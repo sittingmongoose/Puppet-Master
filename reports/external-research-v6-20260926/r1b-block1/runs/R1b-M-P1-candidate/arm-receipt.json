@@ -1,0 +1,73 @@
+{
+ "schema": "er6.r1b_receipt.v3",
+ "process_exit": 0,
+ "last_native_stop": "goal_complete",
+ "slot": "R1b-M-P1-candidate",
+ "package": "M-control",
+ "app": "muse",
+ "variant": "candidate",
+ "host_prep_seconds": 0.78,
+ "goal_span_seconds": 1143.5,
+ "assembly_seconds": 0.01,
+ "rc": 0,
+ "native_responses": 37,
+ "stop_reason": "goal_complete",
+ "driver_error": null,
+ "model_id": "muse-spark-1.3-contributor",
+ "effort_effective": "max",
+ "prompt_sha256": "28720ce2cf578f253195862c2d91e5148e847fee7598867d621d6cec1db215a4",
+ "package_draft_sha256": "c8aa5f38cec8445a424595b1f4b234b0729b5dac89ad5502de12011adbb36216",
+ "package_observations_sha256": "8ddf2ec0d7f4336a2d163df6e46a8cae270eef6ae531d16d4bdc3d59fdb36ddd",
+ "blocks": 129,
+ "bundle_summary": {
+  "observations": 68,
+  "observations_without_citation": 0,
+  "sources": 32,
+  "unknown_handles": [],
+  "cited_lines": 664,
+  "citations_beyond_source_end": [],
+  "delivered_lines": 1676,
+  "long_lines_partially_shown": [],
+  "quotes": 68,
+  "source_file_reads": 32,
+  "quote_classes": {
+   "exact_at_cited_lines": 34,
+   "markdown_code_variant_at_cited_lines": 4,
+   "not_located": 30
+  }
+ },
+ "assembly": {
+  "blocks": 129,
+  "by_status": {
+   "confirm": 78,
+   "not_a_claim": 35,
+   "qualify": 10,
+   "unresolved": 6
+  },
+  "unknown_ids": [],
+  "decision_entries": 117,
+  "lines_outside_entries": [
+   1
+  ],
+  "non_authoritative": [],
+  "carrier_defects": 1,
+  "complete": false
+ },
+ "carrier_complete": false,
+ "frozen_verifier_manifest": {
+  "additions.md": {
+   "sha256": "26399225501dc8437f541007fd6ad829617cc73756f0e2ab9c9aacce2c23431f",
+   "bytes": 17872
+  },
+  "decisions.md": {
+   "sha256": "bb7608bc448bd06bbb5aa79b46eef4aae68a737dead8685b87a9aa6ecf403217",
+   "bytes": 40783
+  }
+ },
+ "delivered_sha256": "744c82f26511f49f4bec1031d5020911792115b37b46bcaa3cdf0fc9f104154e",
+ "outcome": "goal_complete",
+ "outcome_detail": "goal_complete",
+ "start_utc": "2026-09-27T06:20:58.984663+00:00",
+ "end_utc": "2026-09-27T06:40:03.289897+00:00",
+ "active_span_seconds": 1144.3
+}

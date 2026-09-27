@@ -1,0 +1,22 @@
+{
+ "schema": "er6.r1b_approval.v1",
+ "schedule": "block1",
+ "policy_sha256": "b5a2e48ac41481a673d63a74bb786bf9585e63cfa6c6ac847b0aabd39a696dc6",
+ "approved_by": "user (Jared), explicit answer in the orchestrator session",
+ "user_words": "All now, usage will be fine",
+ "technical_signoff": "independent prelaunch closure review: APPROVED_FOR_BLOCK_1 on e0ba81ef0df92c2984d3c2bc25bae759eeb025c3",
+ "approved_utc": "2026-09-27T06:05:45Z",
+ "account_headroom_at_go": {
+  "claude": {
+   "source": "get_usage",
+   "five_hour_pct": 32,
+   "weekly_all_models_pct": 99,
+   "weekly_resets": "2026-10-01T12:00Z",
+   "extra_usage_enabled": false,
+   "note": "user states usage will be fine; reviewer runs may still hit the weekly limit and would then be recorded FAILED_INCOMPLETE"
+  },
+  "muse": "usage/read is observed only after a model call; the runner gate stops the schedule at window>=90% or weekly>=95% after each Muse slot",
+  "zcode": "no quota readout exposed; all-requests-failed is a quota_stop"
+ },
+ "scope": "block1 only: 4 verifier assignments then 2 independent Opus 5.5 xhigh reviews; no block2, no investigator reruns, no retries"
+}

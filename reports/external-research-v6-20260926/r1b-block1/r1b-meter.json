@@ -1,0 +1,300 @@
+{
+ "R1b-M-P1-candidate": {
+  "slot": "R1b-M-P1-candidate",
+  "package": "M-control",
+  "app": "muse",
+  "variant": "candidate",
+  "outcome": "goal_complete",
+  "outcome_detail": "goal_complete",
+  "process_exit": 0,
+  "last_native_stop": "goal_complete",
+  "active_span_seconds": 1144.3,
+  "goal_span_seconds": 1143.5,
+  "host_prep_seconds": 0.78,
+  "assembly_seconds": 0.01,
+  "native_responses": 37,
+  "model_id": "muse-spark-1.3-contributor",
+  "effort_effective": "max",
+  "blocks": 129,
+  "delivered_sha256": "744c82f26511f49f4bec1031d5020911792115b37b46bcaa3cdf0fc9f104154e",
+  "assembly": {
+   "by_status": {
+    "confirm": 78,
+    "not_a_claim": 35,
+    "qualify": 10,
+    "unresolved": 6
+   },
+   "complete": false,
+   "carrier_defects": 1,
+   "unknown_ids": [],
+   "decision_entries": 117
+  },
+  "bundle": {
+   "bytes": 114386,
+   "delivered_lines": 1676,
+   "cited_lines": 664,
+   "sources": 32
+  },
+  "tokens": {
+   "inputTokens": 5041702,
+   "cacheReadTokens": 4832356,
+   "outputTokens": 47336,
+   "reasoningTokens": 24817,
+   "cacheWriteTokens": 0,
+   "uncached_input": 209346
+  },
+  "usage_window_after": {
+   "observedAtMs": 1790491202282,
+   "tier": "<redacted-subscription-tier-id>",
+   "weekly": {
+    "resetsAtMs": 1790553600000,
+    "usedPercent": 19
+   },
+   "window": {
+    "resetsAtMs": 1790492767000,
+    "usedPercent": 8,
+    "windowDurationMins": 300
+   }
+  },
+  "muse_calls": {
+   "parent": 37,
+   "reminder_children": 31,
+   "child_models": {
+    "muse-spark-1.3-contributor": 31
+   },
+   "child_tokens": "unknown (not exposed)"
+  },
+  "tool_result_bytes": "unavailable (not exposed in one Muse log)",
+  "audit": {
+   "tool_calls": 62,
+   "tool_call_names": {
+    "read_file": 37,
+    "search": 17,
+    "report_progress": 2,
+    "write_file": 2,
+    "edit_file": 3,
+    "update_goal": 1
+   },
+   "source_read_calls": 24,
+   "unique_sources_read": 15,
+   "repeat_source_reads": 9,
+   "web_tool_calls": [],
+   "shell_calls": [],
+   "paths_outside_workspace": []
+  }
+ },
+ "R1b-M-P1-control": {
+  "slot": "R1b-M-P1-control",
+  "package": "M-control",
+  "app": "muse",
+  "variant": "control",
+  "outcome": "goal_complete",
+  "outcome_detail": "goal_complete",
+  "process_exit": 0,
+  "last_native_stop": "goal_complete",
+  "active_span_seconds": 912.0,
+  "goal_span_seconds": 911.9,
+  "host_prep_seconds": 0.09,
+  "assembly_seconds": 0.01,
+  "native_responses": 40,
+  "model_id": "muse-spark-1.3-contributor",
+  "effort_effective": "max",
+  "blocks": 129,
+  "delivered_sha256": "2e225c07a3070a5ee514174bf7044cb6ac25df10054c5c0ddac3a477afdf31e5",
+  "assembly": {
+   "by_status": {
+    "confirm": 72,
+    "not_a_claim": 47,
+    "qualify": 10
+   },
+   "complete": false,
+   "carrier_defects": 1,
+   "unknown_ids": [],
+   "decision_entries": 118
+  },
+  "tokens": {
+   "inputTokens": 4957765,
+   "cacheReadTokens": 4768439,
+   "outputTokens": 35084,
+   "reasoningTokens": 13949,
+   "cacheWriteTokens": 0,
+   "uncached_input": 189326
+  },
+  "usage_window_after": {
+   "observedAtMs": 1790490056714,
+   "tier": "<redacted-subscription-tier-id>",
+   "weekly": {
+    "resetsAtMs": 1790553600000,
+    "usedPercent": 19
+   },
+   "window": {
+    "resetsAtMs": 1790492767000,
+    "usedPercent": 8,
+    "windowDurationMins": 300
+   }
+  },
+  "muse_calls": {
+   "parent": 40,
+   "reminder_children": 31,
+   "child_models": {
+    "muse-spark-1.3-contributor": 31
+   },
+   "child_tokens": "unknown (not exposed)"
+  },
+  "tool_result_bytes": "unavailable (not exposed in one Muse log)",
+  "audit": {
+   "tool_calls": 85,
+   "tool_call_names": {
+    "read_file": 63,
+    "write_todos": 2,
+    "report_progress": 2,
+    "search": 13,
+    "write_file": 2,
+    "edit_file": 2,
+    "update_goal": 1
+   },
+   "source_read_calls": 55,
+   "unique_sources_read": 38,
+   "repeat_source_reads": 17,
+   "web_tool_calls": [],
+   "shell_calls": [],
+   "paths_outside_workspace": []
+  }
+ },
+ "R1b-Z-P1-candidate": {
+  "slot": "R1b-Z-P1-candidate",
+  "package": "Z-candidate",
+  "app": "zcode",
+  "variant": "candidate",
+  "outcome": "goal_complete",
+  "outcome_detail": "goal_complete",
+  "process_exit": 0,
+  "last_native_stop": "goal_complete",
+  "active_span_seconds": 1606.0,
+  "goal_span_seconds": 1603.2,
+  "host_prep_seconds": 2.74,
+  "assembly_seconds": 0.01,
+  "native_responses": 54,
+  "model_id": "GLM-5.3-Flash",
+  "effort_effective": "max",
+  "blocks": 107,
+  "delivered_sha256": "eeb845a8e9937e76f5289cf6800cb6115f6464acdbae6af975a6376ac907c280",
+  "assembly": {
+   "by_status": {
+    "not_a_claim": 23,
+    "confirm": 78,
+    "qualify": 6
+   },
+   "complete": false,
+   "carrier_defects": 1,
+   "unknown_ids": [],
+   "decision_entries": 104
+  },
+  "bundle": {
+   "bytes": 482826,
+   "delivered_lines": 7973,
+   "cited_lines": 6812,
+   "sources": 81
+  },
+  "tokens": {
+   "inputTokens": 7325001,
+   "outputTokens": 70446,
+   "reasoningTokens": 0,
+   "cacheReadTokens": 7072384,
+   "cacheWriteTokens": 0,
+   "totalTokens": 7395447,
+   "uncached_input": 252617
+  },
+  "request_status_counts": {
+   "model_request_completed": 54
+  },
+  "tool_result_bytes": {
+   "tool_results": 92,
+   "bytes": 525233,
+   "note": "tool-result text delivered to the model, each counted once; spilled artifacts count by what was returned"
+  },
+  "audit": {
+   "tool_calls": 92,
+   "tool_call_names": {
+    "Glob": 6,
+    "Read": 41,
+    "Grep": 43,
+    "Write": 2
+   },
+   "source_read_calls": 14,
+   "unique_sources_read": 11,
+   "repeat_source_reads": 3,
+   "web_tool_calls": [],
+   "shell_calls": [],
+   "paths_outside_workspace": [
+    {
+     "tool": "Read",
+     "path": "/home/sittingmongoose/.zcode/cli/artifacts/sess_45bde0c1-585b-4366-a73f-1e64d3b59dec/call_07721044902b4ffa8d3c16c4-tool-result-3989cd53-7297-4435-9942-6609af971242.json"
+    }
+   ]
+  }
+ },
+ "R1b-Z-P1-control": {
+  "slot": "R1b-Z-P1-control",
+  "package": "Z-candidate",
+  "app": "zcode",
+  "variant": "control",
+  "outcome": "goal_complete",
+  "outcome_detail": "goal_complete",
+  "process_exit": 0,
+  "last_native_stop": "goal_complete",
+  "active_span_seconds": 1727.1,
+  "goal_span_seconds": 1726.9,
+  "host_prep_seconds": 0.14,
+  "assembly_seconds": 0.01,
+  "native_responses": 60,
+  "model_id": "GLM-5.3-Flash",
+  "effort_effective": "max",
+  "blocks": 107,
+  "delivered_sha256": "320d26662b99ccdf6e059701d591355f877e6991853b71d826b28d7064a087e7",
+  "assembly": {
+   "by_status": {
+    "not_a_claim": 34,
+    "confirm": 68,
+    "qualify": 5
+   },
+   "complete": false,
+   "carrier_defects": 1,
+   "unknown_ids": [],
+   "decision_entries": 107
+  },
+  "tokens": {
+   "inputTokens": 7786812,
+   "outputTokens": 72793,
+   "reasoningTokens": 0,
+   "cacheReadTokens": 7564672,
+   "cacheWriteTokens": 0,
+   "totalTokens": 7859605,
+   "uncached_input": 222140
+  },
+  "request_status_counts": {
+   "model_request_failed": 1,
+   "model_request_completed": 59
+  },
+  "tool_result_bytes": {
+   "tool_results": 159,
+   "bytes": 472055,
+   "note": "tool-result text delivered to the model, each counted once; spilled artifacts count by what was returned"
+  },
+  "audit": {
+   "tool_calls": 159,
+   "tool_call_names": {
+    "Glob": 1,
+    "Read": 125,
+    "Grep": 31,
+    "Write": 2
+   },
+   "source_read_calls": 118,
+   "unique_sources_read": 71,
+   "repeat_source_reads": 47,
+   "web_tool_calls": [],
+   "shell_calls": [],
+   "paths_outside_workspace": []
+  }
+ }
+}

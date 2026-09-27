@@ -1,0 +1,570 @@
+{
+ "schema": "rev-m.ome05.grades.v1",
+ "label": "TEST_ONLY_NEVER_PROMOTE",
+ "evaluator": {"model": "claude-opus-5-5", "effort": "xhigh", "date": "2026-09-27"},
+ "scope": {
+  "case": "ome-zarr-thin (Slide Scout, OME-Zarr 0.5 read-only desktop browser)",
+  "scored_artifacts": ["results/X1/delivered.md", "results/X2/delivered.md"],
+  "graded_sections": "section 1 (current asserted findings: CONFIRMED draft blocks or QUALIFIED verifier replacements) and section 4 (verifier additions). Section 2 (rejected), section 3 (unresolved/undecided/malformed) and section 5 (history, including all blocks marked NOT A CLAIM) earn no retention credit.",
+  "configuration_labels": "withheld; not guessed",
+  "ignored_scoring_parts": ["Jujutsu references", "Phase 1A/1B", "economics"],
+  "hash_policy": "Decisive checks cite the catalog view_sha256 of the source handle plus line ranges. Excerpt hashes were not computed (the evaluator toolset has no shell); the host validates JSON and hashes."
+ },
+ "source_hashes_view_sha256": {
+  "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+  "S004": "f4badac6a11f3a0896bdaf8e129569c940c7d096a466fa9163b9c8680af8f2e3",
+  "S005": "28fb03d9237f8ad60b4b3e8bd9f562e0454900af57bd41df8a3989d320a81bff",
+  "S007": "eba51efc3a5349b2eb245d2e8a4c529855f6029358670c378877134e0bbe7457",
+  "S008": "f8d9f5a3d16702c96404f698b4cb448d36f0e602c708f1ebc4fd19ead6bd4e9d",
+  "S011": "441c1caae52a4b516e9a12d510cacc030b72bcc949d62cfa0613c47d2b70a9df",
+  "S013": "03e533d7aa5315578854bce98c6540bc92b17472655116ca4adc2de16c23f828",
+  "S014": "86030bb33b6eab5ebdaeeacebbdafd21cbd30307ffad538cdbc3d756965df558",
+  "S016": "82b61d30f62d6eddd81ff63b43146fd4f7be93be767ae5561b74a99951c24eca",
+  "S018": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+  "S019": "1634671130537678bf72da5d8aab1ad2e32b540e53ee25b0ab7b3320c97cec22",
+  "S025": "e2b6135a8d325b7db4eb76dd2d3ca4e92d2d25d215045a6351d8264c8110cb03",
+  "S027": "9baab11aac3c28fae13939d9eb75d6c83ef86b35a958c5be00d6c0a9b3723a83",
+  "S028": "bed3a1b8f1d815a475eaa7ab6510ce4b514c7de011ac8723ba4424367d5e9d05",
+  "S031": "679c3eb93df2133dd0646ba9ed847017b0876ba9fccb5aadf9474783fcf6142b",
+  "S033": "2371379e32804870b1b997e6af1c6300c0081a686789f16a401a2f29b7575860",
+  "S034": "7cf44106bd5fc3e952a9c8634bf77272eb14325b9bf2a093f721996bdf328d30",
+  "S038": "a4fec3ff96e4348b4769f59fc6763ddea3b29b747bb13223eaa48dbddbefbd2b",
+  "S043": "a6e9d6c43f5dac0897356c9c1d64e7c7641434863e6bedd91c876920bd9172bb",
+  "S047": "57d1e16906914aae437a60c2d8f234a304ecde71198d100a0ac191f993f1664b",
+  "S048": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+  "S050": "a789bed10a3debdfaca899521f96abf1e211f87fa650349ffff9541526ff4317",
+  "S052": "6717e5b839042f50b59576bdc292afbfb0dbd0ecdf522e6fdfa975dd13c370ec",
+  "S055": "5a239bbb158475d732704c78a2296c1d676c7eada12e67071327816a243de23c",
+  "S058": "d2f7ba77c06db7561ee34f5baf1f514b54192946537186465a9a7928fde703a5",
+  "S059": "7db71adef912e0b009a18b36cd00016ab088f56c2d5a9a82e9b70adca2998e6e",
+  "S092": "c25cdf04538f152bac8a879fc5204b5b3f337f71416143293896cd5623e44c0c",
+  "S098": "9c2b5ca311ccd682d6d6bf2329eb0c19d4cc96b60336050f51913cedea77e129",
+  "S103": "a2eccf854d1569c0f62e0ed7f493b238017b461fcd7bd781fa7626f619bda60e",
+  "S108": "e42b8943c9e5c7a98012afb15a8164630b7d81a9ea3ca991b55c3744ee2d455d",
+  "S109": "c8564b26a2b4d478367e9f05b2b363ac6abe9a057c6cc78888c5270bed2443b8",
+  "S117": "2de334e2b1fac51d43cf99d29c4784ed070895ea466e30bc6a553fea29fc1d30"
+ },
+
+ "step1_reference_eligibility": [
+  {
+   "id": "OME05-C01", "title": "Versioned metadata admission",
+   "facets": [
+    {"f": "C01.a", "text": "0.5 = Zarr v3 zarr.json with metadata under attributes.ome and version \"0.5\", distinct from legacy 0.4 Zarr v2 .zattrs flat attributes", "eligibility": "eligible", "decisive": "S003 67-72, 149-165; S058 301-329"},
+    {"f": "C01.b", "text": "version MUST be consistent within a hierarchy; inconsistent declared versions must be detected", "eligibility": "eligible", "decisive": "S003 155-156"},
+    {"f": "C01.c", "text": "admission requires explicit compatibility validation or a truthful unsupported result for legacy, missing or inconsistent versions", "eligibility": "eligible", "decisive": "S003 149-156; plan/Viewer.md 7, 11"},
+    {"f": "C01.d", "text": "no implicit legacy reinterpretation (reference readers silently switch to the detected format with only a log warning, or fall back to flat attrs)", "eligibility": "eligible", "decisive": "S019 58-66; S048 166-170"},
+    {"f": "C01.e", "text": "distinguishing check: equivalent-looking v3/0.5 vs legacy container, plus inconsistent-version hierarchy", "eligibility": "eligible", "decisive": "S003 149-156"}
+   ],
+   "reference_adjudication": null
+  },
+  {
+   "id": "OME05-C02", "title": "Axis-to-array identity",
+   "facets": [
+    {"f": "C02.a", "text": "axes length equals array rank; axis order constraints (time, channel/custom, space)", "eligibility": "eligible", "decisive": "S003 173, 296-307"},
+    {"f": "C02.b", "text": "unique axis names; array dimension_names MUST match axes names", "eligibility": "eligible", "decisive": "S003 168, 174"},
+    {"f": "C02.c", "text": "navigation/slicing tied to validated axis identity, not fixed 5D positions, shape or conventional names; axis names arbitrary", "eligibility": "eligible", "decisive": "S003 81, 169, 301-302"},
+    {"f": "C02.d", "text": "distinguish absent dimensions from length-one dimensions", "eligibility": "eligible", "decisive": "S003 81, 296-302 (2-5D, optional time/channel); S034 70 (real challenge image shape 1,1,1,93184,144384); S033 333-337 (converter TCZYX default)"},
+    {"f": "C02.e", "text": "reject rank/dimension_names mismatches without inventing sliders or coordinates", "eligibility": "eligible", "decisive": "S003 173-174; plan/Viewer.md 7, 11"}
+   ],
+   "reference_adjudication": null
+  },
+  {
+   "id": "OME05-C03", "title": "Declared pyramid selection",
+   "facets": [
+    {"f": "C03.a", "text": "datasets list is authoritative: ordered highest resolution first; paths group-relative; names arbitrary", "eligibility": "eligible", "decisive": "S003 91-94, 304-306"},
+    {"f": "C03.b", "text": "level-specific geometry from each level's own transform; no fixed factor-of-two; non-power-of-two and anisotropic (e.g. Z not downsampled) reductions", "eligibility": "eligible", "decisive": "S003 308-312; S043 2-35, 80-108"},
+    {"f": "C03.c", "text": "no lexicographic or numeric folder ordering", "eligibility": "eligible", "decisive": "S003 93-94"},
+    {"f": "C03.d", "text": "explicit handling of a declared level whose array is missing or unreadable", "eligibility": "eligible", "decisive": "S003 304-306; plan/Viewer.md 7"},
+    {"f": "C03.e", "text": "selection UI/performance policy remains a product choice", "eligibility": "eligible", "decisive": "plan/Viewer.md 5; S117 105-110"}
+   ],
+   "reference_adjudication": null
+  },
+  {
+   "id": "OME05-C04", "title": "Composed coordinate calibration",
+   "facets": [
+    {"f": "C04.a", "text": "composition order: each dataset's list applied in order (scale then optional translation), then multiscales-level transforms", "eligibility": "eligible", "decisive": "S003 293, 308-316"},
+    {"f": "C04.b", "text": "calibrated coordinates include offsets (translation), not array indices or scale alone", "eligibility": "eligible", "decisive": "S003 311"},
+    {"f": "C04.c", "text": "units come from axes (SHOULD, UDUNITS); a missing unit means unknown calibration; units must not be invented", "eligibility": "eligible", "decisive": "S003 169-172"},
+    {"f": "C04.d", "text": "scale may be a relative factor to the first level when physical scaling is unavailable, so it cannot always be shown as physical size", "eligibility": "eligible", "decisive": "S003 310"},
+    {"f": "C04.e", "text": "concrete check that exposes reversed composition or omitted offsets (hand-computed expected coordinates)", "eligibility": "eligible", "decisive": "S003 308-316"}
+   ],
+   "reference_adjudication": null
+  },
+  {
+   "id": "OME05-C05", "title": "Associated label discovery and registration",
+   "facets": [
+    {"f": "C05.a", "text": "discovery through the labels group 'labels' key (MUST key; all label images SHOULD be listed); intermediate groups allowed; names arbitrary", "eligibility": "eligible", "decisive": "S003 102-117, 437-453"},
+    {"f": "C05.b", "text": "label image is multiscales with the same number of levels as the source", "eligibility": "eligible", "decisive": "S003 454-455"},
+    {"f": "C05.c", "text": "declared association: image-label.source.image relative path (default ../../) resolved to the source image before overlaying", "eligibility": "eligible", "decisive": "S003 467-474"},
+    {"f": "C05.d", "text": "level/coordinate relationship via transforms; label dimensions equal the image's or 1; never attach by folder basename or equal array dims alone", "eligibility": "eligible", "decisive": "S003 106-108, 432-433"},
+    {"f": "C05.e", "text": "unsupported or mismatched geometry stays explicit", "eligibility": "eligible", "decisive": "plan/Viewer.md 7, 11"}
+   ],
+   "reference_adjudication": null
+  },
+  {
+   "id": "OME05-C06", "title": "Categorical label identity",
+   "facets": [
+    {"f": "C06.a", "text": "labels are integer categorical values from 8 integer dtypes including uint64/int64", "eligibility": "eligible", "decisive": "S003 434-439"},
+    {"f": "C06.b", "text": "colors/properties keyed by label-value, not array position", "eligibility": "eligible", "decisive": "S003 461-471; S048 609-650"},
+    {"f": "C06.c", "text": "preserve categorical identity through decode/lookup/resampling (no interpolation creating new IDs; exact integers including uint64 beyond binary64 range)", "eligibility": "eligible", "decisive": "S003 434-439; S025 84-86 (Viv lacks 64-bit integers); S048 706-708 (separate labels layer type)"},
+    {"f": "C06.d", "text": "or declare an exact supported range and refuse unsupported label data", "eligibility": "eligible", "decisive": "S025 84-86; S096 25-28"},
+    {"f": "C06.e", "text": "specified colors are a reader SHOULD, not a universal format mandate", "eligibility": "eligible", "decisive": "S003 456-466"}
+   ],
+   "reference_adjudication": null
+  },
+  {
+   "id": "OME05-C07", "title": "Metadata-driven chunk decoding",
+   "facets": [
+    {"f": "C07.a", "text": "decode each array from its declared codec chain (including nested sharding_indexed codecs and index_codecs)", "eligibility": "eligible", "decisive": "S055 16-57; S003 70-72; S033 157-200"},
+    {"f": "C07.b", "text": "normative reverse-order decoding semantics", "eligibility": "unassessable_missing_input", "decisive": "No Zarr v3 core/codec specification in the admitted corpus (catalog has no zarr-specs capture)."},
+    {"f": "C07.c", "text": "bytes codec carries declared endianness; do not assume little-endian", "eligibility": "eligible", "decisive": "S055 26-31, 44-47 (endian declared per array); S033 356-359 (bioformats2raw >=0.12.0 writes little-endian, so earlier/other writers vary); S013 325 ('Don't assert codecs bytes endian')"},
+    {"f": "C07.d", "text": "handle or truthfully refuse transpose-codec pipelines (fixed adjudication split)", "eligibility": "eligible (handling/refusal); decode-order semantics unassessable_missing_input", "decisive": "S109 553-600 (tensorstore #294: transpose+sharding fails for non-self-inverse orders); S109 2720 (tensorstore #117: transpose order 'F' on WEBKNOSSOS zarr3 data not parsed)"},
+    {"f": "C07.e", "text": "explicit support boundary for codec/dtype combinations; unsupported data never shown as decoded pixels", "eligibility": "eligible", "decisive": "S038 58 (single-shard array: dimensions shown, no chunks loaded, no error); S003 70-72"}
+   ],
+   "reference_adjudication": "Not mistaken. Split: C07.b and the normative part of C07.d are unassessable_missing_input; the remaining facets are eligible."
+  },
+  {
+   "id": "OME05-C08", "title": "Absent data versus failed reads",
+   "facets": [
+    {"f": "C08.a", "text": "normative fill_value semantics for uninitialized/absent chunks", "eligibility": "unassessable_missing_input", "decisive": "Zarr v3 core fill-value section not in corpus; only fill_value values appear (S055 65; S109 600)."},
+    {"f": "C08.b", "text": "distinguish valid absent data (absent chunk/fill, sparse-plate wells never written) from read/decode/cancellation failures", "eligibility": "eligible", "decisive": "S003 128-129, 641-642 (sparse plates valid); S018 425-439, 540-558 (reference reader zero-fills both empty wells and ValueError load failures); S038 58 (silent no-chunks); plan/Viewer.md 7 (cancellation)"},
+    {"f": "C08.c", "text": "show the actual state; never zero-fill failures as data", "eligibility": "eligible", "decisive": "S018 435-439, 552-558"},
+    {"f": "C08.d", "text": "never repair or write source data; reader-side writes considered (read-only opening)", "eligibility": "eligible", "decisive": "brief.md 5; plan/Viewer.md 9; S034 154-156; S092 60 (AGAVE opens with ReadWriteMode::read)"},
+    {"f": "C08.e", "text": "abstract store / filesystem store absence semantics", "eligibility": "unassessable_missing_input", "decisive": "Zarr v3 store specifications not in corpus."}
+   ],
+   "reference_adjudication": "Not mistaken. Split: fill_value and store-interface semantics are unassessable_missing_input; the distinction and read-only facets are eligible."
+  }
+ ],
+ "step1_notes": [
+  "No reference proved mistaken at this snapshot.",
+  "Every status below is decided on eligible facets only; unassessable facets are listed but never counted as missing."
+ ],
+
+ "results": {
+  "X1": {
+   "reference_statuses": [
+    {"id": "OME05-C01", "status": "retained",
+     "location": "s1 B-004 (P1), B-010 (P7), B-030 (F1 corrected, incl. 0.4-fixture validation), B-031, B-065 (F8 corrected: 0.4 in 0.5 scope, missing/inconsistent version rows, one malformed fixture per row); s4 A2 (mixed-namespace taxonomy row), N3",
+     "facets_retained": ["C01.a", "C01.b", "C01.c", "C01.d (implicit: 0.4 and inconsistent versions are explained failure rows; A2 adds a mixed-namespace row)", "C01.e"],
+     "facets_missing": [],
+     "checked": "S003 67-72, 149-165; S019 58-66; S013 157-164; S058 309-329",
+     "reasoning": "Branches on zarr.json+attributes.ome.version vs .zattrs markers, treats in-hierarchy inconsistency as invalid under the MUST, routes 0.4 input to an explained failure, and validates with a 0.4 fixture and a per-row malformed battery that sit in section 1. The hedge 'invalid-or-uncertain' is weaker than 'invalid', but it doesn't license reinterpretation."},
+    {"id": "OME05-C02", "status": "narrowed",
+     "location": "s1 B-005 (P2), B-045/B-046 (F4), B-055 (F6), B-065 (F8 dimension_names row + malformed fixture)",
+     "facets_retained": ["C02.a", "C02.b", "C02.c", "C02.e"],
+     "facets_missing": ["C02.d absent vs length-one dimensions", "F4 selector validation idea (2D/3D/4D/5D/custom fixtures) exists only in history block B-047 marked NOT A CLAIM"],
+     "checked": "S003 81, 168-174, 296-307; S034 70",
+     "reasoning": "Selectors are driven by axes and dimension_names mismatch is an explained failure. But nothing separates a missing axis from a present length-one axis, which real challenge data carries (S034 70)."},
+    {"id": "OME05-C03", "status": "narrowed",
+     "location": "s1 B-005 (P2), B-035/B-036 (F2), B-020 (P15), B-085 (F12 fixtures), B-100 (P-C3)",
+     "facets_retained": ["C03.a (order and arbitrary names; group-relative paths not stated)", "C03.b", "C03.c", "C03.e"],
+     "facets_missing": ["C03.d explicit missing/unreadable declared-level handling", "F2 validation idea only in history B-037 (NOT A CLAIM); F12 fixture rows partly compensate"],
+     "checked": "S003 91-94, 304-312; S043 2-35, 80-108",
+     "reasoning": "Correctly forbids numeric sorting and factor-2 assumptions and takes per-level scale from metadata. It never says what happens when a declared level cannot be read."},
+    {"id": "OME05-C04", "status": "narrowed",
+     "location": "s1 B-005 (P2), B-055/B-056 (F6), B-020 (P15), B-092 (O-C4)",
+     "facets_retained": ["C04.a", "C04.b", "C04.c (partial: UDUNITS; 'inconsistent/missing units need a stated display rule')"],
+     "facets_missing": ["C04.d relative-factor scale when calibration is unavailable", "explicit no-invented-units rule", "C04.e concrete composition/offset check: the hand-computed cursor check exists only in history B-057 (NOT A CLAIM)", "s4 non-finding wrongly says the corpus never states napari's transform combination (S048 260-291 does), losing an omitted-offset precedent"],
+     "checked": "S003 169-172, 293, 308-316; S048 260-291",
+     "reasoning": "The order (dataset scale then translation, then top-level) and the calibrated cursor readout survive. The distinguishing check and the unknown-calibration nuance don't."},
+    {"id": "OME05-C05", "status": "narrowed",
+     "location": "s1 B-007 (P4), B-050 (F5 corrected + two-level validation), B-051",
+     "facets_retained": ["C05.a", "C05.b", "C05.d (partial: level-to-level alignment through each side's transforms)", "C05.e"],
+     "facets_missing": ["C05.c source.image association is described as metadata only and never used to confirm the label-to-image link before overlay", "C05.d label-dimension equal-or-1 rule; no explicit ban on attaching by folder/array dims"],
+     "checked": "S003 102-117, 431-474; S048 184-196, 652-716",
+     "reasoning": "Discovery, level-count and transform-based alignment with explicit notices are present. The declared source association, which is the distinguishing facet, is missing."},
+    {"id": "OME05-C06", "status": "narrowed",
+     "location": "s1 B-007 (P4), B-050 (colors from image-label), B-070/B-071 (F9: all 8 int types, renderers bound support, explicit matrix, loud failure), B-094 (O-C6)",
+     "facets_retained": ["C06.a", "C06.b (label-value named; 'not by position' implicit)", "C06.d (dtype matrix + loud failure)", "C06.e"],
+     "facets_missing": ["C06.c categorical identity through resampling/lookup and exact uint64/int64 precision"],
+     "checked": "S003 434-471; S025 84-86; S048 609-661",
+     "reasoning": "Recognizes integer, label-value-keyed semantics and bounded dtype support, which is the rubric's half level. It never addresses interpolation-created IDs or 64-bit precision."},
+    {"id": "OME05-C07", "status": "narrowed",
+     "location": "s1 B-004 (P1), B-035/B-036 (F2 decode stack), B-065 (F8 codec/shard row), B-069/B-070/B-071 (F9 matrix, fail loudly), B-019 (P14 never silent no-chunks); s4 A8 (single-shard row)",
+     "facets_retained": ["C07.a", "C07.e"],
+     "facets_missing": ["C07.c endianness", "C07.d transpose handling or truthful refusal"],
+     "unassessable": ["C07.b decode-order semantics", "normative transpose semantics"],
+     "checked": "S055 16-57; S033 157-200, 356-359; S109 553-600, 2720; S038 58",
+     "reasoning": "A metadata-driven codec/shard matrix with loud out-of-matrix failure is kept. Layout-changing codecs (transpose) and declared endianness are never examined, although the corpus shows both in real data and readers."},
+    {"id": "OME05-C08", "status": "narrowed",
+     "location": "s1 B-013 (P9), B-019 (P14), B-022 (P17 corrected: no silent zero-fill, mark absent wells), B-065 (F8), B-075/B-076 (F10 read-only, no sidecar writes)",
+     "facets_retained": ["C08.c (partial: no silent zero-fill of missing plate tiles; never silent no-chunks)", "C08.d"],
+     "facets_missing": ["C08.b explicit valid-absent vs read/decode/cancellation-failure distinction: F8 lists 'missing wells/fields' as a failure row next to P5's valid sparse plates, and cancelled work is never distinguished from failure", "F10 hash-before/after validation only in history B-077"],
+     "unassessable": ["C08.a fill_value semantics", "C08.e store semantics"],
+     "checked": "S003 128-129, 641-642; S018 425-439, 540-558; S034 154-156; plan/Viewer.md 7, 9",
+     "reasoning": "Read-only with reader-side writes considered, and zero-fill hiding is rejected. It lumps 'missing/failed' tiles together instead of separating legitimate absence from failure."}
+   ],
+   "reference_summary": {"retained": ["OME05-C01"], "narrowed": ["OME05-C02", "OME05-C03", "OME05-C04", "OME05-C05", "OME05-C06", "OME05-C07", "OME05-C08"], "lost": [], "contradicted": [], "inapplicable": [], "unassessable_missing_input": []},
+
+   "unsupported_claims": [
+    {"id": "X1-U1", "shared_with_X2": "yes (X2-U1 equivalent)", "location": "s1 B-015 (P11 corrected: 'hard-codes dimorder T,C,Z,Y,X (S098 line 256), a correctness risk'); B-045 reason ('AGAVE's risky fixed dimorder')",
+     "type": "unsupported source (code) fact", "severity": "low-moderate",
+     "counterevidence": "S098 256 is an unchanged default initialisation in a diff hunk; S098 234 and S092 60 show a getAxes(nlohmann::json axes) parser that returns dims. The code between the default and its use isn't in the corpus, so the pinned implementation doesn't establish a hard-coded order.",
+     "consequence": "Misstates an AGAVE precedent and would misdirect any compatibility comparison. The Slide Scout rule (derive selectors from axes) stands on S003 without it."},
+    {"id": "X1-U2", "location": "s1 B-014 (P10 CONFIRMED: napari 'resolves arbitrary entry points by walking up, and tolerates rotation/affine/sequence transforms with warn-and-skip'); B-030 (F1 corrected constraint: 'arbitrary entry-point walk-up (S048 lines 672-689)')",
+     "type": "unsupported source (code) fact, carried into a Plan constraint; internal contradiction with B-093 reason ('composes ... with warn-and-skip for unknown types')", "severity": "low-moderate",
+     "counterevidence": "S048 81-133: rotation and affine are converted and composed into one Affine and sequences are flattened; only unknown types warn and skip. S048 664-699: walk-up happens only from a Labels root (1 level) or a Label root (2 levels); other entries dispatch by attrs and a no-match prints 'No matching spec' and returns nothing.",
+     "consequence": "The F1 discovery constraint cites a behaviour the reference doesn't have, and misses the silent no-match that Slide Scout must turn into an error."},
+    {"id": "X1-U3", "location": "s1 B-015 (P11 corrected: time slider listed among limits that 'appear only in older TIFF/CZI-era desktop docs'); s4 N6 ('the OME-Zarr dialog (S117 lines 101-128) claims only resolution/channel/sub-region choice plus memory estimate')",
+     "type": "unsupported source fact (omission stated as negation)", "severity": "low",
+     "counterevidence": "S117 111-116 (inside the cited range): the Load Settings dialog includes Time selection, and the time point can be changed after loading via the Time Panel.",
+     "consequence": "Understates the AGAVE OME-Zarr precedent for time navigation and bounding."},
+    {"id": "X1-U4", "location": "s1 B-022 (P17 corrected: 'Full-resolution stitched canvases are risky: napari loads the plate but crashes on zoom')",
+     "type": "causal overreach", "severity": "low",
+     "counterevidence": "S043 218-220 records the crash on zoom with no cause.",
+     "consequence": "Minor. The recommendation (overview plus drill-down) is independently supported."},
+    {"id": "X1-U5", "location": "s4 N2 heading ('Napari plate labels come from the first well's first field only')",
+     "type": "overgeneralised code fact", "severity": "low",
+     "counterevidence": "S048 535-537: PlateLabels.data() calls get_pyramid_lazy(self.group, labels_path) over the plate; only metadata and label-path enumeration come from the first well/field (S048 507-555). The N2 body and the F5 text are accurate.",
+     "consequence": "Minor; the disposition (explicit product decision on plate-label sourcing) is right."},
+    {"id": "X1-U6", "shared_with_X2": "yes", "location": "s1 B-020 (P15 CONFIRMED)",
+     "type": "lost version qualifier", "severity": "low",
+     "counterevidence": "S043 318-470: the calibration rows are titled '(v0.4)' and use v0.4 sample URLs.",
+     "consequence": "The survey's cross-viewer failure rates are presented as current 0.5 behaviour."},
+    {"id": "X1-U7", "shared_with_X2": "yes", "location": "s1 B-030 (F1 corrected: 'first-multiscales default with user choice by name') vs B-091 (O-C3: the choice UI is an 'optional capability, adopt only with review')",
+     "type": "internal tension (mandatory vs optional)", "severity": "low",
+     "counterevidence": "S003 388-397 is permissive ('the user can choose by name, using the first multiscale as a fallback').",
+     "consequence": "The implementer gets two dispositions for the same feature."},
+    {"id": "X1-U8", "shared_with_X2": "yes", "location": "s1 B-065 (F8 corrected taxonomy row 'missing wells/fields zero-filled by the reference') vs B-008 (P5: sparse plates list only present wells)",
+     "type": "ambiguous disposition (valid absence listed as failure)", "severity": "low-moderate",
+     "counterevidence": "S003 128-129, 641-642: absent wells in sparse plates are valid. S018 543-547 zero-fills those empty wells and S018 552-557 also zero-fills load failures; the row doesn't separate them.",
+     "consequence": "Risks showing error states for valid sparse plates, or treating failures as absence. This is also the C08.b facet loss."}
+   ],
+   "false_dismissals": [
+    {"id": "X1-FD1", "location": "s1 B-112 reason ('never states the fixed combination') and s4 section 3 ('The corpus never states the fixed napari reader's transform combination (R4 stands)')",
+     "type": "false unsupported/absence dismissal", "severity": "low-moderate",
+     "counterevidence": "S048 260-291 (cited by B-112 itself) states it: only datasets[0]'s first transform plus the first top-level transform whose input name matches, composed into one Affine. For plain 0.5 data that drops a dataset-level translation. The X1 verifier's S048 read ranges (1-249, 329-380, 480-555, 600-722) skip lines 250-328, so the absence claim rests on an unread range.",
+     "consequence": "Loses an omitted-offset precedent relevant to C04 and leaves a resolvable question open."}
+   ],
+   "verifier_defects": [
+    {"id": "X1-VD1", "shared_with_X2": "yes",
+     "text": "All 12 per-F validation-idea blocks (B-032, B-037, B-042, B-047, B-052, B-057, B-062, B-067, B-072, B-077, B-082, B-087) were marked NOT A CLAIM although they are substantive distinguishing checks. Four were restated inside qualified replacements (F1 B-030, F5 B-050, F7 B-060, F8 B-065). Eight survive only in history: F2 pyramid comparison, F3 omero defaults, F4 2D-5D/custom selectors, F6 hand-computed cursor coordinates, F9 matrix fixture pack, F10 before/after fileset hash, F11 remote/export refusal, F12 end-to-end matrix.",
+     "consequence": "C04.e (concrete composition/offset check) is lost to history; C02/C03 validation ideas are lost; the C08.d read-only hash check is lost."}
+   ],
+   "novel_supported_findings": [
+    {"id": "X1-N1", "shared_with_X2": "yes", "location": "s4 A8", "claim": "The resave default shard shape is the full image array; shards over 100,000,000 pixels need an explicit --output-shards, so single whole-array shards are expected in challenge-lineage filesets.", "sources": "S034 291-307", "plan_fit": "F9 decode matrix / F7 memory bounding (Plan L7, L9)"},
+    {"id": "X1-N2", "shared_with_X2": "yes", "location": "s1 B-019 (P14 corrected)", "claim": "Real interop failures on 0.5-era data: neuroglancer 'no multiscale metadata' plus a single-shard array with no chunks and no error; vizarr #307 repetitive chunks on resave-converted 0.5; napari/ome-zarr zarr<3 pin conflict. The viewer must explain these and never go silent.", "sources": "S038 58; S014 139-143; S011 151-157", "plan_fit": "F8/F9 (Plan L7, L9)"},
+    {"id": "X1-N3", "shared_with_X2": "yes", "location": "s1 B-022 (P17 corrected), B-098 (P-C1); s4 A6, D1", "claim": "HCS-at-scale precedents: vizarr shows the lowest-resolution plate and opens a clicked well in a new window; napari crashes on zoom; MoBIE supports plates (no detail); ome-zarr-py zero-fills stitched grids. So plate navigation is a product choice with overview-plus-drill-down favoured.", "sources": "S043 207-238; S018 404-567", "plan_fit": "Plan L5 image listing / L7 responsiveness"},
+    {"id": "X1-N4", "shared_with_X2": "yes", "location": "s1 B-009 (P6), B-030 (F1)", "claim": "bioformats2raw.layout discovery precedence (plate, else OME series, else numbered groups); readers SHOULD surface all images.", "sources": "S003 256-275", "plan_fit": "Plan L5 'lists the images it finds'"},
+    {"id": "X1-N5", "shared_with_X2": "yes", "location": "s1 B-008 (P5), B-030/B-031", "claim": "HCS plate/row/well/field hierarchy with sparse plates, so a flat list is wrong and navigation must be hierarchy-aware.", "sources": "S003 118-129, 515-560, 740-752; S056 10-73", "plan_fit": "Plan L5"},
+    {"id": "X1-N6", "shared_with_X2": "yes", "location": "s1 B-039..B-041 (F3)", "claim": "omero render defaults are optional (color/active/label/window, greyscale whitening); a single bad window must degrade per channel, unlike ome-zarr-py's wipe-all.", "sources": "S003 398-430; S018 375-383; S048 316-323", "plan_fit": "Plan L5 channel controls"},
+    {"id": "X1-N7", "shared_with_X2": "yes", "location": "s1 B-021 (P16 corrected), B-091 (O-C3); s4 N1", "claim": "Multiple multiscales per group: the spec allows user choice with first as fallback; 10/11 surveyed viewers report supported:no, 3 fail to open, OMERO is ambiguous.", "sources": "S003 388-397; S043 277-316", "plan_fit": "Plan L5 discovery"},
+    {"id": "X1-N8", "shared_with_X2": "yes", "location": "s1 B-015, B-026, B-100; s4 D3", "claim": "AGAVE's OME-Zarr Load Settings dialog (resolution level, channel exclusion, X/Y/Z sub-region, GPU memory estimate) is an explicit bounding alternative to fully automatic loading, so pyramid UX is a product choice.", "sources": "S117 94-135", "plan_fit": "Plan L5 level choice / L7 responsiveness"},
+    {"id": "X1-N9", "shared_with_X2": "yes", "location": "s1 B-015; s4 N6", "claim": "AGAVE's <=4 channels / 16-bit / first-time-sample / few-GB limits come from TIFF/CZI-era docs and must not be cited as OME-Zarr behaviour (modulo X1-U3 on time).", "sources": "S108 4-29; S117 94-135", "plan_fit": "evidence hygiene for F3/F7"},
+    {"id": "X1-N10", "shared_with_X2": "yes", "location": "s1 B-012 (P8); s4 N5", "claim": "Reference-reader timeline: PR404 0.5 read-only (Nov 2024), v0.12.0 writing (Aug 2025), v0.15.0 deprecations + 0.5 download fix, v0.16.0 sharding, v0.19.0 permissive-0.5/scene/plain-string codecs.", "sources": "S008 139-150; S013 126-164; S052 128, 300, 343, 546-558", "plan_fit": "Plan L9 interop (version pinning)"},
+    {"id": "X1-N11", "shared_with_X2": "yes", "location": "s1 B-025, B-084..B-086", "claim": "The ome-ngff-validator plus IDR/challenge sample catalogs give a pre-check oracle for a representative fixture matrix (validator coverage itself unknown, R7).", "sources": "S031 1-15; S034 67-85; S008 156-158", "plan_fit": "Plan L11 acceptance"},
+    {"id": "X1-N12", "shared_with_X2": "yes", "location": "s4 A1 (X2: s1 B-015)", "claim": "AGAVE's scene count equals the multiscales list size, one scene per multiscales entry.", "sources": "S098 226-233", "plan_fit": "multi-multiscales choice UI (O-C3)"},
+    {"id": "X1-N13", "shared_with_X2": "yes", "location": "s1 B-050 (F5 corrected, S018 316-318 + S048 652-654)", "claim": "Both reference readers hide labels by default.", "sources": "S018 315-318; S048 652-659", "plan_fit": "Plan L5 optional overlays"},
+    {"id": "X1-N14", "shared_with_X2": "yes", "location": "s1 B-076", "claim": "Session settings must avoid the absolute-path portability trap documented for AGAVE.", "sources": "S108 27", "plan_fit": "Plan L9 display settings local to session"},
+    {"id": "X1-N15", "shared_with_X2": "no (X1 only)", "location": "s1 B-030, B-065; s4 N3", "claim": "The mixed v04/v05 exception is write-path only. On read, ome-zarr-py detects the format, logs 'version mismatch: detected/requested' and silently switches to the detected format, so Slide Scout's version errors must be its own and must not copy the silent switch.", "sources": "S013 157-164; S019 58-66", "plan_fit": "Plan L7 failure explanation; C01-adjacent"},
+    {"id": "X1-N16", "shared_with_X2": "partial (X2 states the fact but makes it a constraint)", "location": "s1 B-050 (F5 corrected); s4 N2, D1", "claim": "The napari plate-label path derives metadata from the first well/first field and enumerates that field's label paths, so per-well label sourcing needs an explicit product decision.", "sources": "S048 507-555", "plan_fit": "Plan L5 overlays for plates"},
+    {"id": "X1-N17", "shared_with_X2": "no (X2 mentions the override only descriptively)", "location": "s4 A7", "claim": "The validator's schemas= query override lets edge fixtures be checked against alternative schema branches.", "sources": "S031 8-15", "plan_fit": "Plan L11 acceptance (minor)"},
+    {"id": "X1-N18", "shared_with_X2": "no", "location": "s4 A9", "claim": "napari-ome-zarr PR123 merged on 8 May 2026, so release-status questions must target post-May-2026 releases.", "sources": "S027 126-131", "plan_fit": "version pinning (minor)"}
+   ],
+   "correct_non_findings": [
+    {"id": "X1-NF1", "location": "s4 N4, section 3", "text": "No corpus implementation demonstrates background loading with cancellation; the automatic half of F7 rests on the Plan alone.", "grounds": "Lazy dask construction (S018 298-322; S048 199-202) is not scheduling. Corroborated by S103 (AGAVE #84: loading 'blocks the whole application and is not easy to cancel', an open request), which X1 did not cite."},
+    {"id": "X1-NF2", "location": "s1 B-110; s4 section 3", "text": "PR594 'permissive 0.5' has no rule-level detail in the corpus.", "grounds": "S052 128 (release-note title only)"},
+    {"id": "X1-NF3", "location": "s1 B-111; s4 section 3", "text": "Read-path acceptance of compressor vs codecs spellings on v3 arrays isn't addressed.", "grounds": "S013 166-186 (write path only); bounded by X1's recorded search"},
+    {"id": "X1-NF4", "location": "s1 B-115; s4 section 3", "text": "The validator's rule coverage isn't in the corpus.", "grounds": "S031 1-15"},
+    {"id": "X1-NF5", "location": "s4 A10", "text": "Empty or failed captures are absence of evidence, not evidence of absence.", "grounds": "S005 1 (clone cap), S007 1 (HTTP 403), S002 0 bytes per catalog"},
+    {"id": "X1-NF6", "location": "s1 B-104..B-107", "text": "General multi-image overlay isn't required (3/11 viewers); remote/export/editing/interpretation are out of scope; scene/coordinateSystems isn't a 0.5 obligation; zlib's absence is converter-specific.", "grounds": "S043 473-507; brief.md 5; plan/Viewer.md 9; S003 (no scene/coordinateSystem hits); S033 159-162"},
+    {"id": "X1-NF7", "location": "s1 B-113", "text": "No real-world frequency data for translations, top-level transforms, multi-multiscales or dtypes (bounded).", "grounds": "Accepted as a bounded unknown; the large issue dumps were not exhaustively re-searched by this evaluator (PENDING_HIGH_END_VERIFICATION for full-corpus absence)."}
+   ],
+   "handoff_loss": {
+    "note": "Assessed after steps 2-4 were saved. Upstream (observations O-001..O-068 and the stage-1 draft) is shared by X1 and X2. Upstream-only material stays lost/narrowed in the scores above.",
+    "items": [
+     {"item": "napari entry-point walk-up", "first_acquisition": "O-063 (correct: walk-up only from Labels/Label roots; others dispatch by attrs; no-match prints and returns nothing; S048 672-680)", "draft": "distorted to 'resolves arbitrary entry points by walking up' (P10, F1)", "X1_final": "distortion preserved (B-014 CONFIRMED; B-030 replacement cites 'arbitrary entry-point walk-up')", "classification": "handoff distortion retained"},
+     {"item": "napari transform handling", "first_acquisition": "O-064 (correct: rotation/affine/sequence composed; unknown types warn and skip)", "draft": "distorted to 'tolerates rotation/affine/sequence transforms with warn-and-skip' (P10)", "X1_final": "distortion preserved in P10; B-093 reason states it correctly, so the delivery is internally inconsistent", "classification": "handoff distortion retained"},
+     {"item": "label-to-source linkage", "first_acquisition": "O-010 implication ('colors/properties/source.image (default ../../) drive display and linkage')", "draft": "P4 lists source.image as metadata only; F5 omits the linkage", "X1_final": "lost (C05.c)", "classification": "handoff loss (draft stage)"},
+     {"item": "64-bit label dtype vs renderer support", "first_acquisition": "O-028 (Viv excludes uint64/int64; 'label uint64/int64 (spec-legal) may exceed renderer support')", "draft": "generalised to 'spec labels need all 8 int types; renderers bound support'", "X1_final": "narrowed (C06 range facet weakened)", "classification": "handoff narrowing"},
+     {"item": "crc32c index codec", "first_acquisition": "O-022 (bytes+crc32c index codecs)", "draft": "matrix lists sharding_indexed + blosc/gzip/zstd/null only", "X1_final": "crc32c absent from the decode matrix", "classification": "minor handoff narrowing (C07.a)"},
+     {"item": "F6 hand-computed cursor check and other validation ideas", "first_acquisition": "draft F2-F12 validation ideas", "draft": "present", "X1_final": "8 of 12 moved to history by NOT A CLAIM marking (C04.e, C02/C03 checks, F10 hash check lost)", "classification": "verifier handoff loss"},
+     {"item": "fixed-napari transform combination", "first_acquisition": "O-044 open question", "draft": "R4 unresolved", "X1_final": "falsely declared unanswerable (S048 260-291 answers it)", "classification": "unresolved question closed wrongly"},
+     {"item": "early-reader under-testing caution", "first_acquisition": "O-061 implication", "draft": "dropped", "X1_final": "not restored", "classification": "handoff loss (low value)"},
+     {"item": "AGAVE time selection in OME-Zarr Load Settings", "first_acquisition": "O-052 (lists 'time slider' but conflates older docs)", "draft": "P11 conflated", "X1_final": "over-corrected: time capability attributed only to the TIFF/CZI docs (X1-U3)", "classification": "distortion introduced during correction"},
+     {"item": "AGAVE fixed dimorder", "first_acquisition": "O-053 (overreach from a default initialisation)", "draft": "P11", "X1_final": "preserved as fact (X1-U1)", "classification": "upstream error carried through"},
+     {"item": "multi-multiscales OMERO row", "first_acquisition": "O-032 (overstated 'all supported:no')", "draft": "P16, O-C3", "X1_final": "corrected (B-021, B-091, N1)", "classification": "upstream error corrected"},
+     {"item": "plate-label derivation", "first_acquisition": "O-062 (first well/first field)", "draft": "distorted to 'plate labels derive per wells/fields'", "X1_final": "corrected, routed to a product decision (B-050, N2, D1)", "classification": "upstream fidelity restored"},
+     {"item": "mixed v04/v05 read-path behaviour", "first_acquisition": "O-046 open question", "draft": "F1/F8 treat the write-path exception as the read error", "X1_final": "answered from S019 58-66 (N3)", "classification": "verifier gain beyond upstream"},
+     {"item": "background/cancel precedent", "first_acquisition": "draft F7 'corpus proves both automatic background/cancel'", "draft": "overstated", "X1_final": "corrected (B-060, N4)", "classification": "upstream error corrected"},
+     {"item": "reference acquisition gaps (not handoff losses)", "first_acquisition": "never acquired upstream", "draft": "-", "X1_final": "absent", "classification": "acquisition gap: C02.d length-one axes, C03.d missing level, C04.d relative scale, C06.c resampling/precision, C07.c endianness (S055/S033 356-359 unnoted), C07.d transpose (S109 unvisited), C08.b absent-vs-failure (O-020 itself lumps 'missing/failed')"}
+    ]
+   },
+   "coherence": {
+    "overall": "Coherent and usable. Qualified replacements stand alone with citations, and section 4 findings match the replacements (N1-N6 restate B-021/B-050/B-030/B-060/B-015).",
+    "internal_contradictions": ["P10 (warn-and-skip) vs B-093 reason (composes)", "F1 'user choice by name' vs O-C3 optional", "F8 'missing wells/fields' failure row vs P5 valid sparse plates", "R4/non-finding vs cited S048 260-291"],
+    "assembly": "Host assembly is shared with X2 and mechanical: the reading guide (B-129, '## 5') sits inside section 1; section 4 carries its own '## 1..## 6' headings colliding with top-level numbering; the history is a second '## 5'; the host report shows complete:false, carrier_defects:1. This is a readability issue, not a research defect."
+   },
+   "decision_burden": {
+    "blocking_decisions": [
+     "D1 plate navigation model, including plate-label sourcing (overview+drill-down recommended)",
+     "D2 channel rendering architecture (split layers vs composite; 'decide before contrast-limit architecture')",
+     "D3 pyramid UX and bounding rule (automatic vs explicit estimate vs hybrid; TB-scale forces a bounding rule)",
+     "D4 strictness posture per taxonomy row (strict vs permissive-with-notice)"
+    ],
+    "nonblocking_choices": [
+     "D5 overlay scope (labels-only recommended; the Plan L5 canonical choice already scopes overlays to labels), with sub-choices O-C4 translation alignment and O-C5 transform tolerance",
+     "D6 optionals gate listing O-C1..O-C8 individually (RO-Crate, raw fallback, multi-multiscales UI, translation alignment, transform tolerance, label properties, finder browsing, transfer functions/ROI)"
+    ],
+    "clarification_questions": ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "A2 mixed-namespace groups", "A3 missing XML / non-numeric IDs", "A4 surviving label channel", "A5 dimension_names writer compliance"],
+    "redundant_or_unnecessary": ["R1 (actionable part settled by S003 102-112, 441-450)", "R4 (answered by S048 260-291)", "D5 largely resolved by the canonical Plan choice"],
+    "counts": {"blocking": 4, "nonblocking": 2, "nonblocking_options_listed": 10, "clarification": 11, "redundant": 3},
+    "notes": "Grouping doesn't hide alternatives; each O-C option keeps its own validation idea. The F1-vs-O-C3 tension leaves one disposition ambiguous."
+   },
+   "coverage": {
+    "assessed": [
+     "delivered.md read in full (sections 1-5 incl. history and host report)",
+     "every section-1 block and every section-4 item classified (asserted finding, open question, or decision)",
+     "decisive claims checked in: S003 (full), S004 120-169, S005, S007, S008 136-163, S011 148-167, S013 120-189, 310-334, S014 120-145, S016 290-386, S018 270-610, S019 30-104, S025 76-87, S027 120-181, 260-274 (+grep 342-365), S028 3040-3051, S031 (full), S033 150-369, S034 36-105, 140-319, S038 58, S043 1-110, 200-509, S044 124-143, S048 60-722, S050 3640-3645, 3691, S052 126-128, 299-300, 342-343 (+tag grep), S055 (full), S058 295-394, S092 60, S096 (full), S098 195-269, S103 (grep), S108 (full), S109 545-604, 2690-2729 (+grep), S117 55-139",
+     "corpus-wide greps: endian, fill_value, transpose, uninitialized/missing chunk, cancel/background/progressive, bioformats2raw.layout, scene|coordinateSystem (S003), plate.py/get_pyramid_lazy",
+     "upstream observations (X1 copy) and stage-1 draft (via the delivered history and the X2 upstream copy) for handoff"
+    ],
+    "not_assessed_PENDING_HIGH_END_VERIFICATION": [
+     "S053 image.schema: P2/F8 schema-count claims not independently re-read",
+     "S054, S056 IDR/plate examples: P13 details (czyx scales, 6x11 plate, ~50 wells, field_count 32) not re-read",
+     "S023, S017 finder PR/changelog (P18, O-C7), S061 QuPath, S062 Vol-E, S072 AGAVE README, S010 sample catalog, S059 beyond grep",
+     "S033 1-149: P12 bioformats2raw pyramid defaults (~256px smallest level, factor-2 steps) not re-read",
+     "S048 lines 1-59 (helper remove_axis_from_transform head) not read",
+     "full-corpus absence claims (R5 frequencies, R6 status items) over the large issue/API dumps (S015, S024, S026, S028, S035, S050, S073, S075, S078-S080, S087, S089-S091, S097, S100-S101, S109 beyond targeted lines, S112, S114, S118-S125)",
+     "byte-level identity of X1/upstream/draft.md with the X2 copy (X1 copy not opened directly; host can compare hashes)",
+     "runtime behaviour of any reader (no execution available); all validation ideas are unexecuted proposals"
+    ],
+    "incidental_exposure": "Before step 5, a grep over results/ printed three upstream observation lines (O-009 quote, O-010 implication, O-028 claim/implication). Step-2 statuses rely only on delivered text; this exposure didn't change any status."
+   }
+  },
+  "X2": {
+   "reference_statuses": [
+    {"id": "OME05-C01", "status": "retained",
+     "location": "s1 B-004 (P1), B-010 (P7), B-030 (F1 corrected: markers, mixed hierarchies invalid, explicit error for no-match entries, 0.4 fixture), B-031, B-065 (F8 rows: 0.4 in 0.5 scope, mixed v04/v05, missing/inconsistent version); s4 U-B (open: detect-and-explain 0.4 vs generic malformed; mixed namespaced/flat keys)",
+     "facets_retained": ["C01.a", "C01.b", "C01.c", "C01.d (implicit via failure rows)", "C01.e (0.4 fixture)"],
+     "facets_missing": ["inconsistent-version fixture exists only in history B-067 (NOT A CLAIM); minor"],
+     "checked": "S003 67-72, 149-165; S058 309-318; S013 150-157",
+     "reasoning": "Same substantive admission rule as X1. The 0.4-vs-0.5 distinguishing fixture is in section 1; the per-row malformed battery is not. Whether 0.4 gets a detect-and-explain message is left as a nonblocking open question, but either way it's refused, not reinterpreted."},
+    {"id": "OME05-C02", "status": "narrowed",
+     "location": "s1 B-005 (P2), B-045/B-046 (F4), B-055 (F6), B-065 (F8 dimension_names row)",
+     "facets_retained": ["C02.a", "C02.b", "C02.c", "C02.e"],
+     "facets_missing": ["C02.d absent vs length-one dimensions", "F4 and F8 validation ideas only in history (B-047, B-067)"],
+     "checked": "S003 81, 168-174, 296-307; S034 70",
+     "reasoning": "Same as X1; the length-one distinction is absent. X2's N6 singleton rule concerns label/image dimension matching, not image-axis navigation."},
+    {"id": "OME05-C03", "status": "narrowed",
+     "location": "s1 B-005 (P2), B-035/B-036 (F2), B-020 (P15), B-085 (F12), B-100 (P-C3); s4 G2 pyramid UX",
+     "facets_retained": ["C03.a (group-relative not stated)", "C03.b", "C03.c", "C03.e"],
+     "facets_missing": ["C03.d missing/unreadable declared-level handling", "F2 validation idea only in history B-037"],
+     "checked": "S003 91-94, 304-312; S043 2-35, 80-108",
+     "reasoning": "Identical to X1."},
+    {"id": "OME05-C04", "status": "narrowed",
+     "location": "s1 B-005 (P2), B-055/B-056 (F6), B-020 (P15), B-092 (O-C4); s4 N3 (napari drops dataset translation), G2 scalebar/coordinate display, G3 units display rule required",
+     "facets_retained": ["C04.a", "C04.b (+ N3 omitted-offset precedent, S048 260-283)", "C04.c (partial: display rule for missing/inconsistent units required; 'having none is disallowed')"],
+     "facets_missing": ["C04.d relative-factor scale", "explicit no-invented-units rule", "C04.e concrete composition/offset check only in history B-057 (NOT A CLAIM)"],
+     "checked": "S003 169-172, 293, 308-316; S048 249-283",
+     "reasoning": "Slightly more facet coverage than X1 (N3 shows a real reader dropping a dataset translation; units rule required). The concrete check that would expose reversed composition or omitted offsets still isn't asserted."},
+    {"id": "OME05-C05", "status": "narrowed",
+     "location": "s1 B-007 (P4), B-050 (F5 corrected + validation), B-051; s4 N6 (label dimension equals image or 1)",
+     "facets_retained": ["C05.a", "C05.b", "C05.d (level-to-level transform alignment + N6 equal-or-1 dimension rule)", "C05.e"],
+     "facets_missing": ["C05.c source.image association never used to confirm linkage", "no explicit ban on attaching by folder/array dims"],
+     "checked": "S003 102-117, 431-474; S058 333-337; S048 184-196",
+     "reasoning": "Adds the label-dimension relationship, though N6 wrongly says the 0.5 spec lacks it (S003 106-108). Declared source association is still missing."},
+    {"id": "OME05-C06", "status": "narrowed",
+     "location": "s1 B-007 (P4), B-050, B-070/B-071, B-094; s4 G4 (label dtype row fixed at all 8 int types)",
+     "facets_retained": ["C06.a", "C06.b", "C06.d", "C06.e"],
+     "facets_missing": ["C06.c resampling/lookup identity and 64-bit precision"],
+     "checked": "S003 434-471; S025 84-86; S048 609-661",
+     "reasoning": "Identical to X1. G4 restates that the spec fixes the label dtype row, which doesn't address precision or resampling."},
+    {"id": "OME05-C07", "status": "narrowed",
+     "location": "s1 B-004, B-035/B-036, B-065, B-069..B-071, B-019 (P14 corrected); s4 N1 (whole-array shards)",
+     "facets_retained": ["C07.a", "C07.e"],
+     "facets_missing": ["C07.c endianness", "C07.d transpose handling or truthful refusal"],
+     "unassessable": ["C07.b", "normative transpose semantics"],
+     "checked": "S055 16-57; S033 157-200, 356-359; S109 553-600, 2720; S038 58",
+     "reasoning": "Identical to X1."},
+    {"id": "OME05-C08", "status": "narrowed",
+     "location": "s1 B-013 (P9), B-019 (P14 corrected: explain no-chunks states), B-022 (P17 corrected: don't present zero-filled canvases as complete; record how missing wells show), B-065, B-075/B-076",
+     "facets_retained": ["C08.c (partial)", "C08.d"],
+     "facets_missing": ["C08.b explicit valid-absent vs failure/cancellation distinction (F8 'missing wells/fields' failure row)", "F10 hash validation only in history B-077"],
+     "unassessable": ["C08.a", "C08.e"],
+     "checked": "S003 128-129, 641-642; S018 425-439, 540-558; S034 152-156",
+     "reasoning": "Identical to X1."}
+   ],
+   "reference_summary": {"retained": ["OME05-C01"], "narrowed": ["OME05-C02", "OME05-C03", "OME05-C04", "OME05-C05", "OME05-C06", "OME05-C07", "OME05-C08"], "lost": [], "contradicted": [], "inapplicable": [], "unassessable_missing_input": []},
+
+   "unsupported_claims": [
+    {"id": "X2-U1", "shared_with_X1": "yes (X1-U1)", "location": "s1 B-015 (P11 corrected: 'assumes a fixed T,C,Z,Y,X dimorder (S098 lines 204-262) ... a correctness risk'); B-045 reason; s4 U-B question presupposes it",
+     "type": "unsupported source (code) fact", "severity": "low-moderate",
+     "counterevidence": "S098 256 is a default initialisation in unchanged diff context; S098 234 / S092 60 show a getAxes(axes) parser; the use site isn't in the corpus.",
+     "consequence": "Same as X1-U1."},
+    {"id": "X2-U2", "location": "s1 B-009 (P6 corrected: 'conforming groups MUST carry the string value \"3\"'; verifier reason: 'the layout value is the string \"3\" in S003, not the bare number 3')",
+     "type": "overstated source fact (lost ambiguity); the verifier reason is partly contradicted", "severity": "moderate-low",
+     "counterevidence": "S003 200 and 213: the 0.5 spec's own JSON examples use the integer 3; so does the 0.4 spec (S059 255, 261). Only the prose at S003 256 quotes \"3\". The spec is ambiguous and doesn't clearly require a string type.",
+     "consequence": "A type-strict check built from this sentence would reject spec-example-shaped (integer-valued) bioformats2raw collections and hide their images."},
+    {"id": "X2-U3", "location": "s1 B-050 (F5 corrected constraint: 'for plates, derive label metadata from the first well/first field and label data from the plate-wide lazy pyramid helper')",
+     "type": "unjustified Plan requirement", "severity": "low-moderate",
+     "counterevidence": "S048 507-555 is a napari implementation shortcut, not a spec rule. X2 itself notes the per-well behaviour isn't verifiable (plate.py absent, S047 200). S003 740-752 allows heterogeneous wells/fields.",
+     "consequence": "Heterogeneous plates would get first-well label metadata. X1 routes the same fact to an explicit product decision instead."},
+    {"id": "X2-U4", "location": "s1 B-060 (CONFIRMED: 'corpus proves both automatic background/cancel (Plan) and explicit pre-load bounding')",
+     "type": "unsupported source fact (evidence basis overstated)", "severity": "low",
+     "counterevidence": "No corpus source implements background loading with cancellation. S103 (AGAVE #84) describes loading that 'blocks the whole application and is not easy to cancel' as an open request.",
+     "consequence": "Suggests a precedent exists for a Plan behaviour that has none, which weakens the case for extra validation of the cancel path. The Plan still specifies the behaviour."},
+    {"id": "X2-U5", "location": "s4 N6 ('The 0.5 spec says label images are \"usually\" same-dimensions (S003 lines 432-433) without this rule')",
+     "type": "false absence claim / misattribution", "severity": "low",
+     "counterevidence": "S003 106-108: 'Each dimension of the label should be either the same as the corresponding dimension of the image, or 1 if that dimension of the label is irrelevant.' S058 333-337 copies the 0.5 spec layout ('See OME-Zarr 0.5 spec').",
+     "consequence": "Frames a spec-stated relationship as a converter/consumer nuance. The rule itself is correct."},
+    {"id": "X2-U6", "location": "s4 N5 (proposal to deprecate ome-zarr-py reading presented as current)",
+     "type": "lost update qualifier", "severity": "low",
+     "counterevidence": "S028 3051 (same issue body): the October 2025 update calls the original proposal 'a bit extreme', keeps ome-zarr-py for writing, says the reading API is 'still undecided', and proposes deprecating parse_url().",
+     "consequence": "Overstates maintainer intent. The conclusion (depend on S003/S053, not reader internals) still holds."},
+    {"id": "X2-U7", "location": "s4 L1 ('builds the full dask pyramid eagerly at open ... the reference reader's memory model ... Slide Scout's lazy/bounded loading must beat')",
+     "type": "mischaracterised code fact", "severity": "low",
+     "counterevidence": "S018 298-322: one lazy dask array per level is constructed (self.zarr.load); no pixel data is read at open. X1 N4 correctly calls these lazy loads.",
+     "consequence": "Could mislead F7 memory planning about the reference baseline."},
+    {"id": "X2-U8", "location": "s4 G1 ('first-only like all surveyed viewers (S043 lines 277-316)')",
+     "type": "internal contradiction", "severity": "low",
+     "counterevidence": "S043 293-313: three viewers fail to open the sample and OMERO imports all images (corrupted), as X2's own B-021 and L4 state.",
+     "consequence": "Minor inconsistency inside the decision framing."},
+    {"id": "X2-U9", "shared_with_X1": "yes (X1-U6)", "location": "s1 B-020 (P15)", "type": "lost version qualifier", "severity": "low",
+     "counterevidence": "S043 318-470 rows are '(v0.4)' samples. X2 restores the qualifier for P16/P17 (B-021, B-022) but not for P15.", "consequence": "As X1-U6."},
+    {"id": "X2-U10", "shared_with_X1": "yes (X1-U7)", "location": "s1 B-030 (F1: offer user choice by name) vs B-091 (O-C3 optional capability); s4 G1 recommends first-by-default with switcher", "type": "internal tension (mandatory vs optional)", "severity": "low",
+     "counterevidence": "S003 388-397 permissive.", "consequence": "As X1-U7; G1 partly reconciles it with a recommendation."},
+    {"id": "X2-U11", "shared_with_X1": "yes (X1-U8)", "location": "s1 B-065 (F8 'missing wells/fields' failure row) vs B-008 (P5 sparse plates)", "type": "ambiguous disposition", "severity": "low-moderate",
+     "counterevidence": "S003 128-129, 641-642; S018 543-557.", "consequence": "As X1-U8."}
+   ],
+   "false_dismissals": [],
+   "false_dismissal_notes": "B-110..B-115 are placed in section 3 (UNRESOLVED) as open questions, not assertions. B-112's reason treats the napari combination as 'genuinely contradictory' between the v0.4 survey and the current code while N3 states what the code does. That's a bounded framing choice, not a false dismissal.",
+   "verifier_defects": [
+    {"id": "X2-VD1", "shared_with_X1": "yes (X1-VD1)",
+     "text": "All 12 validation-idea blocks were marked NOT A CLAIM. Only F1 (B-030) and F5 (B-050) restate a validation idea inside a replacement. Ten survive only in history: F2, F3, F4, F6 (hand-computed cursor coordinates), F7 (profiling and observable stale-request drop), F8 (one malformed fixture per taxonomy row), F9, F10 (fileset hash before/after), F11, F12.",
+     "consequence": "Loses C04.e, the C02/C03 checks and the C08.d hash check (as X1), and additionally the F7 cancel check and F8 per-row malformed battery that X1 kept in section 1."}
+   ],
+   "novel_supported_findings": [
+    {"id": "X2-N1", "shared_with_X1": "yes (X1-N1)", "location": "s4 N1", "claim": "Resave default shard = full image array; >1e8-pixel shards need explicit shards; per-resolution tuning via a details JSON.", "sources": "S034 291-315", "plan_fit": "F9/F7"},
+    {"id": "X2-N2", "shared_with_X1": "yes (X1-N2)", "location": "s1 B-019 (P14 corrected)", "claim": "Interop failure precedents (neuroglancer no-metadata and silent single-shard; vizarr #307; zarr<3 pin conflict), with exact versions and conditions.", "sources": "S038 58; S014 139-143; S011 148-157", "plan_fit": "F8/F9"},
+    {"id": "X2-N3", "shared_with_X1": "yes (X1-N3)", "location": "s1 B-022 (P17 corrected), B-098; s4 L3, G1", "claim": "HCS-at-scale precedents and plate navigation as a product choice; X2 correctly withholds a crash cause for napari.", "sources": "S043 207-238; S018 404-567", "plan_fit": "Plan L5/L7"},
+    {"id": "X2-N4", "shared_with_X1": "yes (X1-N4), refined", "location": "s1 B-009 (P6 corrected); s4 L5", "claim": "bioformats2raw precedence, plus: when plate metadata is present, matching series SHOULD still be provided for plate-unaware tools, which matters when both lists exist.", "sources": "S003 256-275 (261-263 for the SHOULD)", "plan_fit": "Plan L5"},
+    {"id": "X2-N5", "shared_with_X1": "yes (X1-N5)", "location": "s1 B-008, B-030/B-031", "claim": "HCS hierarchy and sparse plates.", "sources": "S003 118-129, 515-560, 740-752; S056 10-73", "plan_fit": "Plan L5"},
+    {"id": "X2-N6", "shared_with_X1": "yes (X1-N6)", "location": "s1 B-039..B-041; s4 G3", "claim": "omero defaults optional; per-channel contrast degradation vs wipe-all.", "sources": "S003 398-430; S018 375-383; S048 316-323", "plan_fit": "Plan L5"},
+    {"id": "X2-N7", "shared_with_X1": "yes (X1-N7)", "location": "s1 B-021 (P16 corrected), B-091; s4 L4, G1", "claim": "Multi-multiscales handling and survey (OMERO ambiguous).", "sources": "S003 388-397; S043 277-316", "plan_fit": "Plan L5"},
+    {"id": "X2-N8", "shared_with_X1": "yes (X1-N8), more accurate", "location": "s1 B-015 (P11 corrected), B-026, B-100; s4 G2", "claim": "AGAVE Load Settings dialog as an explicit bounding alternative, correctly including time selection.", "sources": "S117 94-135", "plan_fit": "Plan L5/L7"},
+    {"id": "X2-N9", "shared_with_X1": "yes (X1-N9)", "location": "s1 B-015", "claim": "The <=4-channel and time-slider text is TIFF/CZI-era HELP.txt, not OME-Zarr docs.", "sources": "S108 4-29 (17, 29)", "plan_fit": "evidence hygiene"},
+    {"id": "X2-N10", "shared_with_X1": "yes (X1-N10)", "location": "s1 B-012", "claim": "Reference-reader release timeline.", "sources": "S008 139-150; S013 126-157; S052 128, 300, 343, 558", "plan_fit": "Plan L9"},
+    {"id": "X2-N11", "shared_with_X1": "yes (X1-N11)", "location": "s1 B-025, B-084..B-086", "claim": "Validator + sample catalogs as acceptance pre-check.", "sources": "S031 1-15; S034 67-85; S008 156-158", "plan_fit": "Plan L11"},
+    {"id": "X2-N12", "shared_with_X1": "yes (X1-N12)", "location": "s1 B-015", "claim": "AGAVE scene count = multiscales.size().", "sources": "S098 226-233", "plan_fit": "O-C3"},
+    {"id": "X2-N13", "shared_with_X1": "yes (X1-N13)", "location": "s4 N4", "claim": "Both reference readers hide labels by default.", "sources": "S018 315-318; S048 652-654", "plan_fit": "Plan L5"},
+    {"id": "X2-N14", "shared_with_X1": "yes (X1-N14)", "location": "s1 B-076", "claim": "Absolute-path settings trap.", "sources": "S108 27", "plan_fit": "Plan L9"},
+    {"id": "X2-N15", "shared_with_X1": "no (X2 only)", "location": "s4 N3", "claim": "The current napari reader applies only datasets[0]'s first transform plus the first matching top-level transform, so a plain 0.5 dataset translation at index 1 is dropped, although the (v0.4) survey credits napari with translation support. Don't treat napari as a calibration oracle without a version pin.", "sources": "S048 260-283; S043 370-371", "plan_fit": "Plan L5/L11 calibrated coordinates (C04-adjacent: an omitted-offset precedent)"},
+    {"id": "X2-N16", "shared_with_X1": "no (X1 states the opposite)", "location": "s1 B-014 (P10 corrected)", "claim": "napari composes scale/translation/rotation/affine/sequence into one Affine (sequences flattened); only unknown types warn and skip.", "sources": "S048 81-133", "plan_fit": "O-C5 transform tolerance"},
+    {"id": "X2-N17", "shared_with_X1": "no (X1 states arbitrary walk-up)", "location": "s1 B-030 (F1 corrected), B-014", "claim": "napari walks up only from Labels (1 level) and Label (2 levels) roots; other entries dispatch by attrs and a no-match prints and returns nothing, so Slide Scout must replace this with an explicit error and test a bare-labels-subgroup entry point.", "sources": "S048 664-699", "plan_fit": "Plan L5 discovery / L7 failure explanation"},
+    {"id": "X2-N18", "shared_with_X1": "no", "location": "s4 N2", "claim": "Plate opening amplifies metadata reads (rows x cols x levels array-metadata requests before any pixels; a proposal reuses the first image's array metadata).", "sources": "S050 3644, 3691", "plan_fit": "Plan L7 responsiveness. Scope caveat: the source is a v2-era remote-HTTP report; X2 notes the v2 caveat but not that Slide Scout is local-only (per-array file opens still scale, requests don't)."},
+    {"id": "X2-N19", "shared_with_X1": "no", "location": "s4 L8", "claim": "Most surveyed viewers ignore omero rendering metadata; only vizarr, napari and WEBKNOSSOS (without rdefs) apply it, so omero-derived defaults are Slide Scout's choice, not ecosystem convention.", "sources": "S043 38-78", "plan_fit": "Plan L5 channel controls"},
+    {"id": "X2-N20", "shared_with_X1": "no", "location": "s4 L6", "claim": "AGAVE precedent: a scene-selection dialog for multi-scene data (re-open to switch) and an error dialog with the reason in the log when data cannot load.", "sources": "S117 63-70", "plan_fit": "Plan L5 discovery / L7 failure explanation"},
+    {"id": "X2-N21", "shared_with_X1": "no", "location": "s4 L7", "claim": "bioformats2raw layout-3 lineage: 0.3.0+ writes layout 3; plate/series groups follow 0.2 conventions before converter 0.5.0.", "sources": "S033 339-349", "plan_fit": "dating legacy populations (low value)"}
+   ],
+   "correct_non_findings": [
+    {"id": "X2-NF1", "location": "s1 B-109 (R1 resolved as actionable); s4 NF6", "text": "In released 0.5 the labels list lives in the labels-group zarr.json. PR206's move into the multiscale group is not in the released text, and its history doesn't matter for implementation.", "grounds": "S003 102-112, 441-450; S004 149-157. Removes a spurious open question that X1 keeps as R1."},
+    {"id": "X2-NF2", "location": "s1 B-106; s4 NF1", "text": "No scene/coordinateSystems obligation in 0.5.", "grounds": "Evaluator regex 'scene|coordinateSystem' over S003: 0 hits"},
+    {"id": "X2-NF3", "location": "s4 NF3; s1 B-050", "text": "The napari plate.py content isn't in the corpus (tree entry only).", "grounds": "S047 200; the other 'plate.py' hits (S080, S089, S090, S097) are 'expand_template.py'"},
+    {"id": "X2-NF4", "location": "s4 NF5", "text": "No PR594 rule detail.", "grounds": "S052 128, 171"},
+    {"id": "X2-NF5", "location": "s4 NF2", "text": "No read-path compressor-on-v3 evidence (bounded search).", "grounds": "S013 166-186"},
+    {"id": "X2-NF6", "location": "s4 NF4", "text": "Validator coverage unknown.", "grounds": "S031 1-15"},
+    {"id": "X2-NF7", "location": "s1 B-104..B-107", "text": "Same unsupported/out-of-scope dispositions as X1-NF6.", "grounds": "S043 473-507; brief.md 5; plan/Viewer.md 9; S033 159-162"}
+   ],
+   "handoff_loss": {
+    "note": "Same shared upstream as X1. Assessed after steps 2-4 were saved.",
+    "items": [
+     {"item": "napari entry-point walk-up", "first_acquisition": "O-063 (correct)", "draft": "distorted (arbitrary walk-up)", "X2_final": "restored to the O-063 reading and turned into an explicit-error requirement (B-014, B-030)", "classification": "upstream fidelity restored"},
+     {"item": "napari transform handling", "first_acquisition": "O-064 (correct)", "draft": "distorted (warn-and-skip)", "X2_final": "restored (B-014)", "classification": "upstream fidelity restored"},
+     {"item": "label-to-source linkage", "first_acquisition": "O-010 implication", "draft": "dropped from F5", "X2_final": "lost (C05.c)", "classification": "handoff loss (draft stage)"},
+     {"item": "64-bit label dtype vs renderer support", "first_acquisition": "O-028", "draft": "generalised", "X2_final": "narrowed (G4 restates the spec's 8-int row but not the renderer gap)", "classification": "handoff narrowing"},
+     {"item": "crc32c index codec", "first_acquisition": "O-022", "draft": "omitted from the matrix", "X2_final": "absent", "classification": "minor handoff narrowing"},
+     {"item": "validation ideas", "first_acquisition": "draft F1-F12", "draft": "present", "X2_final": "10 of 12 moved to history by NOT A CLAIM marking (including F7 cancel check and F8 per-row battery, which X1 kept)", "classification": "verifier handoff loss"},
+     {"item": "fixed-napari transform combination", "first_acquisition": "O-044 open question", "draft": "R4 unresolved", "X2_final": "answered in s4 N3 from S048 260-283; R4 kept in section 3 as unresolved (framed as a survey-vs-code contradiction)", "classification": "verifier gain beyond upstream"},
+     {"item": "early-reader under-testing caution", "first_acquisition": "O-061 implication", "draft": "dropped", "X2_final": "restored as hedged caution (L2)", "classification": "restored (low value)"},
+     {"item": "ome-zarr-py per-level dask arrays at open", "first_acquisition": "O-019 ('loads every resolution as dask arrays')", "draft": "dropped", "X2_final": "restored but distorted to an 'eager' memory model (L1, X2-U7)", "classification": "restored with distortion"},
+     {"item": "AGAVE time selection", "first_acquisition": "O-052 (conflated)", "draft": "P11 conflated", "X2_final": "correctly separated: OME-Zarr dialog has time; the <=4-channel text is TIFF/CZI-era (B-015)", "classification": "upstream error corrected"},
+     {"item": "AGAVE fixed dimorder", "first_acquisition": "O-053 (overreach)", "draft": "P11", "X2_final": "preserved as fact (X2-U1)", "classification": "upstream error carried through"},
+     {"item": "multi-multiscales OMERO row", "first_acquisition": "O-032 (overstated)", "draft": "P16", "X2_final": "corrected in B-021/L4, but G1 reintroduces 'first-only like all surveyed viewers' (X2-U8)", "classification": "corrected, partially re-contradicted"},
+     {"item": "plate-label derivation", "first_acquisition": "O-062", "draft": "distorted", "X2_final": "corrected as fact but converted into a Slide Scout constraint (X2-U3)", "classification": "restored, disposition overreached"},
+     {"item": "bioformats2raw layout value", "first_acquisition": "O-014 (value 3)", "draft": "P6 'layout: 3'", "X2_final": "changed to a MUST string \"3\" (X2-U2), contradicting the spec's integer examples", "classification": "distortion introduced by verifier"},
+     {"item": "series SHOULD alongside plate", "first_acquisition": "not in O-014 claim (source S003 261-263)", "draft": "absent", "X2_final": "added (B-009, L5)", "classification": "verifier gain beyond upstream"},
+     {"item": "background/cancel precedent", "first_acquisition": "draft F7 overstatement", "draft": "'corpus proves both automatic background/cancel'", "X2_final": "confirmed unchanged (X2-U4)", "classification": "upstream error carried through"},
+     {"item": "upstream open questions", "first_acquisition": "O-block open questions", "draft": "collapsed to R1-R7 plus 'all open questions persist'", "X2_final": "re-listed as 22 U-B bullets (many redundant with decided F-items)", "classification": "restored; raises decision burden"},
+     {"item": "reference acquisition gaps", "first_acquisition": "never acquired upstream", "draft": "-", "X2_final": "absent", "classification": "acquisition gap (same set as X1)"}
+    ]
+   },
+   "coherence": {
+    "overall": "Coherent; the replacements are more precise than X1's on reader code (napari, AGAVE time) and on survey scope (v0.4 samples). Section 4 is long and mixes lost observations, new findings, non-findings, grouped decisions and 22 open questions.",
+    "internal_contradictions": ["G1 'first-only like all surveyed viewers' vs B-021/L4", "F1 'user choice by name' vs O-C3 optional (G1 recommendation partly reconciles)", "F8 'missing wells/fields' failure row vs P5 sparse plates", "N6 'spec lacks this rule' vs S003 106-108"],
+    "assembly": "Same shared host-assembly layout issues as X1 (reading guide inside section 1, colliding '## N' headings, complete:false, carrier_defects:1)."
+   },
+   "decision_burden": {
+    "blocking_decisions": [
+     "G1 plate navigation model (overview+drill-down recommended)",
+     "G2 channel rendering (split vs composite)",
+     "G2 pyramid UX/bounding (hybrid recommended)",
+     "G3 strictness posture",
+     "G4 support-matrix cells Slide Scout claims",
+     "G4 acceptance large-case threshold (must be sized)"
+    ],
+    "nonblocking_choices": [
+     "G1 multi-multiscales choice UI (first + switcher recommended)", "G1 finder-style browsing", "G1 raw-array fallback (fallback with notice recommended)",
+     "G2 overlay scope (labels-only; canonical Plan choice exists)", "G2 translation handling (ignore-silently disallowed)", "G2 rotation/affine/sequence tolerance", "G2 scalebar/coordinate display",
+     "G3 units display rule", "G4 RO-Crate and label-properties display", "G4 transfer functions and ROI clipping"
+    ],
+    "silently_approved_alternative": "Plate-label sourcing is made a constraint (first well/first field) in B-050 rather than listed as a decision (X2-U3).",
+    "clarification_questions": "6 standing unresolved (R2-R7, section 3) + 22 U-B bullets (several with multiple sub-questions) = 28",
+    "redundant_or_unnecessary": [
+     "G3 contrast degradation (already decided in F3)", "G3 failure-taxonomy verbosity (already decided in F8)", "G2 overlay scope (Plan canonical)",
+     "G3 units rule duplicates G2 scalebar/unit-mismatch",
+     "U-B: plate/well navigation (dup G1), 0.4 detect-and-explain (decided by F1/F8), RO-Crate + acceptance threshold (dup G4), split vs composite + PR123 TODOs (dup G2/R6), label overlay level reuse (settled by S003 454-455), QuPath slowness (out of scope, F11), validator enforcement (dup R7), single bad channel window (decided F3), translation/top-level frequency (dup R5)"
+    ],
+    "counts": {"blocking": 6, "nonblocking": 10, "clarification": 28, "redundant": 13},
+    "notes": "X2 gives explicit recommendations for most groups, which lowers the effective burden per decision. The raw question count is much higher than X1's because upstream open questions were re-listed, and about 9 of the 22 U-B bullets duplicate decided or listed items."
+   },
+   "coverage": {
+    "assessed": [
+     "delivered.md read in full (sections 1-5 incl. history and host report)",
+     "every section-1 block and every section-4 item classified",
+     "decisive claims checked in the same source windows as X1 (see X1 coverage), plus S028 3051 (N5), S050 3644/3691 (N2), S117 63-70 (L6), S033 339-349 (L7), S043 38-78 (L8), S018 298-318 (L1, N4), S047/plate.py grep (NF3), S003 scene|coordinateSystem grep (NF1)",
+     "upstream observations and draft (X2 copies) for handoff"
+    ],
+    "not_assessed_PENDING_HIGH_END_VERIFICATION": [
+     "same source gaps as X1 (S053, S054, S056, S023, S017, S061, S062, S072, S010, S033 1-149, large dumps)",
+     "S008 154-160 caution (L2) accepted as hedged; not further verified",
+     "U-B open questions were not individually re-investigated against the corpus (bounded unknowns, not graded as defects except where redundant)",
+     "runtime behaviour: none executed"
+    ],
+    "incidental_exposure": "Same as X1."
+   }
+  }
+ },
+
+ "comparison_X1_vs_X2": {
+  "reference_statuses": {
+   "both_retained": ["OME05-C01"],
+   "both_narrowed": ["OME05-C02", "OME05-C03", "OME05-C04", "OME05-C05", "OME05-C06", "OME05-C07", "OME05-C08"],
+   "status_differences": [],
+   "facet_gained_by_X2_only": ["C04: napari dataset-translation drop as an omitted-offset precedent (N3); required units display rule (G3)", "C05: label dimension equals image or 1 (N6; mis-sourced)"],
+   "facet_gained_by_X1_only": ["C01: per-row malformed-fixture battery kept in section 1 (B-065); read-path detect/warn/switch behaviour (N3); mixed-namespace taxonomy row (A2)", "F7 observable stale-request-drop validation kept in section 1 (B-060) (Plan cancellation; not a key facet)"],
+   "facets_missing_in_both": ["C02.d absent vs length-one", "C03.d missing declared level", "C04.d relative-factor scale / no invented units; C04.e concrete composition check (history-only in both)", "C05.c source.image association", "C06.c resampling identity and 64-bit precision", "C07.c endianness; C07.d transpose handling/refusal", "C08.b valid-absent vs failure/cancellation"],
+   "unassessable_in_both": ["C07.b decode order", "C07 normative transpose semantics", "C08.a fill_value semantics", "C08.e store semantics"]
+  },
+  "novel_findings": {
+   "both": ["resave whole-array shards (X1-N1/X2-N1)", "interop failure precedents (N2)", "HCS navigation precedents (N3)", "bioformats2raw precedence (N4)", "HCS hierarchy/sparse plates (N5)", "omero defaults and per-channel degradation (N6)", "multi-multiscales handling/survey (N7)", "AGAVE bounding dialog (N8)", "AGAVE TIFF/CZI-era limits (N9)", "reference-reader timeline (N10)", "validator + sample oracle (N11)", "AGAVE scenes = multiscales.size() (N12)", "labels hidden by default in both readers (N13)", "absolute-path settings trap (N14)"],
+   "X1_only": ["read-path version mismatch detect/warn/switch (X1-N15)", "plate-label sourcing as an explicit product decision (X1-N16 disposition)", "validator schemas= override (X1-N17)", "PR123 merge date pin (X1-N18)", "no background/cancel implementation precedent (X1-NF1)"],
+   "X2_only": ["napari transform narrowing drops dataset translation (X2-N15)", "napari composes rotation/affine/sequence (X2-N16)", "napari walk-up only from label roots + explicit no-match error (X2-N17)", "plate metadata-read amplification (X2-N18)", "omero survey row: most viewers ignore omero (X2-N19)", "AGAVE scene and error dialogs (X2-N20)", "bioformats2raw layout-3 lineage (X2-N21)", "R1 resolved: labels list lives in the labels group (X2-NF1)", "series SHOULD alongside plate (X2-N4 refinement)"],
+   "neither": ["transpose/endian decode layout", "absent-vs-failed data distinction", "source.image linkage", "label resampling/precision", "missing-level handling", "length-one axes", "S103 AGAVE blocking non-cancellable loads as a counter-precedent for F7"]
+  },
+  "unsupported_or_defective": {
+   "both": ["AGAVE fixed dimorder as code fact (X1-U1/X2-U1)", "P15 missing v0.4 qualifier (X1-U6/X2-U9)", "F1 vs O-C3 disposition tension (X1-U7/X2-U10)", "F8 'missing wells/fields' failure row vs valid sparse plates (X1-U8/X2-U11)", "validation ideas marked NOT A CLAIM (X1-VD1: 8 lost; X2-VD1: 10 lost)"],
+   "X1_only": ["napari walk-up and warn-and-skip misdescription kept in P10/F1 (X1-U2)", "AGAVE time capability omitted as 'only' (X1-U3)", "stitched-canvas crash causation (X1-U4)", "N2 heading overgeneralised (X1-U5)", "R4 false dismissal (X1-FD1)"],
+   "X2_only": ["bioformats2raw.layout MUST be string \"3\" (X2-U2, moderate-low)", "plate-label first-well rule made a constraint (X2-U3, low-moderate)", "'corpus proves' background/cancel kept (X2-U4)", "N6 says the spec lacks the label-dimension rule (X2-U5)", "N5 omits the Oct-2025 walk-back (X2-U6)", "L1 'eager' pyramid (X2-U7)", "G1 'all surveyed viewers first-only' (X2-U8)"]
+  },
+  "handoff": {
+   "X2_restored_X1_did_not": ["O-063 walk-up", "O-064 transform composition", "O-061 caution", "O-019 per-level arrays (with distortion)"],
+   "X1_corrected_X2_did_not": ["draft F7 'corpus proves background/cancel'"],
+   "both_lost": ["O-010 source.image linkage", "O-028 64-bit renderer gap (narrowed)", "O-022 crc32c index codec", "draft validation ideas"],
+   "both_corrected": ["O-032 OMERO row", "O-062 plate-label derivation (different dispositions)", "draft P14 auto-shard framing", "draft P20 'published dtype matrices'"]
+  },
+  "burden": {"X1": {"blocking": 4, "nonblocking": 2, "clarification": 11, "redundant": 3}, "X2": {"blocking": 6, "nonblocking": 10, "clarification": 28, "redundant": 13}, "note": "Counts summarise exact sets; they're not a quality score. X1's lower count comes with a false closure (R4) and unresolved R1; X2's higher count comes from re-listing upstream questions, many redundant."},
+  "summary": "Same reference outcome (C01 retained, C02-C08 narrowed) with no status difference, so no critical loss separates the two. X2 fixed two inherited reader-code misdescriptions and added more verified code-level findings, but its verifier also introduced more new errors (7 X2-only, including the moderate-low string-typed layout claim and a plate-label constraint) and a heavier, partly redundant question list. X1 kept more validation ideas in section 1 and corrected the background/cancel overstatement, but it kept two draft misdescriptions of napari and made one false dismissal. No fractional or net score is given."
+ },
+ "progress": "steps 1-6 saved for X1 and X2; comparison saved; review.md written separately"
+}

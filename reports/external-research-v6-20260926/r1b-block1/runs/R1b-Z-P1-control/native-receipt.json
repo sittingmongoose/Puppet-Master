@@ -1,0 +1,86 @@
+{
+ "schema": "er6.goal_receipt.v1",
+ "label": "R1b-Z-P1-control",
+ "app": "zcode",
+ "native_goal_entry": "/goal via app-server session/goal set",
+ "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/r1b/runs/R1b-Z-P1-control/ws",
+ "prompt_file": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/r1b/prompts/verifier_control.txt",
+ "prompt_bytes": 3360,
+ "prompt_sha256": "851633e0a1ffdb12749772fcaebc811854edc7b4e7d991a69628269734f34321",
+ "objective_sha256": "41976391e50e117f3e0abbcb8551afc1d03c6b6d9c04593d6b9378797fa7b884",
+ "caps": {
+  "seconds": 1800.0,
+  "responses": 160
+ },
+ "start_utc": "2026-09-27T07:06:49.508155+00:00",
+ "fresh_session": true,
+ "session_id": "sess_e8f541c1-a0b2-465c-aa95-ee66ec8bc3d2",
+ "provider_id": "builtin:zai-coding-plan",
+ "model_id": "GLM-5.3-Flash",
+ "effort_effective": "max",
+ "tool_allowlist": [
+  "Read",
+  "Write",
+  "Edit",
+  "Grep",
+  "Glob"
+ ],
+ "goal_submitted_utc": "2026-09-27T07:06:53.189169+00:00",
+ "goal_target_id": "target_mujh6wtz_2c285110-56c7-4f00-a881-c4bcb4a9d553",
+ "goal_started_turn": true,
+ "stop_reason": "goal_complete",
+ "goal_status_final": "complete",
+ "end_utc": "2026-09-27T07:35:35.906235+00:00",
+ "elapsed_seconds": 1722.7,
+ "native_responses": 60,
+ "request_status_counts": {
+  "model_request_failed": 1,
+  "model_request_completed": 59
+ },
+ "usage_totals": {
+  "inputTokens": 7786812,
+  "outputTokens": 72793,
+  "reasoningTokens": 0,
+  "cacheReadTokens": 7564672,
+  "cacheWriteTokens": 0,
+  "totalTokens": 7859605
+ },
+ "usage_requests_with_delta": 58,
+ "turn_terminals": [
+  {
+   "version": 1,
+   "eventId": "75ee3ece-b0ce-40f2-a4b3-5c295ce2d4e5",
+   "eventSeq": 3,
+   "occurredAt": 1790492813593,
+   "sessionId": "sess_e8f541c1-a0b2-465c-aa95-ee66ec8bc3d2",
+   "turnId": "turn_9317e1ab-f737-4065-889b-fd90003bc33a",
+   "kind": "turn.terminal",
+   "status": "success",
+   "resultType": "success",
+   "durationMs": 0,
+   "tokenCount": 0,
+   "toolCallCount": 0
+  },
+  {
+   "version": 1,
+   "eventId": "29415d58-b2fe-4ba7-a30e-ab708a02eb20",
+   "eventSeq": 52238,
+   "occurredAt": 1790494492663,
+   "sessionId": "sess_e8f541c1-a0b2-465c-aa95-ee66ec8bc3d2",
+   "turnId": "turn_c50c0c4f-fc8e-476a-9670-6541f2129d78",
+   "kind": "turn.terminal",
+   "status": "success",
+   "resultType": "success",
+   "durationMs": 1678856,
+   "tokenCount": 7859605,
+   "toolCallCount": 159
+  }
+ ],
+ "tool_starts": {
+  "Glob": 1,
+  "Write": 2,
+  "Read": 125,
+  "Grep": 31
+ },
+ "receipt_written_utc": "2026-09-27T07:35:36.329664+00:00"
+}

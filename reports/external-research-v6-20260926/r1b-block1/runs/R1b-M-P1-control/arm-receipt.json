@@ -1,0 +1,56 @@
+{
+ "schema": "er6.r1b_receipt.v3",
+ "process_exit": 0,
+ "last_native_stop": "goal_complete",
+ "slot": "R1b-M-P1-control",
+ "package": "M-control",
+ "app": "muse",
+ "variant": "control",
+ "host_prep_seconds": 0.09,
+ "goal_span_seconds": 911.9,
+ "assembly_seconds": 0.01,
+ "rc": 0,
+ "native_responses": 40,
+ "stop_reason": "goal_complete",
+ "driver_error": null,
+ "model_id": "muse-spark-1.3-contributor",
+ "effort_effective": "max",
+ "prompt_sha256": "851633e0a1ffdb12749772fcaebc811854edc7b4e7d991a69628269734f34321",
+ "package_draft_sha256": "c8aa5f38cec8445a424595b1f4b234b0729b5dac89ad5502de12011adbb36216",
+ "package_observations_sha256": "8ddf2ec0d7f4336a2d163df6e46a8cae270eef6ae531d16d4bdc3d59fdb36ddd",
+ "blocks": 129,
+ "bundle_summary": null,
+ "assembly": {
+  "blocks": 129,
+  "by_status": {
+   "confirm": 72,
+   "not_a_claim": 47,
+   "qualify": 10
+  },
+  "unknown_ids": [],
+  "decision_entries": 118,
+  "lines_outside_entries": [
+   1
+  ],
+  "non_authoritative": [],
+  "carrier_defects": 1,
+  "complete": false
+ },
+ "carrier_complete": false,
+ "frozen_verifier_manifest": {
+  "additions.md": {
+   "sha256": "d2c70acd2f06204efb96761b629bd41edd2b1e94ed4d93779dabc10a87a22a51",
+   "bytes": 9391
+  },
+  "decisions.md": {
+   "sha256": "2b5d314abafa3f9fc8bb0cab81167bdd972d035446991d481ecd2f03ab82b2dd",
+   "bytes": 43017
+  }
+ },
+ "delivered_sha256": "2e225c07a3070a5ee514174bf7044cb6ac25df10054c5c0ddac3a477afdf31e5",
+ "outcome": "goal_complete",
+ "outcome_detail": "goal_complete",
+ "start_utc": "2026-09-27T06:05:47.019749+00:00",
+ "end_utc": "2026-09-27T06:20:58.983258+00:00",
+ "active_span_seconds": 912.0
+}

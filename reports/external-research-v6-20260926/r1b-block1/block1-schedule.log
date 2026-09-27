@@ -1,0 +1,27 @@
+{"slot": "R1b-M-P1-control", "dispatch_utc": "2026-09-27T06:05:47.019325+00:00"}
+{"t": "2026-09-27T06:05:48.594437+00:00", "goal_status": "active", "responses": 0}
+{"t": "2026-09-27T06:20:48.731686+00:00", "goal_status": "complete", "responses": 39}
+{"t": "2026-09-27T06:20:58.734279+00:00", "turn_completed": "completed", "reason": null, "responses": 40}
+{"t": "2026-09-27T06:20:58.901368+00:00", "done": "goal_complete", "error": null, "responses": 40, "elapsed": 910.4}
+{"slot": "R1b-M-P1-control", "outcome": "goal_complete", "detail": "goal_complete"}
+{"slot": "R1b-M-P1-candidate", "dispatch_utc": "2026-09-27T06:20:58.984203+00:00"}
+{"t": "2026-09-27T06:21:00.883045+00:00", "goal_status": "active", "responses": 0}
+{"t": "2026-09-27T06:39:53.039652+00:00", "goal_status": "complete", "responses": 36}
+{"t": "2026-09-27T06:40:03.042399+00:00", "turn_completed": "completed", "reason": null, "responses": 37}
+{"t": "2026-09-27T06:40:03.209779+00:00", "done": "goal_complete", "error": null, "responses": 37, "elapsed": 1142.4}
+{"slot": "R1b-M-P1-candidate", "outcome": "goal_complete", "detail": "goal_complete"}
+{"slot": "R1b-Z-P1-candidate", "dispatch_utc": "2026-09-27T06:40:03.290927+00:00"}
+{"t": "2026-09-27T06:40:10.909726+00:00", "goal_status": "active"}
+{"t": "2026-09-27T06:40:16.319358+00:00", "goal_status": "active", "run_state": "running", "responses": 0}
+{"t": "2026-09-27T07:06:09.967620+00:00", "goal_status": "active", "run_state": "idle", "responses": 53}
+{"t": "2026-09-27T07:06:48.706588+00:00", "goal_status": "complete", "run_state": "idle", "responses": 54}
+{"t": "2026-09-27T07:06:49.181294+00:00", "done": "goal_complete", "error": null, "responses": 54, "elapsed": 1599.1}
+{"slot": "R1b-Z-P1-candidate", "outcome": "goal_complete", "detail": "goal_complete"}
+{"slot": "R1b-Z-P1-control", "dispatch_utc": "2026-09-27T07:06:49.276996+00:00"}
+{"t": "2026-09-27T07:06:54.471924+00:00", "goal_status": "active"}
+{"t": "2026-09-27T07:06:59.901540+00:00", "goal_status": "active", "run_state": "running", "responses": 0}
+{"t": "2026-09-27T07:34:57.162830+00:00", "goal_status": "active", "run_state": "idle", "responses": 59}
+{"t": "2026-09-27T07:35:35.905684+00:00", "goal_status": "complete", "run_state": "idle", "responses": 60}
+{"t": "2026-09-27T07:35:36.330347+00:00", "done": "goal_complete", "error": null, "responses": 60, "elapsed": 1722.7}
+{"slot": "R1b-Z-P1-control", "outcome": "goal_complete", "detail": "goal_complete"}
+{"schedule": "block1", "result": "completed"}

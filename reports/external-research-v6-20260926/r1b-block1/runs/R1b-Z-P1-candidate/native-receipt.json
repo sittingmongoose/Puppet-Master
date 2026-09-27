@@ -1,0 +1,85 @@
+{
+ "schema": "er6.goal_receipt.v1",
+ "label": "R1b-Z-P1-candidate",
+ "app": "zcode",
+ "native_goal_entry": "/goal via app-server session/goal set",
+ "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/r1b/runs/R1b-Z-P1-candidate/ws",
+ "prompt_file": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/r1b/prompts/verifier_candidate.txt",
+ "prompt_bytes": 3881,
+ "prompt_sha256": "28720ce2cf578f253195862c2d91e5148e847fee7598867d621d6cec1db215a4",
+ "objective_sha256": "885faf86482d5cb4120799fff4c1e5f771bcce861e847ced3fe2a5159ff3b7ec",
+ "caps": {
+  "seconds": 1800.0,
+  "responses": 160
+ },
+ "start_utc": "2026-09-27T06:40:06.122639+00:00",
+ "fresh_session": true,
+ "session_id": "sess_45bde0c1-585b-4366-a73f-1e64d3b59dec",
+ "provider_id": "builtin:zai-coding-plan",
+ "model_id": "GLM-5.3-Flash",
+ "effort_effective": "max",
+ "tool_allowlist": [
+  "Read",
+  "Write",
+  "Edit",
+  "Grep",
+  "Glob"
+ ],
+ "goal_submitted_utc": "2026-09-27T06:40:09.645158+00:00",
+ "goal_target_id": "target_mujg8jjr_b6c04f54-3c32-41cb-9497-005ae236ef5d",
+ "goal_started_turn": true,
+ "stop_reason": "goal_complete",
+ "goal_status_final": "complete",
+ "end_utc": "2026-09-27T07:06:48.707049+00:00",
+ "elapsed_seconds": 1599.1,
+ "native_responses": 54,
+ "request_status_counts": {
+  "model_request_completed": 54
+ },
+ "usage_totals": {
+  "inputTokens": 7325001,
+  "outputTokens": 70446,
+  "reasoningTokens": 0,
+  "cacheReadTokens": 7072384,
+  "cacheWriteTokens": 0,
+  "totalTokens": 7395447
+ },
+ "usage_requests_with_delta": 53,
+ "turn_terminals": [
+  {
+   "version": 1,
+   "eventId": "3f27e5e2-cce6-4498-a436-fa2cf9ed19ed",
+   "eventSeq": 3,
+   "occurredAt": 1790491210098,
+   "sessionId": "sess_45bde0c1-585b-4366-a73f-1e64d3b59dec",
+   "turnId": "turn_3c4cfb04-a97a-4f0f-af9a-b9450d6a7dc7",
+   "kind": "turn.terminal",
+   "status": "success",
+   "resultType": "success",
+   "durationMs": 0,
+   "tokenCount": 0,
+   "toolCallCount": 0
+  },
+  {
+   "version": 1,
+   "eventId": "0f939f15-32da-4e6f-8b5d-dbc72ea8fdec",
+   "eventSeq": 50283,
+   "occurredAt": 1790492766380,
+   "sessionId": "sess_45bde0c1-585b-4366-a73f-1e64d3b59dec",
+   "turnId": "turn_19f677c6-9879-4f9d-8b6b-26d4eb7428d7",
+   "kind": "turn.terminal",
+   "status": "success",
+   "resultType": "success",
+   "durationMs": 1556096,
+   "tokenCount": 7395447,
+   "toolCallCount": 92
+  }
+ ],
+ "tool_starts": {
+  "Glob": 6,
+  "Read": 41,
+  "Write": 2,
+  "Grep": 43
+ },
+ "receipt_written_utc": "2026-09-27T07:06:49.180636+00:00"
+}

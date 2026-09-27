@@ -1,0 +1,84 @@
+{
+ "schema": "er6.goal_receipt.v1",
+ "label": "R1b-M-P1-control",
+ "app": "muse",
+ "native_goal_entry": "/goal via MSP goal/set",
+ "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/r1b/runs/R1b-M-P1-control/ws",
+ "prompt_file": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/r1b/prompts/verifier_control.txt",
+ "prompt_bytes": 3360,
+ "prompt_sha256": "851633e0a1ffdb12749772fcaebc811854edc7b4e7d991a69628269734f34321",
+ "objective_sha256": "41976391e50e117f3e0abbcb8551afc1d03c6b6d9c04593d6b9378797fa7b884",
+ "caps": {
+  "seconds": 1800.0,
+  "responses": 160
+ },
+ "start_utc": "2026-09-27T06:05:47.192620+00:00",
+ "fresh_session": true,
+ "usage_read_before": {},
+ "session_id": "01a0e178-3ae3-73e3-a7f6-e980a8cca402",
+ "session_log": "/home/sittingmongoose/.local/share/muse/sessions/2026/09/27/01a0e178-3ae3-73e3-a7f6-e980a8cca402/session.jsonl",
+ "model_id": "muse-spark-1.3-contributor",
+ "provider_id": "meta",
+ "catalog_variants": [
+  "minimal",
+  "low",
+  "medium",
+  "high",
+  "xhigh",
+  "max"
+ ],
+ "effort_ack": "accepted",
+ "effort_effective": "max",
+ "goal_submitted_utc": "2026-09-27T06:05:48.368219+00:00",
+ "goal_ack": {
+  "commandId": "01a0e178-3bd0-78b3-8077-9470e2bf6ecc",
+  "status": "accepted",
+  "turnId": "01a0e178-3bd0-78b3-8077-9470e2bf6ecc"
+ },
+ "stop_reason": "goal_complete",
+ "goal_status_final": "complete",
+ "end_utc": "2026-09-27T06:20:58.734783+00:00",
+ "elapsed_seconds": 910.4,
+ "usage_read_after": {
+  "usage": {
+   "observedAtMs": 1790490056714,
+   "tier": "<redacted-subscription-tier-id>",
+   "weekly": {
+    "resetsAtMs": 1790553600000,
+    "usedPercent": 19
+   },
+   "window": {
+    "resetsAtMs": 1790492767000,
+    "usedPercent": 8,
+    "windowDurationMins": 300
+   }
+  }
+ },
+ "native_responses": 40,
+ "counters": {
+  "token_usage_events": 40,
+  "prompt_tokens": 4957765,
+  "last_cumulative": {
+   "outputTokens": 35084,
+   "promptTokens": 4957765,
+   "totalTokens": 4992849
+  },
+  "turns_started": 1,
+  "turns_completed": [
+   {
+    "turnId": "01a0e178-3bd0-78b3-8077-9470e2bf6ecc",
+    "terminal": "completed",
+    "reason": null,
+    "durationMs": 908317,
+    "usage": null
+   }
+  ],
+  "inputTokens": 4957765,
+  "outputTokens": 35084,
+  "reasoningTokens": 13949,
+  "cacheReadTokens": 4768439,
+  "cacheWriteTokens": 0,
+  "cachedTokens": 4768439
+ },
+ "receipt_written_utc": "2026-09-27T06:20:58.900592+00:00"
+}
