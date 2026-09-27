@@ -344,6 +344,21 @@
     "ask": "Stop and ask me",
     "deny": "Block it"
    }
+  },
+  "memory.limits.run-token-budget": {
+   "label": "Tokens one run may use",
+   "help": "The run stops and asks before going past this.",
+   "unit": "tokens",
+   "min": 1000,
+   "step": 1000
+  },
+  "memory.limits.goal-token-budget": {
+   "label": "Tokens one Goal may use",
+   "help": "Across every run of the Goal. Empty means no cap of its own.",
+   "unit": "tokens",
+   "min": 1000,
+   "step": 1000,
+   "placeholder": "No cap"
   }
  }
 }

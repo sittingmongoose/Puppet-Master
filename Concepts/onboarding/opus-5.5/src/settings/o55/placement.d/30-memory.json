@@ -1,0 +1,271 @@
+{
+ "_about": "Context & Memory: memory on/off and the list first; the working space of a run on its own tab; standing instructions apart from memories; one answer each for how long memories last and who may read them. Per-run and per-Goal token caps move to Permissions Run limits.",
+ "sections": {
+  "memory-home": {
+   "to": "context-memory",
+   "title": "Your memories",
+   "help": "Turn memory on, then browse, pin, edit or forget what it keeps.",
+   "order": 1,
+   "tab": "memories",
+   "composed": true
+  },
+  "memory-context-meter": {
+   "to": "context-memory",
+   "title": "Context in use",
+   "help": "How full the assistant's working space is right now.",
+   "order": 102,
+   "tab": "context",
+   "composed": true
+  },
+  "memory-limits": {
+   "to": "context-memory",
+   "title": "When space runs low",
+   "help": "How old context is squeezed so long runs keep going.",
+   "order": 103,
+   "tab": "context"
+  },
+  "memory-notebook": {
+   "to": "context-memory",
+   "title": "Working notebook",
+   "help": "Notes the assistant keeps for itself during long tasks.",
+   "order": 104,
+   "tab": "context"
+  },
+  "memory-limits-more": {
+   "to": "context-memory",
+   "title": "Fine-tune context space",
+   "help": "How the space is split and what is trimmed first.",
+   "order": 105,
+   "tab": "context",
+   "advanced": true
+  },
+  "memory-assembly": {
+   "to": "context-memory",
+   "title": "Standing instructions",
+   "help": "Rules every run reads, in every project and in this one.",
+   "order": 206,
+   "tab": "instructions",
+   "composed": true
+  },
+  "memory-assembly-view": {
+   "to": "context-memory",
+   "title": "What you can see",
+   "help": "Show what the assistant was given for each run.",
+   "order": 207,
+   "tab": "instructions"
+  },
+  "memory-assembly-safety": {
+   "to": "context-memory",
+   "title": "Prompt safety checks",
+   "help": "Keep these on unless you are tracking down a problem.",
+   "order": 208,
+   "tab": "instructions",
+   "advanced": true
+  },
+  "memory-retrieval": {
+   "to": "context-memory",
+   "title": "When memories are used",
+   "help": "When memories are pulled in and how much fits in a reply.",
+   "order": 309,
+   "tab": "retrieval"
+  },
+  "memory-matching": {
+   "to": "context-memory",
+   "title": "How memories are matched",
+   "help": "By meaning, by recency, or by exact words.",
+   "order": 310,
+   "tab": "retrieval"
+  },
+  "memory-fade": {
+   "to": "context-memory",
+   "title": "How long memories last",
+   "help": "Days before an unused note of each kind fades.",
+   "order": 411,
+   "tab": "retention"
+  },
+  "memory-retention": {
+   "to": "context-memory",
+   "title": "Unconfirmed notes",
+   "help": "Notes the assistant proposed that nobody has checked yet.",
+   "order": 412,
+   "tab": "retention"
+  },
+  "memory-sharing": {
+   "to": "context-memory",
+   "title": "Who else can read memories",
+   "help": "Helpers and crews see nothing unless you allow it.",
+   "order": 413,
+   "tab": "retention",
+   "composed": true
+  },
+  "memory-retention-tools": {
+   "to": "context-memory",
+   "title": "Tidy up",
+   "help": "Rebuild the search index, merge duplicates, prune old notes.",
+   "order": 414,
+   "tab": "retention",
+   "advanced": true
+  },
+  "memory-sources": {
+   "to": "context-memory",
+   "title": "What can feed context",
+   "help": "Turn off anything the assistant should not read on its own.",
+   "order": 515,
+   "tab": "sources",
+   "composed": true
+  },
+  "memory-rulepacks": {
+   "to": "context-memory",
+   "tab": "instructions",
+   "title": "Rule packs",
+   "help": "Every set of standing rules, where it comes from, and whether it loaded.",
+   "order": 207.5,
+   "composed": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "memory-home",
+   "ids": [
+    "memory.retention.enabled",
+    "memory.retention.gist-review-filter"
+   ]
+  },
+  {
+   "section": "memory-context-meter",
+   "ids": [
+    "general.interaction.context-usage",
+    "memory.limits.manual-compact"
+   ]
+  },
+  {
+   "section": "memory-limits",
+   "ids": [
+    "memory.limits.auto-compress",
+    "memory.limits.compaction-mode",
+    "memory.limits.pressure-start-threshold",
+    "memory.limits.pressure-aggressive-threshold",
+    "memory.limits.low-context-warning",
+    "memory.limits.max-context-ktokens"
+   ]
+  },
+  {
+   "section": "memory-notebook",
+   "ids": [
+    "memory.notebook.auto-capture",
+    "memory.notebook.resume-capsule",
+    "memory.notebook.capsule-budget-tokens",
+    "memory.notebook.injection-budget-tokens"
+   ]
+  },
+  {
+   "section": "memory-limits-more",
+   "ids": [
+    "memory.limits.tool-result-policy",
+    "memory.limits.budget-buckets",
+    "memory.limits.compaction-immune-pct",
+    "memory.limits.large-block-threshold",
+    "memory.limits.compaction-loop-limit",
+    "memory.limits.local-llm-caps"
+   ]
+  },
+  {
+   "section": "memory-assembly",
+   "ids": [
+    "memory.assembly.app-rules",
+    "memory.assembly.project-rules",
+    "memory.assembly.instruction-budget-mode",
+    "memory.assembly.dry-method-guard"
+   ]
+  },
+  {
+   "section": "memory-assembly-view",
+   "ids": [
+    "memory.assembly.instruction-visibility",
+    "memory.assembly.injected-context-breakdown",
+    "memory.assembly.compiled-prompt-preview",
+    "memory.assembly.integrity-tracking"
+   ]
+  },
+  {
+   "section": "memory-rulepacks",
+   "ids": [
+    "memory.assembly.rule-pack-display"
+   ]
+  },
+  {
+   "section": "memory-assembly-safety",
+   "ids": [
+    "memory.assembly.import-cycle-detection",
+    "memory.assembly.history-admission-gate",
+    "memory.assembly.volatile-quarantine",
+    "memory.assembly.context-dedup",
+    "memory.assembly.epoch-baseline",
+    "memory.assembly.cache-lineage"
+   ]
+  },
+  {
+   "section": "memory-retrieval",
+   "ids": [
+    "memory.retention.retrieval-mode",
+    "memory.retention.rehydration",
+    "memory.assembly.max-injected-memories",
+    "memory.assembly.memory-capsule-budget"
+   ]
+  },
+  {
+   "section": "memory-matching",
+   "ids": [
+    "memory.retention.retrieval-strategy",
+    "memory.retention.retrieval-balance",
+    "memory.limits.memory-context-window"
+   ]
+  },
+  {
+   "section": "memory-fade",
+   "ids": [
+    "memory.retention.half-life-by-kind",
+    "memory.retention.done-decay-multiplier"
+   ]
+  },
+  {
+   "section": "memory-retention",
+   "ids": [
+    "memory.retention.auto-save-unverified",
+    "memory.retention.pinned-unverified-injection",
+    "memory.retention.verify-without-evidence"
+   ]
+  },
+  {
+   "section": "memory-sharing",
+   "ids": [
+    "memory.retention.subagent-access"
+   ]
+  },
+  {
+   "section": "memory-retention-tools",
+   "ids": [
+    "memory.retention.maintenance"
+   ]
+  },
+  {
+   "section": "memory-sources",
+   "ids": [
+    "memory.retention.history-retention"
+   ]
+  }
+ ],
+ "managers": {
+  "context-memory": {
+   "tabs": {
+    "memories": "Memories",
+    "context": "Context space",
+    "instructions": "Instructions",
+    "retrieval": "Finding memories",
+    "retention": "Keeping & privacy",
+    "sources": "Sources"
+   },
+   "defaultTab": "memories"
+  }
+ }
+}

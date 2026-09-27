@@ -805,7 +805,9 @@ PM51.settingsSections = (wsId, tab, { advanced = false } = {}) => {
   const secs = PM51.placement.sectionsFor(wsId, tab || null, { advanced: !!advanced, composed: false });
   return secs.length ? pm51RenderInline(f.ws, secs, { advanced: !!advanced }) : '';
 };
-/* Post-process a manager's markup: inline sections go before the view's direct-child Advanced (else
+/* A manager that wants its own sections after the placed ones leaves PM51.slot() where the placed ones go. */
+PM51.slot = () => '<div class="pm51-slot" hidden></div>';
+/* Post-process a manager's markup: inline sections go before the view's own slot, else its direct-child Advanced (else
    before the quiet row, else at the end of .pm51-scroll; listDetail views therefore get full-width
    sections below the split); advanced placements become the first child of that Advanced (an existing
    one anywhere in the view, else one Advanced is created - never a second). Pages marked
@@ -828,9 +830,10 @@ function pm51PlaceInline(workspace, html) {
   if (visible.length) {
     const holder = document.createElement('template'); holder.innerHTML = pm51RenderInline(workspace, visible, { advanced: false });
     const block = holder.content.firstElementChild;
-    const anchor = children().find(n => n.matches('details.pm51-advanced')) || children().find(n => n.matches('.pm51-quiet'));
+    const anchor = children().find(n => n.matches('.pm51-slot')) || children().find(n => n.matches('details.pm51-advanced')) || children().find(n => n.matches('.pm51-quiet'));
     if (anchor) scroll.insertBefore(block, anchor); else scroll.appendChild(block);
   }
+  children().filter(n => n.matches('.pm51-slot')).forEach(n => n.remove());
   if (advanced.length) {
     /* only the view's own disclosure (a direct child); a selected item's More options inside a list/detail is that
        item's, and project-wide rows must not move with the selection */

@@ -58,7 +58,8 @@ PM51.valueText = (setting, v) => {
   if (v === false) return 'Off';
   if (v == null || v === '') return (O55R[setting.id] || {}).empty || 'Not set';
   if (Array.isArray(v)) return v.length ? v.map(x => (x && typeof x === 'object') ? o55ObjectLine(x) : PM51.valueLabel(setting.id, x)).join(', ') : ((O55R[setting.id] || {}).emptyList || 'None');
-  if (typeof v === 'object') { const e = Object.entries(v); return e.length ? e.slice(0, 4).map(([k, x]) => `${o55Humanize(k)}: ${(x && typeof x === 'object') ? '…' : PM51.valueLabel(setting.id, x)}`).join(', ') + (e.length > 4 ? ` and ${e.length - 4} more` : '') : 'None'; }
+  /* a map's keys read in words when rows.d names them (`keys`), and its numbers carry `valueUnit` */
+  if (typeof v === 'object') { const r = O55R[setting.id] || {}; const e = Object.entries(v); return e.length ? e.slice(0, 4).map(([k, x]) => `${(r.keys && r.keys[k]) || o55Humanize(k)}: ${(x && typeof x === 'object') ? '…' : PM51.valueLabel(setting.id, x)}${r.valueUnit && typeof x === 'number' ? ' ' + r.valueUnit : ''}`).join(', ') + (e.length > 4 ? ` and ${e.length - 4} more` : '') : 'None'; }
   const unit = o55Unit(setting);
   const scale = Number((O55R[setting.id] || {}).scale) || 1;
   if (typeof v === 'number' || /^-?\d+(\.\d+)?$/.test(String(v))) { const n = scale === 1 ? v : +(Number(v) / scale).toFixed(2); return unit ? `${n} ${unit}` : String(n); }
@@ -386,7 +387,7 @@ function o55RunAction(found) {
   const s = found.setting, row = O55R[s.id] || {};
   if (row.route && !row.run) return o55GoOwner(s.id);
   if (row.open) { const f = findSettingGlobal(row.open); if (f) { (f.setting.control === 'keyvalue' ? o55MapEditor : o55ListEditor)(f); return true; } }
-  if (row.pm51) { const fn = actions[row.pm51.replace(/^pm51-/, '')]; if (fn) { fn(Object.assign(document.createElement('button'), { dataset: Object.assign({}, row.data || {}) }), null); return true; } }
+  if (row.pm51) { const fn = actions[row.pm51.replace(/^pm51-/, '')]; if (fn) { const b = document.createElement('button'); b.dataset.setting = s.id; Object.entries(row.data || {}).forEach(([k, v]) => { b.dataset[k] = String(v); }); fn(b, null); return true; } }
   const steps = row.steps || [];
   PM51.panel({
     title: row.actionLabel || PM51.rowLabel(s), eyebrow: found.workspace ? found.workspace.label : '', icon: row.icon || 'play', summary: row.summary || PM51.rowHelp(s),
@@ -402,7 +403,7 @@ dispatchAction = function (action, el, event) {
   const id = el && el.dataset ? el.dataset.setting : null;
   const found = id ? findSettingGlobal(id) : null;
   switch (action) {
-    case 'open-structured-setting': if (found) { (found.setting.control === 'keyvalue' ? o55MapEditor : o55ListEditor)(found); return; } break;
+    case 'open-structured-setting': if (found) { const ed = (O55R[found.setting.id] || {}).editor, fn = ed && actions[ed.replace(/^pm51-/, '')]; if (fn) { fn(el, event); return; } (found.setting.control === 'keyvalue' ? o55MapEditor : o55ListEditor)(found); return; } break;
     case 'set-slider-override': if (found) { o55NumberDialog(found); return; } break;
     case 'manage-credential-reference': if (found) { o55KeyPanel(found); return; } break;
     case 'run-setting-action':

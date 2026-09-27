@@ -295,9 +295,11 @@
    "section": "permissions-run-limits",
    "ids": [
     "ai.usage.run-spend-budget",
+    "memory.limits.run-token-budget",
     "ai.usage.max-wall-clock",
     "ai.usage.max-tool-rounds",
-    "ai.usage.max-goal-turns"
+    "ai.usage.max-goal-turns",
+    "memory.limits.goal-token-budget"
    ]
   },
   {
