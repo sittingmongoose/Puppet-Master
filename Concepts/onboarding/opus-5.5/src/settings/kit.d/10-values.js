@@ -205,7 +205,8 @@ renderSettingsSection = function (section, workspace, index) {
   if (!section || !Array.isArray(section.settings) || (workspace && workspace.virtualAllSettings)) return o55KitSection(section, workspace, index);
   let owners = '';
   try { owners = typeof renderOwnerRedirects === 'function' ? renderOwnerRedirects(section) : ''; } catch (e) { owners = ''; }
-  return `<section class="settings-section o55-group" id="section-${a(section.id)}" data-section-id="${a(section.id)}">
+  const idle = section.settings.length > 0 && section.settings.every(st => (O55R[st.id] || {}).when && !PM51.relevant(st.id));
+  return `<section class="settings-section o55-group${idle ? ' o55-sec-off' : ''}" id="section-${a(section.id)}" data-section-id="${a(section.id)}">
       <header class="o55-group-head"><h3 class="o55-group-title">${h(section.label)}</h3>${section.description ? `<p class="o55-group-help">${h(section.description)}</p>` : ''}</header>
       ${owners}<div class="setting-list">${section.settings.map(s => renderSettingRow(s, section, workspace)).join('')}</div>
     </section>`;
@@ -235,6 +236,9 @@ function o55MarkChanged(id) {
 /* ---------- editors: lists, key/value pairs, numbers, keys, actions ------------------------------------------- */
 const o55IsFlatList = v => Array.isArray(v) && v.every(x => x == null || ['string', 'number', 'boolean'].includes(typeof x));
 const o55IsFlatMap = v => v && typeof v === 'object' && !Array.isArray(v) && Object.values(v).every(x => x == null || ['string', 'number', 'boolean'].includes(typeof x));
+/* A list whose items are picked from things that exist now (personas, say): PM51.listChoices(id, () => [names]). */
+const o55ListPick = {};
+PM51.listChoices = (id, fn) => { o55ListPick[id] = fn; };
 function o55ListEditor(found) {
   const s = found.setting, row = O55R[s.id] || {};
   const value = settingValue(s);
@@ -243,7 +247,8 @@ function o55ListEditor(found) {
   const noun = row.noun || 'item';
   const ordered = row.ordered !== false;
   /* a list of known things (services, say) is picked from, not typed: items read as names, Add offers what is left */
-  const pick = Array.isArray(row.valueChoices) && row.valueChoices.length ? row.valueChoices.map(String) : null;
+  const live = o55ListPick[s.id] ? o55ListPick[s.id]() : null;
+  const pick = live && live.length ? live.map(String) : Array.isArray(row.valueChoices) && row.valueChoices.length ? row.valueChoices.map(String) : null;
   const draw = wrap => {
     const list = wrap.querySelector('.o55-le-list');
     if (pick) {

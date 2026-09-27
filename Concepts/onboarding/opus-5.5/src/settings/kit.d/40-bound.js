@@ -83,7 +83,20 @@ PM51.relevant = id => {
   if (w.truthy) return !!v && v !== 'off' && v !== 'none';
   return !!v;
 };
+/* A placed section whose every row waits on a switch that is off steps aside with its rows. */
+const o55SectionIdle = sec => { const rows = [...sec.querySelectorAll('.setting-list > .setting-row[id^="setting-"]')]; return rows.length > 0 && rows.every(r => !PM51.relevant(r.id.slice(8))); };
+function o55SyncSections(parent) {
+  const secs = new Set();
+  (o55DepsOf[parent] || []).forEach(child => root.querySelectorAll(`[id="setting-${cssEscape(child)}"]`).forEach(row => { const sec = row.closest('.settings-section.o55-group'); if (sec) secs.add(sec); }));
+  secs.forEach(sec => {
+    const idle = o55SectionIdle(sec); if (idle === sec.classList.contains('o55-sec-off')) return;
+    if (o55Still()) { sec.classList.toggle('o55-sec-off', idle); return; }
+    if (!idle) { sec.classList.remove('o55-sec-off'); sec.animate([{ opacity: 0, transform: 'translateY(-4px)' }, { opacity: 1, transform: 'none' }], { duration: 240, easing: o55Ease() }); }
+    else sec.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, easing: o55Ease() }).finished.then(() => sec.classList.add('o55-sec-off'), () => sec.classList.add('o55-sec-off'));
+  });
+}
 function o55SyncDependents(parent) {
+  o55SyncSections(parent);
   (o55DepsOf[parent] || []).forEach(child => {
     root.querySelectorAll(`[id="setting-${cssEscape(child)}"]`).forEach(row => {
       const on = PM51.relevant(child), hidden = row.classList.contains('o55-dep-off');

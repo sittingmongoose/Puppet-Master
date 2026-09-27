@@ -61,8 +61,8 @@
   ];
   const QUALITY_OF = { Thorough: 'thorough', Standard: 'balanced', Fast: 'fast', Balanced: 'balanced' };
   const FINISHED = [
-    { id: 'f1', name: 'Fix the login redirect loop', finished: 'Yesterday', receipt: 'standard', persona: 'Puppet Master', checks: 'Tests passed · reviewed by Repository Auditor · 2 screenshots kept' },
-    { id: 'f2', name: 'Refresh the CLI docs', finished: '3 days ago', receipt: 'degraded', persona: 'Puppet Master', checks: 'Docs built · the link check could not run, so it is marked not fully checked' }
+    { id: 'f1', name: 'Fix the login redirect loop', finished: 'Yesterday', receipt: 'standard', persona: 'General', checks: 'Tests passed · reviewed by Overseer · 2 screenshots kept' },
+    { id: 'f2', name: 'Refresh the CLI docs', finished: '3 days ago', receipt: 'degraded', persona: 'Teacher', checks: 'Docs built · the link check could not run, so it is marked not fully checked' }
   ];
   let seq = 0;
   const newId = p => p + '-' + Date.now().toString(36) + '-' + (++seq);

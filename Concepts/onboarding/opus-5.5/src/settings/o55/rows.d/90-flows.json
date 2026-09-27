@@ -49,42 +49,6 @@
     ]
    }
   },
-  "branching.subagents.child-agent-lease": {
-   "actionLabel": "See a helper's contract",
-   "flow": {
-    "kind": "list",
-    "icon": "file",
-    "listTitle": "The contract",
-    "intro": "What a helper is asked to do and how it hands back its work.",
-    "items": [
-     {
-      "label": "Parent goal",
-      "help": "Ship recipe scaling",
-      "value": "G-118"
-     },
-     {
-      "label": "Allowed step",
-      "help": "Write tests for scaled_quantity",
-      "value": "One step"
-     },
-     {
-      "label": "Reads and writes",
-      "help": "Reads the project, writes only its workspace",
-      "value": "Read and write"
-     },
-     {
-      "label": "Hands back",
-      "help": "A patch and a short summary for the parent to review",
-      "value": "Patch + summary"
-     },
-     {
-      "label": "Time limit",
-      "help": "Stops and reports after",
-      "value": "20 minutes"
-     }
-    ]
-   }
-  },
   "branching.worktrees.clean-all-worktrees": {
    "actionLabel": "Remove all workspaces",
    "danger": true,
@@ -546,14 +510,6 @@
       }
      ]
     }
-   }
-  },
-  "personas.library.persona-manager": {
-   "actionLabel": "Open Personas",
-   "route": {
-    "domain": "memory",
-    "workspace": "personas",
-    "tab": "personas"
    }
   },
   "personas.tools.skipped-controls-audit": {

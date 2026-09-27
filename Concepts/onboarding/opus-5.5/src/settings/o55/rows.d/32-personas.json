@@ -1,0 +1,693 @@
+{
+ "_about": "Personas & Crews rows (settings audit, 2026-09-27).",
+ "rows": {
+  "personas.library.persona-id": {
+   "label": "Short id",
+   "help": "Lowercase with dashes; used in files and automation."
+  },
+  "personas.library.persona-aliases": {
+   "label": "Other names it answers to",
+   "help": "So 'ask the prof' reaches your teacher persona.",
+   "noun": "name",
+   "placeholder": "For example: prof, the teacher"
+  },
+  "personas.library.persona-tags": {
+   "label": "Tags",
+   "help": "Help search and automatic picking find this persona.",
+   "control": "multiselect",
+   "options": {
+    "seam": "Seam",
+    "package": "Package",
+    "lane": "Lane",
+    "node": "Step",
+    "iteration": "Iteration",
+    "cross-seam": "Across seams",
+    "language": "Language",
+    "domain": "Domain",
+    "framework": "Framework",
+    "freeform": "Other"
+   },
+   "choices": [
+    "seam",
+    "package",
+    "lane",
+    "node",
+    "iteration",
+    "cross-seam",
+    "language",
+    "domain",
+    "framework",
+    "freeform"
+   ]
+  },
+  "personas.library.default-persona": {
+   "label": "Default persona",
+   "help": "Answers when you haven't picked one.",
+   "choices": []
+  },
+  "personas.library.active-persona": {
+   "label": "This chat's persona",
+   "help": "Change it from the chat, or just ask for someone else.",
+   "choices": [],
+   "control": "status",
+   "tone": "neutral"
+  },
+  "personas.library.lock-persona": {
+   "label": "Keep one persona for the whole chat"
+  },
+  "personas.library.ask-by-name": {
+   "label": "Switch by asking",
+   "help": "Say 'let the researcher handle this' in chat.",
+   "control": "status",
+   "tone": "neutral",
+   "empty": "Try: \"let the researcher handle this\""
+  },
+  "personas.library.disabled-bundled": {
+   "label": "Hidden specialists",
+   "help": "Bundled personas kept out of pickers.",
+   "choices": [],
+   "noun": "persona",
+   "empty": "None hidden"
+  },
+  "personas.library.custom-scope": {
+   "label": "Save new personas for",
+   "options": {
+    "project": "This project",
+    "global": "All my projects"
+   }
+  },
+  "personas.library.persona-manager": {
+   "actionLabel": "Go to the persona list",
+   "route": {
+    "domain": "memory",
+    "workspace": "personas",
+    "tab": "personas"
+   },
+   "label": "Persona list",
+   "pm51": "pm51-personas-manage",
+   "help": "The list on the Personas tab is where personas are managed."
+  },
+  "personas.library.core-personas": {
+   "label": "Built-in personas",
+   "help": "Nine locked personas that always work.",
+   "control": "status",
+   "tone": "neutral"
+  },
+  "personas.tools.support-badges": {
+   "label": "Mark settings a model can't follow"
+  },
+  "personas.tools.tool-posture": {
+   "label": "Reach for tools",
+   "help": "How readily this persona uses tools.",
+   "options": {
+    "never": "Never",
+    "auto": "When it helps",
+    "always": "Whenever it can"
+   }
+  },
+  "personas.tools.preferred-tools": {
+   "label": "Tools it prefers",
+   "choices": []
+  },
+  "personas.tools.discouraged-tools": {
+   "label": "Tools it avoids",
+   "help": "A nudge, not a ban. Use permissions to block a tool.",
+   "choices": []
+  },
+  "personas.tools.tool-guidance": {
+   "label": "Notes on using tools"
+  },
+  "personas.tools.system-prompt": {
+   "label": "Instructions",
+   "help": "The standing instructions it works from."
+  },
+  "personas.tools.default-skills": {
+   "label": "Skills it carries",
+   "choices": []
+  },
+  "personas.tools.permission-profile": {
+   "label": "What it may do without asking",
+   "options": {
+    "inherit": "Same as the project"
+   },
+   "choices": [
+    "inherit"
+   ]
+  },
+  "personas.tools.disabled-plugins": {
+   "label": "Plugins it ignores",
+   "choices": []
+  },
+  "personas.tuning.default-platform": {
+   "label": "Preferred AI service",
+   "options": {
+    "inherit": "Same as the project"
+   },
+   "choices": [
+    "inherit"
+   ]
+  },
+  "personas.tuning.default-model": {
+   "label": "Preferred model",
+   "options": {
+    "inherit": "Same as the project"
+   },
+   "choices": [
+    "inherit"
+   ]
+  },
+  "personas.tuning.default-variant": {
+   "label": "Faster or smarter edition",
+   "options": {
+    "inherit": "Same as the project",
+    "fast": "Faster",
+    "powerful": "Smarter"
+   }
+  },
+  "personas.tuning.reasoning-effort": {
+   "label": "Thinking effort",
+   "options": {
+    "inherit": "Same as the project",
+    "minimal": "Minimal",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High"
+   }
+  },
+  "personas.tuning.cost-budget": {
+   "label": "Spending cap",
+   "help": "Over-budget models are skipped with a note. 0 = no cap.",
+   "unit": "$ per run",
+   "min": 0,
+   "step": 0.5,
+   "placeholder": "No cap"
+  },
+  "personas.tuning.temperature": {
+   "label": "Creativity",
+   "help": "Higher is more inventive, less predictable.",
+   "control": "number",
+   "min": 0,
+   "max": 2,
+   "step": 0.1,
+   "placeholder": "Model default"
+  },
+  "personas.tuning.top-p": {
+   "label": "Word choice range",
+   "help": "Rarely needed; it stacks with Creativity.",
+   "control": "number",
+   "min": 0,
+   "max": 1,
+   "step": 0.05,
+   "placeholder": "Model default"
+  },
+  "personas.tuning.response-style": {
+   "label": "Answer style",
+   "options": {
+    "concise": "Short and to the point",
+    "balanced": "Balanced",
+    "detailed": "Thorough"
+   }
+  },
+  "personas.tuning.verbosity": {
+   "label": "Answer length",
+   "help": "Fine-tunes Answer style.",
+   "options": {
+    "terse": "Short",
+    "normal": "Normal",
+    "verbose": "Long"
+   }
+  },
+  "personas.tuning.talkativeness": {
+   "label": "Chatter while working",
+   "help": "Updates while it works; not the answer's length.",
+   "options": {
+    "talk_a_lot_more": "A lot more",
+    "talk_more": "More",
+    "talk_a_little_more": "A little more",
+    "model_default": "As the model does",
+    "talk_a_little_less": "A little less",
+    "talk_less": "Less"
+   }
+  },
+  "personas.tuning.output-format": {
+   "label": "Answer format",
+   "help": "Formatted text, data (JSON) or plain text.",
+   "options": {
+    "markdown": "Formatted text",
+    "json": "Data (JSON)",
+    "plain_text": "Plain text"
+   }
+  },
+  "personas.tuning.default-mode": {
+   "label": "Starts by",
+   "options": {
+    "inherit": "Same as the project",
+    "ask": "Asking first",
+    "plan": "Planning first",
+    "regular": "Getting on with it",
+    "yolo": "Working without asking"
+   }
+  },
+  "branching.crew.crew-enabled": {
+   "label": "Use crews",
+   "help": "Several personas on one Goal. Uses noticeably more credits."
+  },
+  "branching.crew.crew-participant-count": {
+   "label": "Crew size",
+   "when": {
+    "id": "branching.crew.crew-enabled",
+    "truthy": true
+   },
+   "min": 2,
+   "max": 8,
+   "step": 1,
+   "unit": "members",
+   "help": "Used when the default lineup is empty; a lineup sets the size itself."
+  },
+  "branching.crew.crew-members": {
+   "label": "Default lineup",
+   "help": "Personas in a new crew, in order.",
+   "when": {
+    "id": "branching.crew.crew-enabled",
+    "truthy": true
+   },
+   "noun": "persona",
+   "empty": "Puppet Master picks"
+  },
+  "branching.crew.crew-coordinator": {
+   "label": "Who leads",
+   "options": {
+    "Parent assistant": "The assistant you're talking to",
+    "Dedicated coordinator": "A lead persona",
+    "None": "Nobody; each works alone"
+   },
+   "choices": [
+    "Parent assistant",
+    "Dedicated coordinator",
+    "None"
+   ],
+   "when": {
+    "id": "branching.crew.crew-enabled",
+    "truthy": true
+   }
+  },
+  "branching.crew.crew-assignment-strategy": {
+   "label": "How work is shared",
+   "options": {
+    "Manager directed": "The lead assigns it",
+    "Members claim work": "Members pick tasks",
+    "Same task for everyone": "Everyone does the same task"
+   },
+   "choices": [
+    "Manager directed",
+    "Members claim work",
+    "Same task for everyone"
+   ],
+   "when": {
+    "id": "branching.crew.crew-enabled",
+    "truthy": true
+   }
+  },
+  "branching.crew.crew-parallelism": {
+   "label": "Members working at once",
+   "help": "The server may allow fewer.",
+   "when": {
+    "id": "branching.crew.crew-enabled",
+    "truthy": true
+   },
+   "min": 1,
+   "max": 8,
+   "step": 1,
+   "unit": "at once"
+  },
+  "branching.crew.crew-auto-enabled": {
+   "label": "Offer a crew for big requests",
+   "help": "It only suggests; nothing starts until you confirm.",
+   "when": {
+    "id": "branching.crew.crew-enabled",
+    "truthy": true
+   }
+  },
+  "branching.crew.crew-auto-complexity": {
+   "label": "Offer when a request looks",
+   "options": {
+    "Low": "Fairly simple",
+    "Medium": "Moderately complex",
+    "High": "Very complex"
+   },
+   "choices": [
+    "Low",
+    "Medium",
+    "High"
+   ],
+   "when": {
+    "id": "branching.crew.crew-auto-enabled",
+    "truthy": true
+   }
+  },
+  "branching.crew.crew-auto-max-members": {
+   "label": "Largest crew it may offer",
+   "when": {
+    "id": "branching.crew.crew-auto-enabled",
+    "truthy": true
+   },
+   "min": 2,
+   "max": 8,
+   "step": 1,
+   "unit": "members"
+  },
+  "branching.crew.crew-auto-roster": {
+   "label": "Personas it may pick",
+   "help": "Empty lets Puppet Master choose.",
+   "when": {
+    "id": "branching.crew.crew-auto-enabled",
+    "truthy": true
+   },
+   "noun": "persona",
+   "empty": "Puppet Master picks"
+  },
+  "branching.crew.brainstorm-core-participants": {
+   "label": "Participants",
+   "min": 2,
+   "max": 8,
+   "step": 1,
+   "unit": "personas",
+   "help": "Used when the lineup is empty; a lineup sets the number itself."
+  },
+  "branching.crew.brainstorm-roster": {
+   "label": "Who takes part",
+   "help": "Personas in a new BrainStorm, in order.",
+   "noun": "persona",
+   "empty": "Puppet Master picks"
+  },
+  "branching.crew.brainstorm-question-limit": {
+   "label": "Questions it may ask you",
+   "min": 1,
+   "max": 60,
+   "step": 1,
+   "unit": "questions"
+  },
+  "branching.crew.grill-me-question-extension": {
+   "label": "Extra questions in Grill Me",
+   "min": 0,
+   "max": 60,
+   "step": 1,
+   "unit": "questions"
+  },
+  "branching.crew.brainstorm-external-research": {
+   "label": "Research outside the project",
+   "options": {
+    "Off": "None",
+    "Some": "Some",
+    "Maximum": "As much as useful"
+   },
+   "choices": [
+    "Off",
+    "Some",
+    "Maximum"
+   ]
+  },
+  "branching.crew.brainstorm-voting": {
+   "label": "How the group decides",
+   "options": {
+    "Evidence weighted": "Best evidence wins",
+    "Majority": "Majority vote",
+    "Coordinator decides": "The lead decides"
+   },
+   "choices": [
+    "Evidence weighted",
+    "Majority",
+    "Coordinator decides"
+   ]
+  },
+  "branching.crew.brainstorm-preserve-dissent": {
+   "label": "Keep the losing ideas in the plan"
+  },
+  "branching.crew.chat-room-participant-count": {
+   "label": "Participants",
+   "min": 2,
+   "max": 8,
+   "step": 1,
+   "unit": "personas",
+   "help": "Used when the lineup is empty; a lineup sets the number itself."
+  },
+  "branching.crew.chat-room-roster": {
+   "label": "Who takes part",
+   "help": "Personas in a new Chat Room, in order.",
+   "noun": "persona",
+   "empty": "Puppet Master picks"
+  },
+  "branching.crew.chat-room-turn-policy": {
+   "label": "Taking turns",
+   "options": {
+    "Moderated": "One persona moderates",
+    "Round-robin": "In a fixed order",
+    "Free-for-all": "Anyone, any time"
+   },
+   "choices": [
+    "Moderated",
+    "Round-robin",
+    "Free-for-all"
+   ]
+  },
+  "branching.crew.chat-room-max-rounds": {
+   "label": "Rounds before a summary",
+   "min": 1,
+   "max": 20,
+   "step": 1,
+   "unit": "rounds"
+  },
+  "branching.crew.max-crews-per-platform": {
+   "label": "Crews running at once, at most",
+   "min": 1,
+   "step": 1,
+   "help": "The server may allow fewer."
+  },
+  "branching.crew.max-agents-per-crew": {
+   "label": "Agents in one crew, at most",
+   "min": 1,
+   "step": 1,
+   "help": "The server may allow fewer."
+  },
+  "branching.subagents.enable-subagents": {
+   "label": "Use helper agents",
+   "help": "Off means one agent does everything."
+  },
+  "branching.subagents.subagents-mandatory": {
+   "label": "Always use helpers",
+   "help": "Usually best left off.",
+   "when": {
+    "id": "branching.subagents.enable-subagents",
+    "truthy": true
+   }
+  },
+  "branching.subagents.fanout-threshold": {
+   "label": "Split work only when it's this big",
+   "when": {
+    "id": "branching.subagents.enable-subagents",
+    "truthy": true
+   },
+   "unit": "parts",
+   "min": 2,
+   "step": 1,
+   "help": "Work with fewer parts than this stays with one agent."
+  },
+  "branching.subagents.parallel-subagents": {
+   "label": "Let helpers work side by side",
+   "when": {
+    "id": "branching.subagents.enable-subagents",
+    "truthy": true
+   }
+  },
+  "branching.subagents.max-parallel": {
+   "label": "Helpers at once, at most",
+   "help": "The server may allow fewer.",
+   "when": {
+    "id": "branching.subagents.parallel-subagents",
+    "truthy": true
+   },
+   "min": 1,
+   "max": 16,
+   "step": 1,
+   "unit": "helpers"
+  },
+  "branching.subagents.retry-policy": {
+   "label": "If a helper fails",
+   "options": {
+    "no retry": "Don't retry",
+    "bounded retries": "Retry a couple of times",
+    "exponential backoff": "Retry, waiting longer each time"
+   },
+   "when": {
+    "id": "branching.subagents.enable-subagents",
+    "truthy": true
+   }
+  },
+  "branching.subagents.write-isolation-mode": {
+   "label": "Extra write protection",
+   "options": {
+    "none": "None",
+    "parent-only writer": "Only the lead edits files",
+    "patch-only subagents": "Helpers suggest patches",
+    "isolated worktree per subagent": "Each helper gets its own copy"
+   },
+   "when": {
+    "id": "branching.subagents.enable-subagents",
+    "truthy": true
+   }
+  },
+  "branching.subagents.delegation-depth": {
+   "label": "Helpers may hire their own helpers",
+   "help": "0 = no; each level adds cost.",
+   "when": {
+    "id": "branching.subagents.enable-subagents",
+    "truthy": true
+   },
+   "unit": "levels",
+   "min": 0,
+   "max": 4,
+   "step": 1
+  },
+  "branching.subagents.max-nesting-depth": {
+   "label": "Delegation levels, hard stop",
+   "unit": "levels",
+   "min": 1,
+   "max": 8,
+   "step": 1,
+   "help": "No helper goes deeper than this, whatever else says."
+  },
+  "branching.subagents.input-token-limit": {
+   "label": "Reading per helper, at most",
+   "help": "In tokens; keeps costs predictable.",
+   "unit": "tokens",
+   "min": 1000,
+   "step": 1000
+  },
+  "branching.subagents.provider-concurrency-cap": {
+   "label": "Requests to one AI service at once",
+   "min": 1,
+   "step": 1,
+   "help": "The server may allow fewer."
+  },
+  "branching.subagents.max-total-active-agents": {
+   "label": "Agents active at once, at most",
+   "min": 1,
+   "step": 1,
+   "help": "The server may allow fewer."
+  },
+  "branching.subagents.max-total-spawned": {
+   "label": "Agents per run, at most",
+   "help": "The emergency brake on runaway helpers.",
+   "min": 1,
+   "step": 1
+  },
+  "branching.subagents.required-subagents": {
+   "label": "Always include",
+   "when": {
+    "id": "branching.subagents.enable-subagents",
+    "truthy": true
+   },
+   "noun": "helper"
+  },
+  "branching.subagents.disabled-subagents": {
+   "label": "Never use",
+   "when": {
+    "id": "branching.subagents.enable-subagents",
+    "truthy": true
+   },
+   "noun": "helper"
+  },
+  "branching.subagents.per-node-overrides": {
+   "label": "Helpers for each kind of step",
+   "when": {
+    "id": "branching.subagents.enable-subagents",
+    "truthy": true
+   }
+  },
+  "branching.crew.brainstorm-debate-rounds": {
+   "min": 0,
+   "max": 6,
+   "step": 1,
+   "unit": "rounds"
+  },
+  "branching.subagents.single-writer-lease": {
+   "when": {
+    "id": "branching.subagents.enable-subagents",
+    "truthy": true
+   }
+  },
+  "branching.subagents.child-state-isolation": {
+   "when": {
+    "id": "branching.subagents.enable-subagents",
+    "truthy": true
+   }
+  },
+  "branching.subagents.external-agent-provenance": {
+   "when": {
+    "id": "branching.subagents.enable-subagents",
+    "truthy": true
+   }
+  },
+  "general.interaction.subagent-disclosure": {
+   "when": {
+    "id": "branching.subagents.enable-subagents",
+    "truthy": true
+   },
+   "label": "Show what helpers are doing",
+   "help": "A line in chat for each helper at work."
+  },
+  "branching.subagents.child-agent-lease": {
+   "actionLabel": "See a helper's contract",
+   "flow": {
+    "kind": "list",
+    "icon": "file",
+    "listTitle": "The contract",
+    "intro": "What a helper is asked to do and how it hands back its work.",
+    "items": [
+     {
+      "label": "Parent goal",
+      "help": "Ship recipe scaling",
+      "value": "G-118"
+     },
+     {
+      "label": "Allowed step",
+      "help": "Write tests for scaled_quantity",
+      "value": "One step"
+     },
+     {
+      "label": "Reads and writes",
+      "help": "Reads the project, writes only its workspace",
+      "value": "Read and write"
+     },
+     {
+      "label": "Hands back",
+      "help": "A patch and a short summary for the parent to review",
+      "value": "Patch + summary"
+     },
+     {
+      "label": "Time limit",
+      "help": "Stops and reports after",
+      "value": "20 minutes"
+     }
+    ]
+   },
+   "help": "Opens from a running Goal."
+  },
+  "personas.library.selection-mode": {
+   "label": "Who picks the persona",
+   "options": {
+    "auto": "Puppet Master picks",
+    "manual": "I pick",
+    "hybrid": "Puppet Master suggests, I confirm"
+   }
+  },
+  "personas.library.persona-name": {
+   "label": "Name",
+   "help": "Shown in pickers and in chat."
+  },
+  "personas.library.persona-description": {
+   "label": "What it is for",
+   "help": "One line. It also helps automatic picking."
+  }
+ }
+}

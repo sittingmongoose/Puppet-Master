@@ -38,15 +38,15 @@ function o55gArt(n) {
 const o55Wizards = [];
 PM51.wizard = ({ title, subtitle = '', eyebrow = '', icon: ic = '', steps, draft = {}, start = 0, finishLabel = 'Finish', onFinish }) => {
   let cur = Math.max(0, Math.min(start, steps.length - 1));
-  let wrap = null, win = null, dir = 1, moving = false;
+  let wrap = null, win = null, dir = 1, moving = false, queued = 0;
   const recaps = {};
   const reduced = () => motionReduced();
-  const api = { draft, next: () => move(1), back: () => move(-1), go: i => { const to = Math.max(0, Math.min(i, steps.length - 1)); dir = to >= cur ? 1 : -1; cur = to; paint(); } };
+  const api = { draft, step: () => cur, next: () => move(1), back: () => move(-1), go: i => { const to = Math.max(0, Math.min(i, steps.length - 1)); dir = to >= cur ? 1 : -1; cur = to; paint(); } };
   const say = msg => { const box = win && win.querySelector('.o55g-error'); if (box) { box.textContent = msg; box.hidden = !msg; if (msg && !reduced()) box.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(0)' }], { duration: 260, easing: 'ease-out' }); } };
   function collect() { const s = steps[cur]; if (s.collect) s.collect(wrap, draft); }
   function valid() { const s = steps[cur]; const why = s.check ? s.check(draft) : ''; say(why || ''); return !why; }
   function move(d) {
-    if (moving) return false;
+    if (moving) { queued = d; return false; }
     collect();
     if (d > 0 && !valid()) return false;
     if (d > 0 && cur === steps.length - 1) { const ok = onFinish ? onFinish(draft, wrap) : true; if (ok !== false && wrap && wrap.isConnected) closeDrawerWrap(wrap); return false; }
@@ -152,7 +152,7 @@ PM51.wizard = ({ title, subtitle = '', eyebrow = '', icon: ic = '', steps, draft
     const card = e.target.closest('.o55g-card');
     if (!card || card.getAttribute('aria-disabled') === 'true' || !win.querySelector('.o55g-layer').contains(card)) return;
     const hold = card.getAttribute('role') === 'radio' ? charm(card) : 0;
-    if (hold) { moving = true; window.setTimeout(() => { moving = false; }, hold); }
+    if (hold) { moving = true; queued = 0; window.setTimeout(() => { moving = false; const q = queued; queued = 0; if (q) move(q); }, hold); }
   }, true);
   win.addEventListener('keydown', e => {
     if (e.key !== 'Enter' || e.shiftKey || e.isComposing) return;
@@ -170,5 +170,6 @@ PM51.wizardOf = el => {
   const w = el && el.closest && el.closest('.drawer-wrap'); const api = w && w._o55Wizard; if (!api) return api;
   const card = el.closest && el.closest('.o55g-card');
   if (!card || motionReduced()) return api;
-  return Object.assign({}, api, { next: () => window.setTimeout(() => { api.next(); }, 400) });
+  const at = api.step();
+  return Object.assign({}, api, { next: () => window.setTimeout(() => { if (api.step() === at) api.next(); }, 400) });
 };

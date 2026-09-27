@@ -148,3 +148,4 @@ html[data-motion="reduced"] #panel-settings .setting-row.o55-row.is-flash, html[
    button, so switches and menus in one card form one column. */
 #panel-settings .pm51-mgr .pm51-section-body .pm51-rows > .pm51-row > .pm51-row-control { padding-right: 50px; }
 @media (max-width: 760px) { #panel-settings .pm51-mgr .pm51-section-body .pm51-rows > .pm51-row > .pm51-row-control { padding-right: 0; } }
+#panel-settings .settings-section.o55-group.o55-sec-off { display: none; }

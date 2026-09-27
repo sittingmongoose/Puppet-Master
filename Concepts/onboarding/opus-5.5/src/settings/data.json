@@ -1662,7 +1662,7 @@
     "goals": {
       "defaults": {
         "route": "Balanced coding route",
-        "persona": "Puppet Master",
+        "persona": "Assistant",
         "crew": "Default Crew",
         "subagents": true,
         "maxParallel": 3
@@ -1682,10 +1682,10 @@
     },
     "personas": {
       "defaults": {
-        "chat": "Puppet Master",
-        "goals": "Puppet Master",
-        "planning": "Planning Compiler",
-        "audits": "Repository Auditor"
+        "chat": "Assistant",
+        "goals": "Assistant",
+        "planning": "Collaborator",
+        "audits": "Overseer"
       },
       "followProvider": true,
       "inheritTools": true
