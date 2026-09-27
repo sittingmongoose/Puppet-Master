@@ -1,0 +1,268 @@
+{
+ "_about": "app-input: sections from the plain-pages audit (2026-09-27). Theme first, then size and readability, three chat groups, help, window and panels, startup, spelling; custom themes and fine-tuning under More options. Duplicate hand rows are dropped: font-size (Text size), motion (Reduce motion), contrast (Keyboard focus outline), restore-window and panel-restore (Remember window size and layout), help-level (How the app talks to me), working-activity-style (the inventory row of the same name). Out: first-run tips to Readiness & Doctor, debug re-check to Testing & Debug, tabs remembered to Editor & Terminal. In: the big-task checklist from Planning.",
+ "pages": {
+  "app-input": {
+   "more": "Custom themes, fine-tuning and rarely changed help options."
+  }
+ },
+ "sections": {
+  "app-theme": {
+   "to": "app-input",
+   "title": "Theme & colors",
+   "help": "Pick a look, then light or dark.",
+   "order": 10,
+   "after": {
+    "accent": "general.visual.theme-mode"
+   }
+  },
+  "app-visual": {
+   "to": "app-input",
+   "title": "Size & readability",
+   "help": "Make text and controls easier to see and use.",
+   "order": 20,
+   "after": {
+    "animation-speed": "general.visual.reduce-animations"
+   }
+  },
+  "app-chat": {
+   "to": "app-input",
+   "title": "Sending messages",
+   "help": "What happens when you type and send.",
+   "order": 30
+  },
+  "app-chat-assistant": {
+   "to": "app-input",
+   "title": "How the assistant works",
+   "help": "Where it starts and how it asks you things.",
+   "order": 40
+  },
+  "app-chat-view": {
+   "to": "app-input",
+   "title": "What the chat shows",
+   "help": "Progress, code and pictures inside the conversation.",
+   "order": 50
+  },
+  "app-help": {
+   "to": "app-input",
+   "title": "Help & explanations",
+   "help": "How much the app explains as you go.",
+   "order": 60
+  },
+  "app-desktop": {
+   "to": "app-input",
+   "title": "Window & panels",
+   "help": "Where the chat and panels sit, and the icons on the left.",
+   "order": 70,
+   "after": {
+    "sidebar-labels": "general.interaction.activity-bar-order"
+   }
+  },
+  "app-startup": {
+   "to": "app-input",
+   "title": "When Puppet Master opens",
+   "help": "What you see first and what comes back after a crash.",
+   "order": 80,
+   "after": {
+    "startup-view": ""
+   }
+  },
+  "app-spelling": {
+   "to": "app-input",
+   "title": "Spelling",
+   "help": "Spell checking for chat and notes, never for code.",
+   "order": 90
+  },
+  "app-custom-themes": {
+   "to": "app-input",
+   "title": "Custom themes",
+   "help": "Make your own theme or bring one in.",
+   "order": 100,
+   "advanced": true
+  },
+  "app-visual-more": {
+   "to": "app-input",
+   "title": "Fine-tuning the look",
+   "help": "Borders, corners, padding and retro textures.",
+   "order": 110,
+   "advanced": true
+  },
+  "app-help-more": {
+   "to": "app-input",
+   "title": "More about help",
+   "help": "Rarely changed help and chat options.",
+   "order": 120,
+   "advanced": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "app-theme",
+   "ids": [
+    "general.visual.theme",
+    "general.visual.theme-mode",
+    "general.visual.theme-preview",
+    "general.visual.glass-background-mode",
+    "general.visual.glass-transparency",
+    "general.visual.retro-effects",
+    "general.visual.app-font"
+   ]
+  },
+  {
+   "section": "app-visual",
+   "ids": [
+    "general.visual.ui-scale",
+    "general.visual.font-size",
+    "general.visual.interface-density",
+    "general.visual.line-height",
+    "general.visual.reduce-animations",
+    "general.visual.high-contrast",
+    "general.visual.focus-indicator"
+   ]
+  },
+  {
+   "section": "app-chat",
+   "ids": [
+    "general.interaction.submit-key",
+    "general.interaction.queue-behavior",
+    "general.interaction.queue-size",
+    "general.interaction.edit-resend",
+    "general.interaction.composer-persist-unsent"
+   ]
+  },
+  {
+   "section": "app-chat-assistant",
+   "ids": [
+    "general.interaction.assistant-mode",
+    "general.interaction.natural-language-modes",
+    "general.interaction.question-cards",
+    "general.interaction.question-drafts",
+    "planning.interview.todo-auto-use"
+   ]
+  },
+  {
+   "section": "app-chat-view",
+   "ids": [
+    "general.interaction.auto-follow",
+    "general.interaction.unread-marker",
+    "general.interaction.working-activity-style",
+    "general.interaction.activity-cards",
+    "general.interaction.file-discovery-cards",
+    "general.interaction.copy-code-button",
+    "general.interaction.mermaid",
+    "general.interaction.inline-visualizers"
+   ]
+  },
+  {
+   "section": "app-help",
+   "ids": [
+    "general.interaction.mode",
+    "general.interaction.eli5-default",
+    "general.interaction.show-tooltips",
+    "general.interaction.explain-disabled",
+    "general.interaction.settings-search"
+   ]
+  },
+  {
+   "section": "app-desktop",
+   "ids": [
+    "general.visual.chat-layout-mode",
+    "general.interaction.panel-dock",
+    "general.interaction.activity-bar-order",
+    "general.interaction.dashboard-widgets",
+    "general.interaction.minimize-to-tray",
+    "general.startup.reset-home-layout"
+   ]
+  },
+  {
+   "section": "app-startup",
+   "ids": [
+    "general.startup.restore-panel",
+    "general.startup.window-state",
+    "general.startup.crash-restore",
+    "general.startup.unsaved-capture"
+   ]
+  },
+  {
+   "section": "app-custom-themes",
+   "ids": [
+    "general.visual.manage-custom-themes",
+    "general.visual.custom-theme-base"
+   ]
+  },
+  {
+   "section": "app-visual-more",
+   "ids": [
+    "general.visual.padding-scale",
+    "general.visual.border-width",
+    "general.visual.border-radius",
+    "general.visual.scrollbar-width",
+    "general.visual.pixel-grid-opacity",
+    "general.visual.scanline-opacity",
+    "general.visual.basic-color-scheme"
+   ]
+  },
+  {
+   "section": "app-help-more",
+   "ids": [
+    "general.interaction.chat-eli5",
+    "general.interaction.scope-labels",
+    "general.interaction.rediscoverability"
+   ]
+  }
+ ],
+ "hand_moves": [
+  {
+   "workspace": "app-input",
+   "ids": [
+    "general.visual.theme",
+    "accent",
+    "general.visual.glass-background-mode",
+    "general.visual.glass-transparency"
+   ],
+   "to_section": "app-theme"
+  },
+  {
+   "workspace": "app-input",
+   "ids": [
+    "general.visual.interface-density",
+    "animation-speed"
+   ],
+   "to_section": "app-visual"
+  },
+  {
+   "workspace": "app-input",
+   "ids": [
+    "general.interaction.activity-bar-order",
+    "sidebar-labels"
+   ],
+   "to_section": "app-desktop"
+  },
+  {
+   "workspace": "app-input",
+   "ids": [
+    "startup-view"
+   ],
+   "to_section": "app-startup"
+  },
+  {
+   "workspace": "app-input",
+   "ids": [
+    "spellcheck",
+    "dictionaries",
+    "custom-words"
+   ],
+   "to_section": "app-spelling"
+  }
+ ],
+ "hand_drops": {
+  "app-input": [
+   "font-size",
+   "motion",
+   "contrast",
+   "restore-window",
+   "panel-restore",
+   "help-level",
+   "working-activity-style"
+  ]
+ }
+}

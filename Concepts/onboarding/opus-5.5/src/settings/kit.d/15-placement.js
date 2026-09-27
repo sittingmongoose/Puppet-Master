@@ -11,6 +11,18 @@
     const at = new Map(rule.ids.map((id, i) => [id, i]));
     sec.settings.sort((x, y) => (at.has(x.id) ? at.get(x.id) : 1e6) - (at.has(y.id) ? at.get(y.id) : 1e6));
   }
+  /* A hand-written row moved into a placement section (hand_moves) has no inventory id, so a rule cannot list it.
+     The section's `after` places it: {"accent": "general.visual.theme-mode"} puts Accent color right under Light or
+     dark; an empty target puts the row first. Entries apply in order, so a row can follow one placed just before. */
+  for (const [sid, def] of Object.entries(PLACEMENT.sections || {})) {
+    const sec = def && def.after ? pm51SectionObjects.get(sid) : null; if (!sec || !Array.isArray(sec.settings)) continue;
+    for (const [id, prev] of Object.entries(def.after)) {
+      const i = sec.settings.findIndex(x => x.id === id); if (i < 0) continue;
+      const [row] = sec.settings.splice(i, 1);
+      const j = prev ? sec.settings.findIndex(x => x.id === prev) : -1;
+      sec.settings.splice(!prev ? 0 : j >= 0 ? j + 1 : sec.settings.length, 0, row);
+    }
+  }
 })();
 const o55Offset = scrollOffsetWithin;
 scrollOffsetWithin = function (scroller, el) {
@@ -22,15 +34,31 @@ scrollOffsetWithin = function (scroller, el) {
 };
 /* Hand-written rows that only repeat canonical rows are not drawn a second time. "Preferred container engine" and
    "Registry accounts" (the Editor page's old Containers section, which the base placement carried into Toolchain)
-   repeat Container engine and the registry sign-ins, which now live together on Containers & Execution. */
+   repeat Container engine and the registry sign-ins, which now live together on Containers. Single hand rows named in
+   placement `hand_drops` repeat an inventory row with other options or defaults, e.g. on Advanced "Diagnostic
+   telemetry" (crash reports on) against "Share anonymous usage and crash reports" (off), and on App & Input
+   "Interface font size" against "Text size", which were stored apart. A hand section left with no rows (its rows moved
+   into placement groups or dropped) is removed, so no page draws a heading with nothing under it. */
 (function o55DropDuplicateHandSections() {
   const drop = new Set(['toolchain-containers']);
   for (const d of D.domains) for (const w of d.workspaces) if (Array.isArray(w.sections)) w.sections = w.sections.filter(s => !drop.has(s.id));
   drop.forEach(id => pm51SectionObjects.delete(id));
-  /* Single hand rows on the Advanced page repeat inventory rows with other defaults: "Diagnostic telemetry"
-     (crash reports on) against "Share anonymous usage and crash reports" (off), and "Restore default settings"
-     against "Reset settings to defaults". The inventory rows stay; the reset one runs the real preview. */
-  const dropRows = { advanced: new Set(['telemetry', 'restore-defaults']) };
-  for (const d of D.domains) for (const w of d.workspaces) if (dropRows[w.id] && Array.isArray(w.sections)) w.sections.forEach(s => { s.settings = (s.settings || []).filter(x => !dropRows[w.id].has(x.id)); });
+  const dropRows = {};
+  for (const [ws, ids] of Object.entries(PLACEMENT.hand_drops || {})) dropRows[ws] = new Set(ids);
+  for (const d of D.domains) for (const w of d.workspaces) {
+    if (!Array.isArray(w.sections)) continue;
+    if (dropRows[w.id]) w.sections.forEach(s => { s.settings = (s.settings || []).filter(x => !dropRows[w.id].has(x.id)); });
+    const page = PLACEMENT.pages[w.id];
+    if (page && page.hand) w.sections = w.sections.filter(s => s.placement || (s.settings || []).length);
+  }
+  /* The hand-drawn "Interface density" offered Compact / Comfortable / Relaxed with Comfortable as the default; the
+     inventory row it draws is Auto / Comfortable / Compact with Auto. "Relaxed" was never a stored value. */
+  const rows = Object.values((window.PM12_REFERENCE || {}).byCat || {}).flatMap(c => c.settings || []);
+  for (const id of ['general.visual.interface-density']) {
+    const e = pm51ById[id], ref = rows.find(r => r.id === id);
+    if (!e || !e.setting || !ref || !Array.isArray(ref.options)) continue;
+    e.setting.options = ref.options.slice(); e.setting.value = ref.default; e.setting.control = 'select';
+    if (ref.desc) e.setting.description = ref.desc;
+  }
   allSettingsCatalogCache = null; searchIndexDirty = true;
 })();

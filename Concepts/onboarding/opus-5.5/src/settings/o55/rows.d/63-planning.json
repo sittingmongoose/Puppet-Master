@@ -1,0 +1,253 @@
+{
+ "_about": "planning-reference (Planning & Interviews): wording, conditions, units and bounds from the plain-pages audit (2026-09-27). The fewest and most questions per topic bound each other; the attachment size is shown in MB and stored in bytes.",
+ "rows": {
+  "planning.interview.plan-default-depth": {
+   "label": "Plan depth",
+   "help": "Quick sketches fast; Thorough looks carefully first."
+  },
+  "planning.interview.deep-plan-default-depth": {
+   "label": "Deep Plan depth",
+   "help": "BrainStorm adds several thinkers who debate and vote.",
+   "options": {
+    "BrainStorm": "BrainStorm (thinkers debate)"
+   }
+  },
+  "planning.interview.deep-plan-grill-me": {
+   "label": "Start Deep Plans with Grill Me",
+   "help": "Lets it ask you more questions first; change it per plan."
+  },
+  "planning.interview.auto-open-deep-plan": {
+   "label": "Open finished plans for review",
+   "help": "Read and mark up a Deep Plan before anything runs."
+  },
+  "planning.interview.plan-panel-sticky": {
+   "label": "Keep the plan visible while work runs"
+  },
+  "planning.interview.plan-default-export": {
+   "label": "Export plans as",
+   "help": "Both formats stay available on every plan."
+  },
+  "planning.interview.recommend-wizard": {
+   "label": "Offer the Planning Wizard for big requests"
+  },
+  "planning.interview.workflow-style": {
+   "label": "How the interview runs"
+  },
+  "planning.interview.prompting-style": {
+   "label": "How questions are worded"
+  },
+  "planning.interview.plan-thoroughness": {
+   "label": "How thorough the wizard's plan is",
+   "help": "Comprehensive does more research and takes longer."
+  },
+  "planning.interview.web-research-mode": {
+   "label": "Look things up on the web while planning"
+  },
+  "planning.interview.require-arch-confirmation": {
+   "label": "Ask me to approve the tech choices"
+  },
+  "planning.interview.builder-topics": {
+   "label": "Topics the interview covers",
+   "help": "Skipped topics are faster but the plan guesses more."
+  },
+  "planning.interview.topic-depth": {
+   "label": "Default depth for each topic",
+   "help": "Skip leaves a topic out unless you pick it for a session."
+  },
+  "planning.interview.scope-probe-questions": {
+   "label": "Opening questions",
+   "help": "Quick questions to size the project before topics start.",
+   "unit": "questions",
+   "min": 1,
+   "max": 10
+  },
+  "planning.interview.min-questions-per-topic": {
+   "label": "Fewest questions per topic",
+   "help": "Must be lower than the most questions per topic.",
+   "unit": "questions",
+   "min": 0,
+   "max": 19,
+   "maxFrom": {
+    "id": "planning.interview.max-questions-per-topic",
+    "offset": -1
+   },
+   "when": {
+    "id": "planning.interview.topic-depth",
+    "not": "skip"
+   }
+  },
+  "planning.interview.max-questions-per-topic": {
+   "label": "Most questions per topic",
+   "help": "One extra question is allowed to finish a thought.",
+   "unit": "questions",
+   "min": 1,
+   "max": 20,
+   "minFrom": {
+    "id": "planning.interview.min-questions-per-topic",
+    "offset": 1
+   },
+   "when": {
+    "id": "planning.interview.topic-depth",
+    "not": "skip"
+   }
+  },
+  "planning.interview.vision-provider": {
+   "label": "Who reads pictures and screenshots",
+   "help": "Media & Vision has the app-wide choice; this one is for planning.",
+   "options": {
+    "auto": "Automatic",
+    "opencode": "OpenCode"
+   }
+  },
+  "planning.interview.prefer-gemini-gui": {
+   "label": "Prefer Gemini for screens and pictures",
+   "help": "Only when it is connected and the choice above is Automatic.",
+   "when": {
+    "id": "planning.interview.vision-provider",
+    "in": [
+     "auto"
+    ]
+   }
+  },
+  "planning.interview.builder-persona-mode": {
+   "label": "Choosing the helpers"
+  },
+  "planning.interview.builder-intake-persona": {
+   "label": "Helper who asks the first questions",
+   "when": {
+    "id": "planning.interview.builder-persona-mode",
+    "in": [
+     "manual",
+     "hybrid"
+    ]
+   }
+  },
+  "planning.interview.builder-drafting-persona": {
+   "label": "Helper who writes the document",
+   "help": "Empty uses a general-purpose writer.",
+   "empty": "General-purpose writer (automatic)",
+   "when": {
+    "id": "planning.interview.builder-persona-mode",
+    "in": [
+     "manual",
+     "hybrid"
+    ]
+   }
+  },
+  "planning.interview.builder-review-personas": {
+   "label": "Reviewers for each round",
+   "help": "Empty rounds use fitting reviewers.",
+   "editor": "pm51-o55-review-rounds",
+   "keys": {
+    "round-1": "First review",
+    "round-2": "Second review",
+    "round-3": "Final review"
+   },
+   "empty": "Chosen for you",
+   "when": {
+    "id": "planning.interview.builder-persona-mode",
+    "in": [
+     "manual",
+     "hybrid"
+    ]
+   }
+  },
+  "planning.interview.wizard-intent": {
+   "label": "What kind of project (this session)"
+  },
+  "planning.interview.wizard-project-path": {
+   "label": "Project folder (this session)",
+   "placeholder": "Chosen in the wizard"
+  },
+  "planning.interview.topic-checklist": {
+   "label": "Hand-picked topics (this session)",
+   "help": "Unchecked topics are skipped this time only."
+  },
+  "planning.interview.run-all-topics": {
+   "label": "Ask every topic in full (this session)"
+  },
+  "planning.interview.requirements-max-files": {
+   "label": "Most files you can attach",
+   "unit": "files",
+   "min": 1,
+   "max": 10
+  },
+  "planning.interview.requirements-max-file-size": {
+   "label": "Largest file you can attach",
+   "unit": "MB",
+   "scale": 1048576,
+   "min": 1,
+   "max": 50
+  },
+  "planning.interview.output-format": {
+   "label": "Requirements document format"
+  },
+  "planning.interview.builder-preferences": {
+   "label": "Expert overrides",
+   "help": "Fine-grained wizard overrides; most people never need these."
+  },
+  "branching.plan.quick-question-limit": {
+   "label": "Quick plan",
+   "help": "Grill Me adds more (set in Personas › Crews).",
+   "unit": "questions",
+   "min": 1,
+   "max": 50
+  },
+  "branching.plan.standard-question-limit": {
+   "label": "Standard plan",
+   "help": "Grill Me adds more (set in Personas › Crews).",
+   "unit": "questions",
+   "min": 1,
+   "max": 50
+  },
+  "branching.plan.thorough-question-limit": {
+   "label": "Thorough plan",
+   "help": "Grill Me adds more (set in Personas › Crews).",
+   "unit": "questions",
+   "min": 1,
+   "max": 50
+  },
+  "branching.deep-plan.thorough-question-limit": {
+   "label": "Deep Plan, Thorough",
+   "help": "Grill Me adds more (set in Personas › Crews).",
+   "unit": "questions",
+   "min": 1,
+   "max": 50
+  },
+  "branching.deep-plan.exhaustive-question-limit": {
+   "label": "Deep Plan, Exhaustive",
+   "help": "Grill Me adds more (set in Personas › Crews).",
+   "unit": "questions",
+   "min": 1,
+   "max": 50
+  },
+  "planning.interview.requirements-upload-order": {
+   "actionLabel": "Put requirement files in order",
+   "flow": {
+    "kind": "order",
+    "icon": "list",
+    "listTitle": "First wins when they disagree",
+    "items": [
+     {
+      "label": "product-brief.md",
+      "help": "Uploaded Monday"
+     },
+     {
+      "label": "api-contract.yaml",
+      "help": "Uploaded Monday"
+     },
+     {
+      "label": "design-notes.pdf",
+      "help": "Uploaded Tuesday"
+     },
+     {
+      "label": "old-requirements.docx",
+      "help": "Uploaded last month"
+     }
+    ]
+   },
+   "label": "Order of attached files (this session)",
+   "help": "Earlier files win when documents disagree."
+  }
+ }
+}

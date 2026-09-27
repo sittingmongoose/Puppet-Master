@@ -359,6 +359,13 @@
    "min": 1000,
    "step": 1000,
    "placeholder": "No cap"
+  },
+  "code.execution.mode-overlay": {
+   "label": "Extra working style",
+   "help": "Debug, interview or brainstorm on top of the mode above; it never allows more than that mode.",
+   "options": {
+    "None": "None"
+   }
   }
  }
 }

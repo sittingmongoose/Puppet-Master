@@ -928,13 +928,8 @@ flashSearchHit = function (settingId) {
 };
 const pm51OriginalAuditWithPlacement = runCompletenessAudit;
 runCompletenessAudit = function () { const report = pm51OriginalAuditWithPlacement(); report.placement = PM51.placement.audit(); return report; };
-Object.assign(INTROS, {
-  'app-input': 'Look and feel, the chat view, help, and what happens at startup.',
-  'editor-runtime': 'Files, editing, the terminal, and the project search index.',
-  'code-reference': 'Building and running containers, Kubernetes views, and Unraid templates.',
-  'planning-reference': 'How the planning interview asks questions and how deep plans go.',
-  advanced: 'Diagnostics, runtime options, and deliberate recovery actions.'
-});
+/* Plain pages carry their intro in placement `pages` (a placement.d patch may change it with the page's name). */
+Object.entries(PLACEMENT.pages || {}).forEach(([id, p]) => { if (p && p.intro) INTROS[id] = p.intro; });
 
 /* Navigation: a section or setting on another tab switches the tab before the mount; scrolling to a
    section on a tab that is not rendered switches and re-renders synchronously first. */

@@ -57,6 +57,18 @@
    "help": "Computer and install details, with secrets removed.",
    "pm51": "pm51-doctor-copy",
    "actionLabel": "Collect support details"
+  },
+  "general.startup.onboarding": {
+   "label": "Show first-run tips",
+   "help": "Short tips the first time you use each part of the app."
+  },
+  "planning.interview.wizard-first-run": {
+   "label": "Open the Planning Wizard after first setup",
+   "help": "Right after you connect your first AI service."
+  },
+  "planning.interview.provider-setup-skip": {
+   "label": "Allow skipping AI service setup",
+   "help": "Setup offers Skip for now; you can connect them later in AI Providers."
   }
  }
 }

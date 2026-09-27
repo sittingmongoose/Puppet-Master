@@ -149,3 +149,18 @@ html[data-motion="reduced"] #panel-settings .setting-row.o55-row.is-flash, html[
 #panel-settings .pm51-mgr .pm51-section-body .pm51-rows > .pm51-row > .pm51-row-control { padding-right: 50px; }
 @media (max-width: 760px) { #panel-settings .pm51-mgr .pm51-section-body .pm51-rows > .pm51-row > .pm51-row-control { padding-right: 0; } }
 #panel-settings .settings-section.o55-group.o55-sec-off { display: none; }
+/* The owner line a placed group names (placement `owner`): one quiet sentence and its buttons, drawn like a row
+   inside the group, not as a boxed strip across its edges. */
+#panel-settings .settings-section.o55-group > .owner-redirects.o55-owner-line { display: flex; align-items: center; flex-wrap: nowrap; gap: 8px; margin: 6px 14px 0 18px; padding: 10px 4px 10px 0; border: 0; border-top: 1px solid var(--k3-line); background: none; }
+#panel-settings .o55-owner-line > span { margin-right: auto; font-size: 12.5px; line-height: 1.45; color: var(--k3-text-2); max-width: 60ch; }
+#panel-settings .o55-owner-line > .btn { flex: none; }
+#panel-settings .settings-section.o55-group > .owner-redirects.o55-owner-line + .setting-list > .setting-row:first-child { border-top: 1px solid var(--k3-line); }
+@media (max-width: 760px) { #panel-settings .settings-section.o55-group > .owner-redirects.o55-owner-line { flex-wrap: wrap; } }
+/* A "Custom" choice's field sits right under the choice. */
+#panel-settings .o55-custom { display: flex; flex-direction: column; align-items: stretch; gap: 6px; min-width: 190px; }
+#panel-settings .o55-custom .o55-custom-in { width: 100%; }
+/* "Needed" reads like "Changed", in the attention color. */
+#panel-settings .o55-changed.o55-needed { color: var(--k3-amber); }
+#panel-settings .o55-changed.o55-needed i { background: var(--k3-amber); box-shadow: 0 0 0 3px var(--k3-amber-soft); }
+/* A plain page's More options sits after its groups with the same gap. */
+#panel-settings .o55-page-more { margin-top: 14px; }

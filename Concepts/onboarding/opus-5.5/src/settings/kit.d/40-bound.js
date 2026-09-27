@@ -75,8 +75,11 @@ handleInputAction = function (action, el) {
 /* ---------- dependents ("when") -------------------------------------------------------------------------------- */
 const o55DepsOf = {}; /* parent id -> [child id] */
 for (const [id, meta] of Object.entries(O55R)) if (meta && meta.when && meta.when.id) (o55DepsOf[meta.when.id] = o55DepsOf[meta.when.id] || []).push(id);
-PM51.relevant = id => {
+/* Relevance follows the chain: a row that waits on a row which is itself hidden is hidden too (Retro scanline
+   strength waits on Retro textures, which only shows while a Retro theme is chosen). */
+PM51.relevant = (id, depth = 0) => {
   const w = (O55R[id] || {}).when; if (!w || !w.id) return true;
+  if (depth < 4 && w.id !== id && !PM51.relevant(w.id, depth + 1)) return false;
   const v = PM51.value(w.id);
   if (Array.isArray(w.in)) return w.in.map(String).includes(String(v));
   if (w.not !== undefined) return String(v) !== String(w.not);
@@ -95,9 +98,10 @@ function o55SyncSections(parent) {
     else sec.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, easing: o55Ease() }).finished.then(() => sec.classList.add('o55-sec-off'), () => sec.classList.add('o55-sec-off'));
   });
 }
-function o55SyncDependents(parent) {
+function o55SyncDependents(parent, depth = 0) {
   o55SyncSections(parent);
   (o55DepsOf[parent] || []).forEach(child => {
+    if (depth < 4 && child !== parent) o55SyncDependents(child, depth + 1);
     root.querySelectorAll(`[id="setting-${cssEscape(child)}"]`).forEach(row => {
       const on = PM51.relevant(child), hidden = row.classList.contains('o55-dep-off');
       if (on === !hidden) return;

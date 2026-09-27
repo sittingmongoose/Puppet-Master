@@ -3,7 +3,10 @@
  "sections": {
   "doctor-onboarding": {
    "title": "Setup and tour",
-   "help": "Pick up setup where you left it, or take the tour again."
+   "help": "Pick up setup where you left it, or take the tour again.",
+   "after": {
+    "onboarding": ""
+   }
   },
   "doctor-summary": {
    "to": "doctor",
@@ -60,6 +63,14 @@
    "section": "doctor-tools",
    "ids": [
     "system.health.platform-diagnostics"
+   ]
+  },
+  {
+   "section": "doctor-onboarding",
+   "ids": [
+    "general.startup.onboarding",
+    "planning.interview.wizard-first-run",
+    "planning.interview.provider-setup-skip"
    ]
   }
  ]

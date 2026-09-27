@@ -1,0 +1,409 @@
+{
+ "_about": "code-reference (Containers): wording, conditions, units, bounds and editors from the plain-pages audit (2026-09-27). The two Docker groups' rows stay decided in 20-toolchain.json. Rows the Unraid listing and publisher profile need are marked Needed while templates are updated after each publish.",
+ "rows": {
+  "code.execution.push-policy": {
+   "label": "Publish images",
+   "options": {
+    "Manual": "When I say so",
+    "After Build": "After every build"
+   }
+  },
+  "code.execution.tag-templates": {
+   "label": "Image tag patterns",
+   "help": "Use {version}, {timestamp} or {commit} in a pattern.",
+   "noun": "pattern",
+   "nouns": "patterns"
+  },
+  "code.execution.build-platforms": {
+   "label": "Build for these processors",
+   "options": {
+    "linux/amd64": "Intel and AMD (amd64)",
+    "linux/arm64": "64-bit ARM, e.g. Apple silicon (arm64)",
+    "linux/arm/v7": "32-bit ARM, e.g. older Raspberry Pi (armv7)"
+   }
+  },
+  "code.execution.dockerfile-path": {
+   "label": "Dockerfile location",
+   "placeholder": "Found automatically"
+  },
+  "code.execution.build-context": {
+   "label": "Folder sent to Docker when building",
+   "help": "Usually the project folder.",
+   "placeholder": "Project folder"
+  },
+  "code.execution.build-target-stage": {
+   "label": "Build stage",
+   "help": "Multi-stage Dockerfiles only: which stage to build.",
+   "placeholder": "The last stage"
+  },
+  "code.execution.compose-file": {
+   "label": "Compose file location",
+   "placeholder": "Found automatically"
+  },
+  "code.execution.compose-project-name": {
+   "label": "Compose project name",
+   "options": {
+    "Auto": "From the folder name",
+    "Custom": "A name I choose"
+   },
+   "custom": {
+    "option": "Custom",
+    "label": "Compose project name",
+    "placeholder": "For example: tastebook"
+   }
+  },
+  "code.execution.preferred-browser": {
+   "label": "Open container web pages in",
+   "options": {
+    "System Default": "My default browser"
+   }
+  },
+  "code.execution.port-forward-auto-open": {
+   "label": "When a container opens a port",
+   "options": {
+    "Suggest": "Suggest opening it",
+    "Always Open": "Open it in the browser",
+    "Never": "Do nothing"
+   }
+  },
+  "code.execution.port-preference-order": {
+   "label": "Ports to try first",
+   "help": "Used to find a container's web page.",
+   "noun": "port",
+   "nouns": "ports"
+  },
+  "code.execution.container-shell-command": {
+   "label": "Shell inside containers",
+   "help": "Used when you open a terminal in a running container."
+  },
+  "code.execution.stream-follow-default": {
+   "label": "Live logs start",
+   "options": {
+    "Following": "Scrolling with new lines",
+    "Paused": "Paused"
+   }
+  },
+  "code.execution.drift-sensitivity": {
+   "label": "Warn about changed containers",
+   "help": "When running containers no longer match their files."
+  },
+  "code.execution.drift-comparison-target": {
+   "label": "Compare running containers with",
+   "options": {
+    "Last Deployed": "What was last deployed",
+    "Compose File": "The compose file",
+    "Git HEAD": "The latest commit"
+   }
+  },
+  "code.execution.drift-ignore-rules": {
+   "label": "Differences to ignore",
+   "noun": "rule",
+   "nouns": "rules"
+  },
+  "code.execution.cleanup-scan-cadence": {
+   "label": "Look for things to clean up",
+   "options": {
+    "Manual": "Only when I ask"
+   }
+  },
+  "code.execution.cleanup-aggressiveness": {
+   "label": "How much cleanup suggests",
+   "options": {
+    "Conservative": "Only clearly unused things",
+    "Aggressive": "Anything not in use"
+   }
+  },
+  "code.execution.disk-threshold": {
+   "label": "Warn when Docker uses more disk than",
+   "unit": "%",
+   "min": 50,
+   "max": 95
+  },
+  "code.execution.protected-assets": {
+   "label": "Never clean these up",
+   "noun": "item",
+   "nouns": "items"
+  },
+  "code.execution.hide-ephemeral-cleanup-warnings": {
+   "label": "Skip warnings for throwaway previews"
+  },
+  "code.execution.k8s-context": {
+   "label": "Kubernetes cluster",
+   "empty": "None chosen"
+  },
+  "code.execution.k8s-namespace": {
+   "label": "Namespace",
+   "help": "The part of the cluster this project works in.",
+   "when": {
+    "id": "code.execution.k8s-context",
+    "not": ""
+   }
+  },
+  "code.execution.k8s-cluster-wide": {
+   "label": "Show the whole cluster",
+   "help": "Off shows only this project's resources."
+  },
+  "code.execution.k8s-auto-refresh": {
+   "label": "Keep Kubernetes views live"
+  },
+  "code.execution.helm-visibility": {
+   "label": "Show Helm tools when Helm files are found"
+  },
+  "code.execution.k8s-host-policy": {
+   "label": "What agents may do in each cluster",
+   "help": "Apply, open a shell, forward ports or read logs.",
+   "editor": "pm51-o55-k8s-policy",
+   "empty": "Only reading logs"
+  },
+  "code.execution.k8s-log-defaults": {
+   "label": "Kubernetes logs start",
+   "editor": "pm51-o55-k8s-logs",
+   "keys": {
+    "start": "Start"
+   },
+   "options": {
+    "following": "Scrolling with new lines",
+    "paused": "Paused",
+    "history": "Show earlier lines first"
+   },
+   "empty": "Same as other live logs"
+  },
+  "code.execution.show-build-advanced": {
+   "label": "Show extra build options in the Docker panel"
+  },
+  "code.execution.follow-latest-publish": {
+   "label": "Docker panel follows the newest publish"
+  },
+  "code.execution.publish-history-chain": {
+   "label": "Show older publishes in the version chain"
+  },
+  "code.execution.receipt-verbosity": {
+   "label": "Detail kept for each container action"
+  },
+  "code.execution.receipt-retention": {
+   "label": "Keep container action records for"
+  },
+  "code.execution.unraid-generate-xml": {
+   "label": "Update the Unraid template after each publish"
+  },
+  "code.execution.unraid-manage-repo": {
+   "label": "Let Puppet Master look after the template repository",
+   "help": "It keeps the layout tidy and makes the commits."
+  },
+  "code.execution.unraid-auto-push": {
+   "label": "Push template updates automatically",
+   "help": "Off: you review and push with one click."
+  },
+  "code.execution.app-template-name": {
+   "label": "App name in the store",
+   "help": "Needed to publish; uses the project name if empty.",
+   "needed": "code.execution.unraid-generate-xml"
+  },
+  "code.execution.app-template-overview": {
+   "label": "App description",
+   "help": "Needed to publish; starts from your README.",
+   "control": "textarea",
+   "needed": "code.execution.unraid-generate-xml"
+  },
+  "code.execution.app-template-webui": {
+   "label": "App web address",
+   "help": "Usually found automatically from previews.",
+   "placeholder": "Found automatically"
+  },
+  "code.execution.app-template-categories": {
+   "label": "Store categories",
+   "help": "Needed to publish.",
+   "noun": "category",
+   "nouns": "categories",
+   "needed": "code.execution.unraid-generate-xml"
+  },
+  "code.execution.app-template-config-items": {
+   "label": "Setup fields",
+   "help": "Ports, folders and options people fill in when installing.",
+   "editor": "pm51-o55-template-fields",
+   "noun": "field",
+   "nouns": "fields"
+  },
+  "code.execution.maintainer-profile-scope": {
+   "label": "This project uses",
+   "help": "Your publisher profile is shared by your projects unless one has its own.",
+   "options": {
+    "Shared Across Projects": "My publisher profile",
+    "Per-Project Override": "A profile just for this project"
+   }
+  },
+  "code.execution.maintainer-name": {
+   "label": "Publisher name",
+   "help": "Needed to publish; shown to people who install your app.",
+   "needed": "code.execution.unraid-generate-xml"
+  },
+  "code.execution.maintainer-about": {
+   "label": "About you",
+   "help": "Needed to publish; a short line about you or your team.",
+   "needed": "code.execution.unraid-generate-xml"
+  },
+  "code.execution.maintainer-support-url": {
+   "label": "Where people get help",
+   "help": "Needed to publish; a forum thread, Discord or issues page.",
+   "placeholder": "https://",
+   "needed": "code.execution.unraid-generate-xml"
+  },
+  "code.execution.maintainer-icon": {
+   "label": "Publisher picture",
+   "help": "Needed to publish.",
+   "options": {
+    "Upload Image": "Upload a picture",
+    "Image URL": "Link to a picture"
+   },
+   "control": "action",
+   "actionLabel": "Choose a picture",
+   "icon": "image",
+   "pm51": "pm51-o55-publisher-picture",
+   "needed": "code.execution.unraid-generate-xml"
+  },
+  "code.execution.maintainer-slug": {
+   "label": "Publisher handle",
+   "help": "Short name; uses your Docker Hub account name if empty."
+  },
+  "code.execution.unraid-repo-path": {
+   "label": "Template repository location",
+   "help": "A folder on this computer or a Git address."
+  },
+  "code.execution.unraid-repo-branch": {
+   "label": "Template repository branch"
+  },
+  "code.execution.unraid-repo-name": {
+   "label": "Template repository name"
+  },
+  "code.execution.unraid-maintainer-folder": {
+   "label": "Folder name inside the template repository"
+  },
+  "code.execution.preserve-unknown-xml": {
+   "label": "Keep profile content Puppet Master doesn't recognise"
+  },
+  "code.execution.unraid-repo-setup": {
+   "actionLabel": "Set up the template repository",
+   "flow": {
+    "kind": "form",
+    "icon": "archive",
+    "primary": "Set it up",
+    "external": true,
+    "fields": [
+     {
+      "key": "mode",
+      "label": "Repository",
+      "type": "select",
+      "options": [
+       [
+        "new",
+        "Make a new one"
+       ],
+       [
+        "existing",
+        "Use one I already have"
+       ]
+      ]
+     },
+     {
+      "key": "repo",
+      "label": "Repository address",
+      "placeholder": "github.com/you/unraid-templates",
+      "required": true,
+      "mono": true
+     },
+     {
+      "key": "branch",
+      "label": "Branch",
+      "value": "main",
+      "mono": true
+     },
+     {
+      "key": "folder",
+      "label": "Templates folder",
+      "value": "templates/",
+      "mono": true
+     },
+     {
+      "key": "push",
+      "label": "Push new templates straight away",
+      "type": "toggle",
+      "value": false
+     }
+    ],
+    "note": "Puppet Master checks the branch and folder layout before it pushes anything.",
+    "done": [
+     "Template repository set up",
+     "Checked the branch and layout."
+    ]
+   },
+   "label": "Set up the template repository"
+  },
+  "code.execution.unraid-review-state": {
+   "actionLabel": "Check the template repository",
+   "flow": {
+    "kind": "check",
+    "icon": "test",
+    "primary": "Check it",
+    "steps": [
+     {
+      "title": "Settings file",
+      "desc": "templates/ca_profile.xml reads cleanly",
+      "result": "OK"
+     },
+     {
+      "title": "In step with GitHub",
+      "desc": "1 commit behind origin/main",
+      "result": "Behind",
+      "resultTone": "attention"
+     },
+     {
+      "title": "Unrelated changes",
+      "desc": "None found",
+      "result": "OK"
+     }
+    ],
+    "outcome": "1 thing to fix: pull the latest commit"
+   },
+   "label": "Check the template repository"
+  },
+  "code.execution.edit-publisher-xml": {
+   "actionLabel": "Edit the publisher profile",
+   "flow": {
+    "kind": "form",
+    "icon": "edit",
+    "size": "wide",
+    "primary": "Save profile",
+    "fields": [
+     {
+      "key": "name",
+      "label": "Publisher name",
+      "value": "Tastebook"
+     },
+     {
+      "key": "site",
+      "label": "Support page",
+      "value": "https://github.com/sittingmongoose/tastebook",
+      "mono": true
+     },
+     {
+      "key": "icon",
+      "label": "Icon address",
+      "placeholder": "https://…/icon.png",
+      "mono": true
+     },
+     {
+      "key": "xml",
+      "label": "Other fields (raw ca_profile.xml)",
+      "type": "textarea",
+      "mono": true,
+      "rows": 8,
+      "value": "<Maintainer>\n  <Donate>https://…</Donate>\n  <Forum>https://forums.unraid.net/…</Forum>\n</Maintainer>",
+      "help": "Only for fields the form above does not cover."
+     }
+    ]
+   },
+   "label": "Edit the publisher profile file",
+   "help": "A form for common fields, or the raw XML for the rest."
+  }
+ }
+}

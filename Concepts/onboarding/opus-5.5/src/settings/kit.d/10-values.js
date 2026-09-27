@@ -98,11 +98,21 @@ function o55Multi(setting, value, opts) {
   const on = Array.isArray(value) ? value.map(String) : [];
   return `<div class="chip-select o55-chips" role="group" aria-label="${a(setting.label)}">${opts.map(o => { const sel = on.includes(String(o)); return `<button type="button" class="${sel ? 'active' : ''}" aria-pressed="${sel}" data-action="toggle-multi-setting" data-setting="${a(setting.id)}" data-value="${a(o)}">${sel ? icon('check') : ''}<span>${h(PM51.valueLabel(setting.id, o))}</span></button>`; }).join('')}</div>`;
 }
+/* A bound may follow another setting (rows.d `maxFrom` / `minFrom`, an id or {id, offset}): tabs reopened next time
+   can't exceed the tabs allowed open, and the fewest questions per topic stays below the most. */
+function o55Bound(row, setting, side) {
+  const own = row[side] ?? (setting || {})[side], from = row[side + 'From'];
+  if (!from || typeof PM51.value !== 'function') return own;
+  const v = Number(PM51.value(typeof from === 'string' ? from : from.id)); if (!Number.isFinite(v)) return own;
+  const lim = v + (typeof from === 'object' ? Number(from.offset) || 0 : 0);
+  return Number.isFinite(own) ? (side === 'max' ? Math.min(own, lim) : Math.max(own, lim)) : lim;
+}
 function o55Number(setting, value) {
   const raw = String(value == null ? '' : value), n = Number.parseFloat(raw), suffix = raw.replace(/^[-+]?\d*\.?\d+\s*/, '');
   const unit = o55Unit(setting) || suffix;
   const row = O55R[setting.id] || {};
-  const bounds = `${Number.isFinite(row.min ?? setting.min) ? ` min="${row.min ?? setting.min}"` : ''}${Number.isFinite(row.max ?? setting.max) ? ` max="${row.max ?? setting.max}"` : ''}`;
+  const lo = o55Bound(row, setting, 'min'), hi = o55Bound(row, setting, 'max');
+  const bounds = `${Number.isFinite(lo) ? ` min="${lo}"` : ''}${Number.isFinite(hi) ? ` max="${hi}"` : ''}`;
   /* a stored unit people do not think in (milliseconds, seconds of cache life) is shown in one they do: rows.d
      `scale` divides for display and multiplies back when saving */
   const scale = Number(row.scale) || 1;
@@ -154,8 +164,10 @@ function o55Path(setting, value) {
 }
 function o55Status(setting, value) {
   const row = O55R[setting.id] || {};
-  /* a policy that is not a choice reads as one fixed sentence (rows.d `readout`) */
-  const text = row.readout || PM51.valueText(setting, value);
+  /* a policy that is not a choice reads as one fixed sentence (rows.d `readout`); a readout of something the app
+     detects maps each value to its sentence ({"true": "Active", "false": "Not active"}) */
+  const ro = row.readout && typeof row.readout === 'object' ? row.readout[String(value)] : row.readout;
+  const text = ro || PM51.valueText(setting, value);
   return `<span class="o55-readout">${PM51.status(text, row.tone || PM51.tone(text))}</span>`;
 }
 const o55KitControl = renderControl;
@@ -185,17 +197,49 @@ renderControl = function (setting, value) {
 /* One row everywhere (manager sections, plain pages, composed rows): label, one plain sentence, the control, and a
    small "About" button that opens the Details panel. Changed values carry a quiet dot, not a badge. */
 const o55FirstSentence = text => { const m = /\S.*?(?:[.!?](?=\s|$))/.exec(String(text || '')); return m ? m[0].trim() : String(text || '').trim(); };
-PM51.rowLabel = setting => (O55R[setting.id] || {}).label || setting.label;
+/* A label rows.d does not decide falls back to the inventory's, in sentence case: "Keep Running In System Tray" reads
+   "Keep running in system tray". Names keep their capitals: product and tool names, words with an inner capital
+   (GitHub, BrainStorm), all-caps words (MB, AI) and a few fixed phrases (Deep Plan, Grill Me, Docker Hub). */
+const O55_LABEL_PHRASES = ['Claude Code', 'Gemini CLI', 'Grok Build', 'Muse Code', 'OpenCode Go', 'OpenCode Zen', 'VS Code', 'Visual Studio Code', 'Docker Hub', 'Docker Manager', 'Puppet Master', 'Deep Plan', 'Deep Research', 'Grill Me', 'Back Seat Driver', 'Planning Wizard', 'Community Apps', 'Guided Tour', 'Assistant Chat', 'File Manager', 'Command Palette', 'Git HEAD'];
+const O55_LABEL_KEEP = new Set(('I Basic Glass Retro Docker Kubernetes Helm Unraid Gemini Mermaid Git Markdown Ctrl Enter Shift Alt Cmd Esc Claude Codex Copilot Cursor '
+  + 'Jujutsu Windows Linux Podman Grok Kimi Qwen DeepSeek Ollama Anthropic OpenAI Google Microsoft Apple Chrome Chromium Firefox Safari Playwright Rust Python '
+  + 'TypeScript JavaScript Node Slack Discord Teams Telegram Jira Linear Notion Figma Wayland Tauri Tailscale Bitwarden Keychain Obsidian Zed Vim Emacs Neovim '
+  + 'Kiro Warp Amp Droid Cline Aider Goose Muse Mistral Groq Cerebras OpenRouter Bedrock Vertex Azure AWS').split(' '));
+const o55LabelCache = new Map();
+function o55SentenceCase(label) {
+  if (!label || !/\s/.test(label)) return label;
+  if (o55LabelCache.has(label)) return o55LabelCache.get(label);
+  let s = String(label); const prot = [];
+  O55_LABEL_PHRASES.forEach((ph, k) => { if (s.includes(ph)) { s = s.split(ph).join(`\u0000${k}\u0000`); prot.push([k, ph]); } });
+  const low = x => (!x || O55_LABEL_KEEP.has(x) || /[A-Z]/.test(x.slice(1)) || /\d/.test(x) || x[0] !== x[0].toUpperCase() || x.slice(1) !== x.slice(1).toLowerCase()) ? x : x[0].toLowerCase() + x.slice(1);
+  let out = s.split(' ').map((w, n) => {
+    if (w.includes('\u0000')) return w;
+    const m = w.match(/^([^A-Za-z0-9]*)(.*?)([^A-Za-z0-9]*)$/), core = m ? m[2] : '';
+    if (!core || /^[A-Z0-9]{2,}s?$/.test(core)) return w;
+    return m[1] + core.split('-').map((p, i) => (n === 0 && i === 0) ? p : low(p)).join('-') + m[3];
+  }).join(' ');
+  prot.forEach(([k, ph]) => { out = out.split(`\u0000${k}\u0000`).join(ph); });
+  o55LabelCache.set(label, out);
+  return out;
+}
+PM51.rowLabel = setting => (O55R[setting.id] || {}).label || o55SentenceCase(setting.label);
 PM51.rowHelp = setting => { const r = O55R[setting.id] || {}; return r.help != null ? r.help : o55FirstSentence(setting.description); };
 renderSettingRow = function (setting, section, workspace) {
   const current = settingValue(setting);
   const changed = !!state.changed[setting.id];
   const row = O55R[setting.id] || {};
   const label = PM51.rowLabel(setting), help = PM51.rowHelp(setting);
-  const control = renderControl(setting, current);
+  let control = renderControl(setting, current);
+  /* a choice named "Custom" gets the field it needs right under it (rows.d `custom`: which option, the field's
+     label and an example); what is typed is kept per setting */
+  if (row.custom && String(current) === String(row.custom.option)) control = `<div class="o55-custom">${control}<input class="text-control o55-custom-in" type="text" data-o55-custom="${a(setting.id)}" value="${a(((PM51.s().o55Custom || {})[setting.id]) || '')}" placeholder="${a(row.custom.placeholder || '')}" aria-label="${a(row.custom.label || 'Custom value')}" autocomplete="off" spellcheck="false"></div>`;
+  /* rows.d `needed`: an empty value that another switch depends on (the Unraid listing while templates are made
+     after each publish) is marked like a change, in the attention color */
+  const empty = current == null || current === '' || (Array.isArray(current) && !current.length) || (typeof current === 'object' && !Array.isArray(current) && !Object.keys(current).length);
+  const needed = !!row.needed && empty && typeof PM51.value === 'function' && !!PM51.value(row.needed);
   const wide = row.layout === 'wide' || ['multiselect'].includes(row.control || setting.control) && o55Options(setting).length > 4;
   return `<div class="setting-row o55-row${changed ? ' is-changed' : ''}${wide ? ' is-wide' : ''}${row.risk ? ' is-risky' : ''}" id="setting-${a(setting.id)}" data-o55-kind="${a(row.control || setting.control || '')}">
-      <div class="setting-copy"><div class="setting-label">${h(label)}${changed ? '<span class="o55-changed" title="Changed from the default"><i></i><span>Changed</span></span>' : ''}${row.risk ? `<span class="o55-risk">${icon('alert')}<span>${h(row.risk)}</span></span>` : ''}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div>
+      <div class="setting-copy"><div class="setting-label">${h(label)}${changed ? '<span class="o55-changed" title="Changed from the default"><i></i><span>Changed</span></span>' : ''}${needed ? '<span class="o55-changed o55-needed" title="Needed before publishing"><i></i><span>Needed</span></span>' : ''}${row.risk ? `<span class="o55-risk">${icon('alert')}<span>${h(row.risk)}</span></span>` : ''}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div>
       <div class="setting-control">${control}</div>
       <button type="button" class="icon-btn details-btn o55-about" aria-expanded="${state.detailSetting === setting.id ? 'true' : 'false'}" data-action="setting-details" data-setting="${a(setting.id)}" data-workspace="${a(workspace ? workspace.id : '')}" data-section="${a(section ? section.id : '')}" aria-label="${a('About ' + label)}" data-pm-hover-label="${a('About ' + label)}" data-pm-hover-detail="What it does, your choices, and the default.">${icon('help')}</button>
     </div>`;
@@ -207,8 +251,12 @@ const o55KitSection = renderSettingsSection;
    each row has its own About. */
 renderSettingsSection = function (section, workspace, index) {
   if (!section || !Array.isArray(section.settings) || (workspace && workspace.virtualAllSettings)) return o55KitSection(section, workspace, index);
+  /* A placed section names its owner line itself (`owner` in placement: one sentence and the buttons), so "Open Docker
+     Manager" shows once, at the top of Docker on this computer, not on every group that holds a container id. */
   let owners = '';
-  try { owners = typeof renderOwnerRedirects === 'function' ? renderOwnerRedirects(section) : ''; } catch (e) { owners = ''; }
+  const def = section.placement ? (PLACEMENT.sections || {})[section.id] : null;
+  if (def) owners = def.owner ? `<div class="owner-redirects o55-owner-line"><span>${h(def.owner.text)}</span>${(def.owner.buttons || []).map(b => `<button type="button" class="btn" data-action="${a(b.action)}">${h(b.label)}</button>`).join('')}</div>` : '';
+  else { try { owners = typeof renderOwnerRedirects === 'function' ? renderOwnerRedirects(section) : ''; } catch (e) { owners = ''; } }
   const idle = section.settings.length > 0 && section.settings.every(st => (O55R[st.id] || {}).when && !PM51.relevant(st.id));
   return `<section class="settings-section o55-group${idle ? ' o55-sec-off' : ''}" id="section-${a(section.id)}" data-section-id="${a(section.id)}">
       <header class="o55-group-head"><h3 class="o55-group-title">${h(section.label)}</h3>${section.description ? `<p class="o55-group-help">${h(section.description)}</p>` : ''}</header>
@@ -337,7 +385,7 @@ function o55JsonEditor(found) {
 function o55NumberDialog(found) {
   const s = found.setting, row = O55R[s.id] || {};
   const unit = o55Unit(s);
-  const min = row.min ?? s.min, max = row.max ?? s.max;
+  const min = o55Bound(row, s, 'min'), max = o55Bound(row, s, 'max');
   PM51.panel({
     title: PM51.rowLabel(s), eyebrow: 'Set a number', icon: 'sliders', size: 'narrow', summary: PM51.rowHelp(s),
     body: PM51.panelSection('Value', PM51.field(unit ? `Value (${unit})` : 'Value', `<input class="text-control o55-numinput" type="number" inputmode="decimal" step="any"${Number.isFinite(min) ? ` min="${min}"` : ''}${Number.isFinite(max) ? ` max="${max}"` : ''} placeholder="${a(row.placeholder || '')}" data-autofocus aria-label="Value"/>`, Number.isFinite(min) && Number.isFinite(max) ? `Between ${min} and ${max}.` : 'Leave it on Automatic to follow the default.')),

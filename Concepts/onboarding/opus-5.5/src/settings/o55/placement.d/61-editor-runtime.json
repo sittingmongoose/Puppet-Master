@@ -1,0 +1,231 @@
+{
+ "_about": "editor-runtime: sections from the plain-pages audit (2026-09-27). Saving and tabs, the file tree, editing, four terminal groups and the search index; big-file limits and rarely changed terminal and index options under More options. The page is named Editor & Terminal: its containers moved to Containers. Duplicate hand rows are dropped: format-save (Tidy code automatically, Toolchain), large-file (the three inventory size limits), terminal-profile (Shell), terminal-restore (Terminals when a project reopens), index-exclusions (Leave out of search). In: tabs reopened next time, from App & Input.",
+ "pages": {
+  "editor-runtime": {
+   "label": "Editor & Terminal",
+   "more": "Big files, allowed shells, speed and troubleshooting, and index details."
+  }
+ },
+ "sections": {
+  "editor-open": {
+   "to": "editor-runtime",
+   "title": "Saving & tabs",
+   "help": "When files are saved and how many tabs stay open.",
+   "order": 10,
+   "after": {
+    "autosave": "",
+    "file-encoding": "autosave"
+   }
+  },
+  "editor-files": {
+   "to": "editor-runtime",
+   "title": "File tree",
+   "help": "What the file list shows and what dragging does.",
+   "order": 20
+  },
+  "editor-editing": {
+   "to": "editor-runtime",
+   "title": "Editing",
+   "help": "How code looks while you read and write it.",
+   "order": 30
+  },
+  "editor-terminal": {
+   "to": "editor-runtime",
+   "title": "Terminal",
+   "help": "Which shell runs, where it starts, and how panes come back.",
+   "order": 40
+  },
+  "editor-terminal-look": {
+   "to": "editor-runtime",
+   "title": "Terminal look",
+   "help": "Colors, font and how rich the terminal looks.",
+   "order": 50
+  },
+  "editor-terminal-output": {
+   "to": "editor-runtime",
+   "title": "Terminal output & history",
+   "help": "Finding things in output and how long it is kept.",
+   "order": 60
+  },
+  "editor-terminal-copy": {
+   "to": "editor-runtime",
+   "title": "Copy & paste",
+   "help": "What copying and pasting do in the terminal.",
+   "order": 70,
+   "after": {
+    "paste-protect": "code.terminal.copy-behavior"
+   }
+  },
+  "editor-search-index": {
+   "to": "editor-runtime",
+   "title": "Project search index",
+   "help": "A fast index so search and autocomplete are instant.",
+   "order": 80,
+   "hand_section": null,
+   "after": {
+    "index-mode": "web.index.enable"
+   }
+  },
+  "editor-big-files": {
+   "to": "editor-runtime",
+   "title": "Big files & folders",
+   "help": "Limits that keep the app fast with huge files.",
+   "order": 90,
+   "advanced": true
+  },
+  "editor-terminal-more": {
+   "to": "editor-runtime",
+   "title": "Terminal: more options",
+   "help": "Shells allowed, extra panes, speed and troubleshooting.",
+   "order": 100,
+   "advanced": true
+  },
+  "editor-search-index-more": {
+   "to": "editor-runtime",
+   "title": "Search index: more options",
+   "help": "Big files, linked folders, remote projects and disk space.",
+   "order": 110,
+   "advanced": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "editor-open",
+   "ids": [
+    "general.interaction.max-editor-tabs",
+    "general.startup.max-persisted-tabs"
+   ]
+  },
+  {
+   "section": "editor-files",
+   "ids": [
+    "general.interaction.hide-ignored-files",
+    "general.interaction.expand-current-file",
+    "general.interaction.persist-tree-state",
+    "general.interaction.drop-action",
+    "general.interaction.drop-conflict"
+   ]
+  },
+  {
+   "section": "editor-editing",
+   "ids": [
+    "code.editing.word-wrap",
+    "code.editing.line-numbers",
+    "code.editing.syntax-highlighting",
+    "code.editing.diagnostics-visibility",
+    "code.editing.goto-highlight-ms",
+    "code.editing.editor-strip-collapsed"
+   ]
+  },
+  {
+   "section": "editor-terminal",
+   "ids": [
+    "code.terminal.shell",
+    "code.terminal.cwd",
+    "code.terminal.startup-command",
+    "code.terminal.layout-style",
+    "code.terminal.layout-restore",
+    "code.terminal.kill-confirm"
+   ]
+  },
+  {
+   "section": "editor-terminal-look",
+   "ids": [
+    "code.terminal.theme",
+    "code.terminal.font-family",
+    "code.terminal.font-size",
+    "code.terminal.rendering-mode",
+    "code.terminal.explanations"
+   ]
+  },
+  {
+   "section": "editor-terminal-output",
+   "ids": [
+    "code.terminal.search",
+    "code.terminal.sticky-header",
+    "code.terminal.readability-signals",
+    "code.terminal.transcript-retention",
+    "code.terminal.scrollback-limit"
+   ]
+  },
+  {
+   "section": "editor-terminal-copy",
+   "ids": [
+    "code.terminal.copy-on-select",
+    "code.terminal.right-click-paste",
+    "code.terminal.copy-behavior"
+   ]
+  },
+  {
+   "section": "editor-search-index",
+   "ids": [
+    "web.index.enable",
+    "web.index.exclusion-patterns",
+    "web.index.rebuild"
+   ]
+  },
+  {
+   "section": "editor-big-files",
+   "ids": [
+    "code.editing.large-file-threshold",
+    "code.editing.max-file-size-mb",
+    "general.interaction.row-cap"
+   ]
+  },
+  {
+   "section": "editor-terminal-more",
+   "ids": [
+    "code.terminal.allowed-profiles",
+    "code.terminal.auto-second-pane",
+    "code.terminal.tab-role",
+    "code.terminal.font-rendering",
+    "code.terminal.performance-mode",
+    "code.terminal.shell-integration",
+    "code.terminal.diagnostics-logging"
+   ]
+  },
+  {
+   "section": "editor-search-index-more",
+   "ids": [
+    "web.index.large-file-threshold",
+    "web.index.follow-symlinks",
+    "web.index.remote-cache-mode",
+    "web.index.disk-usage",
+    "web.index.evict-cache"
+   ]
+  }
+ ],
+ "hand_moves": [
+  {
+   "workspace": "editor-runtime",
+   "ids": [
+    "autosave",
+    "file-encoding"
+   ],
+   "to_section": "editor-open"
+  },
+  {
+   "workspace": "editor-runtime",
+   "ids": [
+    "paste-protect"
+   ],
+   "to_section": "editor-terminal-copy"
+  },
+  {
+   "workspace": "editor-runtime",
+   "ids": [
+    "index-mode"
+   ],
+   "to_section": "editor-search-index"
+  }
+ ],
+ "hand_drops": {
+  "editor-runtime": [
+   "format-save",
+   "large-file",
+   "terminal-profile",
+   "terminal-restore",
+   "index-exclusions"
+  ]
+ }
+}

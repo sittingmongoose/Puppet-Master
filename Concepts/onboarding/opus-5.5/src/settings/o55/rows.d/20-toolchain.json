@@ -191,10 +191,23 @@
    "help": "The Docker panel appears once a Dockerfile shows up."
   },
   "code.execution.docker-display-context": {
-   "label": "Docker panel opens on"
+   "label": "Docker panel opens on",
+   "options": {
+    "Active": "The one in use now",
+    "Last Used": "The one I used last",
+    "Ask Each Time": "Ask me each time"
+   }
   },
   "code.execution.default-registry": {
-   "label": "Where images go by default"
+   "label": "Where images go by default",
+   "custom": {
+    "option": "Custom",
+    "label": "Registry address",
+    "placeholder": "For example: registry.example.com"
+   },
+   "options": {
+    "Custom": "Another registry"
+   }
   },
   "code.execution.dockerhub-auth-method": {
    "label": "How to sign in to Docker Hub",
@@ -247,11 +260,27 @@
   },
   "code.execution.dockerhub-namespace": {
    "label": "Publish under",
-   "help": "The Docker Hub account or team your images belong to."
+   "help": "The Docker Hub account or team your images belong to.",
+   "options": {
+    "custom…": "Other…"
+   },
+   "custom": {
+    "option": "custom…",
+    "label": "Name",
+    "placeholder": "For example: my-team"
+   }
   },
   "code.execution.dockerhub-repository": {
    "label": "Publish to",
-   "help": "The Docker Hub repository your images go to."
+   "help": "The Docker Hub repository your images go to.",
+   "options": {
+    "custom…": "Other…"
+   },
+   "custom": {
+    "option": "custom…",
+    "label": "Name",
+    "placeholder": "For example: my-app"
+   }
   },
   "code.execution.repo-privacy": {
    "label": "New Docker Hub repositories are"

@@ -72,8 +72,9 @@ def o55_data() -> dict:
 
 def placement() -> dict:
     """placement.json plus o55/placement.d/*.json: `sections` merge by id (a patch may add or change fields, or drop a
-    section with null), `overrides` are prepended in file order (first match wins, so a patch beats the base), and
-    `managers` merge by id."""
+    section with null), `overrides` are prepended in file order (first match wins, so a patch beats the base),
+    `managers` and `pages` merge by id, `hand_moves` are appended in file order (after the base's moves), and
+    `hand_drops` ({page: [hand row ids]}) name hand-written rows that only repeat an inventory row and are not drawn."""
     base = json.loads((FORK / 'placement.json').read_text(encoding='utf-8'))
     extra_rules = []
     for p in sorted((FORK / 'o55' / 'placement.d').glob('*.json')):
@@ -85,6 +86,12 @@ def placement() -> dict:
                 base['sections'][sid] = dict(base['sections'].get(sid, {}), **sec)
         for mid, meta in patch.get('managers', {}).items():
             base['managers'][mid] = dict(base['managers'].get(mid, {}), **meta)
+        for pid, meta in patch.get('pages', {}).items():
+            base['pages'][pid] = dict(base['pages'].get(pid, {}), **meta)
+        base['hand_moves'] = base.get('hand_moves', []) + [dict(m, _patch=p.name) for m in patch.get('hand_moves', [])]
+        for ws, ids in patch.get('hand_drops', {}).items():
+            have = base.setdefault('hand_drops', {}).setdefault(ws, [])
+            have += [i for i in ids if i not in have]
         extra_rules += [dict(r, _patch=p.name) for r in patch.get('overrides', [])]
     base['overrides'] = extra_rules + base.get('overrides', [])
     return base
@@ -132,6 +139,12 @@ def validate(merged: dict, engine: str, t50, need) -> dict:
         need(to in managers or to in pages, f'O55 placement: section {sid!r} points at unknown {to!r}')
         if to in managers and managers[to].get('tabs'):
             need(sec.get('tab') in managers[to]['tabs'], f'O55 placement: section {sid!r} needs a tab of {to!r}')
+    for mv in merged.get('hand_moves', []):
+        if mv.get('_patch'):
+            need(mv.get('to_section') in sections, f"O55 placement: {mv['_patch']} moves hand rows to unknown section {mv.get('to_section')!r}")
+            need(pages.get(mv.get('workspace'), {}).get('hand'), f"O55 placement: {mv['_patch']} moves hand rows from {mv.get('workspace')!r}, which draws none")
+    for ws in merged.get('hand_drops', {}):
+        need(pages.get(ws, {}).get('hand'), f'O55 placement: hand_drops names {ws!r}, which draws no hand rows')
     hand = set(t50.HAND_CANONICAL_RE.findall(engine))
     rules = merged.get('overrides', [])
     wins = [0] * len(rules)

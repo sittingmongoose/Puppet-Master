@@ -1,0 +1,130 @@
+{
+ "_about": "planning-reference: sections from the plain-pages audit (2026-09-27). Plan and Deep Plan, the Planning Wizard, interview topics and helpers; question limits, one-session wizard choices, and files and formats under More options. The old 20-row Plan depth & questions group is gone. Out: the big-task checklist to App & Input (it is about work outside planning), first-run wizard and provider-setup skip to Readiness & Doctor.",
+ "pages": {
+  "planning-reference": {
+   "more": "Question limits, one-session wizard choices, and files and formats."
+  }
+ },
+ "sections": {
+  "plan-modes": {
+   "to": "planning-reference",
+   "title": "Plan and Deep Plan",
+   "help": "How much work a plan does and what happens when it is done.",
+   "order": 5
+  },
+  "plan-interview": {
+   "to": "planning-reference",
+   "title": "Planning Wizard",
+   "help": "How the wizard interviews you before it writes a plan.",
+   "order": 10
+  },
+  "plan-topics": {
+   "to": "planning-reference",
+   "title": "Interview topics",
+   "help": "Which topics the interview covers and how many questions each gets.",
+   "order": 15
+  },
+  "plan-helpers": {
+   "to": "planning-reference",
+   "title": "Helpers",
+   "help": "Who reads your pictures and who drafts and reviews the document.",
+   "order": 30
+  },
+  "plan-depth": null,
+  "plan-question-limits": {
+   "to": "planning-reference",
+   "title": "Question limits",
+   "help": "The most questions each kind of plan may ask you.",
+   "order": 100,
+   "advanced": true
+  },
+  "plan-session": {
+   "to": "planning-reference",
+   "title": "This wizard session only",
+   "help": "One-time choices the wizard normally asks you itself.",
+   "order": 110,
+   "advanced": true
+  },
+  "plan-files": {
+   "to": "planning-reference",
+   "title": "Files & formats",
+   "help": "Attachment limits, the document format and expert overrides.",
+   "order": 120,
+   "advanced": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "plan-modes",
+   "ids": [
+    "planning.interview.plan-default-depth",
+    "planning.interview.deep-plan-default-depth",
+    "planning.interview.deep-plan-grill-me",
+    "planning.interview.auto-open-deep-plan",
+    "planning.interview.plan-panel-sticky",
+    "planning.interview.plan-default-export"
+   ]
+  },
+  {
+   "section": "plan-interview",
+   "ids": [
+    "planning.interview.recommend-wizard",
+    "planning.interview.workflow-style",
+    "planning.interview.prompting-style",
+    "planning.interview.plan-thoroughness",
+    "planning.interview.web-research-mode",
+    "planning.interview.require-arch-confirmation"
+   ]
+  },
+  {
+   "section": "plan-topics",
+   "ids": [
+    "planning.interview.builder-topics",
+    "planning.interview.topic-depth",
+    "planning.interview.scope-probe-questions",
+    "planning.interview.min-questions-per-topic",
+    "planning.interview.max-questions-per-topic"
+   ]
+  },
+  {
+   "section": "plan-helpers",
+   "ids": [
+    "planning.interview.vision-provider",
+    "planning.interview.prefer-gemini-gui",
+    "planning.interview.builder-persona-mode",
+    "planning.interview.builder-intake-persona",
+    "planning.interview.builder-drafting-persona",
+    "planning.interview.builder-review-personas"
+   ]
+  },
+  {
+   "section": "plan-question-limits",
+   "ids": [
+    "branching.plan.quick-question-limit",
+    "branching.plan.standard-question-limit",
+    "branching.plan.thorough-question-limit",
+    "branching.deep-plan.thorough-question-limit",
+    "branching.deep-plan.exhaustive-question-limit"
+   ]
+  },
+  {
+   "section": "plan-session",
+   "ids": [
+    "planning.interview.wizard-intent",
+    "planning.interview.wizard-project-path",
+    "planning.interview.topic-checklist",
+    "planning.interview.run-all-topics",
+    "planning.interview.requirements-upload-order"
+   ]
+  },
+  {
+   "section": "plan-files",
+   "ids": [
+    "planning.interview.requirements-max-files",
+    "planning.interview.requirements-max-file-size",
+    "planning.interview.output-format",
+    "planning.interview.builder-preferences"
+   ]
+  }
+ ]
+}

@@ -414,6 +414,10 @@
    "hints": {
     "indefinite": "Overrides the day limit"
    }
+  },
+  "general.startup.refresh-investigation": {
+   "label": "Re-check the debug setup when a debugging chat resumes",
+   "help": "Catches a changed program or debugger before it runs again."
   }
  }
 }
