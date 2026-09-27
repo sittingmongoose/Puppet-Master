@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-004-wand-memory-plan-usage",
-  "updated_at_utc": "2026-09-27T19:15:00+00:00",
+  "updated_at_utc": "2026-09-27T21:30:00+00:00",
   "authority": "Live Plans are canon; this ledger is source lineage only.",
   "scope": "Group G4 of the wand-modules canon compile: register lines B-AMS-01..B-AMS-08, B-APR-01..02, B-PER-01..02, B-USE-01..02 of the impact register snapshot, NOW lines only in this pass.",
   "negative_constraints": [
@@ -16,5 +16,5 @@
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage/source_shards/authorization.md"
   ],
-  "next_action": "Author G4 of CANON-PLAN: compile the NOW lines of B-AMS-01..B-AMS-08, B-APR-01..02, B-PER-01..02, B-USE-01..02 as prose only into Plans/assistant-memory-subsystem.md, Plans/Assistant_Plan_Runtime.md, Plans/Personas.md, Plans/usage-feature.md, Plans/Models_System.md, writing design atoms, decisions, corrections, questions and source_shards/findings.md here and filling state/compile_queue.json; then run python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main. WAIT lines are recorded as open questions naming their card; OUT lines are not compiled."
+  "next_action": "Integrator: regenerate shards and index once for all groups, run the blind form-driven review, then land. WAIT wave: compile q-001..q-006 after the owner's card answers are in Decision_Log."
 }

@@ -62,7 +62,7 @@ ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Execu
 
 Settings stores the defaults; this owner stores the operational records. The defaults are `assistant.scheduling.wind_down_minutes` (10), `assistant.scheduling.missed_dispatch_policy` (`hold`), `assistant.scheduling.default_grace_minutes` (30), `assistant.scheduling.resume_next_window` (true), `assistant.usage.auto_resume_default` (false), and `assistant.scheduling.dst_policy` (`preserve_local_wall_clock`).
 
-A default is read at creation time and copied into the record. Changing a default afterwards never retroactively alters an existing schedule or consent. These keys require Settings inventory census and registration through `Plans/Settings_System.md` and `Plans/settings_inventory.json`; naming them here fixes ownership and does not claim registration.
+A default is read at creation time and copied into the record. Changing a default afterwards never retroactively alters an existing schedule or consent. The surfaces that show these values use the display labels fixed in SQR-017 ("Ask me first", "Keep going next time", "Wrap-up time" and the rest); a label never renames a key or a stored value. These keys require Settings inventory census and registration through `Plans/Settings_System.md` and `Plans/settings_inventory.json`; naming them here fixes ownership and does not claim registration.
 
 ContractRef: ContractName:Plans/Settings_System.md
 
@@ -379,7 +379,7 @@ owner_hints:
 
 ### Schedule Message
 
-`Schedule Message` lives in the **wand** menu — not in the mode menu, and not in the composer tools row.
+`Schedule Message` lives in the **wand** menu — not in the mode menu, and not in the composer tools row. The wand row only opens the Schedule Message sheet; the sheet's text starts as the composer's exact text and stays editable, and the sheet's primary action is the one commit (SQR-013).
 
 Scheduling freezes a `ScheduledMessageSnapshot`:
 
@@ -407,7 +407,7 @@ The snapshot freezes thread and destination, the exact text, the exact attachmen
 
 Before dispatch the service revalidates destination, attachment availability, project and worktree, permissions, and the selected route. A failure to revalidate is a held or failed dispatch that names the reason. The service must never silently send to a different destination, a different model, or a different account than the snapshot recorded. Where the recorded route is no longer available, the dispatch holds and surfaces the substitution the user would have to accept, rather than substituting on their behalf.
 
-Missed-time behavior is the user's choice at schedule time: `hold` keeps the dispatch pending until the user acts; `next_available` sends at the next opportunity; `cancel_after_grace` expires the dispatch after `grace_seconds`. The default missed policy is `hold` and the default grace is thirty minutes, both configurable through Settings.
+Missed-time behavior is the user's choice at schedule time: `hold` keeps the dispatch pending until the user acts; `next_available` sends at the next opportunity; `cancel_after_grace` expires the dispatch after `grace_seconds`. The default missed policy is `hold` and the default grace is thirty minutes, both configurable through Settings. A message sheet labels the three values "Ask me first", "Send as soon as I'm back" and "Skip it if it's more than N min late", where N is the recorded grace in minutes; the per-surface labels are fixed in SQR-017.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
 
@@ -417,11 +417,15 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Fil
 
 A scheduled Plan build binds the exact `plan_id`, `plan_version`, and content hash through `exact_target_version` and `exact_target_hash`. It does not bind "the current Plan".
 
-A revision **invalidates** the pending schedule. The schedule moves to `invalidated` with `invalidated_reason` naming the version change, and it requires an explicit update or reschedule. Building a newer Plan than the user scheduled is a defect, and silently rebinding to the newest version is the same defect with better manners.
+A Build At commit is one command. The window specification (one time or a recurring slot, days, start, stop, wind-down, missed policy, grace and timezone) rides inside the `AssistantPlanScheduleRequest` of `cmd.chat.plan.schedule_build`, and the owner creates the exact-version binding and its `ExecutionSchedule` in one transaction. The surface never dispatches `cmd.execution_window.create` beside it, so no half-created schedule can exist.
+
+A revision **invalidates** the pending schedule. The schedule moves to `invalidated` with `invalidated_reason` naming the version change, and it requires an explicit update or reschedule. The Plan card's "Schedule needs update" line offers that explicit step: "Use V<n>" (for example "Use V3") is `cmd.chat.plan.schedule_build` against the new version's exact hash, the user's click is the explicit reschedule, and the invalidated schedule stays as its audit record; Cancel schedule is `cmd.execution_window.cancel` by the `schedule_id` that `cmd.chat.plan.schedule_build` returned. Building a newer Plan than the user scheduled is a defect, and silently rebinding to the newest version is the same defect with better manners.
 
 Repeated schedules against one target are **execution windows for the same run**, not repeated duplicate builds. A nightly window that opens five times does not produce five builds of the same Plan version; it produces one run that is admitted, paused at wind-down, and resumed in the next window. Idempotency is keyed on `(schedule_id, target_id, exact_target_hash, occurrence_start)` so that a restart, a duplicate timer fire, or a clock adjustment cannot double-dispatch.
 
 `Build With Crew` and an ordinary build schedule identically; the crew configuration is part of the target, not part of the schedule.
+
+The Plan card's schedule line, the Build At sheet's contract and the overnight receipt are specified in SQR-015 and SQR-016.
 
 ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Collaborative_Workflows.md
 
@@ -522,16 +526,16 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.
 
 | Command ID | Meaning | Required result boundary |
 |---|---|---|
-| `cmd.chat.schedule_message` | Freeze and schedule the composer's exact text and attachments from the wand | Returns `scheduled_dispatch_id` and the frozen snapshot ref. Creates no Goal, Plan, or To-Do. |
-| `cmd.chat.schedule_message.update` | Update a pending scheduled message | Rebinds the exact snapshot under the expected revision; refused once dispatch has started. |
+| `cmd.chat.schedule_message` | Freeze and schedule the exact text and attachments of the Schedule Message sheet, which the wand opens prefilled from the composer | Precondition `schedule_text_not_empty`: the sheet's own text must not be empty, whatever the composer holds. Returns `scheduled_dispatch_id` and the frozen snapshot ref. The composer buffer clears only after the durable commit, and only when the scheduled text came from it. Creates no Goal, Plan, or To-Do. |
+| `cmd.chat.schedule_message.update` | Update a `scheduled` or `held` message: Edit, Edit and send, Reschedule, and Send now | Rebinds the exact snapshot under the expected revision; refused once dispatch has started. Send now on a `held` message, including one held because it was missed, is this update with `reschedule_to: "now"`, never a new command. |
 | `cmd.chat.schedule_message.cancel` | Cancel a pending scheduled message | Terminal; the snapshot is retained for audit and never dispatched. |
-| `cmd.chat.plan.schedule_build` | Bind an execution schedule to an exact Plan version and hash | Returns `schedule_id` with `exact_target_version` and `exact_target_hash` set; a later Plan revision invalidates it. |
-| `cmd.execution_window.create` | Create a one-time or recurring execution window | Returns `schedule_id`; creating a window admits no work by itself. |
+| `cmd.chat.plan.schedule_build` | Bind an execution schedule to an exact Plan version and hash; the window specification rides inside `AssistantPlanScheduleRequest` | Creates the binding and its `ExecutionSchedule` in one transaction and returns `schedule_id` with `exact_target_version` and `exact_target_hash` set; a later Plan revision invalidates it. Use V<n> on an invalidated schedule is this command against the new version's exact hash, an explicit reschedule. |
+| `cmd.execution_window.create` | Create a one-time or recurring execution window | Returns `schedule_id`; creating a window admits no work by itself. Never dispatched beside `cmd.chat.plan.schedule_build` for one Build At commit. |
 | `cmd.execution_window.update` | Update an execution window | Never silently changes an in-flight run's admission; a narrowed window takes effect at the next wind-down boundary. |
-| `cmd.execution_window.cancel` | Cancel an execution window | Work already admitted continues under its own owner; cancelling a window is not a Stop. |
+| `cmd.execution_window.cancel` | Cancel an execution window, including Cancel schedule on a Plan card or in the Schedule Manager | Targets the `schedule_id` that `cmd.chat.plan.schedule_build` returned; there is no `schedule_build.cancel`. Work already admitted continues under its own owner; cancelling a window is not a Stop. |
 | `cmd.runtime.quota_resume.set` | Record opt-in consent to resume when quota resets | Requires a known `reset_truth` value; consent is scoped to run, provider, and account and is defeated by a latched manual stop. |
 
-Every request carries `schema_id`, `schema_version`, command ID, command instance ID, `project_id`, target identity, expected revision, expected target hash where applicable, actor, permission snapshot, idempotency key, source surface, and return route. Typed errors are `invalid_request`, `schedule_not_found`, `stale_schedule_revision`, `target_not_found`, `target_version_changed`, `dispatch_already_started`, `manual_stop_latched`, `window_inactive`, `quota_unavailable`, `reset_truth_unknown`, `route_unavailable`, `command_not_registered`, `permission_denied`, `owner_unavailable`, or `cancelled`.
+Every request carries `schema_id`, `schema_version`, command ID, command instance ID, `project_id`, target identity, expected revision, expected target hash where applicable, actor, permission snapshot, idempotency key, source surface, and return route. The source surfaces are `schedule_sheet` (the Schedule Message sheet), `plan_schedule` (the Build At sheet), `scheduled_message_card`, `schedule_manager` and `plan_card`. The wand row and the Plan card's `Build At…` button only open their sheets and are not source surfaces of these commands. Typed errors are `invalid_request`, `schedule_not_found`, `stale_schedule_revision`, `target_not_found`, `target_version_changed`, `dispatch_already_started`, `manual_stop_latched`, `window_inactive`, `quota_unavailable`, `reset_truth_unknown`, `route_unavailable`, `command_not_registered`, `permission_denied`, `owner_unavailable`, or `cancelled`.
 
 Until the central command catalog, Event Authority, and production wiring rows close for a given ID, its controls render disabled with `command_not_registered`. No page-local handler, alias, fixture, timer, or toast may simulate success.
 
@@ -684,7 +688,11 @@ Wall-clock time is never the sole deduplication key.
 
 The projection reuses the existing `cmd.chat.schedule_message`,
 `cmd.chat.schedule_message.update` and `cmd.chat.schedule_message.cancel`; every card
-action maps onto one of those three. Dispatch is
+action maps onto one of those three or onto navigation. Edit, Edit and send and Reschedule are
+`cmd.chat.schedule_message.update`; Send now on a `held` message is the same update with
+`reschedule_to: "now"`; Cancel is `cmd.chat.schedule_message.cancel` with the expected revision and
+currentness; Go to message is `cmd.chat.open_thread` with `route_target: message`; Details only
+discloses. The full mapping is SQR-013. Dispatch is
 `internal.scheduler.dispatch_scheduled_message`, an internal scheduler action with its
 own idempotency domain — not a second user command, and not a state-set command. No
 `schedule_message.state.set` exists.
@@ -704,12 +712,17 @@ pm.schedule.message_projection.v1
 ```
 
 Visible states are `Scheduled`, `Held`, `Sent`, `Canceled`, `Failed`, and `Expired`, mapped from
-owner state with no local inference. Each state carries truthful actions and reasons. Building
-and Goal statuses are never used for messages.
+owner state with no local inference. A message missed while Puppet Master was closed under the
+`hold` policy is `Held` with a missed reason, never a seventh state. Each state carries truthful
+actions and reasons, and every form begins its visible sentence with its state word. `Scheduled`
+renders as a future bubble at its transcript position, `Held` as a decision bubble, and `Sent`,
+`Canceled`, `Failed` and `Expired` as one-line receipts; the state is shown as a glyph and the
+word, never as a badge (SQR-012). Building and Goal statuses are never used for messages.
 
-The card shows the exact time, the IANA timezone, the destination, a short text preview, the
-attachment count, the requested model or route, and the availability of Edit and Cancel.
-Technical hashes stay in Details, and secret attachment paths are never exposed.
+The pending forms show the exact time, the IANA timezone, the destination, a short text preview,
+the attachment count, the requested model or route, and the availability of Edit and Cancel.
+Receipts keep the time and zone in their details. Technical hashes stay in Details, and secret
+attachment paths are never exposed.
 
 ### SMSG-004..006 — Composer safety, edit races, and dispatch
 
@@ -774,7 +787,9 @@ distinguish message schedules from run schedules and thread-wide clearing is pro
 
 The scheduled-message projection rebuilds after restart from owner records and exposes `Held` and
 `Failed` currentness without client timers. Closing the client neither cancels nor duplicates a
-schedule, and browser local storage is never authoritative.
+schedule, and browser local storage is never authoritative. Every countdown and clock ring on a
+card, in the dock or in the Schedule Manager derives from the owner's `scheduled_at` and
+server-owned time; a client tick may repaint it, never decide it.
 
 `Schedule Message` stays in the Assistant wand menu, which opens the exact scheduling modal. The
 thread card is the later lifecycle projection, not a second creation entry point, and scheduling
@@ -831,19 +846,22 @@ APR-028, and APR-043.
   3. *Resume & Safety Policy:* Quota pause auto-resume settings, circuit breakers, grace periods,
      and DST handling.
   4. *Events & Automation:* System event listeners, webhook dispatches, and periodic cron routines.
-- **Filtering and Scope:** Each category provides independent status filtering (Active, Paused,
-  Completed, Failed, Expired), execution time sorting, and search filtering without cross-category
-  state confusion.
+- **Filtering and Scope:** Scheduled Messages, Execution & Build Windows, and Events & Automation
+  each provide independent status filtering, execution time sorting, and search filtering without
+  cross-category state confusion. The status filter's stored values are unchanged; its display
+  labels are Waiting, Paused, Needs you, Done or sent, Didn't send, Skipped, and Canceled, mapped in
+  SQR-014. Resume & Safety Policy is a policy tab, not a list, and has nothing to filter.
 
 ### 12. Scheduled-Message Card Grammar and State Separation (APR-028)
 
 - **Card Lifecycle States:** Scheduled messages project clear visual separation between active and
   historical states:
-  1. *Active/Pending Cards:* High-visibility cards with primary status badge `Scheduled` or `Held`,
-     disclosing destination target, exact dispatch time, IANA timezone, attachment count, requested
-     route/model, and active Edit / Cancel actions.
-  2. *Quiet Historical Receipts:* Sent, Canceled, Expired, and Failed records render as subtle,
-     compact receipts. A `Sent` receipt links directly to the dispatched message in thread history.
+  1. *Active/Pending Cards:* `Scheduled` is a future bubble and `Held` a decision bubble, each led
+     by a glyph and its state word (no status badge), disclosing destination target, exact dispatch
+     time, IANA timezone, attachment count, requested route/model, and active Edit / Cancel actions.
+  2. *Quiet Historical Receipts:* Sent, Canceled, Expired, and Failed records render as one-line
+     receipts that begin with the state word. A `Sent` receipt links directly to the dispatched
+     message in thread history and does not repeat the message text.
 - **Privacy and Secrets Protection:** Sensitive attachment file system paths, authentication tokens,
   and cryptographic payload hashes are relegated strictly to the More Details disclosure panel and
   never rendered in the primary card summary.
@@ -1023,3 +1041,478 @@ negative_constraints:
   deployed migration.
 - No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
 ```
+
+## Wand Modules Redesign Addendum (2026-09-27)
+
+This addendum compiles the scheduling lines of the wand-modules redesign (ledger
+`pldg-20260927-003-wand-scheduling`) from the design spec frozen at
+`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md`
+(SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`), sections 8.7 to 8.9 and 8.15,
+and register lines B-SQR-01 to B-SQR-04, B-SQR-06 and B-SQR-07 of
+`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md`
+(SHA-256 `71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493`). It carries the contract, not the
+concept: no concept class, key, harness hook or browser-storage rule becomes canon. The transcript families and
+the accent budget are ACD-469's and the shared dock is `Plans/assistant-chat-design.md`'s; this owner supplies
+content to them and redefines neither. The scheduling defaults stay Settings-owned (section 1), and nothing here
+decides a project-wide automation pause.
+
+### SQR-012 - Scheduled-Message Card Grammar And Scheduling Dock Lines
+
+A scheduled message has one card in its source thread, and its form follows the owner state. `Scheduled` is a
+future bubble at its transcript position: right-aligned like the message it will become, outlined as not yet
+sent, holding the exact text, with a dateline that begins with the word Scheduled and gives the send time in the
+schedule's own timezone and the time remaining, a clock ring that fills over the real remaining time, and one
+fine line naming the destination, the attachment count, the requested model or route and the zone with its IANA
+name. `Held` is a decision bubble: a warm whole-surface tint whose sentence begins with Held and names the exact
+reason, including "missed at <time>" for a message missed under the `hold` policy. `Sent`, `Canceled`, `Failed`
+and `Expired` are one-line receipts that begin with their state word; a `Sent` receipt gives the send time and
+when it was scheduled, links to the dispatched message and does not repeat the text, and the dispatched user
+message carries a "Sent on schedule" mark linked to its schedule. The state always reads as a glyph and the word,
+never as a status badge. Under ACD-469's family map the `Scheduled` and `Held` forms present in the Time family
+and the four receipts as Ledger lines. Within the Time family the card's internals are owned here: the time
+shown is the schedule's own local time, and the card carries no separate ticket or stub, so ACD-469's "ticket
+with a time block" does not describe the scheduled-message card's internals.
+
+Scheduling contributes attention items to the shared dock above the composer and nothing else. While any
+message in the thread is `Held`, one needs-you line reads "1 scheduled message needs you" (or the count) with
+Show. While any message in the thread is `Scheduled`, one line of the lowest priority reads "Coming up", the
+next send time, a short preview and "+N more", with Show. Both are derived from the scheduled-message
+projection, carry the schedule identity, and Show only reveals the card. Scheduling adds no second strip, no
+second quota strip and no checkbox; the quota wait strip in section 3 stays the one quota surface.
+
+```yaml
+plan_unit_id: SQR-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  A scheduled message has one card in its source thread whose form follows owner state. Scheduled is a future
+  bubble at its transcript position with a dateline that begins with Scheduled, gives the send time in the
+  schedule's own timezone and the time remaining, a clock ring over the real remaining time, and a fine line
+  naming destination, attachment count, requested model or route, and zone with IANA name. Held is a decision
+  bubble whose sentence begins with Held and names the exact reason, including a missed time under the hold
+  policy. Sent, Canceled, Failed and Expired are one-line receipts that begin with their state word; a Sent
+  receipt links to the dispatched message without repeating the text. States read as a glyph and the word,
+  never a badge. Under ACD-469's family map Scheduled and Held present in the Time family and the receipts as
+  Ledger lines; the card's internals are owned here and carry no ticket or stub. Scheduling contributes to the
+  shared dock only one needs-you line while a message in the thread is Held and one lowest-priority Coming up
+  line with the next send time, a preview and +N more; Show only reveals the card, and no second strip, quota
+  strip or checkbox is added.
+gui_related: true
+gui_classification_reason: Defines the in-chat forms of a scheduled message and the dock lines scheduling supplies.
+depends_on: [SQR-002, SQR-007, SQR-009, ACD-469]
+unblocks: [SQR-013]
+acceptance_criteria:
+  - "Each of the six owner states renders in its form, and every form's visible sentence begins with its state word."
+  - "A message missed under the hold policy renders as Held with its missed reason, never as a seventh state."
+  - "No form renders the state as a badge, and a Sent receipt does not repeat the message text."
+  - "The dock carries at most one needs-you line and one Coming up line from scheduling, and Show dispatches no command."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: scheduled_message_state_misread
+reasoning_tier: standard
+context_scope: scheduled_message_card
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.7 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-01, B-SQR-02 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+preserved_exact_tokens:
+  - "Scheduled"
+  - "Held"
+  - "Sent"
+  - "Canceled"
+  - "Failed"
+  - "Expired"
+  - "future bubble"
+  - "decision bubble"
+  - "Coming up"
+negative_constraints:
+  - Do not render a scheduled-message state as a badge or without its state word.
+  - Do not add a seventh visible state for a missed message.
+  - Do not add a second scheduling strip, quota strip or checkbox above the composer.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+### SQR-013 - Card And Sheet Actions Map Onto The Existing Commands
+
+Every scheduling control is an existing command, navigation or a disclosure. The Schedule Message sheet's primary
+is `cmd.chat.schedule_message` with precondition `schedule_text_not_empty`: the sheet has its own editable text,
+prefilled from the composer, so an empty composer does not block it; the composer buffer clears only after the
+durable commit and only when the scheduled text came from it. On the card and in the Schedule Manager, Edit,
+Edit and send and Reschedule are `cmd.chat.schedule_message.update`; Edit refuses with its typed reason, printed
+as a sentence, once dispatch has started. Send now on a `Held` message, including a missed one, is the same
+update with `reschedule_to: "now"`. Cancel is `cmd.chat.schedule_message.cancel` with the expected revision and
+currentness. Go to message and Open message are `cmd.chat.open_thread` with `route_target: message`. Details and
+Technical details only disclose.
+
+The Build At sheet's primary is one `cmd.chat.plan.schedule_build` whose `AssistantPlanScheduleRequest` carries
+the window specification; the owner creates the binding and its `ExecutionSchedule` atomically, and the surface
+never pairs it with `cmd.execution_window.create`. A Crew chosen in the sheet is frozen into that request's
+topology (PSCHED-001..003). Use V<n> on an invalidated schedule is `cmd.chat.plan.schedule_build` against the new
+version's exact hash, an explicit reschedule that leaves the invalidated schedule as its audit record. Cancel
+schedule is `cmd.execution_window.cancel` by the returned `schedule_id`, and editing a build schedule is
+`cmd.execution_window.update`. The source surfaces are `schedule_sheet`, `plan_schedule`,
+`scheduled_message_card`, `schedule_manager` and `plan_card`, registered in the command catalog; the wand row and
+the Plan card's `Build At…` only open their sheets.
+
+```yaml
+plan_unit_id: SQR-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  Every scheduling control is an existing command, navigation or a disclosure. Schedule Message commits through
+  cmd.chat.schedule_message with precondition schedule_text_not_empty, and the composer clears only after the
+  durable commit and only when the text came from it. Edit, Edit and send and Reschedule are
+  cmd.chat.schedule_message.update, refused with a printed typed reason once dispatch started; Send now on a Held
+  message is that update with reschedule_to now; Cancel is cmd.chat.schedule_message.cancel with expected
+  revision and currentness; Go to message is cmd.chat.open_thread with route_target message. Build At commits one
+  cmd.chat.plan.schedule_build whose AssistantPlanScheduleRequest carries the window specification, created
+  atomically and never paired with cmd.execution_window.create; Use V<n> is schedule_build against the new
+  version's exact hash as an explicit reschedule; Cancel schedule is cmd.execution_window.cancel by the returned
+  schedule_id; editing a build is cmd.execution_window.update. Source surfaces are schedule_sheet, plan_schedule,
+  scheduled_message_card, schedule_manager and plan_card.
+gui_related: true
+gui_classification_reason: Binds every scheduling button on the sheet, card, manager and Plan card to its command.
+depends_on: [SQR-002, SQR-003, SQR-010, SQR-012]
+unblocks: []
+acceptance_criteria:
+  - "Scheduling a message with an empty composer and non-empty sheet text succeeds; an empty sheet text is refused."
+  - "Send now dispatches cmd.chat.schedule_message.update with reschedule_to now, and no new command id exists for it."
+  - "One Build At commit dispatches exactly one command and leaves either a complete schedule or none."
+  - "Use V<n> never rebinds silently: it is a user-dispatched schedule_build against the new exact hash, and the old schedule stays invalidated."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: scheduling_action_command_drift
+reasoning_tier: high
+context_scope: scheduling_command_mapping
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+node_compile_hint:
+  mode: owner_command_mapping
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.15 and #8.7 G-21 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-03 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+preserved_exact_tokens:
+  - "schedule_text_not_empty"
+  - "reschedule_to"
+  - "AssistantPlanScheduleRequest"
+  - "cmd.chat.schedule_message.update"
+  - "cmd.execution_window.cancel"
+  - "scheduled_message_card"
+  - "schedule_manager"
+negative_constraints:
+  - Do not mint a new command for Send now, Reschedule or Use V<n>.
+  - Do not dispatch cmd.execution_window.create beside cmd.chat.plan.schedule_build for one Build At commit.
+  - Do not clear the composer before the durable schedule commit.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md
+
+### SQR-014 - Schedule Manager Status Labels, Agenda Groups And Focused Record
+
+The Schedule Manager keeps its four canonical tabs (SQR-009). Scheduled Messages reads as an agenda grouped
+Needs you, Tonight, Tomorrow, Later and Past, by the owner's scheduled time in the viewer's timezone (the group for
+the rest of the current day reads Today before evening); `Held` records sit in Needs you and terminal records in
+Past as single lines. A row gives the time, the first line of the text, the destination, the state word with its
+sentence, and its actions, and each schedule identity has exactly one row. A 48-hour overview above the tabs
+draws scheduled messages and build slots from the same projection. Scheduled Messages, Execution & Build Windows
+and Events & Automation each have a search field, a status filter and a sort; Resume & Safety Policy is a policy
+tab, not a list, and has nothing to filter.
+
+The status filter's stored values are unchanged, and its labels map onto owner states: Everything (all), Waiting
+(`scheduled` messages and `active` windows), Paused (`paused` windows), Needs you (`held` messages and
+`invalidated` build schedules), Done or sent (`dispatched` messages and `completed` windows), Didn't send
+(`failed`), Skipped (`expired`), and Canceled (`cancelled`). Selecting a record opens its focused view in the same
+sheet: the record's full sentence, its time track and its actions, with a way back to the full list.
+
+```yaml
+plan_unit_id: SQR-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  The Schedule Manager keeps its four canonical tabs. Scheduled Messages is an agenda grouped Needs you, Tonight,
+  Tomorrow, Later and Past by owner scheduled time in the viewer's timezone, with Held in Needs you, terminal
+  records in Past, and exactly one row per schedule identity. Scheduled Messages, Execution & Build Windows and
+  Events & Automation each have search, status filter and sort; Resume & Safety Policy is a policy tab, not a
+  list. The status filter keeps its stored values and labels them Waiting, Paused, Needs you (held messages and
+  invalidated build schedules), Done or sent, Didn't send, Skipped and Canceled, mapped onto owner states.
+  Selecting a record opens a focused view in the same sheet with its full sentence, time track and actions.
+gui_related: true
+gui_classification_reason: Defines the Schedule Manager's grouping, filter labels and focused view.
+depends_on: [SQR-009]
+unblocks: []
+acceptance_criteria:
+  - "Every filter label maps to owner states as listed, and the stored filter values are unchanged."
+  - "Each schedule identity appears in exactly one row under any filter and query."
+  - "Resume & Safety Policy shows no search, status filter or sort."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: schedule_manager_label_state_drift
+reasoning_tier: standard
+context_scope: schedule_manager_ui
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.9 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-04 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+preserved_exact_tokens:
+  - "Waiting"
+  - "Needs you"
+  - "Done or sent"
+  - "Didn't send"
+  - "Skipped"
+  - "Tonight"
+  - "Tomorrow"
+  - "Later"
+  - "Past"
+negative_constraints:
+  - Do not change the stored status filter values to match the labels.
+  - Do not render Resume & Safety Policy as a filterable list.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md
+
+### SQR-015 - Build At Sheet And The Plan Card Schedule Line
+
+The Build At sheet binds the exact Plan version it names and commits through SQR-013. It offers One time or
+Nightly time slot (`schedule_kind` `one_time` or `recurring_window`), the days as words, the start and stop
+times, Keep going next time, Wrap-up time, the timezone, who builds it (`execution_topology`: "The assistant
+builds it", "As a Goal", whose Goal is created only when the build starts, or "A Crew"), and what to do if the
+slot is missed. A value the sheet shows is the value it records: when the missed policy is `cancel_after_grace`
+the minutes shown are recorded as the schedule's `grace_seconds`. The read-back sentence and any DST line are
+computed from the real start, stop and wind-down; Plan id, version and hash sit in Technical details.
+
+The Plan card's schedule line is secondary information beside the Build control; its placement belongs to
+`Plans/Assistant_Plan_Runtime.md` and its content to this owner. Before a run it gives the cadence, the slot and
+the next occurrence with a thin night ribbon (the slot, a now tick and the step progress); during an open slot
+it reads "Building now" with the wrap-up time. Every other state leads with its canon token: `Outside execution
+window` with when it continues, `Paused` for a build the user paused, `Waiting for Usage` with the reset time and
+its reset truth (no countdown when the reset is unknown), and `Schedule needs update` for an invalidated schedule,
+with Use V<n> and Cancel schedule. The line never replaces the Build control's `Building…`, and `Scheduled` is
+never a primary Plan status (PSCHED-011).
+
+```yaml
+plan_unit_id: SQR-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  The Build At sheet binds the exact Plan version it names and commits through SQR-013, offering schedule_kind,
+  days, start and stop, Keep going next time, Wrap-up time, timezone, execution_topology and the missed policy.
+  A value the sheet shows is the value it records; under cancel_after_grace the shown minutes are recorded as
+  grace_seconds. The read-back and DST line are computed from the real start, stop and wind-down; Plan id,
+  version and hash sit in Technical details. The Plan card schedule line is secondary information whose placement
+  is Assistant Plan Runtime's and whose content is this owner's: cadence, slot, next occurrence and a night
+  ribbon before a run, Building now with the wrap-up time during a slot, and otherwise a lead canon token of
+  Outside execution window, Paused, Waiting for Usage (with reset truth, no countdown when unknown) or Schedule
+  needs update with Use V<n> and Cancel schedule. It never replaces the Build control's Building… and Scheduled
+  is never a primary Plan status.
+gui_related: true
+gui_classification_reason: Defines the Build At sheet's recorded values and the Plan card schedule line's states.
+depends_on: [SQR-003, SQR-004, SQR-005, SQR-013]
+unblocks: [SQR-016]
+acceptance_criteria:
+  - "Every value shown on the Build At sheet, including the grace minutes, equals the value recorded on the schedule."
+  - "Each secondary state of the schedule line begins with Outside execution window, Paused, Waiting for Usage or Schedule needs update."
+  - "The Build control keeps Building… while the schedule line shows any secondary state."
+  - "An unknown reset renders no countdown on the schedule line."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: scheduled_build_display_value_drift
+reasoning_tier: standard
+context_scope: build_at_surfaces
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.8 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-06 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+preserved_exact_tokens:
+  - "Outside execution window"
+  - "Waiting for Usage"
+  - "Paused"
+  - "Schedule needs update"
+  - "Building…"
+  - "grace_seconds"
+negative_constraints:
+  - Do not show a Build At value that the schedule does not record.
+  - Do not let the schedule line replace the Build control label or show Scheduled as a Plan status.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/FinalGUISpec.md
+
+### SQR-016 - Occurrence Summary, Overnight Receipt, Night Journal And Away Digest
+
+Each window occurrence of a scheduled build has one occurrence summary, written by this owner once when the
+occurrence closes (paused at wind-down, completed, cancelled or held) and keyed by `schedule_id` and occurrence
+start, so a replay or restart returns the same summary. It is a projection: rebuilt from this owner's schedule
+and dispatch records and from the run's step progress and pause facts as its owner reports them. It records the
+occurrence's real bounds, the steps built of the total, how the occurrence ended, and the outcomes of scheduled
+messages in the same thread during it.
+
+Three surfaces read it and none writes it. The overnight receipt is one Ledger-family receipt in the Plan's
+thread per occurrence ("Overnight: built 2 of 5 steps (10:00 PM–1:52 AM, paused safely) · sent 1 scheduled
+message · 1 message needs you · Open"), whose Open focuses the record in the Schedule Manager; it is not a Plan
+status, never changes the Build control, and is not itself a needs-you item. The night journal lists the
+summaries in the build's Schedule Manager row ("Night 1: built 2 of 5 steps · paused safely at 1:52 AM"). The
+"since you were last here" digest is a query over the same records for outcomes after an instant the consuming
+surface supplies; this owner stores no per-user last-seen marker. No new command or event name is introduced.
+
+```yaml
+plan_unit_id: SQR-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  Each window occurrence of a scheduled build has one occurrence summary, written by this owner once when the
+  occurrence closes and keyed by schedule_id and occurrence start so replay returns the same summary. It is a
+  projection rebuilt from schedule and dispatch records and the run owner's reported step progress and pause
+  facts, recording real bounds, steps built of total, how the occurrence ended, and same-thread scheduled message
+  outcomes. The overnight receipt is one Ledger-family receipt per occurrence in the Plan's thread whose Open
+  focuses the Schedule Manager record; it is not a Plan status, never changes the Build control, and is not a
+  needs-you item. The night journal lists the summaries in the build's manager row. The since you were last here
+  digest queries the same records after an instant the consuming surface supplies; this owner stores no per-user
+  marker. No new command or event name is introduced.
+gui_related: true
+gui_classification_reason: Defines the overnight receipt, the night journal and the away digest as projections of one summary.
+depends_on: [SQR-004, SQR-006, SQR-007, SQR-015]
+unblocks: []
+acceptance_criteria:
+  - "One occurrence produces exactly one summary and at most one overnight receipt, across replay and restart."
+  - "The overnight receipt, the night journal and the away digest agree because they read the same summary."
+  - "No overnight receipt changes a Plan status or the Build control label."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: duplicate_or_divergent_occurrence_reporting
+reasoning_tier: standard
+context_scope: scheduled_build_projections
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_projection_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.8 and #8.9 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-06 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+preserved_exact_tokens:
+  - "occurrence summary"
+  - "overnight receipt"
+  - "night journal"
+  - "since you were last here"
+negative_constraints:
+  - Do not write more than one overnight receipt for one occurrence.
+  - Do not present an occurrence outcome as a Plan status.
+  - Do not store a per-user last-seen marker in this owner.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/assistant-chat-design.md
+
+### SQR-017 - Display Labels For Missed Policy, Next-Window Resume And Wind-Down
+
+The surfaces label the stored values as follows, and a label never renames a value, a field or a Settings key.
+The missed policy's menu is titled "If it's missed" on the Schedule Message sheet and "If the slot is missed" on
+the Build At sheet. For a message, `hold` reads "Ask me first", `next_available` "Send as soon as I'm back" and
+`cancel_after_grace` "Skip it if it's more than N min late". For a build, `hold` reads "Ask me first",
+`next_available` "Build at the next chance" and `cancel_after_grace` "Skip it if it's more than N min late". N is
+the recorded grace in minutes. `auto_resume_next_window`, defaulted from `resume_next_window`, reads "Keep going
+next time" ("Unfinished work continues in the next slot."). `wind_down_seconds`, defaulted from
+`wind_down_minutes`, reads "Wrap-up time" ("Stop starting new tasks this many minutes before the end, so nothing
+is cut off mid-way."). Timezone choices list the device zone first, as the default, then the others, each with
+its IANA name; UTC is offered as "UTC" and is never the default.
+
+```yaml
+plan_unit_id: SQR-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  Display labels never rename a stored value, field or Settings key. The missed-policy menu is titled If it's
+  missed for a message and If the slot is missed for a build. For a message hold reads Ask me first,
+  next_available Send as soon as I'm back, and cancel_after_grace Skip it if it's more than N min late; for a
+  build hold reads Ask me first, next_available Build at the next chance, and cancel_after_grace Skip it if it's
+  more than N min late, where N is the recorded grace in minutes. auto_resume_next_window, defaulted from
+  resume_next_window, reads Keep going next time; wind_down_seconds, defaulted from wind_down_minutes, reads
+  Wrap-up time. Timezone choices list the device zone first as the default, each with its IANA name, and UTC is
+  never the default.
+gui_related: true
+gui_classification_reason: Fixes the words the scheduling sheets show for stored scheduling values.
+depends_on: [SQR-002, SQR-004]
+unblocks: []
+acceptance_criteria:
+  - "Each missed-policy value shows its per-surface label, and the stored value is unchanged."
+  - "The grace minutes in a Skip label equal the recorded grace."
+  - "The default timezone choice is the device zone, not UTC."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: scheduling_label_value_drift
+reasoning_tier: standard
+context_scope: scheduling_display_labels
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.7 and #8.8 G-33 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-07 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+preserved_exact_tokens:
+  - "Ask me first"
+  - "Send as soon as I'm back"
+  - "Build at the next chance"
+  - "Keep going next time"
+  - "Wrap-up time"
+  - "resume_next_window"
+  - "cancel_after_grace"
+negative_constraints:
+  - Do not rename a stored scheduling value or Settings key to match its label.
+  - Do not default the timezone to UTC.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Settings_System.md

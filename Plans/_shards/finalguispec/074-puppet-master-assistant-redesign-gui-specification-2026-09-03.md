@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35952-L36247
+Source lines: L35955-L36262
 
-Source SHA256: `6c05eadcfcf31549a409dd6931b79229ff3c43b599074248ff5a3222de15216d`
+Source SHA256: `9e116c56cf58230049cc5d6be27a21bcb35b9f4e28e58ec6ca101c21ecf279bb`
 
 ---
 
@@ -26,7 +26,7 @@ Selecting BrainStorm or either Review choice opens that workflow's configuration
 
 ### 3. Wand menu
 
-The wand keeps its existing capability entries and adds `Goal`, `BSD ▶`, `ELI5`, `Schedule Message…`, `Teach…` where discoverability helps, and `Revert Last Agent Edit` when eligible. A `Multi-Agent ▶` entry sidecars to `Crew…`, `Chat Room…`, a divider, `✓ Crew Auto`, and `Manage Defaults…`. The BSD sidecar offers `Off`, `Auto · Default`, `On`, a divider, and `Configure…`, and its check state comes from the owner projection rather than a local-only checkbox.
+The wand keeps its existing capability entries and adds `Goal`, `BSD ▶`, `ELI5`, `Schedule Message…`, `Teach…` where discoverability helps, and `Revert Last Agent Edit` when eligible. A `Multi-Agent ▶` entry sidecars to `Crew…`, `Chat Room…`, a divider, `✓ Crew Auto`, and `Manage Defaults…`. The BSD sidecar offers `Off`, `Auto · Default`, `On`, a divider, and `Configure…`, and its check state comes from the owner projection rather than a local-only checkbox. The BSD row itself shows the committed mode in title case (`Off`, `Auto`, `On`) beside a chevron, because it opens a sidecar, and the `Revert Last Agent Edit` row's helper line states its eligibility in words, for example `Nothing to revert yet` (F3-577).
 
 Review stays in the primary mode selector and BrainStorm stays under Deep Plan; neither is duplicated as a first-class wand entry, though context actions may route to them. Schedule Message belongs in the wand, not in an Assistant overflow menu outside it.
 
@@ -40,9 +40,13 @@ A targeted composer adds a narrow ribbon inside the composer's top edge and tint
 
 When a provider quota wait is active, a compact in-flow strip sits below the activity and follow-up queue and above the composer, reading the paused reason, the reset time and its source, and an opt-in `Resume automatically` checkbox. It is in flow, not a full-width overlay, and must not collide with the activity bar or the decision host.
 
+Directly after the quota-wait strip sits the dock (ACD-476): at most three one-line items for runs, scheduled messages and advice whose own transcript item is off-screen, needs-you first. It is transient, reserves its own height in this stack, never floats over the transcript, and never collides with the floating Activity bar pill or the decision host; the transcript's bottom padding is measured with the dock present (F3-567). Among the active capability glyphs, Back Seat Driver shows an ambient eye that reads the owner projection, and the Crew glyph is the Crew kind mark (F3-567).
+
 ### 5. Transcript attachments
 
 Attachments render inside their associated turn as compact visual objects and participate in the existing message-hover chrome: metadata and actions are hidden at rest on pointer-capable widths and always available at phone widths under the existing rule. There is no permanent `PNG · 2.8 MB` clutter. A project reference that changed since the message shows a compact stale badge on the object rather than a warning paragraph, with the historical revision explained on hover and both live and materialized versions in Details. Generated artifacts use the same card grammar and disclose version and producing workflow in Details.
+
+What a wand module attaches to an ordinary reply is one line each (F3-570): the files row under a reply that changed files (`Changed 3 files +5 −3 · Revert`), which is visible at rest, and the quiet ticks in the reply's meta row (a memory note taken, a rule used, `Sent on schedule` on a message that a schedule sent), which follow that row's existing message-chrome visibility.
 
 ### 6. Plan card
 
@@ -66,15 +70,15 @@ The hover preview shows compact current work — a completed-over-total count an
 
 Dynamic domains become `Goal · To-Dos · Subagents · Crew · BrainStorm · Review · Chat Room · Changes · Artifacts`, preserving per-thread presence, omission of empty domains, responsive compaction tiers, hover-card dwell, and Activity Detail routing. The four collaborative domains may show active and completed run counts and the latest status, and their rows open the corresponding card, panel or participant transcript. Subagents remains distinct from Crew and from collaborative participant groups.
 
-### 10. Multi-agent modals, cards and panels
+### 10. Multi-agent sheets, run cards and run views
 
-One shared modal shell and participant-row grammar serves all four kinds, with workflow-specific sections added rather than forked. A participant row exposes the role, the model, the Persona, and the requested-versus-effective disclosure when they differ. Wonderer and Grill Me appear as additive rows rather than replacing a core participant.
+The presentation of these surfaces is the wand modules GUI contract, F3-566 (sheets) and F3-569 (run cards, receipts and run views). One shared configuration sheet grammar and participant-row grammar serves all four kinds, with workflow-specific sections added rather than forked. A participant row exposes the role, the model, the Persona, and the requested-versus-effective disclosure when they differ. Wonderer and Grill Me appear as additive rows rather than replacing a core participant.
 
-Each run renders one transcript card that expands inline for recent transcript and details and pops out to a full panel showing the same run. Participants are clickable and open their own transcripts. The BrainStorm modal shows the effective question maximum including the Grill extension; the Review modal shows the reviewer count control across one to eight with repeated model choices permitted; the Chat Room modal shows turn policy and rounds; the Crew modal shows coordinator, roles, assignment strategy and parallelism.
+Each run renders one transcript card that changes density in place as the run moves (Collaborative_Workflows CWR-019) and opens the run view, an editor document showing the same run (ACD-480). Participants are clickable and open their own transcripts. The BrainStorm sheet shows the effective question maximum including the Grill extension; the Review sheet shows the reviewer count control across one to eight with repeated model choices permitted; the Chat Room sheet shows turn policy and rounds; the Crew sheet shows coordinator, roles, assignment strategy and parallelism.
 
 ### 11. BSD GUI
 
-The wand shows Off, Auto and On check state plus Configure, driven by the owner projection. Silent, duplicate and cleared evaluations create no transcript noise. Emitted advice appears as an attributable BSD card or inline advisory near the relevant working activity or safe boundary. Held findings appear only in Context Details and the BSD detail, possibly as a small held count, and are never shown as confirmed warnings. Unreconfirmed terminal critical advice is explicitly labelled stale or unreconfirmed.
+The wand shows Off, Auto and On check state plus Configure, driven by the owner projection. Silent, duplicate and cleared evaluations create no transcript noise. Emitted advice appears as an attributable advisor note at the step boundary near the relevant working activity or safe boundary: a margin note, never a card (Back_Seat_Driver BSD-030, F3-571). Held findings appear only in Context Details and the BSD detail, possibly as a small held count, and are never shown as confirmed warnings. Unreconfirmed terminal critical advice is explicitly labelled stale or unreconfirmed.
 
 The compact Context menu carries a BSD row showing mode, Persona and liveness, for example `BSD  Auto · Critical Advisor` over `Caught up · checked 18s ago`, across the states Off, Idle, Reviewing, Catching up, Finding held, Advice delivered, Quota paused, Failed and Unavailable. Context Details gains a BSD section with policy, identity, stage, cursor, triggers, findings, context, Usage, failure and watch guidance, reusing the existing detail-card grammar and Raw redaction rules. The Usage page gains a BSD purpose filter and rows for calls, no-calls, held, cleared, emitted and suppressed findings, timeout, quota and failure counts, cost by model, account and stage, and catch-up latency, added through the existing widget system without altering the accepted Usage layout.
 
@@ -88,23 +92,25 @@ The browser toolbar and context menu expose `Full Screenshot ▶ Visible Browser
 
 `Build At…` opens a Plan modal carrying one-time start or recurring window, the exact Plan version disclosure, timezone and days, start and pause time, wind-down, auto-resume next window, and a provider usage or reset hint where available. A version change places a small `Schedule needs update` notice on the Plan card and disables automatic dispatch until it is resolved.
 
+Both are sheets of the wand modules grammar (F3-566); F3-573 states what each shows beyond the fields above: the message as a future bubble, the resolved time in the schedule's own zone, and a plate of the next 48 hours for Schedule Message; a week plate of the build slots for Build At.
+
 The quota wait strip described in section 4 links to Usage detail from its reset and source text, and its checkbox controls only that run's consent unless Settings defines a default.
 
 ### 14. Teach, Teacher, memory, ELI5, Debug and Revert
 
-`/teach` or natural language opens an explicit capture card showing the proposed knowledge and its scope. **It never changes the Persona to Teacher.** Teacher remains in the Persona picker as the Puppet-Master-explanation Persona. Ordinary automatic memory produces no constant pop-up; memory detail and history show source and verification under the existing owner behavior.
+`/teach` or natural language opens an explicit capture card showing the proposed knowledge and its scope. **It never changes the Persona to Teacher.** Teacher remains in the Persona picker as the Puppet-Master-explanation Persona. Ordinary automatic memory produces no constant pop-up; memory detail and history show source and verification under the existing owner behavior. Its only chat traces are a quiet tick in the reply's meta row when a note is taken and one verified tick when a check later proves it; a note going out of date makes no chat noise. These satisfy this rule (F3-574).
 
-ELI5 is a wand check with a conversation override while Settings owns the application default; it is not a one-shot "simplify this output" action. Selecting Debug mode must open and demonstrate the full Investigation Context and its eight-phase progression rather than merely changing the selected mode, with fixtures for target binding, evidence, repair, verification, cleanup, attention required and failed cleanup recovery. `Revert Last Agent Edit` appears in the wand, Changes and the message overflow when eligible, previews the exact files before dispatching the canonical whole-turn revert, and stays distinct from Rewind in the thread and message overflow.
+ELI5 is a wand check with a conversation override while Settings owns the application default; it is not a one-shot "simplify this output" action. Selecting Debug mode must open and demonstrate the full Investigation Context and its eight-phase progression rather than merely changing the selected mode, with fixtures for target binding, evidence, repair, verification, cleanup, attention required and failed cleanup recovery. `Revert Last Agent Edit` appears in the wand, Changes, the message overflow and the files row under the reply that changed files when eligible, previews the exact files in one compact confirm sheet before dispatching the canonical whole-turn revert, reports each outcome as one receipt line, and stays distinct from Rewind in the thread and message overflow (ACD-478, F3-574).
 
 ### 15. Thread history and status
 
-Thread status continues to derive from owner projections. Review, multi-agent, scheduled and quota-wait statuses are added only through the shared status vocabulary; Plan Build-button labels are never overloaded into thread status. A title-generation failure leaves `New chat` and is reported in Details and Usage rather than in an intrusive modal.
+Thread status continues to derive from owner projections. Review, multi-agent, scheduled and quota-wait statuses are added only through the shared status vocabulary; Plan Build-button labels are never overloaded into thread status. A title-generation failure leaves `New chat` and is reported in Details and Usage rather than in an intrusive modal. The header title shows the naming, user-named and naming-unavailable states and the naming outcomes of ACD-479 (F3-575).
 
 ### 16. Responsive and theme behavior
 
 All eight themes and every width in the concept's existing verification apply, plus the narrow 390–590px states. Under width pressure the priority order is: preserve Send and Stop; preserve destination identity and its close control; preserve Attach and the active capability glyphs; collapse the participant cluster and the attachment overflow; use the existing selector icon mode; keep the Plan primary status control visible and overflow its secondary actions; and preserve Activity icon access even when labels and counts collapse.
 
-Do not add left accent bars, excessive padding, permanent bright status surfaces, or white-until-hover defects.
+Do not add left accent bars, excessive padding, permanent bright status surfaces, or white-until-hover defects. The J-2 spacing minimums of F3-566 are a floor, not excess padding. A run card narrower than 360 px is a card-inside-a-narrow-chat case (the S card tier of F3-569), not a new minimum chat width; the dock is transient, not a permanent status surface.
 
 ### F3-531 - Assistant Redesign Mode Menu, Wand, And Header Placement
 
@@ -158,6 +164,8 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
+Amended 2026-09-27: the BSD row's committed-mode shortcut and the Revert Last Agent Edit row's eligibility helper are specified in F3-577. The wand's contents above are otherwise unchanged by the wand modules redesign.
+
 ### F3-532 - Assistant Composer Tray, Destination Ribbon, And Quota Strip
 
 ```yaml
@@ -204,6 +212,8 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
+
+Amended 2026-09-27: F3-567 adds the dock (ACD-476) to this composer stack directly after the quota strip, with the same no-collision rule against the activity bar and the decision host, and the Back Seat Driver ambient eye and the Crew kind mark among the active capability glyphs.
 
 ### F3-533 - Plan Card, Goal And To-Do Activity Surfaces, And Activity Domains
 
@@ -304,3 +314,5 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
+
+Amended 2026-09-27: the J-2 spacing minimums of F3-566 are a floor and do not count as excessive padding; a run card narrower than 360 px is the S card tier inside a narrow chat (F3-569), not a new minimum chat width; the dock (F3-567) is transient and is not a permanent status surface.

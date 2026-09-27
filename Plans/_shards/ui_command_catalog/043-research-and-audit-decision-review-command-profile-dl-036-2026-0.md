@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L12972-L13134
 
-Source SHA256: `6419332fe203f8b33f2510b91536598098285012266a0e29b5c2bde2744d2c75`
+Source SHA256: `1a6e69fd6f2415249f56b3a4ecd455c29335d99a0789d709d6d95d97dfde7830`
 
 ---
 
@@ -19,7 +19,7 @@ All six are direct `domain_action` commands with `normalization.kind = none`, `n
 | `cmd.questionnaire.draft_update` | Edit decision response draft | Update only the current choice and conditional user text; preserve unsubmitted draft state. | Current thread/questionnaire/packet/item revision and owning user flow. |
 | `cmd.questionnaire.submit` | Send decision response | Explicitly submit one validated user response through the decision-review profile. | Exactly one of four choices; required change/question text when applicable; authenticated host user provenance and current pending item. |
 | `cmd.questionnaire.dismiss` | Pause decision review | Preserve the current draft and pause the conversational branch without deciding or submitting. | Current questionnaire identity; no successful disposition implied. |
-| `cmd.questionnaire.resume` | Resume decision review | Restore the same pending item, draft, inquiry or completed outcome from durable state. | Matching persisted thread/packet/item identity and current owner projection. |
+| `cmd.questionnaire.resume` | Resume decision review | Restore the same pending item, draft, inquiry or completed outcome from durable state. Outside this profile, under the ordinary Assistant Chat section 7.4 questionnaire lifecycle, BrainStorm "Answer now" on the `run_dock` line and on the `brainstorm_card` is also a producer of this ID (UCC-169); it renders disabled with `command_not_registered` while the family is `candidate_not_registered`. | Matching persisted thread/packet/item identity and current owner projection. |
 | `cmd.questionnaire.expire` | Expire questionnaire round | Apply the existing questionnaire timeout to the round without changing the decision disposition. | Existing lifecycle deadline and authorized lifecycle owner; not a fifth card response. |
 | `cmd.questionnaire.mark_unavailable` | Mark questionnaire unavailable | Record existing headless/HITL-unavailable lifecycle state without inventing a user answer. | Authorized lifecycle owner and explicit unavailable condition; not a fifth card response. |
 

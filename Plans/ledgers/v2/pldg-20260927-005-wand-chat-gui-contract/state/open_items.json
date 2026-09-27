@@ -1,11 +1,26 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-005-wand-chat-gui-contract",
-  "updated_at_utc": "2026-09-27T19:15:00+00:00",
-  "open_questions": [],
+  "updated_at_utc": "2026-09-27T20:30:00+00:00",
+  "open_questions": [
+    "q-001",
+    "q-002",
+    "q-003",
+    "q-004",
+    "q-005",
+    "q-006",
+    "q-007",
+    "q-008",
+    "q-009",
+    "q-010",
+    "q-011",
+    "q-012"
+  ],
   "answered_questions": [],
   "open_blockers": [],
   "deferred_questions": [],
   "deferred_items": [],
-  "not_landed": []
+  "not_landed": [
+    "All compiled prose is unlanded: shards and index regeneration, review and landing are pending."
+  ]
 }

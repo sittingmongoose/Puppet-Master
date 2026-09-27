@@ -1,17 +1,23 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-002-wand-back-seat-driver",
-  "updated_at_utc": "2026-09-27T19:15:00+00:00",
-  "last_event_id": "evt-001",
-  "canonical_plan_targets": [],
-  "compiled_owner_docs": [],
-  "compiled_plan_outputs": [],
+  "updated_at_utc": "2026-09-27T20:30:00+00:00",
+  "last_event_id": "evt-003",
+  "canonical_plan_targets": [
+    "Plans/Back_Seat_Driver.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Back_Seat_Driver.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Back_Seat_Driver.md"
+  ],
   "governance_status": "not_requested",
   "latest_audit_ref": null,
   "latest_audit_status": null,
   "validation_state": {
-    "ledger_health": "pass_empty_skeleton",
-    "compile_witness": "not_run"
+    "ledger_health": "see validation/ledger_health.json",
+    "compile_witness": "see G2-NOTES; rerun after every edit"
   },
   "planned_owner_docs": [
     "Plans/Back_Seat_Driver.md"
@@ -19,10 +25,10 @@
   "reserved_id_ranges": {
     "BSD": "BSD-030..BSD-044"
   },
-  "current_phase": "prose_compile_open",
+  "current_phase": "prose_compiled_companions_pending",
   "cursor": {
-    "last_event_id": "evt-001",
-    "next_action": "Author G2 of CANON-PLAN: compile the NOW lines of B-BSD-01..B-BSD-09 as prose only into Plans/Back_Seat_Driver.md, writing design atoms, decisions, corrections, questions and source_shards/findings.md here and filling state/compile_queue.json; then run python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver --base origin/main. WAIT lines are recorded as open questions naming their card; OUT lines are not compiled."
+    "last_event_id": "evt-003",
+    "next_action": "Prose compiled (BSD-030..BSD-034); witness run. Next: one blind form-driven review (cap two cycles); the lead regenerates shards and index once for all groups; companions (schemas, fixtures, gates) are a separate later task; the WAIT wave compiles q-001..q-003 after the owner answers n01, p04 and p15."
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver/source_shards/authorization.md"

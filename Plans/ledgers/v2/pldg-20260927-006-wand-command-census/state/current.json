@@ -1,17 +1,28 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-006-wand-command-census",
-  "updated_at_utc": "2026-09-27T19:15:00+00:00",
-  "last_event_id": "evt-001",
-  "canonical_plan_targets": [],
-  "compiled_owner_docs": [],
-  "compiled_plan_outputs": [],
+  "updated_at_utc": "2026-09-27T19:30:00+00:00",
+  "last_event_id": "evt-003",
+  "canonical_plan_targets": [
+    "Plans/Commands_System.md",
+    "Plans/UI_Command_Catalog.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Commands_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Commands_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md"
+  ],
   "governance_status": "not_requested",
   "latest_audit_ref": null,
   "latest_audit_status": null,
   "validation_state": {
-    "ledger_health": "pass_empty_skeleton",
-    "compile_witness": "not_run"
+    "ledger_health": "pass",
+    "compile_witness": "pass"
   },
   "planned_owner_docs": [
     "Plans/UI_Command_Catalog.md",
@@ -27,17 +38,22 @@
     "ATS (companion task only)": "ATS-062..ATS-066"
   },
   "phase": "prose_compile_open",
-  "accepted_decisions_count": 0,
-  "design_atoms_total": 0,
+  "accepted_decisions_count": 6,
+  "design_atoms_total": 6,
   "ready_for_plan_compile_atoms": 0,
   "candidate_atoms_count": 0,
-  "open_questions_count": 0,
+  "open_questions_count": 7,
   "deferred_questions_count": 0,
   "open_blockers_count": 0,
-  "compiled_plan_unit_ids": [],
+  "compiled_plan_unit_ids": [
+    "UCC-169",
+    "CDRY-021",
+    "CS-086",
+    "WM-062"
+  ],
   "cursor": {
-    "last_event_id": "evt-001",
-    "next_action": "Author G6 of CANON-PLAN: compile the NOW lines of B-CMD-01..B-CMD-09, B-ACD-12, B-CMP-01..B-CMP-05 as prose only into Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Wiring_Matrix.md, writing design atoms, decisions, corrections, questions and source_shards/findings.md here and filling state/compile_queue.json; then run python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-006-wand-command-census --base origin/main. WAIT lines are recorded as open questions naming their card; OUT lines are not compiled."
+    "last_event_id": "evt-003",
+    "next_action": "Prose compiled and witnessed. Next: blind form-driven review (cap two cycles); the integrator regenerates shards and the plan index; then the companion task (production wiring, exclusions, schemas, fixtures) and the WAIT wave after the owner answers cards p01, p07, p08, p09, p11, p12, p15 and p19."
   },
   "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md."
 }

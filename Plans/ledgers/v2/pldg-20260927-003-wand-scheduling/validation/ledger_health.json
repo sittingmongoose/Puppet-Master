@@ -1,17 +1,17 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-003-wand-scheduling",
-  "updated_at_utc": "2026-09-27T19:15:00+00:00",
-  "status": "pass_empty_skeleton",
+  "updated_at_utc": "2026-09-27T19:30:00+00:00",
+  "status": "pass_prose_compiled",
   "summary": {
-    "events": 1,
-    "design_atoms": 0,
-    "decisions": 0,
-    "open_questions": 0,
+    "events": 3,
+    "design_atoms": 7,
+    "decisions": 7,
+    "open_questions": 3,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "compile_queue_items": 0
+    "compile_queue_items": 6
   },
-  "notes": "Empty skeleton created by the canon planner; the author fills it.",
+  "notes": "Prose compile only; companions (B-SQR-09) and the WAIT line (B-SQR-05) follow.",
   "errors": []
 }

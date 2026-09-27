@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25375-L25416
+Source lines: L25378-L25421
 
-Source SHA256: `82693e025835e537590128c7917aa84700243edfa6b447ccd818cebdcbf55b0f`
+Source SHA256: `9c07fb610dd8cf08beb9335766a862a77e258c5642423573000eeb4edc37f270`
 
 ---
 
@@ -50,3 +50,5 @@ negative_constraints: [No new command or handler., No second buffer or collabora
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-158, ContractName:Plans/Commands_System.md, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Models_System.md, ContractName:Plans/DRY_Rules.md#DR-040
+
+Amended 2026-09-27: the per-attempt title record (`ThreadTitleAttempt`), `thread.title_locked` and the chat header's title states that follow from `cmd.chat.thread.regenerate_title` are specified in ACD-479, which also adds the `chat_header` surface for it. The command, its owner and the title policy stay as stated here.

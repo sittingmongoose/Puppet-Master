@@ -1,17 +1,23 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-003-wand-scheduling",
-  "updated_at_utc": "2026-09-27T19:15:00+00:00",
-  "last_event_id": "evt-001",
-  "canonical_plan_targets": [],
-  "compiled_owner_docs": [],
-  "compiled_plan_outputs": [],
+  "updated_at_utc": "2026-09-27T19:30:00+00:00",
+  "last_event_id": "evt-003",
+  "canonical_plan_targets": [
+    "Plans/Scheduling_and_Quota_Resume.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Scheduling_and_Quota_Resume.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Scheduling_and_Quota_Resume.md"
+  ],
   "governance_status": "not_requested",
   "latest_audit_ref": null,
   "latest_audit_status": null,
   "validation_state": {
-    "ledger_health": "pass_empty_skeleton",
-    "compile_witness": "not_run"
+    "ledger_health": "see validation/ledger_health.json",
+    "compile_witness": "pass"
   },
   "planned_owner_docs": [
     "Plans/Scheduling_and_Quota_Resume.md"
@@ -21,13 +27,14 @@
     "SMSG": "SMSG-019..SMSG-024",
     "PSCHED": "PSCHED-015..PSCHED-018"
   },
-  "current_phase": "prose_compile_open",
+  "current_phase": "prose_compiled_pending_review",
   "cursor": {
-    "last_event_id": "evt-001",
-    "next_action": "Author G3 of CANON-PLAN: compile the NOW lines of B-SQR-01..B-SQR-09 as prose only into Plans/Scheduling_and_Quota_Resume.md, writing design atoms, decisions, corrections, questions and source_shards/findings.md here and filling state/compile_queue.json; then run python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-003-wand-scheduling --base origin/main. WAIT lines are recorded as open questions naming their card; OUT lines are not compiled."
+    "last_event_id": "evt-003",
+    "next_action": "Lead: regenerate shards and index once for all groups, run the blind form-driven review (cap two cycles), then the companion task (q-002). WAIT wave: compile the E-19 answer (q-001) after card p12 is answered."
   },
   "source_refs": [
-    "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/authorization.md"
+    "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/findings.md"
   ],
-  "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md."
+  "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md; re-read against the landed Chat updates.md (B0-01)."
 }

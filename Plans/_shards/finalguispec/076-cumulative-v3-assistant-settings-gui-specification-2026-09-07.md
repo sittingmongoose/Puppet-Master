@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36423-L37111
+Source lines: L36445-L37137
 
-Source SHA256: `6c05eadcfcf31549a409dd6931b79229ff3c43b599074248ff5a3222de15216d`
+Source SHA256: `9e116c56cf58230049cc5d6be27a21bcb35b9f4e28e58ec6ca101c21ecf279bb`
 
 ---
 
@@ -34,6 +34,8 @@ invariants.
   The chat transcript container enforces positive bottom padding such that the final transcript
   message child at settled bottom scroll rests completely above the pill without collision or
   occlusion. The bar is never replaced with plain text and is never rendered as an opaque in-flow footer.
+  The padding is measured with the composer stack as it stands, including the dock when it shows
+  (F3-567), so the last card's footer is never under the pill.
 
 ### 18. Transcript Constraints, Card Visual Rhythm, Diffs, and Work-Note Boundary
 
@@ -71,7 +73,8 @@ invariants.
   bounded surfaces with no internal scrollbars (`overflow: hidden`). Previews display a curated,
   representative subset of items (up to 4–6 items). An overflow summary counter (e.g., "+7 more")
   navigates directly to the full Activity Detail panel on click, but does not masquerade as an Open
-  Activity action button.
+  Activity action button. The collaboration hover cards (at most four run rows plus one overflow
+  line that opens Activity) satisfy this rule unchanged.
 - **Preview Routing Identity (APR-042):** Selecting an item from an activity preview retains exact
   item identity and domain context during routing. Selecting a file change in Changes preview routes
   directly to the specific file diff view; selecting an artifact routes directly to the artifact
@@ -139,7 +142,8 @@ invariants.
   Persona, and Strategy. All pickers share consistent keyboard navigation, anchoring, and search filters.
 - **Plain-Language Collaboration Configuration (APR-052):** All collaboration options use plain-language
   labels with concise descriptive subtitles explaining the exact operational difference between modes
-  (e.g., Single Agent vs Multi-Pass Review, Quick vs Exhaustive BrainStorm).
+  (e.g., Single Agent vs Multi-Pass Review, or the Deep Plan strategies Thorough, Exhaustive and
+  BrainStorm; BrainStorm has no Quick strategy).
 - **Consistent Inset Popup Footers (APR-053):** Configuration modal footers enforce consistent
   inset padding (16 px horizontal and vertical), subtle top separator borders, and standard button
   clustering (primary action right-aligned, secondary/cancel left- or right-adjacent with clear hierarchy).

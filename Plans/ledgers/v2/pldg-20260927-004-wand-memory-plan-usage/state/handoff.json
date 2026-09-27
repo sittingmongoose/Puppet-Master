@@ -1,17 +1,31 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-004-wand-memory-plan-usage",
-  "updated_at_utc": "2026-09-27T19:15:00+00:00",
-  "last_event_id": "evt-001",
-  "canonical_plan_targets": [],
-  "compiled_owner_docs": [],
-  "compiled_plan_outputs": [],
+  "updated_at_utc": "2026-09-27T21:30:00+00:00",
+  "last_event_id": "evt-002",
+  "canonical_plan_targets": [
+    "Plans/Assistant_Plan_Runtime.md",
+    "Plans/assistant-memory-subsystem.md",
+    "Plans/usage-feature.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Models_System.md",
+    "Plans/assistant-memory-subsystem.md",
+    "Plans/usage-feature.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Models_System.md",
+    "Plans/assistant-memory-subsystem.md",
+    "Plans/usage-feature.md"
+  ],
   "governance_status": "not_requested",
   "latest_audit_ref": null,
   "latest_audit_status": null,
   "validation_state": {
-    "ledger_health": "pass_empty_skeleton",
-    "compile_witness": "not_run"
+    "ledger_health": "pass",
+    "compile_witness": "pass"
   },
   "planned_owner_docs": [
     "Plans/assistant-memory-subsystem.md",
@@ -27,10 +41,10 @@
     "UF": "UF-104..UF-110",
     "MS": "MS-140..MS-143"
   },
-  "current_phase": "prose_compile_open",
+  "current_phase": "prose_compiled",
   "cursor": {
-    "last_event_id": "evt-001",
-    "next_action": "Author G4 of CANON-PLAN: compile the NOW lines of B-AMS-01..B-AMS-08, B-APR-01..02, B-PER-01..02, B-USE-01..02 as prose only into Plans/assistant-memory-subsystem.md, Plans/Assistant_Plan_Runtime.md, Plans/Personas.md, Plans/usage-feature.md, Plans/Models_System.md, writing design atoms, decisions, corrections, questions and source_shards/findings.md here and filling state/compile_queue.json; then run python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main. WAIT lines are recorded as open questions naming their card; OUT lines are not compiled."
+    "last_event_id": "evt-002",
+    "next_action": "Integrator: regenerate shards and index once for all groups, run the blind form-driven review, then land. WAIT wave: compile q-001..q-006 after the owner's card answers are in Decision_Log."
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage/source_shards/authorization.md"

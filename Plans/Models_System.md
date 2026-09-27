@@ -567,6 +567,8 @@ OpenCode product pricing is a reference formula, not an authoritative PM cost so
 
 The explanatory formula is per 1M token pricing units: `input * input_rate`, `output * output_rate`, `cache_read * cache_read_rate`, `cache_write * cache_write_rate`, and `reasoning * output_rate`; the estimate may still be inaccurate for some providers such as OpenRouter because of cache/input reporting differences.
 
+A pre-start run estimate reads these rates only through the pricing snapshot it names in `basis.pricing_snapshot_id`; the estimate contract, its labelling and its no-basis rule are owned by `Plans/usage-feature.md` UF-104, and an estimate is never a UsageRecord.
+
 Provider-sensitive token counting uses `token_counting_adapter_id`, `token_counting_basis`, and `counting_semantics` before cost or budget enforcement reads canonical UF-085 token buckets. Provider raw counts may be preserved for audit, but the adapter result is what feeds `input_total`, `input_non_cached`, `cache_read`, `cache_write`, `cache_write_1h` / `cache_write_ttl` where exposed, `output_total`, `output_visible`, `reasoning` / `thoughts`, `provider_total`, and `context_estimate`. Legacy `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, and `reasoning_tokens` remain compatibility import/export aliases only.
 
 Context-detail `Breakdown` views that consume model/runtime usage metadata show the context usage bar, token buckets, and grouped breakdowns by role, tools, and provider/model when available.

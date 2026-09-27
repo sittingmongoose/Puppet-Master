@@ -1,85 +1,86 @@
 # Shard Index: Plans/assistant-chat-design.md
 
-Generated: 2026-09-27T17:38:09Z
+Generated: 2026-09-27T19:44:59Z
 
-Source SHA256: `82693e025835e537590128c7917aa84700243edfa6b447ccd818cebdcbf55b0f`
+Source SHA256: `9c07fb610dd8cf08beb9335766a862a77e258c5642423573000eeb4edc37f270`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `78fbddaa9c2e17f59c6c189bdd75dabc0b566b2b3ebb5c191b8a3d2ae2bb3edb`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `6de8cf6ba133668096eb5408c9256786cb347519ddc2be2066416f9b5b8b4ec4`
-- [003 - Change Summary](003-change-summary.md) L14-L30 `ce825c7fe4b5c297fff634e72edb8dbe53ea5996b20305281f1509083f6acf35`
-- [004 - Rewrite alignment (2026-02-21)](004-rewrite-alignment-2026-02-21.md) L32-L47 `6b496448b72f387d740f17454bd8c26df7c2f45dac3c5fd43d5e00c3f434ebe4`
-- [005 - Executive Summary](005-executive-summary.md) L48-L52 `bea59e17e329d8d54af1794df8f61cb7fd00467e4a064b5069e52c8589cf5d60`
-- [006 - Table of Contents](006-table-of-contents.md) L54-L90 `0fbad3b37256121916715d9dc2dc89aa687ab6cc5fdccd8c6abe040f6a398f3c`
-- [007 - 1. Modes Overview](007-1.-modes-overview.md) L92-L207 `17a52b67a84f51c1df2e9bab1d897993b4e0f3c19340a8d297e54e3db6ec92bf`
-- [008 - 2. ELI5 Mode](008-2.-eli5-mode.md) L209-L231 `a08d28f8d7d196f650a5e140527c5a79e6a886c07b96812eec0aade2edf8e048`
-- [009 - 3. Permissions: YOLO vs Regular](009-3.-permissions-yolo-vs-regular.md) L233-L239 `be5f667e8d402e85b9607344ac46b5c52c64f955b760dce60b4ec05ad6ead168`
-- [010 - 4. Message submission (Steer vs Queue), queued editing, interrupt, and stop](010-4.-message-submission-steer-vs-queue-queued-editing-interrupt-an.md) L241-L289 `78a70d23e87f763939c3c85b34e99d766808664fa07e079bd9bdf028bff215c3`
-- [011 - 5. Commands (slash commands and custom commands)](011-5.-commands-slash-commands-and-custom-commands.md) L290-L438 `bf9d67884a948d4ba9494f05825d19f5189e5ee77efe7852e9fce089d55f8ec5`
-- [012 - 6. Teach](012-6.-teach.md) L439-L477 `0307b02166ca31ff71a30a7f513796e22d1be18140cf3ee1d66eb1c8577d7d45`
-- [013 - 7. Attachments, Web Search, and Extensibility](013-7.-attachments-web-search-and-extensibility.md) L479-L664 `37034f5f168e0cbbd0bd0d7d713a3166fda9127884627c3c18ab53992d268798`
-- [014 - 8. Plan Mode, Deep Plan Mode, and Plan Thoroughness (PT)](014-8.-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md) L665-L957 `e3b9ab5d1908834f21b83dabba6f543dbf1841f5342b425fcef1a91d70698cb9`
-- [015 - 9. File Manager, IDE-style editor, and @ Mention](015-9.-file-manager-ide-style-editor-and-mention.md) L959-L1000 `9d090eacdd3cb306ca609d54110c554896400d54222bafec877c20865a34c878`
-- [016 - 10. Chat History Search](016-10.-chat-history-search.md) L1002-L1072 `2690419d1b54139c1c43bd0a50c6e748b41d95cc614bc643f2d96ba54c648f6c`
-- [017 - 11. Threads and chat management](017-11.-threads-and-chat-management.md) L1073-L1250 `dd4cb5575b4ebc59e8907fc26826372fa7f8b8d79051e933b3f8db3780630418`
-- [018 - 12. Context usage display](018-12.-context-usage-display.md) L1251-L1359 `d44cde4d017b75536a927909981bc3535e1ca3298ab6c9a306a4c1cc654fe56b`
-- [019 - 13. Activity transparency: search, bash, and file activity](019-13.-activity-transparency-search-bash-and-file-activity.md) L1360-L1775 `c134e979f7ddab6014d7e60e2b2bbebc955bebe78aff848d4eed51bc378dc1fc`
-- [020 - 14. Subagents & Crew](020-14.-subagents-crew.md) L1776-L1893 `c9e95e050be8a2ca97d69e0112e84148a7bf38856249732dfe8a32e11df07710`
-- [021 - 15. Plan Mode + Crew Mode](021-15.-plan-mode-crew-mode.md) L1894-L1927 `1d316b6dcd989fe3462b321f17a59e7d46db64c3cc0c9536b35119fce0e22a32`
-- [022 - 16. Interview Phase UX (Chat Surface)](022-16.-interview-phase-ux-chat-surface.md) L1928-L1967 `2df1695403361db532d983fc425a22e2bf0cb2faf93b1bbc2f2314e9f37486d5`
-- [023 - 17. Context & Truncation](023-17.-context-truncation.md) L1969-L2082 `a327a557c08ed18cf80218476d6e9e77fa8fa940cc868c02f1206a69de1732cf`
-- [024 - 18. BrainStorm Mode](024-18.-brainstorm-mode.md) L2083-L2094 `e64bc89106bb6be66d34e02c5a4d0b24f1574e767adb020a337fc6da377dee94`
-- [025 - 19. Documentation Audience (AI Overseer)](025-19.-documentation-audience-ai-overseer.md) L2096-L2105 `2b72140979fd1d250ec9917d7d34cda39924353768be5ce48915087b23486225`
-- [026 - 20. References](026-20.-references.md) L2107-L2136 `3ca262326315d336dcb14ca90e07873aa7788e042ff008628f03a91aff6349d1`
-- [027 - 21. Dashboard Warnings and Calls to Action](027-21.-dashboard-warnings-and-calls-to-action.md) L2137-L2155 `9692ee46dd6623a186699780e28e37fad94e864133703c9eb748b63d98518fd9`
-- [028 - 22. Live Testing Tools and Hot Reload](028-22.-live-testing-tools-and-hot-reload.md) L2157-L2188 `b51044fb49c20e634395d9a8fd42fe18b14e6efb46eb9e3a2ea5e3d0e0224e70`
-- [029 - 23. Gaps, Competitive Comparison, and Enhancements](029-23.-gaps-competitive-comparison-and-enhancements.md) L2189-L2284 `e10824a633614469c116774f9be13ef237fdf27e70e5714b980d5edd0de383bd`
-- [030 - 24. Chat thread performance, virtualization, and flicker avoidance](030-24.-chat-thread-performance-virtualization-and-flicker-avoidance.md) L2286-L2339 `cadd4cf166b3b71ba2d2b6d9b8be4980f8f97a67e588276c88c7be80370f5b82`
-- [031 - 25. Context Circle Enhancements (Addendum -- 2026-02-23)](031-25.-context-circle-enhancements-addendum-2026-02-23.md) L2340-L2346 `b84ab2fd8a7efeeb65b03fcdddc38abe36c42e27fb8e29542a77b5da727ba072`
-- [032 - 26. Auditor Audit-To-Repair Loop Model/Provider Settings (Invariant Sweep)](032-26.-auditor-audit-to-repair-loop-model-provider-settings-invaria.md) L2347-L2449 `457d8f39bccc7f8638d87625955ceeed5d4aa963a95bcf90ba02519153d152f5`
-- [033 - 27. Persona Control in Assistant Chat (2026-03-06)](033-27.-persona-control-in-assistant-chat-2026-03-06.md) L2450-L2586 `4fa16b34109ec2f0f0e987f504a977a8f1e955ee1b5e869f0973ba10c630ba39`
-- [034 - 28. Markdown and Mermaid Rendering in Chat and Planning Surfaces (2026-03-07)](034-28.-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces.md) L2588-L2631 `23ad577e7721600984343b53879e665c7509d20e34172826eb2143c404ea9271`
-- [035 - 29. Natural-language Mode Invocation and Wizard Escalation (2026-03-08)](035-29.-natural-language-mode-invocation-and-wizard-escalation-2026-.md) L2632-L2741 `aef032e372b689047187fbd86f474e17062826b39bc3bea924106d448fd5472a`
-- [036 - Unified Thread Blocked-State Lifecycle](036-unified-thread-blocked-state-lifecycle.md) L2743-L2758 `790db22bc4faa9b952846dcb773f0f3f4421411f562c55496ebf0076aa7d3598`
-- [037 - Worktrees in Assistant](037-worktrees-in-assistant.md) L2759-L2771 `9e6fed5263d731ebad1cffb5e20bba9648762a9eca449935cee7e8d0950d37e8`
-- [038 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](038-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L2773-L2841 `73fde3242d5d6e66b97b88040d397da188540defab8db56978d41e9f26ebc90b`
-- [039 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](039-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L2843-L3485 `99bc1a356533872e3b91b47984dd0602ffa4ea7eb5867351808eb65cddf68928`
-- [040 - Shared actor-boundary, route payload, and blocked_notice packet](040-shared-actor-boundary-route-payload-and-blocked_notice-packet.md) L3486-L3506 `6993115264376962f8abb64a995a03779aca1ec883f420543a7b3f01abbef403`
-- [041 - Shared Conversational Actor Runtime Identity](041-shared-conversational-actor-runtime-identity.md) L3508-L3522 `5cd3ad2e1e09181b71e6327e125abc9aacba958649c7bbb8f159b286266b5b52`
-- [042 - Chat Route, Permission, and History Behaviors](042-chat-route-permission-and-history-behaviors.md) L3524-L3538 `5aa42d0e7469ed576273a81947cce09009c33d70fe54f353b0104f2ff0883b76`
-- [043 - Owner / Consumer Map](043-owner-consumer-map.md) L3540-L3544 `c7c3a20867c2dc4acbc65992b55d041f700c160b5eeba8ee7bcab7413fc884d6`
-- [044 - PlanUnits](044-planunits.md) L3546-L3597 `eb0874e5136280d17881805715f03e01108304cc6014728bf6806ce70258a9ca`
-- [045 - Shared runtime projection addendum (2026-08-13)](045-shared-runtime-projection-addendum-2026-08-13.md) L3599-L22234 `c830977239a48ed56bd48ba79108f6994e3808289c31eb074519fb6f670626e7`
-- [046 - Migration Coverage](046-migration-coverage.md) L22236-L22266 `17d69fed7c5c720df5a39cfc0f0ef6be0ef127b11ba6e062548703cb5b281dc8`
-- [047 - Ledger Compile Addendum - pldg-20260614-001](047-ledger-compile-addendum-pldg-20260614-001.md) L22268-L22356 `f68ea460121fdab3c425c3bc84bbaaec33bb5e21a9dd209b0f076fd9feb80f09`
-- [048 - Ledger Compile Addendum - pldg-20260615-001](048-ledger-compile-addendum-pldg-20260615-001.md) L22358-L22455 `13552f8a3dec2fc7b83dd33ea8862a5f8a98779b2bc56c40d6bc03ef03851350`
-- [049 - Ledger Compile Addendum - pldg-20260616-001](049-ledger-compile-addendum-pldg-20260616-001.md) L22457-L22769 `71ee767dbee78959f375ae36e7e81966ec733cd112acb9bbe35d777de7769b70`
-- [050 - Ledger Compile Addendum - pldg-20260616-002](050-ledger-compile-addendum-pldg-20260616-002.md) L22771-L22838 `6e8137ecb3bd05fe82d7108434e6f39e03bad81b0ad8a3bae1278313ce664ba5`
-- [051 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](051-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L22841-L22929 `cdfa120a8d6705f2ca1e85f57fe21b5a7d462bb816e80f38eada762d0aa5ec1d`
-- [052 - Ledger Compile Addendum - pldg-20260622-001-fff](052-ledger-compile-addendum-pldg-20260622-001-fff.md) L22931-L23017 `076fe56662bd83103b54ca74708c6c1aa90dab8ab00f308f5493d9bfaf1e2c77`
-- [053 - Ledger Compile Addendum - pldg-20260626-001-feature-name](053-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L23020-L23394 `0a772ac83e9dc323125f1ce70bba27e687893fa6cfdaf4173773921399ba52f5`
-- [054 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](054-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L23396-L23607 `7f9a786a7b2422b7c401bfc0d4451488e2d0402b5309985fdf5202c0b60a80ea`
-- [055 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](055-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L23609-L23688 `9e3081eca90de8a659aaced62b8f4a4b94dbc2665fcfa970306ac669f09af977`
-- [056 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](056-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L23690-L23755 `2082a0ee2539aeed7105973f830282a7bc745ed1dc8943e6eab1a419657fc132`
-- [057 - FABLE Residual Chat Mechanics Cleanup Addendum - 2026-07-07](057-fable-residual-chat-mechanics-cleanup-addendum-2026-07-07.md) L23757-L23828 `41179cf5a0919d49bfc3b7ff528107285711bb2529904067c8cc99bbd651bcaf`
-- [058 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](058-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L23830-L23874 `5148312f14036b9227debcbb6ed13ffcfeaa26df0298effd08c7f4a1c4d9b7ee`
-- [059 - Usage GUI Propagation Addendum - 2026-07-09](059-usage-gui-propagation-addendum-2026-07-09.md) L23876-L23952 `6b0fdf2c345443956442dc08b8b13413683697426ae401cab34b8ff6adc32f0c`
-- [060 - PMConcept6 Chat Polish Addendum - 2026-07-16](060-pmconcept6-chat-polish-addendum-2026-07-16.md) L23954-L24173 `8a3eb3bc8650b1b09dc3fc8d817bb41a4aeab7029e70b986b219d5745467d84c`
-- [061 - Immutable conversation restore-point lifecycle - Known-37 completion](061-immutable-conversation-restore-point-lifecycle-known-37-completi.md) L24176-L24193 `293d3a72b313e87cbdde9b6a6d29941314957340beca04b20c4075cea474c0f5`
-- [062 - PMConcept7 Concept Promotion Addendum - 2026-07-23](062-pmconcept7-concept-promotion-addendum-2026-07-23.md) L24195-L24561 `2e5108abdf3bb3db9fdbbdf283e910ebd2ffd4e2274f9f5b0a8c48201c15275e`
-- [063 - PMConcept7 shared Assistant seating and context surfaces addendum - 2026-08-27](063-pmconcept7-shared-assistant-seating-and-context-surfaces-addendu.md) L24563-L24653 `99ef2a2857bba785607b4c82339736207672445d9926c17097052d8f110760c2`
-- [064 - Additive Correction v4 — Consumed Assistant Behaviour (2026-09-03)](064-additive-correction-v4-consumed-assistant-behaviour-2026-09-03.md) L24655-L24692 `b36c552c566824f74099ce6a3ff54c953a85c71889a88594c3ae7b71a13feddb`
-- [065 - Working Notebook Surface Addendum (2026-09-05)](065-working-notebook-surface-addendum-2026-09-05.md) L24694-L24802 `b69a64b3982262ee827f373cf3d01efdb6306db161849d7a9b886a66d2f6524d`
-- [066 - Cumulative v3 Assistant Interaction & Surface Specification (2026-09-07)](066-cumulative-v3-assistant-interaction-surface-specification-2026-0.md) L24804-L25152 `9b980dee87f792f2d91469bb423241c00ff97efd70558645f39fb1bbaa267463`
-- [067 - Research decision packet review](067-research-decision-packet-review.md) L25156-L25251 `2814f6e9e508ecf0979bd8f7314849ad6b03d73b73e17be0912c4fe1d9fe0b86`
-- [068 - Context Lens Source and Preview Reconciliation — 2026-09-10](068-context-lens-source-and-preview-reconciliation-2026-09-10.md) L25253-L25317 `96b161c72ccbce6307318f011adf7e8c0d51401a4bdf50283c0182344ee53aa0`
-- [069 - Compaction completion Event Authority (DL-039 and DL-040)](069-compaction-completion-event-authority-dl-039-and-dl-040.md) L25319-L25372 `55d6b669acbf491a310bbc02f691b1bc1b291c73f728b86f701c16a3b7179eca`
-- [070 - DL-042 — Historical TODO Event Migration Consumer Boundary (2026-09-11)](070-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md) L25375-L25416 `7a5ed2f8bb394888efebfe8300c998e5fa2d9454b3d058a8ff21750a13a14c8e`
-- [071 - Restore-point created native and historical consumers](071-restore-point-created-native-and-historical-consumers.md) L25419-L25593 `efb4b74a9019d83e1b80b20fe006bcc03f8afb78d51b368f98f9b1a190a06a63`
-- [072 - Deleted restore-point passive history admission](072-deleted-restore-point-passive-history-admission.md) L25596-L25662 `9885964f988101ec08af3663db081afc5bdd3916385a68628a7858e821aa0113`
-- [073 - Expired restore-point passive history admission](073-expired-restore-point-passive-history-admission.md) L25665-L25734 `62240a23cde0a309a7622a2497cb97f88dc42d18a2c9d0aabd08c96f21033e98`
-- [074 - External Research Decision Packet Consumer Addendum (2026-09-17)](074-external-research-decision-packet-consumer-addendum-2026-09-17.md) L25736-L25786 `bc113f76b2055d783aa2e7afb699779f2a20758401871657f9a7c98f5e200b64`
-- [075 - Chat WOW Turn Presentation Addendum (2026-09-27)](075-chat-wow-turn-presentation-addendum-2026-09-27.md) L25788-L26281 `42dcae84fac553844b90d940673a15d91230e83cc1674eca7e999af5b348d64d`
+- [001 - Preamble](001-preamble.md) L1-L1 `12133071e440be626c65ba3d0d38fb20706aa476fbc531344b11d6ecec485777`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `dc34d057c752419a0b92469b208fe959d91e54f5ebabe2df3913a11a0a7a1828`
+- [003 - Change Summary](003-change-summary.md) L14-L30 `8a8fe37b017982afd86bd0345a0f3f47a38f589d2e212d2d72d4539147b28da5`
+- [004 - Rewrite alignment (2026-02-21)](004-rewrite-alignment-2026-02-21.md) L32-L47 `7c6dc1f3d3acd038a683f679ac27af7badf10dcf1c9b13a752e38df52677fd1d`
+- [005 - Executive Summary](005-executive-summary.md) L48-L52 `d3bee2553ccd901e233dd773c02b0711221b7a4504a22800360343b4db2de2ab`
+- [006 - Table of Contents](006-table-of-contents.md) L54-L90 `139f23c4f229c45e97aec731618aaaa05504fcc5dc52a7d57684b42112b333c1`
+- [007 - 1. Modes Overview](007-1.-modes-overview.md) L92-L207 `61e16410d34b0f675da865b3ec2095d82789fbf623c14033b54623f76a8bb25f`
+- [008 - 2. ELI5 Mode](008-2.-eli5-mode.md) L209-L231 `755770fc43f3c796c73a248c6783c43b4d1913b760377220ec615ffb1b20867b`
+- [009 - 3. Permissions: YOLO vs Regular](009-3.-permissions-yolo-vs-regular.md) L233-L239 `fdc941f2d26e5cd1a1115f5fc6e952d07efab23f0a040b7fce286f549363884b`
+- [010 - 4. Message submission (Steer vs Queue), queued editing, interrupt, and stop](010-4.-message-submission-steer-vs-queue-queued-editing-interrupt-an.md) L241-L289 `6f7085bb64d1f4754c5a23edc4d2de322e287a1fd841d610e34b33161f4dcc15`
+- [011 - 5. Commands (slash commands and custom commands)](011-5.-commands-slash-commands-and-custom-commands.md) L290-L438 `1dc1ca9123d0071522213b301d8a84d20cb52b124a90e3760eada8ebe056b7c5`
+- [012 - 6. Teach](012-6.-teach.md) L439-L479 `001835143dfe6263d3aadc08823d8fe4f4b2c3d758e0bd5414b6eaa9df3e7ec5`
+- [013 - 7. Attachments, Web Search, and Extensibility](013-7.-attachments-web-search-and-extensibility.md) L481-L666 `767f785ffe67fef53add891f18f7ecd5c04830b0a4fcf1edad8e749b3105660c`
+- [014 - 8. Plan Mode, Deep Plan Mode, and Plan Thoroughness (PT)](014-8.-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md) L667-L959 `5f96b6520f12f9fd5205443a1f5648d34940c700148e9af318818a168009fcc2`
+- [015 - 9. File Manager, IDE-style editor, and @ Mention](015-9.-file-manager-ide-style-editor-and-mention.md) L961-L1003 `6dfcfec7e2b34c80ac66b4c423af0c81c7bc856448db6397804a446443aa4b54`
+- [016 - 10. Chat History Search](016-10.-chat-history-search.md) L1005-L1075 `0cbf58f8595954fd0f68fd3bb3044b7b70eda7891775ed6405d3521b534e620f`
+- [017 - 11. Threads and chat management](017-11.-threads-and-chat-management.md) L1076-L1253 `999ad339d5f4a829bdfdff6fd0c9b9b33606833f127bb2d46719a7b68b069c24`
+- [018 - 12. Context usage display](018-12.-context-usage-display.md) L1254-L1362 `077f60639d4fa2c93d4234bdfbcb676a155e7560965d641ce150d3d423994b8e`
+- [019 - 13. Activity transparency: search, bash, and file activity](019-13.-activity-transparency-search-bash-and-file-activity.md) L1363-L1778 `e8e44c5d8da3be7a1c8324dc2a5cf6e50e2d497aae62e30dda09cd8d995cdfbc`
+- [020 - 14. Subagents & Crew](020-14.-subagents-crew.md) L1779-L1896 `baf035b7062ee0f6355858832cd53f86241604d817222eafc682a0187cba2a44`
+- [021 - 15. Plan Mode + Crew Mode](021-15.-plan-mode-crew-mode.md) L1897-L1930 `6c33240b9945ff5e0638a02fb83259a5d860da30b134c07110d89f1069c2b37a`
+- [022 - 16. Interview Phase UX (Chat Surface)](022-16.-interview-phase-ux-chat-surface.md) L1931-L1970 `57fd4a7bf5a323e9867bc63eac1b87253362cc7b3802e21eaa1c7d116ef4c83a`
+- [023 - 17. Context & Truncation](023-17.-context-truncation.md) L1972-L2085 `1789755734d59355006bf887dc6b1c3d9a235aa6ab8c43dc58d67573cd853961`
+- [024 - 18. BrainStorm Mode](024-18.-brainstorm-mode.md) L2086-L2097 `f1c0fd1b44fa4d6a1614bf551cdbcb3bca165ce9d2a607dd692553220033816b`
+- [025 - 19. Documentation Audience (AI Overseer)](025-19.-documentation-audience-ai-overseer.md) L2099-L2108 `bbf695c7fff1bd21e70ddfbdaed1e16bb44b4e8333528e03c16d2457109fa0d0`
+- [026 - 20. References](026-20.-references.md) L2110-L2139 `5f172e98cdf92d6277f142a1a7ba21d38ab95eb4dbb85a3634e352bb314d2e03`
+- [027 - 21. Dashboard Warnings and Calls to Action](027-21.-dashboard-warnings-and-calls-to-action.md) L2140-L2158 `ee59ecf73e94a6d2b8f7c26c8584e2e8dfaa43ee824b8cd34a5d95866df1f5d3`
+- [028 - 22. Live Testing Tools and Hot Reload](028-22.-live-testing-tools-and-hot-reload.md) L2160-L2191 `f3ef5db2709083a1747f59aa4ee9971a43c1315cff295f3703bebfed12b4261b`
+- [029 - 23. Gaps, Competitive Comparison, and Enhancements](029-23.-gaps-competitive-comparison-and-enhancements.md) L2192-L2287 `f40858ed79b0141c300590e6b23c40503cb55f4b09b13dbe665343df790e0f10`
+- [030 - 24. Chat thread performance, virtualization, and flicker avoidance](030-24.-chat-thread-performance-virtualization-and-flicker-avoidance.md) L2289-L2342 `23fcf3f7502319bfe7d7528402ff48b94f544c1267652bb9661e22eb1cccd3e7`
+- [031 - 25. Context Circle Enhancements (Addendum -- 2026-02-23)](031-25.-context-circle-enhancements-addendum-2026-02-23.md) L2343-L2349 `81c451c72829cb7908d72c5184ef8238384ffd0a0e81f9f01f15f702ed9d238b`
+- [032 - 26. Auditor Audit-To-Repair Loop Model/Provider Settings (Invariant Sweep)](032-26.-auditor-audit-to-repair-loop-model-provider-settings-invaria.md) L2350-L2452 `2521aa309705b101b29814631050f7f8a010955ff09008ef519a80ff7ec200ce`
+- [033 - 27. Persona Control in Assistant Chat (2026-03-06)](033-27.-persona-control-in-assistant-chat-2026-03-06.md) L2453-L2589 `7871579e7c739cb5c287d5c8e8bf8374ebc5e392927d5182224426c7c5383723`
+- [034 - 28. Markdown and Mermaid Rendering in Chat and Planning Surfaces (2026-03-07)](034-28.-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces.md) L2591-L2634 `9b1202d3a50392b5db5de86bea069f21bf7d8d991edd3a818334b9c55cb220a7`
+- [035 - 29. Natural-language Mode Invocation and Wizard Escalation (2026-03-08)](035-29.-natural-language-mode-invocation-and-wizard-escalation-2026-.md) L2635-L2744 `112e0ebc0f1449e04afdffd27f7276a6b10b56b9e681c8db4841ebda0e8c2b49`
+- [036 - Unified Thread Blocked-State Lifecycle](036-unified-thread-blocked-state-lifecycle.md) L2746-L2761 `803ddddff8eafc84b04b1b91d4f855f80a7773da4d6d4afdd99ac9d8f7f41dd4`
+- [037 - Worktrees in Assistant](037-worktrees-in-assistant.md) L2762-L2774 `6db887a91631e591bcf180cb2a6e23413bdc03e60f49e1f2185bf6621b194aed`
+- [038 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](038-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L2776-L2844 `35ddaa8f5a4ba6f451e0e17e98b6480ee2139959ef2ad81c90cf464768a24fad`
+- [039 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](039-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L2846-L3488 `1c0999c1e55369a3cb870a2a4e800d9a77709fb04eb87e2ccdf1abab50dd2364`
+- [040 - Shared actor-boundary, route payload, and blocked_notice packet](040-shared-actor-boundary-route-payload-and-blocked_notice-packet.md) L3489-L3509 `238628c404538e4e44ecbc8e00ff213f362e97d27981db77253de6d3b8e69358`
+- [041 - Shared Conversational Actor Runtime Identity](041-shared-conversational-actor-runtime-identity.md) L3511-L3525 `9157ed30ee4920b4a8f88fc6be8b279252f9d71185735dcc705a8cde7eece862`
+- [042 - Chat Route, Permission, and History Behaviors](042-chat-route-permission-and-history-behaviors.md) L3527-L3541 `1fca8628668a87533fc4a8b5ac15eccd6431bc36c78c66500a85df5c6817eff8`
+- [043 - Owner / Consumer Map](043-owner-consumer-map.md) L3543-L3547 `65b41c7cb0173b457fac63c495003db834e508b9e213cec0a3ffd15dbada557c`
+- [044 - PlanUnits](044-planunits.md) L3549-L3600 `57f67cfbc34e891c1ee7c4cfd4081235c769143ff03f1e71ed777bd45e0dde64`
+- [045 - Shared runtime projection addendum (2026-08-13)](045-shared-runtime-projection-addendum-2026-08-13.md) L3602-L22237 `9149ada0c1490de802470098d88050d2e8c1277700ff979f686c35ea5f1bf099`
+- [046 - Migration Coverage](046-migration-coverage.md) L22239-L22269 `732688086ba1e5df09ab78c91f39f5627595bc28a1a9aff6039a3abc94da57fc`
+- [047 - Ledger Compile Addendum - pldg-20260614-001](047-ledger-compile-addendum-pldg-20260614-001.md) L22271-L22359 `4e5e75f2a0e4d15b93404978ec1a813ba24068c08e832308d39583c78c6de368`
+- [048 - Ledger Compile Addendum - pldg-20260615-001](048-ledger-compile-addendum-pldg-20260615-001.md) L22361-L22458 `7972dc8fad1509ae3a4c62eeaedc9820f5d3c2402442b5dc4d0e2dcc80d91276`
+- [049 - Ledger Compile Addendum - pldg-20260616-001](049-ledger-compile-addendum-pldg-20260616-001.md) L22460-L22772 `b9f7f0d73a5b230689254fd367b485e1c46e177a6cbfa5c8c3978a04940c741c`
+- [050 - Ledger Compile Addendum - pldg-20260616-002](050-ledger-compile-addendum-pldg-20260616-002.md) L22774-L22841 `cfdd2282294deeaefa4281bcda57d2e746b7cd69a810ed8e6d4746f0e9fa6048`
+- [051 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](051-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L22844-L22932 `aa2dde963352760238280612609ea0cd43e3c7b8721d5cedc8f9f3ab61f59daf`
+- [052 - Ledger Compile Addendum - pldg-20260622-001-fff](052-ledger-compile-addendum-pldg-20260622-001-fff.md) L22934-L23020 `23cb02aab3b7ae60685ad287b85ec9e792068b7cd536b7cc870f99a7c531638b`
+- [053 - Ledger Compile Addendum - pldg-20260626-001-feature-name](053-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L23023-L23397 `2ec6f924b92217781b4d2dbcb24585aa32370346334022a93a6b87bbc049e74b`
+- [054 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](054-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L23399-L23610 `e1bbb5c03d04cf10831e29771485f8178b68266d09ba3d51661d8be37ef7dc84`
+- [055 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](055-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L23612-L23691 `6d7959c71c3b8444a6ce43b685430f91cd57185f2b871be1af64bd8786f57a62`
+- [056 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](056-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L23693-L23758 `4452f4da6d0f2c623eddbed6d9ba06860d0d45741e48b3028138a9699d779f86`
+- [057 - FABLE Residual Chat Mechanics Cleanup Addendum - 2026-07-07](057-fable-residual-chat-mechanics-cleanup-addendum-2026-07-07.md) L23760-L23831 `e15cd6b787ce2c0b014ce90560cfd3dcfee1d0ccacfccfa7e3c76a94b0852738`
+- [058 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](058-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L23833-L23877 `958fae5a22f963d07eafb89470cbddc74dcfb41674c07119270736f3cbb6903e`
+- [059 - Usage GUI Propagation Addendum - 2026-07-09](059-usage-gui-propagation-addendum-2026-07-09.md) L23879-L23955 `8bc2b7d2d351194ed55d7a61eeaf2411b902bdce25870cf479e313111c694797`
+- [060 - PMConcept6 Chat Polish Addendum - 2026-07-16](060-pmconcept6-chat-polish-addendum-2026-07-16.md) L23957-L24176 `e16ee376a5a3c9abfa3909c1c1b86e8415d5463b4d57456a082f925fad13c01f`
+- [061 - Immutable conversation restore-point lifecycle - Known-37 completion](061-immutable-conversation-restore-point-lifecycle-known-37-completi.md) L24179-L24196 `3db6e3a749bc71c314bda2f40499c806ee054265c3bf4340387f72b59d791816`
+- [062 - PMConcept7 Concept Promotion Addendum - 2026-07-23](062-pmconcept7-concept-promotion-addendum-2026-07-23.md) L24198-L24564 `84cd223f50612a2fba5e110536a1aa940a27022be7718fd733c6533943182607`
+- [063 - PMConcept7 shared Assistant seating and context surfaces addendum - 2026-08-27](063-pmconcept7-shared-assistant-seating-and-context-surfaces-addendu.md) L24566-L24656 `9229a8b4391b4965a60e6fa2812ba979cb0e692596e6e6027980ec871064083a`
+- [064 - Additive Correction v4 — Consumed Assistant Behaviour (2026-09-03)](064-additive-correction-v4-consumed-assistant-behaviour-2026-09-03.md) L24658-L24695 `ec879875e3746525d449191fb782bca2e945582026cc28f58ca418bb2cf51973`
+- [065 - Working Notebook Surface Addendum (2026-09-05)](065-working-notebook-surface-addendum-2026-09-05.md) L24697-L24805 `68f372bae8cc6c327b57e5dd1876d9943346b5efe817fdfb92fd418aaf200e2e`
+- [066 - Cumulative v3 Assistant Interaction & Surface Specification (2026-09-07)](066-cumulative-v3-assistant-interaction-surface-specification-2026-0.md) L24807-L25155 `05c7a1d6d66e16aa1144079603550b97b8228e3e2d0c358199d099bd03e4f5e4`
+- [067 - Research decision packet review](067-research-decision-packet-review.md) L25159-L25254 `c2c5b005aa42c22c5da8afee40ede615d07e7df8865fd11e79f36ca57dfd02e8`
+- [068 - Context Lens Source and Preview Reconciliation — 2026-09-10](068-context-lens-source-and-preview-reconciliation-2026-09-10.md) L25256-L25320 `0a2cd96dceebcc89ac08a6ce6e35ed07914f18e2922410a1a17dfbfe99e737ba`
+- [069 - Compaction completion Event Authority (DL-039 and DL-040)](069-compaction-completion-event-authority-dl-039-and-dl-040.md) L25322-L25375 `46aab770e73efc64a6e33abcdc3c95056bcb5353423f679552d547f9b8057ee6`
+- [070 - DL-042 — Historical TODO Event Migration Consumer Boundary (2026-09-11)](070-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md) L25378-L25421 `e5d25a5ad94d8d923030cbae844dd63054775d86b91f67f61e25c83fa607ac3d`
+- [071 - Restore-point created native and historical consumers](071-restore-point-created-native-and-historical-consumers.md) L25424-L25598 `b0748639232160d3f7fb68d83433ff0c6de01788e649bf203751ba5bf68e49f5`
+- [072 - Deleted restore-point passive history admission](072-deleted-restore-point-passive-history-admission.md) L25601-L25667 `98330b244b20d3a6d0bb2bc923f9791c485faf5346fd00b8105f41e865478216`
+- [073 - Expired restore-point passive history admission](073-expired-restore-point-passive-history-admission.md) L25670-L25739 `426fb3957fed6ee9c522be5f5b9b9cba6f9322f496a0b02683894c0a7d584bb6`
+- [074 - External Research Decision Packet Consumer Addendum (2026-09-17)](074-external-research-decision-packet-consumer-addendum-2026-09-17.md) L25741-L25791 `f41d0bd9d8e804e052cb007b53adab4833c0d3915e69c7a1f87366571e3985c8`
+- [075 - Chat WOW Turn Presentation Addendum (2026-09-27)](075-chat-wow-turn-presentation-addendum-2026-09-27.md) L25793-L26286 `87ff22447515e73ca116cae8a4c8742c6f3ebbbe70b68b54cfa68dddf6c5179c`
+- [076 - Wand Modules Redesign Addendum (2026-09-27)](076-wand-modules-redesign-addendum-2026-09-27.md) L26288-L26636 `317b43114703d0ff12ba1bad068e1bc9c9211c545f5a783559178709a5213322`

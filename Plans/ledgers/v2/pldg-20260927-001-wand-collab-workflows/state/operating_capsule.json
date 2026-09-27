@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-001-wand-collab-workflows",
-  "updated_at_utc": "2026-09-27T19:15:00+00:00",
+  "updated_at_utc": "2026-09-27T20:30:00+00:00",
   "authority": "Live Plans are canon; this ledger is source lineage only.",
   "scope": "Group G1 of the wand-modules canon compile: register lines B-CW-01..B-CW-29 of the impact register snapshot, NOW lines only in this pass.",
   "negative_constraints": [
@@ -14,7 +14,8 @@
     "Do not edit a Plans file assigned to another group of CANON-PLAN."
   ],
   "source_refs": [
-    "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/source_shards/authorization.md"
+    "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/source_shards/findings.md"
   ],
-  "next_action": "Author G1 of CANON-PLAN: compile the NOW lines of B-CW-01..B-CW-29 as prose only into Plans/Collaborative_Workflows.md, writing design atoms, decisions, corrections, questions and source_shards/findings.md here and filling state/compile_queue.json; then run python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows --base origin/main. WAIT lines are recorded as open questions naming their card; OUT lines are not compiled."
+  "next_action": "Run one blind form-driven review of CWR-018..CWR-033 (cap two cycles); the integrator regenerates shards and the plan index and commits. WAIT questions q-001..q-021 compile in the WAIT wave after the card answers land in Decision_Log."
 }

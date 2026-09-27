@@ -1,17 +1,17 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-006-wand-command-census",
-  "updated_at_utc": "2026-09-27T19:15:00+00:00",
-  "status": "pass_empty_skeleton",
+  "updated_at_utc": "2026-09-27T19:30:00+00:00",
+  "status": "pass",
   "summary": {
-    "events": 1,
-    "design_atoms": 0,
-    "decisions": 0,
-    "open_questions": 0,
+    "events": 3,
+    "design_atoms": 6,
+    "decisions": 6,
+    "open_questions": 7,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "compile_queue_items": 0
+    "compile_queue_items": 6
   },
-  "notes": "Empty skeleton created by the canon planner; the author fills it.",
+  "notes": "Prose compile of the NOW parts; witness and validator run by the author.",
   "errors": []
 }

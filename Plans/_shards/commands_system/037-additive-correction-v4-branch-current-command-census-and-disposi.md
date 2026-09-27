@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6111-L6215
+Source lines: L6113-L6221
 
-Source SHA256: `1a3dced8ba9fc4e7c39874295be3a88dd35d5222201e53e0292f7cdb487c50a9`
+Source SHA256: `665b996dc169a60c1b3d540557fcd5a27812c4b6a0de59a12dc3d7b8d01c1984`
 
 ---
 
@@ -67,11 +67,15 @@ discriminator, so one export owner produces two distinct artifacts.
 
 ### CDRY-006 — What stays view state
 
-Modal open and close, the Plan Rich/Markdown toggle, card expand and collapse, hover, local tabs,
-and To-Do parent expansion use local or shared view-state primitives and emit no domain event. A
-persisted preference uses the shared UI state owner. No domain command is registered for a visual
-action, and `local.workflow_modal.close`, `local.plan_card.expand`, and `local.plan_view.toggle`
-are local view actions rather than catalog rows.
+Modal open and close, card expand and collapse, hover, and local tabs use local or shared
+view-state primitives and emit no domain event. A persisted preference uses the shared UI state
+owner. No domain command is registered for a visual action, and `local.workflow_modal.close` and
+`local.plan_card.expand` are local view actions rather than catalog rows. Two view actions are
+registered as `shell_view` rows, which are view-state commands and never domain commands: the
+Plan Rich/Markdown toggle is `cmd.chat.plan.view.set`, and To-Do parent expansion is
+`cmd.chat.todos.toggle_parent`. Neither emits a domain event or changes a revision or hash. There
+is no separate `local.plan_view.toggle` action. The Review and BrainStorm Formatted and Plain text
+toggles are local view state with no catalog row (CDRY-021).
 
 ### CDRY-007..009 — Family reuse
 

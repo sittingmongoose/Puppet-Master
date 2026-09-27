@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-005-wand-chat-gui-contract",
-  "updated_at_utc": "2026-09-27T19:15:00+00:00",
+  "updated_at_utc": "2026-09-27T20:30:00+00:00",
   "authority": "Live Plans are canon; this ledger is source lineage only.",
   "scope": "Group G5 of the wand-modules canon compile: register lines B-ACD-01..B-ACD-14, B-FGS-01..B-FGS-23 of the impact register snapshot, NOW lines only in this pass.",
   "negative_constraints": [
@@ -14,7 +14,8 @@
     "Do not edit a Plans file assigned to another group of CANON-PLAN."
   ],
   "source_refs": [
-    "Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/source_shards/authorization.md"
+    "Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/source_shards/findings.md"
   ],
-  "next_action": "Author G5 of CANON-PLAN: compile the NOW lines of B-ACD-01..B-ACD-14, B-FGS-01..B-FGS-23 as prose only into Plans/assistant-chat-design.md, Plans/FinalGUISpec.md, Plans/Decision_Log.md, Plans/UI_Wiring_Rules.md, Plans/DRY_Rules.md, writing design atoms, decisions, corrections, questions and source_shards/findings.md here and filling state/compile_queue.json; then run python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract --base origin/main. WAIT lines are recorded as open questions naming their card; OUT lines are not compiled."
+  "next_action": "Integrator: regenerate shards and the plan index once for all groups, run the compile witness again, then one blind form-driven review (cap two cycles). After Jared answers the decision cards, G5 records the answers as DL-112 onward in both Decision_Log sections and compiles the WAIT lines (q-001 to q-012) into this ledger. Companions (schemas, fixtures, gates) are a separate later task."
 }

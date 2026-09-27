@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L2256
+Source lines: L13-L2270
 
-Source SHA256: `0f8412b513ed7fe803eca860e035adba94f999dcb21880b679088069b0f2149a`
+Source SHA256: `2ead50cc7bc2c857954ca63dd68ded1ac21be001ec2a5450fb8c99f5806f4541`
 
 ---
 
@@ -2252,3 +2252,17 @@ Answered on 2026-09-27 by Jared, in the same session, choosing **"Keep both, def
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/chat-wow-20260926/jared-decisions-20260926-27.md`, SHA-256 `f907de7341f052cb8c2e0b870d614bc4490c11984194729bdcbafdcebab929b9`.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Settings_System.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/UI_Command_Catalog.md
+
+### DL-109: Wand module surfaces use the theme's own font, and nothing is cramped (J-1, J-2)
+
+Given on 2026-09-27 by Jared, in the Claude Code session that redesigned the 5.6 Pro wand popups, as owner amendments J-1 and J-2 to the design specification.
+
+**Question:** The redesign gave the wand popups and their chat cards a separate serif display face for read-backs and headlines, and several surfaces crowded text against lines and controls. Should the redesign keep that face, and how much room must text and controls keep?
+
+**Answer:** J-1: "no new display face. Use the theme fonts PMConcept7 uses." J-2: "nothing cramped", with binding minimums.
+
+Every wand-module surface (sheets, run cards, the dock, run views, receipts) uses its theme's own font with no separate display face and no italic voice face. The voice roles (read-backs, result and receipt headlines, pull-quotes, run-view headings) keep their jobs and differ only by size, weight and colour; a quote is marked by quotation marks and the muted colour. The spacing minimums are a floor in every theme: text at least 8 px from a line above or below it (6 px inside a 40 px lane, whose height grows instead) and 12 px from a side edge; control padding at least 10 by 7 px and sheet buttons at least 32 px tall; adjacent controls at least 10 px apart, stacked controls 12 px, a control 16 px from unrelated text; secondary lines 6 px below their row and 12 px above what follows; roster rows at least 52 px; line height at least 1.45 for body and helper text and 1.25 for headlines. When space runs short, text wraps or ellipsizes or a secondary element drops; padding never compresses. This decision does not change which font each theme's canon tokens name: whether canon adopts PMConcept7's fonts in place of its current theme typography is a separate open question. The owner text is FinalGUISpec F3-566.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md`, SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de` (owner amendments J-1 and J-2 at the top); instruction record `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/LEAD-PLAN.md`, SHA-256 `d53f3f802bb9dd7736f1acf36256f8b9b799025bf6ab5212880dc03087649e72`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md

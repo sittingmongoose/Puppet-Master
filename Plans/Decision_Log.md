@@ -2255,6 +2255,20 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/chat-wow-20260926/jared-decisions-
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Settings_System.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/UI_Command_Catalog.md
 
+### DL-109: Wand module surfaces use the theme's own font, and nothing is cramped (J-1, J-2)
+
+Given on 2026-09-27 by Jared, in the Claude Code session that redesigned the 5.6 Pro wand popups, as owner amendments J-1 and J-2 to the design specification.
+
+**Question:** The redesign gave the wand popups and their chat cards a separate serif display face for read-backs and headlines, and several surfaces crowded text against lines and controls. Should the redesign keep that face, and how much room must text and controls keep?
+
+**Answer:** J-1: "no new display face. Use the theme fonts PMConcept7 uses." J-2: "nothing cramped", with binding minimums.
+
+Every wand-module surface (sheets, run cards, the dock, run views, receipts) uses its theme's own font with no separate display face and no italic voice face. The voice roles (read-backs, result and receipt headlines, pull-quotes, run-view headings) keep their jobs and differ only by size, weight and colour; a quote is marked by quotation marks and the muted colour. The spacing minimums are a floor in every theme: text at least 8 px from a line above or below it (6 px inside a 40 px lane, whose height grows instead) and 12 px from a side edge; control padding at least 10 by 7 px and sheet buttons at least 32 px tall; adjacent controls at least 10 px apart, stacked controls 12 px, a control 16 px from unrelated text; secondary lines 6 px below their row and 12 px above what follows; roster rows at least 52 px; line height at least 1.45 for body and helper text and 1.25 for headlines. When space runs short, text wraps or ellipsizes or a secondary element drops; padding never compresses. This decision does not change which font each theme's canon tokens name: whether canon adopts PMConcept7's fonts in place of its current theme typography is a separate open question. The owner text is FinalGUISpec F3-566.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md`, SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de` (owner amendments J-1 and J-2 at the top); instruction record `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/LEAD-PLAN.md`, SHA-256 `d53f3f802bb9dd7736f1acf36256f8b9b799025bf6ab5212880dc03087649e72`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -8108,6 +8122,57 @@ negative_constraints:
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Settings_System.md
+```
+
+### DL-109 - Wand Module Surfaces Use The Theme's Own Font And Nothing Is Cramped
+
+```yaml
+plan_unit_id: DL-109
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 (owner amendments J-1, "no new display face", and J-2, "nothing
+  cramped") that every wand-module surface uses
+  its theme's own font with no separate display face and no italic voice face, the voice roles
+  differing only by size, weight and colour, and that the J-2 spacing minimums are a floor in every
+  theme that padding and gaps never compress below. This decision does not change which font each
+  theme's canon tokens name; canon typography adoption is a separate open question. FinalGUISpec
+  F3-566 carries the owner text.
+gui_related: true
+gui_classification_reason: Sets the typography and spacing floor of the wand module surfaces.
+split_recommended: false
+depends_on: []
+unblocks: [F3-566, DR-044]
+acceptance_criteria:
+  - Every wand-module surface renders in its theme's own font with no display face.
+  - Every wand-module surface meets the J-2 minimums in all eight themes.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: wand_surface_typography_or_crowding
+reasoning_tier: standard
+context_scope: wand_modules_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/LEAD-PLAN.md
+preserved_exact_tokens:
+  - "J-1"
+  - "J-2"
+  - "no new display face"
+  - "nothing cramped"
+negative_constraints:
+  - Do not add a display face to a wand-module surface.
+  - Do not compress padding or gaps below the J-2 minimums.
+  - Do not read this decision as changing canon theme font tokens.
+owner_hints:
+  - Plans/FinalGUISpec.md
 ```
 
 ## Migration Coverage

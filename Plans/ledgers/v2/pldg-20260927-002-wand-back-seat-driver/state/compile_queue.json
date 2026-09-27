@@ -1,17 +1,23 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-002-wand-back-seat-driver",
-  "updated_at_utc": "2026-09-27T19:15:00+00:00",
-  "last_event_id": "evt-001",
-  "canonical_plan_targets": [],
-  "compiled_owner_docs": [],
-  "compiled_plan_outputs": [],
+  "updated_at_utc": "2026-09-27T20:30:00+00:00",
+  "last_event_id": "evt-003",
+  "canonical_plan_targets": [
+    "Plans/Back_Seat_Driver.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Back_Seat_Driver.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Back_Seat_Driver.md"
+  ],
   "governance_status": "not_requested",
   "latest_audit_ref": null,
   "latest_audit_status": null,
   "validation_state": {
-    "ledger_health": "pass_empty_skeleton",
-    "compile_witness": "not_run"
+    "ledger_health": "see validation/ledger_health.json",
+    "compile_witness": "see G2-NOTES; rerun after every edit"
   },
   "planned_owner_docs": [
     "Plans/Back_Seat_Driver.md"
@@ -19,8 +25,104 @@
   "reserved_id_ranges": {
     "BSD": "BSD-030..BSD-044"
   },
-  "status": "prose_compile_open",
-  "items": [],
-  "notes": "Empty. Each item: queue_id, status, source_atom_ids, target_doc, target_docs, target_plan_unit_ids, compiled_plan_unit_ids, compile_event_id.",
+  "status": "prose_compiled_companions_pending",
+  "items": [
+    {
+      "queue_id": "queue-001",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-bsd-03"
+      ],
+      "target_doc": "Plans/Back_Seat_Driver.md",
+      "target_docs": [
+        "Plans/Back_Seat_Driver.md"
+      ],
+      "target_plan_unit_ids": [
+        "BSD-030"
+      ],
+      "compiled_plan_unit_ids": [
+        "BSD-030"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-002",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-bsd-08"
+      ],
+      "target_doc": "Plans/Back_Seat_Driver.md",
+      "target_docs": [
+        "Plans/Back_Seat_Driver.md"
+      ],
+      "target_plan_unit_ids": [
+        "BSD-031"
+      ],
+      "compiled_plan_unit_ids": [
+        "BSD-031"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-003",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-bsd-02"
+      ],
+      "target_doc": "Plans/Back_Seat_Driver.md",
+      "target_docs": [
+        "Plans/Back_Seat_Driver.md"
+      ],
+      "target_plan_unit_ids": [
+        "BSD-032"
+      ],
+      "compiled_plan_unit_ids": [
+        "BSD-032"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-004",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-bsd-05"
+      ],
+      "target_doc": "Plans/Back_Seat_Driver.md",
+      "target_docs": [
+        "Plans/Back_Seat_Driver.md"
+      ],
+      "target_plan_unit_ids": [
+        "BSD-033"
+      ],
+      "compiled_plan_unit_ids": [
+        "BSD-033"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-005",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-bsd-07"
+      ],
+      "target_doc": "Plans/Back_Seat_Driver.md",
+      "target_docs": [
+        "Plans/Back_Seat_Driver.md"
+      ],
+      "target_plan_unit_ids": [
+        "BSD-034"
+      ],
+      "compiled_plan_unit_ids": [
+        "BSD-034"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    }
+  ],
+  "notes": "One item per compiled register line; each names the owner PlanUnit it created. Prose only; companion outputs come later.",
   "terminal_ledger_event_id": null
 }

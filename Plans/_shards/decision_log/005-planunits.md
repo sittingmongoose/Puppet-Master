@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L2264-L8111
+Source lines: L2278-L8176
 
-Source SHA256: `0f8412b513ed7fe803eca860e035adba94f999dcb21880b679088069b0f2149a`
+Source SHA256: `2ead50cc7bc2c857954ca63dd68ded1ac21be001ec2a5450fb8c99f5806f4541`
 
 ---
 
@@ -5855,4 +5855,55 @@ negative_constraints:
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Settings_System.md
+```
+
+### DL-109 - Wand Module Surfaces Use The Theme's Own Font And Nothing Is Cramped
+
+```yaml
+plan_unit_id: DL-109
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 (owner amendments J-1, "no new display face", and J-2, "nothing
+  cramped") that every wand-module surface uses
+  its theme's own font with no separate display face and no italic voice face, the voice roles
+  differing only by size, weight and colour, and that the J-2 spacing minimums are a floor in every
+  theme that padding and gaps never compress below. This decision does not change which font each
+  theme's canon tokens name; canon typography adoption is a separate open question. FinalGUISpec
+  F3-566 carries the owner text.
+gui_related: true
+gui_classification_reason: Sets the typography and spacing floor of the wand module surfaces.
+split_recommended: false
+depends_on: []
+unblocks: [F3-566, DR-044]
+acceptance_criteria:
+  - Every wand-module surface renders in its theme's own font with no display face.
+  - Every wand-module surface meets the J-2 minimums in all eight themes.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: wand_surface_typography_or_crowding
+reasoning_tier: standard
+context_scope: wand_modules_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/LEAD-PLAN.md
+preserved_exact_tokens:
+  - "J-1"
+  - "J-2"
+  - "no new display face"
+  - "nothing cramped"
+negative_constraints:
+  - Do not add a display face to a wand-module surface.
+  - Do not compress padding or gaps below the J-2 minimums.
+  - Do not read this decision as changing canon theme font tokens.
+owner_hints:
+  - Plans/FinalGUISpec.md
 ```
