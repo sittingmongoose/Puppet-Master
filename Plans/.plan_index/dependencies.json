@@ -5582,6 +5582,7 @@
     "SRV-012",
     "SCS-018",
     "SCS-023",
+    "SCS-024",
     "SMPFS-153",
     "SMPFS-155",
     "OSI-178",
@@ -5641,6 +5642,7 @@
     "JJI-019",
     "JJI-022",
     "SCS-021",
+    "UCC-167",
     "SMPFS-169",
     "SMPFS-156",
     "OSI-193",
@@ -5688,6 +5690,7 @@
     "RAS-011",
     "FGI-016",
     "JJI-021",
+    "CS-083",
     "SMPFS-157",
     "SMPFS-166",
     "PSMERA-018",
@@ -5725,6 +5728,7 @@
     "RAS-015",
     "RAS-012",
     "SCS-022",
+    "WM-060",
     "WM-057",
     "PP-091",
     "SP-262",
@@ -6423,6 +6427,7 @@
     "GAAAF-017",
     "APR-017",
     "MA-055",
+    "FGI-022",
     "GRS-076",
     "SP-307",
     "MA-056",
@@ -6526,6 +6531,7 @@
     "F3-522",
     "F3-523",
     "BRS-010",
+    "BRS-030",
     "SSYS-012",
     "F-081",
     "PJCT-004",
@@ -13537,6 +13543,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "BRS-030",
+      "to": "BRS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-030",
+      "to": "BRS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-030",
+      "to": "BRS-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-030",
+      "to": "BRS-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-030",
+      "to": "BRS-015"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "BS-003",
       "to": "BS-002"
     },
@@ -17424,6 +17455,16 @@
       "edge_type": "depends_on",
       "from": "CS-082",
       "to": "WM-058"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CS-083",
+      "to": "SCS-024"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CS-083",
+      "to": "UCC-167"
     },
     {
       "edge_type": "depends_on",
@@ -28858,6 +28899,36 @@
     {
       "edge_type": "depends_on",
       "from": "FGI-021",
+      "to": "SCS-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-022",
+      "to": "FGI-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-022",
+      "to": "FGI-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-022",
+      "to": "FGI-013"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-022",
+      "to": "FGI-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-022",
+      "to": "FGI-021"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-022",
       "to": "SCS-016"
     },
     {
@@ -57192,6 +57263,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SCS-024",
+      "to": "SCS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-024",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-024",
+      "to": "SCS-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-024",
+      "to": "SCS-016"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SIR-001",
       "to": "PDS-003"
     },
@@ -77867,6 +77958,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "UCC-167",
+      "to": "SCS-024"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-167",
+      "to": "UCC-127"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "UF-001",
       "to": "UF-002"
     },
@@ -85027,6 +85128,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "WM-060",
+      "to": "CS-083"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-060",
+      "to": "SCS-024"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-060",
+      "to": "UCC-167"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "WN-001",
       "to": "PDS-003"
     },
@@ -91154,6 +91270,11 @@
       "edge_type": "unblocks",
       "from": "CS-077",
       "to": "UCC-155"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CS-083",
+      "to": "WM-060"
     },
     {
       "edge_type": "unblocks",
@@ -98847,6 +98968,16 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "UCC-167",
+      "to": "CS-083"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UCC-167",
+      "to": "WM-060"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "UF-074",
       "to": "F3-400"
     },
@@ -99256,7 +99387,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-26T23:56:07Z",
+  "generated_at_utc": "2026-09-27T02:39:55Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -112715,8 +112846,8 @@
       "source_location": {
         "heading": "BRS-011 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 909,
-        "line": 911,
+        "heading_line": 915,
+        "line": 917,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112817,8 +112948,8 @@
       "source_location": {
         "heading": "BRS-017 - Coordinator, Capture Barrier, Independent Repositories, And Durable Authority",
         "heading_level": 3,
-        "heading_line": 960,
-        "line": 962,
+        "heading_line": 966,
+        "line": 968,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112834,8 +112965,8 @@
       "source_location": {
         "heading": "BRS-018 - Destination, Headless Authentication, Recovery Key, And Human Delivery Safety",
         "heading_level": 3,
-        "heading_line": 1003,
-        "line": 1005,
+        "heading_line": 1009,
+        "line": 1011,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112851,8 +112982,8 @@
       "source_location": {
         "heading": "BRS-019 - Locate, Browse, Restore, Retention, And Durable Operational Safety",
         "heading_level": 3,
-        "heading_line": 1047,
-        "line": 1049,
+        "heading_line": 1053,
+        "line": 1055,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112868,8 +112999,8 @@
       "source_location": {
         "heading": "Working Notebook Backup Participation Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 1100,
-        "line": 1104,
+        "heading_line": 1106,
+        "line": 1110,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112885,8 +113016,8 @@
       "source_location": {
         "heading": "BRS-021 - Jujutsu History Index Rebuild Verification Policy",
         "heading_level": 3,
-        "heading_line": 1186,
-        "line": 1188,
+        "heading_line": 1192,
+        "line": 1194,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112902,8 +113033,8 @@
       "source_location": {
         "heading": "BRS-022 - Separately Authorized Missing Repository Data Completion",
         "heading_level": 3,
-        "heading_line": 1241,
-        "line": 1243,
+        "heading_line": 1247,
+        "line": 1249,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112919,8 +113050,8 @@
       "source_location": {
         "heading": "BRS-023 - Phase-Local Restore Evidence And Bound Emergency Consent",
         "heading_level": 3,
-        "heading_line": 1140,
-        "line": 1142,
+        "heading_line": 1146,
+        "line": 1148,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112936,8 +113067,8 @@
       "source_location": {
         "heading": "Retention and evidence limits",
         "heading_level": 4,
-        "heading_line": 1333,
-        "line": 1345,
+        "heading_line": 1339,
+        "line": 1351,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112953,8 +113084,8 @@
       "source_location": {
         "heading": "Event and native qualification boundary",
         "heading_level": 4,
-        "heading_line": 1429,
-        "line": 1435,
+        "heading_line": 1435,
+        "line": 1441,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112970,8 +113101,8 @@
       "source_location": {
         "heading": "BRS-026 - Coherent original Workflow Goal cancellation backup and restore",
         "heading_level": 3,
-        "heading_line": 1493,
-        "line": 1514,
+        "heading_line": 1499,
+        "line": 1520,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112987,8 +113118,8 @@
       "source_location": {
         "heading": "BRS-027 - Source-coupled started projection recovery and disclosure",
         "heading_level": 3,
-        "heading_line": 1581,
-        "line": 1595,
+        "heading_line": 1587,
+        "line": 1601,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -113004,8 +113135,8 @@
       "source_location": {
         "heading": "BRS-028 - Whole original cancellation source retention and combined projection recovery",
         "heading_level": 3,
-        "heading_line": 1638,
-        "line": 1654,
+        "heading_line": 1644,
+        "line": 1660,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -113021,12 +113152,29 @@
       "source_location": {
         "heading": "BRS-029 — Mandatory original phase custody; optional coherent derived generation, source lifetime and restore ordering (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 1701,
-        "line": 1703,
+        "heading_line": 1707,
+        "line": 1709,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "backup_verify_depth_and_plan_resolution",
+      "gui_related": true,
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "plan_unit_id": "BRS-030",
+      "reasoning_tier": "high",
+      "risk_class": "unverified_or_mispriced_backup_verification",
+      "source_location": {
+        "heading": "BRS-030 — Verify depth and plan resolution (2026-09-27)",
+        "heading_level": 2,
+        "heading_line": 1776,
+        "line": 1784,
+        "path": "Plans/Backup_Restore_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract_requirement"
     },
     {
       "context_scope": "plan_standardization",
@@ -118410,8 +118558,8 @@
       "source_location": {
         "heading": "CS-074 - Remaining Touch Primary Command Closure",
         "heading_level": 3,
-        "heading_line": 5717,
-        "line": 5719,
+        "heading_line": 5718,
+        "line": 5720,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -118427,8 +118575,8 @@
       "source_location": {
         "heading": "CS-075 - ConnectionDraft Activation Registration And Candidate Normalization",
         "heading_level": 3,
-        "heading_line": 5770,
-        "line": 5772,
+        "heading_line": 5771,
+        "line": 5773,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -118444,8 +118592,8 @@
       "source_location": {
         "heading": "CS-076 - Post-Integration Auth Candidate Normalization",
         "heading_level": 3,
-        "heading_line": 5817,
-        "line": 5819,
+        "heading_line": 5818,
+        "line": 5820,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -118461,8 +118609,8 @@
       "source_location": {
         "heading": "CS-077 - Neutral Source-Control Primary Registration Completion",
         "heading_level": 3,
-        "heading_line": 5864,
-        "line": 5866,
+        "heading_line": 5865,
+        "line": 5867,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -118478,8 +118626,8 @@
       "source_location": {
         "heading": "CS-078 - Assistant Redesign Central Contract, Event, And Record Registration",
         "heading_level": 3,
-        "heading_line": 6057,
-        "line": 6059,
+        "heading_line": 6058,
+        "line": 6060,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -118495,8 +118643,8 @@
       "source_location": {
         "heading": "16. Canonical Command Dispositions and Exact Reuse Invariants (APR-023)",
         "heading_level": 3,
-        "heading_line": 6222,
-        "line": 6252,
+        "heading_line": 6223,
+        "line": 6253,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -118512,8 +118660,8 @@
       "source_location": {
         "heading": "CS-080 - Shared Runtime Result To Command Outcome Binding",
         "heading_level": 3,
-        "heading_line": 6306,
-        "line": 6308,
+        "heading_line": 6307,
+        "line": 6309,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -118529,8 +118677,8 @@
       "source_location": {
         "heading": "CS-081 - Commands Shortcuts Mutation-Routing Census",
         "heading_level": 3,
-        "heading_line": 6675,
-        "line": 6677,
+        "heading_line": 6676,
+        "line": 6678,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -118546,8 +118694,25 @@
       "source_location": {
         "heading": "CS-082 - Project Recovery And Forge CI Command Consumers",
         "heading_level": 3,
-        "heading_line": 6796,
-        "line": 6798,
+        "heading_line": 6797,
+        "line": 6799,
+        "path": "Plans/Commands_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "packet_git_adapter_central_commands",
+      "gui_related": true,
+      "owner_doc": "Plans/Commands_System.md",
+      "plan_unit_id": "CS-083",
+      "reasoning_tier": "high",
+      "risk_class": "cross_target_git_mutation_or_false_effect",
+      "source_location": {
+        "heading": "CS-083 - Git Adapter Command Contracts And Sole Targets",
+        "heading_level": 3,
+        "heading_line": 6869,
+        "line": 6871,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -148432,8 +148597,8 @@
       "source_location": {
         "heading": "FGI-009 - Forge Repository Create Sole Future Handler",
         "heading_level": 3,
-        "heading_line": 582,
-        "line": 584,
+        "heading_line": 583,
+        "line": 585,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -148449,8 +148614,8 @@
       "source_location": {
         "heading": "FGI-010 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 666,
-        "line": 668,
+        "heading_line": 668,
+        "line": 670,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -148466,8 +148631,8 @@
       "source_location": {
         "heading": "FGI-011 - Verified account and repository binding requirements by forge",
         "heading_level": 3,
-        "heading_line": 717,
-        "line": 719,
+        "heading_line": 719,
+        "line": 721,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -148483,8 +148648,8 @@
       "source_location": {
         "heading": "FGI-012 - Distinct Self-Hosted Providers And Independent Automation Authority",
         "heading_level": 3,
-        "heading_line": 777,
-        "line": 779,
+        "heading_line": 779,
+        "line": 781,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -148500,8 +148665,8 @@
       "source_location": {
         "heading": "FGI-013 - Nine Distinct Event-Silent Forge Command Admissions",
         "heading_level": 3,
-        "heading_line": 818,
-        "line": 820,
+        "heading_line": 820,
+        "line": 822,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -148517,8 +148682,8 @@
       "source_location": {
         "heading": "FGI-014 - Origin And Provider-Specific Operation Profiles",
         "heading_level": 3,
-        "heading_line": 863,
-        "line": 865,
+        "heading_line": 865,
+        "line": 867,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -148534,8 +148699,8 @@
       "source_location": {
         "heading": "FGI-015 - Exact Provider Capability, Authentication, Trust, And Administration Matrix",
         "heading_level": 3,
-        "heading_line": 929,
-        "line": 931,
+        "heading_line": 931,
+        "line": 933,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -148551,8 +148716,8 @@
       "source_location": {
         "heading": "FGI-016 - Conditional Ordered Review Stack Workflow",
         "heading_level": 3,
-        "heading_line": 1022,
-        "line": 1024,
+        "heading_line": 1024,
+        "line": 1026,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -148568,8 +148733,8 @@
       "source_location": {
         "heading": "FGI-017 - Conditional Additional Review Service Admission",
         "heading_level": 3,
-        "heading_line": 1092,
-        "line": 1094,
+        "heading_line": 1094,
+        "line": 1096,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -148585,8 +148750,8 @@
       "source_location": {
         "heading": "FGI-018 - Typed Merge Strategy On The Forge Merge Request",
         "heading_level": 3,
-        "heading_line": 1166,
-        "line": 1168,
+        "heading_line": 1168,
+        "line": 1170,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -148602,8 +148767,8 @@
       "source_location": {
         "heading": "FGI-019 - Policy Evaluation Requeue That Degrades Truthfully",
         "heading_level": 3,
-        "heading_line": 1211,
-        "line": 1213,
+        "heading_line": 1213,
+        "line": 1215,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -148619,8 +148784,8 @@
       "source_location": {
         "heading": "FGI-020 - Provider Neutral Vote And Reviewer Carrier",
         "heading_level": 3,
-        "heading_line": 1254,
-        "line": 1256,
+        "heading_line": 1256,
+        "line": 1258,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -148636,8 +148801,25 @@
       "source_location": {
         "heading": "FGI-021 - Repository Delete And Hosted CI Command Closure",
         "heading_level": 3,
-        "heading_line": 1327,
-        "line": 1329,
+        "heading_line": 1329,
+        "line": 1331,
+        "path": "Plans/Forge_Integrations.md"
+      },
+      "status": "accepted",
+      "unit_type": "command_binding"
+    },
+    {
+      "context_scope": "forge_review_edit_and_runner_producers",
+      "gui_related": true,
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "plan_unit_id": "FGI-022",
+      "reasoning_tier": "high",
+      "risk_class": "forge_review_runner_substitution_or_authority_drift",
+      "source_location": {
+        "heading": "FGI-022 - Review Edit And Runner Read Producer Closure",
+        "heading_level": 3,
+        "heading_line": 1384,
+        "line": 1386,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -191705,6 +191887,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "git_adapter_stage_remote_stash_branch_commands",
+      "gui_related": true,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-024",
+      "reasoning_tier": "high",
+      "risk_class": "git_adapter_command_authority_or_effect_overclaim",
+      "source_location": {
+        "heading": "SCS-024 - Git Adapter Stage, Remote, Stash, And Branch Command Contracts",
+        "heading_level": 3,
+        "heading_line": 1780,
+        "line": 1782,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
       "context_scope": "shared_runtime_owner_boundary",
       "gui_related": false,
       "owner_doc": "Plans/Shared_Integration_Runtime.md",
@@ -208578,8 +208777,8 @@
       "source_location": {
         "heading": "UCC-152 - Remaining Touch Reverse-GUI Closure",
         "heading_level": 3,
-        "heading_line": 12256,
-        "line": 12258,
+        "heading_line": 12257,
+        "line": 12259,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -208595,8 +208794,8 @@
       "source_location": {
         "heading": "UCC-153 - ConnectionDraft Activation Catalog And Reverse Coverage",
         "heading_level": 3,
-        "heading_line": 12307,
-        "line": 12309,
+        "heading_line": 12308,
+        "line": 12310,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -208612,8 +208811,8 @@
       "source_location": {
         "heading": "UCC-154 - Post-Integration Auth Alias Reverse Coverage",
         "heading_level": 3,
-        "heading_line": 12352,
-        "line": 12354,
+        "heading_line": 12353,
+        "line": 12355,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -208629,8 +208828,8 @@
       "source_location": {
         "heading": "UCC-155 - Neutral Source-Control Concrete Catalog And Reverse Coverage",
         "heading_level": 3,
-        "heading_line": 12396,
-        "line": 12398,
+        "heading_line": 12397,
+        "line": 12399,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -208646,8 +208845,8 @@
       "source_location": {
         "heading": "UCC-156 - Assistant Redesign Command Registration And Alias Census",
         "heading_level": 3,
-        "heading_line": 12619,
-        "line": 12621,
+        "heading_line": 12620,
+        "line": 12622,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -208663,8 +208862,8 @@
       "source_location": {
         "heading": "UCC-157 - Assistant Redesign Retired Command Surfaces",
         "heading_level": 3,
-        "heading_line": 12676,
-        "line": 12678,
+        "heading_line": 12677,
+        "line": 12679,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -208680,8 +208879,8 @@
       "source_location": {
         "heading": "Working Notebook Command Rows Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 12754,
-        "line": 12758,
+        "heading_line": 12755,
+        "line": 12759,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -208697,8 +208896,8 @@
       "source_location": {
         "heading": "15. UI Command Catalog Dispositions and Exact Reuse Rules (APR-023)",
         "heading_level": 3,
-        "heading_line": 12796,
-        "line": 12821,
+        "heading_line": 12797,
+        "line": 12822,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -208714,8 +208913,8 @@
       "source_location": {
         "heading": "UCC-160 - Accepted Terminal Action Contracts",
         "heading_level": 3,
-        "heading_line": 12895,
-        "line": 12897,
+        "heading_line": 12896,
+        "line": 12898,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -208731,8 +208930,8 @@
       "source_location": {
         "heading": "UCC-161 — Research Decision Review",
         "heading_level": 3,
-        "heading_line": 12996,
-        "line": 12998,
+        "heading_line": 12997,
+        "line": 12999,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -208748,8 +208947,8 @@
       "source_location": {
         "heading": "UCC-162 — Jujutsu Accepted Action Planning And Admission Boundary",
         "heading_level": 3,
-        "heading_line": 13139,
-        "line": 13141,
+        "heading_line": 13140,
+        "line": 13142,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -208765,8 +208964,8 @@
       "source_location": {
         "heading": "UCC-163 — Jujutsu Consumer Action Inventory And Return Context",
         "heading_level": 3,
-        "heading_line": 13244,
-        "line": 13246,
+        "heading_line": 13245,
+        "line": 13247,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -208782,8 +208981,8 @@
       "source_location": {
         "heading": "UCC-164 - Consume The Central Command Response Contract",
         "heading_level": 3,
-        "heading_line": 13064,
-        "line": 13066,
+        "heading_line": 13065,
+        "line": 13067,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -208799,8 +208998,8 @@
       "source_location": {
         "heading": "UCC-165 - Project Recovery And Forge Delete/CI Central Admission",
         "heading_level": 3,
-        "heading_line": 13303,
-        "line": 13305,
+        "heading_line": 13304,
+        "line": 13306,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -208816,12 +209015,29 @@
       "source_location": {
         "heading": "UCC-166 - Commands Shortcuts Central Consumers",
         "heading_level": 3,
-        "heading_line": 13345,
-        "line": 13347,
+        "heading_line": 13346,
+        "line": 13348,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
       "unit_type": "gui_command_catalog"
+    },
+    {
+      "context_scope": "packet_git_command_mapping",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "plan_unit_id": "UCC-167",
+      "reasoning_tier": "high",
+      "risk_class": "wrong_git_target_or_phantom_handler",
+      "source_location": {
+        "heading": "UCC-167 - Git Adapter Command Mapping And Availability",
+        "heading_level": 3,
+        "heading_line": 13398,
+        "line": 13400,
+        "path": "Plans/UI_Command_Catalog.md"
+      },
+      "status": "accepted",
+      "unit_type": "command_binding"
     },
     {
       "context_scope": "usage_feature_generated_tail_batch_197",
@@ -213397,6 +213613,23 @@
       "unit_type": "production_wiring"
     },
     {
+      "context_scope": "packet_git_adapter_production_intent",
+      "gui_related": true,
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "plan_unit_id": "WM-060",
+      "reasoning_tier": "high",
+      "risk_class": "cross_target_dispatch_or_false_runtime_claim",
+      "source_location": {
+        "heading": "WM-060 - Git Adapter Exact Wiring And Reverse Coverage",
+        "heading_level": 3,
+        "heading_line": 4924,
+        "line": 4926,
+        "path": "Plans/Wiring_Matrix.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
       "context_scope": "working_notebook",
       "gui_related": false,
       "owner_doc": "Plans/Working_Notebook.md",
@@ -214083,12 +214316,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15798,
+    "depends_on_edge_count": 15820,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18499,
-    "node_count": 6754,
+    "edge_count": 18524,
+    "node_count": 6760,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2701,
+    "unblocks_edge_count": 2704,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

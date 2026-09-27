@@ -477,6 +477,14 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     scm_alias = {"cmd.source_control.select_worktree"}
     add("TCP-SCM", "command", {item for item in scm if item.startswith("cmd.source_control.")} - scm_alias)
     add("TCP-SCM-ALIAS", "command_alias", scm_alias)
+    add(
+        "TCP-GIT-ADAPTER",
+        "command",
+        schema_enum_actions(
+            "Plans/git_adapter_command_contracts.schema.json",
+            "/$defs/git_adapter_command_id/enum",
+        ),
+    )
 
     jj_text = read("Plans/Jujutsu_Integration.md")
     jj = tokens(between(jj_text, "### 3.1 Canonical command inventory", "### 3.2 JJ receipt extension"))
@@ -1843,14 +1851,17 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # settings.commands_shortcuts.* bindings/view), zero catalog primaries and
     # zero production rows (rows 650->666, profiles 133->134). Exclusions and
     # aliases unchanged at 58/65.
+    # 2026-09-27 packet repair: seven Git adapter primaries and one Forge review
+    # edit primary; seven Git rows use TCP-GIT-ADAPTER and one Forge row uses
+    # TCP-FORGE. Five new production-intent entries plus three reused entries.
     exact_resolved_denominators = {
-        "row_count": 666,
+        "row_count": 674,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
-        "profile_count": 134,
+        "profile_count": 135,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1149,
+        "production_wiring_entry_count": 1154,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

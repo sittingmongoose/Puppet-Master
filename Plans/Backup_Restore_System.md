@@ -691,6 +691,8 @@ owner_hints: [Plans/Backup_Restore_System.md, Plans/Settings_System.md, Plans/Pl
 
 - the closed eleven-row `DestinationFamilyProfile` registry, `BackupDestination`, `BackupRepositoryBinding`, `BackupPolicy`, `BackupRun`, `BackupDestinationAttempt`, `BackupManifest`, and `BackupRetentionDecision`;
 - `RecoverySetPublicRecord`, protected/no-store `RecoveryKitDeliverySession`, `BackupScheduleOccurrence`, `RetentionPreview`, `BackupBrowseOperation`, `BackupHealthProjection`, and `BackupContractMigrationRecord`;
+- `BackupVerificationPlan`, the owner-resolved depth/read-scope plan selectable by `cmd.backup.verify` as an alternative to a direct `verification_depth` (BRS-030);
+- `BackupVerificationAdmission`, the owner-issued bounded record binding one verify target, depth, read scope, cost class, optional plan binding, target currentness, and producer authority, which every `cmd.backup.verify` request resolves and revalidates before effect (BRS-030);
 - `PortableSecretEnvelope` and `RecoveryKeyRecord`;
 - `RestoreRun` and `RestorePreview`; and
 - exact required `BackupReceipt`, `BackupVerificationReceipt`, `RestorePreviewReceipt`, `RestoreReceipt`, and `RecoveryPointReceipt`.
@@ -733,6 +735,10 @@ The closed nested `emergency_recovery_consent` binds the existing human consent 
 
 Static oracles validate phase prerequisites, direct target/receipt joins, and time ordering. Runtime authority lookup, signed/authorized receipt resolution, crash recovery at every phase, activation atomicity, disk restoration, and rollback remain unproved until executable evidence exists.
 
+### 3.3.2 Restore initial mode adjudication (FS-C01)
+
+The selected concept initializes the restore destination choice to `In place` (`Concepts/pm7-tools/settings_refresh/managers/54-backup.js`, `rs()` initial `where`). That initial GUI selection is preserved and supersedes the older packet's as-new initial default as the presented starting choice only. An initial choice authorizes nothing: `in_place` remains a destructive mutating mode, and no effect runs until the request binds an explicit Server/Project target, a current immutable preview receipt for the selected snapshot, the BRS-023 verified recovery-point prerequisite or its narrowly validated emergency-consent alternative, and explicit destructive confirmation. All four modes (`as_new`, `in_place`, `selective`, `server_full`) are retained with identical gating. This owner makes no claim that `in_place` is categorically safe or default-executable; any surface that presents it as consequence-free contradicts this owner.
+
 ### 3.4 Event Authority candidates
 
 The following names are candidate event identities for Event Authority adjudication, not accepted or admitted
@@ -763,7 +769,7 @@ The post-integration admission adds exactly these 16 Backup-owned primaries:
 
 Destructive restore requests bind target identities/generations, manifest and preview receipt, expected policy/revision, idempotency/correlation, permission/FileSafe/confirmation, and the BRS-023 recovery prerequisite. Rollback still requires an actual `RecoveryPointReceipt`. Secret selection and recovery credentials use protected input channels and never ordinary command payload/history.
 
-`Plans/backup_restore_system_contracts.schema.json` now defines one generic discriminated `BackupRestoreCommandRequest`, `BackupRestoreCommandResult`, `BackupRestoreCommandError`, and `BackupRestoreCommandAvailability` family over exactly these 41 IDs. The conditional request branches require currentness for every action; repository/destination/policy revisions; exact snapshot/capture-set/RecoverySet/run/preview identities; target Server/Project/Host/Environment/Client and family fields; protected-channel refs for unlock/key actions; retention candidate hash/lease/confirmation for prune; archive consent; and the BRS-023 recovery prerequisite plus approval, confirmation, and preview-currentness receipts for mutating restores. Full Server secret portability remains explicit opt-in and reference-only through encrypted `PortableSecretEnvelope`; repository recovery uses redacted `RecoverySetPublicRecord` plus protected key-delivery refs. Raw keys, passwords, tokens, cookies, auth URLs/codes, callback/session material, protected-browser content, and foreign absolute paths are not ordinary command fields.
+`Plans/backup_restore_system_contracts.schema.json` now defines one generic discriminated `BackupRestoreCommandRequest`, `BackupRestoreCommandResult`, `BackupRestoreCommandError`, and `BackupRestoreCommandAvailability` family over exactly these 41 IDs. The conditional request branches require currentness for every action; repository/destination/policy revisions; exact snapshot/capture-set/RecoverySet/run/preview identities; target Server/Project/Host/Environment/Client and family fields; protected-channel refs for unlock/key actions; retention candidate hash/lease/confirmation for prune; archive consent; and the BRS-023 recovery prerequisite plus approval, confirmation, and preview-currentness receipts for mutating restores. The `cmd.backup.verify` branch additionally requires exactly one depth selection — a direct `verification_depth` (`structural`, `sampled_data`, `full_data`) or an owner-resolved verification plan selector with plan revision and currentness — bound to the immutable `backup_id`/`snapshot_id` selection and a typed `BackupVerificationAdmission` record that the owner resolves and revalidates before effect (BRS-030). `verification_policy` (`required` versus `best_effort_with_unverified_terminal`) governs terminal handling only and never selects depth. Full Server secret portability remains explicit opt-in and reference-only through encrypted `PortableSecretEnvelope`; repository recovery uses redacted `RecoverySetPublicRecord` plus protected key-delivery refs. Raw keys, passwords, tokens, cookies, auth URLs/codes, callback/session material, protected-browser content, and foreign absolute paths are not ordinary command fields.
 
 These are static owner contracts only. All 41 command-catalog rows and their consumer/reverse rows must agree centrally; Event Authority admissions, native sole handlers, executable production wiring, real destination adapters, backup bytes, restore/rollback/quarantine execution, protected key delivery, and raw runtime receipts remain absent. A schema-valid command therefore remains `handler_unavailable` when its exact native registration or runtime prerequisite is missing. `expected_event_types=[]` remains mandatory until Event Authority separately admits an exact event and payload.
 
@@ -1766,3 +1772,62 @@ gui_classification_reason: Original source, native authority/custody, schema, st
 ```
 
 ContractRef: ContractName:Plans/Backup_Restore_System.md#BRS-029, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
+
+## BRS-030 — Verify depth and plan resolution (2026-09-27)
+
+BRS-030 closes FS02: `cmd.backup.verify` requests carry an explicit owner-typed depth selection instead of an unexpressed handler default. Every dispatching producer (Settings manager, palette, API/automation, Doctor reverse route) presents an explicit depth or plan choice, obtains a typed `BackupVerificationAdmission` for the exact target/depth/cost it will run, and dispatches exactly one selection form: a direct `verification_depth` or an owner-resolved `BackupVerificationPlan` selector plus the admission reference. `structural` may be the presented initial offer on a surface, but that is a presentation offer only; the owner defines no implicit dispatch default, and a request without a selection is `invalid_request`.
+
+Resolution is owner-side at dispatch. The owner resolves the referenced admission and revalidates every binding: request `backup_id`/`snapshot_id` equal the admitted target (else `verification_target_substituted` or `snapshot_not_found`); request currentness and permission equal the admitted values (else `stale_currentness` or permission failure); the plan selector, when present, is current in the plan registry and equals the admitted plan binding (else `verification_plan_stale`); and the effective depth, read scope, and cost class equal the admitted values. A direct depth becomes the requested depth unchanged; a current plan selector yields the plan's `resolves_depth`. The owner never silently retargets `latest`, substitutes another plan revision, or narrows depth to fit. `BackupPolicy.verification_policy` stays orthogonal: `required` versus `best_effort_with_unverified_terminal` decides terminal handling when verification cannot complete, never which depth runs.
+
+Result and receipt truth follows the approved request. A completed verify result is receipt-backed by `BackupVerificationReceipt`, which retains the approved target (`backup_id`, `snapshot_id`, `manifest_id`), the approved admission reference and cost class, `requested_verification_depth`, the resolved plan binding (null for the direct form), and performed `verification_scope`. A `passed` receipt requires performed scope to equal the requested depth mapping (`structural`→`structural`, `sampled_data`→`sampled_data_read`, `full_data`→`full_data_read`); partial progress under a deeper request stays `failed` with failure and quarantine evidence. `isolated_restore_drill` receipts come only from `cmd.backup.test_restore`, never from `cmd.backup.verify`, and carry no admission. Effects at or after the admission's `expires_at_utc` are rejected. Admission, plan, and receipt joins are semantic and therefore executed by `scripts/pm_backup_verify_depth.py`; every semantic fixture declares its exact expected violation set in a case-level `semantic_expect` (absent means no violations), so expectations never depend on fixture naming. JSON Schema enforces the structural branches, coherence rules, the requested/performed mapping, and the drill-command restriction.
+
+```yaml
+plan_unit_id: BRS-030
+unit_type: contract_requirement
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: >-
+  cmd.backup.verify carries exactly one owner-typed depth selection: a direct verification_depth
+  (structural, sampled_data, full_data) or an owner-resolved BackupVerificationPlan selector that the
+  owner maps to exactly one depth and read scope at dispatch. Every verify request binds the immutable
+  backup_id/snapshot_id selection and a typed BackupVerificationAdmission that the owner resolves and
+  revalidates before effect: admitted target, depth, read scope, cost class, plan binding, target
+  currentness, and producer permission must all match, and effects at or after admission expiry are
+  rejected. Producers present an explicit depth or plan choice on every dispatch; structural may
+  be the presented initial offer but the owner defines no implicit dispatch default and never infers
+  depth. A superseded plan revision, currentness mismatch, unresolvable snapshot, or snapshot/backup
+  substitution fails with a typed stale/substitution error and never silently retargets latest or
+  another plan. BackupPolicy verification_policy (required vs best_effort_with_unverified_terminal)
+  governs terminal handling only and never selects depth. BackupVerificationReceipt retains the
+  approved target, admission reference, and cost class plus requested_verification_depth, the resolved
+  plan binding, and performed verification_scope; a passed receipt requires performed scope to equal
+  the requested depth mapping, downgrades stay failed with failure evidence, and
+  isolated_restore_drill receipts come only from cmd.backup.test_restore.
+gui_related: true
+gui_classification_reason: Verify depth/plan choice, immutable snapshot binding, cost/read disclosure, stale-target failure, and requested-vs-performed receipt truth are visible verify workflows.
+depends_on: [BRS-004, BRS-005, BRS-007, BRS-008, BRS-015]
+unblocks: []
+acceptance_criteria:
+  - All three direct depths and the plan-selector form validate as cmd.backup.verify requests with immutable snapshot and typed admission bindings.
+  - Missing/dual depth selection, missing snapshot, missing admission, packet level spelling, and plan/admission coherence breaks fail schema validation.
+  - Schema-valid stale, substituted, and mismatched requests and receipts carry explicit case-level semantic_expect violation sets evaluated by scripts/pm_backup_verify_depth.py: stale plan, wrong backup, substituted snapshot, wrong depth/plan revision, mismatched cost/read-scope, permission/currentness mismatch, unknown admission, expired effect, and invalid admission window.
+  - Snapshot/backup substitution fails with verification_target_substituted; latest is never silently substituted.
+  - Passed receipts match requested depth to performed scope and retain the approved target, admission, and cost truth; failed downgrades keep failure evidence; drill scope requires cmd.backup.test_restore.
+  - verification_policy values change terminal handling only and cannot select or narrow depth.
+  - The exact 41 command IDs are unchanged.
+validation_surfaces: [Plans/backup_restore_system_contracts.schema.json, Plans/backup_restore_system_contract_fixtures.json, scripts/pm_backup_verify_depth.py, python3 scripts/pm-new-contracts-verify.py]
+risk_class: unverified_or_mispriced_backup_verification
+reasoning_tier: high
+context_scope: backup_verify_depth_and_plan_resolution
+implementation_surfaces: [Plans/Backup_Restore_System.md, Plans/backup_restore_system_contracts.schema.json, future verify dispatcher]
+node_compile_hint: {mode: backup_verify_depth_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_ref:packet:2026-09-01:command_census:cmd.backup.verify
+  - source_report:packet-sweep-20260927/cross-contracts:CC-F01
+  - source_report:packet-sweep-20260927/forge-sep01:FS02
+preserved_exact_tokens: [cmd.backup.verify]
+negative_constraints: [Do not accept the packet level spelling as a verify input., Do not infer verify depth from policy required/best-effort handling., Do not silently retarget latest or substitute a plan revision., Do not record a passed receipt whose performed scope differs from the requested depth., Do not add or rename command IDs for depth selection.]
+owner_hints: [Plans/Backup_Restore_System.md]
+```
+
+ContractRef: ContractName:Plans/Backup_Restore_System.md#BRS-030, SchemaID:pm.backup_restore_system.contracts.v2
