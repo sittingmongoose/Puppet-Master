@@ -13171,6 +13171,59 @@ body[data-theme] { --tx-gutter: 24px; }
 .transcript-inner > [data-family="deliverable"] .artifact-preview { color: var(--fam-deliverable); }
 .transcript-inner > [data-family="deliverable"] .artifact-preview svg { color: var(--fam-deliverable); border-color: transparent; }
 
+/* ---- family entrances: live arrivals only -----------------------------
+   finishEntrances() ends every entrance on a thread switch or boot, so only an
+   item that arrives while the reader watches plays one. One beat per family,
+   the same length in every voice; a voice changes only path and easing.
+   `backwards`, never `both`: a held final frame would keep a clip-path on the
+   card and cut off anything that pops out of it. Work (born from the turn
+   mark), the user bubble (the send flight) and streamed prose have their own. */
+.transcript[data-variant="16"] .transcript-inner > [data-family] {
+  --fam-ease: cubic-bezier(.17, .84, .29, .99); --fam-blur: blur(0); --fam-tilt: 0deg; --fam-scale: 1;
+}
+.transcript[data-variant="16"][data-voice="friendly"] .transcript-inner > [data-family] { --fam-ease: cubic-bezier(.34, 1.56, .64, 1); --fam-tilt: -.8deg; --fam-scale: .97; }
+.transcript[data-variant="16"][data-voice="glass"] .transcript-inner > [data-family] { --fam-ease: cubic-bezier(.05, .7, .1, 1); --fam-blur: blur(7px); --fam-scale: 1.02; }
+/* jump-start: the first step shows at once and the last lands at 75%, so a
+   stepped entrance is never a blank quarter followed by a late pop */
+.transcript[data-variant="16"][data-voice="retro"] .transcript-inner > [data-family] { --fam-ease: steps(4, jump-start); }
+
+/* deliverable: the sheet rises and unfolds top-down, its shadow arriving last */
+.transcript[data-variant="16"] .transcript-inner > [data-family="deliverable"] { animation: fam-sheet 460ms var(--fam-ease) backwards; }
+@keyframes fam-sheet {
+  from { opacity: 0; transform: translateY(12px) rotate(var(--fam-tilt)) scale(var(--fam-scale)); filter: var(--fam-blur); clip-path: inset(0 0 58% 0 round 14px); box-shadow: none; }
+  50% { opacity: 1; }
+  to { opacity: 1; transform: none; filter: blur(0); clip-path: inset(0 0 0 0 round 14px); }
+}
+/* needs you: rises, then (on the accent-tinted event item) one ring swells out and fades */
+.transcript[data-variant="16"] .transcript-inner > [data-family="needs"] { animation: fam-rise 380ms var(--fam-ease) backwards; }
+.transcript[data-variant="16"] .transcript-inner > [data-family="needs"].event-card { animation: fam-rise 380ms var(--fam-ease) backwards, fam-ring 700ms cubic-bezier(.2, .6, .3, 1) 140ms backwards; }
+@keyframes fam-ring {
+  from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--needs, var(--accent)) 42%, transparent), 0 0 0 4px color-mix(in srgb, var(--needs, var(--accent)) 6%, transparent); }
+  to { box-shadow: 0 0 0 14px color-mix(in srgb, var(--needs, var(--accent)) 0%, transparent), 0 0 0 4px color-mix(in srgb, var(--needs, var(--accent)) 6%, transparent); }
+}
+/* people: the roster rises into place, then its members arrive one by one
+   (rows and avatars 50ms apart, the last done inside ~520ms; Retro never scales) */
+.transcript[data-variant="16"] .transcript-inner > [data-family="people"] { animation: fam-rise 380ms var(--fam-ease) backwards; --fam-pop: .5; }
+.transcript[data-variant="16"][data-voice="retro"] .transcript-inner > [data-family="people"] { --fam-pop: 1; }
+.transcript[data-variant="16"] .transcript-inner > [data-family="people"] :is(.live-agent-row, .tx-avatars > i) { animation: fam-member 260ms var(--fam-ease) 60ms backwards; }
+.transcript[data-variant="16"] .transcript-inner > [data-family="people"] .tx-avatars > i { animation-name: fam-pop; }
+.transcript[data-variant="16"] .transcript-inner > [data-family="people"] :is(.live-agent-row, .tx-avatars > i):nth-child(2) { animation-delay: 110ms; }
+.transcript[data-variant="16"] .transcript-inner > [data-family="people"] :is(.live-agent-row, .tx-avatars > i):nth-child(3) { animation-delay: 160ms; }
+.transcript[data-variant="16"] .transcript-inner > [data-family="people"] :is(.live-agent-row, .tx-avatars > i):nth-child(4) { animation-delay: 210ms; }
+.transcript[data-variant="16"] .transcript-inner > [data-family="people"] :is(.live-agent-row, .tx-avatars > i):nth-child(n+5) { animation-delay: 260ms; }
+@keyframes fam-member { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes fam-pop { from { opacity: 0; transform: scale(var(--fam-pop)); } to { opacity: 1; transform: none; } }
+/* time: the ticket slides in from the gutter side, then its stub prints top-down
+   along the perforation */
+.transcript[data-variant="16"] .transcript-inner > [data-family="time"] { animation: fam-ticket 380ms var(--fam-ease) backwards; }
+.transcript[data-variant="16"] .transcript-inner > [data-family="time"] .sched-stub { animation: fam-stub 280ms var(--fam-ease) 100ms backwards; }
+@keyframes fam-ticket { from { opacity: 0; transform: translateX(-16px) rotate(var(--fam-tilt)) scale(var(--fam-scale)); filter: var(--fam-blur); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes fam-stub { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+/* ledger: a quick, small slide -- receipts should not make a scene */
+.transcript[data-variant="16"] .transcript-inner > [data-family="ledger"] { animation: fam-ledger 220ms var(--fam-ease) backwards; }
+@keyframes fam-ledger { from { opacity: 0; transform: translateX(-4px); } to { opacity: 1; transform: none; } }
+@keyframes fam-rise { from { opacity: 0; transform: translateY(8px) rotate(var(--fam-tilt)) scale(var(--fam-scale)); filter: var(--fam-blur); } to { opacity: 1; transform: none; filter: blur(0); } }
+@media (prefers-reduced-motion: reduce) { .transcript[data-variant="16"] .transcript-inner > [data-family], .transcript[data-variant="16"] .transcript-inner > [data-family] :is(.live-agent-row, .tx-avatars > i, .sched-stub) { animation: none !important; } }
 
 /* turn-stream.css -- Chat WOW (2026-09-26). OWNER: turn-stream.js.
  * Streaming replies, the send flight, the waiting presence, and rich reply
@@ -17030,7 +17083,8 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
   const clock = {
     scale: 1, _v: performance.now(), _r: performance.now(),
     now() { const r = performance.now(); this._v += (r - this._r) * this.scale; this._r = r; return this._v; },
-    setScale(k) { this.now(); this.scale = Math.max(0, Number(k) || 0); },
+    /* announced, so an interval armed with ms() can re-arm at the new rate */
+    setScale(k) { this.now(); this.scale = Math.max(0, Number(k) || 0); window.dispatchEvent(new Event('pm56-clock-scale')); },
     ms(realMs) { return this.scale > 0 ? realMs / this.scale : realMs; }   /* a real-time delay for a motion-time one */
   };
   window.PM56_CLOCK = clock;
@@ -17249,7 +17303,12 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
   W[8].ownsAgents = true;
   /* Chat WOW M4: the turn's answer has started -- fold the rows region away
      (turn-stream.js calls this for the turn's last burst). */
-  window.PM56_RAIL8 = { compact: (cardId) => { const ui = rail8Ui(cardId); ui.expanded = false; } };
+  /* true when this card is on screen as a Step Rail with its rows open, so it is about to fold */
+  window.PM56_RAIL8 = { compact: (cardId) => {
+    const ui = rail8Ui(cardId); ui.expanded = false;
+    const card = document.querySelector(`.working-card[data-card-ui="${CSS.escape(cardId)}"]`);
+    return !!(card && card.querySelector('.rail8-chev.open'));
+  } };
 
   /* =====================================================================
      9 — WORD STREAM
@@ -47650,44 +47709,76 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      DOM steps and a frame callback. The answer grows into the room; whatever it
      does not use is let go once it has settled, the floor easing down to the
      content like a drawer closing. */
-  var room = { h0: 0, inner: null, on: false, rel: false, x: null, v: 0, raf: 0, last: 0, lastH: 0 };
+  var room = { h0: 0, inner: null, on: false, rel: false, x: null, v: 0, raf: 0, last: 0, lastH: 0, quietUntil: 0, transient: false, relAt: 0 };
+  /* While the card folds, the follow waits: the fold frees far more room than
+     the answer's first line takes, so the reader's view stays put and the
+     answer rises into it. (Chasing the answer's placeholder first scrolled the
+     thread down 33px, which the fold's clamp then snapped back in one frame.) */
+  var FOLD_QUIET = 700;
+  function roomQuiet() { return room.on && !room.rel && now() < room.quietUntil; }
   function roomInner() { var tr = document.querySelector('.chat-stage .transcript'); return tr && tr.querySelector('.transcript-inner'); }
   function roomFloor(px) {
     if (px == null) document.documentElement.style.removeProperty('--tx-hold-min');
     else document.documentElement.style.setProperty('--tx-hold-min', px.toFixed(1) + 'px');
   }
   function naturalH(inner) { var l = inner.lastElementChild; return l ? l.getBoundingClientRect().bottom - inner.getBoundingClientRect().top : 0; }
-  function dropRoom() { room.on = false; room.rel = false; room.x = null; roomFloor(null); }
+  function dropRoom() { room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.transient = false; roomFloor(null); }
   /* the list's height as last laid out: the completion render (which drops
-     the card's narration line) runs before the hold starts, so the hold takes
-     the height from before that render */
+     the card's narration line and mounts the answer's placeholder) runs before
+     the hold starts, so the hold takes the height from before that render */
   var roomRO = null, roomSeen = null;
   function watchRoom() {
     var inner = roomInner(); if (!inner || inner === roomSeen || !window.ResizeObserver) return;
     if (roomRO) roomRO.disconnect();
     roomSeen = inner; room.lastH = inner.offsetHeight;
-    roomRO = new ResizeObserver(function () { if (roomSeen && roomSeen.isConnected && !room.on) room.lastH = roomSeen.offsetHeight; });
+    /* while held this is the floored height, which is what the reader sees */
+    roomRO = new ResizeObserver(function () { if (roomSeen && roomSeen.isConnected) room.lastH = roomSeen.offsetHeight; });
     roomRO.observe(inner);
   }
   function holdRoom() {
     if (reduced()) return;
     var inner = roomInner(); if (!inner) return;
     var before = inner === roomSeen && room.lastH ? room.lastH : 0;
-    room.inner = inner; room.h0 = Math.max(inner.offsetHeight, before);
-    room.on = true; room.rel = false; room.x = null; room.v = 0; room.last = now();
+    room.inner = inner; room.h0 = before || inner.offsetHeight;
+    room.on = true; room.rel = false; room.transient = false; room.x = null; room.v = 0; room.last = now();
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
   function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); } }
+  /* A working card shrinking under a reader at the bottom (the narration line
+     tucking into the caption, a subject's rows folding) would pull the whole
+     thread down with its height FLIP: 36px in four frames, measured. The same
+     floor holds the room instead; the next subject's rows usually fill it, and
+     what is left eases away more gently than the fold's room. */
+  var SHRINK_HOLD = 700;
+  function holdShrink() {
+    if (reduced()) return;
+    if (room.on) { if (room.transient && !room.rel) room.relAt = now() + SHRINK_HOLD; return; }
+    var c = C(); if (!c || (c.isSticky && !c.isSticky())) return;
+    var inner = roomInner(); if (!inner) return;
+    var before = inner === roomSeen && room.lastH ? room.lastH : 0;
+    room.inner = inner; room.h0 = Math.max(before, inner.offsetHeight);
+    room.on = true; room.rel = false; room.transient = true; room.relAt = now() + SHRINK_HOLD;
+    room.x = null; room.v = 0; room.last = now();
+    roomFloor(room.h0);
+    if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
+  }
   function roomFrame() {
     room.raf = 0;
     var inner = roomInner();
     if (!room.on || !inner || inner !== room.inner) { dropRoom(); return; }
+    if (room.transient && !room.rel && now() >= room.relAt) releaseRoom();
+    if (!room.rel && !roomQuiet()) {
+      /* after the fold the floor only ratchets up: a follow into content past
+         it can then never be clamped back when something above shrinks */
+      var grown = naturalH(inner);
+      if (grown > room.h0 + 0.5) { room.h0 = grown; roomFloor(room.h0); }
+    }
     if (room.rel) {
       var nat = naturalH(inner), t = now(), dt = Math.min(0.05, Math.max(0, (t - room.last) / 1000)); room.last = t;
       if (room.x == null) room.x = Math.max(0, room.h0 - nat);
-      /* critically damped to zero (omega 11/s: ~450ms) */
-      var w = 11; room.v += (-2 * w * room.v - w * w * room.x) * dt; room.x += room.v * dt;
+      /* critically damped to zero (omega 11/s: ~450ms; a shrink's leftover 8/s) */
+      var w = room.transient ? 8 : 11; room.v += (-2 * w * room.v - w * w * room.x) * dt; room.x += room.v * dt;
       if (room.x < 0.5 || nat >= room.h0) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
       roomFloor(nat + room.x);
     }
@@ -47838,12 +47929,14 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       var def = rec.runId && D.workRuns && D.workRuns[rec.runId];
       if (!(def && def.next)) {
         holdRoom();
+        var folding = false;
         t.messages.forEach(function (w) {
           if (w.type === 'working' && w.workId === id) {
-            if (window.PM56_ORBIT) window.PM56_ORBIT.compact(w.id);
-            if (window.PM56_RAIL8 && window.PM56_RAIL8.compact) window.PM56_RAIL8.compact(w.id);
+            if (window.PM56_ORBIT && window.PM56_ORBIT.compact(w.id)) folding = true;
+            if (window.PM56_RAIL8 && window.PM56_RAIL8.compact && window.PM56_RAIL8.compact(w.id)) folding = true;
           }
         });
+        if (folding && room.on) { room.quietUntil = now() + FOLD_QUIET; try { C().holdFollow(roomQuiet); } catch (e) { } }
         sound('answer');
       }
     }
@@ -48037,7 +48130,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     if (surf && surf.animate && !reduced()) {
       var v = voice();
       var kf = v === 'friendly' ? [{ transform: 'scale(.97)' }, { transform: 'scale(1.015)', offset: .6 }, { transform: 'none' }]
-        : v === 'retro' ? [{ opacity: .6 }, { opacity: 1 }]
+        /* retro settles like a phosphor: a brief flare, stepped down, never a
+           dip (an opacity dip read as the bubble fading out after it printed) */
+        : v === 'retro' ? [{ filter: 'brightness(1.45)' }, { filter: 'brightness(1)' }]
           : [{ transform: 'scale(.99)' }, { transform: 'none' }];
       surf.animate(kf, { duration: v === 'friendly' ? 240 : 150, easing: v === 'retro' ? 'steps(2,end)' : 'cubic-bezier(.17,.84,.29,.99)' });
     }
@@ -48053,6 +48148,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     setInterval(watchRoom, 700);
     c.registerTurnOwner(owner);
     c.onWorkComplete(onComplete);
+    if (c.onWorkShrink) c.onWorkShrink(holdShrink);
   }
   setTimeout(wire, 0);
   document.addEventListener('DOMContentLoaded', wire);
@@ -48627,7 +48723,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation,
       /* Chat WOW M1: live-turn plumbing for turn-stream.js and friends. */
       turnBusy, registerTurnOwner, maybeFlushQueue, startWorkingRec, onWorkComplete, releaseNextRun,
-      followIfSticky, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx
+      followIfSticky, holdFollow, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx
     }, extra);
   }
   function extEach(name, extra, each){
@@ -50505,7 +50601,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     keepTopAfter(preTop,post);
     flipMoves(moveTargets, moveBefore);
     rollDigits(rollBefore);
-    restoreScroll(positions,{workH, post, workGrow:workFlipGrowth(flips)});
+    restoreScroll(positions,{workH, post, workGrow:workFlipped(flips)});
     renderOverlays();
     retainHoverAfterRender();
     armComposerObserver();
@@ -50539,7 +50635,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     keepTopAfter(preTop,post);
     flipMoves(moveTargets, moveBefore);
     rollDigits(rollBefore);
-    restoreScroll(positions,{workH, post, workGrow:workFlipGrowth(flips)});
+    restoreScroll(positions,{workH, post, workGrow:workFlipped(flips)});
     retainHoverAfterRender();
     return true;
   }
@@ -50863,6 +50959,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function glideStep(ts){
     glideRAF=0;
     const el=tEl(); if(!el||!tStick){ glideTs=0; return; }
+    if(followHoldFn&&followHoldFn()){ glideTs=0; return; }
     const max=el.scrollHeight-el.clientHeight, cur=el.scrollTop, d=max-cur;
     if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
     const dt=glideTs?Math.min(50,Math.max(1,ts-glideTs)):16.7; glideTs=ts;
@@ -50876,6 +50973,16 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function kickFollow(){ if(tStick&&!glideRAF){ glideTs=0; glideRAF=requestAnimationFrame(glideStep); } }
   function followIfSticky(){ kickFollow(); }
+  /* A turn module may hold the follow for a moment: a card about to fold frees
+     far more room than the answer mounting under it needs, so chasing that
+     answer first would scroll down only to be clamped back up by the fold. */
+  let followHoldFn=null;
+  function holdFollow(fn){ followHoldFn=typeof fn==='function'?fn:null; }
+  /* ...and may hold the list's height when a working card's FLIP shrinks it,
+     so a reader at the bottom is not pulled down with the shrink */
+  let workShrinkFn=null;
+  function onWorkShrink(fn){ workShrinkFn=typeof fn==='function'?fn:null; }
+  function workFlipped(flips){ const g=workFlipGrowth(flips); if(g<-4&&workShrinkFn){ try{ workShrinkFn(-g); }catch(e){} } return g; }
   function stickToBottom(instant){
     tStick=true;
     const el=tEl();
@@ -51618,9 +51725,20 @@ recommended path                  migration 0043 + rollback</div></div></section
   window.__PM56_BOOT_OK=true;scrollTranscriptToEnd(true);finishEntrances();
     /* The thread arrives as one piece: a short crossfade of the whole list
        rather than each item's own entrance. */
+    /* It starts from 40% opacity, not 0: the old list is gone the instant the
+       new one mounts, and fading up from nothing read as a blink to an empty
+       pane (filmed). Same 180ms in every voice; the voice picks the path. */
     { const inner=document.querySelector('.transcript-inner');
-      if(inner&&inner.animate&&!(window.PM56_MOTION&&window.PM56_MOTION.reduced()))
-        inner.animate([{opacity:0,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:200,easing:'cubic-bezier(.17,.84,.29,.99)'}); }
+      if(inner&&inner.animate&&!(window.PM56_MOTION&&window.PM56_MOTION.reduced())){
+        const v=motionVoice(), glass=v==='glass';
+        const from={opacity:.4,transform:'translateY(4px)'}, to={opacity:1,transform:'none'};
+        if(glass){ from.filter='blur(3px)'; to.filter='blur(0px)'; }
+        const easing=v==='retro'?'steps(3, jump-start)':v==='friendly'?'cubic-bezier(.34,1.3,.64,1)':'cubic-bezier(.2,.8,.2,1)';
+        inner.animate([from,to],{duration:180,easing});
+        /* the turn spine is its own layer beside the list; it arrives with it */
+        const spine=document.querySelector('.transcript .tx-spine-layer');
+        if(spine&&spine.animate) spine.animate([{opacity:from.opacity},{opacity:1}],{duration:180,easing});
+      } }
     /* The Multi Orbit demo thread plays its turn on entry: the first scripted
        run spawns just after the switch settles, and the chain does the rest. */
     if(id==='orbit-run'&&!state.works.orbitA){ setTimeout(()=>{ if(state.selectedThread==='orbit-run'&&!state.works.orbitA) startWorkingRec('orbitA'); },350); }
@@ -51696,6 +51814,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     /* 500ms of MOTION time: a film tool that slows the clock slows the tick too. */
     workTimer=setInterval(workTick,window.PM56_CLOCK?window.PM56_CLOCK.ms(500):500);
   }
+  window.addEventListener('pm56-clock-scale',()=>{ if(workTimer) armWorkTimer(); });
   function workTick(){
     const live=runningRecs();
     if(!live.length){ stopWorkTimer(); return; }
@@ -52440,6 +52559,7 @@ recommended path                  migration 0043 + rollback</div></div></section
   });
 
   // Public deterministic concept API used by the Demo Studio and automated inspection.
+  let demoArrival=null;   /* lab-only: the candidate arrivePrepare chose */
   window.PM56_DEMO={
     getState:()=>clone(state),
     reset:globalReset,
@@ -52463,6 +52583,29 @@ recommended path                  migration 0043 + rollback</div></div></section
     setWorkStep:(i)=>{state.work.started=true;state.work.running=false;scrubTo(state.work,Number(i));if(!runningRecs().length)stopWorkTimer();renderApp();},
     trigger:runDemoTrigger,
     listTriggers:allDemoTriggers,
+    /* Lab-only (film tool): replay one existing item of a transcript family as
+       a live arrival in the current thread, so its family entrance can be
+       filmed. arriveSource names a thread that has such an item. */
+    /* Some owners key their card by a record, so a clone renders as the same
+       card; arrivePrepare tries each candidate and keeps the first whose clone
+       renders as a new item (then removes that trial clone). */
+    arrivePrepare:(fam)=>{
+      const count=()=>document.querySelectorAll('.transcript-inner > *').length;
+      for(const th of state.threads){
+        const cands=th.messages.filter(m=>messageVisible(m)&&familyOf(m)===fam);
+        if(!cands.length) continue;
+        switchThread(th.id);
+        for(const src of cands){
+          const n0=count(), m=clone(src); m.id=uid('arrive'); th.messages.push(m); renderApp();
+          const ok=count()>n0; th.messages.pop(); renderApp();
+          if(ok){ demoArrival={fam,thread:th.id,src:src.id}; return th.id; }
+        }
+      }
+      demoArrival=null; return null;
+    },
+    arrive:(fam)=>{ const t=activeThread(); const a=demoArrival&&demoArrival.fam===fam&&demoArrival.thread===t.id?demoArrival:null;
+      const src=t&&t.messages.find(m=>a?m.id===a.src:(messageVisible(m)&&familyOf(m)===fam)); if(!src) return null;
+      const m=clone(src); m.id=uid('arrive'); t.messages.push(m); renderApp(); stickToBottom(); return m.id; },
     openArtifact:openEditor,
     snapshot:()=>({theme:state.theme,recipe:state.recipe,variants:[...state.variants],thread:state.selectedThread,work:{...state.work},works:clone(state.works),decision:state.decision?.type||null,activity:clone(state.activity)})
   };

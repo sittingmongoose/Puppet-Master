@@ -147,7 +147,8 @@ await safe('live agent turn', async () => {
     const t0 = performance.now();
     const tick = () => {
       const t = document.querySelector('.transcript');
-      window.__lt.gaps.push({ t: Math.round(performance.now() - t0), g: Math.round(t.scrollHeight - t.clientHeight - t.scrollTop), stick: PM56_EXT.ctx().isSticky() });
+      const us = document.querySelectorAll('.transcript-inner > [data-role="user"]'), u = us[us.length - 1];
+      window.__lt.gaps.push({ t: Math.round(performance.now() - t0), g: Math.round(t.scrollHeight - t.clientHeight - t.scrollTop), stick: PM56_EXT.ctx().isSticky(), u: u ? Math.round(u.getBoundingClientRect().top * 10) / 10 : null, strip: !!document.querySelector('.transcript-inner > .working-card .orbit-strip') });
       window.__lt.liveMax = Math.max(window.__lt.liveMax, document.querySelectorAll('.working-card .orbit-node.live').length);
       if (document.querySelector('.working-card .orbit-narration')) window.__lt.narrLeading = true;
       if (document.querySelector('.working-card .orbit-narr-cap')) window.__lt.narrCap = true;
@@ -170,6 +171,20 @@ await safe('live agent turn', async () => {
   check('follow-along holds through the whole turn (never more than 24px away for longer than 300ms)',
     longest <= 300, { samples: late.length, away: away.length, worst: Math.max(...late.map(s => s.g)), longestAwayMs: longest });
   check('follow-along stays engaged', late.every(s => s.stick), late.filter(s => !s.stick).slice(0, 3));
+  /* the view only ever moves up (following) or eases down (a released room):
+     a drop faster than 0.4px/ms is a snap. Measured before the room holds: the
+     fold's clamp snapped back 33px in one frame (~2px/ms) and a narration tuck
+     pulled the thread down 36px in four frames (~0.7px/ms); a released room
+     eases at ~0.2px/ms. Speed, not pixels per sample: frames here are 12-40ms. */
+  const drops = [];
+  late.forEach((s, i) => { const q = late[i - 1]; if (q && s.u != null && q.u != null && s.u - q.u > 2 && (s.u - q.u) / Math.max(1, s.t - q.t) > 0.4) drops.push({ t: s.t, by: +(s.u - q.u).toFixed(1), ms: s.t - q.t }); });
+  check('the thread never jumps down mid-turn (no clamp snaps back)', drops.length === 0, drops.slice(0, 4));
+  /* while the card folds and the answer starts, the reader's view stays put:
+     the fold runs ~690ms before its strip mounts, the answer mounting with it */
+  const i0 = late.findIndex(s => s.strip);
+  const win = i0 < 0 ? [] : late.filter(s => s.t >= late[i0].t - 750 && s.t <= late[i0].t + 300 && s.u != null);
+  const span = win.length ? Math.max(...win.map(s => s.u)) - Math.min(...win.map(s => s.u)) : null;
+  check('the view holds still while the card folds and the answer starts', win.length > 5 && span <= 1, { samples: win.length, movedPx: span });
   check('the working card is born from the turn mark (clip-path unfold)', lt.birth);
   check('parallel reads are live at the same time', lt.liveMax >= 3, lt.liveMax);
   check('narration streams at the card foot, then tucks into the caption', lt.narrLeading && lt.narrCap, { leading: lt.narrLeading, caption: lt.narrCap });

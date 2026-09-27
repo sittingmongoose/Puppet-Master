@@ -167,6 +167,23 @@ Build with `python3 build.py` then `--check`.
   stable key and its turn position, so an item revealed mid-list animates in
   place and a thread switch arrives as one short crossfade instead of every
   card fading in.
+- **Entrances by family.** Only an item that arrives live animates; a thread's
+  existing items never do. Each family enters in its own way, for the same length
+  in every voice (the voice changes only path and easing: Friendly overshoots with
+  a slight tilt, Glass floats out of a blur, Retro steps and never scales):
+  - **Deliverable**: the sheet rises 12px and unfolds top-down, its shadow
+    arriving last (460ms).
+  - **Needs you**: the item rises, then one accent ring swells out and fades
+    (700ms).
+  - **People**: the roster rises, then its members arrive one by one, rows and
+    avatars 50ms apart.
+  - **Time**: the ticket slides in 16px from the gutter side, then its stub prints
+    top-down along the perforation.
+  - **Ledger**: a 4px slide and fade (220ms); receipts do not make a scene.
+- **Thread switch.** The new thread's list fades up from 40% opacity with a 4px
+  rise in 180ms, and the turn spine fades with it, so there is no blink between
+  threads (Glass clears a blur, Retro steps, Friendly settles with a slight
+  overshoot).
 
 ## Live replies (streaming)
 
@@ -227,8 +244,9 @@ Build with `python3 build.py` then `--check`.
     mid-flight and carries it in; words hop into replies.
   - **Glass**: the text floats up; the bubble condenses out of blur; words
     surface from depth.
-  - **Retro**: the text blinks out; the bubble prints in line by line; replies
-    type in with a block cursor and phosphor bloom.
+  - **Retro**: the text blinks out; the bubble prints in line by line and lands
+    with a brief phosphor flare (never a dim); replies type in with a block
+    cursor and phosphor bloom.
   PMConcept7 adopts voices by theme family (same eight theme ids).
 
 ## Sound
@@ -812,6 +830,11 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   stat; second line: verb + status) — never native `title` tooltips.
 - While a card is running at the bottom of the thread, its detail region keeps a height
   floor so per-subject content changes do not push the page up and down.
+- **A card that shrinks mid-turn never pulls the thread down.** When a live card gets
+  shorter under a reader at the bottom (a narration line tucking into the caption, a
+  subject's rows folding), the list keeps its height for 700ms (the next subject
+  usually fills it), then eases the rest away gently. Before, a tuck dropped the whole
+  thread 36px in four frames.
 
 ## Orbit (default) — behavior spec
 
@@ -828,8 +851,11 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
 - **The fold never moves the thread.** When a turn's card folds as its answer starts,
   the room the card gives up is **held** (a floor on the list's height at its pre-fold
   size) and the answer grows into it; what the answer does not use is let go once it
-  has settled, easing shut like a drawer. Measured on the live agent turn: the thread
-  above moved 550px down and back before, 5px now. The answer that follows visible
+  has settled, easing shut like a drawer. While the card folds, follow-along waits:
+  the answer's first line mounts under a card that is about to free several times its
+  height, so chasing it would scroll the thread down only for the fold to clamp it
+  back. Measured on the live agent turn: the thread above moved 550px down and back
+  at first, then 33px down and back in one frame, and 0px now. The answer that follows visible
   work starts writing without an "is thinking" label. Expanding is the exact reverse: the dial **drops down from
   the strip line to the center** (visible travel), then slides left as the panel opens.
 - **Compact strip:** one row of kind-colored subject discs + "N subjects" + a

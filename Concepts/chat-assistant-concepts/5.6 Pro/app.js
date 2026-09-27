@@ -269,7 +269,7 @@
       openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation,
       /* Chat WOW M1: live-turn plumbing for turn-stream.js and friends. */
       turnBusy, registerTurnOwner, maybeFlushQueue, startWorkingRec, onWorkComplete, releaseNextRun,
-      followIfSticky, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx
+      followIfSticky, holdFollow, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx
     }, extra);
   }
   function extEach(name, extra, each){
@@ -2147,7 +2147,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     keepTopAfter(preTop,post);
     flipMoves(moveTargets, moveBefore);
     rollDigits(rollBefore);
-    restoreScroll(positions,{workH, post, workGrow:workFlipGrowth(flips)});
+    restoreScroll(positions,{workH, post, workGrow:workFlipped(flips)});
     renderOverlays();
     retainHoverAfterRender();
     armComposerObserver();
@@ -2181,7 +2181,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     keepTopAfter(preTop,post);
     flipMoves(moveTargets, moveBefore);
     rollDigits(rollBefore);
-    restoreScroll(positions,{workH, post, workGrow:workFlipGrowth(flips)});
+    restoreScroll(positions,{workH, post, workGrow:workFlipped(flips)});
     retainHoverAfterRender();
     return true;
   }
@@ -2505,6 +2505,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function glideStep(ts){
     glideRAF=0;
     const el=tEl(); if(!el||!tStick){ glideTs=0; return; }
+    if(followHoldFn&&followHoldFn()){ glideTs=0; return; }
     const max=el.scrollHeight-el.clientHeight, cur=el.scrollTop, d=max-cur;
     if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
     const dt=glideTs?Math.min(50,Math.max(1,ts-glideTs)):16.7; glideTs=ts;
@@ -2518,6 +2519,16 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function kickFollow(){ if(tStick&&!glideRAF){ glideTs=0; glideRAF=requestAnimationFrame(glideStep); } }
   function followIfSticky(){ kickFollow(); }
+  /* A turn module may hold the follow for a moment: a card about to fold frees
+     far more room than the answer mounting under it needs, so chasing that
+     answer first would scroll down only to be clamped back up by the fold. */
+  let followHoldFn=null;
+  function holdFollow(fn){ followHoldFn=typeof fn==='function'?fn:null; }
+  /* ...and may hold the list's height when a working card's FLIP shrinks it,
+     so a reader at the bottom is not pulled down with the shrink */
+  let workShrinkFn=null;
+  function onWorkShrink(fn){ workShrinkFn=typeof fn==='function'?fn:null; }
+  function workFlipped(flips){ const g=workFlipGrowth(flips); if(g<-4&&workShrinkFn){ try{ workShrinkFn(-g); }catch(e){} } return g; }
   function stickToBottom(instant){
     tStick=true;
     const el=tEl();
@@ -3259,9 +3270,20 @@ recommended path                  migration 0043 + rollback</div></div></section
     renderApp(false);scrollTranscriptToEnd(true);finishEntrances();
     /* The thread arrives as one piece: a short crossfade of the whole list
        rather than each item's own entrance. */
+    /* It starts from 40% opacity, not 0: the old list is gone the instant the
+       new one mounts, and fading up from nothing read as a blink to an empty
+       pane (filmed). Same 180ms in every voice; the voice picks the path. */
     { const inner=document.querySelector('.transcript-inner');
-      if(inner&&inner.animate&&!(window.PM56_MOTION&&window.PM56_MOTION.reduced()))
-        inner.animate([{opacity:0,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:200,easing:'cubic-bezier(.17,.84,.29,.99)'}); }
+      if(inner&&inner.animate&&!(window.PM56_MOTION&&window.PM56_MOTION.reduced())){
+        const v=motionVoice(), glass=v==='glass';
+        const from={opacity:.4,transform:'translateY(4px)'}, to={opacity:1,transform:'none'};
+        if(glass){ from.filter='blur(3px)'; to.filter='blur(0px)'; }
+        const easing=v==='retro'?'steps(3, jump-start)':v==='friendly'?'cubic-bezier(.34,1.3,.64,1)':'cubic-bezier(.2,.8,.2,1)';
+        inner.animate([from,to],{duration:180,easing});
+        /* the turn spine is its own layer beside the list; it arrives with it */
+        const spine=document.querySelector('.transcript .tx-spine-layer');
+        if(spine&&spine.animate) spine.animate([{opacity:from.opacity},{opacity:1}],{duration:180,easing});
+      } }
     /* The Multi Orbit demo thread plays its turn on entry: the first scripted
        run spawns just after the switch settles, and the chain does the rest. */
     if(id==='orbit-run'&&!state.works.orbitA){ setTimeout(()=>{ if(state.selectedThread==='orbit-run'&&!state.works.orbitA) startWorkingRec('orbitA'); },350); }
@@ -3337,6 +3359,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     /* 500ms of MOTION time: a film tool that slows the clock slows the tick too. */
     workTimer=setInterval(workTick,window.PM56_CLOCK?window.PM56_CLOCK.ms(500):500);
   }
+  window.addEventListener('pm56-clock-scale',()=>{ if(workTimer) armWorkTimer(); });
   function workTick(){
     const live=runningRecs();
     if(!live.length){ stopWorkTimer(); return; }
@@ -4081,6 +4104,7 @@ recommended path                  migration 0043 + rollback</div></div></section
   });
 
   // Public deterministic concept API used by the Demo Studio and automated inspection.
+  let demoArrival=null;   /* lab-only: the candidate arrivePrepare chose */
   window.PM56_DEMO={
     getState:()=>clone(state),
     reset:globalReset,
@@ -4104,6 +4128,29 @@ recommended path                  migration 0043 + rollback</div></div></section
     setWorkStep:(i)=>{state.work.started=true;state.work.running=false;scrubTo(state.work,Number(i));if(!runningRecs().length)stopWorkTimer();renderApp();},
     trigger:runDemoTrigger,
     listTriggers:allDemoTriggers,
+    /* Lab-only (film tool): replay one existing item of a transcript family as
+       a live arrival in the current thread, so its family entrance can be
+       filmed. arriveSource names a thread that has such an item. */
+    /* Some owners key their card by a record, so a clone renders as the same
+       card; arrivePrepare tries each candidate and keeps the first whose clone
+       renders as a new item (then removes that trial clone). */
+    arrivePrepare:(fam)=>{
+      const count=()=>document.querySelectorAll('.transcript-inner > *').length;
+      for(const th of state.threads){
+        const cands=th.messages.filter(m=>messageVisible(m)&&familyOf(m)===fam);
+        if(!cands.length) continue;
+        switchThread(th.id);
+        for(const src of cands){
+          const n0=count(), m=clone(src); m.id=uid('arrive'); th.messages.push(m); renderApp();
+          const ok=count()>n0; th.messages.pop(); renderApp();
+          if(ok){ demoArrival={fam,thread:th.id,src:src.id}; return th.id; }
+        }
+      }
+      demoArrival=null; return null;
+    },
+    arrive:(fam)=>{ const t=activeThread(); const a=demoArrival&&demoArrival.fam===fam&&demoArrival.thread===t.id?demoArrival:null;
+      const src=t&&t.messages.find(m=>a?m.id===a.src:(messageVisible(m)&&familyOf(m)===fam)); if(!src) return null;
+      const m=clone(src); m.id=uid('arrive'); t.messages.push(m); renderApp(); stickToBottom(); return m.id; },
     openArtifact:openEditor,
     snapshot:()=>({theme:state.theme,recipe:state.recipe,variants:[...state.variants],thread:state.selectedThread,work:{...state.work},works:clone(state.works),decision:state.decision?.type||null,activity:clone(state.activity)})
   };

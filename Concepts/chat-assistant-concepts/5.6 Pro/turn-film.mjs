@@ -3,8 +3,12 @@
  *   node turn-film.mjs --scene send --theme basic-dark --out /tmp/x
  *        [--rate 0.1] [--ms 900] [--step 16.667] [--file index.html] [--size 1440x900]
  *        [--crop 0,0.48,1,0.5] [--cols 6] [--width 320] [--msg "..."] [--voice auto|basic|friendly|glass|retro]
- *        [--from 0]   keep only frames at or after this motion time
+ *        [--from 0]   keep only frames at or after this motion time (past 1.5s the
+ *                     scene runs at full speed until a second before it)
  *        [--wide]     close the editor first, so the chat has the whole width
+ *        [--gpu]      new headless mode with GPU compositing (the Mac); default is software
+ *        --scene arrive --family deliverable|needs|people|time|ledger   a live arrival
+ *        --scene switch --to <thread>                                  a thread switch
  *
  * Method: the scene's setup runs at normal speed and settles. Then CSS and Web
  * Animations are slowed with CDP Animation.setPlaybackRate(rate) and every
@@ -42,6 +46,9 @@ const VOICE = opt('voice', 'auto');
 const MSG = opt('msg', 'Walk me through the steps for the rollout.');
 const FROM = Number(opt('from', 0));
 const WIDE = argv.includes('--wide');
+const GPU = argv.includes('--gpu');          // new headless mode with the GPU (use on the Mac)
+const FAMILY = opt('family', 'deliverable');
+const TO = opt('to', 'query');
 
 const SCENES = {
   /* the composer text flies into its bubble, then the reply waits and streams */
@@ -55,6 +62,16 @@ const SCENES = {
     setup: `(() => { PM56_DEMO.selectThread('live-turn'); const ta=document.querySelector('textarea[data-input="composer"]'); ta.focus(); ta.value=${JSON.stringify(opt('msg', "Add the composite index and prove it's faster."))}; ta.dispatchEvent(new Event('input',{bubbles:true})); })()`,
     trigger: `document.querySelector('[data-action="send"]').click()`
   },
+  /* one existing item of a family replayed as a live arrival (its entrance) */
+  arrive: {
+    setup: `(() => { PM56_DEMO.arrivePrepare(${JSON.stringify(FAMILY)}); })()`,
+    trigger: `PM56_DEMO.arrive(${JSON.stringify(FAMILY)})`
+  },
+  /* switching threads: one crossfade of the whole list, no per-item entrances */
+  switch: {
+    setup: `(() => { PM56_DEMO.selectThread('plain'); })()`,
+    trigger: `PM56_DEMO.selectThread(${JSON.stringify(TO)})`
+  },
   multi: {
     setup: `(() => { PM56_DEMO.selectThread('plain'); })()`,
     trigger: `PM56_DEMO.trigger('Multi-orbit turn')`
@@ -63,7 +80,9 @@ const SCENES = {
 const sc = SCENES[SCENE];
 if (!sc) { console.error('unknown scene', SCENE); process.exit(2); }
 fs.rmSync(OUT, { recursive: true, force: true }); fs.mkdirSync(OUT, { recursive: true });
-const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'] });
+const browser = GPU
+  ? await chromium.launch({ channel: 'chromium', args: ['--no-sandbox', '--enable-gpu', '--ignore-gpu-blocklist'] })
+  : await chromium.launch({ args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'] });
 try {
   const page = await browser.newPage({ viewport: { width: W, height: H } });
   const errs = []; page.on('pageerror', e => errs.push(e.message));
@@ -79,8 +98,17 @@ try {
   const clip = { x: Math.round(stage.x + stage.width * CROP[0]), y: Math.round(stage.y + stage.height * CROP[1]), width: Math.round(stage.width * CROP[2]), height: Math.round(stage.height * CROP[3]), scale: 1 };
   const cdp = await page.context().newCDPSession(page);
   await cdp.send('Animation.enable');
-  await cdp.send('Animation.setPlaybackRate', { playbackRate: RATE });
-  await cdp.send('Runtime.evaluate', { expression: `PM56_CLOCK.setScale(${RATE}); window.__filmT0 = PM56_CLOCK.now(); ${sc.trigger}` });
+  /* a late window (--from past 1.5s) runs at full speed until a second before it,
+     so the screenshot budget is spent on the frames that are kept */
+  const lead = FROM > 1500 ? FROM - 1000 : 0, r0 = lead ? 1 : RATE;
+  await cdp.send('Animation.setPlaybackRate', { playbackRate: r0 });
+  await cdp.send('Runtime.evaluate', { expression: `PM56_CLOCK.setScale(${r0}); window.__filmT0 = PM56_CLOCK.now(); ${sc.trigger}` });
+  const clockT = async () => (await cdp.send('Runtime.evaluate', { expression: 'PM56_CLOCK.now() - window.__filmT0', returnByValue: true })).result.value;
+  if (lead) {
+    while (await clockT() < lead) await page.waitForTimeout(40);
+    await cdp.send('Animation.setPlaybackRate', { playbackRate: RATE });
+    await cdp.send('Runtime.evaluate', { expression: `PM56_CLOCK.setScale(${RATE})` });
+  }
   const kept = [];
   let next = FROM, n = 0, guard = 0;
   while (guard++ < 5000) {

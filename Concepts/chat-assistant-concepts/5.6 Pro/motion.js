@@ -126,7 +126,8 @@
   const clock = {
     scale: 1, _v: performance.now(), _r: performance.now(),
     now() { const r = performance.now(); this._v += (r - this._r) * this.scale; this._r = r; return this._v; },
-    setScale(k) { this.now(); this.scale = Math.max(0, Number(k) || 0); },
+    /* announced, so an interval armed with ms() can re-arm at the new rate */
+    setScale(k) { this.now(); this.scale = Math.max(0, Number(k) || 0); window.dispatchEvent(new Event('pm56-clock-scale')); },
     ms(realMs) { return this.scale > 0 ? realMs / this.scale : realMs; }   /* a real-time delay for a motion-time one */
   };
   window.PM56_CLOCK = clock;
