@@ -186,6 +186,15 @@ Build with `python3 build.py` then `--check`.
 - Messages revealed after a work burst (the Multi Orbit demo's interim and
   summary text) stream in the same way, and the next burst waits until the
   interim text has finished.
+- **Live agent turns.** In Agent mode a send that asks for work ("add the composite
+  index…", "fix the rollback path…", "apply the pattern across the module…") plays a
+  whole live turn: the thinking placeholder, then the working card born in its place
+  under the same turn mark, parallel subjects, narration, a failure and its fix, an
+  approval, and finally the answer streaming in as the card folds. The **Live turns**
+  thread is their stage, and Demo Studio's **Live turns** group (Live reply, Live agent
+  turn, Trouble mid-turn, Long agent turn) types and sends each one for real. Demo
+  Studio's **Motion voice** picker shows any voice on any theme (default: follow the
+  theme).
 - Recorded example answers (ELI5) stay instant. Replies come from the concept's
   scripted reply set (`data.js` `scriptedReplies`), including two with
   structure: ask to "walk through the steps" or to "summarize".
@@ -714,10 +723,36 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
 - **No percent-complete anywhere** — total subject count is unknowable mid-run. The
   head shows the live subject caption and the elapsed time; a completed card's head
   says **"Completed"** (never "Completed work").
-- **Auto-collapse rule:** a working activity collapses ONLY when a NEW working activity
-  enters the thread (with a collapse animation). **The last activity always stays
-  expanded** — after it finishes, it remains open until the user collapses it or a new
-  activity appears. Completing never scrolls the reader's transcript position.
+- **Auto-collapse rule:** a working activity collapses when a NEW working activity
+  enters the thread, and the turn's **last** activity collapses **when the turn's
+  answer starts streaming** (decided 2026-09-26), so the answer rises into the room the
+  card frees. Both use the collapse choreography; the reader can reopen the card from
+  its strip. Completing never scrolls the reader's transcript position.
+- **Several subjects can be live at once** (parallel reads, a background command next
+  to a test run): a subject is live from its start until its own duration ends. Every
+  live node pulses; the core shows the newest live subject with a **+N** badge for the
+  others. When no subject is running (the model is between tool calls) the most
+  recently started one stays live, exactly as before.
+- **A subject can fail or wait for the reader.** A failed node shakes once and turns
+  danger-red with an x flag, and its panel chip reads **Failed**; a subject waiting for
+  approval turns warning-amber with a pause flag, the core reads **Waiting for you**,
+  and an **Approval needed** item (Approve once / Deny) appears in the transcript right
+  under the card. Approving resumes the run; denying stops it with nothing applied.
+- **Long runs stay legible.** Past 16 started subjects, adjacent subjects of the same
+  kind merge into one **cluster node** with a count ("Read ×12"); past 30 nodes the
+  oldest fold into one **Earlier** node. A cluster's panel lists every member (the
+  newest eight) with its rows. Pins follow the subject, not its place on the ring.
+- **Narration.** Short lines the assistant writes between bursts of tool calls do not
+  split the card: while a line is the newest thing the run has produced it streams in
+  as prose at the **foot of the card**; when the next subject starts, the line **tucks
+  up into the head caption** (it flies from where it was written). Longer prose and the
+  final answer stay transcript text.
+- Finished subjects keep their kind's colour (muted) with a small green completion pip,
+  so a completed ring still reads as the run it was.
+- **Demo controls** (play/pause, step, complete, reset, work history) sit behind **one
+  button** in the card head that opens them as a drawer inside the head. They are
+  concept-lab controls only (the product's Stop lives in the composer) and are
+  **removed in the PMConcept7 port**.
 - Collapsed activities show **receipt chips WITHOUT a "Worked for" chip** (elapsed
   already lives in the card head). Play/complete respect the user's pin and collapse;
   only Reset clears them.
@@ -747,7 +782,10 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   A completed card collapsed to the compact strip keeps **no leftover min-height**
   under the receipt line; done-state body/receipt padding stays tight.
 - Ring geometry: the ring starts empty and re-spaces evenly on every spawn; density
-  tiers shrink nodes as the ring passes ~13 and ~22 subjects (works at 2–3 and 25+).
+  tiers shrink nodes as the ring passes ~13 and ~22 nodes, and clustering keeps the
+  ring at 30 nodes or fewer (a 140-subject run stays readable).
+- **Birth.** A live turn's working card unfolds out of the turn's mark in the gutter (a
+  circle growing to the whole card), in the theme's voice.
   Subagent subjects pop their agents out as satellites around the center disc; the
   panel lists the same agents (each opens its agent thread).
 - Reduced motion: every choreography lands its end state instantly.

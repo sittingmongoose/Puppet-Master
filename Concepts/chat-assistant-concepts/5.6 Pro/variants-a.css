@@ -653,3 +653,11 @@ button.rail8-row {
   }
   .working-variant-11 .dt-row.retired { animation-duration:1ms, 1ms; animation-delay:0ms, 1ms; }
 }
+
+/* Chat WOW M4 -- Step Rail parity with Orbit: status flags, clusters, narration. */
+.rail8-item { position: relative; }
+.rail8-item.failed { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 60%, transparent); background: color-mix(in srgb, var(--danger) 14%, var(--surface-3)); animation: orbit-fail-shake 360ms cubic-bezier(.36, .07, .19, .97) both; }
+.rail8-item.waiting { color: var(--warning); border-color: color-mix(in srgb, var(--warning) 60%, transparent); background: color-mix(in srgb, var(--warning) 14%, var(--surface-3)); }
+.rail8-item .orbit-node-count { bottom: -7px; font-size: 7.5px; line-height: 11px; }
+.rail8-narr { font-weight: 520; color: color-mix(in srgb, var(--text) 86%, transparent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; animation: orbit-narr-in 260ms cubic-bezier(.17, .84, .29, .99) both; }
+.rail8-narration { margin: 0 0 8px; padding: 0 0 8px; border-top: 0; border-bottom: 1px dashed color-mix(in srgb, var(--text) 10%, transparent); }

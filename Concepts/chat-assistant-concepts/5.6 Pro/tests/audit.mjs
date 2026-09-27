@@ -301,7 +301,8 @@ await safe('Context Lens header strip',async()=>{
 });
 
 await safe('Working Animation controls and history',async()=>{
-  await page.evaluate(()=>PM56_DEMO.resetWorking());await page.locator('[data-action="start-working"]').click();await page.waitForTimeout(1600);await page.locator('[data-action="pause-working"]').click();
+  /* Chat WOW: the lab controls live behind one drawer button in the working head. */
+  await page.evaluate(()=>PM56_DEMO.resetWorking());await page.evaluate(()=>{const m=document.querySelector('.working-card [data-action="work-demo-menu"]');if(m&&m.getAttribute('aria-expanded')!=='true')m.click();});await page.locator('[data-action="start-working"]').click();await page.waitForTimeout(1600);await page.locator('[data-action="pause-working"]').click();
   await page.locator('[data-action="step-working"]').click();await page.locator('[data-action="complete-working"]').click();
   /* Default take is Orbit: elapsed lives in the card head, not a "Worked for"
      receipt chip (orbit.js passes {elapsed:false} on the strip). Open Orbit
@@ -457,7 +458,7 @@ await safe('Working-card FLIP travels forward, in steps, and stops',async()=>{
     if(settle===null||settle>520)out.push(`${label}: settles at ${settle}ms, limit 520ms (travel ${travel}px)`);
     return out;
   };
-  const TOG='function(){document.querySelector(\'[data-action="toggle-work-history"]\').click();}';
+  const TOG='function(){var m=document.querySelector(\'.working-card [data-action="work-demo-menu"]\');if(m&&m.getAttribute(\'aria-expanded\')!==\'true\')m.click();document.querySelector(\'[data-action="toggle-work-history"]\').click();}';
   const rec=(t,ms)=>page.evaluate(([a,b])=>window.__flipRec(a,b),[t,ms]);
   const bad=[];
   for(const v of [1,12,0,7]){

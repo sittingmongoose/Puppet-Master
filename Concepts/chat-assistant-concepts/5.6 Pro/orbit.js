@@ -600,6 +600,10 @@
      through the ordinary collapse choreography, so the answer rises into the
      room it frees. Called by turn-stream.js; the reader can reopen it. */
   window.PM56_ORBIT = {
+    /* shared with Step Rail (variants-a.js W[8]) so both styles group, flag and
+       narrate a run the same way */
+    items: function (w, rec) { return displayItems(w, rec); },
+    narration: function (c) { return narrState(c); },
     compact: function (cardId) {
       var ui = uiFor(cardId);
       if (ui.compact === true || ui.shown === 'strip') { ui.compact = true; return false; }

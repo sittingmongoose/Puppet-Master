@@ -734,7 +734,7 @@ await sec('item4: pinned thread animates into Pinned', async()=>{
    drag window and make the "renders nothing" assertion a coin flip.
    ===================================================================== */
 await sec('wave6: the pinned drawer resizes without breaking pin-in-place', async()=>{
-  await page.evaluate(()=>{const b=document.querySelector('[data-action="pause-working"]'); if(b) b.click();});
+  await page.evaluate(()=>{const m=document.querySelector('.working-card [data-action="work-demo-menu"]'); if(m&&m.getAttribute('aria-expanded')!=='true') m.click(); const b=document.querySelector('[data-action="pause-working"]'); if(b) b.click();});
   await page.waitForTimeout(250);
   /* The "renders nothing" assertion is only meaningful if the 2s work tick is
      actually stopped; say so out loud rather than reporting a silent green. */
@@ -868,7 +868,7 @@ await sec('wave6: the pinned drawer resizes without breaking pin-in-place', asyn
     dflt:parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ph-pin-w'))}));
   check(back.dflt>0 && Math.abs(back.w-back.dflt)<1 && Math.abs(back.w-back.g)<1,
         'With no stored width the drawer returns to the --ph-pin-w default, gutter still coupled', back);
-  await page.evaluate(()=>{const b=document.querySelector('[data-action="start-working"]'); if(b) b.click();});
+  await page.evaluate(()=>{const m=document.querySelector('.working-card [data-action="work-demo-menu"]'); if(m&&m.getAttribute('aria-expanded')!=='true') m.click(); const b=document.querySelector('[data-action="start-working"]'); if(b) b.click();});
 });
 await shot(`item4-resized${REDUCED?'-reduced':''}.png`);
 

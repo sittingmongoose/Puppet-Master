@@ -28,7 +28,11 @@ def main():
    click('[data-action="repair-demo"][data-scenario="work-simple"]');p.wait_for_timeout(1200)
    card=p.locator('.working-card').filter(visible=True).last;card.scroll_into_view_if_needed();wid=card.get_attribute('data-card');r['working_card']=wid
    def rec():return p.evaluate('(id)=>{let s=PM56_EXT.ctx().state;return id!=="primary"&&s.works[id]||s.work}',wid)
-   def control(a):p.locator('.working-card[data-card="'+wid+'"] [data-action="'+a+'"]').first.click();p.wait_for_timeout(160)
+   def control(a):
+    # Chat WOW: the lab controls sit behind one drawer button in the working head
+    card=p.locator('.working-card[data-card="'+wid+'"]').first
+    if card.locator('[data-action="'+a+'"]').count()==0:card.locator('[data-action="work-demo-menu"]').first.click();p.wait_for_timeout(120)
+    card.locator('[data-action="'+a+'"]').first.click();p.wait_for_timeout(160)
    ck('Existing activity card uses simplified variant',int(card.get_attribute('data-working-variant'))==8)
    if rec()['running']:control('pause-working')
    ck('Pause uses the existing work owner',not rec()['running']);step=rec()['step'];control('step-working');ck('Step advances an existing operation',rec()['step']>step);control('start-working');ck('Resume starts existing sequence',rec()['running']);p.wait_for_timeout(1100);control('pause-working');control('toggle-work-history');ck('History remains independently operable',rec()['expanded']);shot('step-rail-simple-history')
