@@ -143,7 +143,11 @@
               "artifact_id": "artifact:recording",
               "artifact_version": 2,
               "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              "security_class": "ordinary"
+              "security_class": "ordinary",
+              "actual_assurance_mode": "not_applicable",
+              "assurance_requirement_ref": null,
+              "assurance_result_ref": null,
+              "assurance_requirement_met": null
             }
           ],
           "redaction_profile_ref": "redaction:ordinary",
@@ -174,7 +178,11 @@
               "artifact_id": "artifact:recording",
               "artifact_version": 2,
               "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              "security_class": "ordinary"
+              "security_class": "ordinary",
+              "actual_assurance_mode": "not_applicable",
+              "assurance_requirement_ref": null,
+              "assurance_result_ref": null,
+              "assurance_requirement_met": null
             }
           ],
           "security_class": "ordinary"
@@ -827,13 +835,21 @@
             "artifact_id": "artifact:recording",
             "artifact_version": 2,
             "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "security_class": "ordinary"
+            "security_class": "ordinary",
+            "actual_assurance_mode": "not_applicable",
+            "assurance_requirement_ref": null,
+            "assurance_result_ref": null,
+            "assurance_requirement_met": null
           },
           {
             "artifact_id": "artifact:recording",
             "artifact_version": 3,
             "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "security_class": "ordinary"
+            "security_class": "ordinary",
+            "actual_assurance_mode": "not_applicable",
+            "assurance_requirement_ref": null,
+            "assurance_result_ref": null,
+            "assurance_requirement_met": null
           }
         ]
       },
@@ -863,7 +879,11 @@
               "artifact_id": "artifact:recording",
               "artifact_version": 2,
               "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              "security_class": "ordinary"
+              "security_class": "ordinary",
+              "actual_assurance_mode": "not_applicable",
+              "assurance_requirement_ref": null,
+              "assurance_result_ref": null,
+              "assurance_requirement_met": null
             }
           ],
           "security_class": "ordinary"

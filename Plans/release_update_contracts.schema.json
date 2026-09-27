@@ -19,6 +19,17 @@
     "ui.update.app.open_logs",
     "ui.update.app.open_release_notes"
   ],
+  "x-scheduling-policy": {
+    "owner": "ApplicationUpdateService via handlers::application_update::check",
+    "state_record": "#/$defs/ApplicationUpdateCheckScheduleState",
+    "advancement_record": "#/$defs/ApplicationUpdateSchedulingAdvancement",
+    "advancement_rule": "the persisted next automatic check time is recomputed only from a fresh successful check operation with a durable receipt; cache reuse, joined requests, failed, blocked, cancelled, still-running, and recovery_required checks never advance the successful-check basis; offline failures alone may schedule a bounded retry",
+    "persistence_authority": "SP-322 owns the Server+application+channel durable check-schedule state; the RSC-014 update journal retains operation/recovery receipts and is not overloaded as a schedule family",
+    "jitter": "every persisted due or retry computation carries a nonnegative randomized jitter contribution",
+    "internal_constants_evolvable": true,
+    "user_schedule_allowed": false,
+    "installed_tool_update_policy": "separate owner (Shared Integration Runtime section 4.7); it cannot supply, override, or stand in for this application policy"
+  },
   "x-command-contracts": {
     "cmd.update.app.automatic.set_enabled": {
       "request_ref": "#/$defs/ApplicationUpdateCommandRequest",
@@ -1359,6 +1370,571 @@
         "result generations never regress"
       ]
     },
+    "ApplicationUpdateSchedulingBasis": {
+      "type": "string",
+      "enum": [
+        "never_checked",
+        "successful_check",
+        "offline_backoff"
+      ]
+    },
+    "ApplicationUpdateCheckDispatchOrigin": {
+      "type": "string",
+      "enum": [
+        "automatic_due_check",
+        "automatic_launch_check",
+        "manual_check"
+      ]
+    },
+    "ApplicationUpdateCheckResultStatus": {
+      "type": "string",
+      "enum": [
+        "accepted",
+        "succeeded",
+        "no_change",
+        "blocked",
+        "cancelled",
+        "failed",
+        "recovery_required"
+      ]
+    },
+    "ApplicationUpdateCheckExecutionKind": {
+      "enum": ["fresh_network_check", "cache_reuse", "coalesced_join", "not_executed"]
+    },
+    "ApplicationUpdateCheckScheduleState": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": ["home_server_id", "application_id", "channel_id"],
+      "x-claim-boundary": "persisted policy state shape only; no scheduler ran, no check executed, no timestamp was observed from a wall clock",
+      "required": [
+        "schema_id",
+        "record_kind",
+        "home_server_id",
+        "application_id",
+        "channel_id",
+        "automatic_enabled",
+        "scheduling_basis",
+        "policy_generation",
+        "policy_snapshot_ref",
+        "state_generation",
+        "last_successful_check_completed_at_utc",
+        "last_successful_check_receipt_ref",
+        "consecutive_failed_check_attempts",
+        "last_failed_check_completed_at_utc",
+        "offline_backoff_active",
+        "backoff_seconds",
+        "next_cadence_due_at_utc",
+        "next_offline_retry_at_utc",
+        "next_automatic_check_not_before_utc",
+        "update_journal_state_ref",
+        "computed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.release_update.check_schedule_state.v1"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateCheckScheduleState"
+        },
+        "home_server_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "application_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "channel_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "automatic_enabled": {
+          "type": "boolean"
+        },
+        "scheduling_basis": {
+          "$ref": "#/$defs/ApplicationUpdateSchedulingBasis"
+        },
+        "policy_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "policy_snapshot_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "state_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "last_successful_check_completed_at_utc": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ApplicationUpdateTimestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_successful_check_receipt_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "consecutive_failed_check_attempts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "last_failed_check_completed_at_utc": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ApplicationUpdateTimestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "offline_backoff_active": {
+          "type": "boolean"
+        },
+        "backoff_seconds": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "next_cadence_due_at_utc": {
+          "anyOf": [{"$ref": "#/$defs/ApplicationUpdateTimestamp"}, {"type": "null"}]
+        },
+        "next_offline_retry_at_utc": {
+          "anyOf": [{"$ref": "#/$defs/ApplicationUpdateTimestamp"}, {"type": "null"}]
+        },
+        "next_automatic_check_not_before_utc": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ApplicationUpdateTimestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "update_journal_state_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "computed_at_utc": {
+          "$ref": "#/$defs/ApplicationUpdateTimestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scheduling_basis": {
+                "const": "successful_check"
+              }
+            },
+            "required": ["scheduling_basis"]
+          },
+          "then": {
+            "properties": {
+              "last_successful_check_completed_at_utc": {
+                "type": "string"
+              },
+              "last_successful_check_receipt_ref": {
+                "type": "string"
+              },
+              "consecutive_failed_check_attempts": {
+                "const": 0
+              },
+              "offline_backoff_active": {
+                "const": false
+              },
+              "last_failed_check_completed_at_utc": {
+                "type": "null"
+              },
+              "backoff_seconds": {
+                "type": "null"
+              },
+              "next_cadence_due_at_utc": {"type": "string"},
+              "next_offline_retry_at_utc": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scheduling_basis": {
+                "const": "offline_backoff"
+              }
+            },
+            "required": ["scheduling_basis"]
+          },
+          "then": {
+            "properties": {
+              "offline_backoff_active": {
+                "const": true
+              },
+              "backoff_seconds": {
+                "type": "integer"
+              },
+              "last_failed_check_completed_at_utc": {
+                "type": "string"
+              },
+              "consecutive_failed_check_attempts": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "next_offline_retry_at_utc": {"type": "string"}
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "automatic_enabled": {
+                      "const": true
+                    }
+                  },
+                  "required": ["automatic_enabled"]
+                },
+                "then": {
+                  "properties": {
+                    "next_automatic_check_not_before_utc": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scheduling_basis": {
+                "const": "never_checked"
+              }
+            },
+            "required": ["scheduling_basis"]
+          },
+          "then": {
+            "properties": {
+              "last_successful_check_completed_at_utc": {
+                "type": "null"
+              },
+              "last_successful_check_receipt_ref": {
+                "type": "null"
+              },
+              "consecutive_failed_check_attempts": {
+                "const": 0
+              },
+              "last_failed_check_completed_at_utc": {
+                "type": "null"
+              },
+              "offline_backoff_active": {
+                "const": false
+              },
+              "backoff_seconds": {
+                "type": "null"
+              },
+              "next_cadence_due_at_utc": {"type": "null"},
+              "next_offline_retry_at_utc": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "automatic_enabled": {
+                "const": false
+              }
+            },
+            "required": ["automatic_enabled"]
+          },
+          "then": {
+            "properties": {
+              "next_automatic_check_not_before_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scheduling_basis": {
+                "enum": ["successful_check", "offline_backoff"]
+              },
+              "automatic_enabled": {
+                "const": true
+              }
+            },
+            "required": ["scheduling_basis", "automatic_enabled"]
+          },
+          "then": {
+            "properties": {
+              "next_automatic_check_not_before_utc": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ApplicationUpdateSchedulingAdvancement": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": ["home_server_id", "application_id", "channel_id"],
+      "x-claim-boundary": "static advancement-rule shape only; no check ran and no successful-check basis advanced",
+      "required": [
+        "schema_id",
+        "record_kind",
+        "home_server_id",
+        "application_id",
+        "channel_id",
+        "policy_snapshot_ref",
+        "expected_policy_generation",
+        "check_dispatch_origin",
+        "check_execution_kind",
+        "check_result_status",
+        "failure_class",
+        "check_result_completed_at_utc",
+        "check_operation_receipt_ref",
+        "successful_check_basis_advanced",
+        "cadence_interval_seconds",
+        "jitter_applied_seconds",
+        "jitter_sample_ref",
+        "policy_jitter_max_seconds",
+        "policy_backoff_max_seconds",
+        "backoff_seconds_applied",
+        "prior_state_generation",
+        "resulting_state_generation",
+        "prior_successful_check_completed_at_utc",
+        "resulting_successful_check_completed_at_utc",
+        "prior_successful_check_receipt_ref",
+        "resulting_successful_check_receipt_ref",
+        "prior_next_cadence_due_at_utc",
+        "resulting_next_cadence_due_at_utc",
+        "prior_next_offline_retry_at_utc",
+        "resulting_next_offline_retry_at_utc",
+        "prior_next_automatic_check_not_before_utc",
+        "resulting_next_automatic_check_not_before_utc",
+        "computed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.release_update.scheduling_advancement.v1"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateSchedulingAdvancement"
+        },
+        "home_server_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "application_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "channel_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "policy_snapshot_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},
+        "expected_policy_generation": {"type": "integer", "minimum": 0},
+        "check_dispatch_origin": {
+          "$ref": "#/$defs/ApplicationUpdateCheckDispatchOrigin"
+        },
+        "check_execution_kind": {
+          "$ref": "#/$defs/ApplicationUpdateCheckExecutionKind"
+        },
+        "check_result_status": {
+          "$ref": "#/$defs/ApplicationUpdateCheckResultStatus"
+        },
+        "failure_class": {"enum": ["none", "offline", "other"]},
+        "check_result_completed_at_utc": {
+          "$ref": "#/$defs/ApplicationUpdateTimestamp"
+        },
+        "check_operation_receipt_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "successful_check_basis_advanced": {
+          "type": "boolean"
+        },
+        "cadence_interval_seconds": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "jitter_applied_seconds": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "jitter_sample_ref": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateNonSecretRef"}, {"type": "null"}]},
+        "policy_jitter_max_seconds": {"type": "integer", "minimum": 1},
+        "policy_backoff_max_seconds": {"type": "integer", "minimum": 1},
+        "backoff_seconds_applied": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prior_state_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resulting_state_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "prior_successful_check_completed_at_utc": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateTimestamp"}, {"type": "null"}]},
+        "resulting_successful_check_completed_at_utc": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateTimestamp"}, {"type": "null"}]},
+        "prior_successful_check_receipt_ref": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateNonSecretRef"}, {"type": "null"}]},
+        "resulting_successful_check_receipt_ref": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateNonSecretRef"}, {"type": "null"}]},
+        "prior_next_cadence_due_at_utc": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateTimestamp"}, {"type": "null"}]},
+        "resulting_next_cadence_due_at_utc": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateTimestamp"}, {"type": "null"}]},
+        "prior_next_offline_retry_at_utc": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateTimestamp"}, {"type": "null"}]},
+        "resulting_next_offline_retry_at_utc": {"anyOf": [{"$ref": "#/$defs/ApplicationUpdateTimestamp"}, {"type": "null"}]},
+        "prior_next_automatic_check_not_before_utc": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ApplicationUpdateTimestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resulting_next_automatic_check_not_before_utc": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ApplicationUpdateTimestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "computed_at_utc": {
+          "$ref": "#/$defs/ApplicationUpdateTimestamp"
+        }
+      },
+      "x-semantic-invariants": [
+        "check_operation_receipt_ref names the persisted durable-update-journal receipt of the completed check operation; completed_at_utc alone never advances the successful-check basis",
+        "successful_check_basis_advanced is true exactly when a fresh_network_check has a succeeded or no_change result with a newly settled successful-check receipt; cache_reuse and coalesced_join never advance it",
+        "a failed, blocked, cancelled, still-accepted, or recovery_required check never advances the successful-check basis or moves cadence due; an offline failure alone may persist a bounded retry",
+        "an advanced due equals check_result_completed_at_utc plus the applied internal channel interval plus the applied randomized jitter; a backoff retry equals check_result_completed_at_utc plus the applied bounded backoff plus the applied randomized jitter",
+        "resulting_state_generation is greater than prior_state_generation for a state mutation; cache reuse and coalesced joins retain the exact generation and due state"
+      ],
+      "allOf": [
+        {
+          "if": {"properties": {"failure_class": {"const": "offline"}}, "required": ["failure_class"]},
+          "then": {"properties": {"check_result_status": {"const": "failed"}, "check_execution_kind": {"const": "fresh_network_check"}, "backoff_seconds_applied": {"type": "integer"}, "jitter_applied_seconds": {"type": "integer"}, "jitter_sample_ref": {"type": "string"}, "resulting_next_offline_retry_at_utc": {"type": "string"}}}
+        },
+        {
+          "if": {"properties": {"failure_class": {"const": "none"}}, "required": ["failure_class"]},
+          "then": {"properties": {"backoff_seconds_applied": {"type": "null"}}}
+        },
+        {
+          "if": {
+            "properties": {
+              "check_result_status": {
+                "enum": ["succeeded", "no_change"]
+              },
+              "check_execution_kind": {
+                "const": "fresh_network_check"
+              }
+            },
+            "required": ["check_result_status", "check_execution_kind"]
+          },
+          "then": {
+            "properties": {
+              "successful_check_basis_advanced": {
+                "const": true
+              },
+              "cadence_interval_seconds": {
+                "type": "integer"
+              },
+              "jitter_applied_seconds": {
+                "type": "integer"
+              },
+              "jitter_sample_ref": {
+                "type": "string"
+              },
+              "backoff_seconds_applied": {
+                "type": "null"
+              },
+              "resulting_next_automatic_check_not_before_utc": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"check_execution_kind": {"enum": ["cache_reuse", "coalesced_join", "not_executed"]}},
+            "required": ["check_execution_kind"]
+          },
+          "then": {
+            "properties": {
+              "successful_check_basis_advanced": {"const": false},
+              "cadence_interval_seconds": {"type": "null"},
+              "jitter_applied_seconds": {"type": "null"},
+              "jitter_sample_ref": {"type": "null"},
+              "backoff_seconds_applied": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "check_result_status": {
+                "enum": [
+                  "accepted",
+                  "blocked",
+                  "cancelled",
+                  "failed",
+                  "recovery_required"
+                ]
+              }
+            },
+            "required": ["check_result_status"]
+          },
+          "then": {
+            "properties": {
+              "successful_check_basis_advanced": {
+                "const": false
+              },
+              "cadence_interval_seconds": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
     "ApplicationUpdateLocalActionId": {
       "type": "string",
       "enum": [
@@ -1633,6 +2209,12 @@
     },
     {
       "$ref": "#/$defs/ReleaseOAuthRegistrationGate"
+    },
+    {
+      "$ref": "#/$defs/ApplicationUpdateCheckScheduleState"
+    },
+    {
+      "$ref": "#/$defs/ApplicationUpdateSchedulingAdvancement"
     }
   ]
 }

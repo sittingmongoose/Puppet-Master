@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15798,
+    "depends_on_edge_count": 15807,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18499,
-    "node_count": 6754,
+    "edge_count": 18508,
+    "node_count": 6757,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2701,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-26T23:56:07Z",
+  "generated_at_utc": "2026-09-27T02:33:26Z",
   "gui_related_units": {
-    "count": 3207,
+    "count": 3209,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -4534,6 +4534,17 @@
           "heading_level": 3,
           "heading_line": 4837,
           "line": 4839,
+          "path": "Plans/Automated_Testing_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Automated_Testing_System.md",
+        "plan_unit_id": "ATS-059",
+        "source_location": {
+          "heading": "Platform assurance and Apple-native proof — 2026-09-27",
+          "heading_level": 2,
+          "heading_line": 5321,
+          "line": 5327,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -27022,6 +27033,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Release_Supply_Chain.md",
+        "plan_unit_id": "RSC-019",
+        "source_location": {
+          "heading": "Application check scheduling and managed WSL image admission — 2026-09-27",
+          "heading_level": 2,
+          "heading_line": 1468,
+          "line": 1474,
+          "path": "Plans/Release_Supply_Chain.md"
+        }
+      },
+      {
         "owner_doc": "Plans/rewrite-tie-in-memo.md",
         "plan_unit_id": "RTIM-004",
         "source_location": {
@@ -35301,10 +35323,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6754,
+  "plan_unit_count": 6757,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2204,
+      "high": 2207,
       "low": 5,
       "medium": 9,
       "standard": 4536
@@ -35423,6 +35445,7 @@
       "antigravity_usage_quota_drift": 1,
       "api_boundary_drift": 1,
       "api_key_setup_flow": 1,
+      "app_update_retry_storm_or_false_successful_check": 1,
       "append_observability_retention_boundary_drift": 1,
       "application_rules_storage": 1,
       "application_update_unverified_activation_or_false_success": 1,
@@ -38962,6 +38985,7 @@
       "unsustainable_concurrency_or_reserve_starvation": 1,
       "untrusted_code_execution": 1,
       "untrusted_source_security_bypass": 1,
+      "untrusted_wsl_image_or_cross_owner_repair": 1,
       "untruthful_projection": 1,
       "untruthful_surface_state": 1,
       "untruthful_work_records_and_diff_formatting": 1,
@@ -39080,6 +39104,7 @@
       "wake_reason_cascade_semantics": 1,
       "wand_overflow_or_demo_command_pollution": 1,
       "weak_integration_underclassification": 1,
+      "weak_platform_evidence_promoted_to_authoritative": 1,
       "weak_test_oracle": 1,
       "weak_worker_false_completion": 1,
       "web_audit_cache_extras_drift": 1,
@@ -39186,7 +39211,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6563,
+      "accepted": 6566,
       "retired": 182,
       "superseded": 9
     },
@@ -39253,7 +39278,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5297,
+      "requirement": 5300,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -39378,7 +39403,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "7fbbfa4cb46530e1307e0fb1ae20bbb738b423f623fb273f8d71134cf8fc3d6f",
+        "expected": "c4adfb6419aee5419ed586dca4bba28c9f817522b3bc77f6114a756eec903c7c",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {

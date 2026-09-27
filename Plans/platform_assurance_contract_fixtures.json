@@ -1,0 +1,60 @@
+{
+  "schema_id": "pm.platform_assurance.contract_fixtures.v1",
+  "claim_boundary": "Static contract and comparison cases only; no native runner, Safari session, Apple signing, or executed test proof.",
+  "cases": [
+    {
+      "name": "genuine_safari_on_suitable_mac",
+      "expected_valid": true,
+      "requirement": {"target_platform": "macos", "proof_kind": "genuine_safari", "accepted_actual_modes": ["native_authoritative"], "target_capability_ref": "capability:safari-native", "requirement_id": "requirement:safari"},
+      "capability": {"proof_kind": "genuine_safari", "suitable_mac_host": true, "available": true, "capability_receipt_ref": "capability-receipt:mac-safari", "browser_runtime": "safari"},
+      "result": {"requirement_ref": "requirement:safari", "actual_mode": "native_authoritative", "actual_platform": "macos", "proof_kind": "genuine_safari", "execution_host_id": "host:mac", "execution_environment_id": "environment:mac", "capability_receipt_ref": "capability-receipt:mac-safari", "requirement_met": true, "browser_runtime": "safari", "suitable_mac_proof_ref": "proof:suitable-mac"},
+      "receipt_result": "pass",
+      "selection": {"artifact_id": "artifact:safari", "artifact_version": 1, "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "security_class": "ordinary", "actual_assurance_mode": "native_authoritative", "assurance_requirement_ref": "requirement:safari", "assurance_result_ref": "result:safari", "assurance_requirement_met": true}
+    },
+    {
+      "name": "pm_browser_cannot_claim_safari",
+      "expected_valid": false,
+      "requirement": {"target_platform": "macos", "proof_kind": "genuine_safari", "accepted_actual_modes": ["native_authoritative"], "target_capability_ref": "capability:safari-native", "requirement_id": "requirement:safari"},
+      "capability": {"proof_kind": "genuine_safari", "suitable_mac_host": true, "available": false, "capability_receipt_ref": "capability-receipt:unavailable", "browser_runtime": "pm_builtin_browser"},
+      "result": {"requirement_ref": "requirement:safari", "actual_mode": "compatibility", "actual_platform": "macos", "proof_kind": "genuine_safari", "execution_host_id": "host:mac", "execution_environment_id": "environment:pm-browser", "capability_receipt_ref": "capability-receipt:unavailable", "requirement_met": true, "browser_runtime": "pm_builtin_browser", "suitable_mac_proof_ref": "proof:suitable-mac"},
+      "receipt_result": "pass",
+      "selection": {"artifact_id": "artifact:cef", "artifact_version": 1, "content_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "security_class": "ordinary", "actual_assurance_mode": "compatibility", "assurance_requirement_ref": "requirement:safari", "assurance_result_ref": "result:cef", "assurance_requirement_met": true}
+    },
+    {
+      "name": "cross_target_cannot_satisfy_native_windows",
+      "expected_valid": false,
+      "requirement": {"target_platform": "windows", "proof_kind": "general", "accepted_actual_modes": ["native_authoritative", "virtualized_authoritative"], "target_capability_ref": "capability:windows-runner", "requirement_id": "requirement:windows"},
+      "capability": {"proof_kind": "general", "suitable_mac_host": false, "available": true, "capability_receipt_ref": "capability-receipt:cross-target"},
+      "result": {"requirement_ref": "requirement:windows", "actual_mode": "cross_target", "actual_platform": "windows", "proof_kind": "general", "execution_host_id": "host:linux", "execution_environment_id": "environment:cross-compiler", "capability_receipt_ref": "capability-receipt:cross-target", "requirement_met": true, "browser_runtime": "not_applicable"},
+      "receipt_result": "pass",
+      "selection": {"artifact_id": "artifact:cross", "artifact_version": 1, "content_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "security_class": "ordinary", "actual_assurance_mode": "cross_target", "assurance_requirement_ref": "requirement:windows", "assurance_result_ref": "result:cross", "assurance_requirement_met": true}
+    },
+    {
+      "name": "unavailable_apple_runner_blocks",
+      "expected_valid": true,
+      "requirement": {"target_platform": "macos", "proof_kind": "macos_ui_system", "accepted_actual_modes": ["native_authoritative"], "target_capability_ref": "capability:mac-ui", "requirement_id": "requirement:mac-ui"},
+      "capability": {"proof_kind": "macos_ui_system", "suitable_mac_host": false, "available": false, "capability_receipt_ref": "capability-receipt:no-mac"},
+      "result": {"requirement_ref": "requirement:mac-ui", "actual_mode": "unavailable", "actual_platform": "macos", "proof_kind": "macos_ui_system", "execution_host_id": "host:unavailable", "execution_environment_id": "environment:unavailable", "capability_receipt_ref": "capability-receipt:no-mac", "requirement_met": false, "browser_runtime": "not_applicable"},
+      "receipt_result": "blocked",
+      "selection": {"artifact_id": "artifact:blocked", "artifact_version": 1, "content_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "security_class": "ordinary", "actual_assurance_mode": "unavailable", "assurance_requirement_ref": "requirement:mac-ui", "assurance_result_ref": "result:blocked", "assurance_requirement_met": false}
+    },
+    {
+      "name": "virtualized_windows_explicitly_accepted",
+      "expected_valid": true,
+      "requirement": {"target_platform": "windows", "proof_kind": "general", "accepted_actual_modes": ["native_authoritative", "virtualized_authoritative"], "target_capability_ref": "capability:windows-guest", "requirement_id": "requirement:windows-guest"},
+      "capability": {"proof_kind": "general", "suitable_mac_host": false, "available": true, "capability_receipt_ref": "capability-receipt:windows-guest"},
+      "result": {"requirement_ref": "requirement:windows-guest", "actual_mode": "virtualized_authoritative", "actual_platform": "windows", "proof_kind": "general", "execution_host_id": "host:vm-parent", "execution_environment_id": "environment:windows-guest", "capability_receipt_ref": "capability-receipt:windows-guest", "requirement_met": true, "browser_runtime": "not_applicable"},
+      "receipt_result": "pass",
+      "selection": {"artifact_id": "artifact:guest", "artifact_version": 1, "content_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "security_class": "ordinary", "actual_assurance_mode": "virtualized_authoritative", "assurance_requirement_ref": "requirement:windows-guest", "assurance_result_ref": "result:guest", "assurance_requirement_met": true}
+    },
+    {
+      "name": "selection_cannot_upgrade_result",
+      "expected_valid": false,
+      "requirement": {"target_platform": "windows", "proof_kind": "general", "accepted_actual_modes": ["native_authoritative"], "target_capability_ref": "capability:windows-runner", "requirement_id": "requirement:windows"},
+      "capability": {"proof_kind": "general", "suitable_mac_host": false, "available": true, "capability_receipt_ref": "capability-receipt:compat"},
+      "result": {"requirement_ref": "requirement:windows", "actual_mode": "compatibility", "actual_platform": "windows", "proof_kind": "general", "execution_host_id": "host:linux", "execution_environment_id": "environment:wine", "capability_receipt_ref": "capability-receipt:compat", "requirement_met": false, "browser_runtime": "not_applicable"},
+      "receipt_result": "blocked",
+      "selection": {"artifact_id": "artifact:wine", "artifact_version": 1, "content_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "security_class": "ordinary", "actual_assurance_mode": "native_authoritative", "assurance_requirement_ref": "requirement:windows", "assurance_result_ref": "result:wine", "assurance_requirement_met": true}
+    }
+  ]
+}
