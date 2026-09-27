@@ -1,0 +1,4 @@
+/* AI services: an account's state ("Limit reached", "Needs sign-in") sits on two short lines beside the dot instead of
+   widening the row, so the usage meters keep their room. */
+#panel-settings .pm51-acc-end .pm51-status { align-items: flex-start; white-space: normal; max-width: 6.2em; line-height: 1.2; }
+#panel-settings .pm51-acc-end .pm51-status > i { margin-top: .32em; flex: none; }
