@@ -66,7 +66,7 @@
   var lastTake = null;
   var lastRender = null;
   function uiFor(id) {
-    return UI[id] || (UI[id] = { pin: null, rotDeg: 0, rotIdx: null, compact: null, anim: null, shown: null });
+    return UI[id] || (UI[id] = { pin: null, rotDeg: 0, rotIdx: null, compact: null, anim: null, shown: null, born: {} });
   }
 
   /* ---- per-card choreography timers ----------------------------------- */
@@ -76,6 +76,7 @@
   function clearAllTimers() { for (var k in TIMERS) killTimers(k); }
   function rerender() { if (lastRender) lastRender(); }
   function reduced() { var M = window.PM56_MOTION; return !!(M && M.reduced && M.reduced()); }
+  function motionNow() { var K = window.PM56_CLOCK; return K && K.now ? K.now() : performance.now(); }
 
   /* COLLAPSE: C1 the grid closes (420ms — panel folds, dial recenters),
      C2 the dial lifts up into the strip line (240ms), then the strip mounts.
@@ -224,9 +225,16 @@
     var waiting = items.some(function (it) { return it.live && it.status === 'waiting'; });
 
     /* ---- nodes ------------------------------------------------------ */
+    /* A node keeps its entrance animation only while it can still be playing
+       (360ms + up to 320ms stagger). Once settled it drops the animation:
+       a finished animation whose keyframes read var() is re-resolved on every
+       restyle, and every spawn restyles the whole ring (re-space + turn). */
+    var tNow = motionNow(), born = ui.born || (ui.born = {});
     var nodes = items.map(function (it, i) {
       var sx = it.inst;
       var cls = 'orbit-node';
+      if (born[it.uid] == null) born[it.uid] = tNow;
+      var settled = tNow - born[it.uid] > 900;
       if (it.done) cls += ' done';
       if (it.live) cls += ' live';
       if (it.status === 'failed') cls += ' failed';
@@ -241,6 +249,7 @@
         + ' data-step-kind="' + esc(it.earlier ? sx.kind : it.kind) + '"'
         + ' data-action="orbit-open-phase" data-value="' + i + '"'
         + ' style="--angle:' + (i * seg).toFixed(4) + 'deg;--node-i:' + Math.min(i, 8) + '"'
+        + (settled ? ' data-settled' : '')
         + ' aria-pressed="' + (i === panelI && pinI != null ? 'true' : 'false') + '"'
         + tipAttrs(esc, w.cardId, it.uid, statBit, (it.count > 1 ? it.count + ' subjects' : sx.verb) + ' (' + st + ')')
         + ' aria-label="' + esc(label) + ', ' + st + '">'
@@ -292,11 +301,13 @@
       + (animAttr ? ' data-orbit-anim="' + animAttr + '"' : '')
       + (tier ? ' data-orbit-tier="' + tier + '"' : '')
       + ' data-step-kind="' + esc(pf.kind) + '"'
-      + ' style="--seg:' + seg.toFixed(4) + 'deg;--orbit-rot:' + rot.toFixed(3) + 'deg">'
+      + '>'
       + '<div class="orbit-layout" data-k="orblayout">'
       + '<div class="orbit-dial" data-k="orbdial">'
       + '<i class="orbit-track" data-k="orbtrack"></i>'
-      + '<div class="orbit-ring" data-k="ring">' + nodes + sats + '</div>'
+      /* the turn lives on the ring, its only reader: on the stage it made every
+         element of the card restyle each time the dial turned */
+      + '<div class="orbit-ring" data-k="ring" style="--seg:' + seg.toFixed(4) + 'deg;--orbit-rot:' + rot.toFixed(3) + 'deg">' + nodes + sats + '</div>'
       + core
       + '</div>'
       + panel
