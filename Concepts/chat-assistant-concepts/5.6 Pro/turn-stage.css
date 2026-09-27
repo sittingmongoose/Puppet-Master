@@ -215,7 +215,7 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
   -webkit-mask: radial-gradient(circle 7px at var(--stub) 0, #0000 97%, #000) top / 100% 51% no-repeat, radial-gradient(circle 7px at var(--stub) 100%, #0000 97%, #000) bottom / 100% 51% no-repeat;
   mask: radial-gradient(circle 7px at var(--stub) 0, #0000 97%, #000) top / 100% 51% no-repeat, radial-gradient(circle 7px at var(--stub) 100%, #0000 97%, #000) bottom / 100% 51% no-repeat;
 }
-.transcript-inner > [data-family="time"].sched-card > :not(.sched-stub) { grid-column: 2; padding-left: 15px; padding-right: 14px; }
+.transcript-inner > [data-family="time"].sched-card > :not(.sched-stub) { grid-column: 2; padding-left: 15px; padding-right: 14px; min-width: 0; overflow-wrap: anywhere; }
 .transcript-inner > [data-family="time"].sched-card > .sched-card-head { padding-top: 12px; }
 .transcript-inner > [data-family="time"].sched-card > :last-child { padding-bottom: 11px; }
 .sched-stub {
@@ -244,12 +244,13 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
 .transcript-inner > [data-family="ledger"].positive > .event-icon { color: var(--positive); }
 .transcript-inner > [data-family="ledger"] .event-copy { display: flex; align-items: baseline; gap: 7px; min-width: 0; flex: 1 1 auto; }
 .transcript-inner > [data-family="ledger"] .event-kind { display: none; }
-.transcript-inner > [data-family="ledger"] .event-copy strong { flex: 0 0 auto; font-size: 12px; font-weight: 620; color: color-mix(in srgb, var(--text) 84%, transparent); white-space: nowrap; }
+.transcript-inner > [data-family="ledger"] .event-copy strong { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 12px; font-weight: 620; color: color-mix(in srgb, var(--text) 84%, transparent); white-space: nowrap; }
 .transcript-inner > [data-family="ledger"] .event-copy p { margin: 0; font-size: 12px; color: var(--subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .transcript-inner > [data-family="ledger"] .event-copy p:empty { display: none; }
 .transcript-inner > [data-family="ledger"] .event-copy p:not(:empty) ~ p:not(:empty) { display: none; }
 .transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) .event-copy { flex-wrap: wrap; row-gap: 2px; }
 .transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) .event-copy p { white-space: normal; flex-basis: 100%; }
+.transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) .event-copy strong { white-space: normal; }
 .transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) .event-copy p:not(:empty) ~ p:not(:empty) { display: block; }
 .transcript-inner > [data-family="ledger"] .plan-actions { margin: 0; flex: 0 0 auto; }
 .transcript-inner > [data-family="ledger"] .plan-actions > .soft-button {
@@ -263,10 +264,12 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
 .transcript-inner > [data-family="people"] .system-card-head > .event-icon,
 .transcript-inner > [data-family="people"] > .event-icon { background: color-mix(in srgb, var(--tx-fam, var(--fam-people)) 14%, transparent); }
 
-/* needs-you: the action sits at the far edge, the copy takes the room */
-.transcript-inner > [data-family="needs"].event-card { align-items: center; }
-.transcript-inner > [data-family="needs"] .event-copy { flex: 1 1 auto; }
-.transcript-inner > [data-family="needs"] > .plan-actions { margin: 0 0 0 auto; flex: 0 0 auto; }
+/* needs-you: the action sits at the far edge, the copy takes the room. In a
+   narrow chat pane the actions wrap to their own row rather than push past
+   the transcript's edge (a rigid action row overflowed it at 234px). */
+.transcript-inner > [data-family="needs"].event-card { align-items: center; flex-wrap: wrap; }
+.transcript-inner > [data-family="needs"] .event-copy { flex: 1 1 12em; min-width: 0; }
+.transcript-inner > [data-family="needs"] > .plan-actions { margin: 0 0 0 auto; flex: 0 1 auto; flex-wrap: wrap; max-width: 100%; }
 /* people: live agent rows read as a roster, left-aligned, warm avatars */
 .transcript-inner > [data-family="people"] .live-agent-row { text-align: left; background: color-mix(in srgb, var(--text) 4%, transparent); border-color: var(--tx-sheet-edge); }
 .transcript-inner > [data-family="people"] .agent-avatar { background: color-mix(in srgb, var(--fam-people) 30%, var(--surface-3)); color: var(--text); box-shadow: none; }

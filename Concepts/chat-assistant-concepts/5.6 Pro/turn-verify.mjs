@@ -214,6 +214,18 @@ await safe('item families', async () => {
   }
   check('every transcript item in every thread names its family', missing.length === 0, { total, missing: missing.slice(0, 3) });
   check('no thread overflows the transcript sideways (scrollWidth == clientWidth)', sideways.length === 0, sideways.slice(0, 4));
+  /* the same at the narrowest chat pane the app produces (~234px: a 900px
+     window with the browser-capture panel open), where a rigid action row, a
+     no-wrap ledger title and a long token in a ticket column once overflowed */
+  await p.addStyleTag({ content: '.chat-stage{width:240px!important;max-width:240px!important;flex:none!important}' });
+  await sleep(300);
+  const narrow = [];
+  for (const id of ids) {
+    await p.evaluate(id => PM56_DEMO.selectThread(id), id); await sleep(120);
+    const o = await p.evaluate(() => { const t = document.querySelector('.transcript'); return { cw: t.clientWidth, over: t.scrollWidth - t.clientWidth }; });
+    if (o.over > 1) narrow.push({ id, ...o });
+  }
+  check('no thread overflows sideways in a ~234px chat pane', narrow.length === 0, narrow.slice(0, 4));
   /* accent budget (Basic Dark): who paints with the accent */
   const scan = await p.evaluate(() => {
     const acc = getComputedStyle(document.body).getPropertyValue('--accent').trim();

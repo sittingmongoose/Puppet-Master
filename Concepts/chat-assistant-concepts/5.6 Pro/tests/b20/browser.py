@@ -7,6 +7,10 @@ shared scheduler API (disclosed); retained-loss uses labeled injection.
 import argparse,hashlib,json,os,subprocess,traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+# Replies stream since Chat WOW (Send becomes Stop while one is written, and a send
+# made meanwhile joins the follow-up queue). These scenarios test capture refs and
+# holds, not reply pacing, so each page load asks for instant replies.
+INSTANT="window.PM56_DEMO&&PM56_DEMO.setReplyMode&&PM56_DEMO.setReplyMode('instant')"
 ROOT=Path(__file__).resolve().parents[2]
 def main():
  ap=argparse.ArgumentParser();ap.add_argument('--outdir',type=Path,required=True);ap.add_argument('--scenario',choices=['capture','currentness','schedule'],required=True);ap.add_argument('--width',type=int,default=1440);ap.add_argument('--height',type=int,default=1000);ap.add_argument('--record',action='store_true');ap.add_argument('--variant',choices=['orbit','simple'],default='orbit');ap.add_argument('--reduced-motion',action='store_true');a=ap.parse_args();o=a.outdir.resolve();o.mkdir(parents=True,exist_ok=True);target=o/'RESULT.json'
@@ -21,7 +25,7 @@ def main():
   ctxkw={'viewport':{'width':a.width,'height':a.height},'accept_downloads':True}
   if a.reduced_motion:ctxkw['reduced_motion']='reduce'
   pw=sync_playwright().start()
-  b=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=not a.record,env=env,args=['--no-sandbox','--disable-dev-shm-usage','--start-fullscreen',f'--window-size={a.width},{a.height}','--window-position=0,0']);cx=b.new_context(**ctxkw);p=cx.new_page();p.set_default_timeout(9000);p.on('pageerror',lambda e:r['errors'].append(str(e)));p.set_content(raw.decode(),wait_until='domcontentloaded');p.wait_for_function('window.__PM56_BOOT_OK');r['browser']=b.version
+  b=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=not a.record,env=env,args=['--no-sandbox','--disable-dev-shm-usage','--start-fullscreen',f'--window-size={a.width},{a.height}','--window-position=0,0']);cx=b.new_context(**ctxkw);p=cx.new_page();p.set_default_timeout(9000);p.on('pageerror',lambda e:r['errors'].append(str(e)));p.set_content(raw.decode(),wait_until='domcontentloaded');p.wait_for_function('window.__PM56_BOOT_OK');p.evaluate(INSTANT);r['browser']=b.version
   if a.record:
    cd=cx.new_cdp_session(p);win=cd.send('Browser.getWindowForTarget')['windowId'];cd.send('Browser.setWindowBounds',{'windowId':win,'bounds':{'windowState':'fullscreen'}})
   def click(sel,label=None):
@@ -86,10 +90,10 @@ def main():
    ck('Protected session refuses with nothing produced',users()==n0+4 and p.evaluate('PM56_BROWSER.state().captures.length')==4);shot('08-protected-refused')
    hits=p.evaluate('()=>[...document.querySelectorAll(".bc-tool-btn")].map(e=>{const r=e.getBoundingClientRect();return Math.min(r.width,r.height)})')
    ck('Capture hit targets adequate',len(hits)>=3 and min(hits)>=20)
-   p.goto('file://'+str(ROOT/'index.html'));p.wait_for_function('window.__PM56_BOOT_OK');r['file_origin']='last-mode persistence leg (localStorage needs a real origin)'
+   p.goto('file://'+str(ROOT/'index.html'));p.wait_for_function('window.__PM56_BOOT_OK');p.evaluate(INSTANT);r['file_origin']='last-mode persistence leg (localStorage needs a real origin)'
    open_browser();click('[data-action="bc-arm-component"]','Arm picker on file origin');p.locator('[data-bc-id="el-retry"]').first.click();p.wait_for_timeout(300)
    click('[data-action="bc-toggle-prompt-menu"]','Open mode menu');click('[data-action="bc-set-component-mode"][data-value="insert"]','Persist Insert mode')
-   p.reload();p.wait_for_function('window.__PM56_BOOT_OK');p.evaluate(probe);open_browser()
+   p.reload();p.wait_for_function('window.__PM56_BOOT_OK');p.evaluate(INSTANT);p.evaluate(probe);open_browser()
    ck('Last component mode persists across reload',p.evaluate('PM56_BROWSER.state().componentMode')=='insert');shot('09-mode-persisted')
   elif a.scenario=='currentness':
    open_browser();shot('01-browser-open')
