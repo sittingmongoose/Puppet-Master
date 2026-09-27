@@ -6,15 +6,15 @@
 .dialog.mdl{max-height:calc(100vh - 24px);display:flex;flex-direction:column;overflow:hidden;}
 .mdl-head{display:flex;align-items:center;gap:12px;padding:16px 20px 14px;border-bottom:1px solid var(--border);}
 .mdl-icon{width:36px;height:36px;flex:none;border-radius:11px;display:grid;place-items:center;color:var(--accent);
-  background:color-mix(in srgb,var(--accent) 14%,var(--surface-2));border:1px solid color-mix(in srgb,var(--accent) 26%,var(--border));}
+  background:var(--pmx-mdl-icon-bg);border:1px solid var(--pmx-mdl-icon-edge);}
 .mdl-title{flex:1;min-width:0;display:grid;gap:2px;}
 .mdl-title strong{font-size:14px;font-weight:680;letter-spacing:-.1px;color:var(--text);}
 .mdl-title span{font-size:11.5px;line-height:1.45;color:var(--muted);}
 .mdl-body{min-height:0;overflow:auto;padding:16px 20px;}
 .mdl-body>*+*{margin-top:12px;}
-.mdl-section{border:1px solid var(--border);border-radius:12px;background:color-mix(in srgb,var(--surface-2) 72%,transparent);overflow:hidden;align-self:start;}
+.mdl-section{border:1px solid var(--border);border-radius:12px;background:var(--pmx-mdl-section-bg);overflow:hidden;align-self:start;}
 .mdl-section-head{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);
-  background:color-mix(in srgb,var(--surface-3) 55%,transparent);}
+  background:var(--pmx-mdl-section-head-bg);}
 .mdl-section-head svg{color:var(--subtle);flex:none;}
 .mdl-section-label{flex:1;font-size:10px;font-weight:750;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
 .mdl-section-meta{font-size:10.5px;color:var(--subtle);}
@@ -34,16 +34,16 @@
 .mdl-choice{display:flex;gap:10px;align-items:flex-start;width:100%;padding:10px 12px;border:1px solid var(--border);
   border-radius:10px;background:var(--surface-2);cursor:pointer;text-align:left;color:var(--text);font:inherit;}
 .mdl-choice:hover{border-color:var(--border-strong);}
-.mdl-choice.active{border-color:color-mix(in srgb,var(--accent) 55%,var(--border));background:color-mix(in srgb,var(--accent) 10%,var(--surface-2));}
+.mdl-choice.active{border-color:var(--pmx-focus-edge);background:var(--pmx-mdl-choice-bg);}
 .mdl-radio{width:16px;height:16px;flex:none;margin-top:2px;border-radius:50%;border:1.5px solid var(--border-strong);box-sizing:border-box;}
 .mdl-choice.active .mdl-radio{border-color:var(--accent);background:radial-gradient(circle,var(--accent) 0 4px,transparent 5px);}
 .mdl-choice strong{display:block;font-size:12px;font-weight:600;}
 .mdl-choice small{display:block;margin-top:2px;font-size:11px;line-height:1.45;color:var(--muted);}
 .mdl-chip{padding:2px 7px;border-radius:6px;border:1px solid var(--border);font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
-.mdl-chip[data-tone=accent]{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,var(--border));}
-.mdl-chip[data-tone=positive]{color:var(--positive);border-color:color-mix(in srgb,var(--positive) 45%,var(--border));}
-.mdl-chip[data-tone=warning]{color:var(--warning);border-color:color-mix(in srgb,var(--warning) 45%,var(--border));}
-.mdl-chip[data-tone=danger]{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 45%,var(--border));}
+.mdl-chip[data-tone=accent]{color:var(--accent);border-color:var(--pmx-mdl-chip-accent);}
+.mdl-chip[data-tone=positive]{color:var(--positive);border-color:var(--pmx-mdl-chip-positive);}
+.mdl-chip[data-tone=warning]{color:var(--warning);border-color:var(--pmx-mdl-chip-warning);}
+.mdl-chip[data-tone=danger]{color:var(--danger);border-color:var(--pmx-mdl-chip-danger);}
 .mdl .shared-picker-copy strong{white-space:normal;overflow:visible;text-overflow:clip;}
 .mdl .shared-picker-button{min-width:0;width:100%;}
 .mdl-rows>div{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--border);font-size:11.5px;}
@@ -58,7 +58,7 @@
 .mdl-disclosure>summary svg:last-child{margin-left:auto;color:var(--subtle);transition:transform 160ms ease;}
 .mdl-disclosure[open]>summary svg:last-child{transform:rotate(180deg);}
 .mdl-disclosure-body{padding:12px;border-top:1px solid var(--border);display:grid;gap:12px;}
-.mdl-stat{display:grid;gap:2px;padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:color-mix(in srgb,var(--surface-2) 72%,transparent);}
+.mdl-stat{display:grid;gap:2px;padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:var(--pmx-mdl-section-bg);}
 .mdl-stat strong{font-size:18px;font-weight:700;letter-spacing:-.3px;color:var(--text);}
 .mdl-stat span{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);}
 .mdl-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
@@ -78,3 +78,1145 @@
 .mdl-card-actions{display:flex;gap:8px;flex-wrap:wrap;}
 .mdl-check{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text);cursor:pointer;}
 .mdl-check input[type=checkbox]{accent-color:var(--accent);width:14px;height:14px;flex:none;margin:0;}
+
+/* =====================================================================
+   pmx TOKENS (DESIGN-SPEC section 3) and PRIMITIVES (section 4).
+   Markup contract: the pmx* builders in module-shell.js. Motion, the scrim,
+   ghosts, the flight, the dock host, hover-to-light and the Chat WOW
+   coexistence block live in pmx-system.css.
+   Rules: no pills, no side strips, no glows, no nested boxes, no uppercase
+   micro-labels. Primitive selectors are scoped .pmx-sheet / .pmx-run /
+   .pmx-view / .pmx-dock / .pmx-note ... so they outrank the legacy .mdl-*
+   rules above and the module sheets that load later. In-chat primitives never
+   paint `color`, `background` or `border` with --accent (turn-verify's accent
+   budget): accent reaches the transcript only through SVG stroke/fill,
+   box-shadow and the primary button.
+   ===================================================================== */
+:root{
+  /* 3.2 spacing, radii, sizes, layers */
+  --pmx-s1:4px;--pmx-s2:8px;--pmx-s3:12px;--pmx-s4:16px;--pmx-s5:20px;--pmx-s6:28px;--pmx-s7:40px;
+  --pmx-r-xs:6px;--pmx-r-sm:9px;--pmx-r-md:12px;--pmx-r-card:14px;--pmx-r-sheet:18px;
+  /* J-2: the wide sheet is min(860, 100vh - 40) and the standard one 960 x 760, so the minimums fit */
+  --pmx-sheet-wide-w:1120px;--pmx-sheet-wide-h:860px;
+  --pmx-sheet-std-w:960px;--pmx-sheet-std-h:760px;
+  --pmx-sheet-compact-w:720px;--pmx-sheet-compact-h:560px;
+  --pmx-card-max-live:340px;
+  /* J-2: a lane keeps 6 px between its text and its hairlines, so it grows to 49; a dock line to 36 */
+  --pmx-lane-h:49px;--pmx-dock-line-h:36px;--pmx-receipt-h:44px;
+  --pmx-z-scrim:1148;--pmx-z-ghost:1149;--pmx-z-flight:1160;
+}
+/* Font tokens and seat hues are declared on body, not :root: they reference
+   --font-ui / --ctxseg-* / --pmx-voice, which the theme sets on body, and a
+   custom property resolves its var() where it is declared. */
+body{
+  --pmx-voice:var(--font-ui);--pmx-voice-italic:normal;--pmx-voice-w:620;
+  --pmx-seat-1:var(--ctxseg-2);--pmx-seat-2:var(--ctxseg-5);--pmx-seat-3:var(--ctxseg-3);--pmx-seat-4:var(--ctxseg-6);
+  --pmx-seat-5:var(--ctxseg-4);--pmx-seat-6:var(--ctxseg-1);--pmx-seat-7:var(--accent-2);--pmx-seat-8:var(--ctxseg-5);
+  --pmx-seat-lead:var(--text);--pmx-seat-you:var(--muted);
+  /* the regular text weight: 450 on Inter's variable axis; 400 on the static Poppins and IBM Plex Mono
+     cuts (J-1), which would otherwise snap 450 up to their 500 */
+  --pmx-w-reg:450;
+  /* Inter's in-between weights, named by value; the static cuts (Poppins, IBM Plex Mono: 400/500/600/700
+     only, J-1) take 600 for all of them rather than letting 620-650 snap up to 700 */
+  --pmx-w-550:550;--pmx-w-560:560;--pmx-w-620:620;--pmx-w-640:640;--pmx-w-650:650;
+  /* 3.1 type scale as font shorthands (weight size/line face) */
+  --pmx-fs-title:var(--pmx-w-650) 22px/28px var(--font-ui);--pmx-ls-title:-.018em;
+  --pmx-fs-lead:var(--pmx-w-reg) 13px/19px var(--font-ui);
+  --pmx-fs-q:var(--pmx-w-620) 15px/20px var(--font-ui);--pmx-ls-q:-.01em;
+  --pmx-fs-qn:600 12px/20px var(--font-ui);
+  --pmx-fs-hero:var(--pmx-w-reg) 14.5px/22px var(--font-ui);--pmx-hero-lh:22px;
+  --pmx-fs-ctl:600 12.5px/18.5px var(--font-ui);
+  --pmx-fs-help:var(--pmx-w-reg) 12px/17.5px var(--font-ui);
+  --pmx-fs-meta:500 11.5px/17px var(--font-ui);
+  --pmx-fs-fine:var(--pmx-w-reg) 11px/16px var(--font-ui);
+  --pmx-fs-plate:var(--pmx-w-560) 11px/16px var(--font-ui);
+  /* J-1: the voice roles are the theme font, set apart by size, weight and colour only */
+  --pmx-fs-readback:var(--pmx-w-reg) 15px/22px var(--pmx-voice);
+  --pmx-fs-run-title:var(--pmx-w-640) 13.5px/20px var(--font-ui);
+  --pmx-fs-sentence:var(--pmx-w-reg) 12.5px/18.5px var(--font-ui);
+  --pmx-fs-lane:var(--pmx-w-reg) 12px/17.5px var(--font-ui);
+  --pmx-fs-quote:var(--pmx-w-reg) 12px/17.5px var(--pmx-voice);
+  --pmx-fs-result:var(--pmx-voice-w) 16px/21px var(--pmx-voice);--pmx-ls-result:-.012em;
+  --pmx-fs-result-l:var(--pmx-voice-w) 16px/21px var(--pmx-voice);
+  --pmx-fs-receipt:var(--pmx-w-560) 13.5px/20px var(--pmx-voice);
+  --pmx-fs-pull:var(--pmx-w-reg) 13px/19px var(--pmx-voice);
+  --pmx-fs-view-title:var(--pmx-voice-w) 26px/33px var(--pmx-voice);--pmx-ls-view-title:-.018em;
+  --pmx-fs-view-h2:var(--pmx-voice-w) 17px/23px var(--pmx-voice);
+  --pmx-fs-body:var(--pmx-w-reg) 13px/20px var(--font-ui);
+}
+/* 3.3 per-theme literal tokens. basic-dark / basic-light follow the graphite
+   neutrals Chat WOW landed in styles.css (the reference build's retune); the
+   other six are the spec table verbatim. */
+body[data-theme="basic-dark"]{--pmx-card:#17171b;--pmx-card-warm:#2a251d;--pmx-edge-warm:rgba(245,189,85,.50);--pmx-wash:rgba(139,114,255,.20);--pmx-floor:#0c0c0e;--pmx-line:#4a4a53;--pmx-hatch:#3f3f47;--pmx-scrim:rgba(5,5,7,.58);--pmx-sheet-ring:none;--pmx-sheet-shadow:inset 0 1px 0 rgb(255 255 255/.05),0 28px 70px -18px rgb(0 0 0/.66);--pmx-voice:var(--font-ui);--pmx-voice-italic:normal;--pmx-voice-w:620;}
+body[data-theme="basic-light"]{--pmx-card:#f5f5f7;--pmx-card-warm:#f7efe2;--pmx-edge-warm:rgba(169,100,0,.45);--pmx-wash:rgba(101,82,223,.13);--pmx-floor:#f0f0f3;--pmx-line:#b6b6be;--pmx-hatch:#b3b3bb;--pmx-scrim:rgba(236,236,240,.52);--pmx-sheet-ring:1px solid var(--border);--pmx-sheet-shadow:0 24px 60px -20px rgb(20 20 30/.28);--pmx-voice:var(--font-ui);--pmx-voice-italic:normal;--pmx-voice-w:620;}
+body[data-theme="friendly-dark"]{--pmx-card:#211f2e;--pmx-card-warm:#332d34;--pmx-edge-warm:rgba(255,208,120,.50);--pmx-wash:rgba(255,142,176,.18);--pmx-floor:#171520;--pmx-line:#665e71;--pmx-hatch:#5a5564;--pmx-scrim:rgba(17,16,24,.56);--pmx-sheet-ring:none;--pmx-sheet-shadow:inset 0 1px 0 rgb(255 255 255/.05),0 28px 70px -18px rgb(0 0 0/.6);--pmx-voice:var(--font-ui);--pmx-voice-italic:normal;--pmx-voice-w:600;}
+body[data-theme="friendly-light"]{--pmx-card:#f7ece8;--pmx-card-warm:#f1e3d9;--pmx-edge-warm:rgba(155,104,21,.45);--pmx-wash:rgba(207,95,133,.12);--pmx-floor:#f3e5e0;--pmx-line:#bfacaa;--pmx-hatch:#c1b4ba;--pmx-scrim:rgba(248,242,239,.50);--pmx-sheet-ring:1px solid var(--border);--pmx-sheet-shadow:0 24px 60px -20px rgb(56 46 53/.24);--pmx-voice:var(--font-ui);--pmx-voice-italic:normal;--pmx-voice-w:600;}
+body[data-theme="glass-dark"]{--pmx-card:rgba(34,25,65,.86);--pmx-card-warm:rgba(52,40,69,.90);--pmx-edge-warm:rgba(255,208,116,.50);--pmx-wash:rgba(178,135,255,.20);--pmx-floor:rgba(24,17,51,.80);--pmx-line:#655c8c;--pmx-hatch:#574f72;--pmx-scrim:rgba(19,13,43,.50);--pmx-sheet-ring:1px solid rgba(196,179,255,.22);--pmx-sheet-shadow:0 28px 70px -18px rgb(6 2 20/.6);--pmx-voice:var(--font-ui);--pmx-voice-italic:normal;--pmx-voice-w:620;}
+body[data-theme="glass-light"]{--pmx-card:rgba(250,248,255,.86);--pmx-card-warm:rgba(243,238,238,.90);--pmx-edge-warm:rgba(155,103,16,.45);--pmx-wash:rgba(122,85,202,.13);--pmx-floor:rgba(243,240,252,.86);--pmx-line:#aea4c7;--pmx-hatch:#b4aec4;--pmx-scrim:rgba(231,227,245,.46);--pmx-sheet-ring:1px solid rgba(92,69,135,.18);--pmx-sheet-shadow:0 24px 60px -20px rgb(40 33 61/.26);--pmx-voice:var(--font-ui);--pmx-voice-italic:normal;--pmx-voice-w:620;}
+body[data-theme="retro-dark"]{--pmx-card:#10221d;--pmx-card-warm:#223022;--pmx-edge-warm:rgba(242,211,94,.50);--pmx-wash:rgba(96,243,154,.16);--pmx-floor:#0a1714;--pmx-line:#42715c;--pmx-hatch:#365947;--pmx-scrim:rgba(7,17,15,.60);--pmx-sheet-ring:1px solid var(--border-strong);--pmx-sheet-shadow:0 20px 50px -16px rgb(0 0 0/.7);--pmx-voice:var(--font-ui);--pmx-voice-italic:normal;--pmx-voice-w:600;}
+body[data-theme="retro-light"]{--pmx-card:#efedd2;--pmx-card-warm:#e8e3c4;--pmx-edge-warm:rgba(134,96,13,.45);--pmx-wash:rgba(25,115,76,.12);--pmx-floor:#e8e5c8;--pmx-line:#a4a689;--pmx-hatch:#acb6a8;--pmx-scrim:rgba(236,235,215,.56);--pmx-sheet-ring:1px solid var(--border-strong);--pmx-sheet-shadow:0 18px 44px -18px rgb(34 52 43/.28);--pmx-voice:var(--font-ui);--pmx-voice-italic:normal;--pmx-voice-w:600;}
+/* 3.3 IMPACT A1-02 (provisional, E-24): the opaque sheet fill. IMPACT A1-15 (canon F3-426/F3-431): every derived
+   colour is a precomputed literal per theme, never colour maths at runtime: seat fills (the hue at 16 %; retro marks
+   keep stroke only), the focus edge/ring/outline, the retro grid, the table fill, the now-dot halo, the reveal
+   pulse, the soft fill, the two sheen stops, the breathe's low stop, the primary hover (the accent lightened 6 %,
+   IMPACT A1-04) and the legacy .mdl fills (retired with those rules at A1-51). Derived once by
+   f0/impact/derive-tokens.mjs from each theme's own tokens. */
+body[data-theme="basic-dark"]{--pmx-sheet-bg:#141417;--pmx-seat-fill-1:rgba(92,200,255,.16);--pmx-seat-fill-2:rgba(255,143,179,.16);--pmx-seat-fill-3:rgba(92,214,155,.16);--pmx-seat-fill-4:rgba(255,122,69,.16);--pmx-seat-fill-5:rgba(245,189,85,.16);--pmx-seat-fill-6:rgba(139,114,255,.16);--pmx-seat-fill-7:rgba(92,200,255,.16);--pmx-seat-fill-8:rgba(255,143,179,.16);--pmx-seat-fill-lead:rgba(243,243,245,.16);--pmx-seat-fill-you:rgba(150,150,159,.16);--pmx-seat-fill-accent:rgba(139,114,255,.16);--pmx-seat-fill-warning:rgba(245,189,85,.16);--pmx-focus-edge:#5d4f9f;--pmx-focus-ring:rgba(139,114,255,.1);--pmx-focus-outline:#ae9cff;--pmx-grid:rgba(74,74,83,.14);--pmx-table-fill:rgba(74,74,83,.12);--pmx-accent-halo:rgba(139,114,255,.22);--pmx-accent-pulse:rgba(139,114,255,.55);--pmx-soft-fill:rgba(243,243,245,.04);--pmx-sheen-card:rgba(23,23,27,.68);--pmx-sheen-warm:rgba(42,37,29,.72);--pmx-edge-warm-low:rgba(245,189,85,.226);--pmx-primary-hover:#9379ff;--pmx-mdl-icon-bg:#262238;--pmx-mdl-icon-edge:#403961;--pmx-mdl-section-bg:rgba(21,21,24,.72);--pmx-mdl-section-head-bg:rgba(28,28,32,.55);--pmx-mdl-choice-bg:#211e2f;--pmx-mdl-chip-accent:#53488a;--pmx-mdl-chip-positive:#3e755d;--pmx-mdl-chip-warning:#83693d;--pmx-mdl-chip-danger:#87454f;}
+body[data-theme="basic-light"]{--pmx-sheet-bg:#ffffff;--pmx-seat-fill-1:rgba(15,111,150,.16);--pmx-seat-fill-2:rgba(194,56,95,.16);--pmx-seat-fill-3:rgba(22,132,90,.16);--pmx-seat-fill-4:rgba(196,90,26,.16);--pmx-seat-fill-5:rgba(169,100,0,.16);--pmx-seat-fill-6:rgba(101,82,223,.16);--pmx-seat-fill-7:rgba(24,125,168,.16);--pmx-seat-fill-8:rgba(194,56,95,.16);--pmx-seat-fill-lead:rgba(22,22,26,.16);--pmx-seat-fill-you:rgba(107,107,116,.16);--pmx-seat-fill-accent:rgba(101,82,223,.16);--pmx-seat-fill-warning:rgba(169,100,0,.16);--pmx-focus-edge:#9d92e2;--pmx-focus-ring:rgba(101,82,223,.1);--pmx-focus-outline:#9386e9;--pmx-grid:rgba(182,182,190,.14);--pmx-table-fill:rgba(182,182,190,.12);--pmx-accent-halo:rgba(101,82,223,.22);--pmx-accent-pulse:rgba(101,82,223,.55);--pmx-soft-fill:rgba(22,22,26,.04);--pmx-sheen-card:rgba(245,245,247,.68);--pmx-sheen-warm:rgba(247,239,226,.72);--pmx-edge-warm-low:rgba(169,100,0,.203);--pmx-primary-hover:#6b57ec;--pmx-mdl-icon-bg:#e3e0f5;--pmx-mdl-icon-edge:#c1bce3;--pmx-mdl-section-bg:rgba(247,247,248,.72);--pmx-mdl-section-head-bg:rgba(236,236,239,.55);--pmx-mdl-choice-bg:#e8e7f5;--pmx-mdl-chip-accent:#a9a1e2;--pmx-mdl-chip-positive:#86b7a6;--pmx-mdl-chip-warning:#c8a97e;--pmx-mdl-chip-danger:#d596a3;}
+body[data-theme="friendly-dark"]{--pmx-sheet-bg:#1d1b28;--pmx-seat-fill-1:rgba(143,219,207,.16);--pmx-seat-fill-2:rgba(127,196,245,.16);--pmx-seat-fill-3:rgba(255,208,120,.16);--pmx-seat-fill-4:rgba(255,154,98,.16);--pmx-seat-fill-5:rgba(185,162,255,.16);--pmx-seat-fill-6:rgba(255,142,176,.16);--pmx-seat-fill-7:rgba(143,219,207,.16);--pmx-seat-fill-8:rgba(127,196,245,.16);--pmx-seat-fill-lead:rgba(255,248,244,.16);--pmx-seat-fill-you:rgba(181,174,189,.16);--pmx-seat-fill-accent:rgba(255,142,176,.16);--pmx-seat-fill-warning:rgba(255,208,120,.16);--pmx-focus-edge:#a5657f;--pmx-focus-ring:rgba(255,142,176,.1);--pmx-focus-outline:#ffb0c8;--pmx-grid:rgba(102,94,113,.14);--pmx-table-fill:rgba(102,94,113,.12);--pmx-accent-halo:rgba(255,142,176,.22);--pmx-accent-pulse:rgba(255,142,176,.55);--pmx-soft-fill:rgba(255,248,244,.04);--pmx-sheen-card:rgba(33,31,46,.68);--pmx-sheen-warm:rgba(51,45,52,.72);--pmx-edge-warm-low:rgba(255,208,120,.226);--pmx-primary-hover:#ff97bb;--pmx-mdl-icon-bg:#402f40;--pmx-mdl-icon-edge:#6b4a5f;--pmx-mdl-section-bg:rgba(33,31,46,.72);--pmx-mdl-section-head-bg:rgba(42,39,56,.55);--pmx-mdl-choice-bg:#372a3b;--pmx-mdl-chip-accent:#915b74;--pmx-mdl-chip-positive:#5b7d70;--pmx-mdl-chip-warning:#91795b;--pmx-mdl-chip-danger:#915462;}
+body[data-theme="friendly-light"]{--pmx-sheet-bg:#fffaf7;--pmx-seat-fill-1:rgba(28,125,114,.16);--pmx-seat-fill-2:rgba(47,111,155,.16);--pmx-seat-fill-3:rgba(155,104,21,.16);--pmx-seat-fill-4:rgba(196,90,26,.16);--pmx-seat-fill-5:rgba(109,91,189,.16);--pmx-seat-fill-6:rgba(207,95,133,.16);--pmx-seat-fill-7:rgba(38,143,131,.16);--pmx-seat-fill-8:rgba(47,111,155,.16);--pmx-seat-fill-lead:rgba(56,46,53,.16);--pmx-seat-fill-you:rgba(117,103,114,.16);--pmx-seat-fill-accent:rgba(207,95,133,.16);--pmx-seat-fill-warning:rgba(155,104,21,.16);--pmx-focus-edge:#db97a9;--pmx-focus-ring:rgba(207,95,133,.1);--pmx-focus-outline:#dd8ea7;--pmx-grid:rgba(191,172,170,.14);--pmx-table-fill:rgba(191,172,170,.12);--pmx-accent-halo:rgba(207,95,133,.22);--pmx-accent-pulse:rgba(207,95,133,.55);--pmx-soft-fill:rgba(56,46,53,.04);--pmx-sheen-card:rgba(247,236,232,.68);--pmx-sheen-warm:rgba(241,227,217,.72);--pmx-edge-warm-low:rgba(155,104,21,.203);--pmx-primary-hover:#db658d;--pmx-mdl-icon-bg:#f1d8da;--pmx-mdl-icon-edge:#e3bbc1;--pmx-mdl-section-bg:rgba(247,236,232,.72);--pmx-mdl-section-head-bg:rgba(239,223,218,.55);--pmx-mdl-choice-bg:#f3dede;--pmx-mdl-chip-accent:#dea3b2;--pmx-mdl-chip-positive:#96b8a2;--pmx-mdl-chip-warning:#c6a77f;--pmx-mdl-chip-danger:#db9c9f;}
+body[data-theme="glass-dark"]{--pmx-sheet-bg:rgba(24,17,52,.97);--pmx-seat-fill-1:rgba(117,215,239,.16);--pmx-seat-fill-2:rgba(255,129,152,.16);--pmx-seat-fill-3:rgba(123,224,175,.16);--pmx-seat-fill-4:rgba(255,138,74,.16);--pmx-seat-fill-5:rgba(255,208,116,.16);--pmx-seat-fill-6:rgba(178,135,255,.16);--pmx-seat-fill-7:rgba(117,215,239,.16);--pmx-seat-fill-8:rgba(255,129,152,.16);--pmx-seat-fill-lead:rgba(250,247,255,.16);--pmx-seat-fill-you:rgba(176,168,201,.16);--pmx-seat-fill-accent:rgba(178,135,255,.16);--pmx-seat-fill-warning:rgba(255,208,116,.16);--pmx-focus-edge:rgba(178,138,255,.622);--pmx-focus-ring:rgba(178,135,255,.1);--pmx-focus-outline:#c9abff;--pmx-grid:rgba(101,92,140,.14);--pmx-table-fill:rgba(101,92,140,.12);--pmx-accent-halo:rgba(178,135,255,.22);--pmx-accent-pulse:rgba(178,135,255,.55);--pmx-soft-fill:rgba(250,247,255,.04);--pmx-sheen-card:rgba(34,25,65,.584);--pmx-sheen-warm:rgba(52,40,69,.649);--pmx-edge-warm-low:rgba(255,208,116,.226);--pmx-primary-hover:#bd8fff;--pmx-mdl-icon-bg:rgba(61,45,100,.761);--pmx-mdl-icon-edge:rgba(179,143,255,.379);--pmx-mdl-section-bg:rgba(34,25,65,.52);--pmx-mdl-section-head-bg:rgba(54,40,88,.373);--pmx-mdl-choice-bg:rgba(53,40,90,.749);--pmx-mdl-chip-accent:rgba(178,139,255,.538);--pmx-mdl-chip-positive:rgba(133,213,188,.538);--pmx-mdl-chip-warning:rgba(243,200,139,.538);--pmx-mdl-chip-danger:rgba(243,134,169,.538);}
+body[data-theme="glass-light"]{--pmx-sheet-bg:rgba(255,255,255,.96);--pmx-seat-fill-1:rgba(23,112,143,.16);--pmx-seat-fill-2:rgba(186,67,92,.16);--pmx-seat-fill-3:rgba(31,122,85,.16);--pmx-seat-fill-4:rgba(196,90,26,.16);--pmx-seat-fill-5:rgba(155,103,16,.16);--pmx-seat-fill-6:rgba(122,85,202,.16);--pmx-seat-fill-7:rgba(35,126,157,.16);--pmx-seat-fill-8:rgba(186,67,92,.16);--pmx-seat-fill-lead:rgba(40,33,61,.16);--pmx-seat-fill-you:rgba(113,105,135,.16);--pmx-seat-fill-accent:rgba(122,85,202,.16);--pmx-seat-fill-warning:rgba(155,103,16,.16);--pmx-focus-edge:rgba(119,83,196,.608);--pmx-focus-ring:rgba(122,85,202,.1);--pmx-focus-outline:rgba(161,135,217,.988);--pmx-grid:rgba(174,164,199,.14);--pmx-table-fill:rgba(174,164,199,.12);--pmx-accent-halo:rgba(122,85,202,.22);--pmx-accent-pulse:rgba(122,85,202,.55);--pmx-soft-fill:rgba(40,33,61,.04);--pmx-sheen-card:rgba(250,248,255,.584);--pmx-sheen-warm:rgba(243,238,238,.649);--pmx-edge-warm-low:rgba(155,103,16,.203);--pmx-primary-hover:#815ad6;--pmx-mdl-icon-bg:rgba(227,219,245,.777);--pmx-mdl-icon-edge:rgba(114,81,184,.356);--pmx-mdl-section-bg:rgba(250,248,255,.534);--pmx-mdl-section-head-bg:rgba(238,233,250,.408);--pmx-mdl-choice-bg:rgba(233,227,248,.767);--pmx-mdl-chip-accent:rgba(118,83,193,.521);--pmx-mdl-chip-positive:rgba(45,123,100,.521);--pmx-mdl-chip-warning:rgba(146,98,32,.521);--pmx-mdl-chip-danger:rgba(173,67,98,.521);}
+body[data-theme="retro-dark"]{--pmx-sheet-bg:#081612;--pmx-seat-fill-1:transparent;--pmx-seat-fill-2:transparent;--pmx-seat-fill-3:transparent;--pmx-seat-fill-4:transparent;--pmx-seat-fill-5:transparent;--pmx-seat-fill-6:transparent;--pmx-seat-fill-7:transparent;--pmx-seat-fill-8:transparent;--pmx-seat-fill-lead:transparent;--pmx-seat-fill-you:transparent;--pmx-seat-fill-accent:transparent;--pmx-seat-fill-warning:transparent;--pmx-focus-edge:#41a06a;--pmx-focus-ring:rgba(96,243,154,.1);--pmx-focus-outline:#90f7b8;--pmx-grid:rgba(66,113,92,.14);--pmx-table-fill:rgba(66,113,92,.12);--pmx-accent-halo:rgba(96,243,154,.22);--pmx-accent-pulse:rgba(96,243,154,.55);--pmx-soft-fill:rgba(217,255,231,.04);--pmx-sheen-card:rgba(16,34,29,.68);--pmx-sheen-warm:rgba(34,48,34,.72);--pmx-edge-warm-low:rgba(242,211,94,.226);--pmx-primary-hover:#66ffa3;--pmx-mdl-icon-bg:#1b3f2f;--pmx-mdl-icon-edge:#2d6b4c;--pmx-mdl-section-bg:rgba(16,34,29,.72);--pmx-mdl-section-head-bg:rgba(22,48,40,.55);--pmx-mdl-choice-bg:#183729;--pmx-mdl-chip-accent:#3a8e60;--pmx-mdl-chip-positive:#43936a;--pmx-mdl-chip-warning:#7c7f45;--pmx-mdl-chip-danger:#82514d;}
+body[data-theme="retro-light"]{--pmx-sheet-bg:#f8f6df;--pmx-seat-fill-1:transparent;--pmx-seat-fill-2:transparent;--pmx-seat-fill-3:transparent;--pmx-seat-fill-4:transparent;--pmx-seat-fill-5:transparent;--pmx-seat-fill-6:transparent;--pmx-seat-fill-7:transparent;--pmx-seat-fill-8:transparent;--pmx-seat-fill-lead:transparent;--pmx-seat-fill-you:transparent;--pmx-seat-fill-accent:transparent;--pmx-seat-fill-warning:transparent;--pmx-focus-edge:#6e9e7a;--pmx-focus-ring:rgba(25,115,76,.1);--pmx-focus-outline:#5c9a78;--pmx-grid:rgba(164,166,137,.14);--pmx-table-fill:rgba(164,166,137,.12);--pmx-accent-halo:rgba(25,115,76,.22);--pmx-accent-pulse:rgba(25,115,76,.55);--pmx-soft-fill:rgba(34,52,43,.04);--pmx-sheen-card:rgba(239,237,210,.68);--pmx-sheen-warm:rgba(232,227,196,.72);--pmx-edge-warm-low:rgba(134,96,13,.203);--pmx-primary-hover:#1b7a51;--pmx-mdl-icon-bg:#d1dcbf;--pmx-mdl-icon-edge:#a5b997;--pmx-mdl-section-bg:rgba(239,237,210,.72);--pmx-mdl-section-head-bg:rgba(226,223,191,.55);--pmx-mdl-choice-bg:#dae1c5;--pmx-mdl-chip-accent:#81a784;--pmx-mdl-chip-positive:#80a784;--pmx-mdl-chip-warning:#b29f68;--pmx-mdl-chip-danger:#bf8f80;}
+/* 3.1 / 3.6: retro steps interface sizes above 12 down 1 px (monospace runs
+   ~12 % wider), titles 19/24/700 with no negative tracking, helpers 11 px;
+   friendly titles 21/27/600, questions 14.5/600 (Poppins has no 620/650). */
+body[data-theme^="retro"], body[data-theme^="friendly"]{--pmx-w-reg:400;--pmx-w-550:600;--pmx-w-560:600;--pmx-w-620:600;--pmx-w-640:600;--pmx-w-650:600;}
+body[data-theme^="retro"]{
+  --pmx-fs-title:700 19px/26px var(--font-ui);--pmx-ls-title:0;--pmx-ls-q:0;
+  --pmx-fs-q:var(--pmx-w-620) 14px/20.5px var(--font-ui);--pmx-fs-hero:var(--pmx-w-reg) 13.5px/21px var(--font-ui);--pmx-hero-lh:21px;
+  --pmx-fs-ctl:600 11.5px/17px var(--font-ui);--pmx-fs-help:var(--pmx-w-reg) 11px/16px var(--font-ui);
+  --pmx-fs-run-title:var(--pmx-w-640) 12.5px/20px var(--font-ui);--pmx-fs-sentence:var(--pmx-w-reg) 11.5px/18px var(--font-ui);
+  --pmx-fs-lead:var(--pmx-w-reg) 12px/19px var(--font-ui);--pmx-fs-body:var(--pmx-w-reg) 12px/20px var(--font-ui);
+  --pmx-fs-readback:var(--pmx-w-reg) 13.5px/20px var(--pmx-voice);--pmx-fs-quote:var(--pmx-w-reg) 11px/16.5px var(--pmx-voice);
+  --pmx-fs-result:600 14px/20.5px var(--pmx-voice);--pmx-fs-result-l:600 14px/20.5px var(--pmx-voice);--pmx-ls-result:0;
+  --pmx-fs-receipt:var(--pmx-w-560) 12.5px/20px var(--pmx-voice);--pmx-fs-pull:var(--pmx-w-reg) 12.5px/19px var(--pmx-voice);
+  --pmx-fs-view-title:600 22px/28px var(--pmx-voice);--pmx-ls-view-title:0;--pmx-fs-view-h2:600 16px/23px var(--pmx-voice);
+}
+body[data-theme^="friendly"]{
+  --pmx-fs-title:600 21px/27px var(--font-ui);--pmx-ls-title:-.01em;--pmx-fs-q:600 14.5px/20px var(--font-ui);--pmx-ls-q:0;
+  --pmx-fs-ctl:600 12.5px/18.5px var(--font-ui);--pmx-fs-run-title:600 13.5px/20px var(--font-ui);
+  /* Poppins ships 400/500/600/700 only (J-1): voice roles use those weights so nothing snaps */
+  --pmx-fs-readback:400 14.5px/22px var(--pmx-voice);--pmx-fs-quote:400 12px/17.5px var(--pmx-voice);
+  --pmx-fs-receipt:600 13.5px/20px var(--pmx-voice);--pmx-fs-pull:400 13px/19px var(--pmx-voice);
+  --pmx-fs-view-title:600 26px/33px var(--pmx-voice);
+}
+
+/* ================================================================ shared */
+.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-files, .pmx-tick, .pmx-guide, .pmx-divider{font-variant-numeric:tabular-nums;}
+.pmx-sheet b, .pmx-run b, .pmx-view b, .pmx-dock b, .pmx-note b{font-weight:var(--pmx-w-620);}
+.pmx-glyph{display:inline-block;flex:none;vertical-align:middle;}
+.pmx-glyph-missing{color:var(--danger);}
+.pmx-g-faint{opacity:.35;}
+.pmx-g-accent{stroke:var(--accent);}
+.pmx-g-dot, .pmx-g-fill{fill:currentColor;stroke:none;}
+.pmx-kind{display:block;flex:none;}
+.pmx-help{display:block;margin:0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-fine{display:block;margin:0;font:var(--pmx-fs-fine);color:var(--subtle);}
+.pmx-reason{grid-column:1 / -1;margin:6px 0 0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
+.pmx-sr{position:absolute !important;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+.pmx-add{color:var(--positive);font-style:normal;}
+.pmx-del{color:var(--danger);font-style:normal;}
+.pmx-sep{color:var(--subtle);}
+/* J-1: code in any pmx surface is the theme's code face (IBM Plex Mono in retro), never the UA's bare monospace */
+:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-files, .pmx-guide, .pmx-bubble) :is(code, kbd, samp, pre){font-family:var(--font-mono);}
+/* The primary-button glow is removed inside every pmx surface (DON'T 4, 3.4). */
+:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide) .primary-button{box-shadow:none;}
+:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide) .primary-button:hover{filter:none;background:var(--pmx-primary-hover);}
+:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide) .primary-button[data-tone="warm"]:hover{background:var(--warning);}
+/* J-2: every text button in a pmx surface keeps 10 px side padding and a 32 px box; a link inside running
+   text (display inline, padding 0) sets its own rule and stays a link */
+:where(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-bubble, .pmx-guide, .pmx-files) .text-button{padding-left:10px;padding-right:10px;min-height:32px;}
+:where(.pmx-view) .pmx-view-acts .primary-button{height:32px;min-height:32px;padding:0 14px;}
+
+/* ================================================================ A1 sheet frame
+   Centred with inset:0 + margin:auto (never translate(-50%,-50%)), clamped to
+   the viewport. The live sheet sits in #pmOverlayRoot; its exit ghost is
+   re-appended to body, so the frame look is keyed on both parents. */
+:is(#pmOverlayRoot, body) > .pmx-sheet{
+  --pmx-w:var(--pmx-sheet-wide-w);--pmx-h:var(--pmx-sheet-wide-h);
+  position:fixed;inset:0;left:0;top:0;right:0;bottom:0;margin:auto;transform:none;
+  width:min(var(--pmx-w),calc(100vw - 48px));height:min(var(--pmx-h),calc(100vh - 40px));max-height:none;min-height:0;
+  display:flex;flex-direction:column;overflow:hidden;z-index:var(--z-dialog,1150);
+  padding:0 28px;border:var(--pmx-sheet-ring);border-radius:var(--pmx-r-sheet);
+  background:var(--pmx-sheet-bg);box-shadow:var(--pmx-sheet-shadow);
+  /* IMPACT A1-02: styles.css .dialog blurs its backdrop (24 px); a pmx sheet is opaque and never does */
+  -webkit-backdrop-filter:none;backdrop-filter:none;
+  color:var(--text);pointer-events:auto;box-sizing:border-box;
+}
+:is(#pmOverlayRoot, body) > .pmx-sheet--standard{--pmx-w:var(--pmx-sheet-std-w);--pmx-h:var(--pmx-sheet-std-h);}
+:is(#pmOverlayRoot, body) > .pmx-sheet--compact{--pmx-w:var(--pmx-sheet-compact-w);}
+.pmx-sheet .pmx-head{display:flex;align-items:flex-start;gap:14px;padding:20px 0 0;border:0;min-height:64px;flex:none;background:none;}
+.pmx-sheet .pmx-head-mark{width:26px;height:26px;flex:none;margin-top:1px;border:0;border-radius:0;background:none;box-shadow:none;color:var(--text);display:block;}
+.pmx-sheet .pmx-head-mark svg{width:26px;height:26px;}
+.pmx-sheet .pmx-title{flex:1;min-width:0;display:block;}
+.pmx-sheet .pmx-title strong{display:block;font:var(--pmx-fs-title);letter-spacing:var(--pmx-ls-title);color:var(--text);}
+.pmx-sheet .pmx-title > span{display:block;margin-top:4px;font:var(--pmx-fs-lead);color:var(--muted);max-width:900px;}
+.pmx-sheet .pmx-title > span b{color:var(--text);font-weight:600;}
+.pmx-sheet .pmx-close{width:30px;height:30px;margin:-2px -6px 0 0;color:var(--muted);flex:none;}
+.pmx-sheet .pmx-close:hover{color:var(--text);background:var(--surface-3);}
+.pmx-sheet .pmx-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.26fr) minmax(0,1fr);gap:32px;padding:0 0 14px;margin-top:28px;overflow:visible;container-type:inline-size;}
+.pmx-sheet .pmx-body > * + *{margin-top:0;}
+/* a one-column body taller than its sheet scrolls inside itself; it never paints over the foot */
+.pmx-sheet .pmx-body[data-layout="one"]{grid-template-columns:minmax(0,1fr);overflow:hidden auto;scrollbar-width:thin;}
+.pmx-sheet--standard .pmx-body{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+.pmx-sheet .pmx-col{min-width:0;min-height:0;display:flex;flex-direction:column;}
+.pmx-sheet .pmx-col{overflow:hidden auto;scrollbar-width:thin;}
+/* a column that still overflows (1024 x 768, states beyond the common case) scrolls with the 14 px fade (6.3);
+   the runtime marks it, so a column that fits never fades its last line */
+.pmx-sheet .pmx-col[data-pmx-overflow="1"]{padding-bottom:14px;-webkit-mask-image:linear-gradient(#000 calc(100% - 14px),transparent);mask-image:linear-gradient(#000 calc(100% - 14px),transparent);}
+.pmx-sheet .shared-picker-copy strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-sheet .shared-picker-button{min-width:0;width:100%;}
+.pmx-sheet input[type=text], .pmx-sheet input[type=number], .pmx-sheet input[type=date], .pmx-sheet input[type=time], .pmx-sheet textarea{font-family:var(--font-ui);}
+/* Inputs keep the legacy .mdl look without depending on .mdl (the exit ghost is stripped of it). */
+.pmx-sheet :is(input[type=text], input[type=date], input[type=time], input[type=number], textarea){width:100%;box-sizing:border-box;min-height:32px;font:inherit;font-size:12px;color:var(--text);background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:7px 10px;}
+.pmx-sheet textarea{line-height:1.6;}
+
+/* ================================================================ A2 question block */
+.pmx-sheet .pmx-q{border:0;border-radius:0;background:none;overflow:visible;align-self:stretch;margin:0;padding:0;}
+/* J-2 / 3.2 rhythm: 28 between questions */
+.pmx-sheet .pmx-q + .pmx-q, .pmx-sheet .pmx-q + .pmx-shelf, .pmx-sheet .pmx-shelf + .pmx-q{margin-top:28px;}
+.pmx-sheet .pmx-q-head{display:flex;align-items:baseline;gap:10px;min-height:20px;min-width:0;}
+.pmx-sheet .pmx-q-n{flex:none;min-width:10px;font:var(--pmx-fs-qn);color:var(--subtle);}
+.pmx-sheet .pmx-q-title{margin:0;min-width:0;font:var(--pmx-fs-q);letter-spacing:var(--pmx-ls-q);color:var(--text);}
+.pmx-sheet .pmx-q-meta{margin-left:auto;flex:none;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;}
+.pmx-sheet .pmx-q > .pmx-help, .pmx-sheet .pmx-shelf > .pmx-help{margin-top:4px;}
+.pmx-sheet .pmx-shelf > .pmx-help{margin-bottom:4px;}
+.pmx-sheet .pmx-q-body{margin-top:0;min-width:0;}
+/* a heading straight over its first control keeps 10 px (controls and plates carry their own margins) */
+.pmx-sheet .pmx-q-head + .pmx-q-body > :first-child:not(.pmx-ctl, .pmx-plate, .pmx-plate-fit, .pmx-roster){margin-top:10px;}
+.pmx-sheet .pmx-q > .pmx-help + .pmx-q-body{margin-top:8px;}
+.pmx-sheet .pmx-q[data-state="error"]{background:var(--pmx-card-warm);border-radius:12px;box-shadow:0 0 0 8px var(--pmx-card-warm);}
+.pmx-sheet .pmx-q[data-state="error"] :is(.pmx-q-n, .pmx-q-title){color:var(--warning);}
+
+/* ================================================================ A3 hero */
+/* R-18: the hero spans the sheet (the legacy .mdl-section{align-self:start} shrank it to max-content) */
+.pmx-sheet .pmx-hero{flex:none;align-self:stretch;width:auto;min-width:0;margin:16px 0 0;padding:0;display:grid;grid-template-columns:minmax(0,1fr) 262px;gap:24px;border:0;background:none;border-radius:0;overflow:visible;}
+.pmx-sheet .pmx-hero[data-aside="0"]{grid-template-columns:minmax(0,1fr);}
+.pmx-sheet .pmx-hero-main{min-width:0;}
+/* A3 (review cycle 1): the field is a fixed three lines (3 x line height + 10 + 10 padding + 2 border: 88 px in
+   Inter and Poppins, 85 in retro) and scrolls inside itself past that. The box carries border, fill and focus
+   ring; the textarea inside it keeps the bottom 10 px as its own padding and fades there to nothing, so a
+   clipped fourth line never reaches the border (J-2) and never grows the sheet. */
+.pmx-sheet .pmx-hero-box{
+  display:block;margin-top:10px;box-sizing:border-box;padding:10px 0 0;overflow:hidden;
+  background:var(--surface-2);border:1px solid var(--border);border-radius:10px;
+}
+.pmx-sheet .pmx-hero-box:focus-within{border-color:var(--pmx-focus-edge);box-shadow:0 0 0 3px var(--pmx-focus-ring);}
+.pmx-sheet .pmx-hero-field, .pmx-sheet textarea.pmx-hero-field{
+  display:block;width:100%;margin:0;resize:none;overflow:auto;box-sizing:border-box;
+  height:calc(3 * var(--pmx-hero-lh) + 10px);min-height:0;
+  font:var(--pmx-fs-hero);line-height:var(--pmx-hero-lh);color:var(--text);background:transparent;
+  border:0;border-radius:0;padding:0 13px 10px;outline:none;box-shadow:none;scrollbar-width:thin;
+  -webkit-mask-image:linear-gradient(#000 calc(100% - 10px),transparent calc(100% - 6px));mask-image:linear-gradient(#000 calc(100% - 10px),transparent calc(100% - 6px));
+}
+.pmx-sheet input.pmx-hero-field{height:40px;min-height:40px;margin-top:10px;padding:0 13px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;-webkit-mask-image:none;mask-image:none;}
+.pmx-sheet input.pmx-hero-field:focus{border-color:var(--pmx-focus-edge);box-shadow:0 0 0 3px var(--pmx-focus-ring);}
+.pmx-sheet .pmx-hero-main > .pmx-help{margin-top:8px;}
+.pmx-sheet .pmx-hero-main > .pmx-q-head{align-items:center;min-height:32px;}
+.pmx-sheet .pmx-hero-main > .pmx-q-head:has(.pmx-hero-aside) + :is(.pmx-hero-box, .pmx-hero-field){margin-top:12px;}
+.pmx-sheet .pmx-hero-side{min-width:0;}
+.pmx-sheet .pmx-hero-aside{margin-left:auto;display:flex;align-items:center;gap:10px;width:280px;max-width:50%;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;}
+/* J-2: the card-title field is a boxed 32 px input (text used to sit on its underline) */
+.pmx-sheet .pmx-hero-aside input[type=text]{flex:1;min-width:0;height:32px;min-height:32px;padding:0 10px;font:600 12px var(--font-ui);color:var(--text);background:var(--surface-2);border:1px solid var(--border);border-radius:8px;outline:none;box-shadow:none;}
+.pmx-sheet .pmx-hero-aside input[type=text]:focus{border-color:var(--pmx-focus-edge);}
+
+/* ================================================================ A4 control row */
+.pmx-sheet .pmx-ctl{display:grid;grid-template-columns:minmax(0,1fr) 216px;gap:6px 16px;align-items:center;margin-top:12px;min-width:0;}
+.pmx-sheet .pmx-ctl[data-layout="stack"]{grid-template-columns:minmax(0,1fr);gap:8px;}
+/* a stepper row sizes its control column to the stepper, capped so a long cap sentence beside it can never squeeze the label away */
+.pmx-sheet .pmx-ctl[data-layout="row"]:has(> .pmx-ctl-control > .pmx-stepper){grid-template-columns:minmax(0,1fr) fit-content(264px);}
+.pmx-sheet .pmx-ctl-copy{min-width:0;}
+.pmx-sheet .pmx-ctl-label{display:block;font:var(--pmx-fs-ctl);color:var(--text);}
+.pmx-sheet .pmx-ctl-copy .pmx-help{margin-top:4px;}
+/* 3.2 / J-2: 12 px between a control (and its secondary line) and whatever follows it */
+.pmx-sheet .pmx-ctl + :not(.pmx-ctl, .pmx-step-cap), .pmx-sheet .pmx-step-cap + *{margin-top:12px;}
+.pmx-sheet .pmx-ctl-control{min-width:0;}
+.pmx-sheet .pmx-ctl[data-state="disabled"] .pmx-ctl-control{opacity:.5;pointer-events:none;}
+body[data-theme^="retro"] .pmx-sheet :is(.pmx-ctl-copy, .pmx-spec-copy) .pmx-help{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* ================================================================ A5/A6 roster */
+/* J-2: the last column holds two 28 px row actions 10 px apart; the model and persona triggers keep 10 px */
+/* 6.3: the plate yields first (its shrink factor is 1000); the roster gives way (its rows scroll) only once the
+   plate is at its floor */
+.pmx-sheet .pmx-roster{--pmx-cols:28px minmax(96px,1fr) 176px 140px 66px;margin-top:12px;flex:0 1 auto;display:flex;flex-direction:column;min-height:0;}
+body[data-theme^="friendly"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(90px,1fr) 188px 144px 66px;}
+body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 188px 150px 66px;}
+/* retro: the mono roster takes a little more of the body so job names ellipsize less (two-column windows only:
+   below 948 px the one-column rule must win, review cycle 1) */
+@media (min-width: 948px){
+  body[data-theme^="retro"] .pmx-sheet--wide .pmx-body:not([data-layout="one"]):has(> .pmx-col .pmx-roster){grid-template-columns:minmax(0,1.36fr) minmax(0,1fr);}
+}
+.pmx-sheet .pmx-roster-head, .pmx-sheet .pmx-row{display:grid;grid-template-columns:var(--pmx-cols);column-gap:10px;align-items:center;}
+.pmx-sheet .pmx-roster-head{align-items:end;padding-bottom:1px;}
+.pmx-sheet .pmx-roster-col{min-width:0;}
+.pmx-sheet .pmx-roster-col b{display:block;font:600 11.5px/17px var(--font-ui);color:var(--muted);}
+.pmx-sheet .pmx-roster-col small{display:block;margin-top:5px;font:var(--pmx-w-reg) 10.5px/15.5px var(--font-ui);color:var(--subtle);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-sheet .pmx-roster-rows{flex:0 1 auto;min-height:0;overflow:visible;}
+.pmx-sheet .pmx-roster-rows:not([data-scroll="1"]){overflow:hidden auto;scrollbar-width:thin;}
+.pmx-sheet .pmx-roster-rows[data-scroll="1"]{overflow:hidden auto;scrollbar-width:thin;padding-bottom:14px;-webkit-mask-image:linear-gradient(#000 calc(100% - 14px),transparent);mask-image:linear-gradient(#000 calc(100% - 14px),transparent);}
+.pmx-sheet .pmx-roster-rows[data-scroll="1"] + .pmx-roster-foot{margin-top:12px;}
+/* 6.3 yield order (runtime-marked, review cycle 1): after the plate, the column helpers drop, then the rows'
+   secondary fine lines; the rows scroll only after both */
+.pmx-sheet .pmx-roster[data-pmx-lean] .pmx-roster-col small{display:none;}
+.pmx-sheet .pmx-roster[data-pmx-lean="2"] .pmx-route .pmx-fine{display:none;}
+/* J-2: rows are separated by space, not hairlines: 60 px rows keep 13 px between stacked 47 px triggers */
+.pmx-sheet .pmx-row{min-height:var(--pmx-row-h,60px);grid-template-rows:var(--pmx-row-h,60px);position:relative;}
+.pmx-sheet .pmx-row:has(> .pmx-route), .pmx-sheet .pmx-row:has(> .pmx-row-note){grid-template-rows:var(--pmx-row-h,60px) auto;}
+.pmx-sheet .pmx-row-mark{display:grid;place-items:center;}
+.pmx-sheet input.pmx-row-job{width:calc(100% + 10px);min-width:0;height:32px;min-height:32px;padding:0 10px;margin-left:-10px;border:1px solid transparent;border-radius:8px;background:transparent;font:var(--pmx-fs-ctl);color:var(--text);outline:none;box-shadow:none;text-overflow:ellipsis;}
+.pmx-sheet input.pmx-row-job:hover{border-color:var(--border);}
+.pmx-sheet input.pmx-row-job:focus{border-color:var(--pmx-focus-edge);background:var(--surface-2);}
+.pmx-sheet input.pmx-row-job[readonly]{pointer-events:none;}
+.pmx-sheet .pmx-row-model, .pmx-sheet .pmx-row-persona{min-width:0;}
+.pmx-sheet .pmx-row-acts{display:flex;justify-content:flex-end;gap:10px;opacity:0;transition:opacity var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-sheet .pmx-row:hover .pmx-row-acts, .pmx-sheet .pmx-row:focus-within .pmx-row-acts{opacity:1;}
+.pmx-sheet .pmx-row-act{width:28px;height:28px;min-height:28px;padding:0;color:var(--muted);}
+.pmx-sheet .pmx-row-act:hover{color:var(--text);}
+.pmx-sheet .pmx-row-note{grid-column:2 / -1;margin:2px 0 0;padding-bottom:12px;align-self:start;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* the error row is a warm box: its triggers keep 8 px inside it, and it keeps 8 px from its neighbours' triggers */
+.pmx-sheet .pmx-row[data-state="error"]{--pmx-row-h:64px;margin:2px 0;background:var(--pmx-card-warm);border-radius:10px;}
+.pmx-sheet .pmx-row[data-state="error"] > .pmx-route{padding-right:12px;}
+.pmx-sheet .pmx-row[data-state="error"] .pmx-mark{--pmx-seat:var(--warning);--pmx-seat-fill:var(--pmx-seat-fill-warning);}
+/* J-2: the foot wraps before "Start from a team" comes closer than 16 px to the suggestion text */
+.pmx-sheet .pmx-roster-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;min-height:40px;margin-top:6px;min-width:0;}
+.pmx-sheet .pmx-roster-foot .pmx-grow{flex:1;}
+/* J-2: the preserved trigger keeps its own 40 px and 7 x 10 padding here (it used to be shrunk to 30 / 4 x 10) */
+.pmx-sheet .pmx-roster-foot .shared-picker-button{width:196px;flex:none;margin-left:auto;}
+.pmx-sheet .pmx-roster-foot > .pmx-fine{min-width:0;}
+.pmx-sheet .pmx-addrow{display:inline-flex;align-items:center;gap:6px;height:32px;min-height:32px;padding:0 10px;margin-left:-10px;border:0;background:none;color:var(--accent);font:600 12.5px/17px var(--font-ui);white-space:nowrap;}
+.pmx-sheet .pmx-addrow:hover{background:none;}
+.pmx-sheet .pmx-addrow:hover > span{text-decoration:underline;text-underline-offset:3px;}
+.pmx-sheet .pmx-addrow[disabled]{color:var(--subtle);}
+
+/* ================================================================ A7 stand-in sentence */
+/* J-2 rule 4: the stand-in sentence sits >= 8 px under the row's triggers, in the job's text column, and keeps
+   12 px above whatever follows; it wraps rather than running under the triggers */
+.pmx-route[data-tone]{grid-column:2 / -1;margin:2px 0 0;padding:0 0 12px;display:flex;gap:8px;align-items:flex-start;align-self:start;min-width:0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-route > svg{flex:none;margin-top:2px;color:var(--muted);}
+.pmx-route > span{min-width:0;}
+.pmx-route b{color:var(--text);font-weight:600;}
+.pmx-route .pmx-fine{display:block;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-route[data-tone="failed"] > svg, .pmx-route[data-tone="failed"] b{color:var(--danger);}
+
+/* ================================================================ A8 specialists */
+.pmx-sheet .pmx-shelf{min-width:0;}
+.pmx-sheet .pmx-spec{display:grid;grid-template-columns:28px minmax(0,1fr) auto;column-gap:10px;align-items:center;min-height:54px;padding:8px 0;box-sizing:border-box;}
+.pmx-sheet .pmx-spec[data-state="on"]{padding:9px 0;}
+.pmx-sheet .pmx-spec > .pmx-mark{justify-self:center;}
+.pmx-sheet .pmx-spec-copy{min-width:0;}
+.pmx-sheet .pmx-spec-copy b{display:block;font:var(--pmx-fs-ctl);color:var(--text);}
+.pmx-sheet .pmx-spec-copy .pmx-help{margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-sheet .pmx-spec-control{display:flex;align-items:center;gap:10px;margin-left:6px;min-width:0;}
+.pmx-sheet .pmx-spec-control .shared-picker-button{width:172px;}
+.pmx-sheet .pmx-spec[data-state="disabled"] .pmx-spec-copy b{color:var(--muted);}
+.pmx-sheet .pmx-spec[data-state="disabled"] .pmx-reason{margin:0;max-width:170px;text-align:right;}
+.pmx-sheet .pmx-add{position:relative;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 10px;font:600 12.5px/17px var(--font-ui);color:var(--accent);cursor:pointer;white-space:nowrap;}
+.pmx-sheet .pmx-add[data-on="1"]{color:var(--muted);}
+.pmx-sheet .pmx-add:hover > span{text-decoration:underline;text-underline-offset:3px;}
+.pmx-sheet .pmx-add-input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;}
+
+/* ================================================================ A9 stepper */
+.pmx-stepper{display:flex;align-items:center;gap:8px;height:40px;position:relative;min-width:0;}
+.pmx-step{width:30px;height:30px;min-height:30px;padding:0;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--muted);display:grid;place-items:center;flex:none;}
+.pmx-step:hover{color:var(--text);border-color:var(--border-strong);background:var(--surface-3);}
+.pmx-step[disabled]{opacity:.4;pointer-events:none;}
+.pmx-cells{display:flex;gap:3px;flex:none;}
+.pmx-cell{width:6px;height:18px;border-radius:2px;background:var(--surface-3);display:block;transition:background-color var(--pmx-t-row) var(--pmx-ease-out);}
+.pmx-cell[data-on="1"]{background:var(--accent);}
+.pmx-cell[data-hatch="1"]{background:repeating-linear-gradient(135deg,var(--pmx-hatch) 0 1.5px,transparent 1.5px 4px);box-shadow:inset 0 0 0 1px var(--pmx-hatch);}
+.pmx-step-val{min-width:58px;margin:0 2px;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;}
+.pmx-step-val b{color:var(--text);font:var(--pmx-w-650) 13px/17px var(--font-ui);display:inline-block;}
+.pmx-stepper input.pmx-step-input{position:absolute;left:0;top:0;width:1px;height:1px;min-height:0;padding:0;border:0;opacity:0;pointer-events:none;clip-path:inset(50%);}
+.pmx-step-cap{grid-column:1 / -1;margin:6px 0 0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-step-cap b{color:var(--text);}
+
+/* ================================================================ A10 switch (typographic: no pill, no boxes) */
+.pmx-switch{position:relative;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));padding-bottom:8px;min-width:0;}
+.pmx-switch::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--border);}
+.pmx-switch-opt{display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0;min-height:0;padding:0 14px 2px 0;border:0;border-radius:0;background:none;text-align:left;color:var(--subtle);cursor:pointer;}
+.pmx-switch-opt:hover{background:none;color:var(--muted);}
+.pmx-switch-word{font:var(--pmx-voice-w) 18px/24px var(--pmx-voice);letter-spacing:-.012em;color:inherit;transition:color var(--pmx-t-row) var(--pmx-ease-linear);}
+.pmx-switch-help{font:var(--pmx-fs-help);color:var(--subtle);transition:color var(--pmx-t-row) var(--pmx-ease-linear);}
+.pmx-switch-opt[aria-checked="true"]{color:var(--text);}
+.pmx-switch-opt[aria-checked="true"] .pmx-switch-help{color:var(--muted);}
+.pmx-switch-rule{position:absolute;left:0;bottom:0;z-index:1;height:2px;width:calc(100% / var(--n));transform:translateX(calc(var(--i) * 100%));transition:transform var(--pmx-t-move) var(--pmx-ease-move);}
+.pmx-switch-rule::before{content:"";position:absolute;left:0;top:0;height:2px;width:36px;background:var(--accent);}
+.pmx-switch--small .pmx-switch-word{font:var(--pmx-fs-ctl);}
+.pmx-switch--small .pmx-switch-opt{min-height:32px;justify-content:center;padding-bottom:0;}
+
+/* ================================================================ A11 checkbox (also the finding tick) */
+.pmx-check{position:relative;display:flex;align-items:flex-start;gap:10px;min-height:22px;cursor:pointer;}
+.pmx-check + .pmx-check{margin-top:12px;}
+.pmx-check > input{position:absolute;left:0;top:2px;width:16px;height:16px;margin:0;opacity:0;cursor:pointer;}
+.pmx-box{flex:none;width:15px;height:15px;margin-top:2px;border-radius:4px;border:1.5px solid var(--border-strong);background:transparent;display:grid;place-items:center;box-sizing:border-box;transition:background-color var(--pmx-t-pop) var(--pmx-ease-linear),border-color var(--pmx-t-pop) var(--pmx-ease-linear),box-shadow var(--pmx-t-pop) var(--pmx-ease-linear);}
+.pmx-box::after{content:"";width:7px;height:3.5px;margin-top:-2px;border-left:1.8px solid var(--on-accent);border-bottom:1.8px solid var(--on-accent);transform:rotate(-45deg) scale(0);transition:transform var(--pmx-t-pop) var(--pmx-ease-pop);}
+:is(.pmx-check, .pmx-finding-tick) > input:checked + .pmx-box{border-color:transparent;box-shadow:inset 0 0 0 8px var(--accent);}
+:is(.pmx-check, .pmx-finding-tick) > input:checked + .pmx-box::after{transform:rotate(-45deg) scale(1);}
+:is(.pmx-check, .pmx-finding-tick) > input:disabled + .pmx-box{opacity:.45;}
+:is(.pmx-check, .pmx-finding-tick) > input:focus-visible + .pmx-box{outline:2px solid var(--pmx-focus-outline);outline-offset:2px;}
+.pmx-check-copy{min-width:0;display:block;}
+.pmx-check-copy b{display:block;font:600 12.5px/18.5px var(--font-ui);color:var(--text);}
+.pmx-check-copy small{display:block;margin-top:3px;font:var(--pmx-fs-help);color:var(--muted);}
+
+/* ================================================================ A12 words */
+.pmx-words{display:flex;flex-wrap:wrap;gap:12px 16px;min-width:0;}
+.pmx-word{display:inline-flex;align-items:center;gap:5px;height:32px;min-height:32px;padding:0 1px;border:0;border-radius:0;background:none;color:var(--muted);font:var(--pmx-w-550) 12.5px/17px var(--font-ui);cursor:pointer;}
+.pmx-word:hover{background:none;color:var(--text);}
+.pmx-word[aria-pressed="true"]{color:var(--text);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:5px;text-decoration-color:var(--border-strong);}
+.pmx-word[aria-pressed="true"] > svg{stroke:var(--accent);}
+
+/* ================================================================ A13 promises */
+.pmx-promises{margin-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0;}
+.pmx-promise{position:relative;display:flex;gap:9px;align-items:flex-start;margin:0;font:var(--pmx-fs-help);color:var(--muted);min-width:0;}
+.pmx-promise > svg{flex:none;margin-top:1px;color:var(--muted);}
+.pmx-promise > span{min-width:0;}
+.pmx-promise b{color:var(--text);font-weight:600;}
+:is(.pmx-promise, .pmx-sheet .pmx-promise) .text-button{display:inline;min-height:0;height:auto;padding:0;border:0;background:none;color:var(--accent);font:600 12px/17.5px var(--font-ui);}
+.pmx-promise .text-button:hover{text-decoration:underline;text-underline-offset:3px;background:none;}
+
+/* ================================================================ A14/A15 Advanced */
+.pmx-sheet .pmx-adv{display:flex;align-items:flex-start;gap:10px;width:100%;min-height:36px;margin-top:12px;padding:11px 0 0;border:0;border-top:1px solid var(--border);border-radius:0;background:none;text-align:left;color:var(--muted);font:var(--pmx-fs-help);}
+.pmx-sheet .pmx-adv:hover{background:none;color:var(--text);}
+.pmx-sheet .pmx-adv-label{flex:none;color:var(--text);font:var(--pmx-fs-ctl);}
+.pmx-sheet .pmx-adv-sum{flex:1;min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.pmx-sheet .pmx-adv > svg{flex:none;margin-top:2px;}
+.pmx-sheet .pmx-advpage{grid-column:1 / -1;min-height:0;display:flex;flex-direction:column;}
+.pmx-sheet .pmx-advpage-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;align-items:baseline;padding-bottom:8px;}
+.pmx-sheet .pmx-advpage-head .text-button{grid-row:1 / 3;grid-column:2;align-self:center;height:34px;min-height:34px;padding:0 10px;margin-right:-10px;color:var(--accent);font-weight:600;}
+.pmx-sheet .pmx-advgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 36px;min-height:0;overflow:hidden auto;scrollbar-width:thin;align-content:start;}
+/* R-19 + J-2: one line each for sentence and helper, the preserved trigger at its own 40 px, about 70 px a row */
+.pmx-sheet .pmx-set{display:grid;grid-template-columns:minmax(0,1fr) 176px;gap:0 16px;align-items:center;padding:8px 0 7px;border-top:1px solid var(--border);}
+.pmx-sheet .pmx-set .pmx-ctl-label{font:600 12px/17.5px var(--font-ui);color:var(--muted);}
+.pmx-sheet .pmx-set-copy{min-width:0;}
+.pmx-sheet .pmx-set-say{margin:4.5px 0 0;font:var(--pmx-w-reg) 13px/19px var(--pmx-voice);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* A15: the sentence states the effect in full; a window taller than 820 px has the room for a second line
+   (retro's wide mono cut "whichever comes first" mid-word with a third of the grid empty) */
+@media (min-height: 820.02px){
+  .pmx-sheet .pmx-set-say{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:clip;}
+}
+.pmx-sheet .pmx-set-say b{font-weight:var(--pmx-voice-w);}
+.pmx-sheet .pmx-set .pmx-help{margin-top:4px;font-size:11.5px;line-height:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+@container (max-width: 700px){ .pmx-sheet .pmx-advgrid{grid-template-columns:minmax(0,1fr);} }
+/* review cycle 2 (6.3.1, R-19, J-2): the Advanced page under the kept hero yields instead of scrolling. The runtime
+   measures the grid after every render, at settle and when fonts arrive: lean 1 drops the row helpers, lean 2 keeps
+   every sentence to one line with an ellipsis; a grid that still overflows (1024 x 768) scrolls with the 14 px fade */
+.pmx-sheet .pmx-advgrid[data-pmx-lean] .pmx-set .pmx-help{display:none;}
+.pmx-sheet .pmx-advgrid[data-pmx-lean="2"] .pmx-set-say{display:block;white-space:nowrap;text-overflow:ellipsis;-webkit-line-clamp:unset;}
+.pmx-sheet .pmx-advgrid[data-pmx-overflow="1"]{padding-bottom:14px;-webkit-mask-image:linear-gradient(#000 calc(100% - 14px),transparent);mask-image:linear-gradient(#000 calc(100% - 14px),transparent);}
+
+/* ================================================================ A16 preview (the Start flight source) */
+.pmx-sheet .pmx-preview{margin:0;min-width:0;}
+.pmx-sheet .pmx-preview figcaption{display:flex;justify-content:space-between;}
+/* R-02: the preview renders the card's first frame at the destination card width (242 / scale: 417 px at .58,
+   591 at .41; --pmx-preview-w overrides) and the 262 x 82 tray fills the hero's side column to the sheet's
+   28 px padding, the frame centred in it */
+.pmx-sheet .pmx-preview-tray{position:relative;width:262px;max-width:100%;height:82px;margin-top:8px;border-radius:var(--pmx-r-md);background:var(--pmx-floor);overflow:hidden;}
+.pmx-sheet .pmx-preview-card{position:absolute;left:10px;top:calc((82px - 120px * var(--pmx-preview-scale,.62)) / 2);width:var(--pmx-preview-w,calc(242px / var(--pmx-preview-scale,.62)));transform:scale(var(--pmx-preview-scale,.62));transform-origin:0 0;pointer-events:none;}
+/* The preview is the card's top frame (head, sentence, track): 391 x 120. */
+.pmx-run[data-pmx-preview="1"]{height:120px;overflow:hidden;}
+/* the frame is the card's own geometry: in a 120 px box the flex column shrank the 28 px head to 20 and let 5 px of
+   the meta line peek in under the track (review cycle 1); nothing past the track shows */
+.pmx-run[data-pmx-preview="1"] > *, .pmx-run[data-pmx-preview="1"] .pmx-run-body > *{flex:none;}
+.pmx-run[data-pmx-preview="1"] .pmx-run-body > .pmx-track ~ *{visibility:hidden;}
+
+/* ================================================================ A17-A19 footer */
+.pmx-sheet .pmx-foot{flex:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;column-gap:18px;align-items:center;height:80px;margin:0 -28px;padding:0 28px;border-top:1px solid var(--border);background:none;}
+.pmx-sheet--standard .pmx-foot, .pmx-sheet--compact .pmx-foot{height:80px;}
+.pmx-sheet .pmx-foot[data-save="0"]{grid-template-columns:minmax(0,1fr) auto auto;}
+.pmx-sheet .pmx-foot-say{min-width:0;}
+.pmx-sheet .pmx-save{display:inline-flex;align-items:center;gap:8px;height:32px;min-height:32px;padding:0 10px;margin-left:-10px;border:0;background:none;color:var(--muted);font:var(--pmx-w-reg) 12.5px/18px var(--font-ui);white-space:nowrap;}
+.pmx-sheet .pmx-save:hover{color:var(--text);background:none;}
+.pmx-sheet .pmx-save[data-state="saved"]{color:var(--positive);}
+.pmx-sheet .pmx-readback{margin:0;font:var(--pmx-fs-readback);color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.pmx-sheet .pmx-readback b{font-weight:var(--pmx-voice-w);}
+.pmx-sheet .pmx-rb{display:inline;}
+.pmx-sheet .pmx-estimate{margin:4px 0 0;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-sheet .pmx-cancel{height:34px;padding:0 14px;white-space:nowrap;}
+/* J-2 reference update: Cancel sits 10 px from the primary (the foot's other columns keep 18) */
+.pmx-sheet .pmx-foot > .pmx-cancel:has(+ .pmx-primary){margin-right:-8px;}
+.pmx-sheet .pmx-primary{height:36px;padding:0 16px;white-space:nowrap;}
+.pmx-sheet .pmx-primary [data-k]{display:inline-block;}
+.pmx-sheet .pmx-primary[data-tone="warm"]{background:var(--warning);color:#1a1405;}
+body[data-theme$="-light"] .pmx-sheet .pmx-primary[data-tone="warm"]{color:#fff;}
+.pmx-sheet .pmx-primary[disabled]{opacity:.45;cursor:not-allowed;filter:none;}
+.pmx-sheet .pmx-foot[data-reason="1"]{grid-template-rows:auto auto;align-content:center;row-gap:8px;}
+/* G-21 guard: narrow-review.css (COLLAB deletes it) pads the legacy collaboration feet with !important and gives
+   every trigger in .collab-configure a 42 px box and a 6 px top margin; a pmx sheet whose foot or body still
+   carries a legacy hook class keeps its own geometry (the preserved trigger's own 40 px) until then. */
+.pmx-sheet > .pmx-foot{padding:0 28px !important;}
+.pmx-sheet.collab-configure .shared-picker-button{min-height:40px;margin-top:0;}
+.pmx-view .pmx-view-acts.collab-panel-foot{padding:0 !important;border-top:0;}
+.pmx-sheet .pmx-foot[data-reason="1"] > :not(.pmx-foot-reason){grid-row:1;}
+.pmx-sheet .pmx-foot-reason{grid-row:2;grid-column:1 / -1;margin:0;text-align:right;}
+
+/* ================================================================ A18 refusal, A20 confirm */
+.pmx-sheet .pmx-refusal{margin:0;display:flex;gap:8px;align-items:flex-start;font:var(--pmx-w-reg) 12.5px/19px var(--font-ui);color:var(--muted);}
+.pmx-sheet .pmx-refusal > svg{flex:none;margin-top:2px;color:var(--warning);}
+.pmx-sheet .pmx-refusal b{color:var(--text);}
+.pmx-sheet .pmx-refusal .text-button, .pmx-sheet .pmx-refusal .text-button.text-button{display:inline;min-height:0;height:auto;padding:0;margin-left:4px;border:0;background:none;color:var(--accent);font-weight:600;}
+.pmx-sheet .pmx-confirm{grid-column:1 / -1;align-self:center;justify-self:center;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;max-width:460px;}
+.pmx-sheet .pmx-confirm-head{margin:6px 0 0;font:var(--pmx-voice-w) 24px/30px var(--pmx-voice);letter-spacing:-.015em;color:var(--text);}
+.pmx-sheet .pmx-confirm-acts{display:flex;gap:10px;margin-top:10px;}
+.pmx-sheet .pmx-confirm-acts > button{height:34px;min-height:34px;padding:0 14px;}
+
+/* ================================================================ A21 tabs */
+.pmx-tabs{display:flex;gap:22px;border-bottom:1px solid var(--border);min-width:0;overflow:hidden;}
+.pmx-tab{position:relative;display:inline-flex;align-items:baseline;gap:6px;height:34px;min-height:34px;padding:0 1px;border:0;border-radius:0;background:none;color:var(--muted);font:600 12.5px/34px var(--font-ui);white-space:nowrap;}
+.pmx-tab:hover{background:none;color:var(--text);}
+.pmx-tab small{font:500 11px var(--font-ui);color:var(--subtle);}
+.pmx-tab.active, .pmx-tab[aria-selected="true"]{color:var(--text);}
+.pmx-tab.active::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent);transform-origin:50% 100%;}
+
+/* ================================================================ B1 marks (silhouette x spike x hue) */
+.pmx-mark{display:inline-block;flex:none;position:relative;width:var(--pmx-mark-size,22px);height:var(--pmx-mark-size,22px);vertical-align:middle;}
+.pmx-mark[data-size="12"]{--pmx-mark-size:12px;} .pmx-mark[data-size="16"]{--pmx-mark-size:16px;} .pmx-mark[data-size="18"]{--pmx-mark-size:18px;}
+.pmx-mark[data-size="22"]{--pmx-mark-size:22px;} .pmx-mark[data-size="24"]{--pmx-mark-size:24px;} .pmx-mark[data-size="28"]{--pmx-mark-size:28px;} .pmx-mark[data-size="36"]{--pmx-mark-size:36px;}
+.pmx-mark > svg{width:100%;height:100%;overflow:visible;display:block;}
+.pmx-m-sil{fill:var(--pmx-seat-fill,transparent);stroke:var(--pmx-seat);stroke-width:1.6;stroke-linejoin:round;}
+.pmx-m-spk{fill:var(--pmx-seat);stroke:none;}
+.pmx-m-spks{fill:none;stroke:var(--pmx-seat);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.pmx-m-ring{fill:none;stroke:var(--pmx-seat);stroke-width:1.5;}
+.pmx-m-floor{fill:var(--pmx-seat);}
+.pmx-m-nd{fill:var(--pmx-notch-bg,var(--surface));}
+.pmx-m-nc{fill:none;stroke:var(--positive);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.pmx-m-nw{fill:none;stroke:var(--warning);stroke-width:2.2;stroke-linecap:round;}
+.pmx-m-nx{fill:none;stroke:var(--danger);stroke-width:1.8;stroke-linecap:round;}
+.pmx-m-sw{fill:none;stroke:var(--muted);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+:is(.pmx-mark, .pmx-p-mark)[data-state="queued"]{opacity:.5;}
+:is(.pmx-mark, .pmx-p-mark)[data-state="queued"] .pmx-m-ring{stroke:var(--subtle);stroke-dasharray:1.5 2.5;}
+:is(.pmx-mark, .pmx-p-mark)[data-state="needs"] .pmx-m-ring{stroke:var(--warning);}
+:is(.pmx-mark, .pmx-p-mark)[data-state="failed"]{opacity:.45;}
+:is(.pmx-mark, .pmx-p-mark)[data-state="abstained"]{opacity:.6;}
+:is(.pmx-mark, .pmx-p-mark)[data-state="optional"] .pmx-m-sil{stroke-dasharray:2.5 2.5;}
+body[data-theme^="retro"] .pmx-m-sil{fill:none;}
+body[data-theme^="retro"] :is(.pmx-m-sil, .pmx-m-spks, .pmx-m-ring){stroke-linecap:square;stroke-linejoin:miter;}
+.pmx-run .pmx-mark, .pmx-dock .pmx-mark{--pmx-notch-bg:var(--pmx-card);}
+.pmx-run[data-tone="warm"] .pmx-mark, .pmx-run[data-density="attention"]:not([data-tone="accent"]) .pmx-mark, .pmx-dock-line[data-tone="needs"] .pmx-mark{--pmx-notch-bg:var(--pmx-card-warm);}
+.pmx-sheet .pmx-mark{--pmx-notch-bg:var(--surface-2);}
+.pmx-plate{--pmx-notch-bg:var(--pmx-floor);}
+
+/* ================================================================ B3/B4 plate */
+.pmx-plate{position:relative;margin:8px 0 0;border-radius:var(--pmx-r-md);background:var(--pmx-floor);height:var(--pmx-plate-h,200px);flex:none;overflow:hidden;min-width:0;}
+.pmx-plate[data-fluid="1"]{flex:1 1000 var(--pmx-plate-h,200px);height:auto;min-height:160px;max-height:var(--pmx-plate-max,280px);}
+/* A fluid plate takes the main column's spare height (it yields first when rows
+   grow, 6.3; and grows up to 280 px when the column is short, G-37). */
+/* a question holding a yielding plate or a roster is a flex column: the plate yields first, and a roster that
+   still does not fit scrolls inside its own rows (6.3), never the whole column */
+.pmx-sheet .pmx-col > .pmx-q:has(> .pmx-q-body > :is(.pmx-plate[data-fluid="1"], .pmx-plate-fit, .pmx-roster)){display:flex;flex-direction:column;flex:1 1 auto;min-height:0;}
+.pmx-sheet .pmx-col > .pmx-q > .pmx-q-body:has(> :is(.pmx-plate[data-fluid="1"], .pmx-plate-fit, .pmx-roster)){display:flex;flex-direction:column;flex:1 1 auto;min-height:0;}
+/* J-2 plate yield: a sheet's plate slot holds every mode it may show (richest first, each with data-fit-h);
+   after each render the runtime marks the richest mode whose natural height fits (data-fit). It is shown at
+   scale 1 and grows downward into spare height (G-37); it is never a scaled-down drawing. */
+.pmx-sheet .pmx-plate-fit{position:relative;flex:1 1 0;min-height:var(--pmx-fit-min,72px);max-height:280px;margin-top:8px;min-width:0;}
+.pmx-sheet .pmx-plate-fit > .pmx-plate{display:none;margin:0;height:100%;min-height:0;max-height:none;}
+.pmx-sheet .pmx-plate-fit:not([data-fit]) > .pmx-plate:last-child,
+.pmx-sheet .pmx-plate-fit[data-fit="full"] > .pmx-plate[data-mode="full"],
+.pmx-sheet .pmx-plate-fit[data-fit="compact"] > .pmx-plate[data-mode="compact"],
+.pmx-sheet .pmx-plate-fit[data-fit="strip"] > .pmx-plate[data-mode="strip"]{display:block;}
+.pmx-sheet .pmx-plate-fit[data-fit="caption"] > .pmx-plate[data-mode="caption"], .pmx-sheet .pmx-plate-fit:not([data-fit]) > .pmx-plate[data-mode="caption"]:last-child{display:flex;}
+/* a caption that wraps (retro at 1024 x 768) grows its plate and the slot with it: 8 px of floor above and below its
+   text, never squeezed (J-2) */
+.pmx-sheet .pmx-plate-fit[data-fit="caption"]{min-height:auto;}
+.pmx-sheet .pmx-plate-fit > .pmx-plate[data-mode="caption"]{height:auto;min-height:100%;}
+/* scale 1, always (review cycle 1): the drawing is its own size, centred in the slot (review cycle 2: the spare floor
+   splits above and below it, as the reference draws it, instead of pooling under a top-aligned drawing); a slot
+   narrower or shorter than a mode's drawing makes the runtime pick a leaner mode, so it is never scaled down or up */
+.pmx-sheet .pmx-plate-fit > .pmx-plate > .pmx-plate-svg{right:0;bottom:0;margin:auto;width:min(100%,var(--pmx-plate-w,100%));height:min(100%,var(--pmx-plate-h,100%));}
+.pmx-plate[data-mode="strip"][data-fluid="1"]{min-height:96px;max-height:96px;}
+@media (max-height: 799.98px){ .pmx-plate[data-fluid="1"]:not([data-mode="strip"]){min-height:120px;} }
+/* J-2: a caption that wraps grows the caption plate (8 px of floor above and below its text), never squeezes */
+.pmx-plate[data-mode="caption"]{height:auto;min-height:40px;max-height:none;flex:none;display:flex;align-items:center;padding:8px 14px;box-sizing:border-box;}
+.pmx-plate-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+body[data-theme^="retro"] .pmx-plate{background-image:linear-gradient(var(--pmx-grid) 1px,transparent 1px),linear-gradient(90deg,var(--pmx-grid) 1px,transparent 1px);background-size:8px 8px;background-color:var(--pmx-floor);}
+/* the legend keeps 12 px from both plate sides: a legend wider than the plate wraps into right-aligned rows
+   instead of running off the plate's left edge (review cycle 1, retro specimens at 700 px) */
+.pmx-legend{position:absolute;left:12px;right:12px;top:9px;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px 14px;margin:0;padding:0;list-style:none;font:var(--pmx-w-reg) 10.5px/15.5px var(--font-ui);color:var(--muted);pointer-events:none;}
+.pmx-legend li{pointer-events:auto;}
+.pmx-legend li{display:flex;align-items:center;gap:8px;white-space:nowrap;}
+.pmx-lg{display:block;flex:none;}
+.pmx-lg-fixed, .pmx-lg-bar{width:14px;height:2px;border-radius:1px;background:var(--muted);}
+.pmx-lg-hands{width:14px;height:0;border-top:1.5px dashed var(--pmx-line);}
+.pmx-lg-sees{width:14px;height:0;border-top:1px dashed var(--pmx-line);}
+.pmx-lg-toyou{width:14px;height:0;border-top:2px dotted var(--accent);}
+.pmx-lg-hatch{width:14px;height:8px;border-radius:2px;background:repeating-linear-gradient(135deg,var(--pmx-hatch) 0 1.5px,transparent 1.5px 4px);box-shadow:inset 0 0 0 1px var(--pmx-hatch);}
+.pmx-lg-hollow, .pmx-lg-filled{width:9px;height:9px;border-radius:50%;box-sizing:border-box;border:1.5px solid var(--muted);}
+.pmx-lg-filled{background:var(--accent);border-color:var(--accent);}
+.pmx-lg-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);}
+.pmx-lg-screen{width:2px;height:10px;border-radius:1px;background:var(--pmx-line);}
+.pmx-plate .pmx-plate-cap{position:absolute;left:14px;right:14px;bottom:10px;margin:0;}
+.pmx-plate[data-mode="caption"] .pmx-plate-cap{position:static;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-p-line{fill:none;stroke:var(--pmx-line);stroke-width:1.2;transition:stroke var(--pmx-t-light) var(--pmx-ease-linear),opacity var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-p-line[data-style="hands"]{stroke-dasharray:3 4;}
+.pmx-p-line[data-style="toyou"]{stroke:var(--accent);stroke-dasharray:1.5 4;stroke-linecap:round;stroke-width:1.6;}
+.pmx-p-line[data-style="sees"]{stroke-dasharray:2 3;stroke-width:.9;}
+.pmx-p-line[data-style="accent"]{stroke:var(--accent);stroke-width:1.6;}
+.pmx-p-seat, .pmx-p-slot, .pmx-p-screen-g, .pmx-p-paper-g, .pmx-p-you, .pmx-p-chapter, .pmx-p-cue-g{transform:translate(var(--x,0),var(--y,0));transition:transform var(--pmx-t-move) var(--pmx-ease-move),opacity var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-p-lab{font:var(--pmx-fs-plate);fill:var(--text);}
+.pmx-p-sub{font:var(--pmx-w-reg) 10.5px/15.5px var(--font-ui);fill:var(--subtle);}
+.pmx-p-note{font:var(--pmx-w-reg) 10.5px/15.5px var(--font-ui);fill:var(--muted);}
+.pmx-p-voice{font:var(--pmx-w-reg) 12px/17.5px var(--pmx-voice);fill:var(--muted);}
+.pmx-p-paper{fill:var(--surface-2);stroke:var(--pmx-line);stroke-width:1;}
+/* the paper's fitted words (HTML lines in a foreignObject): label +20, sub +38 baselines, ellipsis at the inner width */
+.pmx-p-paper-fo{overflow:hidden;}
+.pmx-p-paper-text{display:flex;flex-direction:column;align-items:flex-start;min-width:0;margin:0;padding:0;}
+.pmx-p-paper-text > span{display:block;max-width:100%;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-p-paper-text > .pmx-p-note{color:var(--muted);}
+.pmx-p-paper-text > .pmx-p-lab{margin-top:2.5px;color:var(--text);}
+.pmx-p-paper-text :is(.pmx-p-note, .pmx-p-lab){transition:color var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-p-floorbar{fill:var(--pmx-seat,var(--muted));}
+.pmx-p-fold{fill:none;stroke:var(--pmx-line);stroke-width:1;}
+.pmx-p-hatchbox{fill:none;stroke:var(--pmx-hatch);stroke-width:1;}
+.pmx-p-hatch{fill:none;stroke:var(--pmx-hatch);stroke-width:1.2;}
+body[data-theme^="retro"] .pmx-p-hatch{stroke-dasharray:1.2 2.2;}
+.pmx-p-glyph{fill:none;stroke:var(--subtle);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.pmx-p-screen{stroke:var(--pmx-line);stroke-width:2;stroke-linecap:round;}
+.pmx-p-cue{fill:var(--pmx-floor);stroke:var(--muted);stroke-width:1.5;}
+.pmx-p-cue[data-kind="speaks"]{fill:var(--accent);stroke:var(--accent);}
+.pmx-p-chap{fill:var(--pmx-floor);stroke:var(--muted);stroke-width:1.4;}
+.pmx-p-chapter[data-state="done"] .pmx-p-chap{fill:var(--positive);stroke:var(--positive);}
+.pmx-p-chapter[data-state="now"] .pmx-p-chap{fill:var(--accent);stroke:var(--accent);}
+.pmx-p-table{fill:var(--pmx-table-fill);stroke:var(--pmx-line);stroke-width:1.2;}
+.pmx-p-mark .pmx-m-floor{display:none;}
+.pmx-p-seat[data-state="working"] .pmx-p-mark .pmx-m-floor{display:inline;}
+body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
+
+/* ================================================================ C1 run card: every density */
+/* Hook-carrying elements (cls, headCls, badgeCls, titleCls, statusCls, metaCls, bodyCls, footCls) are
+   keyed at (0,2,0) or more, so a module's legacy hook rule (.collab-card, .collab-status, ...) that
+   loads later cannot restyle them before its package deletes it (G-21). */
+.pmx-run[data-density]{position:relative;container:pmxrun / inline-size;display:flex;flex-direction:column;gap:8px;min-width:0;padding:12px 14px 10px;border:0;border-radius:var(--pmx-r-card);background:var(--pmx-card);color:var(--text);box-shadow:none;box-sizing:border-box;
+  transition:background-color var(--pmx-t-tint) var(--pmx-ease-out),box-shadow var(--pmx-t-tint) var(--pmx-ease-out);}
+.pmx-run[data-density][data-tone="warm"], .pmx-run[data-density="attention"]:not([data-tone="accent"]){background:var(--pmx-card-warm);box-shadow:0 0 0 1px var(--pmx-edge-warm);}
+.pmx-run[data-pmx-arrive="1"]{opacity:0;}
+.pmx-run .pmx-run-head{flex:none;display:flex;flex-wrap:nowrap;align-items:center;gap:8px;height:28px;min-width:0;padding:0;border:0;background:none;}
+.pmx-run .pmx-run-head > .pmx-run-kind{display:inline-flex;align-items:center;gap:6px;flex:none;min-width:0;padding:0;border:0;border-radius:0;background:none;color:var(--muted);font:600 11.5px/16px var(--font-ui);white-space:nowrap;}
+.pmx-run-kind > svg{color:var(--muted);}
+.pmx-run .pmx-run-title{flex:1 1 auto;min-width:0;margin:0;font:var(--pmx-fs-run-title);letter-spacing:-.005em;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-cluster{display:inline-flex;align-items:center;gap:3px;flex:none;}
+.pmx-cluster .pmx-mark{--pmx-mark-size:18px;}
+.pmx-cluster--mini .pmx-mark{--pmx-mark-size:12px;}
+.pmx-cluster--mini{gap:2px;}
+.pmx-cluster-more{font:500 11px/16px var(--font-ui);color:var(--muted);margin-left:2px;}
+.pmx-cluster-screen{display:block;flex:none;width:1.5px;height:13px;margin:0 3px;border-radius:1px;background:var(--pmx-line);}
+.pmx-clock{flex:none;min-width:30px;text-align:right;font:var(--pmx-fs-meta);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.pmx-run-head > .icon-button{width:28px;height:28px;min-height:28px;padding:0;margin-right:-4px;color:var(--muted);flex:none;}
+.pmx-run .pmx-run-body{display:flex;flex-direction:column;gap:9px;min-width:0;padding:0;border:0;}
+.pmx-run .pmx-run-body:empty{display:none;}
+.pmx-run .pmx-run-foot{display:flex;flex-wrap:nowrap;align-items:center;gap:0;min-width:0;padding:0;border:0;}
+.pmx-run .pmx-run-foot:empty{display:none;}
+
+/* C3 sentence (fixed 36 px, two lines) */
+.pmx-sentence[data-status]{margin:0;display:flex;gap:8px;align-items:flex-start;height:37px;min-width:0;padding:0;border:0;border-radius:0;background:none;font:var(--pmx-fs-sentence);color:var(--muted);overflow:hidden;white-space:normal;}
+.pmx-sentence b{color:var(--text);font-weight:var(--pmx-w-650);}
+.pmx-st-glyph{flex:none;margin-top:2.25px;display:block;width:14px;height:14px;color:var(--muted);}
+.pmx-st-glyph > svg{display:block;}
+.pmx-st-text{min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.pmx-sentence[data-status="needs"] .pmx-st-glyph, .pmx-sentence[data-status="attention"] .pmx-st-glyph, .pmx-sentence[data-status="limit"] .pmx-st-glyph{color:var(--warning);}
+.pmx-sentence[data-status="failed"] .pmx-st-glyph, .pmx-sentence[data-status="failed"] b{color:var(--danger);}
+.pmx-sentence[data-status="done"] .pmx-st-glyph{color:var(--positive);}
+.pmx-sentence[data-status="yourmove"] .pmx-st-glyph svg{stroke:var(--accent);}
+.pmx-sentence[data-status="yourmove"] .pmx-st-glyph .pmx-g-dot{fill:var(--accent);}
+
+/* C4 track: named stops, counted progress, never percent */
+.pmx-track{display:flex;align-items:center;gap:10px;height:20px;min-width:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
+.pmx-track-line{display:flex;align-items:center;flex:none;margin:0;padding:0;list-style:none;}
+.pmx-stop{position:relative;display:flex;align-items:center;}
+.pmx-stop-dot{width:8px;height:8px;border-radius:50%;display:block;flex:none;box-sizing:border-box;box-shadow:inset 0 0 0 1.5px var(--pmx-line);transition:box-shadow var(--pmx-t-stop) var(--pmx-ease-out);}
+.pmx-stop[data-state="done"] .pmx-stop-dot{box-shadow:inset 0 0 0 4px var(--positive);}
+.pmx-stop[data-state="now"] .pmx-stop-dot{box-shadow:inset 0 0 0 4px var(--accent),0 0 0 2.5px var(--pmx-accent-halo);}
+.pmx-stop[data-state="failed"] .pmx-stop-dot{box-shadow:inset 0 0 0 4px var(--danger);}
+.pmx-stop[data-state="skipped"] .pmx-stop-dot{box-shadow:none;outline:1.5px dashed var(--pmx-line);outline-offset:-1.5px;}
+.pmx-stop + .pmx-stop::before{content:"";width:22px;height:1.5px;margin:0 3px;display:block;background:var(--pmx-line);}
+.pmx-stop[data-state="done"] + .pmx-stop::before{background:var(--positive);}
+.pmx-stop-label{display:none;margin-left:6px;white-space:nowrap;}
+.pmx-stop[data-state="now"] .pmx-stop-label{color:var(--text);font-weight:600;}
+.pmx-track-now{min-width:0;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-track-now b{color:var(--text);font-weight:600;}
+
+/* C5/C6 lanes: two lines, a fixed height (J-2: 6 px between the text and the lane's hairlines, so 49 px) */
+.pmx-lanes{display:flex;flex-direction:column;min-width:0;}
+.pmx-lane{display:grid;grid-template-columns:22px minmax(0,1fr) auto;grid-template-rows:17.5px 17.5px;column-gap:10px;row-gap:4px;align-items:center;width:100%;height:var(--pmx-lane-h);min-height:var(--pmx-lane-h);padding:4.5px 0 5.5px;box-sizing:border-box;border:0;border-radius:0;background:none;color:var(--text);text-align:left;cursor:pointer;font:var(--pmx-fs-lane);}
+.pmx-lane:hover{background:none;}
+.pmx-lane:hover .pmx-lane-name{text-decoration:underline;text-decoration-color:var(--border-strong);text-underline-offset:3px;}
+.pmx-lane + .pmx-lane, .pmx-lanes > .pmx-lanes-more{box-shadow:0 -1px 0 var(--border);}
+.pmx-lane-mark{grid-row:1 / 3;align-self:center;display:grid;place-items:center;}
+.pmx-lane-l1{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-lane-name{font-weight:600;}
+.pmx-lane-sub{color:var(--subtle);margin-left:5px;display:none;}
+.pmx-lane-verb{color:var(--muted);display:inline;}
+.pmx-lane-verb::before{content:" \00b7  ";color:var(--subtle);}
+.pmx-lane-time{font:var(--pmx-w-reg) 11px/16px var(--font-ui);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.pmx-lane-l2{grid-column:2 / 4;min-width:0;display:block;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-lane-l2[data-kind="quote"] q, .pmx-lane-l2 q{font:var(--pmx-fs-quote);color:var(--muted);quotes:"\201C" "\201D";}
+.pmx-lane[data-state="needs"] .pmx-lane-verb{color:var(--warning);}
+.pmx-lane[data-state="failed"] .pmx-lane-verb{color:var(--danger);}
+.pmx-lane[data-state="done"] .pmx-lane-verb{color:var(--positive);}
+.pmx-sealed{display:inline-flex;gap:3px;vertical-align:-1px;margin-right:8px;}
+.pmx-sealed > i{width:9px;height:11px;border-radius:2px;display:inline-block;background:var(--surface-4);box-shadow:inset 0 0 0 1px var(--border-strong);}
+.pmx-lanes-more{display:flex;align-items:center;gap:8px;height:40px;min-height:40px;width:100%;padding:0 0 0 32px;border:0;border-radius:0;background:none;color:var(--muted);font:var(--pmx-fs-lane);text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;}
+.pmx-lanes-more:hover{background:none;color:var(--text);}
+.pmx-lanes-more b{color:var(--text);font-weight:600;}
+/* the narrow "+N more · Show all" row (review cycle 2) shows only on an attention card below 260 px */
+.pmx-lanes > .pmx-lanes-more-s{display:none;}
+
+/* C7 decision row (the one loud moment) */
+.pmx-decision{display:flex;flex-direction:column;gap:10px;min-width:0;}
+.pmx-decision-say{margin:0;display:flex;gap:8px;align-items:flex-start;height:37px;font:var(--pmx-fs-sentence);color:var(--muted);overflow:hidden;}
+.pmx-decision-say > svg{flex:none;margin-top:2.25px;color:var(--warning);}
+.pmx-decision[data-tone="accent"] .pmx-decision-say > svg{color:var(--muted);stroke:var(--accent);}
+.pmx-decision[data-tone="accent"] .pmx-decision-say .pmx-g-dot{fill:var(--accent);}
+.pmx-decision-say > span{min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.pmx-decision-say b{color:var(--text);font-weight:var(--pmx-w-650);}
+.pmx-decision-acts{display:flex;flex-wrap:wrap;gap:12px 10px;padding-left:22px;min-width:0;}
+.pmx-decision-acts .pmx-act, .pmx-decision-acts .pmx-act.primary-button{height:32px;min-height:32px;padding:0 12px;font-size:12px;}
+.pmx-decision-acts .soft-button{border:1px solid var(--border-strong);background:var(--pmx-soft-fill);color:var(--text);}
+
+/* C8-C10 finished face */
+.pmx-result{display:flex;flex-direction:column;gap:8px;min-width:0;}
+.pmx-result-head{margin:0;display:flex;gap:8px;align-items:flex-start;}
+.pmx-result-head > svg{flex:none;margin-top:3px;color:var(--positive);}
+.pmx-result-headline{font:var(--pmx-fs-result);letter-spacing:var(--pmx-ls-result,-.012em);color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.pmx-result-sub{margin:-2px 0 0 26px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-output{border-radius:var(--pmx-r-sm);background:var(--code);padding:9px 12px;min-width:0;}
+.pmx-output-head{margin:0 0 5px;display:flex;gap:7px;align-items:center;min-width:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);white-space:nowrap;}
+.pmx-output-head > b{color:var(--text);font-weight:600;overflow:hidden;text-overflow:ellipsis;}
+.pmx-diff{margin-left:auto;white-space:nowrap;}
+.pmx-output-pre{margin:0;font:11px/16px var(--font-mono);color:var(--text);white-space:pre;overflow:hidden;overflow-wrap:normal;}
+.pmx-output-pre > span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:pre;}
+.pmx-credits{min-width:0;}
+.pmx-credits > .pmx-fine{margin:0 0 6px;}
+.pmx-credits ul{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 12px;margin:0;padding:0;list-style:none;}
+.pmx-credits li{display:grid;grid-template-rows:18px auto auto;gap:4px;align-content:start;min-width:0;font:var(--pmx-w-reg) 11px/16px var(--font-ui);color:var(--muted);}
+.pmx-credits li > b{color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-did{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.pmx-credits li:nth-child(n+4):not(.pmx-credits-more){display:none;}
+.pmx-credits[data-count="4"] li:nth-child(4){display:grid;}
+.pmx-credits-more{align-content:center;}
+/* the one-row band's "+N more" (review cycle 2) shows only below 260 px */
+.pmx-credits-rest{display:none !important;}
+
+/* C11 meta, C12 actions */
+p.pmx-meta, .pmx-meta{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.pmx-meta b{color:var(--text);font-weight:600;}
+/* 7.2 fixed boxes (review cycle 1, DON'T 23): a run card's meta is a fixed box, so a tick that lengthens it never
+   changes the card's height. It is ONE line with an ellipsis (the lead's card-budget fix): a fixed two-line box
+   put the Review and BrainStorm live faces 16 px over their 347 px budget and the S-tier attention face over 405. */
+.pmx-run[data-density]:not(.pmx-receipt) .pmx-meta{display:block;height:17px;flex:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-recorded{color:var(--text);}
+/* J-2: 32 px actions with 10 px sides; wrapped rows keep 12 px; boxed neighbours keep 10 px (text buttons carry their own padding) */
+.pmx-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 6px;min-height:32px;width:100%;min-width:0;}
+.pmx-act{height:32px;min-height:32px;padding:0 10px;border-radius:8px;font:var(--pmx-w-560) 12px/16px var(--font-ui);white-space:nowrap;}
+.pmx-actions > :is(.primary-button, .soft-button) + :is(.primary-button, .soft-button){margin-left:4px;}
+.pmx-act.text-button{color:var(--muted);background:none;}
+.pmx-act.text-button:hover{color:var(--text);background:var(--surface-3);}
+.pmx-act.primary-button{height:32px;min-height:32px;padding:0 14px;}
+.pmx-act.icon-button{width:30px;height:30px;min-height:30px;padding:0;color:var(--muted);}
+.pmx-act.icon-button:hover{color:var(--text);}
+.pmx-act[disabled]{opacity:.45;}
+.pmx-actions .pmx-grow{flex:1;}
+.pmx-run-foot > .pmx-actions{margin:0 -4px;}
+
+/* C13 receipt: one 44 px line, hairlines above and below, no fill */
+.pmx-run.pmx-receipt{flex-direction:row;align-items:center;gap:8px;height:var(--pmx-receipt-h);min-height:var(--pmx-receipt-h);padding:0 2px;border-radius:0;background:none;box-shadow:0 -1px 0 var(--border),0 1px 0 var(--border);}
+.pmx-receipt .pmx-run-head{flex:1;min-width:0;height:44px;}
+.pmx-receipt .pmx-receipt-title{display:none;min-width:0;flex:0 1 auto;max-width:160px;font:600 12px/16px var(--font-ui);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-receipt .pmx-receipt-say{flex:1;min-width:0;display:flex;align-items:center;gap:6px;padding:0;border:0;border-radius:0;background:none;white-space:nowrap;overflow:hidden;}
+.pmx-receipt-say > svg{flex:none;color:var(--muted);}
+/* IMPACT A1-24: a recorded run's receipt carries a 13 px play-ring at every tier */
+.pmx-receipt-say > svg.pmx-receipt-rec{color:var(--subtle);}
+.pmx-receipt-headline{min-width:0;font:var(--pmx-fs-receipt);color:var(--text);overflow:hidden;text-overflow:ellipsis;}
+.pmx-receipt .pmx-receipt-meta{flex:none;margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);white-space:nowrap;}
+.pmx-receipt .pmx-run-foot{flex:none;gap:0;}
+.pmx-receipt .pmx-run-foot .pmx-open{color:var(--text);font-weight:600;padding:0 10px;}
+
+/* IMPACT A2-14 pmxInlineConfirm: the never-a-modal confirmation, in place of the row it confirms (J-2: 8 px from the
+   sentence to the buttons, 32 px buttons, 10 px between them, 12 between wrapped rows) */
+.pmx-inline-confirm{display:flex;flex-direction:column;gap:8px;min-width:0;}
+.pmx-inline-confirm-say{margin:0;font:var(--pmx-fs-sentence);color:var(--text);}
+.pmx-inline-confirm-acts{display:flex;flex-wrap:wrap;gap:12px 10px;min-width:0;}
+.pmx-inline-confirm-acts .pmx-act{height:32px;min-height:32px;padding:0 12px;}
+.pmx-inline-confirm-acts .soft-button{border:1px solid var(--border-strong);background:var(--pmx-soft-fill);color:var(--text);}
+
+/* C14/C15 dock lines (host rules and motion live in pmx-system.css) */
+.pmx-dock{display:flex;flex-direction:column;gap:6px;min-width:0;}
+.pmx-dock-line{display:flex;align-items:center;gap:8px;height:var(--pmx-dock-line-h);min-width:0;padding:0 2px 0 12px;border-radius:10px;background:var(--pmx-card);font:var(--pmx-fs-sentence);color:var(--muted);box-sizing:border-box;}
+.pmx-dock-line > svg{flex:none;color:var(--muted);}
+.pmx-dock-line[data-tone="needs"]{background:var(--pmx-card-warm);box-shadow:0 0 0 1px var(--pmx-edge-warm);}
+.pmx-dock-say{flex:1;min-width:0;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-dock-say b{color:var(--text);font-weight:600;}
+.pmx-dock-act{flex:none;height:32px;min-height:32px;padding:0 10px;color:var(--accent);font:600 12px/16px var(--font-ui);background:none;}
+.pmx-dock-act:hover{background:var(--surface-3);}
+.pmx-dock-more{margin:0;padding:0 12px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
+
+/* C16-C20 boards: findings, severity, agreement, votes, pull-quotes */
+.pmx-findings{display:flex;flex-direction:column;min-width:0;}
+.pmx-finding{display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:6px;padding:6px 0 7px;min-width:0;}
+/* review cycle 1 (Review result 366 at 417/591 against 360/361): the finding rows keep J-2's 8 px between their INK
+   and the hairlines (the claim's ink starts 4.4 px into its 19 px line, the meta's descenders end 2 px above its
+   17 px line), so the row padding is 6 above and 7 below rather than the reference's 8 */
+.pmx-finding + .pmx-finding{box-shadow:0 -1px 0 var(--border);}
+.pmx-finding-tick{position:relative;width:28px;height:28px;display:grid;place-items:center;cursor:pointer;margin:-4px 0 0 -4px;}
+.pmx-finding-tick > input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;}
+.pmx-finding-tick .pmx-box{margin:0;}
+.pmx-finding-copy{min-width:0;}
+.pmx-finding-claim{margin:0;font:var(--pmx-w-560) 13px/19px var(--pmx-voice);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;user-select:text;cursor:text;}
+body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
+.pmx-view .pmx-finding-claim{white-space:normal;}
+.pmx-finding-meta{margin:4px 0 0;display:flex;align-items:center;gap:6px;min-width:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);white-space:nowrap;overflow:hidden;}
+.pmx-finding-why{margin:4px 0 0;font:var(--pmx-fs-body);color:var(--muted);}
+.pmx-finding-todo{margin:4px 0 0;font:var(--pmx-fs-meta);color:var(--positive);}
+.pmx-finding-todo .text-button, .pmx-finding-todo .text-button.text-button{display:inline;min-height:0;height:auto;padding:0;border:0;background:none;color:var(--text);font-weight:600;text-decoration:underline;text-decoration-color:var(--border-strong);text-underline-offset:3px;}
+.pmx-sev{display:inline-flex;align-items:center;gap:4px;padding:0;border:0;background:none;font-weight:600;color:var(--text);white-space:nowrap;}
+.pmx-sev > svg{flex:none;color:var(--muted);}
+.pmx-sev[data-sev="critical"] > svg{color:var(--danger);}
+.pmx-sev[data-sev="major"] > svg, .pmx-sev[data-sev="concern"] > svg{color:var(--warning);}
+.pmx-sev[data-sev="suggestion"] > svg{color:var(--subtle);}
+.pmx-agree{display:inline-flex;align-items:center;gap:5px;min-width:0;overflow:hidden;}
+.pmx-agree-dots{display:inline-flex;gap:2px;flex:none;}
+.pmx-ag{display:block;}
+.pmx-ag-fill{fill:var(--pmx-seat);stroke:none;}
+.pmx-ag-ring{fill:none;stroke:var(--pmx-seat);stroke-width:1.4;stroke-linecap:round;}
+.pmx-agree > span:last-child{overflow:hidden;text-overflow:ellipsis;}
+.pmx-votes{position:relative;display:grid;grid-template-columns:var(--pmx-vote-cols,minmax(0,1fr) 72px minmax(0,1fr) 58px);gap:0 10px;height:104px;padding:8px 12px;border-radius:var(--pmx-r-md);background:var(--pmx-floor);align-items:stretch;box-sizing:border-box;min-width:0;}
+.pmx-vote-opt{display:flex;flex-direction:column;align-items:center;min-width:0;text-align:center;}
+.pmx-vote-opt[data-state="ruled"]{opacity:.55;}
+.pmx-vote-title{margin:0;max-width:100%;font:var(--pmx-w-620) 11.5px/17px var(--font-ui);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-vote-count{margin:4px 0 0;font:var(--pmx-w-reg) 11px/16px var(--font-ui);color:var(--muted);}
+.pmx-vote-floor{margin-top:auto;display:flex;gap:12px;justify-content:center;align-items:flex-end;max-width:100%;}
+.pmx-voter{display:flex;flex:0 1 auto;min-width:0;flex-direction:column;align-items:center;gap:2px;max-width:64px;font:var(--pmx-w-reg) 10px/14.5px var(--font-ui);color:var(--subtle);}
+.pmx-voter > span{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* the confidence ticks sit under the name, clear of its ink */
+.pmx-conf{display:flex;gap:2px;height:2px;order:3;margin-top:7px;}
+.pmx-conf > i{width:5px;height:2px;border-radius:1px;display:block;background:var(--muted);}
+.pmx-conf > i[data-off="1"]{opacity:.25;}
+.pmx-vote-aisle, .pmx-vote-wing{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;min-width:0;text-align:center;font:var(--pmx-w-reg) 10px/14.5px var(--font-ui);color:var(--subtle);}
+.pmx-vote-aisle{padding:0 8px;box-shadow:-1px 0 0 var(--border),1px 0 0 var(--border);}
+.pmx-vote-aisle .pmx-voter{max-width:100%;}
+.pmx-vote-wing .pmx-voter{gap:5px;}
+.pmx-vote-aisle > p, .pmx-vote-wing > p{margin:0 0 auto;max-width:100%;font:var(--pmx-w-reg) 10.5px/15.5px var(--font-ui);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-ruled{margin:0;display:flex;gap:8px;align-items:flex-start;height:35px;overflow:hidden;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-ruled > svg{flex:none;margin-top:2px;color:var(--danger);}
+.pmx-ruled s{color:var(--text);text-decoration-thickness:1.5px;}
+/* G-21 hook guards: a quote carries collab-dissent and the ruled line collab-hardconflict, whose legacy rules
+   (collaboration.css, loaded later) box them in a warning / danger border with a colour-mix fill */
+.pmx-quote.pmx-quote, .pmx-ruled.pmx-ruled{border:0;border-radius:0;background:none;}
+.pmx-quote.pmx-quote{padding:7px 12px 8px 0;}
+.pmx-ruled.pmx-ruled{padding:0;}
+.pmx-quote{margin:0;padding:7px 12px 8px 0;display:grid;grid-template-columns:16px minmax(0,1fr);column-gap:8px;box-shadow:0 -1px 0 var(--border),0 1px 0 var(--border);}
+.pmx-quote > svg{color:var(--subtle);margin-top:2px;}
+/* J-1: a quote is marked by quotation marks and --muted, never by italics */
+.pmx-quote blockquote{margin:0;font:var(--pmx-fs-pull);color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.pmx-quote blockquote::before, .pmx-md blockquote > :first-child::before{content:"\201C";}
+.pmx-quote blockquote::after, .pmx-md blockquote > :last-child::after{content:"\201D";}
+.pmx-view .pmx-quote blockquote{font-size:17px;line-height:25px;-webkit-line-clamp:unset;display:block;}
+.pmx-quote figcaption{grid-column:2;margin-top:3px;font:var(--pmx-w-reg) 11px/16px var(--font-ui);color:var(--muted);}
+
+/* C21 margin note (Back Seat Driver): hangs from an eye in the gutter, no fill */
+.pmx-note{position:relative;margin:0;padding:2px 0 2px 30px;min-width:0;border:0;border-radius:0;background:none;box-shadow:none;color:var(--text);}
+.pmx-note-eye{position:absolute;left:0;top:1px;width:22px;height:22px;display:grid;place-items:center;color:var(--muted);}
+.pmx-note-kicker{margin:0;display:flex;align-items:center;gap:6px;font:600 11.5px/17px var(--font-ui);color:var(--muted);}
+.pmx-note-title{margin:5px 0 0;font:var(--pmx-voice-w) 15px/20px var(--pmx-voice);letter-spacing:-.01em;color:var(--text);}
+.pmx-note-body{margin:4px 0 0;font:var(--pmx-fs-sentence);color:var(--muted);}
+.pmx-note-body code, .pmx-md code{font:11.5px var(--font-mono);background:var(--code);padding:1px 4px;border-radius:var(--pmx-r-xs);color:var(--text);}
+.pmx-note .pmx-fine{margin-top:3px;}
+.pmx-note-acts{display:flex;align-items:center;gap:4px;margin-top:6px;margin-left:-10px;}
+.pmx-note-acts .text-button{height:32px;min-height:32px;padding:0 10px;color:var(--muted);font:var(--pmx-w-560) 12px/16px var(--font-ui);}
+.pmx-note-acts .text-button:hover{color:var(--text);}
+.pmx-note[data-state="stale"]{padding:10px 12px 10px 36px;border-radius:12px;outline:1px dashed var(--border-strong);outline-offset:0;}
+.pmx-note[data-state="stale"] .pmx-note-eye{left:8px;top:10px;}
+.pmx-note-line{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* C22 tick, C23 divider, C24 files row, C25 code row */
+.pmx-tick{display:inline-flex;align-items:center;gap:5px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);white-space:nowrap;}
+.pmx-divider{display:flex;align-items:center;gap:10px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
+.pmx-divider::before, .pmx-divider::after{content:"";flex:1;height:1px;background:var(--border);}
+.pmx-files{margin:0;display:flex;align-items:center;flex-wrap:wrap;gap:12px 6px;min-height:32px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
+.pmx-files > svg{color:var(--muted);}
+.pmx-files .text-button{min-height:32px;height:32px;padding:0 10px;border:0;background:none;color:var(--text);font:600 11.5px/16px var(--font-ui);}
+.pmx-files .text-button:hover{text-decoration:underline;text-underline-offset:3px;}
+.pmx-files .pmx-reason{margin:0;}
+.pmx-coderow{margin:0;display:flex;align-items:center;gap:7px;min-width:0;font:var(--pmx-fs-help);color:var(--muted);white-space:nowrap;}
+.pmx-coderow > span{min-width:0;overflow:hidden;text-overflow:ellipsis;}
+.pmx-coderow b{color:var(--text);font-weight:600;}
+.pmx-coderow .text-button{min-height:32px;height:32px;padding:0 10px;border:0;background:none;color:var(--text);font:600 12px/16px var(--font-ui);text-decoration:underline;text-decoration-color:var(--border-strong);text-underline-offset:3px;}
+
+/* C27 guide (the one "recorded example" look): hairline above and below */
+.pmx-guide[data-placement]{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:12px;align-items:center;min-width:0;padding:7px 34px 7px 0;border:0;border-radius:0;background:none;box-shadow:0 -1px 0 var(--border),0 1px 0 var(--border);}
+.pmx-guide-cap{margin:0;display:flex;align-items:center;gap:6px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--subtle);}
+.pmx-guide-step{margin:3px 0 0;grid-column:1;min-width:0;font:var(--pmx-fs-sentence);color:var(--text);}
+.pmx-guide-acts{grid-column:2;grid-row:1 / 3;display:flex;gap:4px;}
+.pmx-guide-acts .text-button{height:32px;min-height:32px;padding:0 10px;color:var(--accent);font-weight:600;white-space:nowrap;}
+.pmx-guide > .pmx-guide-close{position:absolute;right:0;top:50%;margin-top:-15px;color:var(--muted);}
+.pmx-guide[data-placement="sheet"]{flex:none;margin-top:8px;padding-top:4px;padding-bottom:4px;grid-template-columns:auto minmax(0,1fr) auto;}
+.pmx-guide[data-placement="sheet"] .pmx-guide-step{grid-column:2;grid-row:1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-guide[data-placement="sheet"] .pmx-guide-acts{grid-column:3;grid-row:1;}
+
+/* C26 markdown */
+.pmx-md{min-width:0;font:var(--pmx-fs-body);color:var(--text);overflow-wrap:anywhere;}
+.pmx-md p{margin:0 0 8px;} .pmx-md p:last-child{margin-bottom:0;}
+.pmx-view .pmx-md p{color:inherit;max-width:78ch;}
+.pmx-view .pmx-md :is(h3, h4, h5){margin:14px 0 6px;font:var(--pmx-w-650) 13.5px/19px var(--font-ui);letter-spacing:0;color:var(--text);}
+.pmx-view .pmx-md h3{font-size:15px;line-height:21px;}
+.pmx-md ul, .pmx-md ol{margin:0 0 8px;padding-left:20px;}
+.pmx-md li{margin:2px 0;}
+.pmx-md-more{list-style:none;margin-left:-20px;color:var(--muted);}
+.pmx-md h3, .pmx-md h4, .pmx-md h5{margin:14px 0 6px;font:var(--pmx-w-650) 13.5px/19px var(--font-ui);color:var(--text);}
+.pmx-md h3{font-size:15px;line-height:21px;}
+.pmx-md a{color:var(--text);text-decoration:underline;text-decoration-color:var(--border-strong);text-underline-offset:3px;}
+.pmx-md blockquote, .pmx-md .pmx-md-quote{margin:8px 0;padding:0 0 0 14px;font:var(--pmx-w-reg) 13.5px/20px var(--pmx-voice);color:var(--muted);border:0;box-shadow:none;}
+.pmx-md hr{border:0;height:1px;background:var(--border);margin:12px 0;}
+.pmx-md :is(em, i, cite){font-style:normal;font-weight:var(--pmx-w-560);color:var(--text);}
+.pmx-md[data-mode="compact"]{font:var(--pmx-fs-sentence);color:var(--muted);}
+/* review cycle 2 (principle 5, 10.1 step 7): compact markdown lives in a 4-line budget (the builder counts it: a
+   paragraph 2 lines, a list one line per item, a code or table row 2) so a 1,500-word message never grows the card.
+   Paragraphs clamp to 2 lines (1 with data-clamp="1") ending in an ellipsis, list items are one line each; the
+   code row keeps its own flex look (the paragraph clamp used to override its display and lose the 7 px gaps). */
+.pmx-md[data-mode="compact"] p:not(.pmx-coderow){margin:0 0 4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.pmx-md[data-mode="compact"] p[data-clamp="1"]{-webkit-line-clamp:1;}
+.pmx-md[data-mode="compact"] > .pmx-coderow{margin:0 0 4px;}
+.pmx-md[data-mode="compact"] :is(ul, ol){margin:0 0 4px;}
+.pmx-md[data-mode="compact"] li{margin:0;}
+.pmx-md[data-mode="compact"] li > span{display:block;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-md[data-mode="compact"] > :is(p, ul, ol, div):last-child{margin-bottom:0;}
+/* inside a run card the compact block has the output preview's box: never taller than 88 px, whatever arrives */
+.pmx-run .pmx-md[data-mode="compact"]{max-height:88px;overflow:hidden;}
+.pmx-md[data-mode="compact"] b, .pmx-md[data-mode="compact"] strong{color:var(--text);}
+.pmx-md .pmx-code, .pmx-view pre.pmx-code{margin:8px 0;padding:10px 12px;border-radius:var(--pmx-r-md);background:var(--code);font:12px/1.6 var(--font-mono);color:var(--text);white-space:pre;overflow-wrap:normal;overflow:auto hidden;max-width:100%;scrollbar-width:thin;}
+.pmx-md .pmx-code code{white-space:pre;overflow-wrap:normal;background:none;padding:0;font:inherit;}
+.pmx-table-wrap{margin:8px 0;max-width:100%;overflow-x:auto;scrollbar-width:thin;}
+.pmx-table-wrap table{border-collapse:collapse;font:var(--pmx-w-reg) 12.5px/18.5px var(--font-ui);min-width:100%;width:auto;table-layout:auto;}
+.pmx-table-wrap th, .pmx-table-wrap td{text-align:left;padding:7px 12px 7px 0;min-width:120px;box-shadow:0 1px 0 var(--border);vertical-align:top;overflow-wrap:normal;}
+.pmx-table-wrap th{color:var(--muted);font-weight:600;font-size:11.5px;}
+
+/* ================================================================ D1-D5 run view (docked in the editor pane) */
+.pmx-view{container:pmxview / inline-size;min-width:0;max-width:980px;margin:0 auto;padding:4px 4px 60px;color:var(--text);box-sizing:border-box;}
+.pmx-view .pmx-view-head.drawer-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 16px;align-items:start;min-height:0;padding:0;border:0;background:none;box-shadow:none;}
+.pmx-view .pmx-view-head .pmx-view-title{grid-column:1;display:block;margin:0;font:var(--pmx-fs-view-title);letter-spacing:var(--pmx-ls-view-title,-.018em);color:var(--text);}
+.pmx-view .pmx-view-kind{grid-column:1;grid-row:2;max-width:none;margin:4px 0 0;display:flex;align-items:center;gap:6px;font:600 12px/16px var(--font-ui);color:var(--muted);}
+.pmx-view .pmx-view-status{grid-column:1;grid-row:3;max-width:none;margin:3px 0 0;font:var(--pmx-fs-sentence);color:var(--muted);}
+.pmx-view .pmx-view-status b{color:var(--text);}
+.pmx-view .pmx-view-head .pmx-view-acts{grid-column:2;grid-row:1 / 4;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-end;gap:4px;align-items:center;padding:0;border:0;background:none;}
+.pmx-view .pmx-view-acts .text-button{color:var(--muted);}
+.pmx-view-plate{margin:18px 0 0;}
+.pmx-view-plate .pmx-plate{margin:0;}
+.pmx-view > .pmx-tabs{margin-top:18px;}
+.pmx-view-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;margin-top:18px;min-width:0;}
+@container pmxview (min-width: 700px){ .pmx-view-grid:has(> .pmx-view-aside){grid-template-columns:minmax(0,1fr) 220px;} }
+.pmx-view-main, .pmx-view-aside{min-width:0;}
+.pmx-view-aside > * + *{margin-top:8px;}
+/* J-2 rule 6: stacked fine lines (the Figures) keep >= 6 px between their ink */
+.pmx-view :is(.pmx-view-aside, .pmx-vsec) .pmx-fine + .pmx-fine{margin-top:6px;}
+.pmx-view .pmx-md{font:var(--pmx-fs-body);}
+.pmx-vsec + .pmx-vsec{margin-top:26px;}
+.pmx-vsec > header{display:flex;align-items:baseline;gap:12px;margin-bottom:10px;}
+.pmx-vsec-title, .pmx-view .pmx-vsec-title{margin:0;font:var(--pmx-fs-view-h2);letter-spacing:-.01em;color:var(--text);}
+.pmx-timeline{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.pmx-timeline-bar{display:flex;align-items:center;gap:10px;}
+.pmx-timeline-bar .shared-picker-button{width:220px;}
+.pmx-entry{display:grid;grid-template-columns:22px minmax(0,1fr);column-gap:10px;min-width:0;}
+.pmx-entry > .pmx-mark{grid-row:1 / 3;}
+.pmx-entry > header{display:flex;align-items:baseline;gap:8px;min-width:0;font:var(--pmx-w-reg) 12.5px/18.5px var(--font-ui);}
+.pmx-entry > header b{color:var(--text);}
+.pmx-entry-body{grid-column:2;margin-top:3px;min-width:0;font:var(--pmx-fs-body);color:var(--text);}
+.pmx-entry[data-kind="system"]{display:block;text-align:center;}
+.pmx-entry[data-kind="system"] .pmx-entry-body{font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--subtle);}
+/* G-21 hook guard: the row carries collab-participant, whose legacy rule (collaboration.css, loaded later) gives it a
+   9 px padded, bordered, filled box; the doubled class keeps the row's own look (the cost sat 10 px from its edge) */
+.pmx-team-row.pmx-team-row{display:grid;grid-template-columns:22px minmax(0,1fr) auto auto;gap:12px;align-items:center;width:100%;min-height:52px;padding:8px 12px 8px 0;border:0;border-radius:0;background:none;text-align:left;color:var(--text);font:var(--pmx-fs-sentence);cursor:pointer;transform:none;}
+.pmx-team-row.pmx-team-row:hover, .pmx-team-row.pmx-team-row:focus-visible, .pmx-team-row.pmx-team-row:active{background:none;border-color:transparent;transform:none;}
+.pmx-team-row + .pmx-team-row{box-shadow:0 -1px 0 var(--border);}
+.pmx-team-who{min-width:0;}
+.pmx-team-who b{display:block;font-weight:600;}
+.pmx-team-who small{display:block;margin-top:3px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
+/* G-17 stand-in line (review cycle 2): the team sentence, then its fine print on its own line under it, aligned to
+   the text column (J-2 item 4). These guards outrank collaboration.css's .collab-route-eff{display:inline-flex;
+   gap:4px;font-weight:600}, which put the fine print BESIDE the sentence as a second cramped column, and its
+   -sub warning ink (a stand-in is information, A7). They also cover a caller's own .collab-route-eff span. */
+.pmx-team-row .pmx-team-who :is(.collab-route-eff, .pmx-route-eff), .pmx-participant > :is(.collab-route-eff, .pmx-route-eff){display:block;gap:0;font-weight:inherit;color:var(--muted);}
+.pmx-team-row .pmx-team-who :is(.collab-route-eff, .pmx-route-eff) .pmx-fine, .pmx-participant > :is(.collab-route-eff, .pmx-route-eff) .pmx-fine{display:block;margin-top:4px;}
+.pmx-team-row .pmx-team-who :is(.collab-route-eff-failed, .pmx-route-eff[data-tone="failed"]), .pmx-participant > :is(.collab-route-eff-failed, .pmx-route-eff[data-tone="failed"]){color:var(--danger);}
+.pmx-participant > :is(.collab-route-eff, .pmx-route-eff){margin:-4px 0 12px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);}
+/* 7.13 Activity Detail: 36 px rows (mark 18, name, one state word; the stand-in line under the name when requested and
+   effective differ) */
+.pmx-team-row.pmx-team-row[data-size="s"]{grid-template-columns:18px minmax(0,1fr) auto auto;gap:10px;min-height:36px;padding:8px 12px 8px 0;}
+.pmx-team-row[data-size="s"] .pmx-meta:empty{display:none;}
+.pmx-team-out{color:var(--muted);white-space:nowrap;}
+.pmx-team-row .pmx-meta{white-space:nowrap;}
+.pmx-view .pmx-participant h3, .pmx-participant h3{margin:0 0 10px;font:var(--pmx-fs-view-h2);color:var(--text);}
+.pmx-participant .pmx-empty{margin:0 0 12px;font:var(--pmx-fs-sentence);color:var(--muted);}
+
+/* ================================================================ 7.2 width tiers (the card is its own container) */
+@container pmxrun (max-width: 359.98px){
+  .pmx-run-kindword{display:none;}
+  .pmx-cluster:not(.pmx-cluster--mini) > :is(.pmx-mark, .pmx-cluster-screen):not(:first-child), .pmx-cluster:not(.pmx-cluster--mini) > .pmx-cluster-more{display:none;}
+  .pmx-cluster:not(.pmx-cluster--mini)[data-count]:not([data-count="0"]):not([data-count="1"])::after{content:attr(data-count);margin-left:3px;font:500 11px/16px var(--font-ui);color:var(--muted);}
+  .pmx-lane{grid-template-columns:22px minmax(0,1fr);}
+  .pmx-lane-time{display:none;}
+  .pmx-lane-l2{grid-column:2;}
+  .pmx-track-line{display:none;}
+  /* the sentence and decision boxes grow to three lines (7.2: 54 px; the third line's ink ends above it), clamped
+     with an ellipsis; the body's rhythm is 8 so the live face stays inside 360 */
+  .pmx-sentence[data-status], .pmx-decision-say{height:54px;}
+  .pmx-run .pmx-run-body{gap:8px;}
+  .pmx-sentence .pmx-st-text, .pmx-decision-say > span{-webkit-line-clamp:3;}
+  .pmx-long{display:none;}
+  .pmx-receipt .pmx-receipt-meta .pmx-receipt-cost, .pmx-receipt .pmx-receipt-meta .pmx-receipt-sep{display:none;}
+  /* the decision's buttons use the card's full width (no glyph indent) and the J-2 minimum 10 px sides, so the
+     three answers of a needs-you row stay on one row (it wrapped to two and put the S face over 405) */
+  .pmx-decision-acts{padding-left:0;}
+  .pmx-decision-acts .pmx-act, .pmx-decision-acts .pmx-act.primary-button{padding:0 10px;}
+  /* the vote board folds to two columns (option | deciding, option | abstained): the reference's 1fr 72 1fr 58 left
+     each option 49 px at a 311 px card, and two 64 px voters ran past it */
+  .pmx-votes{grid-template-columns:minmax(0,1fr) minmax(0,1fr);height:auto;row-gap:10px;padding:8px 12px;}
+  .pmx-votes > *{min-height:84px;}
+  .pmx-vote-aisle{box-shadow:none;padding:0;}
+  /* one action row: the card's own actions stay, a kind's extras move into More (C12, 7.2) */
+  .pmx-actions > .pmx-act-extra{display:none;}
+  /* the output keeps two preview lines; "+N more" takes the credits band's fourth column */
+  .pmx-output-pre > span:nth-child(n+3){display:none;}
+}
+/* A receipt keeps its headline readable (R-21): below the L tier the kind word drops (the mark stays), and the
+   mini cluster and time · cost move into the headline's hover card, which the builder writes (with "Recorded
+   example · no AI cost" first for a recorded run, IMPACT A1-24). The three actions always stay. */
+@container pmxrun (max-width: 519.98px){ .pmx-receipt .pmx-cluster--mini, .pmx-receipt .pmx-receipt-meta{display:none;} }
+@container pmxrun (min-width: 520px){
+  .pmx-lane-sub{display:inline;}
+  .pmx-stop-label{display:inline;}
+  .pmx-stop-label:empty{display:none;}
+  .pmx-track:has(.pmx-stop-label:not(:empty)) .pmx-track-now{display:none;}
+  .pmx-track-line .pmx-stop + .pmx-stop::before{width:14px;margin:0 6px;}
+  .pmx-credits ul{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 16px;}
+  .pmx-credits li{grid-template-columns:18px auto minmax(0,1fr);grid-template-rows:auto;align-items:center;column-gap:7px;}
+  .pmx-credits li:nth-child(n+4):not(.pmx-credits-more){display:grid;}
+  .pmx-credits-more{display:none !important;}
+  .pmx-did{-webkit-line-clamp:1;}
+  .pmx-result-headline{font:var(--pmx-fs-result-l);}
+  .pmx-result-sub{margin-left:28px;}
+}
+/* R-21: the run title shows only on a card of 640 px or more (at 591 it left the headline nothing) */
+@container pmxrun (min-width: 640px){ .pmx-receipt .pmx-receipt-title{display:block;} }
+/* Below 260 px (1024 x 768 and 900 x 800 with the history rail pinned: 230 and 204 px cards; 7.2 names 211 as an S
+   example) nothing may be wider than the card (10.1 step 7) and every face keeps its S budget (review cycle 2): the
+   output head wraps (the diff on its own line, the meta dropped first), the vote board has already folded at S, and
+   every head, track and cluster child can shrink and ellipsize. */
+@container pmxrun (max-width: 259.98px){
+  .pmx-run .pmx-run-head > *, .pmx-track > *, .pmx-cluster > *{min-width:0;}
+  .pmx-run .pmx-run-head > .pmx-run-kind{flex:0 1 auto;overflow:hidden;}
+  .pmx-run .pmx-run-head > .pmx-clock{min-width:0;}
+  .pmx-track-now{flex:1 1 auto;}
+  .pmx-output-head{flex-wrap:wrap;row-gap:2px;white-space:normal;}
+  .pmx-output-head > span:not(.pmx-diff){display:none;}
+  .pmx-output-head > b{flex:1 1 0;min-width:0;white-space:nowrap;}
+  .pmx-diff{flex:1 0 100%;margin-left:0;white-space:normal;overflow-wrap:anywhere;}
+  /* one text action (Open Panel) beside the chevron and More; the others are in More */
+  .pmx-actions > .pmx-act:not(.icon-button) ~ .pmx-act:not(.icon-button){display:none;}
+  /* review cycle 2: every face holds its S budget here too (7.2: live 360, attention and result 400) by dropping,
+     never by wrapping or compressing (J-2). The output preview keeps one line; the figures sentence may take two. */
+  .pmx-output-pre > span:nth-child(n+2){display:none;}
+  .pmx-result-sub{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:clip;}
+  /* credits: one row, the first helper (mark and full name, no `did`) and "+N more"; the run view has the list */
+  .pmx-credits ul{display:flex;flex-wrap:nowrap;align-items:center;gap:12px;}
+  .pmx-credits li{display:flex;align-items:center;gap:6px;flex:0 1 auto;min-width:0;}
+  .pmx-credits li > :first-child{flex:none;}
+  .pmx-credits li > b{min-width:0;}
+  .pmx-credits .pmx-did{display:none;}
+  .pmx-credits li:nth-child(n+2):not(.pmx-credits-rest), .pmx-credits[data-count] li.pmx-credits-more{display:none;}
+  .pmx-credits .pmx-credits-rest{display:flex !important;flex:none;}
+  /* attention: one lane (its first line only) and the builder's narrow "+N more · Show all" row, whose count
+     includes the lanes hidden here */
+  .pmx-run[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > :is(.pmx-lane ~ .pmx-lane, .pmx-lanes-more:not(.pmx-lanes-more-s)){display:none;}
+  .pmx-run[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s{display:flex;}
+  .pmx-run[data-density="attention"] .pmx-lane{grid-template-rows:17.5px;row-gap:0;height:40px;min-height:40px;padding:0;align-content:center;}
+  .pmx-run[data-density="attention"] .pmx-lane-mark{grid-row:1;}
+  .pmx-run[data-density="attention"] .pmx-lane-l2{display:none;}
+  /* the decision keeps its answers; a third, text-only one (Details) moves into More when the card has one */
+  .pmx-run:has(.pmx-run-foot [aria-label="More"]) .pmx-decision-acts > .pmx-act-extra{display:none;}
+  /* the action row stays one row: the primary keeps the J-2 minimum 10 px sides and the spacer's two gaps give way
+     to an auto margin (retro's and friendly's wider "Open Panel" wrapped the More button onto a second row) */
+  .pmx-actions > .pmx-act.primary-button{padding:0 10px;}
+  .pmx-actions > .pmx-grow{display:none;}
+  .pmx-actions > .pmx-grow + .pmx-act{margin-left:auto;}
+  /* Review: the dissent quote keeps two lines, a finding's To-Do line one */
+  .pmx-quote blockquote{-webkit-line-clamp:2;}
+  .pmx-quote figcaption{grid-column:1 / -1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .pmx-finding-todo{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+}
+
+/* ================================================================ smaller windows (6.2): placed last so they
+   outrank the base sheet rules above at equal specificity */
+/* A narrower wide sheet (1024 x 768): the main column keeps more room, the roster
+   narrows its model and persona columns. */
+@media (max-width: 1167.98px){
+  .pmx-sheet--wide .pmx-body{grid-template-columns:minmax(0,1.37fr) minmax(0,1fr);gap:28px;}
+  .pmx-sheet .pmx-roster{--pmx-cols:24px minmax(80px,1fr) 172px 132px 66px;}
+  body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:24px minmax(64px,1fr) 176px 132px 66px;}
+  .pmx-sheet .pmx-ctl{grid-template-columns:minmax(0,1fr) 184px;}
+}
+/* Below a 900 px sheet (the 900 / 700 wide windows): one column, the body
+   scrolls inside itself with fades; head and foot stay put. */
+@media (max-width: 947.98px){
+  .pmx-sheet .pmx-body{grid-template-columns:minmax(0,1fr);gap:20px;overflow:hidden auto;margin-right:-14px;padding-right:14px;scrollbar-width:thin;
+    -webkit-mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 14px),transparent);mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 14px),transparent);}
+  .pmx-sheet .pmx-body > .pmx-col{min-height:auto;}
+  .pmx-sheet .pmx-col, .pmx-sheet .pmx-col--side{overflow:visible;}
+  .pmx-sheet .pmx-hero{grid-template-columns:minmax(0,1fr);}
+  /* one scrolling column has height to spare: the plate slot shows the richest mode that fits the width at its
+     natural height (the runtime reads --pmx-fit-free) */
+  .pmx-sheet .pmx-plate-fit{--pmx-fit-free:1;flex:none;height:auto;max-height:none;}
+  .pmx-sheet .pmx-plate-fit > .pmx-plate:not([data-mode="caption"]){height:var(--pmx-plate-h);}
+  /* one column has the width back: the roster's model and persona columns return to their full widths (the 1024
+     rule narrowed them, which cut "Implementer" and the model names at 900 and 700) */
+  .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(96px,1fr) 176px 140px 66px;}
+  body[data-theme^="friendly"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(90px,1fr) 188px 144px 66px;}
+  body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 188px 150px 66px;}
+  /* the Advanced page scrolls with the body, never inside a clipped grid */
+  .pmx-sheet .pmx-advpage{min-height:auto;}
+  .pmx-sheet .pmx-advgrid{min-height:auto;overflow:visible;}
+  .pmx-sheet .pmx-foot{height:auto;min-height:72px;padding-top:10px;padding-bottom:10px;}
+  .pmx-sheet > .pmx-foot{padding:10px 28px !important;}
+}
+
+/* R-20: below a 960 px window the preview hides and the hero keeps the full width (with no preview to fly from,
+   the new card fades in: PM56_PMX.handoff.arm) */
+@media (max-width: 959.98px){
+  .pmx-sheet .pmx-hero{grid-template-columns:minmax(0,1fr);}
+  .pmx-sheet .pmx-hero-side{display:none;}
+}
+
+/* a plan's cap sentence that stands in for the stepper's helper always wraps (never truncated); placed before the
+   short-window block so its two-line clamp there (and retro's) still applies */
+.pmx-sheet .pmx-ctl-copy .pmx-help:has(> .pmx-step-capsay){white-space:normal !important;overflow:visible !important;}
+
+/* ================================================================ J-2 short windows (<= 820 px tall)
+   Gaps never compress (owner amendment J-2). The sheet reflows instead: the hero helper and the shelf
+   intro drop, side-column helpers truncate to one line with an ellipsis, specialists drop their helper
+   line, the roster's column helpers drop, and the plate yields to the richest mode that fits. */
+@media (max-height: 820px){
+  .pmx-sheet .pmx-hero-main > .pmx-help{display:none;}
+  .pmx-sheet .pmx-col--side .pmx-ctl-copy .pmx-help{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .pmx-sheet .pmx-col--side .pmx-shelf > .pmx-help{display:none;}
+  .pmx-sheet .pmx-col--side .pmx-spec-copy .pmx-help{display:none;}
+  .pmx-sheet .pmx-col--side .pmx-spec{min-height:44px;padding:4px 0;}
+  /* the Crew Auto promise is secondary: it drops before any gap shrinks (J-1/J-2 reference update) */
+  .pmx-sheet .pmx-col--side .pmx-promise:is([data-pmx-part~="auto"], [data-pmx-affects~="auto"]){display:none;}
+  .pmx-sheet .pmx-col--side .pmx-spec[data-state="on"]{padding:9px 0;}
+  .pmx-sheet .pmx-roster-col small{display:none;}
+  body[data-theme^="retro"] .pmx-sheet .pmx-set .pmx-help{display:none;}
+  /* the Advanced summary keeps one line; a side-column trigger's second label line drops (the trigger keeps
+     its own 40 px and 7 x 10 padding: only the label it is given gets shorter) */
+  .pmx-sheet .pmx-adv-sum{-webkit-line-clamp:1;}
+  .pmx-sheet .pmx-col--side .pmx-ctl .shared-picker-copy small{display:none;}
+  /* side-column promise lines keep one line each (the full sentence is the hover card's): Poppins wraps them */
+  .pmx-sheet .pmx-col--side .pmx-promise > span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .pmx-sheet .pmx-ctl-copy .pmx-help:has(> .pmx-step-capsay){display:-webkit-box !important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden !important;}
+}
+body[data-theme^="retro"] .pmx-sheet .pmx-ctl-copy .pmx-help:has(> .pmx-step-capsay){display:-webkit-box !important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden !important;}
+body[data-theme^="retro"] .pmx-sheet .pmx-route{font-size:11px;line-height:16px;}
+body[data-theme^="retro"] .pmx-sheet .pmx-title > span{margin-top:5px;}
+body[data-theme^="retro"] .pmx-switch:not(.pmx-switch--small) .pmx-switch-word{font-size:17px;line-height:22px;}
+/* retro: the wide mono promise lines keep one line each (ellipsis; the full sentence is the hover card's) */
+body[data-theme^="retro"] .pmx-sheet .pmx-promise > span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* J-1 (lead finding): the static Poppins and IBM Plex Mono cuts ship 400/500/600/700 only. Inside pmx surfaces ask for
+   the weight that actually renders (the preserved trigger's 550 draws the 600 cut, the house primary's 680 the 700 cut),
+   so no weight is requested that no embedded face provides; the rendered text is unchanged. */
+body:is([data-theme^="retro"], [data-theme^="friendly"]) :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide) .shared-picker-copy strong{font-weight:600;}
+body:is([data-theme^="retro"], [data-theme^="friendly"]) :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide) .primary-button{font-weight:700;}
+/* friendly: Poppins' ink runs taller than Inter's, so a sheet or run-view button is 36 px tall and keeps 7 px of
+   padding above and below its label (J-2 rule 2, eight-theme verification IMPACT A2-25); cards keep 32 (12 px labels) */
+body[data-theme^="friendly"] :is(.pmx-sheet, .pmx-view) :is(.text-button, .soft-button, .primary-button):not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *, .pmx-row-act, .pmx-step, .icon-button){min-height:36px;}
+body[data-theme^="friendly"] .pmx-sheet :is(.pmx-cancel, .pmx-save, .pmx-confirm-acts > button, .pmx-advpage-head .text-button, .pmx-addrow),
+body[data-theme^="friendly"] .pmx-view .pmx-view-acts :is(.primary-button, .text-button){height:36px;min-height:36px;}
+/* retro: IBM Plex Mono runs wide and tall; button labels step down to 12 px so a 32 px button keeps 7 px above and below */
+body[data-theme^="retro"] :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-bubble, .pmx-guide, .pmx-files) :is(.text-button, .primary-button, .soft-button):not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *){font-size:12px;}
