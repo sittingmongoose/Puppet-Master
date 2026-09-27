@@ -22,3 +22,4 @@
 #panel-settings .o55-setup-summary { margin: 0; }
 html[data-theme^="retro"] #panel-settings :is(.o55-tile, .o55-tile-icon) { border-radius: 2px; }
 @media (prefers-reduced-motion: reduce) { #panel-settings .o55-tile { transition: none; } #panel-settings .o55-tile:active { transform: none; } }
+#panel-settings .o55-setup-fields .o55-chips { justify-content: flex-start; max-width: none; }
