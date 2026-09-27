@@ -1408,6 +1408,7 @@
       "x-claim-boundary": "persisted policy state shape only; no scheduler ran, no check executed, no timestamp was observed from a wall clock",
       "required": [
         "schema_id",
+        "schema_version",
         "record_kind",
         "home_server_id",
         "application_id",
@@ -1433,6 +1434,7 @@
         "schema_id": {
           "const": "pm.release_update.check_schedule_state.v1"
         },
+        "schema_version": {"const": "1.0.0"},
         "record_kind": {
           "const": "ApplicationUpdateCheckScheduleState"
         },
@@ -1691,7 +1693,7 @@
     "ApplicationUpdateSchedulingAdvancement": {
       "type": "object",
       "additionalProperties": false,
-      "x-primary-identity-fields": ["home_server_id", "application_id", "channel_id"],
+      "x-primary-identity-fields": ["home_server_id", "application_id", "channel_id", "schedule_evaluation_ref"],
       "x-claim-boundary": "static advancement-rule shape only; no check ran and no successful-check basis advanced",
       "required": [
         "schema_id",
@@ -1699,6 +1701,7 @@
         "home_server_id",
         "application_id",
         "channel_id",
+        "schedule_evaluation_ref",
         "policy_snapshot_ref",
         "expected_policy_generation",
         "check_dispatch_origin",
@@ -1742,6 +1745,10 @@
           "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
         },
         "channel_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "schedule_evaluation_ref": {
+          "description": "Owner-issued identity of this particular scheduling evaluation, distinct for a fresh result and a later cache or coalesced reuse of its receipt.",
           "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
         },
         "policy_snapshot_ref": {"$ref": "#/$defs/ApplicationUpdateNonSecretRef"},

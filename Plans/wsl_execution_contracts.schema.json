@@ -72,6 +72,7 @@
     "wsl_host_state_record": {
       "type": "object",
       "additionalProperties": false,
+      "x-primary-identity-fields": ["host_id", "shared_runtime_projection_ref"],
       "required": ["schema_id", "schema_version", "host_id", "observed_at", "shared_runtime_projection_ref", "wsl_state", "health"],
       "properties": {
         "schema_id": {"const": "pm.wsl.host_state.v1"},
@@ -145,6 +146,7 @@
     "wsl_acquisition_record": {
       "type": "object",
       "additionalProperties": false,
+      "x-primary-identity-fields": ["host_id", "distro_id", "lifecycle_ref"],
       "required": ["schema_id", "schema_version", "host_id", "distro_name", "distro_id", "acquisition_mode", "ownership", "compatibility_probe_ref", "image_proof", "lifecycle_ref", "decided_at"],
       "properties": {
         "schema_id": {"const": "pm.wsl.acquisition.v1"},
