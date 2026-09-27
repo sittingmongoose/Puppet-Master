@@ -119,7 +119,7 @@ def main() -> int:
             rows[0].update(expected)
         else:
             registry["families"].append(expected)
-        path.write_text(json.dumps(registry, indent=2) + "\n")
+        path.write_text(json.dumps(registry, indent=2, ensure_ascii=False) + "\n")
     failures = validate(registry)
     print(json.dumps({"check": "application-update-schedule-storage", "status": "fail" if failures else "pass", "claim_boundary": "static_owner_schema_registry_consistency", "failures": failures}, indent=2))
     return int(bool(failures))

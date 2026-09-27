@@ -311,8 +311,9 @@ class OnboardingStorageTests(unittest.TestCase):
         #   cycle-2 residual R4-01 (the platform form admits hyphens), on branch
         #   plans/ea-s09-coord-registered-20260925.
         families = self.registry["families"]
-        self.assertEqual(len(families), 294)
-        self.assertEqual(len({row["family_id"] for row in families}), 294)
+        # SP-322 adds the Release-owned application_update_check_schedule family.
+        self.assertEqual(len(families), 295)
+        self.assertEqual(len({row["family_id"] for row in families}), 295)
         added = [row for row in families if row["family_id"] == "run_started_index_checkpoint"]
         browser_checkpoint = [row for row in families if row["family_id"] == "browser_workspace_created_index_checkpoint"]
         self.assertEqual(len(browser_checkpoint), 1)
@@ -325,7 +326,7 @@ class OnboardingStorageTests(unittest.TestCase):
         )
         # 2026-09-26 packet integration materializes onboarding_state from current Project,
         # Settings and Onboarding owners via pm-onboarding-contracts.py --materialize.
-        # Against origin/main only onboarding_state changes; 294 families and all policies remain.
+        # The onboarding pin preceded SP-322; its added schedule family brings the census to 295.
         prior = families[:88]
         self.assertEqual(len(prior), 88)
         def canonical_digest(value):

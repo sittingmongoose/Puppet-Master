@@ -18,7 +18,9 @@ The unfinished Settings branch introduces an authored `src/settings` layer. [The
 
 ## Verification and limits
 
-- Named Plan: 14 focused tests; Azure: 7 focused tests and 31 compared owner/return scenarios; provider fixture-gate enrollment: 9 tests.
+The complete contract gate passes: 35 schema/fixture pairs, 1,300/1,300 positive cases, 3,702/3,702 rejected negatives, and the storage, platform, Forge, Backup and Git owner comparisons.
+
+- All 260 focused owner/inventory/response/storage regression tests pass. Named Plan: 14 focused tests; Azure: 7 focused tests and 31 compared owner/return scenarios; provider fixture-gate enrollment: 9 tests.
 - Git: 25 positive records, 27 negative cases and 7 preview joins. Backup depth/admission and Forge runner-producer joins have focused executable checks. WSL/assurance/update scheduling has a shared focused checker also invoked by the central gate.
 - UI branch: 9 backup self-tests; 16/16 focused selected-concept browser assertions; Tour Keep, Skip, missing-reference reload refusal and explicit recovery restart scenarios pass. Build/check and TestOpus/PMConcept7 identity checks pass.
 - Source evidence paths and SHA-256 values are in [evidence.json](evidence.json). [repair-status.json](repair-status.json) identifies each finding's owner, proof and integration status. The landing gate is evaluated separately against the repository baseline; this report makes no blanket claim that pre-existing governance failures are cleared.
