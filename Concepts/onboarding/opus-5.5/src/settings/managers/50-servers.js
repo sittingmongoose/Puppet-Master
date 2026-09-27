@@ -228,10 +228,10 @@
       });
     }
     const advanced = PM51.advanced([
-      PM51.section({ title: 'Claim and bootstrap', body: PM51.kv([['Claimed', isClaimed(srv) ? 'Yes · identity confirmed' : 'Not yet'], ['Identity', fingerprint(srv)], ['Trust', isClaimed(srv) ? 'Owner' : 'None until claimed'], ['Bootstrap', srv.role === 'This computer' ? 'Installed with the app' : 'Claimed from an existing install']]) + `<div class="pm51-servers-actions" style="margin-top:10px">${pm7ConsumerButton('command', 'cmd.server.claim', 'Claim this server')}${pm7ConsumerButton('command', 'cmd.server.bootstrap.start', 'Set up a new server')}</div>` }),
+      PM51.section({ title: 'Claim and bootstrap', body: PM51.kv([['Claimed', isClaimed(srv) ? 'Yes · identity confirmed' : 'Not yet'], ['Identity', fingerprint(srv)], ['Trust', isClaimed(srv) ? 'Owner' : 'None until claimed'], ['Bootstrap', srv.role === 'This computer' ? 'Installed with the app' : 'Claimed from an existing install']]) + `<div class="pm51-servers-actions" style="margin-top:10px">${PM51.btn({ label: 'Claim this server', small: true, icon: 'lock', action: 'pm51-servers-claim', data: { id: srv.id }, disabled: isClaimed(srv), reason: 'This server is already yours.' })}${PM51.btn({ label: 'Set up a new server', small: true, icon: 'plus', action: 'pm51-servers-add' })}</div>` }),
       PM51.section({ title: 'Deployment', body: PM51.kv([['How it runs', srv.deployment || 'Unknown'], ['Image', /container/i.test(srv.deployment || '') ? 'puppetmaster/server:0.8.0' : 'Not a container'], ['Environments', (srv.environments || []).join(' · ') || 'None reported']]) }),
       PM51.section({ title: 'Full server backup', help: 'Backs up everything on this server, not just this workspace.', body: PM51.rows([{ label: 'Whole-server backup', help: 'Set up and run from Backup & Restore.', action: { label: 'Open Backup & Restore', action: 'pm51-go', data: { domain: 'system', workspace: 'backup' }, icon: 'arrowRight' } }]) }),
-      PM51.section({ title: 'Host and environment details', body: `<div class="pm51-servers-actions">${pm7ConsumerButton('local', 'ui.execution_host.open_details', 'Host details')}${pm7ConsumerButton('local', 'ui.execution_environment.open_details', 'Environment details')}${pm7ConsumerButton('local', 'ui.execution_environment.open_logs', 'Environment logs')}${pm7ConsumerButton('command', 'cmd.execution_host.capabilities.refresh', 'Refresh capabilities')}${pm7ConsumerButton('command', 'cmd.execution_host.register', 'Add a host')}</div>` }),
+      PM51.section({ title: 'Host and environment details', body: `<div class="pm51-servers-actions">${PM51.btn({ label: 'Check this server', small: true, icon: 'test', action: 'pm51-servers-test', data: { id: srv.id } })}${PM51.btn({ label: 'Add another server', small: true, icon: 'plus', action: 'pm51-servers-add' })}</div>` }),
       PM51.section({ title: 'Topology diagnostics', body: PM51.kv([['Servers', String(S.servers.length)], ['Devices', String(S.devices.length)], ['Routes ready', String(readyRoutes().length)]]) + `<div style="margin-top:10px"></div>` })
     ].join(''));
     return PM51.listDetail({
@@ -386,7 +386,7 @@
     });
     const advanced = PM51.advanced([
       PM51.section({ title: 'Move history', body: M.history.length ? PM51.kv(M.history.map(x => [`${x.time} · ${x.kind || 'Move'}`, `${x.destination} · ${x.result}`])) : PM51.empty('No moves yet', 'Moves and copies you start show up here.') }),
-      PM51.section({ title: 'Technical details', body: `<div class="pm51-servers-actions">${pm7ConsumerButton('local', 'ui.project.move.open_details', 'Move details')}${pm7ConsumerButton('command', 'cmd.project.move.preflight', 'Preflight move')}${pm7ConsumerButton('command', 'cmd.project.move.start', 'Start move')}${pm7ConsumerButton('command', 'cmd.project.duplicate_configuration', 'Copy configuration')}${pm7ConsumerButton('command', 'cmd.project.duplicate_with_history', 'Copy with history')}</div>` })
+      PM51.section({ title: 'Technical details', body: `<div class="pm51-servers-actions">${PM51.btn({ label: 'Check a move first', small: true, icon: 'test', action: 'pm51-servers-move-check' })}${PM51.btn({ label: 'Copy with history…', small: true, icon: 'copy', action: 'pm51-servers-copy' })}</div>` })
     ].join(''));
     return move + copy + conflicts + advanced;
   }

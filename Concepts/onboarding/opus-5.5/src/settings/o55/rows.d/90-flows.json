@@ -1,0 +1,885 @@
+{
+ "_about": "Inventory actions that used to open a generic panel: each now routes to the page that does it, or runs a small flow (kit.d/65-flows.js).",
+ "rows": {
+  "ai.accounts.github-connect": {
+   "label": "GitHub connection",
+   "actionLabel": "Open Source Control",
+   "route": {
+    "domain": "source",
+    "workspace": "source-manager"
+   },
+   "routeToast": [
+    "GitHub is set up in Source Control",
+    "Connect or disconnect it with the other code services."
+   ]
+  },
+  "branching.subagents.agent-control-envelope": {
+   "actionLabel": "See the rules helpers get",
+   "flow": {
+    "kind": "list",
+    "icon": "lock",
+    "listTitle": "Every helper starts with",
+    "intro": "Frozen before its first call; a helper can never loosen it.",
+    "items": [
+     {
+      "label": "How freely it may act",
+      "help": "Same as the chat that started it, or stricter",
+      "value": "Regular"
+     },
+     {
+      "label": "What it may write",
+      "help": "Only its own workspace",
+      "value": "Workspace only"
+     },
+     {
+      "label": "Models",
+      "help": "The helper model in Models, with its fallbacks",
+      "value": "Claude Sonnet"
+     },
+     {
+      "label": "Tools",
+      "help": "Everything the parent has, minus web writes",
+      "value": "24 tools"
+     },
+     {
+      "label": "Budget",
+      "help": "Stops when it has used this much",
+      "value": "$2.00 per helper"
+     }
+    ]
+   }
+  },
+  "branching.subagents.child-agent-lease": {
+   "actionLabel": "See a helper's contract",
+   "flow": {
+    "kind": "list",
+    "icon": "file",
+    "listTitle": "The contract",
+    "intro": "What a helper is asked to do and how it hands back its work.",
+    "items": [
+     {
+      "label": "Parent goal",
+      "help": "Ship recipe scaling",
+      "value": "G-118"
+     },
+     {
+      "label": "Allowed step",
+      "help": "Write tests for scaled_quantity",
+      "value": "One step"
+     },
+     {
+      "label": "Reads and writes",
+      "help": "Reads the project, writes only its workspace",
+      "value": "Read and write"
+     },
+     {
+      "label": "Hands back",
+      "help": "A patch and a short summary for the parent to review",
+      "value": "Patch + summary"
+     },
+     {
+      "label": "Time limit",
+      "help": "Stops and reports after",
+      "value": "20 minutes"
+     }
+    ]
+   }
+  },
+  "branching.worktrees.clean-all-worktrees": {
+   "actionLabel": "Remove all workspaces",
+   "danger": true,
+   "flow": {
+    "kind": "confirm",
+    "danger": true,
+    "primary": "Remove all 4",
+    "message": "Removes every AI workspace in this project: feature/recipe-scaling, fix/pagination, try/new-parser and chat-8812. Work that was never merged is lost. Your own branches and the main checkout are not touched.",
+    "done": [
+     "Workspaces removed",
+     "4 workspaces are gone."
+    ]
+   }
+  },
+  "branching.worktrees.clean-workspace-now": {
+   "actionLabel": "Clean this workspace",
+   "flow": {
+    "kind": "check",
+    "icon": "trash",
+    "primary": "Clean it",
+    "summary": "Removes files that are not tracked and not ignored on purpose. Tracked changes are kept.",
+    "steps": [
+     {
+      "title": "Find stray files",
+      "desc": "target/, .cache/ and 38 other files",
+      "result": "Found 40"
+     },
+     {
+      "title": "Keep anything you marked to keep",
+      "desc": ".env.local is kept",
+      "result": "Kept 1"
+     },
+     {
+      "title": "Remove the rest",
+      "desc": "Moved to the trash first, so you can undo",
+      "result": "Removed 39"
+     }
+    ],
+    "outcome": "39 stray files removed"
+   }
+  },
+  "branching.worktrees.recovery-tools": {
+   "actionLabel": "Open recovery tools",
+   "flow": {
+    "kind": "list",
+    "icon": "restore",
+    "listTitle": "What went wrong?",
+    "intro": "Pick what matches. Each one undoes safely instead of asking you to type git commands.",
+    "items": [
+     {
+      "label": "A merge stopped halfway",
+      "help": "Puts the branch back where it was before the merge",
+      "action": "Undo the merge",
+      "doneText": "The branch is back where it was."
+     },
+     {
+      "label": "A workspace has no branch any more",
+      "help": "Finds workspaces whose branch was deleted",
+      "value": "2 found",
+      "action": "Tidy them up",
+      "doneText": "2 orphaned workspaces removed."
+     },
+     {
+      "label": "I committed to the wrong branch",
+      "help": "Moves your last commit to a new branch",
+      "action": "Move my last commit",
+      "doneText": "Moved to a new branch: rescue/last-commit."
+     },
+     {
+      "label": "Something is locked",
+      "help": "Clears a stale git lock left by a crash",
+      "action": "Clear the lock",
+      "doneText": "The lock is cleared."
+     }
+    ]
+   }
+  },
+  "branching.worktrees.thread-worktree-binding": {
+   "actionLabel": "Set up this chat's workspace",
+   "flow": {
+    "kind": "form",
+    "icon": "branch",
+    "primary": "Save",
+    "summary": "Where this chat's changes are made. Status: clean, 2 commits ahead of main.",
+    "fields": [
+     {
+      "key": "where",
+      "label": "This chat works in",
+      "type": "select",
+      "options": [
+       [
+        "own",
+        "Its own workspace (chat-8812)"
+       ],
+       [
+        "main",
+        "The main checkout"
+       ],
+       [
+        "other",
+        "Another workspace"
+       ]
+      ]
+     },
+     {
+      "key": "branch",
+      "label": "Branch name",
+      "value": "chat/8812-recipe-scaling",
+      "mono": true
+     },
+     {
+      "key": "cleanup",
+      "label": "Remove the workspace when the chat is archived",
+      "type": "toggle",
+      "value": true
+     },
+     {
+      "key": "pr",
+      "label": "Open a pull request when the work is done",
+      "type": "toggle",
+      "value": false
+     }
+    ]
+   }
+  },
+  "code.execution.edit-publisher-xml": {
+   "actionLabel": "Edit the publisher profile",
+   "flow": {
+    "kind": "form",
+    "icon": "edit",
+    "size": "wide",
+    "primary": "Save profile",
+    "fields": [
+     {
+      "key": "name",
+      "label": "Publisher name",
+      "value": "Tastebook"
+     },
+     {
+      "key": "site",
+      "label": "Support page",
+      "value": "https://github.com/sittingmongoose/tastebook",
+      "mono": true
+     },
+     {
+      "key": "icon",
+      "label": "Icon address",
+      "placeholder": "https://…/icon.png",
+      "mono": true
+     },
+     {
+      "key": "xml",
+      "label": "Other fields (raw ca_profile.xml)",
+      "type": "textarea",
+      "mono": true,
+      "rows": 8,
+      "value": "<Maintainer>\n  <Donate>https://…</Donate>\n  <Forum>https://forums.unraid.net/…</Forum>\n</Maintainer>",
+      "help": "Only for fields the form above does not cover."
+     }
+    ]
+   }
+  },
+  "code.execution.unraid-repo-setup": {
+   "actionLabel": "Set up the template repository",
+   "flow": {
+    "kind": "form",
+    "icon": "archive",
+    "primary": "Set it up",
+    "external": true,
+    "fields": [
+     {
+      "key": "mode",
+      "label": "Repository",
+      "type": "select",
+      "options": [
+       [
+        "new",
+        "Make a new one"
+       ],
+       [
+        "existing",
+        "Use one I already have"
+       ]
+      ]
+     },
+     {
+      "key": "repo",
+      "label": "Repository address",
+      "placeholder": "github.com/you/unraid-templates",
+      "required": true,
+      "mono": true
+     },
+     {
+      "key": "branch",
+      "label": "Branch",
+      "value": "main",
+      "mono": true
+     },
+     {
+      "key": "folder",
+      "label": "Templates folder",
+      "value": "templates/",
+      "mono": true
+     },
+     {
+      "key": "push",
+      "label": "Push new templates straight away",
+      "type": "toggle",
+      "value": false
+     }
+    ],
+    "note": "Puppet Master checks the branch and folder layout before it pushes anything.",
+    "done": [
+     "Template repository set up",
+     "Checked the branch and layout."
+    ]
+   }
+  },
+  "code.execution.unraid-review-state": {
+   "actionLabel": "Check the template repository",
+   "flow": {
+    "kind": "check",
+    "icon": "test",
+    "primary": "Check it",
+    "steps": [
+     {
+      "title": "Settings file",
+      "desc": "templates/ca_profile.xml reads cleanly",
+      "result": "OK"
+     },
+     {
+      "title": "In step with GitHub",
+      "desc": "1 commit behind origin/main",
+      "result": "Behind",
+      "resultTone": "attention"
+     },
+     {
+      "title": "Unrelated changes",
+      "desc": "None found",
+      "result": "OK"
+     }
+    ],
+    "outcome": "1 thing to fix: pull the latest commit"
+   }
+  },
+  "general.interaction.history-compare": {
+   "actionLabel": "Compare two versions",
+   "flow": {
+    "kind": "form",
+    "icon": "history",
+    "primary": "Compare",
+    "fields": [
+     {
+      "key": "a",
+      "label": "Older version",
+      "type": "select",
+      "options": [
+       "Plan v3 · Monday",
+       "Plan v4 · Tuesday",
+       "Plan v5 · today"
+      ]
+     },
+     {
+      "key": "b",
+      "label": "Newer version",
+      "type": "select",
+      "options": [
+       "Plan v5 · today",
+       "Plan v4 · Tuesday",
+       "Plan v3 · Monday"
+      ]
+     },
+     {
+      "key": "view",
+      "label": "Show",
+      "type": "select",
+      "options": [
+       [
+        "rendered",
+        "What changed on the page"
+       ],
+       [
+        "source",
+        "Where each part came from"
+       ],
+       [
+        "manifest",
+        "The file list"
+       ]
+      ]
+     }
+    ],
+    "done": [
+     "Comparison opened",
+     "Side by side in History."
+    ]
+   }
+  },
+  "general.interaction.history-export": {
+   "actionLabel": "Export history",
+   "flow": {
+    "kind": "form",
+    "icon": "download",
+    "primary": "Export",
+    "fields": [
+     {
+      "key": "what",
+      "label": "What to export",
+      "type": "select",
+      "options": [
+       [
+        "filtered",
+        "What History shows now"
+       ],
+       [
+        "all",
+        "Everything in this project"
+       ],
+       [
+        "picked",
+        "Only the rows I picked"
+       ]
+      ]
+     },
+     {
+      "key": "format",
+      "label": "Format",
+      "type": "select",
+      "options": [
+       [
+        "zip",
+        "A folder in a .zip (with manifests)"
+       ],
+       [
+        "json",
+        "One JSON file"
+       ],
+       [
+        "md",
+        "Readable Markdown"
+       ]
+      ]
+     },
+     {
+      "key": "redact",
+      "label": "Hide secrets and personal data first",
+      "type": "toggle",
+      "value": true
+     }
+    ],
+    "done": [
+     "Export ready",
+     "Saved to Downloads/tastebook-history.zip (example)."
+    ]
+   }
+  },
+  "general.interaction.history-rebuild": {
+   "actionLabel": "Rebuild the history index",
+   "flow": {
+    "kind": "check",
+    "icon": "refresh",
+    "primary": "Rebuild it",
+    "steps": [
+     {
+      "title": "Read every history entry",
+      "desc": "1,284 entries",
+      "result": "Read"
+     },
+     {
+      "title": "Rebuild the search index",
+      "desc": "Words, dates and files",
+      "result": "Built"
+     },
+     {
+      "title": "Check a few searches",
+      "desc": "Results match the entries",
+      "result": "OK"
+     }
+    ],
+    "outcome": "index rebuilt"
+   }
+  },
+  "general.interaction.settings-search": {
+   "actionLabel": "Search settings",
+   "pm51": "pm51-o55-focus-search"
+  },
+  "general.startup.reset-home-layout": {
+   "actionLabel": "Reset Home layout",
+   "flow": {
+    "kind": "confirm",
+    "primary": "Reset layout",
+    "message": "Home panels, docks, the terminal position and floating windows go back to the default. Open files, terminal sessions, the browser, dashboard widgets and chats are kept.",
+    "done": [
+     "Home layout reset",
+     "Everything is back in its default place."
+    ]
+   }
+  },
+  "general.visual.manage-custom-themes": {
+   "actionLabel": "Manage your themes",
+   "flow": {
+    "kind": "list",
+    "icon": "image",
+    "listTitle": "Your themes",
+    "empty": "No themes of your own yet. The eight built-in looks are under Appearance.",
+    "items": [
+     {
+      "label": "Tastebook Night",
+      "help": "Based on Glass Dark · made by you",
+      "value": "Your theme",
+      "action": "Use it",
+      "doneTitle": "Theme applied",
+      "remove": true
+     },
+     {
+      "label": "High contrast warm",
+      "help": "Imported from a file · 1 problem skipped",
+      "value": "Imported",
+      "action": "Use it",
+      "doneTitle": "Theme applied",
+      "remove": true
+     }
+    ],
+    "add": {
+     "title": "Add a theme",
+     "label": "Add theme",
+     "labelKey": "name",
+     "helpKeys": [
+      "base"
+     ],
+     "item": {
+      "value": "Your theme",
+      "action": "Use it",
+      "doneTitle": "Theme applied",
+      "remove": true
+     },
+     "fields": [
+      {
+       "key": "name",
+       "label": "Name",
+       "placeholder": "e.g. Soft paper",
+       "required": true
+      },
+      {
+       "key": "base",
+       "label": "Start from",
+       "type": "select",
+       "options": [
+        "Friendly Light",
+        "Friendly Dark",
+        "Glass Light",
+        "Glass Dark",
+        "Retro Light",
+        "Retro Dark",
+        "Basic Light",
+        "Basic Dark",
+        "A theme file"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "memory.limits.manual-compact": {
+   "actionLabel": "Tidy this chat's memory now",
+   "flow": {
+    "kind": "check",
+    "icon": "memory",
+    "primary": "Tidy it",
+    "summary": "Now: 146,000 of 200,000 tokens used (73%). Tidying keeps decisions and open work, and shortens the rest.",
+    "steps": [
+     {
+      "title": "Keep decisions and open work",
+      "desc": "12 decisions, 3 open tasks",
+      "result": "Kept"
+     },
+     {
+      "title": "Summarize the older conversation",
+      "desc": "Turns 1 to 84",
+      "result": "Summarized"
+     },
+     {
+      "title": "Measure again",
+      "desc": "58,000 tokens used (29%) · about $0.40 saved on the next reply",
+      "result": "Done"
+     }
+    ],
+    "outcome": "from 73% to 29% full"
+   }
+  },
+  "memory.retention.maintenance": {
+   "actionLabel": "Open memory chores",
+   "flow": {
+    "kind": "list",
+    "icon": "memory",
+    "listTitle": "Chores",
+    "items": [
+     {
+      "label": "Rebuild search",
+      "help": "So memory search finds recent notes",
+      "value": "Last: 3 days ago",
+      "action": "Run it",
+      "doneText": "Memory search rebuilt."
+     },
+     {
+      "label": "Sweep for duplicates",
+      "help": "Merges notes that say the same thing",
+      "value": "4 found",
+      "action": "Merge them",
+      "doneText": "4 duplicates merged."
+     },
+     {
+      "label": "Check notes are still true",
+      "help": "Re-reads notes against the current code",
+      "value": "Last: last week",
+      "action": "Run it",
+      "doneText": "31 notes checked, 2 marked out of date."
+     },
+     {
+      "label": "Compress old months",
+      "help": "Keeps summaries of months older than 6",
+      "action": "Compress",
+      "doneText": "3 months compressed."
+     },
+     {
+      "label": "Archive and prune",
+      "help": "Moves unused notes to the archive",
+      "value": "18 unused",
+      "action": "Archive them",
+      "doneText": "18 notes archived."
+     }
+    ]
+   }
+  },
+  "personas.library.persona-manager": {
+   "actionLabel": "Open Personas",
+   "route": {
+    "domain": "memory",
+    "workspace": "personas",
+    "tab": "personas"
+   }
+  },
+  "personas.tools.skipped-controls-audit": {
+   "actionLabel": "See skipped persona settings",
+   "flow": {
+    "kind": "list",
+    "icon": "user",
+    "listTitle": "Recent runs",
+    "intro": "Persona settings a model could not follow, so nothing is silently ignored.",
+    "items": [
+     {
+      "label": "Frontend Craft · temperature 1.1",
+      "help": "Codex coding model ignores temperature · today",
+      "value": "Skipped"
+     },
+     {
+      "label": "Research Lead · web search on",
+      "help": "Kimi Code has no web search here · yesterday",
+      "value": "Skipped"
+     },
+     {
+      "label": "Test Engineer · 8,000-token replies",
+      "help": "Capped at 4,096 by the model · Monday",
+      "value": "Capped"
+     }
+    ]
+   }
+  },
+  "planning.interview.requirements-upload-order": {
+   "actionLabel": "Put requirement files in order",
+   "flow": {
+    "kind": "order",
+    "icon": "list",
+    "listTitle": "First wins when they disagree",
+    "items": [
+     {
+      "label": "product-brief.md",
+      "help": "Uploaded Monday"
+     },
+     {
+      "label": "api-contract.yaml",
+      "help": "Uploaded Monday"
+     },
+     {
+      "label": "design-notes.pdf",
+      "help": "Uploaded Tuesday"
+     },
+     {
+      "label": "old-requirements.docx",
+      "help": "Uploaded last month"
+     }
+    ]
+   }
+  },
+  "planning.testing.session-actions": {
+   "actionLabel": "Open Testing",
+   "route": {
+    "domain": "code",
+    "workspace": "testing",
+    "tab": "profiles"
+   }
+  },
+  "safety.approvals.debug-profile-disclosure": {
+   "actionLabel": "Show debug permissions",
+   "flow": {
+    "kind": "list",
+    "icon": "shield",
+    "listTitle": "Debug automation is active until 3:00 PM",
+    "items": [
+     {
+      "label": "Restart the app under test",
+      "help": "Allowed without asking",
+      "value": "Until 3:00 PM"
+     },
+     {
+      "label": "Attach a debugger",
+      "help": "Allowed without asking",
+      "value": "Until 3:00 PM"
+     },
+     {
+      "label": "Change files",
+      "help": "Still asks you each time",
+      "value": "Asks"
+     },
+     {
+      "label": "Reach the network",
+      "help": "Blocked while debugging",
+      "value": "Blocked"
+     }
+    ]
+   }
+  },
+  "system.advanced.chat-history-retention": {
+   "actionLabel": "See how chats are kept",
+   "flow": {
+    "kind": "list",
+    "icon": "history",
+    "listTitle": "The rule in effect",
+    "items": [
+     {
+      "label": "Chats and their edits",
+      "help": "Kept while the chat exists",
+      "value": "Kept"
+     },
+     {
+      "label": "Very long chats",
+      "help": "At 250,000 events a chat continues in a linked new one; nothing is dropped",
+      "value": "Continued"
+     },
+     {
+      "label": "Deleted chats",
+      "help": "Removed with the chat, after the undo window",
+      "value": "7 days to undo"
+     }
+    ]
+   }
+  },
+  "system.advanced.inspect-holds-quarantine": {
+   "actionLabel": "Look at holds and quarantine",
+   "flow": {
+    "kind": "list",
+    "icon": "lock",
+    "listTitle": "Now",
+    "intro": "Read only. Holds are set and cleared by whoever owns them, never here.",
+    "items": [
+     {
+      "label": "Legal hold · Q3 audit",
+      "help": "Keeps runs and history from July to September",
+      "value": "Held"
+     },
+     {
+      "label": "Quarantined value · models.json line 41",
+      "help": "An unreadable value kept aside instead of lost",
+      "value": "Quarantined"
+     }
+    ]
+   }
+  },
+  "system.advanced.preserved-terminal-runs": {
+   "actionLabel": "See kept terminal runs",
+   "flow": {
+    "kind": "list",
+    "icon": "terminal",
+    "listTitle": "The latest 25 are kept on their own",
+    "items": [
+     {
+      "label": "cargo test -p puppet-core",
+      "help": "Today 10:12 · kept automatically",
+      "value": "Recent",
+      "remove": true
+     },
+     {
+      "label": "npm run build",
+      "help": "Yesterday · you chose to keep it",
+      "value": "Kept by you",
+      "remove": true
+     },
+     {
+      "label": "./scripts/migrate.sh",
+      "help": "Last week · part of a held audit",
+      "value": "Held"
+     }
+    ],
+    "removeMessage": "Only the automatic keep is cleared; a run you or an audit kept stays."
+   }
+  },
+  "system.advanced.request-storage-compaction": {
+   "actionLabel": "Ask to compact storage",
+   "flow": {
+    "kind": "check",
+    "icon": "archive",
+    "primary": "Ask for it",
+    "summary": "The storage owner decides; this only asks. Held and referenced data is never touched.",
+    "steps": [
+     {
+      "title": "Send the request",
+      "desc": "To the storage owner on your server",
+      "result": "Sent"
+     },
+     {
+      "title": "Owner checks holds and references",
+      "desc": "Anything held or still used is left alone",
+      "result": "Checked"
+     },
+     {
+      "title": "Compaction scheduled",
+      "desc": "Tonight at 2:00 AM, when nothing is running",
+      "result": "Scheduled"
+     }
+    ],
+    "outcome": "scheduled for 2:00 AM"
+   }
+  },
+  "web.index.disk-usage": {
+   "actionLabel": "See index size",
+   "flow": {
+    "kind": "list",
+    "icon": "database",
+    "listTitle": "Space used",
+    "items": [
+     {
+      "label": "On this computer",
+      "help": "Search index for tastebook",
+      "value": "412 MB"
+     },
+     {
+      "label": "On your server",
+      "help": "Copy used by remote projects",
+      "value": "1.1 GB"
+     },
+     {
+      "label": "Free space left",
+      "help": "On the index disk",
+      "value": "38 GB"
+     }
+    ]
+   }
+  },
+  "web.index.evict-cache": {
+   "actionLabel": "Clear the index cache",
+   "flow": {
+    "kind": "confirm",
+    "primary": "Clear 412 MB",
+    "message": "Frees 412 MB on this computer. Search builds the index again the next time it needs it, which can take a few minutes.",
+    "done": [
+     "Index cache cleared",
+     "412 MB freed."
+    ]
+   }
+  },
+  "web.index.rebuild": {
+   "actionLabel": "Rebuild the search index",
+   "flow": {
+    "kind": "check",
+    "icon": "refresh",
+    "primary": "Rebuild it",
+    "steps": [
+     {
+      "title": "Throw away the old index",
+      "desc": "412 MB",
+      "result": "Done"
+     },
+     {
+      "title": "Read the project again",
+      "desc": "3,904 files",
+      "result": "Read"
+     },
+     {
+      "title": "Build the new index",
+      "desc": "Words, symbols and file names",
+      "result": "Built"
+     }
+    ],
+    "outcome": "index rebuilt"
+   }
+  }
+ }
+}

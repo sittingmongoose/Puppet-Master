@@ -475,7 +475,35 @@
   },
   "ai.models.requested-effective-inspector": {
    "label": "What actually ran",
-   "actionLabel": "See what actually ran"
+   "actionLabel": "See what actually ran",
+   "flow": {
+    "kind": "list",
+    "icon": "route",
+    "listTitle": "Recent runs",
+    "intro": "What you asked for next to what actually ran, and why they differ.",
+    "items": [
+     {
+      "label": "Asked Claude Opus · ran Claude Sonnet",
+      "help": "Opus was busy on Work Claude; your fallback order picked Sonnet · 10:48",
+      "value": "Fell back"
+     },
+     {
+      "label": "Asked GPT Codex · ran GPT Codex",
+      "help": "Same model, same account · 10:31",
+      "value": "As asked"
+     },
+     {
+      "label": "Asked high effort · ran medium effort",
+      "help": "The account caps effort on this plan · 09:57",
+      "value": "Capped"
+     },
+     {
+      "label": "Asked Kimi K3 · ran Kimi K3",
+      "help": "As asked · yesterday",
+      "value": "As asked"
+     }
+    ]
+   }
   },
   "ai.accounts.multi-account-switching": {
    "label": "Switch accounts by themselves",
@@ -510,7 +538,35 @@
   },
   "ai.accounts.switch-history": {
    "label": "Switch history",
-   "actionLabel": "Open the switch history"
+   "actionLabel": "Open the switch history",
+   "flow": {
+    "kind": "list",
+    "icon": "history",
+    "listTitle": "Recent switches",
+    "intro": "Every automatic move to another account or service, newest first, and why it happened.",
+    "items": [
+     {
+      "label": "Claude: Work Claude to Personal",
+      "help": "5-hour window used up · today 10:42",
+      "value": "Automatic"
+     },
+     {
+      "label": "ChatGPT / Codex to Claude",
+      "help": "Codex rate limited for 12 minutes · yesterday 16:05",
+      "value": "Automatic"
+     },
+     {
+      "label": "Kimi Code: back to Kimi Code",
+      "help": "Its window reset · yesterday 17:30",
+      "value": "Automatic"
+     },
+     {
+      "label": "Claude: Personal to Work Claude",
+      "help": "You chose it for the next run · Monday",
+      "value": "By you"
+     }
+    ]
+   }
   },
   "ai.models.provider-fallback": {
    "label": "Move to another service when one is down",
@@ -670,11 +726,39 @@
   },
   "ai.usage.quota-management": {
    "label": "Quota and budget console",
-   "actionLabel": "Open the console"
+   "actionLabel": "Open the console",
+   "route": {
+    "domain": "ai",
+    "workspace": "providers",
+    "tab": "usage"
+   }
   },
   "ai.usage.pressure-history": {
    "label": "Pressure history",
-   "actionLabel": "Open the history"
+   "actionLabel": "Open the history",
+   "flow": {
+    "kind": "list",
+    "icon": "gauge",
+    "listTitle": "Tight moments",
+    "intro": "When an account ran close to its limit, and what happened.",
+    "items": [
+     {
+      "label": "Personal (Claude) · 100% of the 5-hour window",
+      "help": "Switched to Work Claude · today 10:42",
+      "value": "3 times this week"
+     },
+     {
+      "label": "Jared (ChatGPT / Codex) · rate limited",
+      "help": "Waited 12 minutes, then carried on · yesterday",
+      "value": "Once this week"
+     },
+     {
+      "label": "Work Claude · 92% of the weekly window",
+      "help": "Warned you · Monday",
+      "value": "Once"
+     }
+    ]
+   }
   }
  }
 }
