@@ -1,0 +1,100 @@
+{
+ "_about": "History: the timeline filters are the view rows; chat, run-record and log keep-for rows are the owner rows with their minimums; test evidence is Testing's; the own keep-for copies are gone except for temporary files.",
+ "sections": {
+  "history-view": {
+   "to": "project-history",
+   "title": "What the timeline shows",
+   "help": "Filters above the activity list.",
+   "order": 1,
+   "tab": "timeline",
+   "composed": true
+  },
+  "history-export": {
+   "to": "project-history",
+   "title": "Export and import",
+   "help": "Take history out, or bring an archive in.",
+   "order": 2,
+   "tab": "timeline",
+   "advanced": true,
+   "composed": true
+  },
+  "history-sessions": {
+   "to": "project-history",
+   "title": "Session details",
+   "help": "Technical details shown for chats.",
+   "order": 103,
+   "tab": "sessions",
+   "composed": true
+  },
+  "history-retention": {
+   "to": "project-history",
+   "title": "Chats",
+   "help": "Archiving and recovering chats.",
+   "order": 304,
+   "tab": "cleanup"
+  },
+  "history-records": {
+   "to": "project-history",
+   "title": "Run records and logs",
+   "help": "Minimums are set by Puppet Master; you can keep longer.",
+   "order": 305,
+   "tab": "cleanup"
+  },
+  "history-tools": {
+   "to": "project-history",
+   "title": "Index and storage tools",
+   "help": "Rebuild the history index, compact storage, inspect holds.",
+   "order": 306,
+   "tab": "cleanup",
+   "advanced": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "history-view",
+   "ids": [
+    "general.interaction.history-scope",
+    "general.interaction.history-approved-only",
+    "general.interaction.history-archived",
+    "general.interaction.history-compare"
+   ]
+  },
+  {
+   "section": "history-export",
+   "ids": [
+    "general.interaction.history-export"
+   ]
+  },
+  {
+   "section": "history-sessions",
+   "ids": [
+    "general.interaction.thread-lineage"
+   ]
+  },
+  {
+   "section": "history-retention",
+   "ids": [
+    "system.advanced.chat-history-retention",
+    "general.interaction.thread-archive-days",
+    "general.interaction.thread-retention-days"
+   ]
+  },
+  {
+   "section": "history-records",
+   "ids": [
+    "system.advanced.runtime-history-days",
+    "system.advanced.diagnostic-history-days",
+    "system.advanced.released-safe-point-days",
+    "system.advanced.preserved-terminal-runs"
+   ]
+  },
+  {
+   "section": "history-tools",
+   "ids": [
+    "general.interaction.history-rebuild",
+    "system.advanced.request-storage-compaction",
+    "system.advanced.inspect-holds-quarantine"
+   ]
+  }
+ ]
+}

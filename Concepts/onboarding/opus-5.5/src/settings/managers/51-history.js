@@ -1,10 +1,24 @@
-/* History & Artifacts — what happened in this workspace and the files it produced. */
+/* History & Artifacts — what happened in this workspace and the files it produced (settings audit, 2026-09-27).
+   - The timeline's own filters and the inventory's view rows are one filter bar: which projects, approved only,
+     include archived. "Compare two versions" opens from an item.
+   - Keep-for: the manager kept its own copies for conversations, Goal receipts, logs and test evidence, offering
+     values the owner rows reject (7 days of logs, where the minimum is 30). The owner rows are the controls now,
+     with their minimums; test evidence is Testing's; only temporary files keep an own keep-for.
+   - "Quarantine" (removed items waiting 7 days) is called Recently removed, so it no longer shares a word with the
+     holds and quarantined-values inspector. */
 (function () {
   const ID = 'project-history';
   const KEY = 'project-history-artifacts';
   const TABS = [{ id: 'timeline', label: 'Timeline' }, { id: 'sessions', label: 'Sessions' }, { id: 'artifacts', label: 'Artifacts' }, { id: 'cleanup', label: 'Cleanup' }];
   const KEEP_OPTIONS = ['Keep indefinitely', '1 year', '90 days', '30 days', '7 days'];
-  const KEEP_ROWS = [['conversations', 'Conversations', 'Chats and their replies.'], ['goalReceipts', 'Goal receipts', 'What each Goal did and why.'], ['logs', 'Logs', 'Terminal and tool output.'], ['testEvidence', 'Test evidence', 'Recordings and results from checks.'], ['temporaryArtifacts', 'Temporary artifacts', 'Scratch files the assistant made along the way.']];
+  const V = { scope: 'general.interaction.history-scope', approved: 'general.interaction.history-approved-only', archived: 'general.interaction.history-archived', exportRow: 'general.interaction.history-export', compare: 'general.interaction.history-compare', lineage: 'general.interaction.thread-lineage', runs: 'system.advanced.runtime-history-days', holds: 'system.advanced.inspect-holds-quarantine', evidence: 'branching.worktrees.evidence-retention-days' };
+  const on = v => v === true || v === 'on' || v === 'true';
+  const EXTRA = [
+    { event: 'Settings change proposed: raise the run budget', time: 'Today · 09:12', device: 'Laptop', type: 'Settings', approved: false },
+    { event: 'Prototype session archived', time: 'Last week', device: 'Desktop', type: 'Sessions', archived: true },
+    { event: 'recipe-api: tests passed on main', time: 'Yesterday · 17:40', device: 'Home server', type: 'Tests', project: 'recipe-api' }
+  ];
+  const KEEP_ROWS = [['temporaryArtifacts', 'Temporary artifacts', 'Scratch files the assistant made along the way.']];
   const TYPE_ICON = { Tests: 'test', Goals: 'rocket', Settings: 'settings', Backups: 'archive', Sessions: 'history', Artifacts: 'file' };
   const h = PM51.h;
 
@@ -13,9 +27,11 @@
 #panel-settings .pm51-history-filter .text-control { width: 200px; }
 #panel-settings .pm51-history-filter .pm51-dd-trigger { min-width: 130px; }
 #panel-settings .pm51-history-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+#panel-settings .o55-history-view { margin: 10px 0 12px; gap: 14px; }
+#panel-settings .o55-history-chip { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--k3-text-2); cursor: pointer; }
 `);
 
-  const hs = () => PM51.s().history;
+  const hs = () => { const x = PM51.s().history; if (!x.o55V2) { x.o55V2 = true; EXTRA.forEach(e => { if (!x.timeline.some(t => t.event === e.event)) x.timeline.push(clone(e)); }); } return x; };
   const ph = () => { if (!state.projectHistory) state.projectHistory = { sessions: [], artifacts: [] }; const P = state.projectHistory; if (!P.retention) P.retention = clone((state.backup && state.backup.retention) || { conversations: 'Keep indefinitely', goalReceipts: '1 year', logs: '30 days', testEvidence: '90 days', temporaryArtifacts: '7 days' }); return P; };
   const filter = () => { const s = PM51.s(); if (!s.historyFilter) s.historyFilter = { q: '', type: 'All' }; return s.historyFilter; };
   const refresh = () => { saveState(); PM51.refresh(ID, { swap: false }); };
@@ -32,19 +48,21 @@
     const H = hs(), F = filter();
     const types = ['All', ...new Set(H.timeline.map(t => t.type))];
     const q = F.q.toLowerCase();
-    const rows = H.timeline.filter(t => (F.type === 'All' || t.type === F.type) && (!q || `${t.event} ${t.device} ${t.time}`.toLowerCase().includes(q)));
-    const controls = `<div class="pm51-history-filter">${PM51.input(F.q, { action: 'pm51-history-search', placeholder: 'Search activity', label: 'Search activity' })}${PM51.select(F.type, types, { action: 'pm51-history-type', label: 'Type' })}</div>`;
+    const all = String(PM51.value(V.scope)) === 'All projects', approvedOnly = on(PM51.value(V.approved)), withArchived = on(PM51.value(V.archived));
+    const rows = H.timeline.filter(t => (all || !t.project) && (!approvedOnly || t.approved !== false) && (withArchived || !t.archived) && (F.type === 'All' || t.type === F.type) && (!q || `${t.event} ${t.device} ${t.time}`.toLowerCase().includes(q)));
+    const chip = (id, label) => `<label class="o55-history-chip">${PM51.bound.toggle(id, { label })}<span>${h(label)}</span></label>`;
+    const controls = `<div class="pm51-history-filter">${PM51.input(F.q, { action: 'pm51-history-search', placeholder: 'Search activity', label: 'Search activity' })}${PM51.select(F.type, types, { action: 'pm51-history-type', label: 'Type' })}</div><div class="pm51-history-filter o55-history-view">${PM51.bound.select(V.scope, { prefix: 'Show', width: 150 })}${chip(V.approved, 'Approved only')}${chip(V.archived, 'Include archived')}</div>`;
     const list = rows.length ? PM51.list(rows.map((t, i) => ({
-      title: t.event, meta: `${t.time} · ${t.device}`, avatar: icon(TYPE_ICON[t.type] || 'clock'),
+      title: t.event, meta: [t.time, t.device, t.project ? `in ${t.project}` : '', t.approved === false ? 'waiting for approval' : '', t.archived ? 'archived' : ''].filter(Boolean).join(' · '), avatar: icon(TYPE_ICON[t.type] || 'clock'),
       end: PM51.chip(t.type) + icon('chevron'), action: 'pm51-history-event', data: { index: H.timeline.indexOf(t) }
     }))) : PM51.empty('Nothing matches', 'Try another word or choose a different type.');
-    const activity = PM51.section({ title: 'Recent activity', help: 'What happened in this workspace, newest first.', action: controls, body: list });
+    const activity = PM51.section({ title: 'Recent activity', help: 'What happened, newest first. Open an item to compare it with an earlier version.', body: controls + list });
     const advanced = PM51.advanced([
       PM51.section({ title: 'Export and import', body: PM51.rows([
-        { label: 'Export history', help: 'Sessions, events, and artifact details as a file. Secrets are left out.', action: { label: 'Export…', icon: 'download', action: 'pm51-history-export' } },
+        { label: 'Export history', help: 'Sessions, events, and artifact details as a file. Secrets are left out.', action: PM51.bound.action(V.exportRow, { label: 'Export…', icon: 'download' }) },
         { label: 'Import a history archive', help: 'Bring history from another workspace or an older backup.', action: { label: 'Import…', icon: 'upload', action: 'pm51-history-import' } }
       ]) }),
-      PM51.section({ title: 'Receipts', help: 'Each Goal leaves a receipt saying what it did.', body: PM51.kv([['Goal receipts kept', ph().retention.goalReceipts], ['Receipts in this workspace', String(ph().sessions.reduce((n, s) => n + Math.max(1, Math.round((s.artifacts || 0) / 4)), 0))], ['Latest receipt', H.timeline[0] ? `${H.timeline[0].time} · ${H.timeline[0].event}` : 'None']]) }),
+      PM51.section({ title: 'Receipts', help: 'Each Goal leaves a receipt saying what it did.', body: PM51.kv([['Goal receipts kept', `${PM51.value(V.runs) || 365} days (Cleanup tab)`], ['Receipts in this workspace', String(ph().sessions.reduce((n, s) => n + Math.max(1, Math.round((s.artifacts || 0) / 4)), 0))], ['Latest receipt', H.timeline[0] ? `${H.timeline[0].time} · ${H.timeline[0].event}` : 'None']]) }),
       PM51.section({ title: 'Technical details', body: PM51.kv([['Events recorded', String(H.timeline.length)], ['Storage', 'Workspace database on the home server'], ['Devices reporting', [...new Set(H.timeline.map(t => t.device))].join(' · ')]]) + `<div style="margin-top:10px">${PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-history-diagnostics' })}</div>` })
     ].join(''));
     return activity + advanced;
@@ -61,9 +79,9 @@
       { label: 'Device', value: s.device },
       { label: 'Updated', value: s.updated },
       { label: 'Artifacts', value: String(s.artifacts || 0), action: { label: 'See artifacts', action: 'pm51-history-tab-artifacts', icon: 'arrowRight' } },
-      { label: 'Goal receipts', value: `Kept ${String(P.retention.goalReceipts).toLowerCase() === 'keep indefinitely' ? 'indefinitely' : 'for ' + P.retention.goalReceipts}` }
+      { label: 'Goal receipts', value: `Kept for ${PM51.value(V.runs) || 365} days` }
     ]) });
-    const advanced = PM51.advanced(PM51.section({ title: 'Technical details', body: PM51.kv([['Session', s.title], ['State', s.state], ['Resumes', 'Goals, chats, and unsaved editors saved with this session']]) + `<div style="margin-top:10px">${PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-history-diagnostics' })}</div>` }));
+    const advanced = PM51.advanced(PM51.section({ title: 'Technical details', body: PM51.bound.rows([V.lineage]) + PM51.kv([['Session', s.title], ['State', s.state], ['Resumes', 'Goals, chats, and unsaved editors saved with this session']]) + `<div style="margin-top:10px">${PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-history-diagnostics' })}</div>` }));
     return PM51.listDetail({
       id: ID, rosterTitle: 'Sessions', count: P.sessions.length,
       add: { action: 'pm51-history-session-new', label: 'New session' },
@@ -101,14 +119,19 @@
   /* ---------- Cleanup ----------------------------------------------------- */
   function renderCleanup() {
     const P = ph(), R = P.retention, n = cleanupCount();
-    const keep = PM51.section({ title: 'Keep for', help: 'Older items are removed automatically. Nothing is removed without a review first.', body: PM51.rows(KEEP_ROWS.map(([key, label, help]) => ({ label, help, control: PM51.select(R[key] || KEEP_OPTIONS[0], KEEP_OPTIONS.includes(R[key]) ? KEEP_OPTIONS : [R[key], ...KEEP_OPTIONS], { action: 'pm51-history-keep', data: { key }, label }) }))) });
-    const review = PM51.section({ title: 'Cleanup review', body: PM51.rows([{ label: n ? `${n} items ready` : 'Nothing to clean up', help: n ? 'Review what would be removed before anything happens.' : 'Cleanup candidates appear here as items age.', pill: n ? PM51.pill('Needs attention') : PM51.pill('Ready'), action: n ? { label: 'Review', icon: 'eye', action: 'pm51-history-cleanup-review' } : null }]) });
+    const ev = PM51.setting(V.evidence);
+    const files = PM51.section({ title: 'Files and evidence', help: 'Older items are listed for review before anything is removed.', body: PM51.rows([
+      ...KEEP_ROWS.map(([key, label, help]) => ({ label, help, control: PM51.select(R[key] || '7 days', KEEP_OPTIONS.includes(R[key]) ? KEEP_OPTIONS : [R[key], ...KEEP_OPTIONS], { action: 'pm51-history-keep', data: { key }, label: `Keep ${label.toLowerCase()} for` }) })),
+      { label: 'Test evidence', help: 'Kept with the rest of the saved proof, set in Testing & Debug.', value: ev ? PM51.valueText(ev, PM51.value(V.evidence)) : 'Set in Testing & Debug', action: { label: 'Change', icon: 'arrowRight', action: 'pm51-history-reveal', data: { setting: V.evidence } } }
+    ]) });
+    const review = PM51.section({ title: 'Cleanup review', body: PM51.rows([{ label: n ? `${n} items ready` : 'Nothing to clean up', help: n ? 'Review what would be removed before anything happens.' : 'Cleanup candidates appear here as items age.', pill: n ? PM51.status('Needs a look', 'attention') : '', action: n ? { label: 'Review', icon: 'eye', action: 'pm51-history-cleanup-review' } : null }]) });
+    const removed = PM51.s().historyQuarantine || [];
     const advanced = PM51.advanced([
       PM51.section({ title: 'Storage use', body: PM51.kv([['Sessions and chats', '38 MB'], ['Artifacts', '48.4 MB'], ['Recordings', '1.8 GB'], ['Temporary files', '214 MB']]) }),
-      PM51.section({ title: 'Holds', help: 'Things cleanup never touches.', body: PM51.kv([['Active Goal artifacts', 'Protected while the Goal runs'], ['Pinned items', 'Kept until you unpin them'], ['Latest backup receipts', 'Kept with the backup']]) }),
-      PM51.section({ title: 'Quarantine', help: 'Removed items wait here for 7 days before they are gone for good.', body: (PM51.s().historyQuarantine || []).length ? PM51.kv(PM51.s().historyQuarantine.map(q => [q.title, `${q.meta} · restore until ${q.until}`])) : PM51.empty('Quarantine is empty', 'Items you remove during cleanup wait here for 7 days.') })
+      PM51.section({ title: 'Holds', help: 'Things cleanup never touches.', body: PM51.kv([['Active Goal artifacts', 'Protected while the Goal runs'], ['Pinned items', 'Kept until you unpin them'], ['Latest backup receipts', 'Kept with the backup']]) + PM51.bound.rows([V.holds]) }),
+      PM51.section({ title: 'Recently removed', help: 'Items you deleted wait here for 7 days before they are gone for good.', body: removed.length ? PM51.kv(removed.map(q => [q.title, `${q.meta} · restore until ${q.until}`])) : PM51.note('Nothing removed recently.', 'info') })
     ].join(''));
-    return keep + review + advanced;
+    return PM51.slot() + files + review + advanced;
   }
 
   function render() {
@@ -141,7 +164,8 @@
     const related = t.type === 'Goals' ? { label: 'Open Sessions', action: 'pm51-history-tab-sessions' } : t.type === 'Backups' ? { label: 'Open Backup & Restore', action: 'pm51-go', data: { domain: 'system', workspace: 'backup' } } : t.type === 'Settings' ? { label: 'Open Settings Transfer', action: 'pm51-go', data: { domain: 'system', workspace: 'settings-transfer' } } : t.type === 'Tests' ? { label: 'Open Testing & Debug', action: 'pm51-go', data: { domain: 'code', workspace: 'testing' } } : null;
     PM51.panel({
       title: t.event, subtitle: `${t.time} · ${t.device}`, pill: PM51.chip(t.type),
-      body: PM51.panelSection('Event', PM51.kv([['When', t.time], ['Device', t.device], ['Type', t.type]])) + (related ? PM51.panelSection('Related', PM51.btn(Object.assign({ small: true, icon: 'arrowRight' }, related))) : '')
+      body: PM51.panelSection('Event', PM51.kv([['When', t.time], ['Device', t.device], ['Type', t.type], t.project ? ['Project', t.project] : null, t.approved === false ? ['Approval', 'Waiting for you'] : null])) + (related ? PM51.panelSection('Related', PM51.btn(Object.assign({ small: true, icon: 'arrowRight' }, related))) : '')
+        + PM51.panelSection('Compare', `<div class="pm51-history-actions">${PM51.btn({ label: 'Compare with an earlier version', small: true, icon: 'layers', action: 'pm51-history-compare', data: { index } })}</div>`)
     });
   }
   function cleanupPanel() {
@@ -175,7 +199,7 @@
     { title: 'History database readable', desc: `${hs().timeline.length} events` },
     { title: 'Sessions consistent', desc: `${P.sessions.length} sessions` },
     { title: 'Artifact files present', desc: `${P.artifacts.length} artifacts` },
-    { title: 'Keep-for rules valid', desc: KEEP_ROWS.map(r => P.retention[r[0]]).join(' · ') }
+    { title: 'Keep-for rules valid', desc: `Temporary files ${P.retention.temporaryArtifacts || '7 days'} · run records ${PM51.value(V.runs) || 365} days` }
   ] }); });
   PM51.on('history-session-new', () => {
     const P = ph(); const devices = (PM51.s().serverProject?.devices || []).map(d => d.name);
@@ -198,11 +222,24 @@
   PM51.on('history-cleanup-review', cleanupPanel);
   PM51.on('history-cleanup-keep', el => { const s = PM51.s(); s.historyCleanup = cleanupGroups().filter(g => g.id !== ds(el, 'id')); saveState(); closeOverlay(); refresh(); PM51.toast('Kept', 'Those items stay until the next review.', 'info'); });
   PM51.on('history-cleanup-delete', el => { const g = cleanupGroups().find(x => x.id === ds(el, 'id')); if (!g) return; PM51.confirm(`Delete ${g.title.toLowerCase()}?`, `${g.meta}. They wait in quarantine for 7 days first.`, 'Delete', () => { const s = PM51.s(); s.historyCleanup = cleanupGroups().filter(x => x.id !== g.id); s.historyQuarantine = s.historyQuarantine || []; s.historyQuarantine.unshift({ title: g.title, meta: g.meta, until: 'in 7 days' }); closeOverlay(); refresh(); }, true); });
-  PM51.on('history-reset', () => PM51.confirm('Reset keep-for defaults?', 'Conversations are kept indefinitely, Goal receipts for a year, logs 30 days, test evidence 90 days, and temporary artifacts 7 days.', 'Reset', () => { ph().retention = { conversations: 'Keep indefinitely', goalReceipts: '1 year', logs: '30 days', testEvidence: '90 days', temporaryArtifacts: '7 days' }; refresh(); PM51.toast('Keep-for defaults restored'); }));
+  PM51.on('history-reveal', el => { if (PM51.revealSetting) PM51.revealSetting(ds(el, 'setting')); });
+  PM51.on('history-compare', el => {
+    const H = hs(); const i = el && el.dataset && el.dataset.index != null ? Number(el.dataset.index) : -1; const t = H.timeline[i];
+    const same = t ? H.timeline.filter((x, j) => j !== i && x.type === t.type) : [];
+    const pick = t ? same : H.timeline;
+    PM51.panel({
+      title: 'Compare two versions', eyebrow: 'History', icon: 'layers', summary: t ? `${t.event}, against an earlier item of the same kind.` : 'Pick two items from the timeline.',
+      body: pick.length ? PM51.panelSection(t ? 'Compare with' : 'Items', PM51.list(pick.slice(0, 6).map(x => ({ title: x.event, meta: `${x.time} · ${x.device}`, end: PM51.btn({ label: 'Compare', small: true, action: 'pm51-history-compare-go', data: { a: t ? t.event : x.event, b: x.event } }) })))) : PM51.note('Nothing earlier of this kind to compare with.', 'info')
+    });
+  });
+  PM51.on('history-compare-go', el => PM51.panel({ title: 'Side by side', eyebrow: 'History', icon: 'layers', body: PM51.panelSection('Items', PM51.kv([['This one', ds(el, 'a')], ['Earlier', ds(el, 'b')]])) + PM51.panelSection('What changed (example)', PM51.kv([['Settings touched', '2'], ['Files changed', '5'], ['Checks', 'Both passed']])) + PM51.note('Example data only. In the app the two versions open side by side.', 'info') }));
+  [V.scope, V.approved, V.archived, V.evidence, V.runs].forEach(id => PM51.watch(id, () => refresh()));
+  PM51.owner(ID, id => { const e = PM51.placement.byId[id]; if (e && e.tab) PM51.setTab(ID, e.tab); });
+  PM51.on('history-reset', () => PM51.confirm('Reset keep-for defaults?', 'Temporary files go back to 7 days. Chats, run records, logs and test evidence are set by their own rows and are not changed here.', 'Reset', () => { ph().retention = { conversations: 'Keep indefinitely', goalReceipts: '1 year', logs: '30 days', testEvidence: '90 days', temporaryArtifacts: '7 days' }; refresh(); PM51.toast('Keep-for defaults restored'); }));
   PM51.on('history-help', () => PM51.panel({
     title: 'How history works',
     body: PM51.panelSection('In short', '<p class="pm51-ps-text">Everything that happens in this workspace is recorded: chats, Goals, tests, backups, and settings changes. Files the assistant makes are kept as artifacts.</p>')
       + PM51.panelSection('Sessions', '<p class="pm51-ps-text">A session groups your Goals, chats, and open editors on one device. Resume it on another device to pick up where you left off.</p>')
-      + PM51.panelSection('Cleanup', '<p class="pm51-ps-text">Keep-for rules decide how long each kind of item stays. Old items are listed for review first, then wait in quarantine for 7 days before they are removed.</p>')
+      + PM51.panelSection('Cleanup', '<p class="pm51-ps-text">Each kind of item has one keep-for rule. Old items are listed for review first, then wait under Recently removed for 7 days before they are gone.</p>')
   }));
 })();

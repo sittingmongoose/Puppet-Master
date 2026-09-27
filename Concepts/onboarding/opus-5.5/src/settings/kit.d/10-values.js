@@ -154,7 +154,8 @@ function o55Path(setting, value) {
 }
 function o55Status(setting, value) {
   const row = O55R[setting.id] || {};
-  const text = PM51.valueText(setting, value);
+  /* a policy that is not a choice reads as one fixed sentence (rows.d `readout`) */
+  const text = row.readout || PM51.valueText(setting, value);
   return `<span class="o55-readout">${PM51.status(text, row.tone || PM51.tone(text))}</span>`;
 }
 const o55KitControl = renderControl;
