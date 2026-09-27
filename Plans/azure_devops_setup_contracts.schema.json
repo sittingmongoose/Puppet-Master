@@ -1,0 +1,755 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/azure_devops_setup/1.0.0/azure_devops_setup_contracts.schema.json",
+  "x-schema-id": "pm.azure.setup.schema.v1",
+  "title": "Azure team-project external administration handoff and returned discovery pair",
+  "description": "ADO-006 owns the closed read-only external administration handoff for optional Azure team-project creation and the returned discovery pair that is its only adoption path. The handoff reuses ui.onboarding.open_owner_flow -> cmd.auth_profile.open_official_page: the route owner resolves official_route_ref to an exact Services organization or Server collection official route under the approved web/API domain policy, bound to the authenticated account, selected source, onboarding session/draft revision, initiating Client, owner authorization, explicit human confirmation and expiry. The return pair admits a draft selection only from an independent provider-owned discovery record produced by an explicit human refresh, carrying provider GUID, name, hierarchy, Git kind, access and currentness. Records carry owner-resolved refs, never raw URLs, credentials or provider request bodies; no field here grants permission or proves a provider effect. Static contract only: no new native command, handler, event, storage family, dispatch, team-project creation or readiness fact is admitted.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/azure_setup_handoff_request"
+    },
+    {
+      "$ref": "#/$defs/azure_official_route_record"
+    },
+    {
+      "$ref": "#/$defs/azure_provider_authoritative_state"
+    },
+    {
+      "$ref": "#/$defs/azure_onboarding_owner_state"
+    },
+    {
+      "$ref": "#/$defs/azure_project_discovery_record"
+    },
+    {
+      "$ref": "#/$defs/azure_setup_return_pair"
+    },
+    {
+      "$ref": "#/$defs/azure_return_acknowledgement"
+    }
+  ],
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "safe_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:api[_-]?key|password|passwd|access[_-]?token|refresh[_-]?token|bearer|auth[_-]?code))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "nullable_safe_ref": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/safe_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "approved_domain": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9.:-]*$|^\\[[0-9A-Fa-f:]+\\](?::[0-9]+)?$",
+      "description": "Owner-normalized host/authority (including private hosts and approved ports); no path, query, credentials or arbitrary destination. Actual owner policy authorizes the exact value."
+    },
+    "provider_guid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "provider_variant": {
+      "enum": [
+        "azure_devops_services",
+        "azure_devops_server"
+      ]
+    },
+    "project_kind": {
+      "enum": [
+        "git",
+        "tfvc"
+      ]
+    },
+    "discovery_access_state": {
+      "enum": [
+        "verified_accessible",
+        "pending",
+        "missing",
+        "inaccessible"
+      ]
+    },
+    "container_scope": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "organization_name"
+          ],
+          "properties": {
+            "kind": {
+              "const": "services_organization"
+            },
+            "organization_name": {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "collection_name"
+          ],
+          "properties": {
+            "kind": {
+              "const": "server_collection"
+            },
+            "collection_name": {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          }
+        }
+      ]
+    },
+    "azure_setup_handoff_request": {
+      "title": "AzureSetupHandoffRequest",
+      "description": "Closed read-only external administration handoff context. Navigation only: it opens the provider team-project administration page for the exact variant/instance/container/account through the owner-resolved official route. PM collects no provider form data and emits no team-project create request.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "handoff_id",
+        "local_action_id",
+        "owner_command_id",
+        "official_route_ref",
+        "provider_variant",
+        "normalized_instance",
+        "web_approved_domain",
+        "api_approved_domain",
+        "container_scope",
+        "account_id",
+        "selected_source_ref",
+        "onboarding_session_id",
+        "project_draft_ref",
+        "project_draft_revision",
+        "project_id",
+        "initiating_client_id",
+        "owner_phase",
+        "precommit_authorization_ref",
+        "human_confirmation_ref",
+        "permission_snapshot_ref",
+        "capability_snapshot_ref",
+        "handoff_scope",
+        "navigation_only",
+        "creation_request_permitted",
+        "expires_at_utc",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.azure.setup_handoff.v1"
+        },
+        "handoff_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "local_action_id": {
+          "const": "ui.onboarding.open_owner_flow"
+        },
+        "owner_command_id": {
+          "const": "cmd.auth_profile.open_official_page"
+        },
+        "official_route_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "provider_variant": {
+          "$ref": "#/$defs/provider_variant"
+        },
+        "normalized_instance": {
+          "$ref": "#/$defs/approved_domain"
+        },
+        "web_approved_domain": {
+          "$ref": "#/$defs/approved_domain"
+        },
+        "api_approved_domain": {
+          "$ref": "#/$defs/approved_domain"
+        },
+        "container_scope": {
+          "$ref": "#/$defs/container_scope"
+        },
+        "account_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "selected_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "onboarding_session_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_draft_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_draft_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "initiating_client_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "owner_phase": {
+          "const": "selected_source_auth"
+        },
+        "precommit_authorization_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "human_confirmation_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "capability_snapshot_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "handoff_scope": {
+          "const": "team_project_administration_page_only"
+        },
+        "navigation_only": {
+          "const": true
+        },
+        "creation_request_permitted": {
+          "const": false
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "issued_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "azure_official_route_record": {
+      "title": "AzureOfficialRouteRecord",
+      "description": "The route owner's resolved official route for the exact team-project administration page. Signed-catalog-supported and current; carries the approved web and API domains separately and a route proof ref that resolves via the route owner, never a raw URL.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "route_id",
+        "route_kind",
+        "provider_variant",
+        "normalized_instance",
+        "web_domain",
+        "api_domain",
+        "container_scope",
+        "account_id",
+        "signed_catalog_entry_ref",
+        "catalog_generation",
+        "route_proof_ref",
+        "verified_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.azure.official_route.v1"
+        },
+        "route_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "route_kind": {
+          "const": "team_project_administration"
+        },
+        "provider_variant": {
+          "$ref": "#/$defs/provider_variant"
+        },
+        "normalized_instance": {
+          "$ref": "#/$defs/approved_domain"
+        },
+        "web_domain": {
+          "$ref": "#/$defs/approved_domain"
+        },
+        "api_domain": {
+          "$ref": "#/$defs/approved_domain"
+        },
+        "container_scope": {
+          "$ref": "#/$defs/container_scope"
+        },
+        "account_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "signed_catalog_entry_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "catalog_generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "route_proof_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "verified_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "azure_provider_authoritative_state": {
+      "title": "AzureProviderAuthoritativeState",
+      "description": "Independent authoritative provider/instance state supplied by the Azure adapter owner. Handoff and route records are joined against this record, never against their own echoed copies.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "state_id",
+        "provider_variant",
+        "normalized_instance",
+        "container_scope",
+        "account_id",
+        "current_catalog_generation",
+        "current_web_approved_domain",
+        "current_api_approved_domain"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.azure.provider_state.v1"
+        },
+        "state_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "provider_variant": {
+          "$ref": "#/$defs/provider_variant"
+        },
+        "normalized_instance": {
+          "$ref": "#/$defs/approved_domain"
+        },
+        "container_scope": {
+          "$ref": "#/$defs/container_scope"
+        },
+        "account_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "current_catalog_generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "current_web_approved_domain": {
+          "$ref": "#/$defs/approved_domain"
+        },
+        "current_api_approved_domain": {
+          "$ref": "#/$defs/approved_domain"
+        }
+      }
+    },
+    "azure_onboarding_owner_state": {
+      "title": "AzureOnboardingOwnerState",
+      "description": "Independent current Onboarding owner state for the session/draft fences: current draft revision, selected source, initiating Client and the active authorization/permission/capability/confirmation refs.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "state_id",
+        "onboarding_session_id",
+        "project_draft_ref",
+        "current_draft_revision",
+        "selected_source_ref",
+        "initiating_client_id",
+        "active_precommit_authorization_ref",
+        "active_human_confirmation_ref",
+        "active_permission_snapshot_ref",
+        "active_capability_snapshot_ref",
+        "current_refresh_ref",
+        "current_refresh_confirmation_ref",
+        "current_discovery_ref",
+        "current_phase"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.azure.onboarding_state.v1"
+        },
+        "state_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "onboarding_session_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_draft_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "current_draft_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "selected_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "initiating_client_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "active_precommit_authorization_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "active_human_confirmation_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "active_permission_snapshot_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "active_capability_snapshot_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "current_refresh_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "current_refresh_confirmation_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "current_discovery_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "current_phase": {
+          "enum": [
+            "read_only_preflight",
+            "selected_source_auth",
+            "project_commit",
+            "postcommit_provider",
+            "postcommit_free_models"
+          ]
+        }
+      }
+    },
+    "azure_project_discovery_record": {
+      "title": "AzureProjectDiscoveryRecord",
+      "description": "Independent provider-owned discovery produced by one explicit human refresh through the existing read-only source-list flow. Identity fields stay null while the resource is pending/missing/inaccessible; adoption is decided by the return-pair join, never by this record alone. TFVC is carried truthfully and is unsupported.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "discovery_id",
+        "refresh_ref",
+        "refresh_command_id",
+        "human_refresh_confirmation_ref",
+        "provider_variant",
+        "normalized_instance",
+        "container_scope",
+        "account_id",
+        "project_guid",
+        "project_name",
+        "project_kind",
+        "access_state",
+        "hierarchy_path_ref",
+        "provider_resource_ref",
+        "observed_catalog_generation",
+        "discovered_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.azure.project_discovery.v1"
+        },
+        "discovery_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "refresh_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "refresh_command_id": {
+          "const": "cmd.forge.repository.list"
+        },
+        "human_refresh_confirmation_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "provider_variant": {
+          "$ref": "#/$defs/provider_variant"
+        },
+        "normalized_instance": {
+          "$ref": "#/$defs/approved_domain"
+        },
+        "container_scope": {
+          "$ref": "#/$defs/container_scope"
+        },
+        "account_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_guid": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/provider_guid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "project_name": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "project_kind": {
+          "$ref": "#/$defs/project_kind"
+        },
+        "access_state": {
+          "$ref": "#/$defs/discovery_access_state"
+        },
+        "hierarchy_path_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/safe_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "provider_resource_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/safe_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observed_catalog_generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "discovered_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "azure_setup_return_pair": {
+      "title": "AzureSetupReturnPair",
+      "description": "The returned discovery pair: the exact original handoff (by ref and canonical digest), the independent discovery that only an explicit refresh produced, and the draft selection claim. Navigation or acknowledgement alone never adopts; the semantic join against current owner state decides.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "return_id",
+        "handoff_ref",
+        "handoff_sha256",
+        "discovery_ref",
+        "refresh_ref",
+        "onboarding_session_id",
+        "project_draft_ref",
+        "expected_draft_revision",
+        "initiating_client_id",
+        "draft_selection",
+        "returned_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.azure.setup_return_pair.v1"
+        },
+        "return_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "handoff_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "handoff_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "discovery_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "refresh_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "onboarding_session_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_draft_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "expected_draft_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "initiating_client_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "draft_selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "adopted",
+            "project_guid",
+            "project_name",
+            "project_kind"
+          ],
+          "properties": {
+            "adopted": {
+              "type": "boolean"
+            },
+            "project_guid": {
+              "$ref": "#/$defs/nullable_provider_guid"
+            },
+            "project_name": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/non_empty_string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "project_kind": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/project_kind"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        "returned_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "draft_selection": {
+                "properties": {
+                  "adopted": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "adopted"
+                ]
+              }
+            },
+            "required": [
+              "draft_selection"
+            ]
+          },
+          "then": {
+            "properties": {
+              "draft_selection": {
+                "properties": {
+                  "project_guid": {
+                    "$ref": "#/$defs/provider_guid"
+                  },
+                  "project_name": {
+                    "$ref": "#/$defs/non_empty_string"
+                  }
+                },
+                "required": [
+                  "project_guid",
+                  "project_name",
+                  "project_kind"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "nullable_provider_guid": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/provider_guid"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "azure_return_acknowledgement": {
+      "title": "AzureReturnAcknowledgement",
+      "description": "Acknowledgement-only return record: the human saw and acknowledged the provider page. It claims no discovery, no adoption and no creation, and only offers the explicit project-list refresh.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "acknowledgement_id",
+        "handoff_ref",
+        "handoff_sha256",
+        "navigation_outcome",
+        "adopted",
+        "discovery_ref",
+        "creation_claimed",
+        "refresh_offered",
+        "onboarding_session_id",
+        "project_draft_ref",
+        "expected_draft_revision",
+        "initiating_client_id",
+        "acknowledged_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.azure.return_acknowledgement.v1"
+        },
+        "acknowledgement_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "handoff_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "handoff_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "navigation_outcome": {
+          "enum": [
+            "opened_completed_page",
+            "human_acknowledged"
+          ]
+        },
+        "adopted": {
+          "const": false
+        },
+        "discovery_ref": {
+          "type": "null"
+        },
+        "creation_claimed": {
+          "const": false
+        },
+        "refresh_offered": {
+          "const": true
+        },
+        "onboarding_session_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_draft_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "expected_draft_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "initiating_client_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "acknowledged_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    }
+  }
+}

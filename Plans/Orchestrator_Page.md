@@ -173,7 +173,7 @@ Provider pressure and account switches support both provider-wide and account-sp
 
 Governance/runtime records use a shared record-envelope plus a family payload block. Concern payloads carry severity, category, owner, lifecycle, and resolution_kind; promotion payloads carry promotion_class, source_scope, target_scope, canonical verdict, and revoked `/reopened` lineage; recovery payloads carry blocked episode refs, action ids, preconditions, results, and safe-point refs; review payloads carry review scope, findings counts, unresolved findings, verdict, and canonical findings summary refs. Corroboration, promotion, graph-patch, and projection-trust records consume the `CV-315` / `SP-233` contract-storage owner pair for payload fields, state transitions, durable keys, and revalidation gates. Family payloads remain structured records distinct from artifacts or rendered summaries.
 
-Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/ownership, and concern-transition authority splits retain design-open status until their owning docs close them. Usage and account projections stay project-scoped by default; multi-project aggregation is a separate later concern, and per-project Orchestrator storage `/projection` remains the active direction.
+Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/ownership, and concern-transition authority splits retain design-open status until their owning docs close them. Usage and account projections stay project-scoped by default; multi-project Usage/accounting cost aggregation is a separate later accounting concern only, and per-project Orchestrator storage `/projection` remains the active direction. That accounting deferral never defers or retires the required All Active cross-Project Named Plan scope: OP-037 keeps compact cross-Project Plan aggregation mandatory on this page.
 
 Authority presentation must not collapse back to one monolithic Puppet Master center. Seam/package overseer scopes, `/package` authority, blocked-owner attribution, and `/system/user` separation stay visible, and GitHub auth `/scope/rate-limit` failures raise concern-aware hooks without turning blocked-owner semantics into generic error banners.
 
@@ -2782,4 +2782,95 @@ negative_constraints:
 owner_hints:
 - Plans/storage-plan.md
 - Plans/Executor_Protocol.md
+```
+
+## PERF-001 Named Plan scope repair (2026-09-27)
+
+The header scope offers exactly three explicit scopes over the existing seven tabs
+(`Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, `Ledger`):
+`All Active`, `Current Project`, and `Selected Plan`. The selected scope filters the existing
+tabs; no eighth Orchestrator tab or lifecycle is created. `All Active` shows compact
+cross-Project Plan cards carrying human name, derived phase, bounded progress, attention,
+priority, and Project plus short-ID disambiguation for duplicate names; each card routes under
+explicit immutable `project_id` plus `named_plan_id`. `Current Project` shows the Plans of one
+explicit Project; `Selected Plan` shows one explicit Named Plan.
+
+Current versus historical run routing nests inside the Selected Plan scope rather than replacing
+it: `active_run_id` / `focused_run_id` with `focus_mode = live | historical` continue to select
+the run, and every run route additionally carries the explicit Project+NamedPlan identity the
+run was resolved under. Cross-tab deep links and search pivots preserve that Plan identity
+alongside the focused run; a scope change re-resolves routes instead of silently re-pointing
+them. Focus, selected tab, visible thread, or active Goal never decides Plan identity: every
+scoped request carries explicit identity and every child join resolves through the single
+NPLAN-006 owner-join contract against the actual owner record and aggregate edges.
+
+Remembered scope and per-Plan view state are convenience only, never authority: stale scope or
+a stale join verdict disables scoped mutation under OP-006 projection-trust rules until the
+owner surface revalidates. Historical-edge joins authorize read and history inspection only;
+any Orchestrator mutation requires a current-edge accept with mutate intent, with owner views
+minted by owner adapters rather than the page. This repair adds no commands, no lifecycle, no
+storage keys, no events, and no native handlers; Plan switching uses the existing six
+`cmd.named_plan.*` commands and background work continues under its owner.
+
+ContractRef: ContractName:Plans/Named_Plan_System.md#NPLAN-006, ContractName:Plans/Orchestrator_Page.md#OP-006, ContractName:Plans/Orchestrator_Page.md#OP-007
+
+### OP-037 - Explicit All Active, Current Project, Selected Plan Scopes
+
+```yaml
+plan_unit_id: OP-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: >-
+  The Orchestrator header exposes exactly three explicit scopes, All Active, Current Project,
+  and Selected Plan, filtering the existing seven tabs without adding a tab or lifecycle. All
+  Active shows compact cross-Project Plan cards with name, phase, progress, attention, priority,
+  and Project plus short-ID disambiguation; every card and every scoped route carries explicit
+  immutable project_id plus named_plan_id. Current versus historical run routing with
+  active_run_id, focused_run_id, and focus_mode nests inside the Selected Plan scope, and every
+  child join resolves through the single NPLAN-006 owner-join contract. Remembered scope is
+  convenience only; stale scope disables scoped mutation until revalidation.
+gui_related: true
+gui_classification_reason: Header scopes, Plan cards, and scoped tab filtering are user-visible Orchestrator behavior.
+depends_on: [OP-002, OP-006, OP-007, NPLAN-006]
+unblocks: []
+acceptance_criteria:
+  - The header offers All Active, Current Project, and Selected Plan and nothing else as Plan scope.
+  - The seven-tab set is unchanged; the selected scope filters existing tabs and creates no eighth tab.
+  - All Active renders compact cross-Project cards with Project plus short-ID disambiguation for duplicate names.
+  - Every scoped route carries explicit project_id plus named_plan_id; focus never supplies identity.
+  - Focused-run and historical routing stay coherent inside the Selected Plan scope across tabs, search, and deep links.
+  - Stale scope or a rejected join verdict disables scoped mutation until owner revalidation.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 -m unittest tests.test_named_plan_semantics
+risk_class: orchestrator_plan_scope_drift
+reasoning_tier: high
+context_scope: orchestrator_named_plan_scope
+implementation_surfaces:
+  - Plans/Orchestrator_Page.md
+  - Plans/Named_Plan_System.md
+node_compile_hint:
+  mode: orchestrator_named_plan_scope
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08#PERF-001"
+preserved_exact_tokens:
+  - "All Active"
+  - "Current Project"
+  - "Selected Plan"
+  - "active_run_id"
+  - "focused_run_id"
+  - "focus_mode = live | historical"
+negative_constraints:
+  - Do not add an eighth Orchestrator tab or a parallel Plan lifecycle.
+  - Do not build the old run-scoped page without the three explicit scopes.
+  - Do not infer Plan identity from focus, tab, thread, or active Goal.
+  - Do not treat remembered scope as join authority.
+  - Do not retire cross-Project Plan aggregation under the Usage accounting deferral.
+  - Do not authorize mutation on a historical-edge join; mutation requires a current-edge accept.
+owner_hints:
+  - Plans/Orchestrator_Page.md
+  - Plans/Named_Plan_System.md
 ```

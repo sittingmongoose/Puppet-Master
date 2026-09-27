@@ -1,10 +1,10 @@
-# Shard 022: Product Onboarding and Guided Tour owner addendum (reconciled 2026-09-10)
+# Shard 023: Product Onboarding and Guided Tour owner addendum (reconciled 2026-09-10)
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1775-L2104
+Source lines: L1781-L2114
 
-Source SHA256: `e600f1a4a17cbe931ed0097c04fdc263843537a9a57e308aa5e8533b634f9ab5`
+Source SHA256: `a293b83b3b1dbbf68cbb9b93e935a5f3feb34f4663a9786c165535f53e4e592c`
 
 ---
 
@@ -28,7 +28,7 @@ The semantic dependency graph is owned once by `Plans/product_onboarding_contrac
 8. `automatic_preparation` — observe the selected existing owner command and its required child results after the commit click. The Project becomes usable only from its actual listed/persisted owner result and receipts; acceptance alone is not completion.
 9. `provider_setup` — with that actual committed Project in context, offer Choose what powers Puppet Master. Reuse detected usable accounts and copied routes first; broad AI provider work never precedes Project commit.
 10. `free_models_setup` — offer the explicit optional Set Up Free Models continuation after the paid-provider prompt, including after Skip. It stays inside Onboarding and delegates to the existing underlying provider/account/model owners.
-11. `ready` — present the truthful handoff, Enter Puppet Master, and optional Guided Tour. It does not certify skipped/failed work or start Goals, Plans, agents, provider requests, or builds.
+11. `ready` — present the truthful handoff, Enter Puppet Master, and optional Guided Tour. It does not certify skipped/failed work or start Goals, Plans, agents, provider requests, or builds. Enter Puppet Master without the Tour opens Planning Wizard, matching the selected TestOpus5.5 concept; successful Tour completion also returns there. This explicitly supersedes the September 3 packet's normal-finish Assistant Chat default. Opening Wizard is navigation only: when no Project or Named Plan exists it shows that truthful unbound state and requires explicit selection/creation before child work.
 
 These are dependency stages, not a requirement to render eleven equally complex screens. Hide irrelevant controls, not prerequisites; progress describes the actual applicable journey. `connect_existing_stage_order` retains the exact six-stage welcome/simple_path/remote_access_setup/review_setup_plan/automatic_preparation/ready shortcut. It does not fabricate a first Project or silently execute omitted setup. An explicit `project_disposition=deferred` on the guided path uses `deferred_project_stage_order`, leaves `project_id` and commit proof absent, and defers both provider phases. Do not turn later/Skip into a fake Project identity or a provider-readiness claim.
 
@@ -41,6 +41,10 @@ Start like another Project? appears only while creating a new Project and at lea
 `ui.onboarding.open_owner_flow` before commit requires a current `onboarding_precommit_authorization`, an exact owner request/hash, selected source, draft/revision, permission/capability/consent refs, Server/Host/Environment, initiating active Client, return focus, expiry, and continuation generation. `owner_phase=read_only_preflight` permits only the admitted read-only owner request. `owner_phase=selected_source_auth` permits only authentication or verified official-page navigation necessary for that selected source. It does not open the full provider manager or ask about unrelated AI accounts. The owner must validate actual request semantics and authenticate the referenced fences; a structurally valid authorization value is not authority.
 
 Source sign-in and official signup-page navigation reuse `cmd.auth_profile.sign_in` and `cmd.auth_profile.open_official_page`. The Auth owner supplies the narrowly bounded first-time source variant in `MACS-005` when no account/profile exists and the route requires no external CLI. It allocates real account/profile identity only after verification. Do not fabricate an installation, account, or Project to satisfy an older request schema. `cmd.integration.connection.add` and shared `cmd.authentication.start` currently require a real Project context and are not precommit shortcuts. Project-scoped connection activation/binding remains in the approved owner chain after identity reservation. Protected authentication remains human-only, ephemeral, non-recordable/non-inspectable, secret-owner controlled, and bound to the initiating active Client.
+
+### Optional Azure team-project external handoff
+
+For the selected Azure source, Advanced offers Create a team project on Azure DevOps separately from creating a repository inside an existing team project. `ADO-008` owns this human-only external administration handoff. Reuse `ui.onboarding.open_owner_flow` with `cmd.auth_profile.open_official_page`, the selected-source authorization and an exact owner-verified organization/collection route. Opening or returning from the page proves no creation, authentication, permission, or readiness. PM neither fills the provider form nor issues a team-project create API request. The user explicitly refreshes the project list on return; only a fresh provider resource with the exact host/account/container, project GUID and supported Git kind can become the draft selection. The draft revision/currentness fences reject stale or cross-instance returns. Unsupported routes retain an explicit unavailable reason and the local Project/skip-online path. No Project identity is fabricated to satisfy the precommit route.
 
 ### One reviewed owner commit, then simple provider setup
 

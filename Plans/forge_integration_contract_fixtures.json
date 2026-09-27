@@ -1587,7 +1587,8 @@
           "connection_id": null,
           "official_page_route_ref": null,
           "webhook_redelivery_gate": null,
-          "source_control_handoff_ref": null
+          "source_control_handoff_ref": null,
+          "review_draft_state": false
         },
         "availability": {
           "requested": true,
@@ -4938,7 +4939,8 @@
           "execution_host_ref": "execution-host:build-1",
           "expected_host_revision": "host-revision:19",
           "step_up_ref": "step-up:43",
-          "execution_host_consent_ref": "execution-host-consent:43"
+          "execution_host_consent_ref": "execution-host-consent:43",
+          "registration_preview_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
         },
         "availability": {
           "requested": true,
@@ -8199,6 +8201,257 @@
         "fake_success_allowed": false,
         "runtime_support_claimed": false
       }
+    },
+    {
+      "name": "command_request_forge_review_edit",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.review.edit",
+        "command_instance_id": "command:forge:review-edit",
+        "idempotency_key": "idempotency:forge:review-edit",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_com",
+        "normalized_host": "gitlab.com",
+        "account_id": "account:gitlab:alpha",
+        "repo_id": "repo:alpha",
+        "repository_binding_ref": "forge-binding:gitlab:alpha",
+        "expected_binding_generation": 7,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "review",
+        "capability_snapshot_ref": "capability-snapshot:forge:12",
+        "api_compatibility_ref": "api-compatibility:forge:12",
+        "credential_or_grant_ref": "grant:forge:12",
+        "currentness": {
+          "binding_generation": 7,
+          "catalog_generation": 11,
+          "api_probe_ref": "api-probe:forge:12",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-08-31T21:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:12",
+          "rate_budget_ref": "rate-budget:forge:12"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:12",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:12",
+          "evaluated_at_utc": "2026-08-31T21:00:00Z"
+        },
+        "confirmation": {
+          "confirmation_id": "confirmation:forge:12",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-08-31T21:00:00Z",
+          "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "expected_revision_ref": "binding-generation:12"
+        },
+        "target": {
+          "target_kind": "review",
+          "identity_source": "validated_repository_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": "review:12",
+          "review_revision_ref": "review-revision:12:v2",
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "review_edit_patch": {
+            "title": "Fix runner setup"
+          }
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T21:00:00Z"
+        },
+        "observable_work_id": null,
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-08-31T21:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null
+      }
+    },
+    {
+      "name": "runner_registration_preview_request",
+      "definition": "runner_registration_preview_request",
+      "value": {
+        "schema_id": "pm.forge.runner_registration_preview_request.v1",
+        "request_id": "runner-preview-request:43",
+        "provider": "forgejo",
+        "instance_id": "forgejo.example.invalid",
+        "account_id": "account:forgejo:alpha",
+        "repository_binding_ref": "forge-binding:forgejo:alpha",
+        "automation_binding_ref": "automation-binding:forgejo:alpha",
+        "execution_host_ref": "execution-host:build-1",
+        "expected_host_revision": "host-revision:19",
+        "environment_ref": "environment:build",
+        "runner_scope": {
+          "kind": "repository",
+          "scope_id": "repo:forgejo:alpha"
+        },
+        "capability_snapshot_ref": "capability-snapshot:forge:43",
+        "expected_automation_binding_generation": 5,
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:43",
+          "decision": "allow",
+          "scope": "read",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:43",
+          "evaluated_at_utc": "2026-09-01T12:00:00Z"
+        },
+        "currentness": {
+          "binding_generation": 3,
+          "catalog_generation": 12,
+          "api_probe_ref": "api-probe:forge:43",
+          "state": "current",
+          "mutation_safety": "reads_only",
+          "projection_updated_at_utc": "2026-09-01T12:00:00Z",
+          "direct_revalidation_ref": null,
+          "rate_budget_ref": "rate-budget:forge:43"
+        },
+        "requested_at_utc": "2026-09-01T12:00:00Z"
+      }
+    },
+    {
+      "name": "runner_registration_preview_record",
+      "definition": "runner_registration_preview_record",
+      "value": {
+        "schema_id": "pm.forge.runner_registration_preview.v1",
+        "preview_ref": "runner-registration-preview:43",
+        "preview_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "request_id": "runner-preview-request:43",
+        "producer_ref": "forge-runner-preview-producer:v1",
+        "provider": "forgejo",
+        "instance_id": "forgejo.example.invalid",
+        "account_id": "account:forgejo:alpha",
+        "repository_binding_ref": "forge-binding:forgejo:alpha",
+        "automation_binding_ref": "automation-binding:forgejo:alpha",
+        "execution_host_ref": "execution-host:build-1",
+        "expected_host_revision": "host-revision:19",
+        "environment_ref": "environment:build",
+        "runner_scope": {
+          "kind": "repository",
+          "scope_id": "repo:forgejo:alpha"
+        },
+        "capability_snapshot_ref": "capability-snapshot:forge:43",
+        "automation_binding_generation": 5,
+        "permission_snapshot_ref": "permission:forge:43",
+        "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "disclosure_ref": "runner-registration-disclosure:43",
+        "expected_resource_change": "register_runner",
+        "issued_at_utc": "2026-09-01T12:00:01Z",
+        "expires_at_utc": "2026-09-01T12:05:00Z"
+      }
+    },
+    {
+      "name": "runner_registration_preview_result",
+      "definition": "runner_registration_preview_result",
+      "value": {
+        "schema_id": "pm.forge.runner_registration_preview_result.v1",
+        "request_id": "runner-preview-request:43",
+        "outcome": "ready",
+        "preview_ref": "runner-registration-preview:43",
+        "preview_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "error_code": null,
+        "completed_at_utc": "2026-09-01T12:00:01Z"
+      }
+    },
+    {
+      "name": "runner_list_request",
+      "definition": "runner_list_request",
+      "value": {
+        "schema_id": "pm.forge.runner_list_request.v1",
+        "request_id": "runner-list-request:43",
+        "provider": "forgejo",
+        "instance_id": "forgejo.example.invalid",
+        "account_id": "account:forgejo:alpha",
+        "repository_binding_ref": "forge-binding:forgejo:alpha",
+        "automation_binding_ref": "automation-binding:forgejo:alpha",
+        "runner_scope": {
+          "kind": "repository",
+          "scope_id": "repo:forgejo:alpha"
+        },
+        "capability_snapshot_ref": "capability-snapshot:forge:43",
+        "expected_automation_binding_generation": 5,
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:43",
+          "decision": "allow",
+          "scope": "read",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:43",
+          "evaluated_at_utc": "2026-09-01T12:00:00Z"
+        },
+        "currentness": {
+          "binding_generation": 3,
+          "catalog_generation": 12,
+          "api_probe_ref": "api-probe:forge:43",
+          "state": "current",
+          "mutation_safety": "reads_only",
+          "projection_updated_at_utc": "2026-09-01T12:00:00Z",
+          "direct_revalidation_ref": null,
+          "rate_budget_ref": "rate-budget:forge:43"
+        },
+        "requested_at_utc": "2026-09-01T12:00:00Z"
+      }
+    },
+    {
+      "name": "runner_list_projection",
+      "definition": "runner_list_projection",
+      "value": {
+        "schema_id": "pm.forge.runner_list_projection.v1",
+        "request_id": "runner-list-request:43",
+        "projection_id": "runner-list-projection:43",
+        "producer_ref": "forge-runner-list-producer:v1",
+        "provider": "forgejo",
+        "instance_id": "forgejo.example.invalid",
+        "account_id": "account:forgejo:alpha",
+        "repository_binding_ref": "forge-binding:forgejo:alpha",
+        "automation_binding_ref": "automation-binding:forgejo:alpha",
+        "runner_scope": {
+          "kind": "repository",
+          "scope_id": "repo:forgejo:alpha"
+        },
+        "capability_snapshot_ref": "capability-snapshot:forge:43",
+        "automation_binding_generation": 5,
+        "permission_snapshot_ref": "permission:forge:43",
+        "projection_revision": "runner-list-revision:43",
+        "runners": [
+          {
+            "runner_id": "runner:1",
+            "display_name": "build 1",
+            "state": "online",
+            "execution_host_ref": "execution-host:build-1"
+          }
+        ],
+        "produced_at_utc": "2026-09-01T12:00:01Z",
+        "expires_at_utc": "2026-09-01T12:05:00Z"
+      }
     }
   ],
   "invalid": [
@@ -9951,6 +10204,378 @@
       "patch": {
         "permission_decision": "deny"
       }
+    },
+    {
+      "name": "review_edit_empty_patch",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.review.edit",
+        "command_instance_id": "command:forge:review-edit",
+        "idempotency_key": "idempotency:forge:review-edit",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_com",
+        "normalized_host": "gitlab.com",
+        "account_id": "account:gitlab:alpha",
+        "repo_id": "repo:alpha",
+        "repository_binding_ref": "forge-binding:gitlab:alpha",
+        "expected_binding_generation": 7,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "review",
+        "capability_snapshot_ref": "capability-snapshot:forge:12",
+        "api_compatibility_ref": "api-compatibility:forge:12",
+        "credential_or_grant_ref": "grant:forge:12",
+        "currentness": {
+          "binding_generation": 7,
+          "catalog_generation": 11,
+          "api_probe_ref": "api-probe:forge:12",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-08-31T21:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:12",
+          "rate_budget_ref": "rate-budget:forge:12"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:12",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:12",
+          "evaluated_at_utc": "2026-08-31T21:00:00Z"
+        },
+        "confirmation": {
+          "confirmation_id": "confirmation:forge:12",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-08-31T21:00:00Z",
+          "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "expected_revision_ref": "binding-generation:12"
+        },
+        "target": {
+          "target_kind": "review",
+          "identity_source": "validated_repository_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": "review:12",
+          "review_revision_ref": "review-revision:12:v2",
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "review_edit_patch": {}
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T21:00:00Z"
+        },
+        "observable_work_id": null,
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-08-31T21:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null
+      }
+    },
+    {
+      "name": "review_mark_ready_draft_true",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.review.mark_ready",
+        "command_instance_id": "command:forge:12",
+        "idempotency_key": "idempotency:forge:12",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_com",
+        "normalized_host": "gitlab.com",
+        "account_id": "account:gitlab:alpha",
+        "repo_id": "repo:alpha",
+        "repository_binding_ref": "forge-binding:gitlab:alpha",
+        "expected_binding_generation": 7,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "review",
+        "capability_snapshot_ref": "capability-snapshot:forge:12",
+        "api_compatibility_ref": "api-compatibility:forge:12",
+        "credential_or_grant_ref": "grant:forge:12",
+        "currentness": {
+          "binding_generation": 7,
+          "catalog_generation": 11,
+          "api_probe_ref": "api-probe:forge:12",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-08-31T21:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:12",
+          "rate_budget_ref": "rate-budget:forge:12"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:12",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:12",
+          "evaluated_at_utc": "2026-08-31T21:00:00Z"
+        },
+        "confirmation": {
+          "confirmation_id": "confirmation:forge:12",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-08-31T21:00:00Z",
+          "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "expected_revision_ref": "binding-generation:12"
+        },
+        "target": {
+          "target_kind": "review",
+          "identity_source": "validated_repository_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": "review:12",
+          "review_revision_ref": "review-revision:12:v2",
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "review_draft_state": true
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T21:00:00Z"
+        },
+        "observable_work_id": null,
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-08-31T21:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null
+      }
+    },
+    {
+      "name": "runner_apply_missing_preview_digest",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.runner.registration.apply",
+        "command_instance_id": "command:forge:43",
+        "idempotency_key": "idempotency:forge:43",
+        "provider": "forgejo",
+        "provider_variant": "forgejo_self_managed",
+        "normalized_host": "forgejo.example.invalid",
+        "account_id": "account:forgejo:alpha",
+        "repo_id": "repo:forgejo:alpha",
+        "repository_binding_ref": "forge-binding:forgejo:alpha",
+        "expected_binding_generation": 3,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "runner_administration",
+        "capability_snapshot_ref": "capability-snapshot:forge:43",
+        "api_compatibility_ref": "api-compatibility:forge:43",
+        "credential_or_grant_ref": "grant:forge:43",
+        "currentness": {
+          "binding_generation": 3,
+          "catalog_generation": 12,
+          "api_probe_ref": "api-probe:forge:43",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-09-01T12:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:43",
+          "rate_budget_ref": "rate-budget:forge:43"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:43",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:43",
+          "evaluated_at_utc": "2026-09-01T12:00:00Z"
+        },
+        "confirmation": {
+          "confirmation_id": "confirmation:forge:43",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-09-01T12:00:00Z",
+          "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "expected_revision_ref": "expected-revision:forge:43"
+        },
+        "target": {
+          "target_kind": "runner",
+          "identity_source": "validated_execution_host",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "registration_preview_ref": "runner-registration-preview:43",
+          "execution_host_ref": "execution-host:build-1",
+          "expected_host_revision": "host-revision:19",
+          "step_up_ref": "step-up:43",
+          "execution_host_consent_ref": "execution-host-consent:43"
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-09-01T12:00:00Z"
+        },
+        "observable_work_id": "observable-work:forge:43",
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-09-01T12:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null,
+        "automation_binding_ref": "automation-binding:forgejo:alpha",
+        "expected_automation_binding_generation": 5
+      }
+    },
+    {
+      "name": "command_request_forge_review_edit_permission_denied",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.review.edit",
+        "command_instance_id": "command:forge:review-edit",
+        "idempotency_key": "idempotency:forge:review-edit",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_com",
+        "normalized_host": "gitlab.com",
+        "account_id": "account:gitlab:alpha",
+        "repo_id": "repo:alpha",
+        "repository_binding_ref": "forge-binding:gitlab:alpha",
+        "expected_binding_generation": 7,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "review",
+        "capability_snapshot_ref": "capability-snapshot:forge:12",
+        "api_compatibility_ref": "api-compatibility:forge:12",
+        "credential_or_grant_ref": "grant:forge:12",
+        "currentness": {
+          "binding_generation": 7,
+          "catalog_generation": 11,
+          "api_probe_ref": "api-probe:forge:12",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-08-31T21:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:12",
+          "rate_budget_ref": "rate-budget:forge:12"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:12",
+          "decision": "deny",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:12",
+          "evaluated_at_utc": "2026-08-31T21:00:00Z"
+        },
+        "confirmation": {
+          "confirmation_id": "confirmation:forge:12",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-08-31T21:00:00Z",
+          "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "expected_revision_ref": "binding-generation:12"
+        },
+        "target": {
+          "target_kind": "review",
+          "identity_source": "validated_repository_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": "review:12",
+          "review_revision_ref": "review-revision:12:v2",
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "review_edit_patch": {
+            "title": "Fix runner setup"
+          }
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T21:00:00Z"
+        },
+        "observable_work_id": null,
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-08-31T21:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null
+      }
     }
   ],
   "semantic_counterexamples": [
@@ -10306,9 +10931,9 @@
     }
   ],
   "command_coverage": {
-    "canonical_command_count": 52,
-    "planned_central_common_route_count": 49,
-    "pending_central_catalog_and_wiring_count": 15,
+    "canonical_command_count": 53,
+    "planned_central_common_route_count": 50,
+    "pending_central_catalog_and_wiring_count": 16,
     "preexisting_provider_owned_command_ids": [
       "cmd.forge.review.create",
       "cmd.forge.review.merge"
@@ -10418,6 +11043,13 @@
         "handler_status": "handler_unavailable",
         "expected_event_types": [],
         "receipt_type": "DestructiveOperationReceipt"
+      },
+      {
+        "command_id": "cmd.forge.review.edit",
+        "sole_future_handler": "handlers::forge::review_edit",
+        "handler_status": "handler_unavailable",
+        "expected_event_types": [],
+        "receipt_type": "MutationReceipt"
       }
     ],
     "positive_request_command_ids": [
@@ -10472,7 +11104,8 @@
       "cmd.forge.pipeline.secret.set",
       "cmd.forge.pipeline.secret.remove",
       "cmd.forge.pipeline.variable.set",
-      "cmd.forge.pipeline.variable.remove"
+      "cmd.forge.pipeline.variable.remove",
+      "cmd.forge.review.edit"
     ],
     "negative_request_command_ids": [
       "cmd.forge.repository.list",
@@ -10526,8 +11159,285 @@
       "cmd.forge.pipeline.secret.set",
       "cmd.forge.pipeline.secret.remove",
       "cmd.forge.pipeline.variable.set",
-      "cmd.forge.pipeline.variable.remove"
+      "cmd.forge.pipeline.variable.remove",
+      "cmd.forge.review.edit"
     ],
     "provider_specific_primary_namespace_policy": "cmd.origin.*, cmd.gitlab.*, cmd.azure_devops.*, and cmd.bitbucket.* peer common command namespaces are rejected"
-  }
+  },
+  "packet_contract_bundles": [
+    {
+      "name": "runner_registration_preview_apply",
+      "kind": "preview_apply",
+      "request": {
+        "schema_id": "pm.forge.runner_registration_preview_request.v1",
+        "request_id": "runner-preview-request:43",
+        "provider": "forgejo",
+        "instance_id": "forgejo.example.invalid",
+        "account_id": "account:forgejo:alpha",
+        "repository_binding_ref": "forge-binding:forgejo:alpha",
+        "automation_binding_ref": "automation-binding:forgejo:alpha",
+        "execution_host_ref": "execution-host:build-1",
+        "expected_host_revision": "host-revision:19",
+        "environment_ref": "environment:build",
+        "runner_scope": {
+          "kind": "repository",
+          "scope_id": "repo:forgejo:alpha"
+        },
+        "capability_snapshot_ref": "capability-snapshot:forge:43",
+        "expected_automation_binding_generation": 5,
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:43",
+          "decision": "allow",
+          "scope": "read",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:43",
+          "evaluated_at_utc": "2026-09-01T12:00:00Z"
+        },
+        "currentness": {
+          "binding_generation": 3,
+          "catalog_generation": 12,
+          "api_probe_ref": "api-probe:forge:43",
+          "state": "current",
+          "mutation_safety": "reads_only",
+          "projection_updated_at_utc": "2026-09-01T12:00:00Z",
+          "direct_revalidation_ref": null,
+          "rate_budget_ref": "rate-budget:forge:43"
+        },
+        "requested_at_utc": "2026-09-01T12:00:00Z"
+      },
+      "preview": {
+        "schema_id": "pm.forge.runner_registration_preview.v1",
+        "preview_ref": "runner-registration-preview:43",
+        "preview_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "request_id": "runner-preview-request:43",
+        "producer_ref": "forge-runner-preview-producer:v1",
+        "provider": "forgejo",
+        "instance_id": "forgejo.example.invalid",
+        "account_id": "account:forgejo:alpha",
+        "repository_binding_ref": "forge-binding:forgejo:alpha",
+        "automation_binding_ref": "automation-binding:forgejo:alpha",
+        "execution_host_ref": "execution-host:build-1",
+        "expected_host_revision": "host-revision:19",
+        "environment_ref": "environment:build",
+        "runner_scope": {
+          "kind": "repository",
+          "scope_id": "repo:forgejo:alpha"
+        },
+        "capability_snapshot_ref": "capability-snapshot:forge:43",
+        "automation_binding_generation": 5,
+        "permission_snapshot_ref": "permission:forge:43",
+        "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "disclosure_ref": "runner-registration-disclosure:43",
+        "expected_resource_change": "register_runner",
+        "issued_at_utc": "2026-09-01T12:00:01Z",
+        "expires_at_utc": "2026-09-01T12:05:00Z"
+      },
+      "result": {
+        "schema_id": "pm.forge.runner_registration_preview_result.v1",
+        "request_id": "runner-preview-request:43",
+        "outcome": "ready",
+        "preview_ref": "runner-registration-preview:43",
+        "preview_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "error_code": null,
+        "completed_at_utc": "2026-09-01T12:00:01Z"
+      },
+      "apply": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.runner.registration.apply",
+        "command_instance_id": "command:forge:43",
+        "idempotency_key": "idempotency:forge:43",
+        "provider": "forgejo",
+        "provider_variant": "forgejo_self_managed",
+        "normalized_host": "forgejo.example.invalid",
+        "account_id": "account:forgejo:alpha",
+        "repo_id": "repo:forgejo:alpha",
+        "repository_binding_ref": "forge-binding:forgejo:alpha",
+        "expected_binding_generation": 3,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "runner_administration",
+        "capability_snapshot_ref": "capability-snapshot:forge:43",
+        "api_compatibility_ref": "api-compatibility:forge:43",
+        "credential_or_grant_ref": "grant:forge:43",
+        "currentness": {
+          "binding_generation": 3,
+          "catalog_generation": 12,
+          "api_probe_ref": "api-probe:forge:43",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-09-01T12:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:43",
+          "rate_budget_ref": "rate-budget:forge:43"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:43",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:43",
+          "evaluated_at_utc": "2026-09-01T12:00:00Z"
+        },
+        "confirmation": {
+          "confirmation_id": "confirmation:forge:43",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-09-01T12:00:00Z",
+          "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "expected_revision_ref": "expected-revision:forge:43"
+        },
+        "target": {
+          "target_kind": "runner",
+          "identity_source": "validated_execution_host",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "registration_preview_ref": "runner-registration-preview:43",
+          "execution_host_ref": "execution-host:build-1",
+          "expected_host_revision": "host-revision:19",
+          "step_up_ref": "step-up:43",
+          "execution_host_consent_ref": "execution-host-consent:43",
+          "registration_preview_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-09-01T12:00:00Z"
+        },
+        "observable_work_id": "observable-work:forge:43",
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-09-01T12:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null,
+        "automation_binding_ref": "automation-binding:forgejo:alpha",
+        "expected_automation_binding_generation": 5
+      },
+      "evaluated_at_utc": "2026-09-01T12:01:00Z",
+      "expected_failures": [],
+      "authoritative_automation_binding": {
+        "provider": "forgejo",
+        "instance_id": "forgejo.example.invalid",
+        "account_id": "account:forgejo:alpha",
+        "repository_binding_ref": "forge-binding:forgejo:alpha",
+        "automation_binding_ref": "automation-binding:forgejo:alpha",
+        "binding_generation": 5,
+        "capability_snapshot_ref": "capability-snapshot:forge:43",
+        "permission_snapshot_ref": "permission:forge:43",
+        "currentness": "current"
+      },
+      "authoritative_execution_host": {
+        "execution_host_ref": "execution-host:build-1",
+        "host_revision": "host-revision:19",
+        "environment_ref": "environment:build",
+        "state": "ready",
+        "consent_ref": "execution-host-consent:43",
+        "step_up_ref": "step-up:43"
+      }
+    },
+    {
+      "name": "runner_list_projection",
+      "kind": "runner_list",
+      "request": {
+        "schema_id": "pm.forge.runner_list_request.v1",
+        "request_id": "runner-list-request:43",
+        "provider": "forgejo",
+        "instance_id": "forgejo.example.invalid",
+        "account_id": "account:forgejo:alpha",
+        "repository_binding_ref": "forge-binding:forgejo:alpha",
+        "automation_binding_ref": "automation-binding:forgejo:alpha",
+        "runner_scope": {
+          "kind": "repository",
+          "scope_id": "repo:forgejo:alpha"
+        },
+        "capability_snapshot_ref": "capability-snapshot:forge:43",
+        "expected_automation_binding_generation": 5,
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:43",
+          "decision": "allow",
+          "scope": "read",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:43",
+          "evaluated_at_utc": "2026-09-01T12:00:00Z"
+        },
+        "currentness": {
+          "binding_generation": 3,
+          "catalog_generation": 12,
+          "api_probe_ref": "api-probe:forge:43",
+          "state": "current",
+          "mutation_safety": "reads_only",
+          "projection_updated_at_utc": "2026-09-01T12:00:00Z",
+          "direct_revalidation_ref": null,
+          "rate_budget_ref": "rate-budget:forge:43"
+        },
+        "requested_at_utc": "2026-09-01T12:00:00Z"
+      },
+      "projection": {
+        "schema_id": "pm.forge.runner_list_projection.v1",
+        "request_id": "runner-list-request:43",
+        "projection_id": "runner-list-projection:43",
+        "producer_ref": "forge-runner-list-producer:v1",
+        "provider": "forgejo",
+        "instance_id": "forgejo.example.invalid",
+        "account_id": "account:forgejo:alpha",
+        "repository_binding_ref": "forge-binding:forgejo:alpha",
+        "automation_binding_ref": "automation-binding:forgejo:alpha",
+        "runner_scope": {
+          "kind": "repository",
+          "scope_id": "repo:forgejo:alpha"
+        },
+        "capability_snapshot_ref": "capability-snapshot:forge:43",
+        "automation_binding_generation": 5,
+        "permission_snapshot_ref": "permission:forge:43",
+        "projection_revision": "runner-list-revision:43",
+        "runners": [
+          {
+            "runner_id": "runner:1",
+            "display_name": "build 1",
+            "state": "online",
+            "execution_host_ref": "execution-host:build-1"
+          }
+        ],
+        "produced_at_utc": "2026-09-01T12:00:01Z",
+        "expires_at_utc": "2026-09-01T12:05:00Z"
+      },
+      "evaluated_at_utc": "2026-09-01T12:01:00Z",
+      "expected_failures": [],
+      "authoritative_automation_binding": {
+        "provider": "forgejo",
+        "instance_id": "forgejo.example.invalid",
+        "account_id": "account:forgejo:alpha",
+        "repository_binding_ref": "forge-binding:forgejo:alpha",
+        "automation_binding_ref": "automation-binding:forgejo:alpha",
+        "binding_generation": 5,
+        "capability_snapshot_ref": "capability-snapshot:forge:43",
+        "permission_snapshot_ref": "permission:forge:43",
+        "currentness": "current"
+      }
+    }
+  ]
 }

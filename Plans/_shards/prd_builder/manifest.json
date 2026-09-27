@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "generated_at_utc": "2026-09-27T02:42:20Z",
   "index_path": "Plans/_shards/prd_builder/00-index.md",
-  "index_sha256": "a33291e3e2c58c2037372fa1061f571f3634c010f4cb8ffba98489afce03b8ae",
+  "index_sha256": "731a4b68756598ef4206d469da458f19bcb493bbe7b83350213c20f3529c34e4",
   "manifest_path": "Plans/_shards/prd_builder/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/prd_builder/001-preamble.md",
-      "sha256": "0d5b6456663abbc2ad30596b06311e81d630b5fa4dd1f82291f805867b09bc3b",
+      "sha256": "2e08f15ab09575d37848f73145591c46f36ff8bbac143ee01b88b0dc804f3abe",
       "shard_id": "001",
       "source_line_end": 5,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/prd_builder/002-0.-scope.md",
-      "sha256": "2909476effdeca3ecdeb3af792f9e3fee19f4d9ebe135ef61eb1c837c50ee019",
+      "sha256": "485f3aded45b8bf09b95fa7732117f0ff402ec1538ccd0202f2ef3484a51bed3",
       "shard_id": "002",
       "source_line_end": 9,
       "source_line_start": 7,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Ownership And Consumers",
       "path": "Plans/_shards/prd_builder/003-1.-ownership-and-consumers.md",
-      "sha256": "1426597c402b8278bb87d8525eb1c74fb13f6141a989699349cfc68b42ac23f0",
+      "sha256": "f79cdc34ab8e17b446de96e2fd706180d5069666568e5454539b31313ef82657",
       "shard_id": "003",
       "source_line_end": 20,
       "source_line_start": 12,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Canonical PlanUnits",
       "path": "Plans/_shards/prd_builder/004-2.-canonical-planunits.md",
-      "sha256": "bedc322e8d7ce2c5912717433de690430c114f4e4f18cfc50f8cc5a05aea047f",
+      "sha256": "43814bb1fb03e53ccaac34c1f6e49b8bca3927149d652e5383d05fdf8ae60753",
       "shard_id": "004",
       "source_line_end": 575,
       "source_line_start": 23,
@@ -44,7 +44,7 @@
     {
       "heading": "Assistant redesign: BSD, Wonderer and Grill Me in the PRD Builder start flow (2026-09-03)",
       "path": "Plans/_shards/prd_builder/005-assistant-redesign-bsd-wonderer-and-grill-me-in-the-prd-builder-.md",
-      "sha256": "3e9a217d2c9de55a6e3c594afe1f9c2075feeaabc3565ec141fbac88b50c1b28",
+      "sha256": "386fea0264c88108696a60403ef63df6da6d974bdc4bd876b7fb7288ad106286",
       "shard_id": "005",
       "source_line_end": 662,
       "source_line_start": 579,
@@ -53,7 +53,7 @@
     {
       "heading": "3. Contracts, Schemas, Events, Or Data Shapes",
       "path": "Plans/_shards/prd_builder/006-3.-contracts-schemas-events-or-data-shapes.md",
-      "sha256": "c4762f8bbc8cd3aa8615ff41c94d61a8466af59476f634ade14cfd0142792bcb",
+      "sha256": "b9f36228787ee24548c829e9084791c148a7a08172c295ec5d829673381b9660",
       "shard_id": "006",
       "source_line_end": 666,
       "source_line_start": 664,
@@ -62,7 +62,7 @@
     {
       "heading": "4. Integration Surfaces",
       "path": "Plans/_shards/prd_builder/007-4.-integration-surfaces.md",
-      "sha256": "aef52e6ad5ab7e12bb029261a30cc5666a2ab68cc320967e246384b6eee70de1",
+      "sha256": "6f836ecf885f78e0ef9082fdfddd41843e1a03b1032432c08cd7501982b1f40d",
       "shard_id": "007",
       "source_line_end": 671,
       "source_line_start": 669,
@@ -71,7 +71,7 @@
     {
       "heading": "5. Validation And Acceptance",
       "path": "Plans/_shards/prd_builder/008-5.-validation-and-acceptance.md",
-      "sha256": "06fddf1c24c1614d4f3af37ec096636620d09eb0c289fbe5430846ba0f5ac591",
+      "sha256": "74db449e8c6eafd747c22f0885df9d1c510c9f0da7f23954ce9bdc8133691d9d",
       "shard_id": "008",
       "source_line_end": 676,
       "source_line_start": 674,
@@ -80,7 +80,7 @@
     {
       "heading": "6. Plan-To-Node Readiness",
       "path": "Plans/_shards/prd_builder/009-6.-plan-to-node-readiness.md",
-      "sha256": "a731f814cbbee3b0febdefb5c6bde646c44b2f4204ac663ad8b4b20b2b6fc076",
+      "sha256": "23ad603f8720d916c581b5e8a0f77336c0c4551f06d2da7aaaeedd98de248a90",
       "shard_id": "009",
       "source_line_end": 681,
       "source_line_start": 679,
@@ -89,7 +89,7 @@
     {
       "heading": "7. Deferred, Retired, Compatibility, And Non-Goals",
       "path": "Plans/_shards/prd_builder/010-7.-deferred-retired-compatibility-and-non-goals.md",
-      "sha256": "df47863bd07aa664968bc77cf60cc91c4a01cc9897cef768091ced80830fb960",
+      "sha256": "6cdc054e25974cf0f33fcbed93f87f671284bb57e75fb3740020086fd5e35908",
       "shard_id": "010",
       "source_line_end": 686,
       "source_line_start": 684,
@@ -98,7 +98,7 @@
     {
       "heading": "8. Source Lineage And Governance",
       "path": "Plans/_shards/prd_builder/011-8.-source-lineage-and-governance.md",
-      "sha256": "a85a915af18f014bb44f625798817a0c3f3f53351b8329eb0147dcd8e94a800c",
+      "sha256": "9449a6363cdbadf46d9edf4b2e8ca1e213aa92792cdc78bdbc616845314206ec",
       "shard_id": "011",
       "source_line_end": 691,
       "source_line_start": 689,
@@ -107,7 +107,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260622-001-fff",
       "path": "Plans/_shards/prd_builder/012-ledger-compile-addendum-pldg-20260622-001-fff.md",
-      "sha256": "19f3ab3a7005140617364fab1ac30d0e6792e621b056a566a4b0200d91f11ef5",
+      "sha256": "c88ca04529dc6b744321985c41eee22e928f1c36624c1bf7e6d2e52eff533b3f",
       "shard_id": "012",
       "source_line_end": 738,
       "source_line_start": 693,
@@ -116,7 +116,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
       "path": "Plans/_shards/prd_builder/013-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
-      "sha256": "54b2d1a117771458ff0165d9d4ef78bfdaf11268f8447c9d1e35c6545ffd7305",
+      "sha256": "9c98d338a12f9828f53cf7bd3ca2b8e8619b5fa49e4d62cb2bb2f470e241f480",
       "shard_id": "013",
       "source_line_end": 882,
       "source_line_start": 741,
@@ -125,7 +125,7 @@
     {
       "heading": "FABLE Residual PRD Builder Contract Cleanup Addendum - 2026-07-07",
       "path": "Plans/_shards/prd_builder/014-fable-residual-prd-builder-contract-cleanup-addendum-2026-07-07.md",
-      "sha256": "b0359b247e4932760ce9fd9e3b513bd7cc4dba665a4b68e9a26fe0daf72b89bc",
+      "sha256": "a4a69a2aff4dc918c8efdb309fa9a0b5157210423ae54bbad665390ffeadee5a",
       "shard_id": "014",
       "source_line_end": 945,
       "source_line_start": 884,
@@ -134,16 +134,25 @@
     {
       "heading": "Notebook Research Assistance Addendum (2026-09-05)",
       "path": "Plans/_shards/prd_builder/015-notebook-research-assistance-addendum-2026-09-05.md",
-      "sha256": "ae1ac2ab9230ed2b144823de52bef163751a0a3bd0941bb1bead945add5c41a6",
+      "sha256": "37ef1799da3fd521e589246115e55c63db7a10d57a4c1cb85803c441c1817a59",
       "shard_id": "015",
       "source_line_end": 980,
       "source_line_start": 947,
       "split_rule": "heading-##"
+    },
+    {
+      "heading": "PERF-001 Named Plan consumer repair (2026-09-27)",
+      "path": "Plans/_shards/prd_builder/016-perf-001-named-plan-consumer-repair-2026-09-27.md",
+      "sha256": "a2407b5705ef9a9233c879ce14a8ec7d93dcea129ff20c523fe3b92be5cae608",
+      "shard_id": "016",
+      "source_line_end": 1058,
+      "source_line_start": 982,
+      "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 980,
+    "line_count": 1058,
     "path": "Plans/PRD_Builder.md",
-    "sha256": "0dddb1aa7bb608605c65e6a5d043ae5afb2c4b91baa39260932698cb7af554ef"
+    "sha256": "4dd841cf723c7a8898c5c3bbf8c29540623152ebc4ce61cf95a8ee2243db8c70"
   }
 }

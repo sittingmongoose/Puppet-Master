@@ -265,6 +265,1332 @@
         ],
         "safe_next_action_ref": "action:inspect-named-plan-readiness"
       }
+    },
+    {
+      "name": "owner_join_accepts_current_prd",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_accepts_current_prd",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "claimed_edge": "current",
+          "expected_aggregate_revision": 3,
+          "expected_aggregate_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "intent": "mutate"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:01",
+          "project_id": "project:01",
+          "name": "Ship Settings",
+          "lifecycle": "active",
+          "priority": "high",
+          "phase": "planning",
+          "phase_freshness": "fresh",
+          "progress_percent": 40,
+          "active_agent_count": 2,
+          "queued_agent_count": 1,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:01",
+          "current_planning_run_ref": "planning_run:01",
+          "current_approved_plan_pack_ref": null,
+          "current_plan_compile_run_ref": null,
+          "current_goal_run_refs": [],
+          "historical_child_refs": [
+            "prd:00"
+          ],
+          "thread_group_ref": "thread_group:named_plan:01",
+          "revision": 3,
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [
+            "plan_workstream:legacy:01"
+          ],
+          "snapshot_ref": "snapshot:01"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "accepted",
+          "rejection_code": null,
+          "edge_found": "current"
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        }
+      }
+    },
+    {
+      "name": "owner_join_accepts_historical_prd",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_accepts_historical_prd",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_ref": "prd:00",
+          "child_kind": "prd",
+          "child_revision": 2,
+          "child_currentness_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "claimed_edge": null,
+          "expected_aggregate_revision": 3,
+          "expected_aggregate_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "intent": "read"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:00",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 2,
+          "child_currentness_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshot_ref": "snapshot:01"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:01",
+          "project_id": "project:01",
+          "name": "Ship Settings",
+          "lifecycle": "active",
+          "priority": "high",
+          "phase": "planning",
+          "phase_freshness": "fresh",
+          "progress_percent": 40,
+          "active_agent_count": 2,
+          "queued_agent_count": 1,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:01",
+          "current_planning_run_ref": "planning_run:01",
+          "current_approved_plan_pack_ref": null,
+          "current_plan_compile_run_ref": null,
+          "current_goal_run_refs": [],
+          "historical_child_refs": [
+            "prd:00"
+          ],
+          "thread_group_ref": "thread_group:named_plan:01",
+          "revision": 3,
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [
+            "plan_workstream:legacy:01"
+          ],
+          "snapshot_ref": "snapshot:01"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "accepted",
+          "rejection_code": null,
+          "edge_found": "historical"
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:00",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 2,
+          "child_currentness_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshot_ref": "snapshot:01"
+        }
+      }
+    },
+    {
+      "name": "owner_join_rejects_wrong_plan_same_project",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_rejects_wrong_plan_same_project",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "claimed_edge": "current",
+          "expected_aggregate_revision": 3,
+          "expected_aggregate_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "intent": "read"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:02",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:01",
+          "project_id": "project:01",
+          "name": "Ship Settings",
+          "lifecycle": "active",
+          "priority": "high",
+          "phase": "planning",
+          "phase_freshness": "fresh",
+          "progress_percent": 40,
+          "active_agent_count": 2,
+          "queued_agent_count": 1,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:01",
+          "current_planning_run_ref": "planning_run:01",
+          "current_approved_plan_pack_ref": null,
+          "current_plan_compile_run_ref": null,
+          "current_goal_run_refs": [],
+          "historical_child_refs": [
+            "prd:00"
+          ],
+          "thread_group_ref": "thread_group:named_plan:01",
+          "revision": 3,
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [
+            "plan_workstream:legacy:01"
+          ],
+          "snapshot_ref": "snapshot:01"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "rejected",
+          "rejection_code": "wrong_plan_same_project",
+          "edge_found": null
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:02",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        }
+      }
+    },
+    {
+      "name": "owner_join_rejects_stale_child_revision",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_rejects_stale_child_revision",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "child_revision": 8,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "claimed_edge": "current",
+          "expected_aggregate_revision": 3,
+          "expected_aggregate_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "intent": "read"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:01",
+          "project_id": "project:01",
+          "name": "Ship Settings",
+          "lifecycle": "active",
+          "priority": "high",
+          "phase": "planning",
+          "phase_freshness": "fresh",
+          "progress_percent": 40,
+          "active_agent_count": 2,
+          "queued_agent_count": 1,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:01",
+          "current_planning_run_ref": "planning_run:01",
+          "current_approved_plan_pack_ref": null,
+          "current_plan_compile_run_ref": null,
+          "current_goal_run_refs": [],
+          "historical_child_refs": [
+            "prd:00"
+          ],
+          "thread_group_ref": "thread_group:named_plan:01",
+          "revision": 3,
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [
+            "plan_workstream:legacy:01"
+          ],
+          "snapshot_ref": "snapshot:01"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "rejected",
+          "rejection_code": "stale_child_revision",
+          "edge_found": null
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        }
+      }
+    },
+    {
+      "name": "owner_join_rejects_stale_child_hash",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_rejects_stale_child_hash",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "child_revision": 7,
+          "child_currentness_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+          "claimed_edge": "current",
+          "expected_aggregate_revision": 3,
+          "expected_aggregate_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "intent": "read"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:01",
+          "project_id": "project:01",
+          "name": "Ship Settings",
+          "lifecycle": "active",
+          "priority": "high",
+          "phase": "planning",
+          "phase_freshness": "fresh",
+          "progress_percent": 40,
+          "active_agent_count": 2,
+          "queued_agent_count": 1,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:01",
+          "current_planning_run_ref": "planning_run:01",
+          "current_approved_plan_pack_ref": null,
+          "current_plan_compile_run_ref": null,
+          "current_goal_run_refs": [],
+          "historical_child_refs": [
+            "prd:00"
+          ],
+          "thread_group_ref": "thread_group:named_plan:01",
+          "revision": 3,
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [
+            "plan_workstream:legacy:01"
+          ],
+          "snapshot_ref": "snapshot:01"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "rejected",
+          "rejection_code": "stale_child_hash",
+          "edge_found": null
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        }
+      }
+    },
+    {
+      "name": "owner_join_rejects_orphan_no_aggregate_edge",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_rejects_orphan_no_aggregate_edge",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_ref": "prd:99",
+          "child_kind": "prd",
+          "child_revision": 1,
+          "child_currentness_sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+          "claimed_edge": null,
+          "expected_aggregate_revision": 3,
+          "expected_aggregate_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "intent": "read"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:99",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 1,
+          "child_currentness_sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+          "snapshot_ref": "snapshot:01"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:01",
+          "project_id": "project:01",
+          "name": "Ship Settings",
+          "lifecycle": "active",
+          "priority": "high",
+          "phase": "planning",
+          "phase_freshness": "fresh",
+          "progress_percent": 40,
+          "active_agent_count": 2,
+          "queued_agent_count": 1,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:01",
+          "current_planning_run_ref": "planning_run:01",
+          "current_approved_plan_pack_ref": null,
+          "current_plan_compile_run_ref": null,
+          "current_goal_run_refs": [],
+          "historical_child_refs": [
+            "prd:00"
+          ],
+          "thread_group_ref": "thread_group:named_plan:01",
+          "revision": 3,
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [
+            "plan_workstream:legacy:01"
+          ],
+          "snapshot_ref": "snapshot:01"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "rejected",
+          "rejection_code": "orphan_no_aggregate_edge",
+          "edge_found": null
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:99",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 1,
+          "child_currentness_sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+          "snapshot_ref": "snapshot:01"
+        }
+      }
+    },
+    {
+      "name": "owner_join_rejects_kind_mismatch",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_rejects_kind_mismatch",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_ref": "prd:01",
+          "child_kind": "planning_run",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "claimed_edge": null,
+          "expected_aggregate_revision": 3,
+          "expected_aggregate_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "intent": "read"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:01",
+          "project_id": "project:01",
+          "name": "Ship Settings",
+          "lifecycle": "active",
+          "priority": "high",
+          "phase": "planning",
+          "phase_freshness": "fresh",
+          "progress_percent": 40,
+          "active_agent_count": 2,
+          "queued_agent_count": 1,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:01",
+          "current_planning_run_ref": "planning_run:01",
+          "current_approved_plan_pack_ref": null,
+          "current_plan_compile_run_ref": null,
+          "current_goal_run_refs": [],
+          "historical_child_refs": [
+            "prd:00"
+          ],
+          "thread_group_ref": "thread_group:named_plan:01",
+          "revision": 3,
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [
+            "plan_workstream:legacy:01"
+          ],
+          "snapshot_ref": "snapshot:01"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "rejected",
+          "rejection_code": "kind_mismatch",
+          "edge_found": null
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        }
+      }
+    },
+    {
+      "name": "owner_join_rejects_wrong_project",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_rejects_wrong_project",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "claimed_edge": "current",
+          "expected_aggregate_revision": 3,
+          "expected_aggregate_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "intent": "read"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:02",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:01",
+          "project_id": "project:01",
+          "name": "Ship Settings",
+          "lifecycle": "active",
+          "priority": "high",
+          "phase": "planning",
+          "phase_freshness": "fresh",
+          "progress_percent": 40,
+          "active_agent_count": 2,
+          "queued_agent_count": 1,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:01",
+          "current_planning_run_ref": "planning_run:01",
+          "current_approved_plan_pack_ref": null,
+          "current_plan_compile_run_ref": null,
+          "current_goal_run_refs": [],
+          "historical_child_refs": [
+            "prd:00"
+          ],
+          "thread_group_ref": "thread_group:named_plan:01",
+          "revision": 3,
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [
+            "plan_workstream:legacy:01"
+          ],
+          "snapshot_ref": "snapshot:01"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "rejected",
+          "rejection_code": "wrong_project",
+          "edge_found": null
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:02",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        }
+      }
+    },
+    {
+      "name": "owner_join_rejects_edge_claim_mismatch",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_rejects_edge_claim_mismatch",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "claimed_edge": "historical",
+          "expected_aggregate_revision": 3,
+          "expected_aggregate_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "intent": "read"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:01",
+          "project_id": "project:01",
+          "name": "Ship Settings",
+          "lifecycle": "active",
+          "priority": "high",
+          "phase": "planning",
+          "phase_freshness": "fresh",
+          "progress_percent": 40,
+          "active_agent_count": 2,
+          "queued_agent_count": 1,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:01",
+          "current_planning_run_ref": "planning_run:01",
+          "current_approved_plan_pack_ref": null,
+          "current_plan_compile_run_ref": null,
+          "current_goal_run_refs": [],
+          "historical_child_refs": [
+            "prd:00"
+          ],
+          "thread_group_ref": "thread_group:named_plan:01",
+          "revision": 3,
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [
+            "plan_workstream:legacy:01"
+          ],
+          "snapshot_ref": "snapshot:01"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "rejected",
+          "rejection_code": "edge_claim_mismatch",
+          "edge_found": null
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        }
+      }
+    },
+    {
+      "name": "owner_join_accepts_current_plan_compile_run",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_accepts_current_plan_compile_run",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:03",
+          "child_ref": "plan_compile_run:03",
+          "child_kind": "plan_compile_run",
+          "child_revision": 4,
+          "child_currentness_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "claimed_edge": "current",
+          "expected_aggregate_revision": 9,
+          "expected_aggregate_currentness_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "intent": "mutate"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "plan_compile_run:03",
+          "child_kind": "plan_compile_run",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:03",
+          "child_revision": 4,
+          "child_currentness_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "snapshot_ref": "snapshot:03"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:03",
+          "project_id": "project:01",
+          "name": "Compile Widgets",
+          "lifecycle": "active",
+          "priority": "normal",
+          "phase": "compiling",
+          "phase_freshness": "fresh",
+          "progress_percent": 62,
+          "active_agent_count": 1,
+          "queued_agent_count": 0,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:03",
+          "current_planning_run_ref": "planning_run:03",
+          "current_approved_plan_pack_ref": "approved_plan_pack:03",
+          "current_plan_compile_run_ref": "plan_compile_run:03",
+          "current_goal_run_refs": [],
+          "historical_child_refs": [
+            "plan_compile_run:02"
+          ],
+          "thread_group_ref": "thread_group:named_plan:03",
+          "revision": 9,
+          "currentness_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [],
+          "snapshot_ref": "snapshot:03"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "accepted",
+          "rejection_code": null,
+          "edge_found": "current"
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "plan_compile_run:03",
+          "child_kind": "plan_compile_run",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:03",
+          "child_revision": 4,
+          "child_currentness_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "snapshot_ref": "snapshot:03"
+        }
+      }
+    },
+    {
+      "name": "owner_join_request_standalone",
+      "definition": "named_plan_owner_join_request",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_request.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project:01",
+        "named_plan_id": "named_plan:01",
+        "child_ref": "prd:01",
+        "child_kind": "prd",
+        "child_revision": 7,
+        "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "claimed_edge": "current",
+        "expected_aggregate_revision": 3,
+        "expected_aggregate_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "intent": "mutate"
+      }
+    },
+    {
+      "name": "child_owner_view_standalone",
+      "definition": "named_plan_child_owner_view",
+      "value": {
+        "schema_id": "pm.named_plan.child_owner_view.v1",
+        "schema_version": "1.0.0",
+        "child_ref": "prd:01",
+        "child_kind": "prd",
+        "project_id": "project:01",
+        "named_plan_id": "named_plan:01",
+        "child_revision": 7,
+        "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "snapshot_ref": "snapshot:01"
+      }
+    },
+    {
+      "name": "owner_join_verdict_accepted_standalone",
+      "definition": "named_plan_owner_join_verdict",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_verdict.v1",
+        "schema_version": "1.0.0",
+        "decision": "accepted",
+        "rejection_code": null,
+        "edge_found": "current"
+      }
+    },
+    {
+      "name": "owner_join_verdict_rejected_standalone",
+      "definition": "named_plan_owner_join_verdict",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_verdict.v1",
+        "schema_version": "1.0.0",
+        "decision": "rejected",
+        "rejection_code": "orphan_no_aggregate_edge",
+        "edge_found": null
+      }
+    },
+    {
+      "name": "owner_join_rejects_stale_aggregate_revision",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_rejects_stale_aggregate_revision",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "claimed_edge": "current",
+          "expected_aggregate_revision": 2,
+          "expected_aggregate_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "intent": "read"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:01",
+          "project_id": "project:01",
+          "name": "Ship Settings",
+          "lifecycle": "active",
+          "priority": "high",
+          "phase": "planning",
+          "phase_freshness": "fresh",
+          "progress_percent": 40,
+          "active_agent_count": 2,
+          "queued_agent_count": 1,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:01",
+          "current_planning_run_ref": "planning_run:01",
+          "current_approved_plan_pack_ref": null,
+          "current_plan_compile_run_ref": null,
+          "current_goal_run_refs": [],
+          "historical_child_refs": [
+            "prd:00"
+          ],
+          "thread_group_ref": "thread_group:named_plan:01",
+          "revision": 3,
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [
+            "plan_workstream:legacy:01"
+          ],
+          "snapshot_ref": "snapshot:01"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "rejected",
+          "rejection_code": "stale_aggregate_revision",
+          "edge_found": null
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        }
+      }
+    },
+    {
+      "name": "owner_join_rejects_stale_aggregate_hash",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_rejects_stale_aggregate_hash",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "claimed_edge": "current",
+          "expected_aggregate_revision": 3,
+          "expected_aggregate_currentness_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "intent": "read"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:01",
+          "project_id": "project:01",
+          "name": "Ship Settings",
+          "lifecycle": "active",
+          "priority": "high",
+          "phase": "planning",
+          "phase_freshness": "fresh",
+          "progress_percent": 40,
+          "active_agent_count": 2,
+          "queued_agent_count": 1,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:01",
+          "current_planning_run_ref": "planning_run:01",
+          "current_approved_plan_pack_ref": null,
+          "current_plan_compile_run_ref": null,
+          "current_goal_run_refs": [],
+          "historical_child_refs": [
+            "prd:00"
+          ],
+          "thread_group_ref": "thread_group:named_plan:01",
+          "revision": 3,
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [
+            "plan_workstream:legacy:01"
+          ],
+          "snapshot_ref": "snapshot:01"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "rejected",
+          "rejection_code": "stale_aggregate_hash",
+          "edge_found": null
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        }
+      }
+    },
+    {
+      "name": "owner_join_rejects_historical_mutation",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_rejects_historical_mutation",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_ref": "prd:00",
+          "child_kind": "prd",
+          "child_revision": 2,
+          "child_currentness_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "claimed_edge": null,
+          "expected_aggregate_revision": 3,
+          "expected_aggregate_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "intent": "mutate"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:00",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 2,
+          "child_currentness_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshot_ref": "snapshot:01"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:01",
+          "project_id": "project:01",
+          "name": "Ship Settings",
+          "lifecycle": "active",
+          "priority": "high",
+          "phase": "planning",
+          "phase_freshness": "fresh",
+          "progress_percent": 40,
+          "active_agent_count": 2,
+          "queued_agent_count": 1,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:01",
+          "current_planning_run_ref": "planning_run:01",
+          "current_approved_plan_pack_ref": null,
+          "current_plan_compile_run_ref": null,
+          "current_goal_run_refs": [],
+          "historical_child_refs": [
+            "prd:00"
+          ],
+          "thread_group_ref": "thread_group:named_plan:01",
+          "revision": 3,
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [
+            "plan_workstream:legacy:01"
+          ],
+          "snapshot_ref": "snapshot:01"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "rejected",
+          "rejection_code": "historical_edge_mutation_forbidden",
+          "edge_found": null
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:00",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 2,
+          "child_currentness_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshot_ref": "snapshot:01"
+        }
+      }
+    },
+    {
+      "name": "owner_join_rejects_snapshot_mismatch",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_rejects_snapshot_mismatch",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "claimed_edge": "current",
+          "expected_aggregate_revision": 3,
+          "expected_aggregate_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "intent": "read"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:01",
+          "project_id": "project:01",
+          "name": "Ship Settings",
+          "lifecycle": "active",
+          "priority": "high",
+          "phase": "planning",
+          "phase_freshness": "fresh",
+          "progress_percent": 40,
+          "active_agent_count": 2,
+          "queued_agent_count": 1,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:01",
+          "current_planning_run_ref": "planning_run:01",
+          "current_approved_plan_pack_ref": null,
+          "current_plan_compile_run_ref": null,
+          "current_goal_run_refs": [],
+          "historical_child_refs": [
+            "prd:00"
+          ],
+          "thread_group_ref": "thread_group:named_plan:01",
+          "revision": 3,
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [
+            "plan_workstream:legacy:01"
+          ],
+          "snapshot_ref": "snapshot:02"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "rejected",
+          "rejection_code": "snapshot_mismatch",
+          "edge_found": null
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        }
+      }
+    },
+    {
+      "name": "owner_join_rejects_forged_owner_view",
+      "definition": "named_plan_owner_join_case",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_case.v1",
+        "schema_version": "1.0.0",
+        "case_name": "owner_join_rejects_forged_owner_view",
+        "join_request": {
+          "schema_id": "pm.named_plan.owner_join_request.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:02",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "claimed_edge": "current",
+          "expected_aggregate_revision": 5,
+          "expected_aggregate_currentness_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "intent": "read"
+        },
+        "owner_view": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:02",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:01"
+        },
+        "aggregate": {
+          "schema_id": "pm.named_plan.record.v1",
+          "schema_version": "1.0.0",
+          "named_plan_id": "named_plan:02",
+          "project_id": "project:01",
+          "name": "Second Plan",
+          "lifecycle": "active",
+          "priority": "high",
+          "phase": "planning",
+          "phase_freshness": "fresh",
+          "progress_percent": 40,
+          "active_agent_count": 2,
+          "queued_agent_count": 1,
+          "attention_codes": [],
+          "primary_prd_ref": "prd:01",
+          "current_planning_run_ref": null,
+          "current_approved_plan_pack_ref": null,
+          "current_plan_compile_run_ref": null,
+          "current_goal_run_refs": [],
+          "historical_child_refs": [],
+          "thread_group_ref": "thread_group:named_plan:02",
+          "revision": 5,
+          "currentness_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_activity_at_utc": "2026-08-31T00:00:00Z",
+          "migration_alias_refs": [
+            "plan_workstream:legacy:01"
+          ],
+          "snapshot_ref": "snapshot:02"
+        },
+        "expected_verdict": {
+          "schema_id": "pm.named_plan.owner_join_verdict.v1",
+          "schema_version": "1.0.0",
+          "decision": "rejected",
+          "rejection_code": "proposed_owner_view_mismatch",
+          "edge_found": null
+        },
+        "actual_owner_record": {
+          "schema_id": "pm.named_plan.child_owner_view.v1",
+          "schema_version": "1.0.0",
+          "child_ref": "prd:01",
+          "child_kind": "prd",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:01",
+          "child_revision": 7,
+          "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "snapshot_ref": "snapshot:02"
+        }
+      }
     }
   ],
   "invalid": [
@@ -421,6 +1747,131 @@
         "access_token": "raw-secret-forbidden"
       },
       "expected_invariant": "command_envelope_contains_no_secret_material"
+    },
+    {
+      "name": "owner_join_request_rejects_missing_plan_identity",
+      "definition": "named_plan_owner_join_request",
+      "expected_error": "focus-only join without explicit named_plan_id is not a valid request",
+      "value": {
+        "schema_id": "pm.named_plan.owner_join_request.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project:01",
+        "named_plan_id": null,
+        "child_ref": "prd:01",
+        "child_kind": "prd",
+        "child_revision": 7,
+        "child_currentness_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "claimed_edge": null,
+        "expected_aggregate_revision": 3,
+        "expected_aggregate_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "intent": "read"
+      }
+    },
+    {
+      "name": "owner_join_request_rejects_self_attested_match",
+      "definition": "named_plan_owner_join_request",
+      "base_valid": "owner_join_request_standalone",
+      "patch": {
+        "matches": true
+      },
+      "expected_invariant": "self_attested_match_summary_is_never_a_join_input"
+    },
+    {
+      "name": "child_owner_view_rejects_lifecycle_field",
+      "definition": "named_plan_child_owner_view",
+      "base_valid": "child_owner_view_standalone",
+      "patch": {
+        "lifecycle": "active"
+      },
+      "expected_invariant": "child_lifecycle_stays_with_child_owner_not_the_join"
+    },
+    {
+      "name": "owner_join_case_rejects_unknown_child_kind",
+      "definition": "named_plan_owner_join_case",
+      "base_valid": "owner_join_accepts_current_prd",
+      "patch": {
+        "join_request.child_kind": "workstream",
+        "owner_view.child_kind": "workstream"
+      },
+      "expected_invariant": "child_kind_is_a_closed_enum"
+    },
+    {
+      "name": "accepted_verdict_requires_found_edge",
+      "definition": "named_plan_owner_join_verdict",
+      "base_valid": "owner_join_verdict_accepted_standalone",
+      "patch": {
+        "edge_found": null
+      },
+      "expected_invariant": "accepted_join_names_its_edge"
+    },
+    {
+      "name": "rejected_verdict_requires_rejection_code",
+      "definition": "named_plan_owner_join_verdict",
+      "base_valid": "owner_join_verdict_rejected_standalone",
+      "patch": {
+        "rejection_code": null
+      },
+      "expected_invariant": "rejected_join_names_its_code"
+    },
+    {
+      "name": "wrong_plan_join_claimed_accepted_is_semantically_rejected",
+      "definition": "named_plan_owner_join_case",
+      "base_valid": "owner_join_rejects_wrong_plan_same_project",
+      "patch": {
+        "expected_verdict.decision": "accepted",
+        "expected_verdict.rejection_code": null,
+        "expected_verdict.edge_found": "current"
+      },
+      "semantic_rule": "owner_join_expected_decision_mismatch"
+    },
+    {
+      "name": "stale_hash_join_claimed_accepted_is_semantically_rejected",
+      "definition": "named_plan_owner_join_case",
+      "base_valid": "owner_join_rejects_stale_child_hash",
+      "patch": {
+        "expected_verdict.decision": "accepted",
+        "expected_verdict.rejection_code": null,
+        "expected_verdict.edge_found": "current"
+      },
+      "semantic_rule": "owner_join_expected_rejection_code_mismatch"
+    },
+    {
+      "name": "orphan_join_claimed_historical_edge_is_semantically_rejected",
+      "definition": "named_plan_owner_join_case",
+      "base_valid": "owner_join_rejects_orphan_no_aggregate_edge",
+      "patch": {
+        "expected_verdict.edge_found": "historical"
+      },
+      "semantic_rule": "owner_join_expected_edge_mismatch"
+    },
+    {
+      "name": "owner_join_request_rejects_unknown_intent",
+      "definition": "named_plan_owner_join_request",
+      "base_valid": "owner_join_request_standalone",
+      "patch": {
+        "intent": "approve"
+      },
+      "expected_invariant": "intent_is_read_or_mutate_only"
+    },
+    {
+      "name": "owner_join_case_rejects_missing_actual_owner_record",
+      "definition": "named_plan_owner_join_case",
+      "base_valid": "owner_join_accepts_current_prd",
+      "patch": {
+        "actual_owner_record": null
+      },
+      "expected_invariant": "join_case_carries_an_independent_actual"
+    },
+    {
+      "name": "forged_view_claimed_accepted_is_semantically_rejected",
+      "definition": "named_plan_owner_join_case",
+      "base_valid": "owner_join_rejects_forged_owner_view",
+      "patch": {
+        "expected_verdict.decision": "accepted",
+        "expected_verdict.rejection_code": null,
+        "expected_verdict.edge_found": "current"
+      },
+      "semantic_rule": "owner_join_expected_decision_mismatch"
     }
   ]
 }

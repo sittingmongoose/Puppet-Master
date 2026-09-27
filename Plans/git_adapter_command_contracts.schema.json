@@ -1,0 +1,1335 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/source-control/1.0.0/git_adapter_command_contracts.schema.json",
+  "title": "Puppet Master Git adapter command contracts",
+  "description": "Git-only adapter command family owned by Plans/Source_Control_System.md (SCS-024): whole-file cmd.git.stage / cmd.git.unstage with paths[], Git-scoped local cmd.source_control.remote.update, and the canonical cmd.source_control.stash.create / stash.apply / branch.create / branch.delete commands with typed fields, Git-only backend fencing, expected HEAD/index/config generations, writer lease, permission/currentness, FileSafe, previews, and dangerous-action confirmation. This family is separate from the nineteen neutral commands in Plans/source_control_contracts.schema.json, which it does not modify. Candidate cmd.git.stash.* and cmd.git.branch.* spellings are not admitted as primaries. Static contract shapes only: no central catalog rows, native handlers, production wiring, Event Authority admission, remote calls, or runtime proof.",
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identity_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 192,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "git_oid": {
+      "type": "string",
+      "oneOf": [
+        {
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        {
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ]
+    },
+    "git_object_format": {
+      "type": "string",
+      "enum": ["sha1", "sha256"]
+    },
+    "git_branch_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^(refs/heads/)?(?!/)(?!.*//)(?!.*\\.\\.)(?!.*@\\{)(?!.*[\\s~^:?*\\[\\\\])[A-Za-z0-9._/-]+(?<!/)(?<!\\.)(?<!\\.lock)$"
+    },
+    "relative_repo_path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![/\\\\ ])(?!.*[ /]$)(?!.*(^|/)\\.\\.(/|$))(?!.*\\\\)(?!.*(^|/) )(?!.* (/|$))[^\\\\\\x00-\\x1f\\x7f]{1,512}$"
+    },
+    "validated_remote_url": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(https|ssh)://[^/@?#\\s]+(/[^?#\\s]*)?$"
+    },
+    "stash_id": {
+      "type": "string",
+      "pattern": "^(stash@\\{[0-9]+\\}|[0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "git_expected_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "object_format", "head_oid", "index_generation", "config_generation"],
+      "properties": {
+        "kind": {
+          "const": "git"
+        },
+        "object_format": {
+          "$ref": "#/$defs/git_object_format"
+        },
+        "head_oid": {
+          "$ref": "#/$defs/git_oid"
+        },
+        "index_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "config_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "object_format": {
+                "const": "sha1"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "head_oid": {
+                "pattern": "^[0-9a-f]{40}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "object_format": {
+                "const": "sha256"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "head_oid": {
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "git_command_lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project_id", "project_home_server_id", "execution_host_id", "execution_environment_id", "source_location_id", "topology_generation"],
+      "properties": {
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "plan_id": {
+          "type": ["string", "null"],
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": ["string", "null"],
+          "minLength": 1
+        },
+        "run_id": {
+          "type": ["string", "null"],
+          "minLength": 1
+        },
+        "agent_id": {
+          "type": ["string", "null"],
+          "minLength": 1
+        },
+        "project_home_server_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "git_adapter_command_id": {
+      "type": "string",
+      "enum": [
+        "cmd.git.stage",
+        "cmd.git.unstage",
+        "cmd.source_control.remote.update",
+        "cmd.source_control.stash.create",
+        "cmd.source_control.stash.apply",
+        "cmd.source_control.branch.create",
+        "cmd.source_control.branch.delete"
+      ]
+    },
+    "git_command_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command_id", "lineage", "repository_context_ref", "repo_id", "scm_backend", "workspace_id", "expected_git_state", "currentness_generation", "currentness_ref", "currentness_sha256", "writer_lease_ref", "permission_snapshot_ref", "file_safe_decision_ref"],
+      "properties": {
+        "command_id": {
+          "$ref": "#/$defs/git_adapter_command_id"
+        },
+        "lineage": {
+          "$ref": "#/$defs/git_command_lineage"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "scm_backend": {
+          "const": "git"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "expected_git_state": {
+          "$ref": "#/$defs/git_expected_state"
+        },
+        "currentness_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "currentness_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "currentness_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "writer_lease_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "file_safe_decision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "paths": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 512,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/relative_repo_path"
+          }
+        },
+        "status_selection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "whole_file_only": {
+          "const": true
+        },
+        "include_untracked": {
+          "type": "boolean"
+        },
+        "untracked_paths_declared": {
+          "type": "array",
+          "maxItems": 512,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/relative_repo_path"
+          }
+        },
+        "remote_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "fetch_url": {
+          "$ref": "#/$defs/validated_remote_url"
+        },
+        "push_urls": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/validated_remote_url"
+          }
+        },
+        "expected_config_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "local_config_only": {
+          "const": true
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "stash_id": {
+          "$ref": "#/$defs/stash_id"
+        },
+        "preview_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "branch": {
+          "$ref": "#/$defs/git_branch_name"
+        },
+        "base_oid": {
+          "$ref": "#/$defs/git_oid"
+        },
+        "expected_branch_head": {
+          "$ref": "#/$defs/git_oid"
+        },
+        "dangerous_confirmation": {
+          "const": true
+        },
+        "irreversibility_disclosed": {
+          "const": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.git.stage"
+              }
+            },
+            "required": ["command_id"]
+          },
+          "then": {
+            "required": ["paths", "status_selection_ref", "whole_file_only", "include_untracked"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.git.unstage"
+              }
+            },
+            "required": ["command_id"]
+          },
+          "then": {
+            "required": ["paths", "status_selection_ref", "whole_file_only"],
+            "properties": {
+              "include_untracked": false,
+              "untracked_paths_declared": false
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.remote.update"
+              }
+            },
+            "required": ["command_id"]
+          },
+          "then": {
+            "required": ["remote_id", "fetch_url", "push_urls", "expected_config_generation", "local_config_only"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.stash.create"
+              }
+            },
+            "required": ["command_id"]
+          },
+          "then": {
+            "required": ["include_untracked", "message"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.stash.apply"
+              }
+            },
+            "required": ["command_id"]
+          },
+          "then": {
+            "required": ["stash_id", "preview_ref"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.branch.create"
+              }
+            },
+            "required": ["command_id"]
+          },
+          "then": {
+            "required": ["branch", "base_oid"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.branch.delete"
+              }
+            },
+            "required": ["command_id"]
+          },
+          "then": {
+            "required": ["branch", "expected_branch_head", "preview_ref", "dangerous_confirmation", "irreversibility_disclosed"]
+          }
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "scm_backend is exactly git; a jujutsu scope cannot satisfy this family",
+        "paths[] carries whole files only; no hunk field exists in this family",
+        "remote.update mutates local remote configuration only and performs no fetch, publish, or credential-bearing network effect"
+      ]
+    },
+    "git_return_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["surface_id", "route_ref", "focus_id", "invocation_token", "caller_context_ref", "expected_caller_revision", "continuation_generation"],
+      "properties": {
+        "surface_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "route_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "focus_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "invocation_token": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "caller_context_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_caller_revision": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "continuation_generation": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "git_command_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "command_instance_id", "idempotency_key", "scope", "permission_snapshot_ref", "file_safe_decision_ref", "requested_at_utc"],
+      "properties": {
+        "schema_id": {
+          "const": "pm.git_adapter.command_request.v1"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope": {
+          "$ref": "#/$defs/git_command_scope"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "file_safe_decision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "return_context": {
+          "$ref": "#/$defs/git_return_context"
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "git_command_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "command_instance_id", "scope", "outcome", "effect_state", "result_refs", "completed_at_utc"],
+      "properties": {
+        "schema_id": {
+          "const": "pm.git_adapter.command_result.v1"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope": {
+          "$ref": "#/$defs/git_command_scope"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": ["accepted", "succeeded", "blocked", "failed", "cancelled", "recovery_required", "effect_unknown"]
+        },
+        "effect_state": {
+          "type": "string",
+          "enum": ["no_effect", "effects_applied", "effects_reconciled", "effect_unknown"]
+        },
+        "result_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "operation_receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "observable_work_id": {
+          "type": ["string", "null"],
+          "minLength": 1
+        },
+        "return_context": {
+          "$ref": "#/$defs/git_return_context"
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": ["outcome"]
+          },
+          "then": {
+            "required": ["observable_work_id"],
+            "properties": {
+              "operation_receipt_ref": false,
+              "effect_state": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "else": {
+            "required": ["operation_receipt_ref"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "succeeded"
+              }
+            },
+            "required": ["outcome"]
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "enum": ["no_effect", "effects_applied", "effects_reconciled"]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "effect_unknown"
+              }
+            },
+            "required": ["outcome"]
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "effect_unknown"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "effect_state": {
+                "const": "effect_unknown"
+              }
+            },
+            "required": ["effect_state"]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "const": "effect_unknown"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "cancelled"
+              }
+            },
+            "required": ["outcome"]
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "enum": ["no_effect", "effects_reconciled"]
+              }
+            }
+          }
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "accepted admits work for later settlement and is never terminal success",
+        "only a terminal outcome carries an operation receipt",
+        "effect_unknown is never a known effect and never a safe retry by itself"
+      ]
+    },
+    "git_command_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "command_instance_id", "scope_command_id", "outcome", "effect_state", "before_head_oid", "after_head_oid", "before_index_generation", "after_index_generation", "before_config_generation", "after_config_generation", "effect_summary", "reconciled", "completed_at_utc"],
+      "properties": {
+        "schema_id": {
+          "const": "pm.git_adapter.command_receipt.v1"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope_command_id": {
+          "$ref": "#/$defs/git_adapter_command_id"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": ["succeeded", "blocked", "failed", "cancelled", "recovery_required", "effect_unknown"]
+        },
+        "effect_state": {
+          "type": "string",
+          "enum": ["no_effect", "effects_applied", "effects_reconciled", "effect_unknown"]
+        },
+        "before_head_oid": {
+          "$ref": "#/$defs/git_oid"
+        },
+        "after_head_oid": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/git_oid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "before_index_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "after_index_generation": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "before_config_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "after_config_generation": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "effect_summary": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "affected_paths": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 512,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/relative_repo_path"
+              }
+            },
+            "created_stash_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "applied_stash_id": {
+              "$ref": "#/$defs/stash_id"
+            },
+            "created_branch": {
+              "$ref": "#/$defs/git_branch_name"
+            },
+            "created_branch_tip_oid": {
+              "$ref": "#/$defs/git_oid"
+            },
+            "deleted_branch": {
+              "$ref": "#/$defs/git_branch_name"
+            },
+            "deleted_branch_tip_oid": {
+              "$ref": "#/$defs/git_oid"
+            },
+            "updated_remote_id": {
+              "$ref": "#/$defs/identity_id"
+            }
+          }
+        },
+        "reconciled": {
+          "type": "boolean"
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "succeeded"
+              }
+            },
+            "required": ["outcome"]
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "enum": ["no_effect", "effects_applied", "effects_reconciled"]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "effect_unknown"
+              }
+            },
+            "required": ["outcome"]
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "effect_unknown"
+              },
+              "after_head_oid": {
+                "type": "null"
+              },
+              "after_index_generation": {
+                "type": "null"
+              },
+              "after_config_generation": {
+                "type": "null"
+              },
+              "reconciled": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope_command_id": {
+                "enum": ["cmd.git.stage", "cmd.git.unstage"]
+              },
+              "outcome": {
+                "const": "succeeded"
+              }
+            },
+            "required": ["scope_command_id", "outcome"]
+          },
+          "then": {
+            "properties": {
+              "effect_summary": {
+                "required": ["affected_paths"]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope_command_id": {
+                "const": "cmd.source_control.stash.create"
+              },
+              "outcome": {
+                "const": "succeeded"
+              }
+            },
+            "required": ["scope_command_id", "outcome"]
+          },
+          "then": {
+            "properties": {
+              "effect_summary": {
+                "required": ["created_stash_ref"]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope_command_id": {
+                "const": "cmd.source_control.stash.apply"
+              },
+              "outcome": {
+                "const": "succeeded"
+              }
+            },
+            "required": ["scope_command_id", "outcome"]
+          },
+          "then": {
+            "properties": {
+              "effect_summary": {
+                "required": ["applied_stash_id"]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope_command_id": {
+                "const": "cmd.source_control.branch.create"
+              },
+              "outcome": {
+                "const": "succeeded"
+              }
+            },
+            "required": ["scope_command_id", "outcome"]
+          },
+          "then": {
+            "properties": {
+              "effect_summary": {
+                "required": ["created_branch", "created_branch_tip_oid"]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope_command_id": {
+                "const": "cmd.source_control.branch.delete"
+              },
+              "outcome": {
+                "const": "succeeded"
+              }
+            },
+            "required": ["scope_command_id", "outcome"]
+          },
+          "then": {
+            "properties": {
+              "effect_summary": {
+                "required": ["deleted_branch", "deleted_branch_tip_oid"]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope_command_id": {
+                "const": "cmd.source_control.remote.update"
+              },
+              "outcome": {
+                "const": "succeeded"
+              }
+            },
+            "required": ["scope_command_id", "outcome"]
+          },
+          "then": {
+            "properties": {
+              "effect_summary": {
+                "required": ["updated_remote_id"]
+              }
+            }
+          }
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "a receipt is terminal truth only; accepted work carries no receipt",
+        "branch.delete success names the deleted tip so the effect stays auditable",
+        "effect_unknown receipts leave every after-generation null until reconciliation"
+      ]
+    },
+    "git_command_error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "command_instance_id", "scope", "error_code", "effect_state", "retry_allowed", "safe_next_actions", "occurred_at_utc"],
+      "properties": {
+        "schema_id": {
+          "const": "pm.git_adapter.command_error.v1"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope": {
+          "$ref": "#/$defs/git_command_scope"
+        },
+        "error_code": {
+          "type": "string",
+          "enum": ["repository_missing", "workspace_missing", "stale_head", "stale_index", "stale_config", "selection_stale", "lease_conflict", "permission_denied", "filesafe_denied", "path_out_of_repo", "path_absolute_forbidden", "path_traversal_forbidden", "untracked_not_admitted", "remote_unknown", "remote_url_invalid", "credential_in_url_forbidden", "network_effect_forbidden", "stash_missing", "stash_conflict", "dirty_worktree_blocked", "preview_missing", "preview_stale", "branch_exists", "branch_missing", "branch_protected", "branch_checked_out", "branch_attached_worktree", "dangerous_confirmation_missing", "handler_unavailable", "degraded", "recovery_required", "effect_unknown"]
+        },
+        "effect_state": {
+          "type": "string",
+          "enum": ["no_effect", "effects_applied", "effects_reconciled", "effect_unknown"]
+        },
+        "retry_allowed": {
+          "type": "boolean"
+        },
+        "safe_next_actions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["refresh", "inspect", "retry", "reconcile_effects", "rebind_repository", "renew_lease", "repair_setup", "none"]
+          }
+        },
+        "detail_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "occurred_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "error_code": {
+                "const": "effect_unknown"
+              }
+            },
+            "required": ["error_code"]
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "effect_unknown"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "effect_state": {
+                "const": "effect_unknown"
+              }
+            },
+            "required": ["effect_state"]
+          },
+          "then": {
+            "properties": {
+              "retry_allowed": {
+                "const": false
+              },
+              "safe_next_actions": {
+                "contains": {
+                  "const": "reconcile_effects"
+                },
+                "not": {
+                  "contains": {
+                    "const": "retry"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "git_command_availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "scope", "available", "disabled_reason", "checked_at_utc"],
+      "properties": {
+        "schema_id": {
+          "const": "pm.git_adapter.command_availability.v1"
+        },
+        "scope": {
+          "$ref": "#/$defs/git_command_scope"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "disabled_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/git_command_disabled_reason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checked_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": true
+              }
+            },
+            "required": ["available"]
+          },
+          "then": {
+            "properties": {
+              "disabled_reason": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": false
+              }
+            },
+            "required": ["available"]
+          },
+          "then": {
+            "properties": {
+              "disabled_reason": {
+                "$ref": "#/$defs/git_command_disabled_reason"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "git_command_disabled_reason": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "scope", "reason_code", "safe_next_actions", "observed_at_utc"],
+      "properties": {
+        "schema_id": {
+          "const": "pm.git_adapter.command_disabled_reason.v1"
+        },
+        "scope": {
+          "$ref": "#/$defs/git_command_scope"
+        },
+        "reason_code": {
+          "type": "string",
+          "enum": ["repository_missing", "workspace_missing", "stale_head", "stale_index", "stale_config", "selection_stale", "lease_conflict", "permission_denied", "filesafe_denied", "untracked_not_admitted", "remote_unknown", "stash_missing", "preview_missing", "preview_stale", "branch_exists", "branch_missing", "branch_protected", "branch_checked_out", "branch_attached_worktree", "dangerous_confirmation_missing", "handler_unavailable", "degraded"]
+        },
+        "blocking_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "safe_next_actions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["refresh", "inspect", "retry", "reconcile_effects", "rebind_repository", "renew_lease", "repair_setup", "none"]
+          }
+        },
+        "observed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "stash_apply_preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "preview_id", "repo_id", "workspace_id", "scm_backend", "expected_git_state", "stash_id", "currentness_generation", "currentness_ref", "currentness_sha256", "permission_snapshot_ref", "file_safe_decision_ref", "produced_at_utc", "expires_at_utc", "stash_exists", "worktree_clean", "conflicting_paths"],
+      "properties": {
+        "schema_id": {
+          "const": "pm.git_adapter.stash_apply_preview.v1"
+        },
+        "preview_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "scm_backend": {
+          "const": "git"
+        },
+        "expected_git_state": {
+          "$ref": "#/$defs/git_expected_state"
+        },
+        "stash_id": {
+          "$ref": "#/$defs/stash_id"
+        },
+        "currentness_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "currentness_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "currentness_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "file_safe_decision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "produced_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "stash_exists": {
+          "type": "boolean"
+        },
+        "worktree_clean": {
+          "type": "boolean"
+        },
+        "conflicting_paths": {
+          "type": "array",
+          "maxItems": 512,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/relative_repo_path"
+          }
+        }
+      },
+      "x-puppet-master-assertions": [
+        "the preview is produced by the stash.apply owner projection, never inside the apply dispatch",
+        "the preview is immutable: any state, target, currentness, permission, FileSafe, or finding change needs a new preview_id"
+      ]
+    },
+    "branch_delete_preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "preview_id", "repo_id", "workspace_id", "scm_backend", "expected_git_state", "branch", "expected_branch_head", "currentness_generation", "currentness_ref", "currentness_sha256", "permission_snapshot_ref", "file_safe_decision_ref", "produced_at_utc", "expires_at_utc", "branch_exists", "protected", "checked_out", "attached_worktree_refs"],
+      "properties": {
+        "schema_id": {
+          "const": "pm.git_adapter.branch_delete_preview.v1"
+        },
+        "preview_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "scm_backend": {
+          "const": "git"
+        },
+        "expected_git_state": {
+          "$ref": "#/$defs/git_expected_state"
+        },
+        "branch": {
+          "$ref": "#/$defs/git_branch_name"
+        },
+        "expected_branch_head": {
+          "$ref": "#/$defs/git_oid"
+        },
+        "currentness_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "currentness_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "currentness_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "file_safe_decision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "produced_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "branch_exists": {
+          "type": "boolean"
+        },
+        "protected": {
+          "type": "boolean"
+        },
+        "checked_out": {
+          "type": "boolean"
+        },
+        "attached_worktree_refs": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        }
+      },
+      "x-puppet-master-assertions": [
+        "the preview is produced by the branch.delete owner projection, never inside the delete dispatch",
+        "the preview is immutable: any state, target, currentness, permission, FileSafe, or guard change needs a new preview_id"
+      ]
+    },
+    "git_permission_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "scope", "permission_snapshot_ref", "file_safe_decision_ref", "permission_class", "decision", "authority_widening", "secret_material_exposed", "reason_code"],
+      "properties": {
+        "schema_id": {
+          "const": "pm.git_adapter.permission_decision.v1"
+        },
+        "scope": {
+          "$ref": "#/$defs/git_command_scope"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "file_safe_decision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_class": {
+          "type": "string",
+          "enum": ["git.stage", "git.unstage", "source_control.remote.update", "source_control.stash.create", "source_control.stash.apply", "source_control.branch.create", "source_control.branch.delete"]
+        },
+        "decision": {
+          "type": "string",
+          "enum": ["allow", "deny", "prompt_human"]
+        },
+        "authority_widening": {
+          "const": false
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "reason_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "decision": {
+                "enum": ["deny", "prompt_human"]
+              }
+            },
+            "required": ["decision"]
+          },
+          "then": {
+            "properties": {
+              "reason_code": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/git_command_request"
+    },
+    {
+      "$ref": "#/$defs/git_command_result"
+    },
+    {
+      "$ref": "#/$defs/git_command_receipt"
+    },
+    {
+      "$ref": "#/$defs/git_command_error"
+    },
+    {
+      "$ref": "#/$defs/git_command_availability"
+    },
+    {
+      "$ref": "#/$defs/git_command_disabled_reason"
+    },
+    {
+      "$ref": "#/$defs/git_permission_decision"
+    },
+    {
+      "$ref": "#/$defs/stash_apply_preview"
+    },
+    {
+      "$ref": "#/$defs/branch_delete_preview"
+    }
+  ],
+  "x-git-adapter-commands": ["cmd.git.stage", "cmd.git.unstage", "cmd.source_control.remote.update", "cmd.source_control.stash.create", "cmd.source_control.stash.apply", "cmd.source_control.branch.create", "cmd.source_control.branch.delete"],
+  "x-git-adapter-claim-boundary": "static owner contract only; every command remains handler_unavailable until exact native dispatcher evidence, central registration, permission/FileSafe routing, production wiring, and receipt disposition exist"
+}

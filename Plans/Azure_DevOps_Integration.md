@@ -396,3 +396,42 @@ preserved_exact_tokens: [policy evaluations, status check, informational, gate]
 negative_constraints: [Do not show one provider check in both groups at once., Do not present an unwatched status check as a gate., Do not join the two lists on an inferred key.]
 owner_hints: [Plans/Azure_DevOps_Integration.md, Plans/Source_Control_System.md]
 ```
+
+## ADO-008 — Optional team-project administration handoff
+
+The default remains repository selection or creation inside an existing Azure team project. Advanced additionally offers **Create a team project on Azure DevOps** as explicit human-owned external administration. This preserves the September 3 onboarding packet's optional capability while disposing of its proposed native asynchronous-create chain: native team-project creation is not admitted by this change. A team project is an Azure container, never a Puppet Master Project or repository.
+
+`Plans/azure_devops_setup_contracts.schema.json` defines the closed handoff and returned discovery pair. The Azure adapter supplies a current signed-catalog-supported official route for the exact Services organization or Server collection, provider variant, normalized instance and authenticated account. The route resolver binds `official_route_ref` to this handoff, the initiating Client, selected source, onboarding session/draft revision, owner authorization, explicit human confirmation and expiry. Web/API host differences require the existing approved domain policy. Freeform URLs, guessed provider paths, cross-account/instance/container substitutions and stale routes are rejected. A valid record is not itself a permission grant: the auth/route owner re-resolves the actual current provider/authorization records before dispatch.
+
+The consumer reuses `ui.onboarding.open_owner_flow` -> `cmd.auth_profile.open_official_page`; MACS-005 and protected-auth/route policy remain authoritative. Only the human sees and operates the provider page. PM does not collect team-project fields, choose process templates, auto-submit forms, issue create requests, inspect protected content, or claim completion. This is precommit official navigation, not permission for PM repository/filesystem mutations or general administration automation.
+
+Returning or acknowledging completion only offers **Refresh projects** through the existing read-only source-list flow. There is no optimistic project insertion or automatic selection. A fresh provider-owned resource must independently supply its project GUID/name, exact hierarchy, kind and access/currentness; missing/pending/inaccessible resources remain unselected. The returned discovery is compared with the exact original handoff and current draft. Git containers alone can proceed; TFVC is explicitly unsupported rather than an empty Git repository. Changing host/account/organization/collection or draft revision, or advancing the actual Onboarding owner out of `selected_source_auth`, invalidates the return. If the provider cannot supply an admitted official route, expose its reason and retain the local Project/skip-online choice. This disposition does not broaden generic Forge native support.
+
+```yaml
+plan_unit_id: ADO-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Azure_DevOps_Integration.md
+canonical_text: >-
+  Optional Azure team-project creation is a human-only exact-instance official administration handoff through existing
+  onboarding and Auth owner routes. Default repository-in-existing-project behavior remains. PM performs no team-project
+  creation or optimistic adoption; return requires explicit refresh and independently verified provider GUID, hierarchy,
+  Git kind, access and currentness under the original draft/Client fences. Unsupported routes retain truthful fallback.
+gui_related: true
+gui_classification_reason: Advanced external creation, return, refresh and unsupported-state behavior are visible setup controls.
+depends_on: [ADO-001, ADO-002, FGI-011, MACS-005, PWIZ-021]
+unblocks: []
+acceptance_criteria:
+  - Official route and return bind the exact provider variant, host, account, organization or collection, initiating Client and current draft.
+  - Page navigation and human acknowledgement never create, authenticate, select or certify a resource.
+  - Fresh returned provider resources supply project GUID and Git kind; wrong-instance, stale-draft, missing GUID and TFVC returns cannot be adopted.
+  - PM sends no native team-project create request and never fabricates a Project or repository to navigate.
+validation_surfaces: [Plans/azure_devops_setup_contracts.schema.json, Plans/azure_devops_setup_contract_fixtures.json, scripts/pm_azure_setup_semantics.py]
+risk_class: azure_external_administration_false_adoption
+reasoning_tier: high
+context_scope: azure_team_project_external_handoff
+implementation_surfaces: [Plans/Azure_DevOps_Integration.md, Plans/Planning_Wizard.md, future Azure route resolver]
+node_compile_hint: {mode: azure_external_setup_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:onboarding-sep03:04_ACCOUNT_SIGNIN_AND_PROJECT_CREATION_MATRIX.md, source_ref:packet-sweep-20260927:N03-F03]
+negative_constraints: [Do not treat a return as resource creation., Do not broaden native Azure commands., Do not collect provider administration forms., Do not guess a project GUID from a URL.]
+```

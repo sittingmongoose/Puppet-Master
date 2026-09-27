@@ -1,0 +1,147 @@
+{
+  "source_audit_commit": "0fce05313f4b049fd7fc7c1941499bce8ef027ff",
+  "source_report_path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/packet-sweep-20260927/REPORT.md",
+  "source_report_sha256": "4e9561d68f2106826ae32f77f3c2fe94ff08dafce59477a866d0104a68579ee0",
+  "findings": [
+    {
+      "id": "N03-F01",
+      "category": "actionable_finding",
+      "title": "Selected concept reuses a cloud or other-instance account without instance verification",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "N03-F02",
+      "category": "actionable_finding",
+      "title": "Signup branch recreates provider account form and treats acknowledgement as sign-in",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "N03-F03",
+      "category": "actionable_finding",
+      "title": "Optional Azure team-project creation has no mapped owner/consumer path",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "N03-A01",
+      "category": "ambiguity",
+      "title": "Non-tour Ready default destination needs explicit supersession disposition",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "FS01",
+      "category": "actionable_finding",
+      "title": "Selected recovery point is lost by Verify and by history reordering",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "FS02",
+      "category": "actionable_finding",
+      "title": "Backup verify command cannot carry the requested verification level",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "FS-C01",
+      "category": "ambiguity",
+      "title": "New restore UI defaults to In place rather than the packet safe normal as-new mode",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "PERF-001",
+      "category": "actionable_finding",
+      "title": "Named Plan scopes stop at the aggregate owner and are missing from Orchestrator consumers",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "PERF-002",
+      "category": "actionable_finding",
+      "title": "Performance fixture puts command/cancel phases into the closed ObservableWork state axis",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "SET-AUD-001",
+      "category": "actionable_finding",
+      "title": "Universal search drops the exact managed-object target",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "SERVER-F01",
+      "category": "actionable_finding",
+      "title": "Normal Updates screen still exposes a user frequency schedule",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "OH-F01",
+      "category": "actionable_finding",
+      "title": "Tour checkpoint persists raw composer text and resumes without owner-state revalidation",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "OH-F02",
+      "category": "actionable_finding",
+      "title": "Tour discards restoration recovery while reporting finished or skipped",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "OH-F03",
+      "category": "actionable_finding",
+      "title": "Keep layout also skips restoration of temporary Chat state",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "EGOLITE-F01",
+      "category": "maintenance",
+      "title": "Stale Origin fallback text in hidden concept metadata",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "EGOLITE-X01",
+      "category": "actionable_finding",
+      "title": "Runner registration requires a preview with no specified authoritative producer",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "EPOL-F01",
+      "category": "actionable_finding",
+      "title": "WSL platform contract stops short of required acquisition and feature probes",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "EPOL-F02",
+      "category": "actionable_finding",
+      "title": "Apple-specific authoritative proof restriction is only partially retained",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "EPOL-F03",
+      "category": "actionable_finding",
+      "title": "Preserved assurance policy lacks result and acceptance propagation",
+      "repair_status": "in_progress",
+      "verification": []
+    },
+    {
+      "id": "EPOL-F04",
+      "category": "actionable_finding",
+      "title": "Internal update policy omits durable successful-check basis and retry shaping",
+      "repair_status": "in_progress",
+      "verification": []
+    }
+  ]
+}

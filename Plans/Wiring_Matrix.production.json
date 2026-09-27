@@ -10960,7 +10960,8 @@
         "Validate Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request -> Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.backup_verify.availability and state.commands.backup_verify.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "BRS-030: every producer supplies an explicit verification depth or current plan selector, immutable backup/snapshot and target-bound cost/read acknowledgement; dispatch revalidates plan and target and receipt distinguishes requested from performed depth."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.backup_verify.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -10984,7 +10985,7 @@
       "event_test_requirements": [
         "Assert cmd.backup.verify records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.backup.verify: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.backup.verify: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts. BRS-030 also requires focused depth/plan/cost/snapshot semantic fixtures and negative dispatcher evidence.",
       "expected_event_types": [],
       "handler_location": "handlers::backup_restore::backup_verify",
       "request_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request",
@@ -11010,6 +11011,11 @@
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
           "test_id": "wiring.catalog.backup_verify.accessibility"
+        },
+        {
+          "test_id": "wiring.catalog.backup_verify.verify_depth",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove structural/sampled/full and plan choices preserve immutable backup/snapshot, cost/read scope, currentness and requested-versus-performed receipt; reject stale/substituted plan, target or acknowledgement before effect."
         }
       ],
       "ui_command_id": "cmd.backup.verify",
@@ -56470,69 +56476,60 @@
     },
     "catalog.source_control_branch_create": {
       "ui_element_id": "catalog.source_control_branch_create",
-      "ui_location": "Left rail > Source Control panel > Branch selector > Create Branch",
+      "ui_location": "Source Control > Branches / Stash > Create Branch; command palette and authorized automation consume the same owner route",
       "ui_command_id": "cmd.source_control.branch.create",
       "handler_location": "handlers::source_control::branch_create",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.source_control.branch.create must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.source_control.branch.create must expose projected state selector and disabled reason before dispatch",
-        "cmd.source_control.branch.create dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.source_control.branch.create must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.source_control.branch.create must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "cmd.source_control.branch.create availability class is capability (git_available) with confirmation class none; disabled reasons come only from the closed set: stale_projection, permission_required (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)"
+        "cmd.source_control.branch.create has one sole future route handlers::source_control::branch_create and starts handler_unavailable; target strings do not prove a native handler.",
+        "Validate Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request, Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result and Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_error for this exact command branch before dispatch.",
+        "Read state.cmd_source_control_branch_create.enabled and state.cmd_source_control_branch_create.disabled_reason and revalidate repository/workspace, selected target, permission, FileSafe, writer lease and action-specific preview or confirmation immediately before effect.",
+        "Record owner typed result/receipt only; expected_event_types=[] until Event Authority admits an exact family.",
+        "Prove Source Control, palette and authorized automation reverse consumers, disabled accessibility and deterministic return."
       ],
-      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/GitHub_Integration.md; Plans/WorktreeGitImprovement.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Future source-hashed native proof for cmd.source_control.branch.create: exact Git workspace/target, owner request/result/error and availability, permission and FileSafe, currentness, writer lease, receipt/idempotency, refusal, accessible focus and return. This row is production intent only.",
       "state_selector": "state.cmd_source_control_branch_create.enabled",
       "disabled_reason_projection": "state.cmd_source_control_branch_create.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.source_control.branch.create has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "Owner typed terminal result/receipt; acceptance alone does not prove Git effect. No EventRecord is admitted by this closure.",
         "receipt_or_event_refs": [
-          "cmd.source_control.branch.create.dispatch_receipt"
+          "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result"
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.source_control_branch_create exposes a stable role/name/description matching cmd.source_control.branch.create with visible label Create Branch.",
-        "keyboard_access": "catalog.source_control_branch_create is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.source_control_branch_create preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.source_control_branch_create surfaces state.cmd_source_control_branch_create.disabled_reason to assistive technology when unavailable."
+        "role_or_semantics": "catalog.source_control_branch_create exposes stable role and accessible name Create Branch, exact target summary and pending/terminal state.",
+        "keyboard_access": "Keyboard and pointer dispatch the same typed cmd.source_control.branch.create request only when available.",
+        "focus_management": "Retain invoking focus while pending and return to exact initiating route, focus and continuation.",
+        "disabled_announcement": "Announce state.cmd_source_control_branch_create.disabled_reason, including handler_unavailable, without raw paths or secrets."
       },
       "test_evidence": [
         {
-          "test_id": "wiring.catalog.source_control_branch_create.render_control",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Planned render/control placeholder: future render evidence must prove catalog.source_control_branch_create exists on the declared surface with stable role and accessible name Create Branch; this row is not implementation evidence."
-        },
-        {
           "test_id": "wiring.catalog.source_control_branch_create.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "A future dispatcher fixture must prove cmd.source_control.branch.create reaches the planned handlers::source_control::branch_create target with typed args/result contract; this row is not implementation evidence."
+          "requirement": "Prove cmd.source_control.branch.create reaches only handlers::source_control::branch_create with owner request/result; planned target is not runtime proof."
         },
         {
-          "test_id": "wiring.catalog.source_control_branch_create.disabled_reason",
+          "test_id": "wiring.catalog.source_control_branch_create.state",
           "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.cmd_source_control_branch_create.enabled and disabled copy reads state.cmd_source_control_branch_create.disabled_reason; disabled_reason values come only from the closed set: stale_projection, permission_required."
+          "requirement": "Prove exact state.cmd_source_control_branch_create.enabled and state.cmd_source_control_branch_create.disabled_reason including handler_unavailable and stale or denied target."
         },
         {
           "test_id": "wiring.catalog.source_control_branch_create.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.branch.create has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Prove terminal owner receipt correlation, idempotent replay and zero unregistered EventRecord effects."
         },
         {
           "test_id": "wiring.catalog.source_control_branch_create.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        },
-        {
-          "test_id": "wiring.catalog.source_control_branch_create.regression",
-          "evidence_kind": "event_test",
-          "requirement": "Regression placeholder: dispatch, refusal, and idempotent replay of cmd.source_control.branch.create emit no unexpected persisted domain event and preserve command_id, origin, and correlation_id."
+          "requirement": "Prove role/name, keyboard/pointer parity, focus return, disabled reason and outcome announcement."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.source_control.branch.create records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
+        "Assert cmd.source_control.branch.create records its owner result/receipt with exact target and emits no unexpected persisted domain event."
+      ],
+      "request_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request",
+      "result_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result"
     },
     "catalog.source_control_branch_switch": {
       "ui_element_id": "catalog.source_control_branch_switch",
@@ -58224,135 +58221,117 @@
     },
     "catalog.source_control_stash_apply": {
       "ui_element_id": "catalog.source_control_stash_apply",
-      "ui_location": "Left rail > Source Control panel > Stashes > Apply Stash",
+      "ui_location": "Source Control > Branches / Stash > Apply Stash; command palette and authorized automation consume the same owner route",
       "ui_command_id": "cmd.source_control.stash.apply",
       "handler_location": "handlers::source_control::stash_apply",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.source_control.stash.apply must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.source_control.stash.apply must expose projected state selector and disabled reason before dispatch",
-        "cmd.source_control.stash.apply dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.source_control.stash.apply must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.source_control.stash.apply must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "cmd.source_control.stash.apply availability class is selection (stash_selected) with confirmation class none; disabled reasons come only from the closed set: blocked_state_required, stale_projection (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)"
+        "cmd.source_control.stash.apply has one sole future route handlers::source_control::stash_apply and starts handler_unavailable; target strings do not prove a native handler.",
+        "Validate Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request, Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result and Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_error for this exact command branch before dispatch.",
+        "Read state.cmd_source_control_stash_apply.enabled and state.cmd_source_control_stash_apply.disabled_reason and revalidate repository/workspace, selected target, permission, FileSafe, writer lease and action-specific preview or confirmation immediately before effect.",
+        "Record owner typed result/receipt only; expected_event_types=[] until Event Authority admits an exact family.",
+        "Prove Source Control, palette and authorized automation reverse consumers, disabled accessibility and deterministic return."
       ],
-      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/GitHub_Integration.md; Plans/WorktreeGitImprovement.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Future source-hashed native proof for cmd.source_control.stash.apply: exact Git workspace/target, owner request/result/error and availability, permission and FileSafe, currentness, writer lease, receipt/idempotency, refusal, accessible focus and return. This row is production intent only.",
       "state_selector": "state.cmd_source_control_stash_apply.enabled",
       "disabled_reason_projection": "state.cmd_source_control_stash_apply.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.source_control.stash.apply has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "Owner typed terminal result/receipt; acceptance alone does not prove Git effect. No EventRecord is admitted by this closure.",
         "receipt_or_event_refs": [
-          "cmd.source_control.stash.apply.dispatch_receipt"
+          "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result"
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.source_control_stash_apply exposes a stable role/name/description matching cmd.source_control.stash.apply with visible label Apply Stash.",
-        "keyboard_access": "catalog.source_control_stash_apply is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.source_control_stash_apply preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.source_control_stash_apply surfaces state.cmd_source_control_stash_apply.disabled_reason to assistive technology when unavailable."
+        "role_or_semantics": "catalog.source_control_stash_apply exposes stable role and accessible name Apply Stash, exact target summary and pending/terminal state.",
+        "keyboard_access": "Keyboard and pointer dispatch the same typed cmd.source_control.stash.apply request only when available.",
+        "focus_management": "Retain invoking focus while pending and return to exact initiating route, focus and continuation.",
+        "disabled_announcement": "Announce state.cmd_source_control_stash_apply.disabled_reason, including handler_unavailable, without raw paths or secrets."
       },
       "test_evidence": [
         {
-          "test_id": "wiring.catalog.source_control_stash_apply.render_control",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Planned render/control placeholder: future render evidence must prove catalog.source_control_stash_apply exists on the declared surface with stable role and accessible name Apply Stash; this row is not implementation evidence."
-        },
-        {
           "test_id": "wiring.catalog.source_control_stash_apply.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "A future dispatcher fixture must prove cmd.source_control.stash.apply reaches the planned handlers::source_control::stash_apply target with typed args/result contract; this row is not implementation evidence."
+          "requirement": "Prove cmd.source_control.stash.apply reaches only handlers::source_control::stash_apply with owner request/result; planned target is not runtime proof."
         },
         {
-          "test_id": "wiring.catalog.source_control_stash_apply.disabled_reason",
+          "test_id": "wiring.catalog.source_control_stash_apply.state",
           "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.cmd_source_control_stash_apply.enabled and disabled copy reads state.cmd_source_control_stash_apply.disabled_reason; disabled_reason values come only from the closed set: blocked_state_required, stale_projection."
+          "requirement": "Prove exact state.cmd_source_control_stash_apply.enabled and state.cmd_source_control_stash_apply.disabled_reason including handler_unavailable and stale or denied target."
         },
         {
           "test_id": "wiring.catalog.source_control_stash_apply.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.stash.apply has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Prove terminal owner receipt correlation, idempotent replay and zero unregistered EventRecord effects."
         },
         {
           "test_id": "wiring.catalog.source_control_stash_apply.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        },
-        {
-          "test_id": "wiring.catalog.source_control_stash_apply.regression",
-          "evidence_kind": "event_test",
-          "requirement": "Regression placeholder: dispatch, refusal, and idempotent replay of cmd.source_control.stash.apply emit no unexpected persisted domain event and preserve command_id, origin, and correlation_id."
+          "requirement": "Prove role/name, keyboard/pointer parity, focus return, disabled reason and outcome announcement."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.source_control.stash.apply records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
+        "Assert cmd.source_control.stash.apply records its owner result/receipt with exact target and emits no unexpected persisted domain event."
+      ],
+      "request_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request",
+      "result_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result"
     },
     "catalog.source_control_stash_create": {
       "ui_element_id": "catalog.source_control_stash_create",
-      "ui_location": "Left rail > Source Control panel > Stashes > Create Stash",
+      "ui_location": "Source Control > Branches / Stash > Create Stash; command palette and authorized automation consume the same owner route",
       "ui_command_id": "cmd.source_control.stash.create",
       "handler_location": "handlers::source_control::stash_create",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.source_control.stash.create must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.source_control.stash.create must expose projected state selector and disabled reason before dispatch",
-        "cmd.source_control.stash.create dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.source_control.stash.create must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.source_control.stash.create must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "cmd.source_control.stash.create availability class is selection (dirty_working_tree) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)"
+        "cmd.source_control.stash.create has one sole future route handlers::source_control::stash_create and starts handler_unavailable; target strings do not prove a native handler.",
+        "Validate Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request, Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result and Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_error for this exact command branch before dispatch.",
+        "Read state.cmd_source_control_stash_create.enabled and state.cmd_source_control_stash_create.disabled_reason and revalidate repository/workspace, selected target, permission, FileSafe, writer lease and action-specific preview or confirmation immediately before effect.",
+        "Record owner typed result/receipt only; expected_event_types=[] until Event Authority admits an exact family.",
+        "Prove Source Control, palette and authorized automation reverse consumers, disabled accessibility and deterministic return."
       ],
-      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/GitHub_Integration.md; Plans/WorktreeGitImprovement.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Future source-hashed native proof for cmd.source_control.stash.create: exact Git workspace/target, owner request/result/error and availability, permission and FileSafe, currentness, writer lease, receipt/idempotency, refusal, accessible focus and return. This row is production intent only.",
       "state_selector": "state.cmd_source_control_stash_create.enabled",
       "disabled_reason_projection": "state.cmd_source_control_stash_create.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.source_control.stash.create has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "Owner typed terminal result/receipt; acceptance alone does not prove Git effect. No EventRecord is admitted by this closure.",
         "receipt_or_event_refs": [
-          "cmd.source_control.stash.create.dispatch_receipt"
+          "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result"
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.source_control_stash_create exposes a stable role/name/description matching cmd.source_control.stash.create with visible label Create Stash.",
-        "keyboard_access": "catalog.source_control_stash_create is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.source_control_stash_create preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.source_control_stash_create surfaces state.cmd_source_control_stash_create.disabled_reason to assistive technology when unavailable."
+        "role_or_semantics": "catalog.source_control_stash_create exposes stable role and accessible name Create Stash, exact target summary and pending/terminal state.",
+        "keyboard_access": "Keyboard and pointer dispatch the same typed cmd.source_control.stash.create request only when available.",
+        "focus_management": "Retain invoking focus while pending and return to exact initiating route, focus and continuation.",
+        "disabled_announcement": "Announce state.cmd_source_control_stash_create.disabled_reason, including handler_unavailable, without raw paths or secrets."
       },
       "test_evidence": [
         {
-          "test_id": "wiring.catalog.source_control_stash_create.render_control",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Planned render/control placeholder: future render evidence must prove catalog.source_control_stash_create exists on the declared surface with stable role and accessible name Create Stash; this row is not implementation evidence."
-        },
-        {
           "test_id": "wiring.catalog.source_control_stash_create.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "A future dispatcher fixture must prove cmd.source_control.stash.create reaches the planned handlers::source_control::stash_create target with typed args/result contract; this row is not implementation evidence."
+          "requirement": "Prove cmd.source_control.stash.create reaches only handlers::source_control::stash_create with owner request/result; planned target is not runtime proof."
         },
         {
-          "test_id": "wiring.catalog.source_control_stash_create.disabled_reason",
+          "test_id": "wiring.catalog.source_control_stash_create.state",
           "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.cmd_source_control_stash_create.enabled and disabled copy reads state.cmd_source_control_stash_create.disabled_reason; disabled_reason values come only from the closed set: stale_projection."
+          "requirement": "Prove exact state.cmd_source_control_stash_create.enabled and state.cmd_source_control_stash_create.disabled_reason including handler_unavailable and stale or denied target."
         },
         {
           "test_id": "wiring.catalog.source_control_stash_create.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.source_control.stash.create has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Prove terminal owner receipt correlation, idempotent replay and zero unregistered EventRecord effects."
         },
         {
           "test_id": "wiring.catalog.source_control_stash_create.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        },
-        {
-          "test_id": "wiring.catalog.source_control_stash_create.regression",
-          "evidence_kind": "event_test",
-          "requirement": "Regression placeholder: dispatch, refusal, and idempotent replay of cmd.source_control.stash.create emit no unexpected persisted domain event and preserve command_id, origin, and correlation_id."
+          "requirement": "Prove role/name, keyboard/pointer parity, focus return, disabled reason and outcome announcement."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.source_control.stash.create records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
+        "Assert cmd.source_control.stash.create records its owner result/receipt with exact target and emits no unexpected persisted domain event."
+      ],
+      "request_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request",
+      "result_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result"
     },
     "catalog.source_control_stash_drop": {
       "ui_element_id": "catalog.source_control_stash_drop",
@@ -68591,6 +68570,293 @@
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
+    },
+    "catalog.git_stage": {
+      "acceptance_checks": [
+        "cmd.git.stage has one sole future route handlers::git::stage_files and starts handler_unavailable; target strings do not prove a native handler.",
+        "Validate Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request, Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result and Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_error for this exact command branch before dispatch.",
+        "Read state.commands.git_stage.availability and state.commands.git_stage.disabled_reason and revalidate repository/workspace, selected target, permission, FileSafe, writer lease and action-specific preview or confirmation immediately before effect.",
+        "Record owner typed result/receipt only; expected_event_types=[] until Event Authority admits an exact family.",
+        "Prove Source Control, palette and authorized automation reverse consumers, disabled accessibility and deterministic return."
+      ],
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_stage exposes stable role and accessible name Stage Files, exact target summary and pending/terminal state.",
+        "keyboard_access": "Keyboard and pointer dispatch the same typed cmd.git.stage request only when available.",
+        "focus_management": "Retain invoking focus while pending and return to exact initiating route, focus and continuation.",
+        "disabled_announcement": "Announce state.commands.git_stage.disabled_reason, including handler_unavailable, without raw paths or secrets."
+      },
+      "disabled_reason_projection": "state.commands.git_stage.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Owner typed terminal result/receipt; acceptance alone does not prove Git effect. No EventRecord is admitted by this closure.",
+        "receipt_or_event_refs": [
+          "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result"
+        ]
+      },
+      "event_test_requirements": [
+        "Assert cmd.git.stage records its owner result/receipt with exact target and emits no unexpected persisted domain event."
+      ],
+      "evidence_required": "Future source-hashed native proof for cmd.git.stage: exact Git workspace/target, owner request/result/error and availability, permission and FileSafe, currentness, writer lease, receipt/idempotency, refusal, accessible focus and return. This row is production intent only.",
+      "expected_event_types": [],
+      "handler_location": "handlers::git::stage_files",
+      "request_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request",
+      "result_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result",
+      "state_selector": "state.commands.git_stage.availability",
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_stage.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.git.stage reaches only handlers::git::stage_files with owner request/result; planned target is not runtime proof."
+        },
+        {
+          "test_id": "wiring.catalog.git_stage.state",
+          "evidence_kind": "state_projection",
+          "requirement": "Prove exact state.commands.git_stage.availability and state.commands.git_stage.disabled_reason including handler_unavailable and stale or denied target."
+        },
+        {
+          "test_id": "wiring.catalog.git_stage.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove terminal owner receipt correlation, idempotent replay and zero unregistered EventRecord effects."
+        },
+        {
+          "test_id": "wiring.catalog.git_stage.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove role/name, keyboard/pointer parity, focus return, disabled reason and outcome announcement."
+        }
+      ],
+      "ui_command_id": "cmd.git.stage",
+      "ui_element_id": "catalog.git_stage",
+      "ui_location": "Source Control > Changes > Stage Files; command palette and authorized automation consume the same owner route"
+    },
+    "catalog.git_unstage": {
+      "acceptance_checks": [
+        "cmd.git.unstage has one sole future route handlers::git::unstage_files and starts handler_unavailable; target strings do not prove a native handler.",
+        "Validate Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request, Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result and Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_error for this exact command branch before dispatch.",
+        "Read state.commands.git_unstage.availability and state.commands.git_unstage.disabled_reason and revalidate repository/workspace, selected target, permission, FileSafe, writer lease and action-specific preview or confirmation immediately before effect.",
+        "Record owner typed result/receipt only; expected_event_types=[] until Event Authority admits an exact family.",
+        "Prove Source Control, palette and authorized automation reverse consumers, disabled accessibility and deterministic return."
+      ],
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_unstage exposes stable role and accessible name Unstage Files, exact target summary and pending/terminal state.",
+        "keyboard_access": "Keyboard and pointer dispatch the same typed cmd.git.unstage request only when available.",
+        "focus_management": "Retain invoking focus while pending and return to exact initiating route, focus and continuation.",
+        "disabled_announcement": "Announce state.commands.git_unstage.disabled_reason, including handler_unavailable, without raw paths or secrets."
+      },
+      "disabled_reason_projection": "state.commands.git_unstage.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Owner typed terminal result/receipt; acceptance alone does not prove Git effect. No EventRecord is admitted by this closure.",
+        "receipt_or_event_refs": [
+          "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result"
+        ]
+      },
+      "event_test_requirements": [
+        "Assert cmd.git.unstage records its owner result/receipt with exact target and emits no unexpected persisted domain event."
+      ],
+      "evidence_required": "Future source-hashed native proof for cmd.git.unstage: exact Git workspace/target, owner request/result/error and availability, permission and FileSafe, currentness, writer lease, receipt/idempotency, refusal, accessible focus and return. This row is production intent only.",
+      "expected_event_types": [],
+      "handler_location": "handlers::git::unstage_files",
+      "request_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request",
+      "result_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result",
+      "state_selector": "state.commands.git_unstage.availability",
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_unstage.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.git.unstage reaches only handlers::git::unstage_files with owner request/result; planned target is not runtime proof."
+        },
+        {
+          "test_id": "wiring.catalog.git_unstage.state",
+          "evidence_kind": "state_projection",
+          "requirement": "Prove exact state.commands.git_unstage.availability and state.commands.git_unstage.disabled_reason including handler_unavailable and stale or denied target."
+        },
+        {
+          "test_id": "wiring.catalog.git_unstage.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove terminal owner receipt correlation, idempotent replay and zero unregistered EventRecord effects."
+        },
+        {
+          "test_id": "wiring.catalog.git_unstage.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove role/name, keyboard/pointer parity, focus return, disabled reason and outcome announcement."
+        }
+      ],
+      "ui_command_id": "cmd.git.unstage",
+      "ui_element_id": "catalog.git_unstage",
+      "ui_location": "Source Control > Changes > Unstage Files; command palette and authorized automation consume the same owner route"
+    },
+    "catalog.source_control_remote_update": {
+      "acceptance_checks": [
+        "cmd.source_control.remote.update has one sole future route handlers::source_control::remote_update and starts handler_unavailable; target strings do not prove a native handler.",
+        "Validate Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request, Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result and Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_error for this exact command branch before dispatch.",
+        "Read state.commands.source_control_remote_update.availability and state.commands.source_control_remote_update.disabled_reason and revalidate repository/workspace, selected target, permission, FileSafe, writer lease and action-specific preview or confirmation immediately before effect.",
+        "Record owner typed result/receipt only; expected_event_types=[] until Event Authority admits an exact family.",
+        "Prove Source Control, palette and authorized automation reverse consumers, disabled accessibility and deterministic return."
+      ],
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.source_control_remote_update exposes stable role and accessible name Update Remote, exact target summary and pending/terminal state.",
+        "keyboard_access": "Keyboard and pointer dispatch the same typed cmd.source_control.remote.update request only when available.",
+        "focus_management": "Retain invoking focus while pending and return to exact initiating route, focus and continuation.",
+        "disabled_announcement": "Announce state.commands.source_control_remote_update.disabled_reason, including handler_unavailable, without raw paths or secrets."
+      },
+      "disabled_reason_projection": "state.commands.source_control_remote_update.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Owner typed terminal result/receipt; acceptance alone does not prove Git effect. No EventRecord is admitted by this closure.",
+        "receipt_or_event_refs": [
+          "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result"
+        ]
+      },
+      "event_test_requirements": [
+        "Assert cmd.source_control.remote.update records its owner result/receipt with exact target and emits no unexpected persisted domain event."
+      ],
+      "evidence_required": "Future source-hashed native proof for cmd.source_control.remote.update: exact Git workspace/target, owner request/result/error and availability, permission and FileSafe, currentness, writer lease, receipt/idempotency, refusal, accessible focus and return. This row is production intent only.",
+      "expected_event_types": [],
+      "handler_location": "handlers::source_control::remote_update",
+      "request_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request",
+      "result_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result",
+      "state_selector": "state.commands.source_control_remote_update.availability",
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.source_control_remote_update.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.source_control.remote.update reaches only handlers::source_control::remote_update with owner request/result; planned target is not runtime proof."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_remote_update.state",
+          "evidence_kind": "state_projection",
+          "requirement": "Prove exact state.commands.source_control_remote_update.availability and state.commands.source_control_remote_update.disabled_reason including handler_unavailable and stale or denied target."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_remote_update.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove terminal owner receipt correlation, idempotent replay and zero unregistered EventRecord effects."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_remote_update.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove role/name, keyboard/pointer parity, focus return, disabled reason and outcome announcement."
+        }
+      ],
+      "ui_command_id": "cmd.source_control.remote.update",
+      "ui_element_id": "catalog.source_control_remote_update",
+      "ui_location": "Source Control > Remotes > Update Remote; command palette and authorized automation consume the same owner route"
+    },
+    "catalog.source_control_branch_delete": {
+      "acceptance_checks": [
+        "cmd.source_control.branch.delete has one sole future route handlers::source_control::branch_delete and starts handler_unavailable; target strings do not prove a native handler.",
+        "Validate Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request, Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result and Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_error for this exact command branch before dispatch.",
+        "Read state.commands.source_control_branch_delete.availability and state.commands.source_control_branch_delete.disabled_reason and revalidate repository/workspace, selected target, permission, FileSafe, writer lease and action-specific preview or confirmation immediately before effect.",
+        "Record owner typed result/receipt only; expected_event_types=[] until Event Authority admits an exact family.",
+        "Prove Source Control, palette and authorized automation reverse consumers, disabled accessibility and deterministic return."
+      ],
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.source_control_branch_delete exposes stable role and accessible name Delete Branch, exact target summary and pending/terminal state.",
+        "keyboard_access": "Keyboard and pointer dispatch the same typed cmd.source_control.branch.delete request only when available.",
+        "focus_management": "Retain invoking focus while pending and return to exact initiating route, focus and continuation.",
+        "disabled_announcement": "Announce state.commands.source_control_branch_delete.disabled_reason, including handler_unavailable, without raw paths or secrets."
+      },
+      "disabled_reason_projection": "state.commands.source_control_branch_delete.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Owner typed terminal result/receipt; acceptance alone does not prove Git effect. No EventRecord is admitted by this closure.",
+        "receipt_or_event_refs": [
+          "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result"
+        ]
+      },
+      "event_test_requirements": [
+        "Assert cmd.source_control.branch.delete records its owner result/receipt with exact target and emits no unexpected persisted domain event."
+      ],
+      "evidence_required": "Future source-hashed native proof for cmd.source_control.branch.delete: exact Git workspace/target, owner request/result/error and availability, permission and FileSafe, currentness, writer lease, receipt/idempotency, refusal, accessible focus and return. This row is production intent only.",
+      "expected_event_types": [],
+      "handler_location": "handlers::source_control::branch_delete",
+      "request_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request",
+      "result_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result",
+      "state_selector": "state.commands.source_control_branch_delete.availability",
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.source_control_branch_delete.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.source_control.branch.delete reaches only handlers::source_control::branch_delete with owner request/result; planned target is not runtime proof."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_branch_delete.state",
+          "evidence_kind": "state_projection",
+          "requirement": "Prove exact state.commands.source_control_branch_delete.availability and state.commands.source_control_branch_delete.disabled_reason including handler_unavailable and stale or denied target."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_branch_delete.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove terminal owner receipt correlation, idempotent replay and zero unregistered EventRecord effects."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_branch_delete.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove role/name, keyboard/pointer parity, focus return, disabled reason and outcome announcement."
+        }
+      ],
+      "ui_command_id": "cmd.source_control.branch.delete",
+      "ui_element_id": "catalog.source_control_branch_delete",
+      "ui_location": "Source Control > Branches / Stash > Delete Branch; command palette and authorized automation consume the same owner route"
+    },
+    "catalog.forge_review_edit": {
+      "acceptance_checks": [
+        "cmd.forge.review.edit names exactly one owner-adjudicated future target handlers::forge::review_edit in Plans/Forge_Integrations.md#FGI-022; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "Validate Plans/forge_integration_contracts.schema.json#/$defs/command_request -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
+        "Read state.commands.forge_review_edit.availability and state.commands.forge_review_edit.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
+        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "Require nonempty title/description patch, exact provider review and expected revision, current direct revalidation, remote_side_effect permission, target-bound confirmation, and reconciliation before effect."
+      ],
+      "accessibility_contract": {
+        "disabled_announcement": "Announce state.commands.forge_review_edit.disabled_reason, including handler_unavailable, without secrets or raw output.",
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.forge.review.edit request only when available.",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.forge.review.edit in every named consumer."
+      },
+      "disabled_reason_projection": "state.commands.forge_review_edit.disabled_reason",
+      "effect_contract": {
+        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
+        "effect_kind": "receipt",
+        "receipt_or_event_refs": [
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
+        ]
+      },
+      "event_test_requirements": [
+        "Assert cmd.forge.review.edit records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+      ],
+      "evidence_required": "Future production evidence for cmd.forge.review.edit: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "expected_event_types": [],
+      "handler_location": "handlers::forge::review_edit",
+      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
+      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+      "state_selector": "state.commands.forge_review_edit.availability",
+      "test_evidence": [
+        {
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.forge.review.edit reaches only handlers::forge::review_edit; the target string itself is not proof.",
+          "test_id": "wiring.catalog.forge_review_edit.dispatcher"
+        },
+        {
+          "evidence_kind": "state_projection",
+          "requirement": "Prove exact availability and disabled reason, including handler_unavailable before native evidence.",
+          "test_id": "wiring.catalog.forge_review_edit.state"
+        },
+        {
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "test_id": "wiring.catalog.forge_review_edit.effect"
+        },
+        {
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "test_id": "wiring.catalog.forge_review_edit.accessibility"
+        }
+      ],
+      "ui_command_id": "cmd.forge.review.edit",
+      "ui_element_id": "catalog.forge_review_edit",
+      "ui_location": "Source Control reviews, command palette, authorized automation"
     }
   }
 }
