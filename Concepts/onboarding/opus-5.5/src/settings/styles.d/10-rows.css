@@ -144,3 +144,7 @@ html[data-motion="reduced"] #panel-settings .setting-row.o55-row.is-flash, html[
    row and the hint gives way with an ellipsis (its full text is the toast shown when a greyed choice is clicked). */
 .pm51-popout-item .pm51-popout-label { flex: 1 0 auto; max-width: 100%; min-width: min(50%, max-content); }
 .pm51-popout-item .pm51-popout-meta { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: right; }
+/* A manager's own rows line their controls up with setting rows, which keep 50px on the right for their About
+   button, so switches and menus in one card form one column. */
+#panel-settings .pm51-mgr .pm51-section-body .pm51-rows > .pm51-row > .pm51-row-control { padding-right: 50px; }
+@media (max-width: 760px) { #panel-settings .pm51-mgr .pm51-section-body .pm51-rows > .pm51-row > .pm51-row-control { padding-right: 0; } }

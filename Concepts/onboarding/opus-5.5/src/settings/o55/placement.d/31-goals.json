@@ -1,0 +1,203 @@
+{
+ "_about": "Goals: Recovery and Checks are one control each (the manager's own copies of cadence, resume, retries, evidence, helpers and risky-step approval are gone); the progress view's rows are its toolbar; a Goal's kind is set per template; the receipt is shown, not chosen.",
+ "sections": {
+  "goals-legacy": null,
+  "goals-template-fields": {
+   "to": "goals",
+   "title": "Kind of job",
+   "help": "Set in each template and when a Goal starts.",
+   "order": 1,
+   "tab": "templates",
+   "composed": true
+  },
+  "goals-progress": {
+   "to": "goals",
+   "title": "Progress view",
+   "help": "How the graph of a running Goal is drawn.",
+   "order": 102,
+   "tab": "active",
+   "composed": true
+  },
+  "goals-receipt": {
+   "to": "goals",
+   "title": "Receipt earned",
+   "help": "Shown in each Goal's panel once it finishes.",
+   "order": 103,
+   "tab": "active",
+   "composed": true
+  },
+  "goals-defaults": {
+   "to": "goals",
+   "title": "New Goals start with",
+   "help": "Templates can override any of these.",
+   "order": 204,
+   "tab": "defaults",
+   "composed": true
+  },
+  "goals-watch": {
+   "to": "goals",
+   "title": "Keeping an eye on progress",
+   "help": "How stuck or blocked work is spotted and explained.",
+   "order": 205,
+   "tab": "defaults"
+  },
+  "goals-scheduling": {
+   "to": "goals",
+   "title": "Scheduled runs",
+   "help": "What happens around a run's time window.",
+   "order": 206,
+   "tab": "defaults"
+  },
+  "goals-recovery": {
+   "to": "goals",
+   "title": "If something interrupts",
+   "help": "Saving progress and picking up after a stop.",
+   "order": 307,
+   "tab": "checkpoints"
+  },
+  "goals-replan": {
+   "to": "goals",
+   "title": "Changing the plan",
+   "help": "When a Goal rethinks its plan.",
+   "order": 308,
+   "tab": "checkpoints"
+  },
+  "goals-repair": {
+   "to": "goals",
+   "title": "When a check fails",
+   "help": "How many times to try a fix, and what then.",
+   "order": 309,
+   "tab": "checkpoints"
+  },
+  "goals-verification": {
+   "to": "goals",
+   "title": "Before a Goal is called done",
+   "help": "The checks that run in the Verify phase.",
+   "order": 410,
+   "tab": "verification",
+   "composed": true
+  },
+  "goals-verification-more": {
+   "to": "goals",
+   "title": "Stricter proof",
+   "help": "Fine-tune how much proof counts as done.",
+   "order": 411,
+   "tab": "verification",
+   "advanced": true
+  },
+  "goals-evidence": {
+   "order": 412
+  },
+  "goals-review": {
+   "order": 413
+  }
+ },
+ "overrides": [
+  {
+   "section": "goals-template-fields",
+   "ids": [
+    "planning.verification.goal-template"
+   ]
+  },
+  {
+   "section": "goals-progress",
+   "ids": [
+    "general.interaction.run-graph-mode",
+    "general.interaction.graph-density",
+    "general.interaction.progress-widget-layout"
+   ]
+  },
+  {
+   "section": "goals-receipt",
+   "ids": [
+    "planning.verification.receipt-type"
+   ]
+  },
+  {
+   "section": "goals-defaults",
+   "ids": [
+    "planning.verification.goal-write-mode"
+   ]
+  },
+  {
+   "section": "goals-watch",
+   "ids": [
+    "planning.verification.heartbeat-interval",
+    "planning.verification.stall-detection",
+    "planning.verification.true-blocker-escalation",
+    "planning.verification.blocker-detail",
+    "planning.verification.cloud-local-display"
+   ]
+  },
+  {
+   "section": "goals-scheduling",
+   "ids": [
+    "safety.approvals.schedule-missed-policy",
+    "safety.approvals.schedule-grace-minutes",
+    "safety.approvals.schedule-wind-down-minutes",
+    "safety.approvals.schedule-resume-next-window",
+    "safety.approvals.schedule-dst-policy"
+   ]
+  },
+  {
+   "section": "goals-recovery",
+   "ids": [
+    "planning.verification.goal-auto-resume",
+    "planning.verification.goal-checkpoint-cadence",
+    "planning.verification.goal-interruption",
+    "planning.verification.interrupt-settlement"
+   ]
+  },
+  {
+   "section": "goals-replan",
+   "ids": [
+    "planning.verification.goal-replan-behavior",
+    "planning.verification.goal-replan-events"
+   ]
+  },
+  {
+   "section": "goals-repair",
+   "ids": [
+    "planning.verification.auditor-loop",
+    "planning.verification.repair-loop",
+    "planning.verification.repair-strategies",
+    "planning.verification.repair-budget-exhaustion",
+    "planning.verification.degraded-mode"
+   ]
+  },
+  {
+   "section": "goals-verification",
+   "ids": [
+    "planning.verification.quality-preference",
+    "planning.verification.validation-pass",
+    "planning.verification.independent-review",
+    "planning.verification.completion-receipts",
+    "planning.verification.report-visibility"
+   ]
+  },
+  {
+   "section": "goals-verification-more",
+   "ids": [
+    "planning.verification.strictness",
+    "planning.verification.certification-level",
+    "planning.verification.gate-enforcement",
+    "planning.verification.parallel-stage-enforcement",
+    "planning.verification.validators-by-node",
+    "planning.verification.invisible-goal-authority",
+    "planning.verification.worknode-activation"
+   ]
+  }
+ ],
+ "managers": {
+  "goals": {
+   "tabs": {
+    "templates": "Templates",
+    "active": "Active Goals",
+    "defaults": "Defaults",
+    "checkpoints": "Recovery",
+    "verification": "Checks"
+   },
+   "defaultTab": "templates"
+  }
+ }
+}
