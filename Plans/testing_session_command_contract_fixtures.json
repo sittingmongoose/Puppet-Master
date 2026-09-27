@@ -125,7 +125,7 @@
           "schema_id": "pm.shared_runtime.command_idempotency.v1",
           "idempotency_key": "idempotency:session_redaction_inspect",
           "scope_ref": "scope:testing",
-          "binding_sha256": "cae0e533944764014ca100ce9ee5d61f323442c584121dfc839f48f2eb06215e",
+          "binding_sha256": "76f14bbc39fa8e91af0aeb145625bde681ba214c0d30e0c35a4634aa9422c8db",
           "replay_policy": "return_original_result",
           "conflict_behavior": "reject_same_key_different_binding"
         },
@@ -143,7 +143,11 @@
               "artifact_id": "artifact:recording",
               "artifact_version": 2,
               "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              "security_class": "ordinary"
+              "security_class": "ordinary",
+              "actual_assurance_mode": "not_applicable",
+              "assurance_requirement_ref": null,
+              "assurance_result_ref": null,
+              "assurance_requirement_met": null
             }
           ],
           "redaction_profile_ref": "redaction:ordinary",
@@ -161,7 +165,7 @@
           "schema_id": "pm.shared_runtime.command_idempotency.v1",
           "idempotency_key": "idempotency:export_bundle",
           "scope_ref": "scope:testing",
-          "binding_sha256": "ed6afdb97bd932c2bc3b852186b15775c6c18f15076a23223dddde42ae153365",
+          "binding_sha256": "259d32afae5d26faf4d23e3cbc4e4e6d16753e8bd5d31938647e5364babbbb36",
           "replay_policy": "return_original_result",
           "conflict_behavior": "reject_same_key_different_binding"
         },
@@ -174,7 +178,11 @@
               "artifact_id": "artifact:recording",
               "artifact_version": 2,
               "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              "security_class": "ordinary"
+              "security_class": "ordinary",
+              "actual_assurance_mode": "not_applicable",
+              "assurance_requirement_ref": null,
+              "assurance_result_ref": null,
+              "assurance_requirement_met": null
             }
           ],
           "security_class": "ordinary"
@@ -334,7 +342,7 @@
         "command_id": "cmd.testing.session.redaction.inspect",
         "command_instance_id": "command:session_redaction_inspect",
         "operation_id": "operation:session_redaction_inspect",
-        "request_binding_sha256": "cae0e533944764014ca100ce9ee5d61f323442c584121dfc839f48f2eb06215e",
+        "request_binding_sha256": "76f14bbc39fa8e91af0aeb145625bde681ba214c0d30e0c35a4634aa9422c8db",
         "context": {
           "project_id": "project:alpha",
           "home_server_id": "server:home",
@@ -379,7 +387,7 @@
         "command_id": "cmd.testing.export_bundle",
         "command_instance_id": "command:export_bundle",
         "operation_id": "operation:export_bundle",
-        "request_binding_sha256": "ed6afdb97bd932c2bc3b852186b15775c6c18f15076a23223dddde42ae153365",
+        "request_binding_sha256": "259d32afae5d26faf4d23e3cbc4e4e6d16753e8bd5d31938647e5364babbbb36",
         "context": {
           "project_id": "project:alpha",
           "home_server_id": "server:home",
@@ -827,13 +835,21 @@
             "artifact_id": "artifact:recording",
             "artifact_version": 2,
             "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "security_class": "ordinary"
+            "security_class": "ordinary",
+            "actual_assurance_mode": "not_applicable",
+            "assurance_requirement_ref": null,
+            "assurance_result_ref": null,
+            "assurance_requirement_met": null
           },
           {
             "artifact_id": "artifact:recording",
             "artifact_version": 3,
             "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "security_class": "ordinary"
+            "security_class": "ordinary",
+            "actual_assurance_mode": "not_applicable",
+            "assurance_requirement_ref": null,
+            "assurance_result_ref": null,
+            "assurance_requirement_met": null
           }
         ]
       },
@@ -863,7 +879,11 @@
               "artifact_id": "artifact:recording",
               "artifact_version": 2,
               "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              "security_class": "ordinary"
+              "security_class": "ordinary",
+              "actual_assurance_mode": "not_applicable",
+              "assurance_requirement_ref": null,
+              "assurance_result_ref": null,
+              "assurance_requirement_met": null
             }
           ],
           "security_class": "ordinary"

@@ -3286,6 +3286,7 @@
         "cmd.forge.review.create",
         "cmd.forge.review.open",
         "cmd.forge.review.refresh",
+        "cmd.forge.review.edit",
         "cmd.forge.review.mark_ready",
         "cmd.forge.review.approve",
         "cmd.forge.review.request_changes",
@@ -4493,6 +4494,15 @@
               "$ref": "#/$defs/non_secret_ref"
             }
           ]
+        },
+        "review_edit_patch": {
+          "$ref": "#/$defs/review_edit_patch"
+        },
+        "review_draft_state": {
+          "type": "boolean"
+        },
+        "registration_preview_digest": {
+          "$ref": "#/$defs/sha256"
         }
       },
       "additionalProperties": false
@@ -4894,6 +4904,7 @@
                   "cmd.forge.mirror.sync",
                   "cmd.forge.mirror.detach",
                   "cmd.forge.review.create",
+                  "cmd.forge.review.edit",
                   "cmd.forge.review.mark_ready",
                   "cmd.forge.review.approve",
                   "cmd.forge.review.request_changes",
@@ -4962,6 +4973,7 @@
               "command_id": {
                 "enum": [
                   "cmd.forge.mirror.detach",
+                  "cmd.forge.review.edit",
                   "cmd.forge.review.mark_ready",
                   "cmd.forge.review.approve",
                   "cmd.forge.review.request_changes",
@@ -5218,6 +5230,7 @@
                   "cmd.forge.review.create",
                   "cmd.forge.review.open",
                   "cmd.forge.review.refresh",
+                  "cmd.forge.review.edit",
                   "cmd.forge.review.mark_ready",
                   "cmd.forge.review.approve",
                   "cmd.forge.review.request_changes",
@@ -5288,6 +5301,7 @@
                 "enum": [
                   "cmd.forge.review.open",
                   "cmd.forge.review.refresh",
+                  "cmd.forge.review.edit",
                   "cmd.forge.review.mark_ready",
                   "cmd.forge.review.approve",
                   "cmd.forge.review.request_changes",
@@ -6783,6 +6797,7 @@
                   "cmd.forge.review.create",
                   "cmd.forge.review.open",
                   "cmd.forge.review.refresh",
+                  "cmd.forge.review.edit",
                   "cmd.forge.review.mark_ready",
                   "cmd.forge.review.approve",
                   "cmd.forge.review.request_changes",
@@ -6890,6 +6905,7 @@
                   "cmd.forge.review.create",
                   "cmd.forge.review.open",
                   "cmd.forge.review.refresh",
+                  "cmd.forge.review.edit",
                   "cmd.forge.review.mark_ready",
                   "cmd.forge.review.approve",
                   "cmd.forge.review.request_changes",
@@ -7141,6 +7157,115 @@
               },
               "repo_id": {
                 "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.review.edit"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_authority_role": {
+                "const": "authority"
+              },
+              "requested_capability": {
+                "const": "review"
+              },
+              "confirmation": {
+                "$ref": "#/$defs/confirmation"
+              },
+              "currentness": {
+                "properties": {
+                  "state": {
+                    "const": "current"
+                  },
+                  "mutation_safety": {
+                    "const": "verified"
+                  },
+                  "direct_revalidation_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              },
+              "target": {
+                "required": [
+                  "review_edit_patch"
+                ],
+                "properties": {
+                  "target_kind": {
+                    "const": "review"
+                  },
+                  "provider_review_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "review_revision_ref": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "review_edit_patch": {
+                    "$ref": "#/$defs/review_edit_patch"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.review.mark_ready"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "required": [
+                  "review_draft_state"
+                ],
+                "properties": {
+                  "review_draft_state": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.forge.runner.registration.apply"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "required": [
+                  "registration_preview_digest"
+                ],
+                "properties": {
+                  "registration_preview_digest": {
+                    "$ref": "#/$defs/sha256"
+                  }
+                }
               }
             }
           }
@@ -9420,6 +9545,458 @@
           "$ref": "#/$defs/repository_binding"
         }
       }
+    },
+    "review_edit_patch": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 65536
+        }
+      },
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "title"
+          ]
+        },
+        {
+          "required": [
+            "description"
+          ]
+        }
+      ]
+    },
+    "runner_scope": {
+      "type": "object",
+      "required": [
+        "kind",
+        "scope_id"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "repository",
+            "organization",
+            "project",
+            "environment"
+          ]
+        },
+        "scope_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "runner_list_request": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "request_id",
+        "provider",
+        "instance_id",
+        "account_id",
+        "repository_binding_ref",
+        "automation_binding_ref",
+        "expected_automation_binding_generation",
+        "runner_scope",
+        "capability_snapshot_ref",
+        "permission",
+        "currentness",
+        "requested_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.runner_list_request.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "account_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "automation_binding_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_automation_binding_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "runner_scope": {
+          "$ref": "#/$defs/runner_scope"
+        },
+        "capability_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission": {
+          "$ref": "#/$defs/permission_decision"
+        },
+        "currentness": {
+          "$ref": "#/$defs/command_currentness"
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "runner_list_projection": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "request_id",
+        "projection_id",
+        "producer_ref",
+        "provider",
+        "instance_id",
+        "account_id",
+        "repository_binding_ref",
+        "automation_binding_ref",
+        "automation_binding_generation",
+        "runner_scope",
+        "capability_snapshot_ref",
+        "permission_snapshot_ref",
+        "projection_revision",
+        "runners",
+        "produced_at_utc",
+        "expires_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.runner_list_projection.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "projection_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "producer_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "account_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "automation_binding_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "automation_binding_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "runner_scope": {
+          "$ref": "#/$defs/runner_scope"
+        },
+        "capability_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "projection_revision": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "runners": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "runner_id",
+              "display_name",
+              "state",
+              "execution_host_ref"
+            ],
+            "properties": {
+              "runner_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "display_name": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "state": {
+                "enum": [
+                  "online",
+                  "offline",
+                  "unknown"
+                ]
+              },
+              "execution_host_ref": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "produced_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "runner_registration_preview_request": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "request_id",
+        "provider",
+        "instance_id",
+        "account_id",
+        "repository_binding_ref",
+        "automation_binding_ref",
+        "expected_automation_binding_generation",
+        "execution_host_ref",
+        "expected_host_revision",
+        "environment_ref",
+        "runner_scope",
+        "capability_snapshot_ref",
+        "permission",
+        "currentness",
+        "requested_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.runner_registration_preview_request.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "account_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "automation_binding_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_automation_binding_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "execution_host_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_host_revision": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "environment_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "runner_scope": {
+          "$ref": "#/$defs/runner_scope"
+        },
+        "capability_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission": {
+          "$ref": "#/$defs/permission_decision"
+        },
+        "currentness": {
+          "$ref": "#/$defs/command_currentness"
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "runner_registration_preview_record": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "preview_ref",
+        "preview_digest",
+        "request_id",
+        "producer_ref",
+        "provider",
+        "instance_id",
+        "account_id",
+        "repository_binding_ref",
+        "automation_binding_ref",
+        "automation_binding_generation",
+        "execution_host_ref",
+        "expected_host_revision",
+        "environment_ref",
+        "runner_scope",
+        "capability_snapshot_ref",
+        "permission_snapshot_ref",
+        "target_binding_sha256",
+        "disclosure_ref",
+        "expected_resource_change",
+        "issued_at_utc",
+        "expires_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.runner_registration_preview.v1"
+        },
+        "preview_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "preview_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "producer_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "account_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "automation_binding_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "automation_binding_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "execution_host_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_host_revision": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "environment_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "runner_scope": {
+          "$ref": "#/$defs/runner_scope"
+        },
+        "capability_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "target_binding_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "disclosure_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_resource_change": {
+          "const": "register_runner"
+        },
+        "issued_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "runner_registration_preview_result": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "request_id",
+        "outcome",
+        "preview_ref",
+        "preview_digest",
+        "error_code",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.runner_registration_preview_result.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "enum": [
+            "ready",
+            "blocked"
+          ]
+        },
+        "preview_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "preview_digest": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/sha256"
+            }
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          ]
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

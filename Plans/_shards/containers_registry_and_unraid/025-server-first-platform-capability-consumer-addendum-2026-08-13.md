@@ -2,9 +2,9 @@
 
 Source: `Plans/Containers_Registry_and_Unraid.md`
 
-Source lines: L6413-L6706
+Source lines: L6413-L6744
 
-Source SHA256: `b85a638b9bee79cf5e0279103a5d0036b735382788cd8e0bfe0b41ee664a926e`
+Source SHA256: `7e87abb8faef41ff751502f5ecd8688646bf6781e4d575d72ffdf4d62c646da0`
 
 ---
 
@@ -96,10 +96,26 @@ canonical_text: >-
   Execution Environment: Windows-native and WSL tools, paths, profiles, resources, capability snapshots, and receipts
   never collapse together, and user-owned versus PM-managed distributions remain distinct. Kubernetes behavior is
   namespace-scoped and project/workload-focused by default; cluster-admin and cluster-wide mutation are not implied by
-  Server capability or by the Docker Manager cluster-wide observation toggle.
+  Server capability or by the Docker Manager cluster-wide observation toggle. WSL acquisition admits exactly two modes:
+  attach user-owned compatible WSL2 distribution, which probes and attaches an existing compatible distribution while
+  its system updates stay user-owned, and install PM-managed signed/versioned .wsl distribution, which admits only a
+  signed versioned PM image through Release supply-chain proof before the shared InstallationLifecycleManager acquires,
+  verifies, activates, updates, repairs, rolls back, or removes it. Ownership sets the action boundary: user_owned
+  distributions receive probes, attach, and only explicitly scoped PM dependency installs, while distro updates stay
+  user-owned and repair can never reset, delete, or convert; pm_managed distributions receive PM-owned image updates,
+  verification, repair, rollback, and removal, while PM never owns Windows WSL itself and reset or delete needs explicit
+  destructive confirmation. Every distribution carries bounded per-distro probes for WSL and distro version and
+  architecture, systemd, WSLg, GPU, network mode and localhost reachability, automount and source mounts with filesystem
+  semantics, interop, CPU/memory/swap limits with observed global .wslconfig, idle and shutdown behavior, nested
+  virtualization, and dependency packages with capability modules; each probe reports available, unavailable, or unknown
+  explicitly, never assume fills a gap, and unavailable or unknown in a required capability cannot project that
+  capability as Ready. Windows and Linux checkout
+  mappings stay explicit and PM never duplicates/moves source silently. Lifecycle state, topology, and capability
+  projection reuse the existing Shared Integration Runtime records; Containers mints no parallel WSL lifecycle,
+  installation, update, or health truth.
 gui_related: false
 gui_classification_reason: This unit defines accepted execution forms, environment isolation, and Kubernetes capability scope rather than GUI presentation.
-depends_on: [CRAU-091, CRAU-100, SIR-002]
+depends_on: [CRAU-091, CRAU-100, SIR-002, SIR-003, RSC-008]
 unblocks: [CRAU-102, CRAU-103]
 acceptance_criteria:
   - Native Windows, macOS, and Linux plus standalone and container Server forms each expose capability probes without being forced through WSL or Docker.
@@ -107,15 +123,22 @@ acceptance_criteria:
   - Windows-native and each WSL distribution retain distinct Installation, profile, path, resource, capability, and receipt identities.
   - Kubernetes discovery and actions bind the selected context plus namespace and project/workload identity; no namespace is inferred for mutation.
   - Cluster-wide observation does not grant cluster-admin mutation or escape namespace-scoped policy.
+  - WSL acquisition records exactly one of attach_user_owned or install_pm_managed; attach requires a compatibility probe pass and managed install requires a Release supply-chain proof ref before shared-lifecycle acquisition.
+  - user_owned repair, update, and removal actions refuse reset, delete, convert, and unscoped system updates; pm_managed reset and delete require explicit destructive confirmation and PM never claims ownership of Windows WSL itself.
+  - Every distribution probe set reports distro version/architecture, systemd, WSLg, GPU, network mode and localhost reachability, mounts with filesystem semantics, interop, limits with observed global config, idle/shutdown, nested virtualization, and dependencies with explicit available/unavailable/unknown outcomes.
+  - WSL Off projects healthy with no warning or degraded-health condition; platform_unavailable stays explicit, and unknown probe outcomes never imply readiness for a capability that requires them.
+  - Checkout mappings record explicit Windows and Linux paths; no flow moves, duplicates, or relocates source silently.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future execution-form and WSL separation fixtures
+  - Plans/wsl_execution_contracts.schema.json plus Plans/wsl_execution_contract_fixtures.json WSL acquisition, probe, and ownership checks (static)
   - future Kubernetes namespace-scope and permission-negative fixtures
 risk_class: execution_environment_scope_drift
 reasoning_tier: high
 context_scope: containers_execution_forms_wsl_kubernetes
 implementation_surfaces:
   - Plans/Containers_Registry_and_Unraid.md
+  - Plans/wsl_execution_contracts.schema.json
+  - Plans/wsl_execution_contract_fixtures.json
   - future RuntimeHostFamilyProfile and Kubernetes capability probes
 node_compile_hint:
   mode: execution_forms_environment_scope
@@ -126,6 +149,8 @@ source_lineage:
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md#execution-forms
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md#wsl
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/EGOLITE_INTEGRATION_RUNTIME_RETURN.md#8-wsl-and-environment-profiles
+  - PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/06_CROSS_PLATFORM_EXECUTION_AND_BROWSER.md#windows
+  - PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/source_authority/backbone_v5/11_CROSS_PLATFORM_EXECUTION_AND_BUILTIN_BROWSER_CONTRACT.md#7-optional-wsl2-linux-execution-backend
 preserved_exact_tokens:
   - "Native Windows"
   - "Native macOS"
@@ -137,17 +162,30 @@ preserved_exact_tokens:
   - "WSL Off is healthy"
   - "namespace-scoped"
   - "project/workload-focused"
+  - "attach user-owned compatible WSL2 distribution"
+  - "install PM-managed signed/versioned .wsl distribution"
+  - "user_owned"
+  - "pm_managed"
+  - "never assume"
+  - "never duplicates/moves source silently"
 negative_constraints:
   - Do not require WSL for native Windows execution.
   - Do not silently convert WSL1, change the default distribution, rewrite global .wslconfig, reset a distribution, or shut down every distribution.
   - Do not collapse Windows-native and WSL installations, tools, paths, profiles, resources, or receipts.
   - Do not promote namespace-scoped Kubernetes support into cluster-admin authority.
+  - Do not admit a PM-managed distribution without signed versioned Release proof routed before shared-lifecycle acquisition.
+  - Do not let user_owned repair reset, delete, or convert a distribution, and do not take over its system updates without explicit delegation.
+  - Do not fill an unavailable or unknown probe with an assumed available value or project its required capability Ready from it.
+  - Do not move, duplicate, or relocate checkout source silently between Windows and WSL paths.
 owner_boundary_notes:
   - "Shared Integration Runtime owns Installation, profile, connection, and reusable capability-projection lifecycles."
   - "Containers owns which platform forms are execution-capable and the Kubernetes namespace-scoped capability envelope."
+  - "Release Supply Chain owns signed/versioned image admission proof; Containers consumes the proof ref and never re-verifies signatures."
+  - "Shared Integration Runtime owns Installation, lifecycle state, topology, and capability projection; Containers owns WSL acquisition mode, ownership action boundaries, and per-distro probe semantics, and mints no parallel lifecycle truth."
 owner_hints:
   - Plans/Containers_Registry_and_Unraid.md
   - Plans/Shared_Integration_Runtime.md
+  - Plans/Release_Supply_Chain.md
   - Plans/Permissions_System.md
   - Plans/FileSafe.md
 ```

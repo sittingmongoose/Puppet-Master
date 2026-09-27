@@ -166,6 +166,7 @@
         }
       };
       if (extra.long) m.long = true;
+      if (extra.rich) m.rich = true;   /* Chat WOW: rendered with the streaming reply's markdown subset */
       /* `revealAfter` gates a message behind a work run: app.js hides it until
          state.works[revealAfter] reports completed. Whitelisted here like
          `long`, because this builder copies nothing it does not know. */
@@ -419,8 +420,126 @@
         { ref:'complete', startAt:24, dur:8, stat:'queue still waiting',
           rows:[{at:0.5, stream:true, text:'When this run completes, the first queued message sends on its own. Stop would leave both rows waiting.'}]}
       ]
+    },
+
+    /* ---------------------------------------------------------------------
+       Chat WOW live turns (turn-stream.js). Played by a real send in Agent
+       mode (see liveTurns below) or from Demo Studio. They carry what a live
+       agent actually emits: parallel tool calls (overlapping startAt/dur),
+       short narration between bursts (tucked into the card caption), a failed
+       command and its retry, and a subject that waits for the reader.
+       --------------------------------------------------------------------- */
+    liveA: {
+      title: 'Adding the composite index',
+      receipt: ['9 tools','3 parallel reads','2 files changed','42 tests','p95 482 → 71 ms'],
+      narration: [
+        { at:2.1, text:'I will read the query path and the migrations before changing anything.' },
+        { at:6.3, text:'The read path filters by tenant and sorts by time, so one composite index covers both.' },
+        { at:14.6, text:'Tests pass. Measuring against the 128,400-row fixture now.' }
+      ],
+      steps: [
+        { ref:'think', startAt:0, dur:2, stat:'1 reasoning pass',
+          rows:[{at:0.3, stream:true, text:'The slow path is tenant-scoped and time-ordered. Before proposing an index I want the exact predicate and sort order, and whether migrations here run inside a transaction.'}]},
+        { ref:'files', startAt:3.5, dur:0.9, stat:'queries.rs · 212 lines', label:'Read', verb:'Reading queries.rs', detail:'The analytics read path and its filters.',
+          rows:[{at:0.2, text:'Read src/analytics/queries.rs', path:'src/analytics/queries.rs'}]},
+        { ref:'files', startAt:3.55, dur:1.1, stat:'schema.rs · 96 lines', label:'Read', verb:'Reading schema.rs', detail:'Column types and existing indexes.',
+          rows:[{at:0.3, text:'Read src/analytics/schema.rs', path:'src/analytics/schema.rs'}]},
+        { ref:'files', startAt:3.6, dur:1.0, stat:'0042_events.sql', label:'Read', verb:'Reading the last migration', detail:'How migrations are wrapped.',
+          rows:[{at:0.3, text:'Read migrations/0042_events.sql', path:'migrations/0042_events.sql'}]},
+        { ref:'search', startAt:4.8, dur:1.4, stat:'1 search · 6 results',
+          rows:[{at:0.3, text:'Searched "create index concurrently transaction block"', tag:'6 results', query:'create index concurrently transaction block'}]},
+        { ref:'edit', startAt:7.7, dur:1.5, stat:'1 file · +14', verb:'Writing migration 0043', detail:'A no-transaction migration with a concurrent build.',
+          rows:[{at:0.3, text:'Created migrations/0043_tenant_created_index.sql', add:14, del:0, path:'migrations/0043_tenant_created_index.sql'}]},
+        { ref:'edit', startAt:9.3, dur:1.3, stat:'1 file · +9 −6', verb:'Updating the query', detail:'Leading columns now match the index.',
+          rows:[{at:0.3, text:'Edited src/analytics/queries.rs', add:9, del:6, path:'src/analytics/queries.rs'}]},
+        { ref:'bash', startAt:10.8, dur:3.4, stat:'42 passed', verb:'Running the analytics tests', detail:'cargo test analytics',
+          rows:[{at:0.4, text:'Ran cargo test analytics', cmd:'cargo test analytics', output:['running 42 tests','test result: ok. 42 passed; 0 failed'], exitCode:0, tag:'42 passed'}]},
+        { ref:'bash', startAt:11.1, dur:3.2, stat:'rollback rehearsed', verb:'Rehearsing the rollback', detail:'Down then up on a scratch database.',
+          rows:[{at:0.5, text:'Ran pm migrate --rehearse 0043', cmd:'pm migrate --rehearse 0043', output:['down 0043 ... ok','up 0043 ... ok'], exitCode:0, tag:'both directions'}]},
+        { ref:'validate', startAt:15.6, dur:1.6, stat:'p95 482 → 71 ms', verb:'Measuring', detail:'Before and after on the corrected fixture.',
+          rows:[{at:0.3, text:'p95 482 ms → 71 ms · p50 118 ms → 24 ms', tag:'128,400 rows'},{at:0.9, text:'Insert cost +4.8% over 50,000 rows', tag:'measured'}]}
+      ]
+    },
+    liveB: {
+      title: 'Fixing the rollback path',
+      receipt: ['8 tools','1 failure recovered','1 approval','42 tests'],
+      narration: [
+        { at:5.4, text:'One test fails on the rollback path. Fixing the down migration rather than skipping it.' },
+        { at:11.6, text:'Green now. Applying to staging needs your approval.' }
+      ],
+      steps: [
+        { ref:'files', startAt:0, dur:0.9, stat:'0043 migration', rows:[{at:0.2, text:'Read migrations/0043_tenant_created_index.sql', path:'migrations/0043_tenant_created_index.sql'}]},
+        { ref:'edit', startAt:1.1, dur:1.2, stat:'1 file · +4 −2', verb:'Tightening the down migration', detail:'Drop concurrently, if it exists.',
+          rows:[{at:0.3, text:'Edited migrations/0043_tenant_created_index.sql', add:4, del:2, path:'migrations/0043_tenant_created_index.sql'}]},
+        { ref:'bash', startAt:2.5, dur:2.6, stat:'1 failed', verb:'Running the migration tests', detail:'cargo test migrations', status:'failed',
+          rows:[{at:0.4, text:'Ran cargo test migrations', cmd:'cargo test migrations', output:['running 12 tests','test rollback_0043 ... FAILED','test result: FAILED. 11 passed; 1 failed'], exitCode:101, tag:'1 failed'}]},
+        { ref:'think', startAt:6.8, dur:1.4, stat:'1 reasoning pass',
+          rows:[{at:0.2, stream:true, text:'The down step runs inside the harness transaction, and DROP INDEX CONCURRENTLY refuses that. It needs the same no-transaction marker as the up step.'}]},
+        { ref:'edit', startAt:8.3, dur:1.1, stat:'1 file · +1', verb:'Marking the down step no-transaction', detail:'Same marker as the up step.',
+          rows:[{at:0.3, text:'Edited migrations/0043_tenant_created_index.sql', add:1, del:0, path:'migrations/0043_tenant_created_index.sql'}]},
+        { ref:'bash', startAt:9.6, dur:1.8, stat:'12 passed', verb:'Re-running the migration tests', detail:'cargo test migrations',
+          rows:[{at:0.3, text:'Ran cargo test migrations', cmd:'cargo test migrations', output:['running 12 tests','test result: ok. 12 passed; 0 failed'], exitCode:0, tag:'12 passed'}]},
+        { ref:'app', startAt:13.2, dur:1.2, stat:'awaiting approval', verb:'Applying to staging', detail:'Needs your approval before it runs.', status:'waiting', statusAt:0.3, waitFor:'permission',
+          rows:[{at:0.2, text:'Waiting for approval to run 0043 on staging', tag:'approval'}]},
+        { ref:'validate', startAt:14.6, dur:1.4, stat:'staging healthy', verb:'Checking staging', detail:'Index valid, no lock waits.',
+          rows:[{at:0.3, text:'idx_events_tenant_created is valid on staging', tag:'ok'}]}
+      ]
     }
   };
+
+  /* A long agent turn: 140 tool calls in realistic bursts (parallel reads,
+     searches, edits, test runs), so the ring's clustering and Earlier fold can
+     be seen at scale. Generated, not hand-written, and deterministic. */
+  (function buildLongRun() {
+    const pattern = [
+      ['think', 2.2], ['files', .25], ['files', .25], ['files', .25], ['files', .3], ['search', 1.1],
+      ['files', .25], ['files', .3], ['edit', 1.2], ['edit', 1.0], ['bash', 2.4], ['files', .25],
+      ['search', 1.0], ['edit', 1.1], ['bash', 2.2], ['validate', 1.0]
+    ];
+    const files = ['queries.rs','schema.rs','report.rs','cache.rs','routes.rs','events.rs','tenant.rs','bench.rs','fixtures.rs','mod.rs'];
+    const steps = []; let t = 0;
+    for (let i = 0; i < 140; i++) {
+      const [ref, gap] = pattern[i % pattern.length];
+      const f = files[i % files.length];
+      const row = ref === 'files' ? { at:.1, text:'Read src/analytics/' + f, path:'src/analytics/' + f }
+        : ref === 'search' ? { at:.2, text:'Searched "' + f.replace('.rs','') + ' tenant filter"', tag:(3 + i % 5) + ' results', query:f.replace('.rs','') + ' tenant filter' }
+        : ref === 'edit' ? { at:.2, text:'Edited src/analytics/' + f, add:2 + i % 9, del:i % 4, path:'src/analytics/' + f }
+        : ref === 'bash' ? { at:.3, text:'Ran cargo test ' + f.replace('.rs',''), cmd:'cargo test ' + f.replace('.rs',''), output:['test result: ok'], exitCode:0, tag:'ok' }
+        : ref === 'validate' ? { at:.2, text:'Checked ' + f.replace('.rs','') + ' against the fixture', tag:'ok' }
+        : { at:.2, stream:true, text:'Next: ' + f.replace('.rs','') + ' — same tenant-first pattern, same checks.' };
+      steps.push({ ref, startAt:+t.toFixed(2), dur:Math.max(.25, gap * .5), stat:ref === 'files' ? f : ref, rows:[row] });
+      t += gap * .52;
+    }
+    workRuns.liveC = {
+      title: 'Applying the pattern across the module',
+      receipt: ['140 tools','10 files','62 reads','18 edits'],
+      narration: [ { at:21.3, text:'Half the module is done. The same tenant-first pattern applies to the rest.' } ],
+      steps
+    };
+  })();
+
+  /* Live agent turns, keyed by what you send in Agent mode (turn-stream.js).
+     The answer streams in when the run completes; the card folds as it does. */
+  const liveTurns = [
+    { id:'lt-trouble', run:'liveB', title:'Fixing the rollback path', match:['rollback path','fix the rollback','trouble'],
+      answer:['The rollback path is fixed and applied to staging.\n\n',
+        '- **What failed:** the down migration ran inside the test harness transaction, which `DROP INDEX CONCURRENTLY` refuses.\n',
+        '- **The fix:** the down step now carries the same no-transaction marker as the up step.\n',
+        '- **Evidence:** 12 of 12 migration tests pass, and staging reports the index as valid with no lock waits.\n\n',
+        'Nothing was skipped or retried blindly: the failing test is the one that now passes.'] },
+    { id:'lt-long', run:'liveC', title:'Applying the pattern across the module', match:['whole module','across the module','everywhere','all the files'],
+      answer:['All ten files in the module now use the tenant-first query shape.\n\n',
+        '- 62 reads, 18 edits, every change covered by its own test run.\n',
+        '- No behaviour change outside the analytics module.\n\n',
+        'The ring above grouped repeated reads so the run stays legible; open any group to see every file it touched.'] },
+    { id:'lt-build', run:'liveA', title:'Adding the composite index', match:['add the','implement','build it','make it faster','prove it','ship'],
+      answer:['## Done: the composite index is in\n\n',
+        'The read path filters by tenant and orders by time, so one index on `(tenant_id, created_at DESC)` serves both.\n\n',
+        '- **Migration:** `0043` builds it concurrently, outside the transaction wrapper.\n',
+        '- **Query:** leading columns now match the index; no separate sort node.\n',
+        '- **Proof:** 42 tests green, rollback rehearsed both ways, p95 **482 ms → 71 ms**.\n\n',
+        'Insert cost rose 4.8%, measured over 50,000 rows. That is inside the 8% budget.'] }
+  ];
 
 
   /* =====================================================================
@@ -2318,8 +2437,26 @@
       'Mute and Focus apply immediately as selection toggles; Subcompact needs an explicit Apply because it writes a local summary artifact.',
       ' The cap is 25 messages per operation, not per thread, so operations accumulate.'],
       followUp:{ type:'context-focus', title:'Context Lens · Focus', detail:'Included the current renderer, the current tests, and the final reference.' } }),
-    reply({ id:'sr-default', match:[], chunks:[
-      'Added as an ordinary conversational turn so the reading rhythm, message actions, wide response layout, and the persistent More Details surface can all be evaluated on real text rather than on a placeholder.'] })
+    /* Chat WOW: two replies with structure, so lists, headings and code can be
+       seen arriving mid-stream (turn-stream.js renders a small markdown subset). */
+    reply({ id:'sr-steps', match:['steps','walk me','checklist','how would','how should'], delayMs:700, chunkMs:360, chunks:[
+      '## The rollout, in order\n\n',
+      '1. Split **0043** out of the migration wrapper and mark it no-transaction.\n',
+      '2. Build the index concurrently: `CREATE INDEX CONCURRENTLY idx_events_tenant_created`.\n',
+      '3. Batch the two N+1 call sites behind one tenant-first query.\n',
+      '4. Re-run the benchmark against the 128,400-row fixture and record both directions.\n\n',
+      'The check that has to pass before anything ships:\n\n',
+      '```\npm bench analytics_query --rows 128400 --assert p95<100ms\npm bench analytics_query --rollback --assert rows=128400\n```\n\n',
+      'If the second command fails, the rollback is not rehearsed yet and the rollout waits.'] }),
+    reply({ id:'sr-summary', match:['summar','recap','tl;dr','where are we'], delayMs:640, chunkMs:320, chunks:[
+      'Where things stand:\n\n',
+      '- **Read path:** p95 482 ms to 71 ms on the corrected fixture.\n',
+      '- **Write cost:** +4.8% on inserts, measured over 50,000 rows.\n',
+      '- **Rollback:** rehearsed in both directions, table readable throughout.\n\n',
+      'Still open: whether the payload bound applies to existing rows. That is your call, not mine.'] }),
+    reply({ id:'sr-default', match:[], delayMs:620, chunkMs:300, chunks:[
+      'Added as an ordinary conversational turn, so the reading rhythm, the message actions and the wide response layout can be judged on real text.',
+      ' Try asking me to **walk through the steps**, to **summarize** where things stand, or to explain the **benchmark** — each reply streams in the way a live model would, with its own pace, pauses at sentence ends, and structure arriving as it is written.'] })
   ];
 
   /* =====================================================================
@@ -2429,6 +2566,17 @@
 
   /* The long-history thread: 26 turns, no tools, no cards, no artifacts.
      Its ids are `plain-NN` and belong to it alone. */
+  /* Chat WOW: the stage for live turns. Demo Studio's Live turns triggers type
+     and send here; anything sent in Agent mode that matches a live turn plays
+     one (see liveTurns). */
+  thread({ id:'live-turn', title:'Live turns', status:'idle', pinned:true, updated:'now',
+    model:'Claude Sonnet 4.6', worktree:'feature/query-index',
+    summary:'Send a message and watch the turn arrive live.',
+    messages:turns('live-turn', { route:'sonnet', startMin:600, mode:'agent', persona:'Product Manager', contextStart:3200 }, [
+      ['u','How do live turns look here?'],
+      ['a','Send something below and watch it arrive. Ask me to **add the composite index**, to **fix the rollback path**, or to **apply the pattern across the module** for a turn that works before it answers; ask to **walk through the steps** or to **summarize** for a written reply.',{ rich:true }]
+    ]) });
+
   thread({ id:'plain', title:'Product Design Discussion', status:'idle', pinned:true, updated:'12m',
     model:'Claude Sonnet 4.6',
     summary:'A long ordinary conversation with no tools, cards, or artifacts.',
@@ -2991,7 +3139,9 @@
     'Wide Prose','Assistant Cards','Speaker Grid','Journal Stream',
     'Editorial Reading','Layered Technical','Terminal Dense','Stage Layout',
     'Aligned Bubbles','Zebra Rows','Sticky Rail','Timeline Gutter',
-    'Notebook Cells','Focus Reader','Print Sheet','Threaded Turns'
+    'Notebook Cells','Focus Reader','Print Sheet','Threaded Turns',
+    /* 16 -- Chat WOW default (turn-stage.css): presence mark, turn spine, item families. */
+    'Turn Stage'
   ];
 
 
@@ -2999,7 +3149,7 @@
     /* enum -> human copy; no raw enum value is ever user-facing */
     labels,
     /* working animation */
-    workSteps, phaseMeta, phaseRows, phaseGroups, workRuns,
+    workSteps, phaseMeta, phaseRows, phaseGroups, workRuns, liveTurns,
     /* activity domains */
     artifacts, subagents, subagentGroups, todos, changes,
     /* conversation */

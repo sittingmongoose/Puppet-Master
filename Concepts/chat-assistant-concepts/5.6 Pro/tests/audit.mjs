@@ -114,7 +114,9 @@ async function cleanup(label){
       if(s.ctxDetails){ await page.keyboard.press('Escape'); await page.waitForTimeout(30); continue; }
       if(s.activityPinned){ await page.evaluate(()=>document.querySelector('[data-action="unpin-activity"]')?.click()); await page.waitForTimeout(40); continue; }
       if(s.activityOpen){ await page.evaluate(()=>document.querySelector('[data-action="close-activity"]')?.click()); await page.waitForTimeout(40); continue; }
-      if(s.decision){ await page.evaluate(()=>document.querySelector('[data-action="close-decision"]')?.click()); await page.waitForTimeout(40); continue; }
+      /* the questionnaire closes through a leave morph (questions.js beginLeave,
+         up to its 1.4s watchdog) before state.decision clears -- give it time */
+      if(s.decision){ await page.evaluate(()=>document.querySelector('[data-action="close-decision"]')?.click()); await page.waitForTimeout(260); continue; }
       if(s.hover||s.domHover){ await page.mouse.move(2,2); await page.waitForTimeout(220); 
         const t=await overlayState(); if(t.hover||t.domHover){ if(tries>4)break; } continue; }
       if(s.domGhost){ await page.waitForTimeout(120); continue; }   // menus.js close clone, self-clearing
@@ -299,7 +301,8 @@ await safe('Context Lens header strip',async()=>{
 });
 
 await safe('Working Animation controls and history',async()=>{
-  await page.evaluate(()=>PM56_DEMO.resetWorking());await page.locator('[data-action="start-working"]').click();await page.waitForTimeout(1600);await page.locator('[data-action="pause-working"]').click();
+  /* Chat WOW: the lab controls live behind one drawer button in the working head. */
+  await page.evaluate(()=>PM56_DEMO.resetWorking());await page.evaluate(()=>{const m=document.querySelector('.working-card [data-action="work-demo-menu"]');if(m&&m.getAttribute('aria-expanded')!=='true')m.click();});await page.locator('[data-action="start-working"]').click();await page.waitForTimeout(1600);await page.locator('[data-action="pause-working"]').click();
   await page.locator('[data-action="step-working"]').click();await page.locator('[data-action="complete-working"]').click();
   /* Default take is Orbit: elapsed lives in the card head, not a "Worked for"
      receipt chip (orbit.js passes {elapsed:false} on the strip). Open Orbit
@@ -455,7 +458,7 @@ await safe('Working-card FLIP travels forward, in steps, and stops',async()=>{
     if(settle===null||settle>520)out.push(`${label}: settles at ${settle}ms, limit 520ms (travel ${travel}px)`);
     return out;
   };
-  const TOG='function(){document.querySelector(\'[data-action="toggle-work-history"]\').click();}';
+  const TOG='function(){var m=document.querySelector(\'.working-card [data-action="work-demo-menu"]\');if(m&&m.getAttribute(\'aria-expanded\')!==\'true\')m.click();document.querySelector(\'[data-action="toggle-work-history"]\').click();}';
   const rec=(t,ms)=>page.evaluate(([a,b])=>window.__flipRec(a,b),[t,ms]);
   const bad=[];
   for(const v of [1,12,0,7]){
@@ -617,7 +620,7 @@ for(const vw of [1920,1440,1280,1100]){
 await page.setViewportSize({width:1440,height:900});
 await cleanup('editor split sweep');
 
-await safe('Global reset restores stock state',async()=>{await page.evaluate(()=>{PM56_DEMO.setTheme('friendly-light');PM56_DEMO.setVariant(2,7);PM56_DEMO.selectThread('plain');PM56_DEMO.reset();});await page.waitForTimeout(100);const s=await page.evaluate(()=>PM56_DEMO.snapshot());const expected=[7,5,1,0,1,0,8];if(s.theme!=='basic-dark'||s.thread!=='query'||s.variants.some((x,i)=>x!==expected[i]))throw new Error(JSON.stringify(s));});
+await safe('Global reset restores stock state',async()=>{await page.evaluate(()=>{PM56_DEMO.setTheme('friendly-light');PM56_DEMO.setVariant(2,7);PM56_DEMO.selectThread('plain');PM56_DEMO.reset();});await page.waitForTimeout(100);const s=await page.evaluate(()=>PM56_DEMO.snapshot());const expected=[7,5,1,0,1,16,8];if(s.theme!=='basic-dark'||s.thread!=='query'||s.variants.some((x,i)=>x!==expected[i]))throw new Error(JSON.stringify(s));});
 
 /* ------------------------------------------------- matcher-hygiene summary */
 check(matchers.length>0,'Matcher hygiene: text assertions were actually exercised',`${matchers.length} matchers`);

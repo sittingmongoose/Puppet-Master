@@ -178,8 +178,8 @@ if(REDUCED){
         'All nine motion signatures differ', anims);
 }
 
-/* Row hover: status slot hides, menu appears in the left lead cell. */
-await sec('item3: row hover swaps status for menu', async()=>{
+/* Row hover: status stays visible; menu appears on the right. */
+await sec('item3: row hover reveals right-side menu', async()=>{
   const row='.history-flyout .thread-row';
   const slot=page.locator('.history-flyout .thread-row .thread-status-slot').first();
   const more=page.locator('.history-flyout .thread-row .thread-more').first();
@@ -194,16 +194,22 @@ await sec('item3: row hover swaps status for menu', async()=>{
   const hoverMore=await more.evaluate(el=>getComputedStyle(el).opacity);
   const hitMore=await hitsSelf('.history-flyout .thread-row .thread-more');
   const pos=await page.locator(row).first().evaluate(el=>{
-    const lead=el.querySelector('.thread-lead');
     const copy=el.querySelector('.thread-copy');
     const btn=el.querySelector('.thread-more');
-    return {moreLeft:btn.getBoundingClientRect().left,copyLeft:copy.getBoundingClientRect().left,
-            inLead:!!(lead&&lead.contains(btn))};
+    const rowR=el.getBoundingClientRect();
+    const btnR=btn.getBoundingClientRect();
+    const copyR=copy.getBoundingClientRect();
+    return {moreRight:btnR.right,rowRight:rowR.right,copyRight:copyR.right,
+            inLead:!!el.querySelector('.thread-lead')?.contains(btn)};
   });
-  check(Number(hoverOp)<0.5 && Number(hoverMore)>0.9 && hitMore && pos.inLead && pos.moreLeft<pos.copyLeft,
-        'Row hover hides status and reveals menu in left lead',
+  check(Number(hoverOp)>0.9 && Number(hoverMore)>0.9 && hitMore && !pos.inLead && pos.moreRight>pos.copyRight-4,
+        'Row hover keeps status and reveals menu on the right',
         {hoverOp,hoverMore,hitMore,pos});
-  await page.mouse.move(4,4); await page.waitForTimeout(200);
+  await page.locator(row).first().click();
+  await page.mouse.move(4,4);
+  await page.waitForTimeout(220);
+  const afterMore=await more.evaluate(el=>getComputedStyle(el).opacity);
+  check(Number(afterMore)<0.5,'Menu hides after pointer leaves focused row',{afterMore});
 });
 
 await sec('item3: narrow hides status and time at rest', async()=>{
@@ -728,7 +734,7 @@ await sec('item4: pinned thread animates into Pinned', async()=>{
    drag window and make the "renders nothing" assertion a coin flip.
    ===================================================================== */
 await sec('wave6: the pinned drawer resizes without breaking pin-in-place', async()=>{
-  await page.evaluate(()=>{const b=document.querySelector('[data-action="pause-working"]'); if(b) b.click();});
+  await page.evaluate(()=>{const m=document.querySelector('.working-card [data-action="work-demo-menu"]'); if(m&&m.getAttribute('aria-expanded')!=='true') m.click(); const b=document.querySelector('[data-action="pause-working"]'); if(b) b.click();});
   await page.waitForTimeout(250);
   /* The "renders nothing" assertion is only meaningful if the 2s work tick is
      actually stopped; say so out loud rather than reporting a silent green. */
@@ -862,7 +868,7 @@ await sec('wave6: the pinned drawer resizes without breaking pin-in-place', asyn
     dflt:parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ph-pin-w'))}));
   check(back.dflt>0 && Math.abs(back.w-back.dflt)<1 && Math.abs(back.w-back.g)<1,
         'With no stored width the drawer returns to the --ph-pin-w default, gutter still coupled', back);
-  await page.evaluate(()=>{const b=document.querySelector('[data-action="start-working"]'); if(b) b.click();});
+  await page.evaluate(()=>{const m=document.querySelector('.working-card [data-action="work-demo-menu"]'); if(m&&m.getAttribute('aria-expanded')!=='true') m.click(); const b=document.querySelector('[data-action="start-working"]'); if(b) b.click();});
 });
 await shot(`item4-resized${REDUCED?'-reduced':''}.png`);
 

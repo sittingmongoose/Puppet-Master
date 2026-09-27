@@ -25,12 +25,21 @@
 .hover-card.ab-card .todo-hover-list { max-height:none; overflow:visible; }
 .ab-head, .todo-hover-head { width:100%; background:transparent; text-align:left; color:var(--text); cursor:pointer; }
 .ab-head:hover, .todo-hover-head:hover { background:var(--surface-3); }
-.ab-row-copy b, .todo-hover-title { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; white-space:normal; }
+.ab-row-copy b { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; white-space:normal; }
+.todo-hover-title { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .ab-row-copy i { display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; }
-.todo-hover-list { display:grid; gap:3px; margin:0; padding:8px; }
-button.todo-hover-row { display:grid; grid-template-columns:18px minmax(0,1fr); gap:8px; width:100%; padding:7px; border:0; border-radius:8px; background:transparent; text-align:left; color:var(--text); cursor:pointer; }
-button.todo-hover-row:hover { background:var(--surface-3); }
-button.todo-hover-blocked { width:100%; text-align:left; background:transparent; padding:8px 14px; cursor:pointer; }
+.hover-card .todo-hover-head { display:flex; align-items:center; gap:8px; min-height:36px; padding:6px 10px; border-bottom:1px solid var(--border); }
+.hover-card .todo-hover-list { display:flex; flex-direction:column; gap:0; margin:0; padding:4px; }
+.hover-card button.todo-hover-row { display:grid; grid-template-columns:16px minmax(0,1fr) 68px; gap:8px; align-items:center; width:100%; min-height:32px; padding:4px 8px; border:0; border-radius:6px; background:transparent; text-align:left; color:var(--text); cursor:pointer; }
+.hover-card button.todo-hover-row:hover { background:var(--surface-3); }
+.hover-card .todo-hover-status { font-size:10.5px; line-height:14px; text-align:right; color:var(--muted); white-space:nowrap; font-variant-numeric:tabular-nums; }
+.hover-card .todo-hover-status[data-tone="working"] { color:var(--accent); }
+.hover-card .todo-hover-status[data-tone="blocked"] { color:var(--danger); }
+.hover-card .todo-hover-status[data-tone="done"] { color:var(--positive); }
+.hover-card .todo-hover-foot-row { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:30px; padding:0 12px; border-top:1px solid var(--border); }
+.hover-card .todo-hover-overflow, .hover-card button.todo-hover-blocked { width:auto; margin:0; padding:4px 0; border:0; background:transparent; font-size:11px; line-height:16px; text-align:left; cursor:pointer; }
+.hover-card .todo-hover-overflow { color:var(--muted); }
+.hover-card button.todo-hover-blocked { margin-left:auto; color:var(--danger); display:inline-flex; align-items:center; gap:4px; }
 .todo-row { grid-template-columns:14px 17px minmax(0,1fr); padding:8px 0; align-items:start; gap:6px; }
 .todo-title-button { border:0; background:transparent; color:var(--text); text-align:left; cursor:pointer; padding:0; width:100%; font:inherit; }
 .todo-title-button:hover { color:var(--accent); }

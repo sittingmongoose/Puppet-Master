@@ -312,6 +312,10 @@
   animation: orbit-node-in 360ms var(--spring-soft-ease) backwards;
   animation-delay: calc(var(--node-i, 0) * 40ms);
 }
+/* settled nodes drop the entrance (orbit.js stamps data-settled 900ms after
+   birth): keeping a finished var()-keyframe animation attached made every
+   ring restyle re-resolve it */
+.orbit-node[data-settled] { animation: none; }
 @keyframes orbit-node-in {
   from { opacity: 0; transform: rotate(var(--a)) translateX(0) rotate(calc(-1 * var(--a))) scale(.4); }
   to   { opacity: 1; transform: rotate(var(--a)) translateX(var(--orbit-r)) rotate(calc(-1 * var(--a))) scale(var(--pop)); }
@@ -790,3 +794,82 @@ button.wa-row {
   color: var(--subtle);
   font-size: 10.5px;
 }
+
+/* ======================================================================
+   Chat WOW M4 -- concurrency, status, clusters, narration.
+   ====================================================================== */
+/* done subjects keep their kind's colour (muted) with a small completion pip,
+   so a finished ring still reads as the run it was, not a wall of green */
+.orbit-node.done {
+  color: color-mix(in srgb, var(--pm-step, var(--muted)) 80%, var(--text));
+  border-color: color-mix(in srgb, var(--pm-step, var(--muted)) 26%, var(--border));
+  background: color-mix(in srgb, var(--pm-step, var(--muted)) 10%, var(--surface-3));
+}
+.orbit-node.done::after {
+  content: ""; position: absolute; right: -3px; bottom: -3px; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--positive); box-shadow: 0 0 0 2px var(--surface-2); pointer-events: none;
+}
+.orbit-node.done.failed::after, .orbit-node.failed::after { display: none; }
+/* several subjects live at once: each live node pulses, out of phase */
+.orbit-node.live:nth-child(3n+2) .orbit-node-pip { animation-delay: -.6s; }
+.orbit-node.live:nth-child(3n) .orbit-node-pip { animation-delay: -1.2s; }
+/* failed: one shake, a danger ring and an x flag */
+.orbit-node.failed {
+  color: var(--danger); background: color-mix(in srgb, var(--danger) 14%, var(--surface-3));
+  border-color: color-mix(in srgb, var(--danger) 60%, transparent);
+  animation: orbit-fail-shake 360ms cubic-bezier(.36, .07, .19, .97) both;
+}
+@keyframes orbit-fail-shake {
+  0%, 100% { translate: 0 0; } 20% { translate: -2.5px 0; } 40% { translate: 2.5px 0; } 60% { translate: -1.5px 0; } 80% { translate: 1px 0; }
+}
+/* waiting for the reader: warning ring, a pause flag, a slow breath */
+.orbit-node.waiting {
+  color: var(--warning); background: color-mix(in srgb, var(--warning) 14%, var(--surface-3));
+  border-color: color-mix(in srgb, var(--warning) 60%, transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--warning) 35%, transparent);
+}
+.orbit-node-flag {
+  position: absolute; right: -5px; top: -5px; width: 12px; height: 12px; border-radius: 50%;
+  display: grid; place-items: center; font-style: normal; pointer-events: none;
+  background: var(--danger); color: #fff; box-shadow: 0 0 0 2px var(--surface-2);
+}
+.orbit-node.waiting .orbit-node-flag { background: var(--warning); color: #1b1200; }
+.orbit-node-flag svg { width: 7px; height: 7px; stroke-width: 3.2; }
+/* clusters: a count badge; the Earlier fold is quieter */
+.orbit-node.cluster { border-style: solid; }
+.orbit-node-count {
+  position: absolute; left: 50%; bottom: -9px; transform: translateX(-50%);
+  min-width: 15px; padding: 0 3px; border-radius: 999px;
+  font: 700 8.5px/13px var(--font-ui); font-style: normal; letter-spacing: .01em; text-align: center;
+  color: var(--text); background: var(--surface-4); box-shadow: 0 0 0 1.5px var(--surface-2); pointer-events: none;
+}
+.orbit-node.earlier { opacity: .75; }
+.orbit-node.earlier .orbit-node-count { background: var(--surface-3); color: var(--muted); }
+.orbit-strip-item .orbit-node-count { bottom: -6px; font-size: 7.5px; line-height: 11px; }
+.orbit-strip-item.failed { color: var(--danger); }
+.orbit-strip-item.waiting { color: var(--warning); }
+/* the core: +N when more than one subject is live; waiting for the reader */
+.orbit-core-more {
+  position: absolute; right: 2px; top: 2px; min-width: 20px; padding: 1px 5px; border-radius: 999px;
+  font: 700 10px/15px var(--font-ui); font-style: normal; color: var(--on-accent);
+  background: var(--pm-step, var(--accent)); box-shadow: 0 0 0 2px var(--surface-2);
+  animation: orbit-more-in 260ms cubic-bezier(.34, 1.56, .64, 1) both;
+}
+@keyframes orbit-more-in { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+.orbit-core.waiting { border-color: color-mix(in srgb, var(--warning) 60%, var(--border)); box-shadow: 0 0 40px color-mix(in srgb, var(--warning) 20%, transparent); }
+.orbit-core.waiting .orbit-core-icon { color: var(--warning); }
+/* cluster panel: one line per member, then its rows */
+.orbit-member { display: block; margin: 8px 0 2px; font-size: 11px; color: var(--muted); }
+.orbit-member:first-child { margin-top: 0; }
+.orbit-member b { color: var(--text); font-weight: 650; }
+/* narration: the leading edge of the turn, written at the foot of the card */
+.orbit-narration {
+  display: flex; gap: 8px; align-items: baseline;
+  margin: 10px 2px 0; padding: 9px 2px 0; border-top: 1px dashed color-mix(in srgb, var(--text) 10%, transparent);
+  font-size: 13px; line-height: 1.55; color: color-mix(in srgb, var(--text) 88%, transparent);
+  animation: orbit-narr-in 260ms cubic-bezier(.17, .84, .29, .99) both;
+}
+.orbit-narration-mark { flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; background: var(--tx-live, var(--accent)); transform: translateY(-1px); box-shadow: 0 0 8px var(--tx-live, var(--accent)); }
+@keyframes orbit-narr-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.orbit-narr-cap i { font-style: normal; color: color-mix(in srgb, var(--text) 82%, transparent); }
+@media (prefers-reduced-motion: reduce) { .orbit-node.failed, .orbit-core-more, .orbit-narration { animation: none; } }

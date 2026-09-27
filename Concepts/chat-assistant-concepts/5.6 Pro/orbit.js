@@ -66,7 +66,7 @@
   var lastTake = null;
   var lastRender = null;
   function uiFor(id) {
-    return UI[id] || (UI[id] = { pin: null, rotDeg: 0, rotIdx: null, compact: null, anim: null, shown: null });
+    return UI[id] || (UI[id] = { pin: null, rotDeg: 0, rotIdx: null, compact: null, anim: null, shown: null, born: {} });
   }
 
   /* ---- per-card choreography timers ----------------------------------- */
@@ -76,6 +76,7 @@
   function clearAllTimers() { for (var k in TIMERS) killTimers(k); }
   function rerender() { if (lastRender) lastRender(); }
   function reduced() { var M = window.PM56_MOTION; return !!(M && M.reduced && M.reduced()); }
+  function motionNow() { var K = window.PM56_CLOCK; return K && K.now ? K.now() : performance.now(); }
 
   /* COLLAPSE: C1 the grid closes (420ms — panel folds, dial recenters),
      C2 the dial lifts up into the strip line (240ms), then the strip mounts.
@@ -89,7 +90,7 @@
     }
     ui.anim = 'c1';
     if (finalCompact != null) ui.pendingCompact = finalCompact;
-    later(id, 430, function () { ui.anim = 'c2'; rerender(); });
+    later(id, 430, function () { ui.anim = 'c2'; rerender(); shrinkStage(id); });
     later(id, 690, function () {
       ui.anim = null; ui.pin = null;
       /* Mark the landing state BEFORE the render: the auto-collapse detector
@@ -102,6 +103,21 @@
     });
   }
 
+  /* C2 as one move: while the dial lifts into the strip line, the stage's
+     height closes toward the strip's, instead of the dial fading out of a box
+     that keeps its size until the strip mounts (a dead, empty frame). The
+     strip's mount FLIP then only settles the last few pixels. */
+  var STRIP_H = 64;
+  function shrinkStage(id) {
+    var node = document.querySelector('[data-hover-key^="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + ':"]');
+    var stage = node && node.closest('.orbit-stage');
+    if (!stage || !stage.animate) return;
+    var h = stage.getBoundingClientRect().height;
+    if (h <= STRIP_H + 4) return;
+    stage.animate([{ height: h + 'px', overflow: 'hidden' }, { height: STRIP_H + 'px', overflow: 'hidden' }],
+      { duration: 250, easing: 'cubic-bezier(.3, .7, .2, 1)', fill: 'forwards' });
+  }
+
   /* EXPAND: E1 the dial drops down from the strip line (240ms, panel still
      closed — today's resting pose), then the ordinary open transition slides
      it left and unfolds the panel onto the clicked subject. */
@@ -109,6 +125,7 @@
     killTimers(id);
     ui.compact = false;
     ui.pin = pinIdx != null ? pinIdx : null;
+    if (pinIdx == null) ui.pinUid = null;
     if (reduced()) { ui.anim = null; return; }
     ui.anim = 'e1';
     later(id, 440, function () { ui.anim = null; rerender(); });
@@ -157,46 +174,109 @@
   }
 
   /* ---- full stage ----------------------------------------------------- */
+  /* ---- display list (Chat WOW M4) --------------------------------------
+     What the ring shows. Several subjects can be live at once and a subject
+     can fail or wait for the reader (ctx.liveSet / ctx.statusOf). Long runs
+     stay legible: past CLUSTER_AT spawned subjects, adjacent subjects of the
+     same kind merge into one cluster node with a count ("Read x12"); past
+     FOLD_AT nodes, the oldest fold into one "Earlier" node. Each item keeps its
+     member instance indexes, so the panel can list every member's rows. */
+  var CLUSTER_AT = 16, FOLD_AT = 30;
+  function displayItems(w, rec) {
+    var steps = w.steps, out = [], i;
+    var live = w.liveSet ? w.liveSet() : null;
+    if (!live) { live = new Set(); if (!rec.completed) live.add(w.index); }
+    for (i = 0; i < steps.length; i++) if (rec.completed || steps[i].startAt <= w.clock + 1e-6) out.push({ idx: [i], uid: steps[i].uid, kind: steps[i].kind, inst: steps[i] });
+    if (!out.length) out.push({ idx: [0], uid: steps[0].uid, kind: steps[0].kind, inst: steps[0] });
+    if (out.length > CLUSTER_AT) {
+      var merged = [];
+      out.forEach(function (it) {
+        var last = merged[merged.length - 1];
+        if (last && last.kind === it.kind) { last.idx.push(it.idx[0]); last.cluster = true; }
+        else merged.push(it);
+      });
+      out = merged;
+    }
+    if (out.length > FOLD_AT) {
+      var keep = out.slice(out.length - (FOLD_AT - 1)), folded = out.slice(0, out.length - (FOLD_AT - 1)), all = [];
+      folded.forEach(function (f) { all = all.concat(f.idx); });
+      out = [{ idx: all, uid: 'earlier:' + steps[all[0]].uid, kind: 'earlier', inst: steps[all[0]], earlier: true, cluster: true }].concat(keep);
+    }
+    out.forEach(function (it) {
+      it.count = it.idx.length;
+      it.live = !rec.completed && it.idx.some(function (k) { return live.has(k); });
+      it.status = null;
+      it.idx.forEach(function (k) { var st = w.statusOf ? w.statusOf(steps[k]) : null; if (st) it.status = st; });
+      it.hasFocus = it.idx.indexOf(w.index) >= 0;
+      it.done = rec.completed || (!it.live && it.idx.every(function (k) { return k < w.index || (!live.has(k) && steps[k].startAt + (steps[k].dur != null ? steps[k].dur : 2) <= w.clock + 1e-6); }));
+    });
+    return out;
+  }
+  function itemIcon(it) { return it.earlier ? 'history' : it.inst.icon; }
+  function itemLabel(it) { return it.earlier ? 'Earlier' : it.inst.label; }
+
+  /* ---- full stage ----------------------------------------------------- */
   function renderStage(c, ui) {
     var esc = c.esc, icon = c.icon, w = c.ctx;
     var rec = w.rec || c.state.work;
     var steps = w.steps;
+    var items = displayItems(w, rec);
+    var n = items.length, seg = 360 / n;
+    ui.list = items.map(function (it) { return it.uid; });
 
-    var spawned = rec.completed ? steps.slice() : steps.filter(function (s) { return s.startAt <= w.clock + 1e-6; });
-    if (!spawned.length) spawned = steps.slice(0, 1);
-    var n = spawned.length, seg = 360 / n;
-
-    var liveIdx = Math.min(w.index, n - 1);
-    var pin = (ui.pin != null && ui.pin >= 0 && ui.pin < n) ? ui.pin : null;
-    var panelIdx = pin != null ? pin : liveIdx;
-    var live = steps[liveIdx];        // what the CORE and the head caption describe
-    var pf = steps[panelIdx];         // what the PANEL describes
-    var open = ui.anim == null;       // posed (closed) during every choreography phase
+    var liveI = 0;
+    items.forEach(function (it, i) { if (it.hasFocus) liveI = i; });
+    var pinI = null;
+    if (ui.pinUid != null) { var at = ui.list.indexOf(ui.pinUid); if (at >= 0) pinI = at; }
+    else if (ui.pin != null && ui.pin >= 0 && ui.pin < n) pinI = ui.pin;
+    var panelI = pinI != null ? pinI : liveI;
+    var live = steps[Math.min(w.index, steps.length - 1)];   // what the CORE and the head caption describe
+    var pItem = items[panelI];
+    var open = ui.anim == null;
     var animAttr = ui.anim === 'e1' ? 'drop' : ui.anim === 'c2' ? 'lift' : null;
-    var rot = rotationFor(ui, panelIdx, n);
+    var rot = rotationFor(ui, panelI, n);
     var tier = n >= 22 ? 'xl' : n >= 13 ? 'lg' : '';
+    var liveCount = items.filter(function (it) { return it.live; }).length;
+    var waiting = items.some(function (it) { return it.live && it.status === 'waiting'; });
 
     /* ---- nodes ------------------------------------------------------ */
-    var nodes = spawned.map(function (sx, i) {
+    /* A node keeps its entrance animation only while it can still be playing
+       (360ms + up to 320ms stagger). Once settled it drops the animation:
+       a finished animation whose keyframes read var() is re-resolved on every
+       restyle, and every spawn restyles the whole ring (re-space + turn). */
+    var tNow = motionNow(), born = ui.born || (ui.born = {});
+    var nodes = items.map(function (it, i) {
+      var sx = it.inst;
       var cls = 'orbit-node';
-      if (rec.completed || i < liveIdx) cls += ' done';
-      if (i === liveIdx && !rec.completed) cls += ' live';
-      if (i === panelIdx) cls += ' focus';
-      if (i === panelIdx && pin != null) cls += ' open';
-      var st = i < liveIdx ? 'completed' : i === liveIdx ? (rec.completed ? 'completed' : 'in progress') : 'pending';
-      var statBit = sx.stat ? sx.label + ' · ' + sx.stat : sx.label;
-      return '<button type="button" class="' + cls + '" data-k="node:' + esc(sx.uid) + '"'
-        + ' data-step-kind="' + esc(sx.kind) + '"'
+      if (born[it.uid] == null) born[it.uid] = tNow;
+      var settled = tNow - born[it.uid] > 900;
+      if (it.done) cls += ' done';
+      if (it.live) cls += ' live';
+      if (it.status === 'failed') cls += ' failed';
+      if (it.status === 'waiting') cls += ' waiting';
+      if (it.cluster) cls += it.earlier ? ' cluster earlier' : ' cluster';
+      if (i === panelI) cls += ' focus';
+      if (i === panelI && pinI != null) cls += ' open';
+      var st = it.status === 'failed' ? 'failed' : it.status === 'waiting' ? 'waiting for you' : it.done ? 'completed' : it.live ? 'in progress' : 'pending';
+      var label = itemLabel(it) + (it.count > 1 ? ' ×' + it.count : '');
+      var statBit = it.count > 1 ? label : (sx.stat ? sx.label + ' · ' + sx.stat : sx.label);
+      return '<button type="button" class="' + cls + '" data-k="node:' + esc(it.uid) + '"'
+        + ' data-step-kind="' + esc(it.earlier ? sx.kind : it.kind) + '"'
         + ' data-action="orbit-open-phase" data-value="' + i + '"'
         + ' style="--angle:' + (i * seg).toFixed(4) + 'deg;--node-i:' + Math.min(i, 8) + '"'
-        + ' aria-pressed="' + (i === panelIdx && pin != null ? 'true' : 'false') + '"'
-        + tipAttrs(esc, w.cardId, sx.uid, statBit, sx.verb + ' (' + st + ')')
-        + ' aria-label="Subject ' + (i + 1) + ' of ' + n + ': ' + esc(sx.label) + ', ' + st + (sx.stat ? ', ' + esc(sx.stat) : '') + '">'
-        + icon(sx.icon, 13) + '<i class="orbit-node-pip"></i></button>';
+        + (settled ? ' data-settled' : '')
+        + ' aria-pressed="' + (i === panelI && pinI != null ? 'true' : 'false') + '"'
+        + tipAttrs(esc, w.cardId, it.uid, statBit, (it.count > 1 ? it.count + ' subjects' : sx.verb) + ' (' + st + ')')
+        + ' aria-label="' + esc(label) + ', ' + st + '">'
+        + icon(itemIcon(it), 13) + '<i class="orbit-node-pip"></i>'
+        + (it.count > 1 ? '<b class="orbit-node-count">' + (it.earlier ? it.count : '×' + it.count) + '</b>' : '')
+        + (it.status === 'failed' ? '<i class="orbit-node-flag">' + icon('close', 8) + '</i>' : it.status === 'waiting' ? '<i class="orbit-node-flag">' + icon('pause', 8) + '</i>' : '')
+        + '</button>';
     }).join('');
 
     /* ---- subagent satellites (follow the PANEL subject) -------------- */
-    var agents = agentsFor(c, pf);
+    var pf = pItem.inst;
+    var agents = pItem.count === 1 ? agentsFor(c, pf) : [];
     var sats = '';
     if (pf.kind === 'agents' && agents.length) {
       var an = Math.min(agents.length, 5);
@@ -212,52 +292,100 @@
     }
 
     /* ---- core: ALWAYS the live subject; NEVER a collapse control ----- */
-    var coreTitle = pin != null ? 'Follow the live step again' : 'Following the live step';
-    var core = '<button type="button" class="orbit-core' + (rec.completed ? ' done' : '') + '"'
-      + ' data-k="core" data-action="orbit-toggle" aria-pressed="' + (pin == null ? 'true' : 'false') + '"'
-      + tipAttrs(esc, w.cardId, 'core', coreTitle, pin != null ? 'Return focus to the live subject' : 'The dial follows the live subject')
+    var coreTitle = pinI != null ? 'Follow the live step again' : 'Following the live step';
+    var core = '<button type="button" class="orbit-core' + (rec.completed ? ' done' : '') + (waiting ? ' waiting' : '') + '"'
+      + ' data-k="core" data-action="orbit-toggle" aria-pressed="' + (pinI == null ? 'true' : 'false') + '"'
+      + tipAttrs(esc, w.cardId, 'core', coreTitle, pinI != null ? 'Return focus to the live subject' : 'The dial follows the live subject')
       + '>'
-      + '<span class="orbit-core-icon" data-k="coreicon:' + esc(live.uid) + '">' + icon(rec.completed ? 'check' : live.icon, 22) + '</span>'
+      + '<span class="orbit-core-icon" data-k="coreicon:' + esc(live.uid) + '">' + icon(rec.completed ? 'check' : waiting ? 'pause' : live.icon, 22) + '</span>'
       /* CONSTANT key on purpose: a subject key here remounted the label on
          every handover and the pm-materialize entrance blanked the core for
          ~40ms mid-rotation. */
-      + '<strong data-k="corelabel">' + esc(live.label) + '</strong>'
+      + '<strong data-k="corelabel">' + esc(waiting ? 'Waiting for you' : live.label) + '</strong>'
+      + (liveCount > 1 && !rec.completed ? '<em class="orbit-core-more" data-k="coremore">+' + (liveCount - 1) + '</em>' : '')
       + '</button>';
 
     var panel = '<div class="orbit-panel" data-k="orbpanel" role="region" aria-label="Subject detail"'
       + (open ? '' : ' aria-hidden="true"') + '>'
-      + '<div class="orbit-panel-in" data-k="opin:' + esc(pf.uid) + '">'
-      + renderPanel(c, ui, pf, panelIdx, n)
+      + '<div class="orbit-panel-in" data-k="opin:' + esc(pItem.uid) + '">'
+      + renderPanel(c, ui, pItem, panelI, n)
       + '</div></div>';
 
     return '<div class="orbit-stage' + (open ? ' is-open' : '') + '" data-k="orbit"'
-      + ' data-orbit-open="' + (open ? '1' : '0') + '" data-orbit-focus="' + esc(pf.uid) + '"'
+      + ' data-orbit-open="' + (open ? '1' : '0') + '" data-orbit-focus="' + esc(pItem.uid) + '"'
       + (animAttr ? ' data-orbit-anim="' + animAttr + '"' : '')
       + (tier ? ' data-orbit-tier="' + tier + '"' : '')
       + ' data-step-kind="' + esc(pf.kind) + '"'
-      + ' style="--seg:' + seg.toFixed(4) + 'deg;--orbit-rot:' + rot.toFixed(3) + 'deg">'
+      + '>'
       + '<div class="orbit-layout" data-k="orblayout">'
       + '<div class="orbit-dial" data-k="orbdial">'
       + '<i class="orbit-track" data-k="orbtrack"></i>'
-      + '<div class="orbit-ring" data-k="ring">' + nodes + sats + '</div>'
+      /* the turn lives on the ring, its only reader: on the stage it made every
+         element of the card restyle each time the dial turned */
+      + '<div class="orbit-ring" data-k="ring" style="--seg:' + seg.toFixed(4) + 'deg;--orbit-rot:' + rot.toFixed(3) + 'deg">' + nodes + sats + '</div>'
       + core
       + '</div>'
       + panel
-      + '</div></div>';
+      + '</div>'
+      + narrationLine(c, ui)
+      + '</div>';
   }
 
+  /* ---- narration (Chat WOW M4) ------------------------------------------
+     Short lines the assistant writes between bursts of tool calls. While the
+     latest line is newer than every started subject it is the turn's leading
+     edge: it streams in as prose at the foot of the card. When the next subject
+     starts, the same line tucks up into the head caption (a FLIP from where it
+     was written), so short narration never splits the card. */
+  function narrState(c) {
+    var w = c.ctx, rec = w.rec || c.state.work;
+    var list = w.narration ? w.narration() : [];
+    if (!list.length || rec.completed) return null;
+    var cur = -1;
+    for (var i = 0; i < list.length; i++) if (list[i].at <= w.clock + 1e-6) cur = i;
+    if (cur < 0) return null;
+    var latestStart = 0;
+    w.steps.forEach(function (s) { if (s.startAt <= w.clock + 1e-6) latestStart = Math.max(latestStart, s.startAt); });
+    return { i: cur, text: list[cur].text, leading: list[cur].at > latestStart };
+  }
+  function narrationLine(c, ui) {
+    var ns = narrState(c);
+    if (!ns || !ns.leading) return '';
+    var M = c.ctx.M;
+    return '<div class="orbit-narration" data-k="onarr:' + ns.i + '"><span class="orbit-narration-mark"></span><span class="wa-prose pm-stream">' + M.words(ns.text) + '</span></div>';
+  }
   /* ---- panel body ---------------------------------------------------- */
-  function renderPanel(c, ui, pf, pi, spawnedCount) {
+  function renderPanel(c, ui, item, pi, spawnedCount) {
     var esc = c.esc, icon = c.icon, w = c.ctx, M = w.M;
     var rec = w.rec || c.state.work;
-    var done = pi < w.index || rec.completed;
-    var liveHere = pi === w.index && !rec.completed;
-    var chip = done ? ['ok', 'Completed'] : liveHere ? [w.running ? 'run' : 'idle', w.running ? 'In progress' : 'Paused'] : ['idle', 'Pending'];
-
-    var rows = pf.rows || [];
-    var visible = rec.completed ? rows : rows.filter(function (r) { return w.rowVisible(pf, r); });
+    var pf = item.inst;
+    var chip = item.status === 'failed' ? ['bad', 'Failed'] : item.status === 'waiting' ? ['warn', 'Waiting for you']
+      : item.done ? ['ok', 'Completed'] : item.live ? [w.running ? 'run' : 'idle', w.running ? 'In progress' : 'Paused'] : ['idle', 'Pending'];
     var word = 0;
-    var rowHtml = visible.map(function (r, j) {
+    function rowsFor(inst) {
+      var rows = inst.rows || [];
+      var visible = rec.completed ? rows : rows.filter(function (r) { return w.rowVisible(inst, r); });
+      return visible.map(function (r, j) { return rowHtml(inst, r, j); }).join('');
+    }
+    if (item.count > 1) {
+      /* a cluster lists every member (the newest eight), each with its rows */
+      var members = item.idx.slice(-8).map(function (k) { return w.steps[k]; });
+      var body = members.map(function (m) {
+        return '<span class="orbit-member" data-k="omem:' + esc(m.uid) + '"><b>' + esc(m.label) + '</b>' + (m.stat ? ' · ' + esc(m.stat) : '') + '</span>' + rowsFor(m);
+      }).join('');
+      var closeC = '<button type="button" class="orbit-close" data-k="oclose" data-action="orbit-collapse"'
+        + tipAttrs(esc, w.cardId, 'oclose', 'Collapse to the summary', 'Pack this work activity into its compact strip')
+        + ' aria-label="Collapse to the compact summary">' + icon('close', 12) + '</button>';
+      return '<div class="orbit-panel-head">'
+        + '<span class="orbit-step-no">' + (item.earlier ? 'Earlier' : 'Subjects ' + (item.idx[0] + 1) + '–' + (item.idx[item.idx.length - 1] + 1)) + ' · ' + item.count + '</span>'
+        + '<span class="orbit-chip ' + chip[0] + '">' + chip[1] + '</span>'
+        + '<span class="wa-spacer"></span>' + closeC + '</div>'
+        + '<strong class="orbit-panel-title">' + esc(item.earlier ? 'Earlier in this run' : pf.verb + ' ×' + item.count) + '</strong>'
+        + '<p class="orbit-panel-detail">' + esc(item.earlier ? item.count + ' subjects folded to keep the ring legible.' : item.count + ' ' + pf.label.toLowerCase() + ' subjects in a row, grouped.') + '</p>'
+        + '<div class="orbit-rows pm-rows">' + body + '</div>';
+    }
+    var html = rowsFor(pf);
+    function rowHtml(inst, r, j) {
       var body;
       if (r.stream) {
         body = '<span class="wa-prose pm-stream">' + M.words(r.text, word) + '</span>';
@@ -270,10 +398,10 @@
         : r.url ? '<span class="wa-meta"><b class="wa-tag">' + esc(r.url) + '</b></span>'
         : r.tag ? '<span class="wa-meta"><b class="wa-tag">' + esc(r.tag) + '</b></span>' : '';
       var wrap = w.shellRowWrap;
-      if (wrap) return wrap(w.cardId, pf, r, j, body + meta, 'orow:' + esc(pf.uid) + ':' + j, 'wa-row', Math.min(j, 6));
-      return '<span class="wa-row pm-materialize" data-k="orow:' + esc(pf.uid) + ':' + j + '" style="--pm-stagger:' + Math.min(j, 6) + '">'
+      if (wrap) return wrap(w.cardId, inst, r, j, body + meta, 'orow:' + esc(inst.uid) + ':' + j, 'wa-row', Math.min(j, 6));
+      return '<span class="wa-row pm-materialize" data-k="orow:' + esc(inst.uid) + ':' + j + '" style="--pm-stagger:' + Math.min(j, 6) + '">'
         + body + meta + '</span>';
-    }).join('');
+    }
 
     /* Child agents — only when this subject actually has some. */
     var agentsHtml = '';
@@ -297,8 +425,9 @@
       }
     }
 
-    var jump = (pi !== w.index && !rec.completed)
-      ? '<button type="button" class="soft-button orbit-jump" data-k="ojump" data-action="inspect-work-step" data-value="' + pi + '">'
+    var inst0 = item.idx[0];
+    var jump = (inst0 !== w.index && !rec.completed && !item.live)
+      ? '<button type="button" class="soft-button orbit-jump" data-k="ojump" data-action="inspect-work-step" data-value="' + inst0 + '">'
       + icon('step', 12) + ' Move the run to this step</button>'
       : '';
 
@@ -308,14 +437,14 @@
       + ' aria-label="Collapse to the compact summary">' + icon('close', 12) + '</button>';
 
     return '<div class="orbit-panel-head">'
-      + '<span class="orbit-step-no">Subject ' + (pi + 1) + (rec.completed ? ' of ' + w.total : ' · ' + spawnedCount + ' so far') + '</span>'
+      + '<span class="orbit-step-no">Subject ' + (inst0 + 1) + (rec.completed ? ' of ' + w.total : ' · ' + spawnedCount + ' so far') + '</span>'
       + '<span class="orbit-chip ' + chip[0] + '">' + chip[1] + '</span>'
       + '<span class="wa-spacer"></span>'
       + close
       + '</div>'
       + '<strong class="orbit-panel-title">' + esc(pf.verb) + '</strong>'
       + '<p class="orbit-panel-detail">' + esc(pf.detail) + '</p>'
-      + '<div class="orbit-rows pm-rows">' + rowHtml + '</div>'
+      + '<div class="orbit-rows pm-rows">' + html + '</div>'
       + agentsHtml
       + jump;
   }
@@ -327,27 +456,27 @@
   function renderStrip(c, ui) {
     var esc = c.esc, icon = c.icon, w = c.ctx, M = w.M;
     var rec = w.rec || c.state.work;
-    var steps = w.steps;
-    var spawned = rec.completed ? steps.slice() : steps.filter(function (s) { return s.startAt <= w.clock + 1e-6; });
-    if (!spawned.length) spawned = steps.slice(0, 1);
-    var liveIdx = Math.min(w.index, spawned.length - 1);
+    var items = displayItems(w, rec);
+    ui.list = items.map(function (it) { return it.uid; });
+    var subjects = 0; items.forEach(function (it) { subjects += it.count; });
 
-    var discs = spawned.map(function (sx, i) {
-      var cur = !rec.completed && i === liveIdx;
-      var cls = 'pm-rail-item wa-disc orbit-strip-item ' + (cur ? 'current' : 'done');
-      var st = i < liveIdx ? 'completed' : cur ? 'in progress' : 'completed';
-      var statBit = sx.stat ? sx.label + ' · ' + sx.stat : sx.label;
-      return '<button type="button" class="' + cls + '" data-k="sd:' + esc(sx.uid) + '"'
+    var discs = items.map(function (it, i) {
+      var sx = it.inst, cur = it.live;
+      var cls = 'pm-rail-item wa-disc orbit-strip-item ' + (cur ? 'current' : 'done') + (it.cluster ? ' cluster' : '') + (it.status === 'failed' ? ' failed' : it.status === 'waiting' ? ' waiting' : '');
+      var st = it.status === 'failed' ? 'failed' : it.status === 'waiting' ? 'waiting for you' : cur ? 'in progress' : 'completed';
+      var label = itemLabel(it) + (it.count > 1 ? ' ×' + it.count : '');
+      var statBit = it.count > 1 ? label : (sx.stat ? sx.label + ' · ' + sx.stat : sx.label);
+      return '<button type="button" class="' + cls + '" data-k="sd:' + esc(it.uid) + '"'
         + ' data-step-kind="' + esc(sx.kind) + '"'
         + ' data-action="orbit-reopen" data-value="' + i + '"'
-        + tipAttrs(esc, w.cardId, 'sd-' + sx.uid, statBit, sx.verb + ' (' + st + ') — reopen this subject')
-        + ' aria-label="Reopen ' + esc(sx.label) + '">'
-        + icon(sx.icon, 11) + '</button>';
+        + tipAttrs(esc, w.cardId, 'sd-' + it.uid, statBit, (it.count > 1 ? it.count + ' subjects' : sx.verb) + ' (' + st + ') — reopen this subject')
+        + ' aria-label="Reopen ' + esc(label) + '">'
+        + icon(itemIcon(it), 11) + (it.count > 1 ? '<b class="orbit-node-count">' + it.count + '</b>' : '') + '</button>';
     }).join('');
 
     return '<div class="orbit-strip" data-k="strip">'
       + '<span class="pm-rail wa-track orbit-strip-rail" data-k="striprail">' + discs + '</span>'
-      + '<span class="wa-label"><b class="wa-verb" data-k="stripn">' + M.roll(spawned.length) + (spawned.length === 1 ? ' subject' : ' subjects') + '</b></span>'
+      + '<span class="wa-label"><b class="wa-verb" data-k="stripn">' + M.roll(subjects) + (subjects === 1 ? ' subject' : ' subjects') + '</b></span>'
       + '<button type="button" class="orbit-strip-chev" data-k="stripchev" data-action="orbit-reopen"'
       + tipAttrs(esc, w.cardId, 'stripchev', 'Expand this work activity', 'Reopen the stage for the current subject')
       + ' aria-label="Expand this work activity">' + icon('down', 12) + '</button>'
@@ -364,10 +493,46 @@
        subject there read as "Completed work Complete". Live cards (stage OR
        strip) keep the running caption. */
     if (rec.completed) return '';
+    var ns = narrState(c);
+    if (ns && !ns.leading) {
+      /* the narration line has been overtaken by a new subject: it lives in the
+         caption now. If it was on screen at the foot of the card a moment ago,
+         fly it up from there (measured now, before the patch moves it). */
+      var ui = uiFor(ctx.cardId);
+      if (ui.narrTucked !== ns.i) {
+        var from = document.querySelector('.working-card[data-card-ui="' + CSS.escape(ctx.cardId) + '"] .orbit-narration');
+        if (from && !reduced()) {
+          var fr = from.getBoundingClientRect();
+          var key = 'narr:' + ns.i, card = ctx.cardId;
+          requestAnimationFrame(function () { tuck(card, key, fr); });
+        }
+        ui.narrTucked = ns.i;
+      }
+      return '<span class="orbit-caption work-detail orbit-narr-cap" data-k="narr:' + ns.i + '"><i>' + c.esc(ns.text) + '</i></span>';
+    }
     var f = ctx.step;
     return '<span class="orbit-caption work-detail" data-k="cap:' + c.esc(f.uid || f.id) + '">'
       + '<b class="orbit-caption-label">' + c.esc(f.label) + '</b> · ' + c.esc(f.detail) + '</span>';
   });
+  /* The tuck: the caption starts where the line was written (translated and
+     scaled from the foot of the card) and settles into the head. */
+  function tuck(cardId, key, fr) {
+    var cap = document.querySelector('.working-card[data-card-ui="' + CSS.escape(cardId) + '"] [data-k="' + key + '"]');
+    if (!cap || !cap.animate) return;
+    var cr = cap.getBoundingClientRect();
+    var dx = fr.left - cr.left, dy = fr.top - cr.top;
+    var voice = (document.querySelector('.transcript') || {}).getAttribute ? document.querySelector('.transcript').getAttribute('data-voice') : 'basic';
+    var ease = voice === 'friendly' ? 'cubic-bezier(.34,1.4,.64,1)' : voice === 'retro' ? 'steps(5,end)' : 'cubic-bezier(.17,.84,.29,.99)';
+    /* a web animation runs on the document timeline, which a film already
+       slows; scaling it by PM56_CLOCK as well played it 25x slower on film */
+    var ms = 380;
+    /* the head's title column clips for its ellipsis, which hid the line for
+       most of its travel up from the foot; the clip lifts for the tuck only (a
+       web animation, so a patch mid-tuck cannot strip it) */
+    var par = cap.parentElement;
+    if (par && par.animate) par.animate([{ overflow: 'visible' }, { overflow: 'visible' }], { duration: ms });
+    cap.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(1.06)', opacity: 0.9, zIndex: 5 }, { transform: 'none', opacity: 1, zIndex: 5 }], { duration: ms, easing: ease });
+  }
 
   /* ---- helpers ------------------------------------------------------- */
   function cardBits(ctx, btn) {
@@ -416,7 +581,8 @@
   EXT.action('orbit-open-phase', function (ctx, btn) {
     var b = cardBits(ctx, btn); if (!b) return false;
     if (b.ui.anim != null) return true;           // mid-choreography: ignore
-    b.ui.pin = Number(btn.dataset.value);
+    var v = Number(btn.dataset.value);
+    b.ui.pin = v; b.ui.pinUid = (b.ui.list && b.ui.list[v]) || null;
     ctx.renderApp();
     return true;
   });
@@ -424,7 +590,7 @@
   EXT.action('orbit-toggle', function (ctx, btn) {
     var b = cardBits(ctx, btn); if (!b) return false;
     if (b.ui.anim != null) return true;
-    b.ui.pin = null;
+    b.ui.pin = null; b.ui.pinUid = null;
     ctx.renderApp();
     return true;
   });
@@ -442,7 +608,9 @@
     var b = cardBits(ctx, btn); if (!b) return false;
     if (b.ui.anim != null) return true;
     var v = btn.dataset.value;
-    beginExpand(b.uiId, b.ui, (v == null || v === '') ? null : Number(v));
+    var vi = (v == null || v === '') ? null : Number(v);
+    beginExpand(b.uiId, b.ui, vi);
+    b.ui.pinUid = vi == null ? null : ((b.ui.list && b.ui.list[vi]) || null);
     ctx.renderApp();
     return true;
   });
@@ -455,11 +623,29 @@
     if (card) {
       var id = card.dataset.cardUi;
       var ui = UI[id];
-      if (ui) { ui.pin = null; ui.compact = null; ui.anim = null; delete ui.pendingCompact; }
+      if (ui) { ui.pin = null; ui.pinUid = null; ui.compact = null; ui.anim = null; ui.narrTucked = null; delete ui.pendingCompact; }
       killTimers(id);
     }
     return false;
   });
+
+  /* Chat WOW M4: the turn's answer has started -- fold this card into its strip
+     through the ordinary collapse choreography, so the answer rises into the
+     room it frees. Called by turn-stream.js; the reader can reopen it. */
+  window.PM56_ORBIT = {
+    /* shared with Step Rail (variants-a.js W[8]) so both styles group, flag and
+       narrate a run the same way */
+    items: function (w, rec) { return displayItems(w, rec); },
+    narration: function (c) { return narrState(c); },
+    compact: function (cardId) {
+      var ui = uiFor(cardId);
+      if (ui.compact === true || ui.shown === 'strip') { ui.compact = true; return false; }
+      if (lastTake !== 1) { ui.compact = true; return false; }
+      beginCollapse(cardId, ui, true);
+      if (lastRender) lastRender();
+      return true;
+    }
+  };
 
   /* Take 1 renders its own child agents (ring satellites + panel rows), so it
      must not also get app.js's shared inline list appended underneath. */

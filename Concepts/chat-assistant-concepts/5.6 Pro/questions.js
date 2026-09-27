@@ -492,6 +492,11 @@
       var out = '<div class="qs-reel-out qs-reel-out-' + dir + '" aria-hidden="true">' + st.outgoingHtml + '</div>';
       st.outgoingHtml = null;
       st.outgoingH = null;
+      /* The outgoing reel lives for exactly one render. It used to be cleared by
+         whatever full render came next -- usually the half-second work tick --
+         but the tick now patches only the live cards (Chat WOW), so the reel asks
+         for its own clearing render once its 80ms exit has played. */
+      setTimeout(function () { if (!st.outgoingHtml && ctx.renderApp) ctx.renderApp(); }, 120);
       return '<div class="qs-reel-stage" data-k="qs-reel-stage">' + out + live + '</div>';
     }
     return live;

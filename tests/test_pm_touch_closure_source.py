@@ -417,8 +417,8 @@ class BoundedGapRepairInventoryTests(unittest.TestCase):
         self.assertEqual(sum(c.startswith("cmd.bsd.") for c in admitted), 9)
         self.assertEqual(sum(c.startswith("cmd.chat.context_lens.") for c in admitted), 7)
         self.assertNotIn("cmd.bsd.set", admitted)
-        self.assertEqual(len(rows), 666)
-        self.assertEqual(len(profiles), 134)
+        self.assertEqual(len(rows), 674)
+        self.assertEqual(len(profiles), 135)
         for command, (profile_id, owner, unit) in admitted.items():
             with self.subTest(command=command):
                 self.assertEqual(rows[command][1:5], [profile_id, "command", command, "partial"])
@@ -473,6 +473,72 @@ class BoundedGapRepairInventoryTests(unittest.TestCase):
             self.assertIsNone(validator.validate_repository_ref(profile[field]))
 
 
+class PacketCommandTouchCoverageTests(unittest.TestCase):
+    """The packet commands and runner producers must retain owner-to-touch joins."""
+
+    GIT_HANDLERS = {
+        "cmd.git.stage": "handlers::git::stage_files",
+        "cmd.git.unstage": "handlers::git::unstage_files",
+        "cmd.source_control.remote.update": "handlers::source_control::remote_update",
+        "cmd.source_control.stash.create": "handlers::source_control::stash_create",
+        "cmd.source_control.stash.apply": "handlers::source_control::stash_apply",
+        "cmd.source_control.branch.create": "handlers::source_control::branch_create",
+        "cmd.source_control.branch.delete": "handlers::source_control::branch_delete",
+    }
+
+    def test_git_adapter_touch_rows_match_owner_schema_and_production_wiring(self):
+        registry = json.loads((ROOT / "Plans/touch_closure.json").read_text())
+        schema = json.loads((ROOT / "Plans/git_adapter_command_contracts.schema.json").read_text())
+        wiring = json.loads((ROOT / "Plans/Wiring_Matrix.production.json").read_text())["entries"]
+        expected, failures = validator.expected_inventory()
+        self.assertFalse([failure for failure in failures if "Git" in failure], failures)
+        profile = next(item for item in registry["profiles"] if item["profile_id"] == "TCP-GIT-ADAPTER")
+        self.assertEqual((profile["owner_plan"], profile["plan_unit"]),
+                         ("Plans/Source_Control_System.md", "SCS-024"))
+        self.assertEqual(profile["payload_schema_ref"],
+                         "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request")
+        self.assertEqual(profile["result_schema_ref"],
+                         "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result")
+        self.assertIn("scripts/pm_git_adapter_commands.py", profile["test_refs"])
+        self.assertEqual(set(schema["$defs"]["git_adapter_command_id"]["enum"]), set(self.GIT_HANDLERS))
+        rows = {row[3]: row for row in registry["rows"]}
+        for command, handler in self.GIT_HANDLERS.items():
+            with self.subTest(command=command):
+                self.assertEqual(expected[command], ("TCP-GIT-ADAPTER", "command", "partial"))
+                self.assertEqual(rows[command][1:5],
+                                 ["TCP-GIT-ADAPTER", "command", command, "partial"])
+                self.assertIn("handler_unavailable", rows[command][5])
+                entry = wiring["catalog." + command.removeprefix("cmd.").replace(".", "_")]
+                self.assertEqual((entry["ui_command_id"], entry["handler_location"]),
+                                 (command, handler))
+                self.assertEqual(entry["request_schema_ref"], profile["payload_schema_ref"])
+                self.assertEqual(entry["result_schema_ref"], profile["result_schema_ref"])
+
+    def test_forge_review_touch_row_retains_runner_producer_evidence(self):
+        registry = json.loads((ROOT / "Plans/touch_closure.json").read_text())
+        schema = json.loads((ROOT / "Plans/forge_integration_contracts.schema.json").read_text())
+        fixtures = json.loads((ROOT / "Plans/forge_integration_contract_fixtures.json").read_text())
+        wiring = json.loads((ROOT / "Plans/Wiring_Matrix.production.json").read_text())["entries"]
+        profile = next(item for item in registry["profiles"] if item["profile_id"] == "TCP-FORGE")
+        row = next(row for row in registry["rows"] if row[3] == "cmd.forge.review.edit")
+        self.assertEqual(row[1:5], ["TCP-FORGE", "command", "cmd.forge.review.edit", "partial"])
+        self.assertIn("Plans/Forge_Integrations.md#FGI-022", profile["requirement_refs"])
+        self.assertIn("scripts/pm_forge_command_followup.py", profile["test_refs"])
+        self.assertIn("runner list/preview read producers", profile["availability_rule"])
+        self.assertIn("runner.list_projection", (ROOT / "Plans/Forge_Integrations.md").read_text())
+        for definition in ("runner_list_request", "runner_list_projection",
+                           "runner_registration_preview_request", "runner_registration_preview_record",
+                           "runner_registration_preview_result"):
+            self.assertIn(definition, schema["$defs"])
+        self.assertEqual({case["kind"] for case in fixtures["packet_contract_bundles"]},
+                         {"runner_list", "preview_apply"})
+        entry = wiring["catalog.forge_review_edit"]
+        self.assertEqual((entry["ui_command_id"], entry["handler_location"]),
+                         ("cmd.forge.review.edit", "handlers::forge::review_edit"))
+        forge_checker = load_module("forge_command_followup", ROOT / "scripts/pm_forge_command_followup.py")
+        self.assertEqual(forge_checker.check_all(), [])
+
+
 class ForgeReviewAliasConsumerTests(unittest.TestCase):
     """Static DL-044 consumer checks, not executed payload normalization proof."""
 
@@ -504,7 +570,7 @@ class ForgeReviewAliasConsumerTests(unittest.TestCase):
         self.assertEqual(self.row(self.registry)[:5],
                          ["TOUCH-GHPR-001", "TCP-GITHUB-PR", "command_alias", self.ALIAS, "partial"])
         self.assertEqual(sum(row[3] == self.ALIAS for row in self.registry["rows"]), 1)
-        self.assertEqual((len(self.registry["rows"]), len(self.registry["profiles"])), (666, 134))
+        self.assertEqual((len(self.registry["rows"]), len(self.registry["profiles"])), (674, 135))
         binding = self.registry["alias_bindings"][self.ALIAS]
         for field in ("exact_target", "availability_source", "handler_dispatch_token"):
             self.assertEqual(binding[field], self.TARGET)
@@ -811,7 +877,7 @@ class CommandsShortcutsCensusTests(unittest.TestCase):
         self.assertEqual(sum(row[1] == "TCP-CMDSC" for row in registry["rows"]), 16)
         self.assertEqual((len(registry["rows"]), len(registry["profiles"]),
                           len(registry["excluded_tokens"]), len(registry["alias_bindings"])),
-                         (666, 134, 58, 65))
+                         (674, 135, 58, 65))
 
     def test_unknown_commands_ids_are_rejected(self) -> None:
         for unknown in self.UNKNOWN:
@@ -836,7 +902,7 @@ class CommandsShortcutsCensusTests(unittest.TestCase):
         production_actions = {entry["ui_command_id"] for entry in matrix["entries"].values()}
         registry = json.loads((ROOT / "Plans/touch_closure.json").read_text(encoding="utf-8"))
         kinds = {row[3]: row[2] for row in registry["rows"]}
-        self.assertEqual(len(matrix["entries"]), 1149)
+        self.assertEqual(len(matrix["entries"]), 1154)
         for action in self.ALL:
             with self.subTest(action=action):
                 self.assertEqual(kinds[action], "ui_action")

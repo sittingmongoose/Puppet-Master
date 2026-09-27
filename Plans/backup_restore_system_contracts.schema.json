@@ -26,6 +26,8 @@
     {"$ref": "#/$defs/restore_preview"},
     {"$ref": "#/$defs/backup_receipt"},
     {"$ref": "#/$defs/backup_verification_receipt"},
+    {"$ref": "#/$defs/backup_verification_plan"},
+    {"$ref": "#/$defs/backup_verification_admission"},
     {"$ref": "#/$defs/restore_preview_receipt"},
     {"$ref": "#/$defs/restore_receipt"},
     {"$ref": "#/$defs/recovery_point_receipt"},
@@ -57,6 +59,9 @@
     "backup_type": {"enum": ["project_backup", "full_server_backup"]},
     "backup_state": {"enum": ["planned", "waiting_for_source", "waiting_for_unlock", "acquiring_capture_barrier", "capturing", "staged", "encrypting_uploading", "committing_remote_snapshot", "verifying_structure", "verifying_data", "completed", "partial", "failed", "cancelled"]},
     "integrity_verification_level": {"enum": ["not_run", "structure_passed", "sampled_data_passed", "full_data_read_passed", "failed"]},
+    "verification_depth": {"enum": ["structural", "sampled_data", "full_data"]},
+    "verification_read_scope": {"enum": ["manifest_metadata_only", "sampled_object_bytes", "full_object_bytes"]},
+    "verification_cost_class": {"enum": ["metadata_only", "sampled_read", "full_read", "cold_retrieval_maybe"]},
     "restore_mode": {"enum": ["as_new", "in_place", "selective", "server_full"]},
     "restore_state": {"enum": ["selecting_backup", "reading_manifest", "compatibility_check", "previewing", "waiting_for_approval", "pre_restore_backup", "staging", "verifying_staged_data", "resolving_identity", "resolving_credentials", "resolving_source_locations", "quiescing", "activating", "rebuilding_derived_state", "post_restore_verifying", "complete", "rollback_available", "rolling_back", "blocked"]},
     "readiness_classification": {"enum": ["Ready", "Download/Verify Required", "External Reattachment Required", "Sign-in Required"]},
@@ -1632,16 +1637,79 @@
         {"if": {"properties": {"status": {"const": "failed"}}, "required": ["status"]}, "then": {"properties": {"failure_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
       ]
     },
+    "backup_verification_plan": {
+      "title": "BackupVerificationPlan",
+      "description": "Owner-resolved verification plan selectable by cmd.backup.verify instead of a direct verification_depth. The owner resolves the referenced plan revision to exactly one depth and read scope at dispatch; revision and currentness mismatches are stale failures, never silent substitution.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "verification_plan_id", "plan_revision", "resolves_depth", "read_scope", "cost_class", "plan_currentness_sha256", "created_at_utc", "updated_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.backup_verification_plan.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "verification_plan_id": {"$ref": "#/$defs/stable_id"},
+        "plan_revision": {"type": "integer", "minimum": 0},
+        "resolves_depth": {"$ref": "#/$defs/verification_depth"},
+        "read_scope": {"$ref": "#/$defs/verification_read_scope"},
+        "cost_class": {"$ref": "#/$defs/verification_cost_class"},
+        "plan_currentness_sha256": {"$ref": "#/$defs/sha256"},
+        "created_at_utc": {"$ref": "#/$defs/timestamp"},
+        "updated_at_utc": {"$ref": "#/$defs/timestamp"}
+      },
+      "allOf": [
+        {"if": {"properties": {"resolves_depth": {"const": "structural"}}, "required": ["resolves_depth"]}, "then": {"properties": {"read_scope": {"const": "manifest_metadata_only"}}}},
+        {"if": {"properties": {"resolves_depth": {"const": "sampled_data"}}, "required": ["resolves_depth"]}, "then": {"properties": {"read_scope": {"const": "sampled_object_bytes"}}}},
+        {"if": {"properties": {"resolves_depth": {"const": "full_data"}}, "required": ["resolves_depth"]}, "then": {"properties": {"read_scope": {"const": "full_object_bytes"}}}}
+      ]
+    },
+    "backup_verification_admission": {
+      "title": "BackupVerificationAdmission",
+      "description": "Owner-issued bounded admission binding one verify target, depth, read scope, cost class, optional plan binding, target currentness, and producer authority. A cmd.backup.verify request resolves this record by verification_admission_ref and revalidates every binding before effect; effects at or after expires_at_utc are rejected.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "verification_admission_id", "backup_id", "snapshot_id", "manifest_id", "admitted_depth", "admitted_read_scope", "admitted_cost_class", "admitted_plan_ref", "admitted_plan_revision", "target_currentness_ref", "target_currentness_sha256", "producer_ref", "permission_snapshot_ref", "issued_at_utc", "expires_at_utc"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.backup_verification_admission.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "verification_admission_id": {"$ref": "#/$defs/stable_id"},
+        "backup_id": {"$ref": "#/$defs/stable_id"},
+        "snapshot_id": {"$ref": "#/$defs/stable_id"},
+        "manifest_id": {"$ref": "#/$defs/stable_id"},
+        "admitted_depth": {"$ref": "#/$defs/verification_depth"},
+        "admitted_read_scope": {"$ref": "#/$defs/verification_read_scope"},
+        "admitted_cost_class": {"$ref": "#/$defs/verification_cost_class"},
+        "admitted_plan_ref": {"$ref": "#/$defs/nullable_stable_id"},
+        "admitted_plan_revision": {"type": ["integer", "null"], "minimum": 0},
+        "target_currentness_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "target_currentness_sha256": {"$ref": "#/$defs/sha256"},
+        "producer_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "permission_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "issued_at_utc": {"$ref": "#/$defs/timestamp"},
+        "expires_at_utc": {"$ref": "#/$defs/timestamp"}
+      },
+      "allOf": [
+        {"if": {"properties": {"admitted_depth": {"const": "structural"}}, "required": ["admitted_depth"]}, "then": {"properties": {"admitted_read_scope": {"const": "manifest_metadata_only"}}}},
+        {"if": {"properties": {"admitted_depth": {"const": "sampled_data"}}, "required": ["admitted_depth"]}, "then": {"properties": {"admitted_read_scope": {"const": "sampled_object_bytes"}}}},
+        {"if": {"properties": {"admitted_depth": {"const": "full_data"}}, "required": ["admitted_depth"]}, "then": {"properties": {"admitted_read_scope": {"const": "full_object_bytes"}}}},
+        {"if": {"properties": {"admitted_plan_ref": {"type": "null"}}}, "then": {"properties": {"admitted_plan_revision": {"type": "null"}}}},
+        {"if": {"properties": {"admitted_plan_ref": {"$ref": "#/$defs/stable_id"}}}, "then": {"properties": {"admitted_plan_revision": {"type": "integer", "minimum": 0}}}}
+      ]
+    },
     "backup_verification_receipt": {
       "title": "BackupVerificationReceipt",
       "allOf": [
         {"$ref": "#/$defs/receipt_common"},
-        {"type": "object", "required": ["schema_id", "backup_id", "manifest_id", "backup_destination_id", "verification_run_id", "verification_scope", "status", "checks", "test_restore_receipt_ref", "verified_object_count", "verified_byte_count", "quarantine_ref"], "properties": {
+        {"type": "object", "required": ["schema_id", "backup_id", "manifest_id", "snapshot_id", "backup_destination_id", "verification_run_id", "requested_verification_depth", "resolved_verification_plan_ref", "resolved_verification_plan_revision", "approved_verification_admission_ref", "approved_cost_class", "verification_scope", "status", "checks", "test_restore_receipt_ref", "verified_object_count", "verified_byte_count", "quarantine_ref"], "properties": {
           "schema_id": {"const": "pm.backup_restore_system.backup_verification_receipt.v1"},
           "backup_id": {"$ref": "#/$defs/stable_id"},
           "manifest_id": {"$ref": "#/$defs/stable_id"},
+          "snapshot_id": {"$ref": "#/$defs/stable_id"},
           "backup_destination_id": {"$ref": "#/$defs/stable_id"},
           "verification_run_id": {"$ref": "#/$defs/stable_id"},
+          "requested_verification_depth": {"$ref": "#/$defs/verification_depth"},
+          "resolved_verification_plan_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+          "resolved_verification_plan_revision": {"type": ["integer", "null"], "minimum": 0},
+          "approved_verification_admission_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+          "approved_cost_class": {"oneOf": [{"$ref": "#/$defs/verification_cost_class"}, {"type": "null"}]},
           "verification_scope": {"enum": ["structural", "sampled_data_read", "full_data_read", "isolated_restore_drill"]},
           "status": {"enum": ["passed", "failed", "not_run"]},
           "checks": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/verification_check"}},
@@ -1652,7 +1720,17 @@
         }},
         {"if": {"properties": {"status": {"const": "passed"}}, "required": ["status"]}, "then": {"properties": {"failure_refs": {"maxItems": 0}, "quarantine_ref": {"type": "null"}}}},
         {"if": {"properties": {"status": {"const": "failed"}}, "required": ["status"]}, "then": {"properties": {"failure_refs": {"minItems": 1}, "quarantine_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
-        {"if": {"properties": {"verification_scope": {"const": "isolated_restore_drill"}}, "required": ["verification_scope"]}, "then": {"properties": {"test_restore_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+        {"if": {"properties": {"verification_scope": {"const": "isolated_restore_drill"}}, "required": ["verification_scope"]}, "then": {"properties": {"test_restore_receipt_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"status": {"const": "passed"}, "verification_scope": {"const": "structural"}}, "required": ["status", "verification_scope"]}, "then": {"properties": {"requested_verification_depth": {"const": "structural"}}}},
+        {"if": {"properties": {"status": {"const": "passed"}, "verification_scope": {"const": "sampled_data_read"}}, "required": ["status", "verification_scope"]}, "then": {"properties": {"requested_verification_depth": {"const": "sampled_data"}}}},
+        {"if": {"properties": {"status": {"const": "passed"}, "verification_scope": {"const": "full_data_read"}}, "required": ["status", "verification_scope"]}, "then": {"properties": {"requested_verification_depth": {"const": "full_data"}}}},
+        {"if": {"properties": {"verification_scope": {"const": "isolated_restore_drill"}}, "required": ["verification_scope"]}, "then": {"properties": {"command_id": {"const": "cmd.backup.test_restore"}}}},
+        {"if": {"properties": {"resolved_verification_plan_ref": {"type": "null"}}}, "then": {"properties": {"resolved_verification_plan_revision": {"type": "null"}}}},
+        {"if": {"properties": {"resolved_verification_plan_ref": {"$ref": "#/$defs/non_secret_ref"}}}, "then": {"properties": {"resolved_verification_plan_revision": {"type": "integer", "minimum": 0}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.verify"}}, "required": ["command_id"]}, "then": {"properties": {"approved_verification_admission_ref": {"$ref": "#/$defs/non_secret_ref"}, "approved_cost_class": {"$ref": "#/$defs/verification_cost_class"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.test_restore"}}, "required": ["command_id"]}, "then": {"properties": {"approved_verification_admission_ref": {"type": "null"}, "approved_cost_class": {"type": "null"}}}},
+        {"if": {"properties": {"approved_verification_admission_ref": {"type": "null"}}}, "then": {"properties": {"approved_cost_class": {"type": "null"}}}},
+        {"if": {"properties": {"approved_verification_admission_ref": {"$ref": "#/$defs/non_secret_ref"}}}, "then": {"properties": {"approved_cost_class": {"$ref": "#/$defs/verification_cost_class"}}}}
       ],
       "unevaluatedProperties": false
     },
@@ -2473,7 +2551,7 @@
     "backup_restore_command_request": {
       "title": "BackupRestoreCommandRequest",
       "$anchor": "BackupRestoreCommandRequest",
-      "description": "One owner-DRY request envelope for the exact 41 canonical backup/restore commands. Conditional branches add action-specific repository, destination, snapshot, RecoverySet, currentness, preview, protected-channel, lease, confirmation, and target requirements.",
+      "description": "One owner-DRY request envelope for the exact 41 canonical backup/restore commands. Conditional branches add action-specific repository, destination, snapshot, RecoverySet, currentness, preview, protected-channel, lease, confirmation, and target requirements. cmd.backup.verify additionally requires an immutable snapshot binding, a typed verification admission binding, and exactly one depth selection: a direct verification_depth or an owner-resolved verification plan selector.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -2643,6 +2721,22 @@
           "$ref": "#/$defs/stable_id"
         },
         "capture_set_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "verification_depth": {
+          "$ref": "#/$defs/verification_depth"
+        },
+        "verification_plan_ref": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "verification_plan_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "verification_plan_currentness_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "verification_admission_ref": {
           "$ref": "#/$defs/stable_id"
         },
         "recovery_set_id": {
@@ -2846,8 +2940,37 @@
           "if": {
             "properties": {
               "command_id": {
+                "const": "cmd.backup.verify"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "backup_id",
+              "snapshot_id",
+              "verification_admission_ref"
+            ],
+            "oneOf": [
+              {
+                "required": [
+                  "verification_depth"
+                ]
+              },
+              {
+                "required": [
+                  "verification_plan_ref",
+                  "verification_plan_revision",
+                  "verification_plan_currentness_sha256"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
                 "enum": [
-                  "cmd.backup.verify",
                   "cmd.backup.test_restore",
                   "cmd.backup.browse",
                   "cmd.backup.open_details"
@@ -3361,7 +3484,7 @@
         "schema_version": {"const": "1.0.0"},
         "command_id": {"$ref": "#/$defs/backup_restore_command_id"},
         "command_instance_id": {"$ref": "#/$defs/stable_id"},
-        "error_code": {"enum": ["invalid_request", "permission_denied", "human_step_up_required", "protected_channel_required", "stale_currentness", "stale_preview", "confirmation_required", "recovery_point_required", "destination_unavailable", "repository_locked", "recovery_set_unavailable", "retention_preview_required", "maintenance_lease_required", "archive_consent_required", "archive_external_restore_required", "backup_not_found", "snapshot_not_found", "restore_not_found", "manifest_unverified", "incompatible_backup", "operation_conflict", "corruption_detected", "quarantine_required", "command_not_registered", "native_handler_absent", "production_wiring_absent", "handler_unavailable", "owner_unavailable", "cancelled"]},
+        "error_code": {"enum": ["invalid_request", "permission_denied", "human_step_up_required", "protected_channel_required", "stale_currentness", "stale_preview", "confirmation_required", "recovery_point_required", "destination_unavailable", "repository_locked", "recovery_set_unavailable", "retention_preview_required", "maintenance_lease_required", "archive_consent_required", "archive_external_restore_required", "backup_not_found", "snapshot_not_found", "restore_not_found", "manifest_unverified", "incompatible_backup", "operation_conflict", "corruption_detected", "quarantine_required", "verification_plan_stale", "verification_target_substituted", "command_not_registered", "native_handler_absent", "production_wiring_absent", "handler_unavailable", "owner_unavailable", "cancelled"]},
         "message_code": {"$ref": "#/$defs/non_empty_string"},
         "retriable": {"type": "boolean"},
         "currentness_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},

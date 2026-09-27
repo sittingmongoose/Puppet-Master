@@ -1,0 +1,1545 @@
+{
+  "schema_id": "pm.git_adapter.contract_fixtures.v1",
+  "owner_schema": "Plans/git_adapter_command_contracts.schema.json",
+  "owner_unit": "SCS-024",
+  "valid": [
+    {
+      "name": "req_stage_whole_file_untracked_and_binary",
+      "definition": "git_command_request",
+      "value": {
+        "schema_id": "pm.git_adapter.command_request.v1",
+        "command_instance_id": "cmd-inst:git:stage:001",
+        "idempotency_key": "idem:git:stage:001",
+        "scope": {
+          "command_id": "cmd.git.stage",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 12,
+          "currentness_ref": "currentness:git:alpha:12",
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "writer_lease_ref": "lease:writer:7",
+          "permission_snapshot_ref": "perm:stage:3",
+          "file_safe_decision_ref": "filesafe:stage:3",
+          "paths": [
+            "src/notes.rs",
+            "assets/logo.bin",
+            "docs/new_page.md"
+          ],
+          "status_selection_ref": "selection:status:44",
+          "whole_file_only": true,
+          "include_untracked": true,
+          "untracked_paths_declared": [
+            "docs/new_page.md"
+          ]
+        },
+        "permission_snapshot_ref": "perm:stage:3",
+        "file_safe_decision_ref": "filesafe:stage:3",
+        "requested_at_utc": "2026-09-27T00:00:00Z"
+      }
+    },
+    {
+      "name": "req_unstage_whole_file",
+      "definition": "git_command_request",
+      "value": {
+        "schema_id": "pm.git_adapter.command_request.v1",
+        "command_instance_id": "cmd-inst:git:unstage:001",
+        "idempotency_key": "idem:git:unstage:001",
+        "scope": {
+          "command_id": "cmd.git.unstage",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 9,
+            "config_generation": 3
+          },
+          "currentness_generation": 13,
+          "currentness_ref": "currentness:git:alpha:13",
+          "currentness_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "writer_lease_ref": "lease:writer:8",
+          "permission_snapshot_ref": "perm:unstage:3",
+          "file_safe_decision_ref": "filesafe:unstage:3",
+          "paths": [
+            "src/notes.rs"
+          ],
+          "status_selection_ref": "selection:status:45",
+          "whole_file_only": true
+        },
+        "permission_snapshot_ref": "perm:unstage:3",
+        "file_safe_decision_ref": "filesafe:unstage:3",
+        "requested_at_utc": "2026-09-27T00:00:00Z"
+      }
+    },
+    {
+      "name": "req_remote_update_local_config",
+      "definition": "git_command_request",
+      "value": {
+        "schema_id": "pm.git_adapter.command_request.v1",
+        "command_instance_id": "cmd-inst:sc:remote-update:001",
+        "idempotency_key": "idem:sc:remote-update:001",
+        "scope": {
+          "command_id": "cmd.source_control.remote.update",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 12,
+          "currentness_ref": "currentness:git:alpha:12",
+          "currentness_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "writer_lease_ref": "lease:writer:9",
+          "permission_snapshot_ref": "perm:remote-update:3",
+          "file_safe_decision_ref": "filesafe:remote-update:3",
+          "remote_id": "remote:origin",
+          "fetch_url": "https://forge.example.com/alpha/main.git",
+          "push_urls": [
+            "ssh://forge.example.com:2222/alpha/main.git"
+          ],
+          "expected_config_generation": 3,
+          "local_config_only": true
+        },
+        "permission_snapshot_ref": "perm:remote-update:3",
+        "file_safe_decision_ref": "filesafe:remote-update:3",
+        "requested_at_utc": "2026-09-27T00:00:00Z"
+      }
+    },
+    {
+      "name": "req_stash_create_with_untracked",
+      "definition": "git_command_request",
+      "value": {
+        "schema_id": "pm.git_adapter.command_request.v1",
+        "command_instance_id": "cmd-inst:sc:stash-create:001",
+        "idempotency_key": "idem:sc:stash-create:001",
+        "scope": {
+          "command_id": "cmd.source_control.stash.create",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 12,
+          "currentness_ref": "currentness:git:alpha:12",
+          "currentness_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "writer_lease_ref": "lease:writer:10",
+          "permission_snapshot_ref": "perm:stash-create:3",
+          "file_safe_decision_ref": "filesafe:stash-create:3",
+          "include_untracked": true,
+          "message": "WIP: notes panel before branch switch"
+        },
+        "permission_snapshot_ref": "perm:stash-create:3",
+        "file_safe_decision_ref": "filesafe:stash-create:3",
+        "requested_at_utc": "2026-09-27T00:00:00Z"
+      }
+    },
+    {
+      "name": "req_stash_apply_with_preview",
+      "definition": "git_command_request",
+      "value": {
+        "schema_id": "pm.git_adapter.command_request.v1",
+        "command_instance_id": "cmd-inst:sc:stash-apply:001",
+        "idempotency_key": "idem:sc:stash-apply:001",
+        "scope": {
+          "command_id": "cmd.source_control.stash.apply",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 14,
+          "currentness_ref": "currentness:git:alpha:14",
+          "currentness_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "writer_lease_ref": "lease:writer:11",
+          "permission_snapshot_ref": "perm:stash-apply:3",
+          "file_safe_decision_ref": "filesafe:stash-apply:3",
+          "stash_id": "stash@{0}",
+          "preview_ref": "preview:stash-apply:2"
+        },
+        "permission_snapshot_ref": "perm:stash-apply:3",
+        "file_safe_decision_ref": "filesafe:stash-apply:3",
+        "requested_at_utc": "2026-09-27T00:00:00Z"
+      }
+    },
+    {
+      "name": "req_branch_create_from_base",
+      "definition": "git_command_request",
+      "value": {
+        "schema_id": "pm.git_adapter.command_request.v1",
+        "command_instance_id": "cmd-inst:sc:branch-create:001",
+        "idempotency_key": "idem:sc:branch-create:001",
+        "scope": {
+          "command_id": "cmd.source_control.branch.create",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 12,
+          "currentness_ref": "currentness:git:alpha:12",
+          "currentness_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "writer_lease_ref": "lease:writer:12",
+          "permission_snapshot_ref": "perm:branch-create:3",
+          "file_safe_decision_ref": "filesafe:branch-create:3",
+          "branch": "feature/notes-panel",
+          "base_oid": "1111111111111111111111111111111111111111"
+        },
+        "permission_snapshot_ref": "perm:branch-create:3",
+        "file_safe_decision_ref": "filesafe:branch-create:3",
+        "requested_at_utc": "2026-09-27T00:00:00Z"
+      }
+    },
+    {
+      "name": "req_branch_delete_with_preview_and_confirmation",
+      "definition": "git_command_request",
+      "value": {
+        "schema_id": "pm.git_adapter.command_request.v1",
+        "command_instance_id": "cmd-inst:sc:branch-delete:001",
+        "idempotency_key": "idem:sc:branch-delete:001",
+        "scope": {
+          "command_id": "cmd.source_control.branch.delete",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 15,
+          "currentness_ref": "currentness:git:alpha:15",
+          "currentness_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+          "writer_lease_ref": "lease:writer:13",
+          "permission_snapshot_ref": "perm:branch-delete:3",
+          "file_safe_decision_ref": "filesafe:branch-delete:3",
+          "branch": "feature/stale-experiment",
+          "expected_branch_head": "2222222222222222222222222222222222222222",
+          "preview_ref": "preview:branch-delete:5",
+          "dangerous_confirmation": true,
+          "irreversibility_disclosed": true
+        },
+        "permission_snapshot_ref": "perm:branch-delete:3",
+        "file_safe_decision_ref": "filesafe:branch-delete:3",
+        "requested_at_utc": "2026-09-27T00:00:00Z"
+      }
+    },
+    {
+      "name": "result_stage_succeeded",
+      "definition": "git_command_result",
+      "value": {
+        "schema_id": "pm.git_adapter.command_result.v1",
+        "command_instance_id": "cmd-inst:git:stage:001",
+        "scope": {
+          "command_id": "cmd.git.stage",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 12,
+          "currentness_ref": "currentness:git:alpha:12",
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "writer_lease_ref": "lease:writer:7",
+          "permission_snapshot_ref": "perm:stage:3",
+          "file_safe_decision_ref": "filesafe:stage:3",
+          "paths": [
+            "src/notes.rs",
+            "assets/logo.bin",
+            "docs/new_page.md"
+          ],
+          "status_selection_ref": "selection:status:44",
+          "whole_file_only": true,
+          "include_untracked": true,
+          "untracked_paths_declared": [
+            "docs/new_page.md"
+          ]
+        },
+        "outcome": "succeeded",
+        "effect_state": "effects_applied",
+        "result_refs": [
+          "stage-outcome:alpha:1"
+        ],
+        "operation_receipt_ref": "receipt:git:stage:11",
+        "completed_at_utc": "2026-09-27T00:01:00Z"
+      }
+    },
+    {
+      "name": "result_branch_delete_accepted",
+      "definition": "git_command_result",
+      "value": {
+        "schema_id": "pm.git_adapter.command_result.v1",
+        "command_instance_id": "cmd-inst:sc:branch-delete:001",
+        "scope": {
+          "command_id": "cmd.source_control.branch.delete",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 15,
+          "currentness_ref": "currentness:git:alpha:15",
+          "currentness_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+          "writer_lease_ref": "lease:writer:13",
+          "permission_snapshot_ref": "perm:branch-delete:3",
+          "file_safe_decision_ref": "filesafe:branch-delete:3",
+          "branch": "feature/stale-experiment",
+          "expected_branch_head": "2222222222222222222222222222222222222222",
+          "preview_ref": "preview:branch-delete:5",
+          "dangerous_confirmation": true,
+          "irreversibility_disclosed": true
+        },
+        "outcome": "accepted",
+        "effect_state": "no_effect",
+        "result_refs": [],
+        "observable_work_id": "work:branch-delete:9",
+        "completed_at_utc": "2026-09-27T00:01:00Z"
+      }
+    },
+    {
+      "name": "result_stash_apply_effect_unknown",
+      "definition": "git_command_result",
+      "value": {
+        "schema_id": "pm.git_adapter.command_result.v1",
+        "command_instance_id": "cmd-inst:sc:stash-apply:001",
+        "scope": {
+          "command_id": "cmd.source_control.stash.apply",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 14,
+          "currentness_ref": "currentness:git:alpha:14",
+          "currentness_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "writer_lease_ref": "lease:writer:11",
+          "permission_snapshot_ref": "perm:stash-apply:3",
+          "file_safe_decision_ref": "filesafe:stash-apply:3",
+          "stash_id": "stash@{0}",
+          "preview_ref": "preview:stash-apply:2"
+        },
+        "outcome": "effect_unknown",
+        "effect_state": "effect_unknown",
+        "result_refs": [
+          "stash-apply-attempt:alpha:1"
+        ],
+        "operation_receipt_ref": "receipt:git:stash-apply:12",
+        "completed_at_utc": "2026-09-27T00:02:00Z"
+      }
+    },
+    {
+      "name": "result_remote_update_blocked_stale_config",
+      "definition": "git_command_result",
+      "value": {
+        "schema_id": "pm.git_adapter.command_result.v1",
+        "command_instance_id": "cmd-inst:sc:remote-update:001",
+        "scope": {
+          "command_id": "cmd.source_control.remote.update",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 12,
+          "currentness_ref": "currentness:git:alpha:12",
+          "currentness_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "writer_lease_ref": "lease:writer:9",
+          "permission_snapshot_ref": "perm:remote-update:3",
+          "file_safe_decision_ref": "filesafe:remote-update:3",
+          "remote_id": "remote:origin",
+          "fetch_url": "https://forge.example.com/alpha/main.git",
+          "push_urls": [
+            "ssh://forge.example.com:2222/alpha/main.git"
+          ],
+          "expected_config_generation": 3,
+          "local_config_only": true
+        },
+        "outcome": "blocked",
+        "effect_state": "no_effect",
+        "result_refs": [
+          "remote-update-blocked:alpha:1"
+        ],
+        "operation_receipt_ref": "receipt:git:remote-update:13",
+        "completed_at_utc": "2026-09-27T00:02:00Z"
+      }
+    },
+    {
+      "name": "receipt_stage_index_advanced",
+      "definition": "git_command_receipt",
+      "value": {
+        "schema_id": "pm.git_adapter.command_receipt.v1",
+        "command_instance_id": "cmd-inst:git:stage:001",
+        "scope_command_id": "cmd.git.stage",
+        "outcome": "succeeded",
+        "effect_state": "effects_applied",
+        "before_head_oid": "1111111111111111111111111111111111111111",
+        "after_head_oid": "1111111111111111111111111111111111111111",
+        "before_index_generation": 8,
+        "after_index_generation": 9,
+        "before_config_generation": 3,
+        "after_config_generation": 3,
+        "effect_summary": {
+          "affected_paths": [
+            "src/notes.rs",
+            "assets/logo.bin",
+            "docs/new_page.md"
+          ]
+        },
+        "reconciled": false,
+        "completed_at_utc": "2026-09-27T00:01:00Z"
+      }
+    },
+    {
+      "name": "receipt_branch_delete_truthful_tip",
+      "definition": "git_command_receipt",
+      "value": {
+        "schema_id": "pm.git_adapter.command_receipt.v1",
+        "command_instance_id": "cmd-inst:sc:branch-delete:001",
+        "scope_command_id": "cmd.source_control.branch.delete",
+        "outcome": "succeeded",
+        "effect_state": "effects_applied",
+        "before_head_oid": "1111111111111111111111111111111111111111",
+        "after_head_oid": "1111111111111111111111111111111111111111",
+        "before_index_generation": 8,
+        "after_index_generation": 8,
+        "before_config_generation": 3,
+        "after_config_generation": 3,
+        "effect_summary": {
+          "deleted_branch": "feature/stale-experiment",
+          "deleted_branch_tip_oid": "2222222222222222222222222222222222222222"
+        },
+        "reconciled": false,
+        "completed_at_utc": "2026-09-27T00:03:00Z"
+      }
+    },
+    {
+      "name": "receipt_stash_create_names_stash",
+      "definition": "git_command_receipt",
+      "value": {
+        "schema_id": "pm.git_adapter.command_receipt.v1",
+        "command_instance_id": "cmd-inst:sc:stash-create:001",
+        "scope_command_id": "cmd.source_control.stash.create",
+        "outcome": "succeeded",
+        "effect_state": "effects_applied",
+        "before_head_oid": "1111111111111111111111111111111111111111",
+        "after_head_oid": "1111111111111111111111111111111111111111",
+        "before_index_generation": 8,
+        "after_index_generation": 8,
+        "before_config_generation": 3,
+        "after_config_generation": 3,
+        "effect_summary": {
+          "created_stash_ref": "stash-entry:alpha:7"
+        },
+        "reconciled": false,
+        "completed_at_utc": "2026-09-27T00:03:00Z"
+      }
+    },
+    {
+      "name": "receipt_remote_update_config_advanced",
+      "definition": "git_command_receipt",
+      "value": {
+        "schema_id": "pm.git_adapter.command_receipt.v1",
+        "command_instance_id": "cmd-inst:sc:remote-update:002",
+        "scope_command_id": "cmd.source_control.remote.update",
+        "outcome": "succeeded",
+        "effect_state": "effects_applied",
+        "before_head_oid": "1111111111111111111111111111111111111111",
+        "after_head_oid": "1111111111111111111111111111111111111111",
+        "before_index_generation": 8,
+        "after_index_generation": 8,
+        "before_config_generation": 3,
+        "after_config_generation": 4,
+        "effect_summary": {
+          "updated_remote_id": "remote:origin"
+        },
+        "reconciled": false,
+        "completed_at_utc": "2026-09-27T00:04:00Z"
+      }
+    },
+    {
+      "name": "availability_stage_ready",
+      "definition": "git_command_availability",
+      "value": {
+        "schema_id": "pm.git_adapter.command_availability.v1",
+        "scope": {
+          "command_id": "cmd.git.stage",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 12,
+          "currentness_ref": "currentness:git:alpha:12",
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "writer_lease_ref": "lease:writer:7",
+          "permission_snapshot_ref": "perm:stage:3",
+          "file_safe_decision_ref": "filesafe:stage:3",
+          "paths": [
+            "src/notes.rs"
+          ],
+          "status_selection_ref": "selection:status:44",
+          "whole_file_only": true,
+          "include_untracked": false
+        },
+        "available": true,
+        "disabled_reason": null,
+        "checked_at_utc": "2026-09-27T00:00:00Z"
+      }
+    },
+    {
+      "name": "availability_branch_delete_protected",
+      "definition": "git_command_availability",
+      "value": {
+        "schema_id": "pm.git_adapter.command_availability.v1",
+        "scope": {
+          "command_id": "cmd.source_control.branch.delete",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 15,
+          "currentness_ref": "currentness:git:alpha:15",
+          "currentness_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+          "writer_lease_ref": "lease:writer:13",
+          "permission_snapshot_ref": "perm:branch-delete:3",
+          "file_safe_decision_ref": "filesafe:branch-delete:3",
+          "branch": "main",
+          "expected_branch_head": "1111111111111111111111111111111111111111",
+          "preview_ref": "preview:branch-delete:6",
+          "dangerous_confirmation": true,
+          "irreversibility_disclosed": true
+        },
+        "available": false,
+        "disabled_reason": {
+          "schema_id": "pm.git_adapter.command_disabled_reason.v1",
+          "scope": {
+            "command_id": "cmd.source_control.branch.delete",
+            "lineage": {
+              "project_id": "project:alpha",
+              "plan_id": null,
+              "goal_id": null,
+              "run_id": null,
+              "agent_id": null,
+              "project_home_server_id": "server:home:1",
+              "execution_host_id": "host:linux:1",
+              "execution_environment_id": "environment:native:1",
+              "source_location_id": "source:alpha-main",
+              "topology_generation": 4
+            },
+            "repository_context_ref": "repo-ctx:alpha:1",
+            "repo_id": "repo:alpha",
+            "scm_backend": "git",
+            "workspace_id": "git-worktree:alpha-main",
+            "expected_git_state": {
+              "kind": "git",
+              "object_format": "sha1",
+              "head_oid": "1111111111111111111111111111111111111111",
+              "index_generation": 8,
+              "config_generation": 3
+            },
+            "currentness_generation": 15,
+            "currentness_ref": "currentness:git:alpha:15",
+            "currentness_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+            "writer_lease_ref": "lease:writer:13",
+            "permission_snapshot_ref": "perm:branch-delete:3",
+            "file_safe_decision_ref": "filesafe:branch-delete:3",
+            "branch": "main",
+            "expected_branch_head": "1111111111111111111111111111111111111111",
+            "preview_ref": "preview:branch-delete:6",
+            "dangerous_confirmation": true,
+            "irreversibility_disclosed": true
+          },
+          "reason_code": "branch_protected",
+          "blocking_ref": "policy:protected-branches:1",
+          "safe_next_actions": [
+            "inspect",
+            "none"
+          ],
+          "observed_at_utc": "2026-09-27T00:00:00Z"
+        },
+        "checked_at_utc": "2026-09-27T00:00:00Z"
+      }
+    },
+    {
+      "name": "error_effect_unknown_requires_reconciliation",
+      "definition": "git_command_error",
+      "value": {
+        "schema_id": "pm.git_adapter.command_error.v1",
+        "command_instance_id": "cmd-inst:sc:stash-apply:001",
+        "scope": {
+          "command_id": "cmd.source_control.stash.apply",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 14,
+          "currentness_ref": "currentness:git:alpha:14",
+          "currentness_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "writer_lease_ref": "lease:writer:11",
+          "permission_snapshot_ref": "perm:stash-apply:3",
+          "file_safe_decision_ref": "filesafe:stash-apply:3",
+          "stash_id": "stash@{0}",
+          "preview_ref": "preview:stash-apply:2"
+        },
+        "error_code": "effect_unknown",
+        "effect_state": "effect_unknown",
+        "retry_allowed": false,
+        "safe_next_actions": [
+          "reconcile_effects",
+          "inspect"
+        ],
+        "detail_ref": "stash-apply-attempt:alpha:1",
+        "occurred_at_utc": "2026-09-27T00:02:00Z"
+      }
+    },
+    {
+      "name": "error_stage_stale_index_safe_retry",
+      "definition": "git_command_error",
+      "value": {
+        "schema_id": "pm.git_adapter.command_error.v1",
+        "command_instance_id": "cmd-inst:git:stage:002",
+        "scope": {
+          "command_id": "cmd.git.stage",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 12,
+          "currentness_ref": "currentness:git:alpha:12",
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "writer_lease_ref": "lease:writer:7",
+          "permission_snapshot_ref": "perm:stage:3",
+          "file_safe_decision_ref": "filesafe:stage:3",
+          "paths": [
+            "src/notes.rs"
+          ],
+          "status_selection_ref": "selection:status:44",
+          "whole_file_only": true,
+          "include_untracked": false
+        },
+        "error_code": "stale_index",
+        "effect_state": "no_effect",
+        "retry_allowed": true,
+        "safe_next_actions": [
+          "refresh",
+          "retry"
+        ],
+        "detail_ref": "index-fence:alpha:8",
+        "occurred_at_utc": "2026-09-27T00:02:00Z"
+      }
+    },
+    {
+      "name": "permission_allow_stage",
+      "definition": "git_permission_decision",
+      "value": {
+        "schema_id": "pm.git_adapter.permission_decision.v1",
+        "scope": {
+          "command_id": "cmd.git.stage",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 12,
+          "currentness_ref": "currentness:git:alpha:12",
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "writer_lease_ref": "lease:writer:7",
+          "permission_snapshot_ref": "perm:stage:3",
+          "file_safe_decision_ref": "filesafe:stage:3",
+          "paths": [
+            "src/notes.rs"
+          ],
+          "status_selection_ref": "selection:status:44",
+          "whole_file_only": true,
+          "include_untracked": false
+        },
+        "permission_snapshot_ref": "perm:stage:3",
+        "file_safe_decision_ref": "filesafe:stage:3",
+        "permission_class": "git.stage",
+        "decision": "allow",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": null
+      }
+    },
+    {
+      "name": "permission_deny_branch_delete",
+      "definition": "git_permission_decision",
+      "value": {
+        "schema_id": "pm.git_adapter.permission_decision.v1",
+        "scope": {
+          "command_id": "cmd.source_control.branch.delete",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 15,
+          "currentness_ref": "currentness:git:alpha:15",
+          "currentness_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+          "writer_lease_ref": "lease:writer:13",
+          "permission_snapshot_ref": "perm:branch-delete:3",
+          "file_safe_decision_ref": "filesafe:branch-delete:3",
+          "branch": "feature/stale-experiment",
+          "expected_branch_head": "2222222222222222222222222222222222222222",
+          "preview_ref": "preview:branch-delete:5",
+          "dangerous_confirmation": true,
+          "irreversibility_disclosed": true
+        },
+        "permission_snapshot_ref": "perm:branch-delete:3",
+        "file_safe_decision_ref": "filesafe:branch-delete:3",
+        "permission_class": "source_control.branch.delete",
+        "decision": "deny",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": "perm-denial:branch-delete:1"
+      }
+    },
+    {
+      "name": "disabled_branch_checked_out",
+      "definition": "git_command_disabled_reason",
+      "value": {
+        "schema_id": "pm.git_adapter.command_disabled_reason.v1",
+        "scope": {
+          "command_id": "cmd.source_control.branch.delete",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 15,
+          "currentness_ref": "currentness:git:alpha:15",
+          "currentness_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+          "writer_lease_ref": "lease:writer:13",
+          "permission_snapshot_ref": "perm:branch-delete:3",
+          "file_safe_decision_ref": "filesafe:branch-delete:3",
+          "branch": "feature/stale-experiment",
+          "expected_branch_head": "2222222222222222222222222222222222222222",
+          "preview_ref": "preview:branch-delete:5",
+          "dangerous_confirmation": true,
+          "irreversibility_disclosed": true
+        },
+        "reason_code": "branch_checked_out",
+        "blocking_ref": "worktree:alpha-side:1",
+        "safe_next_actions": [
+          "inspect",
+          "none"
+        ],
+        "observed_at_utc": "2026-09-27T00:00:00Z"
+      }
+    },
+    {
+      "name": "req_stage_path_with_space",
+      "definition": "git_command_request",
+      "value": {
+        "schema_id": "pm.git_adapter.command_request.v1",
+        "command_instance_id": "cmd-inst:git:stage:003",
+        "idempotency_key": "idem:git:stage:003",
+        "scope": {
+          "command_id": "cmd.git.stage",
+          "lineage": {
+            "project_id": "project:alpha",
+            "plan_id": null,
+            "goal_id": null,
+            "run_id": null,
+            "agent_id": null,
+            "project_home_server_id": "server:home:1",
+            "execution_host_id": "host:linux:1",
+            "execution_environment_id": "environment:native:1",
+            "source_location_id": "source:alpha-main",
+            "topology_generation": 4
+          },
+          "repository_context_ref": "repo-ctx:alpha:1",
+          "repo_id": "repo:alpha",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:alpha-main",
+          "expected_git_state": {
+            "kind": "git",
+            "object_format": "sha1",
+            "head_oid": "1111111111111111111111111111111111111111",
+            "index_generation": 8,
+            "config_generation": 3
+          },
+          "currentness_generation": 12,
+          "currentness_ref": "currentness:git:alpha:12",
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "writer_lease_ref": "lease:writer:7",
+          "permission_snapshot_ref": "perm:stage:3",
+          "file_safe_decision_ref": "filesafe:stage:3",
+          "paths": [
+            "docs/meeting notes.md",
+            "src/notes.rs"
+          ],
+          "status_selection_ref": "selection:status:44",
+          "whole_file_only": true,
+          "include_untracked": false
+        },
+        "permission_snapshot_ref": "perm:stage:3",
+        "file_safe_decision_ref": "filesafe:stage:3",
+        "requested_at_utc": "2026-09-27T00:00:00Z"
+      }
+    },
+    {
+      "name": "preview_stash_apply_current",
+      "definition": "stash_apply_preview",
+      "value": {
+        "schema_id": "pm.git_adapter.stash_apply_preview.v1",
+        "preview_id": "preview:stash-apply:2",
+        "repo_id": "repo:alpha",
+        "workspace_id": "git-worktree:alpha-main",
+        "scm_backend": "git",
+        "expected_git_state": {
+          "kind": "git",
+          "object_format": "sha1",
+          "head_oid": "1111111111111111111111111111111111111111",
+          "index_generation": 8,
+          "config_generation": 3
+        },
+        "stash_id": "stash@{0}",
+        "currentness_generation": 14,
+        "currentness_ref": "currentness:git:alpha:14",
+        "currentness_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "permission_snapshot_ref": "perm:stash-apply:3",
+        "file_safe_decision_ref": "filesafe:stash-apply:3",
+        "produced_at_utc": "2026-09-26T23:55:00Z",
+        "expires_at_utc": "2026-09-27T01:00:00Z",
+        "stash_exists": true,
+        "worktree_clean": true,
+        "conflicting_paths": []
+      }
+    },
+    {
+      "name": "preview_branch_delete_current",
+      "definition": "branch_delete_preview",
+      "value": {
+        "schema_id": "pm.git_adapter.branch_delete_preview.v1",
+        "preview_id": "preview:branch-delete:5",
+        "repo_id": "repo:alpha",
+        "workspace_id": "git-worktree:alpha-main",
+        "scm_backend": "git",
+        "expected_git_state": {
+          "kind": "git",
+          "object_format": "sha1",
+          "head_oid": "1111111111111111111111111111111111111111",
+          "index_generation": 8,
+          "config_generation": 3
+        },
+        "branch": "feature/stale-experiment",
+        "expected_branch_head": "2222222222222222222222222222222222222222",
+        "currentness_generation": 15,
+        "currentness_ref": "currentness:git:alpha:15",
+        "currentness_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "permission_snapshot_ref": "perm:branch-delete:3",
+        "file_safe_decision_ref": "filesafe:branch-delete:3",
+        "produced_at_utc": "2026-09-26T23:55:00Z",
+        "expires_at_utc": "2026-09-27T01:00:00Z",
+        "branch_exists": true,
+        "protected": false,
+        "checked_out": false,
+        "attached_worktree_refs": []
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "neg_stage_absolute_path",
+      "definition": "git_command_request",
+      "command": "cmd.git.stage",
+      "base_valid": "req_stage_whole_file_untracked_and_binary",
+      "patch": {
+        "scope.paths[0]": "/abs/notes.rs"
+      },
+      "rejection_layer": "schema",
+      "expected_error": "paths must be repo-relative; absolute paths are rejected"
+    },
+    {
+      "name": "neg_stage_traversal_path",
+      "definition": "git_command_request",
+      "command": "cmd.git.stage",
+      "base_valid": "req_stage_whole_file_untracked_and_binary",
+      "patch": {
+        "scope.paths[0]": "../escape.rs"
+      },
+      "rejection_layer": "schema",
+      "expected_error": "dot-dot traversal escapes the repository and is rejected"
+    },
+    {
+      "name": "neg_stage_hunk_payload_rejected",
+      "definition": "git_command_request",
+      "command": "cmd.git.stage",
+      "base_valid": "req_stage_whole_file_untracked_and_binary",
+      "patch": {
+        "scope.hunk_ids": [
+          "hunk-1"
+        ]
+      },
+      "rejection_layer": "schema",
+      "expected_error": "whole-file stage carries no hunk field; hunk payloads belong to cmd.git.stage_hunks"
+    },
+    {
+      "name": "neg_stage_missing_untracked_flag",
+      "definition": "git_command_request",
+      "command": "cmd.git.stage",
+      "base_valid": "req_stage_whole_file_untracked_and_binary",
+      "remove": [
+        "scope.include_untracked"
+      ],
+      "rejection_layer": "schema",
+      "expected_error": "stage requires an explicit include_untracked decision"
+    },
+    {
+      "name": "neg_unstage_forbids_untracked_flag",
+      "definition": "git_command_request",
+      "command": "cmd.git.unstage",
+      "base_valid": "req_unstage_whole_file",
+      "patch": {
+        "scope.include_untracked": true
+      },
+      "rejection_layer": "schema",
+      "expected_error": "unstage never admits an untracked flag; untracked files are outside the index"
+    },
+    {
+      "name": "neg_unstage_wrong_backend",
+      "definition": "git_command_request",
+      "command": "cmd.git.unstage",
+      "base_valid": "req_unstage_whole_file",
+      "patch": {
+        "scope.scm_backend": "jujutsu"
+      },
+      "rejection_layer": "schema",
+      "expected_error": "this family is Git-only; a jujutsu scope cannot satisfy it"
+    },
+    {
+      "name": "neg_remote_fetch_url_with_userinfo",
+      "definition": "git_command_request",
+      "command": "cmd.source_control.remote.update",
+      "base_valid": "req_remote_update_local_config",
+      "patch": {
+        "scope.fetch_url": "https://deploy@forge.example.com/alpha/main.git"
+      },
+      "rejection_layer": "schema",
+      "expected_error": "remote URLs carry no userinfo; credentials come only from brokered leases"
+    },
+    {
+      "name": "neg_remote_push_url_with_credentials",
+      "definition": "git_command_request",
+      "command": "cmd.source_control.remote.update",
+      "base_valid": "req_remote_update_local_config",
+      "patch": {
+        "scope.push_urls[0]": "https://token123@forge.example.com/alpha/main.git"
+      },
+      "rejection_layer": "schema",
+      "expected_error": "credential-bearing push URLs are rejected before any config write"
+    },
+    {
+      "name": "neg_remote_missing_push_urls",
+      "definition": "git_command_request",
+      "command": "cmd.source_control.remote.update",
+      "base_valid": "req_remote_update_local_config",
+      "remove": [
+        "scope.push_urls"
+      ],
+      "rejection_layer": "schema",
+      "expected_error": "remote.update requires a distinct validated push URL array, not a bare fetch URL"
+    },
+    {
+      "name": "neg_stash_create_message_too_long",
+      "definition": "git_command_request",
+      "command": "cmd.source_control.stash.create",
+      "base_valid": "req_stash_create_with_untracked",
+      "patch": {
+        "scope.message": {
+          "$repeat": [
+            "m",
+            501
+          ]
+        }
+      },
+      "rejection_layer": "schema",
+      "expected_error": "stash messages are bounded at 500 characters"
+    },
+    {
+      "name": "neg_stash_apply_missing_preview",
+      "definition": "git_command_request",
+      "command": "cmd.source_control.stash.apply",
+      "base_valid": "req_stash_apply_with_preview",
+      "remove": [
+        "scope.preview_ref"
+      ],
+      "rejection_layer": "schema",
+      "expected_error": "stash.apply requires an approved current preview reference"
+    },
+    {
+      "name": "neg_branch_create_invalid_ref",
+      "definition": "git_command_request",
+      "command": "cmd.source_control.branch.create",
+      "base_valid": "req_branch_create_from_base",
+      "patch": {
+        "scope.branch": "bad ref..name"
+      },
+      "rejection_layer": "schema",
+      "expected_error": "branch names follow git check-ref-format rules; spaces and dot-dot are rejected"
+    },
+    {
+      "name": "neg_branch_delete_missing_confirmation",
+      "definition": "git_command_request",
+      "command": "cmd.source_control.branch.delete",
+      "base_valid": "req_branch_delete_with_preview_and_confirmation",
+      "remove": [
+        "scope.dangerous_confirmation"
+      ],
+      "rejection_layer": "schema",
+      "expected_error": "branch.delete requires explicit dangerous confirmation"
+    },
+    {
+      "name": "neg_branch_delete_confirmation_false",
+      "definition": "git_command_request",
+      "command": "cmd.source_control.branch.delete",
+      "base_valid": "req_branch_delete_with_preview_and_confirmation",
+      "patch": {
+        "scope.dangerous_confirmation": false
+      },
+      "rejection_layer": "schema",
+      "expected_error": "a false dangerous confirmation cannot authorize a destructive delete"
+    },
+    {
+      "name": "neg_git_stash_spelling_not_primary",
+      "definition": "git_command_request",
+      "command": "cmd.source_control.stash.create",
+      "base_valid": "req_stash_create_with_untracked",
+      "patch": {
+        "scope.command_id": "cmd.git.stash.create"
+      },
+      "rejection_layer": "schema",
+      "expected_error": "cmd.git.stash.* spellings are not primaries; the canonical stash commands live under cmd.source_control"
+    },
+    {
+      "name": "neg_git_branch_spelling_not_primary",
+      "definition": "git_command_request",
+      "command": "cmd.source_control.branch.delete",
+      "base_valid": "req_branch_delete_with_preview_and_confirmation",
+      "patch": {
+        "scope.command_id": "cmd.git.branch.delete"
+      },
+      "rejection_layer": "schema",
+      "expected_error": "cmd.git.branch.* spellings are not primaries; the canonical branch commands live under cmd.source_control"
+    },
+    {
+      "name": "neg_accepted_result_carries_receipt",
+      "definition": "git_command_result",
+      "command": "cmd.source_control.branch.delete",
+      "base_valid": "result_branch_delete_accepted",
+      "patch": {
+        "operation_receipt_ref": "receipt:git:branch-delete:99"
+      },
+      "rejection_layer": "schema",
+      "expected_error": "accepted is not terminal success; only terminal outcomes carry a receipt"
+    },
+    {
+      "name": "neg_succeeded_result_claims_unknown_effect",
+      "definition": "git_command_result",
+      "command": "cmd.git.stage",
+      "base_valid": "result_stage_succeeded",
+      "patch": {
+        "effect_state": "effect_unknown"
+      },
+      "rejection_layer": "schema",
+      "expected_error": "a succeeded result cannot carry an unknown effect"
+    },
+    {
+      "name": "neg_unknown_error_allows_retry",
+      "definition": "git_command_error",
+      "command": "cmd.source_control.stash.apply",
+      "base_valid": "error_effect_unknown_requires_reconciliation",
+      "patch": {
+        "retry_allowed": true
+      },
+      "rejection_layer": "schema",
+      "expected_error": "effect_unknown keeps retry_allowed=false with reconciliation-only next actions"
+    },
+    {
+      "name": "neg_identity_substitution_missing_repo",
+      "definition": "git_command_request",
+      "command": "cmd.git.stage",
+      "base_valid": "req_stage_whole_file_untracked_and_binary",
+      "remove": [
+        "scope.repo_id"
+      ],
+      "rejection_layer": "schema",
+      "expected_error": "paths cannot substitute for repo_id identity; the scope stays incomplete without it"
+    },
+    {
+      "name": "neg_stage_untracked_without_admission",
+      "definition": "git_command_request",
+      "command": "cmd.git.stage",
+      "base_valid": "req_stage_whole_file_untracked_and_binary",
+      "patch": {
+        "scope.include_untracked": false
+      },
+      "rejection_layer": "semantic",
+      "expected_error": "declared untracked paths require include_untracked=true or exact refusal"
+    },
+    {
+      "name": "neg_stage_declared_untracked_outside_paths",
+      "definition": "git_command_request",
+      "command": "cmd.git.stage",
+      "base_valid": "req_stage_whole_file_untracked_and_binary",
+      "patch": {
+        "scope.untracked_paths_declared": [
+          "docs/ghost.md"
+        ]
+      },
+      "rejection_layer": "semantic",
+      "expected_error": "declared untracked paths must be a subset of the staged paths"
+    },
+    {
+      "name": "neg_remote_update_stale_config_generation",
+      "definition": "git_command_request",
+      "command": "cmd.source_control.remote.update",
+      "base_valid": "req_remote_update_local_config",
+      "patch": {
+        "scope.expected_config_generation": 2
+      },
+      "rejection_layer": "semantic",
+      "expected_error": "expected_config_generation must equal the fenced config generation of the expected git state"
+    },
+    {
+      "name": "neg_permission_class_command_mismatch",
+      "definition": "git_permission_decision",
+      "command": "cmd.git.stage",
+      "base_valid": "permission_allow_stage",
+      "patch": {
+        "permission_class": "source_control.branch.delete"
+      },
+      "rejection_layer": "semantic",
+      "expected_error": "the permission class must name the exact scoped command"
+    },
+    {
+      "name": "neg_receipt_index_generation_regresses",
+      "definition": "git_command_receipt",
+      "command": "cmd.git.stage",
+      "base_valid": "receipt_stage_index_advanced",
+      "patch": {
+        "after_index_generation": 7
+      },
+      "rejection_layer": "semantic",
+      "expected_error": "receipt generations are monotonic; an after-generation below before is untruthful"
+    },
+    {
+      "name": "neg_stage_path_with_control_byte",
+      "definition": "git_command_request",
+      "command": "cmd.git.stage",
+      "base_valid": "req_stage_path_with_space",
+      "patch": {
+        "scope.paths[0]": "docs/meeting\nnotes.md"
+      },
+      "rejection_layer": "schema",
+      "expected_error": "control bytes are never safe in a repo-relative path, even where spaces are allowed"
+    },
+    {
+      "name": "neg_stage_path_with_trailing_space",
+      "definition": "git_command_request",
+      "command": "cmd.git.stage",
+      "base_valid": "req_stage_path_with_space",
+      "patch": {
+        "scope.paths[0]": "docs/meeting notes.md "
+      },
+      "rejection_layer": "schema",
+      "expected_error": "leading and trailing spaces are rejected; only interior spaces are safe"
+    }
+  ],
+  "preview_joins": [
+    {
+      "name": "join_stash_apply_admitted",
+      "request": "req_stash_apply_with_preview",
+      "preview": "preview_stash_apply_current",
+      "expect": "admitted"
+    },
+    {
+      "name": "join_branch_delete_admitted",
+      "request": "req_branch_delete_with_preview_and_confirmation",
+      "preview": "preview_branch_delete_current",
+      "expect": "admitted"
+    },
+    {
+      "name": "join_stash_apply_stale_fence",
+      "request": "req_stash_apply_with_preview",
+      "preview": "preview_stash_apply_current",
+      "expect": "stale",
+      "patch": {
+        "expected_git_state": {
+          "kind": "git",
+          "object_format": "sha1",
+          "head_oid": "1111111111111111111111111111111111111111",
+          "index_generation": 7,
+          "config_generation": 3
+        }
+      },
+      "expect_detail": "revision fence moved since the preview was produced"
+    },
+    {
+      "name": "join_stash_apply_wrong_target",
+      "request": "req_stash_apply_with_preview",
+      "preview": "preview_stash_apply_current",
+      "expect": "substitution",
+      "patch": {
+        "stash_id": "stash@{3}"
+      },
+      "expect_detail": "preview names a different stash_id"
+    },
+    {
+      "name": "join_branch_delete_expired",
+      "request": "req_branch_delete_with_preview_and_confirmation",
+      "preview": "preview_branch_delete_current",
+      "expect": "expired",
+      "patch": {
+        "produced_at_utc": "2026-09-26T22:00:00Z",
+        "expires_at_utc": "2026-09-26T23:00:00Z"
+      },
+      "expect_detail": "preview expired before the request was made"
+    },
+    {
+      "name": "join_branch_delete_guarded_protected",
+      "request": "req_branch_delete_with_preview_and_confirmation",
+      "preview": "preview_branch_delete_current",
+      "expect": "guarded",
+      "patch": {
+        "protected": true
+      },
+      "expect_detail": "preview reports a protected branch"
+    },
+    {
+      "name": "join_branch_delete_wrong_branch",
+      "request": "req_branch_delete_with_preview_and_confirmation",
+      "preview": "preview_branch_delete_current",
+      "expect": "substitution",
+      "patch": {
+        "branch": "main",
+        "expected_branch_head": "1111111111111111111111111111111111111111"
+      },
+      "expect_detail": "preview names a different branch"
+    }
+  ]
+}

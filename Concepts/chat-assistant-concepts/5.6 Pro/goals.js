@@ -221,16 +221,16 @@
    (editing?'<div class="goal-edit"><textarea class="goal-objective-input" data-goal-input="objective" data-pm-keep rows="5">'+esc(ui.draft)+'</textarea><div class="goal-edit-foot"><span class="goal-count">'+ui.draft.length+' / 4000</span><span class="spacer"></span>'+button('goal-cancel-edit','Cancel edit')+button('goal-save','Save')+'</div></div>':'<p class="goal-objective-full">'+esc(g.objective)+'</p>')+
    '<div class="goal-lifecycle">'+(g.status==='active'?button('goal-pause','Pause'):button('goal-resume','Resume',!resumeEligibility(g).ok?'disabled':''))+button('goal-cancel','Cancel Goal',g.status==='completed'?'disabled':'')+(!editing?button('goal-edit','Edit objective',g.status==='completed'?'disabled':''):'')+'</div>'+
    (g.binding?'<div class="goal-lifecycle">'+button('goal-bound-open-plan','Open exact Plan · V'+g.binding.plan_version,'data-id="'+esc(g.binding.assistant_plan_id)+'"')+(g.blockedReason?button('goal-revise-plan','Revise Plan','data-id="'+esc(g.binding.assistant_plan_id)+'"'):'')+'</div>':'')+
-   '<div class="goal-disclosures">'+button('goal-toggle-history','Objective history')+button('goal-toggle-conts','Continuation decisions')+button('goal-request-change','Ask for a replacement',g.status==='completed'?'disabled':'')+'</div>'+
+   '<div class="goal-disclosures">'+button('goal-toggle-history','Objective history')+button('goal-request-change','Ask for a replacement',g.status==='completed'?'disabled':'')+'</div>'+
    (ui.history?'<div class="goal-history">'+g.revisions.slice().reverse().map(r=>'<div class="goal-history-row"><strong>Revision '+r.revision+'</strong><small>'+esc(r.source==='user_direct'?'Your direct change':'Your approved proposal')+'</small><p>'+esc(r.objective)+'</p></div>').join('')+'</div>':'')+
-   (ui.continuations?'<div class="goal-conts">'+g.continuations.slice().reverse().map(t=>'<div class="goal-cont-row"><strong>'+esc(t.result)+'</strong><small>Stop epoch '+t.stopEpochAt+'</small><p>'+esc(t.note)+'</p></div>').join('')+(g.continuations.length?'':'<p>No continuation decision yet.</p>')+'</div>':'')+
-   '<details class="goal-technical"><summary>Details</summary><p>Session-memory concept. No native host persistence or provider execution.</p><pre>'+esc(JSON.stringify({goal_id:g.id,origin:g.lineage,scope:g.scope,binding:g.binding||null,active_run_ref:g.activeRunRef,currentness_hash:g.currentnessHash,user_stop_epoch:g.stopEpoch},null,2))+'</pre>'+(!g.binding?button('goal-continue','Evaluate next turn',g.status==='active'?'':'disabled'):'')+'</details></section>';
+   '</section>';
  }
- function renderCompact(c){const g=get(c.thread.id);if(!g)return '';if(ui.editing||ui.proposal||ui.history||ui.continuations)return renderSection(c);
+ function renderCompact(c){const g=get(c.thread.id);if(!g)return '';
   return '<section class="goal-compact" data-goal-id="'+esc(g.id)+'"><div class="goal-compact-head"><span class="goal-chip goal-chip-'+g.status+'">'+labels[g.status]+'</span><span class="goal-rev">Revision '+g.revision+'</span></div><p class="ab-objective goal-objective-2">'+esc(g.objective)+'</p><div class="goal-compact-actions">'+(g.status==='active'?button('goal-pause','Pause'):button('goal-resume','Resume',!resumeEligibility(g).ok?'disabled':''))+button('goal-open-editor','Edit objective',g.status==='completed'?'disabled':'')+button('goal-cancel','Cancel',g.status==='completed'?'disabled':'')+button('goal-details','Details')+'</div></section>';
  }
+ function renderPanel(c){if(ui.editing||ui.proposal||ui.history)return renderSection(c);return renderCompact(c);}
  function refresh(c,out){c.renderApp();c.renderOverlays?.();if(out?.ok===false)c.toast('No change made',out.error?.replaceAll('_',' ')||'The owner refused this action.');}
- function openGoal(c){c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.state.menu=null;if(c.state.activity.expanded&&!c.state.activity.expanded.includes('goal'))c.state.activity.expanded.push('goal');}
+ function openGoal(c){c.state.hover=null;c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.state.menu=null;if(c.state.activity.expanded&&!c.state.activity.expanded.includes('goal'))c.state.activity.expanded.push('goal');}
  const actions={
   'goal-new':c=>{c.state.composer='/goal '+c.state.composer.replace(/^\/goal\s*/,'');c.state.menu=null;refresh(c);setTimeout(()=>document.querySelector('textarea.composer-input,textarea[data-composer]')?.focus(),0);},
   'goal-details':c=>{ui.history=true;openGoal(c);refresh(c);},
@@ -259,7 +259,7 @@
   cancelled,proposal:id=>clone(store.proposals[id]||null),tickets:()=>clone(store.tickets),cancellation:id=>clone(store.cancellations[id]||null),
   registerOwner:(kind,api)=>{if(owners.has(kind))throw new Error('duplicate_goal_work_owner');owners.set(kind,api);},
   fenceThread:tid=>{const g=get(tid);if(g){fence(g,'Thread lineage changed.');g.status='paused';if(g.binding)window.PM56_PLANS?.boundPause(g.binding.assistant_plan_id);}return g;},
-  bound,boundList,createBound,boundTransition,restore,fixture:()=>clone(GOAL_FIXTURE),render:{section:renderSection,compact:renderCompact,editor:renderEditor},chip:()=>'',sidebar:()=>summary().statusLine,
+  bound,boundList,createBound,boundTransition,restore,fixture:()=>clone(GOAL_FIXTURE),render:{section:renderSection,compact:renderCompact,panel:renderPanel,editor:renderEditor},chip:()=>'',sidebar:()=>summary().statusLine,
   originKinds:()=>origins.slice(),originLabel:k=>originLabels[k]||null,lineageFor,progress:()=>({completed:0,total:0,open:0,retired:true}),phaseNumber:()=>0,
   exportRecord:id=>{const g=byId(id);return g?{schema_id:'pm.goal.record.v2',goal_id:g.id,project_id:g.projectId,thread_id:g.thread,objective_text:g.objective,revision:g.revision,state:g.status,blocked_reason_ref:g.blockedReason,active_run_ref:g.activeRunRef,created_at:g.createdAt,updated_at:g.updatedAt,currentness_hash:g.currentnessHash}:null;}
  };

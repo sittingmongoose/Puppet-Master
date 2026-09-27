@@ -758,16 +758,18 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # deferred coordination families coordination_event_records and coordination_read_model_projections
 # are materialized in place as SP-320 keyed value compositions, so 272 materialized and 21 deferred
 # become 274 and 19. The family count, the retention-policy count and the tiers are unchanged.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 294
+# Re-pinned 2026-09-27 for SP-322: application_update_check_schedule adds one materialized
+# later_gui_or_feature_projection family. Retention policies and critical/MVP memberships are unchanged.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 295
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 274,
+    "materialized": 275,
     "deferred_not_build_blocking": 19,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 40,
-    "later_gui_or_feature_projection": 251,
+    "later_gui_or_feature_projection": 252,
     "migration_only": 3,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [

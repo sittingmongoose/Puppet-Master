@@ -288,6 +288,7 @@ acceptance_criteria:
   before protected handoff.
 - Verified official signup pages use cmd.auth_profile.open_official_page with current official-source proof; page
   navigation does not create a provider account or count as successful authentication.
+- The same official-page command permits ADO-008 human-only team-project administration after exact source-account verification. Its official_route_ref resolves the Azure owner handoff and current draft/Client/domain policy; project_id stays null before commit, existing verified account/profile identity is retained, and FirstTimeSourceAuthBinding remains sign_in-only. Navigation or return cannot create or adopt a team project; explicit fresh provider discovery is required.
 - Success returns actual owner-verified identities; failure/cancel returns exact source focus without a Project,
   repository, destination filesystem or broad provider mutation.
 - The same canonical command/handler/result family is reused; no generic no-Project authentication command, credential

@@ -52,7 +52,7 @@
       "registry_id": "TCR-SETTINGS-PACKET-COMMANDS",
       "source_path": "Plans/settings_system_contract_fixtures.json",
       "json_pointer": "/packet_command_dispositions",
-    "source_sha256": "6871d6791d5d946d8e4d8ccd635e7d5417499a2d2e8bc4ee2c927cbfcfd1c90e",
+      "source_sha256": "6871d6791d5d946d8e4d8ccd635e7d5417499a2d2e8bc4ee2c927cbfcfd1c90e",
       "owner_plan": "Plans/Settings_System.md",
       "plan_unit": "SSYS-023",
       "expected_token_count": 80,
@@ -2850,7 +2850,7 @@
         "Projects list/card/menu, Onboarding first project, Settings project route",
         "Product Onboarding Review commit after draft/preflight; actual Project result feeds paid/free setup and resume",
         "Projects archived row, K3 Project manager, palette/API; retained ui.project.restore_archived entry constructs cmd.project.unarchive before every gate",
-      "Projects recovery surface and Product Onboarding automatic_preparation Continue Setup; Open Repository and Delete Repository dispatch through Forge owner routes, never Project-local mutation"
+        "Projects recovery surface and Product Onboarding automatic_preparation Continue Setup; Open Repository and Delete Repository dispatch through Forge owner routes, never Project-local mutation"
       ],
       "return_route": "Exact Project route and caller focus. Onboarding consumes its persisted/listed Project and required owner results bound to exact draft/hash; acknowledgement is not commit. Unarchive preserves the exact caller route/focus without opening the Project, and exposes success only after owner persistence/readback. Resume_creation echoes the exact return context byte-for-byte and exposes success only as listed/persisted with recovery plus terminal receipts.",
       "reverse_consumers": [
@@ -3157,7 +3157,8 @@
         "Plans/Backup_Restore_System.md#BRS-013",
         "Plans/Backup_Restore_System.md#BRS-014",
         "Plans/Backup_Restore_System.md#BRS-015",
-        "Plans/Backup_Restore_System.md#BRS-016"
+        "Plans/Backup_Restore_System.md#BRS-016",
+        "Plans/Backup_Restore_System.md#BRS-030"
       ],
       "owner_plan": "Plans/Backup_Restore_System.md",
       "plan_unit": "BRS-008",
@@ -3165,8 +3166,8 @@
       "payload_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request",
       "result_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result",
       "error_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error",
-      "availability_rule": "Exact Server/Project/manifest/destination/generation and current preview or recovery point are required.",
-      "permission_gate": "Permissions, FileSafe, destructive confirmation, secret-envelope custody, and RecoveryPointReceipt apply by mode.",
+      "availability_rule": "Exact Server/Project/manifest/destination/generation and current preview or recovery point are required. For cmd.backup.verify, BRS-030 requires an explicit direct depth or current plan selector bound to immutable backup/snapshot and cost/read acknowledgement; no policy-derived default.",
+      "permission_gate": "Permissions, FileSafe, destructive confirmation, secret-envelope custody, and RecoveryPointReceipt apply by mode. Verify cost/read acknowledgement is resolved against the exact request target/depth before dispatch.",
       "disabled_reason_rule": "Expose registration/handler, stale preview, verification, quarantine, secret custody, destination, permission, rollback, or recovery blocker.",
       "handler_owner": "Backup/Restore System owns 41 primaries: cmd.restore.preview retains its sole route and the other 40 have BRS-011 future routes. Every route remains handler_unavailable without native evidence.",
       "handler_status": "specified",
@@ -3202,7 +3203,8 @@
         "Plans/Backup_Restore_System.md#BRS-009"
       ],
       "test_refs": [
-        "Plans/backup_restore_system_contract_fixtures.json"
+        "Plans/backup_restore_system_contract_fixtures.json",
+        "scripts/pm_backup_verify_depth.py"
       ],
       "evidence_refs": [
         "static_schema_fixture_and_concept_only"
@@ -3687,7 +3689,8 @@
         "Plans/Forge_Integrations.md#FGI-010",
         "Plans/Forge_Integrations.md#FGI-013",
         "Plans/Forge_Integrations.md#FGI-011",
-        "Plans/Forge_Integrations.md#FGI-021"
+        "Plans/Forge_Integrations.md#FGI-021",
+        "Plans/Forge_Integrations.md#FGI-022"
       ],
       "owner_plan": "Plans/Forge_Integrations.md",
       "plan_unit": "FGI-008",
@@ -3695,17 +3698,17 @@
       "payload_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
       "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
       "error_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_error_record",
-      "availability_rule": "Exact provider, connection, repository binding, authority role, immutable review revision, capability, generation, and rate budget are required. FGI-011's existing list command repository_list_scope requires current actual account/container, source/draft authorization and read scope; no Project/repository mutation. FGI-021's delete requires verified-create refs with fresh target-bound human confirmation; artifact download requires exact run/artifact/digest identity with download/import disposition; secret/variable mutations require exact name/scope with confirmation, and secret set carries a one-use protected human-broker ref.",
+      "availability_rule": "Exact provider, connection, repository binding, authority role, immutable review revision, capability, generation, and rate budget are required. FGI-011's existing list command repository_list_scope requires current actual account/container, source/draft authorization and read scope; no Project/repository mutation. FGI-021's delete requires verified-create refs with fresh target-bound human confirmation; artifact download requires exact run/artifact/digest identity with download/import disposition; secret/variable mutations require exact name/scope with confirmation, and secret set carries a one-use protected human-broker ref. FGI-022 review edit additionally requires nonempty typed patch and exact expected immutable review revision; runner list/preview read producers bind exact AutomationBinding generation and apply revalidates preview ref/digest, host, permission, step-up and consent.",
       "permission_gate": "Permissions, credential/grant broker, provider authority, immutable revision, FileSafe, and confirmation apply.",
       "disabled_reason_rule": "Expose connection/auth/setup, capability, rate, stale generation/revision, permission, mirror, degraded, or recovery blocker.",
-      "handler_owner": "Forge Integrations owns 52 primaries; the common central route set contains 49, including the nine FGI-013 admissions and the six FGI-021 admissions. Every planned target remains handler_unavailable without native/provider evidence.",
+      "handler_owner": "Forge Integrations owns 53 primaries; the common central route set contains 50, including the nine FGI-013 admissions and the six FGI-021 admissions. Every planned target remains handler_unavailable without native/provider evidence.",
       "handler_status": "specified",
       "wiring_status": "specified",
       "production_or_simulation": "Static common/provider schemas and PMConcept7 projection only. Central production-intent wiring is specified; no native runtime proof. Central production-intent wiring is specified; native runtime evidence remains absent.",
       "gui_triggers": [
         "Source Control forge sections, Settings connections, Project setup, official-page routes",
         "Product Onboarding selected-source precommit read-only account/container repository list without a phantom repository",
-      "Project recovery Delete Repository route; automation artifact download/import and hosted secret/variable administration; automation-run artifacts and hosted service settings official-page destinations"
+        "Project recovery Delete Repository route; automation artifact download/import and hosted secret/variable administration; automation-run artifacts and hosted service settings official-page destinations"
       ],
       "return_route": "Exact provider/repository/review/pipeline and caller focus.",
       "reverse_consumers": [
@@ -3738,7 +3741,8 @@
         "Plans/gitlab_integration_fixtures.json",
         "Plans/azure_devops_integration_fixtures.json",
         "Plans/bitbucket_integration_fixtures.json",
-        "tests/test_pm_onboarding_phases.py"
+        "tests/test_pm_onboarding_phases.py",
+        "scripts/pm_forge_command_followup.py"
       ],
       "evidence_refs": [
         "static_schema_and_fixture_only"
@@ -7728,6 +7732,66 @@
       "evidence_refs": [
         "static_owner_schema_fixture_and_census_only; no native, storage, event-producer, visual, motion, or accessibility acceptance evidence is asserted."
       ]
+    },
+    {
+      "profile_id": "TCP-GIT-ADAPTER",
+      "requirement_refs": [
+        "Plans/Source_Control_System.md#SCS-024",
+        "Plans/UI_Command_Catalog.md#UCC-167",
+        "Plans/Commands_System.md#CS-083",
+        "Plans/Wiring_Matrix.md#WM-060"
+      ],
+      "owner_plan": "Plans/Source_Control_System.md",
+      "plan_unit": "SCS-024",
+      "dry_contract_ref": "Plans/git_adapter_command_contracts.schema.json",
+      "payload_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request",
+      "result_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result",
+      "error_schema_ref": "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_error",
+      "availability_rule": "Exact Git repository/workspace/expected revision, target/currentness, capability and handler availability; no backend-neutral or hunk substitution.",
+      "permission_gate": "Current target-bound permission, FileSafe and writer lease; stash apply and branch deletion also require current preview, with dangerous-action authority for deletion.",
+      "disabled_reason_rule": "Expose typed missing/stale target, path, conflict, protected branch, FileSafe, permission, preview or handler_unavailable reason; never simulate success.",
+      "handler_owner": "Source Control Git adapter; each command has exactly one sole future target in CS-083 and WM-060. Planned strings are not native proof.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner/schema/fixtures and production-intent wiring only; no native dispatcher, filesystem mutation or runtime proof.",
+      "gui_triggers": [
+        "Source Control Changes whole-file actions",
+        "Source Control Branches / Stash",
+        "Source Control remote configuration",
+        "command palette",
+        "authorized automation"
+      ],
+      "return_route": "Exact caller route, repository/workspace selection, focus and continuation after owner terminal result or refusal.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md#UCC-167",
+        "Plans/Commands_System.md#CS-083",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/Settings_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "event_refs": [
+        "none_pending_event_authority"
+      ],
+      "receipt_refs": [
+        "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result"
+      ],
+      "observable_work": [
+        "Owner operation ID if asynchronous; acceptance is never terminal effect proof."
+      ],
+      "persistence_refs": [
+        "Source Control owner operation journal and exact Git repository state only; no new storage family admitted."
+      ],
+      "migration_refs": [
+        "Historical cmd.git.stash.* and cmd.git.branch.* spelling resolves to existing cmd.source_control primaries; hunk commands remain separate."
+      ],
+      "test_refs": [
+        "Plans/git_adapter_command_contract_fixtures.json",
+        "scripts/pm_git_adapter_commands.py",
+        "scripts/pm-touch-closure-verify.py"
+      ],
+      "evidence_refs": [
+        "static_contract_only"
+      ]
     }
   ],
   "row_columns": [
@@ -9017,7 +9081,7 @@
       "command",
       "cmd.backup.verify",
       "partial",
-      "Accepted scope only; native verification and corruption evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "BRS-030 specifies explicit depth or current plan, immutable backup/snapshot and cost/read acknowledgement with requested-versus-performed receipt truth. Native verification and corruption/runtime evidence remain absent; the central sole future route is production intent only."
     ],
     [
       "TOUCH-BRS-011",
@@ -13066,6 +13130,70 @@
       "settings.commands_shortcuts.presentation",
       "partial",
       "V aggregate: New command opener, row opens, lists, Where command files live, Reserved shortcuts, cheat sheet, How commands work, Search shortcuts, Sample input, resolved prompt, How it will run, Back to command, and modals-as-evidence are view-only with no dispatch. Static classification only; no EventRecord or readiness is claimed."
+    ],
+    [
+      "TOUCH-GITADAPTER-001",
+      "TCP-GIT-ADAPTER",
+      "command",
+      "cmd.git.stage",
+      "partial",
+      "SCS-024/UCC-167/CS-083/WM-060 statically specify exact owner command, typed target/guards, planned sole handler, receipt and reverse consumers. cmd.git.stage remains handler_unavailable pending native and runtime evidence; no EventRecord or readiness is claimed."
+    ],
+    [
+      "TOUCH-GITADAPTER-002",
+      "TCP-GIT-ADAPTER",
+      "command",
+      "cmd.git.unstage",
+      "partial",
+      "SCS-024/UCC-167/CS-083/WM-060 statically specify exact owner command, typed target/guards, planned sole handler, receipt and reverse consumers. cmd.git.unstage remains handler_unavailable pending native and runtime evidence; no EventRecord or readiness is claimed."
+    ],
+    [
+      "TOUCH-GITADAPTER-003",
+      "TCP-GIT-ADAPTER",
+      "command",
+      "cmd.source_control.remote.update",
+      "partial",
+      "SCS-024/UCC-167/CS-083/WM-060 statically specify exact owner command, typed target/guards, planned sole handler, receipt and reverse consumers. cmd.source_control.remote.update remains handler_unavailable pending native and runtime evidence; no EventRecord or readiness is claimed."
+    ],
+    [
+      "TOUCH-GITADAPTER-004",
+      "TCP-GIT-ADAPTER",
+      "command",
+      "cmd.source_control.stash.create",
+      "partial",
+      "SCS-024/UCC-167/CS-083/WM-060 statically specify exact owner command, typed target/guards, planned sole handler, receipt and reverse consumers. cmd.source_control.stash.create remains handler_unavailable pending native and runtime evidence; no EventRecord or readiness is claimed."
+    ],
+    [
+      "TOUCH-GITADAPTER-005",
+      "TCP-GIT-ADAPTER",
+      "command",
+      "cmd.source_control.stash.apply",
+      "partial",
+      "SCS-024/UCC-167/CS-083/WM-060 statically specify exact owner command, typed target/guards, planned sole handler, receipt and reverse consumers. cmd.source_control.stash.apply remains handler_unavailable pending native and runtime evidence; no EventRecord or readiness is claimed."
+    ],
+    [
+      "TOUCH-GITADAPTER-006",
+      "TCP-GIT-ADAPTER",
+      "command",
+      "cmd.source_control.branch.create",
+      "partial",
+      "SCS-024/UCC-167/CS-083/WM-060 statically specify exact owner command, typed target/guards, planned sole handler, receipt and reverse consumers. cmd.source_control.branch.create remains handler_unavailable pending native and runtime evidence; no EventRecord or readiness is claimed."
+    ],
+    [
+      "TOUCH-GITADAPTER-007",
+      "TCP-GIT-ADAPTER",
+      "command",
+      "cmd.source_control.branch.delete",
+      "partial",
+      "SCS-024/UCC-167/CS-083/WM-060 statically specify exact owner command, typed target/guards, planned sole handler, receipt and reverse consumers. cmd.source_control.branch.delete remains handler_unavailable pending native and runtime evidence; no EventRecord or readiness is claimed."
+    ],
+    [
+      "TOUCH-FGI-053",
+      "TCP-FORGE",
+      "command",
+      "cmd.forge.review.edit",
+      "partial",
+      "FGI-022 typed request and static production-intent wiring are specified; native provider handler, reverse GUI and accessibility evidence remain absent."
     ]
   ],
   "excluded_tokens": [

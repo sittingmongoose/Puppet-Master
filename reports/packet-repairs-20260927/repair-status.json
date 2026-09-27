@@ -1,0 +1,245 @@
+{
+  "source_audit_commit": "0fce05313f4b049fd7fc7c1941499bce8ef027ff",
+  "source_report_path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/packet-sweep-20260927/REPORT.md",
+  "source_report_sha256": "4e9561d68f2106826ae32f77f3c2fe94ff08dafce59477a866d0104a68579ee0",
+  "findings": [
+    {
+      "id": "N03-F01",
+      "category": "actionable_finding",
+      "title": "Selected concept reuses a cloud or other-instance account without instance verification",
+      "repair_status": "repaired_and_verified_on_ui_branch_pending_integration",
+      "verification": [
+        "fix/packet-ui-20260927@60bd24773705a1004873a4c31dd7bfcd508c72eb",
+        "reports/packet-repairs-20260927/ui-port-map.md",
+        "reports/packet-repairs-20260927/evidence.json"
+      ],
+      "integration_status": "Held outside main while claude/happy-ramanujan-23lwck is actively changing selected settings; port authored fixes, never overwrite its generated HTML."
+    },
+    {
+      "id": "N03-F02",
+      "category": "actionable_finding",
+      "title": "Signup branch recreates provider account form and treats acknowledgement as sign-in",
+      "repair_status": "repaired_and_verified_on_ui_branch_pending_integration",
+      "verification": [
+        "fix/packet-ui-20260927@60bd24773705a1004873a4c31dd7bfcd508c72eb",
+        "reports/packet-repairs-20260927/ui-port-map.md",
+        "reports/packet-repairs-20260927/evidence.json"
+      ],
+      "integration_status": "Held outside main while claude/happy-ramanujan-23lwck is actively changing selected settings; port authored fixes, never overwrite its generated HTML."
+    },
+    {
+      "id": "N03-F03",
+      "category": "actionable_finding",
+      "title": "Optional Azure team-project creation has no mapped owner/consumer path",
+      "repair_status": "repaired_static_contract",
+      "verification": [
+        "Plans/Azure_DevOps_Integration.md#ADO-008",
+        "scripts/pm_azure_setup_semantics.py",
+        "tests/test_azure_setup_semantics.py"
+      ],
+      "integration_status": "Canonical external administration route repaired here; GUI consumer is on fix/packet-ui-20260927 pending concurrent settings integration."
+    },
+    {
+      "id": "N03-A01",
+      "category": "ambiguity",
+      "title": "Non-tour Ready default destination needs explicit supersession disposition",
+      "repair_status": "repaired_static_contract",
+      "verification": [
+        "Plans/Planning_Wizard.md"
+      ]
+    },
+    {
+      "id": "FS01",
+      "category": "actionable_finding",
+      "title": "Selected recovery point is lost by Verify and by history reordering",
+      "repair_status": "repaired_and_verified_on_ui_branch_pending_integration",
+      "verification": [
+        "fix/packet-ui-20260927@60bd24773705a1004873a4c31dd7bfcd508c72eb",
+        "reports/packet-repairs-20260927/ui-port-map.md",
+        "reports/packet-repairs-20260927/evidence.json"
+      ],
+      "integration_status": "Held outside main while claude/happy-ramanujan-23lwck is actively changing selected settings; port authored fixes, never overwrite its generated HTML."
+    },
+    {
+      "id": "FS02",
+      "category": "actionable_finding",
+      "title": "Backup verify command cannot carry the requested verification level",
+      "repair_status": "repaired_static_contract",
+      "verification": [
+        "Plans/Backup_Restore_System.md#BRS-030",
+        "scripts/pm_backup_verify_depth.py"
+      ]
+    },
+    {
+      "id": "FS-C01",
+      "category": "ambiguity",
+      "title": "New restore UI defaults to In place rather than the packet safe normal as-new mode",
+      "repair_status": "repaired_static_contract",
+      "verification": [
+        "Plans/Backup_Restore_System.md#BRS-030"
+      ]
+    },
+    {
+      "id": "PERF-001",
+      "category": "actionable_finding",
+      "title": "Named Plan scopes stop at the aggregate owner and are missing from Orchestrator consumers",
+      "repair_status": "repaired_static_contract",
+      "verification": [
+        "Plans/Named_Plan_System.md#NPLAN-006",
+        "Plans/Orchestrator_Page.md#OP-037",
+        "Plans/PRD_Builder.md#PRDB-013",
+        "Plans/Plan_To_Node_Compilation.md#PNC-026",
+        "Plans/Planning_Wizard.md",
+        "tests/test_named_plan_semantics.py"
+      ],
+      "integration_status": "Canonical consumers and comparisons repaired here; GUI scope controls are on fix/packet-ui-20260927 pending concurrent settings integration."
+    },
+    {
+      "id": "PERF-002",
+      "category": "actionable_finding",
+      "title": "Performance fixture puts command/cancel phases into the closed ObservableWork state axis",
+      "repair_status": "repaired_and_verified_on_ui_branch_pending_integration",
+      "verification": [
+        "fix/packet-ui-20260927@60bd24773705a1004873a4c31dd7bfcd508c72eb",
+        "reports/packet-repairs-20260927/ui-port-map.md",
+        "reports/packet-repairs-20260927/evidence.json"
+      ],
+      "integration_status": "Held outside main while claude/happy-ramanujan-23lwck is actively changing selected settings; port authored fixes, never overwrite its generated HTML."
+    },
+    {
+      "id": "SET-AUD-001",
+      "category": "actionable_finding",
+      "title": "Universal search drops the exact managed-object target",
+      "repair_status": "repaired_and_verified_on_ui_branch_pending_integration",
+      "verification": [
+        "fix/packet-ui-20260927@60bd24773705a1004873a4c31dd7bfcd508c72eb",
+        "reports/packet-repairs-20260927/ui-port-map.md",
+        "reports/packet-repairs-20260927/evidence.json"
+      ],
+      "integration_status": "Held outside main while claude/happy-ramanujan-23lwck is actively changing selected settings; port authored fixes, never overwrite its generated HTML."
+    },
+    {
+      "id": "SERVER-F01",
+      "category": "actionable_finding",
+      "title": "Normal Updates screen still exposes a user frequency schedule",
+      "repair_status": "repaired_and_verified_on_ui_branch_pending_integration",
+      "verification": [
+        "fix/packet-ui-20260927@60bd24773705a1004873a4c31dd7bfcd508c72eb",
+        "reports/packet-repairs-20260927/ui-port-map.md",
+        "reports/packet-repairs-20260927/evidence.json"
+      ],
+      "integration_status": "Held outside main while claude/happy-ramanujan-23lwck is actively changing selected settings; port authored fixes, never overwrite its generated HTML."
+    },
+    {
+      "id": "OH-F01",
+      "category": "actionable_finding",
+      "title": "Tour checkpoint persists raw composer text and resumes without owner-state revalidation",
+      "repair_status": "repaired_and_verified_on_ui_branch_pending_integration",
+      "verification": [
+        "fix/packet-ui-20260927@60bd24773705a1004873a4c31dd7bfcd508c72eb",
+        "reports/packet-repairs-20260927/ui-port-map.md",
+        "reports/packet-repairs-20260927/evidence.json"
+      ],
+      "integration_status": "Held outside main while claude/happy-ramanujan-23lwck is actively changing selected settings; port authored fixes, never overwrite its generated HTML."
+    },
+    {
+      "id": "OH-F02",
+      "category": "actionable_finding",
+      "title": "Tour discards restoration recovery while reporting finished or skipped",
+      "repair_status": "repaired_and_verified_on_ui_branch_pending_integration",
+      "verification": [
+        "fix/packet-ui-20260927@60bd24773705a1004873a4c31dd7bfcd508c72eb",
+        "reports/packet-repairs-20260927/ui-port-map.md",
+        "reports/packet-repairs-20260927/evidence.json"
+      ],
+      "integration_status": "Held outside main while claude/happy-ramanujan-23lwck is actively changing selected settings; port authored fixes, never overwrite its generated HTML."
+    },
+    {
+      "id": "OH-F03",
+      "category": "actionable_finding",
+      "title": "Keep layout also skips restoration of temporary Chat state",
+      "repair_status": "repaired_and_verified_on_ui_branch_pending_integration",
+      "verification": [
+        "fix/packet-ui-20260927@60bd24773705a1004873a4c31dd7bfcd508c72eb",
+        "reports/packet-repairs-20260927/ui-port-map.md",
+        "reports/packet-repairs-20260927/evidence.json"
+      ],
+      "integration_status": "Held outside main while claude/happy-ramanujan-23lwck is actively changing selected settings; port authored fixes, never overwrite its generated HTML."
+    },
+    {
+      "id": "EGOLITE-F01",
+      "category": "maintenance",
+      "title": "Stale Origin fallback text in hidden concept metadata",
+      "repair_status": "repaired_and_verified_on_ui_branch_pending_integration",
+      "verification": [
+        "fix/packet-ui-20260927@60bd24773705a1004873a4c31dd7bfcd508c72eb",
+        "reports/packet-repairs-20260927/ui-port-map.md",
+        "reports/packet-repairs-20260927/evidence.json"
+      ],
+      "integration_status": "Held outside main while claude/happy-ramanujan-23lwck is actively changing selected settings; port authored fixes, never overwrite its generated HTML."
+    },
+    {
+      "id": "EGOLITE-X01",
+      "category": "actionable_finding",
+      "title": "Runner registration requires a preview with no specified authoritative producer",
+      "repair_status": "repaired_static_contract",
+      "verification": [
+        "Plans/Forge_Integrations.md#FGI-022",
+        "scripts/pm_forge_command_followup.py"
+      ]
+    },
+    {
+      "id": "EPOL-F01",
+      "category": "actionable_finding",
+      "title": "WSL platform contract stops short of required acquisition and feature probes",
+      "repair_status": "repaired_static_contract",
+      "verification": [
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/wsl_execution_contracts.schema.json",
+        "scripts/pm-platform-execution-policy-verify.py"
+      ]
+    },
+    {
+      "id": "EPOL-F02",
+      "category": "actionable_finding",
+      "title": "Apple-specific authoritative proof restriction is only partially retained",
+      "repair_status": "repaired_static_contract",
+      "verification": [
+        "Plans/Automated_Testing_System.md",
+        "scripts/pm-platform-execution-policy-verify.py"
+      ]
+    },
+    {
+      "id": "EPOL-F03",
+      "category": "actionable_finding",
+      "title": "Preserved assurance policy lacks result and acceptance propagation",
+      "repair_status": "repaired_static_contract",
+      "verification": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/platform_assurance_contract_fixtures.json",
+        "scripts/pm-platform-execution-policy-verify.py"
+      ]
+    },
+    {
+      "id": "EPOL-F04",
+      "category": "actionable_finding",
+      "title": "Internal update policy omits durable successful-check basis and retry shaping",
+      "repair_status": "repaired_static_contract",
+      "verification": [
+        "Plans/Release_Supply_Chain.md#RSC-019",
+        "Plans/storage-plan.md#SP-322",
+        "scripts/pm-update-schedule-storage.py",
+        "scripts/pm-platform-execution-policy-verify.py"
+      ]
+    }
+  ],
+  "command_mapping_completion": "reports/packet-repairs-20260927/command-mappings.json",
+  "runtime_claim_boundary": "Static authored contracts/fixtures and HTML concept only; no native handler, owner storage writer, production event or runtime admission.",
+  "ui_branch": {
+    "branch": "fix/packet-ui-20260927",
+    "commit": "60bd24773705a1004873a4c31dd7bfcd508c72eb",
+    "landing_status": "held_for_concurrent_settings_source_integration",
+    "active_settings_branch": "claude/happy-ramanujan-23lwck",
+    "inspected_settings_commit": "5853aed29358c705ef36bdc88ae169a245cab12a"
+  }
+}

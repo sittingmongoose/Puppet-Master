@@ -31,7 +31,7 @@ PROVIDER_PACKS = {
 
 
 def run_isolated_gate(pairs, *, expected_count=None, inputs=None):
-    """Run the real main loop; omit only unrelated storage/expansion checks.
+    """Run the real main loop; omit only unrelated storage/expansion/platform checks.
 
     Synthetic-input tests exercise bookkeeping with a small schema. The real
     provider-pack test uses unchanged on-disk inputs and real schema validators.
@@ -53,6 +53,8 @@ def run_isolated_gate(pairs, *, expected_count=None, inputs=None):
         mock.patch.object(GATE, "EXPECTED_CONTRACT_PAIR_COUNT", len(pairs) if expected_count is None else expected_count),
         mock.patch.object(GATE, "load_json", side_effect=load),
         mock.patch.object(GATE, "validate_onboarding_storage_contract", return_value=([], Counter())),
+        mock.patch.object(GATE, "validate_platform_execution_policy", return_value=([], Counter())),
+        mock.patch.object(GATE, "validate_update_schedule_storage_contract", return_value=([], Counter())),
         mock.patch.object(GATE, "validate_expansion_fixture_pack", return_value=([], Counter())),
         redirect_stdout(stream),
     ):
@@ -103,10 +105,10 @@ class ForgeProviderFixtureGateTests(unittest.TestCase):
         for fixture in PROVIDER_PACKS:
             with self.subTest(fixture=fixture):
                 self.assertEqual(GATE.CONTRACT_PAIRS.count((FORGE_SCHEMA, fixture)), 1)
-        self.assertEqual(len(GATE.CONTRACT_PAIRS), 31)
-        self.assertEqual(len(set(GATE.CONTRACT_PAIRS)), 31)
-        self.assertEqual(GATE.EXPECTED_CONTRACT_PAIR_COUNT, 31)
-        self.assertEqual(len({schema for schema, _ in GATE.CONTRACT_PAIRS}), 27)
+        self.assertEqual(len(GATE.CONTRACT_PAIRS), 35)
+        self.assertEqual(len(set(GATE.CONTRACT_PAIRS)), 35)
+        self.assertEqual(GATE.EXPECTED_CONTRACT_PAIR_COUNT, 35)
+        self.assertEqual(len({schema for schema, _ in GATE.CONTRACT_PAIRS}), 31)
         self.assertEqual(
             {fixture for schema, fixture in GATE.CONTRACT_PAIRS if schema == FORGE_SCHEMA},
             set(PROVIDER_PACKS) | {"Plans/forge_integration_contract_fixtures.json"},

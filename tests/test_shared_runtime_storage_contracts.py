@@ -1,4 +1,5 @@
 import copy
+import importlib.util
 import json
 import subprocess
 import sys
@@ -212,18 +213,28 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
         # Re-pinned 2026-09-25 (SP-320, DL-045; branch plans/ea-s09-coordination-prep-20260925):
         # coordination_event_records and coordination_read_model_projections are materialized in place
         # as SP-320 keyed value compositions, so 272 materialized and 21 deferred become 274 and 19.
-        # The family count stays 294.
-        self.assertEqual(len(self.registry["families"]), 294)
+        # SP-322 adds one Release-owned schedule family after this SP-320 pin.
+        self.assertEqual(len(self.registry["families"]), 295)
         self.assertEqual(
             Counter(row["status"] for row in self.registry["families"]),
             Counter(
                 {
-                    "materialized": 274,
+                    "materialized": 275,
                     "deferred_not_build_blocking": 19,
                     "compatibility_alias": 1,
                 }
             ),
         )
+
+    def test_live_registry_satisfies_readiness_census_and_value_contracts(self) -> None:
+        spec = importlib.util.spec_from_file_location(
+            "storage_readiness_census", ROOT / "scripts/pm-implementation-readiness.py"
+        )
+        readiness = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(readiness)
+        self.assertEqual(readiness.storage_value_registry_data_failures(
+            self.registry, path_label="Plans/storage_value_registry.json"
+        ), [])
 
     def test_closed_shared_runtime_families_are_materialized_exactly_once(self) -> None:
         for family_id in MATERIALIZED_FAMILY_IDS:
