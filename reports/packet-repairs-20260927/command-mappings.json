@@ -202,5 +202,14 @@
       "fixture_proof": "Plans/backup_restore_system_contract_fixtures.json; scripts/pm_backup_verify_depth.py",
       "runtime_limit": "handler_unavailable; static contract only"
     }
+  ],
+  "retained_owner_deferrals": [
+    {
+      "action_id": "ACT-025",
+      "canonical_route": "cmd.jujutsu.change.split",
+      "disposition": "newer_owner_explicitly_defers_effect",
+      "owner": "Plans/Jujutsu_Integration.md#JJI-003",
+      "reason": "The admitted interactive selection vocabulary is absent; interactive_editor_session_required remains explicit. Newer JJI-003/SCS-015 supersede the packet executable candidate. This is not an unresolved name mapping and this repair does not unlock deferred functionality."
+    }
   ]
 }
