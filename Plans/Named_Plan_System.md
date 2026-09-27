@@ -347,3 +347,125 @@ then bind `named_plan_id` on the Assistant Plan record. This document owns the `
 of that binding; `Plans/Assistant_Plan_Runtime.md` owns the Assistant Plan and its runtime, and
 this owner does not acquire authority over Plan content, versions, progress, or builds by virtue
 of a binding existing.
+
+## 10. Single owner-join resolver (2026-09-27)
+
+PERF-001 closes every immutable child-to-NamedPlan join through ONE resolver contract owned
+here, rather than duplicating each child state machine at every consumer. The closed shapes are
+`named_plan_owner_join_request`, `named_plan_child_owner_view`, `named_plan_owner_join_verdict`,
+and `named_plan_owner_join_case` in `Plans/named_plan_system_contracts.schema.json`; the
+substantive comparison is `scripts/pm_named_plan_semantics.py`, proven by
+`tests/test_named_plan_semantics.py` and the positive/negative fixtures in
+`Plans/named_plan_system_contract_fixtures.json`.
+
+A join request carries explicit immutable `project_id` and `named_plan_id` plus the exact
+`child_ref`, `child_kind`, `child_revision`, `child_currentness_sha256`, the expected aggregate
+revision and currentness hash, a read-or-mutate intent, and an optional claimed current/historical
+edge. The authoritative resolver compares those values field by field against two trusted actuals:
+the actual child-owner record and the actual aggregate record. It rejects wrong-Plan joins in the
+SAME Project, wrong-Project joins, stale child revision or hash, stale aggregate revision or hash,
+snapshot splits, orphans on neither aggregate edge, kind mismatches, focus-only requests without
+explicit identity, forged caller-proposed views, and edge-claim mismatches, with first-failure-wins
+precedence in the documented order. A verdict is accepted only when actual owner identity, revision,
+hash, aggregate identity and generation, snapshot unity, and edge membership all agree, and it
+names the found edge. The verdict itself carries no project or Plan identity, so ownership can
+never be manufactured from the requested Plan.
+
+Trust is split by producer. The GUI and caller supply only the request and an untrusted proposed
+owner view. The actual owner record is minted exclusively by the child owner's adapter reading the
+authoritative source keyed by the exact child kind and ref at one consistent snapshot; the actual
+aggregate comes from that same snapshot. The resolver verifies every proposed view field against
+the actual record before any join comparison uses it, so a forged view that agrees with the request
+still rejects when the actual disagrees. Record acquisition keys the exact child kind and ref and
+returns the stored original source edge; flat historical refs are membership-only and child kind
+always comes from the authoritative actual record, never from the flat list.
+
+Historical-edge acceptance authorizes read and history inspection only, never mutation: write,
+approve, compile, and handoff require a current-edge accept with mutate intent, and a mutate intent
+on a historical edge rejects. The closed shapes contain no match, verified, summary, lifecycle,
+status, or phase field, so a self-attested matching summary can never be shaped into a join input,
+and an opaque aggregate ref alone can never prove a join: actual kind, revision, and hash
+comparisons must pass first. Child lifecycle and status stay owned by the child owner; owner views
+carry identity plus snapshot fields only and the verdict carries no lifecycle claim. Scope view
+persistence, such as a remembered selected Plan, is convenience only and never join authority:
+every request still carries explicit identity and every join still resolves through this contract.
+Fixture cases that copy a record prove static conformance of the comparison logic, never native
+authenticity; live proof requires the adapters' actual consistent-snapshot source reads.
+
+This section invents no production storage keys, no EventRecord registrations, no new lifecycle,
+and no native handlers. The six `cmd.named_plan.*` commands and their `handler_unavailable`
+bindings are unchanged; consumers below use them as-is.
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/PRD_Builder.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Planning_Wizard.md
+
+### NPLAN-006 - Single Owner-Join Resolver Contract
+
+```yaml
+plan_unit_id: NPLAN-006
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Named_Plan_System.md
+canonical_text: >-
+  Every immutable child-to-NamedPlan join resolves through the single closed owner-join
+  contract: an explicit Project+NamedPlan request with exact child ref/kind/revision/hash,
+  expected aggregate generation, and read-or-mutate intent is compared against the trusted
+  actual child-owner record and actual aggregate at one consistent snapshot, after every
+  caller-proposed view field is verified against the actual. It accepts only on full agreement
+  with the found edge named, rejects wrong-Plan same-Project, wrong-Project, stale
+  child/aggregate revision/hash, snapshot-split, orphan, kind mismatch, focus-only, forged-view,
+  and edge-claim joins fail-closed, and never authorizes mutation on a historical edge. The join
+  carries no lifecycle and accepts no self-attested match summary or opaque ref as proof.
+gui_related: false
+gui_classification_reason: Join resolution is an identity/currentness contract; visible scope and switcher behavior stays in the consumer units.
+depends_on: [NPLAN-001, NPLAN-002]
+unblocks: [OP-037, PRDB-013, PNC-026]
+acceptance_criteria:
+  - The request, owner-view, verdict, and case shapes are closed with no match, summary, lifecycle, or status field.
+  - Same-Project wrong-Plan, stale child/aggregate revision/hash, snapshot-split, orphan, kind mismatch, focus-only, forged-view, and edge-claim joins all reject with their exact closed code.
+  - Accepted joins name the found current or historical edge; every rejection names exactly one code with no found edge.
+  - Fixture verdicts recompute field-identical from their four inputs under scripts/pm_named_plan_semantics.py.
+  - Historical-edge acceptance authorizes read only; mutate intent on a historical edge rejects.
+  - A forged view agreeing with the request still rejects when the actual record disagrees.
+  - Child lifecycle and status remain owned by the child owner and appear nowhere in the join shapes.
+validation_surfaces:
+  - python3 -m unittest tests.test_named_plan_semantics
+  - Plans/named_plan_system_contracts.schema.json
+  - Plans/named_plan_system_contract_fixtures.json
+risk_class: named_plan_join_false_accept
+reasoning_tier: high
+context_scope: named_plan_owner_join
+implementation_surfaces:
+  - Plans/Named_Plan_System.md
+  - Plans/named_plan_system_contracts.schema.json
+  - Plans/named_plan_system_contract_fixtures.json
+  - scripts/pm_named_plan_semantics.py
+  - tests/test_named_plan_semantics.py
+node_compile_hint:
+  mode: named_plan_owner_join_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08#PERF-001"
+preserved_exact_tokens:
+  - "named_plan_owner_join_request"
+  - "named_plan_child_owner_view"
+  - "named_plan_owner_join_verdict"
+  - "wrong_plan_same_project"
+  - "focus_only_no_explicit_identity"
+  - "proposed_owner_view_mismatch"
+  - "historical_edge_mutation_forbidden"
+  - "stale_aggregate_revision"
+negative_constraints:
+  - Do not duplicate child state machines at consumers to prove joins.
+  - Do not accept self-attested match summaries or opaque refs as join proof.
+  - Do not trust a caller-supplied owner view without verifying every field against the actual record.
+  - Do not authorize mutation on a historical edge.
+  - Do not infer Plan identity from focus, tab, thread, or active Goal.
+  - Do not invent storage keys, events, lifecycle, or handlers for the join.
+owner_hints:
+  - Plans/Named_Plan_System.md
+  - Plans/Orchestrator_Page.md
+  - Plans/PRD_Builder.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Planning_Wizard.md
+```

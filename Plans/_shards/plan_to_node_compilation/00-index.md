@@ -1,22 +1,23 @@
 # Shard Index: Plans/Plan_To_Node_Compilation.md
 
-Generated: 2026-09-13T23:55:18Z
+Generated: 2026-09-27T02:42:20Z
 
-Source SHA256: `f31d88c4b35996d247054ac9faffae91c07489df4d1bed10e6555f2824fcdb12`
+Source SHA256: `244ef6d88c377b3416c039b2b877204fbb152accf376f3ac8bc21b84f30df2fd`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `e0a909848257de48d695e13c19ce74e795d702bd0905c301e7bf18fce4a533dd`
-- [002 - 0. Scope](002-0.-scope.md) L5-L9 `26968bf7a7cf595352b8d030c35794169037951a09fd77470b14827392efc32f`
-- [003 - 1. Boundary](003-1.-boundary.md) L11-L21 `ef048fc1d87ce8b1bd37a3fc70ad42e03e4d28ce20b9bc19d8c6612d17e54f82`
-- [004 - 2. PlanUnits](004-2.-planunits.md) L23-L142 `fdd5209bf2a0d1f2d9726c59f409c187a3a7bfb400513896470534df245d9449`
-- [005 - FABLE Residual Plan-To-Node Contract Cleanup Addendum - 2026-07-07](005-fable-residual-plan-to-node-contract-cleanup-addendum-2026-07-07.md) L144-L204 `61adaad3149ee292a9ab411cc579329829ba332713c9362f5fa6a41f3e11dd62`
-- [006 - Implementation Readiness Gate Addendum - 2026-07-05](006-implementation-readiness-gate-addendum-2026-07-05.md) L206-L510 `f9808606f6b5895719527d5a6c39936f89c7680119704e5e44e02a044a6d29f2`
-- [007 - 4. Runtime Compiler Algorithm And Enablement](007-4.-runtime-compiler-algorithm-and-enablement.md) L512-L611 `070b245fde4e6eb5bee5ca7ab6a09f262565dbc05346bbeec7bdcb1ec1eb5305`
-- [008 - 5. Compilation Coverage](008-5.-compilation-coverage.md) L613-L632 `ff9e4b66c382fd5a726298ed41a324a7299a8420a9813b52c722cb2bb67c7350`
-- [009 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L634-L1044 `7e46ad2cfc4eebc27d716e5f1202c3f56f8cc8ef9f8c11fcd9e226385fbca733`
-- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L1047-L1443 `b8d35120165dfb593f6757d06efc7cb8058aec344b7abd25b4da4de8db075855`
-- [011 - Ledger Compile Addendum - pldg-20260622-001-fff](011-ledger-compile-addendum-pldg-20260622-001-fff.md) L1445-L1488 `166c7da99182b4baae9390058e005f13f61f8e7cc2eb7f901ba5ad2b4379ffb0`
-- [012 - Compile receipt timing and original dispatch evidence - 2026-09-13](012-compile-receipt-timing-and-original-dispatch-evidence-2026-09-13.md) L1491-L1674 `fd1c9c4a29fe73af67fe035a016db7232363d01acf832c4f357f02d1669e1ef0`
+- [001 - Preamble](001-preamble.md) L1-L3 `a871861faf244e6c31ab4684441f6caf390171341d3d8fe692966643d839d809`
+- [002 - 0. Scope](002-0.-scope.md) L5-L9 `9c20d179fcb75bce84579958c20fbedeeac065414cd8fc75405281365a0e0061`
+- [003 - 1. Boundary](003-1.-boundary.md) L11-L21 `b4f171cfdbc39c9080e1e33b3e3ef2285aa791d61c9848db1259a89349d83c4c`
+- [004 - 2. PlanUnits](004-2.-planunits.md) L23-L142 `41944482679457c8b9ee8aabba112b7d657ff8c89f125a0bde2105e4f5338c06`
+- [005 - FABLE Residual Plan-To-Node Contract Cleanup Addendum - 2026-07-07](005-fable-residual-plan-to-node-contract-cleanup-addendum-2026-07-07.md) L144-L204 `eda253f6ceab2b565062eb4f96cd676889fb4711c797d57e6c6d70802ea09bc9`
+- [006 - Implementation Readiness Gate Addendum - 2026-07-05](006-implementation-readiness-gate-addendum-2026-07-05.md) L206-L510 `15b0237dc550361b25606ba9c8976369f387c6291011f717e9ef2c0cf0e33838`
+- [007 - 4. Runtime Compiler Algorithm And Enablement](007-4.-runtime-compiler-algorithm-and-enablement.md) L512-L611 `04c311b09896d34d339eaff17ea97cc9f736c32e69124d665bd2edf5cbce49d4`
+- [008 - 5. Compilation Coverage](008-5.-compilation-coverage.md) L613-L632 `43dc4d7846bc89f0e0b99a2f17a3133e8851986c2164dc67812f53e6b51ae285`
+- [009 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L634-L1044 `1f6bf71f0ea370604c73b5ca7096a8a43cfe9e57894a996e0449c87f2fcdfc10`
+- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L1047-L1443 `20c5c419337c380cb8f47b8d4d11670223b0f34c7ea854f8e763ad78e8a7d58f`
+- [011 - Ledger Compile Addendum - pldg-20260622-001-fff](011-ledger-compile-addendum-pldg-20260622-001-fff.md) L1445-L1488 `c7051d3e04ec5747108fbf9cd8f35ac530daa23838d3b96df4bf07de793b4aaa`
+- [012 - Compile receipt timing and original dispatch evidence - 2026-09-13](012-compile-receipt-timing-and-original-dispatch-evidence-2026-09-13.md) L1491-L1674 `42d6d985d835e513b6ec83b269146b764b02694f348e843848b15cc7da66ad4a`
+- [013 - PERF-001 Named Plan join consumer (2026-09-27)](013-perf-001-named-plan-join-consumer-2026-09-27.md) L1676-L1745 `325a13524bbd5f3f338ec378531f9aaba6933c651ce4f646265f347e4bdb116d`

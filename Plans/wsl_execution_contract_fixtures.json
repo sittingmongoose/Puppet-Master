@@ -1,0 +1,321 @@
+{
+  "schema_id": "pm.wsl.execution_contract_fixtures.v1",
+  "owner_schema": "Plans/wsl_execution_contracts.schema.json",
+  "claim_boundary": "Static schema and fixture consistency only. No WSL distribution is attached or installed, no probe is executed, no update, repair, removal, or global reconfiguration happens, and no readiness is projected; runtime, provider, recovery, security, visual and performance proof remains NOT_RUN.",
+  "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+  "owner_unit": "CRAU-101",
+  "valid": [
+    {
+      "name": "host_wsl_off_is_healthy",
+      "definition": "wsl_host_state_record",
+      "value": {
+        "schema_id": "pm.wsl.host_state.v1",
+        "schema_version": "1.0.0",
+        "host_id": "host:win11-dev-01",
+        "observed_at": "2026-09-27T12:00:00Z",
+        "shared_runtime_projection_ref": "sir:projection:wsl-off",
+        "wsl_state": "off",
+        "wsl_version": null,
+        "health": "healthy",
+        "health_reason": "Native Windows execution is complete without WSL; off is a supported state, not a warning."
+      }
+    },
+    {
+      "name": "host_platform_unavailable_stays_explicit",
+      "definition": "wsl_host_state_record",
+      "value": {
+        "schema_id": "pm.wsl.host_state.v1",
+        "schema_version": "1.0.0",
+        "host_id": "host:win11-dev-01",
+        "observed_at": "2026-09-27T12:05:00Z",
+        "shared_runtime_projection_ref": "sir:projection:wsl-unavailable",
+        "wsl_state": "platform_unavailable",
+        "wsl_version": null,
+        "health": "unknown",
+        "health_reason": "Virtualization is disabled in firmware; the platform state stays explicit until re-probed after enablement."
+      }
+    },
+    {
+      "name": "attach_user_owned_compatible_distro",
+      "definition": "wsl_acquisition_record",
+      "value": {
+        "schema_id": "pm.wsl.acquisition.v1",
+        "schema_version": "1.0.0",
+        "host_id": "host:win11-dev-01",
+        "distro_name": "Ubuntu-24.04",
+        "distro_id": "env:wsl:ubuntu-24.04",
+        "acquisition_mode": "attach_user_owned",
+        "ownership": "user_owned",
+        "compatibility_probe_ref": "probe:compat:ubuntu-24.04:007",
+        "image_proof": null,
+        "lifecycle_ref": "sir:ilm:attach-external:op-4412:gen-3",
+        "decided_at": "2026-09-27T12:10:00Z"
+      }
+    },
+    {
+      "name": "install_pm_managed_signed_distro",
+      "definition": "wsl_acquisition_record",
+      "value": {
+        "schema_id": "pm.wsl.acquisition.v1",
+        "schema_version": "1.0.0",
+        "host_id": "host:win11-dev-01",
+        "distro_name": "PM-Exec-1",
+        "distro_id": "env:wsl:pm-exec-1",
+        "acquisition_mode": "install_pm_managed",
+        "ownership": "pm_managed",
+        "compatibility_probe_ref": null,
+        "image_proof": {
+          "image_id": "pm-wsl-exec",
+          "image_version": "2026.09.1",
+          "package_sha256": "3f2a1c4e5d6b7a8c9e0f1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f",
+          "signature_algorithm": "ed25519",
+          "key_id": "pm-release-2026-09",
+          "trust_root_ref": "release:trust-root:pm-internal-v3",
+          "provenance_ref": "release:provenance:pm-wsl-exec:2026.09.1",
+          "release_admission_receipt_ref": "release:admission:pm-wsl-exec:2026.09.1"
+        },
+        "lifecycle_ref": "sir:ilm:acquire:op-4413:gen-1",
+        "decided_at": "2026-09-27T12:12:00Z"
+      }
+    },
+    {
+      "name": "probes_mixed_availability_stays_explicit",
+      "definition": "wsl_distro_probe_record",
+      "value": {
+        "schema_id": "pm.wsl.distro_probes.v1",
+        "schema_version": "1.0.0",
+        "host_id": "host:win11-dev-01",
+        "distro_id": "env:wsl:ubuntu-24.04",
+        "observed_at": "2026-09-27T12:15:00Z",
+        "topology_generation": 118,
+        "probes": {
+          "distro_version_arch": {
+            "status": "available",
+            "detail": "Ubuntu 24.04 LTS, WSL2, x86-64, kernel 5.15.153.",
+            "evidence_ref": "probe:distro-version:007"
+          },
+          "systemd": {
+            "status": "available",
+            "detail": "systemd is PID 1; user units start.",
+            "evidence_ref": "probe:systemd:007"
+          },
+          "wslg": {
+            "status": "unavailable",
+            "detail": "No WSLg socket; GUI apps cannot launch in this distro.",
+            "evidence_ref": "probe:wslg:007"
+          },
+          "gpu": {
+            "status": "unknown",
+            "detail": null,
+            "evidence_ref": null
+          },
+          "network": {
+            "status": "available",
+            "detail": "Mirrored networking mode; outbound reachability observed.",
+            "evidence_ref": "probe:network:007",
+            "localhost_reachability": "reachable"
+          },
+          "mounts": {
+            "status": "available",
+            "detail": "Automount on; /mnt/c present via DrvFs; project source lives at /home/pm/checkout.",
+            "evidence_ref": "probe:mounts:007",
+            "filesystem_semantics": "drvfs metadatailm; fstab empty; linux fs ext4 case-sensitive",
+            "performance_class": "drvfs"
+          },
+          "interop": {
+            "status": "available",
+            "detail": "Windows interop enabled; .exe launch from Linux shell observed.",
+            "evidence_ref": "probe:interop:007"
+          },
+          "limits": {
+            "status": "available",
+            "detail": "8 vCPU, 24 GiB memory, 8 GiB swap observed; global .wslconfig read.",
+            "evidence_ref": "probe:limits:007",
+            "wslconfig_observed": true
+          },
+          "idle_shutdown": {
+            "status": "available",
+            "detail": "Idle auto-shutdown after 15 minutes; no active Goal lease currently held.",
+            "evidence_ref": "probe:idle:007"
+          },
+          "nested_virtualization": {
+            "status": "unavailable",
+            "detail": "Nested virtualization not exposed to this distro; KVM modules absent.",
+            "evidence_ref": "probe:nested:007"
+          },
+          "dependencies": {
+            "status": "unavailable",
+            "detail": "Two managed dependency packages missing; nothing installed without scope.",
+            "evidence_ref": "probe:deps:007",
+            "missing_packages": ["pm-agent-deps", "pm-build-essential"]
+          }
+        }
+      }
+    },
+    {
+      "name": "user_owned_repair_is_bounded",
+      "definition": "wsl_ownership_action_policy",
+      "value": {
+        "schema_id": "pm.wsl.ownership_action.v1",
+        "schema_version": "1.0.0",
+        "ownership": "user_owned",
+        "action": "repair",
+        "admission": "allowed_with_explicit_scope",
+        "reason": "Bounded repair (reinstall PM dependencies, re-run probes) needs explicit scope; reset, delete, and convert stay refused rows."
+      }
+    },
+    {
+      "name": "managed_reset_needs_destructive_confirmation",
+      "definition": "wsl_ownership_action_policy",
+      "value": {
+        "schema_id": "pm.wsl.ownership_action.v1",
+        "schema_version": "1.0.0",
+        "ownership": "pm_managed",
+        "action": "reset",
+        "admission": "requires_destructive_confirmation",
+        "reason": "Even PM-owned image state is destroyed by reset, so the user confirms destructively first."
+      }
+    },
+    {
+      "name": "global_shutdown_needs_impact_confirmation",
+      "definition": "wsl_ownership_action_policy",
+      "value": {
+        "schema_id": "pm.wsl.ownership_action.v1",
+        "schema_version": "1.0.0",
+        "ownership": "pm_managed",
+        "action": "global_shutdown",
+        "admission": "requires_impact_confirmation",
+        "reason": "wsl --shutdown stops every distribution, so the warning names that blast radius; per-distro stop is preferred."
+      }
+    },
+    {
+      "name": "explicit_linux_native_checkout_mapping",
+      "definition": "wsl_source_mapping_record",
+      "value": {
+        "schema_id": "pm.wsl.source_mapping.v1",
+        "schema_version": "1.0.0",
+        "host_id": "host:win11-dev-01",
+        "distro_id": "env:wsl:ubuntu-24.04",
+        "windows_path": "C:\\pm\\checkout",
+        "wsl_path": "/home/pm/checkout",
+        "mapping_kind": "linux_native_checkout",
+        "filesystem_semantics": "ext4 case-sensitive; no DrvFs permission translation",
+        "performance_class": "high",
+        "explicit": true,
+        "origin": "user_authored"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "attach_claims_pm_managed_ownership",
+      "definition": "wsl_acquisition_record",
+      "base_valid": "attach_user_owned_compatible_distro",
+      "rejects_for": "acquisition_mode/ownership binding: attach_user_owned requires user_owned",
+      "reason": "An attached distro stays user-owned; claiming managed ownership would let PM update, repair, or remove someone else's system (CRAU-101).",
+      "patch": {
+        "ownership": "pm_managed"
+      }
+    },
+    {
+      "name": "attach_without_compat_probe_pass",
+      "definition": "wsl_acquisition_record",
+      "base_valid": "attach_user_owned_compatible_distro",
+      "rejects_for": "attach_user_owned requires a non-null compatibility_probe_ref",
+      "reason": "Attach admits only a compatible WSL2 distro, and compatibility is a probe pass, not a name match or an assumption (CRAU-101).",
+      "patch": {
+        "compatibility_probe_ref": null
+      }
+    },
+    {
+      "name": "managed_install_without_image_proof",
+      "definition": "wsl_acquisition_record",
+      "base_valid": "install_pm_managed_signed_distro",
+      "rejects_for": "install_pm_managed requires a full wsl_image_proof_ref",
+      "reason": "A managed install admits only a signed versioned image; without Release proof there is no admission, only a blocked acquisition (CRAU-101, RSC-008).",
+      "patch": {
+        "image_proof": null
+      }
+    },
+    {
+      "name": "managed_install_claims_signing_without_release_admission",
+      "definition": "wsl_acquisition_record",
+      "base_valid": "install_pm_managed_signed_distro",
+      "rejects_for": "Release admission receipt is required in addition to image signing metadata",
+      "reason": "Caller-supplied hash, key and provenance fields do not prove Release admitted this exact .wsl image (CRAU-101, RSC-008).",
+      "patch": {
+        "image_proof.release_admission_receipt_ref": null
+      }
+    },
+    {
+      "name": "managed_install_with_empty_signing_key",
+      "definition": "wsl_acquisition_record",
+      "base_valid": "install_pm_managed_signed_distro",
+      "rejects_for": "wsl_image_proof_ref.key_id is a non-empty string",
+      "reason": "An empty signing identity is not a signature; untrusted or half-described images fail closed instead of installing (CRAU-101, RSC-008).",
+      "patch": {
+        "image_proof.key_id": ""
+      }
+    },
+    {
+      "name": "probe_invents_an_assumed_status",
+      "definition": "wsl_distro_probe_record",
+      "base_valid": "probes_mixed_availability_stays_explicit",
+      "rejects_for": "probe_status closed enum available/unavailable/unknown",
+      "reason": "There is no assumed outcome: an unrun GPU probe reports unknown, never a filled-in available that would project Ready by assumption (CRAU-101).",
+      "patch": {
+        "probes.gpu.status": "assumed_available"
+      }
+    },
+    {
+      "name": "drvfs_mount_claims_native_performance",
+      "definition": "wsl_distro_probe_record",
+      "base_valid": "probes_mixed_availability_stays_explicit",
+      "rejects_for": "mounts performance_class is an observed closed value, not a claim",
+      "reason": "/mnt/c is not an equivalent high-performance Linux source root; a DrvFs observation cannot borrow the linux_native class (CRAU-101).",
+      "patch": {
+        "probes.mounts.performance_class": "linux_native_equivalent"
+      }
+    },
+    {
+      "name": "user_owned_reset_admitted",
+      "definition": "wsl_ownership_action_policy",
+      "base_valid": "managed_reset_needs_destructive_confirmation",
+      "rejects_for": "user_owned reset/delete/convert_wsl1/rollback conditional requires refused",
+      "reason": "Repair on a user-owned distro can never reset, delete, or convert it; the destructive confirmation that fits a managed distro does not transfer (CRAU-101).",
+      "patch": {
+        "ownership": "user_owned"
+      }
+    },
+    {
+      "name": "global_shutdown_silently_allowed",
+      "definition": "wsl_ownership_action_policy",
+      "base_valid": "global_shutdown_needs_impact_confirmation",
+      "rejects_for": "global_shutdown conditional requires requires_impact_confirmation",
+      "reason": "wsl --shutdown stops every distribution, so plain allowed would hide the blast radius the warning must name (CRAU-101).",
+      "patch": {
+        "admission": "allowed"
+      }
+    },
+    {
+      "name": "wsl_off_marked_degraded",
+      "definition": "wsl_host_state_record",
+      "base_valid": "host_wsl_off_is_healthy",
+      "rejects_for": "wsl_state off conditional requires health healthy",
+      "reason": "WSL Off is healthy: flagging a supported off state as needing attention would turn a first-class native-Windows setup into a defect (CRAU-101).",
+      "patch": {
+        "health": "attention_required"
+      }
+    },
+    {
+      "name": "silent_source_move_recorded",
+      "definition": "wsl_source_mapping_record",
+      "base_valid": "explicit_linux_native_checkout_mapping",
+      "rejects_for": "wsl_source_mapping_record.explicit const true",
+      "reason": "A mapping exists only as an explicit record; a non-explicit row would be the silent source move the contract forbids (CRAU-101).",
+      "patch": {
+        "explicit": false
+      }
+    }
+  ]
+}

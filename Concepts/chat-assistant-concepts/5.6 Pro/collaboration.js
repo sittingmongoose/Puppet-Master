@@ -1044,6 +1044,18 @@
       (c.clean_completion ? '' : '<strong>Needs attention</strong>') + bits.join('') + '</div>';
   }
 
+  /* Chat WOW: the roster reads at a glance -- up to four participant initials,
+     ringed by their live state, then +N. Presentation only; the list stays in
+     the expanded body and the panel. */
+  function avatarStack(run) {
+    var list = run.participants || [];
+    if (!list.length) return '';
+    var shown = list.slice(0, 4), more = list.length - shown.length;
+    return '<span class="tx-avatars" aria-hidden="true">' + shown.map(function (p) {
+      var tone = PSTATE_TONE[p.status] || 'idle';
+      return '<i data-tone="' + esc(tone === 'working' ? 'run' : tone === 'blocked' ? 'bad' : tone) + '">' + esc((p.name || '?').slice(0, 2).toUpperCase()) + '</i>';
+    }).join('') + (more > 0 ? '<i class="more">+' + more + '</i>' : '') + '</span>';
+  }
   function renderCard(ctx, run) {
     if(run.crew?.planBinding)refreshPlanCrew(run.crew.planBinding.plan_id);
     var expanded = !!UI.expanded[run.id];
@@ -1061,6 +1073,7 @@
     return '<article class="event-card collab-card collab-kind-' + esc(run.kind) + '" data-k="collab-card-' + esc(run.id) + '" data-run-id="' + esc(run.id) + '">' +
       '<div class="collab-card-head">' +
         '<span class="collab-kind-badge">' + ctx.icon(KIND_ICON[run.kind], 13) + esc(KIND_LABEL[run.kind]) + '</span>' +
+        avatarStack(run) +
         '<strong class="collab-card-title">' + esc(run.title) + '</strong>' +
         statusChip(run.status, run.blockedReason) +
       '</div>' +

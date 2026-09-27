@@ -72,8 +72,12 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:fo
 svg { display:block; }
 ::selection { background:color-mix(in srgb,var(--accent) 32%,transparent); }
 
-body[data-theme="basic-dark"] { color-scheme:dark; --canvas:#080a11;--surface:#0e111a;--surface-2:#131725;--surface-3:#1a2030;--surface-4:#222a3b;--text:#f3f5fb;--muted:#8e97aa;--subtle:#626b7d;--border:#252b39;--border-strong:#353d50;--accent:#8b72ff;--accent-2:#5cc8ff;--positive:#5cd69b;--warning:#f5bd55;--danger:#ff6c7d;--glass:rgba(18,22,34,.92);--code:#090d16;--user:#22203a;--assistant:#111621; }
-body[data-theme="basic-light"] { color-scheme:light; --canvas:#edf0f6;--surface:#ffffff;--surface-2:#f5f7fb;--surface-3:#e9edf5;--surface-4:#dfe4ee;--text:#111827;--muted:#667085;--subtle:#8d96a8;--border:#dce1eb;--border-strong:#c8cfdd;--accent:#6552df;--accent-2:#187da8;--positive:#16845a;--warning:#a96400;--danger:#c73b52;--glass:rgba(255,255,255,.94);--code:#f3f5f8;--user:#ece9ff;--assistant:#fff; }
+/* Chat WOW accent rule (2026-09-26): Basic neutrals were navy (hue ~225), so with a violet
+   accent and a violet user bubble the whole transcript read as one blue-purple wash. The
+   neutrals are now graphite; the accent stays violet and is spent only on live work and
+   on items that need the reader. */
+body[data-theme="basic-dark"] { color-scheme:dark; --canvas:#09090b;--surface:#101012;--surface-2:#151518;--surface-3:#1c1c20;--surface-4:#242429;--text:#f3f3f5;--muted:#96969f;--subtle:#686871;--border:#25252a;--border-strong:#35353c;--accent:#8b72ff;--accent-2:#5cc8ff;--positive:#5cd69b;--warning:#f5bd55;--danger:#ff6c7d;--glass:rgba(20,20,23,.92);--code:#0b0b0d;--user:#232327;--assistant:#131316; }
+body[data-theme="basic-light"] { color-scheme:light; --canvas:#f1f1f3;--surface:#ffffff;--surface-2:#f7f7f8;--surface-3:#ececef;--surface-4:#e2e2e6;--text:#16161a;--muted:#6b6b74;--subtle:#95959d;--border:#e1e1e5;--border-strong:#cdcdd3;--accent:#6552df;--accent-2:#187da8;--positive:#16845a;--warning:#a96400;--danger:#c73b52;--glass:rgba(255,255,255,.94);--code:#f4f4f6;--user:#efeff2;--assistant:#fff; }
 body[data-theme="friendly-dark"] { color-scheme:dark; --on-accent:#3d1020;--canvas:#111018;--surface:#191824;--surface-2:#211f2e;--surface-3:#2a2738;--surface-4:#343043;--text:#fff8f4;--muted:#b5aebd;--subtle:#827a8d;--border:#373243;--border-strong:#4b4458;--accent:#ff8eb0;--accent-2:#8fdbcf;--positive:#86d8a7;--warning:#ffd078;--danger:#ff7e87;--glass:rgba(29,27,40,.92);--code:#12111a;--user:#38243a;--assistant:#1d1c29; }
 body[data-theme="friendly-light"] { color-scheme:light; --canvas:#f8f2ef;--surface:#fffaf7;--surface-2:#f7ece8;--surface-3:#efdfda;--surface-4:#e5d2cc;--text:#382e35;--muted:#756772;--subtle:#a3929d;--border:#eadbd6;--border-strong:#d8c3bc;--accent:#cf5f85;--accent-2:#268f83;--positive:#2f8d63;--warning:#9b6815;--danger:#c94f5c;--glass:rgba(255,250,247,.94);--code:#f4e9e6;--user:#f8dde7;--assistant:#fffaf7; }
 body[data-theme="glass-dark"] { color-scheme:dark; --on-accent:#1b1030;--canvas:#130d2b;--surface:rgba(22,16,47,.72);--surface-2:rgba(34,25,65,.72);--surface-3:rgba(54,40,88,.68);--surface-4:rgba(71,53,107,.72);--text:#faf7ff;--muted:#b0a8c9;--subtle:#7c7298;--border:rgba(181,159,255,.16);--border-strong:rgba(196,179,255,.28);--accent:#b287ff;--accent-2:#75d7ef;--positive:#7be0af;--warning:#ffd074;--danger:#ff8198;--glass:rgba(24,17,52,.82);--code:rgba(8,6,22,.72);--user:rgba(104,67,160,.35);--assistant:rgba(25,20,50,.72); }
@@ -156,6 +160,9 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .thread-row.active { background:color-mix(in srgb,var(--accent) 12%,var(--surface-3));color:var(--text); }
 
 .thread-copy { min-width:0;padding-right:2px; }
+.thread-row:hover .thread-copy,
+.thread-row:has(.thread-more:focus) .thread-copy,
+.thread-row:has(.thread-more:focus-visible) .thread-copy { padding-right:30px; }
 .thread-title { display:flex;align-items:center;gap:5px;font-weight:620;font-size:13px;white-space:nowrap; min-width:0; }
 .thread-time { flex:0 0 auto; white-space:nowrap; font-variant-numeric:tabular-nums; color:var(--subtle); font-weight:500; font-size:12px; }
 .thread-name { min-width:0; overflow:hidden; text-overflow:ellipsis; }
@@ -163,9 +170,8 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .thread-sub .summary { overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
 .thread-lead { position:relative;width:28px;min-height:28px;display:grid;place-items:center;align-self:start;flex-shrink:0; }
 .thread-status-slot { width:18px;height:18px;display:grid;place-items:center;transition:opacity 130ms,transform var(--spring-soft); }
-.thread-more { position:absolute;inset:0;width:28px;height:28px;margin:0;padding:0;opacity:0;transform:scale(.82);pointer-events:none;transition:opacity 130ms,transform var(--spring-soft); }
-.thread-row:hover .thread-more,.thread-row:focus-within .thread-more { opacity:1;transform:scale(1);pointer-events:auto; }
-.thread-row:hover .thread-status-slot,.thread-row:focus-within .thread-status-slot { opacity:0;transform:scale(.6);pointer-events:none; }
+.thread-more { position:absolute;top:50%;right:4px;width:28px;height:28px;margin:0;padding:0;opacity:0;transform:translateY(-50%) scale(.82);pointer-events:none;transition:opacity 130ms,transform var(--spring-soft); }
+.thread-row:hover .thread-more,.thread-more:focus,.thread-more:focus-visible { opacity:1;transform:translateY(-50%) scale(1);pointer-events:auto; }
 .status-dot { width:7px;height:7px;border-radius:50%;background:var(--subtle); }
 .status-dot.working,.status-dot.reviewing { background:var(--warning);animation:status-pulse 1.5s ease-in-out infinite; }
 .status-dot.complete,.status-dot.idle { background:var(--positive); }.status-dot.blocked,.status-dot.failed { background:var(--danger); }.status-dot.waiting,.status-dot.paused { background:var(--accent-2); }

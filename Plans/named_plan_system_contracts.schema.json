@@ -2,14 +2,18 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/named_plan_system/1.0.0/named_plan_system_contracts.schema.json",
   "title": "Puppet Master Named Plan System contracts",
-  "description": "Closed NamedPlan aggregate, lifecycle command, result, and migration receipt contracts.",
+  "description": "Closed NamedPlan aggregate, lifecycle command, result, migration receipt, and single owner-join resolver contracts.",
   "oneOf": [
     {"$ref": "#/$defs/named_plan_record"},
     {"$ref": "#/$defs/named_plan_action_request"},
     {"$ref": "#/$defs/named_plan_action_result"},
     {"$ref": "#/$defs/named_plan_action_error"},
     {"$ref": "#/$defs/named_plan_action_availability"},
-    {"$ref": "#/$defs/named_plan_migration_receipt"}
+    {"$ref": "#/$defs/named_plan_migration_receipt"},
+    {"$ref": "#/$defs/named_plan_owner_join_request"},
+    {"$ref": "#/$defs/named_plan_child_owner_view"},
+    {"$ref": "#/$defs/named_plan_owner_join_verdict"},
+    {"$ref": "#/$defs/named_plan_owner_join_case"}
   ],
   "$defs": {
     "non_empty_string": {"type": "string", "minLength": 1, "maxLength": 512},
@@ -46,6 +50,7 @@
         "thread_group_ref": {"$ref": "#/$defs/safe_ref"},
         "revision": {"type": "integer", "minimum": 1},
         "currentness_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "snapshot_ref": {"$ref": "#/$defs/safe_ref"},
         "created_at_utc": {"type": "string", "format": "date-time"},
         "updated_at_utc": {"type": "string", "format": "date-time"},
         "last_activity_at_utc": {"oneOf": [{"type": "string", "format": "date-time"}, {"type": "null"}]},
@@ -189,6 +194,84 @@
         "quarantined_child_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/safe_ref"}},
         "unresolved_risk_codes": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_empty_string"}},
         "completed_at_utc": {"type": "string", "format": "date-time"}
+      }
+    },
+    "named_plan_child_kind": {"enum": ["prd", "planning_run", "approved_plan_pack", "plan_compile_run", "goal_run", "assistant_plan_link"]},
+    "named_plan_owner_join_edge": {"enum": ["current", "historical"]},
+    "named_plan_rejection_code": {"enum": ["wrong_plan_same_project", "wrong_project", "stale_child_revision", "stale_child_hash", "stale_aggregate_revision", "stale_aggregate_hash", "orphan_no_aggregate_edge", "kind_mismatch", "focus_only_no_explicit_identity", "incomplete_join_request", "owner_record_mismatch", "proposed_owner_view_mismatch", "snapshot_mismatch", "edge_claim_mismatch", "historical_edge_mutation_forbidden"]},
+    "named_plan_owner_join_request": {
+      "title": "NamedPlanOwnerJoinRequest",
+      "$anchor": "NamedPlanOwnerJoinRequest",
+      "description": "Single closed join question: does this exact child belong to this explicit immutable Project+NamedPlan identity, at this expected aggregate generation, for this read-or-mutate intent. Carries no lifecycle claim and no self-attested match summary.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "project_id", "named_plan_id", "child_ref", "child_kind", "child_revision", "child_currentness_sha256", "expected_aggregate_revision", "expected_aggregate_currentness_sha256", "intent", "claimed_edge"],
+      "properties": {
+        "schema_id": {"const": "pm.named_plan.owner_join_request.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "project_id": {"$ref": "#/$defs/non_empty_string"},
+        "named_plan_id": {"$ref": "#/$defs/non_empty_string"},
+        "child_ref": {"$ref": "#/$defs/safe_ref"},
+        "child_kind": {"$ref": "#/$defs/named_plan_child_kind"},
+        "child_revision": {"type": "integer", "minimum": 1},
+        "child_currentness_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "expected_aggregate_revision": {"type": "integer", "minimum": 1},
+        "expected_aggregate_currentness_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "intent": {"enum": ["read", "mutate"]},
+        "claimed_edge": {"oneOf": [{"$ref": "#/$defs/named_plan_owner_join_edge"}, {"type": "null"}]}
+      }
+    },
+    "named_plan_child_owner_view": {
+      "title": "NamedPlanChildOwnerView",
+      "description": "Minimal identity projection of a child-owner record: identity fields plus the consistent-snapshot ref the read came from. Child lifecycle and status stay owned by the child owner and are never carried here. Only the child owner's adapter mints authoritative views; caller-proposed views are untrusted until verified field by field against the actual.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "child_ref", "child_kind", "project_id", "named_plan_id", "child_revision", "child_currentness_sha256", "snapshot_ref"],
+      "properties": {
+        "schema_id": {"const": "pm.named_plan.child_owner_view.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "child_ref": {"$ref": "#/$defs/safe_ref"},
+        "child_kind": {"$ref": "#/$defs/named_plan_child_kind"},
+        "project_id": {"$ref": "#/$defs/non_empty_string"},
+        "named_plan_id": {"$ref": "#/$defs/non_empty_string"},
+        "child_revision": {"type": "integer", "minimum": 1},
+        "child_currentness_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "snapshot_ref": {"$ref": "#/$defs/safe_ref"}
+      }
+    },
+    "named_plan_owner_join_verdict": {
+      "title": "NamedPlanOwnerJoinVerdict",
+      "description": "Authoritative accept/reject answer recomputed from the supplied owner view and aggregate edges. Accepted verdicts name the found edge; rejected verdicts name the single rejection code.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "decision", "rejection_code", "edge_found"],
+      "properties": {
+        "schema_id": {"const": "pm.named_plan.owner_join_verdict.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "decision": {"enum": ["accepted", "rejected"]},
+        "rejection_code": {"oneOf": [{"$ref": "#/$defs/named_plan_rejection_code"}, {"type": "null"}]},
+        "edge_found": {"oneOf": [{"$ref": "#/$defs/named_plan_owner_join_edge"}, {"type": "null"}]}
+      },
+      "allOf": [
+        {"if": {"properties": {"decision": {"const": "accepted"}}}, "then": {"properties": {"rejection_code": {"type": "null"}, "edge_found": {"$ref": "#/$defs/named_plan_owner_join_edge"}}}},
+        {"if": {"properties": {"decision": {"const": "rejected"}}}, "then": {"properties": {"rejection_code": {"$ref": "#/$defs/named_plan_rejection_code"}}}}
+      ]
+    },
+    "named_plan_owner_join_case": {
+      "title": "NamedPlanOwnerJoinCase",
+      "description": "Static join fixture: one caller request, the caller-proposed owner view, the independent actual owner record and actual aggregate read by adapters at one consistent snapshot, and the expected verdict. Static conformance only: fixtures prove the comparison logic, never native authenticity. The semantic validator recomputes the verdict from the four inputs and compares it field by field.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "case_name", "join_request", "owner_view", "actual_owner_record", "aggregate", "expected_verdict"],
+      "properties": {
+        "schema_id": {"const": "pm.named_plan.owner_join_case.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "case_name": {"$ref": "#/$defs/non_empty_string"},
+        "join_request": {"$ref": "#/$defs/named_plan_owner_join_request"},
+        "owner_view": {"$ref": "#/$defs/named_plan_child_owner_view", "description": "Caller-proposed owner view. Untrusted: every field is verified against actual_owner_record before any join comparison uses it."},
+        "actual_owner_record": {"$ref": "#/$defs/named_plan_child_owner_view", "description": "Trusted actual owner record minted by the child owner's adapter reading the authoritative source at the case snapshot. Never supplied by the GUI or caller."},
+        "aggregate": {"$ref": "#/$defs/named_plan_record", "description": "Trusted actual aggregate record at the case snapshot. Never supplied by the GUI or caller."},
+        "expected_verdict": {"$ref": "#/$defs/named_plan_owner_join_verdict"}
       }
     }
   }

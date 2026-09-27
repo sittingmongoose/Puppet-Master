@@ -132,6 +132,9 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
   overflow: hidden;
   border-radius: 12px;
   background: var(--surface-2);
+  /* The shared .hover-card blur clips the border through the top radius. */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   /* Column flex + a viewport cap so the card fits a short window; .ab-body is
      the part that gives. Without this the card simply grew past the bottom. */
   display: flex; flex-direction: column;
@@ -164,6 +167,7 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
   padding: 8px 12px;
   border-bottom: 1px solid var(--border);
   background: var(--surface-2);
+  border-radius: 11px 11px 0 0;
 }
 .ab-card .ab-head strong { display: block; font-size: 14px; line-height: 18px; font-weight: 650; color: var(--text); }
 .ab-card .ab-head-meta {

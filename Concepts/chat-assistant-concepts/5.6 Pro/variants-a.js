@@ -87,9 +87,11 @@
       const i = Number(btn.dataset.value);
       /* Clicking the CURRENT disc always returns to following the live run
          (the rails equivalent of orbit's core); any other disc pins, and
-         clicking the pinned disc again unpins. */
-      if (btn.classList.contains('current')) ui.pin = null;
-      else ui.pin = ui.pin === i ? null : i;
+         clicking the pinned disc again unpins. Pins key on the subject, not its
+         position, so a cluster forming mid-run never moves the pin. */
+      if (btn.classList.contains('current')) { ui.pin = null; ui.pinUid = null; }
+      else if (ui.pin === i) { ui.pin = null; ui.pinUid = null; }
+      else { ui.pin = i; ui.pinUid = (ui.list && ui.list[i]) || null; }
       ui.expanded = true;
       ctx.renderApp();
       return true;
@@ -106,7 +108,7 @@
       // The registry invokes the previous owner once when this hook declines.
       EXT.chainAction('reset-working', (ctx, btn) => {
         const card = btn && btn.closest ? btn.closest('.working-card') : null;
-        if (card) { const ui = RAIL8_UI[card.dataset.cardUi]; if (ui) { ui.pin = null; ui.expanded = null; } }
+        if (card) { const ui = RAIL8_UI[card.dataset.cardUi]; if (ui) { ui.pin = null; ui.pinUid = null; ui.expanded = null; } }
         return false;
       });
     }
@@ -144,37 +146,56 @@
 
     /* An accumulating rail: only STARTED subjects have discs, keyed by uid so
        duplicate subjects never collide and `enter` fires exactly once. */
-    const spawned = completed ? steps : steps.slice(0, index + 1);
-    const n = spawned.length;
+    /* Chat WOW M4: the same display list as Orbit (window.PM56_ORBIT.items):
+       several subjects live at once, failed and waiting flags, clusters past 16
+       and an Earlier fold past 30 -- so a 140-tool run is a readable rail, not a
+       wall. Falls back to one disc per started subject if orbit.js is absent. */
+    const items = (window.PM56_ORBIT && window.PM56_ORBIT.items) ? window.PM56_ORBIT.items(ctx, rec)
+      : (completed ? steps : steps.slice(0, index + 1)).map((s, i) => ({ idx: [i], uid: s.uid, kind: s.kind, inst: s, count: 1, live: !completed && i === index, done: completed || i < index, hasFocus: i === index }));
+    const n = items.length;
+    ui.list = items.map((it) => it.uid);
     const superseded = !!rec.supersededBy;
     const expanded = ui.expanded != null ? ui.expanded : (!completed && !superseded);
     ui._eff = expanded;
-    const liveIdx = Math.min(index, n - 1);
-    const pin = ui.pin != null && ui.pin >= 0 && ui.pin < n ? ui.pin : null;
-    const selIdx = pin != null ? pin : liveIdx;
-    const sel = steps[selIdx];
+    let liveI = 0; items.forEach((it, i) => { if (it.hasFocus) liveI = i; });
+    let pinI = null;
+    if (ui.pinUid != null) { const at = ui.list.indexOf(ui.pinUid); if (at >= 0) pinI = at; }
+    else if (ui.pin != null && ui.pin >= 0 && ui.pin < n) pinI = ui.pin;
+    const selI = pinI != null ? pinI : liveI;
+    const selItem = items[selI];
+    const sel = selItem.inst;
     const shut = completed && !expanded;
 
-    const track = spawned.map((s, i) => {
-      const cur = !completed && i === liveIdx;
-      const cls = 'pm-rail-item rail8-item ' + (cur ? 'current enter' : 'done') + (i === selIdx && pin != null ? ' pinned' : '');
-      const st = i < liveIdx ? 'completed' : cur ? 'in progress' : 'completed';
-      const statBit = s.stat ? `${s.label} · ${s.stat}` : s.label;
-      return `<button type="button" class="${cls}" data-k="ri:${esc(s.uid)}" data-action="rail8-pin" data-value="${i}" data-step-kind="${esc(s.kind)}" data-hover-key="${esc(ctx.cardId + ':r8:' + s.uid)}" data-hover-tip="${esc(statBit + '\n' + s.verb + ' (' + st + ')')}" aria-pressed="${i === selIdx && pin != null ? 'true' : 'false'}" aria-label="${esc(s.label)}${s.stat ? ', ' + esc(s.stat) : ''}">${icon(s.icon, 11)}</button>`;
+    const track = items.map((it, i) => {
+      const s = it.inst, cur = it.live;
+      const cls = 'pm-rail-item rail8-item ' + (cur ? 'current enter' : 'done') + (i === selI && pinI != null ? ' pinned' : '')
+        + (it.cluster ? ' cluster' : '') + (it.status === 'failed' ? ' failed' : it.status === 'waiting' ? ' waiting' : '');
+      const st = it.status === 'failed' ? 'failed' : it.status === 'waiting' ? 'waiting for you' : cur ? 'in progress' : 'completed';
+      const label = (it.earlier ? 'Earlier' : s.label) + (it.count > 1 ? ' ×' + it.count : '');
+      const statBit = it.count > 1 ? label : (s.stat ? `${s.label} · ${s.stat}` : s.label);
+      return `<button type="button" class="${cls}" data-k="ri:${esc(it.uid)}" data-action="rail8-pin" data-value="${i}" data-step-kind="${esc(s.kind)}" data-hover-key="${esc(ctx.cardId + ':r8:' + it.uid)}" data-hover-tip="${esc(statBit + '\n' + (it.count > 1 ? it.count + ' subjects' : s.verb) + ' (' + st + ')')}" aria-pressed="${i === selI && pinI != null ? 'true' : 'false'}" aria-label="${esc(label)}${s.stat && it.count === 1 ? ', ' + esc(s.stat) : ''}">${icon(it.earlier ? 'history' : s.icon, 11)}${it.count > 1 ? `<b class="orbit-node-count">${it.count}</b>` : ''}</button>`;
     }).join('');
 
     const m = railMeta(sel);
-    const past = completed || selIdx < liveIdx;
+    const past = completed || selItem.done;
+    const ns = (window.PM56_ORBIT && window.PM56_ORBIT.narration) ? window.PM56_ORBIT.narration({ ctx, state: ctx.state }) : null;
     const label = shut
       ? `<span class="rail8-head-label" data-k="l8"><span class="rail8-sum">${M.roll(total)} tools used</span></span>`
-      : `<span class="rail8-head-label" data-k="l8"><span class="rail8-verb ${running && pin == null && !completed ? 'pm-shimmer' : 'pm-shimmer pm-settled'}" data-k="v8:${esc(sel.uid)}">${esc(past ? m[1] : m[0])}</span><span class="rail8-count" data-k="c8:${esc(sel.uid)}">${esc(sel.stat || m[2])}</span></span>`;
+      : (ns && !ns.leading && pinI == null)
+        ? `<span class="rail8-head-label" data-k="l8"><span class="rail8-verb rail8-narr" data-k="n8:${ns.i}">${esc(ns.text)}</span></span>`
+        : `<span class="rail8-head-label" data-k="l8"><span class="rail8-verb ${running && pinI == null && !completed ? 'pm-shimmer' : 'pm-shimmer pm-settled'}" data-k="v8:${esc(selItem.uid)}">${esc(selItem.count > 1 ? (selItem.earlier ? 'Earlier' : (past ? m[1] : m[0])) + ' ×' + selItem.count : (past ? m[1] : m[0]))}</span><span class="rail8-count" data-k="c8:${esc(selItem.uid)}">${esc(selItem.count > 1 ? '' : (sel.stat || m[2]))}</span></span>`;
 
     /* The chevron is a REAL region toggle now — present live and completed,
        and it never touches the record. */
     const chev = `<button type="button" class="rail8-chev ${expanded ? 'open' : ''}" data-k="chev8" data-action="rail8-toggle" data-hover-key="${esc(ctx.cardId + ':chev8')}" data-hover-tip="${esc(expanded ? 'Collapse the detail rows' : 'Show the detail rows')}" aria-expanded="${expanded ? 'true' : 'false'}">${icon('down', 12)}</button>`;
 
     let under = '';
-    if (expanded) under = rail8Rows(ctx, sel).map((r, j) => rail8Row(ctx, sel, r, j, `r8:${sel.uid}:${j}`)).join('');
+    if (expanded) {
+      const members = selItem.count > 1 ? selItem.idx.slice(-8).map((k) => steps[k]) : [sel];
+      under = members.map((inst) => (selItem.count > 1 ? `<span class="orbit-member" data-k="r8m:${esc(inst.uid)}"><b>${esc(inst.label)}</b>${inst.stat ? ' · ' + esc(inst.stat) : ''}</span>` : '')
+        + rail8Rows(ctx, inst).map((r, j) => rail8Row(ctx, inst, r, j, `r8:${inst.uid}:${j}`)).join('')).join('');
+      if (ns && ns.leading) under = `<div class="orbit-narration rail8-narration" data-k="r8narr:${ns.i}"><span class="orbit-narration-mark"></span><span class="wa-prose pm-stream">${M.words(ns.text)}</span></div>` + under;
+    }
     else if (completed) under = `<span class="rail8-idle" data-k="idle8">${workReceipt({ elapsed: false })}</span>`;
 
     return `<div class="rail8 ${completed ? 'done8' : ''}" data-k="rail8" style="--rail8-n:${n}">`
@@ -183,6 +204,9 @@
       + `</div>`;
   };
   W[8].ownsAgents = true;
+  /* Chat WOW M4: the turn's answer has started -- fold the rows region away
+     (turn-stream.js calls this for the turn's last burst). */
+  window.PM56_RAIL8 = { compact: (cardId) => { const ui = rail8Ui(cardId); ui.expanded = false; } };
 
   /* =====================================================================
      9 — WORD STREAM

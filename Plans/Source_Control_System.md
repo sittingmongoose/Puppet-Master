@@ -1684,3 +1684,150 @@ preserved_exact_tokens: [current checks, gate list, enforcement, required, advis
 negative_constraints: [Do not add a second policies region or new section vocabulary under this decision., Do not infer an enforcement value the provider does not publish., Do not let the two consumer owners name different columns.]
 owner_hints: [Plans/Source_Control_System.md, Plans/FinalGUISpec.md, Plans/Azure_DevOps_Integration.md]
 ```
+
+## Git Adapter Command Contracts - 2026-09-27 (ACT011/014/015/018/019/020/021)
+
+This addendum resolves the seven packet-sweep command mappings below as static
+owner contracts. It admits no native handler, EventRecord, runtime behavior, or readiness claim;
+central catalog and production-intent wiring rows are specified separately. The nineteen neutral
+commands in `Plans/source_control_contracts.schema.json` are unchanged; the
+seven commands here live in the separate Git adapter family
+`Plans/git_adapter_command_contracts.schema.json` with fixtures in
+`Plans/git_adapter_command_contract_fixtures.json` and the focused validator
+`scripts/pm_git_adapter_commands.py`.
+
+| ACT | Command | Resolution |
+|---|---|---|
+| ACT014 | `cmd.git.stage` | New whole-file stage with `paths[]`; hunk commands do not cover it. |
+| ACT015 | `cmd.git.unstage` | New whole-file unstage with `paths[]`; hunk commands do not cover it. |
+| ACT011 | `cmd.source_control.remote.update` | New Git-scoped local remote configuration mutation. |
+| ACT018 | `cmd.source_control.stash.create` | Canonical equivalent with typed `include_untracked` and `message`. |
+| ACT019 | `cmd.source_control.stash.apply` | Canonical equivalent with typed `stash_id` and `preview_ref`. |
+| ACT020 | `cmd.source_control.branch.create` | Canonical equivalent with typed `branch` and `base_oid`. |
+| ACT021 | `cmd.source_control.branch.delete` | New destructive delete with preview, guards, and dangerous confirmation. |
+
+`cmd.git.stage_hunks` and `cmd.git.unstage_hunks` stage selected hunks of one
+tracked file and do not demonstrate whole-file `paths[]` staging or unstaging
+of entire untracked or binary files. `cmd.git.stage` and `cmd.git.unstage`
+are therefore separate exact primaries. Both carry whole files only
+(`whole_file_only=true`); no hunk field exists in this family. Every path is
+repo-relative: absolute paths, dot-dot traversal, backslashes, trailing
+slashes, NUL/control bytes, and leading or trailing spaces are rejected,
+while ordinary interior spaces (for example `docs/meeting notes.md`) are
+safe. `paths[]` is chosen from the status snapshot named by
+`status_selection_ref`; the selection never substitutes for `repo_id`,
+`workspace_id`, expected revision, lease, or currentness identity. Stage
+requires an explicit `include_untracked` decision, and declared untracked
+paths must be a subset of `paths[]`; unstage forbids untracked admission
+fields because untracked files are outside the index.
+
+`cmd.source_control.remote.update` mutates local remote configuration only
+(`local_config_only=true`). It carries an exact `remote_id`, one validated
+`fetch_url`, a distinct validated `push_urls` array, and an
+`expected_config_generation` fenced against the expected Git state. Remote
+URLs carry no userinfo or credentials; brokered credential leases remain the
+only credential route. The command performs no fetch, publish, fan-out, or
+any network effect, and a successful local config write is never reported as
+remote truth.
+
+`cmd.source_control.stash.create` carries `include_untracked` and a bounded
+`message`. `cmd.source_control.stash.apply` carries a typed `stash_id` and a
+current `preview_ref`; a missing or stale preview, a missing stash, a
+conflict, or a dirty worktree fails with an exact refusal code, never a
+silent partial apply. `cmd.source_control.branch.create` carries a
+check-ref-format `branch` name and a `base_oid`.
+
+`cmd.source_control.branch.delete` is admitted only with an immutable
+branch/head preview (`preview_ref` plus `expected_branch_head`), the
+protected, checked-out, and attached-worktree guards, explicit
+`dangerous_confirmation` with `irreversibility_disclosed`, FileSafe, and a
+truthful effect receipt naming the deleted branch tip OID. The candidate
+`cmd.git.stash.*` and `cmd.git.branch.*` spellings are not primaries and are
+rejected by the closed command enum.
+
+`preview_ref` is never opaque. `stash.apply` consumes a typed immutable
+`pm.git_adapter.stash_apply_preview.v1` record and `branch.delete` a typed
+immutable `pm.git_adapter.branch_delete_preview.v1` record, each produced by
+its own owner projection before dispatch, never inside the mutation. A
+preview binds repository, workspace, Git-only backend, expected Git state,
+target stash or branch head, currentness generation with reference and hash,
+permission and FileSafe decision references, produced/expiry timestamps, and
+typed findings: stash existence, worktree cleanliness, and conflicting paths
+for apply; branch existence, protected, checked-out, and attached-worktree
+refs for delete. The preview is immutable: any state, target, currentness,
+permission, FileSafe, or finding change requires a new `preview_id`.
+Dispatch revalidates the request against the preview exactly, in order:
+substitution (wrong record, kind, repository, workspace, or target),
+expiry, staleness (moved revision fence, currentness, permission, FileSafe,
+or vanished target), guard findings, and only then admission. Each refusal
+is typed; a stale or substituted preview is recomputed and reconfirmed,
+never repaired in place.
+
+Every scope in this family requires exactly `scm_backend=git`, the exact
+`repo_id` and Git-native `workspace_id`, an expected Git state (HEAD OID,
+index generation, config generation), currentness generation with reference
+and hash, a writer lease reference, permission and FileSafe decision
+references, and the action-specific fields above. Requests carry an
+idempotency key. Results distinguish `accepted` (admitted, ObservableWork,
+no terminal receipt) from terminal success; receipts are terminal only and
+leave every after-generation null while the effect is unknown. Errors keep
+`effect_unknown` at `retry_allowed=false` with reconciliation-only next
+actions, distinct from safe retry after a known fenced refusal such as
+`stale_index`.
+
+ContractRef: ContractName:Plans/git_adapter_command_contracts.schema.json, ContractName:Plans/git_adapter_command_contract_fixtures.json
+
+### SCS-024 - Git Adapter Stage, Remote, Stash, And Branch Command Contracts
+
+```yaml
+plan_unit_id: SCS-024
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: >-
+  Source Control owns seven Git-only adapter commands in a schema family
+  separate from the nineteen neutral commands: whole-file cmd.git.stage and
+  cmd.git.unstage with paths[], Git-scoped local cmd.source_control.remote.update,
+  canonical cmd.source_control.stash.create and stash.apply with typed fields and
+  an apply preview, canonical cmd.source_control.branch.create, and destructive
+  cmd.source_control.branch.delete with an immutable branch/head preview,
+  protected/checked-out/attached guards, explicit dangerous confirmation, and a
+  truthful tip-naming receipt. Every scope fences exact Git backend, repository,
+  workspace, HEAD/index/config generations, currentness, writer lease, permission,
+  FileSafe, and action-specific fields; accepted never means terminal success and
+  effect_unknown never means safe retry. Candidate cmd.git.stash.* and
+  cmd.git.branch.* spellings are not primaries.
+gui_related: true
+gui_classification_reason: Staging, remote, stash, and branch actions with their availability, previews, confirmations, and disabled reasons are visible across Source Control, Settings, and palette consumers.
+depends_on: [SCS-002, SCS-003, SCS-015, SCS-016]
+unblocks: []
+acceptance_criteria:
+  - Whole-file stage/unstage admit paths[] of entire tracked, untracked, and binary files; hunk commands are not credited with this semantic and no hunk field exists in the family.
+  - Every path is repo-relative; absolute, traversal, backslash, trailing-slash, NUL/control-byte, and leading-or-trailing-space spellings are rejected while ordinary interior spaces are safe, and the status selection never substitutes for repository, workspace, revision, lease, or currentness identity.
+  - remote.update mutates local remote configuration only with an exact remote_id, one validated fetch URL, a distinct validated push URL array, and a fenced expected config generation; remote URLs carry no userinfo or credentials and no fetch, publish, or network effect occurs.
+  - stash.create carries typed include_untracked and bounded message; stash.apply carries typed stash_id and a current preview_ref with exact refusal on missing/stale preview, missing stash, conflict, or dirty worktree.
+  - branch.create carries a check-ref-format branch name and base OID; branch.delete additionally requires an immutable branch/head preview, protected/checked-out/attached guards, explicit dangerous confirmation with irreversibility disclosure, and a receipt naming the deleted tip OID.
+  - cmd.git.stash.* and cmd.git.branch.* spellings are rejected as primaries; the nineteen neutral command shapes are byte-unchanged.
+  - Every scope requires exactly scm_backend=git with expected HEAD/index/config generations, currentness, writer lease, permission, FileSafe, and action-specific fields; every request carries an idempotency key.
+  - accepted results carry ObservableWork and no terminal receipt; terminal receipts leave after-generations null while effect_unknown; effect_unknown errors keep retry_allowed=false with reconciliation-only next actions.
+  - stash.apply and branch.delete previews are owner-typed immutable records binding repository, workspace, Git state, target, currentness, permission, FileSafe, expiry, and conflict or guard findings; dispatch revalidates request-to-preview exactly with typed substitution, expiry, stale, and guarded refusals, and cross-record join fixtures pin admitted plus each refusal.
+  - Every command has positive fixtures and schema plus semantic negative fixtures covering currentness and substitution; the focused validator pins that coverage.
+  - Static owner, catalog, and production-intent wiring contracts only: no native handler, event, runtime, security, visual, readiness, WorkNode, or NodeSeed claim.
+validation_surfaces: [Plans/git_adapter_command_contracts.schema.json, Plans/git_adapter_command_contract_fixtures.json, scripts/pm_git_adapter_commands.py]
+risk_class: git_adapter_command_authority_or_effect_overclaim
+reasoning_tier: high
+context_scope: git_adapter_stage_remote_stash_branch_commands
+implementation_surfaces: [Plans/Source_Control_System.md, Plans/git_adapter_command_contracts.schema.json, Plans/git_adapter_command_contract_fixtures.json, future Git adapter handlers]
+node_compile_hint: {mode: static_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:packet-sweep-20260927-cross-contracts:ACT014, source_ref:packet-sweep-20260927-cross-contracts:ACT015, source_ref:packet-sweep-20260927-egolite:ACT-011, source_ref:packet-sweep-20260927-egolite:ACT-018, source_ref:packet-sweep-20260927-egolite:ACT-019, source_ref:packet-sweep-20260927-egolite:ACT-020, source_ref:packet-sweep-20260927-egolite:ACT-021]
+preserved_exact_tokens: [cmd.git.stage, cmd.git.unstage, cmd.source_control.remote.update, cmd.source_control.stash.create, cmd.source_control.stash.apply, cmd.source_control.branch.create, cmd.source_control.branch.delete, paths, whole_file_only, include_untracked, local_config_only, expected_config_generation, preview_ref, pm.git_adapter.stash_apply_preview.v1, pm.git_adapter.branch_delete_preview.v1, dangerous_confirmation, accepted, effect_unknown, reconcile_effects]
+negative_constraints:
+  - Do not credit hunk commands with whole-file untracked/binary stage semantics.
+  - Do not admit cmd.git.stash.* or cmd.git.branch.* as primaries.
+  - Do not modify the nineteen neutral command shapes to host these commands.
+  - Do not embed userinfo or credentials in remote URLs or perform network effects from remote.update.
+  - Do not delete a branch without its preview, guards, dangerous confirmation, and tip-naming receipt.
+  - Do not report accepted as terminal success or effect_unknown as safe retry.
+  - Do not claim native handler execution, event, runtime proof, or readiness from these static contracts and production-intent rows.
+owner_hints: [Plans/Source_Control_System.md]
+```

@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2406-L2455
+Source lines: L2406-L2457
 
-Source SHA256: `ebb5f684861f32442827a722734983ed6003f8a13634b0e3d1083f4b6cb10196`
+Source SHA256: `bdc06a6145923c91cba42e7ece8ade8375183ac2a7e704b016fd5affc408bb7d`
 
 ---
 
@@ -13,6 +13,8 @@ Source SHA256: `ebb5f684861f32442827a722734983ed6003f8a13634b0e3d1083f4b6cb10196
 Every capability touched by the Settings, Product Onboarding, Guided Tour, Doctor, Server/WAN/Backup, Browser/Capture, SCM/Forge/Origin, plugin, and full-thread-performance wave must have one machine-readable row in `Plans/touch_closure.json`. A row is complete only when it routes one requirement to one canonical owner and PlanUnit, one DRY schema or typed local UI-action contract, one command/handler path where a domain operation exists, all intended GUI consumers in reverse, and named test/evidence and residual-risk boundaries. Paint, typography, animation tokens, hover-overlay presentation, and local disclosure state remain Final GUI/UI-action concerns and must not be promoted into false domain commands.
 
 Settings, Onboarding, Guided Tour, Doctor, and PMConcept7 remain consumers. They may cache and render owner projections, open exact owner routes, and observe `ObservableWork` and receipts, but they cannot duplicate Server, route, backup, Browser, capture, SCM, forge, plugin, Project, Named Plan, installation, authentication, update, storage, or repair state machines. `AuthBrowserSession` is outside agent, adapter, capture, inspection, replay, export, and restore authority. A concept simulation is not a native handler, production wiring receipt, runtime result, or Slint certification.
+
+The September 27 packet repairs use the same rule at semantic joins: Named Plan owns child-parent resolution consumed by PRD/Wizard/Compile/Orchestrator; Azure owns the optional team-project official-route context consumed by Onboarding and Auth; Backup owns verification depth and immutable recovery-point selection; Release owns durable app-check scheduling; Testing owns actual-versus-required execution assurance. Reference-only GUI caches, return acknowledgements, matching command names, and opaque preview IDs cannot replace those owner validations. Concept fixtures model the same decisions without claiming production effects. A new exact Git adapter command must register its single owner/request/result/permission/currentness/receipt path and reverse GUI consumers; hunk routes cannot silently stand in for whole-file untracked or binary operations.
 
 The closure validator fails on duplicate command/action IDs, competing owners, orphan controls, command-without-handler, handler-without-command, missing GUI reverse coverage, stale PlanRefs, undocumented local-action exemptions, or incomplete closure dimensions. A row may remain `partial`, `blocked`, or `missing`; it must not be relabeled `implemented` merely because canon, schema, fixtures, PMConcept7 behavior, or browser evidence exists.
 

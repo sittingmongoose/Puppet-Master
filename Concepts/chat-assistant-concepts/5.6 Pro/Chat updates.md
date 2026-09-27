@@ -51,8 +51,9 @@ Build with `python3 build.py` then `--check`.
 - **Working Animation** starts on **#2 Orbit** (`variants[2]=1`). The dedicated
   Working activity picker matches that (Orbit · Default).
 - **Activity Detail** starts on **#2 Status Board** (`variants[4]=1`).
+- **Transcript** starts on **#17 Turn Stage** (`variants[5]=16`).
 - **Question & decision** starts on **#9 Ask Card** (`variants[6]=8`).
-- Full default vector is `variants:[7,5,1,0,1,0,8]`. Recipe starts as
+- Full default vector is `variants:[7,5,1,0,1,16,8]`. Recipe starts as
   **Custom mix** (`recipe: -1`) so those family picks are not mislabeled as
   PM7 Refined. **Reset all** restores this mix.
 
@@ -119,6 +120,132 @@ Build with `python3 build.py` then `--check`.
   overflow **panel is a sibling** of the toolbar (not nested inside it), so
   layout is three rows: meta, then Copy / Details / More, then the panel.
 
+## Transcript turns and item families (Turn Stage, the default take)
+
+- The default transcript take is **Turn Stage** (transcript take 16). The other
+  takes remain Demo Studio lab options.
+- **Turn anatomy.** Each assistant turn opens with a small **orbit mark** in a
+  24px gutter (it replaces the repeated "Assistant" label). A hairline **spine**
+  runs from the mark through every item of the turn and ends in a dot. Cards
+  meet the spine with a **family-colored tick**; prose carries no tick; ledger
+  receipts sit **on** the spine (their icon rides the line). A user turn opens
+  with extra air above it. The spine is one layer drawn behind the whole
+  transcript, so cards never clip it.
+- **Live.** While the assistant is thinking the mark's satellite (a bead that
+  rides the ring itself, so the mark always reads as a circle) **orbits**;
+  while a reply is written or work runs, the mark lights and a **comet of
+  light** runs down the spine to the live point: a streaming reply's caret, or
+  the live card. The comet appears only once it has real length (a few pixels
+  under the ring read as a glyph, not as light travelling). Light, not color
+  floods, says live. Reduced motion drops both.
+- **Families.** Every transcript item is one of eight families, each with its
+  own silhouette:
+  - **Prose** (assistant text): no container, 14px reading type, the only
+    full-contrast text.
+  - **User**: a raised neutral bubble, no accent tint or colored border.
+  - **Work** (working activity): a sunken instrument surface; the accent glows
+    around it only while it is live.
+  - **Deliverable** (plans, artifacts, file-change records): a raised sheet
+    with a paper shadow and a teal eyebrow tile.
+  - **Needs you** (permission, questionnaire, advisor, tool error, model
+    unavailable, blocked, waiting): an accent-tinted surface, a round icon
+    medallion, and one filled primary action at the far edge (danger-toned for
+    tool errors).
+  - **People** (crew / review / brainstorm / chat room runs, live subagents,
+    delegation records): a roster with a warm band and an avatar stack whose
+    rings show each participant's state.
+  - **Time** (scheduled messages): a ticket with a stub showing the time, a
+    perforated edge, and punched notches.
+  - **Ledger** (goal, context, thread-op, teach and memory receipts, route
+    changes, reconnects, attachment events): not a card, one quiet line (icon,
+    title, first line of detail); hover or focus expands the rest.
+- **Accent rule.** Surfaces are neutral (Basic Dark and Light are graphite, not
+  navy). The accent is spent only on live work, on Needs-you items, on the one
+  primary action of a card, and on Send/Stop. Event icons outside Needs-you,
+  the model chip and chart bars are neutral or family-toned.
+- **Item identity.** Every item carries `data-family`, `data-msg-type`, a
+  stable key and its turn position, so an item revealed mid-list animates in
+  place and a thread switch arrives as one short crossfade instead of every
+  card fading in.
+
+## Live replies (streaming)
+
+- An ordinary reply **streams**. On send the reply's placeholder appears after
+  the bubble lands: the model's name and a shimmering "is thinking" (elapsed
+  seconds after 4s). When the first text arrives, the label **condenses
+  toward the mark** while the first word emerges where the caret starts (the
+  same 180ms in every voice: Basic condenses and blurs, Friendly hops away,
+  Glass sinks into depth, Retro backspaces). The label leaves from its own
+  layer, so the reply's first line never reflows. Words
+  release at a natural, rate-smoothed pace (faster when text is waiting, a
+  breath at sentence ends, never a dump), behind a soft caret. The reply's
+  height follows its text through a spring, so a new line opens rather than
+  jumps, and follow-along glides with it.
+- Structure arrives with character: headings settle, list items slide in,
+  code frames open then grow, inline code and bold stream as themselves.
+- When the reply ends, the caret dissolves, the hover row shows for ~1.5s so
+  people learn it is there, and the reply renders exactly as streamed (no
+  reflow). A stopped reply keeps what was written with a **Stopped** marker;
+  an error keeps it with the error's note.
+- While a reply is being written the composer shows **Stop** and a send joins
+  the follow-up queue. **Send now** on a queued message stops the reply first.
+  Leaving the thread lets the reply finish (it is complete when you return).
+- Messages revealed after a work burst (the Multi Orbit demo's interim and
+  summary text) stream in the same way, and the next burst waits until the
+  interim text has finished.
+- **Live agent turns.** In Agent mode a send that asks for work ("add the composite
+  index…", "fix the rollback path…", "apply the pattern across the module…") plays a
+  whole live turn: the thinking placeholder, then the working card born in its place
+  under the same turn mark, parallel subjects, narration, a failure and its fix, an
+  approval, and finally the answer streaming in as the card folds. The **Live turns**
+  thread is their stage, and Demo Studio's **Live turns** group (Live reply, Live agent
+  turn, Trouble mid-turn, Long agent turn) types and sends each one for real. Demo
+  Studio's **Motion voice** picker shows any voice on any theme (default: follow the
+  theme).
+- Recorded example answers (ELI5) stay instant. Replies come from the concept's
+  scripted reply set (`data.js` `scriptedReplies`), including two with
+  structure: ask to "walk through the steps" or to "summarize".
+
+## Sending
+
+- The text you send **leaves the composer and becomes the bubble**: the typed
+  glyphs lift off the field, scale to the bubble's size and travel to its slot
+  while the bubble forms around them (one text layer; two only when the line
+  breaks differ). The field's placeholder returns once the text has left it.
+- **Theme voices.** One choreography, four personalities (dark and light share
+  a voice); timing and order never differ, only path, easing and texture:
+  - **Basic**: the text lifts; the bubble grows out of the text's own bounds.
+  - **Friendly**: the bubble pops out of the Send button, catches the text
+    mid-flight and carries it in; words hop into replies.
+  - **Glass**: the text floats up; the bubble condenses out of blur; words
+    surface from depth.
+  - **Retro**: the text blinks out; the bubble prints in line by line; replies
+    type in with a block cursor and phosphor bloom.
+  PMConcept7 adopts voices by theme family (same eight theme ids).
+
+## Sound
+
+- The chat has a **subtle sound**, on by default. A speaker button in the chat
+  header mutes it in one click (its hover card says what it does); the choice
+  persists. Audio starts only after the first real click or key press, so
+  demos that run on load stay silent until then. Reduced motion does not mute.
+- Every sound is paired with a visual beat and never carries meaning alone:
+  **send** (a soft lift with the flight), **first word** (a breath), **work
+  born** (a low bloom), **step finished** (a tiny tick, at most one per 250ms
+  and silent inside bursts), **failure** (a soft knock), **needs you** (a
+  two-tone), **answer arrives** (a glide with the fold), **turn complete** (a
+  two-note resolve) and **stop** (a muted click). At most one sound per 120ms.
+- One kit per theme family (Basic, Friendly, Glass, Retro; dark and light
+  share a kit), synthesized with WebAudio: no audio files. Every event is
+  leveled to a tier by its measured loudness, so a beat sounds equally loud in
+  every kit (within ~3 dB): needs you loudest, the turn's beats (send, work,
+  fail, answer, complete) next, stop below them, the first word and step ticks
+  quietest. No event peaks above -20 dBFS (checked by rendering each kit
+  offline).
+- Production: these events map onto the app's **Notifications & Sounds**
+  settings (per-event toggles and the master volume live there); the header
+  button is the quick mute.
+
 ## Scroll to bottom
 
 - When the transcript is **not** at the bottom (more than ~24px of remaining
@@ -130,9 +257,14 @@ Build with `python3 build.py` then `--check`.
   treatment as activity-bar domain icons. Hidden at the bottom and when the
   thread does not overflow; the button stays in the DOM and only toggles
   visibility, so a scroll does not re-render the app.
-- Clicking it uses the existing scroll-to-end intent, so a click while work is
-  running **resumes follow-along** until the reader wheels again. The control
-  does not steal scroll just by being visible.
+- Clicking it re-engages **follow-along**: the transcript sticks to its bottom
+  edge while a reply streams or a card grows, gliding after the growth (a
+  critically damped approach, not a jump). Follow-along holds only while the
+  reader is at the bottom; wheel-up, touch, a scrollbar drag, a scrolling key
+  outside a text field, or anything that moves the view **up** (a jump to a
+  search result) releases it, and scrolling back to the bottom re-engages it.
+  Growth never moves a reader who has scrolled away; a receipt landing never
+  drags them back down. The control does not steal scroll just by being visible.
 - While any work record is running the tile is **working**: accent color,
   slightly heavier stroke, `ab-breathe` plus a small chevron bounce, hover card
   **Scroll to latest**. Idle hover card is **Scroll to bottom**. Reduced motion
@@ -294,14 +426,19 @@ Question changes pull rows off on overlapping elastic stagger with light blur.
   collapses New thread to a **+** icon (`is-hh-compact`), and thread rows enter
   **narrow** mode (`is-history-narrow`) at the same threshold (JS measures the
   scroll rect; CSS `@container history-drawer` stays aligned).
-- Thread rows are a **2-column** grid: left **lead** (status glyph + hover **⋯**
-  menu) | copy (title + optional time). On hover, status fades and the more
-  menu appears **in the lead** (not on the right). Each row’s hover tip is the
-  status label; the more button has its own tip. History row / lead /
-  status-slot use `overflow: visible`. Row horizontal padding is slightly
-  tighter so the active inset ring does not crowd the title text. The **active**
-  row keeps a **one-line ellipsized title**, the timestamp, and the **summary
-  preview**; `box-sizing: border-box` and a slightly wider copy gutter keep the
+- Thread rows are a **2-column** grid: left **lead** (status glyph only) | copy
+  (title + optional time). The **⋯** thread-options control sits on the **right**
+  edge of the row (absolute), hidden until the row is hovered or the button
+  itself is focused — not when the row merely holds keyboard focus after a
+  click. The status glyph **stays visible** on hover; it is not replaced by
+  the menu. Each row’s hover tip is the status label; the more button has its
+  own tip. History row / lead / status-slot use `overflow: visible`. At rest the
+  title and summary use the full row width; copy only reserves right padding
+  while the row is hovered or the options button is focused, so the text does
+  not sit under the menu. Row horizontal padding is
+  slightly tighter so the active inset ring does not crowd the title text. The
+  **active** row keeps a **one-line ellipsized title**, the timestamp, and the
+  **summary preview**; `box-sizing: border-box` and the copy gutter keep the
   inset ring from clipping. Long names like **Inline Visualizer Gallery** may
   still ellipsize.
 - Preview Rows: working / reviewing keep the outer spinning satellite **on**
@@ -312,7 +449,9 @@ Question changes pull rows off on overlapping elastic stagger with light blur.
   Other history takes that still use `.status-orbit` keep the same on-ring
   satellite.
 - In narrow mode: status glyph and timestamp are hidden so the title gets full
-  width; on hover the lead expands only enough to show the more menu.
+  width; the lead column stays collapsed (no hover expansion). Thread options
+  still appear on the **right** on row hover only. Rows gain a little extra
+  **left** inset so title and summary are not flush with the selection ring.
 - Pinned / Recent / Archived are **collapsible** section heads with an always-
   visible chevron (rotates when collapsed). **Archived defaults collapsed**;
   Pinned and Recent default open. **No count badges** on section heads.
@@ -404,8 +543,14 @@ tabular right-aligned values, 13–14px primary copy, 12–13px support copy, an
 compact semantic marks instead of broad tinted boxes. Focused Changes show the
 basename first with path context below; add/delete counts are green and red
 on the file rows, the Added/Deleted facts, and the Change mix label — not a
-boxed hunk. The entire row opens its real diff. Focused Goal has no summary card — the
-compact Goal projection and a **View Goal** footer stand alone. Focused
+boxed hunk. On each file row those counts sit in a content-sized column with a
+4px gap from the text. The entire row opens its real diff. Focused Goal has no summary card — the
+compact Goal projection and a **View Goal** footer stand alone. The full Goal
+section exposes lifecycle controls, **Objective history**, and **Ask for a
+replacement** only — not continuation-decision dumps, session JSON **Details**,
+or **Evaluate next turn**. The activity-bar Goal preview stays the short card.
+**Edit objective** and **Details** close that preview and open this panel.
+Focused
 Subagents keep a slim head plus the one-line agent summary; focused Artifacts
 keep the head and count only.
 
@@ -413,10 +558,16 @@ The Activity Bar previews use the same explicit status vocabulary as the board:
 Blocked, Needs attention/Needs retry, Working, Changed, Queued/Waiting, and
 Settled/Ready do not change meaning between surfaces. Each 354px preview has a
 44px header, at most five 48px rows, a stable 68px status/time column, and one
-34px **Open Activity** footer. Preview rows have no identity glyphs and no
+34px **Open Activity** footer. The To-Do preview is the checklist form used by
+agent plan lists: one line per item (status mark, ellipsized title, status
+word in that same 68px column) and a single footer line that pairs **Open all**
+with the blocked count. Preview rows have no identity glyphs and no
 agent-initial badges; Subagents rows match Activity Detail (name, model and
 current/blocker, status plus elapsed). Header totals are retained; duplicate
 footer histograms are not.
+
+Activity Detail body scroll uses **8px** horizontal inset (10px vertical) so
+domain panels keep more readable line length in narrow widths.
 
 The final Activity-specific verifier covers the default, Show all/drill-down,
 preview footer, keyboard focus, pin/unpin/close focus restoration, independent
@@ -564,6 +715,18 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   working card binds to its own work record; a scripted demo turn reveals its later
   messages only after the run they wait on completes (the "Multi Orbit demo" thread:
   user → burst A → interim assistant text → burst B → summary).
+- The half-second **work tick re-renders only the live working cards** (and the
+  status bar's elapsed time); completions, reveals, new cards and queue flushes
+  run a full render. Its period is 500ms of motion time (`PM56_CLOCK`), so a film
+  tool that slows the clock slows the tick with it.
+- **Cost at scale (measured on the review VM, software rendering).** At 140
+  subjects the tick costs ~45-50ms against ~100ms for a full render of the same
+  state (the old every-tick full render measured 185ms). About half of the tick
+  is the ring itself: every spawn re-spaces the nodes and turns the dial, so each
+  of the ~30 nodes restarts its transform transition. That is why the node count
+  is capped at 30 (clusters, then Earlier); keep the cap in the port. Settled
+  nodes drop their entrance animation, and the dial's turn lives on the ring
+  (its only reader) rather than on the whole stage.
 - **Clock-only work ticks** (card height unchanged, `|Δh| < 1px`) do **not** FLIP the
   working body or rewrite transcript `scrollTop`. User scroll during a live Orbit or
   Step Rail run is not stolen. Height-changing expand/collapse still FLIPs and
@@ -598,10 +761,36 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
 - **No percent-complete anywhere** — total subject count is unknowable mid-run. The
   head shows the live subject caption and the elapsed time; a completed card's head
   says **"Completed"** (never "Completed work").
-- **Auto-collapse rule:** a working activity collapses ONLY when a NEW working activity
-  enters the thread (with a collapse animation). **The last activity always stays
-  expanded** — after it finishes, it remains open until the user collapses it or a new
-  activity appears. Completing never scrolls the reader's transcript position.
+- **Auto-collapse rule:** a working activity collapses when a NEW working activity
+  enters the thread, and the turn's **last** activity collapses **when the turn's
+  answer starts streaming** (decided 2026-09-26), so the answer rises into the room the
+  card frees. Both use the collapse choreography; the reader can reopen the card from
+  its strip. Completing never scrolls the reader's transcript position.
+- **Several subjects can be live at once** (parallel reads, a background command next
+  to a test run): a subject is live from its start until its own duration ends. Every
+  live node pulses; the core shows the newest live subject with a **+N** badge for the
+  others. When no subject is running (the model is between tool calls) the most
+  recently started one stays live, exactly as before.
+- **A subject can fail or wait for the reader.** A failed node shakes once and turns
+  danger-red with an x flag, and its panel chip reads **Failed**; a subject waiting for
+  approval turns warning-amber with a pause flag, the core reads **Waiting for you**,
+  and an **Approval needed** item (Approve once / Deny) appears in the transcript right
+  under the card. Approving resumes the run; denying stops it with nothing applied.
+- **Long runs stay legible.** Past 16 started subjects, adjacent subjects of the same
+  kind merge into one **cluster node** with a count ("Read ×12"); past 30 nodes the
+  oldest fold into one **Earlier** node. A cluster's panel lists every member (the
+  newest eight) with its rows. Pins follow the subject, not its place on the ring.
+- **Narration.** Short lines the assistant writes between bursts of tool calls do not
+  split the card: while a line is the newest thing the run has produced it streams in
+  as prose at the **foot of the card**; when the next subject starts, the line **tucks
+  up into the head caption** (it flies from where it was written). Longer prose and the
+  final answer stay transcript text.
+- Finished subjects keep their kind's colour (muted) with a small green completion pip,
+  so a completed ring still reads as the run it was.
+- **Demo controls** (play/pause, step, complete, reset, work history) sit behind **one
+  button** in the card head that opens them as a drawer inside the head. They are
+  concept-lab controls only (the product's Stop lives in the composer) and are
+  **removed in the PMConcept7 port**.
 - Collapsed activities show **receipt chips WITHOUT a "Worked for" chip** (elapsed
   already lives in the card head). Play/complete respect the user's pin and collapse;
   only Reset clears them.
@@ -620,7 +809,14 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   It never collapses the card.
 - The **panel X collapses the card** — live or completed — to a compact strip. The
   collapse is two beats: the panel folds while the dial recenters, then the dial lifts
-  up into the strip line. Expanding is the exact reverse: the dial **drops down from
+  up into the strip line while the stage closes to the strip's height (one move, no
+  empty box), and the strip settles in.
+- **The fold never moves the thread.** When a turn's card folds as its answer starts,
+  the room the card gives up is **held** (a floor on the list's height at its pre-fold
+  size) and the answer grows into it; what the answer does not use is let go once it
+  has settled, easing shut like a drawer. Measured on the live agent turn: the thread
+  above moved 550px down and back before, 5px now. The answer that follows visible
+  work starts writing without an "is thinking" label. Expanding is the exact reverse: the dial **drops down from
   the strip line to the center** (visible travel), then slides left as the panel opens.
 - **Compact strip:** one row of kind-colored subject discs + "N subjects" + a
   **chevron that re-expands following the live/last subject**. Clicking a disc
@@ -631,7 +827,10 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   A completed card collapsed to the compact strip keeps **no leftover min-height**
   under the receipt line; done-state body/receipt padding stays tight.
 - Ring geometry: the ring starts empty and re-spaces evenly on every spawn; density
-  tiers shrink nodes as the ring passes ~13 and ~22 subjects (works at 2–3 and 25+).
+  tiers shrink nodes as the ring passes ~13 and ~22 nodes, and clustering keeps the
+  ring at 30 nodes or fewer (a 140-subject run stays readable).
+- **Birth.** A live turn's working card unfolds out of the turn's mark in the gutter (a
+  circle growing to the whole card), in the theme's voice.
   Subagent subjects pop their agents out as satellites around the center disc; the
   panel lists the same agents (each opens its agent thread).
 - Reduced motion: every choreography lands its end state instantly.
@@ -723,7 +922,15 @@ child sub-To-Dos; every leaf carries a bounded expected outcome.
   dependencies permit. A pending item with an unmet dependency is *not* blocked.
 - Transitions are **individually receipted** for that item. Bulk completion,
   a provider whole-list replacement, and a stale-revision write are all
-  **refused**, with the refusal visible.
+  **refused**, with the refusal visible (via **Show refused attempts**, not a
+  raw JSON disclosure on the selected item).
+- The **selected To-Do detail** is a header bar (title and an icon-only **Close details** mark),
+  an inset **Expected** well, then a full-width wrapping dependency or waiting
+  line when one exists, plus source links. It does not show dependency,
+  attempt, or receipt dumps.
+- Each virtual row is a bordered card: the title sits with the status glyph,
+  and progress or status sits in a full-width meta strip under a hairline.
+  Expand carets point **right** when collapsed and **down** when expanded.
 - There is **no verification status** anywhere user-visible; validation, when
   needed, is its own To-Do. There is **no separate Done section and no source
   grouping** — completed items stay inline, in place, struck through.
@@ -871,8 +1078,9 @@ and deliberately not in the Multi-Agent Workflows manager.
   and is never partial; an ineligible turn says why.
 - **Thread title policy** is Default resolver, None, or an explicit available
   model. A manual rename **locks** the auto-title until an explicit Regenerate,
-  and an unavailable model is disclosed rather than silently substituted. An
-  untitled thread reads **New chat**.
+  and an unavailable model is disclosed rather than silently substituted. The
+  thread menu shows **Regenerate title** only — no **Title:** policy status
+  line. An untitled thread reads **New chat**.
 
 ## What is fixture and what is not
 

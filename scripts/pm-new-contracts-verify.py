@@ -27,6 +27,11 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT / "scripts"))
 from pm_full_thread_semantics import full_thread_semantic_failures
+from pm_named_plan_semantics import named_plan_owner_join_failures
+from pm_azure_setup_semantics import validate_azure_setup_pairs
+from pm_git_adapter_commands import apply_case as git_apply_case, semantic_problems as git_semantic_problems, run_checks as git_command_checks
+from pm_backup_verify_depth import check as backup_depth_check
+from pm_forge_command_followup import check_all as forge_followup_check
 from pm_restore_semantics import restore_semantic_failures
 from pm_browser_program_semantics import browser_program_semantic_failures
 from pm_onboarding_semantics import onboarding_semantic_failures, settings_draft_semantic_failures
@@ -54,6 +59,9 @@ from pm_packet_integration_semantics import (
 # Authored and intentionally closed.  Adding a contract pair is a reviewed gate
 # change, not an ambient glob that silently changes the validation denominator.
 CONTRACT_PAIRS = (
+    ("Plans/azure_devops_setup_contracts.schema.json", "Plans/azure_devops_setup_contract_fixtures.json"),
+    ("Plans/git_adapter_command_contracts.schema.json", "Plans/git_adapter_command_contract_fixtures.json"),
+    ("Plans/wsl_execution_contracts.schema.json", "Plans/wsl_execution_contract_fixtures.json"),
     ("Plans/backup_restore_system_contracts.schema.json", "Plans/backup_restore_system_contract_fixtures.json"),
     ("Plans/doctor_contracts.schema.json", "Plans/doctor_contract_fixtures.json"),
     ("Plans/egolite_retained_requirement_contracts.schema.json", "Plans/egolite_retained_requirement_contract_fixtures.json"),
@@ -88,7 +96,7 @@ CONTRACT_PAIRS = (
     ("Plans/commands_shortcuts_contracts.schema.json", "Plans/commands_shortcuts_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 32
+EXPECTED_CONTRACT_PAIR_COUNT = 35
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1260,6 +1268,10 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/git_adapter_command_contracts.schema.json":
+        return git_semantic_problems(definition_name, value) if isinstance(value, dict) else ["git_record_not_object"]
+    if schema_rel == "Plans/named_plan_system_contracts.schema.json":
+        return named_plan_owner_join_failures(definition_name, value)
     if schema_rel in {"Plans/testing_session_command_contracts.schema.json", "Plans/artifact_recording_command_contracts.schema.json"}:
         return evidence_command_semantic_failures(definition_name, value)
     if schema_rel == "Plans/product_onboarding_contracts.schema.json":
@@ -1413,6 +1425,32 @@ def validate_onboarding_storage_contract() -> tuple[list[dict[str, Any]], dict[s
             {"onboarding_storage_contracts_checked": 1, "onboarding_storage_contracts_valid": int(not failures)})
 
 
+def validate_update_schedule_storage_contract() -> tuple[list[dict[str, Any]], dict[str, int]]:
+    """Check the exact Release schema/key/census stored by SP-322."""
+    try:
+        spec = importlib.util.spec_from_file_location("update_schedule_storage", ROOT / "scripts/pm-update-schedule-storage.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        failures = module.validate(load_json(ROOT / "Plans/storage_value_registry.json"))
+    except (OSError, ValueError, KeyError, TypeError, SchemaError) as exc:
+        return [{"code": "update_schedule_storage_unreadable", "detail": str(exc)}], {"update_schedule_storage_checks": 1}
+    return ([{"code": code, "path": "Plans/storage_value_registry.json"} for code in failures],
+            {"update_schedule_storage_checks": 1, "update_schedule_storage_checks_passed": int(not failures)})
+
+
+def validate_platform_execution_policy() -> tuple[list[dict[str, Any]], dict[str, int]]:
+    """Run the same owner policy predicates as the focused platform checker."""
+    try:
+        spec = importlib.util.spec_from_file_location("platform_execution_policy", ROOT / "scripts/pm-platform-execution-policy-verify.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        failures = module.check_all()
+    except (OSError, ValueError, KeyError, TypeError, SchemaError) as exc:
+        return [{"code": "platform_execution_policy_unreadable", "detail": str(exc)}], {"platform_policy_checks": 1}
+    return ([{"code": "platform_execution_policy_failure", "detail": failure} for failure in failures],
+            {"platform_policy_checks": 1, "platform_policy_checks_passed": int(not failures)})
+
+
 def main() -> int:
     findings: list[dict[str, Any]] = []
     counts = Counter()
@@ -1427,6 +1465,14 @@ def main() -> int:
     counts["internal_self_tests"] = self_test_count
     counts["internal_self_tests_passed"] = self_test_count - len(self_test_failures)
     findings.extend(self_test_failures)
+
+    update_storage_findings, update_storage_counts = validate_update_schedule_storage_contract()
+    findings.extend(update_storage_findings)
+    counts.update(update_storage_counts)
+
+    platform_findings, platform_counts = validate_platform_execution_policy()
+    findings.extend(platform_findings)
+    counts.update(platform_counts)
 
     storage_findings, storage_counts = validate_onboarding_storage_contract()
     findings.extend(storage_findings)
@@ -1598,9 +1644,19 @@ def main() -> int:
 
         # Packet-integration pack checks, scoped by exact pair. Sibling Forge
         # packs sharing the Forge schema never receive main-pack census.
+        if (schema_rel, fixture_rel) == ("Plans/azure_devops_setup_contracts.schema.json", "Plans/azure_devops_setup_contract_fixtures.json"):
+            findings.extend(validate_azure_setup_pairs(fixtures))
+        if (schema_rel, fixture_rel) == ("Plans/git_adapter_command_contracts.schema.json", "Plans/git_adapter_command_contract_fixtures.json"):
+            findings.extend({"code": "git_adapter_contract_failure", "fixture": fixture_rel, "detail": problem}
+                            for problem in git_command_checks()["problems"])
+        if (schema_rel, fixture_rel) == ("Plans/backup_restore_system_contracts.schema.json", "Plans/backup_restore_system_contract_fixtures.json"):
+            findings.extend({"code": "backup_verify_depth_failure", "fixture": fixture_rel, "detail": problem}
+                            for problem in backup_depth_check(fixtures, schema))
         if (schema_rel, fixture_rel) == (FORGE_SCHEMA_REL, FORGE_MAIN_FIXTURE_REL):
             findings.extend(validate_forge_main_pack(positive_by_name, set(fully_valid_by_name)))
             findings.extend(validate_forge_counterexamples(schema, fixtures, registry=schema_registry))
+            findings.extend({"code": "forge_producer_join_failure", "fixture": fixture_rel, "detail": problem}
+                            for problem in forge_followup_check())
         if (schema_rel, fixture_rel) == (COMMANDS_SCHEMA_REL, COMMANDS_MAIN_FIXTURE_REL):
             findings.extend(validate_commands_main_pack(schema, fixtures, positive_by_name, set(fully_valid_by_name)))
         if (schema_rel, fixture_rel) == (ONBOARDING_SCHEMA_REL, ONBOARDING_MAIN_FIXTURE_REL):
@@ -1615,7 +1671,8 @@ def main() -> int:
             counts["negative_cases"] += 1
             name = str(case.get("name", case.get("case_id", "unnamed")))
             try:
-                value = materialize_invalid(case, positive_by_name)
+                is_git_pair = (schema_rel, fixture_rel) == ("Plans/git_adapter_command_contracts.schema.json", "Plans/git_adapter_command_contract_fixtures.json")
+                value = git_apply_case(positive_by_name[case["base_valid"]], case) if is_git_pair else materialize_invalid(case, positive_by_name)
                 selector_case = dict(case)
                 if "definition" not in selector_case and "schema_ref" not in selector_case:
                     base_name = selector_case.get("base_valid", selector_case.get("left_valid"))
@@ -1624,7 +1681,15 @@ def main() -> int:
                 definition_name, selected = select_definition(schema, selector_case, value, require_valid=False)
                 accepted = validator_for(schema, selected, schema_registry).is_valid(value)
                 semantic_rule = case.get("semantic_rule")
-                if semantic_rule is not None:
+                if is_git_pair and case.get("rejection_layer") == "semantic":
+                    semantic_failures = contract_semantic_failures(schema_rel, definition_name, value)
+                    if not accepted:
+                        findings.append({"code": "semantic_negative_not_structurally_valid", "fixture": fixture_rel, "case": name, "definition": definition_name})
+                    elif not semantic_failures:
+                        findings.append({"code": "semantic_negative_not_proven", "fixture": fixture_rel, "case": name, "definition": definition_name})
+                    else:
+                        counts["negative_cases_rejected"] += 1
+                elif semantic_rule is not None:
                     semantic_failures = contract_semantic_failures(schema_rel, definition_name, value)
                     if not accepted:
                         findings.append({"code": "semantic_negative_not_structurally_valid", "fixture": fixture_rel, "case": name, "definition": definition_name, "semantic_rule": semantic_rule})

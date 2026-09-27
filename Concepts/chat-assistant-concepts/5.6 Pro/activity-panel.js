@@ -229,8 +229,10 @@
   }
   function goalCompact(ctx) {
     var api = goalApi();
-    if (api && api.render && api.render.compact) {
-      try { return sealed(api.render.compact(ctx)); } catch (e) { /* fall through */ }
+    var render = api && api.render;
+    var fn = render && (render.panel || render.compact);
+    if (fn) {
+      try { return sealed(fn(ctx)); } catch (e) { /* fall through */ }
     }
     return '';
   }

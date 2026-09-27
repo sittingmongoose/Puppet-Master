@@ -176,7 +176,7 @@ body:has(.activity-panel.transient) .history-flyout {
   white-space: nowrap;
 }
 .activity-scroll {
-  padding: 12px;
+  padding: 10px 8px;
   overscroll-behavior: contain;
 }
 
@@ -347,6 +347,8 @@ body:has(.activity-panel.transient) .history-flyout {
   min-width: 56px; color: var(--subtle); font-size: 11px; line-height: 16px;
   text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums;
 }
+.pmap-row:has(.pmap-churn) { grid-template-columns: 14px minmax(0,1fr) auto; column-gap: 4px; }
+.pmap-row:has(.pmap-churn) .right { min-width: 0; }
 .pmap-churn { display: inline-flex; gap: 5px; align-items: baseline; font-variant-numeric: tabular-nums; }
 .pmap-churn b, .pmap-tile-facts b.is-add, .pmap-focus-facts b.is-add { color: var(--positive); font-weight: 650; }
 .pmap-churn i, .pmap-tile-facts b.is-del, .pmap-focus-facts b.is-del { color: var(--danger); font-style: normal; font-weight: 650; }
