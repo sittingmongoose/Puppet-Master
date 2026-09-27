@@ -1,0 +1,36 @@
+/* The look settings (kit.d/17-look.js) write root attributes; these are the styles they switch on. Nothing here
+   applies until the matching setting has been changed. */
+
+/* High contrast, for the Basic themes: secondary text reads as primary, edges get stronger. */
+html[data-contrast="high"][data-theme^="basic"] {
+  --text-secondary: var(--text-primary); --text-muted: color-mix(in srgb, var(--text-primary) 88%, transparent);
+  --border: color-mix(in srgb, var(--text-primary) 55%, transparent); --border-light: color-mix(in srgb, var(--text-primary) 38%, transparent);
+}
+html[data-contrast="high"][data-theme^="basic"] #panel-settings {
+  --k3-text-2: var(--k3-text-1); --k3-text-3: color-mix(in srgb, var(--k3-text-1) 88%, transparent); --k3-line: color-mix(in srgb, var(--k3-text-1) 38%, transparent);
+}
+
+/* Keyboard focus outline */
+html[data-focus="high-contrast"] :focus-visible { outline: 3px solid var(--text-primary, #fff) !important; outline-offset: 2px !important; }
+html[data-focus="color-blind"] :focus-visible { outline: 3px dashed #0072b2 !important; outline-offset: 2px !important; }
+html[data-focus="color-blind"][data-theme$="-dark"] :focus-visible { outline-color: #56b4e9 !important; }
+
+/* Retro textures */
+html[data-retro-fx="off"] .pixel-grid { display: none !important; }
+html[data-o55-grid="set"][data-theme="retro-dark"] .pixel-grid {
+  background-image: linear-gradient(rgba(224,224,224,var(--o55-grid-a)) 1px, transparent 1px), linear-gradient(90deg, rgba(224,224,224,var(--o55-grid-a)) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+html[data-o55-grid="set"][data-theme="retro-light"] .pixel-grid {
+  background-image: linear-gradient(rgba(26,26,26,calc(var(--o55-grid-a) / 2)) 1px, transparent 1px), linear-gradient(90deg, rgba(26,26,26,calc(var(--o55-grid-a) / 2)) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+html[data-o55-scan="on"][data-theme^="retro"]:not([data-retro-fx="off"]) .pixel-grid::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,var(--o55-scan-a)) 0 1px, transparent 1px 3px);
+}
+
+/* Compact spacing also tightens Settings' own rows and groups. */
+html[data-density="compact"] #panel-settings .setting-row.o55-row { min-height: 44px; padding-top: 6px; padding-bottom: 6px; }
+html[data-density="compact"] #panel-settings .o55-group-head { padding-top: 10px; }
+html[data-density="compact"] #panel-settings .settings-section.o55-group + .settings-section.o55-group { margin-top: 10px; }
