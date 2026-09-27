@@ -4,6 +4,7 @@
  *        [--rate 0.1] [--ms 900] [--step 16.667] [--file index.html] [--size 1440x900]
  *        [--crop 0,0.48,1,0.5] [--cols 6] [--width 320] [--msg "..."] [--voice auto|basic|friendly|glass|retro]
  *        [--from 0]   keep only frames at or after this motion time
+ *        [--wide]     close the editor first, so the chat has the whole width
  *
  * Method: the scene's setup runs at normal speed and settles. Then CSS and Web
  * Animations are slowed with CDP Animation.setPlaybackRate(rate) and every
@@ -40,6 +41,7 @@ const TW = Number(opt('width', 320));
 const VOICE = opt('voice', 'auto');
 const MSG = opt('msg', 'Walk me through the steps for the rollout.');
 const FROM = Number(opt('from', 0));
+const WIDE = argv.includes('--wide');
 
 const SCENES = {
   /* the composer text flies into its bubble, then the reply waits and streams */
@@ -70,6 +72,7 @@ try {
   await page.waitForTimeout(1200);
   await page.evaluate(([t, v]) => { PM56_DEMO.completeWorking(); PM56_DEMO.setTheme(t); if (v !== 'auto' && PM56_DEMO.setVoice) PM56_DEMO.setVoice(v); }, [THEME, VOICE]);
   await page.waitForTimeout(400);
+  if (WIDE) for (let i = 0; i < 4; i++) { const b = await page.$('[data-action="close-editor"]'); if (!b) break; await b.click(); await page.waitForTimeout(150); }
   await page.evaluate(sc.setup);
   await page.waitForTimeout(900);
   const stage = await page.evaluate(() => { const r = document.querySelector('.chat-stage').getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height }; });
