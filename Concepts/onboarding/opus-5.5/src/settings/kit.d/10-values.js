@@ -4,7 +4,8 @@
    - a select whose current value is not one of its options gets that value as a visible first choice instead of
      silently showing the first option as if it were chosen;
    - number fields show their unit or nothing (the engine printed the word "number"); a number that follows a default
-     until someone sets it reads "Automatic" with a quiet "Set a number";
+     until someone sets it reads "Automatic" with a quiet "Set a number"; a number whose 0 means none reads as that
+     word (rows.d `zero`: a Spending cap of 0 is "No cap");
    - lists and key/value settings open a real editor (rows you add, remove and reorder) instead of a JSON box;
    - action rows run what they name (O55S.rows[id].route / .open), never the engine's generic three-step preview;
    - secret rows open a key panel that never shows the key, or send you to the manager that owns the secret.
@@ -62,6 +63,8 @@ PM51.valueText = (setting, v) => {
   if (typeof v === 'object') { const r = O55R[setting.id] || {}; const e = Object.entries(v); return e.length ? e.slice(0, 4).map(([k, x]) => `${(r.keys && r.keys[k]) || o55Humanize(k)}: ${(x && typeof x === 'object') ? '…' : PM51.valueLabel(setting.id, x)}${r.valueUnit && typeof x === 'number' ? ' ' + r.valueUnit : ''}`).join(', ') + (e.length > 4 ? ` and ${e.length - 4} more` : '') : 'None'; }
   const unit = o55Unit(setting);
   const scale = Number((O55R[setting.id] || {}).scale) || 1;
+  /* a number whose 0 means "none" says so (rows.d `zero`: a Spending cap of 0 reads "No cap", not "0 $ per run") */
+  if ((O55R[setting.id] || {}).zero && Number(v) === 0 && String(v).trim() !== '') return O55R[setting.id].zero;
   if (typeof v === 'number' || /^-?\d+(\.\d+)?$/.test(String(v))) { const n = scale === 1 ? v : +(Number(v) / scale).toFixed(2); return unit ? `${n} ${unit}` : String(n); }
   return PM51.valueLabel(setting.id, v);
 };
@@ -116,7 +119,7 @@ function o55Number(setting, value) {
   /* a stored unit people do not think in (milliseconds, seconds of cache life) is shown in one they do: rows.d
      `scale` divides for display and multiplies back when saving */
   const scale = Number(row.scale) || 1;
-  const shown = Number.isFinite(n) ? (scale === 1 ? n : +(n / scale).toFixed(2)) : '';
+  const shown = Number.isFinite(n) && !(row.zero && n === 0) ? (scale === 1 ? n : +(n / scale).toFixed(2)) : '';
   return `<label class="o55-num"><input class="text-control" type="number" inputmode="decimal" step="${a(row.step || 'any')}"${bounds} value="${a(shown)}" placeholder="${a(row.placeholder || '')}" data-action="${scale === 1 ? 'input-setting' : 'o55-scaled-input'}" data-setting="${a(setting.id)}" data-scale="${scale}" data-value-suffix="${a(suffix)}" aria-label="${a(setting.label)}">${unit ? `<span class="o55-unit">${h(unit)}</span>` : ''}</label>`;
 }
 function o55Inherited(setting, value) {

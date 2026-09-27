@@ -180,7 +180,8 @@
    "unit": "$ per run",
    "min": 0,
    "step": 0.5,
-   "placeholder": "No cap"
+   "placeholder": "No cap",
+   "zero": "No cap"
   },
   "personas.tuning.temperature": {
    "label": "Creativity",
@@ -189,7 +190,8 @@
    "min": 0,
    "max": 2,
    "step": 0.1,
-   "placeholder": "Model default"
+   "placeholder": "Same as the project",
+   "empty": "Same as the project"
   },
   "personas.tuning.top-p": {
    "label": "Word choice range",
@@ -198,7 +200,8 @@
    "min": 0,
    "max": 1,
    "step": 0.05,
-   "placeholder": "Model default"
+   "placeholder": "Same as the project",
+   "empty": "Same as the project"
   },
   "personas.tuning.response-style": {
    "label": "Answer style",

@@ -118,9 +118,12 @@ PM51.chip = label => PM51.tag(label);
 PM51.chipToggle = (label, on, { action, data, label: aria } = {}) => `<button type="button" class="pm51-chip pm51-chip-toggle${on ? ' is-on' : ''}" aria-pressed="${on ? 'true' : 'false'}" data-action="${a(action || 'pm51-noop')}" ${dataAttrs(data)}>${h(label)}</button>`;
 PM51.tech = text => `<code class="pm51-tech">${h(text)}</code>`;
 
+/* A manager's tabs are a tab list (role, aria-selected, the body as its tab panel); 20-motion.js adds the arrow keys. */
 PM51.page = ({ id, key, tabs, active, body, quiet, cls, ui }) => {
-  const tabsHtml = tabs && tabs.length ? `<nav class="manager-tabs pm51-tabs" aria-label="Sections">${tabs.map(t => `<button type="button" class="manager-tab${t.id === active ? ' active' : ''}" data-action="pm51-tab" data-manager="${a(id)}" data-tab="${a(t.id)}" ${t.ui || ui ? `data-ui-action-id="${a(t.ui || ui)}"` : ''}>${h(t.label)}</button>`).join('')}</nav>` : '';
-  return `<div class="manager-page pm51-mgr${tabsHtml ? ' has-manager-tabs' : ''}${cls ? ' ' + cls : ''}" data-manager-key="${a(key || '')}" data-pm51-manager="${a(id)}">${tabsHtml}<div class="manager-body manager-tab-body pm51-body"><div class="manager-scroll pm51-scroll">${body}${quiet && quiet.length ? PM51.quiet(quiet) : ''}</div></div></div>`;
+  const tabId = t => `pm51-tab-${a(id)}-${a(t)}`;
+  const tabsHtml = tabs && tabs.length ? `<nav class="manager-tabs pm51-tabs" role="tablist" aria-label="Sections">${tabs.map(t => `<button type="button" role="tab" id="${tabId(t.id)}" aria-selected="${t.id === active ? 'true' : 'false'}" aria-controls="pm51-panel-${a(id)}" class="manager-tab${t.id === active ? ' active' : ''}" data-action="pm51-tab" data-manager="${a(id)}" data-tab="${a(t.id)}" ${t.ui || ui ? `data-ui-action-id="${a(t.ui || ui)}"` : ''}>${h(t.label)}</button>`).join('')}</nav>` : '';
+  const panel = tabsHtml ? ` role="tabpanel" id="pm51-panel-${a(id)}" aria-labelledby="${tabId(active)}"` : '';
+  return `<div class="manager-page pm51-mgr${tabsHtml ? ' has-manager-tabs' : ''}${cls ? ' ' + cls : ''}" data-manager-key="${a(key || '')}" data-pm51-manager="${a(id)}">${tabsHtml}<div class="manager-body manager-tab-body pm51-body"${panel}><div class="manager-scroll pm51-scroll">${body}${quiet && quiet.length ? PM51.quiet(quiet) : ''}</div></div></div>`;
 };
 PM51.section = ({ title, help, action, body, cls, id, tone, data }) => `<section class="panel-card pm51-section${cls ? ' ' + cls : ''}${tone ? ' tone-' + a(tone) : ''}" ${id ? `id="${a(id)}"` : ''} ${dataAttrs(data)}><div class="pm51-section-head"><div class="pm51-section-copy"><h3 class="pm51-section-title">${h(title)}</h3>${help ? `<p class="pm51-section-help">${h(help)}</p>` : ''}</div>${action ? (typeof action === 'string' ? action : PM51.btn(action)) : ''}</div>${body ? `<div class="pm51-section-body">${body}</div>` : ''}</section>`;
 PM51.grid = (cols, ...parts) => `<div class="pm51-grid cols-${a(cols)}">${parts.join('')}</div>`;
@@ -142,7 +145,7 @@ PM51.meter = ({ label, pct, reset, tone, note, value }) => {
   const text = value || `${Math.round(p)}% used${reset ? ' · ' + reset : ''}`;
   return `<div class="pm51-meter tone-${a(t)}" data-pct="${Math.round(p)}"><div class="pm51-meter-head"><span class="pm51-meter-label">${h(label)}</span><span class="pm51-meter-value">${h(text)}</span></div><div class="pm51-meter-track" role="img" aria-label="${a(`${label}: ${text}`)}"><i class="pm51-meter-fill" style="--fill:${Math.round(p)}%"></i></div>${note ? `<div class="pm51-meter-note">${h(note)}</div>` : ''}</div>`;
 };
-/* Numbered order badge (priority lists); locked variant for a fixed first position. */
+/* Order number (priority lists), a plain numeral; locked variant for a fixed first position. */
 PM51.order = (n, { locked, label } = {}) => `<span class="pm51-order${locked ? ' is-locked' : ''}" aria-label="${a(label || (locked ? 'Always first' : 'Position ' + n))}">${locked ? icon('lock') : h(String(n))}</span>`;
 /* Accordion: a head row with controls and a pop-down body; open state persists in PM51.s().open. */
 PM51.accordion = (items, { cls } = {}) => `<div class="pm51-acc${cls ? ' ' + cls : ''}">${items.filter(Boolean).map(it => {
@@ -809,16 +812,21 @@ PM51.settingsSections = (wsId, tab, { advanced = false } = {}) => {
 PM51.slot = () => '<div class="pm51-slot" hidden></div>';
 /* Post-process a manager's markup: inline sections go before the view's own slot, else its direct-child Advanced (else
    before the quiet row, else at the end of .pm51-scroll; listDetail views therefore get full-width
-   sections below the split); advanced placements become the first child of that Advanced (an existing
-   one anywhere in the view, else one Advanced is created - never a second). Pages marked
+   sections below the split); advanced placements become the first child of that Advanced (the view's own
+   one, else one Advanced is created). Pages marked
    data-pm51-placed="manual" compose their rows themselves; only composed sections whose ids the
-   manager did not render fall back into its Advanced so every id still renders exactly once. */
+   manager did not render fall back into its Advanced so every id still renders exactly once.
+   A view shows one More options: in a list/detail view whose view already has one, the selected item's own More
+   options joins it as its first group, under the item's name (pm51OneMore; PM51.swapDetail swaps that group along
+   with the detail). Before this, a list/detail view whose only disclosure was the item's got a second one created
+   for its project-wide rows (Permissions, Toolchain, Testing, Personas). */
 function pm51PlaceInline(workspace, html) {
   const all = (workspace.sections || []).filter(s => s.inline);
-  if (!all.length || typeof html !== 'string' || html.indexOf('pm51-mgr') < 0) return html;
+  if (typeof html !== 'string' || html.indexOf('pm51-mgr') < 0 || (!all.length && html.indexOf('pm51-advanced') < 0)) return html;
   const tpl = document.createElement('template'); tpl.innerHTML = html;
   const page = tpl.content.querySelector('.pm51-mgr'); if (!page) return html;
   const scroll = page.querySelector('.pm51-scroll'); if (!scroll) return html;
+  if (!all.length) { pm51OneMore(scroll); return tpl.innerHTML; }
   const manual = page.dataset.pm51Placed === 'manual';
   const activeBtn = page.querySelector('.pm51-tabs .manager-tab.active');
   const activeTab = activeBtn ? activeBtn.dataset.tab : (PM51.tab(workspace.id, pm51DefaultTabs[workspace.id]) || null);
@@ -848,8 +856,28 @@ function pm51PlaceInline(workspace, html) {
     const holder = document.createElement('template'); holder.innerHTML = pm51RenderInline(workspace, advanced, { advanced: true });
     body.insertBefore(holder.content.firstElementChild, body.firstChild);
   }
+  pm51OneMore(scroll);
   if (!manual) page.dataset.pm51Placed = 'auto';
   return tpl.innerHTML;
+}
+/* The selected item's More options (a direct child of its detail) becomes the first group of the view's own, titled
+   with the item's name; without a view disclosure it stays where the manager drew it. */
+function pm51OneMore(scroll) {
+  const view = [...scroll.children].find(n => n.matches('details.pm51-advanced'));
+  const own = view && scroll.querySelector('.pm51-split .pm51-detail-content > details.pm51-advanced');
+  if (!own) return;
+  const titleEl = scroll.querySelector('.pm51-split .pm51-detail-title');
+  const first = titleEl && titleEl.firstChild;
+  const name = String(first && first.nodeType === 3 ? first.nodeValue : titleEl ? titleEl.textContent : '').trim();
+  const ownBody = own.querySelector(':scope > .pm51-advanced-body');
+  const group = document.createElement('section');
+  group.className = 'panel-card pm51-section o55-item-more'; group.setAttribute('data-o55-item-more', '');
+  group.innerHTML = `<div class="pm51-section-head"><div class="pm51-section-copy"><h3 class="pm51-section-title">${h(name || 'This item')}</h3><p class="pm51-section-help">${h(name ? `These apply to ${name} only.` : 'These apply to the chosen item only.')}</p></div></div><div class="pm51-section-body"></div>`;
+  const into = group.querySelector('.pm51-section-body');
+  while (ownBody && ownBody.firstChild) into.appendChild(ownBody.firstChild);
+  own.remove();
+  const body = view.querySelector(':scope > .pm51-advanced-body') || view;
+  body.insertBefore(group, body.firstChild);
 }
 
 /* Engine walkers: any workspace with sections holds settings now. */
@@ -877,6 +905,8 @@ renderPageIndexCard = function (workspaces, activeWsId, activeSection) {
     const sections = domainSectionMap[w.id] || [];
     const title = `<button type="button" class="page-index-title ${w.id === activeWsId ? 'is-current' : ''}" data-action="jump-workspace" data-workspace="${escAttr(w.id)}">${escapeHtml(w.label)}</button>`;
     const main = `${w.id}:main`;
+    const tabIds = pm51TabOrder[w.id] || [];
+    if (w.type !== 'settings' && !sections.some(s => s.id !== main) && tabIds.length > 1) return title + pm51IndexTabs(w.id, activeWsId, activeSection);
     if (w.type === 'settings' || !sections.some(s => s.id !== main)) {
       return title + sections.filter(s => !(sections.length === 1 && s.id === main)).map(s => `<button type="button" class="index-link ${s.id === activeSection ? 'is-active' : ''}" data-action="scroll-section" data-section="${escAttr(s.id)}" data-workspace="${escAttr(w.id)}">${escapeHtml(s.label)}</button>`).join('');
     }
@@ -892,6 +922,25 @@ renderPageIndexCard = function (workspaces, activeWsId, activeSection) {
   }).join('');
   return `<aside class="page-index" aria-label="On this page"><div class="page-index-card" data-page-index-links>${groups}</div></aside>`;
 };
+/* A manager with no placed sections (Backup & Restore) had only its title in the page index. It lists its tabs; one
+   opens that tab and lands on the manager. The link for the tab on show carries the manager's section id, so the scroll
+   spy lights it like any other entry. */
+function pm51IndexTabs(wsId, activeWsId, activeSection) {
+  const labels = ((PLACEMENT && PLACEMENT.managers[wsId]) || {}).tabs || {}, main = `${wsId}:main`, cur = PM51.tab(wsId, pm51DefaultTabs[wsId] || (pm51TabOrder[wsId] || [])[0]);
+  return (pm51TabOrder[wsId] || []).map(t => `<button type="button" class="index-link pm51-index-tab${t === cur && wsId === activeWsId && activeSection === main ? ' is-active' : ''}" data-action="pm51-index-tab" data-workspace="${escAttr(wsId)}" data-tab="${escAttr(t)}" data-section="${t === cur ? escAttr(main) : ''}">${escapeHtml(labels[t] || humanize(t))}</button>`).join('');
+}
+PM51.syncIndexTabs = wsId => {
+  const cur = PM51.tab(wsId, pm51DefaultTabs[wsId] || (pm51TabOrder[wsId] || [])[0]), main = `${wsId}:main`, lit = state.workspace === wsId && state.activeSection[wsId] === main;
+  root.querySelectorAll(`.pm51-index-tab[data-workspace="${cssEscape(wsId)}"]`).forEach(b => { const on = b.dataset.tab === cur; b.dataset.section = on ? main : ''; b.classList.toggle('is-active', on && lit); });
+};
+PM51.on('index-tab', el => {
+  const ws = ds(el, 'workspace'), tab = ds(el, 'tab');
+  const shown = root.querySelector(`[data-continuous-workspace-body="${cssEscape(ws)}"] .pm51-mgr`);
+  if (shown && PM51.tab(ws, pm51DefaultTabs[ws] || null) !== tab) PM51.switchTab(ws, tab); else PM51.setTab(ws, tab);
+  state.activeSection[ws] = `${ws}:main`;
+  jumpToWorkspace(ws);
+  PM51.syncIndexTabs(ws);
+});
 const pm51OriginalEstimatedHeight = estimatedWorkspaceHeight;
 estimatedWorkspaceHeight = function (workspace) {
   const base = pm51OriginalEstimatedHeight(workspace);
@@ -915,6 +964,7 @@ flashSearchHit = function (settingId) {
       centered = true;
       const rect = row.getBoundingClientRect(), sc = scroller ? scroller.getBoundingClientRect() : null;
       if (scroller && sc && (rect.top < sc.top || rect.bottom > sc.bottom)) {
+        if (PM51.stopLanding) PM51.stopLanding(); /* the row is the target now, not its section */
         const abs = rect.top - sc.top + scroller.scrollTop;
         scroller.scrollTo({ top: Math.max(0, abs - (scroller.clientHeight - rect.height) / 2), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
         still = 0;

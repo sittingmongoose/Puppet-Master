@@ -1,6 +1,9 @@
 /* O55 · manager frame. One level of cards, not three: the manager is an open page (no card of its own), its sections
    are the cards, and anything inside a card is a titled group with dividers. The tab strip is a pill track that
-   stays at the top of the manager while you scroll it, with a thumb that slides to the chosen tab. */
+   stays at the top of the manager while you scroll it, with a thumb that slides to the chosen tab. The track is
+   painted in the page's own colour, wraps onto a second line instead of hiding its last tabs, and while it is stuck
+   to the top it carries a band of that colour across the page, so rows pass cleanly beneath it (kit.d/20-motion.js
+   marks it .is-stuck and moves the thumb to the chosen tab's line). */
 
 /* ---- open frame --------------------------------------------------------------------------------------------- */
 #panel-settings .workspace-block .manager-page.pm51-mgr { border: 0; border-radius: 0; background: none; box-shadow: none; overflow: visible; }
@@ -10,12 +13,17 @@
 
 /* ---- tabs: pill track with a sliding thumb ---------------------------------------------------------------------- */
 #panel-settings .workspace-block .pm51-mgr.has-manager-tabs > .manager-tabs.pm51-tabs {
-  position: sticky; top: 0; z-index: 6; display: inline-flex; align-self: flex-start; max-width: 100%;
+  position: sticky; top: 0; z-index: 6; display: inline-flex; flex-wrap: wrap; align-self: flex-start; max-width: 100%;
   gap: 2px; min-height: 0; margin: 2px 0 0; padding: 4px; border: 1px solid var(--k3-line); border-radius: 12px;
-  background: color-mix(in srgb, var(--k3-bg-1) 92%, transparent); box-shadow: 0 10px 24px -18px rgba(0, 0, 0, .55);
-  overflow-x: auto; scrollbar-width: none; isolation: isolate;
+  background: var(--k3-bg-0); box-shadow: 0 10px 24px -18px rgba(0, 0, 0, .55);
+  overflow: visible; isolation: isolate;
 }
-#panel-settings .pm51-mgr > .pm51-tabs .manager-tab { height: 34px; padding: 0 14px; border-radius: 9px; font-size: 12.5px; font-weight: 620; color: var(--k3-text-3); background: none; z-index: 1; }
+/* stuck: a band of the page's colour behind the track, the width of the page and a little below it */
+#panel-settings .workspace-block .pm51-mgr.has-manager-tabs > .manager-tabs.pm51-tabs.is-stuck {
+  box-shadow: 0 10px 24px -18px rgba(0, 0, 0, .55), 0 0 0 100vmax var(--k3-bg-0);
+  clip-path: inset(0 -100vmax -10px -100vmax);
+}
+#panel-settings .pm51-mgr > .pm51-tabs .manager-tab { height: 34px; padding: 0 14px; border-radius: 9px; font-size: 12.5px; font-weight: 620; color: var(--k3-text-3); background: none; white-space: nowrap; z-index: 1; }
 #panel-settings .pm51-mgr > .pm51-tabs .manager-tab:hover { color: var(--k3-text-1); background: none; }
 #panel-settings .pm51-mgr > .pm51-tabs .manager-tab.active { color: var(--k3-text-1); background: none; box-shadow: none; }
 #panel-settings .pm51-mgr > .pm51-tabs .manager-tab:focus-visible { outline: 2px solid color-mix(in srgb, var(--k3-accent) 70%, transparent); outline-offset: -2px; }
@@ -23,10 +31,12 @@
   top: 4px; bottom: 4px; height: auto; z-index: 0; border-radius: 9px;
   background: var(--k3-surface-2, var(--k3-surface-1)); border: 1px solid color-mix(in srgb, var(--k3-accent) 28%, var(--k3-line));
   box-shadow: 0 1px 0 color-mix(in srgb, #fff 6%, transparent) inset, 0 6px 16px -8px color-mix(in srgb, var(--k3-accent) 55%, transparent);
-  transition: left 420ms var(--k3-ease-spring), width 420ms var(--k3-ease-spring), opacity 160ms ease;
+  transition: left 420ms var(--k3-ease-spring), width 420ms var(--k3-ease-spring), top 420ms var(--k3-ease-spring), height 420ms var(--k3-ease-spring), opacity 160ms ease;
 }
 #panel-settings .pm51-mgr > .pm51-tabs .tab-ink::after { content: ''; position: absolute; left: 22%; right: 22%; bottom: -1px; height: 2px; border-radius: 2px; background: var(--k3-accent); opacity: .9; }
-html[data-theme^="retro"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { transition-timing-function: steps(4, end), steps(4, end), linear; }
+html[data-theme^="retro"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { transition-timing-function: steps(4, end), steps(4, end), steps(4, end), steps(4, end), linear; }
+html[data-motion="reduced"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { transition: none; }
+@media (prefers-reduced-motion: reduce) { #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { transition: none; } }
 
 /* ---- summary strip (was four tall tiles) ---------------------------------------------------------------------- */
 #panel-settings .pm51-mgr .pm51-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md, 10px); background: var(--k3-surface-1); overflow: hidden; }
@@ -82,9 +92,11 @@ html[data-theme^="retro"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { tran
 #panel-settings .o55-leaving { pointer-events: none !important; }
 
 /* ---- narrow hosts ------------------------------------------------------------------------------------------------ */
-@container settings-host (max-width: 760px) {
+@container settings-host (max-width: 720px) {
   #panel-settings .pm51-mgr .split-manager.pm51-split { grid-template-columns: minmax(0, 1fr); }
-  #panel-settings .pm51-mgr .pm51-roster { border-right: 0; border-bottom: 1px solid var(--k3-line); }
+  #panel-settings .pm51-mgr .pm51-roster { border-right: 0; }
+}
+@container settings-host (max-width: 760px) {
   #panel-settings .workspace-block .pm51-mgr.has-manager-tabs > .manager-tabs.pm51-tabs { display: flex; }
   #panel-settings .pm51-mgr .pm51-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   #panel-settings .pm51-mgr .pm51-stat:nth-child(3) { box-shadow: inset 0 1px 0 var(--k3-line); }

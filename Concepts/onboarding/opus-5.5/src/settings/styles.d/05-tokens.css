@@ -1,0 +1,17 @@
+/* O55 · readable quiet text. Help lines, group and section help and list details use --k3-text-3, the theme's muted
+   colour; on Settings' cards it read at 2.5 to 3.7 to 1 in six themes. Inside Settings it is raised per theme to at
+   least 4.5 to 1 on every card and page surface, and stays below the label colour (--k3-text-1) so help still reads
+   quieter than what it explains. The attention colour, used as text for status words ("Unconfirmed", "Clashes
+   with …", "Last checkup: Ready with warnings"), is deepened where it fell under 3 to 1, and a list's selected row
+   keeps its details at the value colour on its tinted background. High contrast (12-look.css) still wins in the Basic
+   themes. */
+
+html[data-theme="basic-dark"] #panel-settings { --k3-text-3: #989ca5; }
+html[data-theme="friendly-dark"] #panel-settings { --k3-text-3: #9c97a5; }
+html[data-theme="retro-dark"] #panel-settings { --k3-text-3: #858f74; }
+html[data-theme="glass-dark"] #panel-settings { --k3-text-3: rgba(226, 215, 245, .62); }
+html[data-theme="glass-light"] #panel-settings { --k3-text-2: rgba(24, 37, 45, .84); --k3-text-3: rgba(27, 43, 51, .74); --k3-amber: #7a4f06; --k3-red: #a8334a; }
+html[data-theme="friendly-light"] #panel-settings { --k3-text-3: #6e6874; --k3-amber: #a67d1a; }
+html[data-theme="retro-light"] #panel-settings { --k3-amber: #c46200; }
+
+#panel-settings .pm51-mgr .pm51-roster .resource-row.active .resource-row-meta { color: var(--k3-text-2); }

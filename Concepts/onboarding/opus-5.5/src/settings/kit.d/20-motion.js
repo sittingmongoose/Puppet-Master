@@ -4,11 +4,14 @@
    - tab switch: the tab strip stays put (its ink slides), the body cross-fades with a short slide in the direction of
      travel, and the manager's height morphs;
    - choosing another item in a list (a provider, a sound, a skill): the list stays put (its scroll and filter too),
-     only the detail cross-fades;
+     only the detail cross-fades (and the item's group in the view's More options is swapped with it);
    - "More options" and other disclosures open and close by height, never by a jump;
    - reduced motion (system or the app's Reduce Animations): every swap is immediate.
    Retro keeps its stepped look (steps(4) instead of a curve). Only opacity and transform run per frame on the moving
-   layers; the one height animation is on the manager box. */
+   layers; the one height animation is on the manager box.
+   The tab strip is a real tab list: it wraps onto a second line instead of hiding tabs (the thumb follows the chosen
+   tab to its line), the arrow keys, Home and End move between tabs, and while the strip is stuck to the top of the
+   page it is marked .is-stuck so 20-managers.css can lay the page's colour behind it. */
 
 const o55Retro = () => /^retro/.test(document.documentElement.getAttribute('data-theme') || '');
 const o55Ease = () => o55Retro() ? 'steps(4, end)' : 'cubic-bezier(.22,.8,.24,1)';
@@ -82,9 +85,54 @@ PM51.switchTab = function (wsId, tab) {
   requestAnimationFrame(() => moveTabInks(measureTabInks(true, page)));
   try { syncDetailButtonStates(); } catch (e) { /* cosmetic */ }
   o55KeepTabsInView(page);
+  if (PM51.syncIndexTabs) PM51.syncIndexTabs(wsId);
   saveState();
 };
 PM51.on('tab', el => PM51.switchTab(ds(el, 'manager'), ds(el, 'tab')));
+
+/* The engine places a strip's thumb from a cached left and width. A strip that wraps needs the chosen tab's line too,
+   and the cache is stale once a resize moves a tab to another line, so a manager's strip is measured live, and again
+   whenever the strip itself changes size (a page index or an open Details panel narrows it without a window resize). */
+const o55InkSizes = typeof ResizeObserver === 'function' ? new ResizeObserver(() => requestAnimationFrame(() => moveTabInks())) : null;
+const o55InkWatched = new WeakSet();
+const o55EngineMoveInks = moveTabInks;
+moveTabInks = function () {
+  const r = o55EngineMoveInks.apply(this, arguments);
+  root.querySelectorAll('.pm51-mgr > .pm51-tabs').forEach(nav => {
+    if (o55InkSizes && !o55InkWatched.has(nav)) { o55InkWatched.add(nav); o55InkSizes.observe(nav); }
+    const ink = nav.querySelector(':scope > .tab-ink'), btn = nav.querySelector('.manager-tab.active');
+    if (!ink || !btn) return;
+    Object.assign(ink.style, { left: btn.offsetLeft + 'px', width: btn.offsetWidth + 'px', top: btn.offsetTop + 'px', height: btn.offsetHeight + 'px', bottom: 'auto' });
+  });
+  o55MarkStuck();
+  return r;
+};
+
+/* Arrow keys, Home and End move along the strip and choose the tab they land on, as in any tab list. */
+root.addEventListener('keydown', e => {
+  const tab = e.target && e.target.closest ? e.target.closest('.pm51-tabs .manager-tab') : null;
+  if (!tab || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+  const tabs = [...tab.parentElement.querySelectorAll(':scope > .manager-tab')], i = tabs.indexOf(tab);
+  const next = tabs[e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : (i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+  if (!next || next === tab) return;
+  e.preventDefault();
+  const ws = next.dataset.manager, id = next.dataset.tab;
+  PM51.switchTab(ws, id);
+  const again = root.querySelector(`[data-pm51-manager="${cssEscape(ws)}"] > .pm51-tabs .manager-tab[data-tab="${cssEscape(id)}"]`);
+  if (again) again.focus({ preventScroll: true });
+});
+
+/* A strip is stuck while its top sits at the top of the page's scroller; checked once a frame while that scrolls. */
+function o55MarkStuck() {
+  const scroller = root.querySelector('#settings-document'); if (!scroller) return;
+  const top = scroller.getBoundingClientRect().top + 1;
+  scroller.querySelectorAll('.pm51-mgr.has-manager-tabs > .pm51-tabs').forEach(nav => nav.classList.toggle('is-stuck', nav.getBoundingClientRect().top <= top));
+}
+let o55StuckFrame = 0;
+document.addEventListener('scroll', e => {
+  if (!e.target || e.target.id !== 'settings-document' || o55StuckFrame) return;
+  o55StuckFrame = requestAnimationFrame(() => { o55StuckFrame = 0; o55MarkStuck(); });
+}, { capture: true, passive: true });
 
 /* ---------- list / detail: only the detail moves --------------------------------------------------------------- */
 PM51.swapDetail = function (wsId, sel) {
@@ -97,6 +145,13 @@ PM51.swapDetail = function (wsId, sel) {
   page.querySelectorAll('.resource-roster .resource-row').forEach(row => { const on = String(row.dataset.id || row.dataset.provider) === String(sel); row.classList.toggle('active', on); row.setAttribute('aria-current', on ? 'true' : 'false'); });
   o55PostMount(nextDetail);
   o55Morph(oldDetail, nextDetail, { host: oldDetail.parentNode, dir: 0, dur: 260 });
+  /* the item's own More options lives in the view's More options (kit.js pm51OneMore): it changes with the detail */
+  const oldMore = page.querySelector('[data-o55-item-more]'), nextMore = fresh.querySelector('[data-o55-item-more]');
+  const moreBody = page.querySelector(':scope > .manager-body > .pm51-scroll > details.pm51-advanced > .pm51-advanced-body');
+  if (nextMore) o55PostMount(nextMore);
+  if (oldMore && nextMore) oldMore.replaceWith(nextMore);
+  else if (oldMore) oldMore.remove();
+  else if (nextMore && moreBody) moreBody.insertBefore(nextMore, moreBody.firstChild);
   try { syncDetailButtonStates(); } catch (e) { /* cosmetic */ }
   saveState();
 };

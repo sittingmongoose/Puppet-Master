@@ -22,3 +22,18 @@
   }
   if (fixed) try { saveState(); } catch (e) { /* the next save writes it */ }
 })();
+/* An empty stored value that really means one of the row's own choices (rows.d `emptyMeans`) starts as that choice, so
+   the row reads what applies instead of "Not set": "Open container web pages in" is empty until someone picks, and
+   until then the system's default browser opens them. Only values the person has not changed are corrected. */
+(function o55FixEmptyMeans() {
+  const rows = (typeof O55S === 'object' && O55S && O55S.rows && O55S.rows.rows) || {};
+  for (const [id, row] of Object.entries(rows)) {
+    if (!row || row.emptyMeans == null) continue;
+    const want = row.emptyMeans, empty = v => v == null || v === '';
+    const f = findSettingGlobal(id);
+    if (f && f.setting && empty(f.setting.value)) f.setting.value = want;
+    const e = PM51.placement && PM51.placement.byId[id];
+    if (e && e.setting && empty(e.setting.value)) e.setting.value = want;
+    if (state.settings && !(state.changed || {})[id] && empty(state.settings[id])) state.settings[id] = want;
+  }
+})();

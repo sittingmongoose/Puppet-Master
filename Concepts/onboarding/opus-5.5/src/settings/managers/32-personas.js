@@ -1,7 +1,8 @@
 /* Personas & Crews — personas, crews, group work, helpers, defaults (settings audit, 2026-09-27).
    - A persona's own settings (how it answers, its model and cost, its tools and instructions) are edited inside
      that persona: they were drawn once under the list, where changing "Creativity" changed every persona at once.
-     Core personas are locked and read; duplicate one to change it.
+     Core personas are locked and read; duplicate one to change it. Every row of a group is drawn in the group, as a
+     locked persona shows them: the view has one More options, and each group used to add its own.
    - The library follows Plans/Personas.md §6 (kit.d/70-personas.js): nine protected core personas, then the
      bundled specialists, then your own. Bundled ones can be hidden from pickers.
    - New personas and crews are made in the guided window. Crew members and the lead are picked, never typed.
@@ -97,13 +98,13 @@
       ? lockedGroup(p, [S.name, S.desc, S.aliases, S.tags, S.pid])
       : valueRow(p, S.name, { label: 'Change', icon: 'edit', action: 'pm51-personas-about', data: { id: p.id } }) + valueRow(p, S.desc, { label: 'Change', icon: 'edit', action: 'pm51-personas-about', data: { id: p.id } }, true)
         + valueRow(p, S.aliases, { label: 'Change', icon: 'edit', action: 'pm51-personas-aliases', data: { id: p.id } }) + PM51.scoped.rows([srow(p, S.tags)])
-        + PM51.advanced(valueRow(p, S.pid), { label: 'More options' });
+        + valueRow(p, S.pid);
     const intro = locked ? PM51.note(`${p.name} is a built-in core persona, so it is locked. Duplicate it to make a version you can change.`, 'info')
       : p.group === 'Bundled' ? PM51.note('Bundled with Puppet Master. Your changes stay in this project.', 'info') : '';
     const groups = GROUPS.map(g => PM51.section({
       title: g.title, help: g.help,
       body: locked ? lockedGroup(p, g.ids.concat(g.more)) + (g.title === 'Tools and instructions' ? promptRow(p) : '')
-        : (g.title === 'Tools and instructions' ? promptRow(p) : '') + PM51.scoped.rows(g.ids.map(id => srow(p, id))) + PM51.advanced(PM51.scoped.rows(g.more.map(id => srow(p, id))), { label: 'More options' })
+        : (g.title === 'Tools and instructions' ? promptRow(p) : '') + PM51.scoped.rows(g.ids.concat(g.more).map(id => srow(p, id)))
     })).join('');
     const others = personas().filter(o => o.id !== p.id);
     return intro + PM51.section({ title: 'About', help: 'Its name, what it is for, and other names it answers to.', body: about }) + groups

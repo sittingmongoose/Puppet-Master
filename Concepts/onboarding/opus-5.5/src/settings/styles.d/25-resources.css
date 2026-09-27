@@ -73,13 +73,18 @@
 /* ---- narrow views ------------------------------------------------------------------------------------------------
    The settings host can be wide while a manager's own view is not (page index, open sidebars), so the list/detail
    and the rows inside a detail follow their own width: a slimmer list first, then rows that put the control under
-   the label. */
+   the label, and on a narrow host the list becomes a drawer and the detail takes the whole card. */
 #panel-settings .pm51-mgr .pm51-scroll { container: pm51-view / inline-size; }
 #panel-settings .pm51-mgr .pm51-detail { container: pm51-detail / inline-size; }
 @container pm51-view (max-width: 760px) {
   #panel-settings .pm51-mgr .split-manager.pm51-split { grid-template-columns: 208px minmax(0, 1fr); }
   #panel-settings .pm51-mgr .pm51-roster .resource-avatar { display: none; }
   #panel-settings .pm51-mgr .o55-roster-group > small { display: none; }
+}
+/* Once the list is an off-canvas drawer behind the menu button (the engine does that at 720px), the slimmer list's
+   column goes too: the detail takes the whole width. */
+@container settings-host (max-width: 720px) {
+  #panel-settings .pm51-mgr .split-manager.pm51-split { grid-template-columns: minmax(0, 1fr); }
 }
 @container pm51-detail (max-width: 540px) {
   #panel-settings .pm51-detail .setting-row.o55-row { grid-template-columns: minmax(0, 1fr) 30px; }

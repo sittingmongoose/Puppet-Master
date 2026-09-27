@@ -46,7 +46,7 @@ PM51.scoped = {
     if (kind === 'number') {
       const n = Number.parseFloat(String(value == null ? '' : value)), unit = o55Unit(s);
       const bounds = `${Number.isFinite(row.min) ? ` min="${row.min}"` : ''}${Number.isFinite(row.max) ? ` max="${row.max}"` : ''}`;
-      return `<label class="o55-num"><input class="text-control" type="number" inputmode="decimal" step="${a(row.step || 'any')}"${bounds} value="${a(Number.isFinite(n) ? n : '')}" placeholder="${a(row.placeholder || 'Automatic')}" data-action="pm51-scoped-input" ${dataAttrs(d)} aria-label="${a(name)}">${unit ? `<span class="o55-unit">${h(unit)}</span>` : ''}</label>`;
+      return `<label class="o55-num"><input class="text-control" type="number" inputmode="decimal" step="${a(row.step || 'any')}"${bounds} value="${a(Number.isFinite(n) && !(row.zero && n === 0) ? n : '')}" placeholder="${a(row.placeholder || 'Automatic')}" data-action="pm51-scoped-input" ${dataAttrs(d)} aria-label="${a(name)}">${unit ? `<span class="o55-unit">${h(unit)}</span>` : ''}</label>`;
     }
     /* a stored default that is really words ("provider defaults") reads as the placeholder, not as typed text */
     const shown = typeof value === 'string' && value === s.value && row.placeholder && /default/i.test(value) ? '' : value;

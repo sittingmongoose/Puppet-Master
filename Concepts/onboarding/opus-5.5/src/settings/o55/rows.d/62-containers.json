@@ -56,7 +56,8 @@
    "label": "Open container web pages in",
    "options": {
     "System Default": "My default browser"
-   }
+   },
+   "emptyMeans": "System Default"
   },
   "code.execution.port-forward-auto-open": {
    "label": "When a container opens a port",

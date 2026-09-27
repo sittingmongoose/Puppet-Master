@@ -121,10 +121,11 @@
 #panel-settings .pm51-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 #panel-settings .pm51-step { display: flex; align-items: center; gap: 12px; min-height: 50px; padding: 8px 0; border-top: 1px solid var(--k3-line); }
 #panel-settings .pm51-step:first-child { border-top: 0; }
-#panel-settings .pm51-step-n { width: 26px; height: 26px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--k3-line); background: var(--k3-bg-2); color: var(--k3-text-2); font-size: 11px; font-weight: 720; }
-#panel-settings .pm51-step-n svg { width: 13px; height: 13px; }
-#panel-settings .pm51-step.is-done .pm51-step-n, #panel-settings .pm51-step.tone-ready .pm51-step-n { color: var(--k3-green); border-color: rgba(84,214,154,.35); background: var(--k3-green-soft); }
-#panel-settings .pm51-step.tone-attention .pm51-step-n { color: var(--k3-amber); border-color: rgba(247,189,99,.35); background: var(--k3-amber-soft); }
+/* step numbers are plain numerals in a fixed-width slot (no disc), so titles still line up */
+#panel-settings .pm51-step-n { width: 26px; height: 26px; flex: 0 0 auto; display: grid; place-items: center; border: 0; border-radius: 0; background: none; color: var(--k3-text-2); font-size: 13px; font-weight: 720; font-variant-numeric: tabular-nums; }
+#panel-settings .pm51-step-n svg { width: 15px; height: 15px; }
+#panel-settings .pm51-step.is-done .pm51-step-n, #panel-settings .pm51-step.tone-ready .pm51-step-n { color: var(--k3-green); }
+#panel-settings .pm51-step.tone-attention .pm51-step-n { color: var(--k3-amber); }
 #panel-settings .pm51-step-copy { min-width: 0; flex: 1 1 auto; }
 #panel-settings .pm51-step-title { font-size: 12.5px; font-weight: 650; color: var(--k3-text-1); }
 #panel-settings .pm51-step-desc { margin-top: 2px; font-size: 11.5px; color: var(--k3-text-3); }
@@ -177,9 +178,13 @@
 #panel-settings .pm51-roster-toggle { display: none; }
 #panel-settings .workspace-block .pm51-detail-content { padding: 14px 16px 18px; }
 #panel-settings .pm51-detail-content > * + * { margin-top: 12px; }
-@container settings-host (max-width: 760px) {
+/* The engine turns the list into an off-canvas drawer at 720px; the menu button and the one-column split follow the
+   same width, so the detail never keeps the list's column once the list is hidden. */
+@container settings-host (max-width: 720px) {
   #panel-settings .pm51-split { grid-template-columns: minmax(0, 1fr); }
   #panel-settings .pm51-roster-toggle { display: inline-grid; }
+}
+@container settings-host (max-width: 760px) {
   #panel-settings .pm51-grid.cols-2, #panel-settings .pm51-grid.cols-3 { grid-template-columns: 1fr; }
   #panel-settings .pm51-row { grid-template-columns: 1fr; }
   #panel-settings .pm51-row-control { justify-content: flex-start; }
@@ -385,7 +390,7 @@ html[data-motion="reduced"] .pm51-popout.is-open { opacity: 1; visibility: visib
   #panel-settings .workspace-block .pm51-split[data-roster-scroll] .roster-list { overflow-y: auto; min-height: 0; }
 }
 
-/* ---- meters, order badges, accordions ------------------------------------------------------ */
+/* ---- meters, order numbers, accordions ----------------------------------------------------- */
 #panel-settings .pm51-meter { min-width: 0; }
 #panel-settings .pm51-meter-head { display: flex; justify-content: space-between; gap: 10px; font-size: 11px; line-height: 1.3; }
 #panel-settings .pm51-meter-label { color: var(--k3-text-2); font-weight: 620; white-space: nowrap; }
@@ -397,9 +402,9 @@ html[data-motion="reduced"] .pm51-popout.is-open { opacity: 1; visibility: visib
 #panel-settings .pm51-meter.tone-info .pm51-meter-fill { background: var(--k3-blue); }
 #panel-settings .pm51-meter.tone-blocked .pm51-meter-value { color: var(--k3-red); }
 #panel-settings .pm51-meter-note { margin-top: 3px; font-size: 10.5px; color: var(--k3-text-3); }
-#panel-settings .pm51-order { width: 24px; height: 24px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--k3-line); background: var(--k3-bg-2); color: var(--k3-text-2); font-size: 11px; font-weight: 720; }
+#panel-settings .pm51-order { width: 24px; height: 24px; flex: 0 0 auto; display: grid; place-items: center; border: 0; border-radius: 0; background: none; color: var(--k3-text-2); font-size: 13px; font-weight: 720; font-variant-numeric: tabular-nums; }
 #panel-settings .pm51-order.is-locked { color: var(--k3-text-3); }
-#panel-settings .pm51-order svg { width: 11px; height: 11px; }
+#panel-settings .pm51-order svg { width: 13px; height: 13px; }
 #panel-settings .pm51-acc { display: flex; flex-direction: column; }
 #panel-settings .pm51-acc-item { border-top: 1px solid var(--k3-line); }
 #panel-settings .pm51-acc-item:first-child { border-top: 0; }

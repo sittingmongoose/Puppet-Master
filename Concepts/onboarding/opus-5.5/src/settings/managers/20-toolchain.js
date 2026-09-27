@@ -40,7 +40,7 @@
 #panel-settings .pm51-toolchain-order { display: flex; flex-direction: column; }
 #panel-settings .pm51-toolchain-order-row { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 6px 0; border-top: 1px solid var(--k3-line); }
 #panel-settings .pm51-toolchain-order-row:first-child { border-top: 0; }
-#panel-settings .pm51-toolchain-order-n { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--k3-line); background: var(--k3-bg-2); font-size: 11px; font-weight: 700; color: var(--k3-text-2); flex: 0 0 auto; }
+#panel-settings .pm51-toolchain-order-n { width: 22px; height: 22px; display: grid; place-items: center; font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--k3-text-2); flex: 0 0 auto; }
 #panel-settings .pm51-toolchain-order-name { flex: 1 1 auto; min-width: 0; font-size: 12.5px; font-weight: 640; color: var(--k3-text-1); }
 `);
 

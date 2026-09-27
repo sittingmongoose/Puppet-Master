@@ -4,7 +4,9 @@
    scenes) instead of a flat wall, and the manager's own "Use built-in browser", "Visual inspection" and "Native
    checks" switches that repeated three of them are gone. The Debug list is the home of the stored debug
    configurations. History's policy lines read the evidence rows. The browser's own screenshot and DevTools
-   choices moved to Browser & SCM, and Goal receipt evidence moved to Goals. */
+   choices moved to Browser & SCM, and Goal receipt evidence moved to Goals. History's captured-evidence cards come
+   from the shared evidence surface; here their states read as a dot and a word and the values that surface writes as
+   identifiers (partial_with_gaps, display_only, failed_no_media) read as words. The shared data is not changed. */
 (function () {
   const ID = 'testing';
   const KEY = 'testing-debug-capture';
@@ -184,13 +186,29 @@
      legacy six-tab Browser & SCM projection, so their old Capture tab no longer renders in this
      shell. Their buttons carry the same typed data-action attributes and dispatch through the
      one live action dispatch into the existing capture handlers. */
+  const EVIDENCE_WORDS = { partial_with_gaps: 'partly recorded, with gaps', display_only: 'display-only', failed_no_media: 'failed with nothing recorded', no_recording: 'no recording', manifest_verified: 'manifest checked', source_missing: 'source missing', browser_page: 'browser page', immutable_recorded_capture: 'kept exactly as recorded', no_retained_capture: 'nothing kept', handler_unavailable: 'not available here' };
+  const EVIDENCE_TONE = { ready: 'ready', attention: 'attention', unavailable: 'off', blocked: 'blocked', error: 'blocked' };
+  const evidenceWords = text => text.replace(/\b[a-z]+(?:_[a-z]+)+\b/g, (m, at) => { const w = EVIDENCE_WORDS[m] || m.replace(/_/g, ' '); return text.slice(0, at).trim() ? w : w.charAt(0).toUpperCase() + w.slice(1); });
+  function plainEvidence(html) {
+    const tpl = document.createElement('template'); tpl.innerHTML = html;
+    tpl.content.querySelectorAll('.doctor-state').forEach(el => {
+      const holder = document.createElement('template'); holder.innerHTML = PM51.status(el.textContent.trim(), EVIDENCE_TONE[el.dataset.state] || 'neutral');
+      const dot = holder.content.firstElementChild; if (el.dataset.state) dot.dataset.state = el.dataset.state;
+      el.replaceWith(dot);
+    });
+    tpl.content.querySelectorAll('.info-value, .capture-relation, .doctor-item-copy').forEach(el => {
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let n;
+      while ((n = walker.nextNode())) if (/_/.test(n.nodeValue)) n.nodeValue = evidenceWords(n.nodeValue);
+    });
+    return tpl.innerHTML;
+  }
   function captureEvidenceSection() {
     const surface = typeof window.PM7_TEST_CAPTURE_EVIDENCE === 'object' ? window.PM7_TEST_CAPTURE_EVIDENCE : null;
     if (!surface) return '';
     return PM51.section({
       title: 'Captured evidence',
       help: 'Raw Test Capture and Demonstration Video records kept from test runs, plus a session that ended with no recording. Opening one shows bounded concept evidence; nothing is recorded, played, or downloaded here.',
-      body: `<div class="capture-fixture-list" data-capture-evidence-surface="pm51-testing-history" data-production-runtime-state="unavailable">${surface.fixtures.map(fx => surface.cardOf(fx)).join('')}</div>` + PM51.note('Concept evidence only. View Source Capture and Inspect Provenance open local drawers; the owner routes behind them stay handler-unavailable.', 'info')
+      body: `<div class="capture-fixture-list" data-capture-evidence-surface="pm51-testing-history" data-production-runtime-state="unavailable">${plainEvidence(surface.fixtures.map(fx => surface.cardOf(fx)).join(''))}</div>` + PM51.note('Concept evidence only. View Source Capture and Inspect Provenance open local drawers; the owner routes behind them stay handler-unavailable.', 'info')
     });
   }
   function renderHistory() {

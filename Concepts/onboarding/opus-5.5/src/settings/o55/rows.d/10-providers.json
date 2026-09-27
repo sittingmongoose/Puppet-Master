@@ -452,7 +452,10 @@
    "label": "Extra options for a service"
   },
   "ai.models.lane-bindings": {
-   "label": "Work lanes"
+   "label": "Work lanes",
+   "options": {
+    "unconfigured": "Every lane uses the everyday model"
+   }
   },
   "ai.models.role-policy": {
    "label": "Role rules"
@@ -460,18 +463,24 @@
   "ai.models.per-lane-platform": {
    "label": "Service for each lane",
    "options": {
+    "": "The everyday model’s service",
     "Claude Code": "Claude",
     "Cursor": "Cursor",
     "Gemini Direct": "Gemini API",
     "Antigravity CLI": "Google Antigravity",
     "OpenCode": "OpenCode on your computer"
-   }
+   },
+   "empty": "The everyday model’s service"
   },
   "ai.models.per-lane-model": {
    "label": "Model for each lane"
   },
   "ai.models.execution-role": {
-   "label": "Role for one run"
+   "label": "Role for one run",
+   "options": {
+    "": "Set by how the run starts"
+   },
+   "empty": "Set by how the run starts"
   },
   "ai.models.requested-effective-inspector": {
    "label": "What actually ran",
