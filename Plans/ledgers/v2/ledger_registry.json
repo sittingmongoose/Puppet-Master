@@ -22,6 +22,84 @@
         "no_nodeseeds_created": true,
         "no_worknodes_created": true
       }
+    },
+    {
+      "canonical_plan_targets": [],
+      "created_at_utc": "2026-09-27T19:15:00+00:00",
+      "last_event_id": "evt-001",
+      "last_updated_at_utc": "2026-09-27T19:15:00+00:00",
+      "ledger_id": "pldg-20260927-001-wand-collab-workflows",
+      "notes": "Empty skeleton for group G1 of the wand-modules canon compile (register lines B-CW-01..B-CW-29). Planned owner documents: Plans/Collaborative_Workflows.md. NOW lines compile first; WAIT lines follow the owner's decision-card answers; OUT lines (Settings, PMConcept7 port, Slint, Demo Studio) are excluded.",
+      "phase": "prose_compile_open",
+      "primary_goal": "Wand modules redesign: collaboration runs (Crew, Chat Room, Review, BrainStorm, Crew Auto)",
+      "resume_file": "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/state/handoff.json",
+      "status": "active",
+      "title": "Wand modules redesign: collaboration runs (Crew, Chat Room, Review, BrainStorm, Crew Auto)"
+    },
+    {
+      "canonical_plan_targets": [],
+      "created_at_utc": "2026-09-27T19:15:00+00:00",
+      "last_event_id": "evt-001",
+      "last_updated_at_utc": "2026-09-27T19:15:00+00:00",
+      "ledger_id": "pldg-20260927-002-wand-back-seat-driver",
+      "notes": "Empty skeleton for group G2 of the wand-modules canon compile (register lines B-BSD-01..B-BSD-09). Planned owner documents: Plans/Back_Seat_Driver.md. NOW lines compile first; WAIT lines follow the owner's decision-card answers; OUT lines (Settings, PMConcept7 port, Slint, Demo Studio) are excluded.",
+      "phase": "prose_compile_open",
+      "primary_goal": "Wand modules redesign: Back Seat Driver sheet, margin note and projections",
+      "resume_file": "Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver/state/handoff.json",
+      "status": "active",
+      "title": "Wand modules redesign: Back Seat Driver sheet, margin note and projections"
+    },
+    {
+      "canonical_plan_targets": [],
+      "created_at_utc": "2026-09-27T19:15:00+00:00",
+      "last_event_id": "evt-001",
+      "last_updated_at_utc": "2026-09-27T19:15:00+00:00",
+      "ledger_id": "pldg-20260927-003-wand-scheduling",
+      "notes": "Empty skeleton for group G3 of the wand-modules canon compile (register lines B-SQR-01..B-SQR-09). Planned owner documents: Plans/Scheduling_and_Quota_Resume.md. NOW lines compile first; WAIT lines follow the owner's decision-card answers; OUT lines (Settings, PMConcept7 port, Slint, Demo Studio) are excluded.",
+      "phase": "prose_compile_open",
+      "primary_goal": "Wand modules redesign: Schedule Message, Build At and the Scheduled manager",
+      "resume_file": "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/state/handoff.json",
+      "status": "active",
+      "title": "Wand modules redesign: Schedule Message, Build At and the Scheduled manager"
+    },
+    {
+      "canonical_plan_targets": [],
+      "created_at_utc": "2026-09-27T19:15:00+00:00",
+      "last_event_id": "evt-001",
+      "last_updated_at_utc": "2026-09-27T19:15:00+00:00",
+      "ledger_id": "pldg-20260927-004-wand-memory-plan-usage",
+      "notes": "Empty skeleton for group G4 of the wand-modules canon compile (register lines B-AMS-01..B-AMS-08, B-APR-01..02, B-PER-01..02, B-USE-01..02). Planned owner documents: Plans/assistant-memory-subsystem.md, Plans/Assistant_Plan_Runtime.md, Plans/Personas.md, Plans/usage-feature.md, Plans/Models_System.md. NOW lines compile first; WAIT lines follow the owner's decision-card answers; OUT lines (Settings, PMConcept7 port, Slint, Demo Studio) are excluded.",
+      "phase": "prose_compile_open",
+      "primary_goal": "Wand modules redesign: Memory, plan runtime records, Personas and pre-start estimates",
+      "resume_file": "Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage/state/handoff.json",
+      "status": "active",
+      "title": "Wand modules redesign: Memory, plan runtime records, Personas and pre-start estimates"
+    },
+    {
+      "canonical_plan_targets": [],
+      "created_at_utc": "2026-09-27T19:15:00+00:00",
+      "last_event_id": "evt-001",
+      "last_updated_at_utc": "2026-09-27T19:15:00+00:00",
+      "ledger_id": "pldg-20260927-005-wand-chat-gui-contract",
+      "notes": "Empty skeleton for group G5 of the wand-modules canon compile (register lines B-ACD-01..B-ACD-14, B-FGS-01..B-FGS-23). Planned owner documents: Plans/assistant-chat-design.md, Plans/FinalGUISpec.md, Plans/Decision_Log.md, Plans/UI_Wiring_Rules.md, Plans/DRY_Rules.md. NOW lines compile first; WAIT lines follow the owner's decision-card answers; OUT lines (Settings, PMConcept7 port, Slint, Demo Studio) are excluded.",
+      "phase": "prose_compile_open",
+      "primary_goal": "Wand modules redesign: chat module behaviour and the GUI contract",
+      "resume_file": "Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/state/handoff.json",
+      "status": "active",
+      "title": "Wand modules redesign: chat module behaviour and the GUI contract"
+    },
+    {
+      "canonical_plan_targets": [],
+      "created_at_utc": "2026-09-27T19:15:00+00:00",
+      "last_event_id": "evt-001",
+      "last_updated_at_utc": "2026-09-27T19:15:00+00:00",
+      "ledger_id": "pldg-20260927-006-wand-command-census",
+      "notes": "Empty skeleton for group G6 of the wand-modules canon compile (register lines B-CMD-01..B-CMD-09, B-ACD-12, B-CMP-01..B-CMP-05). Planned owner documents: Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Wiring_Matrix.md. NOW lines compile first; WAIT lines follow the owner's decision-card answers; OUT lines (Settings, PMConcept7 port, Slint, Demo Studio) are excluded.",
+      "phase": "prose_compile_open",
+      "primary_goal": "Wand modules redesign: command census, new command rows and wiring",
+      "resume_file": "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/state/handoff.json",
+      "status": "active",
+      "title": "Wand modules redesign: command census, new command rows and wiring"
     }
   ],
   "compiled_ledgers": [
@@ -1617,5 +1695,5 @@
       "updated_at_utc": "2026-07-04T00:47:25Z"
     }
   ],
-  "updated_at_utc": "2026-09-18T06:10:00+00:00"
+  "updated_at_utc": "2026-09-27T19:15:00+00:00"
 }

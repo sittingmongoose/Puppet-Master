@@ -1,0 +1,27 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260927-001-wand-collab-workflows",
+  "updated_at_utc": "2026-09-27T19:15:00+00:00",
+  "last_event_id": "evt-001",
+  "canonical_plan_targets": [],
+  "compiled_owner_docs": [],
+  "compiled_plan_outputs": [],
+  "governance_status": "not_requested",
+  "latest_audit_ref": null,
+  "latest_audit_status": null,
+  "validation_state": {
+    "ledger_health": "pass_empty_skeleton",
+    "compile_witness": "not_run"
+  },
+  "planned_owner_docs": [
+    "Plans/Collaborative_Workflows.md"
+  ],
+  "reserved_id_ranges": {
+    "CWR": "CWR-018..CWR-039",
+    "EP (later wave, E-31 only)": "EP-129..EP-131"
+  },
+  "status": "prose_compile_open",
+  "items": [],
+  "notes": "Empty. Each item: queue_id, status, source_atom_ids, target_doc, target_docs, target_plan_unit_ids, compiled_plan_unit_ids, compile_event_id.",
+  "terminal_ledger_event_id": null
+}

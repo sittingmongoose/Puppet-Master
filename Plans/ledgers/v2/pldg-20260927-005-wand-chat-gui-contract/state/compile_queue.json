@@ -1,0 +1,35 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260927-005-wand-chat-gui-contract",
+  "updated_at_utc": "2026-09-27T19:15:00+00:00",
+  "last_event_id": "evt-001",
+  "canonical_plan_targets": [],
+  "compiled_owner_docs": [],
+  "compiled_plan_outputs": [],
+  "governance_status": "not_requested",
+  "latest_audit_ref": null,
+  "latest_audit_status": null,
+  "validation_state": {
+    "ledger_health": "pass_empty_skeleton",
+    "compile_witness": "not_run"
+  },
+  "planned_owner_docs": [
+    "Plans/assistant-chat-design.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Decision_Log.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/DRY_Rules.md"
+  ],
+  "reserved_id_ranges": {
+    "ACD": "ACD-476..ACD-495",
+    "F3": "F3-566..F3-590",
+    "DL (NOW)": "DL-109..DL-111",
+    "DL (card answers, later wave)": "DL-112..DL-140",
+    "UIW": "UIW-025..UIW-029",
+    "DR": "DR-044..DR-045"
+  },
+  "status": "prose_compile_open",
+  "items": [],
+  "notes": "Empty. Each item: queue_id, status, source_atom_ids, target_doc, target_docs, target_plan_unit_ids, compiled_plan_unit_ids, compile_event_id.",
+  "terminal_ledger_event_id": null
+}

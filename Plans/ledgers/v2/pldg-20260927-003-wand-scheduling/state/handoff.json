@@ -1,0 +1,33 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260927-003-wand-scheduling",
+  "updated_at_utc": "2026-09-27T19:15:00+00:00",
+  "last_event_id": "evt-001",
+  "canonical_plan_targets": [],
+  "compiled_owner_docs": [],
+  "compiled_plan_outputs": [],
+  "governance_status": "not_requested",
+  "latest_audit_ref": null,
+  "latest_audit_status": null,
+  "validation_state": {
+    "ledger_health": "pass_empty_skeleton",
+    "compile_witness": "not_run"
+  },
+  "planned_owner_docs": [
+    "Plans/Scheduling_and_Quota_Resume.md"
+  ],
+  "reserved_id_ranges": {
+    "SQR": "SQR-012..SQR-024",
+    "SMSG": "SMSG-019..SMSG-024",
+    "PSCHED": "PSCHED-015..PSCHED-018"
+  },
+  "current_phase": "prose_compile_open",
+  "cursor": {
+    "last_event_id": "evt-001",
+    "next_action": "Author G3 of CANON-PLAN: compile the NOW lines of B-SQR-01..B-SQR-09 as prose only into Plans/Scheduling_and_Quota_Resume.md, writing design atoms, decisions, corrections, questions and source_shards/findings.md here and filling state/compile_queue.json; then run python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-003-wand-scheduling --base origin/main. WAIT lines are recorded as open questions naming their card; OUT lines are not compiled."
+  },
+  "source_refs": [
+    "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/authorization.md"
+  ],
+  "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md."
+}
