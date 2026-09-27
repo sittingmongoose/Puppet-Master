@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36445-L37137
+Source lines: L36450-L37149
 
-Source SHA256: `9e116c56cf58230049cc5d6be27a21bcb35b9f4e28e58ec6ca101c21ecf279bb`
+Source SHA256: `82311978bcae7304ae7583f93c9d2f06905292c3162b96ec40677061f97270cf`
 
 ---
 
@@ -68,7 +68,9 @@ invariants.
 - **Direct Hover Navigation (APR-006):** Redundant "Open Activity" buttons are completely removed
   from all activity hover cards. Clicking directly on an item row, task title, participant card, or
   artifact entry immediately opens that specific record in the pinned Activity Detail panel,
-  preserving domain identity and focus.
+  preserving domain identity and focus. Exception (DL-122, F3-580): a click on the Crew, BrainStorm,
+  Review or Chat Room domain chip itself reveals the newest card of that kind in the thread; the rows
+  of those domains' hover cards keep this routing, so Activity Detail stays reachable.
 - **Non-Scrolling Bounded Previews (APR-007):** All activity hover preview panels are strictly
   bounded surfaces with no internal scrollbars (`overflow: hidden`). Previews display a curated,
   representative subset of items (up to 4–6 items). An overflow summary counter (e.g., "+7 more")
@@ -89,7 +91,8 @@ invariants.
   presents a concise, high-signal information hierarchy: active context window usage, current
   token counts, pinned sources, and high-level Back Seat Driver (BSD) status. Detailed inspection
   (e.g., full prompt breakdown, BSD sensitivity, catch-up configuration, and stage bindings) is
-  placed behind intentional disclosure toggles.
+  placed behind intentional disclosure toggles. Back Seat Driver's section is three plain facts and
+  three native disclosures with no metric-card grid (DL-122, F3-580).
 - **Strict Elimination of Left-Edge Accent Stripes (APR-034):** Decorative left-edge vertical
   accent bars, colored side stripes, inset accent borders, and pseudo-element stripes are strictly
   prohibited across all Assistant and Settings surfaces (including gray or muted substitutes).
@@ -164,6 +167,10 @@ invariants.
   7. *Chat Room Detail:* Multi-agent participant list, room topic, round counter, and conversation timeline.
   8. *Changes Detail:* Aggregated file modifications, colored additions/deletions, path links, and diff inspection triggers.
   9. *Artifacts Detail:* Generated documents, diagrams, code outputs, export options, and lineage metadata.
+
+  Scoped exception (2026-09-27, DL-122): for Crew, BrainStorm, Review and Chat Room (items 4 to 7) the
+  Activity Detail body is the short team list of F3-580, and the kind content listed above lives in
+  the run view (ACD-480). The other five families keep the native presentation above.
 - **Read-Only Demonstration Semantics (APR-067):** Read-only inspection fixtures and demo cards
   render findings, diagnostics, and code views without interactive mutation controls or misleading
   active buttons, clearly labeling the static or demo nature of the content.

@@ -1,9 +1,9 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-004-wand-memory-plan-usage",
-  "updated_at_utc": "2026-09-27T21:30:00+00:00",
+  "updated_at_utc": "2026-09-27T22:45:00+00:00",
   "authority": "Live Plans are canon; this ledger is source lineage only.",
-  "scope": "Group G4 of the wand-modules canon compile: register lines B-AMS-01..B-AMS-08, B-APR-01..02, B-PER-01..02, B-USE-01..02 of the impact register snapshot, NOW lines only in this pass.",
+  "scope": "Group G4 of the wand-modules canon compile: register lines B-AMS-01..B-AMS-08, B-APR-01..02, B-PER-01..02, B-USE-01..02 of the impact register snapshot. NOW lines compiled first; WAIT lines compiled on 2026-09-27 from the owner's card answers (DL-116, DL-130, DL-131, DL-133, DL-134), except the parts still open in q-006; the definition of following (q-003) compiled on 2026-09-27 from the design lead's ruling (AMS-053).",
   "negative_constraints": [
     "Do not edit Settings_System.md, settings_inventory.json, or state where Save as my default is stored (owner exclusion, 2026-09-27).",
     "Do not carry PMConcept7-port, Slint-production or Demo Studio work into canon (owner exclusion, 2026-09-27).",
@@ -16,5 +16,5 @@
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage/source_shards/authorization.md"
   ],
-  "next_action": "Integrator: regenerate shards and index once for all groups, run the blind form-driven review, then land. WAIT wave: compile q-001..q-006 after the owner's card answers are in Decision_Log."
+  "next_action": "Integrator: regenerate shards and index once for all groups, run the blind form-driven review, then land. Open: q-006 (ending at the effective limit and hard ceilings, DL-131) and q-007 (AMS-053 companion outcome field and the fix action's command binding); q-003 answered by AMS-053."
 }

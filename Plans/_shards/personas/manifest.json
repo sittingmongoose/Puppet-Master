@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-09-27T16:24:19Z",
+  "generated_at_utc": "2026-09-28T23:52:50Z",
   "index_path": "Plans/_shards/personas/00-index.md",
-  "index_sha256": "4cd6549f9c3cd4073607e542f6fdc7559cfab16773abe080aefa2d67c9a30a27",
+  "index_sha256": "3be2bcf94efc237c2f7dec1834f2ccdbd3b11310fe27b62a00c4992504523403",
   "manifest_path": "Plans/_shards/personas/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/personas/001-preamble.md",
-      "sha256": "951f6b539331e9e4a30b059c78e81fddc77eb7f1a6049e410eaf13ab85d3d7e0",
+      "sha256": "d7812daec00a2b5834408e6a2b63cbe508c23b6de1ccb130aafdbdbca067c1b1",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope and SSOT status",
       "path": "Plans/_shards/personas/002-0.-scope-and-ssot-status.md",
-      "sha256": "a646bbd77af05ec890f08170dd7fa923b610bf652dcb6239a77dc1e52badff4a",
+      "sha256": "a33073f007f5b44c9844846a31bef0a87ed33e2ceefa26e83aaf64c3fbaf9269",
       "shard_id": "002",
       "source_line_end": 27,
       "source_line_start": 6,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Definitions",
       "path": "Plans/_shards/personas/003-1.-definitions.md",
-      "sha256": "4a726d1b5030e139ecfdd68bf79758f0a7067699ed0d0fa61af206598eff0ad1",
+      "sha256": "0f00c80f949f6c541ba9e3783d38395816c405079f2d831e9b20400f1a4496fc",
       "shard_id": "003",
       "source_line_end": 76,
       "source_line_start": 29,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Storage layout",
       "path": "Plans/_shards/personas/004-2.-storage-layout.md",
-      "sha256": "b2039044f596150a3f3bfdd60ed19128c7fce406e61308ca1559ef68aa6bfa21",
+      "sha256": "a18bdab038b1657378c2d340a8aed312b29c10c1084fca749217c9e389321400",
       "shard_id": "004",
       "source_line_end": 123,
       "source_line_start": 78,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Persona format (schema)",
       "path": "Plans/_shards/personas/005-3.-persona-format-schema.md",
-      "sha256": "f26141ca6371d5bf9eeba5eca590d4ac284db91a4eaff80e4e3c0a78ed9b95ba",
+      "sha256": "b8b88e37d6fccc8624d64bd31dcc5bf14d9de01a09b2e408b7521e5e947f3ad4",
       "shard_id": "005",
       "source_line_end": 211,
       "source_line_start": 125,
@@ -53,7 +53,7 @@
     {
       "heading": "4. GUI requirements",
       "path": "Plans/_shards/personas/006-4.-gui-requirements.md",
-      "sha256": "affc3b43e326a3188d95bc38b5d938e40513dd81d2015f9a08272c5a3174e089",
+      "sha256": "743e0b90a321f1b218e755a7cf034f541fb11488842cae40d3aebb99e9ac8f89",
       "shard_id": "006",
       "source_line_end": 261,
       "source_line_start": 213,
@@ -62,7 +62,7 @@
     {
       "heading": "5. Integration: Persona application to a run",
       "path": "Plans/_shards/personas/007-5.-integration-persona-application-to-a-run.md",
-      "sha256": "870e21e6139f7b7412e587d70b88294a6acbc46eebfda59b59a1385e1cf5ae48",
+      "sha256": "f2766e9ffec516c5a31c6b074835915fd21740ad7e99806a6f89cf050734f985",
       "shard_id": "007",
       "source_line_end": 329,
       "source_line_start": 263,
@@ -71,160 +71,169 @@
     {
       "heading": "6. Reserved Personas",
       "path": "Plans/_shards/personas/008-6.-reserved-personas.md",
-      "sha256": "34e30277d236fad3f7a6991a264a645325de3fd76c214b39139f980153dd6531",
+      "sha256": "71b238fe87f64b29c183c5a476d5e70fae45ac17b08d995cf873550a954a95ef",
       "shard_id": "008",
-      "source_line_end": 355,
+      "source_line_end": 357,
       "source_line_start": 331,
       "split_rule": "heading-##"
     },
     {
       "heading": "7. Relationship to the Persona registry and delegated-subagent registry",
       "path": "Plans/_shards/personas/009-7.-relationship-to-the-persona-registry-and-delegated-subagent-r.md",
-      "sha256": "01022abded23a461dd0cf851c8fc540ceee37cf6a012c63d25c588e6dc8ec23a",
+      "sha256": "f9e42429725a94248c15ab1258e674417060da6b9bcc754b681fe6b9cf31f921",
       "shard_id": "009",
-      "source_line_end": 377,
-      "source_line_start": 356,
+      "source_line_end": 380,
+      "source_line_start": 359,
       "split_rule": "heading-##"
     },
     {
       "heading": "8. OpenCode baseline and Puppet Master deltas",
       "path": "Plans/_shards/personas/010-8.-opencode-baseline-and-puppet-master-deltas.md",
-      "sha256": "e30fdce20cb2a066fd94de462982b9f2b2a2fd67d1dac9bac8a839d8e18faefa",
+      "sha256": "9a548a2c387211aa46db96f6708bab18ab675e0503e000d30ad87a40c0a7e231",
       "shard_id": "010",
-      "source_line_end": 398,
-      "source_line_start": 378,
+      "source_line_end": 401,
+      "source_line_start": 381,
       "split_rule": "heading-##"
     },
     {
       "heading": "9. Acceptance criteria",
       "path": "Plans/_shards/personas/011-9.-acceptance-criteria.md",
-      "sha256": "00882582f0cbd6a82eab6fc2ae51b6a0adf81d3d3abc841eebcc60e9fd2be3b5",
+      "sha256": "04e14d63a53bb28789c10bc4005fad538877dcde9502617e2c4405361b3453d9",
       "shard_id": "011",
-      "source_line_end": 427,
-      "source_line_start": 400,
+      "source_line_end": 430,
+      "source_line_start": 403,
       "split_rule": "heading-##"
     },
     {
       "heading": "10. Persona Runtime Contract Expansion (2026-03-06)",
       "path": "Plans/_shards/personas/012-10.-persona-runtime-contract-expansion-2026-03-06.md",
-      "sha256": "ea088918fcc74ddc1b1c54a63592b3b1104653d2ad6ce806a7568fbc3c6c100a",
+      "sha256": "27d72bfdd99d32131609fdc0668f1fda2e4507017a1800f0173488a79228283d",
       "shard_id": "012",
-      "source_line_end": 471,
-      "source_line_start": 428,
+      "source_line_end": 474,
+      "source_line_start": 431,
       "split_rule": "heading-##"
     },
     {
       "heading": "11. Core Persona catalog",
       "path": "Plans/_shards/personas/013-11.-core-persona-catalog.md",
-      "sha256": "ea43c08ab3753ffe47affa24b447da19b7e4f8671334e8bcdd168e271c10fe98",
+      "sha256": "4995cd58116ee940cc12a7950221ba4a53494cdfadb4fbbe72a5bb9a337b8c0e",
       "shard_id": "013",
-      "source_line_end": 617,
-      "source_line_start": 472,
+      "source_line_end": 620,
+      "source_line_start": 475,
       "split_rule": "heading-##"
     },
     {
       "heading": "12. Specialty Persona catalog and curation",
       "path": "Plans/_shards/personas/014-12.-specialty-persona-catalog-and-curation.md",
-      "sha256": "0878c6030df29cad5ae823ba4672a6a6f702a72c5dbb8f835230c0b147d5b9e5",
+      "sha256": "f22a42a5a0525417e7275992c1a0703ce1ec3953507ec7a7f23f6faf6bc5c146",
       "shard_id": "014",
-      "source_line_end": 684,
-      "source_line_start": 618,
+      "source_line_end": 687,
+      "source_line_start": 621,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/personas/015-owner-consumer-map.md",
-      "sha256": "17ec92c67e595e9537ca53d3349475914a3b7aca5a46fec88dc9f1cec33a9f7c",
+      "sha256": "e8fbe314cce0f5da70b547c21d453149d3eefd77941022a016b949089c4a7210",
       "shard_id": "015",
-      "source_line_end": 690,
-      "source_line_start": 686,
+      "source_line_end": 693,
+      "source_line_start": 689,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/personas/016-planunits.md",
-      "sha256": "683551d3b4f1c88f03885fd998b1ce4036dc9099831a54679202a5cb92c272dd",
+      "sha256": "1dcfdeee18e8638da617f0f43a6a7e64e0a66a6afbf02df86d95d99ffd1175c5",
       "shard_id": "016",
-      "source_line_end": 3179,
-      "source_line_start": 692,
+      "source_line_end": 3182,
+      "source_line_start": 695,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/personas/017-migration-coverage.md",
-      "sha256": "c14cc04529911bc0342cf279484c5009affcd264bbacd7787166818f66ab2fa6",
+      "sha256": "2ad70540850ceb150cf2164a3230cfbf1e2cdbf6071c7e5719dfadd309cd60fa",
       "shard_id": "017",
-      "source_line_end": 3191,
-      "source_line_start": 3181,
+      "source_line_end": 3194,
+      "source_line_start": 3184,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/personas/018-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "87851c23a4cfb1f3a918b11792b4d80c7ede611e3db338b20af4dc26466608c7",
+      "sha256": "8a69bbf2d692851ccfc1b4584524e108e8e1fccf80c487689dae22e3ff8980bb",
       "shard_id": "018",
-      "source_line_end": 3240,
-      "source_line_start": 3193,
+      "source_line_end": 3243,
+      "source_line_start": 3196,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/personas/019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "ec1e851789f792b207086cb1b966360bd2e9ac1d4d6ed9915e29f32e9ccc1413",
+      "sha256": "18cec2a01451fb887dfe129984e49e7b8766112410775c16aa21e87d608d953a",
       "shard_id": "019",
-      "source_line_end": 3311,
-      "source_line_start": 3243,
+      "source_line_end": 3314,
+      "source_line_start": 3246,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
       "path": "Plans/_shards/personas/020-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
-      "sha256": "d35e7c453e3d0821c41369cde36728623240f241b0f77b46bda2828adc450554",
+      "sha256": "621d1475c7b92fef93ac5a07bab3cd7ef4142ae6b28163f1aec4fcfedf70903a",
       "shard_id": "020",
-      "source_line_end": 3448,
-      "source_line_start": 3314,
+      "source_line_end": 3451,
+      "source_line_start": 3317,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/personas/021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "0797327af0a5e378532bd66f2251d4c22e5c6e4dce01b246892b9586c55f4f4c",
+      "sha256": "62ee73f20b9ecfb7f920aa1d1dcaa18cc958e9f51fe7ed1a27fd6a4cddeed660",
       "shard_id": "021",
-      "source_line_end": 3458,
-      "source_line_start": 3450,
+      "source_line_end": 3461,
+      "source_line_start": 3453,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)",
       "path": "Plans/_shards/personas/022-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
-      "sha256": "8bd340bdf10f5f33f4b8a01dfdeaf3d1c641b969d7b3f5ca2d1943e48e6dd61f",
+      "sha256": "bd404fb7850ef661ceb250fcd01a95c231d5cafb2ac7139cb1f6f866d752a73f",
       "shard_id": "022",
-      "source_line_end": 3465,
-      "source_line_start": 3459,
+      "source_line_end": 3468,
+      "source_line_start": 3462,
       "split_rule": "heading-##"
     },
     {
       "heading": "`run.started` Persona owner join",
       "path": "Plans/_shards/personas/023-run.started-persona-owner-join.md",
-      "sha256": "08b58579670dbe630b583a8e1574ced908d22a6540068752280de2cda01c72f4",
+      "sha256": "b8d11c569f617082629cd904fb91dd36d109c8282939ab3b77cd7830a80004b1",
       "shard_id": "023",
-      "source_line_end": 3498,
-      "source_line_start": 3468,
+      "source_line_end": 3501,
+      "source_line_start": 3471,
       "split_rule": "heading-##"
     },
     {
       "heading": "Additive Correction v4 \u2014 Wonderer Convergence Boundary (2026-09-03)",
       "path": "Plans/_shards/personas/024-additive-correction-v4-wonderer-convergence-boundary-2026-09-03.md",
-      "sha256": "1f03ef24e69040e4b594eaee0868ee9b274faadd2d8cb89c0755a51a580d84d2",
+      "sha256": "9d5f1a6e533e9f96e5728e1fe1c5f0102d6259c3647b6f0a78b45aced66be618",
       "shard_id": "024",
-      "source_line_end": 3535,
-      "source_line_start": 3500,
+      "source_line_end": 3538,
+      "source_line_start": 3503,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Wand Modules Redesign Addendum (2026-09-27)",
+      "path": "Plans/_shards/personas/025-wand-modules-redesign-addendum-2026-09-27.md",
+      "sha256": "b96739a0c282cc6d9c31d3ad62045a396ad4c0dfcd9e533f42f38628927d7da7",
+      "shard_id": "025",
+      "source_line_end": 3622,
+      "source_line_start": 3540,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 3535,
+    "line_count": 3622,
     "path": "Plans/Personas.md",
-    "sha256": "f1286dac3dea331f4cbbbf762fc066e7d41ac7d9652dffe6a9a5bc1a8e0713e7"
+    "sha256": "3d9974d4746956f2f1e1b814f1c86bcb061e04c26721a5db1c2e50d836b911f5"
   }
 }

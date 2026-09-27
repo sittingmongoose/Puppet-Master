@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L2270
+Source lines: L13-L2785
 
-Source SHA256: `2ead50cc7bc2c857954ca63dd68ded1ac21be001ec2a5450fb8c99f5806f4541`
+Source SHA256: `de5c970810a44af17252148ef157b5f5baf1cef3a69d692499a1e6556f6f7941`
 
 ---
 
@@ -2266,3 +2266,518 @@ Every wand-module surface (sheets, run cards, the dock, run views, receipts) use
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md`, SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de` (owner amendments J-1 and J-2 at the top); instruction record `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/LEAD-PLAN.md`, SHA-256 `d53f3f802bb9dd7736f1acf36256f8b9b799025bf6ab5212880dc03087649e72`. Agent-relayed; not verifiable from inside this repository.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md
+
+### DL-110: Back Seat Driver shows plain status words, and the Plans change to match (E-10)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `n01` (register E-10), choosing **"Plain words only, and change the Plans to match"**, which is not the recommended option.
+
+**Question:** Should Back Seat Driver show its official status words ("Caught up", "Finding held", "Quota paused") or the friendlier ones the new design wrote ("Up to date", "Double-checking", "Paused: usage limit reached")?
+
+**Options:**
+
+1. **A. Official word first, plain meaning after it** (recommended)
+2. **B. Plain words only, and change the Plans to match**
+
+**Answer:** Option B, "Plain words only, and change the Plans to match".
+
+Back Seat Driver shows the plain status words the design wrote in place of the official ones: "Up to date" for "Caught up", "Double-checking" for "Finding held" and "Paused: usage limit reached" for "Quota paused" (the card pairs them in that order). The recommended interim form, the official word first with its plain meaning after it, is not used. The Plans' exact status words are amended to match when the waiting lines compile; because those words are preserved exact tokens, the compile supersedes them rather than deleting them. The register lines waiting on this card, B-BSD-01, B-BSD-08, B-FGS-06, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. It needs lead follow-up before the waiting lines compile (see the lead's notes).
+
+SourceRef: decision card `n01` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `a34dbbea35a474b9c6ec875872ce231919bc4536e1e5385cd75a49bbbd6df031` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `n01` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/FinalGUISpec.md
+
+### DL-111: The Coordinator's mark in a Crew card uses the text or seat colour, not the accent (E-17)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `n02` (register E-17), choosing **"Text or seat colour"**, the recommended option.
+
+**Question:** May the Coordinator's small mark in a running Crew card use the purple accent colour?
+
+**Options:**
+
+1. **A. Text or seat colour** (recommended)
+2. **B. Allow the accent as a named exception**
+
+**Answer:** Option A, "Text or seat colour".
+
+The Coordinator's small mark in a running Crew card uses the text colour or its seat colour, never the accent. The transcript's accent budget keeps the accent for live work, anything that needs the user, the one main button and Send/Stop, so the accent keeps meaning "look here". No named exception to the accent budget is recorded. No group-B register line waits on this card; it settles the concept items A4-04 and A5-04. No group-B register line waits on this card; this entry changes no owner text itself.
+
+SourceRef: decision card `n02` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `2a2ccf09263d6b0e9a113f0c6a4873674a5f1e1c1ccb2d396e242673daa93617` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `n02` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md
+
+### DL-112: A Chat Room message sent mid-round queues for the next round and can steer without interrupting (E-18)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `n03` (register E-18), declining every option and giving his own instruction.
+
+**Question:** When you type into a Chat Room while a round is still going, should your message wait until the round ends, or be refused?
+
+**Options:**
+
+1. **A. Hold it (build later); truthful wording now** (recommended)
+2. **B. Always refuse mid-round messages**
+
+**Answer:** None of the options. Jared's instruction, verbatim: "It should work like the normal chat, it queues the message for the next round, and the user has the option to send it immediately to steer but not interrupt."
+
+Jared chose neither option. As he wrote it, a Chat Room works like the normal chat: a message typed while a round is still going is queued for the next round, and the user may instead send it immediately to steer the round without interrupting it. This matches the busy-send rule the chat already has (DL-108: Queue by default, Send now steers without stopping). Option A's interim wording ("Send it after this round ends", with the hold built later) and option B (refuse mid-round messages) are both not taken. The instruction does not say how a steer reaches a multi-helper round (which helper or the Coordinator receives it) or whether queueing is built now; those are left to the lead. The register lines waiting on this card, B-CW-10, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. It needs lead follow-up before the waiting lines compile (see the lead's notes).
+
+**Lead ruling applied (2026-09-27):** this is the applied reading of Jared's instruction and settles the follow-up above. A message sent to a Chat Room while a round is running is queued for the next round. "Send now" delivers it into the current round as steering without interrupting it: the next speaker reads it first, and every later speaker in that round sees it. No speaker is stopped mid-turn. B-CW-10's mid-round sends compile to this reading. Agent-relayed: the design lead's rulings of 2026-09-27, made on Jared's behalf and citing his answer on this card; not verifiable from inside this repository.
+
+SourceRef: decision card `n03` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `ed1dc00afb46793855739561734e2ae9dfcbffea32c6692d6fd040a08b281ef8` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `n03` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/assistant-chat-design.md
+
+### DL-113: Each theme family gets its own motion personality for popups and chat cards (E-22)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `n04` (register E-22), choosing **"Each theme family gets its own motion personality"**, which is not the recommended option.
+
+**Question:** Should popups and chat cards animate the same way in every theme, or should Retro move faster and skip the slight zoom when a popup opens?
+
+**Options:**
+
+1. **A. Same everywhere, except Retro faster with no zoom** (recommended)
+2. **B. Identical in every theme**
+3. **C. Each theme family gets its own motion personality**
+
+**Answer:** Option C, "Each theme family gets its own motion personality".
+
+Popups and chat cards do not animate the same way in every theme: each theme family gets its own motion personality. This is broader than the recommended option, which kept one motion everywhere except a faster Retro with no zoom on popup entry. The card does not define the personalities; the family-by-family motion rules (durations, easing, entry scale) still have to be written and shown to Jared. Reduce motion stays instant in every family (DL-115). The card covers only E-22's motion part; its colour, geometry, glass and spring-versus-no-overshoot parts are port questions and are not decided here. The register lines waiting on this card, B-CW-03, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. It needs lead follow-up before the waiting lines compile (see the lead's notes).
+
+**Lead ruling applied (2026-09-27):** this is the applied reading and settles the follow-up above. Each theme family moves with its own personality, aligned with the transcript's motion voices (DL-106, ACD-475): Basic moves like ink, Friendly hops, Glass moves in depth and Retro types. Canon states the principle only. The per-family duration and easing values are the design foundation's tokens and are recorded at the concept's closing step, not in the owner documents. Reduce Motion stays instant in every family (DL-115). FinalGUISpec F3-566 carries the principle for the wand modules' sheets and in-chat cards. Agent-relayed: the design lead's rulings of 2026-09-27, made on Jared's behalf and citing his answer on this card; not verifiable from inside this repository.
+
+SourceRef: decision card `n04` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `42542bf5fda9fcfa2709c5d8032e0b04a10cdf24417beef5e4be910422ef6e51` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `n04` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/FinalGUISpec.md
+
+### DL-114: Setup popups keep the blur only if Slint 1.18.1 can draw it, otherwise they are solid (E-24)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `n05` (register E-24), declining every option and giving his own instruction.
+
+**Question:** Should the setup popups be solid rather than frosted, blurred glass?
+
+**Options:**
+
+1. **A. Solid** (recommended)
+2. **B. Keep the blur and raise the Plans' blur limit (production still can't draw it)**
+
+**Answer:** None of the options. Jared's instruction, verbatim: "There is a much newer version of slint(1.18.1), check if that limitation still exists.  It was there because eventually we are porting to slint.  If that limit no longer exists in the newer versions of Slint(previously looked at 1.17.1) then use the extra blur.  If the limitation still exists, use solid."
+
+Jared chose neither option as written and made the answer conditional. The solid-popup limit existed because the concept will eventually be ported to Slint, and it was based on Slint 1.17.1. If the limitation no longer exists in Slint 1.18.1, the setup popups use the extra blur; if it still exists, they are solid. When Jared answered, the check had not been recorded, so neither form was canon until it was; the check recorded below resolves it: solid popups and a flat scrim. The Plans' closed blur budget (F3-431) and the Glass theme's second blur are part of what the check must settle. The register lines waiting on this card, B-CW-01, B-FGS-17, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+**Check recorded (2026-09-27):** the lead applied Jared's rule. Slint 1.18.1 (released 2026-09-21) still has no backdrop or background blur: none is listed in the 1.18 release notes or the release list, the backdrop-filter request slint-ui/slint#13502 was closed as a duplicate of the open #612 (compositing and effects), and #2066 (blur what is underneath a Rectangle) is still open. The limitation therefore still exists, and the setup popups are solid over a flat scrim, as built; the Glass theme keeps its near-opaque glass-coloured panel, and F3-431's blur budget stays closed. Sources: https://slint.dev/blog/slint-1.18-released, https://github.com/slint-ui/slint/releases, https://github.com/slint-ui/slint/issues/13502, https://github.com/slint-ui/slint/issues/2066, as recorded in the `resolution` field of answer record `n05` (the ANSWERS.json cited below). Agent-relayed; not verifiable from inside this repository. FinalGUISpec F3-566 carries the result.
+
+SourceRef: decision card `n05` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `ae42601afbd6e76ed542336e1afd1390e2ecf54021bd4c6012740f8c9c3f6881` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `n05` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/FinalGUISpec.md
+
+### DL-115: Reduce Motion means instant (E-25)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `n06` (register E-25), choosing **"Instant"**, the recommended option.
+
+**Question:** When someone turns on Reduce Motion, should changes happen instantly, or with a short 0.12-second fade?
+
+**Options:**
+
+1. **A. Instant** (recommended)
+2. **B. Short fades, and change the Plans**
+
+**Answer:** Option A, "Instant".
+
+When Reduce Motion is on, changes happen instantly, exactly as the Plans already say in four places. The design's short 0.12-second fade is not carried, and the Plans are not amended. B-FGS-19 is out of scope; the answer is recorded because B-CW-03's card motion depends on it (canon plan R-4). No group-B register line waits on this card; this entry changes no owner text itself.
+
+SourceRef: decision card `n06` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `078f975c9cd48749089da4f3e729314c36f255ab5d9b7d2dfcb127df3b3c5acd` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `n06` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md
+
+### DL-116: Applied taught rules are reported as "Followed", and the Plans define what counts as following (E-36)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `n07` (register E-36), choosing **""Followed", and define what counts as following"**, which is not the recommended option.
+
+**Question:** When Puppet Master applies something you taught it, should the note say "Used 1 of your rules" or "Followed 1 of your rules"?
+
+**Options:**
+
+1. **A. "Used"** (recommended)
+2. **B. "Followed", and define what counts as following**
+
+**Answer:** Option B, ""Followed", and define what counts as following".
+
+When Puppet Master applies something the user taught it, the note keeps the word "Followed" (for example "Followed 1 of your rules"), not the recommended "Used". Because the system can prove only that a rule was given to the model, not that the model obeyed it, the Plans must define what counts as following before the note can say it. The card does not supply that definition. The register lines waiting on this card, B-ACD-02, B-AMS-06, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. It needs lead follow-up before the waiting lines compile (see the lead's notes).
+
+**Lead ruling applied (2026-09-27):** this is the applied reading and supplies the definition the answer asked for. A rule counts as followed when it was given to the assistant for that reply and the finished reply passed that rule's check, which compares the rule's testable statement with the reply. Inclusion in the prompt alone is never following. When a check fails, the note says "Missed 1 of your rules" and offers a way to see which rule was missed and to ask for a fix. When no check could run, the note shows no tick. Agent-relayed: the design lead's rulings of 2026-09-27, made on Jared's behalf and citing his answer on this card; not verifiable from inside this repository.
+
+SourceRef: decision card `n07` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `35a3d7c2b009521d355e671ebc730d04a727609fa7a4f30f43620ca68f204486` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `n07` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/assistant-memory-subsystem.md
+
+### DL-117: Review's setup offers team presets (E-37)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `n08` (register E-37), choosing **"Add presets (say which, e.g. "Security + Bugs + Tests")"**, which is not the recommended option.
+
+**Question:** Should Review's setup offer "Start from a team" presets like Crew, Chat Room and BrainStorm do?
+
+**Options:**
+
+1. **A. Add presets (say which, e.g. "Security + Bugs + Tests")**
+2. **B. Hide it on Review** (recommended)
+
+**Answer:** Option A, "Add presets (say which, e.g. "Security + Bugs + Tests")".
+
+Review's setup offers "Start from a team" presets, as Crew, Chat Room and BrainStorm do, instead of hiding the button. Jared did not name the presets; the card's "Security + Bugs + Tests" was an example, not his list. The register lines waiting on this card, B-CW-26, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. It needs lead follow-up before the waiting lines compile (see the lead's notes).
+
+**Lead ruling applied (2026-09-27):** this is the applied reading and names the presets the answer asked for. Review ships three presets: "Careful review · Security, Bugs and Tests (3 reviewers)", the default; "Quick check · one reviewer"; and "Deep audit · 5 reviewers, one of them a Critical Advisor". Agent-relayed: the design lead's rulings of 2026-09-27, made on Jared's behalf and citing his answer on this card; not verifiable from inside this repository.
+
+SourceRef: decision card `n08` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `9749a790494779f6a168e111a5de6b6ea14a340badf203df272bd45d6d65abf9` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `n08` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md
+
+### DL-118: The two recovery buttons use the Plans' words "Retry" and "Recover" (E-38, now)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `n09` (register E-38 (now)), choosing **"Use "Retry" and "Recover""**, the recommended option.
+
+**Question:** Should two buttons use the Plans' exact words "Retry" and "Recover" instead of the design's "Try again" and "Open recovery"?
+
+**Options:**
+
+1. **A. Use "Retry" and "Recover"** (recommended)
+2. **B. Keep the friendly words and change the Plans**
+
+**Answer:** Option A, "Use "Retry" and "Recover"".
+
+The two buttons the design labelled "Try again" and "Open recovery" use the Plans' fixed command words "Retry" and "Recover". The Plans are not amended; this is a copy fix in the concept (A1-33, A1-34). Friendlier words for other official labels are the separate decision DL-134. No group-B register line waits on this card; this entry changes no owner text itself.
+
+SourceRef: decision card `n09` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `ce75c3d6628b95bd1471bca3c19e17e5bdcab6964d5584f250858dcba3876675` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `n09` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md
+
+### DL-119: Review and BrainStorm keep their Plans entry points, and the Plans gain "Crew Auto settings…" (E-01)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p01` (register E-01), choosing **"Plans unchanged, except add "Crew Auto settings…""**, the recommended option.
+
+**Question:** Should the Plans allow Review and BrainStorm to have their own rows in the wand menu, and should "Manage Defaults…" be renamed "Crew Auto settings…"?
+
+**Options:**
+
+1. **A. Keep the wand rows and change the Plans to match**
+2. **B. Plans unchanged, except add "Crew Auto settings…"** (recommended)
+
+**Answer:** Option B, "Plans unchanged, except add "Crew Auto settings…"".
+
+The Plans stay as they are: Review starts from the Mode menu and BrainStorm from Deep Plan, not from rows in the wand. The one change is that the Plans gain the "Crew Auto settings…" row; "Manage Defaults…" is not renamed. The concept keeps its own Review and BrainStorm wand rows until the chat moves into PMConcept7, where the Mode menu opens these popups; until then the concept and the Plans differ on where the two kinds start. The register lines waiting on this card, B-CW-08, B-CW-17, B-ACD-04, B-FGS-02, B-CMD-01, B-CMD-04, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+SourceRef: decision card `p01` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `1881159755b0f34c45497e6858282a38632177f568f3052b43feb76e11349877` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p01` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
+
+### DL-120: Crews are summonable by the agent, and Crew Auto is the project-wide default that lets it use them (E-02)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p02` (register E-02), declining every option and giving his own instruction.
+
+**Question:** What should happen to the old per-chat Crew on/off switch?
+
+**Options:**
+
+1. **A. Retire it** (recommended)
+2. **B. Make it "Allow Crews in this project", tied to the real setting**
+
+**Answer:** None of the options. Jared's instruction, verbatim: "Crews should be summonable by the agent, its also an option to build plans with a crew.  So crews auto was meant as a way to tell the agent they can use them if they want/need them.  Turning it off in the project wide settings would stop it from being default on."
+
+Jared chose neither option (retire the per-chat switch, or make it a project switch) and explained the intent instead. Crews are something the agent can summon, and building plans with a Crew is also an option. Crew Auto was meant as a way to tell the agent it may use Crews if it wants or needs them. Turning it off in the project-wide settings stops it from being on by default. Read together, Crew Auto is a permission for the agent defaulted by the project setting; the instruction does not say outright whether a per-chat control remains to override that default in one chat. The register lines waiting on this card, B-CW-18, B-ACD-04, B-FGS-02, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. It needs lead follow-up before the waiting lines compile (see the lead's notes).
+
+**Lead ruling applied (2026-09-27):** this is the applied reading of Jared's instruction and settles the follow-up above. Crew Auto is the permission for the assistant to start a Crew by itself when it needs one. It is on by default at project level, and a chat's Crew Auto check overrides the project default for that chat. The assistant may start a Crew only when Crew Auto is on and the Crew Auto evaluator (Collaborative_Workflows CWR-021) admits the request; the evaluator remains the gate. "Build With Crew" on a Plan stays a user choice. The separate per-chat "Allow Crews in this chat" switch is retired into the Crew Auto check. The project default being on is a change to the Crew Auto settings key's default; Settings is outside this compile, so it is recorded as a Settings follow-up and not made here. Agent-relayed: the design lead's rulings of 2026-09-27, made on Jared's behalf and citing his answer on this card; not verifiable from inside this repository.
+
+SourceRef: decision card `p02` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `90c3ec1b77af9a43ec346d73ee86b34ac777be6dc1503d3c047d00ad51654ed1` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p02` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+### DL-121: Start is blocked until the user picks a replacement for an offline model (E-03)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p03` (register E-03), choosing **"Always block Start until you pick a replacement"**, which is not the recommended option.
+
+**Question:** If an AI you picked is offline, may another model from the same provider stand in so Start can go ahead?
+
+**Options:**
+
+1. **A. Allowed, with the policy visible before Start** (recommended)
+2. **B. Always block Start until you pick a replacement**
+
+**Answer:** Option B, "Always block Start until you pick a replacement".
+
+If a model the user chose is offline, no other model stands in automatically, not even one from the same provider: Start is blocked until the user picks a replacement. This settles the Plans' self-contradiction in favour of the blocking rule; the rule that allows an acceptable substitute does not apply to a chosen participant. The design's stand-in sentence and automatic start are not carried, and no substitution policy is added to the saved setup. The register lines waiting on this card, B-CW-02, B-CW-15, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+SourceRef: decision card `p03` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `4744475ea2d7ce9b676885d994804b9dd3e04f54cecd95ab86759e0444c67814` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p03` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Models_System.md
+
+### DL-122: Activity shows a short team list for the four collaboration kinds and Back Seat Driver (E-04)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p04` (register E-04), choosing **"Allow the short list for these"**, the recommended option.
+
+**Question:** In the Activity panel, may Crew, Chat Room, BrainStorm and Review show a short team list instead of the full card-and-grid layout you asked to restore on September 8?
+
+**Options:**
+
+1. **A. Allow the short list for these** (recommended)
+2. **B. Keep the rollback: full content in Activity too**
+
+**Answer:** Option A, "Allow the short list for these".
+
+In the Activity panel, Crew, Chat Room, BrainStorm and Review show a short, scannable team list, and Back Seat Driver's details use the same compact form; the full card-and-grid detail is one click away in the run view beside the chat. This is a scoped exception to Jared's 2026-09-08 rollback (APR-060, APR-061, ACD item 20) for these five only; every other Activity surface keeps the restored native cards and grids. The register lines waiting on this card, B-CW-05, B-BSD-04, B-ACD-05, B-FGS-12, B-FGS-13, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+SourceRef: decision card `p04` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `f49e399e046820f880093035b40d36f999238aba08321d82e684d3127323e39c` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p04` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+### DL-123: A collapsed or narrow run card may move its actions behind Expand and its helper count into a hover card (E-05)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p05` (register E-05), choosing **"Allow it"**, the recommended option.
+
+**Question:** When a run card is collapsed or the chat is narrow, may Open Panel, Message and More move behind Expand, and the helper count move into a hover card?
+
+**Options:**
+
+1. **A. Allow it** (recommended)
+2. **B. Keep every fact and button on every card**
+
+**Answer:** Option A, "Allow it".
+
+When a run card is collapsed or the chat is narrow, Open Panel, Message and More may move behind Expand, and the helper count may move into the hover card (below 520 px, per the register). A finished run's Message button stays visible where shown and says why it is disabled. The Plans' list of facts and actions every card always shows is amended accordingly. The register lines waiting on this card, B-CW-03, B-FGS-05, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+SourceRef: decision card `p05` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `7509e2c87521d28200471ef8620602a3b2bcc6d68548596571206eb063469928` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p05` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/FinalGUISpec.md
+
+### DL-124: Screens say "helpers", and the data keeps "participant" (E-06)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p06` (register E-06), choosing **""Helpers" on screen"**, the recommended option.
+
+**Question:** Should the screens say "helpers" (and "reviewers") instead of the Plans' word "participants"?
+
+**Options:**
+
+1. **A. "Helpers" on screen** (recommended)
+2. **B. "Participants"**
+
+**Answer:** Option A, ""Helpers" on screen".
+
+On screen the product says "helpers" (and "reviewers" in Review) where the Plans said "participants"; the data model keeps `participant`. The Plans' examples and the composer label change to match. The register lines waiting on this card, B-CW-06, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+SourceRef: decision card `p06` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `93c720d09aab9f7dad51dc586cb430d256b020ebb654ed9973783ab44c583a67` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p06` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md
+
+### DL-125: "Send Findings To Agent" fills the message box instead of sending (E-07)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p07` (register E-07), choosing **"Fill the message box"**, the recommended option.
+
+**Question:** Should "Send Findings To Agent" put a ready-made fix request in your message box instead of sending it straight away?
+
+**Options:**
+
+1. **A. Fill the message box** (recommended)
+2. **B. Send it directly, as today**
+
+**Answer:** Option A, "Fill the message box".
+
+"Send Findings To Agent" puts a ready-made, editable fix request into the message box instead of sending it; nothing runs until the user presses Send. This changes an existing command: its result and refusal change and a lineage field is added (register E-07). The register lines waiting on this card, B-CW-12, B-CW-23, B-ACD-09, B-CMD-01, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+SourceRef: decision card `p07` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `17c7be8ac6a736f115097c3f674b746bafabab83ccbe2ed68c9b511e6a967b1e` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p07` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
+
+### DL-126: ELI5's scope and per-chat toggle are open on the owner's question (E-11)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p08` (register E-11), asking a question back instead of choosing an option.
+
+**Question:** Three parts. (1) Keep ELI5 as its own small popup, with the dot by the message box as the quick on/off, or go back to a one-click toggle? (2) Keep the "this project" level the Plans don't have? (3) Do the new helper lines under controls also need an "expert" and a "simple" version, or only tooltips and help?
+
+**Options:**
+
+1. **A. Popup + quick dot; drop the project level; tooltips and help only** (recommended)
+2. **B. One-click toggle; drop the project level; tooltips and help only**
+3. **C. Popup + quick dot; keep the project level; every helper line**
+
+**Answer:** None of the options. Jared's reply, verbatim: "I originally intended eli5 to be project level, as a setting to default everywhere.  Then changing the toggle in chat would change it just for that chat. However, thinking more about it, wouldnt that require the agent to send two responses?  Or if its changed, resend an updated response?"
+
+Jared did not choose an option; he answered with his original intent and a question. As he wrote it, ELI5 was meant to be project-level, a setting that defaults everywhere, with the toggle in a chat changing it just for that chat. He then asked whether that would require the agent to send two responses, or to resend an updated response when the toggle changes. No part of the card (popup or toggle, project level, which helper text gets two versions) is decided; the question has to be answered for him first. The register lines waiting on this card, B-CW-25, B-ACD-01, B-FGS-02, B-FGS-03, B-FGS-08, B-CMD-01, B-CMD-03, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. It needs lead follow-up before the waiting lines compile (see the lead's notes).
+
+**Proposed answer (lead, 2026-09-27), awaiting Jared's confirmation:** switching ELI5 affects only the replies written after the switch. The assistant never sends two versions of a reply and never re-sends a past reply when the switch changes. An optional on-demand action, "Explain this reply simply", may re-explain one past reply when the user asks. ELI5 has a project default with a per-chat override. This is a proposal, not a decision. The card stays open, and no ELI5 behaviour compiles from it until Jared confirms it. The project default is Settings scope. Agent-relayed: the design lead's rulings of 2026-09-27, made on Jared's behalf and citing his answer on this card; not verifiable from inside this repository.
+
+SourceRef: decision card `p08` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `dab0b89fb497bbad7b64c1ec6b564036c1b2cfcf6b97344cd6184e034f557791` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p08` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Settings_System.md
+
+### DL-127: /teach opens the Teach popup everywhere (E-12)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p09` (register E-12), choosing **"The popup everywhere"**, which is not the recommended option.
+
+**Question:** Should typing /teach open the Teach popup (as built) or a small capture card in the chat (as the Plans say)?
+
+**Options:**
+
+1. **A. The popup everywhere**
+2. **B. Popup from the wand; a capture card for /teach later** (recommended)
+
+**Answer:** Option A, "The popup everywhere".
+
+Typing /teach opens the Teach popup, filled in from what the user typed, and the wand opens the same popup. The Plans' small capture card in the chat is superseded and is not planned for later; there is one way in to maintain. The register lines waiting on this card, B-ACD-02, B-FGS-08, B-CMD-01, B-CMD-03, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+SourceRef: decision card `p09` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `8f3bfd9fb3af9a80c561cb6f33b28eefcc025c2c3b96de6e8c3c463876b80a20` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p09` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
+
+### DL-128: The Coordinator writes each Crew part's "done when" and "must finish first" (E-14)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p10` (register E-14), choosing **"The Coordinator writes them"**, the recommended option.
+
+**Question:** Do you set each part's "what done looks like" and "what must finish first" in the setup popup, or does the Coordinator write them when it splits the job?
+
+**Options:**
+
+1. **A. The Coordinator writes them** (recommended)
+2. **B. Add optional fields to the setup popup**
+
+**Answer:** Option A, "The Coordinator writes them".
+
+The setup popup does not ask for each part's "what done looks like" and "what must finish first". The Coordinator writes them when it splits the job, and the run view shows them, where the user can read and question them. The Plans' setup fields for them are superseded. The register lines waiting on this card, B-CW-07, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+SourceRef: decision card `p10` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `854c294c134c8d615c244fcb46cf62a8d84a270f3400c4b7599d5d2c7eaef070` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p10` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md
+
+### DL-129: The live-run line and per-reply files row replace the old summary above the message box (E-27)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p13` (register E-27), choosing **"Replace the old summary"**, the recommended option.
+
+**Question:** The Plans put a small summary above the message box (a helpers count and "N file changes"). The redesign adds a live-run line there and a files row under each reply. Should the new ones replace the old summary?
+
+**Options:**
+
+1. **A. Replace the old summary** (recommended)
+2. **B. Keep all three**
+
+**Answer:** Option A, "Replace the old summary".
+
+The Plans' footer summary above the message box (a helpers count and "N file changes") is superseded by the redesign's live-run line and the files row under each reply. The chat's total file count moves to Activity, one click further away. The register lines waiting on this card, B-ACD-10, B-ACD-11, B-FGS-03, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+SourceRef: decision card `p13` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `95af64d7ea2ba0a09167fc885ea4abb45e8af31604fdd4261a13762d7aa68973` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p13` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+### DL-130: All seven new commands are added (E-32)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p15` (register E-32), choosing **"Add all seven"**, which is not the recommended option.
+
+**Question:** Five new commands are needed: End discussion (Chat Room), Dismiss advice and Don't wait (Back Seat Driver), Turn off a rule and Lock a rule (Teach). Two more are optional: Export memory, and Wonderer's "Check it". Which should be added?
+
+**Options:**
+
+1. **A. Add the five; the two optional ones stay demo-only** (recommended)
+2. **B. Add all seven**
+
+**Answer:** Option B, "Add all seven".
+
+All seven commands are registered: End discussion (Chat Room), Dismiss advice and Don't wait (Back Seat Driver), Turn off a rule and Lock a rule (Teach), and the two optional ones, Export memory and the Wonderer's "Check it". None of the seven stays demo-only; every button in these popups maps to a real command. The register lines waiting on this card, B-CW-10, B-CW-24, B-BSD-05, B-ACD-02, B-AMS-05, B-AMS-07, B-CMD-01, B-CMD-02, B-CMD-04, B-CMD-05, B-CMD-07, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+SourceRef: decision card `p15` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `b9c6065214649291f52f65b39c452e7c7220ba2fa4cdc87e5fb4618dba2304b3` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p15` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md
+
+### DL-131: A Crew's own time and cost limit overrides the general run limit (E-33)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p16` (register E-33), choosing **"The Crew's own limit overrides the general one"**, which is not the recommended option.
+
+**Question:** A Crew's own limit (say 45 minutes or $6) versus the app's general run limit (say 20 minutes): which wins, and how does a run that hits its limit end?
+
+**Options:**
+
+1. **A. Tighter limit wins; ends as stopped, with the reason** (recommended)
+2. **B. The Crew's own limit overrides the general one**
+
+**Answer:** Option B, "The Crew's own limit overrides the general one".
+
+When a Crew sets its own limit (for example 45 minutes or $6) and the app's general run limit is different (for example 20 minutes), the Crew's own limit wins. The recommended rule, the tighter limit wins, is not taken. The card's option B does not say how a run that reaches its limit ends; the recommended ending (stopped, with the reason) was part of option A only. The register lines waiting on this card, B-CW-15, B-CW-19, B-CW-20, B-USE-02, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. It needs lead follow-up before the waiting lines compile (see the lead's notes).
+
+**Lead ruling applied (2026-09-27):** this is the applied reading and settles the follow-up above. Because the collaboration kinds share one limit row, the kind's own limit applies to every collaboration kind, not only to Crew; that reading is accepted. A run that reaches its own limit ends as stopped, with the reason "Stopped at your limit". That is a stop reason on the terminal stopped run, not a new run state. Agent-relayed: the design lead's rulings of 2026-09-27, made on Jared's behalf and citing his answer on this card; not verifiable from inside this repository.
+
+SourceRef: decision card `p16` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `bbf6f6e5c22e8db457e2b253da222b220695cbfedce5327ad87e65656f607b15` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p16` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/usage-feature.md
+
+### DL-132: This chat's assistant checks the work of a helper who is also the Coordinator (E-34)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p17` (register E-34), choosing **"This chat's assistant"**, the recommended option.
+
+**Question:** If you make one of the helpers the Coordinator, who checks that helper's own work?
+
+**Options:**
+
+1. **A. This chat's assistant** (recommended)
+2. **B. Another helper**
+3. **C. A helper who leads does no part of the work**
+
+**Answer:** Option A, "This chat's assistant".
+
+If the user makes one of the helpers the Coordinator, that helper's own part is checked by this chat's assistant, so no one approves their own work, as the Plans require. The register lines waiting on this card, B-CW-07, B-CW-10, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+SourceRef: decision card `p17` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `3342e7df3e0c9896f8714c0347885c331711a807f6c1817e52bf4cd6435e0b85` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p17` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md
+
+### DL-133: The team preset Personas are registered for team use, and Grill Me is a skill (E-35)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p18` (register E-35), choosing **"Register them; Grill Me is a skill"**, the recommended option.
+
+**Question:** The team presets use Product Manager, Architect, Implementer, Reviewer, Critical Advisor and Wonderer. Should the Plans register these for team use, and is Grill Me a Persona or a skill?
+
+**Options:**
+
+1. **A. Register them; Grill Me is a skill** (recommended)
+2. **B. Use only Personas already registered**
+
+**Answer:** Option A, "Register them; Grill Me is a skill".
+
+Product Manager, Architect, Implementer, Reviewer, Critical Advisor and Wonderer are registered as Personas for team use, so the team presets work as designed (Critical Advisor is no longer Back Seat Driver-only, and the Plans' disagreement about Product Manager is resolved by registering it). Grill Me is a methodology skill, like Wonderer's method, not a Persona. The register lines waiting on this card, B-CW-14, B-CW-26, B-PER-01, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+SourceRef: decision card `p18` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `741e33ea9bf29f382f1f52e85d9977e52889b58bbca43f7c8274a093d4aef1e9` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p18` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Personas.md
+
+### DL-134: Three official labels change to friendlier words, and two data words get plain display words (E-38)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p19` (register E-38 (Plans)), choosing **"Yes to all of it"**, the recommended option.
+
+**Question:** Should the Plans change three official labels to the friendlier words: "Name it for me" (was Regenerate Title), "Write the plan" (was Synthesize) and "Save as default" (was Save as Default, without "my")? And for "Gist Review" and "frozen target pack", keep the official words in the data but show "Notes it took" and "snapshot" on screen?
+
+**Options:**
+
+1. **A. Yes to all of it** (recommended)
+2. **B. Keep every official label on screen**
+
+**Answer:** Option A, "Yes to all of it".
+
+The Plans change three official labels: "Name it for me" replaces Regenerate Title, "Write the plan" replaces Synthesize, and "Save as default" replaces Save as Default (without "my"). "Gist Review" and "frozen target pack" keep their official words in the data, and the screen shows "Notes it took" and "snapshot". Because the old labels are preserved exact tokens, the compile supersedes them rather than deleting them. "Retry" and "Recover" are unchanged (DL-118). The register lines waiting on this card, B-CW-11, B-CW-13, B-ACD-06, B-AMS-01, B-FGS-09, B-CMD-01, B-CMD-04, B-CMD-05, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. It needs lead follow-up before the waiting lines compile (see the lead's notes).
+
+SourceRef: decision card `p19` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `da6eddd13fe1911b9414658b1e9bcf9188a3d3184fbe5ba4ca266712dfc43cfb` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p19` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
+
+### DL-135: Crew Auto leaves a one-line note in the chat, worded for the project (E-15)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p11` (register E-15), choosing **"Keep the note, worded for the project"**, the recommended option.
+
+**Question:** When you turn Crew Auto on, may it leave a one-line note in the chat, even though it's a project-wide setting?
+
+**Options:**
+
+1. **A. Keep the note, worded for the project** (recommended)
+2. **B. No note**
+
+**Answer:** Option A, "Keep the note, worded for the project".
+
+When Crew Auto is turned on, the chat keeps a one-line note worded for the project, such as "Crew Auto is on for this project", so the user can see when it changed. The Plans had no chat record for a project setting; the cost is one more line in the chat. The card was answered at 2026-09-27T21:37:48Z, after DL-110 to DL-134 were written, so it takes the next free id. The register lines waiting on this card, B-CW-08 (the receipt), B-CW-24 (REV-10 and REV-11, with DL-119), B-CMD-03 (`crew_auto_receipt`) and B-CMD-04 (REV-10 and REV-11), compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+**Lead ruling applied (2026-09-27):** the note is kept and worded for the project ("Crew Auto is on for this project"). Collaborative Workflows owns it, beside the Crew Auto evaluator (CWR-021) and the Crew Auto permission of DL-120. Agent-relayed: the design lead's rulings of 2026-09-27, made on Jared's behalf and citing his answer on this card; not verifiable from inside this repository.
+
+SourceRef: decision card `p11` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `01923d0690bca21a5ccdf725fcae190a0897420bb68f0e696c568b6c209d3604` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p11` in the lead's updated answer file ANSWERS.json, SHA-256 `d08c3551305290fafe43acaffd78d43f9f8d9cdb00a87e4d21bb34603a61969d`. The copy at `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json` (SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`) predates this answer and still records `p11` as unanswered. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/UI_Command_Catalog.md

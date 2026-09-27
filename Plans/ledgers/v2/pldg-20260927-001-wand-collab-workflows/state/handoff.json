@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-001-wand-collab-workflows",
-  "updated_at_utc": "2026-09-27T20:30:00+00:00",
-  "last_event_id": "evt-005",
+  "updated_at_utc": "2026-09-27T23:30:00+00:00",
+  "last_event_id": "evt-014",
   "canonical_plan_targets": [
     "Plans/Collaborative_Workflows.md"
   ],
@@ -29,8 +29,8 @@
   },
   "current_phase": "prose_compiled_pending_review",
   "cursor": {
-    "last_event_id": "evt-005",
-    "next_action": "Run one blind form-driven review of CWR-018..CWR-033 (cap two cycles); the integrator regenerates shards and the plan index and commits. WAIT questions q-001..q-021 compile in the WAIT wave after the card answers land in Decision_Log."
+    "last_event_id": "evt-014",
+    "next_action": "Run one blind form-driven review of CWR-018..CWR-039, the CWR-004 amendment and the 2026-09-27 lead-ruling additions (cap two cycles); the integrator regenerates shards and the plan index and commits. Companion follow-ups: stop_reason on CollaborativeRun, scope on CrewAutoSetRequest, crew_auto_receipt on open_config, the steer delivery. Open questions q-008, q-021, q-026, q-027, q-028 wait on an unanswered card (p14), a new card (Grill Me outside BrainStorm), Jared's confirmation of the ELI5 answer, or the Settings owner."
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/source_shards/authorization.md",

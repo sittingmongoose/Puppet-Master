@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-003-wand-scheduling",
-  "updated_at_utc": "2026-09-27T19:30:00+00:00",
-  "last_event_id": "evt-003",
+  "updated_at_utc": "2026-09-27T22:10:00+00:00",
+  "last_event_id": "evt-007",
   "canonical_plan_targets": [
     "Plans/Scheduling_and_Quota_Resume.md"
   ],
@@ -32,7 +32,7 @@
   "design_atoms_total": 7,
   "ready_for_plan_compile_atoms": 0,
   "candidate_atoms_count": 0,
-  "open_questions_count": 3,
+  "open_questions_count": 4,
   "deferred_questions_count": 0,
   "open_blockers_count": 0,
   "compiled_plan_unit_ids": [
@@ -44,8 +44,8 @@
     "SQR-017"
   ],
   "cursor": {
-    "last_event_id": "evt-003",
-    "next_action": "Lead: regenerate shards and index once for all groups, run the blind form-driven review (cap two cycles), then the companion task (q-002). WAIT wave: compile the E-19 answer (q-001) after card p12 is answered."
+    "last_event_id": "evt-007",
+    "next_action": "Lead: regenerate shards and index once for all groups, run the blind form-driven review (cap two cycles). Open: q-001 (card p12, E-19, unanswered), q-003 (R-1 to Chat WOW), q-004 (stored grace_seconds and the occurrence summary shape), q-005 (plan_card on cmd.execution_window.cancel, for the command census)."
   },
   "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md; re-read against the landed Chat updates.md (B0-01)."
 }

@@ -1,17 +1,17 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-003-wand-scheduling",
-  "updated_at_utc": "2026-09-27T19:30:00+00:00",
+  "updated_at_utc": "2026-09-27T22:10:00+00:00",
   "status": "pass_prose_compiled",
   "summary": {
-    "events": 3,
+    "events": 7,
     "design_atoms": 7,
     "decisions": 7,
-    "open_questions": 3,
+    "open_questions": 4,
     "deferred_questions": 0,
     "open_blockers": 0,
     "compile_queue_items": 6
   },
-  "notes": "Prose compile only; companions (B-SQR-09) and the WAIT line (B-SQR-05) follow.",
+  "notes": "Prose compile; WAIT wave reviewed 2026-09-27 (B-SQR-05 unanswered, q-001 open); companions (B-SQR-09) written 2026-09-27: Plans/scheduling_and_quota_resume_contracts.schema.json + Plans/scheduling_and_quota_resume_contract_fixtures.json, pair registered in scripts/pm-new-contracts-verify.py.",
   "errors": []
 }

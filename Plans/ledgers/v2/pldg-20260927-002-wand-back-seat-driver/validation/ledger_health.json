@@ -1,17 +1,17 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-002-wand-back-seat-driver",
-  "updated_at_utc": "2026-09-27T20:30:00+00:00",
+  "updated_at_utc": "2026-09-27T22:00:00+00:00",
   "status": "prose_compiled_pending_review",
   "summary": {
-    "events": 3,
-    "design_atoms": 8,
-    "decisions": 6,
-    "open_questions": 3,
+    "events": 5,
+    "design_atoms": 11,
+    "decisions": 11,
+    "open_questions": 2,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "compile_queue_items": 5
+    "compile_queue_items": 10
   },
-  "notes": "Prose compile of the NOW lines; companions, review and regeneration pending.",
+  "notes": "Prose compile of the NOW lines and the owner-answered WAIT lines; companions, review and regeneration pending.",
   "errors": []
 }

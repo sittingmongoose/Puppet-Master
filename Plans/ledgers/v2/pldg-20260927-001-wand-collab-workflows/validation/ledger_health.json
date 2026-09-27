@@ -1,17 +1,17 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-001-wand-collab-workflows",
-  "updated_at_utc": "2026-09-27T20:30:00+00:00",
+  "updated_at_utc": "2026-09-27T23:30:00+00:00",
   "status": "pass_prose_compiled",
   "summary": {
-    "events": 5,
-    "design_atoms": 18,
-    "decisions": 18,
-    "open_questions": 21,
+    "events": 14,
+    "design_atoms": 40,
+    "decisions": 42,
+    "open_questions": 5,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "compile_queue_items": 18
+    "compile_queue_items": 40
   },
-  "notes": "Prose compile of the G1 NOW lines; compile witness pass.",
+  "notes": "Prose compile of the G1 NOW lines, the WAIT lines the owner answered and the lead's follow-up rulings; compile witness pass.",
   "errors": []
 }

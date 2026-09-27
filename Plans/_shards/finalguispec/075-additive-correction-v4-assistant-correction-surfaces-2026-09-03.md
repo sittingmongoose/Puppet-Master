@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36264-L36443
+Source lines: L36264-L36448
 
-Source SHA256: `9e116c56cf58230049cc5d6be27a21bcb35b9f4e28e58ec6ca101c21ecf279bb`
+Source SHA256: `82311978bcae7304ae7583f93c9d2f06905292c3162b96ec40677061f97270cf`
 
 ---
 
@@ -105,7 +105,12 @@ A failed Start keeps the sheet values and shows the typed failure; it never clea
 configuration and never renders a fake card.
 
 `Crew Auto`'s checkmark reflects effective stored state and appears only after configuration
-confirmation and a successful Settings commit; cancel restores the prior state.
+confirmation and a successful Settings commit; cancel restores the prior state. Since 2026-09-27
+(DL-120, F3-578) that sentence applies to turning Crew Auto on for the project from the Crew Auto
+sheet. In a chat the check shows the stored value in force for that chat, the chat's override or
+else the project value, and checking it commits that chat's override (`cmd.chat.crew_auto.set`
+with scope `thread`) before the check changes, without opening the sheet first. No optimistic
+change is allowed for either the project value or a chat's override.
 
 If a Review target changed while the sheet was open, the sheet offers refresh-to-current or the
 explicitly identified old immutable target. There is no silent swap.

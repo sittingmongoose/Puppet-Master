@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/back_seat_driver_contracts/1.0.0/schema.json",
-  "$comment": "Typed record definitions for the six pm.bsd.* lifecycle record families declared by Plans/Back_Seat_Driver.md section 16 and named by Plans/Commands_System.md CS-078 (\"Naming them here does not create them\"). Scope is record definitions only. The CS-078 command request/result definitions (BackSeatDriverModeSetRequest, BSDPolicyUpdateRequest/Result, BSDWorkflowBindingRequest/Result, BSDAssignmentControlRequest/Result, BSDAssignmentRetryRequest/Result, BSDFindingRoute, BSDUsageRoute, BSDTranscriptRoute, RouteResult) are intentionally absent and remain future owner-authored additions to this file, so every CS-078 row keeps handler_unavailable truthfully. This file admits no storage key, no EventRecord, no writer, and no physical family; the central persistence disposition is row scd.back_seat_driver.durable.v1 in Plans/storage_value_registry.json under Plans/storage-plan.md unit SP-314. The legacy completed-review summary pm.shared_runtime.bsd_runtime_record.v1 is not redefined or extended here.",
+  "$comment": "Typed record definitions for the six pm.bsd.* lifecycle record families declared by Plans/Back_Seat_Driver.md section 16 and named by Plans/Commands_System.md CS-078 (\"Naming them here does not create them\"), plus the request/result pairs of the two commands DL-130 added on 2026-09-27 (Back_Seat_Driver.md section 18 and BSD-037; Commands_System.md CS-085): BSDFindingDismissRequest/Result for cmd.bsd.finding.dismiss and BSDCatchUpReleaseRequest/Result for cmd.bsd.catch_up.release. The CS-078 command request/result definitions (BackSeatDriverModeSetRequest, BSDPolicyUpdateRequest/Result, BSDWorkflowBindingRequest/Result, BSDAssignmentControlRequest/Result, BSDAssignmentRetryRequest/Result, BSDFindingRoute, BSDUsageRoute, BSDTranscriptRoute, RouteResult) are intentionally absent and remain future owner-authored additions to this file, so every CS-078 row keeps handler_unavailable truthfully. A definition here is a contract shape, not a handler, a catalogue registration, or an admission: both DL-130 commands stay handler_unavailable, and their controls render disabled with command_not_registered until CS-085's registration, Event Authority, storage and production wiring close (Wiring_Matrix.md WM-063 keeps them DL-035 candidate exclusions until then). The requests and results are not records and add no storage key. This file admits no storage key, no EventRecord, no writer, and no physical family; the central persistence disposition is row scd.back_seat_driver.durable.v1 in Plans/storage_value_registry.json under Plans/storage-plan.md unit SP-318. The legacy completed-review summary pm.shared_runtime.bsd_runtime_record.v1 is not redefined or extended here.",
   "$defs": {
     "non_empty_string": {
       "type": "string",
@@ -387,7 +387,7 @@
       }
     },
     "bsd_finding": {
-      "description": "BSD finding record. Transcribed from Plans/Back_Seat_Driver.md section 16 (pm.bsd.finding.v1). Severity is the section 7 vocabulary nit|concern|critical; blocker is excluded from every public surface and payload per section 2. State vocabulary is held|reconfirming|emitted|cleared|suppressed|closed. Held state is stored outside the advisor transcript so compaction cannot erase it. Contract-validation shape only; admits no storage key, writer, physical family, or EventRecord.",
+      "description": "BSD finding record. Transcribed from Plans/Back_Seat_Driver.md section 16 (pm.bsd.finding.v1). Severity is the section 7 vocabulary nit|concern|critical; blocker is excluded from every public surface and payload per section 2. State vocabulary is held|reconfirming|emitted|cleared|suppressed|closed. Held state is stored outside the advisor transcript so compaction cannot erase it. Contract-validation shape only; admits no storage key, writer, physical family, or EventRecord. presentation_weight (note|aside, 2026-09-27, BSD-031) is absent until the finding is emitted and stamped once at the emission transition: a nit, and any finding routed as a non-interrupting aside because the section 11 cooldown was running, is aside; every other emission is note. It is never recomputed, so an emitted finding must carry it and a held or reconfirming finding cannot. closed_reason stays an open owner string; the value dismissed_by_user (cmd.bsd.finding.dismiss, BSD-037) is written only when an emitted finding is closed by the user, so it requires state closed and a stamped presentation_weight.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -478,13 +478,82 @@
         "closed_reason": {
           "$ref": "#/$defs/nullable_non_empty_string"
         },
+        "presentation_weight": {
+          "enum": [
+            "note",
+            "aside"
+          ]
+        },
         "created_at": {
           "$ref": "#/$defs/timestamp"
         },
         "updated_at": {
           "$ref": "#/$defs/timestamp"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "emitted"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "presentation_weight"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "held",
+                  "reconfirming"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "presentation_weight"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "closed_reason": {
+                "const": "dismissed_by_user"
+              }
+            },
+            "required": [
+              "closed_reason"
+            ]
+          },
+          "then": {
+            "properties": {
+              "state": {
+                "const": "closed"
+              }
+            },
+            "required": [
+              "presentation_weight"
+            ]
+          }
+        }
+      ]
     },
     "bsd_quarantine": {
       "description": "BSD quarantine record. Transcribed from Plans/Back_Seat_Driver.md section 16 (pm.bsd.quarantine.v1) with the owner-pinned terminal_action vocabulary re_prime|pause_bsd. Contract-validation shape only; admits no storage key, writer, physical family, or EventRecord.",
@@ -541,6 +610,441 @@
           "$ref": "#/$defs/timestamp"
         }
       }
+    },
+    "bsd_command_error_code": {
+      "description": "The closed BSD typed-error set of Plans/Back_Seat_Driver.md section 18. A failure never emits a success-shaped result, never advances an assignment state, and never converts a held finding into a delivered one.",
+      "enum": [
+        "invalid_request",
+        "project_not_found",
+        "bsd_policy_not_found",
+        "bsd_binding_not_found",
+        "bsd_assignment_not_found",
+        "bsd_finding_not_found",
+        "stale_policy_revision",
+        "stale_epoch",
+        "stale_projection",
+        "already_in_state",
+        "mode_off_no_assignment",
+        "tool_profile_widening_rejected",
+        "quarantine_terminal_pause",
+        "advisor_model_unavailable",
+        "advisor_persona_unavailable",
+        "quota_unavailable",
+        "resource_refused",
+        "permission_required",
+        "policy_denied",
+        "command_not_registered",
+        "owner_unavailable",
+        "cancelled"
+      ]
+    },
+    "bsd_finding_dismiss_request": {
+      "description": "BSDFindingDismissRequest for cmd.bsd.finding.dismiss (Dismiss advice), Plans/Back_Seat_Driver.md section 18 and BSD-037 (DL-130). Section 18 envelope plus bsd_finding_id, finding_key and expected_epoch. Source surfaces are bsd_note (the dismissal control on an advisor note) and bsd_details (the Advisor notes row of Context Details). Contract shape only: sole future target handlers::bsd::finding_dismiss, handler_unavailable until admission.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "scope_kind",
+        "expected_epoch",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "bsd_finding_id",
+        "finding_key"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.finding_dismiss_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "BSDFindingDismissRequest"
+        },
+        "command_id": {
+          "const": "cmd.bsd.finding.dismiss"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope_kind": {
+          "const": "finding"
+        },
+        "expected_epoch": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "enum": [
+            "bsd_note",
+            "bsd_details"
+          ]
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "bsd_finding_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "finding_key": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      }
+    },
+    "bsd_finding_dismiss_result": {
+      "description": "BSDFindingDismissResult, BSD-037. An accepted dismissal reports the finding closed with closed_reason dismissed_by_user under the resulting epoch; the closure is durable across restart and advisor reset, and the finding reopens only on a changed evidence fingerprint as a recorded reopen. A prior-epoch request is rejected stale_epoch and a finding that is no longer emitted is rejected already_in_state. Every path fixes primary_run_mutated false and authority_granted false and carries a projection reference (section 18).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "resulting_epoch",
+        "projection_ref",
+        "primary_run_mutated",
+        "authority_granted",
+        "bsd_finding_id",
+        "finding_key",
+        "finding_state",
+        "closed_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.finding_dismiss_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "BSDFindingDismissResult"
+        },
+        "command_id": {
+          "const": "cmd.bsd.finding.dismiss"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/bsd_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resulting_epoch": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "bsd_finding_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "finding_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "finding_state": {
+          "enum": [
+            "held",
+            "reconfirming",
+            "emitted",
+            "cleared",
+            "suppressed",
+            "closed"
+          ]
+        },
+        "closed_reason": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              },
+              "finding_state": {
+                "const": "closed"
+              },
+              "closed_reason": {
+                "const": "dismissed_by_user"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/bsd_command_error_code"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "bsd_catch_up_release_request": {
+      "description": "BSDCatchUpReleaseRequest for cmd.bsd.catch_up.release (Don't wait), Plans/Back_Seat_Driver.md section 18 and BSD-037 (DL-130). Section 18 envelope plus bsd_assignment_id, the primary_generation of the boundary being waited on, and expected_epoch. Its only source surface is bsd_note (the catch-up line). Contract shape only: sole future target handlers::bsd::catch_up_release, handler_unavailable until admission.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "scope_kind",
+        "expected_epoch",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "bsd_assignment_id",
+        "primary_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.catch_up_release_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "BSDCatchUpReleaseRequest"
+        },
+        "command_id": {
+          "const": "cmd.bsd.catch_up.release"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope_kind": {
+          "const": "assignment"
+        },
+        "expected_epoch": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "enum": [
+            "bsd_note"
+          ]
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "primary_generation": {
+          "$ref": "#/$defs/non_negative_integer"
+        }
+      }
+    },
+    "bsd_catch_up_release_result": {
+      "description": "BSDCatchUpReleaseResult, BSD-037. An accepted release ends the current catch-up wait at its boundary as if the catch_up_seconds cap had expired at that moment, so the primary continues at once; the advisor keeps reviewing, later findings follow section 8, and the release never pauses, stops or reconfigures the assignment and never changes catch_up_seconds. With no wait in progress the request is rejected already_in_state; a prior-epoch request is rejected stale_epoch. Every path fixes primary_run_mutated false and authority_granted false and carries a projection reference (section 18).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "resulting_epoch",
+        "projection_ref",
+        "primary_run_mutated",
+        "authority_granted",
+        "bsd_assignment_id",
+        "primary_generation",
+        "catch_up_wait_released"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.catch_up_release_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "BSDCatchUpReleaseResult"
+        },
+        "command_id": {
+          "const": "cmd.bsd.catch_up.release"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/bsd_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resulting_epoch": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "primary_generation": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "catch_up_wait_released": {
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              },
+              "catch_up_wait_released": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/bsd_command_error_code"
+              },
+              "catch_up_wait_released": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

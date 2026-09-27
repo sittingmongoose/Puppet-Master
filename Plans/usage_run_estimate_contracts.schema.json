@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/usage_run_estimate/1.0.0/usage_run_estimate_contracts.schema.json",
+  "title": "Usage pre-start run estimate static contract schemas",
+  "description": "Closed shapes for the pre-start estimate owned by Plans/usage-feature.md UF-104 (ledger pldg-20260927-004-wand-memory-plan-usage): estimate(definition) returns either a range estimate with its basis or, when no pricing or latency basis exists, an estimate with no range at all. Both carry source_class pricing_estimated and neither is a UsageRecord: no usage_record_id, usage_event_ref, settlement or quota field is allowed. Each range is [lo, hi]; lo <= hi is a runtime rule these static shapes cannot express. The on-screen words (about, an estimate, not a promise) are presentation and are not stored. Pricing rates stay owned by Plans/Models_System.md section 4.2. Static schema and fixture consistency only; no provider call, pricing lookup, runtime, visual or performance claim.",
+  "oneOf": [
+    {"$ref": "#/$defs/run_estimate"},
+    {"$ref": "#/$defs/run_estimate_no_basis"}
+  ],
+  "$defs": {
+    "non_empty_string": {"type": "string", "minLength": 1},
+    "non_negative_integer_range": {
+      "description": "[lo, hi], both non-negative integers.",
+      "type": "array",
+      "prefixItems": [
+        {"type": "integer", "minimum": 0},
+        {"type": "integer", "minimum": 0}
+      ],
+      "items": false,
+      "minItems": 2
+    },
+    "positive_integer_range": {
+      "description": "[lo, hi] for replies, both at least 1.",
+      "type": "array",
+      "prefixItems": [
+        {"type": "integer", "minimum": 1},
+        {"type": "integer", "minimum": 1}
+      ],
+      "items": false,
+      "minItems": 2
+    },
+    "estimate_basis": {
+      "description": "The pricing snapshot that priced cost_microdollars and the latency samples that timed duration_s (UF-104).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pricing_snapshot_id", "latency_sample_ref"],
+      "properties": {
+        "pricing_snapshot_id": {"$ref": "#/$defs/non_empty_string"},
+        "latency_sample_ref": {"$ref": "#/$defs/non_empty_string"}
+      }
+    },
+    "run_estimate": {
+      "description": "A range estimate with a basis. replies is present only for kinds that count replies.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "duration_s", "cost_microdollars", "basis", "source_class"],
+      "properties": {
+        "schema_id": {"const": "pm.usage.run_estimate.v1"},
+        "duration_s": {"$ref": "#/$defs/non_negative_integer_range"},
+        "cost_microdollars": {"$ref": "#/$defs/non_negative_integer_range"},
+        "replies": {"$ref": "#/$defs/positive_integer_range"},
+        "basis": {"$ref": "#/$defs/estimate_basis"},
+        "source_class": {"const": "pricing_estimated"}
+      }
+    },
+    "run_estimate_no_basis": {
+      "description": "With no pricing or latency basis the estimate carries no range, so a surface can show no number and never $0.00. missing_basis names what is absent.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "missing_basis", "source_class"],
+      "properties": {
+        "schema_id": {"const": "pm.usage.run_estimate_no_basis.v1"},
+        "missing_basis": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"enum": ["pricing_snapshot", "latency_samples"]}
+        },
+        "source_class": {"const": "pricing_estimated"}
+      }
+    }
+  }
+}

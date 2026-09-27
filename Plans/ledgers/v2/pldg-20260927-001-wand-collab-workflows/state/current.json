@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-001-wand-collab-workflows",
-  "updated_at_utc": "2026-09-27T20:30:00+00:00",
-  "last_event_id": "evt-005",
+  "updated_at_utc": "2026-09-27T23:30:00+00:00",
+  "last_event_id": "evt-014",
   "canonical_plan_targets": [
     "Plans/Collaborative_Workflows.md"
   ],
@@ -18,7 +18,7 @@
   "validation_state": {
     "ledger_health": "pass_prose_compiled",
     "compile_witness": "pass",
-    "claim_boundary": "Owner prose only. No schema, fixture, gate, shard or index work; no governance seal."
+    "claim_boundary": "Owner prose plus the static contract companion (ATS-062): schema and fixtures validated by pm-new-contracts-verify.py only. No shard or index regeneration by this ledger's authors; no governance seal."
   },
   "planned_owner_docs": [
     "Plans/Collaborative_Workflows.md"
@@ -28,14 +28,15 @@
     "EP (later wave, E-31 only)": "EP-129..EP-131"
   },
   "phase": "prose_compiled_pending_review",
-  "accepted_decisions_count": 18,
-  "design_atoms_total": 18,
+  "accepted_decisions_count": 42,
+  "design_atoms_total": 40,
   "ready_for_plan_compile_atoms": 0,
   "candidate_atoms_count": 0,
-  "open_questions_count": 21,
+  "open_questions_count": 5,
   "deferred_questions_count": 0,
   "open_blockers_count": 0,
   "compiled_plan_unit_ids": [
+    "CWR-004",
     "CWR-018",
     "CWR-019",
     "CWR-020",
@@ -51,11 +52,17 @@
     "CWR-030",
     "CWR-031",
     "CWR-032",
-    "CWR-033"
+    "CWR-033",
+    "CWR-034",
+    "CWR-035",
+    "CWR-036",
+    "CWR-037",
+    "CWR-038",
+    "CWR-039"
   ],
   "cursor": {
-    "last_event_id": "evt-005",
-    "next_action": "Run one blind form-driven review of CWR-018..CWR-033 (cap two cycles); the integrator regenerates shards and the plan index and commits. WAIT questions q-001..q-021 compile in the WAIT wave after the card answers land in Decision_Log."
+    "last_event_id": "evt-014",
+    "next_action": "Run one blind form-driven review of CWR-018..CWR-039, the CWR-004 amendment and the 2026-09-27 lead-ruling additions (cap two cycles); the integrator regenerates shards and the plan index and commits. Companion follow-ups: stop_reason on CollaborativeRun, scope on CrewAutoSetRequest, crew_auto_receipt on open_config, the steer delivery. Open questions q-008, q-021, q-026, q-027, q-028 wait on an unanswered card (p14), a new card (Grill Me outside BrainStorm), Jared's confirmation of the ELI5 answer, or the Settings owner."
   },
   "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md."
 }

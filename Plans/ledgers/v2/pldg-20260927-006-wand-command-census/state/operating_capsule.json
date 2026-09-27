@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-006-wand-command-census",
-  "updated_at_utc": "2026-09-27T19:30:00+00:00",
+  "updated_at_utc": "2026-09-27T21:45:00+00:00",
   "authority": "Live Plans are canon; this ledger is source lineage only.",
   "scope": "Group G6 of the wand-modules canon compile: register lines B-CMD-01..B-CMD-09, B-ACD-12, B-CMP-01..B-CMP-05 of the impact register snapshot, NOW lines only in this pass.",
   "negative_constraints": [
@@ -16,5 +16,5 @@
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/authorization.md"
   ],
-  "next_action": "Prose compiled and witnessed. Next: blind form-driven review (cap two cycles); the integrator regenerates shards and the plan index; then the companion task (production wiring, exclusions, schemas, fixtures) and the WAIT wave after the owner answers cards p01, p07, p08, p09, p11, p12, p15 and p19."
+  "next_action": "NOW and WAIT prose compiled and witnessed. Next: blind form-driven review (cap two cycles); the integrator regenerates shards and the plan index; then the companion task (q-014). Open on the owner: q-008 (DL-126 ask), q-009 (card p11), q-010 (card p12), q-011 (DL-120 follow-up), q-012 (DL-112 follow-up), q-013 (no card)."
 }

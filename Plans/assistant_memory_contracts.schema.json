@@ -1,0 +1,557 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/assistant_memory/1.0.0/assistant_memory_contracts.schema.json",
+  "title": "Assistant memory static contract schemas",
+  "description": "The owner schema Plans/Commands_System.md names for Plans/assistant-memory-subsystem.md. Closed record shapes written by the 2026-09-27 wand-modules compile (ledger pldg-20260927-004-wand-memory-plan-usage): MemoryExportRequest for cmd.chat.memory.export (AMS-052, CS-085); MemoryExportPayload, what that request hands the artifact owner (the ArtifactExportResult itself stays the artifact owner's), with gist and taught-rule entries that carry the three stored verification_state values and pointer-only EvidenceRefs (section 3.3, AMS-006, AMS-014, AMS-047); and ReplyIncludedTeachings, the included_teaching_ids fragment a reply's canonical usage/context record carries (AMS-051). That fragment does not define the record, and no field here states that a rule was followed (DL-116). The Teach request and result definitions the Commands_System.md tables point at in this file (TeachCaptureRequest, TeachConfirmRequest, TeachCancelRequest, TeachRevokeRequest, TeachLockRequest, MemoryRoute and their results) are not authored yet. Static schema and fixture consistency only; no runtime, storage, provider, security, visual or performance claim.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/MemoryExportRequest"
+    },
+    {
+      "$ref": "#/$defs/MemoryExportPayload"
+    },
+    {
+      "$ref": "#/$defs/ReplyIncludedTeachings"
+    }
+  ],
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "utc_timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?Z$"
+    },
+    "sha256_hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "export_scope": {
+      "description": "AMS-052: gists | teachings | all. There is no scope for a display group such as Out of date.",
+      "enum": [
+        "gists",
+        "teachings",
+        "all"
+      ]
+    },
+    "verification_state": {
+      "description": "AMS-014: exactly Unverified, Verified or Discarded. Out of date is a read-time display group (AMS-047) and is never a stored, emitted or exported value.",
+      "enum": [
+        "Unverified",
+        "Verified",
+        "Discarded"
+      ]
+    },
+    "gist_kind": {
+      "description": "Section 9.2 kinds.",
+      "enum": [
+        "CurrentThread",
+        "Blocker",
+        "Constraint",
+        "Outcome",
+        "Handoff",
+        "Note",
+        "Decision",
+        "Preference",
+        "Landmine"
+      ]
+    },
+    "EvidenceRef": {
+      "description": "Section 3.3 and AMS-006: a structured pointer to evidence stored elsewhere. Every variant is closed, so no variant can carry a diff, log or artifact body.",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "variant",
+            "hash",
+            "repo_id"
+          ],
+          "properties": {
+            "variant": {
+              "const": "Commit"
+            },
+            "hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{7,64}$"
+            },
+            "repo_id": {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "variant",
+            "run_id",
+            "repo_id",
+            "paths",
+            "stats"
+          ],
+          "properties": {
+            "variant": {
+              "const": "Diff"
+            },
+            "run_id": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "repo_id": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "paths": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            },
+            "stats": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "files_changed",
+                "insertions",
+                "deletions"
+              ],
+              "properties": {
+                "files_changed": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "insertions": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "deletions": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "variant",
+            "run_id",
+            "command",
+            "exit_code",
+            "summary_hash"
+          ],
+          "properties": {
+            "variant": {
+              "enum": [
+                "TestRun",
+                "BuildRun",
+                "LintRun"
+              ]
+            },
+            "run_id": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "command": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "exit_code": {
+              "type": "integer"
+            },
+            "summary_hash": {
+              "$ref": "#/$defs/sha256_hex"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "variant",
+            "path",
+            "change_type"
+          ],
+          "properties": {
+            "variant": {
+              "const": "Artifact"
+            },
+            "path": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "change_type": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "content_hash": {
+              "$ref": "#/$defs/sha256_hex"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "variant",
+            "file_path"
+          ],
+          "properties": {
+            "variant": {
+              "const": "PlanRef"
+            },
+            "file_path": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "anchor_id": {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "variant",
+            "provider",
+            "id"
+          ],
+          "properties": {
+            "variant": {
+              "enum": [
+                "Issue",
+                "PR"
+              ]
+            },
+            "provider": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "id": {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          }
+        }
+      ]
+    },
+    "MemoryClaimEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id",
+        "text",
+        "created_at"
+      ],
+      "properties": {
+        "claim_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "text": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "created_at": {
+          "$ref": "#/$defs/utc_timestamp"
+        }
+      }
+    },
+    "MemoryGistExportEntry": {
+      "description": "One MemoryGist as stored (section 3.1). verification_state is the stored value, so an Unverified gist is never exported as Verified; evidence goes out as pointers only.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gist_id",
+        "kind",
+        "status",
+        "pinned",
+        "verification_state",
+        "claims",
+        "evidence_refs",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "gist_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "kind": {
+          "$ref": "#/$defs/gist_kind"
+        },
+        "status": {
+          "enum": [
+            "Active",
+            "Done",
+            "Archived"
+          ]
+        },
+        "pinned": {
+          "type": "boolean"
+        },
+        "verification_state": {
+          "$ref": "#/$defs/verification_state"
+        },
+        "half_life_days": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true
+        },
+        "claims": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/MemoryClaimEntry"
+          }
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          }
+        },
+        "created_at": {
+          "$ref": "#/$defs/utc_timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/utc_timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "verification_state": {
+                "const": "Verified"
+              }
+            },
+            "required": [
+              "verification_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_refs": {
+                "minItems": 1
+              }
+            }
+          },
+          "description": "AMS-014: a gist is never Verified with empty evidence_refs, so none is exported that way."
+        }
+      ]
+    },
+    "TaughtRuleExportEntry": {
+      "description": "One persisted Teach record as Plans/assistant-chat-design.md section 6 names its minimum fields, plus whether the user locked it (AMS-050, DL-130).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "memory_id",
+        "scope",
+        "source_thread_id",
+        "author_message_id",
+        "captured_at",
+        "normalized_fact",
+        "locked"
+      ],
+      "properties": {
+        "memory_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope": {
+          "enum": [
+            "thread",
+            "project",
+            "user"
+          ]
+        },
+        "source_thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "author_message_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "captured_at": {
+          "$ref": "#/$defs/utc_timestamp"
+        },
+        "normalized_fact": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "locked": {
+          "type": "boolean"
+        },
+        "supersedes_memory_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "revoked_at": {
+          "$ref": "#/$defs/utc_timestamp"
+        }
+      }
+    },
+    "MemoryExportRequest": {
+      "description": "AMS-052 and CS-085: MemoryExportRequest for cmd.chat.memory.export, the one command behind both Export actions. It is read-only: it carries no field that could verify, pin, discard or edit what it exports.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "project_id",
+        "scope"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.memory_export_request.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.export"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope": {
+          "$ref": "#/$defs/export_scope"
+        }
+      }
+    },
+    "MemoryExportPayload": {
+      "description": "What an export hands the artifact owner, which returns the ArtifactExportResult. The scope decides which lists may hold entries.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "export_id",
+        "request_id",
+        "project_id",
+        "scope",
+        "exported_at_utc",
+        "gists",
+        "teachings"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.memory_export_payload.v1"
+        },
+        "export_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope": {
+          "$ref": "#/$defs/export_scope"
+        },
+        "exported_at_utc": {
+          "$ref": "#/$defs/utc_timestamp"
+        },
+        "gists": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MemoryGistExportEntry"
+          }
+        },
+        "teachings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TaughtRuleExportEntry"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "gists"
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "teachings": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "teachings"
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "gists": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "IncludedTeachingRef": {
+      "description": "One taught rule at the version that was included: its Teach memory_id and the SHA-256 of the normalized_fact text the prompt builder placed.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "memory_id",
+        "normalized_fact_sha256"
+      ],
+      "properties": {
+        "memory_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "normalized_fact_sha256": {
+          "$ref": "#/$defs/sha256_hex"
+        }
+      }
+    },
+    "ReplyIncludedTeachings": {
+      "description": "AMS-051: the included_teaching_ids fragment on a reply's canonical usage/context record, keyed by the reply's message_id. It records inclusion only; an empty list means no taught rule was included. It has no field for following, because inclusion never establishes it (DL-116).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "message_id",
+        "thread_id",
+        "included_teaching_ids"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.reply_included_teachings.v1"
+        },
+        "message_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "included_teaching_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/IncludedTeachingRef"
+          }
+        }
+      }
+    }
+  }
+}

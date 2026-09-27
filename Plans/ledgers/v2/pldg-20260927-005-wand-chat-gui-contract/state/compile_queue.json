@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-005-wand-chat-gui-contract",
-  "updated_at_utc": "2026-09-27T20:30:00+00:00",
-  "last_event_id": "evt-004",
+  "updated_at_utc": "2026-09-27T22:40:00+00:00",
+  "last_event_id": "evt-009",
   "canonical_plan_targets": [
     "Plans/DRY_Rules.md",
     "Plans/Decision_Log.md",
@@ -496,6 +496,340 @@
         "DR-044"
       ],
       "compile_event_id": "evt-004"
+    },
+    {
+      "queue_id": "queue-025",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-w-acd-02"
+      ],
+      "target_doc": "Plans/assistant-chat-design.md",
+      "target_docs": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "target_plan_unit_ids": [
+        "ACD-477",
+        "ACD-481",
+        "ACD-426"
+      ],
+      "compiled_plan_unit_ids": [
+        "ACD-477",
+        "ACD-481",
+        "ACD-426"
+      ],
+      "compile_event_id": "evt-006"
+    },
+    {
+      "queue_id": "queue-026",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-w-acd-04"
+      ],
+      "target_doc": "Plans/FinalGUISpec.md",
+      "target_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "target_plan_unit_ids": [
+        "F3-578",
+        "F3-531"
+      ],
+      "compiled_plan_unit_ids": [
+        "F3-578",
+        "F3-531"
+      ],
+      "compile_event_id": "evt-006"
+    },
+    {
+      "queue_id": "queue-027",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-w-acd-05"
+      ],
+      "target_doc": "Plans/FinalGUISpec.md",
+      "target_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "target_plan_unit_ids": [
+        "F3-580"
+      ],
+      "compiled_plan_unit_ids": [
+        "F3-580"
+      ],
+      "compile_event_id": "evt-006"
+    },
+    {
+      "queue_id": "queue-028",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-w-acd-06"
+      ],
+      "target_doc": "Plans/assistant-chat-design.md",
+      "target_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "target_plan_unit_ids": [
+        "ACD-479",
+        "F3-575"
+      ],
+      "compiled_plan_unit_ids": [
+        "ACD-479",
+        "F3-575"
+      ],
+      "compile_event_id": "evt-006"
+    },
+    {
+      "queue_id": "queue-029",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-w-acd-09"
+      ],
+      "target_doc": "Plans/assistant-chat-design.md",
+      "target_docs": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "target_plan_unit_ids": [
+        "ACD-483"
+      ],
+      "compiled_plan_unit_ids": [
+        "ACD-483"
+      ],
+      "compile_event_id": "evt-006"
+    },
+    {
+      "queue_id": "queue-030",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-w-acd-10"
+      ],
+      "target_doc": "Plans/assistant-chat-design.md",
+      "target_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "target_plan_unit_ids": [
+        "ACD-482",
+        "ACD-476",
+        "ACD-435",
+        "ACD-436",
+        "F3-567"
+      ],
+      "compiled_plan_unit_ids": [
+        "ACD-482",
+        "ACD-476",
+        "ACD-435",
+        "ACD-436",
+        "F3-567"
+      ],
+      "compile_event_id": "evt-006"
+    },
+    {
+      "queue_id": "queue-031",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-w-fgs-05"
+      ],
+      "target_doc": "Plans/FinalGUISpec.md",
+      "target_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "target_plan_unit_ids": [
+        "F3-569"
+      ],
+      "compiled_plan_unit_ids": [
+        "F3-569"
+      ],
+      "compile_event_id": "evt-006"
+    },
+    {
+      "queue_id": "queue-032",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-w-fgs-06"
+      ],
+      "target_doc": "Plans/FinalGUISpec.md",
+      "target_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "target_plan_unit_ids": [
+        "F3-571"
+      ],
+      "compiled_plan_unit_ids": [
+        "F3-571"
+      ],
+      "compile_event_id": "evt-006"
+    },
+    {
+      "queue_id": "queue-033",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-w-fgs-08"
+      ],
+      "target_doc": "Plans/FinalGUISpec.md",
+      "target_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "target_plan_unit_ids": [
+        "F3-579"
+      ],
+      "compiled_plan_unit_ids": [
+        "F3-579"
+      ],
+      "compile_event_id": "evt-006"
+    },
+    {
+      "queue_id": "queue-034",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-w-fgs-17"
+      ],
+      "target_doc": "Plans/FinalGUISpec.md",
+      "target_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Decision_Log.md"
+      ],
+      "target_plan_unit_ids": [
+        "F3-566",
+        "DL-114"
+      ],
+      "compiled_plan_unit_ids": [
+        "F3-566",
+        "DL-114"
+      ],
+      "compile_event_id": "evt-006"
+    },
+    {
+      "queue_id": "queue-035",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-f-co-04"
+      ],
+      "target_doc": "Plans/Decision_Log.md",
+      "target_docs": [
+        "Plans/Decision_Log.md"
+      ],
+      "target_plan_unit_ids": [
+        "DL-135"
+      ],
+      "compiled_plan_unit_ids": [
+        "DL-135"
+      ],
+      "compile_event_id": "evt-008"
+    },
+    {
+      "queue_id": "queue-036",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-f-co-05"
+      ],
+      "target_doc": "Plans/Decision_Log.md",
+      "target_docs": [
+        "Plans/Decision_Log.md"
+      ],
+      "target_plan_unit_ids": [
+        "DL-112",
+        "DL-113",
+        "DL-116",
+        "DL-117",
+        "DL-120",
+        "DL-131"
+      ],
+      "compiled_plan_unit_ids": [
+        "DL-112",
+        "DL-113",
+        "DL-116",
+        "DL-117",
+        "DL-120",
+        "DL-131"
+      ],
+      "compile_event_id": "evt-008"
+    },
+    {
+      "queue_id": "queue-037",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-f-co-06"
+      ],
+      "target_doc": "Plans/Decision_Log.md",
+      "target_docs": [
+        "Plans/Decision_Log.md"
+      ],
+      "target_plan_unit_ids": [
+        "DL-114",
+        "DL-126"
+      ],
+      "compiled_plan_unit_ids": [
+        "DL-114",
+        "DL-126"
+      ],
+      "compile_event_id": "evt-008"
+    },
+    {
+      "queue_id": "queue-038",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-f-co-07"
+      ],
+      "target_doc": "Plans/FinalGUISpec.md",
+      "target_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Decision_Log.md"
+      ],
+      "target_plan_unit_ids": [
+        "F3-566",
+        "DL-113"
+      ],
+      "compiled_plan_unit_ids": [
+        "F3-566",
+        "DL-113"
+      ],
+      "compile_event_id": "evt-008"
+    },
+    {
+      "queue_id": "queue-039",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-q-co-08"
+      ],
+      "target_doc": "Plans/FinalGUISpec.md",
+      "target_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "target_plan_unit_ids": [
+        "F3-578",
+        "F3-531"
+      ],
+      "compiled_plan_unit_ids": [
+        "F3-578",
+        "F3-531"
+      ],
+      "compile_event_id": "evt-009"
+    },
+    {
+      "queue_id": "queue-040",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g5-q-co-09"
+      ],
+      "target_doc": "Plans/assistant-chat-design.md",
+      "target_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "target_plan_unit_ids": [
+        "ACD-477",
+        "F3-570",
+        "F3-579"
+      ],
+      "compiled_plan_unit_ids": [
+        "ACD-477",
+        "F3-570",
+        "F3-579"
+      ],
+      "compile_event_id": "evt-009"
     }
   ],
   "notes": "One item per compiled register line; WAIT lines are open questions.",

@@ -1,22 +1,22 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-002-wand-back-seat-driver",
-  "updated_at_utc": "2026-09-27T20:30:00+00:00",
+  "updated_at_utc": "2026-09-27T22:00:00+00:00",
   "title": "Wand modules redesign: Back Seat Driver sheet, margin note and projections",
   "status": "active",
   "created_at_utc": "2026-09-27T19:15:00+00:00",
   "record_counts": {
-    "events": 3,
-    "design_atoms": 8,
-    "decisions": 6,
-    "questions": 3,
+    "events": 5,
+    "design_atoms": 11,
+    "decisions": 11,
+    "questions": 5,
     "blockers": 0,
-    "corrections": 5
+    "corrections": 10
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver/source_shards/authorization.md",
     "Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver/source_shards/findings.md"
   ],
   "phase": "prose_compiled_companions_pending",
-  "last_event_id": "evt-003"
+  "last_event_id": "evt-005"
 }

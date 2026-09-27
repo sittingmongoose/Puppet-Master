@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-001-wand-collab-workflows",
-  "updated_at_utc": "2026-09-27T20:30:00+00:00",
-  "last_event_id": "evt-005",
+  "updated_at_utc": "2026-09-27T23:30:00+00:00",
+  "last_event_id": "evt-014",
   "canonical_plan_targets": [
     "Plans/Collaborative_Workflows.md"
   ],
@@ -372,8 +372,440 @@
       ],
       "companion_outputs": [],
       "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-019",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-02"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-034",
+        "CWR-018"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-034",
+        "CWR-018"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-020",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-03-wait"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-035"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-035"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-021",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-05"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-036"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-036"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-022",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-06"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-036"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-036"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-023",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-07"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-037",
+        "CWR-004"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-037",
+        "CWR-004"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-024",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-08-wait"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-038"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-038"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-025",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-10-wait"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-024",
+        "CWR-037"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-024",
+        "CWR-037"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-026",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-11-wait"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-025"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-025"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-027",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-12-wait"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-031"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-031"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-028",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-13-wait"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-027"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-027"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-029",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-14-wait"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-028"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-028"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-030",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-15-wait"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-032",
+        "CWR-034"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-032",
+        "CWR-034"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-031",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-17"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-038"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-038"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-032",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-23-wait"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-031"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-031"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-033",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-24-wait"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-031",
+        "CWR-038"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-031",
+        "CWR-038"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-034",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-26"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-039"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-039"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-035",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-18"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-004",
+        "CWR-021",
+        "CWR-038"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-004",
+        "CWR-021",
+        "CWR-038"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-012"
+    },
+    {
+      "queue_id": "queue-036",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-08-note"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-038"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-038"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-012"
+    },
+    {
+      "queue_id": "queue-037",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-10-steer"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-024"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-024"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-012"
+    },
+    {
+      "queue_id": "queue-038",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-26-review"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-039"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-039"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-012"
+    },
+    {
+      "queue_id": "queue-039",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-20"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-029"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-029"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-012"
+    },
+    {
+      "queue_id": "queue-040",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-04-verify"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-020"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-020"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-012"
     }
   ],
-  "notes": "One item per NOW register line; each compiles only the NOW part named in the canon plan.",
+  "notes": "One item per register line or answered WAIT part; each compiles only the part named in the canon plan or settled by its Decision_Log entry.",
   "terminal_ledger_event_id": null
 }

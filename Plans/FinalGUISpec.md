@@ -35970,7 +35970,7 @@ Selecting BrainStorm or either Review choice opens that workflow's configuration
 
 ### 3. Wand menu
 
-The wand keeps its existing capability entries and adds `Goal`, `BSD ▶`, `ELI5`, `Schedule Message…`, `Teach…` where discoverability helps, and `Revert Last Agent Edit` when eligible. A `Multi-Agent ▶` entry sidecars to `Crew…`, `Chat Room…`, a divider, `✓ Crew Auto`, and `Manage Defaults…`. The BSD sidecar offers `Off`, `Auto · Default`, `On`, a divider, and `Configure…`, and its check state comes from the owner projection rather than a local-only checkbox. The BSD row itself shows the committed mode in title case (`Off`, `Auto`, `On`) beside a chevron, because it opens a sidecar, and the `Revert Last Agent Edit` row's helper line states its eligibility in words, for example `Nothing to revert yet` (F3-577).
+The wand keeps its existing capability entries and adds `Goal`, `BSD ▶`, `ELI5`, `Schedule Message…`, `Teach…` where discoverability helps, and `Revert Last Agent Edit` when eligible. A `Multi-Agent ▶` entry sidecars to `Crew…`, `Chat Room…`, a divider, `✓ Crew Auto`, `Crew Auto settings…`, and `Manage Defaults…` (F3-578, DL-119). `✓ Crew Auto` shows the Crew Auto permission in force for the chat and sets only that chat's override of the project value, which is on by default; there is no separate `Allow Crews in this chat` row (F3-578, DL-120). The BSD sidecar offers `Off`, `Auto · Default`, `On`, a divider, and `Configure…`, and its check state comes from the owner projection rather than a local-only checkbox. The BSD row itself shows the committed mode in title case (`Off`, `Auto`, `On`) beside a chevron, because it opens a sidecar, and the `Revert Last Agent Edit` row's helper line states its eligibility in words, for example `Nothing to revert yet` (F3-577).
 
 Review stays in the primary mode selector and BrainStorm stays under Deep Plan; neither is duplicated as a first-class wand entry, though context actions may route to them. Schedule Message belongs in the wand, not in an Assistant overflow menu outside it.
 
@@ -35984,13 +35984,13 @@ A targeted composer adds a narrow ribbon inside the composer's top edge and tint
 
 When a provider quota wait is active, a compact in-flow strip sits below the activity and follow-up queue and above the composer, reading the paused reason, the reset time and its source, and an opt-in `Resume automatically` checkbox. It is in flow, not a full-width overlay, and must not collide with the activity bar or the decision host.
 
-Directly after the quota-wait strip sits the dock (ACD-476): at most three one-line items for runs, scheduled messages and advice whose own transcript item is off-screen, needs-you first. It is transient, reserves its own height in this stack, never floats over the transcript, and never collides with the floating Activity bar pill or the decision host; the transcript's bottom padding is measured with the dock present (F3-567). Among the active capability glyphs, Back Seat Driver shows an ambient eye that reads the owner projection, and the Crew glyph is the Crew kind mark (F3-567).
+Directly after the quota-wait strip sits the dock (ACD-476): at most three one-line items for runs, scheduled messages and advice whose own transcript item is off-screen, needs-you first. It is transient, reserves its own height in this stack, never floats over the transcript, and never collides with the floating Activity bar pill or the decision host; the transcript's bottom padding is measured with the dock present (F3-567). The dock's live-run lines and the files row under each reply replace the old summary above the composer of a helpers count and `N file changes` (ACD-482, DL-129); the thread's total file count is in Activity's Changes domain. Among the active capability glyphs, Back Seat Driver shows an ambient eye that reads the owner projection, and the Crew glyph is the Crew kind mark (F3-567).
 
 ### 5. Transcript attachments
 
 Attachments render inside their associated turn as compact visual objects and participate in the existing message-hover chrome: metadata and actions are hidden at rest on pointer-capable widths and always available at phone widths under the existing rule. There is no permanent `PNG · 2.8 MB` clutter. A project reference that changed since the message shows a compact stale badge on the object rather than a warning paragraph, with the historical revision explained on hover and both live and materialized versions in Details. Generated artifacts use the same card grammar and disclose version and producing workflow in Details.
 
-What a wand module attaches to an ordinary reply is one line each (F3-570): the files row under a reply that changed files (`Changed 3 files +5 −3 · Revert`), which is visible at rest, and the quiet ticks in the reply's meta row (a memory note taken, a rule used, `Sent on schedule` on a message that a schedule sent), which follow that row's existing message-chrome visibility.
+What a wand module attaches to an ordinary reply is one line each (F3-570): the files row under a reply that changed files (`Changed 3 files +5 −3 · Revert`), which is visible at rest, and the quiet ticks in the reply's meta row (a memory note taken; the rule note, `Followed 1 of your rules` for rules whose check the reply passed or `Missed 1 of your rules` when a check failed (DL-116); `Sent on schedule` on a message that a schedule sent), which follow that row's existing message-chrome visibility.
 
 ### 6. Plan card
 
@@ -36024,7 +36024,7 @@ Each run renders one transcript card that changes density in place as the run mo
 
 The wand shows Off, Auto and On check state plus Configure, driven by the owner projection. Silent, duplicate and cleared evaluations create no transcript noise. Emitted advice appears as an attributable advisor note at the step boundary near the relevant working activity or safe boundary: a margin note, never a card (Back_Seat_Driver BSD-030, F3-571). Held findings appear only in Context Details and the BSD detail, possibly as a small held count, and are never shown as confirmed warnings. Unreconfirmed terminal critical advice is explicitly labelled stale or unreconfirmed.
 
-The compact Context menu carries a BSD row showing mode, Persona and liveness, for example `BSD  Auto · Critical Advisor` over `Caught up · checked 18s ago`, across the states Off, Idle, Reviewing, Catching up, Finding held, Advice delivered, Quota paused, Failed and Unavailable. Context Details gains a BSD section with policy, identity, stage, cursor, triggers, findings, context, Usage, failure and watch guidance, reusing the existing detail-card grammar and Raw redaction rules. The Usage page gains a BSD purpose filter and rows for calls, no-calls, held, cleared, emitted and suppressed findings, timeout, quota and failure counts, cost by model, account and stage, and catch-up latency, added through the existing widget system without altering the accepted Usage layout.
+The compact Context menu carries a BSD row showing mode, Persona and liveness, for example `BSD  Auto · Critical Advisor` over `Up to date · checked 18s ago`, across the states Off, Idle, Reviewing, Catching up, Finding held, Advice delivered, Quota paused, Failed and Unavailable. The words shown are the plain ones (DL-110, F3-571): `Up to date` where the canon word was `Caught up`, `Double-checking` for `Finding held`, and `Paused: usage limit reached` for `Quota paused`. Context Details gains a BSD section with policy, identity, stage, cursor, triggers, findings, context, Usage, failure and watch guidance, reusing the existing detail-card grammar and Raw redaction rules. The Usage page gains a BSD purpose filter and rows for calls, no-calls, held, cleared, emitted and suppressed findings, timeout, quota and failure counts, cost by model, account and stage, and catch-up latency, added through the existing widget system without altering the accepted Usage layout.
 
 ### 12. Browser capture GUI
 
@@ -36042,13 +36042,13 @@ The quota wait strip described in section 4 links to Usage detail from its reset
 
 ### 14. Teach, Teacher, memory, ELI5, Debug and Revert
 
-`/teach` or natural language opens an explicit capture card showing the proposed knowledge and its scope. **It never changes the Persona to Teacher.** Teacher remains in the Persona picker as the Puppet-Master-explanation Persona. Ordinary automatic memory produces no constant pop-up; memory detail and history show source and verification under the existing owner behavior. Its only chat traces are a quiet tick in the reply's meta row when a note is taken and one verified tick when a check later proves it; a note going out of date makes no chat noise. These satisfy this rule (F3-574).
+`/teach`, natural language, the wand's `Teach…` and `Save as a rule…` all open the Teach sheet, prefilled with the proposed knowledge and its scope; the explicit capture card this sentence used to name is superseded and not planned (DL-127, F3-579). **It never changes the Persona to Teacher.** Teacher remains in the Persona picker as the Puppet-Master-explanation Persona. Ordinary automatic memory produces no constant pop-up; memory detail and history show source and verification under the existing owner behavior. Its only chat traces are a quiet tick in the reply's meta row when a note is taken and one verified tick when a check later proves it; a note going out of date makes no chat noise. These satisfy this rule (F3-574).
 
 ELI5 is a wand check with a conversation override while Settings owns the application default; it is not a one-shot "simplify this output" action. Selecting Debug mode must open and demonstrate the full Investigation Context and its eight-phase progression rather than merely changing the selected mode, with fixtures for target binding, evidence, repair, verification, cleanup, attention required and failed cleanup recovery. `Revert Last Agent Edit` appears in the wand, Changes, the message overflow and the files row under the reply that changed files when eligible, previews the exact files in one compact confirm sheet before dispatching the canonical whole-turn revert, reports each outcome as one receipt line, and stays distinct from Rewind in the thread and message overflow (ACD-478, F3-574).
 
 ### 15. Thread history and status
 
-Thread status continues to derive from owner projections. Review, multi-agent, scheduled and quota-wait statuses are added only through the shared status vocabulary; Plan Build-button labels are never overloaded into thread status. A title-generation failure leaves `New chat` and is reported in Details and Usage rather than in an intrusive modal. The header title shows the naming, user-named and naming-unavailable states and the naming outcomes of ACD-479 (F3-575).
+Thread status continues to derive from owner projections. Review, multi-agent, scheduled and quota-wait statuses are added only through the shared status vocabulary; Plan Build-button labels are never overloaded into thread status. A title-generation failure leaves `New chat` and is reported in Details and Usage rather than in an intrusive modal. The header title shows the naming, user-named and naming-unavailable states and the naming outcomes of ACD-479 (F3-575). The regenerate action reads `Name it for me` (DL-134).
 
 ### 16. Responsive and theme behavior
 
@@ -36108,7 +36108,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-Amended 2026-09-27: the BSD row's committed-mode shortcut and the Revert Last Agent Edit row's eligibility helper are specified in F3-577. The wand's contents above are otherwise unchanged by the wand modules redesign.
+Amended 2026-09-27: the BSD row's committed-mode shortcut and the Revert Last Agent Edit row's eligibility helper are specified in F3-577, and the Multi-Agent sidecar gains `Crew Auto settings…` beside an unchanged `Manage Defaults…` (F3-578, DL-119). The checkable Crew Auto is the assistant's permission to start a Crew by itself, on by default for a project; in a chat it shows and sets only that chat's override of the project value, and it is the chat's only Crew permission control, so the wand has no separate `Allow Crews in this chat` row (F3-578, DL-120, 2026-09-27). The wand's contents above are otherwise unchanged by the wand modules redesign; Review and BrainStorm keep the entry points stated above.
 
 ### F3-532 - Assistant Composer Tray, Destination Ribbon, And Quota Strip
 
@@ -36358,7 +36358,12 @@ A failed Start keeps the sheet values and shows the typed failure; it never clea
 configuration and never renders a fake card.
 
 `Crew Auto`'s checkmark reflects effective stored state and appears only after configuration
-confirmation and a successful Settings commit; cancel restores the prior state.
+confirmation and a successful Settings commit; cancel restores the prior state. Since 2026-09-27
+(DL-120, F3-578) that sentence applies to turning Crew Auto on for the project from the Crew Auto
+sheet. In a chat the check shows the stored value in force for that chat, the chat's override or
+else the project value, and checking it commits that chat's override (`cmd.chat.crew_auto.set`
+with scope `thread`) before the check changes, without opening the sheet first. No optimistic
+change is allowed for either the project value or a chat's override.
 
 If a Review target changed while the sheet was open, the sheet offers refresh-to-current or the
 explicitly identified old immutable target. There is no silent swap.
@@ -36502,7 +36507,9 @@ invariants.
 - **Direct Hover Navigation (APR-006):** Redundant "Open Activity" buttons are completely removed
   from all activity hover cards. Clicking directly on an item row, task title, participant card, or
   artifact entry immediately opens that specific record in the pinned Activity Detail panel,
-  preserving domain identity and focus.
+  preserving domain identity and focus. Exception (DL-122, F3-580): a click on the Crew, BrainStorm,
+  Review or Chat Room domain chip itself reveals the newest card of that kind in the thread; the rows
+  of those domains' hover cards keep this routing, so Activity Detail stays reachable.
 - **Non-Scrolling Bounded Previews (APR-007):** All activity hover preview panels are strictly
   bounded surfaces with no internal scrollbars (`overflow: hidden`). Previews display a curated,
   representative subset of items (up to 4–6 items). An overflow summary counter (e.g., "+7 more")
@@ -36523,7 +36530,8 @@ invariants.
   presents a concise, high-signal information hierarchy: active context window usage, current
   token counts, pinned sources, and high-level Back Seat Driver (BSD) status. Detailed inspection
   (e.g., full prompt breakdown, BSD sensitivity, catch-up configuration, and stage bindings) is
-  placed behind intentional disclosure toggles.
+  placed behind intentional disclosure toggles. Back Seat Driver's section is three plain facts and
+  three native disclosures with no metric-card grid (DL-122, F3-580).
 - **Strict Elimination of Left-Edge Accent Stripes (APR-034):** Decorative left-edge vertical
   accent bars, colored side stripes, inset accent borders, and pseudo-element stripes are strictly
   prohibited across all Assistant and Settings surfaces (including gray or muted substitutes).
@@ -36598,6 +36606,10 @@ invariants.
   7. *Chat Room Detail:* Multi-agent participant list, room topic, round counter, and conversation timeline.
   8. *Changes Detail:* Aggregated file modifications, colored additions/deletions, path links, and diff inspection triggers.
   9. *Artifacts Detail:* Generated documents, diagrams, code outputs, export options, and lineage metadata.
+
+  Scoped exception (2026-09-27, DL-122): for Crew, BrainStorm, Review and Chat Room (items 4 to 7) the
+  Activity Detail body is the short team list of F3-580, and the kind content listed above lives in
+  the run view (ACD-480). The other five families keep the native presentation above.
 - **Read-Only Demonstration Semantics (APR-067):** Read-only inspection fixtures and demo cards
   render findings, diagnostics, and code views without interactive mutation controls or misleading
   active buttons, clearly labeling the static or demo nature of the content.
@@ -38536,7 +38548,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-469
 
 ## Wand Modules Redesign Addendum (2026-09-27)
 
-This addendum is the GUI contract for the redesigned Assistant wand popups and their in-chat presence, under Jared's instruction of 2026-09-27 and his amendments J-1 and J-2 (DL-109). Its source is the frozen design specification `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md` (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`); the 5.6 Pro concept is source lineage only, and its class names, keys and harness hooks are not canon. Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-476 through ACD-480, `Plans/Collaborative_Workflows.md`, `Plans/Back_Seat_Driver.md`, `Plans/Scheduling_and_Quota_Resume.md` and `Plans/assistant-memory-subsystem.md`. The transcript family map and the accent budget stay with ACD-469 and F3-562 (DR-043), and DR-044 names this addendum as the single owner of the wand modules' presentation grammar. Anything the units below leave unstated waits for Jared's answer and is not implied.
+This addendum is the GUI contract for the redesigned Assistant wand popups and their in-chat presence, under Jared's instruction of 2026-09-27 and his amendments J-1 and J-2 (DL-109). Its source is the frozen design specification `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md` (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`); the 5.6 Pro concept is source lineage only, and its class names, keys and harness hooks are not canon. Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-476 through ACD-480, `Plans/Collaborative_Workflows.md`, `Plans/Back_Seat_Driver.md`, `Plans/Scheduling_and_Quota_Resume.md` and `Plans/assistant-memory-subsystem.md`. The transcript family map and the accent budget stay with ACD-469 and F3-562 (DR-043), and DR-044 names this addendum as the single owner of the wand modules' presentation grammar. Anything the units below leave unstated waits for Jared's answer and is not implied. F3-578 to F3-580 and the later amendments to F3-566, F3-567, F3-569, F3-571 and F3-575 compile the answers Jared gave on the decision cards (DL-110, DL-111, DL-114, DL-119, DL-122, DL-123, DL-127, DL-129 and DL-134), and F3-566 also states the per-family motion principle of DL-113 as the lead's ruling applied it. The lead's rulings on DL-120 and DL-116 are compiled too: F3-578, F3-531's amendment line, section 3 and the v4 MODAL paragraph make a chat's Crew Auto check the only per-chat Crew permission control, and F3-570 and F3-579 carry the reply's rule note (Followed, or Missed when a check failed). ELI5 (DL-126), the canon theme typography and the minimum chat width are still open.
 
 ### F3-566 - Wand Modules Redesign GUI Contract And Sheet Grammar
 
@@ -38566,7 +38578,16 @@ canonical_text: >-
   sentence, always true for the current settings, the estimate line (never $0.00), Cancel and one
   primary naming a verb, the canonical name and a count; a disabled primary prints its reason, and
   a refused Start replaces the read-back with the refusal and a route to the control that fixes it.
-  A sheet whose changes apply at once shows only Done. Sizes are fixed per sheet: wide 1120 x 780
+  A sheet whose changes apply at once shows only Done. Every sheet is a solid surface over a flat scrim, with no backdrop blur in any theme: Glass keeps its near-opaque glass-coloured panel, and
+  F3-431's blur budget stays closed (DL-114). Motion (DL-113, DL-115): each theme family moves with
+  its own motion personality, aligned with the transcript's motion voices of ACD-475
+  (Basic: ink; Friendly: hop; Glass: depth; Retro: type), so a sheet's opening and closing and an
+  in-chat card's changes take their family's personality. Where a card takes part in a transcript
+  beat (its family entrance, the fold), ACD-475 governs and the voice changes only path, easing and
+  texture, never timing or order. This contract states the principle only: the per-family duration
+  and easing values are the design foundation's tokens, recorded at the concept's closing step, and
+  are not canon values. Reduce Motion lands every change at its end state instantly in every family.
+  Sizes are fixed per sheet: wide 1120 x 780
   (the collaboration kinds, the Scheduled and Automations manager, Memory), standard 900 x 720 (Back
   Seat Driver, Schedule Message, Build At, Teach) and compact 720 wide at a fixed height per sheet
   (Revert and the small raw-data and evidence dialogs), always clamped inside the window (at most
@@ -38597,14 +38618,17 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Defines the grammar, sizes, typography and spacing of every wand module sheet."
 split_recommended: false
-depends_on: [DL-109, F3-531, F3-534]
-unblocks: [F3-567, F3-568, F3-569, F3-570, F3-573, F3-574, F3-576, DR-044]
+depends_on: [DL-109, DL-113, DL-114, DL-115, ACD-475, F3-431, F3-531, F3-534]
+unblocks: [F3-567, F3-568, F3-569, F3-570, F3-573, F3-574, F3-576, F3-579, DR-044]
 acceptance_criteria:
   - "Every wand configuration popup renders the head, hero, plate, questions and foot anatomy with one primary."
   - "No sheet scrolls in its common case at 1440 x 900 or 1280 x 800, and no sheet changes size while open."
   - "No kind or participant is drawn with initials or letters."
   - "Every wand-module surface uses the theme's own font and no separate display face."
   - "Every surface meets the J-2 minimums in all eight themes."
+  - "No sheet or scrim uses a backdrop blur in any theme."
+  - "Each theme family's sheets and in-chat cards move with that family's motion personality, and a card's transcript beats keep ACD-475's shared timing and order."
+  - "With Reduce Motion on, every sheet and card change lands at its end state instantly in every family."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -38623,8 +38647,11 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) owner amendments J-1 and J-2, sections 2.2, 3.2, 3.5, 6.1-6.6"
   - "IMPACT-REGISTER B-FGS-01, B-FGS-05 (NOW part)"
   - "Plans/Decision_Log.md#DL-109"
+  - "Plans/Decision_Log.md#DL-114 (the solid surface, compiled 2026-09-27; IMPACT-REGISTER B-FGS-17, card n05, E-24)"
+  - "Plans/Decision_Log.md#DL-113 (the per-family motion principle, the lead's ruling of 2026-09-27 on card n04, E-22; the token values stay out of canon, IMPACT-REGISTER B-FGS-19 OUT)"
 preserved_exact_tokens:
   - "configuration sheet"
+  - "flat scrim"
   - "plate"
   - "kind mark"
   - "cast mark"
@@ -38634,12 +38661,17 @@ preserved_exact_tokens:
   - "J-2"
   - "MODAL, PART, SMSG, QMAX, PPROG, PFAIL, PSCHED and CDRY"
   - "BrainStorm has no Quick strategy"
+  - "motion personality"
+  - "Basic: ink; Friendly: hop; Glass: depth; Retro: type"
 negative_constraints:
   - "Do not change a behaviour clause of v4 through a presentation change."
   - "Do not draw initials, letters or photo avatars for participants."
   - "Do not add a display face or italic voice face."
   - "Do not compress padding or gaps below the J-2 minimums."
   - "Do not change the canon theme font tokens through this unit."
+  - "Do not raise F3-431's blur budget for a sheet or its scrim."
+  - "Do not write per-family motion durations or easing values into canon; they are the design foundation's tokens."
+  - "Do not change a transcript beat's timing or order per family (ACD-475)."
 stale_retired_dispositions:
   - "2026-09-03 redesign section 10 'one shared modal shell' and 'pops out to a full panel' are superseded for presentation by this unit, F3-569 and ACD-480; the participant-row and per-kind behaviour sentences stay."
   - "Additive Correction v4 'Nothing here authorises a broad restyle' is superseded for the wand modules' surfaces by DL-109 and this unit."
@@ -38668,13 +38700,15 @@ canonical_text: >-
   sentence and keeps its action; the F3-534 priority order is unchanged. Among the active capability
   glyphs inside the text field, Back Seat Driver shows an ambient eye that reads the owner
   projection and is absent when Back Seat Driver is off, and the Crew glyph is the Crew kind mark.
-  This unit does not change the stream footer pill.
+  The dock and the per-reply files row replace the stream footer pill's helpers and files chips
+  (ACD-482, DL-129); no summary of helpers or file changes stacks above the composer beside the dock.
 gui_related: true
 gui_classification_reason: "Places the dock and the new capability glyphs in the composer stack."
 split_recommended: false
-depends_on: [F3-532, ACD-476, F3-566]
+depends_on: [F3-532, ACD-476, ACD-482, F3-566]
 unblocks: []
 acceptance_criteria:
+  - "No helpers or file-changes chip renders above the composer."
   - "The dock sits between the quota-wait strip and the composer and never overlaps the transcript, the Activity bar pill or the decision host."
   - "With the dock showing, the last transcript item clears the Activity bar pill at settled bottom scroll."
   - "The Back Seat Driver eye reflects the owner projection and is absent when Back Seat Driver is off."
@@ -38694,9 +38728,10 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 3.2, 4.3 C14-C15, 7.8, 8.6, 10.1 item f"
-  - "IMPACT-REGISTER B-FGS-03 (NOW part), B-FGS-12 (APR-004 part)"
+  - "IMPACT-REGISTER B-FGS-03 (NOW part; the footer pill part compiled 2026-09-27 from DL-129), B-FGS-12 (APR-004 part)"
 preserved_exact_tokens:
   - "dock"
+  - "files chips"
   - "quota-wait strip"
   - "decision host"
   - "APR-004"
@@ -38733,8 +38768,7 @@ canonical_text: >-
   press consumed by a menu or a dialog never falls through to stopping an agent. Escape on a sheet
   runs the sheet's cancel path (UIW-025). In one place Escape is not the close button: a Crew Auto
   sheet opened from a Crew sheet goes back one step to the Crew sheet with its draft on Escape or
-  Cancel, while the close button and the scrim close both; the registry help says Escape goes back
-  one step. A dropdown opened from a sheet paints above it and returns focus to its trigger.
+  Cancel, while the close button and the scrim close both; the registry help says Escape goes back one step. A dropdown opened from a sheet paints above it and returns focus to its trigger.
 gui_related: true
 gui_classification_reason: "Defines sheet keyboard behaviour and the scoped shortcut registry rules."
 split_recommended: false
@@ -38786,8 +38820,7 @@ canonical_text: >-
   A collaboration run card is a system surface at the transcript's full content width, never inside
   an assistant bubble, and no transcript variant adds a side strip to it. One card per run changes
   density in place (Collaborative_Workflows CWR-019 owns the densities and their state mapping);
-  this unit fixes its geometry. The card is its own width container with three tiers: S below
-  360 px, M from 360 to 519 px, L from 520 px. Height budgets: live at most 340 px and needs-you,
+  this unit fixes its geometry. The card is its own width container with three tiers: S below 360 px, M from 360 to 519 px, L from 520 px. Height budgets: live at most 340 px and needs-you,
   failed or finished at most 360 px at M and L; 360 px and 400 px at S; a receipt is one 44 px line.
   At every tier a card shows at most three lane rows (the rest summarised in one row that opens the
   full list), and every region has a fixed box and a line clamp, so a periodic tick changes only
@@ -38798,7 +38831,12 @@ canonical_text: >-
   face until the user's next message and then becomes a receipt. The one-line receipt is one
   grammar for every module (collaboration runs, Teach, Revert, a sent scheduled message, a
   dismissed advisor note): mark, headline, time and cost where they apply, and an open action; the
-  run title shows only at L. Open Panel opens the run view, the editor document of ACD-480, which
+  run title shows only at L. When a card is collapsed, or narrower than 520 px (the S and M tiers),
+  Open Panel, Message and More may sit behind Expand, and below 520 px the helper count may move into
+  the card's hover card (DL-123). On a result face or a receipt, Message moves into More as a
+  disabled item with its reason printed ("This {Kind} has finished, so it can't take messages. Ask
+  the assistant instead."), never only in a tooltip. The Coordinator's cast mark uses the text
+  colour or its seat colour, never the accent (DL-111). Open Panel opens the run view, the editor document of ACD-480, which
   holds the full record. While a run's view is the active editor tab, the card's follow-on controls
   give way to one line saying where to decide, at the same height, so a control that changes the run
   is in one place at a time; decisions from an approval owner stay in the card. The collaboration
@@ -38806,9 +38844,11 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Fixes run card geometry, receipts and the run view hand-off."
 split_recommended: false
-depends_on: [F3-566, ACD-480]
+depends_on: [F3-566, ACD-480, DL-111, DL-123]
 unblocks: []
 acceptance_criteria:
+  - "A collapsed or sub-520 px card reaches Open Panel, Message and More through Expand; a finished run's Message prints why it is disabled."
+  - "The Coordinator's mark never paints the accent."
   - "Card heights stay within the tier budgets under the periodic tick in all eight themes."
   - "No card shows more than three lane rows without its summary row."
   - "Every module's finished trace uses the one 44 px receipt grammar."
@@ -38829,9 +38869,12 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 7.1-7.2, 7.5, 7.8-7.10, 7.12-7.13"
-  - "IMPACT-REGISTER B-FGS-05 (NOW part), B-FGS-10 (NOW part), B-FGS-12 (APR-007 part)"
+  - "IMPACT-REGISTER B-FGS-05 (NOW part; the density facts compiled 2026-09-27 from DL-123, card p05, E-05), B-FGS-10 (NOW part), B-FGS-12 (APR-007 part)"
+  - "Plans/Decision_Log.md#DL-111 (card n02, E-17: the Coordinator's colour)"
 preserved_exact_tokens:
   - "S below 360 px"
+  - "behind Expand"
+  - "never the accent"
   - "44 px"
   - "run view"
   - "receipt"
@@ -38859,18 +38902,27 @@ canonical_text: >-
   under a reply whose turn changed files ("Changed 3 files +5 −3 · Revert") is visible at rest and
   offers Revert per ACD-478. The quiet ticks live in the reply's meta row and follow that row's
   existing message-chrome visibility: a memory note taken (relaxing to its glyph alone after a few
-  seconds) and verified once a check proves it, a tick when taught rules were included in the
-  reply's context, and Sent on schedule on the user message a schedule sent. Each tick's detail is
-  in the app hover card, never a native tooltip. A reply that changed files, took a note and used a
-  rule grows by at most 40 px.
+  seconds) and verified once a check proves it; the rule note for taught rules; and Sent on schedule
+  on the user message a schedule sent. The rule note follows DL-116 as the design lead's ruling of
+  2026-09-27 applied it and assistant-memory-subsystem AMS-053 defines following. It reads
+  "Followed 1 of your rules" for the included rules whose check the finished reply passed (the
+  number is how many); inclusion alone never earns it, and a rule whose check could not run earns
+  no tick. When any included rule failed its check the reply shows "Missed 1 of your rules" (the
+  number is how many failed), never hidden behind a Followed count, with a way to see which rule
+  was missed and a way to ask for a fix, which starts only when the user asks. A reply with no
+  passed or failed check shows no rule note. Each tick's and note's detail is in the app hover
+  card, never a native tooltip. A reply that changed files, took a note and carries a rule note
+  grows by at most 40 px.
 gui_related: true
 gui_classification_reason: "Defines the one-line traces the wand modules leave on ordinary replies."
 split_recommended: false
-depends_on: [F3-566, ACD-478]
+depends_on: [F3-566, ACD-478, DL-116, AMS-053]
 unblocks: []
 acceptance_criteria:
   - "The files row is visible without hover; ticks follow the meta row's visibility."
   - "The traces on one reply add at most 40 px."
+  - "The rule note counts only included rules whose check the finished reply passed; a rule whose check could not run earns no tick."
+  - "A failed check shows \"Missed 1 of your rules\" with a way to see which rule and a way to ask for a fix, and is never hidden behind a Followed count."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -38889,18 +38941,25 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 4.3 C22 and C24, 7.10, 8.7, 8.10"
   - "IMPACT-REGISTER B-FGS-04"
+  - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
+  - "Plans/assistant-memory-subsystem.md#AMS-053"
 preserved_exact_tokens:
   - "files row"
   - "Sent on schedule"
   - "40 px"
+  - "Followed 1 of your rules"
+  - "Missed 1 of your rules"
+  - "AMS-053"
 negative_constraints:
   - "Do not render a reply trace as a card."
   - "Do not hide the files row behind hover."
+  - "Do not show a rule as followed because it was included, or because its check could not run."
+  - "Do not show Used in place of the rule note."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-478, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Scheduling_and_Quota_Resume.md
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-478, ContractName:Plans/assistant-memory-subsystem.md#AMS-053, ContractName:Plans/Decision_Log.md#DL-116, ContractName:Plans/Scheduling_and_Quota_Resume.md
 
 ### F3-571 - Back Seat Driver Advisor Note Placement
 
@@ -38919,15 +38978,19 @@ canonical_text: >-
   advice that was not reconfirmed keeps its stale and unreconfirmed labelling with its generation
   and a dashed full perimeter, never a side stripe; a dismissed note becomes one line. Back Seat
   Driver's catch-up, failure and safety-pause lines are single in-flow lines at the same boundary.
-  Back_Seat_Driver BSD-030 owns the note's content and attribution; this unit places it. The
-  Context status words are unchanged here.
+  Back_Seat_Driver BSD-030 owns the note's content and attribution; this unit places it. Back Seat
+  Driver shows the plain status words (DL-110): Up to date where canon said Caught up,
+  Double-checking for Finding held, and Paused: usage limit reached for Quota paused, wherever its
+  status is shown; the official word is not printed beside the plain one. Back_Seat_Driver BSD-035 owns
+  the word table.
 gui_related: true
 gui_classification_reason: "Places Back Seat Driver advice in the transcript."
 split_recommended: false
-depends_on: [F3-566]
+depends_on: [F3-566, DL-110]
 unblocks: []
 acceptance_criteria:
   - "No Back Seat Driver advice renders as a card, with a roster or with a track."
+  - "The Context row shows Up to date, Double-checking and Paused: usage limit reached, not the official words."
   - "Stale critical advice keeps its stale and unreconfirmed labelling."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -38944,9 +39007,12 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 4.3 C21, 7.11, 8.6"
-  - "IMPACT-REGISTER B-FGS-06 (NOW part)"
+  - "IMPACT-REGISTER B-FGS-06 (NOW part; the status list compiled 2026-09-27 from DL-110, card n01, E-10)"
 preserved_exact_tokens:
   - "advisor note"
+  - "Up to date"
+  - "Double-checking"
+  - "Paused: usage limit reached"
   - "BSD-030"
   - "BSD-031"
   - "unreconfirmed"
@@ -39155,15 +39221,16 @@ canonical_text: >-
   offers the next step: the regenerate action for a locked title, and the title policy for an
   unavailable model. In the thread menu the regenerate action sits directly under Rename and is
   disabled with its reason when the policy is off or the model is unavailable. A title-generation
-  failure still leaves New chat and is reported in Details and Usage (section 15). This unit does
-  not change the regenerate action's label.
+  failure still leaves New chat and is reported in Details and Usage (section 15). The regenerate
+  action reads Name it for me wherever it is shown, in place of Regenerate Title (DL-134).
 gui_related: true
 gui_classification_reason: "Defines how the chat header shows naming state."
 split_recommended: false
-depends_on: [ACD-479]
+depends_on: [ACD-479, DL-134]
 unblocks: []
 acceptance_criteria:
   - "The header shows the naming, locked and unavailable states with a hover reason and no pill or modal."
+  - "The regenerate action is labelled Name it for me."
   - "The regenerate action sits directly under Rename and is disabled with its reason when naming cannot run."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -39180,9 +39247,10 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.14 (G-33, G-34)"
-  - "IMPACT-REGISTER B-FGS-09 (NOW part)"
+  - "IMPACT-REGISTER B-FGS-09 (NOW part; the label compiled 2026-09-27 from DL-134, card p19)"
 preserved_exact_tokens:
   - "New chat"
+  - "Name it for me"
   - "directly under Rename"
   - "ACD-479"
 negative_constraints:
@@ -39301,3 +39369,230 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-531, ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/assistant-chat-design.md#ACD-478
+
+### F3-578 - Wand Multi-Agent Sidecar Gains Crew Auto Settings
+
+```yaml
+plan_unit_id: F3-578
+unit_type: gui_requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The wand's Multi-Agent sidecar lists Crew…, Chat Room…, a divider, the checkable Crew Auto, Crew
+  Auto settings… and Manage Defaults… (DL-119). Crew Auto settings… dispatches the existing
+  cmd.chat.crew_auto.open_config and opens the Crew Auto configuration sheet whether or not Crew Auto
+  is checked; opening it changes nothing (UIW-025), and only the sheet's primary commits the
+  project's Crew Auto rules and team, through cmd.chat.crew_auto.set with scope project (CWR-038).
+  Manage Defaults… keeps its name and its route. The rest of F3-531 stands: Review keeps its entry
+  point in the primary mode menu and BrainStorm stays under Deep Plan, and neither becomes a wand
+  row. The checkable Crew Auto is the assistant's permission to start a Crew by itself when it
+  needs one, on by default for a project (DL-120, 2026-09-27), and it is the chat's only Crew
+  permission control. The check shows the value in force for this chat: the chat's own override
+  when it has one, otherwise the project value. Checking or unchecking it dispatches
+  cmd.chat.crew_auto.set with scope thread, which sets only this chat's override; the override is
+  committed before the check changes, it never changes the project value or another chat, and the
+  check does not open the sheet first. The check never starts a Crew itself: a Crew starts only
+  when the assistant asks for one, Crew Auto is on for the chat and the Collaborative Workflows
+  evaluator (CWR-021) admits the request. Build With Crew on a Plan stays the user's own choice
+  and does not depend on the check. The wand has no separate Allow Crews in this chat row: the
+  redesign concept's per-chat switch is retired into the Crew Auto check. Turning the project
+  default on is a change to the Crew Auto settings key's default, which Settings owns.
+gui_related: true
+gui_classification_reason: "Adds one row to the wand's Multi-Agent sidecar and states what the chat's Crew Auto check does."
+split_recommended: false
+depends_on: [F3-531, DL-119, DL-120, UIW-025]
+unblocks: []
+acceptance_criteria:
+  - "The Multi-Agent sidecar shows Crew Auto settings… beside Manage Defaults…, and both keep their own routes."
+  - "Crew Auto settings… opens the configuration sheet without checking or unchecking Crew Auto."
+  - "The wand has no Review or BrainStorm row."
+  - "The Crew Auto check shows the chat's own override when it has one, otherwise the project value."
+  - "Checking or unchecking Crew Auto in a chat sends scope thread, changes the check only after the override is committed, and never changes the project value or opens the sheet."
+  - "The wand has no Allow Crews in this chat row."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: wand_row_state_drift
+reasoning_tier: standard
+context_scope: assistant_redesign_menus
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Collaborative_Workflows.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: gui_surface_spec
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.2 (D-3)"
+  - "IMPACT-REGISTER B-FGS-02 and B-ACD-04 (E-01 part); card p01, E-01"
+  - "Plans/Decision_Log.md#DL-119"
+  - "Plans/Decision_Log.md#DL-120 (card p02, E-02; the design lead's ruling of 2026-09-27)"
+  - "Plans/Collaborative_Workflows.md#CWR-004, CWR-021 and CWR-038 (the Crew Auto permission, its evaluator and CrewAutoSetRequest scope)"
+preserved_exact_tokens:
+  - "Crew Auto settings…"
+  - "Manage Defaults…"
+  - "cmd.chat.crew_auto.open_config"
+  - "Allow Crews in this chat"
+  - "scope thread"
+  - "CWR-021"
+negative_constraints:
+  - "Do not rename the Manage Defaults… row."
+  - "Do not add Review or BrainStorm rows to the wand."
+  - "Do not toggle Crew Auto from Crew Auto settings… without a committed configuration."
+  - "Do not add a separate per-chat Allow Crews in this chat row."
+  - "Do not let a chat's Crew Auto check change the project value or start a Crew by itself."
+  - "Do not make Build With Crew depend on the Crew Auto check."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-119, ContractName:Plans/Decision_Log.md#DL-120, ContractName:Plans/FinalGUISpec.md#F3-531, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/UI_Wiring_Rules.md#UIW-025
+
+### F3-579 - Teach Sheet And Your Rules Document
+
+```yaml
+plan_unit_id: F3-579
+unit_type: gui_requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Teach is a standard sheet of F3-566 and the only capture form: the wand's Teach…, /teach,
+  natural-language intent and Save as a rule… all open it, prefilled with the rule text and its
+  source, and there is no inline capture card in the chat (DL-127, ACD-477). Head: the Teach mark,
+  Teach Puppet Master a rule and one lead sentence; in correct mode, Edit your rule. The hero is the
+  rule field, with example rules that fill it. Under it one safety line says either that no password
+  or key was spotted or, in the warm tone, that the text looks like a password or key and must be
+  removed to save. The plate is three nested rings, This thread inside This project inside Every project, each a button with a helper; Every project stays disabled with its reason until the tick
+  "It's safe to use in my other projects" is set, and in correct mode the wider rings are disabled
+  because an edit cannot widen a rule. A Locked tick says only the user can change the rule
+  (ACD-481). Beside them, the rule card shows the rule exactly as it will be saved, with its scope,
+  lock and source message; when a similar rule exists, the old and new wording are shown side by
+  side with a choice between Replace the old rule and Keep both, and saving waits for it. The foot
+  holds Cancel and one primary, Save rule, Save and replace or Save as version 2. In the chat each
+  change is one receipt line of F3-569's grammar: Rule saved, Rule updated to a new version, Rule
+  turned off, with several saves in a row coalesced into one line. Your rules is an editor document
+  (the taught memory document): one row per rule with its words, its scope, lock and version, a
+  state word (In use, In use · locked, Replaced by v2, Turned off) and the actions Edit, Lock or
+  Unlock, Turn off and From your message; Turn off asks inline (ACD-481), never in a modal. Teacher
+  stays a Persona, and the sheet says Teach isn't the Teacher Persona. The note a reply carries for
+  its taught rules is F3-570's rule note under DL-116 as AMS-053 defines following: it counts only
+  rules whose check the finished reply passed, a failed check reads "Missed 1 of your rules" with a
+  way to see which rule and a way to ask for a fix, and a check that could not run earns no tick.
+gui_related: true
+gui_classification_reason: "Defines the Teach sheet, its chat receipts and the Your rules document."
+split_recommended: false
+depends_on: [F3-566, ACD-477, ACD-481, DL-127, DL-116, F3-570]
+unblocks: []
+acceptance_criteria:
+  - "Every Teach entry point opens the Teach sheet; no inline capture card renders in the chat."
+  - "A reply's rule note never counts a rule as followed unless its check passed."
+  - "Every project cannot be chosen without the safe-for-other-projects tick, and correct mode cannot widen the scope."
+  - "A similar rule blocks saving until Replace the old rule or Keep both is chosen."
+  - "Turn off in Your rules asks inline and never opens a modal."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: taught_memory_scope_or_secret_leak
+reasoning_tier: standard
+context_scope: teach_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: gui_surface_spec
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.11 (G-26, G-33, G-38)"
+  - "IMPACT-REGISTER B-FGS-08 (Teach part); cards p09 (E-12) and p15 (E-32)"
+  - "Plans/Decision_Log.md#DL-127"
+  - "Plans/Decision_Log.md#DL-130"
+  - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
+preserved_exact_tokens:
+  - "Teach Puppet Master a rule"
+  - "This thread"
+  - "Every project"
+  - "Keep both"
+  - "Your rules"
+  - "no inline capture card"
+  - "Missed 1 of your rules"
+negative_constraints:
+  - "Do not render an inline capture card."
+  - "Do not change the Persona to Teacher when Teach opens."
+  - "Do not save while a similar rule's choice is unmade or the text looks like a secret."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-477, ContractName:Plans/assistant-chat-design.md#ACD-481, ContractName:Plans/Decision_Log.md#DL-127, ContractName:Plans/Decision_Log.md#DL-116, ContractName:Plans/assistant-memory-subsystem.md#AMS-053
+
+### F3-580 - Compact Activity Detail For Collaboration Runs And Back Seat Driver Context
+
+```yaml
+plan_unit_id: F3-580
+unit_type: gui_requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  A scoped exception to Jared's 2026-09-08 rollback (USER-REFERENCE-LAYOUT-ROLLBACK-20260908; APR-060,
+  APR-061 and assistant-chat-design v3 item 20), allowed on 2026-09-27 for five surfaces only
+  (DL-122), because each run's full detail lives in its run view (ACD-480). For Crew, BrainStorm,
+  Review and Chat Room, the Activity Detail body is a short team list: the run title, the run's one
+  true sentence, where the run is now, one 36 px row per helper (its cast mark, name and one state
+  word, with the stand-in sentence under the row only when the requested and effective route
+  differ), then Open Panel and Message. It never repeats the run card or the kind's board. A click on
+  one of these four domains' chip in the Activity bar reveals the newest card of that kind in the
+  thread and marks it once; the rows of those domains' hover cards keep APR-006's routing into
+  Activity Detail, pinned per APR-001, so Activity Detail stays reachable. Back Seat Driver's section
+  of Context Details has a head (Back Seat Driver and Configure), three plain facts (the mode, the
+  advisor model and Persona, and how watchful it is) and three native disclosures (Advisor notes,
+  Session, Usage), with evidence as sentences and raw data behind Show raw data, and no metric-card
+  grid and no pills. Every other Activity Detail family (Goal, To-Dos, Subagents, Changes, Artifacts)
+  and every other Context Details section keeps the restored native card, panel and grid
+  presentation.
+gui_related: true
+gui_classification_reason: "Defines the compact Activity Detail and Back Seat Driver Context Details surfaces."
+split_recommended: false
+depends_on: [ACD-480, F3-569, DL-122]
+unblocks: []
+acceptance_criteria:
+  - "The four collaboration kinds' Activity Detail shows the short team list and never the kind's board."
+  - "A collaboration domain chip click reveals the newest card; its hover rows still open Activity Detail."
+  - "Back Seat Driver's Context Details section has no metric-card grid and no pills."
+  - "Goal, To-Dos, Subagents, Changes and Artifacts keep the native card and grid presentation."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: rollback_exception_scope_creep
+reasoning_tier: standard
+context_scope: activity_detail
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Collaborative_Workflows.md
+  - Plans/Back_Seat_Driver.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: gui_surface_spec
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 7.13 (G-24), 8.6 (G-26)"
+  - "IMPACT-REGISTER B-FGS-13 (APR-060), B-FGS-12 (chip click), B-ACD-05 (item 20); card p04, E-04"
+  - "Plans/Decision_Log.md#DL-122"
+preserved_exact_tokens:
+  - "USER-REFERENCE-LAYOUT-ROLLBACK-20260908"
+  - "APR-060"
+  - "APR-061"
+  - "short team list"
+  - "no metric-card grid"
+negative_constraints:
+  - "Do not extend the exception beyond the four collaboration kinds and Back Seat Driver's Context Details."
+  - "Do not remove the hover-row route into Activity Detail."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-122, ContractName:Plans/assistant-chat-design.md#ACD-480, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Back_Seat_Driver.md

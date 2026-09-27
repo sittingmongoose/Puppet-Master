@@ -1,11 +1,12 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-006-wand-command-census",
-  "updated_at_utc": "2026-09-27T19:30:00+00:00",
-  "last_event_id": "evt-003",
+  "updated_at_utc": "2026-09-27T22:45:00+00:00",
+  "last_event_id": "evt-008",
   "canonical_plan_targets": [
     "Plans/Commands_System.md",
-    "Plans/UI_Command_Catalog.md"
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md"
   ],
   "compiled_owner_docs": [
     "Plans/Commands_System.md",
@@ -39,8 +40,8 @@
   },
   "current_phase": "prose_compile_open",
   "cursor": {
-    "last_event_id": "evt-003",
-    "next_action": "Prose compiled and witnessed. Next: blind form-driven review (cap two cycles); the integrator regenerates shards and the plan index; then the companion task (production wiring, exclusions, schemas, fixtures) and the WAIT wave after the owner answers cards p01, p07, p08, p09, p11, p12, p15 and p19."
+    "last_event_id": "evt-008",
+    "next_action": "NOW and WAIT prose compiled and witnessed; wiring companions written (evt-007); WM-063 prose aligned with the exclusions JSON (evt-008). Next: blind form-driven review (cap two cycles); the integrator regenerates shards and the plan index. Open: q-008 (DL-126 ask), q-009 (card p11), q-010 (card p12), q-011 (DL-120 follow-up), q-012 (DL-112 follow-up), q-013 (no card), q-014 (request and result schemas, owner-document companions)."
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/authorization.md"

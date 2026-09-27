@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L23957-L24176
+Source lines: L23962-L24183
 
-Source SHA256: `9c07fb610dd8cf08beb9335766a862a77e258c5642423573000eeb4edc37f270`
+Source SHA256: `237cebfbbbf9d667e88e2df927335d28e9273018bc7b1e209c31b12359719c2e`
 
 ---
 
@@ -63,7 +63,8 @@ negative_constraints:
   - "Footer content contracts must not hardcode demo thread names."
 compatibility_only_notes:
   - "Slint portability: chips are opaque precomputed surfaces; diff totals use precomputed per-theme colors; no arbitrary-content backdrop blur and no SVG filters."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Superseded 2026-09-27 by ACD-482 (DL-129): the subagent chip, the files chip and their separator no longer render above the composer; live runs are dock lines (ACD-476), each reply that changed files has its own files row (ACD-478), and the thread's total file count is in Activity's Changes domain. The problems row and its route to the Problems bottom tab are not part of that decision and are unchanged."
 owner_boundary_notes:
   - "Plans/FinalGUISpec.md owns the footer pill geometry (F3-422); this unit records footer content and routing semantics."
 owner_hints:
@@ -113,7 +114,8 @@ negative_constraints:
   - "The fan-out must not dispatch rewind actions."
 compatibility_only_notes:
   - "Slint portability: the fan-out is a native popup surface; stagger motion is optional and disabled under reduced motion; no arbitrary-content backdrop blur and no SVG filters."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Superseded 2026-09-27 by ACD-482 (DL-129): with the footer chips gone, their fan-out is retired; a dock line reveals its run card (ACD-476), a reply's files row states that turn's file changes (ACD-478), and each file's diff stays reachable from Activity's Changes domain."
 owner_boundary_notes: []
 owner_hints:
   - Plans/assistant-chat-design.md

@@ -1,0 +1,1809 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json",
+  "title": "Scheduling and Quota Resume command contracts",
+  "$comment": "Owner contract schema named by Plans/Commands_System.md (Puppet Master Assistant Redesign Central Registration Addendum - 2026-09-03: \"Naming them here does not create them\") for Plans/Scheduling_and_Quota_Resume.md. Written 2026-09-27 as the companion of ledger pldg-20260927-003-wand-scheduling (register line B-SQR-09; SQR-013, SQR-015, SQR-017): the request/result pairs of the six commands the wand-module scheduling surfaces dispatch, cmd.chat.schedule_message, cmd.chat.schedule_message.update, cmd.chat.schedule_message.cancel, cmd.chat.plan.schedule_build, cmd.execution_window.update and cmd.execution_window.cancel. ExecutionWindowCreateRequest/Result (cmd.execution_window.create) and QuotaResumeConsentRequest/Result (cmd.runtime.quota_resume.set) are intentionally absent and remain future owner-authored additions to this file, so those rows keep handler_unavailable truthfully. The project-wide automation pause (register N-6, card p12, E-19) is unanswered and has no definition here. The stored records pm.chat.scheduled_message_snapshot.v1 and pm.execution.schedule.v1 are not redefined: the latter lives in Plans/assistant_plan_cancel_custody.schema.json, which does not yet carry grace_seconds (recorded as open question q-002 of the ledger). A definition here is a contract shape, not a handler, a catalogue registration or an admission: every command stays handler_unavailable. Requests and results are not records and add no storage key, EventRecord, writer or physical family.",
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "nullable_non_secret_ref": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?(?:Z|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "positive_integer": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "non_negative_integer": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "iana_timezone": {
+      "description": "An IANA zone name, never a fixed offset (section 3, Execution windows). UTC is a valid choice but is never the sheet's default (SQR-017); the default is a surface rule, not a shape.",
+      "type": "string",
+      "pattern": "^(?:UTC|[A-Z][A-Za-z_]+(?:/[A-Za-z0-9_+-]+)+)$"
+    },
+    "local_time": {
+      "type": "string",
+      "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][0-9]$"
+    },
+    "local_date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])$"
+    },
+    "missed_policy": {
+      "description": "Stored missed-time policy (section 3). Surfaces label these values per SQR-017 and never rename them.",
+      "enum": [
+        "hold",
+        "next_available",
+        "cancel_after_grace"
+      ]
+    },
+    "grace_seconds": {
+      "description": "The grace recorded for cancel_after_grace. The sheets show whole minutes and record exactly the shown value in seconds (SQR-015, SQR-017), so it is a positive multiple of 60.",
+      "type": "integer",
+      "minimum": 60,
+      "multipleOf": 60
+    },
+    "schedule_command_error_code": {
+      "description": "The closed typed-error set of Plans/Scheduling_and_Quota_Resume.md section 3 (Exact commands and required result boundaries). A failure never returns a success-shaped result and never advances a schedule.",
+      "enum": [
+        "invalid_request",
+        "schedule_not_found",
+        "stale_schedule_revision",
+        "target_not_found",
+        "target_version_changed",
+        "dispatch_already_started",
+        "manual_stop_latched",
+        "window_inactive",
+        "quota_unavailable",
+        "reset_truth_unknown",
+        "route_unavailable",
+        "command_not_registered",
+        "permission_denied",
+        "owner_unavailable",
+        "cancelled"
+      ]
+    },
+    "scheduled_message_state": {
+      "enum": [
+        "scheduled",
+        "held",
+        "dispatched",
+        "cancelled",
+        "failed",
+        "expired"
+      ]
+    },
+    "execution_schedule_state": {
+      "enum": [
+        "active",
+        "paused",
+        "cancelled",
+        "completed",
+        "invalidated"
+      ]
+    },
+    "scheduled_send_time": {
+      "description": "A concrete send time: the owner's UTC instant plus the IANA zone and local wall time the user chose, validated as future in that zone before admission (SQR-010).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scheduled_at_utc",
+        "timezone",
+        "local_wall_time"
+      ],
+      "properties": {
+        "scheduled_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "timezone": {
+          "$ref": "#/$defs/iana_timezone"
+        },
+        "local_wall_time": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}$"
+        }
+      }
+    },
+    "missed_policy_with_grace": {
+      "description": "grace_seconds is a recorded value exactly when the policy is cancel_after_grace, and null otherwise (a value the sheet does not show is not recorded).",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "missed_policy": {
+                "const": "cancel_after_grace"
+              }
+            },
+            "required": [
+              "missed_policy"
+            ]
+          },
+          "then": {
+            "properties": {
+              "grace_seconds": {
+                "$ref": "#/$defs/grace_seconds"
+              }
+            },
+            "required": [
+              "grace_seconds"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "missed_policy": {
+                "enum": [
+                  "hold",
+                  "next_available"
+                ]
+              }
+            },
+            "required": [
+              "missed_policy"
+            ]
+          },
+          "then": {
+            "properties": {
+              "grace_seconds": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "execution_window_spec": {
+      "description": "The window specification a Build At commit carries inside AssistantPlanScheduleRequest (SQR-013, REV-9) and an edit carries inside ExecutionWindowUpdateRequest. Field names follow pm.execution.schedule.v1 (section 3, Execution windows); local_start_date and grace_seconds are request-side fields that record exactly what the Build At sheet shows (SQR-015). one_time names a date and no weekdays; recurring_window names at least one weekday (1 = Monday .. 7 = Sunday) and no date.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schedule_kind",
+        "timezone",
+        "local_start_date",
+        "local_start",
+        "local_pause",
+        "days_of_week",
+        "wind_down_seconds",
+        "missed_policy",
+        "grace_seconds",
+        "auto_resume_next_window",
+        "dst_policy"
+      ],
+      "properties": {
+        "schedule_kind": {
+          "enum": [
+            "one_time",
+            "recurring_window"
+          ]
+        },
+        "timezone": {
+          "$ref": "#/$defs/iana_timezone"
+        },
+        "local_start_date": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/local_date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "local_start": {
+          "$ref": "#/$defs/local_time"
+        },
+        "local_pause": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/local_time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "days_of_week": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 7,
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        },
+        "wind_down_seconds": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "missed_policy": {
+          "$ref": "#/$defs/missed_policy"
+        },
+        "grace_seconds": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/grace_seconds"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "auto_resume_next_window": {
+          "type": "boolean"
+        },
+        "dst_policy": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/missed_policy_with_grace"
+        },
+        {
+          "if": {
+            "properties": {
+              "schedule_kind": {
+                "const": "one_time"
+              }
+            },
+            "required": [
+              "schedule_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "local_start_date": {
+                "$ref": "#/$defs/local_date"
+              },
+              "days_of_week": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "schedule_kind": {
+                "const": "recurring_window"
+              }
+            },
+            "required": [
+              "schedule_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "local_start_date": {
+                "type": "null"
+              },
+              "days_of_week": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "scheduled_message_changes": {
+      "description": "The edited fields of a scheduled or held message. Every present field replaces the frozen value in a new snapshot revision; an absent field keeps it. text keeps the schedule_text_not_empty rule.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "$ref": "#/$defs/schedule_text"
+        },
+        "attachment_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "requested_runtime_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "missed_policy": {
+          "$ref": "#/$defs/missed_policy"
+        },
+        "grace_seconds": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/grace_seconds"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "dependentRequired": {
+        "missed_policy": [
+          "grace_seconds"
+        ],
+        "grace_seconds": [
+          "missed_policy"
+        ]
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/missed_policy_with_grace"
+        }
+      ]
+    },
+    "schedule_text": {
+      "description": "The Schedule Message sheet's own text (precondition schedule_text_not_empty, SQR-013): at least one non-whitespace character. An empty composer does not matter; empty sheet text is refused invalid_request.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200000,
+      "pattern": "\\S"
+    },
+    "ScheduledMessageCreateRequest": {
+      "description": "ScheduledMessageCreateRequest for cmd.chat.schedule_message (SQR-002, SQR-013; Commands_System.md central registration). The only GUI producer is the schedule_sheet primary; the wand row only opens the sheet. The text is the sheet's own editable text, prefilled from the composer; text_from_composer says whether the committed text is the composer's, and composer_buffer_ref names that buffer so the owner clears it only after the durable commit and only in that case. Contract shape only: handler_unavailable until admission.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "thread_id",
+        "destination_ref",
+        "expected_thread_currentness",
+        "text",
+        "text_from_composer",
+        "composer_buffer_ref",
+        "attachment_refs",
+        "requested_runtime_snapshot_ref",
+        "send_at",
+        "missed_policy",
+        "grace_seconds"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.scheduled_message_create_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ScheduledMessageCreateRequest"
+        },
+        "command_id": {
+          "const": "cmd.chat.schedule_message"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "const": "schedule_sheet"
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "destination_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_thread_currentness": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "text": {
+          "$ref": "#/$defs/schedule_text"
+        },
+        "text_from_composer": {
+          "type": "boolean"
+        },
+        "composer_buffer_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "attachment_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "requested_runtime_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "send_at": {
+          "$ref": "#/$defs/scheduled_send_time"
+        },
+        "missed_policy": {
+          "$ref": "#/$defs/missed_policy"
+        },
+        "grace_seconds": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/grace_seconds"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/missed_policy_with_grace"
+        },
+        {
+          "if": {
+            "properties": {
+              "text_from_composer": {
+                "const": true
+              }
+            },
+            "required": [
+              "text_from_composer"
+            ]
+          },
+          "then": {
+            "properties": {
+              "composer_buffer_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "composer_buffer_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ScheduledMessageCreateResult": {
+      "description": "ScheduledMessageCreateResult. An accepted commit returns the scheduled_dispatch_id and frozen snapshot ref at revision 1 in state scheduled, and only then may the card render (SMSG-001). A rejection names its typed reason, creates nothing and leaves the composer untouched (composer_cleared false). Creates no Goal, Plan or To-Do.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "scheduled_dispatch_id",
+        "snapshot_ref",
+        "revision",
+        "state",
+        "composer_cleared"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.scheduled_message_create_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ScheduledMessageCreateResult"
+        },
+        "command_id": {
+          "const": "cmd.chat.schedule_message"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/schedule_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "scheduled_dispatch_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snapshot_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "revision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/positive_integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/scheduled_message_state"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "composer_cleared": {
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              },
+              "scheduled_dispatch_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "snapshot_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "revision": {
+                "const": 1
+              },
+              "state": {
+                "const": "scheduled"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/schedule_command_error_code"
+              },
+              "scheduled_dispatch_id": {
+                "type": "null"
+              },
+              "snapshot_ref": {
+                "type": "null"
+              },
+              "revision": {
+                "type": "null"
+              },
+              "state": {
+                "type": "null"
+              },
+              "composer_cleared": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ScheduledMessageUpdateRequest": {
+      "description": "ScheduledMessageUpdateRequest for cmd.chat.schedule_message.update: Edit (changes), Reschedule (reschedule_to a new time), Edit and send (changes plus reschedule_to \"now\") and Send now on a held message, including a missed one (reschedule_to \"now\" and no changes). There is no separate send-now command (SQR-013, CDRY-008). Under the expected revision and currentness; refused dispatch_already_started once dispatch has started, and never applied to a dispatched message. Surfaces are the existing schedule_details plus scheduled_message_card and schedule_manager (UCC-169). A request that changes nothing is invalid.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "expected_revision",
+        "scheduled_dispatch_id",
+        "expected_thread_currentness",
+        "changes",
+        "reschedule_to"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.scheduled_message_update_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ScheduledMessageUpdateRequest"
+        },
+        "command_id": {
+          "const": "cmd.chat.schedule_message.update"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "enum": [
+            "schedule_details",
+            "scheduled_message_card",
+            "schedule_manager"
+          ]
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_revision": {
+          "$ref": "#/$defs/positive_integer"
+        },
+        "scheduled_dispatch_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "expected_thread_currentness": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "changes": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/scheduled_message_changes"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reschedule_to": {
+          "oneOf": [
+            {
+              "const": "now"
+            },
+            {
+              "$ref": "#/$defs/scheduled_send_time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "anyOf": [
+        {
+          "properties": {
+            "changes": {
+              "$ref": "#/$defs/scheduled_message_changes"
+            }
+          },
+          "required": [
+            "changes"
+          ],
+          "allOf": [
+            {
+              "properties": {
+                "changes": {
+                  "minProperties": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "reschedule_to": {
+              "not": {
+                "type": "null"
+              }
+            }
+          },
+          "required": [
+            "reschedule_to"
+          ]
+        }
+      ]
+    },
+    "ScheduledMessageUpdateResult": {
+      "description": "ScheduledMessageUpdateResult. An accepted update rebinds the exact snapshot as a new revision of the same scheduled_dispatch_id (no second schedule, SQR-010) in state scheduled; with reschedule_to now, scheduled_at_utc is the owner's server time and the internal scheduler dispatch follows in its own idempotency domain. A rejected update reports the unchanged record: its revision, state, snapshot and time stay as they were, and a prior failed attempt is never overwritten (SMSG-013).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "scheduled_dispatch_id",
+        "resulting_revision",
+        "state",
+        "snapshot_ref",
+        "scheduled_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.scheduled_message_update_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ScheduledMessageUpdateResult"
+        },
+        "command_id": {
+          "const": "cmd.chat.schedule_message.update"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/schedule_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "scheduled_dispatch_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "resulting_revision": {
+          "$ref": "#/$defs/positive_integer"
+        },
+        "state": {
+          "$ref": "#/$defs/scheduled_message_state"
+        },
+        "snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "scheduled_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              },
+              "state": {
+                "const": "scheduled"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/schedule_command_error_code"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ScheduledMessageCancelRequest": {
+      "description": "ScheduledMessageCancelRequest for cmd.chat.schedule_message.cancel, with the expected revision and currentness (SQR-013). Cancels exactly one schedule; siblings in the thread are untouched (SMSG-012, SMSG-016).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "expected_revision",
+        "scheduled_dispatch_id",
+        "expected_thread_currentness"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.scheduled_message_cancel_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ScheduledMessageCancelRequest"
+        },
+        "command_id": {
+          "const": "cmd.chat.schedule_message.cancel"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "enum": [
+            "schedule_details",
+            "scheduled_message_card",
+            "schedule_manager"
+          ]
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_revision": {
+          "$ref": "#/$defs/positive_integer"
+        },
+        "scheduled_dispatch_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "expected_thread_currentness": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      }
+    },
+    "ScheduledMessageCancelResult": {
+      "description": "ScheduledMessageCancelResult. Accepted is terminal cancelled; the snapshot is retained for audit on every path and is never dispatched.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "scheduled_dispatch_id",
+        "resulting_revision",
+        "state",
+        "snapshot_retained"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.scheduled_message_cancel_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ScheduledMessageCancelResult"
+        },
+        "command_id": {
+          "const": "cmd.chat.schedule_message.cancel"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/schedule_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "scheduled_dispatch_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "resulting_revision": {
+          "$ref": "#/$defs/positive_integer"
+        },
+        "state": {
+          "$ref": "#/$defs/scheduled_message_state"
+        },
+        "snapshot_retained": {
+          "const": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              },
+              "state": {
+                "const": "cancelled"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/schedule_command_error_code"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "AssistantPlanScheduleRequest": {
+      "description": "AssistantPlanScheduleRequest for cmd.chat.plan.schedule_build. One Build At commit is this one command: the window specification rides inside the request, and the owner creates the exact-version binding and its ExecutionSchedule in one transaction, never paired with cmd.execution_window.create (SQR-013, REV-9). expected_revision is the Plan's revision at the sheet. Exactly one execution_topology is frozen; crew carries the validated CollaborationDefinition ref and the others carry none (PSCHED-001..003). Use V<n> on the Plan card is this command against the new version's exact hash with reschedule_of_schedule_id naming the invalidated schedule, which stays invalidated as its audit record. Sources: plan_schedule (the Build At sheet) and plan_card (Use V<n>).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "expected_revision",
+        "assistant_plan_id",
+        "exact_target_version",
+        "exact_target_hash",
+        "execution_topology",
+        "collaboration_definition_ref",
+        "window",
+        "reschedule_of_schedule_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.plan_schedule_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "AssistantPlanScheduleRequest"
+        },
+        "command_id": {
+          "const": "cmd.chat.plan.schedule_build"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "enum": [
+            "plan_schedule",
+            "plan_card"
+          ]
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_revision": {
+          "$ref": "#/$defs/positive_integer"
+        },
+        "assistant_plan_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "exact_target_version": {
+          "$ref": "#/$defs/positive_integer"
+        },
+        "exact_target_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "execution_topology": {
+          "enum": [
+            "agent",
+            "goal_driven",
+            "crew"
+          ]
+        },
+        "collaboration_definition_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "window": {
+          "$ref": "#/$defs/execution_window_spec"
+        },
+        "reschedule_of_schedule_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "execution_topology": {
+                "const": "crew"
+              }
+            },
+            "required": [
+              "execution_topology"
+            ]
+          },
+          "then": {
+            "properties": {
+              "collaboration_definition_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "collaboration_definition_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionScheduleResult": {
+      "description": "ExecutionScheduleResult. Accepted returns the schedule_id (the id Cancel schedule later targets) and the binding ref together, at revision 1 and state active, with the recorded window echoed value for value, so the sheet can read back exactly what it showed (SQR-015). Rejected returns neither: no half-created schedule exists. Neither path admits a run: no PlanRun, Goal, CrewRun, work binding or provider attempt exists before first eligible dispatch (PSCHED-001..003, PGOAL-015).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "schedule_id",
+        "binding_ref",
+        "revision",
+        "schedule_state",
+        "exact_target_version",
+        "exact_target_hash",
+        "execution_topology",
+        "window",
+        "superseded_schedule_id",
+        "run_admitted"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.schedule_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ExecutionScheduleResult"
+        },
+        "command_id": {
+          "const": "cmd.chat.plan.schedule_build"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/schedule_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "schedule_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binding_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "revision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/positive_integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "schedule_state": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/execution_schedule_state"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exact_target_version": {
+          "$ref": "#/$defs/positive_integer"
+        },
+        "exact_target_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "execution_topology": {
+          "enum": [
+            "agent",
+            "goal_driven",
+            "crew"
+          ]
+        },
+        "window": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/execution_window_spec"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "superseded_schedule_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "run_admitted": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              },
+              "schedule_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "binding_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "revision": {
+                "const": 1
+              },
+              "schedule_state": {
+                "const": "active"
+              },
+              "window": {
+                "$ref": "#/$defs/execution_window_spec"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/schedule_command_error_code"
+              },
+              "schedule_id": {
+                "type": "null"
+              },
+              "binding_ref": {
+                "type": "null"
+              },
+              "revision": {
+                "type": "null"
+              },
+              "schedule_state": {
+                "type": "null"
+              },
+              "window": {
+                "type": "null"
+              },
+              "superseded_schedule_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionWindowUpdateRequest": {
+      "description": "ExecutionWindowUpdateRequest for cmd.execution_window.update: editing a build schedule (SQR-013) under the expected revision, refused once dispatch has started. The exact target binding does not change here; a new Plan version is Use V<n>, not an edit. Surfaces are the registered plan_schedule, run_schedule and settings plus schedule_manager (UCC-169).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "expected_revision",
+        "schedule_id",
+        "window"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.window_update_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ExecutionWindowUpdateRequest"
+        },
+        "command_id": {
+          "const": "cmd.execution_window.update"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "enum": [
+            "plan_schedule",
+            "run_schedule",
+            "settings",
+            "schedule_manager"
+          ]
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_revision": {
+          "$ref": "#/$defs/positive_integer"
+        },
+        "schedule_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "window": {
+          "$ref": "#/$defs/execution_window_spec"
+        }
+      }
+    },
+    "ExecutionWindowUpdateResult": {
+      "description": "ExecutionWindowUpdateResult. The same schedule_id at a new revision with the recorded window echoed; an in-flight run's admission never changes silently, and a narrowed window takes effect at the next wind-down boundary. A rejected update echoes the unchanged record.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "schedule_id",
+        "resulting_revision",
+        "schedule_state",
+        "window",
+        "in_flight_admission_changed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.window_update_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ExecutionWindowUpdateResult"
+        },
+        "command_id": {
+          "const": "cmd.execution_window.update"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/schedule_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "schedule_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "resulting_revision": {
+          "$ref": "#/$defs/positive_integer"
+        },
+        "schedule_state": {
+          "$ref": "#/$defs/execution_schedule_state"
+        },
+        "window": {
+          "$ref": "#/$defs/execution_window_spec"
+        },
+        "in_flight_admission_changed": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/schedule_command_error_code"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionWindowCancelRequest": {
+      "description": "ExecutionWindowCancelRequest for cmd.execution_window.cancel, including Cancel schedule, which targets the schedule_id cmd.chat.plan.schedule_build returned; there is no schedule_build.cancel (SQR-013). Surfaces are the registered plan_schedule, run_schedule and settings, schedule_manager (UCC-169), and plan_card for Cancel schedule on the Plan card's Schedule needs update line (SQR-013, SQR-015; plan_card is a registered source surface of the scheduling family).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "expected_revision",
+        "schedule_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.window_cancel_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ExecutionWindowCancelRequest"
+        },
+        "command_id": {
+          "const": "cmd.execution_window.cancel"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "enum": [
+            "plan_schedule",
+            "run_schedule",
+            "settings",
+            "schedule_manager",
+            "plan_card"
+          ]
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "expected_revision": {
+          "$ref": "#/$defs/positive_integer"
+        },
+        "schedule_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      }
+    },
+    "ExecutionWindowCancelResult": {
+      "description": "ExecutionWindowCancelResult. Accepted is terminal cancelled. Work already admitted continues under its own owner: cancelling a window is not a Stop, so admitted_work_stopped is false on every path.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "schedule_id",
+        "resulting_revision",
+        "schedule_state",
+        "admitted_work_stopped"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.window_cancel_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ExecutionWindowCancelResult"
+        },
+        "command_id": {
+          "const": "cmd.execution_window.cancel"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/schedule_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "schedule_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "resulting_revision": {
+          "$ref": "#/$defs/positive_integer"
+        },
+        "schedule_state": {
+          "$ref": "#/$defs/execution_schedule_state"
+        },
+        "admitted_work_stopped": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              },
+              "schedule_state": {
+                "const": "cancelled"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/schedule_command_error_code"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

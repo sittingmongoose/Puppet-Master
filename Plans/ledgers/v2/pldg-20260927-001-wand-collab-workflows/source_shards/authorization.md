@@ -32,3 +32,24 @@ Reserved ID ranges (re-check the live maximum of each family on `origin/main` ri
 
 Only lines triaged NOW in the canon plan are compiled in this pass. A line triaged WAIT is recorded as an open
 question naming its decision card; a line triaged OUT is not compiled.
+
+## WAIT wave (2026-09-27)
+
+Jared answered the wand-modules decision cards on 2026-09-27. The answers are recorded in
+`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256
+`4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`, and in `Plans/Decision_Log.md` as DL-110..DL-134
+(both sections, written by group G5). This ledger compiles the G1 WAIT lines whose answers those entries settle, and
+only the settled parts, citing the DL id in each unit. Lines answered with a question (DL-126), unanswered cards
+(p11, p12, p14) and the parts a DL entry routes to lead follow-up stay open questions. Card n05 (E-24) is compiled by
+the FinalGUISpec owner, not here. The owner exclusions above still apply.
+
+## Lead-rulings follow-up (2026-09-27)
+
+Several answers recorded in `Plans/Decision_Log.md` left a part to the design lead (DL-112, DL-117, DL-120, DL-131), and card
+p11 (E-15) was answered after the WAIT wave (option A, 2026-09-27T21:37:48Z; the lead's updated answer file has SHA-256
+`d08c3551305290fafe43acaffd78d43f9f8d9cdb00a87e4d21bb34603a61969d` and is not yet frozen in the evidence directory, and no
+Decision_Log entry records p11 yet). The design lead ruled on those parts on the owner's behalf, citing his answers. This
+ledger compiles those rulings into `Plans/Collaborative_Workflows.md` only, as dated additions to existing units and
+in-place section edits, plus the section 18 leftover of register line B-CW-04. The ELI5 answer (DL-126) is recorded as the
+lead's proposed answer and is not compiled. Settings consequences (the `auto_enabled` default, where a chat's Crew Auto
+override is stored, Crew Auto's at-once count) are recorded as follow-ups and not written here.

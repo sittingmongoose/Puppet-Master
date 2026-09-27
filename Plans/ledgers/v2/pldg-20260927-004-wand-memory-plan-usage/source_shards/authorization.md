@@ -39,3 +39,16 @@ Reserved ID ranges (re-check the live maximum of each family on `origin/main` ri
 
 Only lines triaged NOW in the canon plan are compiled in this pass. A line triaged WAIT is recorded as an open
 question naming its decision card; a line triaged OUT is not compiled.
+
+## WAIT wave authority (2026-09-27)
+
+Jared answered the owner decision cards on 2026-09-27. The answers are recorded in `Plans/Decision_Log.md` (both sections) and the
+answer records are frozen at `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`
+(agent-relayed; not verifiable from inside this repository). This ledger compiles the answers to the cards its WAIT
+lines named: DL-134 (p19, E-38), DL-130 (p15, E-32), DL-116 (n07, E-36), DL-133 (p18, E-35) and DL-131 (p16, E-33).
+Where an answer left a definition to be written (DL-116 following, DL-131 the ending at the limit), only the decided
+part compiles and the rest stays an open question. Of the held range `P-057..P-062`, P-057 and P-058 are used.
+
+## Lead ruling authority (2026-09-27)
+
+DL-116 left the definition of following to the Plans. The design lead ruled on it on the owner's behalf, citing his answer to card n07 (option B): a rule counts as followed when it was given to the assistant AND the finished reply passed that rule's check (the rule's testable statement compared with the reply); a failed check shows "Missed 1 of your rules" with a way to see which and ask for a fix; if no check could run, no tick. Author G46 compiled that ruling into AMS-053 (event evt-005, decision dec-008). The ruling reached the author in its task text and is not frozen as a file; the DL-116 entry in `Plans/Decision_Log.md` is G5's to annotate. AMS-053 uses the next free id of the reserved range `AMS-047..AMS-056`.

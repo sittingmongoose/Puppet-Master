@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24658-L24695
+Source lines: L24665-L24713
 
-Source SHA256: `9c07fb610dd8cf08beb9335766a862a77e258c5642423573000eeb4edc37f270`
+Source SHA256: `237cebfbbbf9d667e88e2df927335d28e9273018bc7b1e209c31b12359719c2e`
 
 ---
 
@@ -46,3 +46,14 @@ Everything else in this document — Teach versus Teacher, automatic memory, Deb
 ELI5, whole-turn Revert, the top-level Context Lens, the invisible per-thread composer buffer,
 empty-composer history, title-model routing, passive spellcheck, and the wand's contents — is
 unchanged by this correction.
+
+Amended 2026-09-27: the wand's Multi-Agent sidecar gains one row, `Crew Auto settings…`, beside an
+unchanged `Manage Defaults…` (DL-119, FinalGUISpec F3-578). Review keeps its entry point in the
+primary mode menu and BrainStorm under Deep Plan; neither becomes a wand row. The sidecar's
+checkable `Crew Auto` is the assistant's permission to start a Crew by itself when it needs one
+(DL-120, 2026-09-27): it is on by default for a project, a chat's check overrides the project
+value for that chat only, and the Collaborative Workflows evaluator (CWR-021) stays the gate, so a
+Crew starts only when the assistant asks for one, Crew Auto is on for the chat and the evaluator
+admits the request. Build With Crew on a Plan stays the user's choice. The redesign concept's
+per-chat `Allow Crews in this chat` switch is retired into that check (Collaborative_Workflows
+CWR-004 and CWR-038, FinalGUISpec F3-578).

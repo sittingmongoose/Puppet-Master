@@ -49,3 +49,47 @@ Repairs UF-104.
 Live cost from usage_group_ref with per-participant attribution; BSD usage separate. The effective limit waits on p16 E-33.
 
 Repairs UF-105.
+
+<!-- WAIT wave, 2026-09-27: register lines compiled from the owner's card answers recorded in Plans/Decision_Log.md. -->
+
+## Record 9 — AMS-01 (gist review display name): Gist Review display name
+
+On screen the panel reads "Notes it took"; "Gist Review" stays the canonical name in data (DL-134).
+
+Repairs AMS-049.
+
+## Record 10 — AMS-05 (locked-rule decision line): Locked-rule decision line
+
+A proposal to change a locked rule earns one chat line and a Memory decision; the rule changes only by the user's edit (DL-130).
+
+Repairs AMS-050.
+
+## Record 11 — AMS-06 (taught rules included in a reply): Taught rules included in a reply
+
+included_teaching_ids on the reply's context record; inclusion is never shown as "Followed"; the definition of following stays open (DL-116).
+
+Repairs AMS-051.
+
+## Record 12 — AMS-07 (memory export command): Memory export command
+
+N-7 is registered as cmd.chat.memory.export {scope} through the artifact owner (DL-130).
+
+Repairs AMS-052.
+
+## Record 13 — PER-01 (team personas and grill me identity): Team Personas and Grill Me identity
+
+The six team Personas are registered with stable IDs, product-manager's exclusion is superseded for team use, and Grill Me is a methodology Skill (DL-133).
+
+Repairs P-048, P-057 and P-058.
+
+## Record 14 — USE-02 (live cost against the effective limit): Live cost against the effective limit
+
+A run's own time or cost limit overrides the general run limit and the live cost is shown against it; the ending at the limit stays open (DL-131).
+
+Repairs UF-106.
+
+## Record 15 — AMS-06 (definition of following): What counts as following a taught rule
+
+A rule is followed only when it was included for the reply and the finished reply passed the rule's check; a failed check shows "Missed 1 of your rules"; no check, no tick (DL-116, design lead ruling 2026-09-27).
+
+Repairs AMS-051 and AMS-053.

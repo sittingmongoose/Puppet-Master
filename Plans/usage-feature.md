@@ -7133,10 +7133,11 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main
+  - python3 scripts/pm-new-contracts-verify.py
 risk_class: estimate_presented_as_usage
 reasoning_tier: standard
 context_scope: usage_prestart_estimate
-implementation_surfaces: [Plans/usage-feature.md, Plans/Models_System.md, Plans/Collaborative_Workflows.md]
+implementation_surfaces: [Plans/usage-feature.md, Plans/Models_System.md, Plans/Collaborative_Workflows.md, Plans/usage_run_estimate_contracts.schema.json]
 node_compile_hint: {mode: usage_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#6.4, #8.0, #9.1 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
@@ -7189,3 +7190,43 @@ owner_hints: [Plans/usage-feature.md, Plans/Collaborative_Workflows.md]
 ```
 
 ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/usage-feature.md#UF-091
+
+### UF-106 - Live Run Cost Against The Run's Effective Limit
+
+```yaml
+plan_unit_id: UF-106
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: >-
+  A run's live cost (UF-105) is shown against the run's effective limit, which Usage reads from the run's limit contract (Plans/Collaborative_Workflows.md and executionLimits) and never resolves itself. By the owner's decision DL-131 (card p16, E-33), when a run's definition sets its own time or cost limit (DL-131 names a Crew's own limit, for example 45 minutes or $6), that limit overrides the general run limit rather than the tighter of the two winning. So a run whose own limit overrides the general one is never shown against the general limit, and a run with no limit of its own is shown against the general run limit. How a run that reaches its effective limit ends, and whether its own limit may exceed a hard ceiling such as a token or plan budget, stay open in this compile's ledger and are not settled here.
+gui_related: true
+gui_classification_reason: The limit shown beside a run's live cost is user-visible.
+depends_on: [UF-105]
+unblocks: []
+acceptance_criteria:
+  - A run whose definition sets its own time or cost limit shows its live cost against that limit, even when the general run limit is tighter.
+  - A run without a limit of its own shows its live cost against the general run limit.
+  - Usage reads the effective limit from the run's limit contract and never computes the tighter of the two.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main
+risk_class: run_cost_against_wrong_limit
+reasoning_tier: standard
+context_scope: usage_collaboration_run_cost
+implementation_surfaces: [Plans/usage-feature.md, Plans/Collaborative_Workflows.md]
+node_compile_hint: {mode: usage_contract_spec, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#9.1 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-USE-02 (WAIT part, card p16 E-33) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json (SHA-256 61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a)
+  - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
+  - Plans/Decision_Log.md#DL-131
+preserved_exact_tokens: ["effective limit", "general run limit", "executionLimits", "DL-131"]
+negative_constraints:
+  - Do not show a run's cost against the general run limit when the run's own limit overrides it.
+  - Do not let Usage choose between limits; it reads the run's effective limit.
+owner_hints: [Plans/usage-feature.md, Plans/Collaborative_Workflows.md]
+```
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/usage-feature.md#UF-105, ContractName:Plans/Decision_Log.md#DL-131

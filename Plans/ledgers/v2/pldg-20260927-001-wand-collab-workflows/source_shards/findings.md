@@ -109,3 +109,139 @@ Repairs CWR-029. A coordinator failure sets attention_reason coordinator_failed 
 Assistant_Plan_Runtime already requires the atomic admission; this owner recorded it only as MODAL-013..014 prose, so the rule is restated as a unit tied to the sheet's refusal.
 
 Repairs CWR-023. The CollaborativeRun, the PlanRun and the To-Dos commit together or not at all, with the plan-changed refusal; no new contract.
+
+## WAIT wave (2026-09-27): lines compiled after the owner answered their decision cards
+
+Each record below compiles only what the owner's answer settles, as recorded in `Plans/Decision_Log.md` (both sections). The answers are in /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json (SHA-256 4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f). Parts an entry leaves to lead follow-up stay open questions.
+
+## Record 19 — CW-02 (WAIT, answered): An unavailable chosen model blocks Start
+
+Canon contradicted itself: section 2.2 and section 15 spoke of acceptable substitutes, while PART-021..024 said Start is blocked or needs explicit replacement. Card p03 chose blocking (Decision_Log entry 121).
+
+Repairs CWR-034 and CWR-018. No stand-in for a chosen model at Start, not even a same-provider one; the sheet's substitution row becomes a sentence; after Start, replacement stays explicit.
+
+## Record 20 — CW-03 (WAIT, answered): Compact card faces and theme-family motion
+
+Section 4.1 lists facts and actions every card shows; the collapsed face and the receipt drop some of them. Card p05 allowed it, card n04 gave each theme family its own motion personality without defining one, and card n06 made Reduce Motion instant.
+
+Repairs CWR-035. Actions may sit behind Expand and the count in the hover card below 520 px, a finished run's Message is disabled with its reason, motion follows the theme family and Reduce Motion is instant; the per-family rules stay open.
+
+## Record 21 — CW-05 (WAIT, answered): The Activity chip and the compact Activity Detail
+
+Section 4.4 routed every click through Activity Detail and the 2026-09-08 rollback asked for native cards and grids there. Card p04 allowed the short team list for the four kinds.
+
+Repairs CWR-036. The chip reveals the newest card, hover rows still route to Activity Detail, and the four kinds show a short team list there, with the full content in the run view.
+
+## Record 22 — CW-06 (WAIT, answered): Helpers on screen
+
+Section 4.5's example said 4 participants, and the concept showed a Read marker canon never defined. Card p06 chose helpers on screen with participant kept in data.
+
+Repairs CWR-036. Screens say helpers (reviewers in Review), records keep participant, the ribbon example reads 4 helpers and no read marker is shown.
+
+## Record 23 — CW-07 (WAIT, answered): Coordinator specification and coordinator-authored parts
+
+Section 5.2 and CWR-004 made expected outputs and dependencies sheet fields and left the coordinator untyped; the self-approval rule for a lead that also works had no checker. Cards p10 and p17 answered both.
+
+Repairs CWR-037 and CWR-004. coordinator_spec is typed, the coordinator authors expected outputs and dependencies at split time, and this chat's assistant checks a lead's own part.
+
+## Record 24 — CW-08 (WAIT, answered part): The Crew Auto settings row
+
+Section 5.3's menu had no route to the Crew Auto sheet other than the check. Card p01 kept the Plans and added only Crew Auto settings…; the Crew Auto receipt (card p11) is still unanswered.
+
+Repairs CWR-038. The Multi-Agent submenu gains Crew Auto settings… under the check, and Manage Defaults… keeps its name and route.
+
+## Record 25 — CW-10 (WAIT, answered part): Chat Room mid-round sends, End discussion and the Moderator
+
+The concept refused mid-round sends while its copy said the message waits; End discussion had no command; the Moderator row had no field. Cards n03, p15 and p17 answered all three, but who receives a mid-round steer is left to the lead.
+
+Repairs CWR-024. A mid-round message queues for the next round unless sent now to steer without interrupting, End discussion settles the room completed, and the Moderator writes coordinator_spec.
+
+## Record 26 — CW-11 (WAIT, answered part): The display word snapshot
+
+The screens needed a plain word for the frozen target pack. Card p19 approved snapshot on screen with the data word kept.
+
+Repairs CWR-025. Screens call the pack the snapshot; records and commands keep ReviewTargetPack and frozen target pack.
+
+## Record 27 — CW-12 (WAIT, answered part): Send Findings To Agent fills the message box
+
+Section 7.6 and section 10 sent findings as a message straight away. Card p07 chose filling the message box.
+
+Repairs CWR-031. Send Findings To Agent writes a fix request into the empty composer and never sends it.
+
+## Record 28 — CW-13 (WAIT, answered part): Write the plan
+
+CWR-027 left the synthesis phase and action without a plain label. Card p19 approved Write the plan.
+
+Repairs CWR-027. The synthesis phase and action read Write the plan; the command id is unchanged.
+
+## Record 29 — CW-14 (WAIT, answered part): Grill Me is a skill
+
+The identity of Grill Me was contested between Persona and skill. Card p18 made it a skill; its question allowance outside BrainStorm stays open.
+
+Repairs CWR-028. Grill Me is a methodology Skill, never a Persona, so its row has no Persona picker.
+
+## Record 30 — CW-15 (WAIT, answered part): A run's own limits, and no substitution policy
+
+Section 2.4 let configured limits only narrow, so a sheet could promise more time than the general run limit allows; the register also proposed a substitution policy field. Cards p16 and p03 answered both.
+
+Repairs CWR-032. The definition's time and cost limits override the general run limit for the run, token and concurrency ceilings still narrow, and no substitution policy is stored.
+
+## Record 31 — CW-17 (WAIT, answered): Review and BrainStorm keep their entry points
+
+The register asked whether to record an exception to CWR-017 for wand rows. Card p01 kept the Plans unchanged.
+
+Repairs CWR-038. Review keeps the mode menu and BrainStorm keeps Deep Plan as their entry points, with no wand rows in canon.
+
+## Record 32 — CW-23 (WAIT, answered part): The send_findings result and refusal
+
+Section 10 returned CollaborationMessageResult for send_findings_to_agent. Card p07 changes the command to fill the composer.
+
+Repairs CWR-031. The command returns ComposerBufferResult and refuses composer_not_empty.
+
+## Record 33 — CW-24 (WAIT, answered part): New command rows and the Crew Auto commit
+
+Section 10 had no command for ending a room or checking a Wonderer lead, and the Crew Auto primary could dispatch twice. Card p15 added all seven commands and card p01 answered the menu label; the Crew Auto receipt surface waits on card p11.
+
+Repairs CWR-031 and CWR-038. cmd.chat_room.end and cmd.brainstorm.research_lead join section 10, open_config gains the workflow_modal surface, and one Crew Auto click dispatches one cmd.chat.crew_auto.set.
+
+## Record 34 — CW-26 (WAIT, answered): Team presets per kind
+
+Canon had no preset catalog, registered none of the preset Personas for teams, and the concept hid presets on Review. Cards p18 and n08 answered; which Review presets ship is open.
+
+Repairs CWR-039. A built-in preset catalog for every kind including Review, prefill only, using the Personas registered for team use, with Grill Me only as a specialist row.
+
+## Record 35 — CW-18 (lead ruling): Crew Auto is the assistant's permission, on by default
+
+Section 5.3 treated Crew Auto as automatic admission that opens its sheet before the check appears, the legacy per-chat Crew switch had no ruling, and the owner's answer (the agent may summon Crews; Crew Auto tells it that it may) was not reconciled with the deterministic evaluator. The design lead ruled on the owner's behalf: Crew Auto is the assistant's permission, on by default for a project, a chat's check overrides it for that chat, and the evaluator stays the gate.
+
+Repairs CWR-004, CWR-021 and CWR-038. Crew Auto is the assistant's permission to start a Crew by itself, on by default for a project and overridable per chat; the assistant starts one only when Crew Auto is on for the chat and the evaluator admits the request; Build With Crew stays a user choice; no separate per-chat switch; the request names its scope, project or thread.
+
+## Record 36 — CW-08 (answered part): Crew Auto's note in the chat
+
+Canon had no chat record for turning on a project-wide setting. The owner kept the note, worded for the project.
+
+Repairs CWR-038. Turning Crew Auto on for the project leaves one line in that chat, Crew Auto is on for this project, owned by this document and never a run, card or Usage; its Change control opens the sheet from the crew_auto_receipt surface.
+
+## Record 37 — CW-10 (lead ruling): Who reads a mid-round steer
+
+A message sent now during a Chat Room round steered the round without interrupting it, but canon did not say which participant receives it.
+
+Repairs CWR-024. The next participant to speak reads a steer first, and every later speaker in that round sees it; no turn is cancelled.
+
+## Record 38 — CW-26 (lead ruling): Review's team presets
+
+Review offered presets but named none.
+
+Repairs CWR-039. Review ships Careful review (the default), Quick check and Deep audit.
+
+## Record 39 — CW-20 with the CW-19 WAIT part (lead ruling): How a run at its limit ends
+
+A run's own limit overrode the general one, but canon did not say how a run that reaches it ends, and the register proposed a limit_reached attention reason.
+
+Repairs CWR-029. A run at its time, cost or token limit settles cancelled with a stop_reason, reads Stopped at your limit and is never a failure; no run state and no attention reason is added.
+
+## Record 40 — CW-04 (section 18 leftover): The run view in the verification section
+
+Section 18 still tested that a card pops out to a full panel after section 4.2 became the run view.
+
+Repairs CWR-020. Section 18 now tests that a card opens the same run in the run view docked in the editor pane, as CWR-020 specifies.

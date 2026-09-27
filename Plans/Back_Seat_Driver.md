@@ -310,7 +310,7 @@ BSD owns six record families. Payload semantics are owned here; physical binding
 
 `pm.bsd.quarantine.v1` — `quarantine_id`, `assignment_id`, `review_cycle_id`, `reason`, `payload_hash`, `retained_payload_ref`, `reset_attempted`, `terminal_action` in `re_prime|pause_bsd`, `created_at`.
 
-**Owner projection.** Every BSD surface (the ambient status by the composer, the compact Context row, Context Details, and the transcript note) reads one owner projection per assignment, never a local copy. Besides mode, advisor identity, and health, it carries `context_state`, exactly one of `off|idle|reviewing|catching_up|finding_held|advice_delivered|quota_paused|failed|unavailable`, mapped 1:1 onto the nine compact Context states of §20; `last_checked_at`, the completion time of the latest completed review, absent before any review completes; and `generations_behind`, the current primary generation minus the assignment cursor, never negative. Display words come from one word table owned here and keyed by `context_state`; no surface keeps its own list of status words (BSD-031).
+**Owner projection.** Every BSD surface (the ambient status by the composer, the compact Context row, Context Details, and the transcript note) reads one owner projection per assignment, never a local copy. Besides mode, advisor identity, and health, it carries `context_state`, exactly one of `off|idle|reviewing|catching_up|finding_held|advice_delivered|quota_paused|failed|unavailable`, mapped 1:1 onto the nine compact Context states of §20; `last_checked_at`, the completion time of the latest completed review, absent before any review completes; and `generations_behind`, the current primary generation minus the assignment cursor, never negative. Display words come from one word table owned here and keyed by `context_state`; no surface keeps its own list of status words (BSD-031). The table's words are the plain words of BSD-035 (DL-110).
 
 Restart restores held findings, closed keys, assignment epochs and cursors, quarantine counters, and policy/binding revisions. Absence of evidence is never recovered as success, and a nonterminal assignment that cannot be reconciled becomes `failed` with an explicit reason rather than silently `idle`.
 
@@ -340,10 +340,12 @@ This owner therefore **reuses that exact command ID and its existing request and
 | `cmd.bsd.finding.open` | Navigate to one finding's detail | Navigation only; opening a finding never emits, clears, closes, or reopens it. |
 | `cmd.bsd.open_usage` | Navigate to the Usage page filtered to BSD attribution | Navigation only; no Usage record is created by navigating. A local summary or raw-data view of BSD usage is never a substitute for this navigation. |
 | `cmd.bsd.open_transcript` | Navigate to the advisor's private transcript | Navigation only; subject to `retain_transcript` and to ordinary redaction. Returns an honest unavailable state when retention is off. |
+| `cmd.bsd.finding.dismiss` | Dismiss one emitted finding (Dismiss advice) | Closes that finding for its current evidence fingerprint under the expected epoch: state `closed`, `closed_reason` `dismissed_by_user`. The closure is durable across restart and advisor reset (§9) and reopens only when the evidence fingerprint changes, as a recorded reopen. A prior-epoch request fails `stale_epoch`. Never deletes evidence, never tells the primary anything, and never changes the primary run (BSD-037). |
+| `cmd.bsd.catch_up.release` | Release the current catch-up wait (Don't wait) | Ends the catch-up wait at the current boundary under the expected epoch, as if its cap had expired at that moment, so the primary continues at once. The advisor keeps reviewing, its later findings follow §8, and the assignment is never paused or stopped by the release. With no wait in progress it fails `already_in_state` (BSD-037). |
 
-All ten commands in this table now have central catalogue declarations; the former statement that only `cmd.bsd.set` was registered is superseded. Their existing names and sole future targets are reused. Dispatch still requires the actual owner, current projection, exact payload binding, permissions, and any applicable event admission. Missing registration is `command_not_registered`; missing owner/native implementation is `owner_unavailable`. Neither a catalogue row nor an isolated, explicitly labelled concept simulation proves successful product dispatch. No page-local handler or fixture may bypass those guards. The trigger evaluator, hold/reconfirmation transitions, and window/eligibility behavior remain internal service behavior; no GUI command is invented for them.
+The first ten commands in this table now have central catalogue declarations; the former statement that only `cmd.bsd.set` was registered is superseded. The last two rows, `cmd.bsd.finding.dismiss` and `cmd.bsd.catch_up.release`, are added by the owner on 2026-09-27 (DL-130, BSD-037); their central catalogue rows belong to the command census, and until those rows exist a dispatch fails `command_not_registered`. Their existing names and sole future targets are reused. Dispatch still requires the actual owner, current projection, exact payload binding, permissions, and any applicable event admission. Missing registration is `command_not_registered`; missing owner/native implementation is `owner_unavailable`. Neither a catalogue row nor an isolated, explicitly labelled concept simulation proves successful product dispatch. No page-local handler or fixture may bypass those guards. The trigger evaluator, hold/reconfirmation transitions, and window/eligibility behavior remain internal service behavior; no GUI command is invented for them.
 
-**Session controls and the transcript note surface (2026-09-27, BSD-033).** The advisor's session controls map one to one onto the assignment commands: Pause advisor dispatches `cmd.bsd.assignment.pause`, Resume advisor dispatches `cmd.bsd.assignment.resume`, and Stop advisor dispatches `cmd.bsd.assignment.stop`, each with the assignment's current epoch. The resume action on the safety-pause line dispatches `cmd.bsd.assignment.resume`, because a second consecutive quarantine pauses the assignment (§11); `cmd.bsd.assignment.retry` belongs to a failed or timed-out cycle and never re-runs the batch a quarantine dropped. Neither wakes the primary run. "Change model" on the safety-pause line opens the Configure surface and dispatches nothing until that surface saves through `cmd.bsd.configure`. Inspect usage dispatches `cmd.bsd.open_usage`, which stays navigation to the Usage page. `bsd_note` is a source surface of this command family: the transcript advisor note, its aside, the catch-up line, the quiet failure line, and the safety-pause line. From it, Why? on a full note dispatches `cmd.bsd.finding.open`; Why? on an aside only expands the aside in place and dispatches nothing; the failure line's Details dispatches `cmd.chat.open_thread_context_details` and lands on the BSD section of Context Details. Controls on `bsd_note` read the same owner availability and the same exact disabled reason as every other surface of the family. The dismissal and catch-up release controls of the transcript surface have no command row in this table; their commands are an open question of ledger `pldg-20260927-002-wand-back-seat-driver`, and until a row exists they follow §20's disabled-with-reason rule.
+**Session controls and the transcript note surface (2026-09-27, BSD-033).** The advisor's session controls map one to one onto the assignment commands: Pause advisor dispatches `cmd.bsd.assignment.pause`, Resume advisor dispatches `cmd.bsd.assignment.resume`, and Stop advisor dispatches `cmd.bsd.assignment.stop`, each with the assignment's current epoch. The resume action on the safety-pause line dispatches `cmd.bsd.assignment.resume`, because a second consecutive quarantine pauses the assignment (§11); `cmd.bsd.assignment.retry` belongs to a failed or timed-out cycle and never re-runs the batch a quarantine dropped. Neither wakes the primary run. "Change model" on the safety-pause line opens the Configure surface and dispatches nothing until that surface saves through `cmd.bsd.configure`. Inspect usage dispatches `cmd.bsd.open_usage`, which stays navigation to the Usage page. `bsd_note` is a source surface of this command family: the transcript advisor note, its aside, the catch-up line, the quiet failure line, and the safety-pause line. From it, Why? on a full note dispatches `cmd.bsd.finding.open`; Why? on an aside only expands the aside in place and dispatches nothing; the failure line's Details dispatches `cmd.chat.open_thread_context_details` and lands on the BSD section of Context Details. Controls on `bsd_note` read the same owner availability and the same exact disabled reason as every other surface of the family. The dismissal control on a note and in Context Details dispatches `cmd.bsd.finding.dismiss`, and Don't wait on the catch-up line dispatches `cmd.bsd.catch_up.release` (DL-130, BSD-037); both follow §20's disabled-with-reason rule while their catalogue rows are not registered.
 
 ## 18. Typed request, result, and error enumerations
 
@@ -356,6 +358,8 @@ Requests:
 - `BSDWorkflowBindingRequest` — `workflow_kind`, `workflow_id`, stage binding list, requested advisor identity, `expected_policy_revision`.
 - `BSDAssignmentControlRequest` — `bsd_assignment_id`, `control` in `pause|resume|stop`, `expected_epoch`.
 - `BSDAssignmentRetryRequest` — `bsd_assignment_id`, `review_cycle_id`, `expected_epoch`.
+- `BSDFindingDismissRequest` — `bsd_finding_id`, `finding_key`, `expected_epoch`.
+- `BSDCatchUpReleaseRequest` — `bsd_assignment_id`, the `primary_generation` of the boundary being waited on, `expected_epoch`.
 - `BSDFindingRoute`, `BSDUsageRoute`, `BSDTranscriptRoute` — navigation-only routes carrying the target identity and the return route.
 
 Results fix `primary_run_mutated: false` and `authority_granted: false` on every path, return the exact resulting revision or epoch, and carry a projection reference. Navigation wrappers return `RouteResult` with an explicit no-persist receipt. A duplicate idempotency binding returns the original result; the same key with a different binding is rejected.
@@ -374,11 +378,13 @@ Assistant Chat owns the shell, chrome, and placement; this document owns what th
 
 **Wand.** The wand carries BSD `Off`, `Auto`, `On` check state plus `Configure`. Check state renders the owner projection of effective mode; it is not a local checkbox. `Configure` opens the BSD configuration surface.
 
-**Advice presentation.** Silent, duplicate-suppressed, content-free-suppressed, and cleared evaluations create no transcript noise at all. An emitted finding appears as an advisor note, the inline advisory form, in the transcript margin at the step boundary that produced it, between assistant messages and working activity; it is never a card, a roster, or a track (BSD-030). A note at `note` weight carries a kicker reading `Advisor note` with the severity glyph and its canonical word (`Nit`, `Concern`, or `Critical`), a title of five to twelve words, one to four sentences, a fine line naming the version it was checked against and the effective advisor model and Persona (with the requested model when a stand-in served, §14), and the actions `Why?` and a dismissal control. A note at `aside` weight is one quiet line with the severity word, the title, and `Why?`, and no body; its `Why?` expands it in place to the full note. The weight is read from the finding's stamped `presentation_weight` (§16), never from the current cooldown. Every severity arrives with the same motion; severity is carried by the glyph and the word. Attribution: the note says `Advisor note`, and its hover names Back Seat Driver, so the advice is attributable to BSD without the product name in the note body. A dismissed finding collapses to one line naming its title and never relabels itself stale; a note from a replaced epoch or branch says it is from earlier in the chat. Held findings appear only in Context Details and the BSD detail surface, optionally as a small held count; they are never rendered as confirmed warnings. Unreconfirmed terminal `critical` advice is explicitly labeled stale and unreconfirmed, with the generation it was raised against, and draws with a stale treatment no current note uses (BSD-032).
+**Advice presentation.** Silent, duplicate-suppressed, content-free-suppressed, and cleared evaluations create no transcript noise at all. An emitted finding appears as an advisor note, the inline advisory form, in the transcript margin at the step boundary that produced it, between assistant messages and working activity; it is never a card, a roster, or a track (BSD-030). A note at `note` weight carries a kicker reading `Advisor note` with the severity glyph and its canonical word (`Nit`, `Concern`, or `Critical`), a title of five to twelve words, one to four sentences, a fine line naming the version it was checked against and the effective advisor model and Persona (with the requested model when a stand-in served, §14), and the actions `Why?` and a dismissal control, which dispatches `cmd.bsd.finding.dismiss` (BSD-037). A note at `aside` weight is one quiet line with the severity word, the title, and `Why?`, and no body; its `Why?` expands it in place to the full note. The weight is read from the finding's stamped `presentation_weight` (§16), never from the current cooldown. Every severity arrives with the same motion; severity is carried by the glyph and the word. Attribution: the note says `Advisor note`, and its hover names Back Seat Driver, so the advice is attributable to BSD without the product name in the note body. A dismissed finding collapses to one line naming its title and never relabels itself stale; a note from a replaced epoch or branch says it is from earlier in the chat. Held findings appear only in Context Details and the BSD detail surface, optionally as a small held count; they are never rendered as confirmed warnings. Unreconfirmed terminal `critical` advice is explicitly labeled stale and unreconfirmed, with the generation it was raised against, and draws with a stale treatment no current note uses (BSD-032); its printed label is the plain stale label of BSD-035.
 
-**Compact Context menu.** One BSD row shows mode, advisor identity, health or catch-up state, and time since the last check, for example a first line reading `BSD    Auto · Critical Advisor` and a second reading `Caught up · checked 18s ago`. Its states are `Off`, `Idle`, `Reviewing`, `Catching up`, `Finding held`, `Advice delivered`, `Quota paused`, `Failed`, and `Unavailable`. Copy must be truthful: `Caught up` requires an actually converged cursor, and `checked` requires a real completed review.
+**Compact Context menu.** One BSD row shows mode, advisor identity, health or catch-up state, and time since the last check, for example a first line reading `BSD    Auto · Critical Advisor` and a second reading `Up to date · checked 18s ago`. Its states are `Off`, `Idle`, `Reviewing`, `Catching up`, `Finding held`, `Advice delivered`, `Quota paused`, `Failed`, and `Unavailable`. Copy must be truthful: the converged idle word (`Caught up` in earlier text, `Up to date` since DL-110) requires an actually converged cursor, and `checked` requires a real completed review.
 
-**Context Details.** A BSD section reuses the existing context and detail card grammar and existing Raw redaction rules. It shows assignment and stage identity, trigger kind and reason, cursor and epoch, requested and effective model and account, Persona, resolved tool profile, held/cleared/emitted/suppressed finding counts and detail, advisor context and compaction state, cost, token, and latency facts, quota, failure, and quarantine state, and the resolved project watch guidance sources.
+**Plain status words (2026-09-27, DL-110, BSD-035).** Back Seat Driver prints plain status words only, from the one word table of BSD-035. Three printed words change: the converged idle state prints `Up to date` where it printed `Caught up`, the held state prints `Double-checking` where it printed `Finding held`, and the quota state prints `Paused: usage limit reached` where it printed `Quota paused`. The nine state names above remain the names of the `context_state` values and of the states in BSD-018; only what a person reads changes, and no surface prints the old word before or beside the new one. The truthfulness rule moves with the word: `Up to date` requires an actually converged cursor and a completed review. `Double-checking` appears only in the Context row and Context Details, never in the transcript.
+
+**Context Details.** A BSD section reuses the existing context and detail grammar and existing Raw redaction rules, laid out in the short form of BSD-036 (DL-122): three plain facts and native disclosures, with no metric-card grid. It shows assignment and stage identity, trigger kind and reason, cursor and epoch, requested and effective model and account, Persona, resolved tool profile, held/cleared/emitted/suppressed finding counts and detail, advisor context and compaction state, cost, token, and latency facts, quota, failure, and quarantine state, and the resolved project watch guidance sources. The short form changes where these facts sit, not which facts exist: each stays reachable inside a disclosure as a sentence, with the raw record behind `Show raw data`.
 
 **Usage page.** A BSD purpose filter and BSD widgets and rows are added through the Usage widget system without altering the accepted Usage layout.
 
@@ -1780,6 +1786,13 @@ APR-047, and APR-061.
   USER-REFERENCE-LAYOUT-ROLLBACK-20260908, Context More Details and BSD projections use native metric
   cards rather than a reference-derived flat list, preserving concise hierarchy, disclosures, and zero
   decorative left stripes.
+- **Scoped exception for BSD Context Details (DL-122, 2026-09-27):** Jared answered card p04 (E-04)
+  with "Allow the short list for these": BSD's Context Details section uses the short form of BSD-036
+  (three plain facts and native disclosures, no metric-card grid and no pills) instead of the native
+  metric cards above. This document states the exception for BSD's details only (the same answer's
+  exception for the four collaboration kinds belongs to their owner); every surface outside DL-122
+  keeps the native cards and grids that USER-REFERENCE-LAYOUT-ROLLBACK-20260908 restored, and the
+  stripe removal above still applies to the short form.
 
 ```yaml
 plan_unit_id: BSD-026
@@ -2082,7 +2095,10 @@ contract behind the in-place edits to §8, §16, §17, §20, §21 and the ten-ro
 "advice cards" for emitted advice, BSD-030 supersedes that word for presentation only; their
 behavior, tokens and acceptance criteria are unchanged. The status words themselves (BSD-018),
 the Context Details layout (BSD-026 and APR-061), the stage label set, and the dismissal and
-catch-up release commands wait on open owner decisions and are not settled here.
+catch-up release commands waited on open owner decisions and are not settled by BSD-030..BSD-034.
+The owner's answers of 2026-09-27 settle three of them in the second part of this addendum
+(BSD-035..BSD-037, citing DL-110, DL-122 and DL-130). The stage label set stays with the Settings
+boundary and is not compiled here.
 
 ### BSD-030 - Advisor Note, Aside, And Attribution In The Transcript Margin
 
@@ -2269,9 +2285,10 @@ canonical_text: >-
   cmd.bsd.finding.open, Why? on an aside expands in place and dispatches nothing, and the failure
   line's Details opens Context Details at the BSD section through
   cmd.chat.open_thread_context_details. Controls on bsd_note read the same owner availability and
-  exact disabled reason as every other surface of the family. The dismissal and catch-up release
-  controls have no command row here; their commands wait on an open owner decision, and until a row
-  exists they render disabled with the owner reason.
+  exact disabled reason as every other surface of the family. The dismissal control dispatches
+  cmd.bsd.finding.dismiss and Don't wait on the catch-up line dispatches cmd.bsd.catch_up.release,
+  both defined by BSD-037 (DL-130); while their catalogue rows are not registered they render
+  disabled with the owner reason.
 gui_related: true
 gui_classification_reason: Binds visible BSD buttons in the transcript and Context Details to exact commands and a source surface.
 depends_on: [BSD-012, BSD-020, BSD-030]
@@ -2299,7 +2316,7 @@ preserved_exact_tokens: ["cmd.bsd.assignment.pause", "cmd.bsd.assignment.resume"
 negative_constraints:
   - Do not wake, resume or restart the primary run from any BSD control.
   - Do not replace Usage navigation with a local raw-data view.
-  - Do not invent the dismissal or catch-up release command here.
+  - Do not bind the dismissal or catch-up release control to any command other than those of BSD-037.
 owner_hints:
   - Plans/Back_Seat_Driver.md#17-exact-commands-and-command-ownership
 ```
@@ -2345,4 +2362,208 @@ negative_constraints:
   - Do not render unknown cost as zero.
 owner_hints:
   - Plans/Back_Seat_Driver.md#21-usage-attribution
+```
+
+### Owner Answers Compiled On 2026-09-27
+
+The three units below compile the lines that waited on owner decision cards, now that Jared has
+answered them: the status words (card n01, E-10, recorded as DL-110), the short form of BSD's
+Context Details (card p04, E-04, DL-122), and the dismissal and catch-up release commands (card p15,
+E-32, DL-130). They are the contract behind the 2026-09-27 in-place edits to §16, §17, §18, §20 and
+§25. The wording of an advisor the user paused stays open (ledger
+`pldg-20260927-002-wand-back-seat-driver`, question q-004), and the stage label set stays with the
+Settings boundary.
+
+### BSD-035 - Plain Status Words In The One Word Table
+
+```yaml
+plan_unit_id: BSD-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: >-
+  Back Seat Driver prints plain status words only (DL-110: card n01, E-10, answered "Plain words
+  only, and change the Plans to match"). The one word table keyed by context_state (BSD-031) reads:
+  off prints Off; idle prints Up to date when the cursor has converged and a review has completed,
+  and Idle before any review has completed; reviewing prints Reviewing; catching_up prints Catching
+  up; finding_held prints Double-checking; advice_delivered prints Advice delivered; quota_paused
+  prints Paused: usage limit reached; failed prints Failed; unavailable prints Unavailable. A word
+  may be followed, after a middle dot, only by plain facts read from the owner projection: the time
+  since last_checked_at, generations_behind as updates behind, the number of held findings or
+  delivered notes, the failure or stop reason, and that the main work continues. It is never
+  followed by a second status word. Up to date replaces Caught up, Double-checking replaces Finding
+  held, and Paused: usage limit reached replaces Quota paused as printed words; the replaced words
+  remain the state names of BSD-018 and of the data, and no surface prints them to a person before,
+  beside, or after the new word. The truthfulness rule of BSD-018 moves with the word: Up to date
+  requires a converged cursor and a completed review, and checked requires a completed review.
+  Double-checking appears only in the Context row and Context Details, never in the transcript. The
+  stale terminal note of BSD-032 prints the plain label "About an earlier version (vN): not
+  re-checked", where N is its raised_against_generation, and keeps stale and unreconfirmed in its
+  data. The wording for an assignment the user paused is not settled by this unit.
+gui_related: true
+gui_classification_reason: Sets the words a person reads in the composer status, the Context row, Context Details and the stale note.
+depends_on: [BSD-018, BSD-031, BSD-032, DL-110]
+unblocks: [BSD-036]
+acceptance_criteria:
+  - Every BSD surface prints the status word from the one table, keyed by context_state.
+  - The converged idle state prints Up to date, the held state prints Double-checking, and the quota state prints Paused: usage limit reached.
+  - No surface prints Caught up, Finding held or Quota paused to a person.
+  - Up to date is shown only with a converged cursor and a completed review.
+  - Double-checking never appears in the transcript.
+  - The stale terminal note prints the About an earlier version label with its generation, and its data keeps stale and unreconfirmed.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver --base origin/main
+risk_class: fabricated_advisor_status
+reasoning_tier: high
+context_scope: bsd_context_projection
+implementation_surfaces:
+  - Plans/Back_Seat_Driver.md
+node_compile_hint: {mode: contract_reconciliation_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "Plans/Decision_Log.md DL-110 (card n01, E-10)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json sha256:61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a card n01"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json sha256:4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f answer n01"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de section 8.6 (IMPACT A1-27 status-word table, stale critical)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-BSD-01, B-BSD-08 (WAIT part) and B-BSD-02 (label words)"
+  - pldg-20260927-002-wand-back-seat-driver
+preserved_exact_tokens: ["Up to date", "Double-checking", "Paused: usage limit reached", "Caught up", "Finding held", "Quota paused", "context_state", "About an earlier version", "DL-110"]
+negative_constraints:
+  - Do not print an official status word before, beside or after its plain word.
+  - Do not keep a status-word list outside the one table.
+  - Do not show Up to date without a converged cursor and a completed review.
+  - Do not delete the replaced words from BSD-018 or from data; they are superseded for display only.
+owner_hints:
+  - Plans/Back_Seat_Driver.md#20-gui-projection
+  - Plans/Back_Seat_Driver.md#16-typed-records
+```
+
+### BSD-036 - Short Form Of BSD Context Details
+
+```yaml
+plan_unit_id: BSD-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: >-
+  Back Seat Driver's section of Context Details uses a short form (DL-122: card p04, E-04, answered
+  "Allow the short list for these"), a scoped exception to the 2026-09-08 native-card rollback of
+  APR-061 for BSD's details only. It shows a head naming Back Seat Driver with Configure, then one
+  line of three plain facts (the effective mode, the effective advisor model with its Persona, and
+  the trigger sensitivity), then three native disclosures. Advisor notes (N) lists one row per
+  emitted or held finding in the chat, with the severity glyph and word, the title, its state in
+  plain words (Shown in chat, Double-checking, or Dismissed), Why? through cmd.bsd.finding.open, and
+  the dismissal control through cmd.bsd.finding.dismiss; evidence is written as sentences, with the
+  raw record behind Show raw data. Session gives the requested and effective advisor as sentences,
+  the identity, trigger, cursor, epoch, tool profile, compaction, quota, failure, quarantine and
+  watch-guidance facts of BSD-018 as sentences, and Pause advisor, Resume advisor and Stop advisor,
+  each disabled with its exact reason when it cannot run. Usage gives the number of checks, the
+  cost or that cost was not reported (never zero), that it is kept separate from the chat's usage,
+  Inspect usage through cmd.bsd.open_usage, and Advisor transcript through
+  cmd.bsd.open_transcript, disabled with its reason when the advisor's transcript is not retained.
+  There is no metric-card grid and no pill, and no decorative left stripe. Every fact BSD-018
+  requires stays reachable inside a disclosure; the short form changes placement, not the field
+  set. Every surface outside DL-122 keeps the native cards and grids the rollback restored.
+gui_related: true
+gui_classification_reason: Defines the layout and controls of BSD's section of Context Details.
+depends_on: [BSD-018, BSD-027, BSD-033, BSD-035, DL-122]
+unblocks: []
+acceptance_criteria:
+  - BSD's Context Details shows the head, one line of three plain facts, and the Advisor notes, Session and Usage disclosures.
+  - No metric-card grid, pill or decorative left stripe appears in BSD's Context Details.
+  - Each Advisor notes row shows its state as Shown in chat, Double-checking or Dismissed, with Why? and the dismissal control.
+  - Every field BSD-018 lists is reachable inside a disclosure, with raw data behind Show raw data.
+  - Unknown cost reads as not reported and never as zero.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver --base origin/main
+risk_class: advisor_presentation_drift
+reasoning_tier: standard
+context_scope: bsd_context_projection
+implementation_surfaces:
+  - Plans/Back_Seat_Driver.md
+node_compile_hint: {mode: contract_reconciliation_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "Plans/Decision_Log.md DL-122 (card p04, E-04)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json sha256:61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a card p04"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json sha256:4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f answer p04"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de section 8.6 (G-26 content of Context Details)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 line B-BSD-04"
+  - pldg-20260927-002-wand-back-seat-driver
+preserved_exact_tokens: ["Advisor notes", "Shown in chat", "Dismissed", "Show raw data", "cmd.bsd.finding.dismiss", "APR-061", "DL-122"]
+negative_constraints:
+  - Do not render BSD's Context Details as a metric-card grid or with pills.
+  - Do not drop a BSD-018 field because the short form moved it into a disclosure.
+  - Do not extend this exception to any surface outside DL-122.
+owner_hints:
+  - Plans/Back_Seat_Driver.md#25-concise-context-more-details-projection-apr-061
+  - Plans/Back_Seat_Driver.md#20-gui-projection
+```
+
+### BSD-037 - Dismiss Advice And Don't Wait Commands
+
+```yaml
+plan_unit_id: BSD-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: >-
+  Two commands join the BSD family (DL-130: card p15, E-32, answered "Add all seven"; register rows
+  N-2 and N-3). cmd.bsd.finding.dismiss, labelled Dismiss advice, takes BSDFindingDismissRequest and
+  returns BSDFindingDismissResult. It closes one emitted finding for its current evidence
+  fingerprint under the expected epoch, recording state closed with closed_reason
+  dismissed_by_user. It is available only while the finding is emitted and the epoch is current; a
+  prior-epoch request fails stale_epoch, and a finding that is no longer emitted fails
+  already_in_state. The closure is durable across restart and advisor reset, and the finding
+  reopens only when its evidence fingerprint changes, as a recorded reopen, never as a duplicate.
+  Dismissal never deletes evidence and never informs or changes the primary run. Its source
+  surfaces are bsd_note (the dismissal control on a note) and bsd_details (the Advisor notes row of
+  Context Details), and a dismissed finding renders as the one-line dismissed form of BSD-030.
+  cmd.bsd.catch_up.release, labelled Don't wait, takes BSDCatchUpReleaseRequest and returns
+  BSDCatchUpReleaseResult. It ends the current catch-up wait at its boundary under the expected
+  epoch, as if the catch_up_seconds cap had expired at that moment, so the primary continues at
+  once; it is the user abort that §11 requires of every wait. The advisor keeps reviewing, findings
+  that arrive later follow §8 unchanged (including the terminal stale rule of BSD-008 and BSD-032),
+  and the release never pauses, stops, or reconfigures the assignment and never changes
+  catch_up_seconds. With no wait in progress it fails already_in_state. Its source surface is
+  bsd_note (the catch-up line). Both are domain actions owned by this document, with sole future
+  targets handlers::bsd::finding_dismiss and handlers::bsd::catch_up_release; both results carry
+  primary_run_mutated false and authority_granted false. Until their central catalogue rows exist,
+  a dispatch fails command_not_registered and the controls render disabled with that reason.
+gui_related: true
+gui_classification_reason: Binds the visible Dismiss and Don't wait controls to exact commands and their outcomes.
+depends_on: [BSD-008, BSD-010, BSD-015, BSD-030, BSD-033, DL-130]
+unblocks: []
+acceptance_criteria:
+  - Dismiss on an emitted finding closes it with closed_reason dismissed_by_user, and the closure survives restart and advisor reset.
+  - A dismissed finding reopens only on a changed evidence fingerprint, recorded as a reopen.
+  - A prior-epoch dismissal fails stale_epoch and changes nothing.
+  - Don't wait ends the current wait, the primary continues, and the assignment keeps reviewing.
+  - Neither command changes the primary run or grants authority.
+  - Without a catalogue row, both controls render disabled with command_not_registered.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver --base origin/main
+risk_class: command_wiring_drift
+reasoning_tier: high
+context_scope: bsd_command_surface
+implementation_surfaces:
+  - Plans/Back_Seat_Driver.md
+node_compile_hint: {mode: contract_reconciliation_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "Plans/Decision_Log.md DL-130 (card p15, E-32)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json sha256:61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a card p15"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json sha256:4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f answer p15"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f rows N-2 and N-3, D-09, D-11"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 8.6 (Dismiss, catch-up line) and 8.15 (Back Seat Driver rows)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 line B-BSD-05 (WAIT part: N-2, N-3)"
+  - pldg-20260927-002-wand-back-seat-driver
+preserved_exact_tokens: ["cmd.bsd.finding.dismiss", "cmd.bsd.catch_up.release", "BSDFindingDismissRequest", "BSDCatchUpReleaseRequest", "dismissed_by_user", "bsd_note", "bsd_details", "DL-130"]
+negative_constraints:
+  - Do not let dismissal delete evidence or reopen a finding without a changed evidence fingerprint.
+  - Do not let a catch-up release pause, stop or reconfigure the advisor.
+  - Do not let either command change, wake or restart the primary run.
+owner_hints:
+  - Plans/Back_Seat_Driver.md#17-exact-commands-and-command-ownership
+  - Plans/Back_Seat_Driver.md#18-typed-request-result-and-error-enumerations
 ```

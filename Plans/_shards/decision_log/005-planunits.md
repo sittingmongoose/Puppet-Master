@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L2278-L8176
+Source lines: L2793-L9998
 
-Source SHA256: `2ead50cc7bc2c857954ca63dd68ded1ac21be001ec2a5450fb8c99f5806f4541`
+Source SHA256: `de5c970810a44af17252148ef157b5f5baf1cef3a69d692499a1e6556f6f7941`
 
 ---
 
@@ -5906,4 +5906,1311 @@ negative_constraints:
   - Do not read this decision as changing canon theme font tokens.
 owner_hints:
   - Plans/FinalGUISpec.md
+```
+
+### DL-110 - Back Seat Driver Shows Plain Status Words And The Plans Change To Match
+
+```yaml
+plan_unit_id: DL-110
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card n01 (E-10), choosing "Plain words only, and change the Plans
+  to match", that Back Seat Driver shows the plain status words "Up to date", "Double-checking" and
+  "Paused: usage limit reached" in place of "Caught up", "Finding held" and "Quota paused", and that
+  the Plans' exact status words are amended to match by supersession, not deletion.
+gui_related: true
+gui_classification_reason: Records an owner decision about back seat driver status presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "Back Seat Driver status lines show the plain words, not the official word first."
+  - The owner documents supersede the three official status words with the plain words.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: bsd_status_word_drift
+reasoning_tier: high
+context_scope: back_seat_driver_status
+implementation_surfaces:
+  - Plans/Back_Seat_Driver.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-10"
+  - "Plain words only, and change the Plans to match"
+  - "Up to date"
+  - "Double-checking"
+  - "Paused: usage limit reached"
+negative_constraints:
+  - Do not print the official status word before the plain words.
+  - Do not delete the preserved official words without a superseding statement.
+owner_hints:
+  - Plans/Back_Seat_Driver.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-111 - The Coordinator's Mark In A Crew Card Uses The Text Or Seat Colour Not The Accent
+
+```yaml
+plan_unit_id: DL-111
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card n02 (E-17), choosing "Text or seat colour", that the
+  Coordinator's mark in a running Crew card uses the text or seat colour and never the accent, with
+  no exception recorded against the transcript accent budget.
+gui_related: true
+gui_classification_reason: Records an owner decision about crew card marks presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "The Coordinator's mark in a running Crew card paints no accent colour in any theme."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: accent_budget_drift
+reasoning_tier: standard
+context_scope: crew_card_marks
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-17"
+  - "Text or seat colour"
+negative_constraints:
+  - "Do not add the Coordinator's mark as an accent-budget exception."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-112 - A Chat Room Message Sent Mid Round Queues For The Next Round And Can Steer Without Interrupting
+
+```yaml
+plan_unit_id: DL-112
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered card n03 (E-18) on 2026-09-27 by denying the options with his own instruction, that
+  a message typed into a Chat Room mid-round works like the normal chat: it is queued for the
+  next round, and the user may send it immediately to steer without interrupting the round,
+  consistent with DL-108; neither the refuse option nor the build-later wording is taken. Lead
+  ruling applied 2026-09-27: "Send now" delivers the message into the current round as steering
+  without interrupting it; the next speaker reads it first and every later speaker in that round
+  sees it.
+gui_related: true
+gui_classification_reason: Records an owner decision about chat room rounds presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - A mid-round Chat Room message is queued for the next round by default.
+  - The user can send a queued Chat Room message immediately to steer without stopping the round.
+  - After Send now, the next speaker in the current round reads the message first and every later speaker in that round sees it.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_room_send_semantics
+reasoning_tier: high
+context_scope: chat_room_rounds
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-18"
+  - "next round"
+  - "Send now"
+negative_constraints:
+  - Do not refuse a Chat Room message because a round is in progress.
+  - Do not let steering a Chat Room round interrupt or stop it.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+```
+
+### DL-113 - Each Theme Family Gets Its Own Motion Personality For Popups And Chat Cards
+
+```yaml
+plan_unit_id: DL-113
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card n04 (E-22), choosing
+  "Each theme family gets its own motion personality", that popups and chat cards animate with a
+  motion personality per theme family rather than one motion everywhere with a Retro exception, and
+  Reduce Motion stays instant in every family. Lead ruling applied 2026-09-27: the personalities
+  align with the transcript's motion voices (Basic: ink; Friendly: hop; Glass: depth; Retro: type);
+  canon states the principle, and the per-family duration and easing values are the foundation's
+  tokens, recorded at the concept's closing step (FinalGUISpec F3-566).
+gui_related: true
+gui_classification_reason: Records an owner decision about theme motion presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Each theme family has its own named motion rules for popups and chat cards.
+  - "Each family's popup and card motion matches its transcript motion voice: Basic ink, Friendly hop, Glass depth, Retro type."
+  - "Reduce Motion overrides every family's motion with instant changes."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: theme_motion_drift
+reasoning_tier: high
+context_scope: theme_motion
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-22"
+  - "Each theme family gets its own motion personality"
+  - "motion personality"
+  - "Basic: ink; Friendly: hop; Glass: depth; Retro: type"
+negative_constraints:
+  - Do not ship one identical motion for every theme family.
+  - Do not treat the Retro-only exception as the decided rule.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-114 - Setup Popups Keep The Blur Only If Slint 1.18.1 Can Draw It Otherwise They Are Solid
+
+```yaml
+plan_unit_id: DL-114
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered card n05 (E-24) on 2026-09-27 by denying the options with his own instruction, that
+  the setup popups use the extra blur if Slint 1.18.1 no longer has the backdrop-blur limitation and
+  are solid if it still does. The check was recorded on 2026-09-27 (resolved: solid): Slint 1.18.1
+  still cannot draw a blur behind a popup (slint-ui/slint#13502 closed as a duplicate of the open
+  #612; #2066 still open), so the setup popups are solid over a flat scrim, Glass keeps its
+  near-opaque glass-coloured panel, and F3-431's blur budget stays closed (FinalGUISpec F3-566).
+gui_related: true
+gui_classification_reason: Records an owner decision about popup surfaces presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - A recorded check states whether Slint 1.18.1 can draw a blur behind a popup.
+  - The setup popups are blurred if the check passes and solid if it fails.
+  - As recorded on 2026-09-27 the check failed, so no setup popup or scrim uses a backdrop blur.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: popup_surface_backend_drift
+reasoning_tier: high
+context_scope: popup_surfaces
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-24"
+  - "Slint 1.18.1"
+negative_constraints:
+  - Do not canonize blurred or solid popups before the Slint 1.18.1 check is recorded.
+  - Do not add a backdrop blur to a setup popup while Slint cannot draw one.
+  - "Do not read the recorded check as permanent: a later Slint release that can draw a backdrop blur reopens it under Jared's rule."
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-115 - Reduce Motion Means Instant
+
+```yaml
+plan_unit_id: DL-115
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card n06 (E-25), choosing "Instant", that Reduce Motion means
+  instant changes, as the Plans already state, and that the design's 0.12-second fade is not carried
+  into canon.
+gui_related: true
+gui_classification_reason: Records an owner decision about reduced motion presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "With Reduce Motion on, popups and chat cards change state with no transition."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: reduce_motion_drift
+reasoning_tier: standard
+context_scope: reduced_motion
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-25"
+  - "Instant"
+negative_constraints:
+  - Do not replace instant changes with a short fade under Reduce Motion.
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### DL-116 - Applied Taught Rules Are Reported As Followed And The Plans Define What Counts As Following
+
+```yaml
+plan_unit_id: DL-116
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card n07 (E-36), choosing
+  ""Followed", and define what counts as following", that the note for applied taught rules says
+  "Followed" rather than "Used", and that the Plans must define what counts as following, since
+  inclusion of a rule in the prompt alone does not prove it was obeyed. Lead ruling applied
+  2026-09-27: a rule counts as followed when it was given to the assistant and the finished reply
+  passed that rule's check (the rule's testable statement compared with the reply); a failed check
+  shows "Missed 1 of your rules" with a way to see which and ask for a fix; if no check could run,
+  no tick.
+gui_related: true
+gui_classification_reason: Records an owner decision about teach receipts presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - The applied-rules note uses the word Followed.
+  - The owner document defines the evidence that makes a rule count as followed.
+  - A rule counts as followed only when it was given to the assistant and the finished reply passed that rule's check.
+  - "A failed check shows Missed 1 of your rules with a way to see which and ask for a fix; with no check run, no tick shows."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_claim_truthfulness
+reasoning_tier: high
+context_scope: teach_receipts
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-36"
+  - "\"Followed\", and define what counts as following"
+  - "Followed"
+  - "Missed 1 of your rules"
+negative_constraints:
+  - "Do not report a rule as followed merely because it was included in the prompt, once the definition exists."
+  - Do not change the word to Used.
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+```
+
+### DL-117 - Review's Setup Offers Team Presets
+
+```yaml
+plan_unit_id: DL-117
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card n08 (E-37), choosing
+  "Add presets (say which, e.g. "Security + Bugs + Tests")", that Review's setup offers
+  Start from a team presets like the other three kinds rather than hiding the control. Lead ruling
+  applied 2026-09-27: the presets that ship are "Careful review · Security, Bugs and Tests (3
+  reviewers)" (the default), "Quick check · one reviewer" and "Deep audit · 5 reviewers, one of them
+  a Critical Advisor".
+gui_related: true
+gui_classification_reason: Records an owner decision about review setup presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "Review's setup shows a Start from a team control with at least one preset."
+  - "Review offers Careful review (the default), Quick check and Deep audit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: review_preset_gap
+reasoning_tier: high
+context_scope: review_setup
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-37"
+  - "Add presets (say which, e.g. \"Security + Bugs + Tests\")"
+  - "Start from a team"
+  - "Careful review"
+  - "Quick check"
+  - "Deep audit"
+negative_constraints:
+  - Do not hide the Start from a team control on Review.
+  - "Do not treat the card's example as the owner's chosen preset list."
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+```
+
+### DL-118 - The Two Recovery Buttons Use The Plans' Words Retry And Recover
+
+```yaml
+plan_unit_id: DL-118
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card n09 (E-38 (now)), choosing "Use "Retry" and "Recover"", that
+  the two buttons labelled "Try again" and "Open recovery" in the design use the Plans' command
+  words "Retry" and "Recover", with no amendment to the Plans.
+gui_related: true
+gui_classification_reason: Records an owner decision about command labels presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - The two buttons read Retry and Recover.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_label_drift
+reasoning_tier: standard
+context_scope: command_labels
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-38"
+  - "Use \"Retry\" and \"Recover\""
+  - "Retry"
+  - "Recover"
+negative_constraints:
+  - Do not amend the Retry or Recover command labels in the Plans.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+```
+
+### DL-119 - Review And BrainStorm Keep Their Plans Entry Points And The Plans Gain Crew Auto Settings
+
+```yaml
+plan_unit_id: DL-119
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p01 (E-01), choosing "Plans unchanged, except add "Crew Auto
+  settings…"", that the Plans keep Review under the Mode menu and BrainStorm under Deep Plan, add a
+  "Crew Auto settings…" row without renaming "Manage Defaults…", and that the concept's own wand
+  rows stand only until the PMConcept7 port, where the Mode menu opens these popups.
+gui_related: true
+gui_classification_reason: Records an owner decision about wand menu presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - The owner documents list a Crew Auto settings… row.
+  - The owner documents give Review and BrainStorm no wand rows.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: wand_entry_point_drift
+reasoning_tier: standard
+context_scope: wand_menu
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-01"
+  - "Plans unchanged, except add \"Crew Auto settings…\""
+  - "Crew Auto settings…"
+negative_constraints:
+  - Do not add Review or BrainStorm wand rows to the Plans.
+  - Do not rename Manage Defaults… to Crew Auto settings….
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### DL-120 - Crews Are Summonable By The Agent And Crew Auto Is The Project Wide Default That Lets It Use Them
+
+```yaml
+plan_unit_id: DL-120
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered card p02 (E-02) on 2026-09-27 by denying the options with his own instruction, that
+  Crews are summonable by the agent and usable to build plans, that Crew Auto tells the agent it may
+  use Crews when it wants or needs them, and that turning Crew Auto off in the project-wide settings
+  stops it from being on by default. Lead ruling applied 2026-09-27: Crew Auto is the permission for
+  the assistant to start a Crew by itself when it needs one; it is on by default at project level
+  (the settings key's default is a Settings follow-up, outside this compile); a chat's Crew Auto
+  check overrides the project default for that chat; the assistant may start a Crew only when Crew
+  Auto is on and the evaluator (CWR-021) admits the request, so the evaluator remains the gate;
+  "Build With Crew" on a Plan stays a user choice; and the separate per-chat
+  "Allow Crews in this chat" switch is retired into the Crew Auto check.
+gui_related: true
+gui_classification_reason: Records an owner decision about crew auto presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "The owner documents describe Crew Auto as the agent's permission to summon a Crew."
+  - Turning Crew Auto off project-wide makes it off by default in new chats.
+  - "A chat's Crew Auto check overrides the project default for that chat."
+  - "The assistant starts a Crew by itself only when Crew Auto is on and the CWR-021 evaluator admits the request."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: crew_permission_scope_drift
+reasoning_tier: high
+context_scope: crew_auto
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-02"
+  - "summonable by the agent"
+  - "Allow Crews in this chat"
+negative_constraints:
+  - Do not describe Crew as an On/Off switch the user must flip to start a Crew.
+  - "Do not remove the agent's ability to summon a Crew when Crew Auto allows it."
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-121 - Start Is Blocked Until The User Picks A Replacement For An Offline Model
+
+```yaml
+plan_unit_id: DL-121
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p03 (E-03), choosing "Always block Start until you pick a
+  replacement", that when a chosen model is offline Start is always blocked until the user picks a
+  replacement, with no automatic same-provider stand-in and no substitution policy in the saved
+  setup, resolving the Plans' contradiction in favour of the blocking rule.
+gui_related: true
+gui_classification_reason: Records an owner decision about collaboration start presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Start stays disabled while any chosen model is offline and unreplaced.
+  - Start enables once the user picks a replacement.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: model_substitution_drift
+reasoning_tier: standard
+context_scope: collaboration_start
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Models_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-03"
+  - "Always block Start until you pick a replacement"
+  - "Always block Start"
+negative_constraints:
+  - Do not substitute another model for an offline chosen model automatically.
+  - Do not add a substitution policy to the saved setup.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Models_System.md
+```
+
+### DL-122 - Activity Shows A Short Team List For The Four Collaboration Kinds And Back Seat Driver
+
+```yaml
+plan_unit_id: DL-122
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p04 (E-04), choosing "Allow the short list for these", that
+  Activity shows a short team list for Crew, Chat Room, BrainStorm and Review and a compact form for
+  Back Seat Driver's details, with the full detail in the run view, as a scoped exception to the
+  2026-09-08 rollback that applies to these five only.
+gui_related: true
+gui_classification_reason: Records an owner decision about activity detail presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Activity renders the short team list for the four collaboration kinds and Back Seat Driver.
+  - Every other Activity surface keeps the native cards and grids of the 2026-09-08 rollback.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: activity_rollback_scope
+reasoning_tier: standard
+context_scope: activity_detail
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Back_Seat_Driver.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-04"
+  - "Allow the short list for these"
+negative_constraints:
+  - Do not widen the exception beyond the four collaboration kinds and Back Seat Driver.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Back_Seat_Driver.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-123 - A Collapsed Or Narrow Run Card May Move Its Actions Behind Expand And Its Helper Count Into A Hover Card
+
+```yaml
+plan_unit_id: DL-123
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p05 (E-05), choosing "Allow it", that a collapsed or narrow
+  run card may put Open Panel, Message and More behind Expand and the helper count in the hover
+  card, and that a finished run's Message button shows why it is disabled, amending the Plans'
+  always-shown list.
+gui_related: true
+gui_classification_reason: Records an owner decision about run card density presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "A collapsed or narrow run card reaches Open Panel, Message and More through Expand."
+  - "A finished run's Message button states its disabled reason."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: card_density_contract
+reasoning_tier: standard
+context_scope: run_card_density
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-05"
+  - "Allow it"
+negative_constraints:
+  - Do not drop an action from a collapsed card without an Expand path to it.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-124 - Screens Say Helpers And The Data Keeps Participant
+
+```yaml
+plan_unit_id: DL-124
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p06 (E-06), choosing ""Helpers" on screen", that screens say
+  "helpers" (and "reviewers" for Review) instead of "participants", while the data keeps the field
+  name participant, and that the Plans' examples and the composer label change to match.
+gui_related: true
+gui_classification_reason: Records an owner decision about collaboration copy presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "User-facing text says helpers or reviewers, never participants."
+  - Data contracts keep participant.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: terminology_drift
+reasoning_tier: standard
+context_scope: collaboration_copy
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-06"
+  - "\"Helpers\" on screen"
+  - "participant"
+negative_constraints:
+  - Do not rename the participant field in data contracts.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+```
+
+### DL-125 - Send Findings To Agent Fills The Message Box Instead Of Sending
+
+```yaml
+plan_unit_id: DL-125
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p07 (E-07), choosing "Fill the message box", that Send
+  Findings To Agent fills the message box with an editable fix request and sends nothing until the
+  user presses Send, changing the existing command's result and refusal and adding a lineage field.
+gui_related: true
+gui_classification_reason: Records an owner decision about review findings presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Send Findings To Agent leaves an editable request in the message box and starts no turn.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_semantics_change
+reasoning_tier: standard
+context_scope: review_findings
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-07"
+  - "Fill the message box"
+  - "Send Findings To Agent"
+negative_constraints:
+  - Do not send the findings request without the user pressing Send.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### DL-126 - ELI5's Scope And Per Chat Toggle Are Open On The Owner's Question
+
+```yaml
+plan_unit_id: DL-126
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered card p08 (E-11) on 2026-09-27 by asking a question back, that ELI5 is not yet
+  decided: Jared stated his original intent (a project-level default with a per-chat toggle that
+  changes only that chat) and asked whether that would require two responses or a resent response
+  when toggled; the popup-or-toggle, project level and dual-copy parts remain open. Proposed answer
+  (lead, 2026-09-27), awaiting Jared's confirmation and not decided: switching affects only replies
+  written after the switch, the assistant never re-sends, an optional on-demand "Explain this reply
+  simply" re-explains one reply, and ELI5 has a project default with a per-chat override.
+gui_related: true
+gui_classification_reason: Records an owner decision about eli5 presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "No owner document changes ELI5's form, scope or dual copy on the strength of this entry."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: eli5_scope_undecided
+reasoning_tier: high
+context_scope: eli5
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Settings_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-11"
+  - "project-level"
+  - "two responses"
+negative_constraints:
+  - Do not compile any ELI5 waiting line from this entry alone.
+  - "Do not compile ELI5 behaviour from the lead's proposed answer before Jared confirms it."
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Settings_System.md
+```
+
+### DL-127 - Teach Opens The Teach Popup Everywhere
+
+```yaml
+plan_unit_id: DL-127
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p09 (E-12), choosing "The popup everywhere", that /teach and
+  the wand both open the Teach popup, prefilled from what was typed, superseding the Plans' in-chat
+  capture card with no capture card planned for later.
+gui_related: true
+gui_classification_reason: Records an owner decision about teach presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Typing /teach opens the Teach popup prefilled from the typed text.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: teach_entry_drift
+reasoning_tier: standard
+context_scope: teach
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-12"
+  - "The popup everywhere"
+  - "/teach"
+negative_constraints:
+  - Do not add an in-chat capture card for /teach.
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### DL-128 - The Coordinator Writes Each Crew Part's Done When And Must Finish First
+
+```yaml
+plan_unit_id: DL-128
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p10 (E-14), choosing "The Coordinator writes them", that the
+  Coordinator writes each Crew part's what-done-looks-like and what-must-finish-first when it splits
+  the job, shown and questionable in the run view, superseding the Plans' setup fields for them.
+gui_related: true
+gui_classification_reason: Records an owner decision about crew planning presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "The run view shows each part's Coordinator-written done criteria and prerequisites."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: crew_spec_authorship
+reasoning_tier: standard
+context_scope: crew_planning
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-14"
+  - "The Coordinator writes them"
+negative_constraints:
+  - Do not add done-criteria or prerequisite fields to the Crew setup popup.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+```
+
+### DL-129 - The Live Run Line And Per Reply Files Row Replace The Old Summary Above The Message Box
+
+```yaml
+plan_unit_id: DL-129
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p13 (E-27), choosing "Replace the old summary", that the
+  live-run line and the per-reply files row replace the Plans' footer summary above the message box,
+  and that the chat's total file count moves to Activity.
+gui_related: true
+gui_classification_reason: Records an owner decision about composer footer presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Nothing but the live-run line sits above the message box for collaboration state.
+  - "Activity shows the chat's total file count."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: composer_chrome_stacking
+reasoning_tier: standard
+context_scope: composer_footer
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-27"
+  - "Replace the old summary"
+negative_constraints:
+  - Do not keep the old footer summary alongside the live-run line.
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-130 - All Seven New Commands Are Added
+
+```yaml
+plan_unit_id: DL-130
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p15 (E-32), choosing "Add all seven", that all seven new
+  commands are registered: End discussion, Dismiss advice, Don't wait, Turn off a rule, Lock a rule,
+  Export memory and the Wonderer's Check it, with none left demo-only.
+gui_related: true
+gui_classification_reason: Records an owner decision about command catalog presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - The command catalog registers all seven commands.
+  - No popup button among them is demo-only.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_catalog_gap
+reasoning_tier: standard
+context_scope: command_catalog
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Back_Seat_Driver.md
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-32"
+  - "Add all seven"
+  - "End discussion"
+  - "Dismiss advice"
+  - "Don't wait"
+  - "Export memory"
+  - "Check it"
+negative_constraints:
+  - Do not leave Export memory or Check it as demo-only controls.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Back_Seat_Driver.md
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+```
+
+### DL-131 - A Crew's Own Time And Cost Limit Overrides The General Run Limit
+
+```yaml
+plan_unit_id: DL-131
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p16 (E-33), choosing
+  "The Crew's own limit overrides the general one", that a Crew's own time and cost limit overrides
+  the app's general run limit rather than the tighter limit winning. Lead ruling applied 2026-09-27:
+  the kind's own limit applies to every collaboration kind (they share one limit row), and a run
+  that reaches its own limit ends as stopped with the reason "Stopped at your limit", a stop reason
+  on the terminal run, not a new state.
+gui_related: true
+gui_classification_reason: Records an owner decision about run limits presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "A Crew run's effective time and cost limit is the Crew's own limit when one is set."
+  - "Every collaboration kind applies its own limit from the shared limit row."
+  - "A run that reaches its own limit ends as stopped with the reason Stopped at your limit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: run_limit_precedence
+reasoning_tier: high
+context_scope: run_limits
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-33"
+  - "The Crew's own limit overrides the general one"
+  - "Stopped at your limit"
+negative_constraints:
+  - "Do not clamp a Crew's own limit to the general run limit."
+  - "Do not add a limit-reached run state; the limit is a stop reason on a stopped run."
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/usage-feature.md
+```
+
+### DL-132 - This Chat's Assistant Checks The Work Of A Helper Who Is Also The Coordinator
+
+```yaml
+plan_unit_id: DL-132
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p17 (E-34), choosing "This chat's assistant", that when a
+  helper is also the Coordinator, this chat's assistant checks that helper's own part, preserving
+  the rule that no one approves their own work.
+gui_related: false
+gui_classification_reason: "Records an owner decision about crew review behaviour, not UI presentation."
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "A Coordinator-helper's own part is reviewed by the chat's assistant."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: self_approval
+reasoning_tier: standard
+context_scope: crew_review
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-34"
+  - "This chat's assistant"
+negative_constraints:
+  - Do not let a Coordinator approve its own part.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+```
+
+### DL-133 - The Team Preset Personas Are Registered For Team Use And Grill Me Is A Skill
+
+```yaml
+plan_unit_id: DL-133
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p18 (E-35), choosing "Register them; Grill Me is a skill",
+  that Product Manager, Architect, Implementer, Reviewer, Critical Advisor and Wonderer are
+  registered as Personas for team use and that Grill Me is a methodology skill, not a Persona.
+gui_related: false
+gui_classification_reason: "Records an owner decision about personas behaviour, not UI presentation."
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - The Persona registry lists the six Personas as usable in collaboration teams.
+  - "Grill Me is registered as a skill, not a Persona."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: persona_registry_gap
+reasoning_tier: standard
+context_scope: personas
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Personas.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-35"
+  - "Register them; Grill Me is a skill"
+  - "Critical Advisor"
+negative_constraints:
+  - Do not register Grill Me as a Persona.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Personas.md
+```
+
+### DL-134 - Three Official Labels Change To Friendlier Words And Two Data Words Get Plain Display Words
+
+```yaml
+plan_unit_id: DL-134
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p19 (E-38 (Plans)), choosing "Yes to all of it", that "Name it
+  for me" replaces Regenerate Title, "Write the plan" replaces Synthesize and "Save as default"
+  replaces Save as Default, and that Gist Review and frozen target pack keep their data words while
+  the screen shows "Notes it took" and "snapshot".
+gui_related: true
+gui_classification_reason: Records an owner decision about command labels presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "The three labels read Name it for me, Write the plan and Save as default."
+  - Data keeps Gist Review and frozen target pack while the screen shows Notes it took and snapshot.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_label_drift
+reasoning_tier: high
+context_scope: command_labels
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+preserved_exact_tokens:
+  - "E-38"
+  - "Yes to all of it"
+  - "Name it for me"
+  - "Write the plan"
+  - "Save as default"
+  - "Notes it took"
+  - "snapshot"
+negative_constraints:
+  - Do not rename Gist Review or frozen target pack in data contracts.
+  - "Do not drop the old labels' preserved tokens without a superseding statement."
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### DL-135 - Crew Auto Leaves A One Line Note In The Chat Worded For The Project
+
+```yaml
+plan_unit_id: DL-135
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p11 (E-15), choosing "Keep the note, worded for the project",
+  that turning Crew Auto on leaves a one-line note in the chat worded for the project,
+  "Crew Auto is on for this project", so the user can see when it changed, even though Crew Auto is
+  a project-wide setting. Lead ruling applied 2026-09-27: Collaborative Workflows owns the note,
+  beside the Crew Auto evaluator (CWR-021) and the Crew Auto permission of DL-120.
+gui_related: true
+gui_classification_reason: Records an owner decision about crew auto presentation or behaviour.
+split_recommended: false
+depends_on: [DL-120]
+unblocks: []
+acceptance_criteria:
+  - "Turning Crew Auto on leaves one line in the chat worded for the project."
+  - "The note's owner is Plans/Collaborative_Workflows.md."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: crew_auto_chat_record
+reasoning_tier: standard
+context_scope: crew_auto
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - "ANSWERS.json answer record p11 (SHA-256 d08c3551305290fafe43acaffd78d43f9f8d9cdb00a87e4d21bb34603a61969d, answered 2026-09-27T21:37:48Z; the /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json copy predates it)"
+preserved_exact_tokens:
+  - "E-15"
+  - "Keep the note, worded for the project"
+  - "Crew Auto is on for this project"
+negative_constraints:
+  - "Do not drop the note when Crew Auto is turned on."
+  - "Do not add more than one line to the chat for a Crew Auto change."
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/UI_Command_Catalog.md
 ```

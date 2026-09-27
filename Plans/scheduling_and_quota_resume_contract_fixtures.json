@@ -1,0 +1,1023 @@
+{
+  "schema_id": "pm.scheduling_and_quota_resume.contract_fixtures.v1",
+  "schema_version": "1.0.0",
+  "owner_schema": "Plans/scheduling_and_quota_resume_contracts.schema.json",
+  "revision": "wand-modules-redesign-2026-09-27",
+  "scope": "Static contract-shape cases for the six command request/result pairs this file defines (ledger pldg-20260927-003-wand-scheduling, B-SQR-09; SQR-013, SQR-015, SQR-017). A passing case proves a shape only: no handler, catalogue admission, storage, event, timer or native dispatch.",
+  "valid": [
+    {
+      "name": "schedule_message_text_from_composer",
+      "definition": "ScheduledMessageCreateRequest",
+      "value": {
+        "schema_id": "pm.chat.scheduled_message_create_request.v1",
+        "request_type": "ScheduledMessageCreateRequest",
+        "command_id": "cmd.chat.schedule_message",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-create:1",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-create:1",
+        "source_surface": "schedule_sheet",
+        "return_route": "route:assistant:thread:fixture",
+        "thread_id": "thread:fixture:1",
+        "destination_ref": "destination:assistant:thread:fixture:1",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r12",
+        "text": "Please rebase the storage branch onto main and run the migration tests.",
+        "text_from_composer": true,
+        "composer_buffer_ref": "composer-buffer:thread:fixture:1",
+        "attachment_refs": [
+          "attachment:fixture:log-1"
+        ],
+        "requested_runtime_snapshot_ref": "runtime-snapshot:fixture:model-a",
+        "send_at": {
+          "scheduled_at_utc": "2026-09-28T13:00:00Z",
+          "timezone": "Europe/Berlin",
+          "local_wall_time": "2026-09-28T15:00"
+        },
+        "missed_policy": "hold",
+        "grace_seconds": null
+      }
+    },
+    {
+      "name": "schedule_message_typed_in_sheet_with_empty_composer",
+      "definition": "ScheduledMessageCreateRequest",
+      "value": {
+        "schema_id": "pm.chat.scheduled_message_create_request.v1",
+        "request_type": "ScheduledMessageCreateRequest",
+        "command_id": "cmd.chat.schedule_message",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-create:2",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-create:2",
+        "source_surface": "schedule_sheet",
+        "return_route": "route:assistant:thread:fixture",
+        "thread_id": "thread:fixture:1",
+        "destination_ref": "destination:assistant:thread:fixture:1",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r12",
+        "text": "Remind the crew to post the nightly summary.",
+        "text_from_composer": false,
+        "composer_buffer_ref": null,
+        "attachment_refs": [],
+        "requested_runtime_snapshot_ref": "runtime-snapshot:fixture:model-a",
+        "send_at": {
+          "scheduled_at_utc": "2026-09-28T13:00:00Z",
+          "timezone": "Europe/Berlin",
+          "local_wall_time": "2026-09-28T15:00"
+        },
+        "missed_policy": "cancel_after_grace",
+        "grace_seconds": 1800
+      }
+    },
+    {
+      "name": "schedule_message_accepted_clears_composer_after_commit",
+      "definition": "ScheduledMessageCreateResult",
+      "value": {
+        "schema_id": "pm.chat.scheduled_message_create_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ScheduledMessageCreateResult",
+        "command_id": "cmd.chat.schedule_message",
+        "command_instance_id": "cmdi:sched-create:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:scheduled-message:fixture:1",
+        "scheduled_dispatch_id": "sched-dispatch:fixture:1",
+        "snapshot_ref": "snapshot:scheduled-message:fixture:1:r1",
+        "revision": 1,
+        "state": "scheduled",
+        "composer_cleared": true
+      }
+    },
+    {
+      "name": "schedule_message_rejected_creates_nothing",
+      "definition": "ScheduledMessageCreateResult",
+      "value": {
+        "schema_id": "pm.chat.scheduled_message_create_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ScheduledMessageCreateResult",
+        "command_id": "cmd.chat.schedule_message",
+        "command_instance_id": "cmdi:sched-create:3",
+        "outcome": "rejected",
+        "error_code": "invalid_request",
+        "projection_ref": "projection:scheduled-message:fixture:1",
+        "scheduled_dispatch_id": null,
+        "snapshot_ref": null,
+        "revision": null,
+        "state": null,
+        "composer_cleared": false
+      }
+    },
+    {
+      "name": "send_now_on_held_message",
+      "definition": "ScheduledMessageUpdateRequest",
+      "value": {
+        "schema_id": "pm.chat.scheduled_message_update_request.v1",
+        "request_type": "ScheduledMessageUpdateRequest",
+        "command_id": "cmd.chat.schedule_message.update",
+        "expected_revision": 2,
+        "scheduled_dispatch_id": "sched-dispatch:fixture:1",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r14",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-update:1",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-update:1",
+        "source_surface": "scheduled_message_card",
+        "return_route": "route:assistant:thread:fixture",
+        "changes": null,
+        "reschedule_to": "now"
+      }
+    },
+    {
+      "name": "edit_and_send",
+      "definition": "ScheduledMessageUpdateRequest",
+      "value": {
+        "schema_id": "pm.chat.scheduled_message_update_request.v1",
+        "request_type": "ScheduledMessageUpdateRequest",
+        "command_id": "cmd.chat.schedule_message.update",
+        "expected_revision": 2,
+        "scheduled_dispatch_id": "sched-dispatch:fixture:1",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r14",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-update:2",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-update:2",
+        "source_surface": "scheduled_message_card",
+        "return_route": "route:assistant:thread:fixture",
+        "changes": {
+          "text": "Please rebase onto main, then run only the migration tests."
+        },
+        "reschedule_to": "now"
+      }
+    },
+    {
+      "name": "reschedule_from_schedule_manager",
+      "definition": "ScheduledMessageUpdateRequest",
+      "value": {
+        "schema_id": "pm.chat.scheduled_message_update_request.v1",
+        "request_type": "ScheduledMessageUpdateRequest",
+        "command_id": "cmd.chat.schedule_message.update",
+        "expected_revision": 2,
+        "scheduled_dispatch_id": "sched-dispatch:fixture:1",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r14",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-update:3",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-update:3",
+        "source_surface": "schedule_manager",
+        "return_route": "route:assistant:thread:fixture",
+        "changes": null,
+        "reschedule_to": {
+          "scheduled_at_utc": "2026-09-29T06:30:00Z",
+          "timezone": "Europe/Berlin",
+          "local_wall_time": "2026-09-29T08:30"
+        }
+      }
+    },
+    {
+      "name": "edit_missed_policy_from_details",
+      "definition": "ScheduledMessageUpdateRequest",
+      "value": {
+        "schema_id": "pm.chat.scheduled_message_update_request.v1",
+        "request_type": "ScheduledMessageUpdateRequest",
+        "command_id": "cmd.chat.schedule_message.update",
+        "expected_revision": 2,
+        "scheduled_dispatch_id": "sched-dispatch:fixture:1",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r14",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-update:4",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-update:4",
+        "source_surface": "schedule_details",
+        "return_route": "route:assistant:thread:fixture",
+        "changes": {
+          "missed_policy": "next_available",
+          "grace_seconds": null
+        },
+        "reschedule_to": null
+      }
+    },
+    {
+      "name": "send_now_accepted_same_identity_new_revision",
+      "definition": "ScheduledMessageUpdateResult",
+      "value": {
+        "schema_id": "pm.chat.scheduled_message_update_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ScheduledMessageUpdateResult",
+        "command_id": "cmd.chat.schedule_message.update",
+        "command_instance_id": "cmdi:sched-update:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:scheduled-message:fixture:1",
+        "scheduled_dispatch_id": "sched-dispatch:fixture:1",
+        "resulting_revision": 3,
+        "state": "scheduled",
+        "snapshot_ref": "snapshot:scheduled-message:fixture:1:r3",
+        "scheduled_at_utc": "2026-09-28T07:12:05Z"
+      }
+    },
+    {
+      "name": "update_refused_after_dispatch_started",
+      "definition": "ScheduledMessageUpdateResult",
+      "value": {
+        "schema_id": "pm.chat.scheduled_message_update_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ScheduledMessageUpdateResult",
+        "command_id": "cmd.chat.schedule_message.update",
+        "command_instance_id": "cmdi:sched-update:5",
+        "outcome": "rejected",
+        "error_code": "dispatch_already_started",
+        "projection_ref": "projection:scheduled-message:fixture:1",
+        "scheduled_dispatch_id": "sched-dispatch:fixture:1",
+        "resulting_revision": 2,
+        "state": "held",
+        "snapshot_ref": "snapshot:scheduled-message:fixture:1:r2",
+        "scheduled_at_utc": "2026-09-28T06:00:00Z"
+      }
+    },
+    {
+      "name": "cancel_from_card",
+      "definition": "ScheduledMessageCancelRequest",
+      "value": {
+        "schema_id": "pm.chat.scheduled_message_cancel_request.v1",
+        "request_type": "ScheduledMessageCancelRequest",
+        "command_id": "cmd.chat.schedule_message.cancel",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-cancel:1",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-cancel:1",
+        "source_surface": "scheduled_message_card",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 2,
+        "scheduled_dispatch_id": "sched-dispatch:fixture:2",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r14"
+      }
+    },
+    {
+      "name": "cancel_accepted_retains_snapshot",
+      "definition": "ScheduledMessageCancelResult",
+      "value": {
+        "schema_id": "pm.chat.scheduled_message_cancel_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ScheduledMessageCancelResult",
+        "command_id": "cmd.chat.schedule_message.cancel",
+        "command_instance_id": "cmdi:sched-cancel:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:scheduled-message:fixture:2",
+        "scheduled_dispatch_id": "sched-dispatch:fixture:2",
+        "resulting_revision": 3,
+        "state": "cancelled",
+        "snapshot_retained": true
+      }
+    },
+    {
+      "name": "build_at_nightly_crew_one_command",
+      "definition": "AssistantPlanScheduleRequest",
+      "value": {
+        "schema_id": "pm.chat.plan_schedule_request.v1",
+        "request_type": "AssistantPlanScheduleRequest",
+        "command_id": "cmd.chat.plan.schedule_build",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:plan-schedule:1",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:plan-schedule:1",
+        "source_surface": "plan_schedule",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 4,
+        "assistant_plan_id": "assistant-plan:fixture:storage",
+        "exact_target_version": 2,
+        "exact_target_hash": "3f2a9c1e5b7d4f608a1c2e3b4d5f60718293a4b5c6d7e8f90a1b2c3d4e5f6071",
+        "execution_topology": "crew",
+        "collaboration_definition_ref": "collaboration-definition:fixture:crew-3",
+        "window": {
+          "schedule_kind": "recurring_window",
+          "timezone": "America/Chicago",
+          "local_start_date": null,
+          "local_start": "22:00",
+          "local_pause": "02:00",
+          "days_of_week": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "wind_down_seconds": 600,
+          "missed_policy": "cancel_after_grace",
+          "grace_seconds": 900,
+          "auto_resume_next_window": true,
+          "dst_policy": "preserve_local_wall_clock"
+        },
+        "reschedule_of_schedule_id": null
+      }
+    },
+    {
+      "name": "build_at_one_time_agent",
+      "definition": "AssistantPlanScheduleRequest",
+      "value": {
+        "schema_id": "pm.chat.plan_schedule_request.v1",
+        "request_type": "AssistantPlanScheduleRequest",
+        "command_id": "cmd.chat.plan.schedule_build",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:plan-schedule:2",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:plan-schedule:2",
+        "source_surface": "plan_schedule",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 4,
+        "assistant_plan_id": "assistant-plan:fixture:storage",
+        "exact_target_version": 2,
+        "exact_target_hash": "3f2a9c1e5b7d4f608a1c2e3b4d5f60718293a4b5c6d7e8f90a1b2c3d4e5f6071",
+        "execution_topology": "agent",
+        "collaboration_definition_ref": null,
+        "window": {
+          "schedule_kind": "one_time",
+          "timezone": "Asia/Tokyo",
+          "local_start_date": "2026-10-02",
+          "local_start": "23:30",
+          "local_pause": null,
+          "days_of_week": [],
+          "wind_down_seconds": 300,
+          "missed_policy": "hold",
+          "grace_seconds": null,
+          "auto_resume_next_window": false,
+          "dst_policy": "preserve_local_wall_clock"
+        },
+        "reschedule_of_schedule_id": null
+      }
+    },
+    {
+      "name": "use_v3_explicit_reschedule_from_plan_card",
+      "definition": "AssistantPlanScheduleRequest",
+      "value": {
+        "schema_id": "pm.chat.plan_schedule_request.v1",
+        "request_type": "AssistantPlanScheduleRequest",
+        "command_id": "cmd.chat.plan.schedule_build",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:plan-schedule:3",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:plan-schedule:3",
+        "source_surface": "plan_card",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 5,
+        "assistant_plan_id": "assistant-plan:fixture:storage",
+        "exact_target_version": 3,
+        "exact_target_hash": "8e7d6c5b4a39281706f5e4d3c2b1a09f8e7d6c5b4a39281706f5e4d3c2b1a09f",
+        "execution_topology": "goal_driven",
+        "collaboration_definition_ref": null,
+        "window": {
+          "schedule_kind": "recurring_window",
+          "timezone": "America/Chicago",
+          "local_start_date": null,
+          "local_start": "22:00",
+          "local_pause": "02:00",
+          "days_of_week": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "wind_down_seconds": 600,
+          "missed_policy": "cancel_after_grace",
+          "grace_seconds": 900,
+          "auto_resume_next_window": true,
+          "dst_policy": "preserve_local_wall_clock"
+        },
+        "reschedule_of_schedule_id": "exec-schedule:fixture:1"
+      }
+    },
+    {
+      "name": "build_at_accepted_atomic_binding",
+      "definition": "ExecutionScheduleResult",
+      "value": {
+        "schema_id": "pm.execution.schedule_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ExecutionScheduleResult",
+        "command_id": "cmd.chat.plan.schedule_build",
+        "command_instance_id": "cmdi:plan-schedule:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:plan-card:fixture:storage",
+        "schedule_id": "exec-schedule:fixture:1",
+        "binding_ref": "schedule-run-binding:fixture:1",
+        "revision": 1,
+        "schedule_state": "active",
+        "exact_target_version": 2,
+        "exact_target_hash": "3f2a9c1e5b7d4f608a1c2e3b4d5f60718293a4b5c6d7e8f90a1b2c3d4e5f6071",
+        "execution_topology": "crew",
+        "window": {
+          "schedule_kind": "recurring_window",
+          "timezone": "America/Chicago",
+          "local_start_date": null,
+          "local_start": "22:00",
+          "local_pause": "02:00",
+          "days_of_week": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "wind_down_seconds": 600,
+          "missed_policy": "cancel_after_grace",
+          "grace_seconds": 900,
+          "auto_resume_next_window": true,
+          "dst_policy": "preserve_local_wall_clock"
+        },
+        "superseded_schedule_id": null,
+        "run_admitted": false
+      }
+    },
+    {
+      "name": "use_v3_accepted_names_superseded_schedule",
+      "definition": "ExecutionScheduleResult",
+      "value": {
+        "schema_id": "pm.execution.schedule_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ExecutionScheduleResult",
+        "command_id": "cmd.chat.plan.schedule_build",
+        "command_instance_id": "cmdi:plan-schedule:3",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:plan-card:fixture:storage",
+        "schedule_id": "exec-schedule:fixture:2",
+        "binding_ref": "schedule-run-binding:fixture:2",
+        "revision": 1,
+        "schedule_state": "active",
+        "exact_target_version": 3,
+        "exact_target_hash": "8e7d6c5b4a39281706f5e4d3c2b1a09f8e7d6c5b4a39281706f5e4d3c2b1a09f",
+        "execution_topology": "goal_driven",
+        "window": {
+          "schedule_kind": "recurring_window",
+          "timezone": "America/Chicago",
+          "local_start_date": null,
+          "local_start": "22:00",
+          "local_pause": "02:00",
+          "days_of_week": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "wind_down_seconds": 600,
+          "missed_policy": "cancel_after_grace",
+          "grace_seconds": 900,
+          "auto_resume_next_window": true,
+          "dst_policy": "preserve_local_wall_clock"
+        },
+        "superseded_schedule_id": "exec-schedule:fixture:1",
+        "run_admitted": false
+      }
+    },
+    {
+      "name": "build_at_rejected_no_half_schedule",
+      "definition": "ExecutionScheduleResult",
+      "value": {
+        "schema_id": "pm.execution.schedule_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ExecutionScheduleResult",
+        "command_id": "cmd.chat.plan.schedule_build",
+        "command_instance_id": "cmdi:plan-schedule:4",
+        "outcome": "rejected",
+        "error_code": "target_version_changed",
+        "projection_ref": "projection:plan-card:fixture:storage",
+        "schedule_id": null,
+        "binding_ref": null,
+        "revision": null,
+        "schedule_state": null,
+        "exact_target_version": 2,
+        "exact_target_hash": "3f2a9c1e5b7d4f608a1c2e3b4d5f60718293a4b5c6d7e8f90a1b2c3d4e5f6071",
+        "execution_topology": "crew",
+        "window": null,
+        "superseded_schedule_id": null,
+        "run_admitted": false
+      }
+    },
+    {
+      "name": "edit_build_window_from_manager",
+      "definition": "ExecutionWindowUpdateRequest",
+      "value": {
+        "schema_id": "pm.execution.window_update_request.v1",
+        "request_type": "ExecutionWindowUpdateRequest",
+        "command_id": "cmd.execution_window.update",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:window-update:1",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:window-update:1",
+        "source_surface": "schedule_manager",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 1,
+        "schedule_id": "exec-schedule:fixture:1",
+        "window": {
+          "schedule_kind": "recurring_window",
+          "timezone": "America/Chicago",
+          "local_start_date": null,
+          "local_start": "22:00",
+          "local_pause": "01:30",
+          "days_of_week": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "wind_down_seconds": 600,
+          "missed_policy": "next_available",
+          "grace_seconds": null,
+          "auto_resume_next_window": true,
+          "dst_policy": "preserve_local_wall_clock"
+        }
+      }
+    },
+    {
+      "name": "edit_build_window_accepted",
+      "definition": "ExecutionWindowUpdateResult",
+      "value": {
+        "schema_id": "pm.execution.window_update_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ExecutionWindowUpdateResult",
+        "command_id": "cmd.execution_window.update",
+        "command_instance_id": "cmdi:window-update:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:schedule-manager:fixture",
+        "schedule_id": "exec-schedule:fixture:1",
+        "resulting_revision": 2,
+        "schedule_state": "active",
+        "window": {
+          "schedule_kind": "recurring_window",
+          "timezone": "America/Chicago",
+          "local_start_date": null,
+          "local_start": "22:00",
+          "local_pause": "01:30",
+          "days_of_week": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "wind_down_seconds": 600,
+          "missed_policy": "next_available",
+          "grace_seconds": null,
+          "auto_resume_next_window": true,
+          "dst_policy": "preserve_local_wall_clock"
+        },
+        "in_flight_admission_changed": false
+      }
+    },
+    {
+      "name": "cancel_schedule_by_schedule_id",
+      "definition": "ExecutionWindowCancelRequest",
+      "value": {
+        "schema_id": "pm.execution.window_cancel_request.v1",
+        "request_type": "ExecutionWindowCancelRequest",
+        "command_id": "cmd.execution_window.cancel",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:window-cancel:1",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:window-cancel:1",
+        "source_surface": "schedule_manager",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 1,
+        "schedule_id": "exec-schedule:fixture:1"
+      }
+    },
+    {
+      "name": "cancel_invalidated_schedule_from_plan_card",
+      "definition": "ExecutionWindowCancelRequest",
+      "value": {
+        "schema_id": "pm.execution.window_cancel_request.v1",
+        "request_type": "ExecutionWindowCancelRequest",
+        "command_id": "cmd.execution_window.cancel",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:window-cancel:2",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:window-cancel:2",
+        "source_surface": "plan_card",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 2,
+        "schedule_id": "exec-schedule:fixture:3"
+      }
+    },
+    {
+      "name": "cancel_schedule_accepted_is_not_a_stop",
+      "definition": "ExecutionWindowCancelResult",
+      "value": {
+        "schema_id": "pm.execution.window_cancel_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ExecutionWindowCancelResult",
+        "command_id": "cmd.execution_window.cancel",
+        "command_instance_id": "cmdi:window-cancel:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:schedule-manager:fixture",
+        "schedule_id": "exec-schedule:fixture:1",
+        "resulting_revision": 2,
+        "schedule_state": "cancelled",
+        "admitted_work_stopped": false
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "whitespace_only_sheet_text",
+      "definition": "ScheduledMessageCreateRequest",
+      "base_valid": "schedule_message_typed_in_sheet_with_empty_composer",
+      "expected_error": "schedule_text_not_empty: the sheet text needs a non-whitespace character (SQR-013)",
+      "patch": {
+        "text": "   \n "
+      }
+    },
+    {
+      "name": "empty_sheet_text",
+      "definition": "ScheduledMessageCreateRequest",
+      "base_valid": "schedule_message_text_from_composer",
+      "expected_error": "schedule_text_not_empty (SQR-013)",
+      "patch": {
+        "text": ""
+      }
+    },
+    {
+      "name": "wand_row_as_producer",
+      "definition": "ScheduledMessageCreateRequest",
+      "base_valid": "schedule_message_text_from_composer",
+      "expected_error": "the wand row only opens the sheet; schedule_sheet is the only producer (SQR-013, UCC-169)",
+      "patch": {
+        "source_surface": "wand"
+      }
+    },
+    {
+      "name": "composer_text_without_buffer_ref",
+      "definition": "ScheduledMessageCreateRequest",
+      "base_valid": "schedule_message_text_from_composer",
+      "expected_error": "text from the composer names its buffer so only that buffer clears after commit",
+      "patch": {
+        "composer_buffer_ref": null
+      }
+    },
+    {
+      "name": "sheet_text_names_composer_buffer",
+      "definition": "ScheduledMessageCreateRequest",
+      "base_valid": "schedule_message_typed_in_sheet_with_empty_composer",
+      "expected_error": "text not from the composer must not clear the composer",
+      "patch": {
+        "composer_buffer_ref": "composer-buffer:thread:fixture:1"
+      }
+    },
+    {
+      "name": "cancel_after_grace_without_grace",
+      "definition": "ScheduledMessageCreateRequest",
+      "base_valid": "schedule_message_typed_in_sheet_with_empty_composer",
+      "expected_error": "cancel_after_grace records the shown grace (SQR-015/017)",
+      "patch": {
+        "grace_seconds": null
+      }
+    },
+    {
+      "name": "grace_not_whole_minutes",
+      "definition": "ScheduledMessageCreateRequest",
+      "base_valid": "schedule_message_typed_in_sheet_with_empty_composer",
+      "expected_error": "the sheet shows minutes and records exactly that value",
+      "patch": {
+        "grace_seconds": 1799
+      }
+    },
+    {
+      "name": "grace_recorded_under_hold",
+      "definition": "ScheduledMessageCreateRequest",
+      "base_valid": "schedule_message_text_from_composer",
+      "expected_error": "a grace the sheet does not show is not recorded",
+      "patch": {
+        "grace_seconds": 600
+      }
+    },
+    {
+      "name": "fixed_offset_timezone",
+      "definition": "ScheduledMessageCreateRequest",
+      "base_valid": "schedule_message_text_from_composer",
+      "expected_error": "timezone is an IANA name, never a fixed offset",
+      "patch": {
+        "send_at.timezone": "+02:00"
+      }
+    },
+    {
+      "name": "rejected_create_clears_composer",
+      "definition": "ScheduledMessageCreateResult",
+      "base_valid": "schedule_message_rejected_creates_nothing",
+      "expected_error": "a failure preserves the composer (SMSG-004)",
+      "patch": {
+        "composer_cleared": true
+      }
+    },
+    {
+      "name": "rejected_create_returns_schedule_id",
+      "definition": "ScheduledMessageCreateResult",
+      "base_valid": "schedule_message_rejected_creates_nothing",
+      "expected_error": "a rejection creates nothing",
+      "patch": {
+        "scheduled_dispatch_id": "sched-dispatch:fixture:9"
+      }
+    },
+    {
+      "name": "accepted_create_without_snapshot",
+      "definition": "ScheduledMessageCreateResult",
+      "base_valid": "schedule_message_accepted_clears_composer_after_commit",
+      "expected_error": "the card renders only after a durable commit with its snapshot (SMSG-001)",
+      "patch": {
+        "snapshot_ref": null
+      }
+    },
+    {
+      "name": "send_now_as_new_command",
+      "definition": "ScheduledMessageUpdateRequest",
+      "base_valid": "send_now_on_held_message",
+      "expected_error": "no new command id for Send now (SQR-013, CDRY-008)",
+      "patch": {
+        "command_id": "cmd.chat.schedule_message.send_now"
+      }
+    },
+    {
+      "name": "update_changes_nothing",
+      "definition": "ScheduledMessageUpdateRequest",
+      "base_valid": "edit_missed_policy_from_details",
+      "expected_error": "an update changes the snapshot or the time",
+      "patch": {
+        "changes": null
+      }
+    },
+    {
+      "name": "update_empty_changes_object",
+      "definition": "ScheduledMessageUpdateRequest",
+      "base_valid": "edit_missed_policy_from_details",
+      "expected_error": "an empty changes object changes nothing",
+      "patch": {
+        "changes": {}
+      }
+    },
+    {
+      "name": "update_without_expected_revision",
+      "definition": "ScheduledMessageUpdateRequest",
+      "base_valid": "send_now_on_held_message",
+      "expected_error": "update runs under the expected revision (SMSG-005)",
+      "remove": [
+        "expected_revision"
+      ]
+    },
+    {
+      "name": "update_edit_to_blank_text",
+      "definition": "ScheduledMessageUpdateRequest",
+      "base_valid": "edit_and_send",
+      "expected_error": "an edit keeps schedule_text_not_empty",
+      "patch": {
+        "changes": {
+          "text": " "
+        }
+      }
+    },
+    {
+      "name": "update_reschedule_to_later_keyword",
+      "definition": "ScheduledMessageUpdateRequest",
+      "base_valid": "send_now_on_held_message",
+      "expected_error": "reschedule_to is now or a concrete time",
+      "patch": {
+        "reschedule_to": "later"
+      }
+    },
+    {
+      "name": "update_policy_without_grace_field",
+      "definition": "ScheduledMessageUpdateRequest",
+      "base_valid": "edit_missed_policy_from_details",
+      "expected_error": "a policy change states its grace (null unless cancel_after_grace)",
+      "patch": {
+        "changes": {
+          "missed_policy": "cancel_after_grace"
+        }
+      }
+    },
+    {
+      "name": "accepted_update_left_held",
+      "definition": "ScheduledMessageUpdateResult",
+      "base_valid": "send_now_accepted_same_identity_new_revision",
+      "expected_error": "an accepted update leaves the record scheduled",
+      "patch": {
+        "state": "held"
+      }
+    },
+    {
+      "name": "cancel_drops_audit_snapshot",
+      "definition": "ScheduledMessageCancelResult",
+      "base_valid": "cancel_accepted_retains_snapshot",
+      "expected_error": "the snapshot is retained for audit (SMSG-012)",
+      "patch": {
+        "snapshot_retained": false
+      }
+    },
+    {
+      "name": "accepted_cancel_not_terminal",
+      "definition": "ScheduledMessageCancelResult",
+      "base_valid": "cancel_accepted_retains_snapshot",
+      "expected_error": "accepted cancel is terminal cancelled",
+      "patch": {
+        "state": "scheduled"
+      }
+    },
+    {
+      "name": "build_at_without_window",
+      "definition": "AssistantPlanScheduleRequest",
+      "base_valid": "build_at_nightly_crew_one_command",
+      "expected_error": "the window rides inside the one Build At command (REV-9)",
+      "remove": [
+        "window"
+      ]
+    },
+    {
+      "name": "build_at_without_exact_hash",
+      "definition": "AssistantPlanScheduleRequest",
+      "base_valid": "build_at_nightly_crew_one_command",
+      "expected_error": "Build At binds the exact version and hash (SQR-003)",
+      "remove": [
+        "exact_target_hash"
+      ]
+    },
+    {
+      "name": "crew_without_frozen_definition",
+      "definition": "AssistantPlanScheduleRequest",
+      "base_valid": "build_at_nightly_crew_one_command",
+      "expected_error": "crew freezes the validated CollaborationDefinition at commit (PSCHED-001..003)",
+      "patch": {
+        "collaboration_definition_ref": null
+      }
+    },
+    {
+      "name": "agent_with_crew_definition",
+      "definition": "AssistantPlanScheduleRequest",
+      "base_valid": "build_at_one_time_agent",
+      "expected_error": "exactly one topology is stored",
+      "patch": {
+        "collaboration_definition_ref": "collaboration-definition:fixture:crew-3"
+      }
+    },
+    {
+      "name": "one_time_without_date",
+      "definition": "AssistantPlanScheduleRequest",
+      "base_valid": "build_at_one_time_agent",
+      "expected_error": "a one-time slot names its date",
+      "patch": {
+        "window.local_start_date": null
+      }
+    },
+    {
+      "name": "nightly_without_days",
+      "definition": "AssistantPlanScheduleRequest",
+      "base_valid": "build_at_nightly_crew_one_command",
+      "expected_error": "a recurring slot names its days",
+      "patch": {
+        "window.days_of_week": []
+      }
+    },
+    {
+      "name": "nightly_grace_not_recorded",
+      "definition": "AssistantPlanScheduleRequest",
+      "base_valid": "build_at_nightly_crew_one_command",
+      "expected_error": "cancel_after_grace records the shown minutes as grace_seconds (SQR-015)",
+      "patch": {
+        "window.grace_seconds": null
+      }
+    },
+    {
+      "name": "build_at_from_wand",
+      "definition": "AssistantPlanScheduleRequest",
+      "base_valid": "build_at_nightly_crew_one_command",
+      "expected_error": "Build At… only opens its sheet; sources are plan_schedule and plan_card",
+      "patch": {
+        "source_surface": "wand"
+      }
+    },
+    {
+      "name": "build_at_as_window_create",
+      "definition": "AssistantPlanScheduleRequest",
+      "base_valid": "build_at_nightly_crew_one_command",
+      "expected_error": "Build At never dispatches cmd.execution_window.create (SQR-013)",
+      "patch": {
+        "command_id": "cmd.execution_window.create"
+      }
+    },
+    {
+      "name": "accepted_build_admits_run",
+      "definition": "ExecutionScheduleResult",
+      "base_valid": "build_at_accepted_atomic_binding",
+      "expected_error": "no run exists before first eligible dispatch (PSCHED-001..003)",
+      "patch": {
+        "run_admitted": true
+      }
+    },
+    {
+      "name": "accepted_build_without_binding",
+      "definition": "ExecutionScheduleResult",
+      "base_valid": "build_at_accepted_atomic_binding",
+      "expected_error": "schedule and binding are created in one transaction",
+      "patch": {
+        "binding_ref": null
+      }
+    },
+    {
+      "name": "rejected_build_half_schedule",
+      "definition": "ExecutionScheduleResult",
+      "base_valid": "build_at_rejected_no_half_schedule",
+      "expected_error": "a rejected Build At leaves no schedule",
+      "patch": {
+        "schedule_id": "exec-schedule:fixture:9"
+      }
+    },
+    {
+      "name": "accepted_build_not_echoing_window",
+      "definition": "ExecutionScheduleResult",
+      "base_valid": "build_at_accepted_atomic_binding",
+      "expected_error": "the recorded window is read back value for value",
+      "patch": {
+        "window": null
+      }
+    },
+    {
+      "name": "window_update_changes_in_flight_admission",
+      "definition": "ExecutionWindowUpdateResult",
+      "base_valid": "edit_build_window_accepted",
+      "expected_error": "an in-flight run's admission never changes silently",
+      "patch": {
+        "in_flight_admission_changed": true
+      }
+    },
+    {
+      "name": "window_update_without_expected_revision",
+      "definition": "ExecutionWindowUpdateRequest",
+      "base_valid": "edit_build_window_from_manager",
+      "expected_error": "edits run under the expected revision",
+      "remove": [
+        "expected_revision"
+      ]
+    },
+    {
+      "name": "cancel_schedule_without_schedule_id",
+      "definition": "ExecutionWindowCancelRequest",
+      "base_valid": "cancel_schedule_by_schedule_id",
+      "expected_error": "Cancel schedule targets the returned schedule_id",
+      "remove": [
+        "schedule_id"
+      ]
+    },
+    {
+      "name": "cancel_schedule_is_a_stop",
+      "definition": "ExecutionWindowCancelResult",
+      "base_valid": "cancel_schedule_accepted_is_not_a_stop",
+      "expected_error": "cancelling a window is not a Stop",
+      "patch": {
+        "admitted_work_stopped": true
+      }
+    },
+    {
+      "name": "cancel_schedule_from_run_dock",
+      "definition": "ExecutionWindowCancelRequest",
+      "base_valid": "cancel_schedule_by_schedule_id",
+      "expected_error": "run_dock is not a producer of cmd.execution_window.cancel",
+      "patch": {
+        "source_surface": "run_dock"
+      }
+    },
+    {
+      "name": "cancel_message_from_plan_card",
+      "definition": "ScheduledMessageCancelRequest",
+      "base_valid": "cancel_from_card",
+      "expected_error": "plan_card produces no scheduled-message command",
+      "patch": {
+        "source_surface": "plan_card"
+      }
+    }
+  ]
+}

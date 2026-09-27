@@ -2,15 +2,15 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26288-L26636
+Source lines: L26306-L26871
 
-Source SHA256: `9c07fb610dd8cf08beb9335766a862a77e258c5642423573000eeb4edc37f270`
+Source SHA256: `237cebfbbbf9d667e88e2df927335d28e9273018bc7b1e209c31b12359719c2e`
 
 ---
 
 ## Wand Modules Redesign Addendum (2026-09-27)
 
-This addendum carries the chat-behaviour parts of the redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room, BrainStorm, Review, Crew Auto, Back Seat Driver, Schedule Message, Build At, the Scheduled and Automations manager, Memory, Teach, Revert Last Agent Edit, ELI5, New chat defaults and chat titles) into this owner. The source is the frozen design specification `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md` (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`) under Jared's instruction of 2026-09-27 and his amendments J-1 and J-2 (DL-109); the 5.6 Pro concept is source lineage only. The family each record takes in the transcript is ACD-469's map and is never restated here, and the assistant-turn stream vocabulary is EP-128's. The run cards, notes, schedule cards and memory traces themselves belong to their owners (Collaborative_Workflows, Back_Seat_Driver, Scheduling_and_Quota_Resume, assistant-memory-subsystem); the GUI contract is FinalGUISpec F3-566 through F3-577. Where a unit below settles only part of a question it says which part; the rest waits for Jared's answer and is not implied.
+This addendum carries the chat-behaviour parts of the redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room, BrainStorm, Review, Crew Auto, Back Seat Driver, Schedule Message, Build At, the Scheduled and Automations manager, Memory, Teach, Revert Last Agent Edit, ELI5, New chat defaults and chat titles) into this owner. The source is the frozen design specification `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md` (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`) under Jared's instruction of 2026-09-27 and his amendments J-1 and J-2 (DL-109); the 5.6 Pro concept is source lineage only. The family each record takes in the transcript is ACD-469's map and is never restated here, and the assistant-turn stream vocabulary is EP-128's. The run cards, notes, schedule cards and memory traces themselves belong to their owners (Collaborative_Workflows, Back_Seat_Driver, Scheduling_and_Quota_Resume, assistant-memory-subsystem); the GUI contract is FinalGUISpec F3-566 through F3-577. Where a unit below settles only part of a question it says which part; the rest waits for Jared's answer and is not implied. ACD-481 to ACD-483 and the later amendments to ACD-476, ACD-477 and ACD-479 compile the answers Jared gave on the decision cards (DL-125, DL-127, DL-129, DL-130 and DL-134). The design lead's rulings of 2026-09-27 on two of those answers are compiled as well: ACD-477 carries the reply's rule note of DL-116, with following defined by assistant-memory-subsystem AMS-053, and the v4 wand-contents paragraph carries the Crew Auto permission of DL-120, which Collaborative_Workflows CWR-004 and CWR-021 own. The ELI5 questions (DL-126) are still open.
 
 ### ACD-476 - Composer Dock And Per-Owner Attention Items
 
@@ -38,8 +38,8 @@ canonical_text: >-
   the transcript item (scrolls to it and marks it once), or, for an owner-admitted question, opens
   the existing questionnaire (Answer now). A permission decision is never taken from the dock; it is
   taken only in its transcript item or the approval owner's host. The families of the records the
-  dock mirrors are ACD-469's map. This unit does not change the stream footer pill (ACD-435,
-  ACD-436).
+  dock mirrors are ACD-469's map. The dock's live-run lines and the per-reply files row replace
+  the stream footer pill's helpers and files chips (ACD-482, DL-129).
 gui_related: true
 gui_classification_reason: "Defines the dock above the composer and the attention items it shows."
 split_recommended: false
@@ -100,7 +100,8 @@ canonical_text: >-
   Save as a rule… in a message's More row each dispatch cmd.chat.teach.capture with mode new,
   prefilled with the proposed rule text and a reference to its source message; the user's message
   stays in the chat as sent. Editing a taught rule dispatches cmd.chat.teach.capture with mode
-  correct. Capture only opens the capture step; the save action is cmd.chat.teach.confirm, and
+  correct. Capture only opens the capture step, and the capture step is the Teach sheet (FinalGUISpec
+  F3-579) for every entry point, /teach and natural-language intent included: there is no inline capture card in the chat (DL-127). The save action is cmd.chat.teach.confirm, and
   Cancel, close and Escape are cmd.chat.teach.cancel, which persists nothing. Scope is exactly one
   of thread, project and user, shown nested from narrowest to widest as This thread, This project
   and Every project. The user scope needs public_safe: the user's explicit statement that the rule
@@ -110,23 +111,33 @@ canonical_text: >-
   says so in words and confirm stays refused until it is removed. When a similar taught rule is in
   reach, the capture step shows the old and the new wording side by side and confirm waits for the
   user's choice: replace the old rule, which records supersedes_memory_id and keeps the old version
-  in history, or keep both. The confirm request is TeachConfirmRequest {scope, public_safe,
-  conflict_resolution: replace:<memory_id> | keep_both, supersedes_memory_id?}. Each confirmed change
-  leaves one receipt line in the chat (saved, or updated to a new version), and consecutive saves
-  coalesce into one line. This unit does not specify the capture step's form (a sheet or an inline
-  card), per-rule lock or revoke controls, or the wording of the reply disclosure; section 6's
-  user-locked sentence is unchanged.
+  in history, or keep both. The user may also mark the rule locked at confirm (ACD-481). The confirm
+  request is TeachConfirmRequest {scope, public_safe, locked, conflict_resolution:
+  replace:<memory_id> | keep_both, supersedes_memory_id?}. Each confirmed change leaves one receipt
+  line in the chat (saved, or updated to a new version), and consecutive saves coalesce into one
+  line. The reply's note about taught rules follows DL-116 as the design lead's ruling of
+  2026-09-27 applied it and AMS-053 of assistant-memory-subsystem defines it. A rule counts as
+  followed only when it was given to the assistant for that reply and the finished reply passed
+  that rule's check; inclusion alone is never shown as following. The note counts only rules that
+  passed, for example "Followed 1 of your rules". When any included rule failed its check the
+  reply shows "Missed 1 of your rules" (the number is how many failed), with a way to see which
+  rule was missed and a way to ask for a fix; the fix starts only when the user asks, and a failed
+  check is never hidden behind a Followed count. A rule whose check could not run earns no tick,
+  and a reply with no passed or failed check shows no rule note. Used is never shown in place of
+  either note. Section 6's user-locked sentence is unchanged.
 gui_related: true
 gui_classification_reason: "Defines what the user sets and sees when teaching Puppet Master a rule."
 split_recommended: false
-depends_on: [ACD-469]
-unblocks: [F3-574]
+depends_on: [ACD-469, DL-127, DL-116, AMS-053]
+unblocks: [F3-570, F3-574, F3-579]
 acceptance_criteria:
-  - "Every entry point dispatches cmd.chat.teach.capture; nothing persists before cmd.chat.teach.confirm."
+  - "Every entry point dispatches cmd.chat.teach.capture and opens the Teach sheet; nothing persists before cmd.chat.teach.confirm."
+  - "No entry point renders an inline capture card in the chat."
   - "Confirm refuses user scope without public_safe and refuses text that looks like a secret, with the reason in words."
   - "Correct mode never widens a rule's scope."
   - "A similar rule blocks confirm until replace or keep both is chosen; replace records supersedes_memory_id."
-  - "TeachConfirmRequest carries scope, public_safe, conflict_resolution and supersedes_memory_id and no other new field."
+  - "TeachConfirmRequest carries scope, public_safe, locked, conflict_resolution and supersedes_memory_id and no other new field."
+  - "A reply's rule note counts only included rules whose check passed; a failed check shows \"Missed 1 of your rules\" with a way to see which rule and to ask for a fix; a rule whose check could not run earns no tick."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -143,7 +154,11 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 8.11, 8.15"
-  - "IMPACT-REGISTER B-ACD-02 (NOW part)"
+  - "IMPACT-REGISTER B-ACD-02 (NOW part; the capture form and the locked field compiled 2026-09-27 from DL-127 and DL-130)"
+  - "Plans/Decision_Log.md#DL-127"
+  - "Plans/Decision_Log.md#DL-130"
+  - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
+  - "Plans/assistant-memory-subsystem.md#AMS-053"
 preserved_exact_tokens:
   - "cmd.chat.teach.capture"
   - "cmd.chat.teach.confirm"
@@ -152,17 +167,25 @@ preserved_exact_tokens:
   - "supersedes_memory_id"
   - "keep_both"
   - "Save as a rule…"
+  - "Teach sheet"
+  - "no inline capture card"
+  - "locked"
+  - "Followed 1 of your rules"
+  - "Missed 1 of your rules"
+  - "AMS-053"
 negative_constraints:
   - "Do not persist anything on capture."
   - "Do not let an edit widen a rule's scope."
   - "Do not save text that looks like a password, key or token."
   - "Do not overwrite a similar rule without the user's replace choice."
+  - "Do not render an inline capture card for /teach or natural-language intent."
+  - "Do not show a rule as followed because it was included in the reply's context."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
 ```
 
-ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md#F3-574
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/assistant-memory-subsystem.md#AMS-053, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md#F3-570, ContractName:Plans/FinalGUISpec.md#F3-574, ContractName:Plans/FinalGUISpec.md#F3-579, ContractName:Plans/Decision_Log.md#DL-127, ContractName:Plans/Decision_Log.md#DL-116
 
 ### ACD-478 - Revert Files Row Confirm Sheet And Outcome Display
 
@@ -245,8 +268,7 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Each automatic or explicit naming of a thread is one ThreadTitleAttempt {thread_id, attempt_id,
-  requested_route, effective_route?, outcome, title?, at} with outcome pending | named | policy_off
-  | route_unavailable | awaiting_first_message | user_locked. thread.title_locked is set by a manual
+  requested_route, effective_route?, outcome, title?, at} with outcome pending | named | policy_off | route_unavailable | awaiting_first_message | user_locked. thread.title_locked is set by a manual
   rename and cleared only by cmd.chat.thread.regenerate_title (ACD-462); while it is set, automatic
   naming records user_locked and changes nothing. An unavailable title model records
   route_unavailable and is never silently replaced by another model. The chat header's title shows
@@ -257,18 +279,20 @@ canonical_text: >-
   action sits directly under Rename and is disabled with its reason when the policy is off or the
   model is unavailable. The naming outcome reads as a plain sentence per outcome (naming, named,
   not named because automatic naming is off, could not name because the model is unavailable,
-  waiting for the first message, kept the user's name). This unit does not change the command's
-  visible label.
+  waiting for the first message, kept the user's name). The command's visible label, in the thread
+  menu and in the header's hovers, is Name it for me; it replaces the catalog label Regenerate Title
+  (DL-134), and the command id is unchanged.
 gui_related: true
 gui_classification_reason: "Defines the chat title record and the header title states."
 split_recommended: false
-depends_on: [ACD-462]
+depends_on: [ACD-462, DL-134]
 unblocks: [F3-575]
 acceptance_criteria:
   - "Every naming attempt produces one ThreadTitleAttempt with one of the six outcomes."
   - "A manual rename sets thread.title_locked and automatic naming never overwrites it."
   - "An unavailable title model is never substituted silently."
   - "The header shows the naming, locked and unavailable states without a pill or modal."
+  - "Every visible label of cmd.chat.thread.regenerate_title reads Name it for me."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -285,13 +309,16 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.14 (G-33, G-34)"
-  - "IMPACT-REGISTER B-ACD-06 (NOW part)"
+  - "IMPACT-REGISTER B-ACD-06 (NOW part; the label compiled 2026-09-27 from DL-134)"
+  - "Plans/Decision_Log.md#DL-134"
 preserved_exact_tokens:
   - "ThreadTitleAttempt"
   - "thread.title_locked"
   - "chat_header"
   - "pending | named | policy_off | route_unavailable | awaiting_first_message | user_locked"
   - "New chat"
+  - "Name it for me"
+  - "Regenerate Title"
 negative_constraints:
   - "Do not overwrite a user-named title automatically."
   - "Do not switch title models silently."
@@ -357,3 +384,193 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/FinalGUISpec.md#F3-569
+
+### ACD-481 - Teach Rule Lock And Turn Off
+
+```yaml
+plan_unit_id: ACD-481
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Per-rule lock and turn off for taught rules (section 6; DL-130 adds both commands). A rule is
+  locked when the user ticks Locked in the Teach sheet, which sets TeachConfirmRequest.locked, or
+  uses Lock on the rule's row in Your rules. cmd.chat.teach.set_lock {locked} sets or clears the
+  user-locked flag of one taught rule; a locked rule can be changed only by the user, and this
+  command is the explicit user unlock that section 6 requires before automated cleanup,
+  summarization or profile migration may weaken a user-locked rule. Unlocking is the same command
+  with locked false. Turning a rule off is cmd.chat.teach.revoke: it sets revoked_at on one rule, the
+  rule stays in history, older versions do not come back, and the rule leaves future prompt
+  assembly; there is no undo, and the way back is to teach the rule again. Turn off asks inline in
+  the rule's row, never in a modal: "Stop using this rule? It stays in history, and older versions
+  don't come back." with Keep it, which is view state and dispatches nothing, and Turn off, which
+  dispatches the command. Both commands act on one rule at its current revision and refuse a stale
+  revision or an already turned-off rule with the reason in words. Turning a rule off leaves one
+  receipt line in the chat (Rule turned off: and the rule's words); locking and unlocking change the
+  rule's row and write no chat line. Your rules (the taught memory document) is the source surface of
+  both commands, and the Memory sheet is a source surface of cmd.chat.teach.revoke. The catalog rows
+  are UI_Command_Catalog's and the stored flags are assistant-memory-subsystem's; this unit states
+  the chat behaviour.
+gui_related: true
+gui_classification_reason: "Defines how a user locks, unlocks and turns off a taught rule."
+split_recommended: false
+depends_on: [ACD-477, DL-130]
+unblocks: [F3-579]
+acceptance_criteria:
+  - "cmd.chat.teach.set_lock changes the lock of exactly one rule and is the only way a user-locked rule is unlocked."
+  - "cmd.chat.teach.revoke sets revoked_at on one rule, keeps it in history and never restores an older version."
+  - "Keep it dispatches nothing; Turn off never opens a modal."
+  - "A stale revision is refused with its reason."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: taught_rule_lock_bypass
+reasoning_tier: high
+context_scope: teach_capture
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_behavior_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.11 (G-26, G-33)"
+  - "IMPACT-REGISTER B-ACD-02 (WAIT part: lock and revoke, card p15, E-32)"
+  - "Plans/Decision_Log.md#DL-130"
+preserved_exact_tokens:
+  - "cmd.chat.teach.set_lock"
+  - "cmd.chat.teach.revoke"
+  - "revoked_at"
+  - "Keep it"
+  - "Rule turned off:"
+negative_constraints:
+  - "Do not let automated cleanup unlock or weaken a user-locked rule."
+  - "Do not restore an older version when a rule is turned off."
+  - "Do not ask to turn a rule off in a modal."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-130, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md#F3-579
+
+### ACD-482 - Dock And Files Row Supersede The Stream Footer Summary
+
+```yaml
+plan_unit_id: ACD-482
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The summary above the composer that ACD-435 and ACD-436 defined, a subagent chip with a helpers
+  count and a files chip reading N file changes with a fan-out under both, is superseded (DL-129).
+  What it carried now has these homes: a live run whose card is off-screen is a dock line (ACD-476);
+  each assistant reply whose turn changed files carries its own files row (ACD-478); and the thread's
+  total file count and every file's diff are in Activity's Changes domain, one click away. Nothing
+  else stacks above the composer for this purpose, so the composer stack is the Activity bar pill,
+  the follow-up queue, the quota-wait strip and the dock (FinalGUISpec F3-567). The problems row
+  that ACD-435 renders for threads with diagnostics, with its route to the Problems bottom tab, is
+  not part of this decision and is unchanged, as are FinalGUISpec F3-422's floating geometry and
+  jump-to-latest rules.
+gui_related: true
+gui_classification_reason: "Removes the footer chips above the composer and names where their information went."
+split_recommended: false
+depends_on: [ACD-435, ACD-436, ACD-476, ACD-478, DL-129]
+unblocks: [F3-567]
+acceptance_criteria:
+  - "No subagent chip, files chip or chip fan-out renders above the composer."
+  - "The thread's total file count is reachable from Activity's Changes domain."
+  - "The problems row still routes to the Problems bottom tab."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: stacked_composer_summaries
+reasoning_tier: standard
+context_scope: chat_composer_stack
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 4.3 C14-C15 and C24, 7.8"
+  - "IMPACT-REGISTER B-ACD-11, B-ACD-10 (footer pill part), B-FGS-03 (footer pill part); card p13, E-27"
+  - "Plans/Decision_Log.md#DL-129"
+preserved_exact_tokens:
+  - "N file changes"
+  - "files row"
+  - "Changes domain"
+  - "Problems"
+negative_constraints:
+  - "Do not render the footer chips beside the dock."
+  - "Do not drop the problems row as part of this supersession."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-129, ContractName:Plans/assistant-chat-design.md#ACD-435, ContractName:Plans/assistant-chat-design.md#ACD-476, ContractName:Plans/FinalGUISpec.md#F3-567
+
+### ACD-483 - Composer Source References For Sent Review Findings
+
+```yaml
+plan_unit_id: ACD-483
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Send Findings To Agent fills the message box instead of sending (DL-125). It writes a fix request
+  into the source thread's composer buffer, the one invisible per-thread buffer, only when that
+  buffer is empty, and otherwise refuses with "Your message box already has text. Send or clear it first."; nothing is sent until the user presses Send. The request is ordinary editable text, one
+  numbered item per selected finding with its claim, its suggested fix and how the user will know it
+  is fixed. The lineage never appears in the text: the buffer carries source_refs[] {kind:
+  review_finding, run_id, finding_id}, one entry per finding in the request, and when the user sends,
+  the sent message record carries the same source_refs. Editing the text keeps them; if the user
+  clears the message box entirely, they are dropped with it. source_refs are metadata for lineage
+  and Details only and change nothing the model is sent. Collaborative_Workflows owns the command's
+  revised result and refusal; this unit owns the buffer and message fields.
+gui_related: true
+gui_classification_reason: "Defines what Send Findings To Agent puts in the composer and what the sent message records."
+split_recommended: false
+depends_on: [ACD-462, DL-125]
+unblocks: []
+acceptance_criteria:
+  - "Send Findings To Agent never sends; it fills an empty message box or refuses with its reason."
+  - "The message text holds no run or finding id; the buffer and the sent message carry source_refs."
+  - "Clearing the message box drops the source_refs."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: lineage_leaks_into_prompt_text
+reasoning_tier: standard
+context_scope: chat_composer_buffer
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Collaborative_Workflows.md
+node_compile_hint:
+  mode: owner_behavior_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.5 (G-33, the Send Findings To Agent text)"
+  - "IMPACT-REGISTER B-ACD-09; card p07, E-07"
+  - "Plans/Decision_Log.md#DL-125"
+preserved_exact_tokens:
+  - "Send Findings To Agent"
+  - "source_refs"
+  - "review_finding"
+  - "Your message box already has text. Send or clear it first."
+negative_constraints:
+  - "Do not send a findings request without the user pressing Send."
+  - "Do not overwrite text already in the message box."
+  - "Do not put run or finding ids in the message text."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Collaborative_Workflows.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-125, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/assistant-chat-design.md#ACD-462

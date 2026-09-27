@@ -79,6 +79,11 @@ DIMENSION_FIELDS = {
  'disposition_and_residual_risk': ('disposition','residual_risk'),
 }
 BSD_COMMANDS = ['cmd.bsd.'+x for x in ('set','configure','workflow.configure','assignment.pause','assignment.resume','assignment.retry','assignment.stop','finding.open','open_usage','open_transcript')]
+# 2026-09-27 (DL-130, Back_Seat_Driver.md section 17 and BSD-037): two owner rows with catalogue rows
+# (UCC-171) but no handler. They are DL-035 candidate exclusions until admission (Wiring_Matrix.md
+# WM-063), so they are checked as candidates, never as production-intent wiring; admission moves each
+# into BSD_COMMANDS together with its wiring entry and Touch row.
+BSD_CANDIDATE_COMMANDS = ['cmd.bsd.finding.dismiss','cmd.bsd.catch_up.release']
 LENS_COMMANDS = ['cmd.chat.context_lens.'+x for x in ('toggle','set_mode','turn_off','toggle_message_selection','clear_selection','apply_subcompact','revert_subcompact')]
 
 def materialize_touch(touch):
@@ -259,7 +264,13 @@ def check(root):
     source_hashes.update(whole_inventory['reference_source_hashes'])
     dimensions=read(root,'scripts/pm-integration-packet-audit.spec.json')['touch_closure_dimensions']
     if dimensions!=list(DIMENSION_FIELDS):raise ValueError('central audit dimension set/order changed')
-    if set(bsd_ids)!=set(BSD_COMMANDS):gap('bsd_owner_command_set_drift','BSD',sorted(set(bsd_ids)^set(BSD_COMMANDS)))
+    if set(bsd_ids)!=set(BSD_COMMANDS)|set(BSD_CANDIDATE_COMMANDS):gap('bsd_owner_command_set_drift','BSD',sorted(set(bsd_ids)^(set(BSD_COMMANDS)|set(BSD_CANDIDATE_COMMANDS))))
+    excluded=set(read(root,'Plans/Wiring_Matrix.production.exclusions.json')['excluded_tokens'])
+    for cid in BSD_CANDIDATE_COMMANDS:
+        # WM-063: exactly one catalogue row, an exact candidate exclusion, and no production wiring before admission.
+        if not any(re.match(r'^\|\s*`'+re.escape(cid)+r'`\s*\|',l)for l in catalogue.splitlines()):gap('missing_catalogue_row',cid,'A prose mention is not a command row')
+        if cid not in excluded:gap('candidate_exclusion_missing',cid,'WM-063 keeps the row a DL-035 candidate exclusion until admission')
+        if any(r.get('ui_command_id')==cid for r in wiring.values()):gap('candidate_wired_before_admission',cid,'Admission must move the row into BSD_COMMANDS with its exclusion removed')
     if len(browser_ids)!=15 or len(set(browser_ids))!=15 or 'cmd.browser.program.inspect'not in browser_ids:gap('browser_command_set_drift','Browser','Re-adjudicate the closed command inventory')
     selected=sorted(set(browser_ids)|set(BSD_COMMANDS)|set(LENS_COMMANDS));commands=[]
     for cid in selected:

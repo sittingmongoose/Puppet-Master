@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-002-wand-back-seat-driver",
-  "updated_at_utc": "2026-09-27T20:30:00+00:00",
-  "last_event_id": "evt-003",
+  "updated_at_utc": "2026-09-27T22:00:00+00:00",
+  "last_event_id": "evt-005",
   "canonical_plan_targets": [
     "Plans/Back_Seat_Driver.md"
   ],
@@ -27,8 +27,8 @@
   },
   "current_phase": "prose_compiled_companions_pending",
   "cursor": {
-    "last_event_id": "evt-003",
-    "next_action": "Prose compiled (BSD-030..BSD-034); witness run. Next: one blind form-driven review (cap two cycles); the lead regenerates shards and index once for all groups; companions (schemas, fixtures, gates) are a separate later task; the WAIT wave compiles q-001..q-003 after the owner answers n01, p04 and p15."
+    "last_event_id": "evt-005",
+    "next_action": "Prose compiled (BSD-030..BSD-037, NOW and WAIT waves); witness run. Next: one blind form-driven review (cap two cycles); the lead confirms q-005 and routes q-004 to the owner; the lead regenerates shards and index once for all groups; companions (schemas for BSDFindingDismissRequest and BSDCatchUpReleaseRequest, fixtures, gates) are a separate later task."
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver/source_shards/authorization.md"

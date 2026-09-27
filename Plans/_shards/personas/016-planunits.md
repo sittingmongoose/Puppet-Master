@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L692-L3179
+Source lines: L695-L3182
 
-Source SHA256: `f1286dac3dea331f4cbbbf762fc066e7d41ac7d9652dffe6a9a5bc1a8e0713e7`
+Source SHA256: `3d9974d4746956f2f1e1b814f1c86bcb061e04c26721a5db1c2e50d836b911f5`
 
 ---
 
@@ -2172,7 +2172,7 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  technical-writer is a specialty/template candidate only and must not recreate document-writer by another name, while project-manager, product-manager, and context-manager are not PM Persona catalog entries because delivery sequencing, product framing, and context/memory behavior belong to orchestration, interview, prompt pipeline, and memory systems.
+  technical-writer is a specialty/template candidate only and must not recreate document-writer by another name, while project-manager, product-manager, and context-manager are not PM Persona catalog entries because delivery sequencing, product framing, and context/memory behavior belong to orchestration, interview, prompt pipeline, and memory systems. Superseded in part on 2026-09-27 by P-057 (DL-133): product-manager is registered as a first-party team Persona for collaboration teams and their presets, while project-manager and context-manager remain excluded.
 gui_related: false
 gui_classification_reason: This unit defines catalog exclusions and ownership boundaries rather than GUI presentation.
 split_recommended: false
@@ -2184,7 +2184,7 @@ unblocks: []
 acceptance_criteria:
   - technical-writer remains specialty/template candidate only.
   - document-writer is not recreated by another name.
-  - project-manager, product-manager, and context-manager remain outside PM Persona catalog entries.
+  - project-manager and context-manager remain outside PM Persona catalog entries; product-manager is catalogued only as the team Persona of P-057.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2206,7 +2206,7 @@ preserved_exact_tokens:
   - "context-manager"
 negative_constraints:
   - "technical-writer MUST NOT be used to recreate document-writer by another name."
-  - "project-manager, product-manager, and context-manager are not PM Persona catalog entries."
+  - "project-manager and context-manager are not PM Persona catalog entries; product-manager is registered only as the P-057 team Persona (DL-133), not as a delivery-sequencing or context-management Persona."
 owner_hints:
   - Plans/Personas.md
 ```

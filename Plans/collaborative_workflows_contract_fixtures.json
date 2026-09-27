@@ -1,0 +1,3095 @@
+{
+  "schema_id": "pm.collaborative_workflows.contract_fixtures.v1",
+  "owner_schema": "Plans/collaborative_workflows_contracts.schema.json",
+  "owner_doc": "Plans/Collaborative_Workflows.md",
+  "contract_schema_id": "pm.collaborative_workflows.contracts.v1",
+  "claim_boundary": "Static schema and fixture consistency only. No collaborative run, command dispatch, Settings transaction, provider call, EventRecord or storage write is executed; every command stays handler_unavailable, and runtime, provider, recovery, security, visual and performance proof remains NOT_RUN.",
+  "valid": [
+    {
+      "name": "definition_crew_shared_notes",
+      "definition": "CollaborativeDefinition",
+      "value": {
+        "schema_id": "pm.collaboration.definition.v1",
+        "schema_version": "1.0.0",
+        "collaboration_id": "collab-crew-0001",
+        "kind": "crew",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "name": "Add CSV export with tests",
+        "purpose": "Add CSV export to the collection page",
+        "revision": 2,
+        "participant_specs": [
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-crew-0001-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-crew-0001-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          }
+        ],
+        "coordinator_spec": {
+          "kind": "parent_assistant"
+        },
+        "context_policy_ref": "ctx-policy:mentioned-files",
+        "tool_policy_ref": "tool-policy:parent",
+        "permission_ceiling_ref": "ceiling:parent-thread",
+        "concurrency": 2,
+        "time_limit_seconds": 1800,
+        "token_limit": null,
+        "cost_limit": 4.0,
+        "transcript_policy": "keep_full",
+        "output_policy": "summary_and_artifacts",
+        "stuck_policy": "ask_user",
+        "shared_notes_policy": "shared_space",
+        "assignment_strategy": "manager_directed"
+      }
+    },
+    {
+      "name": "definition_review_file_and_line",
+      "definition": "CollaborativeDefinition",
+      "value": {
+        "schema_id": "pm.collaboration.definition.v1",
+        "schema_version": "1.0.0",
+        "collaboration_id": "collab-review-0001",
+        "kind": "review",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "name": "Add CSV export with tests",
+        "purpose": "Add CSV export to the collection page",
+        "revision": 2,
+        "participant_specs": [
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-review-0001-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-review-0001-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          }
+        ],
+        "coordinator_spec": {
+          "kind": "parent_assistant"
+        },
+        "context_policy_ref": "ctx-policy:mentioned-files",
+        "tool_policy_ref": "tool-policy:parent",
+        "permission_ceiling_ref": "ceiling:parent-thread",
+        "concurrency": 2,
+        "time_limit_seconds": 1800,
+        "token_limit": null,
+        "cost_limit": 4.0,
+        "transcript_policy": "keep_full",
+        "output_policy": "summary_and_artifacts",
+        "stuck_policy": "ask_user",
+        "evidence_citation_rule": "file_and_line"
+      }
+    },
+    {
+      "name": "definition_chat_room_kind_rows",
+      "definition": "CollaborativeDefinition",
+      "value": {
+        "schema_id": "pm.collaboration.definition.v1",
+        "schema_version": "1.0.0",
+        "collaboration_id": "collab-room-0001",
+        "kind": "chat_room",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "name": "Add CSV export with tests",
+        "purpose": "Add CSV export to the collection page",
+        "revision": 2,
+        "participant_specs": [
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-room-0001-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-room-0001-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          }
+        ],
+        "coordinator_spec": {
+          "kind": "dedicated_model",
+          "requested_provider_id": "provider:anthropic",
+          "requested_model_id": "model:claude-sonnet",
+          "requested_persona_id": "persona:critical-advisor"
+        },
+        "context_policy_ref": "ctx-policy:mentioned-files",
+        "tool_policy_ref": "tool-policy:parent",
+        "permission_ceiling_ref": "ceiling:parent-thread",
+        "concurrency": 2,
+        "time_limit_seconds": 1800,
+        "token_limit": null,
+        "cost_limit": 4.0,
+        "transcript_policy": "keep_full",
+        "output_policy": "summary_and_artifacts",
+        "stuck_policy": "ask_user",
+        "turn_policy": "moderated",
+        "moderator_style": "keep_on_topic",
+        "mention_policy": "mentions_and_replies",
+        "stop_condition": "max_rounds_4",
+        "summary_style": "agreed_debated_open"
+      }
+    },
+    {
+      "name": "definition_brainstorm_must_haves_and_specialists",
+      "definition": "CollaborativeDefinition",
+      "value": {
+        "schema_id": "pm.collaboration.definition.v1",
+        "schema_version": "1.0.0",
+        "collaboration_id": "collab-bs-0001",
+        "kind": "brainstorm",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "name": "Add CSV export with tests",
+        "purpose": "Add CSV export to the collection page",
+        "revision": 2,
+        "participant_specs": [
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-bs-0001-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-bs-0001-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-bs-0001-slot-3",
+            "role": "Wonderer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-haiku",
+            "requested_persona_id": "persona:wonderer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "wonderer"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-bs-0001-slot-4",
+            "role": "Grill Me",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-sonnet",
+            "requested_persona_id": null,
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "grill_me"
+          }
+        ],
+        "coordinator_spec": {
+          "kind": "participant_slot",
+          "participant_slot_id": "collab-bs-0001-slot-1"
+        },
+        "context_policy_ref": "ctx-policy:mentioned-files",
+        "tool_policy_ref": "tool-policy:parent",
+        "permission_ceiling_ref": "ceiling:parent-thread",
+        "concurrency": 2,
+        "time_limit_seconds": 1800,
+        "token_limit": null,
+        "cost_limit": 4.0,
+        "transcript_policy": "keep_full",
+        "output_policy": "summary_and_artifacts",
+        "stuck_policy": "ask_user",
+        "hard_constraints": [
+          {
+            "id": "hc-1",
+            "text": "No uploads",
+            "source": "user"
+          }
+        ],
+        "provisioning_posture": "ask_first"
+      }
+    },
+    {
+      "name": "run_user_crew",
+      "definition": "CollaborativeRun",
+      "value": {
+        "schema_id": "pm.collaboration.run.v1",
+        "schema_version": "1.0.0",
+        "collaboration_run_id": "crun-crew-0001",
+        "collaboration_id": "collab-crew-0001",
+        "definition_revision": 2,
+        "kind": "crew",
+        "parent_run_id": null,
+        "assistant_plan_id": null,
+        "plan_version": null,
+        "goal_id": null,
+        "state": "running",
+        "participant_run_refs": [
+          "prun-1",
+          "prun-2"
+        ],
+        "coordinator_run_ref": "prun-coord",
+        "transcript_ref": "ctx-crew-0001",
+        "artifact_refs": [],
+        "usage_group_ref": "usage-crew-0001",
+        "requested_effective_snapshot_ref": "snap-crew-0001",
+        "admission_source": "user",
+        "crew_auto_revision": null,
+        "created_at": "2026-09-27T12:00:00Z",
+        "completed_at": null
+      }
+    },
+    {
+      "name": "run_crew_auto_admitted",
+      "definition": "CollaborativeRun",
+      "value": {
+        "schema_id": "pm.collaboration.run.v1",
+        "schema_version": "1.0.0",
+        "collaboration_run_id": "crun-crew-0002",
+        "collaboration_id": "collab-crew-auto",
+        "definition_revision": 1,
+        "kind": "crew",
+        "parent_run_id": null,
+        "assistant_plan_id": null,
+        "plan_version": null,
+        "goal_id": null,
+        "state": "running",
+        "participant_run_refs": [
+          "prun-3"
+        ],
+        "coordinator_run_ref": null,
+        "transcript_ref": "ctx-crew-0002",
+        "artifact_refs": [],
+        "usage_group_ref": "usage-crew-0002",
+        "requested_effective_snapshot_ref": "snap-crew-0002",
+        "admission_source": "crew_auto",
+        "crew_auto_revision": 4,
+        "created_at": "2026-09-27T12:00:00Z",
+        "completed_at": null
+      }
+    },
+    {
+      "name": "run_build_with_crew",
+      "definition": "CollaborativeRun",
+      "value": {
+        "schema_id": "pm.collaboration.run.v1",
+        "schema_version": "1.0.0",
+        "collaboration_run_id": "crun-crew-0003",
+        "collaboration_id": "collab-crew-plan",
+        "definition_revision": 1,
+        "kind": "crew",
+        "parent_run_id": null,
+        "assistant_plan_id": "aplan-0001",
+        "plan_version": 3,
+        "goal_id": null,
+        "state": "running",
+        "participant_run_refs": [
+          "prun-4"
+        ],
+        "coordinator_run_ref": null,
+        "transcript_ref": "ctx-crew-0003",
+        "artifact_refs": [],
+        "usage_group_ref": "usage-crew-0003",
+        "requested_effective_snapshot_ref": "snap-crew-0003",
+        "admission_source": "build_with_crew",
+        "crew_auto_revision": null,
+        "created_at": "2026-09-27T12:00:00Z",
+        "completed_at": null
+      }
+    },
+    {
+      "name": "message_system_entry",
+      "definition": "CollaborationMessage",
+      "value": {
+        "schema_id": "pm.collaboration.message.v1",
+        "schema_version": "1.0.0",
+        "collaboration_message_id": "cmsg-0001",
+        "collaboration_run_id": "crun-room-0001",
+        "sender_kind": "system",
+        "sender_id": "system",
+        "recipient_ids": [],
+        "message_type": "message",
+        "body_ref": "body-0001",
+        "reply_to": null,
+        "attachment_refs": [],
+        "created_at": "2026-09-27T12:00:00Z",
+        "sequence": 7
+      }
+    },
+    {
+      "name": "question_bank_grill_me",
+      "definition": "QuestionBank",
+      "value": {
+        "schema_id": "pm.brainstorm.question_bank.v1",
+        "schema_version": "1.0.0",
+        "brainstorm_run_id": "crun-bs-0001",
+        "baseline_limit": 20,
+        "grill_extension": 25,
+        "effective_limit": 45,
+        "asked_question_ids": [
+          "q-1",
+          "q-2"
+        ],
+        "resolved_question_ids": [
+          "q-1"
+        ],
+        "duplicate_question_ids": [],
+        "research_routed_question_ids": [
+          "q-3"
+        ]
+      }
+    },
+    {
+      "name": "proposal_round_one",
+      "definition": "BrainstormProposal",
+      "value": {
+        "schema_id": "pm.brainstorm.proposal.v1",
+        "schema_version": "1.0.0",
+        "proposal_id": "prop-0001",
+        "participant_id": "collab-bs-0001-slot-1",
+        "approach": "Stream rows to a CSV writer",
+        "assumptions": [
+          "collections fit in memory"
+        ],
+        "benefits": [
+          "small change"
+        ],
+        "costs": [
+          "one new endpoint"
+        ],
+        "risks": [
+          "large exports"
+        ],
+        "migrations": [],
+        "cross_system_effects": [],
+        "validation": "export test",
+        "rollback": "remove the menu entry",
+        "evidence_refs": [
+          "src/export.rs:40"
+        ],
+        "proposal_round": 1
+      }
+    },
+    {
+      "name": "vote_with_constraint_conflict",
+      "definition": "BrainstormVote",
+      "value": {
+        "schema_id": "pm.brainstorm.vote.v1",
+        "schema_version": "1.0.0",
+        "vote_id": "vote-0001",
+        "proposal_id": "prop-0001",
+        "participant_id": "collab-bs-0001-slot-2",
+        "position": "oppose",
+        "confidence": 0.7,
+        "reason": "Uploads the file to a share",
+        "evidence_refs": [
+          "docs/share.md"
+        ],
+        "hard_constraint_conflicts": [
+          "hc-1"
+        ]
+      }
+    },
+    {
+      "name": "target_pack_changes",
+      "definition": "ReviewTargetPack",
+      "value": {
+        "schema_id": "pm.review.target_pack.v1",
+        "schema_version": "1.0.0",
+        "review_run_id": "crun-review-0001",
+        "target_kind": "changes",
+        "target_refs": [
+          "diff:working-tree"
+        ],
+        "target_hashes": [
+          "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        ],
+        "user_constraint_refs": [
+          "teach:rule-7"
+        ],
+        "acceptance_refs": [],
+        "test_build_evidence_refs": [
+          "tests:run-12"
+        ],
+        "frozen_at": "2026-09-27T12:00:00Z"
+      }
+    },
+    {
+      "name": "finding_confirmed_major",
+      "definition": "ReviewFinding",
+      "value": {
+        "schema_id": "pm.review.finding.v1",
+        "schema_version": "1.0.0",
+        "finding_id": "find-0001",
+        "review_run_id": "crun-review-0001",
+        "finding_key": "csv-escape",
+        "category": "correctness",
+        "severity": "major",
+        "claim": "Commas inside titles are not escaped",
+        "affected_object_refs": [
+          "src/export.rs"
+        ],
+        "evidence_refs": [
+          "src/export.rs:52"
+        ],
+        "originating_reviewer_ids": [
+          "rev-1",
+          "rev-2"
+        ],
+        "reviewer_votes": [
+          {
+            "reviewer_id": "rev-1",
+            "disposition": "confirmed",
+            "target_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          }
+        ],
+        "disposition": "confirmed",
+        "confidence": 0.9,
+        "dissent": [],
+        "proposed_remediation": "Quote every field"
+      }
+    },
+    {
+      "name": "disposition_waived",
+      "definition": "ParticipantDisposition",
+      "value": {
+        "schema_id": "pm.collaboration.participant_disposition.v1",
+        "schema_version": "1.0.0",
+        "run_id": "crun-room-0001",
+        "slot_id": "slot-3",
+        "required": true,
+        "attempt_id": "att-9",
+        "outcome": "explicitly_waived",
+        "requested_identity": "model:claude-opus",
+        "effective_identity": null,
+        "waiver": {
+          "actor_identity": "user:jared",
+          "reason": "Continue without",
+          "currentness_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        },
+        "currentness": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      }
+    },
+    {
+      "name": "disposition_unavailable",
+      "definition": "ParticipantDisposition",
+      "value": {
+        "schema_id": "pm.collaboration.participant_disposition.v1",
+        "schema_version": "1.0.0",
+        "run_id": "crun-room-0001",
+        "slot_id": "slot-4",
+        "required": false,
+        "attempt_id": null,
+        "outcome": "unavailable",
+        "requested_identity": "model:gpt-x",
+        "effective_identity": null,
+        "waiver": null,
+        "currentness": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      }
+    },
+    {
+      "name": "completion_clean_crew",
+      "definition": "CompletionProjection",
+      "value": {
+        "schema_id": "pm.collaboration.completion_projection.v1",
+        "schema_version": "1.0.0",
+        "run_id": "crun-crew-0001",
+        "kind": "crew",
+        "required_slots": [
+          "s1",
+          "s2"
+        ],
+        "completed_slots": [
+          "s1",
+          "s2"
+        ],
+        "failed_slots": [],
+        "waived_slots": [],
+        "output_status": "finalised",
+        "quorum_status": "not_applicable",
+        "attention_reason": null,
+        "clean_completion": true,
+        "allowed_actions": [
+          {
+            "action_id": "export",
+            "command_id": "cmd.collaboration.export"
+          }
+        ]
+      }
+    },
+    {
+      "name": "completion_coordinator_failed",
+      "definition": "CompletionProjection",
+      "value": {
+        "schema_id": "pm.collaboration.completion_projection.v1",
+        "schema_version": "1.0.0",
+        "run_id": "crun-crew-0004",
+        "kind": "crew",
+        "required_slots": [
+          "s1"
+        ],
+        "completed_slots": [],
+        "failed_slots": [],
+        "waived_slots": [],
+        "output_status": "pending",
+        "quorum_status": "not_applicable",
+        "attention_reason": "coordinator_failed",
+        "clean_completion": false,
+        "allowed_actions": [
+          {
+            "action_id": "retry_coordinator",
+            "command_id": "cmd.collaboration.reconfigure"
+          },
+          {
+            "action_id": "replace_coordinator",
+            "command_id": "cmd.collaboration.reconfigure"
+          },
+          {
+            "action_id": "cancel",
+            "command_id": "cmd.collaboration.cancel"
+          }
+        ]
+      }
+    },
+    {
+      "name": "completion_partial_review",
+      "definition": "CompletionProjection",
+      "value": {
+        "schema_id": "pm.collaboration.completion_projection.v1",
+        "schema_version": "1.0.0",
+        "run_id": "crun-review-0002",
+        "kind": "review",
+        "required_slots": [
+          "r1",
+          "r2",
+          "r3"
+        ],
+        "completed_slots": [
+          "r1",
+          "r2"
+        ],
+        "failed_slots": [
+          "r3"
+        ],
+        "waived_slots": [],
+        "output_status": "pending",
+        "quorum_status": "partial",
+        "attention_reason": "partial_review",
+        "clean_completion": false,
+        "allowed_actions": [
+          {
+            "action_id": "accept_partial",
+            "command_id": "cmd.collaboration.reconfigure"
+          },
+          {
+            "action_id": "restart_on_current",
+            "command_id": "cmd.review.run_again"
+          }
+        ]
+      }
+    },
+    {
+      "name": "activity_using_tools",
+      "definition": "ParticipantActivity",
+      "value": {
+        "schema_id": "pm.collaboration.participant_activity_projection.v1",
+        "schema_version": "1.0.0",
+        "participant_id": "prun-1",
+        "state": "using_tools",
+        "verb": "Running tests",
+        "detail_text": "cargo test export",
+        "since": "2026-09-27T12:00:00Z"
+      }
+    },
+    {
+      "name": "activity_needs_you",
+      "definition": "ParticipantActivity",
+      "value": {
+        "schema_id": "pm.collaboration.participant_activity_projection.v1",
+        "schema_version": "1.0.0",
+        "participant_id": "prun-2",
+        "state": "needs_you",
+        "verb": "Waiting for your approval",
+        "decision_ref": "approval:77",
+        "since": "2026-09-27T12:00:00Z"
+      }
+    },
+    {
+      "name": "activity_done_with_quote",
+      "definition": "ParticipantActivity",
+      "value": {
+        "schema_id": "pm.collaboration.participant_activity_projection.v1",
+        "schema_version": "1.0.0",
+        "participant_id": "prun-3",
+        "state": "done",
+        "verb": "Finished",
+        "quote_source_id": "cmsg-0042",
+        "since": "2026-09-27T12:00:00Z"
+      }
+    },
+    {
+      "name": "preset_crew_build_and_check",
+      "definition": "TeamPreset",
+      "value": {
+        "schema_id": "pm.collaboration.team_preset.v1",
+        "schema_version": "1.0.0",
+        "id": "preset-crew-build-and-check",
+        "label": "Build and check",
+        "helper": "One builds, one checks",
+        "rows": [
+          {
+            "role": "Implementer",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "additive_role_kind": "none"
+          },
+          {
+            "role": "Reviewer",
+            "requested_model_id": "model:claude-sonnet",
+            "requested_persona_id": "persona:reviewer",
+            "additive_role_kind": "none"
+          }
+        ],
+        "config_overrides": {
+          "concurrency": 2
+        }
+      }
+    },
+    {
+      "name": "configure_request_crew",
+      "definition": "CollaborationConfigureRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_configure_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.configure",
+        "command_instance_id": "ci-0001",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_modal",
+        "correlation_id": "corr-0001",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0001",
+        "causation_id": null,
+        "kind": "crew",
+        "seed_definition_ref": null
+      }
+    },
+    {
+      "name": "configure_result_revision_only",
+      "definition": "CollaborationConfigureResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_configure_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.configure",
+        "command_instance_id": "ci-0001",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0001"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "collaboration_id": "collab-crew-0001",
+        "definition_revision": 2,
+        "start_blockers": []
+      }
+    },
+    {
+      "name": "configure_result_blocked_row",
+      "definition": "CollaborationConfigureResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_configure_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.configure",
+        "command_instance_id": "ci-0002",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0002"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "collaboration_id": "collab-crew-0001",
+        "definition_revision": 2,
+        "start_blockers": [
+          {
+            "participant_slot_id": "collab-crew-0001-slot-2",
+            "chosen_model_id": "model:gpt-x",
+            "reason": "model_unavailable"
+          }
+        ]
+      }
+    },
+    {
+      "name": "start_request_crew_user",
+      "definition": "CollaborationStartRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_start_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.start",
+        "command_instance_id": "ci-0003",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_modal",
+        "correlation_id": "corr-0003",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0003",
+        "causation_id": null,
+        "kind": "crew",
+        "collaboration_id": "collab-crew-0001",
+        "definition_revision": 2,
+        "admission_source": "user",
+        "crew_auto_revision": null
+      }
+    },
+    {
+      "name": "start_result_admitted",
+      "definition": "CollaborationStartResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_start_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.start",
+        "command_instance_id": "ci-0003",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0003"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "collaboration_run_id": "crun-crew-0001",
+        "state": "running",
+        "participant_slot_ids": [
+          "collab-crew-0001-slot-1",
+          "collab-crew-0001-slot-2"
+        ],
+        "requested_effective_snapshot_ref": "snap-crew-0001"
+      }
+    },
+    {
+      "name": "start_request_review_opened_version",
+      "definition": "CollaborationStartRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_start_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.start",
+        "command_instance_id": "ci-0004",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_modal",
+        "correlation_id": "corr-0004",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0004",
+        "causation_id": null,
+        "kind": "review",
+        "collaboration_id": "collab-review-0001",
+        "definition_revision": 2,
+        "admission_source": "user",
+        "crew_auto_revision": null,
+        "review_target": {
+          "target_kind": "changes",
+          "target_refs": [
+            "diff:working-tree"
+          ],
+          "choice": "opened_version",
+          "pre_freeze_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        }
+      }
+    },
+    {
+      "name": "start_result_refused_model_unavailable",
+      "definition": "CollaborationStartResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_start_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.start",
+        "command_instance_id": "ci-0004",
+        "committed": false,
+        "status": "refused",
+        "revision_after": null,
+        "currentness_hash_after": null,
+        "receipt_refs": [],
+        "observable_work_ref": null,
+        "error": "model_unavailable",
+        "replay_of": null,
+        "collaboration_run_id": null,
+        "state": null,
+        "participant_slot_ids": [],
+        "requested_effective_snapshot_ref": null
+      }
+    },
+    {
+      "name": "start_request_crew_auto",
+      "definition": "CollaborationStartRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_start_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.start",
+        "command_instance_id": "ci-0005",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "composer",
+        "correlation_id": "corr-0005",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0005",
+        "causation_id": null,
+        "kind": "crew",
+        "collaboration_id": "collab-crew-auto",
+        "definition_revision": 1,
+        "admission_source": "crew_auto",
+        "crew_auto_revision": 4
+      }
+    },
+    {
+      "name": "pause_request",
+      "definition": "CollaborationPauseRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_pause_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.pause",
+        "command_instance_id": "ci-0006",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0006",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0006",
+        "causation_id": null,
+        "collaboration_run_id": "crun-crew-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "name": "pause_result",
+      "definition": "CollaborationPauseResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_pause_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.pause",
+        "command_instance_id": "ci-0006",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0006"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "run_state_after": "paused"
+      }
+    },
+    {
+      "name": "resume_request",
+      "definition": "CollaborationResumeRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_resume_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.resume",
+        "command_instance_id": "ci-0007",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0007",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0007",
+        "causation_id": null,
+        "collaboration_run_id": "crun-crew-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "name": "resume_result_waiting",
+      "definition": "CollaborationResumeResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_resume_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.resume",
+        "command_instance_id": "ci-0007",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0007"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "run_state_after": "waiting"
+      }
+    },
+    {
+      "name": "cancel_request",
+      "definition": "CollaborationCancelRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_cancel_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.cancel",
+        "command_instance_id": "ci-0008",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0008",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0008",
+        "causation_id": null,
+        "collaboration_run_id": "crun-crew-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "name": "cancel_result",
+      "definition": "CollaborationCancelResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_cancel_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.cancel",
+        "command_instance_id": "ci-0008",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0008"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "run_state_after": "cancelled"
+      }
+    },
+    {
+      "name": "message_request_room_steer",
+      "definition": "CollaborationMessageRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_message_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.message",
+        "command_instance_id": "ci-0009",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "composer",
+        "correlation_id": "corr-0009",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0009",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "recipient_ids": [],
+        "body_ref": "body-0100",
+        "reply_to": null,
+        "attachment_refs": [],
+        "destination_state_generation": 12,
+        "delivery_mode": "steer"
+      }
+    },
+    {
+      "name": "message_result",
+      "definition": "CollaborationMessageResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_message_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.message",
+        "command_instance_id": "ci-0009",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0009"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "collaboration_message_id": "cmsg-0100"
+      }
+    },
+    {
+      "name": "message_result_run_finished",
+      "definition": "CollaborationMessageResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_message_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.message",
+        "command_instance_id": "ci-0010",
+        "committed": false,
+        "status": "refused",
+        "revision_after": null,
+        "currentness_hash_after": null,
+        "receipt_refs": [],
+        "observable_work_ref": null,
+        "error": "run_state_invalid",
+        "replay_of": null,
+        "collaboration_message_id": null
+      }
+    },
+    {
+      "name": "open_request_run_view_participant",
+      "definition": "CollaborationOpenRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_open_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.open",
+        "command_instance_id": "ci-0011",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0011",
+        "created_at": "2026-09-27T12:00:00Z",
+        "collaboration_run_id": "crun-crew-0001",
+        "target": "run_view",
+        "focus": {
+          "participant_id": "prun-2"
+        }
+      }
+    },
+    {
+      "name": "open_result_run_view",
+      "definition": "CollaborationOpenResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_open_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.open",
+        "command_instance_id": "ci-0011",
+        "route_ok": true,
+        "error": null,
+        "target": "run_view",
+        "document_id": "crew-work:crun-crew-0001",
+        "reused_existing_document": true
+      }
+    },
+    {
+      "name": "open_request_card",
+      "definition": "CollaborationOpenRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_open_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.open",
+        "command_instance_id": "ci-0012",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0012",
+        "created_at": "2026-09-27T12:00:00Z",
+        "collaboration_run_id": "crun-room-0001",
+        "target": "card"
+      }
+    },
+    {
+      "name": "open_result_card",
+      "definition": "CollaborationOpenResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_open_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.open",
+        "command_instance_id": "ci-0012",
+        "route_ok": true,
+        "error": null,
+        "target": "card",
+        "document_id": null,
+        "reused_existing_document": false
+      }
+    },
+    {
+      "name": "participant_open_request",
+      "definition": "CollaborationParticipantOpenRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_participant_open_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.participant.open",
+        "command_instance_id": "ci-0013",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0013",
+        "created_at": "2026-09-27T12:00:00Z",
+        "collaboration_run_id": "crun-crew-0001",
+        "participant_id": "prun-2"
+      }
+    },
+    {
+      "name": "participant_open_result_empty",
+      "definition": "CollaborationParticipantOpenResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_participant_open_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.participant.open",
+        "command_instance_id": "ci-0013",
+        "route_ok": true,
+        "error": null,
+        "participant_id": "prun-2",
+        "transcript_empty": true
+      }
+    },
+    {
+      "name": "export_request_report",
+      "definition": "CollaborationExportRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_export_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.export",
+        "command_instance_id": "ci-0014",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0014",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0014",
+        "causation_id": null,
+        "collaboration_run_id": "crun-review-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "content_kind": "report",
+        "format": "markdown",
+        "content_ref": "artifact:review-report@2",
+        "content_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    },
+    {
+      "name": "export_result",
+      "definition": "CollaborationExportResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_export_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.export",
+        "command_instance_id": "ci-0014",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0014"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "export_ref": "file:review-report.md",
+        "exported_content_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    },
+    {
+      "name": "reconfigure_request_add_rounds",
+      "definition": "CollaborationReconfigureRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_reconfigure_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.reconfigure",
+        "command_instance_id": "ci-0015",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0015",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0015",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "changes": [
+          {
+            "change_kind": "add_rounds",
+            "rounds": 2
+          }
+        ],
+        "accept_stale_target": false
+      }
+    },
+    {
+      "name": "reconfigure_result",
+      "definition": "CollaborationReconfigureResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_reconfigure_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.reconfigure",
+        "command_instance_id": "ci-0015",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0015"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "definition_revision_after": 3,
+        "system_message_id": "cmsg-0200",
+        "run_state_after": "running"
+      }
+    },
+    {
+      "name": "reconfigure_request_continue_without",
+      "definition": "CollaborationReconfigureRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_reconfigure_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.reconfigure",
+        "command_instance_id": "ci-0016",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0016",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0016",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "changes": [
+          {
+            "change_kind": "waive_participant",
+            "participant_slot_id": "slot-3",
+            "reason": "Never joined"
+          }
+        ],
+        "accept_stale_target": false
+      }
+    },
+    {
+      "name": "reconfigure_request_finish_stale",
+      "definition": "CollaborationReconfigureRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_reconfigure_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.reconfigure",
+        "command_instance_id": "ci-0017",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0017",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0017",
+        "causation_id": null,
+        "collaboration_run_id": "crun-review-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "changes": [],
+        "accept_stale_target": true
+      }
+    },
+    {
+      "name": "reconfigure_request_add_grill_me",
+      "definition": "CollaborationReconfigureRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_reconfigure_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.reconfigure",
+        "command_instance_id": "ci-0018",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0018",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0018",
+        "causation_id": null,
+        "collaboration_run_id": "crun-bs-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "changes": [
+          {
+            "change_kind": "add_grill_me",
+            "participant_spec": {
+              "schema_id": "pm.collaboration.participant_spec.v1",
+              "schema_version": "1.0.0",
+              "participant_slot_id": "collab-bs-0001-slot-5",
+              "role": "Grill Me",
+              "requested_provider_id": "provider:anthropic",
+              "requested_account_id": "account:main",
+              "requested_model_id": "model:claude-sonnet",
+              "requested_persona_id": null,
+              "requested_skill_ids": [],
+              "requested_tool_profile_id": null,
+              "additive_role_kind": "grill_me"
+            }
+          }
+        ],
+        "accept_stale_target": false
+      }
+    },
+    {
+      "name": "reconfigure_request_replace_moderator",
+      "definition": "CollaborationReconfigureRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_reconfigure_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.reconfigure",
+        "command_instance_id": "ci-0019",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0019",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0019",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "changes": [
+          {
+            "change_kind": "replace_coordinator",
+            "coordinator_spec": {
+              "kind": "dedicated_model",
+              "requested_model_id": "model:claude-opus"
+            }
+          }
+        ],
+        "accept_stale_target": false
+      }
+    },
+    {
+      "name": "brainstorm_round_request",
+      "definition": "BrainstormRoundRequest",
+      "value": {
+        "schema_id": "pm.collaboration.brainstorm_round_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.brainstorm.next_round",
+        "command_instance_id": "ci-0020",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "brainstorm_panel",
+        "correlation_id": "corr-0020",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0020",
+        "causation_id": null,
+        "collaboration_run_id": "crun-bs-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "name": "brainstorm_round_result",
+      "definition": "BrainstormRoundResult",
+      "value": {
+        "schema_id": "pm.collaboration.brainstorm_round_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.brainstorm.next_round",
+        "command_instance_id": "ci-0020",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0020"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "phase_after": "debate",
+        "debate_round": 1
+      }
+    },
+    {
+      "name": "synthesis_request_tie",
+      "definition": "BrainstormSynthesisRequest",
+      "value": {
+        "schema_id": "pm.collaboration.brainstorm_synthesis_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.brainstorm.synthesize_plan",
+        "command_instance_id": "ci-0021",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "brainstorm_card",
+        "correlation_id": "corr-0021",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0021",
+        "causation_id": null,
+        "collaboration_run_id": "crun-bs-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tie_resolution": "coordinator"
+      }
+    },
+    {
+      "name": "plan_create_result",
+      "definition": "AssistantPlanCreateResult",
+      "value": {
+        "schema_id": "pm.collaboration.assistant_plan_create_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.brainstorm.synthesize_plan",
+        "command_instance_id": "ci-0021",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0021"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "assistant_plan_id": "aplan-0002",
+        "plan_version": 1
+      }
+    },
+    {
+      "name": "lead_research_request",
+      "definition": "BrainstormLeadResearchRequest",
+      "value": {
+        "schema_id": "pm.collaboration.brainstorm_lead_research_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.brainstorm.research_lead",
+        "command_instance_id": "ci-0022",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "wonderer_workspace",
+        "correlation_id": "corr-0022",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0022",
+        "causation_id": null,
+        "collaboration_run_id": "crun-bs-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "lead_id": "lead-3"
+      }
+    },
+    {
+      "name": "lead_research_result_substantiated",
+      "definition": "BrainstormLeadResearchResult",
+      "value": {
+        "schema_id": "pm.collaboration.brainstorm_lead_research_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.brainstorm.research_lead",
+        "command_instance_id": "ci-0022",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0022"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "lead_id": "lead-3",
+        "lead_status": "substantiated",
+        "evidence_refs": [
+          "web:rfc4180"
+        ],
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "lead_research_result_set_aside",
+      "definition": "BrainstormLeadResearchResult",
+      "value": {
+        "schema_id": "pm.collaboration.brainstorm_lead_research_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.brainstorm.research_lead",
+        "command_instance_id": "ci-0023",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0023"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "lead_id": "lead-4",
+        "lead_status": "set_aside",
+        "evidence_refs": [],
+        "set_aside_reason": "No connection back to the seed topic"
+      }
+    },
+    {
+      "name": "create_todos_request",
+      "definition": "ReviewCreateTodosRequest",
+      "value": {
+        "schema_id": "pm.collaboration.review_create_todos_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.review.create_todos",
+        "command_instance_id": "ci-0024",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "review_card",
+        "correlation_id": "corr-0024",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0024",
+        "causation_id": null,
+        "collaboration_run_id": "crun-review-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "finding_ids": [
+          "find-0001"
+        ]
+      }
+    },
+    {
+      "name": "create_todos_result",
+      "definition": "ReviewCreateTodosResult",
+      "value": {
+        "schema_id": "pm.collaboration.review_create_todos_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.review.create_todos",
+        "command_instance_id": "ci-0024",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0024"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "created_todos": [
+          {
+            "todo_ref": "todo-0001",
+            "finding_id": "find-0001"
+          }
+        ]
+      }
+    },
+    {
+      "name": "send_findings_request",
+      "definition": "ReviewSendFindingsRequest",
+      "value": {
+        "schema_id": "pm.collaboration.review_send_findings_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.review.send_findings_to_agent",
+        "command_instance_id": "ci-0025",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "review_panel",
+        "correlation_id": "corr-0025",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0025",
+        "causation_id": null,
+        "collaboration_run_id": "crun-review-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "finding_ids": [
+          "find-0001"
+        ]
+      }
+    },
+    {
+      "name": "composer_buffer_filled",
+      "definition": "ComposerBufferResult",
+      "value": {
+        "schema_id": "pm.collaboration.composer_buffer_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.review.send_findings_to_agent",
+        "command_instance_id": "ci-0025",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0025"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "composer_buffer_ref": "composer:thread:01",
+        "sent": false,
+        "message_metadata_lineage": {
+          "collaboration_run_id": "crun-review-0001",
+          "finding_ids": [
+            "find-0001"
+          ]
+        }
+      }
+    },
+    {
+      "name": "composer_buffer_not_empty",
+      "definition": "ComposerBufferResult",
+      "value": {
+        "schema_id": "pm.collaboration.composer_buffer_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.review.send_findings_to_agent",
+        "command_instance_id": "ci-0026",
+        "committed": false,
+        "status": "refused",
+        "revision_after": null,
+        "currentness_hash_after": null,
+        "receipt_refs": [],
+        "observable_work_ref": null,
+        "error": "composer_not_empty",
+        "replay_of": null,
+        "composer_buffer_ref": null,
+        "sent": false,
+        "message_metadata_lineage": null
+      }
+    },
+    {
+      "name": "run_again_request_current",
+      "definition": "ReviewRunAgainRequest",
+      "value": {
+        "schema_id": "pm.collaboration.review_run_again_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.review.run_again",
+        "command_instance_id": "ci-0027",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "review_card",
+        "correlation_id": "corr-0027",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0027",
+        "causation_id": null,
+        "collaboration_run_id": "crun-review-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "collaboration_id": "collab-review-0001",
+        "definition_revision": 2,
+        "review_target": {
+          "target_kind": "changes",
+          "target_refs": [
+            "diff:working-tree"
+          ],
+          "choice": "current_version",
+          "pre_freeze_digest": "7777777777777777777777777777777777777777777777777777777777777777"
+        }
+      }
+    },
+    {
+      "name": "run_again_result",
+      "definition": "CollaborationStartResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_start_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.review.run_again",
+        "command_instance_id": "ci-0027",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0027"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "collaboration_run_id": "crun-review-0003",
+        "state": "running",
+        "participant_slot_ids": [
+          "r1",
+          "r2",
+          "r3"
+        ],
+        "requested_effective_snapshot_ref": "snap-review-0003"
+      }
+    },
+    {
+      "name": "room_round_request",
+      "definition": "ChatRoomRoundRequest",
+      "value": {
+        "schema_id": "pm.collaboration.chat_room_round_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat_room.next_round",
+        "command_instance_id": "ci-0028",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "chat_room_card",
+        "correlation_id": "corr-0028",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0028",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "name": "room_round_result",
+      "definition": "ChatRoomRoundResult",
+      "value": {
+        "schema_id": "pm.collaboration.chat_room_round_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat_room.next_round",
+        "command_instance_id": "ci-0028",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0028"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "turn_policy": "round_robin",
+        "participant_order": [
+          "slot-1",
+          "slot-2",
+          "slot-3"
+        ]
+      }
+    },
+    {
+      "name": "room_summarize_request",
+      "definition": "ChatRoomSummarizeRequest",
+      "value": {
+        "schema_id": "pm.collaboration.chat_room_summarize_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat_room.summarize",
+        "command_instance_id": "ci-0029",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "chat_room_panel",
+        "correlation_id": "corr-0029",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0029",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "name": "room_summary_artifact",
+      "definition": "ArtifactResult",
+      "value": {
+        "schema_id": "pm.collaboration.artifact_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat_room.summarize",
+        "command_instance_id": "ci-0029",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0029"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "artifact_ref": "artifact:room-summary",
+        "artifact_version": 1,
+        "artifact_hash": "9999999999999999999999999999999999999999999999999999999999999999"
+      }
+    },
+    {
+      "name": "promote_todo_request",
+      "definition": "ChatRoomPromoteTodoRequest",
+      "value": {
+        "schema_id": "pm.collaboration.chat_room_promote_todo_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat_room.promote_to_todo",
+        "command_instance_id": "ci-0030",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "chat_room_card",
+        "correlation_id": "corr-0030",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0030",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "collaboration_message_id": "cmsg-0100",
+        "participant_slot_id": "slot-2"
+      }
+    },
+    {
+      "name": "promote_todo_admitted",
+      "definition": "ChatRoomPromoteTodoResult",
+      "value": {
+        "schema_id": "pm.collaboration.chat_room_promote_todo_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat_room.promote_to_todo",
+        "command_instance_id": "ci-0030",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0030"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "owner_decision": "admitted",
+        "todo_ref": "todo-0002",
+        "owner_reason": null
+      }
+    },
+    {
+      "name": "promote_plan_request",
+      "definition": "ChatRoomPromotePlanRequest",
+      "value": {
+        "schema_id": "pm.collaboration.chat_room_promote_plan_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat_room.promote_to_plan",
+        "command_instance_id": "ci-0031",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "chat_room_card",
+        "correlation_id": "corr-0031",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0031",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "collaboration_message_id": "cmsg-0101",
+        "participant_slot_id": "slot-1"
+      }
+    },
+    {
+      "name": "promote_plan_rejected",
+      "definition": "ChatRoomPromotePlanResult",
+      "value": {
+        "schema_id": "pm.collaboration.chat_room_promote_plan_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat_room.promote_to_plan",
+        "command_instance_id": "ci-0031",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0031"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "owner_decision": "rejected",
+        "assistant_plan_id": null,
+        "owner_reason": "A current Plan already exists"
+      }
+    },
+    {
+      "name": "promote_goal_request",
+      "definition": "ChatRoomPromoteGoalRequest",
+      "value": {
+        "schema_id": "pm.collaboration.chat_room_promote_goal_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat_room.promote_to_goal",
+        "command_instance_id": "ci-0032",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "chat_room_panel",
+        "correlation_id": "corr-0032",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0032",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "collaboration_message_id": "cmsg-0102",
+        "participant_slot_id": "slot-3"
+      }
+    },
+    {
+      "name": "promote_goal_admitted",
+      "definition": "ChatRoomPromoteGoalResult",
+      "value": {
+        "schema_id": "pm.collaboration.chat_room_promote_goal_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat_room.promote_to_goal",
+        "command_instance_id": "ci-0032",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0032"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "owner_decision": "admitted",
+        "goal_id": "goal-0001",
+        "owner_reason": null
+      }
+    },
+    {
+      "name": "room_end_request",
+      "definition": "ChatRoomEndRequest",
+      "value": {
+        "schema_id": "pm.collaboration.chat_room_end_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat_room.end",
+        "command_instance_id": "ci-0033",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "chat_room_card",
+        "correlation_id": "corr-0033",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0033",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "name": "room_end_result",
+      "definition": "ChatRoomEndResult",
+      "value": {
+        "schema_id": "pm.collaboration.chat_room_end_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat_room.end",
+        "command_instance_id": "ci-0033",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0033"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "run_state_after": "completed",
+        "promotion_allowed": true
+      }
+    },
+    {
+      "name": "crew_auto_set_enable",
+      "definition": "CrewAutoSetRequest",
+      "value": {
+        "schema_id": "pm.collaboration.crew_auto_set_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.crew_auto.set",
+        "command_instance_id": "ci-0034",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "crew_auto_modal",
+        "correlation_id": "corr-0034",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0034",
+        "causation_id": null,
+        "enabled": true,
+        "expected_crew_auto_revision": 3,
+        "rules": {
+          "complexity_threshold": "high",
+          "min_parallel_parts": 2,
+          "independent_subsystems": true
+        },
+        "team": [
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "auto-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "auto-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          }
+        ]
+      }
+    },
+    {
+      "name": "crew_auto_set_result_on",
+      "definition": "CrewAutoSetResult",
+      "value": {
+        "schema_id": "pm.collaboration.crew_auto_set_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.crew_auto.set",
+        "command_instance_id": "ci-0034",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0034"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "enabled_after": true,
+        "crew_auto_revision": 4,
+        "settings_transaction_ref": "settings-tx-0001"
+      }
+    },
+    {
+      "name": "crew_auto_set_disable",
+      "definition": "CrewAutoSetRequest",
+      "value": {
+        "schema_id": "pm.collaboration.crew_auto_set_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.crew_auto.set",
+        "command_instance_id": "ci-0035",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "multi_agent_menu",
+        "correlation_id": "corr-0035",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0035",
+        "causation_id": null,
+        "enabled": false,
+        "expected_crew_auto_revision": 4
+      }
+    },
+    {
+      "name": "crew_auto_set_result_configuration_required",
+      "definition": "CrewAutoSetResult",
+      "value": {
+        "schema_id": "pm.collaboration.crew_auto_set_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.crew_auto.set",
+        "command_instance_id": "ci-0036",
+        "committed": false,
+        "status": "refused",
+        "revision_after": null,
+        "currentness_hash_after": null,
+        "receipt_refs": [],
+        "observable_work_ref": null,
+        "error": "configuration_required",
+        "replay_of": null,
+        "enabled_after": false,
+        "crew_auto_revision": null,
+        "settings_transaction_ref": null
+      }
+    },
+    {
+      "name": "crew_auto_config_route",
+      "definition": "CrewAutoConfigRoute",
+      "value": {
+        "schema_id": "pm.collaboration.crew_auto_config_route.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.crew_auto.open_config",
+        "command_instance_id": "ci-0037",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "multi_agent_menu",
+        "correlation_id": "corr-0037",
+        "created_at": "2026-09-27T12:00:00Z"
+      }
+    },
+    {
+      "name": "crew_auto_config_route_result",
+      "definition": "RouteResult",
+      "value": {
+        "schema_id": "pm.collaboration.route_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.crew_auto.open_config",
+        "command_instance_id": "ci-0037",
+        "route_ok": true,
+        "error": null
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "definition_carries_substitution_policy",
+      "base_valid": "definition_crew_shared_notes",
+      "rejects_for": "additionalProperties false (no substitution policy)",
+      "reason": "The definition stores no substitution policy that could let a stand-in start; an unavailable chosen model blocks Start (CWR-032, CWR-034).",
+      "patch": {
+        "substitution_policy": "same_provider"
+      }
+    },
+    {
+      "name": "definition_crew_missing_shared_notes",
+      "base_valid": "definition_crew_shared_notes",
+      "rejects_for": "crew kind requires shared_notes_policy",
+      "reason": "Shared notes replace shared versus private scratch for a Crew and are written into its definition (CWR-032, section 5.2).",
+      "remove": [
+        "shared_notes_policy"
+      ]
+    },
+    {
+      "name": "definition_crew_shared_notes_value_open",
+      "base_valid": "definition_crew_shared_notes",
+      "rejects_for": "shared_notes_policy closed enum",
+      "reason": "shared_notes_policy is closed to shared_space and private_per_participant (CWR-032).",
+      "patch": {
+        "shared_notes_policy": "shared_scratch"
+      }
+    },
+    {
+      "name": "definition_review_with_specialist",
+      "base_valid": "definition_review_file_and_line",
+      "rejects_for": "review participant_specs must be core (additive_role_kind none)",
+      "reason": "Review has no specialists (CWR-028).",
+      "patch": {
+        "participant_specs.1.additive_role_kind": "wonderer"
+      }
+    },
+    {
+      "name": "definition_review_carries_hard_constraints",
+      "base_valid": "definition_review_file_and_line",
+      "rejects_for": "kind fields appear only on their kind",
+      "reason": "hard_constraints[] is a BrainStorm field (CWR-027, CWR-032); a Review definition never carries it.",
+      "patch": {
+        "hard_constraints": []
+      }
+    },
+    {
+      "name": "definition_chat_room_missing_summary_style",
+      "base_valid": "definition_chat_room_kind_rows",
+      "rejects_for": "chat_room kind requires summary_style",
+      "reason": "The Chat Room Advanced page writes moderator_style, mention_policy, stop_condition and summary_style (CWR-024).",
+      "remove": [
+        "summary_style"
+      ]
+    },
+    {
+      "name": "definition_brainstorm_provisioning_install_always",
+      "base_valid": "definition_brainstorm_must_haves_and_specialists",
+      "rejects_for": "provisioning_posture closed enum",
+      "reason": "provisioning_posture is closed to ask_first and never_install; a run never installs research tools without the approval path (CWR-027, section 8.2).",
+      "patch": {
+        "provisioning_posture": "always_install"
+      }
+    },
+    {
+      "name": "definition_brainstorm_constraint_without_source",
+      "base_valid": "definition_brainstorm_must_haves_and_specialists",
+      "rejects_for": "hard_constraint requires id, text and source",
+      "reason": "Each must-have is {id, text, source} (CWR-027).",
+      "remove": [
+        "hard_constraints.0.source"
+      ]
+    },
+    {
+      "name": "definition_grill_me_with_persona",
+      "base_valid": "definition_brainstorm_must_haves_and_specialists",
+      "rejects_for": "grill_me spec forbids a Persona",
+      "reason": "Grill Me is a methodology Skill and never a Persona, so its row has no Persona (DL-133, CWR-028).",
+      "patch": {
+        "participant_specs.3.requested_persona_id": "persona:grill-me"
+      }
+    },
+    {
+      "name": "definition_wonderer_without_own_model",
+      "base_valid": "definition_brainstorm_must_haves_and_specialists",
+      "rejects_for": "specialist spec requires its own requested_model_id",
+      "reason": "An added specialist is its own row with its own model picker (CWR-028).",
+      "patch": {
+        "participant_specs.2.requested_model_id": null
+      }
+    },
+    {
+      "name": "definition_coordinator_slot_without_slot_id",
+      "base_valid": "definition_brainstorm_must_haves_and_specialists",
+      "rejects_for": "coordinator_spec participant_slot requires participant_slot_id",
+      "reason": "participant_slot names one of the run's participant slots (CWR-037).",
+      "remove": [
+        "coordinator_spec.participant_slot_id"
+      ]
+    },
+    {
+      "name": "definition_parent_assistant_with_model",
+      "base_valid": "definition_crew_shared_notes",
+      "rejects_for": "coordinator_spec parent_assistant carries no requested identity",
+      "reason": "parent_assistant is this chat's assistant; only dedicated_model adds its own requested identity (CWR-037).",
+      "patch": {
+        "coordinator_spec.requested_model_id": "model:claude-opus"
+      }
+    },
+    {
+      "name": "definition_coordinator_kind_open",
+      "base_valid": "definition_crew_shared_notes",
+      "rejects_for": "coordinator_spec kind closed enum",
+      "reason": "coordinator_spec kind is closed to parent_assistant, participant_slot and dedicated_model (CWR-037).",
+      "patch": {
+        "coordinator_spec.kind": "any_member"
+      }
+    },
+    {
+      "name": "run_crew_auto_without_revision",
+      "base_valid": "run_crew_auto_admitted",
+      "rejects_for": "admission_source crew_auto requires crew_auto_revision",
+      "reason": "A run admitted by Crew Auto records the revision of the rules that admitted it, so the card can say which rules started it (CWR-021).",
+      "patch": {
+        "crew_auto_revision": null
+      }
+    },
+    {
+      "name": "run_user_with_crew_auto_revision",
+      "base_valid": "run_user_crew",
+      "rejects_for": "crew_auto_revision only on a crew_auto admission",
+      "reason": "crew_auto_revision names the Crew Auto configuration that admitted the run; a user start was not admitted by it (CWR-021).",
+      "patch": {
+        "crew_auto_revision": 4
+      }
+    },
+    {
+      "name": "run_build_with_crew_without_plan",
+      "base_valid": "run_build_with_crew",
+      "rejects_for": "build_with_crew requires assistant_plan_id and plan_version",
+      "reason": "The Build With Crew transaction binds assistant_plan_id and plan_version (CWR-023, section 5.4).",
+      "patch": {
+        "assistant_plan_id": null
+      }
+    },
+    {
+      "name": "run_admission_source_open",
+      "base_valid": "run_user_crew",
+      "rejects_for": "admission_source closed enum",
+      "reason": "admission_source is closed to user, crew_auto, build_with_crew and scheduled_build (CWR-021).",
+      "patch": {
+        "admission_source": "assistant"
+      }
+    },
+    {
+      "name": "run_state_open",
+      "base_valid": "run_user_crew",
+      "rejects_for": "run_state closed enum",
+      "reason": "Run states are closed; a bare Working state is not one of them (section 2.1).",
+      "patch": {
+        "state": "working"
+      }
+    },
+    {
+      "name": "message_sender_kind_open",
+      "base_valid": "message_system_entry",
+      "rejects_for": "sender_kind closed enum",
+      "reason": "sender_kind is closed to user, participant, coordinator and system (section 2.3).",
+      "patch": {
+        "sender_kind": "moderator"
+      }
+    },
+    {
+      "name": "vote_position_majority",
+      "base_valid": "vote_with_constraint_conflict",
+      "rejects_for": "vote position closed enum",
+      "reason": "A vote records support, oppose or abstain; there is no majority-weight value (section 8.5, CWR-027).",
+      "patch": {
+        "position": "strong_support"
+      }
+    },
+    {
+      "name": "target_pack_without_hash",
+      "base_valid": "target_pack_changes",
+      "rejects_for": "target_hashes minItems 1",
+      "reason": "A frozen pack records the exact hashes every reviewer read (section 7.2).",
+      "patch": {
+        "target_hashes": []
+      }
+    },
+    {
+      "name": "target_pack_kind_open",
+      "base_valid": "target_pack_changes",
+      "rejects_for": "target_kind closed enum",
+      "reason": "target_kind is closed to the six target kinds of section 7.2.",
+      "patch": {
+        "target_kind": "repository"
+      }
+    },
+    {
+      "name": "finding_without_origin",
+      "base_valid": "finding_confirmed_major",
+      "rejects_for": "originating_reviewer_ids minItems 1",
+      "reason": "Normalization never loses an originating reviewer identity (section 7.5).",
+      "patch": {
+        "originating_reviewer_ids": []
+      }
+    },
+    {
+      "name": "finding_severity_as_disposition",
+      "base_valid": "finding_confirmed_major",
+      "rejects_for": "severity closed enum",
+      "reason": "Severity and disposition are separate axes; confirmed is not a severity (section 7.5).",
+      "patch": {
+        "severity": "confirmed"
+      }
+    },
+    {
+      "name": "disposition_waiver_without_reason",
+      "base_valid": "disposition_waived",
+      "rejects_for": "waiver requires actor, reason and currentness",
+      "reason": "A waiver identifies actor, reason and currentness (PART-001..006, CWR-024).",
+      "remove": [
+        "waiver.reason"
+      ]
+    },
+    {
+      "name": "disposition_waived_without_waiver",
+      "base_valid": "disposition_waived",
+      "rejects_for": "explicitly_waived requires a waiver",
+      "reason": "Continue without is an explicit waiver; a slot is never waived silently (CWR-024, PART-001..006).",
+      "patch": {
+        "waiver": null
+      }
+    },
+    {
+      "name": "disposition_completed_with_waiver",
+      "base_valid": "disposition_unavailable",
+      "rejects_for": "only explicitly_waived carries a waiver",
+      "reason": "A waiver is recorded only by the explicit waive action (PART-001..006).",
+      "patch": {
+        "outcome": "completed",
+        "attempt_id": "att-10",
+        "waiver": {
+          "actor_identity": "user:jared",
+          "reason": "x",
+          "currentness_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        }
+      }
+    },
+    {
+      "name": "disposition_unavailable_claims_attempt",
+      "base_valid": "disposition_unavailable",
+      "rejects_for": "unavailable claims no attempt",
+      "reason": "Configuration alone never creates a runtime participant, and no provider attempt is claimed (PART-021..024, CWR-034).",
+      "patch": {
+        "attempt_id": "att-11"
+      }
+    },
+    {
+      "name": "completion_clean_with_attention",
+      "base_valid": "completion_clean_crew",
+      "rejects_for": "clean_completion true forbids an attention_reason",
+      "reason": "A clean result and a Needs attention face never coexist; both read only this projection (CWR-029).",
+      "patch": {
+        "attention_reason": "missing_outputs"
+      }
+    },
+    {
+      "name": "completion_limit_reached_reason",
+      "base_valid": "completion_coordinator_failed",
+      "rejects_for": "attention_reason closed to six values",
+      "reason": "attention_reason is closed to six values; limit_reached waits on an owner decision and is not admitted (CWR-029, ledger q-007).",
+      "patch": {
+        "attention_reason": "limit_reached"
+      }
+    },
+    {
+      "name": "completion_partial_review_on_crew",
+      "base_valid": "completion_clean_crew",
+      "rejects_for": "partial_review applies to a Review only",
+      "reason": "Partial coverage is a Review outcome (PART-007..010, CWR-026).",
+      "patch": {
+        "clean_completion": false,
+        "attention_reason": "partial_review"
+      }
+    },
+    {
+      "name": "completion_accept_partial_on_run_again",
+      "base_valid": "completion_partial_review",
+      "rejects_for": "accept_partial maps to cmd.collaboration.reconfigure",
+      "reason": "accept_partial is an explicit waiver through cmd.collaboration.reconfigure (CWR-026).",
+      "patch": {
+        "allowed_actions.0.command_id": "cmd.review.run_again"
+      }
+    },
+    {
+      "name": "completion_restart_on_reconfigure",
+      "base_valid": "completion_partial_review",
+      "rejects_for": "restart_on_current maps to cmd.review.run_again",
+      "reason": "restart_on_current is cmd.review.run_again against a newly frozen pack (CWR-026).",
+      "patch": {
+        "allowed_actions.1.command_id": "cmd.collaboration.reconfigure"
+      }
+    },
+    {
+      "name": "completion_action_invented_command",
+      "base_valid": "completion_coordinator_failed",
+      "rejects_for": "allowed_actions map to existing commands only",
+      "reason": "Each allowed action maps to one existing command; no per-workflow retry command is minted (CWR-029, PART-001..006).",
+      "patch": {
+        "allowed_actions.0.command_id": "cmd.collaboration.retry_coordinator"
+      }
+    },
+    {
+      "name": "activity_needs_you_without_decision",
+      "base_valid": "activity_needs_you",
+      "rejects_for": "needs_you requires decision_ref",
+      "reason": "needs_you carries the decision it waits on (CWR-030).",
+      "remove": [
+        "decision_ref"
+      ]
+    },
+    {
+      "name": "activity_decision_ref_on_working",
+      "base_valid": "activity_using_tools",
+      "rejects_for": "decision_ref only on needs_you",
+      "reason": "Only a pending decision makes a participant needs_you (CWR-030).",
+      "patch": {
+        "decision_ref": "approval:78"
+      }
+    },
+    {
+      "name": "activity_persisted_flag",
+      "base_valid": "activity_using_tools",
+      "rejects_for": "additionalProperties false (projection is never persisted)",
+      "reason": "The projection is derived on read and never persisted or replayed (CWR-030).",
+      "patch": {
+        "persisted_at": "2026-09-27T12:00:00Z"
+      }
+    },
+    {
+      "name": "activity_state_streaming",
+      "base_valid": "activity_using_tools",
+      "rejects_for": "participant activity state closed enum",
+      "reason": "Verbs change at state boundaries and tool events, never per token; streaming is not a presentation state (CWR-030).",
+      "patch": {
+        "state": "streaming"
+      }
+    },
+    {
+      "name": "preset_grill_me_as_persona",
+      "base_valid": "preset_crew_build_and_check",
+      "rejects_for": "grill_me preset row forbids a Persona",
+      "reason": "A preset adds Grill Me only as a specialist row, never as a Persona (CWR-039, DL-133).",
+      "patch": {
+        "rows.1.additive_role_kind": "grill_me"
+      }
+    },
+    {
+      "name": "configure_result_starts_run",
+      "base_valid": "configure_result_revision_only",
+      "rejects_for": "additionalProperties false (configure carries no run identity)",
+      "reason": "cmd.collaboration.configure validates and previews only; it never starts a run (MODAL-003..005).",
+      "patch": {
+        "collaboration_run_id": "crun-crew-0009"
+      }
+    },
+    {
+      "name": "configure_blocker_substituted",
+      "base_valid": "configure_result_blocked_row",
+      "rejects_for": "start_blocker reason closed enum",
+      "reason": "A blocked row names the owner's typed reason; there is no substituted outcome (CWR-034).",
+      "patch": {
+        "start_blockers.0.reason": "substituted"
+      }
+    },
+    {
+      "name": "start_request_build_with_crew",
+      "base_valid": "start_request_crew_user",
+      "rejects_for": "start admission_source excludes build_with_crew",
+      "reason": "Build With Crew dispatches cmd.chat.plan.build_with_crew and never cmd.collaboration.start (CWR-022, MODAL-013..014).",
+      "patch": {
+        "admission_source": "build_with_crew"
+      }
+    },
+    {
+      "name": "start_request_review_without_target",
+      "base_valid": "start_request_review_opened_version",
+      "rejects_for": "review start requires review_target",
+      "reason": "Review target identity and hash freeze at Start (MODAL-009..010).",
+      "remove": [
+        "review_target"
+      ]
+    },
+    {
+      "name": "start_request_review_target_silent_swap",
+      "base_valid": "start_request_review_opened_version",
+      "rejects_for": "review_target choice closed enum",
+      "reason": "The user chooses the current version or the version the sheet opened with; there is no silent swap (MODAL-009..010, CWR-025).",
+      "patch": {
+        "review_target.choice": "latest_if_changed"
+      }
+    },
+    {
+      "name": "start_request_crew_auto_without_revision",
+      "base_valid": "start_request_crew_auto",
+      "rejects_for": "crew_auto start requires crew_auto_revision",
+      "reason": "A Crew Auto admission names the committed configuration revision that admitted it (CWR-021).",
+      "patch": {
+        "crew_auto_revision": null
+      }
+    },
+    {
+      "name": "start_request_without_idempotency",
+      "base_valid": "start_request_crew_user",
+      "rejects_for": "mutation request requires idempotency_key",
+      "reason": "Every asynchronous start is idempotent: a double invocation returns the original run (section 2.6, MODAL-015..018).",
+      "remove": [
+        "idempotency_key"
+      ]
+    },
+    {
+      "name": "start_result_committed_without_run",
+      "base_valid": "start_result_admitted",
+      "rejects_for": "committed start requires collaboration_run_id",
+      "reason": "A committed start returns run identity (section 10).",
+      "patch": {
+        "collaboration_run_id": null
+      }
+    },
+    {
+      "name": "start_result_refused_with_run",
+      "base_valid": "start_result_refused_model_unavailable",
+      "rejects_for": "refused start carries no run identity",
+      "reason": "A failed Start creates no card and no partial participant records (MODAL-003..005).",
+      "patch": {
+        "collaboration_run_id": "crun-crew-0010"
+      }
+    },
+    {
+      "name": "start_result_refused_without_error",
+      "base_valid": "start_result_refused_model_unavailable",
+      "rejects_for": "not committed requires a typed error",
+      "reason": "A failure carries its typed error and never a success shape (section 11).",
+      "patch": {
+        "error": null
+      }
+    },
+    {
+      "name": "start_result_refused_with_work",
+      "base_valid": "start_result_refused_model_unavailable",
+      "rejects_for": "not committed carries no observable work",
+      "reason": "A refusal claims no provider attempt or work (PART-021..024, section 11).",
+      "patch": {
+        "observable_work_ref": "work-0001"
+      }
+    },
+    {
+      "name": "start_result_error_open",
+      "base_valid": "start_result_refused_model_unavailable",
+      "rejects_for": "error closed enum",
+      "reason": "Errors come from the closed section 11 enumeration.",
+      "patch": {
+        "error": "model_substituted"
+      }
+    },
+    {
+      "name": "pause_result_completed",
+      "base_valid": "pause_result",
+      "rejects_for": "committed pause settles paused",
+      "reason": "Pause reaches a safe boundary and returns exact run state (section 2.6).",
+      "patch": {
+        "run_state_after": "completed"
+      }
+    },
+    {
+      "name": "resume_result_second_state",
+      "base_valid": "resume_result_waiting",
+      "rejects_for": "committed resume continues the run",
+      "reason": "Resume continues the same run; it never reports paused or a terminal state (section 10).",
+      "patch": {
+        "run_state_after": "completed"
+      }
+    },
+    {
+      "name": "cancel_result_without_receipt",
+      "base_valid": "cancel_result",
+      "rejects_for": "committed cancel requires a cancellation receipt",
+      "reason": "Cancel records a cancellation receipt (section 2.6).",
+      "patch": {
+        "receipt_refs": []
+      }
+    },
+    {
+      "name": "cancel_request_without_currentness",
+      "base_valid": "cancel_request",
+      "rejects_for": "run command requires expected_currentness_hash",
+      "reason": "Mutations on a run revalidate currentness before dispatch (section 11).",
+      "remove": [
+        "expected_currentness_hash"
+      ]
+    },
+    {
+      "name": "message_request_delivery_interrupt",
+      "base_valid": "message_request_room_steer",
+      "rejects_for": "delivery_mode closed to queue and steer",
+      "reason": "A mid-round message steers without interrupting; no turn is cancelled and the round is not restarted (CWR-024, DL-112).",
+      "patch": {
+        "delivery_mode": "interrupt"
+      }
+    },
+    {
+      "name": "message_request_without_generation",
+      "base_valid": "message_request_room_steer",
+      "rejects_for": "message requires destination_state_generation",
+      "reason": "Destination state_generation is revalidated before dispatch (section 10).",
+      "remove": [
+        "destination_state_generation"
+      ]
+    },
+    {
+      "name": "message_result_refused_writes_message",
+      "base_valid": "message_result_run_finished",
+      "rejects_for": "refused message writes no message",
+      "reason": "A message to a finished run is unavailable and writes nothing (CWR-031).",
+      "patch": {
+        "collaboration_message_id": "cmsg-0101"
+      }
+    },
+    {
+      "name": "open_request_target_panel",
+      "base_valid": "open_request_card",
+      "rejects_for": "open target closed enum",
+      "reason": "The full panel is now the run view; target is closed to card, run_view and activity_detail (CWR-020, CWR-031).",
+      "patch": {
+        "target": "panel"
+      }
+    },
+    {
+      "name": "open_request_focus_two_kinds",
+      "base_valid": "open_request_run_view_participant",
+      "rejects_for": "focus names exactly one of tab, participant_id or finding_id",
+      "reason": "The optional focus names a tab, a participant or a finding (CWR-031).",
+      "patch": {
+        "focus.finding_id": "find-0001"
+      }
+    },
+    {
+      "name": "open_result_panel_document",
+      "base_valid": "open_result_run_view",
+      "rejects_for": "run_view document_id carries a kind prefix",
+      "reason": "The run view is one editor document per run with a stable kind-prefixed id (CWR-020).",
+      "patch": {
+        "document_id": "panel:crun-crew-0001"
+      }
+    },
+    {
+      "name": "open_result_run_view_without_document",
+      "base_valid": "open_result_run_view",
+      "rejects_for": "run_view route requires document_id",
+      "reason": "Opening the run view focuses or opens its one editor document (CWR-020).",
+      "patch": {
+        "document_id": null
+      }
+    },
+    {
+      "name": "open_result_changes_run_state",
+      "base_valid": "open_result_card",
+      "rejects_for": "additionalProperties false (navigation carries no run state)",
+      "reason": "Route success is not run success; open cannot mutate a run (section 10).",
+      "patch": {
+        "run_state_after": "running"
+      }
+    },
+    {
+      "name": "open_result_failed_without_error",
+      "base_valid": "open_result_card",
+      "rejects_for": "route_ok false requires a typed error",
+      "reason": "A failed route names its reason (section 11).",
+      "patch": {
+        "route_ok": false
+      }
+    },
+    {
+      "name": "export_request_content_kind_open",
+      "base_valid": "export_request_report",
+      "rejects_for": "content_kind closed enum",
+      "reason": "content_kind is closed to transcript, result_artifact and report (CWR-031).",
+      "patch": {
+        "content_kind": "screenshot"
+      }
+    },
+    {
+      "name": "export_request_without_hash",
+      "base_valid": "export_request_report",
+      "rejects_for": "export requires content_hash",
+      "reason": "Export ships the referenced version and hash and never re-renders (section 10).",
+      "remove": [
+        "content_hash"
+      ]
+    },
+    {
+      "name": "reconfigure_request_empty",
+      "base_valid": "reconfigure_request_add_rounds",
+      "rejects_for": "changes minItems 1 unless accept_stale_target",
+      "reason": "A reconfiguration names what it changes; only finish_stale needs no participant change (CWR-026, CWR-031).",
+      "patch": {
+        "changes": []
+      }
+    },
+    {
+      "name": "reconfigure_waiver_without_reason",
+      "base_valid": "reconfigure_request_continue_without",
+      "rejects_for": "waive_participant requires reason",
+      "reason": "Continue without is an explicit waiver that identifies its reason (CWR-024, PART-001..006).",
+      "remove": [
+        "changes.0.reason"
+      ]
+    },
+    {
+      "name": "reconfigure_add_participant_as_wonderer",
+      "base_valid": "reconfigure_request_add_grill_me",
+      "rejects_for": "add_grill_me carries a grill_me spec",
+      "reason": "Adding Grill Me mid-run adds a Grill Me row; it never repurposes the change for another role (CWR-031).",
+      "patch": {
+        "changes.0.participant_spec.additive_role_kind": "wonderer"
+      }
+    },
+    {
+      "name": "reconfigure_silent_substitute",
+      "base_valid": "reconfigure_request_add_rounds",
+      "rejects_for": "reconfigure change kinds are closed",
+      "reason": "No participant is swapped silently; replacement names the slot and the new requested identity (PART-001..006).",
+      "patch": {
+        "changes.0": {
+          "change_kind": "auto_substitute",
+          "participant_slot_id": "slot-1"
+        }
+      }
+    },
+    {
+      "name": "reconfigure_result_completed",
+      "base_valid": "reconfigure_result",
+      "rejects_for": "committed reconfigure leaves a non-terminal run",
+      "reason": "Reconfigure is available only while the run is waiting, running, blocked or paused; a completed run is never reconfigured (CWR-031).",
+      "patch": {
+        "run_state_after": "completed"
+      }
+    },
+    {
+      "name": "reconfigure_result_without_system_entry",
+      "base_valid": "reconfigure_result",
+      "rejects_for": "committed reconfigure records a system transcript entry",
+      "reason": "Reconfiguration records a system transcript entry (section 6.3, CWR-024).",
+      "patch": {
+        "system_message_id": null
+      }
+    },
+    {
+      "name": "brainstorm_round_phase_open",
+      "base_valid": "brainstorm_round_result",
+      "rejects_for": "phase closed to the seven phases",
+      "reason": "BrainStorm runs seven ordered phases (section 8.5, CWR-027).",
+      "patch": {
+        "phase_after": "majority_vote"
+      }
+    },
+    {
+      "name": "synthesis_tie_first_response",
+      "base_valid": "synthesis_request_tie",
+      "rejects_for": "tie_resolution const coordinator",
+      "reason": "Ties are never broken by first response, provider order or model prestige (PART-011..015, CWR-027).",
+      "patch": {
+        "tie_resolution": "first_response"
+      }
+    },
+    {
+      "name": "plan_create_result_without_plan",
+      "base_valid": "plan_create_result",
+      "rejects_for": "committed synthesis returns exactly one Plan",
+      "reason": "BrainStorm always ends in exactly one Plan (section 8.1).",
+      "patch": {
+        "assistant_plan_id": null
+      }
+    },
+    {
+      "name": "lead_substantiated_without_evidence",
+      "base_valid": "lead_research_result_substantiated",
+      "rejects_for": "substantiated lead requires evidence_refs",
+      "reason": "A lead is never accepted as fact without evidence (section 9.2, CWR-031).",
+      "patch": {
+        "evidence_refs": []
+      }
+    },
+    {
+      "name": "lead_set_aside_without_reason",
+      "base_valid": "lead_research_result_set_aside",
+      "rejects_for": "set_aside lead requires set_aside_reason",
+      "reason": "The result records the reason the lead was set aside (CWR-031).",
+      "patch": {
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "lead_hypothesis_with_evidence",
+      "base_valid": "lead_research_result_set_aside",
+      "rejects_for": "a hypothesis carries no evidence",
+      "reason": "Evidence makes a lead substantiated; a hypothesis carries none (section 9.2).",
+      "patch": {
+        "lead_status": "hypothesis",
+        "evidence_refs": [
+          "web:x"
+        ],
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "create_todos_implicit_selection",
+      "base_valid": "create_todos_request",
+      "rejects_for": "finding_ids minItems 1",
+      "reason": "Only the final explicit selection is converted (CWR-026).",
+      "patch": {
+        "finding_ids": []
+      }
+    },
+    {
+      "name": "create_todos_without_lineage",
+      "base_valid": "create_todos_result",
+      "rejects_for": "created To-Do requires its finding_id",
+      "reason": "Each To-Do keeps lineage back to its finding (section 7.6).",
+      "remove": [
+        "created_todos.0.finding_id"
+      ]
+    },
+    {
+      "name": "composer_buffer_sends",
+      "base_valid": "composer_buffer_filled",
+      "rejects_for": "sent const false",
+      "reason": "Send Findings fills the box and never sends; nothing runs until the user presses Send (DL-125).",
+      "patch": {
+        "sent": true
+      }
+    },
+    {
+      "name": "composer_buffer_without_lineage",
+      "base_valid": "composer_buffer_filled",
+      "rejects_for": "committed buffer requires metadata lineage",
+      "reason": "The findings' lineage is recorded in message metadata, never in the text (CWR-031).",
+      "patch": {
+        "message_metadata_lineage": null
+      }
+    },
+    {
+      "name": "composer_buffer_overwrites",
+      "base_valid": "composer_buffer_not_empty",
+      "rejects_for": "refused buffer writes nothing",
+      "reason": "A composer that holds text refuses with composer_not_empty and is not overwritten (CWR-031).",
+      "patch": {
+        "composer_buffer_ref": "composer:thread:01"
+      }
+    },
+    {
+      "name": "room_summary_creates_todo",
+      "base_valid": "room_summary_artifact",
+      "rejects_for": "additionalProperties false (summarize creates no To-Do)",
+      "reason": "Summarize creates no To-Do, Plan or Goal (section 10).",
+      "patch": {
+        "todo_ref": "todo-9"
+      }
+    },
+    {
+      "name": "promote_without_message_lineage",
+      "base_valid": "promote_todo_request",
+      "rejects_for": "promotion requires collaboration_message_id",
+      "reason": "Promotion preserves lineage to the exact message and participant (section 6.4).",
+      "remove": [
+        "collaboration_message_id"
+      ]
+    },
+    {
+      "name": "promote_rejected_creates_plan",
+      "base_valid": "promote_plan_rejected",
+      "rejects_for": "rejected promotion creates nothing",
+      "reason": "The Plan owner admits or rejects; a rejection creates no Plan (section 6.4).",
+      "patch": {
+        "assistant_plan_id": "aplan-9"
+      }
+    },
+    {
+      "name": "promote_rejected_without_reason",
+      "base_valid": "promote_plan_rejected",
+      "rejects_for": "rejected promotion names the owner reason",
+      "reason": "The owner's refusal is carried, never hidden (section 6.4).",
+      "patch": {
+        "owner_reason": null
+      }
+    },
+    {
+      "name": "room_end_settles_cancelled",
+      "base_valid": "room_end_result",
+      "rejects_for": "committed end settles completed",
+      "reason": "End discussion settles completed, never cancelled; it is distinct from cmd.collaboration.cancel (CWR-031, DL-130).",
+      "patch": {
+        "run_state_after": "cancelled"
+      }
+    },
+    {
+      "name": "room_end_blocks_promotion",
+      "base_valid": "room_end_result",
+      "rejects_for": "committed end keeps promotion allowed",
+      "reason": "Promotion of the room's existing messages stays allowed after End discussion (CWR-024).",
+      "patch": {
+        "promotion_allowed": false
+      }
+    },
+    {
+      "name": "crew_auto_enable_without_team",
+      "base_valid": "crew_auto_set_enable",
+      "rejects_for": "enabling requires rules and team in the same request",
+      "reason": "One click, one command: the rules and the team are committed together (CWR-038).",
+      "remove": [
+        "team"
+      ]
+    },
+    {
+      "name": "crew_auto_team_with_specialist",
+      "base_valid": "crew_auto_set_enable",
+      "rejects_for": "Crew Auto team members are core only",
+      "reason": "Specialists are refused in Crew Auto teams (CWR-028).",
+      "patch": {
+        "team.1.additive_role_kind": "wonderer"
+      }
+    },
+    {
+      "name": "crew_auto_parts_four",
+      "base_valid": "crew_auto_set_enable",
+      "rejects_for": "min_parallel_parts is 2 or 3",
+      "reason": "The minimum number of parts that can run at the same time is 2 or 3 (CWR-021).",
+      "patch": {
+        "rules.min_parallel_parts": 4
+      }
+    },
+    {
+      "name": "crew_auto_on_without_settings_commit",
+      "base_valid": "crew_auto_set_result_on",
+      "rejects_for": "enabled_after true requires a Settings transaction",
+      "reason": "The check appears only after a committed configuration and a successful project Settings commit (MODAL-006..008).",
+      "patch": {
+        "settings_transaction_ref": null
+      }
+    },
+    {
+      "name": "crew_auto_refused_with_transaction",
+      "base_valid": "crew_auto_set_result_configuration_required",
+      "rejects_for": "refusal commits no Settings transaction",
+      "reason": "Cancel or refusal preserves the prior state; optimistic enabling is prohibited (MODAL-006..008).",
+      "patch": {
+        "settings_transaction_ref": "settings-tx-0002"
+      }
+    },
+    {
+      "name": "crew_auto_route_enables",
+      "base_valid": "crew_auto_config_route_result",
+      "rejects_for": "additionalProperties false (route is not enablement)",
+      "reason": "Route success is not enablement; the check changes only through cmd.chat.crew_auto.set (CWR-038).",
+      "patch": {
+        "enabled_after": true
+      }
+    }
+  ]
+}

@@ -1,24 +1,32 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-004-wand-memory-plan-usage",
-  "updated_at_utc": "2026-09-27T21:30:00+00:00",
-  "last_event_id": "evt-002",
+  "updated_at_utc": "2026-09-27T22:45:00+00:00",
+  "last_event_id": "evt-005",
   "canonical_plan_targets": [
     "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Personas.md",
     "Plans/assistant-memory-subsystem.md",
     "Plans/usage-feature.md"
   ],
   "compiled_owner_docs": [
     "Plans/Assistant_Plan_Runtime.md",
     "Plans/Models_System.md",
+    "Plans/Personas.md",
     "Plans/assistant-memory-subsystem.md",
     "Plans/usage-feature.md"
   ],
   "compiled_plan_outputs": [
     "Plans/Assistant_Plan_Runtime.md",
     "Plans/Models_System.md",
+    "Plans/Personas.md",
     "Plans/assistant-memory-subsystem.md",
-    "Plans/usage-feature.md"
+    "Plans/assistant_memory_contract_fixtures.json",
+    "Plans/assistant_memory_contracts.schema.json",
+    "Plans/usage-feature.md",
+    "Plans/usage_run_estimate_contract_fixtures.json",
+    "Plans/usage_run_estimate_contracts.schema.json",
+    "scripts/pm-new-contracts-verify.py"
   ],
   "governance_status": "not_requested",
   "latest_audit_ref": null,
@@ -41,7 +49,7 @@
     "UF": "UF-104..UF-110",
     "MS": "MS-140..MS-143"
   },
-  "status": "prose_compiled",
+  "status": "prose_and_companions_compiled",
   "items": [
     {
       "queue_id": "queue-001",
@@ -136,7 +144,11 @@
       "register_lines": [
         "B-USE-01"
       ],
-      "companion_outputs": [],
+      "companion_outputs": [
+        "Plans/usage_run_estimate_contracts.schema.json",
+        "Plans/usage_run_estimate_contract_fixtures.json",
+        "scripts/pm-new-contracts-verify.py"
+      ],
       "compile_event_id": "evt-002"
     },
     {
@@ -160,6 +172,218 @@
       ],
       "companion_outputs": [],
       "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-006",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g4-gist-review-display-name"
+      ],
+      "target_doc": "Plans/assistant-memory-subsystem.md",
+      "target_docs": [
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "target_plan_unit_ids": [
+        "AMS-049"
+      ],
+      "compiled_plan_unit_ids": [
+        "AMS-049"
+      ],
+      "register_lines": [
+        "B-AMS-01 (WAIT part)"
+      ],
+      "decision_refs": [
+        "DL-134"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-007",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g4-locked-rule-proposal"
+      ],
+      "target_doc": "Plans/assistant-memory-subsystem.md",
+      "target_docs": [
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "target_plan_unit_ids": [
+        "AMS-050"
+      ],
+      "compiled_plan_unit_ids": [
+        "AMS-050"
+      ],
+      "register_lines": [
+        "B-AMS-05 (WAIT part)"
+      ],
+      "decision_refs": [
+        "DL-130"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-008",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g4-included-teaching-ids"
+      ],
+      "target_doc": "Plans/assistant-memory-subsystem.md",
+      "target_docs": [
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "target_plan_unit_ids": [
+        "AMS-051"
+      ],
+      "compiled_plan_unit_ids": [
+        "AMS-051"
+      ],
+      "register_lines": [
+        "B-AMS-06 (part)"
+      ],
+      "decision_refs": [
+        "DL-116"
+      ],
+      "companion_outputs": [
+        "Plans/assistant_memory_contracts.schema.json",
+        "Plans/assistant_memory_contract_fixtures.json",
+        "scripts/pm-new-contracts-verify.py"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-009",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g4-memory-export"
+      ],
+      "target_doc": "Plans/assistant-memory-subsystem.md",
+      "target_docs": [
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "target_plan_unit_ids": [
+        "AMS-052"
+      ],
+      "compiled_plan_unit_ids": [
+        "AMS-052"
+      ],
+      "register_lines": [
+        "B-AMS-07 (WAIT part N-7)"
+      ],
+      "decision_refs": [
+        "DL-130"
+      ],
+      "companion_outputs": [
+        "Plans/assistant_memory_contracts.schema.json",
+        "Plans/assistant_memory_contract_fixtures.json",
+        "scripts/pm-new-contracts-verify.py"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-010",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g4-team-personas"
+      ],
+      "target_doc": "Plans/Personas.md",
+      "target_docs": [
+        "Plans/Personas.md"
+      ],
+      "target_plan_unit_ids": [
+        "P-057",
+        "P-048"
+      ],
+      "compiled_plan_unit_ids": [
+        "P-057",
+        "P-048"
+      ],
+      "register_lines": [
+        "B-PER-01"
+      ],
+      "decision_refs": [
+        "DL-133"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-011",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g4-grill-me-skill"
+      ],
+      "target_doc": "Plans/Personas.md",
+      "target_docs": [
+        "Plans/Personas.md"
+      ],
+      "target_plan_unit_ids": [
+        "P-058"
+      ],
+      "compiled_plan_unit_ids": [
+        "P-058"
+      ],
+      "register_lines": [
+        "B-PER-01"
+      ],
+      "decision_refs": [
+        "DL-133"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-012",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g4-run-effective-limit"
+      ],
+      "target_doc": "Plans/usage-feature.md",
+      "target_docs": [
+        "Plans/usage-feature.md"
+      ],
+      "target_plan_unit_ids": [
+        "UF-106"
+      ],
+      "compiled_plan_unit_ids": [
+        "UF-106"
+      ],
+      "register_lines": [
+        "B-USE-02 (WAIT part)"
+      ],
+      "decision_refs": [
+        "DL-131"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-013",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g4-followed-definition"
+      ],
+      "target_doc": "Plans/assistant-memory-subsystem.md",
+      "target_docs": [
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "target_plan_unit_ids": [
+        "AMS-051",
+        "AMS-053"
+      ],
+      "compiled_plan_unit_ids": [
+        "AMS-051",
+        "AMS-053"
+      ],
+      "register_lines": [
+        "B-AMS-06 (definition of following)"
+      ],
+      "decision_refs": [
+        "DL-116"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-005"
     }
   ],
   "notes": "Empty. Each item: queue_id, status, source_atom_ids, target_doc, target_docs, target_plan_unit_ids, compiled_plan_unit_ids, compile_event_id.",

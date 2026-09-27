@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-005-wand-chat-gui-contract",
-  "updated_at_utc": "2026-09-27T20:30:00+00:00",
+  "updated_at_utc": "2026-09-27T22:40:00+00:00",
   "authority": "Live Plans are canon; this ledger is source lineage only.",
   "scope": "Group G5 of the wand-modules canon compile: register lines B-ACD-01..B-ACD-14, B-FGS-01..B-FGS-23 of the impact register snapshot, NOW lines only in this pass.",
   "negative_constraints": [
@@ -17,5 +17,5 @@
     "Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/source_shards/authorization.md",
     "Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/source_shards/findings.md"
   ],
-  "next_action": "Integrator: regenerate shards and the plan index once for all groups, run the compile witness again, then one blind form-driven review (cap two cycles). After Jared answers the decision cards, G5 records the answers as DL-112 onward in both Decision_Log sections and compiles the WAIT lines (q-001 to q-012) into this ledger. Companions (schemas, fixtures, gates) are a separate later task."
+  "next_action": "Integrator: regenerate shards and the plan index once for all groups, run the compile witness again, then one blind form-driven review (cap two cycles). The WAIT wave, the lead-rulings follow-up and the DL-120 and DL-116 owner prose are compiled (q-013 and q-014 closed); three questions stay open: q-001 (ELI5: the lead's proposed answer in DL-126 awaits Jared), q-005 and q-008 (no card yet: canon typography, minimum chat width). Companions (schemas, fixtures, gates) are a separate later task."
 }

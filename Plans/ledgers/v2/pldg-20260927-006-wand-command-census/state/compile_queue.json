@@ -1,11 +1,12 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-006-wand-command-census",
-  "updated_at_utc": "2026-09-27T19:30:00+00:00",
-  "last_event_id": "evt-003",
+  "updated_at_utc": "2026-09-27T22:45:00+00:00",
+  "last_event_id": "evt-008",
   "canonical_plan_targets": [
     "Plans/Commands_System.md",
-    "Plans/UI_Command_Catalog.md"
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md"
   ],
   "compiled_owner_docs": [
     "Plans/Commands_System.md",
@@ -157,8 +158,142 @@
         "CS-086"
       ],
       "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-007",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-01"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-170"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-170"
+      ],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-008",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-02"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-171"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-171"
+      ],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-009",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-03-w"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-172",
+        "WM-063"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-172",
+        "WM-063"
+      ],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-010",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-04-w"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-172",
+        "WM-063"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-172",
+        "WM-063"
+      ],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-011",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-05"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-173"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-173"
+      ],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-012",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-07-w"
+      ],
+      "target_doc": "Plans/Commands_System.md",
+      "target_docs": [
+        "Plans/Commands_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "CS-085",
+        "CDRY-022"
+      ],
+      "compiled_plan_unit_ids": [
+        "CS-085",
+        "CDRY-022"
+      ],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-013",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmp-02"
+      ],
+      "target_doc": "Plans/Wiring_Matrix.md",
+      "target_docs": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "target_plan_unit_ids": [
+        "WM-063"
+      ],
+      "compiled_plan_unit_ids": [
+        "WM-063"
+      ],
+      "compile_event_id": "evt-005"
     }
   ],
-  "notes": "Prose only. Companions are the later task.",
+  "notes": "Prose only (NOW and WAIT waves). Companions are the later task.",
   "terminal_ledger_event_id": null
 }

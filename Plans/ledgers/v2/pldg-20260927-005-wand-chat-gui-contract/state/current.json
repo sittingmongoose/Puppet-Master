@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-005-wand-chat-gui-contract",
-  "updated_at_utc": "2026-09-27T20:30:00+00:00",
-  "last_event_id": "evt-004",
+  "updated_at_utc": "2026-09-27T22:40:00+00:00",
+  "last_event_id": "evt-009",
   "canonical_plan_targets": [
     "Plans/DRY_Rules.md",
     "Plans/Decision_Log.md",
@@ -48,21 +48,36 @@
     "DR": "DR-044..DR-045"
   },
   "phase": "prose_compiled_pending_review",
-  "accepted_decisions_count": 24,
-  "design_atoms_total": 24,
+  "accepted_decisions_count": 40,
+  "design_atoms_total": 40,
   "ready_for_plan_compile_atoms": 0,
   "candidate_atoms_count": 0,
-  "open_questions_count": 12,
+  "open_questions_count": 3,
   "deferred_questions_count": 0,
   "open_blockers_count": 0,
   "compiled_plan_unit_ids": [
+    "ACD-426",
+    "ACD-435",
+    "ACD-436",
     "ACD-462",
     "ACD-476",
     "ACD-477",
     "ACD-478",
     "ACD-479",
     "ACD-480",
+    "ACD-481",
+    "ACD-482",
+    "ACD-483",
     "DL-109",
+    "DL-112",
+    "DL-113",
+    "DL-114",
+    "DL-116",
+    "DL-117",
+    "DL-120",
+    "DL-126",
+    "DL-131",
+    "DL-135",
     "DR-044",
     "F3-531",
     "F3-532",
@@ -79,11 +94,15 @@
     "F3-575",
     "F3-576",
     "F3-577",
+    "F3-578",
+    "F3-579",
+    "F3-580",
     "UIW-025"
   ],
   "cursor": {
-    "last_event_id": "evt-004",
-    "next_action": "Integrator: regenerate shards and the plan index once for all groups, run the compile witness again, then one blind form-driven review (cap two cycles). After Jared answers the decision cards, G5 records the answers as DL-112 onward in both Decision_Log sections and compiles the WAIT lines (q-001 to q-012) into this ledger. Companions (schemas, fixtures, gates) are a separate later task."
+    "last_event_id": "evt-009",
+    "next_action": "Integrator: regenerate shards and the plan index once for all groups, run the compile witness again, then one blind form-driven review (cap two cycles). The WAIT wave, the lead-rulings follow-up and the DL-120 and DL-116 owner prose are compiled (q-013 and q-014 closed); three questions stay open: q-001 (ELI5: the lead's proposed answer in DL-126 awaits Jared), q-005 and q-008 (no card yet: canon typography, minimum chat width). Companions (schemas, fixtures, gates) are a separate later task."
   },
-  "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md."
+  "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md.",
+  "answered_questions_count": 11
 }
