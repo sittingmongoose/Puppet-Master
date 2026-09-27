@@ -8101,7 +8101,7 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 | `cmd.concern.promote` | `project_id`, `concern_id`, `promotion_target`, `expected_concern_revision`, `idempotency_key` | `promotion_id`, `concern_id` | `permission_denied`, `blocked_state_required`, `stale_projection` | `concern.promoted` |
 | `cmd.model.refresh` | `project_id?`, `provider_id?`, `account_id?`, `refresh_reason`, `idempotency_key` | `model_catalog_revision`, `provider_status_refs[]` | `permission_denied`, `handler_unavailable`, `stale_projection` | `model.catalog_refreshed` |
 | `cmd.model.list` | `project_id?`, `provider_filter?`, `capability_filter?`, `cache_policy` | `model_catalog_revision`, `model_ids[]`, `degraded_reason?` | `handler_unavailable`, `invalid_args` | explicit dispatch receipt |
-| `cmd.chat.send` | `thread_id`, `project_id?`, `message_id`, `content_ref`, `attachment_refs[]`, `model_request_ref?`, `idempotency_key` | `assistant_turn_id?`, `message_id`, `run_or_goal_ref?` | `permission_denied`, `stale_projection`, `handler_unavailable` | `chat.message.submitted` |
+| `cmd.chat.send` | `thread_id`, `project_id?`, `message_id`, `content_ref`, `attachment_refs[]`, `model_request_ref?`, `delivery_mode?` (`queue` or `steer`; UCC-168), `idempotency_key` | `assistant_turn_id?`, `message_id`, `run_or_goal_ref?` | `permission_denied`, `stale_projection`, `handler_unavailable` | `chat.message.submitted` |
 | `cmd.chat.stop` | `thread_id`, `run_id?`, `assistant_turn_id?`, `stop_reason_code`, `idempotency_key` | `thread_id`, `stopped_ref?`, `resumable` | `blocked_state_required`, `stale_projection`, `handler_unavailable` | `chat.response_stop_requested` |
 | `cmd.panel.undock` | `project_id?`, `panel_id`, `current_host`, `target_window?`, `expected_layout_revision`, `idempotency_key` | `panel_id`, `layout_revision`, `window_id?` | `invalid_args`, `stale_projection` | `panel.undocked` |
 | `cmd.panel.redock` | `project_id?`, `panel_id`, `window_id?`, `target_host`, `expected_layout_revision`, `idempotency_key` | `panel_id`, `layout_revision` | `invalid_args`, `stale_projection` | `panel.redocked` |
@@ -13437,3 +13437,76 @@ ContractRef: ContractName:Plans/Source_Control_System.md#SCS-024, ContractName:P
 ### UCC-168 - Forge Review Edit And Runner Read Producers
 
 `cmd.forge.review.edit` is the sole primary for a typed title/description patch of an exact provider review at an expected immutable revision. FGI-022 owns currentness, effective authority, remote_side_effect permission, target-bound confirmation and reconciliation guards. `cmd.forge.review.mark_ready` requires `draft=false`; the existing version.open/compare commands supply immutable review diff selection. Runner list and registration preview are FGI-022 owner-local read producers, with typed request/projection or preview/result records; they have no command-palette dispatch ID. Every Forge route remains `handler_unavailable` until native evidence exists.
+
+### Chat busy-send steer command
+
+`cmd.chat.queue.send_now` is the command identity for Send now on a queued composer message (ACD-219, DL-108). `cmd.chat.send` carries `delivery_mode` (`queue` or `steer`), resolved from `general.interaction.queue-behavior` when the composer's switch does not override it.
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.chat.queue.send_now` | Send Queued Message Now | Steers one queued, not-yet-dispatched composer message into the running turn at once, without stopping the answer; other queued messages keep their order. | `queued_message_exists` | `domain_action` |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
+
+### UCC-168 - Chat Busy Send Steer Command And Reused Chat Controls
+
+```yaml
+plan_unit_id: UCC-168
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.chat.queue.send_now steers one queued, not-yet-dispatched message into the running turn
+  without stopping the answer and emits chat.message.submitted for that message with delivery_mode
+  steer; it never advances the rest of the queue. cmd.chat.send gains delivery_mode (queue or
+  steer), resolved from general.interaction.queue-behavior (default Queue, DL-108) unless the
+  composer's switch overrides it; a queued send becomes an outbox entry that later dispatches
+  through the same handler. The other chat controls of ACD-469 through ACD-475 reuse existing
+  identities and add none: Stop is cmd.chat.stop; Edit on a queued entry is cmd.chat.queue.remove
+  followed by a local composer restore; Remove is cmd.chat.queue.remove; the header sound mute is
+  cmd.settings.transaction.apply on general.interaction.sound-effects; approving or declining a
+  needs-you item is cmd.runtime.approve or cmd.runtime.decline; jump-to-latest, working card fold,
+  expand, subject pin and follow-live are local view state (CDRY-013).
+gui_related: true
+gui_classification_reason: "Registers the Send now command and maps every other chat control to an existing identity."
+split_recommended: false
+depends_on: [ACD-219, ACD-471, DL-108, UCC-119]
+unblocks: [F3-563]
+acceptance_criteria:
+  - "cmd.chat.queue.send_now has one handler and a production wiring entry."
+  - "cmd.chat.send accepts delivery_mode queue or steer."
+  - "No new command exists for Edit, the header mute, approvals or view-state controls."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: chat_command_catalog_gap
+reasoning_tier: high
+context_scope: chat_composer_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: chat_composer_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-108"
+  - "Plans/assistant-chat-design.md#ACD-219"
+preserved_exact_tokens:
+  - "cmd.chat.queue.send_now"
+  - "delivery_mode"
+  - "cmd.chat.send"
+  - "cmd.chat.queue.remove"
+  - "cmd.runtime.approve"
+  - "cmd.runtime.decline"
+negative_constraints:
+  - "Do not mint a separate edit, mute or steer command."
+  - "Do not let cmd.chat.queue.send_now stop the running answer or advance the rest of the queue."
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-471, ContractName:Plans/Decision_Log.md#DL-108

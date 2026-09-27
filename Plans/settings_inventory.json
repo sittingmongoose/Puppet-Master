@@ -948,14 +948,14 @@
   {
    "id": "general.interaction.sound-effects",
    "label": "Sound Effects",
-   "desc": "Plays short sounds for approvals, completions, and errors. Off by default; hidden if your computer has no audio.",
+   "desc": "Plays short, quiet sounds for the chat's moments: sending, the answer arriving, approvals, completions, and errors. On by default; the speaker button in the chat header turns it off in one click. Hidden if your computer has no audio.",
    "type": "toggle",
-   "default": false,
+   "default": true,
    "scope": [
     "global"
    ],
    "tier": "simple",
-   "recommended": false,
+   "recommended": true,
    "search": [
     "audio",
     "chime",
@@ -1529,18 +1529,18 @@
   {
    "id": "general.interaction.queue-behavior",
    "label": "While The Assistant Is Busy",
-   "desc": "Steer interrupts the assistant with your new message; Queue holds it until the current step finishes.",
+   "desc": "Queue holds your new message until the assistant finishes (the default); Steer sends it into the running turn at once.",
    "type": "select",
    "options": [
     "Steer",
     "Queue"
    ],
-   "default": "Steer",
+   "default": "Queue",
    "scope": [
     "run"
    ],
    "tier": "advanced",
-   "recommended": "Steer",
+   "recommended": "Queue",
    "search": [
     "message queue",
     "interrupt",

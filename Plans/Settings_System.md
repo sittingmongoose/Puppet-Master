@@ -1692,8 +1692,8 @@ Settings manager refresh under USER-SETTINGS-MANAGER-REFRESH-20260908 (§22, SSY
 - **Canonical Key Identity:** The working activity presentation preference is canonically registered
   under `general.interaction.working-activity-style`. The short key `working-activity-style` is retained
   exclusively as a query and migration alias; the curated duplicate short-key row is retired.
-- **Supported Selections:** The setting offers exactly `Orbit` (family/variant 2/1) and `Step Rail Simple`
-  (family/variant 2/8). The legacy value token `Step Rail` maps directly to `Step Rail Simple` as an
+- **Supported Selections:** The setting offers exactly `Orbit` and `Step Rail Simple` (the concept's
+  Demo Studio family/variant indices are lab-only, ACD-474). The legacy value token `Step Rail` maps directly to `Step Rail Simple` as an
   input alias.
 - **Concept-Candidate Roster and Stage Rows (APR-048):** The five concept-candidate inventory keys:
   1. `branching.crew.crew-auto-roster`
@@ -2331,3 +2331,61 @@ owner_hints: [Plans/Settings_System.md, Plans/Commands_System.md]
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Commands_System.md#CS-081
+
+## Chat sound and busy-send defaults — 2026-09-27
+
+Jared's decisions DL-107 and DL-108 change two defaults in `Plans/settings_inventory.json`. This owner records them; the Settings GUI concept adopts them in its own later pass.
+
+### SSYS-039 - Chat Sound On By Default And Queue As The Busy Send Default
+
+```yaml
+plan_unit_id: SSYS-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  general.interaction.sound-effects defaults to on and is recommended on (DL-107); its description
+  names the chat header's speaker button as a quick mute for the same setting.
+  general.interaction.queue-behavior defaults to Queue and is recommended Queue, with Steer still
+  offered (DL-108). No other key, scope or tier changes; the chat header mute is a shared chrome
+  control over general.interaction.sound-effects, not a new setting, which keeps sound effects a
+  grouped setting rather than a per-view toggle. Production motion honours general.visual.reduce-
+  animations as well as the operating system's reduced-motion preference (ACD-475).
+gui_related: true
+gui_classification_reason: "Changes two user-visible setting defaults."
+split_recommended: false
+depends_on: [DL-107, DL-108]
+unblocks: []
+acceptance_criteria:
+  - "The inventory defaults general.interaction.sound-effects to true and general.interaction.queue-behavior to Queue."
+  - "No new sound or queue setting key exists."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: settings_default_drift
+reasoning_tier: standard
+context_scope: settings_defaults
+implementation_surfaces:
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+node_compile_hint:
+  mode: settings_default_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-107"
+  - "Plans/Decision_Log.md#DL-108"
+preserved_exact_tokens:
+  - "general.interaction.sound-effects"
+  - "general.interaction.queue-behavior"
+  - "Queue"
+  - "Steer"
+negative_constraints:
+  - "Do not add a chat-only sound or queue setting."
+  - "Do not change scopes or tiers of these keys."
+owner_hints:
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-107, ContractName:Plans/Decision_Log.md#DL-108, ContractName:Plans/settings_inventory.json
