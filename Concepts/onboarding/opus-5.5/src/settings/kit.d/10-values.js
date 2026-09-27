@@ -137,13 +137,16 @@ function o55Action(setting) {
   const go = row.route && !row.run;
   return `<button type="button" class="btn small o55-actionbtn${row.danger ? ' danger' : ''}" data-action="run-setting-action" data-setting="${a(setting.id)}">${row.icon ? icon(row.icon) : ''}<span>${h(label)}</span>${go ? icon('arrowRight') : ''}</button>`;
 }
+/* A stored default that is really words ("(default project location)") reads as the placeholder (rows.d
+   `wordsDefault`), so the box shows what it means instead of a value nobody typed. */
+const o55Shown = (setting, value) => { const row = O55R[setting.id] || {}; return row.wordsDefault && row.placeholder && value === setting.value ? '' : value; };
 function o55Text(setting, value) {
-  const row = O55R[setting.id] || {};
+  const row = O55R[setting.id] || {}; value = o55Shown(setting, value);
   return `<input class="text-control" value="${a(value == null ? '' : value)}" placeholder="${a(row.placeholder || '')}" data-action="input-setting" data-setting="${a(setting.id)}" aria-label="${a(setting.label)}"${row.wide ? ' data-wide="1"' : ''}/>`;
 }
 const O55_PROJECT_BASE = '${PROJECT_ROOT}/';
 function o55Path(setting, value) {
-  const row = O55R[setting.id] || {};
+  const row = O55R[setting.id] || {}; value = o55Shown(setting, value);
   /* a path kept relative to the project reads as "project/…"; typing keeps the ${PROJECT_ROOT}/ part */
   const base = typeof value === 'string' && value.startsWith(O55_PROJECT_BASE) ? O55_PROJECT_BASE : '';
   const shown = base ? value.slice(base.length) : value;

@@ -1,4 +1,13 @@
-/* Source Control — code services, local tools, repositories, defaults & safety, actions & pipelines. */
+/* Source Control — code services, local tools, repositories, defaults & safety, actions & pipelines
+   (settings audit, 2026-09-27).
+   - One main-branch name (branching.worktrees.default-branch) and one workspace folder (worktree-base-dir) are used
+     for new repositories, clones, worktrees and runs; the manager's own copy of the branch name is gone.
+   - GitHub's sign-in rows (account, token, allowed servers, sign-in return address) live inside GitHub.
+   - Creating a new repository and contributing to someone else's project are guided set-ups; their rows are the
+     answers they remember.
+   - The safety level decides the three safety switches unless it is Custom; the policy summary is written from the
+     real values, including Testing's tests-before-merge.
+   - Workflow pins are the Pinned workflows row. Links and folders are copied, not opened, in this preview. */
 (function () {
   const ID = 'source-manager';
   const KEY = 'source-control';
@@ -32,7 +41,20 @@
   const worktrees = () => sc().worktrees || (sc().worktrees = []);
   const workflows = () => sc().actions || (sc().actions = []);
   const host = () => (((PM51.s().serverProject || {}).servers || []).find(s => s.default) || {}).name || 'Home TrueNAS';
-  const cfg = () => { const s = PM51.s(); if (!s.sourceDefaults) s.sourceDefaults = { tool: 'Git', branch: 'main', service: 'GitHub', protectMain: true, forcePush: 'Never', askDelete: true, backupRisky: true, updatePolicy: {} }; return s.sourceDefaults; };
+  const cfg = () => { const s = PM51.s(); if (!s.sourceDefaults) s.sourceDefaults = { tool: 'Git', service: 'GitHub', protectMain: true, askDelete: true, backupRisky: true, updatePolicy: {} }; delete s.sourceDefaults.branch; delete s.sourceDefaults.forcePush; return s.sourceDefaults; };
+  const W = 'branching.worktrees.';
+  const GH = ['ai.accounts.github-connect', 'ai.accounts.github-token', 'ai.accounts.github-host-policy', 'ai.accounts.github-oauth-loopback'];
+  const NEWREPO = [W + 'create-github-repo', W + 'new-repo-details'], CONTRIB = [W + 'upstream-repo', W + 'create-fork', W + 'fork-location', W + 'feature-branch-name'];
+  const PIN = W + 'github-pinned-workflows', PRESET = W + 'git-policy-preset', FORCE = W + 'force-push-policy';
+  const PRESETS = { strict: { protectMain: true, askDelete: true, backupRisky: true }, standard: { protectMain: true, askDelete: false, backupRisky: true }, lenient: { protectMain: false, askDelete: false, backupRisky: false } };
+  const mainBranch = () => String(PM51.value(W + 'default-branch') || 'main').trim() || 'main';
+  const wtBase = () => { const st = PM51.setting(W + 'worktree-base-dir'); const v = PM51.value(W + 'worktree-base-dir'); return !v || (st && v === st.value) ? '' : String(v).replace(/\/+$/, ''); };
+  const wtFolder = () => wtBase() || 'project/.worktrees';
+  const ghOnly = () => String(PM51.value('ai.accounts.github-host-policy') || 'github.com_only') !== 'enterprise_allowed';
+  const pinned = () => { const v = PM51.value(PIN); return Array.isArray(v) ? v.map(String) : []; };
+  const safety = () => { const p = String(PM51.value(PRESET) || 'strict'); return p === 'custom' ? cfg() : (PRESETS[p] || PRESETS.strict); };
+  const copyText = (text, what) => { const done = () => PM51.toast(`${what} copied`, text); try { navigator.clipboard.writeText(text).then(done, () => PM51.toast(what, text, 'info')); } catch (e) { PM51.toast(what, text, 'info'); } };
+  const forgeUrl = f => f.id === 'github' ? `https://github.com/${connected(f) ? f.defaultAccount : ''}` : f.instanceUrl || (API[f.id] ? 'https://' + API[f.id].split('/')[0].replace(/^api\./, '') : '');
   const connected = f => f.status === 'active';
   const statusLabel = f => connected(f) ? 'Connected' : f.status === 'needs-signin' ? 'Needs sign-in' : 'Not connected';
   const statusTone = f => connected(f) ? 'ready' : f.status === 'needs-signin' ? 'attention' : 'off';
@@ -42,6 +64,7 @@
   const selectedTool = () => tools().find(t => t.id === PM51.sel(TOOL_SEL)) || tools()[0];
   const withCurrent = (list, v) => !v || list.includes(v) ? list : [v, ...list];
   const refresh = () => PM51.refresh(ID, { swap: false });
+  let migratePins = () => {};
   const repoPill = r => r.state === 'Clean' ? PM51.pill('Ready') : r.state === 'Checking' ? PM51.pill('Checking') : PM51.pill('Needs attention');
   const repoAddress = r => r.address ? r.address : r.forge === 'Local' ? 'This server only' : r.forge === 'GitHub' ? `github.com/${(byId('github') || {}).defaultAccount || 'you'}/${r.name}` : `${r.name} on ${r.forge}`;
   const repoWorktrees = r => worktrees().filter(w => (w.repo || (repos()[0] || {}).name) === r.name);
@@ -78,11 +101,18 @@
       { label: 'Reviews are called', help: 'What this service names a code review.', value: f.reviewLabel },
       { label: 'Automation', help: 'What runs builds and tests on this service.', value: f.automationLabel },
       f.modes ? { label: 'Mode', help: 'Native keeps the code on Cursor Origin. Mirrored copies it from GitHub.', control: PM51.segmented(f.mode || f.modes[0], f.modes, { action: 'pm51-source-mode', data: { id: f.id }, label: 'Cursor Origin mode' }) } : null,
-      { label: 'Default for new repositories', help: 'New repositories are created here.', control: on ? PM51.toggle(cfg().service === f.name, { action: 'pm51-source-default-service', data: { id: f.id }, label: 'Default for new repositories' }) : '<span class="pm51-row-value is-muted">Connect first</span>' },
       { label: 'Connection', help: on ? (f.lastCheck ? `Checked ${f.lastCheck}` : 'Not checked yet') : 'Nothing to check until it is connected', action: { label: 'Check connection', icon: 'test', action: 'pm51-source-check', data: { id: f.id } } }
     ];
     const account = on ? f.defaultAccount : 'you';
-    const body = setupSteps(f) + PM51.rows(rows) + PM51.advanced([
+    const gh = f.id === 'github' || f.id === 'github-enterprise';
+    const blocked = f.id === 'github-enterprise' && ghOnly();
+    const signIn = gh ? PM51.section({
+      title: 'Sign-in', help: 'The GitHub account, its token, and which GitHub servers may be used.',
+      body: (blocked ? PM51.note('Company GitHub servers are not allowed yet. Allow them below, then connect GitHub Enterprise.', 'attention') : '')
+        + PM51.home('ai.accounts.github-connect', PM51.rows([{ label: 'GitHub account', help: on ? `Signed in as ${f.defaultAccount}.` : 'Nobody is signed in.', action: on ? { label: 'Disconnect', icon: 'close', action: 'pm51-source-gh-disconnect', data: { id: f.id } } : { label: VERB[f.id] || 'Connect', icon: 'link', action: 'pm51-source-connect', data: { id: f.id }, disabled: blocked, reason: 'Allow company servers first.' } }]))
+        + PM51.bound.rows(['ai.accounts.github-token', 'ai.accounts.github-host-policy'])
+    }) : GH.reduce((html, id) => PM51.home(id, html), '');
+    const body = setupSteps(f) + PM51.rows(rows) + signIn + PM51.advanced([
       PM51.section({ title: 'Technical details', body: PM51.kv([
         ['Sign-in method', f.auth],
         ['API address', API[f.id] || (f.instanceUrl ? f.instanceUrl.replace(/\/$/, '') + '/api' : 'Known once the address is entered')],
@@ -91,12 +121,12 @@
         ['Fetch address', f.id === 'github' && on ? `https://github.com/${account}/Puppet-Master.git` : f.kind === 'generic' ? (f.instanceUrl || 'Not set') : 'Set when the first repository is added'],
         ['Push address', f.id === 'github' && on ? `git@github.com:${account}/Puppet-Master.git` : f.kind === 'generic' ? (f.instanceUrl || 'Not set') : 'Set when the first repository is added'],
         ['Last test', f.lastTest || 'Not run']
-      ]) + '<div style="margin-top:10px">' + PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-source-diagnostics' }) + '</div>' })
+      ]) + (gh ? PM51.bound.rows(['ai.accounts.github-oauth-loopback']) : '') + '<div style="margin-top:10px">' + PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-source-diagnostics' }) + '</div>' })
     ].join(''));
     return PM51.listDetail({
       id: ID, rosterTitle: 'Code services', count: forges().length,
       add: { action: 'pm51-source-add-service', label: 'Add another account or instance' },
-      items: forges().map(x => ({ id: x.id, title: x.name, meta: connected(x) ? `Connected as ${x.defaultAccount}` : x.status === 'needs-signin' ? 'Needs sign-in' : 'Not connected', tone: statusTone(x), selected: x.id === f.id })),
+      items: forges().map(x => ({ id: x.id, title: x.name, meta: x.id === 'github-enterprise' && ghOnly() && !connected(x) ? 'Not allowed: github.com only' : connected(x) ? `Connected as ${x.defaultAccount}` : x.status === 'needs-signin' ? 'Needs sign-in' : 'Not connected', tone: statusTone(x), selected: x.id === f.id })),
       detail: {
         title: f.name, pill: PM51.pill(statusLabel(f), statusTone(f)),
         subtitle: f.help || (f.kind === 'instance' ? 'A service your organization runs.' : 'Keep code online and work from more than one computer.'),
@@ -110,11 +140,11 @@
     const on = connected(f); const isDefault = cfg().service === f.name;
     PM51.menu(anchor, [
       { label: 'Reauthorize', icon: 'refresh', ariaDisabled: !on, meta: on ? '' : 'Connect first', onClick: () => connectPanel(f, true) },
-      { label: 'Open in browser', icon: 'external', onClick: () => PM51.unavailable('Open in browser', 'Opening links needs the desktop app.') },
+      forgeUrl(f) ? { label: 'Copy link', icon: 'copy', meta: 'To open it in your browser', onClick: () => copyText(forgeUrl(f), 'Link') } : null,
       { label: 'Make default', icon: 'check', ariaDisabled: !on || isDefault, meta: !on ? 'Connect first' : isDefault ? 'Already the default' : '', onClick: () => { cfg().service = f.name; saveState(); refresh(); PM51.toast('Default code service', `New repositories are created on ${f.name}.`); } },
       { separator: true },
       { label: 'Disconnect', icon: 'close', danger: true, ariaDisabled: !on, meta: on ? '' : 'Not connected', onClick: () => disconnect(f) }
-    ], f.name);
+    ].filter(Boolean), f.name);
   }
   function connectPanel(f, reauth) {
     const on = connected(f);
@@ -128,7 +158,7 @@
           if (!/^(git@|https?:\/\/|ssh:\/\/)\S+/.test(addr)) { PM51.toast('Enter a repository address', 'It should start with git@, ssh://, or https://', 'warning'); return false; }
           f.instanceUrl = addr; f.auth = (wrap.querySelector('.pm51-source-access') || {}).value || f.auth;
           const name = addr.replace(/\.git$/, '').split(/[/:]/).pop() || 'repository';
-          if (!repos().some(r => r.name === name)) repos().push({ name, forge: f.name, remote: 'origin', address: addr, branch: cfg().branch || 'main', state: 'Checking', protection: 'None', lfs: 'Not needed' });
+          if (!repos().some(r => r.name === name)) repos().push({ name, forge: f.name, remote: 'origin', address: addr, branch: mainBranch(), state: 'Checking', protection: 'None', lfs: 'Not needed' });
           saveState(); refresh(); PM51.toast('Repository added', `${name} appears under Repositories. Fetching happens in the app.`, 'info');
         }
       });
@@ -205,6 +235,13 @@
         }))) : PM51.empty('No repositories yet', 'Add a folder, clone from a code service, or start history in this folder.', { label: 'Add repository', icon: 'plus', action: 'pm51-source-add-repo' })
       }),
       PM51.section({
+        title: 'Start something new', help: 'Guided set-ups that remember your answers for next time.',
+        body: NEWREPO.concat(CONTRIB).reduce((html, id) => PM51.home(id, html), PM51.rows([
+          { label: 'Create a new repository', help: 'Online, with a license, a .gitignore and a starting branch.', action: { label: 'Start', icon: 'plus', action: 'pm51-source-new-repo' } },
+          { label: 'Contribute to another project', help: 'Your own copy (a fork) and a branch for your changes.', action: { label: 'Start', icon: 'branch', action: 'pm51-source-contribute' } }
+        ]))
+      }),
+      PM51.section({
         title: 'Worktrees', help: 'Extra copies of a repository so two things can happen at once.',
         action: { label: 'Create worktree', icon: 'plus', action: 'pm51-source-worktree-new' },
         body: wts.length ? PM51.list(wts.map(w => ({
@@ -213,8 +250,9 @@
           end: PM51.iconBtn({ icon: 'more', label: 'More actions', action: 'pm51-source-worktree-menu', data: { name: w.name } })
         }))) : PM51.note('No worktrees. Create one to work on two things at once.')
       }),
+      PM51.slot(),
       PM51.advanced([
-        PM51.section({ title: 'Repository defaults', body: PM51.kv([['New repositories go to', cfg().service], ['Default branch', cfg().branch], ['Large files', 'Git LFS when a file is over 50 MB'], ['Worktree folder', '/mnt/Cursor/.worktrees']]) }),
+        PM51.section({ title: 'Repository defaults', help: 'Read from your settings.', body: PM51.kv([['New repositories go to', cfg().service], ['Main branch', mainBranch()], ['Large files', 'Git LFS when a file is over 50 MB'], ['Worktree folder', wtBase() || 'Inside the project folder (.worktrees)']]) }),
         PM51.section({ title: 'Find repositories on GitHub', help: 'Lists repositories on your account that are not here yet.', action: { label: 'Find repositories', small: true, icon: 'search', action: 'pm51-source-find' } }),
         PM51.section({ title: 'Clean up stale worktrees', help: 'Removes worktrees nobody has used for a while.', action: { label: 'Clean up', small: true, icon: 'trash', action: 'pm51-source-cleanup' } })
       ].join(''))
@@ -242,7 +280,7 @@
     if (kind === 'init') {
       const name = 'tastebook';
       if (repos().some(r => r.name === name)) { PM51.toast('Already tracked', `${name} already has version history.`, 'info'); return; }
-      PM51.confirm('Start version history in this folder?', `A new ${cfg().tool} history begins in tastebook on the ${cfg().branch} branch. Nothing is sent anywhere.`, 'Start history', () => { repos().push({ name, forge: 'Local', remote: 'None', branch: cfg().branch || 'main', state: 'Clean', protection: 'None', lfs: 'Not needed' }); saveState(); refresh(); PM51.toast('History started', `${name} is now tracked with ${cfg().tool}.`, 'info'); });
+      PM51.confirm('Start version history in this folder?', `A new ${cfg().tool} history begins in tastebook on the ${mainBranch()} branch. Nothing is sent anywhere.`, 'Start history', () => { repos().push({ name, forge: 'Local', remote: 'None', branch: mainBranch(), state: 'Clean', protection: 'None', lfs: 'Not needed' }); saveState(); refresh(); PM51.toast('History started', `${name} is now tracked with ${cfg().tool}.`, 'info'); });
       return;
     }
     const services = forges().filter(connected);
@@ -261,7 +299,7 @@
         if (!name) { PM51.toast(kind === 'clone' ? 'Enter a repository' : 'Enter a folder', 'Puppet Master needs to know which one.', 'warning'); return false; }
         if (kind === 'clone' && !services.length) { PM51.toast('No code service connected', 'Connect one under Code Services first.', 'warning'); return false; }
         if (repos().some(r => r.name === name)) { PM51.toast('Already tracked', `${name} is already in the list.`, 'info'); return false; }
-        repos().push({ name, forge: kind === 'clone' ? data.service : 'Local', remote: kind === 'clone' ? 'origin' : 'None', branch: cfg().branch || 'main', state: 'Checking', protection: 'None', lfs: 'Not needed' });
+        repos().push({ name, forge: kind === 'clone' ? data.service : 'Local', remote: kind === 'clone' ? 'origin' : 'None', branch: mainBranch(), state: 'Checking', protection: 'None', lfs: 'Not needed' });
         saveState(); refresh(); PM51.toast(kind === 'clone' ? 'Clone queued' : 'Folder added', `${name} appears under Repositories. Example data only; the app does the ${kind === 'clone' ? 'copying' : 'reading'}.`, 'info');
       }
     });
@@ -270,6 +308,9 @@
   /* ---------- Defaults & Safety ---------------------------------------- */
   function defaultsTab() {
     const c = cfg(); const services = forges().filter(connected).map(f => f.name);
+    const preset = String(PM51.value(PRESET) || 'strict'); const custom = preset === 'custom'; const e = safety();
+    const tests = PM51.setting(W + 'pre-merge-tests');
+    const said = [`${mainBranch()} is ${e.protectMain ? 'protected, so changes to it go through a review' : 'not protected'}`, e.askDelete ? 'you are asked before a branch is deleted' : 'branches are deleted without asking', e.backupRisky ? 'a recovery point is saved before anything risky' : 'no recovery point is saved first'];
     return [
       PM51.section({
         title: 'Defaults',
@@ -278,23 +319,24 @@
           { label: 'Default code service', help: 'Where new repositories are created.', control: PM51.select(c.service, withCurrent(['None', ...services], c.service), { action: 'pm51-source-cfg', data: { key: 'service' }, label: 'Default code service' }) }
         ])
       }),
+      PM51.slot(),
       PM51.section({
         title: 'Safety', help: 'Guard rails for the assistant and for you.',
-        body: PM51.rows([
-          { label: 'Protect main branch', help: 'Changes to main go through a review first.', control: PM51.toggle(!!c.protectMain, { action: 'pm51-source-cfg-toggle', data: { key: 'protectMain' }, label: 'Protect main branch' }) },
+        body: PM51.bound.rows([PRESET, FORCE]) + (custom ? PM51.rows([
+          { label: 'Protect the main branch', help: 'Changes to it go through a review first.', control: PM51.toggle(!!c.protectMain, { action: 'pm51-source-cfg-toggle', data: { key: 'protectMain' }, label: 'Protect the main branch' }) },
           { label: 'Ask before deleting branches', control: PM51.toggle(!!c.askDelete, { action: 'pm51-source-cfg-toggle', data: { key: 'askDelete' }, label: 'Ask before deleting branches' }) },
           { label: 'Back up before risky operations', help: 'A recovery point is saved first.', control: PM51.toggle(!!c.backupRisky, { action: 'pm51-source-cfg-toggle', data: { key: 'backupRisky' }, label: 'Back up before risky operations' }) }
-        ])
+        ]) : PM51.note(`${PM51.valueLabel(PRESET, preset)}: ${said.join('; ')}. Pick Custom to set these one by one.`, 'info'))
       }),
       PM51.section({
-        title: 'Recovery',
+        title: 'Recovery', help: 'Undo, recovery points and guided fixes.',
         body: PM51.rows([
           { label: 'Undo last operation', help: 'Push of main to GitHub · 8 minutes ago', action: { label: 'Undo', icon: 'restore', action: 'pm51-source-undo' } },
           { label: 'Recovery points', help: 'Saved before risky operations.', value: `${RECOVERY_POINTS.length} points`, action: { label: 'View', icon: 'history', action: 'pm51-source-recovery' } }
-        ])
+        ]) + PM51.bound.rows([W + 'recovery-tools'])
       }),
       PM51.advanced([
-        PM51.section({ title: 'Policy details', body: PM51.kv([['Protected branches', c.protectMain ? 'main, release/*' : 'None'], ['Tests before merge', 'Required'], ['Push credentials', 'The account that owns the code service'], ['Uncommitted changes', c.backupRisky ? 'Preserved before destructive operations' : 'Not preserved automatically'], ['Jujutsu alongside Git', 'Supported in the same folder']]) }),
+        PM51.section({ title: 'Policy in effect', help: 'Written from the settings above and from Testing.', body: PM51.kv([['Protected branches', e.protectMain ? `${mainBranch()}, release/*` : 'None'], ['Tests before merge', tests ? PM51.valueText(tests, PM51.value(W + 'pre-merge-tests')) : 'Set in Testing & Debug'], ['Force push', PM51.valueLabel(FORCE, PM51.value(FORCE))], ['Push credentials', 'The account that owns the code service'], ['Uncommitted changes', e.backupRisky ? 'Preserved before destructive operations' : 'Not preserved first']]) }),
         PM51.section({ title: 'Recent operations', body: PM51.kv([['Push', 'main to GitHub · 8 minutes ago · succeeded'], ['Force push', 'main · 2 days ago · denied by policy'], ['Branch deleted', 'audit/settings · yesterday · you confirmed']]) })
       ].join(''))
     ].join('');
@@ -302,21 +344,22 @@
 
   /* ---------- Actions & Pipelines -------------------------------------- */
   function actionsTab() {
+    migratePins();
     const c = cfg();
     const f = forges().find(x => x.name === c.service && connected(x)) || forges().find(connected);
     const label = f ? f.automationLabel : '';
     const available = !!f && !/not available|connect automation/i.test(label);
-    if (!available) return PM51.empty('No automation connected', f ? `${f.name} does not provide builds and tests here.` : 'Connect a code service with pipelines to see its workflows here.', { label: 'Connect automation service', icon: 'link', action: 'pm51-tab', data: { manager: ID, tab: 'services' } });
+    if (!available) return PM51.home(PIN, '') + PM51.empty('No automation connected', f ? `${f.name} does not provide builds and tests here.` : 'Connect a code service with pipelines to see its workflows here.', { label: 'Connect automation service', icon: 'link', action: 'pm51-tab', data: { manager: ID, tab: 'services' } });
     const repo = (repos().find(r => r.forge === f.name) || repos()[0] || {}).name || 'this repository';
     return PM51.section({
       title: label, help: `Workflows in ${repo} on ${f.name}.`,
-      action: { label: `Open on ${f.name.split(' ')[0]}`, icon: 'external', action: 'pm51-source-open-external', data: { name: f.name } },
-      body: workflows().length ? PM51.list(workflows().map(w => ({
-        title: w.name, pill: (w.pinned ? PM51.chip('Pinned') + ' ' : '') + (w.status === 'passing' ? PM51.pill('Ready') : w.status === 'failing' ? PM51.pill('Needs attention') : ''),
+      action: { label: 'Copy link', icon: 'copy', action: 'pm51-source-open-external', data: { name: f.name, id: f.id } },
+      body: PM51.home(PIN, workflows().length ? PM51.list(workflows().map(w => ({
+        title: w.name, pill: (pinned().includes(w.name) ? PM51.tag('Pinned') + ' ' : '') + (w.status === 'passing' ? PM51.status('Passing', 'ready') : w.status === 'failing' ? PM51.status('Failing', 'attention') : ''),
         meta: `${w.workflow} · ${TRIGGER[w.trigger] || w.trigger.toLowerCase()} · last run ${String(w.lastRun).toLowerCase()}`,
-        end: PM51.iconBtn({ icon: 'pin', label: w.pinned ? 'Unpin' : 'Pin', action: 'pm51-source-pin', data: { name: w.name }, cls: 'pm51-source-pin' + (w.pinned ? ' is-on' : '') }) + PM51.btn({ label: 'Run', icon: 'play', small: true, action: 'pm51-source-run', data: { name: w.name } })
-      }))) : PM51.note('No workflows found in this repository yet.')
-    }) + PM51.advanced([
+        end: PM51.iconBtn({ icon: 'pin', label: pinned().includes(w.name) ? 'Unpin' : 'Pin', action: 'pm51-source-pin', data: { name: w.name }, cls: 'pm51-source-pin' + (pinned().includes(w.name) ? ' is-on' : '') }) + PM51.btn({ label: 'Run', icon: 'play', small: true, action: 'pm51-source-run', data: { name: w.name } })
+      }))) : PM51.note('No workflows found in this repository yet.'))
+    }) + PM51.slot() + PM51.advanced([
       PM51.section({ title: 'Runners', body: PM51.kv([['Hosted runners', `Provided by ${f.name}`], ['Self-hosted', 'None registered'], ['Concurrency', 'Up to 4 jobs at once']]) }),
       PM51.section({ title: 'Logs', help: 'Output from the most recent runs.', action: { label: 'View logs', small: true, icon: 'file', action: 'pm51-source-logs' } })
     ].join(''));
@@ -338,7 +381,6 @@
   }));
   PM51.on('source-connect', el => { const f = byId(ds(el, 'id')); if (f) connectPanel(f, false); });
   PM51.on('source-mode', el => { const f = byId(ds(el, 'id')); if (!f) return; f.mode = ds(el, 'value'); saveState(); refresh(); });
-  PM51.on('source-default-service', el => { const f = byId(ds(el, 'id')); if (!f) return; cfg().service = cfg().service === f.name ? 'None' : f.name; saveState(); refresh(); });
   PM51.on('source-address', el => {
     const f = byId(ds(el, 'id')); if (!f) return;
     const label = f.addressLabel || 'Service address'; const generic = f.kind === 'generic';
@@ -387,6 +429,74 @@
     { title: 'Push access', desc: 'Checked through each connected service', status: 'Example', tone: 'info' }
   ] }));
 
+  PM51.on('source-gh-connect', () => { const f = byId('github'); if (!f) return; PM51.setSel(ID, f.id); PM51.setTab(ID, 'services'); if (connected(f)) disconnect(f); else connectPanel(f, false); });
+  PM51.on('source-gh-disconnect', el => { const f = byId(ds(el, 'id')); if (f) disconnect(f); });
+
+  /* ---------- guided: a new repository, or contributing to someone else's --------------------------- */
+  const LICENSES = [['None', 'No license', 'All rights reserved'], ['MIT', 'MIT', 'Short and permissive'], ['Apache-2.0', 'Apache 2.0', 'Permissive, with a patent grant'], ['GPL-3.0', 'GPL 3.0', 'Changes must stay open']];
+  const IGNORES = ['None', 'Node', 'Python', 'Rust', 'Go', 'Java'];
+  const repoName = v => String(v || '').trim().replace(/\.git$/, '').split(/[/:]/).pop();
+  function newRepoWizard() {
+    const cur = PM51.value(W + 'new-repo-details'); const det = cur && typeof cur === 'object' ? cur : {};
+    const svcs = forges().filter(f => connected(f) && f.kind !== 'generic');
+    PM51.wizard({
+      title: 'Create a new repository', subtitle: 'An online home for a project, with its first files.', eyebrow: 'Repository', icon: 'branch', finishLabel: 'Create repository',
+      draft: { service: svcs.some(f => f.name === cfg().service) ? cfg().service : ((svcs[0] || {}).name || ''), name: '', visibility: det.visibility || 'private', license: det.license || 'MIT', gitignore: det.gitignore || 'None', branch: det.default_branch || mainBranch() },
+      steps: [
+        { label: 'Where', icon: 'cloud', title: 'Where should it live?', lead: 'Pick a code service you are signed in to.',
+          render: d => svcs.length ? PM51.tiles(svcs.map(f => ({ title: f.name, text: `Signed in as ${f.defaultAccount}`, icon: 'cloud', selected: d.service === f.name, data: { service: f.name } })), { action: 'pm51-source-w-service' }) : PM51.note('Connect a code service first, under Code Services.', 'attention'),
+          check: d => svcs.length ? (d.service ? '' : 'Pick where it should live.') : 'Connect a code service first.' },
+        { label: 'Name', icon: 'edit', title: 'What is it called, and who can see it?', recap: d => d.name,
+          render: d => `<div class="o55-setup-fields">${PM51.field('Name', `<input class="text-control o55-nr-name o55-setup-mono" value="${a(d.name)}" placeholder="my-project" autocomplete="off" spellcheck="false"/>`, 'Letters, numbers, - and _.')}</div>` + PM51.tiles([['private', 'lock', 'Private', 'Only you and people you invite.'], ['public', 'globe', 'Public', 'Anyone can see it; only you can change it.']].map(([v, ic, t, x]) => ({ title: t, text: x, icon: ic, selected: d.visibility === v, data: { vis: v } })), { action: 'pm51-source-w-vis' }),
+          collect: (w, d) => { d.name = String(w.querySelector('.o55-nr-name').value || '').trim(); },
+          check: d => !d.name ? 'Give it a name.' : !/^[A-Za-z0-9._-]+$/.test(d.name) ? 'Use letters, numbers, dots, - and _ only.' : repos().some(r => r.name === d.name) ? `${d.name} is already on your list.` : '' },
+        { label: 'First files', icon: 'file', title: 'What should it start with?', lead: 'All three can be changed later in the repository itself.',
+          render: d => `<div class="o55-setup-fields">${PM51.field('License', PM51.dropdown(d.license, LICENSES.map(([v, l, m]) => ({ value: v, label: l, meta: m })), { cls: 'o55-nr-license', label: 'License' }))}${PM51.field('.gitignore template', PM51.dropdown(d.gitignore, IGNORES.map(v => ({ value: v, label: v === 'None' ? 'None' : v })), { cls: 'o55-nr-ignore', label: '.gitignore template' }), 'Keeps build output and secrets out of history.')}${PM51.field('Starting branch', `<input class="text-control o55-nr-branch o55-setup-mono" value="${a(d.branch)}" autocomplete="off" spellcheck="false"/>`, 'Starts as your main branch name.')}</div>` + PM51.bound.rows([W + 'create-github-repo']),
+          collect: (w, d) => { const l = w.querySelector('.o55-nr-license'), g = w.querySelector('.o55-nr-ignore'), b = w.querySelector('.o55-nr-branch'); if (l) d.license = l.value; if (g) d.gitignore = g.value; if (b) d.branch = String(b.value || '').trim() || mainBranch(); } }
+      ],
+      onFinish: d => {
+        if (commitSettingValue(W + 'new-repo-details', { visibility: d.visibility, default_branch: d.branch, license: d.license, gitignore: d.gitignore })) o55Notify(W + 'new-repo-details', null);
+        const f = forges().find(x => x.name === d.service) || {};
+        repos().push({ name: d.name, forge: d.service, remote: 'origin', address: f.id === 'github' ? `github.com/${f.defaultAccount}/${d.name}` : `${d.name} on ${d.service}`, branch: d.branch, state: 'Checking', protection: safety().protectMain ? 'Protected' : 'None', lfs: 'Not needed' });
+        saveState(); refresh(); PM51.toast('Repository created', `${d.name} on ${d.service}, ${d.visibility}, starting on ${d.branch}. Example only: nothing was created online.`, 'info');
+      }
+    });
+  }
+  function contributeWizard() {
+    const gh = byId('github'); const account = gh && connected(gh) ? gh.defaultAccount : 'you';
+    PM51.wizard({
+      title: 'Contribute to another project', subtitle: 'Work on someone else\'s project through your own copy, and send your changes back for review.', eyebrow: 'Contribute', icon: 'branch', finishLabel: 'Set it up',
+      draft: { upstream: String(PM51.value(W + 'upstream-repo') || ''), fork: PM51.value(W + 'create-fork') !== false, branch: String(PM51.value(W + 'feature-branch-name') || '') },
+      steps: [
+        { label: 'Project', icon: 'search', title: 'Which project do you want to help with?', lead: 'Its address, or owner/name on GitHub.', recap: d => d.upstream,
+          render: d => `<div class="o55-setup-fields">${PM51.field('Original project', `<input class="text-control o55-ct-up o55-setup-mono" value="${a(d.upstream)}" placeholder="someone/their-project" autocomplete="off" spellcheck="false"/>`)}</div>`,
+          collect: (w, d) => { d.upstream = String(w.querySelector('.o55-ct-up').value || '').trim(); },
+          check: d => !d.upstream ? 'Enter the project.' : !/^[\w.-]+\/[\w.-]+$|^(https?:\/\/|git@)\S+/.test(d.upstream) ? 'Use owner/name, or a full address.' : '' },
+        { label: 'Your copy', icon: 'copy', title: 'Work in your own copy?', lead: 'A fork is your copy on your account; your changes go back as a review request.', recap: d => d.fork ? 'My own copy' : 'The original',
+          render: d => PM51.tiles([[true, 'copy', 'Make my own copy (fork)', `It will be github.com/${account}/${repoName(d.upstream) || 'project'}.`], [false, 'branch', 'Work on the original', 'Only if you can already push to it.']].map(([v, ic, t, x]) => ({ title: t, text: x, icon: ic, selected: d.fork === v, data: { fork: String(v) } })), { action: 'pm51-source-w-fork' }) },
+        { label: 'Branch', icon: 'branch', title: 'What should your branch be called?', lead: 'Your changes go on this branch, not on the project\'s main branch.',
+          render: d => `<div class="o55-setup-fields">${PM51.field('Branch for my changes', `<input class="text-control o55-ct-branch o55-setup-mono" value="${a(d.branch || 'fix/' + (repoName(d.upstream) || 'my-change'))}" autocomplete="off" spellcheck="false"/>`)}</div>`,
+          collect: (w, d) => { d.branch = String(w.querySelector('.o55-ct-branch').value || '').trim(); },
+          check: d => !d.branch ? 'Name the branch.' : /\s/.test(d.branch) ? 'Branch names have no spaces.' : '' }
+      ],
+      onFinish: d => {
+        const name = repoName(d.upstream); const where = d.fork ? `github.com/${account}/${name}` : '';
+        [[W + 'upstream-repo', d.upstream], [W + 'create-fork', d.fork], [W + 'feature-branch-name', d.branch], [W + 'fork-location', where]].forEach(([id, v]) => { if (commitSettingValue(id, v)) o55Notify(id, v); });
+        if (!repos().some(r => r.name === name)) repos().push({ name, forge: 'GitHub', remote: d.fork ? 'origin (your copy), upstream' : 'origin', address: where || d.upstream, branch: d.branch, state: 'Checking', protection: 'None', lfs: 'Not needed' });
+        saveState(); refresh(); PM51.toast('Ready to contribute', `${d.fork ? `Your copy is ${where}` : `Working on ${d.upstream}`}, on ${d.branch}. Example only: nothing was forked.`, 'info');
+      }
+    });
+  }
+  PM51.on('source-new-repo', () => newRepoWizard());
+  PM51.on('source-contribute', () => contributeWizard());
+  PM51.on('source-w-service', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.service = ds(el, 'service'); w.next(); });
+  PM51.on('source-w-vis', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.visibility = ds(el, 'vis'); });
+  PM51.on('source-w-fork', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.fork = ds(el, 'fork') === 'true'; w.next(); });
+  PM51.owner(ID, id => { if (GH.includes(id)) { PM51.setTab(ID, 'services'); if (byId('github')) PM51.setSel(ID, 'github'); return; } const e = PM51.placement.byId[id]; if (e && e.tab) PM51.setTab(ID, e.tab); });
+  [PRESET, FORCE, W + 'default-branch', W + 'worktree-base-dir', 'ai.accounts.github-host-policy', W + 'pre-merge-tests'].forEach(id => PM51.watch(id, () => refresh()));
+  /* the pins that lived on each workflow move into the Pinned workflows row once */
+  migratePins = () => { const s0 = sc(); if (s0.o55Pins) return; s0.o55Pins = true; const was = workflows().filter(w => w.pinned).map(w => w.name); workflows().forEach(w => { delete w.pinned; }); if (was.length && !pinned().length && commitSettingValue(PIN, was)) saveState(); };
+
   /* ---------- actions: tools ------------------------------------------ */
   PM51.on('source-select-tool', el => { PM51.setSel(TOOL_SEL, ds(el, 'id')); state.resourceRosterOpen = false; refresh(); });
   PM51.on('source-tool-default', el => { const t = tools().find(x => x.id === ds(el, 'id')); if (!t) return; tools().forEach(x => { x.default = x.id === t.id; }); cfg().tool = t.name; saveState(); refresh(); PM51.toast('Default tool', `${t.name} keeps history for new folders.`); });
@@ -413,8 +523,8 @@
     onSave: data => {
       const name = String(data.name || '').trim(); if (!name) { PM51.toast('Give the worktree a name', 'It becomes the folder name.', 'warning'); return false; }
       if (worktrees().some(w => w.name === name)) { PM51.toast('Name already used', 'Pick a different name.', 'warning'); return false; }
-      worktrees().push({ name, path: `/mnt/Cursor/.worktrees/${name}`, branch: String(data.branch || '').trim() || name, owner: 'You', state: 'Clean', lease: 'Persistent' });
-      saveState(); refresh(); PM51.toast('Worktree created', `${name} is ready in /mnt/Cursor/.worktrees.`, 'info');
+      worktrees().push({ name, path: `${wtFolder()}/${name}`, branch: String(data.branch || '').trim() || name, owner: 'You', state: 'Clean', lease: 'Persistent' });
+      saveState(); refresh(); PM51.toast('Worktree created', `${name} is ready in ${wtFolder()}.`, 'info');
     }
   }));
   PM51.on('source-worktree-menu', el => {
@@ -422,7 +532,7 @@
     const inUse = /Goal/.test(w.lease || '') || w.name === 'main';
     PM51.menu(el, [
       { label: 'Details', icon: 'info', onClick: () => PM51.panel({ title: w.name, pill: w.state === 'Clean' ? PM51.pill('Ready') : PM51.pill('Needs attention'), body: PM51.panelSection('Worktree', PM51.kv([['Folder', w.path], ['Branch', w.branch], ['Used by', ownerLabel(w)], ['Kept', w.lease], ['Changes', w.state === 'Clean' ? 'None waiting' : w.state]])) }) },
-      { label: 'Open folder', icon: 'folder', onClick: () => PM51.unavailable('Open folder', 'Opening a folder needs the desktop app.') },
+      { label: 'Copy folder path', icon: 'copy', onClick: () => copyText(w.path, 'Folder path') },
       { separator: true },
       { label: 'Remove', icon: 'trash', danger: true, ariaDisabled: inUse, meta: inUse ? (w.name === 'main' ? 'Main worktree' : 'In use by a Goal') : '', onClick: () => PM51.confirm(`Remove worktree ${w.name}?`, w.state === 'Clean' ? 'The folder is deleted. Its branch is kept.' : `${w.state} that are not saved to history would be lost.`, 'Remove', () => { const i = worktrees().indexOf(w); if (i >= 0) worktrees().splice(i, 1); saveState(); refresh(); PM51.toast('Worktree removed', w.name, 'warning'); }, true) }
     ], w.name);
@@ -438,7 +548,7 @@
   PM51.on('source-clone-found', el => {
     const name = ds(el, 'name'); if (!name) return;
     if (repos().some(r => r.name === name)) { PM51.toast('Already tracked', `${name} is already in the list.`, 'info'); return; }
-    repos().push({ name, forge: 'GitHub', remote: 'origin', branch: cfg().branch || 'main', state: 'Checking', protection: 'None', lfs: 'Not needed' });
+    repos().push({ name, forge: 'GitHub', remote: 'origin', branch: mainBranch(), state: 'Checking', protection: 'None', lfs: 'Not needed' });
     saveState(); refresh(); closeOverlay(); PM51.toast('Clone queued', `${name} appears under Repositories. Example data only; the app does the copying.`, 'info');
   });
   PM51.on('source-cleanup', () => {
@@ -451,7 +561,6 @@
   PM51.on('source-cfg-seg', el => { cfg()[ds(el, 'key')] = ds(el, 'value'); if (ds(el, 'key') === 'tool') tools().forEach(t => { t.default = t.name === ds(el, 'value'); }); saveState(); refresh(); });
   PM51.on('source-cfg-toggle', el => { const c = cfg(); const k = ds(el, 'key'); c[k] = !c[k]; saveState(); refresh(); });
   PM51.onChange('source-cfg', el => { cfg()[ds(el, 'key')] = el.value; saveState(); });
-  PM51.onInput('source-branch', el => { cfg().branch = el.value.trim() || 'main'; saveState(); });
   PM51.on('source-undo', () => PM51.panel({
     title: 'Undo last operation', subtitle: 'Push of main to GitHub · 8 minutes ago',
     body: PM51.panelSection('What undo does', PM51.kv([['Locally', 'main goes back to where it was before the push'], ['On GitHub', 'Nothing changes until you push again'], ['Your files', 'Kept exactly as they are']])) + PM51.note('Undo runs in the app. Nothing changes in this preview.'),
@@ -464,13 +573,13 @@
   PM51.on('source-restore-point', el => PM51.toast('Nothing restored', `Example data only. Restoring “${ds(el, 'name')}” runs in the app.`, 'info'));
 
   /* ---------- actions: pipelines --------------------------------------- */
-  PM51.on('source-open-external', el => PM51.unavailable(`Open on ${String(ds(el, 'name') || '').split(' ')[0] || 'the service'}`, 'Opening links needs the desktop app.'));
-  PM51.on('source-pin', el => { const w = workflows().find(x => x.name === ds(el, 'name')); if (!w) return; w.pinned = !w.pinned; saveState(); refresh(); });
+  PM51.on('source-open-external', el => { const f = byId(ds(el, 'id')) || forges().find(x => x.name === ds(el, 'name')); const url = f ? forgeUrl(f) : ''; if (url) copyText(url, 'Link'); });
+  PM51.on('source-pin', el => { const n = ds(el, 'name'); const cur = pinned(); const next = cur.includes(n) ? cur.filter(x => x !== n) : [...cur, n]; if (commitSettingValue(PIN, next)) { saveState(); o55Notify(PIN, next); } refresh(); PM51.toast(next.includes(n) ? 'Pinned' : 'Unpinned', next.includes(n) ? `${n} shows in the Source Control panel.` : n); });
   PM51.on('source-run', el => {
     const w = workflows().find(x => x.name === ds(el, 'name')); if (!w) return;
     PM51.panel({
       title: `Run ${w.name}`, subtitle: `${w.workflow} · ${TRIGGER[w.trigger] || w.trigger}`,
-      body: PM51.panelSection('Run on', PM51.field('Branch', PM51.select(cfg().branch || 'main', withCurrent(repos().map(r => r.branch), cfg().branch || 'main'), { label: 'Branch' }))) + PM51.note('Runs are started by the app. Nothing is sent in this preview.'),
+      body: PM51.panelSection('Run on', PM51.field('Branch', PM51.select(mainBranch(), withCurrent(repos().map(r => r.branch), mainBranch()), { label: 'Branch' }))) + PM51.note('Runs are started by the app. Nothing is sent in this preview.'),
       primaryLabel: 'Run', onPrimary: () => PM51.toast('Nothing started', 'Example data only. Runs are started by the app.', 'info')
     });
   });
@@ -483,6 +592,6 @@
     title: 'How version history works',
     body: PM51.panelSection('In short', '<p class="pm51-ps-text">Version history keeps every change to your files so you can compare, go back, and work in parallel. Git or Jujutsu keeps it on your server; a code service keeps a copy online.</p>')
       + PM51.panelSection('The pieces', PM51.kv([['Local tools', 'Git and Jujutsu do the work on your server.'], ['Code services', 'GitHub and the others store a copy, host reviews, and run automation.'], ['Repositories', 'The folders whose history is kept.'], ['Worktrees', 'Extra copies so two things can happen at once.']]))
-      + PM51.panelSection('Safety', '<p class="pm51-ps-text">Main stays protected, force pushes are refused, and a recovery point is saved before anything risky.</p>')
+      + PM51.panelSection('Safety', '<p class="pm51-ps-text">One safety level decides how carefully branches and recovery are handled: whether main is protected, whether you are asked before deletes, and whether a recovery point is saved first. Custom lets you set each one.</p>')
   }));
 })();
