@@ -52,8 +52,11 @@
       g = el('g', 'sp-mark');
       var ring = el('circle', 'sp-ring'); ring.setAttribute('r', '5.4'); g.appendChild(ring);
       /* the invisible hub circle centres the group's fill-box on the mark, so a
-         CSS rotation about the fill-box centre orbits the satellite round it */
-      var orbit = el('g', 'sp-orbit'); var hub = el('circle', 'sp-hub'); hub.setAttribute('r', '8.4'); orbit.appendChild(hub); var sat = el('circle', 'sp-sat'); sat.setAttribute('r', '2.2'); sat.setAttribute('cx', '5.9'); sat.setAttribute('cy', '-5.9'); orbit.appendChild(sat); g.appendChild(orbit);
+         CSS rotation about the fill-box centre orbits the satellite round it.
+         The satellite rides ON the ring (radius 5.4), a bead on the stroke: one
+         orbiting outside it drew letter shapes (a Q, a ring with a tail) as it
+         went round. */
+      var orbit = el('g', 'sp-orbit'); var hub = el('circle', 'sp-hub'); hub.setAttribute('r', '8.4'); orbit.appendChild(hub); var sat = el('circle', 'sp-sat'); sat.setAttribute('r', '2.2'); sat.setAttribute('cx', '3.82'); sat.setAttribute('cy', '-3.82'); orbit.appendChild(sat); g.appendChild(orbit);
       group(svg, 'sp-marks').appendChild(g); nodes.set(key, g);
     }
     g.__seen = true;
@@ -88,9 +91,13 @@
     }
     var tR = tr.getBoundingClientRect(), sT = tr.scrollTop;
     var gutter = parseFloat(getComputedStyle(inner).getPropertyValue('--tx-gutter')) || 26;
-    var H = inner.offsetTop + inner.offsetHeight + 8;
-    layer.style.height = H + 'px';
-    set(svg, { width: Math.round(tR.width), height: Math.round(H), viewBox: '0 0 ' + Math.round(tR.width) + ' ' + Math.round(H) });
+    /* The SVG is 1px tall and draws everything as paint overflow: paint
+       overflow never counts as scrollable area. A layer sized to the content
+       was one frame stale whenever the content shrank (a card folding), and
+       for that frame it held the scroll height up, then let it drop at once. */
+    layer.style.height = '';
+    if (svg.hasAttribute('viewBox')) svg.removeAttribute('viewBox');
+    set(svg, { width: Math.round(tR.width), height: 1 });
     nodes.forEach(function (n) { n.__seen = false; });
     var turns = {}, order = [];
     var kids = inner.children;
@@ -134,9 +141,16 @@
       });
       /* the comet: light running from the mark down to what is live */
       if (live) {
-        var rL = live.getBoundingClientRect();
-        var yLive = live.getAttribute('data-streaming') ? rL.bottom - tR.top + sT - 12 : rL.top - tR.top + sT + 17;
-        if (yLive - yMark > 18) {
+        /* a streaming reply's live point is its caret (the writing edge), not
+           its box, whose foot is the hover row's reserved space. A comet only
+           once it has real length: a few pixels under the ring read as a glyph
+           (a ring with a tail), not as light travelling. */
+        var rL = live.getBoundingClientRect(), yLive;
+        if (live.getAttribute('data-streaming')) {
+          var cr = live.querySelector('.tx-caret'), rc = cr && cr.getBoundingClientRect();
+          yLive = rc && rc.height ? rc.top + rc.height / 2 - tR.top + sT : rL.bottom - tR.top + sT - 34;
+        } else yLive = rL.top - tR.top + sT + 17;
+        if (yLive - yMark > 40) {
           var cm = node(svg, 'c' + t, 'path', 'sp-comet');
           set(cm, { d: 'M' + x + ' ' + (yMark + 9).toFixed(1) + 'V' + yLive.toFixed(1), pathLength: 100 });
         }

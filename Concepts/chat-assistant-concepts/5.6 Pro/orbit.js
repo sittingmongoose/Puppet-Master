@@ -90,7 +90,7 @@
     }
     ui.anim = 'c1';
     if (finalCompact != null) ui.pendingCompact = finalCompact;
-    later(id, 430, function () { ui.anim = 'c2'; rerender(); });
+    later(id, 430, function () { ui.anim = 'c2'; rerender(); shrinkStage(id); });
     later(id, 690, function () {
       ui.anim = null; ui.pin = null;
       /* Mark the landing state BEFORE the render: the auto-collapse detector
@@ -101,6 +101,21 @@
       if (ui.pendingCompact != null) { ui.compact = ui.pendingCompact; delete ui.pendingCompact; }
       rerender();
     });
+  }
+
+  /* C2 as one move: while the dial lifts into the strip line, the stage's
+     height closes toward the strip's, instead of the dial fading out of a box
+     that keeps its size until the strip mounts (a dead, empty frame). The
+     strip's mount FLIP then only settles the last few pixels. */
+  var STRIP_H = 64;
+  function shrinkStage(id) {
+    var node = document.querySelector('[data-hover-key^="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + ':"]');
+    var stage = node && node.closest('.orbit-stage');
+    if (!stage || !stage.animate) return;
+    var h = stage.getBoundingClientRect().height;
+    if (h <= STRIP_H + 4) return;
+    stage.animate([{ height: h + 'px', overflow: 'hidden' }, { height: STRIP_H + 'px', overflow: 'hidden' }],
+      { duration: 250, easing: 'cubic-bezier(.3, .7, .2, 1)', fill: 'forwards' });
   }
 
   /* EXPAND: E1 the dial drops down from the strip line (240ms, panel still

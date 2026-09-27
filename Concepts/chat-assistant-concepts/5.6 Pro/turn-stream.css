@@ -27,6 +27,9 @@ body[data-theme$="-light"] .message-body pre { background: var(--code); }
 .tx-stream .tx-flow { position: relative; }
 .transcript-inner > [data-streaming] { animation: tx-arrive 360ms cubic-bezier(.17, .84, .29, .99) both; }
 @keyframes tx-arrive { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+/* the room a folding card gives up, held for its answer (turn-stream.js) */
+.chat-stage .transcript-inner { min-height: var(--tx-hold-min, 0px); }
+
 /* the chrome keeps its space while the reply is written, then peeks once */
 .transcript-inner > [data-streaming] .message-chrome { visibility: hidden !important; opacity: 0 !important; }
 .transcript-inner > .tx-peek .message-chrome { visibility: visible; opacity: 1; transform: none; transition: opacity 260ms ease 120ms, transform 260ms ease 120ms; }
@@ -42,6 +45,16 @@ body[data-theme$="-light"] .message-body pre { background: var(--code); }
 }
 .tx-pending-t { font-style: normal; font-variant-numeric: tabular-nums; color: var(--subtle); }
 @keyframes tx-shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+/* ignition: the label condenses toward the mark as the first word emerges.
+   Same 180ms in every voice; only the path differs. */
+.tx-pending.tx-pending-out { pointer-events: none; white-space: nowrap; transform-origin: 0 50%; animation: tx-pend-out 180ms cubic-bezier(.4, 0, .2, 1) forwards; }
+@keyframes tx-pend-out { from { opacity: 1; } to { opacity: 0; transform: translateX(-10px) scaleX(.86); filter: blur(2px); } }
+[data-voice="friendly"] .tx-pending.tx-pending-out { animation-name: tx-pend-out-friendly; animation-timing-function: cubic-bezier(.3, .7, .4, 1); }
+@keyframes tx-pend-out-friendly { 0% { opacity: 1; } 40% { opacity: .45; transform: translateY(-5px) rotate(-2deg); } 100% { opacity: 0; transform: translateY(-9px) rotate(-3deg) scale(.9); } }
+[data-voice="glass"] .tx-pending.tx-pending-out { animation-name: tx-pend-out-glass; }
+@keyframes tx-pend-out-glass { from { opacity: 1; } to { opacity: 0; transform: scale(.97); filter: blur(5px); } }
+[data-voice="retro"] .tx-pending.tx-pending-out { animation-name: tx-pend-out-retro; animation-timing-function: steps(6, end); }
+@keyframes tx-pend-out-retro { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 100% 0 0); } }
 
 /* ---------------------------------------------------------- words: voices */
 .tx-w { animation: tx-ink 220ms cubic-bezier(.2, .8, .2, 1) both; }
@@ -56,7 +69,10 @@ body[data-theme$="-light"] .message-body pre { background: var(--code); }
 [data-voice="glass"] .tx-w { animation: tx-depth 320ms cubic-bezier(.05, .7, .1, 1) both; }
 @keyframes tx-depth { 0% { opacity: 0; filter: blur(7px) brightness(1.7); } 100% { opacity: 1; filter: none; } }
 [data-voice="retro"] .tx-w { animation: tx-phosphor 700ms steps(4, end) both; }
-[data-voice="retro"] .tx-c { animation: tx-type 1ms steps(1, end) both; animation-delay: calc(var(--i) * 14ms); }
+/* linear, not steps(1, end): at exactly delay + duration a stepped 1ms fill
+   can round to progress 0.9999 and hold the character at opacity 0 forever
+   (measured: the second character of every word stayed blank) */
+[data-voice="retro"] .tx-c { animation: tx-type 1ms linear both; animation-delay: calc(var(--i) * 14ms); }
 @keyframes tx-type { from { opacity: 0; } to { opacity: 1; } }
 @keyframes tx-phosphor { 0% { text-shadow: 0 0 8px var(--accent), 0 0 2px var(--accent); } 100% { text-shadow: 0 0 0 transparent; } }
 

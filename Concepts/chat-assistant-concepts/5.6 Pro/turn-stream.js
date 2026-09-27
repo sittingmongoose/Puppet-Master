@@ -173,6 +173,7 @@
     };
     if (opts && opts.instantArrival) { st.chunkAt = st.chunkAt.map(function () { return 0; }); }
     if (opts && opts.hold) st.hold = true;                 /* a thinking placeholder a director replaces */
+    if (opts && opts.quiet) st.quiet = true;               /* an answer after visible work: no "is thinking" */
     streams.set(m.id, st);
     m.streaming = true; m.streamPhase = 'pending';
     kick();
@@ -205,7 +206,7 @@
     var upto = st.cursor; st.cursor = 0;
     for (var i = 0; i < upto; i++) exec(st, st.ops[i], true);
     st.cursor = upto;
-    if (st.phase === 'pending') pendingLabel(st, true);
+    if (st.phase === 'pending' && !st.quiet) pendingLabel(st, true);
     st.h = st.flow.offsetHeight; st.clip.style.height = st.h + 'px';
     return host;
   }
@@ -218,10 +219,28 @@
       el.innerHTML = '<b>' + esc((mdl && mdl.name) || 'Assistant') + '</b><span class="tx-pending-verb">is thinking</span><em class="tx-pending-t"></em>';
       st.flow.appendChild(el);
     } else if (!on && el) {
-      el.remove();
+      /* the label condenses toward the mark while the first word emerges
+         (voice keyframes in turn-stream.css); it leaves the flow the moment
+         the first word lands, so the word never starts a line below it */
+      if (reduced()) el.remove();
+      else {
+        /* it leaves from the clip layer, not the flow: a first child that is
+           still in the flow keeps the first real block from being :first-child,
+           and that block's top margin pushed the whole reply down until the
+           label was gone (measured: 14px under a heading) */
+        var lt = el.offsetTop + st.flow.offsetTop, ll = el.offsetLeft + st.flow.offsetLeft;
+        st.flow.style.minHeight = st.flow.offsetHeight + 'px';
+        Object.assign(el.style, { position: 'absolute', left: ll + 'px', top: lt + 'px' });
+        st.clip.insertBefore(el, st.caret);
+        el.classList.add('tx-pending-out'); st.leaving = true;
+        var gone = function () { if (el.isConnected) el.remove(); };
+        el.addEventListener('animationend', function (e) { if (e.target === el) gone(); });
+        setTimeout(gone, K() ? K().ms(400) : 400);
+      }
     }
     return el;
   }
+  function K() { return window.PM56_CLOCK || null; }
 
   function currentBlock(st) {
     if (!st.block) { var p = document.createElement('p'); st.flow.appendChild(p); st.block = p; }
@@ -229,6 +248,7 @@
   }
   function exec(st, op, quiet) {
     var v = voice();
+    if (st.leaving) { st.flow.style.minHeight = ''; st.leaving = false; }
     if (op.t === 'block') {
       var el;
       if (op.tag === 'li') {
@@ -284,6 +304,7 @@
 
   function frame(ts) {
     loop = 0;
+    watchRoom();
     var t = now(), any = false;
     if (directors.size) { stepDirectors(t); any = true; }
     streams.forEach(function (st) {
@@ -298,7 +319,7 @@
           pendingLabel(st, false);
           setPhase(st, 'live');
           sound('first');
-          st.nextAt = t + (reduced() ? 0 : 60);
+          st.nextAt = t + (reduced() ? 0 : 90);
         }
       }
       if (st.phase === 'live') {
@@ -378,7 +399,10 @@
     if (terminal === 'complete' && st.spec.followUp && t) followUp(c, t, st.spec.followUp);
     if (terminal === 'error' && st.spec.followUp && t) followUp(c, t, st.spec.followUp);
     sound(terminal === 'complete' ? 'complete' : 'stop');
-    if (st.revealRec) { var others = false; streams.forEach(function (o) { if (o.revealRec === st.revealRec) others = true; }); if (!others) c.releaseNextRun(st.revealRec); }
+    if (st.revealRec) {
+      var others = false; streams.forEach(function (o) { if (o.revealRec === st.revealRec) others = true; });
+      if (!others) { c.releaseNextRun(st.revealRec); setTimeout(releaseRoom, K() ? K().ms(260) : 260); }
+    }
     c.followIfSticky();
     if (st.tid === c.state.selectedThread) c.maybeFlushQueue();
   }
@@ -408,8 +432,63 @@
       directors.forEach(function (d) { if (d.tid === tid) finishDirector(d); });
       streams.forEach(function (st) { if (st.tid === tid) { st.cursor = st.ops.length; finalize(st, st.spec.terminal || 'complete'); } });
     },
-    reset: function () { streams.clear(); flights.clear(); directors.clear(); }
+    reset: function () { streams.clear(); flights.clear(); directors.clear(); dropRoom(); }
   };
+
+  /* ================================================================ room hold
+     When a turn's card folds as its answer starts, the thread loses most of the
+     card's height at once: a reader at the bottom saw everything above slide
+     half a screen down, then climb back up as the answer streamed. The room the
+     card gives up is held instead: a min-height floor on the list at its
+     pre-fold height (a root variable, which the patcher never touches). A floor
+     holds inside layout itself, so no clamp can slip in between the fold's own
+     DOM steps and a frame callback. The answer grows into the room; whatever it
+     does not use is let go once it has settled, the floor easing down to the
+     content like a drawer closing. */
+  var room = { h0: 0, inner: null, on: false, rel: false, x: null, v: 0, raf: 0, last: 0, lastH: 0 };
+  function roomInner() { var tr = document.querySelector('.chat-stage .transcript'); return tr && tr.querySelector('.transcript-inner'); }
+  function roomFloor(px) {
+    if (px == null) document.documentElement.style.removeProperty('--tx-hold-min');
+    else document.documentElement.style.setProperty('--tx-hold-min', px.toFixed(1) + 'px');
+  }
+  function naturalH(inner) { var l = inner.lastElementChild; return l ? l.getBoundingClientRect().bottom - inner.getBoundingClientRect().top : 0; }
+  function dropRoom() { room.on = false; room.rel = false; room.x = null; roomFloor(null); }
+  /* the list's height as last laid out: the completion render (which drops
+     the card's narration line) runs before the hold starts, so the hold takes
+     the height from before that render */
+  var roomRO = null, roomSeen = null;
+  function watchRoom() {
+    var inner = roomInner(); if (!inner || inner === roomSeen || !window.ResizeObserver) return;
+    if (roomRO) roomRO.disconnect();
+    roomSeen = inner; room.lastH = inner.offsetHeight;
+    roomRO = new ResizeObserver(function () { if (roomSeen && roomSeen.isConnected && !room.on) room.lastH = roomSeen.offsetHeight; });
+    roomRO.observe(inner);
+  }
+  function holdRoom() {
+    if (reduced()) return;
+    var inner = roomInner(); if (!inner) return;
+    var before = inner === roomSeen && room.lastH ? room.lastH : 0;
+    room.inner = inner; room.h0 = Math.max(inner.offsetHeight, before);
+    room.on = true; room.rel = false; room.x = null; room.v = 0; room.last = now();
+    roomFloor(room.h0);
+    if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
+  }
+  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); } }
+  function roomFrame() {
+    room.raf = 0;
+    var inner = roomInner();
+    if (!room.on || !inner || inner !== room.inner) { dropRoom(); return; }
+    if (room.rel) {
+      var nat = naturalH(inner), t = now(), dt = Math.min(0.05, Math.max(0, (t - room.last) / 1000)); room.last = t;
+      if (room.x == null) room.x = Math.max(0, room.h0 - nat);
+      /* critically damped to zero (omega 11/s: ~450ms) */
+      var w = 11; room.v += (-2 * w * room.v - w * w * room.x) * dt; room.x += room.v * dt;
+      if (room.x < 0.5 || nat >= room.h0) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
+      roomFloor(nat + room.x);
+    }
+    try { C().followIfSticky(); } catch (e) { }
+    room.raf = requestAnimationFrame(roomFrame);
+  }
 
   /* ================================================================ 6 directors
      A live agent turn: the reply's thinking placeholder, then (once the first
@@ -543,7 +622,8 @@
         chunks = [];
         for (var i = 0; i < words.length; i += per) chunks.push(words.slice(i, i + per).join(''));
       }
-      begin(m, t.id, { chunks: chunks, delayMs: 420, chunkMs: 300, terminal: 'complete' }, { rich: !!m.rich, revealRec: id, minPending: 300 });
+      /* the answer's first line starts inside the fold, as the dial lifts */
+      begin(m, t.id, { chunks: chunks, delayMs: 420, chunkMs: 300, terminal: 'complete' }, { rich: !!m.rich, revealRec: id, minPending: 300, quiet: true });
       held = true;
     });
     if (held) {
@@ -552,6 +632,7 @@
          card folds into its strip and the answer rises into the room */
       var def = rec.runId && D.workRuns && D.workRuns[rec.runId];
       if (!(def && def.next)) {
+        holdRoom();
         t.messages.forEach(function (w) {
           if (w.type === 'working' && w.workId === id) {
             if (window.PM56_ORBIT) window.PM56_ORBIT.compact(w.id);
@@ -613,6 +694,15 @@
   }
   function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
   function seg(t, a, b) { return clamp01((t - a) / (b - a)); }
+  function isOpaque(c) {
+    if (!c) return false;
+    var a = /^color\(/.test(c) ? (c.match(/\/\s*([\d.]+)/) || [0, '1'])[1] : (c.match(/[\d.]+/g) || [])[3];
+    return a == null || +a >= 0.99;
+  }
+  function groundOf(el) {
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) { var c = getComputedStyle(e).backgroundColor; if (isOpaque(c)) return c; }
+    return getComputedStyle(document.body).backgroundColor || '#000';
+  }
   function textLayer(text, font, lh, color, width) {
     var d = document.createElement('div'); d.className = 'tx-fly tx-fly-text'; d.textContent = text;
     Object.assign(d.style, { font: font, lineHeight: lh, color: color, width: width + 'px', transformOrigin: '0 0' });
@@ -649,7 +739,11 @@
     else B2.style.opacity = '0';
     /* SHAPE */
     var S = document.createElement('div'); S.className = 'tx-fly tx-fly-shape';
-    Object.assign(S.style, { width: r0.width + 'px', height: r0.height + 'px', background: scs.backgroundColor, border: scs.border, borderRadius: scs.borderRadius, boxSizing: 'border-box' });
+    /* the bubble's fill is a translucent tint of the canvas; in flight it
+       crosses other things (the activity chips), so it is painted over the
+       opaque ground it will land on -- the same pixels, but solid */
+    var ground = groundOf(surf.parentElement), fill = scs.backgroundColor;
+    Object.assign(S.style, { width: r0.width + 'px', height: r0.height + 'px', background: 'linear-gradient(' + fill + ',' + fill + '),' + ground, border: scs.border, borderRadius: scs.borderRadius, boxSizing: 'border-box' });
     document.body.insertBefore(S, A);
     var radius = parseFloat(scs.borderTopLeftRadius) || 16;
     var sx = s.rect.left + s.pad.l, sy = s.rect.top + s.pad.t - s.scroll;
@@ -698,17 +792,21 @@
         if (v === 'friendly' && sendR) {
           /* the pill pops out of Send, catches the text by mid-flight, and
              carries it the rest of the way (so the two never drift apart) */
-          var q = bez(seg(t, 0, 0.55), 0.34, 1.5, 0.64, 1);
+          /* position catches the text with no overshoot (so the text never
+             rides the pill's edge); the pop lives in the pill's scale */
+          var q = bez(seg(t, 0, 0.36), 0.12, 0.9, 0.2, 1);
           var ox = sendR.left + sendR.width / 2 - (r.left + r.width / 2), oy = sendR.top + sendR.height / 2 - (r.top + r.height / 2);
           var rideX = (sx - tx) * (1 - p), rideY = (sy - ty) * (1 - p) + arc;
           bx = ox + (rideX - ox) * q; by = oy + (rideY - oy) * q;
-          ss = 0.18 + 0.82 * q; op = seg(t, 0, 0.1);
+          ss = 0.18 + 0.82 * bez(seg(t, 0, 0.62), 0.34, 1.56, 0.64, 1); op = seg(t, 0, 0.1);
         } else {
           bx = (sx - tx) * (1 - p); by = (sy - ty) * (1 - p) + arc;
           if (v === 'glass') { ss = 1.05 - 0.05 * p; op = seg(t, 0.05, 0.6); blur = 9 * (1 - seg(t, 0.1, 0.85)); }
           else {
+            /* opaque almost at once, but only as big as the text: the lifted
+               line gets its own ground before it crosses anything */
             var f = bez(seg(t, 0.1, 1), 0.2, 0.8, 0.2, 1);
-            op = seg(t, 0, 0.3);
+            op = seg(t, 0, 0.12);
             clip = 'inset(' + (padT * (1 - f)).toFixed(1) + 'px ' + (padR * (1 - f)).toFixed(1) + 'px ' + (padB * (1 - f)).toFixed(1) + 'px ' + (padL * (1 - f)).toFixed(1) + 'px round ' + radius + 'px)';
           }
         }
@@ -747,6 +845,7 @@
     var c; try { c = C(); } catch (e) { return; }
     if (!c || !c.registerTurnOwner) return;
     wired = true;
+    setInterval(watchRoom, 700);
     c.registerTurnOwner(owner);
     c.onWorkComplete(onComplete);
   }
