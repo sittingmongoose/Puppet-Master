@@ -175,10 +175,9 @@ Build with `python3 build.py` then `--check`.
     arriving last (460ms).
   - **Needs you**: the item rises, then one accent ring swells out and fades
     (700ms).
-  - **People**: the roster rises, then its members arrive one by one, rows and
-    avatars 50ms apart.
-  - **Time**: the ticket slides in 16px from the gutter side, then its stub prints
-    top-down along the perforation.
+  - **People**: the roster rises, then the live subagent rows arrive one by one,
+    50ms apart.
+  - **Time**: the ticket slides in 16px from the gutter side.
   - **Ledger**: a 4px slide and fade (220ms); receipts do not make a scene.
 - **Thread switch.** The new thread's list fades up from 40% opacity with a 4px
   rise in 180ms, and the turn spine fades with it, so there is no blink between
