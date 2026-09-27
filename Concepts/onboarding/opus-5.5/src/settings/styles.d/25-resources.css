@@ -82,9 +82,12 @@
   #panel-settings .pm51-mgr .o55-roster-group > small { display: none; }
 }
 /* Once the list is an off-canvas drawer behind the menu button (the engine does that at 720px), the slimmer list's
-   column goes too: the detail takes the whole width. */
+   column goes too: the detail takes the whole width. The drawer opens over the list/detail card it belongs to (not
+   the whole manager, whose top can be far above), on the card's own opaque surface so the detail does not show
+   through it. */
 @container settings-host (max-width: 720px) {
-  #panel-settings .pm51-mgr .split-manager.pm51-split { grid-template-columns: minmax(0, 1fr); }
+  #panel-settings .pm51-mgr .split-manager.pm51-split { grid-template-columns: minmax(0, 1fr); position: relative; }
+  #panel-settings .pm51-mgr .pm51-split > .pm51-roster { background: linear-gradient(var(--k3-surface-1), var(--k3-surface-1)), var(--k3-bg-0); box-shadow: 18px 0 40px -24px rgba(0, 0, 0, .55); }
 }
 @container pm51-detail (max-width: 540px) {
   #panel-settings .pm51-detail .setting-row.o55-row { grid-template-columns: minmax(0, 1fr) 30px; }
