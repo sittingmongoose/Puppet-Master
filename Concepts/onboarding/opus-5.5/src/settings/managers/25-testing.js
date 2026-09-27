@@ -125,7 +125,7 @@
       PM51.section({
         title: 'Browser testing', help: 'For anything with a screen: web apps, docs, and this app.',
         body: PM51.bound.rows(['planning.testing.test-visibility', CAP('built-in-browser')])
-          + PM51.rows([{ label: 'Screenshots', help: 'Pictures of the screen kept with each run.', control: PM51.select(b.screenshots || 'On failure', [['On failure', 'When something fails'], ['Always', 'Always'], ['Never', 'Never']], { action: 'pm51-testing-browser-select', data: { key: 'screenshots' }, label: 'Screenshots' }) }])
+          + PM51.rows([{ label: 'Screenshots', help: 'Pictures of the screen kept with each run. Set with the built-in browser.', value: ({ 'On failure': 'When something fails', Always: 'Always', Never: 'Never' })[b.screenshots || 'On failure'] || b.screenshots, action: { label: 'Change', icon: 'arrowRight', action: 'pm51-go', data: { domain: 'source', workspace: 'browser-scm' } } }])
           + PM51.bound.rows([CAP('screenshot-compare'), CAP('console-network'), CAP('accessibility')])
           + PM51.rows([{ label: 'Browser status', pill: PM51.pill('Ready'), help: 'Its sessions and screenshot button are set in Browser & SCM.', action: { label: 'Open Browser & SCM', icon: 'arrowRight', ghost: true, action: 'pm51-go', data: { domain: 'source', workspace: 'browser-scm' } } }])
       }),

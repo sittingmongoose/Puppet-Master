@@ -1,0 +1,39 @@
+{
+ "_about": "Built-in browser: one capture switch (shared with Testing), retention and redaction read from their owners, pointing at things to share sits with helper sharing; signing in to websites and capture tools are two groups.",
+ "sections": {
+  "browser-share": {
+   "to": "browser-scm",
+   "title": "Built-in browser",
+   "help": "Status, screenshots and sharing with chat.",
+   "order": 5,
+   "composed": true
+  },
+  "browser-sessions": {
+   "to": "browser-scm",
+   "title": "Signing in to websites",
+   "help": "Whether the browser keeps a profile and remembers logins.",
+   "order": 10
+  },
+  "browser-capture-tools": {
+   "to": "browser-scm",
+   "title": "Screenshots and developer tools",
+   "help": "How pages are captured and when developer tools may open.",
+   "order": 20
+  }
+ },
+ "overrides": [
+  {
+   "section": "browser-share",
+   "ids": [
+    "general.interaction.browser-capture"
+   ]
+  },
+  {
+   "section": "browser-sessions",
+   "ids": [
+    "web.fetch.browser-session-profile",
+    "web.fetch.browser-save-session"
+   ]
+  }
+ ]
+}

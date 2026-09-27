@@ -313,25 +313,29 @@
    "label": "Keep test run logs for",
    "help": "Blank keeps them until you delete them.",
    "unit": "days",
-   "placeholder": "Until I delete them"
+   "placeholder": "Until I delete them",
+   "empty": "Until I delete them"
   },
   "branching.worktrees.evidence-retain-last-runs": {
    "label": "Keep only the last runs' logs",
    "help": "Blank means no limit.",
    "unit": "runs",
-   "placeholder": "No limit"
+   "placeholder": "No limit",
+   "empty": "No limit"
   },
   "planning.verification.evidence-retention-days": {
    "label": "Keep Goal proof for",
    "help": "Blank keeps it until you delete it.",
    "unit": "days",
-   "placeholder": "Until I delete it"
+   "placeholder": "Until I delete it",
+   "empty": "Until I delete it"
   },
   "planning.verification.evidence-retain-runs": {
    "label": "Always keep proof from the last runs",
    "help": "Protected however old it is.",
    "unit": "runs",
-   "placeholder": "None protected"
+   "placeholder": "None protected",
+   "empty": "No limit"
   },
   "planning.verification.prune-on-cleanup": {
    "label": "Delete old proof during cleanup"
