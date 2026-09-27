@@ -114,7 +114,9 @@ async function cleanup(label){
       if(s.ctxDetails){ await page.keyboard.press('Escape'); await page.waitForTimeout(30); continue; }
       if(s.activityPinned){ await page.evaluate(()=>document.querySelector('[data-action="unpin-activity"]')?.click()); await page.waitForTimeout(40); continue; }
       if(s.activityOpen){ await page.evaluate(()=>document.querySelector('[data-action="close-activity"]')?.click()); await page.waitForTimeout(40); continue; }
-      if(s.decision){ await page.evaluate(()=>document.querySelector('[data-action="close-decision"]')?.click()); await page.waitForTimeout(40); continue; }
+      /* the questionnaire closes through a leave morph (questions.js beginLeave,
+         up to its 1.4s watchdog) before state.decision clears -- give it time */
+      if(s.decision){ await page.evaluate(()=>document.querySelector('[data-action="close-decision"]')?.click()); await page.waitForTimeout(260); continue; }
       if(s.hover||s.domHover){ await page.mouse.move(2,2); await page.waitForTimeout(220); 
         const t=await overlayState(); if(t.hover||t.domHover){ if(tries>4)break; } continue; }
       if(s.domGhost){ await page.waitForTimeout(120); continue; }   // menus.js close clone, self-clearing

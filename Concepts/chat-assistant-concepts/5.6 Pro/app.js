@@ -1002,7 +1002,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const ctx=makeWorkCtx(rec,m), step=ctx.step, pct=ctx.pct;
     const co=CHROME_OPTS[v]||{}, shut=rec.completed&&rec.openPhase==null;
     const cardId=ctx.cardId, recId=(m&&m.workId)||'primary';
-    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon">${icon(step.icon,14)}</span><div><strong>${rec.ownerProjection?esc(rec.statusLabel||(rec.completed?'Completed':'Working')):(rec.completed?'Completed':'Working')}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.ownerProjection?extRender('workingOwnerControls',{message:m,rec,ctx}):`${rec.running?`<button class="icon-button" data-action="pause-working" title="Pause the live demo">${icon('pause',13)}</button>`:`<button class="icon-button" data-action="start-working" title="Start or resume the complete work sequence">${icon('play',13)}</button>`}<button class="icon-button" data-action="step-working" title="Advance one operation">${icon('step',13)}</button><button class="icon-button" data-action="complete-working" title="Complete the sequence">${icon('check',13)}</button><button class="icon-button" data-action="reset-working" title="Reset this work run">${icon('reset',13)}</button><button class="icon-button ${rec.expanded?'active':''}" data-action="toggle-work-history" title="${rec.expanded?'Hide':'Show'} organized work history and evidence">${icon(rec.expanded?'collapse':'expand',13)}</button>`}</div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
+    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon">${icon(step.icon,14)}</span><div><strong>${rec.ownerProjection?esc(rec.statusLabel||(rec.completed?'Completed':'Working')):(rec.completed?'Completed':'Working')}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.ownerProjection?extRender('workingOwnerControls',{message:m,rec,ctx}):renderWorkDemoControls(rec,cardId)}</div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
+  }
+
+  /* Chat WOW M4: the lab controls (play/pause, step, complete, reset, history)
+     live behind ONE button so the head carries only state, caption and time.
+     They are concept-lab controls, not product ones -- Stop lives in the
+     composer -- and are removed in the PMConcept7 port. Opening shows them in a
+     drawer inside the head (a popover would be clipped by the card). */
+  function renderWorkDemoControls(rec,cardId){
+    const open=!!(state.workDemoOpen&&state.workDemoOpen[cardId]);
+    const drawer=open?`<span class="work-demo-drawer" data-k="wdd:${esc(cardId)}">${rec.running?`<button class="icon-button" data-action="pause-working"${hoverAttrs('wd-pause-'+cardId,'Pause the demo run')}>${icon('pause',13)}</button>`:`<button class="icon-button" data-action="start-working"${hoverAttrs('wd-play-'+cardId,'Play or resume the demo run')}>${icon('play',13)}</button>`}<button class="icon-button" data-action="step-working"${hoverAttrs('wd-step-'+cardId,'Advance one subject')}>${icon('step',13)}</button><button class="icon-button" data-action="complete-working"${hoverAttrs('wd-done-'+cardId,'Complete the run')}>${icon('check',13)}</button><button class="icon-button" data-action="reset-working"${hoverAttrs('wd-reset-'+cardId,'Reset this run')}>${icon('reset',13)}</button><button class="icon-button ${rec.expanded?'active':''}" data-action="toggle-work-history"${hoverAttrs('wd-hist-'+cardId,(rec.expanded?'Hide':'Show')+' the organized work history')}>${icon(rec.expanded?'collapse':'expand',13)}</button></span>`:'';
+    return `${drawer}<button class="icon-button work-demo-btn${open?' active':''}" data-action="work-demo-menu" data-card-ui="${esc(cardId)}" aria-expanded="${open?'true':'false'}"${hoverAttrs('wd-menu-'+cardId,open?'Hide the demo controls':'Demo controls (concept lab only)')}>${icon(open?'close':'sliders',13)}</button>`;
   }
 
   /* Everything a working-animation take needs, so takes can live outside
@@ -1074,7 +1085,24 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     for(let k=0;k<list.length;k++){ if(list[k].startAt<=c+1e-6) i=k; else break; }
     return i;
   }
-  function workRunEnd(list){ const last=list[list.length-1]; return last.startAt+(last.dur!=null?last.dur:2); }
+  function workRunEnd(list){ let end=0; for(const s of list) end=Math.max(end,s.startAt+(s.dur!=null?s.dur:2)); const last=list[list.length-1]; return Math.max(end,last.startAt+(last.dur!=null?last.dur:2)); }
+  function workLiveSet(rec){
+    const list=workInstancesFor(rec), c=workClock(rec), out=new Set();
+    if(rec.completed) return out;
+    list.forEach((s,i)=>{ const end=s.startAt+(s.dur!=null?s.dur:2); if(s.startAt<=c+1e-6 && c<end-1e-6) out.add(i); });
+    if(!out.size){ out.add(workLiveIndex(rec)); }
+    return out;
+  }
+  function workStatusOf(rec,inst){
+    const c=workClock(rec);
+    if(inst.status==='waiting'&&rec.cleared&&rec.cleared[inst.uid]) return null;     /* the reader answered */
+    if(inst.status&&c>=(inst.statusAt!=null?inst.startAt+inst.statusAt:inst.startAt+(inst.dur||0))-1e-6) return inst.status;   /* failed | waiting | cancelled */
+    return null;
+  }
+  function workNarration(rec){
+    const def=rec&&rec.runId&&D.workRuns&&D.workRuns[rec.runId];
+    return (def&&def.narration)||[];
+  }
   function makeWorkCtx(rec,m){
     rec=rec||state.work;
     const steps=workInstancesFor(rec);
@@ -1086,6 +1114,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       running:rec.running, completed:rec.completed, elapsed:rec.elapsed,
       rec, cardId:(m&&m.id)||'work', clock:workClock(rec),
       rowVisible:(inst,r)=>rec.completed||workClock(rec)>=inst.startAt+((r&&r.at)||0),
+      /* Chat WOW M4: several subjects can be live at once (parallel tool calls,
+         a background command), and a subject can fail or wait for the reader.
+         An instance is live while startAt <= clock < startAt+dur; when none is,
+         the latest started one is (today's single-live behavior, so every
+         existing fixture renders exactly as before). */
+      liveSet:()=>workLiveSet(rec),
+      statusOf:(inst)=>workStatusOf(rec,inst),
+      narration:()=>workNarration(rec),
       icon, esc, formatElapsed, commandForStep, isShellRow, shellRowWrap, workRowWrap, workRowDest,
       workReceipt:(opts)=>renderWorkReceipt(rec,opts),
       M: window.PM56_MOTION
@@ -2103,10 +2139,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     document.documentElement.style.setProperty('--editor-w',`${effectiveEditor}%`);
     document.documentElement.style.setProperty('--history-w',`${Math.min(state.historyWidth,200)}px`);
     document.documentElement.style.setProperty('--activity-w',`${state.activityWidth}px`);
+    const preTop=keepTopBefore();
     pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace ${state.editorRevealed?'editor-revealed':''}">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel(false):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
     document.getElementById('pmRoot').setAttribute('aria-busy','false');
     const post=snapScroll();
     const flips=flipHeights(flipTargets, flipBefore);
+    keepTopAfter(preTop,post);
     flipMoves(moveTargets, moveBefore);
     rollDigits(rollBefore);
     restoreScroll(positions,{workH, post, workGrow:workFlipGrowth(flips)});
@@ -2136,9 +2174,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const moveTargets=[...live.querySelectorAll('[data-flip-move]')];
     const moveBefore=new Map(moveTargets.map(el=>{const r=el.getBoundingClientRect();return [el,{x:r.left,y:r.top}];}));
     const workH=live.classList.contains('working-card')?live.getBoundingClientRect().height:null;
+    const preTop=keepTopBefore();
     pmPatchNode(live,src);
     const post=snapScroll();
     const flips=flipHeights(flipTargets, flipBefore);
+    keepTopAfter(preTop,post);
     flipMoves(moveTargets, moveBefore);
     rollDigits(rollBefore);
     restoreScroll(positions,{workH, post, workGrow:workFlipGrowth(flips)});
@@ -2380,6 +2420,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(hold){
         if(dir===0 && Math.abs(moved)>1){ dir=moved; a.cancel(); }
         if(dir!==0){
+          /* Releasing the hold for one measurement lays the page out shorter for
+             an instant, and the browser clamps the transcript's scroll to it --
+             an upward jump the follow logic would read as the reader leaving.
+             Keep the scroll position across the measurement (Chat WOW). */
+          const trS=scrollKeyEl('transcript'), s0=trS?trS.scrollTop:null;
           hold.cancel(); hold=null;               // read the truth underneath
           const live=el.getBoundingClientRect().height;
           /* 640ms is a hard stop: the longest layout transition the concept
@@ -2387,6 +2432,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
              not a handover this FLIP can wait out. */
           if((dir>0 ? live>=h0-0.5 : live<=h0+0.5) || performance.now()-t0>640){ letGo(); return; }
           hold=pin();
+          if(trS&&s0!=null&&Math.abs(trS.scrollTop-s0)>0.5) writeScrollInstant(trS,s0);
         } else if(++grace>5){
           hold.cancel(); hold=null; a.play();
         }
@@ -2396,6 +2442,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(st==='finished'){ letGo(); return; }
       if(st!=='running' && st!=='paused') return; // cancelled by someone else
       if(Math.abs(moved)>1){
+        const trS=scrollKeyEl('transcript'), s0=trS?trS.scrollTop:null;
         dir=moved; a.cancel();
         /* Direction-aware pin. Pinning at h0 when the content GREW painted
            one frame clipped to the old height -- measured as the reopen's
@@ -2404,6 +2451,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
            before style and paint, so pinning at the live height is seamless;
            a SHRINK (the dip this guard exists for) still holds at h0. */
         hold=pinAt(moved>0?el.getBoundingClientRect().height:h0);
+        if(trS&&s0!=null&&Math.abs(trS.scrollTop-s0)>0.5) writeScrollInstant(trS,s0);
         requestAnimationFrame(tick); return;
       }
       if(st==='paused') a.play();                 // clock starts on the SECOND frame
@@ -2502,6 +2550,17 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   },{capture:true});
   document.addEventListener('pointerup',()=>{ if(tDragging){ tDragging=false; tUserInputAt=performance.now(); const el=tEl(); if(el) tStick=tAtBottom(el); } },{capture:true});
   function snapScroll(){ const out={}; document.querySelectorAll('[data-scroll-key]').forEach(el=>{ out[el.dataset.scrollKey]=el.scrollTop; }); return out; }
+  /* A patch that removes content is laid out once at the shorter height before
+     the height FLIP pins the old height back, and the browser clamps the
+     transcript's scroll during that one layout -- an upward jump nobody asked
+     for, which the follow logic would read as the reader leaving. With the FLIP
+     installed the old height is back, so the pre-patch position is valid again:
+     restore it (as our own write) and let the FLIP's shrink move the bottom. */
+  function keepTopBefore(){ const el=tEl(); return el?el.scrollTop:null; }
+  function keepTopAfter(pre,post){
+    const el=tEl(); if(!el||pre==null) return;
+    if(el.scrollTop<pre-0.5){ const max=el.scrollHeight-el.clientHeight; writeScrollInstant(el,Math.min(pre,max)); if(post) post.transcript=el.scrollTop; }
+  }
   function workFlipGrowth(flips){ let g=0; for(const f of flips||[]) if(f.el.closest&&f.el.closest('.working-card')) g+=f.h1-f.h0; return g; }
   function transcriptAwayFromBottom(){
     const el=scrollKeyEl('transcript');
@@ -2520,8 +2579,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     /* Stickiness: our own glide writes never change it. Arriving at the bottom
        re-engages it. Leaving the bottom disengages it when it follows real input
        or when something else moved the view UP -- a jump to a search result, a
-       scrollIntoView -- which is a reader going somewhere. Anchoring moves the
-       view DOWN when content above grows, so it never unsticks. */
+       scrollIntoView -- which is a reader going somewhere. Browser scroll
+       anchoring is switched off for the transcript (turn-stage.css): it moved the
+       view up when a card above shrank, which this rule would misread. */
     const el=tEl();
     if(el){
       const top=el.scrollTop, prev=tLastTop; tLastTop=top;
@@ -3387,7 +3447,7 @@ recommended path                  migration 0043 + rollback</div></div></section
 
   function globalReset(){
     notifyTurnOwners('reset');
-    stopWorkTimer(true);if(window.PM56_CTX&&window.PM56_CTX.reset)window.PM56_CTX.reset();safeStorage.del('pm56-prefs');D.models=clone(FIXTURE0.models);D.artifacts=clone(FIXTURE0.artifacts);state=clone(DEFAULT);state.threads=clone(D.threads);state.questions=clone(D.questions);renderApp(false);toast('Concept reset','All recipes, components, panels, threads, answers, artifacts, and working states returned to stock.');setTimeout(()=>{if(state.demoAutoStart)startWorking(true);},900);
+    stopWorkTimer(true);if(window.PM56_CTX&&window.PM56_CTX.reset)window.PM56_CTX.reset();safeStorage.del('pm56-prefs');D.models=clone(FIXTURE0.models);D.artifacts=clone(FIXTURE0.artifacts);{ const keepReply=state.replyMode; state=clone(DEFAULT); if(keepReply) state.replyMode=keepReply; /* a harness's reply mode survives Reset all */ }state.threads=clone(D.threads);state.questions=clone(D.questions);renderApp(false);toast('Concept reset','All recipes, components, panels, threads, answers, artifacts, and working states returned to stock.');setTimeout(()=>{if(state.demoAutoStart)startWorking(true);},900);
   }
 
   function applyRecipe(i){i=Number(i);if(i<0){state.recipe=-1;renderApp();return;}const r=D.recipes[i];if(!r)return;state.recipe=i;state.variants=[...r.choices];renderApp();}
@@ -3691,6 +3751,7 @@ recommended path                  migration 0043 + rollback</div></div></section
       return;
     }
     if(a==='work-terminal-close'){delete state.workTerminal[btn.dataset.cardUi];renderApp();return;}
+    if(a==='work-demo-menu'){ const id=btn.dataset.cardUi; state.workDemoOpen=state.workDemoOpen||{}; state.workDemoOpen[id]=!state.workDemoOpen[id]; renderApp(); return; }
     if(['start-working','pause-working','step-working','complete-working','reset-working','toggle-work-history','inspect-work-step','toggle-work-phase'].includes(a)){
       /* Card-scoped work controls: a button inside a working card resolves
          that card's record through data-card (a workId or 'primary'); the

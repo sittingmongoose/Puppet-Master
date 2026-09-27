@@ -277,3 +277,29 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
    the hover row keeps its provider and model chips at the same widths. */
 .transcript[data-variant="16"] { padding-left: clamp(4px, 1vw, 10px); padding-right: clamp(12px, 2vw, 22px); }
 body[data-theme] { --tx-gutter: 24px; }
+
+/* the lab's demo controls: one button in the working head opens a drawer */
+.working-controls { display: flex; align-items: center; gap: 2px; }
+.work-demo-drawer { display: inline-flex; align-items: center; gap: 2px; padding: 0 4px 0 2px; margin-right: 2px; border-right: 1px solid var(--tx-sunken-edge); animation: wd-in 220ms cubic-bezier(.17, .84, .29, .99) both; }
+@keyframes wd-in { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: none; } }
+.work-demo-btn { opacity: .55; }
+.work-demo-btn:hover, .work-demo-btn.active { opacity: 1; }
+.working-head:has(.work-demo-drawer) .orbit-caption { opacity: .25; }
+
+/* the item being pointed at or typed in sits above its neighbours, so hover
+   chrome that reaches into the gap (attachment actions, the hover row) is never
+   covered by the next item */
+.transcript-inner > :is(:hover, :focus-within) { position: relative; z-index: 3; }
+
+/* In a narrow chat pane (the default layout with the editor open is ~430px) the
+   gutter and side padding give back room, so the hover row keeps its model chip
+   at the same pane widths it did before the spine. */
+@container pmChat (max-width: 540px) {
+  .transcript[data-variant="16"] { --tx-gutter: 18px; padding-left: 2px; padding-right: 10px; }
+}
+
+/* Scroll custody is JS-owned (app.js: stick-to-bottom follow, plus the working
+   card compensator for readers who are away). Browser scroll anchoring moved the
+   view UP whenever a card above the reader shrank -- a working card folding as
+   the answer starts -- which read as the reader leaving the bottom. */
+.chat-stage .transcript { overflow-anchor: none; }
