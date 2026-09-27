@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L3421-L4050
+Source lines: L3421-L4055
 
-Source SHA256: `86d7739c405a3d78a104ba84164a2aad597b89b4fa8571860eb92fef9e81ae65`
+Source SHA256: `7fbbfa4cb46530e1307e0fb1ae20bbb738b423f623fb273f8d71134cf8fc3d6f`
 
 ---
 
@@ -341,7 +341,12 @@ canonical_text: >-
   identities within a closed definition, and mixed puppetmaster.local/puppet-master.local schema hosts. An
   aggregate runtime schema identity is permitted only when the schema explicitly declares
   x-runtime-schema-id-policy=aggregate_plus_record_kind and each selected definition supplies the matching unique
-  record_kind discriminator. The gate proves static schema and fixture consistency only.
+  record_kind discriminator. Closed action families may explicitly declare aggregate_plus_record_kind_and_action_id;
+  every shared schema identity must then have required constant record_kind and required finite action_id discriminators
+  with no overlapping record-kind/action pairs. A definition may declare x-primary-identity-fields as an ordered
+  nonempty list of required nonempty string fields; uniqueness uses the complete field/value tuple rather than
+  a containing session or shared Settings destination. Invalid declarations and duplicate tuples fail closed.
+  The gate proves static schema and fixture consistency only.
 gui_related: false
 gui_classification_reason: This unit owns a static contract-validation gate; it does not own or certify a visible GUI implementation.
 depends_on: [ATS-001, SIR-031]
@@ -377,7 +382,7 @@ source_lineage:
   - Plans/Forge_Integrations.md
   - Plans/egolite_retained_requirement_contracts.schema.json
   - Plans/egolite_retained_requirement_contract_fixtures.json
-preserved_exact_tokens: [validate-new-contracts, shared-integration expansion fixture pack, Draft 2020-12, aggregate_plus_record_kind, static_schema_and_fixture_consistency_only]
+preserved_exact_tokens: [validate-new-contracts, shared-integration expansion fixture pack, Draft 2020-12, aggregate_plus_record_kind, aggregate_plus_record_kind_and_action_id, x-primary-identity-fields, static_schema_and_fixture_consistency_only]
 negative_constraints:
   - "Do not add schemas or fixture pairs to the gate through an ambient glob."
   - "Do not weaken a failing invariant merely to make current fixtures pass."

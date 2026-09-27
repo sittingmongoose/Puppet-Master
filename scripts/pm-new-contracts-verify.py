@@ -31,6 +31,25 @@ from pm_restore_semantics import restore_semantic_failures
 from pm_browser_program_semantics import browser_program_semantic_failures
 from pm_onboarding_semantics import onboarding_semantic_failures, settings_draft_semantic_failures
 from pm_evidence_command_semantics import evidence_command_semantic_failures
+from pm_forge_packet_semantics import validate_forge_counterexamples
+from pm_packet_integration_semantics import (
+    COMMANDS_MAIN_FIXTURE_REL,
+    COMMANDS_SCHEMA_REL,
+    FORGE_MAIN_FIXTURE_REL,
+    FORGE_SCHEMA_REL,
+    ONBOARDING_MAIN_FIXTURE_REL,
+    ONBOARDING_SCHEMA_REL,
+    PROJECT_MAIN_FIXTURE_REL,
+    PROJECT_ROUND_TRIP_DEF,
+    PROJECT_ROUND_TRIP_SCHEMA_ID,
+    PROJECT_SCHEMA_REL,
+    commands_semantic_failures,
+    forge_semantic_failures,
+    project_round_trip_comparison_failures,
+    validate_commands_main_pack,
+    validate_forge_main_pack,
+    validate_onboarding_recovery_pairs,
+)
 
 # Authored and intentionally closed.  Adding a contract pair is a reviewed gate
 # change, not an ambient glob that silently changes the validation denominator.
@@ -66,9 +85,10 @@ CONTRACT_PAIRS = (
     ("Plans/multi_account_contracts.schema.json", "Plans/multi_account_contract_fixtures.json"),
     ("Plans/testing_session_command_contracts.schema.json", "Plans/testing_session_command_contract_fixtures.json"),
     ("Plans/artifact_recording_command_contracts.schema.json", "Plans/artifact_recording_command_contract_fixtures.json"),
+    ("Plans/commands_shortcuts_contracts.schema.json", "Plans/commands_shortcuts_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 31
+EXPECTED_CONTRACT_PAIR_COUNT = 32
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -222,7 +242,9 @@ def root_definition_names(schema: dict[str, Any]) -> list[str]:
 
 def const_fingerprint(definition: dict[str, Any]) -> dict[str, Any]:
     props = definition.get("properties", {}) if isinstance(definition, dict) else {}
-    discriminator_keys = {"schema_id", "record_kind", "manifest_kind", "kind", "type"}
+    # action_id consts discriminate closed local-action request/response
+    # families that share one schema_id/record_kind (Commands & Shortcuts).
+    discriminator_keys = {"schema_id", "record_kind", "manifest_kind", "kind", "type", "action_id"}
     return {
         key: value["const"]
         for key, value in props.items()
@@ -684,6 +706,37 @@ def effective_runtime_schema_id_policy(schema_rel: str, schema: dict[str, Any]) 
     return config.get("implicit_runtime_schema_id_policy")
 
 
+
+def closed_action_family_is_disjoint(schema: dict[str, Any], members: list[tuple[str, str | None]]) -> bool:
+    """Explicit action-family policy; expand closed discriminators and reject overlap."""
+    if schema.get("x-runtime-schema-id-policy") != "aggregate_plus_record_kind_and_action_id":
+        return False
+    seen = set()
+    defs = schema.get("$defs", {})
+    for name, kind in members:
+        definition = defs.get(name, {})
+        if not isinstance(kind, str) or not kind or not {"schema_id", "record_kind", "action_id"}.issubset(definition.get("required", [])):
+            return False
+        node = definition.get("properties", {}).get("action_id", {})
+        visited = set()
+        while isinstance(node, dict) and "$ref" in node:
+            ref = node["$ref"]
+            if not isinstance(ref, str) or not ref.startswith("#/$defs/") or ref in visited:
+                return False
+            visited.add(ref)
+            node = defs.get(ref.removeprefix("#/$defs/"))
+        if not isinstance(node, dict):
+            return False
+        actions = [node["const"]] if "const" in node else node.get("enum")
+        if not isinstance(actions, list) or not actions or any(not isinstance(a, str) or not a for a in actions):
+            return False
+        for action in actions:
+            key = (kind, action)
+            if key in seen:
+                return False
+            seen.add(key)
+    return True
+
 def command_ids_from_request_definitions(schema: dict[str, Any]) -> set[str]:
     defs = schema.get("$defs", {})
     command_ids: set[str] = set()
@@ -765,7 +818,17 @@ def primary_identity(definition_name: str, definition: dict[str, Any], value: An
     if not isinstance(value, dict):
         return None
     required = set(definition.get("required", []))
-    candidates = [key for key in value if key in required and key.endswith("_id") and key not in {"schema_id", "command_id"}]
+    declared = definition.get("x-primary-identity-fields")
+    if declared is not None:
+        if (not isinstance(declared, list) or not declared
+                or any(not isinstance(field, str) or field not in required for field in declared)
+                or len(set(declared)) != len(declared)
+                or any(not isinstance(value.get(field), str) or not value[field] for field in declared)):
+            raise ValueError("invalid_declared_primary_identity")
+        return ("declared", json.dumps([[field, value[field]] for field in declared], ensure_ascii=False, separators=(",", ":")))
+    # action_id names the action type shared by every record of that action,
+    # never the record instance, so it can never serve as record identity.
+    candidates = [key for key in value if key in required and key.endswith("_id") and key not in {"schema_id", "command_id", "action_id"}]
     if not candidates:
         return None
     def_tokens = set(re.split(r"[^a-z0-9]+", definition_name.lower())) - IDENTITY_STOPWORDS
@@ -1233,6 +1296,17 @@ def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any
         return source_control_semantic_failures(definition_name, value)
     if schema_rel == JUJUTSU_SCHEMA_REL:
         return jujutsu_semantic_failures(definition_name, value)
+    if schema_rel == PROJECT_SCHEMA_REL and (
+        definition_name == PROJECT_ROUND_TRIP_DEF
+        or (isinstance(value, dict) and value.get("schema_id") == PROJECT_ROUND_TRIP_SCHEMA_ID)
+    ):
+        # Round trips are structurally valid by construction; acceptance is
+        # recomputed failure codes compared against the expected outcome.
+        return project_round_trip_comparison_failures(value)
+    if schema_rel == FORGE_SCHEMA_REL:
+        return forge_semantic_failures(definition_name, value)
+    if schema_rel == COMMANDS_SCHEMA_REL:
+        return commands_semantic_failures(definition_name, value)
     return []
 
 
@@ -1442,6 +1516,10 @@ def main() -> int:
             if len(members) < 2:
                 continue
             record_kinds = [record_kind for _, record_kind in members]
+            if runtime_schema_id_policy == "aggregate_plus_record_kind_and_action_id":
+                if not closed_action_family_is_disjoint(schema, members):
+                    findings.append({"code": "invalid_closed_action_schema_identity", "schema": schema_rel, "runtime_schema_id": runtime_schema_id, "definitions": [name for name, _ in members]})
+                continue
             if (
                 runtime_schema_id_policy != "aggregate_plus_record_kind"
                 or schema.get("x-schema-id") != runtime_schema_id
@@ -1474,6 +1552,7 @@ def main() -> int:
             continue
         positive_by_name: dict[str, Any] = {}
         selected_by_name: dict[str, str] = {}
+        fully_valid_by_name: dict[str, Any] = {}
 
         for case in positives:
             counts["positive_cases"] += 1
@@ -1492,6 +1571,7 @@ def main() -> int:
                     findings.append({"code": "positive_semantic_invariant_failure", "fixture": fixture_rel, "case": name, "definition": definition_name, "semantic_failures": semantic_failures})
                     continue
                 counts["positive_cases_valid"] += 1
+                fully_valid_by_name[name] = value
                 definition = defs.get(definition_name, schema)
                 identity = primary_identity(definition_name, definition, value)
                 if identity:
@@ -1515,6 +1595,21 @@ def main() -> int:
 
         if schema_rel in SERVER_REMOTE_OWNER_CHECKS:
             findings.extend(validate_server_remote_inventory(schema_rel, fixture_rel, schema, fixtures, positives))
+
+        # Packet-integration pack checks, scoped by exact pair. Sibling Forge
+        # packs sharing the Forge schema never receive main-pack census.
+        if (schema_rel, fixture_rel) == (FORGE_SCHEMA_REL, FORGE_MAIN_FIXTURE_REL):
+            findings.extend(validate_forge_main_pack(positive_by_name, set(fully_valid_by_name)))
+            findings.extend(validate_forge_counterexamples(schema, fixtures, registry=schema_registry))
+        if (schema_rel, fixture_rel) == (COMMANDS_SCHEMA_REL, COMMANDS_MAIN_FIXTURE_REL):
+            findings.extend(validate_commands_main_pack(schema, fixtures, positive_by_name, set(fully_valid_by_name)))
+        if (schema_rel, fixture_rel) == (ONBOARDING_SCHEMA_REL, ONBOARDING_MAIN_FIXTURE_REL):
+            try:
+                project_fixtures = load_json(ROOT / PROJECT_MAIN_FIXTURE_REL)
+            except (OSError, json.JSONDecodeError) as exc:
+                findings.append({"code": "onboarding_recovery_project_fixtures_unreadable", "detail": str(exc)})
+            else:
+                findings.extend(validate_onboarding_recovery_pairs(fixtures, project_fixtures, fully_valid_by_name))
 
         for case in invalids:
             counts["negative_cases"] += 1

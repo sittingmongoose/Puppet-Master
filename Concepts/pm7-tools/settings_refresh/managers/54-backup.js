@@ -51,6 +51,7 @@
       title: 'Recovery Kit', help: 'Separate from your account. You need it if this server is lost.',
       action: { label: 'Save Recovery Kit', icon: 'key', action: 'pm51-backup-kit-save' },
       body: PM51.rows([{ label: 'Status', value: kitStatus(), pill: PM51.pill(B.recoveryKit.tested ? 'Tested' : B.recoveryKit.saved ? 'Not tested' : 'Not set up'), action: { label: 'Test Recovery Kit', icon: 'test', action: 'pm51-backup-kit-test', disabled: !B.recoveryKit.saved, reason: 'Save the Recovery Kit first.' } }])
+        + PM51.note('Save, copy, print, and test go through a protected handoff: the kit is shown only to you, once, and Puppet Master keeps no copy of it.', 'info')
     });
     const daily = E.schedules.find(s => /daily/i.test(s.name)), weekly = E.schedules.find(s => /weekly/i.test(s.name));
     const advanced = PM51.advanced([
@@ -59,7 +60,11 @@
         { label: 'Weekly backups', control: PM51.select(weekly ? weekly.retention : '12 weekly', ['4 weekly', '8 weekly', '12 weekly', '26 weekly'], { action: 'pm51-backup-retention', data: { id: weekly ? weekly.id : '' }, label: 'Weekly backups to keep' }) },
         { label: 'Cleanup review', help: 'Old backups are listed before they are removed.', action: { label: 'Review', icon: 'eye', action: 'pm51-backup-cleanup' } }
       ]) }),
-      PM51.section({ title: 'Recovery key', help: 'The key inside your Recovery Kit. Keep it somewhere safe and offline.', body: PM51.rows([{ label: 'Copy Recovery Key', help: 'Asks you to confirm first.', action: { label: 'Copy Recovery Key', icon: 'copy', action: 'pm51-backup-key-copy' } }]) }),
+      PM51.section({ title: 'Recovery key', help: 'The key inside your Recovery Kit. Keep it somewhere safe and offline.', body: PM51.rows([
+        { label: 'Copy Recovery Key', help: 'Shown only to you, once, through the protected handoff. Never placed on the clipboard here.', action: { label: 'Copy Recovery Key', icon: 'copy', action: 'pm51-backup-key-copy', disabled: !B.recoveryKit.saved, reason: 'Save the Recovery Kit first.' } },
+        { label: 'Rotate key slot', help: 'A new key slot is added and checked, then the old one is removed. Same encryption, same backups, kit keeps working.', action: { label: 'Rotate key slot', icon: 'key', action: 'pm51-backup-key-rotate', disabled: !B.recoveryKit.saved, reason: 'Save the Recovery Kit first.' } },
+        { label: 'Suspected compromise', help: 'Not a rotation: the backups move to a new encryption domain and are re-encrypted. Older backups stay exposed if the key was taken.', action: { label: 'Re-encrypt…', icon: 'restore', action: 'pm51-backup-key-reencrypt', disabled: !latest(), reason: 'There is no backup to re-encrypt yet.' } }
+      ]) + PM51.kv([['Last rotation', B.recoveryKit.rotatedAt || 'Never'], ['Re-encrypted', B.recoveryKit.reencryptedAt || 'Never']]) }),
       PM51.section({ title: 'Full server backup', help: 'Everything on the server, not just this workspace.', body: PM51.kv([['Included', 'Server settings, every workspace, histories, and receipts'], ['Left out', 'Caches, running processes, and secret bytes (references only)']]) + `<div class="pm51-backup-actions" style="margin-top:10px">${PM51.btn({ label: 'Back up whole server', small: true, icon: 'archive', action: 'pm51-backup-server' })}${PM51.btn({ label: 'Verify latest backup', small: true, icon: 'test', action: 'pm51-backup-verify' })}</div>` }),
       PM51.section({ title: 'Bandwidth', body: PM51.rows([{ label: 'Upload speed limit', help: 'Slows backups so they do not crowd out other traffic.', control: PM51.select(B.bandwidth || 'Night schedule · 40 MB/s', ['No limit', 'Night schedule · 40 MB/s', '10 MB/s all day'], { action: 'pm51-backup-bandwidth', label: 'Upload speed limit' }) }]) }),
       PM51.section({ title: 'Technical details', body: PM51.kv([['Encryption', 'Each backup is encrypted before it leaves the server; the key lives in your Recovery Kit'], ['Last receipt', last ? `${last.receipt} · ${last.time}` : 'None'], ['Destination', defaultDest() ? defaultDest().name : 'None']]) + `<div style="margin-top:10px">${PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-backup-diagnostics' })}</div>` })
@@ -203,12 +208,94 @@
     const x = eng().history[index]; if (!x) return;
     PM51.panel({ title: `${x.type} backup`, subtitle: x.time, pill: PM51.pill(x.result), body: PM51.panelSection('Backup', PM51.kv([['When', x.time], ['Type', x.type], ['Destination', x.destination], ['Size', x.size], ['Result', x.result], ['Receipt', x.receipt || '—']])) + PM51.panelSection('Actions', `<div class="pm51-backup-actions">${PM51.btn({ label: 'Restore from this backup', small: true, icon: 'restore', action: 'pm51-backup-restore-from', data: { index } })}${PM51.btn({ label: 'Verify', small: true, icon: 'test', action: 'pm51-backup-verify' })}</div>`) });
   }
+  /* ---------- protected handoff -------------------------------------------- */
+  /* Recovery Key/Kit custody (BRS-012/BRS-017, F3-528): Save, Copy, Print, Test, Rotate, and Re-encrypt run through
+     one protected, human-only, no-store handoff. The person confirms a current step-up on the initiating Client,
+     then only an adopted owner-shaped result changes state — reusing window.O55.ownerResults when present. No timer
+     confers completion: default host-unavailable stays pending with retry. No key or kit material exists in the DOM,
+     the clipboard, storage, events, or logs here — not even as an example. */
+  const ownerSeam = () => ((typeof window !== 'undefined' && window.O55 && O55.ownerResults) || null);
+  let activeHandoff = null;
+  function handoff(title, subtitle, steps, opts, onDone) {
+    if (typeof opts === 'function') { onDone = opts; opts = {}; }
+    opts = opts || {};
+    if (activeHandoff && activeHandoff.wrap && activeHandoff.wrap.isConnected === false) activeHandoff = null;
+    if (activeHandoff && !activeHandoff.settled) return;
+    const O = ownerSeam();
+    const project = window.PM7_SETTINGS_TOME && PM7_SETTINGS_TOME.project();
+    const subject = O && O.protectedContext && O.protectedContext(project && project.id);
+    const req = O && subject ? O.begin(opts.operation || 'cmd.backup.recovery_key.export', subject) : null;
+    const H = activeHandoff = { req, opts, onDone, stepUp: false, settled: false, wrap: null };
+    const wrap = H.wrap = PM51.panel({
+      title, subtitle, pill: PM51.status('Protected handoff', 'info'),
+      body: PM51.panelSection('What happens', PM51.steps(steps.map(s => ({ title: s.title, desc: s.desc, status: 'Waiting', tone: 'info' }))))
+        + PM51.panelSection('Confirm', `<div class="pm51-backup-actions">${PM51.btn({ label: "Confirm it's you", small: true, icon: 'key', action: 'pm51-backup-handoff-stepup' })}${PM51.btn({ label: 'Check again', small: true, icon: 'test', action: 'pm51-backup-handoff-retry' })}</div>`)
+        + `<div class="pm51-handoff-note" data-key="handoff-note">${PM51.note('The key or kit is shown only to you, once, on this device. Nothing is saved or switched on until the protected handoff answers.', 'info')}</div>`,
+      primaryLabel: 'Done', onPrimary: () => { H.settled = true; activeHandoff = null; return true; }
+    });
+    H.markAll = (status, tone) => { wrap.querySelectorAll('.pm51-step-end .pm51-status').forEach(el => { el.outerHTML = PM51.status(status, tone || 'ready'); }); };
+    H.note = (text, tone) => { const n = wrap.querySelector('[data-key="handoff-note"]'); if (n) n.innerHTML = PM51.note(text, tone || 'info'); };
+    H.hero = (text, tone) => { const hs = wrap.querySelector('.pm51-hero-status .pm51-status'); if (hs) hs.outerHTML = PM51.status(text, tone || 'info'); };
+  }
+  function attemptHandoff() {
+    const H = activeHandoff;
+    if (!H || H.settled || (H.wrap && H.wrap.isConnected === false)) return;
+    const O = ownerSeam();
+    if (!H.stepUp) { H.note("Confirm it's you first. The handoff runs only for you, on this device.", 'info'); return; }
+    if (!O || !H.req) { H.hero('Waiting for the protected handoff', 'info'); H.note('The protected handoff is not available in this preview, so nothing is saved or switched on yet. Try again when a host is available.', 'info'); return; }
+    const project = window.PM7_SETTINGS_TOME && PM7_SETTINGS_TOME.project();
+    const current = O.protectedContext && O.protectedContext(project && project.id);
+    if (!current || ['project', 'server', 'client', 'recovery_set_id', 'recovery_generation'].some(k => current[k] !== H.req[k])) {
+      H.note('The backup or device changed. Close this handoff and open it again.', 'attention'); return;
+    }
+    const res = O.take(H.req.id);
+    if (res && H.opts.check && !H.opts.check(res.postcondition || {})) { H.note('The protected owner has not supplied the required completion evidence.', 'attention'); return; }
+    const v = O.adopt(H.req, res, {});
+    if (!v.ok) {
+      if (v.reason === 'host_unavailable' || v.reason === 'pending_no_result' || v.reason === 'fixture_not_injected') {
+        H.hero('Waiting for the protected handoff', 'info');
+        H.note('The protected handoff is not available in this preview, so nothing is saved or switched on yet. Try again when a host is available.', 'info');
+        return;
+      }
+      H.hero('Handoff did not finish', 'attention');
+      H.markAll('Not completed', 'attention');
+      H.note('The handoff did not finish. Nothing was saved, tested, rotated, or re-encrypted. You can try again.', 'attention');
+      H.settled = true; activeHandoff = null;
+      H.onDone && H.onDone(false);
+      refresh();
+      return;
+    }
+    const pc = (res && res.postcondition) || {};
+    const check = H.opts.check;
+    if (check && !check(pc)) {
+      H.hero('Handoff proof missing', 'attention');
+      H.markAll('Not completed', 'attention');
+      H.note('The handoff answer was missing its proof. Nothing was saved, tested, rotated, or re-encrypted.', 'attention');
+      H.settled = true; activeHandoff = null;
+      H.onDone && H.onDone(false);
+      refresh();
+      return;
+    }
+    H.hero('Handoff finished', 'ready');
+    H.markAll('Checked', 'ready');
+    H.settled = true; activeHandoff = null;
+    H.onDone && H.onDone(true);
+    refresh();
+  }
+  PM51.on('backup-handoff-stepup', () => { const H = activeHandoff; if (!H || H.settled) return; H.stepUp = true; H.note("Identity confirmation requested. Waiting for the protected owner to verify it…", 'info'); attemptHandoff(); });
+  PM51.on('backup-handoff-retry', () => { attemptHandoff(); });
+  const today = () => new Date().toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
   function checkKit() {
-    PM51.check({ title: 'Test Recovery Kit', subtitle: 'Proves the kit can unlock a backup. Example data only; no backup was restored.', steps: [
+    const l = latest();
+    if (!l) { PM51.toast('Recovery Kit not tested', 'No backup to test against yet. Run a backup first.', 'warning'); return; }
+    handoff('Test Recovery Kit', 'Proves the saved kit can open a backup. The kit itself stays in your hands.', [
       { title: 'Kit file readable', desc: 'Saved copy found' },
-      { title: 'Key unlocks the latest backup', desc: latest() ? `${latest().time} · ${latest().size}` : 'No backup yet', tone: latest() ? 'ready' : 'attention', status: latest() ? 'Checked' : 'No backup' },
+      { title: 'Key opens the latest backup', desc: `${l.time} · ${l.size}` },
       { title: 'Trial restore in a scratch folder', desc: 'A few files are read back and compared' }
-    ] });
+    ], { operation: 'cmd.backup.recovery_key.test', check: (pc) => pc.unlock === 'verified' && pc.scratch === 'verified' }, (ok) => {
+      if (ok) { bk().recoveryKit.tested = true; PM51.toast('Recovery Kit tested', 'The saved kit opened the latest backup.', 'success'); }
+      else PM51.toast('Recovery Kit not tested', 'The kit did not open this backup. Make sure it is the kit you saved here.', 'warning');
+    });
   }
 
   /* ---------- actions -------------------------------------------------------- */
@@ -225,7 +312,18 @@
   PM51.on('backup-kit-save', () => openDialog({ title: 'Save Recovery Kit', subtitle: 'The kit holds the key that unlocks your backups. Keep it away from this server.', body: PM51.form([
     { label: 'Save to', name: 'where', value: 'Download a file', type: 'select', choices: ['Download a file', 'Print it', 'USB drive'], full: true },
     { label: 'Passphrase for the kit', name: 'pass', value: '', type: 'password', help: 'Optional. Protects the kit if someone finds it.' }
-  ]), saveLabel: 'Save kit', onSave: () => { bk().recoveryKit.saved = true; bk().recoveryKit.tested = false; refresh(); PM51.toast('Recovery Kit prepared', 'Example data only. No file was written in this preview. Test the kit when you have it.', 'info'); } }));
+  ]), saveLabel: 'Continue', onSave: (data) => {
+    const where = String(data.where || 'Download a file');
+    handoff('Save Recovery Kit', `The kit is shown once, for you to keep (${where.toLowerCase()}).`, [
+      { title: "Confirm it's you", desc: 'This device checks it is you first' },
+      { title: `Kit shown once · ${where}`, desc: 'Save or print it now, away from this server' },
+      { title: 'Nothing kept', desc: 'No copy of the kit stays in Puppet Master' }
+    ], { operation: where === 'Print it' ? 'cmd.backup.recovery_key.print' : 'cmd.backup.recovery_key.export', check: (pc) => pc.delivery === 'verified' && pc.savedAck === true }, (ok) => {
+      if (!ok) return;
+      bk().recoveryKit.saved = true; bk().recoveryKit.tested = false;
+      PM51.toast('Recovery Kit saved', 'Protected handoff finished. Test the kit when you have it.', 'info');
+    });
+  } }));
   PM51.on('backup-kit-test', checkKit);
   PM51.onChange('backup-retention', el => { const s = eng().schedules.find(x => x.id === ds(el, 'id')); if (s) { s.retention = el.value; saveState(); } });
   PM51.on('backup-cleanup', () => PM51.panel({ title: 'Cleanup review', subtitle: 'Backups past their keep-for time. Nothing is removed until you choose.', body: PM51.panelSection('Ready to remove', PM51.list([
@@ -233,7 +331,21 @@
     { title: 'Weekly backups older than 12 weeks', meta: '1 backup · 2.1 GB', avatar: icon('trash'), end: PM51.btn({ label: 'Remove', small: true, danger: true, action: 'pm51-backup-cleanup-remove', data: { what: 'weekly' } }) }
   ])) + PM51.note('The latest verified backup is always kept, no matter how old it is.', 'info') }));
   PM51.on('backup-cleanup-remove', el => PM51.confirm('Remove old backups?', 'They are gone for good once removed. Newer backups are kept.', 'Remove', () => { closeOverlay(); PM51.toast('Cleanup preview', `Example data only. Old ${ds(el, 'what')} backups would be removed now.`, 'info'); }, true));
-  PM51.on('backup-key-copy', () => PM51.confirm('Copy the recovery key?', 'Anyone with this key can read your backups. Paste it only somewhere safe, then clear your clipboard.', 'Copy key', () => { try { const p = navigator.clipboard && navigator.clipboard.writeText('EXAMPLE-KEY-not-a-real-recovery-key'); if (p && p.catch) p.catch(() => {}); } catch (_e) {} PM51.toast('Example key copied', 'Example data only. The real key comes from your Recovery Kit.', 'info'); }, true));
+  PM51.on('backup-key-copy', () => PM51.confirm('Copy the recovery key?', 'Anyone with this key can read your backups. The key is shown only to you, once, in a protected handoff; Puppet Master never keeps a copy and never writes it to the clipboard.', 'Continue', () => handoff('Copy Recovery Key', 'The key is handed to you once, to paste somewhere safe yourself.', [
+    { title: "Confirm it's you", desc: 'This device checks it is you first' },
+    { title: 'Key handed to you', desc: 'Paste it where you keep it, then clear what you pasted there' },
+    { title: 'Nothing kept', desc: 'No copy of the key stays in Puppet Master' }
+  ], { operation: 'cmd.backup.recovery_key.copy', check: (pc) => pc.delivery === 'verified' }, (ok) => { if (ok) PM51.toast('Key handed off', 'Nothing was stored or copied by this preview.', 'info'); }), true));
+  PM51.on('backup-key-rotate', () => PM51.confirm('Rotate the recovery key slot?', 'A new key slot is added and checked, then the old one is removed. This is a rotation: your Recovery Kit keeps unlocking the same backups and nothing is re-encrypted.', 'Rotate key', () => handoff('Rotate key slot', 'Same encryption domain, a new key slot.', [
+    { title: 'New key slot added', desc: 'Your Recovery Kit opens it' },
+    { title: 'New slot verified', desc: 'A canary read-back opens the latest backup with the new slot' },
+    { title: 'Old slot removed', desc: 'The previous key stops opening backups' }
+  ], { operation: 'cmd.backup.recovery_key.rotate', check: (pc) => pc.newSlot === 'verified' && pc.oldRemoved === true && pc.order === 'new-before-old' }, (ok) => { if (ok) { bk().recoveryKit.rotatedAt = today(); PM51.toast('Key slot rotated', 'New slot verified and old slot removed.', 'success'); } }), true));
+  PM51.on('backup-key-reencrypt', () => PM51.confirm('Key may be compromised?', 'This is not a rotation. The backups move to a brand-new encryption domain and are re-encrypted with a new key. Backups made before this stay exposed if the old key was taken.', 'Re-encrypt', () => handoff('New domain and re-encryption', 'For a suspected compromise. Older backups stay exposed if the key was taken.', [
+    { title: 'New encryption domain created', desc: 'A fresh key that shares nothing with the old one' },
+    { title: 'Backups re-encrypted', desc: latest() ? `Each finished backup is re-encrypted and evidenced, from ${latest().time} onward` : 'Nothing to re-encrypt yet' },
+    { title: 'Old domain retired', desc: 'The old key opens nothing from now on' }
+  ], { operation: 'cmd.backup.recovery_key.reencrypt', check: (pc) => pc.newDomain === true && pc.reencrypted === true }, (ok) => { if (ok) { bk().recoveryKit.reencryptedAt = today(); PM51.toast('Re-encryption finished', 'Your backups now use the new encryption domain.', 'success'); } }), true));
   PM51.on('backup-server', () => PM51.confirm('Back up the whole server?', 'Every workspace and the server settings are included. It runs in the background.', 'Back up whole server', () => PM51.toast('Full server backup preview', 'Example data only. A full server backup would start now.', 'info')));
   PM51.on('backup-verify', () => { const last = latest(); PM51.check({ title: 'Verify latest backup', steps: [
     { title: 'Backup found', desc: last ? `${last.time} · ${last.destination}` : 'None', tone: last ? 'ready' : 'attention', status: last ? 'Checked' : 'Missing' },

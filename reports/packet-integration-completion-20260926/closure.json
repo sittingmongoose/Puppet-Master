@@ -1,0 +1,74 @@
+{
+  "status": "integration_complete_pending_landing_gate",
+  "base_commit": "0a9f06969578029af1c5fe2af1e3f675e1d580ab",
+  "prior_review": "reports/concept-packet-integration-20260926/README.md",
+  "items": [
+    {
+      "id": "project-recovery",
+      "scope": "Project recovery/resume and owner joins",
+      "status": "reviewed_source_and_browser_checks_passed"
+    },
+    {
+      "id": "commands-shortcuts",
+      "scope": "Typed editing and binding routes",
+      "status": "reviewed_computed_semantic_regressions_passed"
+    },
+    {
+      "id": "forge-ci-delete",
+      "scope": "Forge deletion, CI artifacts/admin and official destinations",
+      "status": "owner_concept_and_computed_semantic_joins_reviewed"
+    },
+    {
+      "id": "server-backup-consumers",
+      "scope": "Claim/bootstrap/pairing and protected Recovery Kit consumers",
+      "status": "reviewed_source_and_browser_checks_passed"
+    },
+    {
+      "id": "sound",
+      "scope": "Project-scoped sound and no-Project preview",
+      "status": "reviewed_source_and_browser_checks_passed",
+      "report": "sound.md"
+    },
+    {
+      "id": "capture",
+      "scope": "Raw capture and derived demonstration presentations",
+      "status": "reviewed_source_and_browser_checks_passed"
+    },
+    {
+      "id": "performance-dispositions",
+      "scope": "Conditional thread branching and provisional calibration inputs",
+      "status": "canonical_dispositions_reviewed",
+      "report": "performance-dispositions.md"
+    },
+    {
+      "id": "central-admission",
+      "scope": "Catalog, wiring, DRY, Settings and onboarding companions",
+      "status": "reviewed_touch_validator_passed"
+    },
+    {
+      "id": "semantic-validation",
+      "scope": "Cross-record semantic validation and regression tests",
+      "status": "reviewed_87_focused_tests_and_29_forge_counterexamples_passed"
+    },
+    {
+      "id": "publication",
+      "scope": "Authored builds, byte parity and browser verification",
+      "status": "reviewed_source_and_browser_checks_passed"
+    },
+    {
+      "id": "landing",
+      "scope": "Required derivatives, checks, commit, push and main landing",
+      "status": "required_landing_gate_pending"
+    }
+  ],
+  "published_sha256": "fb5040bdb7fc6a2fa1b799eb43200d4d4d1e044797adbca681faa42b590d9f78",
+  "landing_first_pass": {
+    "blocking_count": 9,
+    "infrastructure_count": 0,
+    "repairs": [
+      "UCC-166 forbidden namespace prose now refers to CS-081",
+      "existing onboarding_state value schema materialized from owner contracts"
+    ],
+    "final_recheck": "required"
+  }
+}

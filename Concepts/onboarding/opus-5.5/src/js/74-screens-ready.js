@@ -22,6 +22,7 @@
       menu.querySelectorAll('[data-project]').forEach((n) => n.classList.toggle('is-selected', n === item));
       window.PM_ACTIVE_PROJECT_ID = id;
       if (label) label.textContent = name || id;
+      if (O55.sound && O55.sound.refresh) O55.sound.refresh('project');
       return true;
     },
     /* the look chosen in onboarding becomes the saved theme (the preview used persist:false) */

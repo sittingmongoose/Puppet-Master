@@ -1,0 +1,184 @@
+{
+  "schema_id": "pm.concept_packet_integration_findings.v1",
+  "packet_scope": [
+    "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+    "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08"
+  ],
+  "audit_date": "2026-09-26",
+  "adjudication_date": "2026-09-26",
+  "method": "fresh single-pass integration audit; duplicates hash-verified not reread; packet prompts treated as historical source, never executed; adjudicated against independent sol-review plus later root adjudication (root overrides where they differ); owned fixture fields corrected; no governance artifacts touched",
+  "authority_chain": [
+    "current canonical Plans (Plans/Settings_System.md SSYS-001..037; Plans/runtime_integration_disposition.json; Shared_Integration_Runtime.md §4.3/§4.7 Sept-9 correction; 2026-09-03 assistant redesign wave) supersede older packet clauses per explicit decision",
+    "Concepts/TestOpus5.5PmConcept.html is the leading GUI/interaction reference (hosts K3 manager-kit Settings, PM12_REFERENCE 892 ids); selected-design precedence over packet-era presentation",
+    "Concepts/settings-redesign-concepts/kimi-k3-polish/concept-12-tome-tabs.html is the original winning reference, shell geometry only (SSYS-003)",
+    "packet order: 2026-08-08 base -> 2026-08-13 correction -> 2026-08-18 seven-new-concepts supersession -> later canonical decisions"
+  ],
+  "duplicate_copies_detected": [
+    {
+      "copy": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/**/authority/base_packet/**",
+      "identical_to": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/**",
+      "method": "sha256 spot equality (00_START_HERE.md 6029b97f…, DECISION_COVERAGE.json befbc677…, PERFORMANCE_SETTINGS_RETURN.md 25988311…) + identical per-file byte sizes",
+      "reread": false
+    },
+    {
+      "copy": "authority/correction_packet/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "identical_to": "base_packet/reference/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "method": "sha256 9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
+      "reread": false
+    },
+    {
+      "copy": "reference/T3_MODEL_PICKER_REFERENCE.png",
+      "identical_to": "reference/current_model_picker_reference.png",
+      "method": "identical sha256 in packet manifest (76915ba3…)",
+      "reread": false
+    }
+  ],
+  "coverage": {
+    "substantive_documents_reviewed": [
+      "2026-08-08: 01..10 core docs; CANDIDATE_COMMAND_ID_REGISTER.json (80 tokens); DECISION_COVERAGE.json (129 topics); MANAGER_COVERAGE_MATRIX.json; SOURCE_AND_PRECEDENCE_MAP.md; REFERENCE_SUPERSESSIONS.md",
+      "2026-08-08 references: EGOLITE_SETTINGS_RETURN.md; SERVER_BACKBONE_SETTINGS_RETURN.md; SETTINGS_NAVIGATION_VIDEO_DESCRIPTION.md; PROVIDER_CLI_FINAL_ADJUDICATION.md; PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md; PERFORMANCE_SETTINGS_RETURN.md; PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md; OMP_PROVIDER_CATALOG_REFERENCE.json (research baseline, not runtime authority)",
+      "2026-08-18: 02..10 top-level docs; machine_readable/{concept_blueprints,manager_coverage_required,model_folder_map,repo_baseline,search_contract,supersessions,test_matrix}.json",
+      "2026-08-18 correction packet: 00_READ_ME_FIRST.md; 02_FULL_THREAD_CURRENT_DECISION_REGISTER.md (§20-§25 settings/command/supersession sections in scope; performance sections belong to the Full-Thread packet audit); REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md; CORRECTION_PACKET_MANIFEST.json",
+      "2026-08-18 authority: repo_reference/CONCEPT_RULES.md (hub manifest rules, current of the two copies)"
+    ],
+    "legacy_prompts_and_process_assets_classified_not_executed": [
+      "IMPLEMENTATION_PROMPT.md", "AUDIT_PROMPT.md", "PROMPT_USAGE.md", "SHARED_PROCESS_RULES.md",
+      "GOAL_PROMPT.md", "CORRECTION_GOAL_PROMPT.md", "00_START_HERE.md (both)", "01_ASSIGNMENT_AND_PRECEDENCE.md",
+      "11_REQUIRED_FILES_AND_REPORTS.md", "12_REPO_BASELINE_AND_KNOWN_FAILURES.md", "authority/README.md",
+      "PACKET_MANIFEST.json (both)", "CORRECTION_PACKET_MANIFEST.json", "SHA256SUMS.txt", "IMPACT_REGISTER.template.json",
+      "tools/validate_seven_new_concepts.py", "reference/CONCEPT_RULES.md (superseded copy)",
+      "reference/selected_concepts/* (7 layout reference PNGs + README)"
+    ],
+    "clusters": [
+      {"cluster": "shell_architecture_home_search", "status": "already_covered", "owner": "Plans/Settings_System.md SSYS-003/005/019/020"},
+      {"cluster": "home_notices", "status": "superseded_by_selected_design", "finding": "G2", "note": "selected TestOpus Home (Essential setup / Needs attention / directory, compact rows) supersedes the packet triad; not admitted by SSYS-015; do not resurrect"},
+      {"cluster": "manager_and_row_grammar", "status": "already_covered", "owner": "SSYS-006 + §22 kit principles (SSYS-032/033/035)"},
+      {"cluster": "project_only_settings_and_copy", "status": "already_covered", "owner": "SSYS-002/007/025/036"},
+      {"cluster": "inventory_authority", "status": "already_covered", "owner": "SSYS-004 (828 historical token) + §22 census 887 inventory ids / 892 concept ids + SSYS-035 placement"},
+      {"cluster": "provider_cli_acquisition_and_lifecycle", "status": "already_covered", "owner": "SSYS-011 + CS-066/UCC-145 + SIR + CLI_Bridged_Providers.md:483,1643-1685 + Release_Supply_Chain.md:835"},
+      {"cluster": "provider_update_policy", "status": "already_covered", "finding": "G3", "owner": "SIR §4.3/§4.7 six-choice table + IRT-008; RSC version/channel/compatibility proof (:835-889); CLI facade compatibility range; historical four-choice picker superseded, no user decision/enum"},
+      {"cluster": "installation_resolver_confidence_duplicates", "status": "already_covered", "owner": "SIR InstallationResolver/LifecycleManager; BinaryLocator discovery-only"},
+      {"cluster": "auth_boundaries_cli_owned_oauth", "status": "already_covered", "owner": "CLI_Bridged_Providers.md:1673-1685; SSYS-008"},
+      {"cluster": "multi_account_free_models_catalogs", "status": "already_covered", "owner": "Multi-Account; Models_System Free Models wrapper; SSYS-026"},
+      {"cluster": "context_memory_personas", "status": "already_covered", "owner": "memory-context-instructions/goals-crew-personas managers; assistant-memory-subsystem; Personas owners"},
+      {"cluster": "goal_automation_defaults", "status": "superseded_in_part", "owner": "Goal V2 rewrite (index 2026-09-03) retires fan-out/capacity/child-Goals; remaining defaults covered"},
+      {"cluster": "crew_template", "status": "covered_reorganized", "owner": "Collaborative_Workflows.md:137 Crew modal fields; SSYS-027; packet-era waves/board-topology retired"},
+      {"cluster": "back_seat_driver", "status": "already_covered", "owner": "Back_Seat_Driver.md:53-67 Off/Auto(default)/On; safety.approvals.bsd-* rows; BSD-028"},
+      {"cluster": "permissions_filesafe", "status": "already_covered", "owner": "Permissions_System.md seam/lane scopes (:218), doom-loop (:42-55)"},
+      {"cluster": "access_selector", "status": "superseded", "note": "CHAT-003 external-derived labels rejected by 2026-09-03 PM-native approval wording (assistant-chat-design.md:1965); workflow enum ask|agent|debug|plan|deep_plan (:169)"},
+      {"cluster": "notifications_sounds", "status": "already_covered", "owner": "notifications-sounds manager + cmd.notifications.*/cmd.sound.* (UCC :7594-7598) + title-bar sole affordance + PeonPing packs"},
+      {"cluster": "appearance_themes", "status": "already_covered", "owner": "FinalGUISpec §6.6 (:2085-2136) + SSYS-010 + cmd.theme.* wired; file-lifecycle commands reconciled to file ops"},
+      {"cluster": "spellcheck_dictionaries", "status": "closed_composer_preserved_manager_unadopted", "finding": "G1", "owner": "passive composer spellcheck retained by assistant-chat-design + Crosswalk:3529; fixture purpose corrected; no rows/commands added"},
+      {"cluster": "desktop_behavior", "status": "partial_low", "note": "rows + manager exist; single DesktopBehaviorPolicy projection suggestion never landed (suggestion-level, not packet-fixed)"},
+      {"cluster": "settings_lifecycle_import_export_reset", "status": "already_covered", "owner": "SSYS-018 five commands; SSYS-021 snapshot/export/migration; import via transaction preview over settings_export_v1"},
+      {"cluster": "commands_shortcuts_admin", "status": "partial", "finding": "G4", "owner": "CS §6.1/§6.2 semantics + §1 surfaces owned; typed mutation routing not census-routed; descriptor owner_gap_reason declares it; no invented aliases"},
+      {"cluster": "storage_retention_recovery_backup", "status": "already_covered", "owner": "storage-retention-recovery/server-backup-restore/project-backup descriptors under Data Backup and Retention; SSYS-020"},
+      {"cluster": "lsp_formatters", "status": "lsp_covered_formatters_partial", "note": "cmd.formatter.* family absent from catalog; same census-or-gap shape as G4 (owner lane, not repaired here)"},
+      {"cluster": "source_control_worktrees_actions", "status": "already_covered", "owner": "SSYS-013; Source_Control/Forge/GitHub owners; shared lifecycle commands (Forge_Integrations.md:452)"},
+      {"cluster": "containers_registries", "status": "already_covered", "owner": "SSYS-013 Docker Manager/Docker-Hosts redirect"},
+      {"cluster": "web_search_fetch", "status": "already_covered", "owner": "SSYS-026 web-routes + web owner + provider connection manager"},
+      {"cluster": "project_search_index", "status": "already_covered", "finding": "G5", "note": "descriptor already has owner_gap_reason; evict_remote_cache covers clear-cache; SSYS-023 assigns ops to Search; G5 rejected"},
+      {"cluster": "testing_debug", "status": "already_covered", "owner": "testing-debug-capture manager; ATS + Run&Debug wave"},
+      {"cluster": "history_artifacts_cleanup", "status": "covered_as_destinations", "note": "cleanup runtime remains audit-era known-incomplete; no new gap beyond G4 shape"},
+      {"cluster": "skills_plugins_tools_mcp", "status": "already_covered", "owner": "SSYS-024 exact 12 cmd.agent_plugin.* fail-closed; separate Code & Tools workspaces"},
+      {"cluster": "media", "status": "already_covered", "owner": "media-routes manager; Media owner"},
+      {"cluster": "teacher_help", "status": "already_covered", "owner": "SSYS-023 teacher-help projection; Guided Tour owner"},
+      {"cluster": "dry_method_visible_state", "status": "already_covered", "owner": "F3-406 + UCC-104 + DL-041 owner_contract_missing gating"},
+      {"cluster": "accessibility_input", "status": "covered", "note": "admitted appearance/accessibility/input/startup rows; fixture purpose corrected; no Settings spellcheck promised"},
+      {"cluster": "onboarding_doctor_deferred_modules", "status": "already_covered", "owner": "SSYS-014/022; SMPFS-146; N2-151"},
+      {"cluster": "app_content_updates", "status": "already_covered", "owner": "updates manager; Project Syncing & Updates owner"},
+      {"cluster": "performance_truthful_state", "status": "already_covered", "owner": "SSYS-005/015/006 + §4.3 ResourceGovernor/ObservableWork"},
+      {"cluster": "slint_portability_tests", "status": "already_covered", "owner": "SSYS-016/017; packet viewport widths superseded by SSYS-003 host-width states"},
+      {"cluster": "command_wiring_dry_discipline", "status": "already_covered", "owner": "SSYS-018/023 exact 80-token disposition 41/7/1/31/0; bloom retired (Commands_System.md:4972)"},
+      {"cluster": "regular_yolo_coupling_retirement", "status": "superseded_deliberately", "owner": "assistant-chat-design.md §1.0C (:169-177) Run_Modes normalization; Commands §6.1.3 retains regular/yolo as runtime Mode override by design; PROC-008 tracks residual stale clauses"},
+      {"cluster": "seven_concept_bakeoff_process", "status": "process_only_superseded", "note": "bakeoff completed; K3 Tome Tabs (concept-12) selected and adopted (SSYS-001/003); per-concept evidence files are bakeoff artifacts, not canon debts"},
+      {"cluster": "escape_order_and_exit_contract", "status": "superseded", "note": "SSYS-019 close_transient→close_details→clear_query→return_to_opener supersedes packet stop-at-Home step; visible Back/Close optional per SSYS-006"}
+    ]
+  },
+  "findings": [
+    {
+      "id": "G1",
+      "title": "Spellcheck: passive composer requirement preserved; old Settings dictionary manager historical unadopted",
+      "packet_source": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/06_NOTIFICATIONS_SOUNDS_APPEARANCE_AND_INPUT.md §Spellcheck and dictionaries (lines 99-128); DECISION_COVERAGE.json CHAT-014/CHAT-015; reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md §5.24; PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/machine_readable/manager_coverage_required.json",
+      "current_authority": "Plans/assistant-chat-design.md:24691 + Plans/Crosswalk.md:3529 (invisible per-thread composer spellcheck retained); 887-row inventory has zero spell/dictionary rows; chosen K3/TestOpus GUI has no dictionary manager; general-appearance-input fixture purpose corrected to admitted rows",
+      "status": "closed",
+      "classification": "adjudicated_composer_preserved_manager_unadopted",
+      "change_applied": "Plans/settings_system_contract_fixtures.json general-appearance-input purpose now reads 'Project appearance, accessibility, interaction, input, and startup settings.' No inventory rows added, no commands minted."
+    },
+    {
+      "id": "G2",
+      "title": "Settings Home notices: selected design supersedes the packet triad; do not resurrect",
+      "packet_source": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/01_CORE_ARCHITECTURE.md §Notices (lines 33-50); DECISION_COVERAGE.json SET-003; PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/03_HOME_SEARCH_AND_NAVIGATION.md",
+      "current_authority": "selected Concepts/TestOpus5.5PmConcept.html Home: Essential setup / Needs attention ('3 actionable items') / directory navigation with compact status/headline/reason/action rows; SSYS-015 does not admit the packet three-heading triad",
+      "status": "closed",
+      "classification": "adjudicated_superseded_by_selected_design"
+    },
+    {
+      "id": "G3",
+      "title": "Version policy: exact version/channel+compatibility proof already owned; historical picker superseded",
+      "packet_source": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md §8.1, §9.2, fixed decisions #11/#14; DECISION_COVERAGE.json PROV-011; 03_PROVIDER_AGENT_MODEL_AND_INSTALLATION.md §Updates",
+      "current_authority": "Plans/Shared_Integration_Runtime.md §4.3/§4.7 + IRT-008 (ownership-aware maintenance, exact-target/compatibility rechecks); Plans/CLI_Bridged_Providers.md post-consent lifecycle (facade compatibility range, known_bad_version); Plans/Release_Supply_Chain.md:835-889 (ProviderCliSupplyChainProof version/channel/compatibility refs); six-choice update UI supersedes the historical four-choice persistent picker",
+      "status": "closed",
+      "classification": "adjudicated_already_owned_no_decision_needed"
+    },
+    {
+      "id": "G4",
+      "title": "Commands & Shortcuts typed mutation routing incomplete; semantics owned, no invented aliases",
+      "packet_source": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/05_DESKTOP_DEVELOPER_AND_SYSTEM_MANAGERS.md §Commands and shortcuts (lines 39-44); reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md §5.6; DECISION_COVERAGE.json MGR-007",
+      "current_authority": "Plans/Commands_System.md §6.1 (scope/create/edit/delete/save-validation) + §6.2 (dry-run preview, never submits) + §1 invocation surfaces incl. :220 Settings > Shortcuts; §6.3 heading-only per CS-036; User Commands are file-backed presets not UICommands; commands-shortcuts descriptor owner_gap_reason now declares the routing gap",
+      "status": "partial",
+      "classification": "genuine_gap_typed_mutation_routing",
+      "change_applied": "Plans/settings_system_contract_fixtures.json commands-shortcuts owner_gap_reason set to the honest routing-gap text; destinations preserved; no cmd.user_command.*/cmd.keybinding.* aliases invented.",
+      "still_open": "per-control action-routing census (owner lane)"
+    },
+    {
+      "id": "G5",
+      "title": "Project search index administration (rejected — original claim wrong)",
+      "packet_source": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md §5.15; DECISION_COVERAGE.json MGR-016; 05_DESKTOP_DEVELOPER_AND_SYSTEM_MANAGERS.md §Search index",
+      "current_authority": "settings_system_contract_fixtures.json project-search-index descriptor already has owner_gap_reason; cmd.search.evict_remote_cache covers clear-cache; SSYS-023 assigns build/cancel/evict/repair to Search",
+      "status": "rejected",
+      "classification": "review_rejected_no_repair"
+    },
+    {
+      "id": "G6",
+      "title": "TestOpus header self-description stale (note only)",
+      "current_authority": "Concepts/TestOpus5.5PmConcept.html:64 still says settings engine = 'chips + bloom modal, shelves' while the rendered surface is the K3 manager kit and chip/bloom is retired bakeoff-only (SSYS-018/023)",
+      "status": "note_only",
+      "classification": "concept_comment_staleness",
+      "smallest_correction": "Fix the header comment during the concept file's next authorized regeneration; no Plans edit; not edited in this pass"
+    }
+  ],
+  "not_findings_deliberately_superseded": [
+    "SSYS-003 host-width responsive states (1180/960/720/320) supersede packet 760-2500 viewport matrix",
+    "SSYS-019 return_to_opener escape order supersedes packet stop-at-Home step",
+    "2026-09-03 PM-native approval wording supersedes CHAT-003 external labels (Ask for approval/Auto accept edits/Auto/Full Access)",
+    "Run_Modes normalization §1.0C retains regular/yolo as runtime postures by design; Commands §6.1.3 retains them as a runtime Mode override; the stale mode-coupling is gone",
+    "bakeoff process obligations (per-concept reports, differentiation gate, no-winner rule) ended with the K3 concept-12 selection adopted by SSYS-001/003",
+    "Crew waves/board-topology and Goal fan-out/capacity defaults retired by the 2026-09-03 redesign owners",
+    "theme file-lifecycle candidate commands reconciled to file operations + generic transactions (FinalGUISpec §6.6 + cmd.theme.*)",
+    "cmd.settings.open_notifications retired with catalog disposition; cmd.settings.bloom.open retired bakeoff-only (SSYS-023: 41 reuse / 7 typed local UI actions / 1 retired / 31 rejected / 0 aliases)",
+    "G2 packet Home triad superseded by the selected TestOpus Home design (Essential setup / Needs attention / directory)",
+    "G3 historical four-choice version picker superseded by the current six-choice update UI with owned version/channel/compatibility proof",
+    "G1 old dictionary Settings manager unadopted; passive composer spellcheck retained by assistant-chat-design/Crosswalk"
+  ],
+  "validation": {
+    "targeted_validator": "python3 scripts/pm-new-contracts-verify.py (validate-new-contracts, covers Plans/settings_system_contracts.schema.json + Plans/settings_system_contract_fixtures.json)",
+    "result": "pass",
+    "findings": 0,
+    "contract_pairs": 31,
+    "note": "no broad tests or mirror tests run, per scope"
+  },
+  "counts": {
+    "packets_in_scope": 2,
+    "substantive_documents_reviewed": 33,
+    "legacy_prompt_or_process_files_classified": 19,
+    "duplicate_sets_hash_verified": 3,
+    "requirement_clusters": 43,
+    "already_covered": 34,
+    "superseded_deliberate": 7,
+    "closed_by_adjudication": 3,
+    "rejected_findings": 1,
+    "genuine_open_findings": 1,
+    "notes_only": 1
+  }
+}

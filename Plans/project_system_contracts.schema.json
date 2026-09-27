@@ -48,6 +48,9 @@
     },
     {
       "$ref": "#/$defs/project_setup_commit_binding"
+    },
+    {
+      "$ref": "#/$defs/project_creation_recovery_context"
     }
   ],
   "$defs": {
@@ -121,7 +124,8 @@
         "cmd.project.refresh",
         "cmd.project.open_settings",
         "cmd.project.delete_data",
-        "cmd.project.unarchive"
+        "cmd.project.unarchive",
+        "cmd.project.resume_creation"
       ]
     },
     "return_context": {
@@ -430,6 +434,9 @@
         },
         "onboarding_setup_binding": {
           "$ref": "#/$defs/onboarding_project_setup_binding"
+        },
+        "creation_recovery_resume_binding": {
+          "$ref": "#/$defs/creation_recovery_resume_binding"
         }
       },
       "allOf": [
@@ -702,13 +709,82 @@
               ]
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "cmd.project.resume_creation"
+              }
+            },
+            "required": [
+              "action_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "creation_recovery_resume_binding"
+            ],
+            "properties": {
+              "command_instance_id": {
+                "type": "string",
+                "pattern": "^command:project:resume:.+"
+              },
+              "idempotency_key": {
+                "type": "string",
+                "pattern": "^idempotency:project:resume:.+"
+              },
+              "project_id": {
+                "type": "null"
+              },
+              "display_name": {
+                "type": "null"
+              },
+              "registration_kind": {
+                "type": "null"
+              },
+              "source_ref": {
+                "type": "null"
+              },
+              "project_home_server_ref": {
+                "type": "null"
+              },
+              "source_location_ref": {
+                "type": "null"
+              },
+              "repository_ref": {
+                "type": "null"
+              },
+              "owner_receipt_refs": {
+                "type": "array",
+                "minItems": 1
+              },
+              "expected_project_revision": {
+                "type": "null"
+              },
+              "expected_project_currentness_sha256": {
+                "type": "null"
+              },
+              "permission_snapshot_ref": {
+                "$ref": "#/$defs/safe_ref"
+              }
+            },
+            "not": {
+              "required": [
+                "onboarding_setup_binding"
+              ]
+            }
+          }
         }
       ],
       "x-puppet-master-assertions": [
         "return_context is echoed byte-for-byte by the terminal project_action_result",
         "caller close or navigation does not cancel a dispatched owner operation",
         "stale expected registry or Project currentness rejects before mutation",
-        "cmd.project.unarchive is a permission-fenced registry mutation, never an executable local UI action or a creation/backup/runtime operation"
+        "cmd.project.unarchive is a permission-fenced registry mutation, never an executable local UI action or a creation/backup/runtime operation",
+        "cmd.project.resume_creation carries a fresh resume-namespaced attempt identity bound to the retained recovery, never the original creation idempotency key",
+        "a reused original idempotency key re-observes its terminal result and can never validate as a resume",
+        "resume authority comes only from owner-resolved comparison of actual retained fields; client join_checks values never grant authority"
       ]
     },
     "project_action_result": {
@@ -1030,6 +1106,94 @@
           "if": {
             "properties": {
               "action_id": {
+                "const": "cmd.project.resume_creation"
+              }
+            },
+            "required": [
+              "action_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "accepted",
+                  "rejected",
+                  "cancelled"
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "const": "accepted"
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "$ref": "#/$defs/non_empty_string"
+                    },
+                    "project_revision": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "project_currentness_sha256": {
+                      "$ref": "#/$defs/sha256"
+                    },
+                    "lifecycle": {
+                      "const": "listed"
+                    },
+                    "persistence_disposition": {
+                      "const": "persisted"
+                    },
+                    "receipt_refs": {
+                      "minItems": 2
+                    },
+                    "error_code": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "project_id": {
+                      "type": "null"
+                    },
+                    "project_revision": {
+                      "type": "null"
+                    },
+                    "project_currentness_sha256": {
+                      "type": "null"
+                    },
+                    "lifecycle": {
+                      "type": "null"
+                    },
+                    "persistence_disposition": {
+                      "enum": [
+                        "not_attempted",
+                        "rolled_back"
+                      ]
+                    },
+                    "error_code": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
                 "const": "cmd.project.new_github_repo"
               }
             },
@@ -1119,6 +1283,7 @@
         "return_context equals the initiating request return_context exactly",
         "route_ref does not override the caller return route",
         "cancelled registration leaves no listed half-row",
+        "accepted resume_creation completes the original creation as listed persisted with recovery plus terminal receipts, never a half-ready row",
         "Unarchive accepted follows atomic archived-to-listed persistence/readback: same project_id, exactly one Project and registry revision advance, new currentness hashes, correlated owner receipt, and no change outside lifecycle/update/revision/currentness metadata",
         "An already-listed no_change preserves Project and registry fences; replay returns the original committed binding/result without another write; stale, denied, removed/deletion-state or uncertain persistence cannot report success"
       ]
@@ -2721,6 +2886,1240 @@
         }
       ]
     },
+    "creation_recovery_effect": {
+      "enum": [
+        "remote_repository_create",
+        "source_preparation",
+        "clone_connect",
+        "history_init",
+        "settings_rebind_apply",
+        "registry_publication"
+      ]
+    },
+    "verified_repository_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "normalized_host",
+        "account_id",
+        "provider_repository_id"
+      ],
+      "properties": {
+        "provider": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "normalized_host": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "account_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider_repository_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "description": "Verified remote repository identity from a terminal Forge/SCM create result. Never inferred from remote text, never speculative, and present only when the remote effect state is verified_created."
+    },
+    "recovery_route_availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "continue_setup",
+        "open_repository",
+        "delete_repository"
+      ],
+      "properties": {
+        "continue_setup": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "available",
+            "reason",
+            "resume_eligible",
+            "eligible_reason"
+          ],
+          "properties": {
+            "available": {
+              "type": "boolean",
+              "description": "Effective dispatch availability: eligibility plus current permission, a live recovery claim, and central registration, wiring, and native handler gates. A verified created remote alone never forces true."
+            },
+            "reason": {
+              "enum": [
+                "resume_join_contracted",
+                "remote_unknown_reconcile_only",
+                "no_verified_remote_identity",
+                "no_remaining_effects",
+                "central_dispatch_unavailable",
+                "concurrent_resume_active"
+              ]
+            },
+            "resume_eligible": {
+              "type": "boolean",
+              "description": "Owner resume eligibility: the retained joins hold for a verified created remote with a current reviewed draft, a current composition, disjoint settled/remaining sets, and no fencing conflict."
+            },
+            "eligible_reason": {
+              "enum": [
+                "owner_join_holds",
+                "owner_join_not_held"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "available": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "available"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "reason": {
+                    "const": "resume_join_contracted"
+                  },
+                  "resume_eligible": {
+                    "const": true
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "reason": {
+                    "const": "resume_join_contracted"
+                  }
+                },
+                "required": [
+                  "reason"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "available": {
+                    "const": true
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "resume_eligible": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "resume_eligible"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "eligible_reason": {
+                    "const": "owner_join_holds"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "eligible_reason": {
+                    "const": "owner_join_holds"
+                  }
+                },
+                "required": [
+                  "eligible_reason"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "resume_eligible": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "open_repository": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "available",
+            "reason"
+          ],
+          "properties": {
+            "available": {
+              "type": "boolean"
+            },
+            "reason": {
+              "enum": [
+                "verified_binding_present",
+                "no_verified_binding"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "available": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "available"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "reason": {
+                    "const": "verified_binding_present"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "reason": {
+                    "const": "verified_binding_present"
+                  }
+                },
+                "required": [
+                  "reason"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "available": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "delete_repository": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "available",
+            "reason"
+          ],
+          "properties": {
+            "available": {
+              "const": false
+            },
+            "reason": {
+              "enum": [
+                "forge_owner_gated",
+                "no_verified_binding",
+                "remote_unknown_reconcile_only"
+              ]
+            }
+          },
+          "description": "Project System never dispatches repository deletion; Delete Repository is consumed from the Forge FGI-021 cmd.forge.repository.delete admission with its exact currentness and target-bound confirmation, and stays unavailable in Project scope with forge_owner_gated until the Forge owner proves its own dispatch gates. Never Project-local, never automatic rollback."
+        }
+      },
+      "description": "Project-owned per-route availability with fail-closed reasons. Central registration, wiring, and handler availability gate actual dispatch separately."
+    },
+    "project_creation_recovery_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "recovery_id",
+        "original_command_id",
+        "original_command_instance_id",
+        "original_idempotency_key",
+        "original_operation_ref",
+        "original_terminal_result_ref",
+        "original_terminal_result_sha256",
+        "reviewed_setup_binding",
+        "remote_effect_state",
+        "forge_create_result_ref",
+        "forge_create_receipt_ref",
+        "repository_binding",
+        "reconciliation_refs",
+        "settled_effects",
+        "remaining_effects",
+        "active_resume_claim",
+        "return_context",
+        "expected_registry_revision",
+        "expected_registry_currentness_sha256",
+        "composition_revision",
+        "composition_sha256",
+        "created_at_utc",
+        "updated_at_utc",
+        "route_availability"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project.creation_recovery_context.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "recovery_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "original_command_id": {
+          "enum": [
+            "cmd.project.new_github_repo"
+          ],
+          "description": "Only an original action with an exact currently owned receipted remote-create chain anchors a remote-create recovery. cmd.project.new_local never qualifies; cmd.project.add_existing qualifies only when such a chain is defined for it."
+        },
+        "original_command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "original_idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "original_operation_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "original_terminal_result_ref": {
+          "$ref": "#/$defs/safe_ref",
+          "description": "Immutable ref to the original rejected terminal ProjectActionResult. Restart and replay return this result; they never infer a new effect."
+        },
+        "original_terminal_result_sha256": {
+          "$ref": "#/$defs/sha256",
+          "description": "SHA-256 of the immutable original result encoded as RFC 8785 canonical JSON (CV-333), resolved by original_terminal_result_ref. Any canonical payload difference fails closed; fixture checks use the existing integer/string-only oracle."
+        },
+        "reviewed_setup_binding": {
+          "$ref": "#/$defs/onboarding_project_setup_binding"
+        },
+        "remote_effect_state": {
+          "enum": [
+            "verified_created",
+            "failed_before_effect",
+            "unknown"
+          ]
+        },
+        "forge_create_result_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "forge_create_receipt_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "repository_binding": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/verified_repository_identity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reconciliation_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        "settled_effects": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/creation_recovery_effect"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "result_ref",
+              "receipt_ref"
+            ],
+            "properties": {
+              "result_ref": {
+                "$ref": "#/$defs/safe_ref"
+              },
+              "receipt_ref": {
+                "$ref": "#/$defs/safe_ref"
+              }
+            }
+          },
+          "description": "Settled creation steps keyed by effect. Object keys make a duplicate settled effect unrepresentable."
+        },
+        "remaining_effects": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/creation_recovery_effect"
+          }
+        },
+        "active_resume_claim": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/creation_recovery_resume_claim"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "One-active-resume claim admitted by atomic compare-and-swap. Null when no attempt is active; a second new attempt is rejected or coalesced while a claim is held."
+        },
+        "return_context": {
+          "$ref": "#/$defs/return_context"
+        },
+        "expected_registry_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_registry_currentness_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "composition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "composition_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "route_availability": {
+          "$ref": "#/$defs/recovery_route_availability"
+        }
+      },
+      "description": "Restart-safe retained Project creation recovery under SP-321 custody. Replaying the original idempotency key re-observes the terminal result and never resumes; only cmd.project.resume_creation with a creation_recovery_resume_binding advances, and only from verified_created with owner-resolved joins.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "remote_effect_state": {
+                "const": "verified_created"
+              }
+            },
+            "required": [
+              "remote_effect_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "forge_create_result_ref": {
+                "$ref": "#/$defs/safe_ref"
+              },
+              "forge_create_receipt_ref": {
+                "$ref": "#/$defs/safe_ref"
+              },
+              "repository_binding": {
+                "$ref": "#/$defs/verified_repository_identity"
+              },
+              "settled_effects": {
+                "required": [
+                  "remote_repository_create"
+                ]
+              },
+              "route_availability": {
+                "properties": {
+                  "continue_setup": {
+                    "properties": {
+                      "available": {
+                        "const": false
+                      },
+                      "reason": {
+                        "enum": [
+                          "central_dispatch_unavailable",
+                          "concurrent_resume_active"
+                        ]
+                      },
+                      "resume_eligible": {
+                        "const": true
+                      },
+                      "eligible_reason": {
+                        "const": "owner_join_holds"
+                      }
+                    }
+                  },
+                  "open_repository": {
+                    "properties": {
+                      "available": {
+                        "const": true
+                      },
+                      "reason": {
+                        "const": "verified_binding_present"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "remote_effect_state": {
+                "const": "failed_before_effect"
+              }
+            },
+            "required": [
+              "remote_effect_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "forge_create_result_ref": {
+                "type": "null"
+              },
+              "forge_create_receipt_ref": {
+                "type": "null"
+              },
+              "repository_binding": {
+                "type": "null"
+              },
+              "settled_effects": {
+                "not": {
+                  "required": [
+                    "remote_repository_create"
+                  ]
+                }
+              },
+              "route_availability": {
+                "properties": {
+                  "continue_setup": {
+                    "properties": {
+                      "available": {
+                        "const": false
+                      },
+                      "reason": {
+                        "const": "no_verified_remote_identity"
+                      },
+                      "resume_eligible": {
+                        "const": false
+                      },
+                      "eligible_reason": {
+                        "const": "owner_join_not_held"
+                      }
+                    }
+                  },
+                  "open_repository": {
+                    "properties": {
+                      "available": {
+                        "const": false
+                      },
+                      "reason": {
+                        "const": "no_verified_binding"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "remote_effect_state": {
+                "const": "unknown"
+              }
+            },
+            "required": [
+              "remote_effect_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "forge_create_result_ref": {
+                "type": "null"
+              },
+              "forge_create_receipt_ref": {
+                "type": "null"
+              },
+              "repository_binding": {
+                "type": "null"
+              },
+              "settled_effects": {
+                "not": {
+                  "required": [
+                    "remote_repository_create"
+                  ]
+                }
+              },
+              "route_availability": {
+                "properties": {
+                  "continue_setup": {
+                    "properties": {
+                      "available": {
+                        "const": false
+                      },
+                      "reason": {
+                        "const": "remote_unknown_reconcile_only"
+                      },
+                      "resume_eligible": {
+                        "const": false
+                      },
+                      "eligible_reason": {
+                        "const": "owner_join_not_held"
+                      }
+                    }
+                  },
+                  "open_repository": {
+                    "properties": {
+                      "available": {
+                        "const": false
+                      },
+                      "reason": {
+                        "const": "no_verified_binding"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "settled_effects": {
+                "required": [
+                  "remote_repository_create"
+                ]
+              }
+            },
+            "required": [
+              "settled_effects"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remaining_effects": {
+                "not": {
+                  "contains": {
+                    "const": "remote_repository_create"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "settled_effects": {
+                "required": [
+                  "source_preparation"
+                ]
+              }
+            },
+            "required": [
+              "settled_effects"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remaining_effects": {
+                "not": {
+                  "contains": {
+                    "const": "source_preparation"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "settled_effects": {
+                "required": [
+                  "clone_connect"
+                ]
+              }
+            },
+            "required": [
+              "settled_effects"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remaining_effects": {
+                "not": {
+                  "contains": {
+                    "const": "clone_connect"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "settled_effects": {
+                "required": [
+                  "history_init"
+                ]
+              }
+            },
+            "required": [
+              "settled_effects"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remaining_effects": {
+                "not": {
+                  "contains": {
+                    "const": "history_init"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "settled_effects": {
+                "required": [
+                  "settings_rebind_apply"
+                ]
+              }
+            },
+            "required": [
+              "settled_effects"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remaining_effects": {
+                "not": {
+                  "contains": {
+                    "const": "settings_rebind_apply"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "settled_effects": {
+                "required": [
+                  "registry_publication"
+                ]
+              }
+            },
+            "required": [
+              "settled_effects"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remaining_effects": {
+                "not": {
+                  "contains": {
+                    "const": "registry_publication"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "creation_recovery_resume_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recovery_ref",
+        "recovery_composition_revision",
+        "recovery_composition_sha256",
+        "original_command_id",
+        "original_command_instance_id",
+        "original_idempotency_key",
+        "original_operation_ref",
+        "reviewed_setup_binding",
+        "remote_effect_state",
+        "forge_create_result_ref",
+        "forge_create_receipt_ref",
+        "repository_binding",
+        "settled_effect_names",
+        "remaining_effects",
+        "resume_authorization_ref",
+        "resume_attempt_sequence",
+        "join_checks"
+      ],
+      "properties": {
+        "recovery_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "recovery_composition_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Candidate composition revision the owner compares against the retained composition_revision. A stale revision fails closed."
+        },
+        "recovery_composition_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "original_command_id": {
+          "enum": [
+            "cmd.project.new_github_repo"
+          ],
+          "description": "Only an original action with an exact currently owned receipted remote-create chain anchors a remote-create recovery. cmd.project.new_local never qualifies; cmd.project.add_existing qualifies only when such a chain is defined for it."
+        },
+        "original_command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "original_idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "original_operation_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "reviewed_setup_binding": {
+          "$ref": "#/$defs/onboarding_project_setup_binding"
+        },
+        "remote_effect_state": {
+          "const": "verified_created"
+        },
+        "forge_create_result_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "forge_create_receipt_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "repository_binding": {
+          "$ref": "#/$defs/verified_repository_identity"
+        },
+        "settled_effect_names": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/creation_recovery_effect"
+          },
+          "contains": {
+            "const": "remote_repository_create"
+          }
+        },
+        "remaining_effects": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/creation_recovery_effect"
+          }
+        },
+        "resume_authorization_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "resume_attempt_sequence": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "join_checks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "original_operation_matches_recovery",
+            "reviewed_draft_matches_recovery",
+            "reviewed_draft_current",
+            "repository_binding_matches_recovery",
+            "no_settled_effect_repeated",
+            "recovery_composition_current"
+          ],
+          "properties": {
+            "original_operation_matches_recovery": {
+              "const": true
+            },
+            "reviewed_draft_matches_recovery": {
+              "const": true
+            },
+            "reviewed_draft_current": {
+              "const": true
+            },
+            "repository_binding_matches_recovery": {
+              "const": true
+            },
+            "no_settled_effect_repeated": {
+              "const": true
+            },
+            "recovery_composition_current": {
+              "const": true
+            }
+          },
+          "description": "Owner-computed echo recorded after server-side resolution. Each flag reads true only on an owner-verified join, but client-supplied values grant no authority: the semantic validator ignores these booleans and compares actual retained fields, and any mismatch fails closed even when every flag reads true.",
+          "x-owner-computed-after-resolution": true,
+          "x-client-attestation-grants-no-authority": true
+        }
+      },
+      "description": "Typed resume join carried by cmd.project.resume_creation. Binds the fresh attempt to the original operation, the exact reviewed draft, and the verified Forge create result; resumes only remaining effects. Authority comes only from owner-resolved comparison typed as creation_recovery_resume_round_trip, never from the join_checks echo.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "settled_effect_names": {
+                "contains": {
+                  "const": "remote_repository_create"
+                }
+              }
+            },
+            "required": [
+              "settled_effect_names"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remaining_effects": {
+                "not": {
+                  "contains": {
+                    "const": "remote_repository_create"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "settled_effect_names": {
+                "contains": {
+                  "const": "source_preparation"
+                }
+              }
+            },
+            "required": [
+              "settled_effect_names"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remaining_effects": {
+                "not": {
+                  "contains": {
+                    "const": "source_preparation"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "settled_effect_names": {
+                "contains": {
+                  "const": "clone_connect"
+                }
+              }
+            },
+            "required": [
+              "settled_effect_names"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remaining_effects": {
+                "not": {
+                  "contains": {
+                    "const": "clone_connect"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "settled_effect_names": {
+                "contains": {
+                  "const": "history_init"
+                }
+              }
+            },
+            "required": [
+              "settled_effect_names"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remaining_effects": {
+                "not": {
+                  "contains": {
+                    "const": "history_init"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "settled_effect_names": {
+                "contains": {
+                  "const": "settings_rebind_apply"
+                }
+              }
+            },
+            "required": [
+              "settled_effect_names"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remaining_effects": {
+                "not": {
+                  "contains": {
+                    "const": "settings_rebind_apply"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "settled_effect_names": {
+                "contains": {
+                  "const": "registry_publication"
+                }
+              }
+            },
+            "required": [
+              "settled_effect_names"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remaining_effects": {
+                "not": {
+                  "contains": {
+                    "const": "registry_publication"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "creation_recovery_resume_claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attempt_command_instance_id",
+        "attempt_idempotency_key",
+        "claim_generation",
+        "claimed_at_utc"
+      ],
+      "properties": {
+        "attempt_command_instance_id": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "Resume-namespaced command instance holding the claim."
+        },
+        "attempt_idempotency_key": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "Resume-namespaced idempotency key holding the claim."
+        },
+        "claim_generation": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Fresh generation admitted with the winning attempt. Child effects and result adoption are fenced by this generation and attempt identity."
+        },
+        "claimed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "description": "One-active-resume claim admitted by atomic compare-and-swap on the retained recovery. Exactly one attempt holds it per recovery."
+    },
+    "creation_recovery_resume_round_trip": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "round_trip_id",
+        "retained_context",
+        "candidate_request",
+        "original_terminal_result",
+        "expected_semantic_outcome"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project.creation_recovery_resume_round_trip.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "round_trip_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "retained_context": {
+          "$ref": "#/$defs/project_creation_recovery_context",
+          "description": "Owner-resolved retained recovery as held under SP-321 custody."
+        },
+        "candidate_request": {
+          "$ref": "#/$defs/project_action_request",
+          "description": "Candidate cmd.project.resume_creation request whose binding the owner compares against the retained context."
+        },
+        "original_terminal_result": {
+          "$ref": "#/$defs/project_action_result",
+          "description": "Immutable original rejected terminal result of the creation. Restart and replay return these bytes."
+        },
+        "expected_semantic_outcome": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "accepted",
+            "semantic_failures"
+          ],
+          "properties": {
+            "accepted": {
+              "type": "boolean",
+              "description": "True only when the semantic comparison yields no failure."
+            },
+            "semantic_failures": {
+              "type": "array",
+              "uniqueItems": true,
+              "maxItems": 24,
+              "items": {
+                "enum": [
+                  "resume_original_command_mismatch",
+                  "resume_original_instance_mismatch",
+                  "resume_original_idempotency_mismatch",
+                  "resume_original_operation_mismatch",
+                  "resume_reviewed_draft_mismatch",
+                  "resume_forge_result_ref_mismatch",
+                  "resume_forge_receipt_ref_mismatch",
+                  "resume_repository_binding_mismatch",
+                  "resume_composition_revision_stale",
+                  "resume_composition_hash_mismatch",
+                  "resume_settled_effects_mismatch",
+                  "resume_remaining_effects_mismatch",
+                  "resume_settled_remaining_overlap",
+                  "resume_remote_effect_not_verified",
+                  "resume_original_result_identity_mismatch",
+                  "resume_original_result_not_rejected_terminal",
+                  "resume_concurrent_active_attempt",
+                  "resume_recovery_ref_mismatch",
+                  "resume_original_result_digest_mismatch"
+                ]
+              }
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "accepted": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "accepted"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "semantic_failures": {
+                    "maxItems": 0
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "accepted": {
+                    "const": false
+                  }
+                },
+                "required": [
+                  "accepted"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "semantic_failures": {
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "description": "Paired resume evidence: the owner-resolved retained context, the candidate resume request, and the original terminal result together so the central semantic validator can compare actual fields. Client join_checks values are ignored for authority in every comparison.",
+      "allOf": [
+        {
+          "properties": {
+            "candidate_request": {
+              "properties": {
+                "action_id": {
+                  "const": "cmd.project.resume_creation"
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "original_terminal_result": {
+              "properties": {
+                "outcome": {
+                  "const": "rejected"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "x-semantic-invariants": [
+        "retained_context.original_command_id == candidate_request.creation_recovery_resume_binding.original_command_id",
+        "retained_context.original_command_instance_id == candidate_request.creation_recovery_resume_binding.original_command_instance_id",
+        "retained_context.original_idempotency_key == candidate_request.creation_recovery_resume_binding.original_idempotency_key",
+        "retained_context.original_operation_ref == candidate_request.creation_recovery_resume_binding.original_operation_ref",
+        "retained_context.reviewed_setup_binding == candidate_request.creation_recovery_resume_binding.reviewed_setup_binding (deep equality over the entire binding)",
+        "retained_context.forge_create_result_ref == candidate_request.creation_recovery_resume_binding.forge_create_result_ref",
+        "retained_context.forge_create_receipt_ref == candidate_request.creation_recovery_resume_binding.forge_create_receipt_ref",
+        "retained_context.repository_binding == candidate_request.creation_recovery_resume_binding.repository_binding (deep equality)",
+        "retained_context.composition_revision == candidate_request.creation_recovery_resume_binding.recovery_composition_revision",
+        "retained_context.composition_sha256 == candidate_request.creation_recovery_resume_binding.recovery_composition_sha256",
+        "set(candidate_request.creation_recovery_resume_binding.settled_effect_names) == set(keys(retained_context.settled_effects))",
+        "candidate_request.creation_recovery_resume_binding.remaining_effects == retained_context.remaining_effects (set equality)",
+        "candidate_request.creation_recovery_resume_binding.settled_effect_names intersect candidate_request.creation_recovery_resume_binding.remaining_effects == empty",
+        "retained_context.remote_effect_state == verified_created",
+        "original_terminal_result.command_instance_id == retained_context.original_command_instance_id",
+        "original_terminal_result.action_id == retained_context.original_command_id",
+        "original_terminal_result.outcome == rejected and original_terminal_result.project_id == null",
+        "retained_context.active_resume_claim == null or retained_context.active_resume_claim.attempt_command_instance_id == candidate_request.command_instance_id",
+        "join_checks values are ignored for authority in every comparison",
+        "candidate_request.creation_recovery_resume_binding.recovery_ref == retained_context.recovery_id",
+        "Resolve original_terminal_result by retained_context.original_terminal_result_ref; SHA-256 of RFC 8785 canonical JSON of that resolved result == retained_context.original_terminal_result_sha256 (CV-333). Static fixture comparisons use the existing integer/string-only canonical owner-result oracle.",
+        "A self-claim matches both attempt_command_instance_id and attempt_idempotency_key to the candidate request; matching only one is a concurrent active attempt."
+      ]
+    },
     "project_setup_commit_binding": {
       "type": "object",
       "additionalProperties": false,
@@ -2781,7 +4180,8 @@
             "cmd.project.new_local",
             "cmd.project.new_github_repo",
             "cmd.project.add_existing",
-            "cmd.project.open"
+            "cmd.project.open",
+            "cmd.project.resume_creation"
           ]
         },
         "command_instance_id": {
@@ -3276,5 +4676,26 @@
       "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
     }
   },
-  "x-server-gap-claim-boundary": "static owner contract only; six commands remain handler_unavailable; local actions have no domain handler/EventRecord; aliases normalize pre-policy/pre-dispatch with no independent handler/wiring; rejected rows stay unregistered"
+  "x-server-gap-claim-boundary": "static owner contract only; six commands remain handler_unavailable; local actions have no domain handler/EventRecord; aliases normalize pre-policy/pre-dispatch with no independent handler/wiring; rejected rows stay unregistered",
+  "x-project-recovery-command-contract": {
+    "cmd.project.resume_creation": {
+      "request_ref": "#/$defs/project_action_request",
+      "result_ref": "#/$defs/project_action_result",
+      "resume_binding_ref": "#/$defs/creation_recovery_resume_binding",
+      "recovery_context_ref": "#/$defs/project_creation_recovery_context",
+      "sole_handler": "handlers::project::resume_creation",
+      "gui_consumers": [
+        "Projects page",
+        "Product Onboarding automatic_preparation",
+        "palette/API"
+      ],
+      "initial_availability": "handler_unavailable",
+      "availability_rule": "Retained verified_created recovery, exact reviewed draft, verified repository binding, fresh resume-namespaced attempt identity, current Project/registry fences, permission snapshot, and remaining-effects-only scope; stale or mismatched joins block before mutation.",
+      "permission_rule": "Project owner revalidates the actor's Project creation permission against current fences; the original commit consent and selected-source authentication never authorize a resume by themselves.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Resume a recovery-required Project creation under its retained recovery with a fresh attempt identity, executing only unsettled steps.",
+      "census_basis": "No cmd.project resume/creation-recovery ID exists in the central catalog; cmd.project.move.resume and cmd.project.move.retry are Project_Sync_and_Backbone PSB-005 move operations, cmd.authentication.resume is the authentication continuation, and Forge pipeline retries are Forge-owned. This ID is a new Project-owned primary, not an alias of any of them.",
+      "central_companions_pending": "Commands_System registration, UI_Command_Catalog row, production wiring, permission/currentness routes, and native handler proof; see reports/packet-integration-completion-20260926/project-recovery.md"
+    }
+  }
 }

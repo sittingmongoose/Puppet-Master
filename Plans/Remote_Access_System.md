@@ -126,6 +126,11 @@ owner_hints: [Plans/Remote_Access_System.md, Plans/Server_System.md, Plans/Share
 
 ### RAS-003 - Hosted Tailscale Serve And Headscale Capability Split
 
+> Successor pointer (reader routing only; no semantic change): the conflicting RAS-003 mechanics identified
+> in RAS-015's complete `supersedes` list follow RAS-015, including host-install reuse, full-install/component,
+> private Serve, per-WSL host-serving, and initiating-active-Client lifetime mechanics. In conflicts RAS-015
+> controls. Other RAS-003 semantics and the historical text are preserved.
+
 ```yaml
 plan_unit_id: RAS-003
 unit_type: requirement

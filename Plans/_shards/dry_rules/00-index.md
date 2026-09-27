@@ -1,35 +1,37 @@
 # Shard Index: Plans/DRY_Rules.md
 
-Generated: 2026-09-10T02:47:39Z
+Generated: 2026-09-26T22:56:32Z
 
-Source SHA256: `595e587a48b45dbe60cfa50b0191bdfd70d86f1f7943227f32d39c85dd8ed3ec`
+Source SHA256: `ebb5f684861f32442827a722734983ed6003f8a13634b0e3d1083f4b6cb10196`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L13 `cbfa1c9f01780f56d9df2ce0913611f11c0575eb45629ae622fd35d7cae4e39d`
-- [002 - 0. Scope](002-0.-scope.md) L15-L22 `41391d99912b9132176f9a496228ff93d5360cea85343942c3fe27da7145a433`
-- [003 - 1. SSOT precedence (global)](003-1.-ssot-precedence-global.md) L24-L34 `467cdacbd09d415bd1d5946689356bd3503b22cc026a35f85c1a8bba5bfd0e35`
-- [004 - 2. Don't duplicate canonical contracts](004-2.-don-t-duplicate-canonical-contracts.md) L36-L98 `522966094b3e1437a829e5c5bd5fb25cc352931463e69ac755b7cfba02b48918`
-- [005 - 3. "Index-only" guidance](005-3.-index-only-guidance.md) L100-L133 `fd9925e170b002e7329f5be9ff5f9c0ebcb03c979216e2341de16b6aac553ee2`
-- [006 - 4. Forbidden patterns (drift accelerators)](006-4.-forbidden-patterns-drift-accelerators.md) L135-L142 `61e0cbfc17fbad55fb6c9fd3bff0d4691e5e8565a4b8f2563b65cc14d7c211c5`
-- [007 - 5. MUST/SHALL/REQUIRED implies ContractRef](007-5.-must-shall-required-implies-contractref.md) L144-L149 `07d8965db6ea4da2a2e05124d7e8457bd6da484d365552ca8aefff907debaff0`
-- [008 - 6. ContractRef taxonomy (allowed categories)](008-6.-contractref-taxonomy-allowed-categories.md) L151-L172 `d10263723d599a622c66d02638216e78dcbbb26c67f4b061a659fa141dc80a56`
-- [009 - 7. ContractRef annotation rule (canonical)](009-7.-contractref-annotation-rule-canonical.md) L173-L191 `ff21d0e2aed05083201db2149cc7385be1311b827f1b6691beac0afad7dbe13b`
-- [010 - 7.1 Packet-fidelity semantic matching](010-7.1-packet-fidelity-semantic-matching.md) L193-L208 `2f5a0968ef34e21f9049c1a1f165f3143248516324e2e9b946fb299331b237fc`
-- [011 - 8. Reference style](011-8.-reference-style.md) L210-L218 `c2658bef1e8d9c36218d51cf216e1bd0ee94c63286ad8503081061360ccc454e`
-- [012 - 9. No unreferenced operational text](012-9.-no-unreferenced-operational-text.md) L219-L228 `77ce4591b2d4e299a79f3cd02c9e795e3744abc5b8fa59fdf0018b522043e965`
-- [013 - 10. Inline requirement tag convention (readability only)](013-10.-inline-requirement-tag-convention-readability-only.md) L229-L250 `aaabf31a5266d74d418d311bf69ce0041001b196ccdb0d8f511d950b093b4466`
-- [014 - References](014-references.md) L252-L257 `24a8cbe85a18f85b7e0bb20a91a41ba82de02d8db5aeaed911532f6cb5a36d45`
-- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L259-L263 `05ed4ec2a4ae5382dc8d0d0aa36cac42b4cf07958959ded80b39c701e04bdb3f`
-- [016 - PlanUnits](016-planunits.md) L265-L1968 `13f812cba026fe470b4c834d953533b00e71c6606bd6e2e756ae8c7528ae0a79`
-- [017 - Migration Coverage](017-migration-coverage.md) L1969-L1981 `4cca5fa9f61aa6034e537996d64d79b1d0f85789f35b3bc51c6a4a064ceb13f8`
-- [018 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](018-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L1983-L2044 `4525b1103d82bbc5e5a350c9af200f0fab9c9dcc2dfd9eee72e1984ba86adec1`
-- [019 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2046-L2050 `a0ee1e7e8e409ee833769a37d9cb2bdee21b93a5c52d8a9e7930f6892be1a489`
-- [020 - PMConcept7 Home Workspace owner boundary — 2026-08-04](020-pmconcept7-home-workspace-owner-boundary-2026-08-04.md) L2052-L2072 `467dfd0d78f061f48ba7fbe011898257c05fcf8167fbaa4049dc0f52535c8a8a`
-- [021 - Shared Integration Runtime DRY service registry — 2026-08-13](021-shared-integration-runtime-dry-service-registry-2026-08-13.md) L2073-L2198 `7a212845cef09a115d0220b15edadba7acb6ed2fc90a644497da44d46d8e99ac`
-- [022 - u11 Prism II Usage candidate-role dispositions - 2026-08-18](022-u11-prism-ii-usage-candidate-role-dispositions-2026-08-18.md) L2199-L2315 `25f62aa1ff513296e78cf1d28d44528479e58d55b3fa2488261853f9cd143e3e`
-- [023 - PMConcept7 Usage, command, and shared Assistant SSOT addendum - 2026-08-27](023-pmconcept7-usage-command-and-shared-assistant-ssot-addendum-2026.md) L2317-L2404 `f58ae1c7c01428e2eded3d809010f0e28eb9a69d501cb7211fa4931572118e58`
-- [024 - Universal touch-closure and projection-owner addendum - 2026-08-31](024-universal-touch-closure-and-projection-owner-addendum-2026-08-31.md) L2406-L2455 `12120031adf8c3fed0f0a63ebd7626738d2e8909cce258fb3ec3cdf384f527d4`
-- [025 - Touch Closure Exact-Key Addendum - 2026-09-01](025-touch-closure-exact-key-addendum-2026-09-01.md) L2457-L2514 `0fe62257bf6d74b9cc58c6f3a2201e479bf7078f8d5c20d39e84462289d76320`
+- [001 - Preamble](001-preamble.md) L1-L13 `2c88dd233e4348175632d38fa9fb1e1214f9f6034e885ade3ccb18ac43dabfe4`
+- [002 - 0. Scope](002-0.-scope.md) L15-L22 `c7b0d874df0240edd0064f2a375bf2ef3e0473d45880504b22acf001d3c6de6e`
+- [003 - 1. SSOT precedence (global)](003-1.-ssot-precedence-global.md) L24-L34 `0933e6c74db3dca02f6ece54ab39fcabc9a247273248d00cb60761b8e4554280`
+- [004 - 2. Don't duplicate canonical contracts](004-2.-don-t-duplicate-canonical-contracts.md) L36-L98 `221b00f702865b9161cb00b130ee33148bebae848172e8d6cdc240441e01fffe`
+- [005 - 3. "Index-only" guidance](005-3.-index-only-guidance.md) L100-L133 `1f0ac69b6ab0b44acb59f4c5605e26f2f249d3acfba383a56cfa64afe6b9be6a`
+- [006 - 4. Forbidden patterns (drift accelerators)](006-4.-forbidden-patterns-drift-accelerators.md) L135-L142 `da74830595bedccc9896dab93c6c25e1261a11cdb23741ed6693bf9cfb0d6e21`
+- [007 - 5. MUST/SHALL/REQUIRED implies ContractRef](007-5.-must-shall-required-implies-contractref.md) L144-L149 `c795cc909cc13dd1d900445a8129a4b271e620450102055d436f179d60ffc963`
+- [008 - 6. ContractRef taxonomy (allowed categories)](008-6.-contractref-taxonomy-allowed-categories.md) L151-L172 `e5b18c52c98ee3ecd4cd938c8aa7ed0c47b3c34aaa909c41152c090a47ea0f55`
+- [009 - 7. ContractRef annotation rule (canonical)](009-7.-contractref-annotation-rule-canonical.md) L173-L191 `dac72bc550b61f346d8fa8a5d332486bd1844dd8868139b07269a2c6a0f5995e`
+- [010 - 7.1 Packet-fidelity semantic matching](010-7.1-packet-fidelity-semantic-matching.md) L193-L208 `b6bbea8bf756f805d9b13def95817263efc25230568082e66ede8fbc8c039977`
+- [011 - 8. Reference style](011-8.-reference-style.md) L210-L218 `0ab2e6d31384d9bc0d91d3d0d568d062f3b8200e85d1d6d198291d9f42acc8d9`
+- [012 - 9. No unreferenced operational text](012-9.-no-unreferenced-operational-text.md) L219-L228 `a9342483cd43ceefbe1f3cb9d15414cb4d72a4ee319e90ed20f0d963d7c1d1c7`
+- [013 - 10. Inline requirement tag convention (readability only)](013-10.-inline-requirement-tag-convention-readability-only.md) L229-L250 `f29a6ecb52b42d7490876d5293302232159adfc369528bc429739db3f91c3197`
+- [014 - References](014-references.md) L252-L257 `9712ed37604a2fbb46c28bf7a3bc006ccdf9e7400b43e81246acf5c9a1edf640`
+- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L259-L263 `9bb36eb3272000da2f4091ca2abf83578eeeef72bc632c8997507119182052d2`
+- [016 - PlanUnits](016-planunits.md) L265-L1968 `a17087e036a7c1b0a4c3f620ae57c3d2f59e8977c8748ceb99d5d735216b31aa`
+- [017 - Migration Coverage](017-migration-coverage.md) L1969-L1981 `b64ddd0256c9a9eb53069f5dde3dd87a600b2c8e5c56ae82158e1d7363773ccd`
+- [018 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](018-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L1983-L2044 `dcfbb20df9f75ce08614826be9cbee74bf50861481cc9704311d0d3136ce433e`
+- [019 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2046-L2050 `29fdce3384f2a63710dceee68d3a0c2d7854c87db515fd26982c689439390b1b`
+- [020 - PMConcept7 Home Workspace owner boundary — 2026-08-04](020-pmconcept7-home-workspace-owner-boundary-2026-08-04.md) L2052-L2072 `8115faaaf444570a21fe94a1607f0397d169ad7a5e3d5c8c59302d70799d3b8f`
+- [021 - Shared Integration Runtime DRY service registry — 2026-08-13](021-shared-integration-runtime-dry-service-registry-2026-08-13.md) L2073-L2198 `db2c01ff31221a5b1ec138da13a4743d65202b36d3811a9fd0dd260f121c2575`
+- [022 - u11 Prism II Usage candidate-role dispositions - 2026-08-18](022-u11-prism-ii-usage-candidate-role-dispositions-2026-08-18.md) L2199-L2315 `cede10b200d2a5da2aef7d177678f026a68d455d797895c8f73137820f496d8f`
+- [023 - PMConcept7 Usage, command, and shared Assistant SSOT addendum - 2026-08-27](023-pmconcept7-usage-command-and-shared-assistant-ssot-addendum-2026.md) L2317-L2404 `2972cbf5d7642e7025a3087fcef1040e27ae23659ca1cc5fe6273ceb37198ae5`
+- [024 - Universal touch-closure and projection-owner addendum - 2026-08-31](024-universal-touch-closure-and-projection-owner-addendum-2026-08-31.md) L2406-L2455 `59a3e185676cbe94fcf4b4b48d3dc546414d963d5b4e5163d07b57e79a35e96f`
+- [025 - Touch Closure Exact-Key Addendum - 2026-09-01](025-touch-closure-exact-key-addendum-2026-09-01.md) L2457-L2514 `ca625e8e746716f1e198e7c9bf78f42feab18311edb8e9703616c098271d971c`
+- [026 - Project recovery and Forge delete/CI central companion boundary — 2026-09-26](026-project-recovery-and-forge-delete-ci-central-companion-boundary-.md) L2516-L2522 `51de3c4e95ab0bcc0f412bdb0e72534787d2894630e9ef79178b8a402b0042b7`
+- [027 - Commands Shortcuts local-action namespace ownership — 2026-09-26](027-commands-shortcuts-local-action-namespace-ownership-2026-09-26.md) L2524-L2588 `b1cd0978b99c825d6afadf22761758d530851d2a1155afb3270ad1ea0afa3b0d`

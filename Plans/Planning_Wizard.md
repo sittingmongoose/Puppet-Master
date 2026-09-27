@@ -1812,6 +1812,8 @@ Before enabling the final commit, revalidate stale source, path, account, Server
 
 After the click, Project System may reserve the real never-reused identity needed by child owners. It lists the Project only after all required content/history/configuration/Settings work and readback have settled under the same commit, or rolls back/reports recovery failure without a half-ready row. Progress names the actual current phase; no percentage exists without an owner denominator. Idempotent replay returns the original owner result rather than creating another Project. The Project-owned `project_setup_commit_binding` is a read model over actual `ProjectActionResult` and terminal receipts, not a new physical receipt family or an Onboarding-written success flag.
 
+If a remote repository was created and a later step fails, `automatic_preparation` keeps observing the same owner operation and presents the retained recovery truth under the PJCT-007 generic composition: a notice naming the repository with Continue Setup, Open Repository, and Delete Repository. The user-facing name is repository; packet wording for the notice is source lineage only, not frozen copy. These are projections of the Project recovery result, not new local actions: Continue Setup is enabled only with the explicit Project-owned recovery/resume transition and owner-resolved typed join to the original operation, reviewed draft, verified create result, and settled/remaining effects, contracted in the Project action family as `cmd.project.resume_creation` with a `creation_recovery_resume_binding`; the owner compares actual retained fields server-side and client booleans never grant authority. Exact replay only re-observes the original result and never resumes, and a resume carries a fresh attempt identity bound to the original recovery, with exactly one active attempt per recovery. Owner resume eligibility stays distinct from effective dispatch availability: a verified created remote alone never makes Continue Setup available, and it stays visible but unavailable until current draft, permission, recovery claim, central registration, wiring, and handler availability all hold, or while another attempt holds the claim; Open Repository is enabled only on the verified binding and dispatches `cmd.forge.repository.open_in_browser`; Delete Repository is separate explicit destructive intent consumed from the Forge FGI-021 `cmd.forge.repository.delete` admission with its exact currentness and target-bound confirmation — never automatic, never part of Continue Setup, never Project-local, never while the remote effect is unknown, never on provider-scope reuse. While the remote effect is unknown only reconciliation runs: no repeat create, no delete, no inferred identity. The exact GitHub creation case consumes this composition through PJCT-008/GI-042 and is currently the only original action that anchors a remote-create recovery; a local creation never anchors one and other provider routes stay open until their own command chains supply verified remote results. No silent re-create and no silent delete occur. Back still cannot uncreate anything; Close/resume re-observes the same owner operation/dedupe identity; provider setup still waits for the actual commit binding.
+
 `provider_setup` requires that exact binding and the actual Project ID. Show verified usable accounts automatically as Ready, prioritizing copied routes, then a small set of relevant choices with See all providers/search. Start with one account; Add another account is secondary. Keep distinct subscription/API billing pools visible in ordinary language, but never ask the user to choose SDK, ACP, bridge, headless mode, protocol, or telemetry adapter. Multiple internal adapters sharing one credential remain one visible account.
 
 Detection is bounded/cached and prioritized by the selected Execution Host, copied routes, and likely installed products. Compatible installation plus usable credentials is verified and connected automatically; missing/expired credentials expose Sign In or Enter API Key. Only a selected canonical route requiring an external vendor CLI/host binary exposes explicit Install. It uses the vendor's official method, exact selected Host/Environment, provenance and compatibility verification before authentication; no silent first install or bundled CLI is inferred. Shipped SDK/bridge/runtime dependencies and API-only paths expose no provider-CLI Install control. The current provider/account catalog remains authoritative, not a second hard-coded Onboarding list. Ordinary actions Connect, Use This Installation, Use This Provider and Open Installer are absent.
@@ -1860,6 +1862,8 @@ Onboarding acceptance now requires the v2 eleven-stage dependency graph, unchang
 
 Tour acceptance requires the current Chat -> workspace -> Planning sequence, every manual and Show Me path with shared owner predicates, measured zero provider requests and usage increments, same-answer ELI5, planning action/dwell shares of at least one half, a real answer edit with visible specific consequence, restore/default versus explicit Keep, safe checkpoint recovery, missing-target and restoration-failure negatives, keyboard/focus/geometry checks, all eight themes, constrained widths, and Reduced Motion. The historical v2 schemas/fixtures and their ten-action/Usage-first/Chat-final/no-resume assertions are superseded migration inputs. The current v3 schema and Final GUI consumer enforce the replacement static obligations and reject those predecessors; passing them cannot establish native/runtime, durable recovery, or visual acceptance. Checkpoint references and revalidation records require real owner implementations before they can be used as runtime evidence.
 
+The recovery projection's `selected_route` records owner-route intent only. Project recovery-side eligibility never supplies effective Forge dispatch availability: Open Repository and Delete Repository remain disabled until the exact Forge currentness, permission, capability, central registration/wiring and handler gates resolve; missing owner proof stays unavailable. Opening an owner details/handoff view does not execute the operation.
+
 ### PWIZ-021 - Product Onboarding draft-first state machine and connect-existing shortcut
 
 ```yaml
@@ -1889,12 +1893,26 @@ depends_on:
 - SSYS-007
 - SSYS-036
 - PJCT-007
+- PJCT-008
 - MACS-005
 - MS-122
 unblocks: []
 acceptance_criteria:
 - The eleven exact ordered stage IDs consume product_onboarding_contracts.schema.json main_stage_order; Final GUI
   uses the same definitions. These are dependencies, not eleven forced equally complex screens.
+- After a verified remote create with later local failure, automatic_preparation observes the retained Project
+  recovery result under the PJCT-007 generic composition — the exact GitHub case via PJCT-008, other provider
+  routes open — and presents Continue Setup, Open Repository, and Delete Repository as owner-route projections;
+  no new local action mutates, and no silent re-create or silent delete occurs.
+- Continue Setup is enabled only with the explicit Project-owned recovery/resume transition and owner-resolved typed
+  join, contracted as cmd.project.resume_creation with a creation_recovery_resume_binding with client booleans never
+  granting authority, and is otherwise visible but unavailable until current draft, permission, recovery claim, central
+  registration, wiring, and handler availability all hold for the resume command, or while another attempt holds the
+  one-active-resume claim; owner resume eligibility stays distinct from effective dispatch availability and a verified
+  created remote alone never forces available=true; replaying the original idempotency key never resumes; Open
+  Repository uses the verified binding through the real Forge open-in-browser command; Delete Repository is separate
+  explicit destructive intent consumed from the Forge FGI-021 delete admission with its exact currentness and
+  target-bound confirmation, never automatic, never Project-local, and unavailable while the remote effect is unknown.
 - Connect-existing retains the exact six-stage shortcut, omits hidden Project/provider work, and claims Ready only
   from its reviewed usable owner route.
 - The guided deferred-project path is explicit and has no Project identity/commit binding or provider-readiness
@@ -1946,6 +1964,14 @@ source_lineage:
 - source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/01_CANONICAL_NEWBIE_FLOW.md
 - source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/02_PROJECT_DRAFT_COPY_AND_COMMIT.md
 - source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/03_SIMPLE_PROVIDER_SETUP_AFTER_PROJECT.md
+- source_packet:PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/01_COMBINED_HANDOFF.md:103-124
+- source_packet:PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/10_ACCEPTANCE_FAILURE_AND_USABILITY_MATRIX.md:81-83
+- source_report:reports/concept-packet-integration-20260926/project-recovery-owner.md
+- source_report:reports/packet-integration-completion-20260926/project-recovery.md
+preserved_exact_tokens:
+- Continue Setup
+- Open Repository
+- Delete Repository
 negative_constraints:
 - Do not create a Project, destination, history, repository, clone/import, Settings apply, sync/backup binding or
   broad provider work before the reviewed commit.

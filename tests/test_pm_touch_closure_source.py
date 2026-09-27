@@ -7,6 +7,7 @@ import argparse
 import copy
 import json
 from pathlib import Path
+import re
 import sys
 import unittest
 from unittest import mock
@@ -416,8 +417,8 @@ class BoundedGapRepairInventoryTests(unittest.TestCase):
         self.assertEqual(sum(c.startswith("cmd.bsd.") for c in admitted), 9)
         self.assertEqual(sum(c.startswith("cmd.chat.context_lens.") for c in admitted), 7)
         self.assertNotIn("cmd.bsd.set", admitted)
-        self.assertEqual(len(rows), 643)
-        self.assertEqual(len(profiles), 133)
+        self.assertEqual(len(rows), 666)
+        self.assertEqual(len(profiles), 134)
         for command, (profile_id, owner, unit) in admitted.items():
             with self.subTest(command=command):
                 self.assertEqual(rows[command][1:5], [profile_id, "command", command, "partial"])
@@ -503,7 +504,7 @@ class ForgeReviewAliasConsumerTests(unittest.TestCase):
         self.assertEqual(self.row(self.registry)[:5],
                          ["TOUCH-GHPR-001", "TCP-GITHUB-PR", "command_alias", self.ALIAS, "partial"])
         self.assertEqual(sum(row[3] == self.ALIAS for row in self.registry["rows"]), 1)
-        self.assertEqual((len(self.registry["rows"]), len(self.registry["profiles"])), (643, 133))
+        self.assertEqual((len(self.registry["rows"]), len(self.registry["profiles"])), (666, 134))
         binding = self.registry["alias_bindings"][self.ALIAS]
         for field in ("exact_target", "availability_source", "handler_dispatch_token"):
             self.assertEqual(binding[field], self.TARGET)
@@ -765,6 +766,82 @@ class CentralArchivedProjectAdapterTests(unittest.TestCase):
         check.assert_called_once()
         self.assertEqual(failures, [])
         self.assertEqual(result["central_map_crosscheck"], "pass")
+
+
+class CommandsShortcutsCensusTests(unittest.TestCase):
+    """CS-081 census: sixteen local ui_action partials, zero new primaries."""
+
+    COMMANDS = (
+        "commands.create",
+        "commands.update",
+        "commands.delete",
+        "commands.preview",
+        "commands.import_preview",
+        "commands.import_commit",
+        "commands.export",
+        "commands.reset_all",
+    )
+    SETTINGS = (
+        "settings.commands_shortcuts.shortcut_bind",
+        "settings.commands_shortcuts.shortcut_remove",
+        "settings.commands_shortcuts.shortcuts_reset",
+        "settings.commands_shortcuts.shortcuts_backup",
+        "settings.commands_shortcuts.hints_toggle",
+        "settings.commands_shortcuts.layout_select",
+        "settings.commands_shortcuts.palette_toggle",
+        "settings.commands_shortcuts.presentation",
+    )
+    ALL = COMMANDS + SETTINGS
+    UNKNOWN = ("commands.save_draft", "commands.synthetic", "commands.create.extra", "commands.bind")
+
+    def test_local_rows_map_to_cmdsc_partial_ui_actions(self) -> None:
+        expected, failures = validator.expected_inventory()
+        self.assertFalse([item for item in failures if "Commands" in item], failures)
+        registry = json.loads((ROOT / "Plans/touch_closure.json").read_text(encoding="utf-8"))
+        rows = {row[3]: row for row in registry["rows"]}
+        profile = next(p for p in registry["profiles"] if p["profile_id"] == "TCP-CMDSC")
+        self.assertEqual((profile["owner_plan"], profile["plan_unit"]),
+                         ("Plans/Commands_System.md", "CS-081"))
+        self.assertEqual((profile["handler_status"], profile["wiring_status"]), ("specified", "specified"))
+        for action in self.ALL:
+            with self.subTest(action=action):
+                self.assertEqual(expected[action], ("TCP-CMDSC", "ui_action", "partial"))
+                self.assertEqual(rows[action][1:5], ["TCP-CMDSC", "ui_action", action, "partial"])
+                self.assertTrue(rows[action][5].strip())
+        self.assertEqual(sum(row[1] == "TCP-CMDSC" for row in registry["rows"]), 16)
+        self.assertEqual((len(registry["rows"]), len(registry["profiles"]),
+                          len(registry["excluded_tokens"]), len(registry["alias_bindings"])),
+                         (666, 134, 58, 65))
+
+    def test_unknown_commands_ids_are_rejected(self) -> None:
+        for unknown in self.UNKNOWN:
+            with self.subTest(action=unknown):
+                self.assertIsNone(validator.ACTION_RE.fullmatch(unknown))
+        for known in self.COMMANDS:
+            with self.subTest(action=known):
+                self.assertIsNotNone(validator.ACTION_RE.fullmatch(known))
+        actual = validator.schema_enum_actions
+
+        def changed(path, pointer):
+            result = actual(path, pointer)
+            return result | {"commands.synthetic"} if "commands_shortcuts" in path else result
+
+        with mock.patch.object(validator, "schema_enum_actions", side_effect=changed):
+            with self.assertRaisesRegex(ValueError, "eight-action inventory drift"):
+                validator.expected_inventory()
+
+    def test_no_primary_command_catalog_or_production_row_is_minted(self) -> None:
+        catalog = (ROOT / "Plans/UI_Command_Catalog.md").read_text(encoding="utf-8")
+        matrix = json.loads((ROOT / "Plans/Wiring_Matrix.production.json").read_text(encoding="utf-8"))
+        production_actions = {entry["ui_command_id"] for entry in matrix["entries"].values()}
+        registry = json.loads((ROOT / "Plans/touch_closure.json").read_text(encoding="utf-8"))
+        kinds = {row[3]: row[2] for row in registry["rows"]}
+        self.assertEqual(len(matrix["entries"]), 1149)
+        for action in self.ALL:
+            with self.subTest(action=action):
+                self.assertEqual(kinds[action], "ui_action")
+                self.assertNotIn(action, production_actions)
+                self.assertIsNone(re.search(r"^\| `" + re.escape(action) + r"` \|", catalog, re.M))
 
 
 if __name__ == "__main__":

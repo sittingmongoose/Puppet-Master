@@ -140,7 +140,7 @@ def _project_inventory_json(need):
             row["default"] = None
             row["recommended"] = None
     inventory["scope_policy"] = "all persisted Settings values are project-owned; no-project is ephemeral"
-    need(len(rows) == 887, "T44: compatibility Settings inventory count changed")
+    need(len(rows) == 889, "T44: compatibility Settings inventory count changed")
     notebook_ids = {
         "memory.notebook.auto-capture", "memory.notebook.resume-capsule",
         "memory.notebook.capsule-budget-tokens", "memory.notebook.injection-budget-tokens",
@@ -3036,7 +3036,7 @@ def apply(doc, notes, need):
     doc = _replace_once(
         doc,
         "PM7 SECTION 18/32: settings-data-json - inert JSON payload for PM_SETTINGS_DATA (T11 parse defer); parsed lazily on first settings access (script#pm7-settings-data)",
-        "PM7 SECTION 18/32: settings-data-json - current 887-row project-scoped compatibility payload; T44 runtime uses PM12_REFERENCE (script#pm7-settings-data)",
+        "PM7 SECTION 18/32: settings-data-json - current 889-row project-scoped compatibility payload; T44 runtime uses PM12_REFERENCE (script#pm7-settings-data)",
         need,
         "Settings section description",
     )

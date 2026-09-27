@@ -166,6 +166,21 @@
   }
 
   /* ---------- History ---------------------------------------------------------- */
+  /* T46 narrow adapter: the retained Raw Test Capture / Demonstration Video cards come from the
+     shared systems-integration authority (window.PM7_TEST_CAPTURE_EVIDENCE); this tab holds no
+     copy of the fixture data. They live here because the PM51 browserScm manager replaced the
+     legacy six-tab Browser & SCM projection, so their old Capture tab no longer renders in this
+     shell. Their buttons carry the same typed data-action attributes and dispatch through the
+     one live action dispatch into the existing capture handlers. */
+  function captureEvidenceSection() {
+    const surface = typeof window.PM7_TEST_CAPTURE_EVIDENCE === 'object' ? window.PM7_TEST_CAPTURE_EVIDENCE : null;
+    if (!surface) return '';
+    return PM51.section({
+      title: 'Captured evidence',
+      help: 'Raw Test Capture and Demonstration Video records kept from test runs, plus a session that ended with no recording. Opening one shows bounded concept evidence; nothing is recorded, played, or downloaded here.',
+      body: `<div class="capture-fixture-list" data-capture-evidence-surface="pm51-testing-history" data-production-runtime-state="unavailable">${surface.fixtures.map(fx => surface.cardOf(fx)).join('')}</div>` + PM51.note('Concept evidence only. View Source Capture and Inspect Provenance open local drawers; the owner routes behind them stay handler-unavailable.', 'info')
+    });
+  }
   function renderHistory() {
     const runs = t().runs;
     const items = runs.map((r, i) => ({ title: r.profile, meta: `${r.time} · ${r.duration}`, pill: PM51.pill(r.result), avatar: icon('test'), action: 'pm51-testing-open-run', data: { index: i } }));
@@ -174,6 +189,7 @@
         title: 'Recent runs', help: 'Open a run to see what happened.',
         body: items.length ? PM51.list(items) : PM51.empty('No runs yet', 'Runs appear here after tests have run.')
       }),
+      captureEvidenceSection(),
       /* Wave S: the canonical evidence rows (planning.verification.evidence-*, branching.worktrees.evidence-*)
          render inline on this tab, so the kit keeps no duplicate keep-days / screenshots / logs rows. */
       PM51.advanced([

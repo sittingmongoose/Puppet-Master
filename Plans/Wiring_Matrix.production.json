@@ -28738,9 +28738,12 @@
     },
     "catalog.forge_pipeline_open_in_browser": {
       "acceptance_checks": [
-        "cmd.forge.pipeline.open_in_browser names exactly one owner-adjudicated future target handlers::forge::pipeline_open_in_browser in Plans/Forge_Integrations.md#FGI-010; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.forge.pipeline.open_in_browser names exactly one owner-adjudicated future target handlers::forge::pipeline_open_in_browser in Plans/Forge_Integrations.md#FGI-010, with the exact official_destination_kind refined by Plans/Forge_Integrations.md#FGI-021; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Validate Plans/forge_integration_contracts.schema.json#/$defs/command_request -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
+        "Carry exactly one official_destination_kind: automation_run_artifacts binds the exact automation run (immutable automation_run_id plus pipeline/definition identity, job where applicable) behind Open artifacts in service, hosted_service_settings binds the exact service settings scope (non-null hosted_setting_scope_ref) behind Open service settings with no run identity, and automation_service_overview binds the selected automation service overview with its exact AutomationBinding behind the first-card Open in <provider> action with neither run nor scope identity. Never conflate run and settings identities, and never fabricate a run, a setting scope, or a provider origin.",
+        "Resolve the allowed official-page origin from the provider instance profile web_base_url, which may differ from the API host api_root; the handoff's allowed origin and route must match the instance/tenant profile-approved official UI origin and route reference; the API host is not an official UI-origin equality constraint.",
         "Read state.commands.forge_pipeline_open_in_browser.availability and state.commands.forge_pipeline_open_in_browser.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
+        "Project the central v2 response envelope (Plans/ui_command_response.schema.json) for acceptance, pending, and terminal state while the owner typed result remains the separate effect truth per UIW-023; dispatch acceptance is never completion.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
       ],
@@ -28752,7 +28755,7 @@
       },
       "disabled_reason_projection": "state.commands.forge_pipeline_open_in_browser.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
+        "description": "Owner typed result/receipt/projection only, carrying the exact official-page handoff for one destination kind; no EventRecord is admitted by this closure.",
         "effect_kind": "receipt",
         "receipt_or_event_refs": [
           "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
@@ -28760,9 +28763,9 @@
         ]
       },
       "event_test_requirements": [
-        "Assert cmd.forge.pipeline.open_in_browser records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+        "Assert cmd.forge.pipeline.open_in_browser records only its typed result/receipt/projection with exactly one official destination kind and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.forge.pipeline.open_in_browser: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.forge.pipeline.open_in_browser: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, destination-kind negatives (settings destination carries no run identity; overview destination carries neither run nor scope identity; run destination binds the immutable automation_run_id, not only the definition identity), official-origin/API-host mismatch negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::forge::pipeline_open_in_browser",
       "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
@@ -28792,7 +28795,307 @@
       ],
       "ui_command_id": "cmd.forge.pipeline.open_in_browser",
       "ui_element_id": "catalog.forge_pipeline_open_in_browser",
-      "ui_location": "Source Control forge sections, Settings connections, Project setup, official-page routes"
+      "ui_location": "Source Control forge sections, Settings connections, Project setup, official-page routes; automation-run artifacts, hosted service settings, and automation service overview destinations"
+    },
+    "catalog.forge_pipeline_artifact_download": {
+      "acceptance_checks": [
+        "cmd.forge.pipeline.artifact.download names exactly one owner-adjudicated future target handlers::forge::pipeline_artifact_download in Plans/Forge_Integrations.md#FGI-021; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "Validate Plans/forge_integration_contracts.schema.json#/$defs/command_request -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with AutomationBinding scope and expected automation-binding generation, exact run, job where applicable, provider artifact, RemoteArtifact record, and expected digest identity, local_mutation permission, target-bound confirmation, ObservableWork, and an explicit download or import disposition.",
+        "Download writes bytes to an exact FileSafe destination and import delivers them through an exact artifact-import handoff; both never auto-execute. A CI artifact target is never a release asset target and the release_assets capability never authorizes a CI download.",
+        "Read state.commands.forge_pipeline_artifact_download.availability and state.commands.forge_pipeline_artifact_download.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
+        "Project the central v2 response envelope (Plans/ui_command_response.schema.json) for acceptance, pending, and terminal state while the owner typed result remains the separate effect truth per UIW-023; dispatch acceptance is never completion.",
+        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+      ],
+      "accessibility_contract": {
+        "disabled_announcement": "Announce state.commands.forge_pipeline_artifact_download.disabled_reason, including handler_unavailable, without secrets or raw output.",
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.forge.pipeline.artifact.download request only when available.",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.forge.pipeline.artifact.download in every named consumer."
+      },
+      "disabled_reason_projection": "state.commands.forge_pipeline_artifact_download.disabled_reason",
+      "effect_contract": {
+        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
+        "effect_kind": "receipt",
+        "receipt_or_event_refs": [
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
+        ]
+      },
+      "event_test_requirements": [
+        "Assert cmd.forge.pipeline.artifact.download records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+      ],
+      "evidence_required": "Future production evidence for cmd.forge.pipeline.artifact.download: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "expected_event_types": [],
+      "handler_location": "handlers::forge::pipeline_artifact_download",
+      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
+      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+      "state_selector": "state.commands.forge_pipeline_artifact_download.availability",
+      "test_evidence": [
+        {
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.forge.pipeline.artifact.download reaches only its sole handler; the target string itself is not proof.",
+          "test_id": "wiring.catalog.forge_pipeline_artifact_download.dispatcher"
+        },
+        {
+          "evidence_kind": "state_projection",
+          "requirement": "Prove exact availability and disabled reason, including handler_unavailable before native evidence.",
+          "test_id": "wiring.catalog.forge_pipeline_artifact_download.state"
+        },
+        {
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "test_id": "wiring.catalog.forge_pipeline_artifact_download.effect"
+        },
+        {
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "test_id": "wiring.catalog.forge_pipeline_artifact_download.accessibility"
+        }
+      ],
+      "ui_command_id": "cmd.forge.pipeline.artifact.download",
+      "ui_element_id": "catalog.forge_pipeline_artifact_download",
+      "ui_location": "Source Control Actions & Pipelines or provider-neutral forge workspace; Settings Source Control; Project setup; palette/API"
+    },
+    "catalog.forge_pipeline_secret_set": {
+      "acceptance_checks": [
+        "cmd.forge.pipeline.secret.set names exactly one owner-adjudicated future target handlers::forge::pipeline_secret_set in Plans/Forge_Integrations.md#FGI-021; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "Validate Plans/forge_integration_contracts.schema.json#/$defs/command_request -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with AutomationBinding scope, exact setting name and settings scope, remote_side_effect permission with a human actor, a one-use protected human-broker ref with no inline secret bytes, and target-bound confirmation; no request, result, receipt, log, agent payload, or fixture carries secret values.",
+        "The FGI-015 hosted-administration matrix gates each area's read/write independently; secret values are never returned.",
+        "Read state.commands.forge_pipeline_secret_set.availability and state.commands.forge_pipeline_secret_set.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
+        "Project the central v2 response envelope (Plans/ui_command_response.schema.json) for acceptance, pending, and terminal state while the owner typed result remains the separate effect truth per UIW-023; dispatch acceptance is never completion.",
+        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+      ],
+      "accessibility_contract": {
+        "disabled_announcement": "Announce state.commands.forge_pipeline_secret_set.disabled_reason, including handler_unavailable, without secrets or raw output.",
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.forge.pipeline.secret.set request only when available.",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.forge.pipeline.secret.set in every named consumer."
+      },
+      "disabled_reason_projection": "state.commands.forge_pipeline_secret_set.disabled_reason",
+      "effect_contract": {
+        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
+        "effect_kind": "receipt",
+        "receipt_or_event_refs": [
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
+        ]
+      },
+      "event_test_requirements": [
+        "Assert cmd.forge.pipeline.secret.set records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+      ],
+      "evidence_required": "Future production evidence for cmd.forge.pipeline.secret.set: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts. Protected-broker single-use and no-secret-bytes negatives are additionally required.",
+      "expected_event_types": [],
+      "handler_location": "handlers::forge::pipeline_secret_set",
+      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
+      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+      "state_selector": "state.commands.forge_pipeline_secret_set.availability",
+      "test_evidence": [
+        {
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.forge.pipeline.secret.set reaches only its sole handler; the target string itself is not proof.",
+          "test_id": "wiring.catalog.forge_pipeline_secret_set.dispatcher"
+        },
+        {
+          "evidence_kind": "state_projection",
+          "requirement": "Prove exact availability and disabled reason, including handler_unavailable before native evidence.",
+          "test_id": "wiring.catalog.forge_pipeline_secret_set.state"
+        },
+        {
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "test_id": "wiring.catalog.forge_pipeline_secret_set.effect"
+        },
+        {
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "test_id": "wiring.catalog.forge_pipeline_secret_set.accessibility"
+        }
+      ],
+      "ui_command_id": "cmd.forge.pipeline.secret.set",
+      "ui_element_id": "catalog.forge_pipeline_secret_set",
+      "ui_location": "Source Control Actions & Pipelines or provider-neutral forge workspace; Settings Source Control; Project setup; palette/API"
+    },
+    "catalog.forge_pipeline_secret_remove": {
+      "acceptance_checks": [
+        "cmd.forge.pipeline.secret.remove names exactly one owner-adjudicated future target handlers::forge::pipeline_secret_remove in Plans/Forge_Integrations.md#FGI-021; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "Validate Plans/forge_integration_contracts.schema.json#/$defs/command_request -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with AutomationBinding scope, exact setting name and settings scope, remote_side_effect permission with a human actor, and target-bound confirmation; secret values are never returned.",
+        "The FGI-015 hosted-administration matrix gates each area's read/write independently.",
+        "Read state.commands.forge_pipeline_secret_remove.availability and state.commands.forge_pipeline_secret_remove.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
+        "Project the central v2 response envelope (Plans/ui_command_response.schema.json) for acceptance, pending, and terminal state while the owner typed result remains the separate effect truth per UIW-023; dispatch acceptance is never completion.",
+        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+      ],
+      "accessibility_contract": {
+        "disabled_announcement": "Announce state.commands.forge_pipeline_secret_remove.disabled_reason, including handler_unavailable, without secrets or raw output.",
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.forge.pipeline.secret.remove request only when available.",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.forge.pipeline.secret.remove in every named consumer."
+      },
+      "disabled_reason_projection": "state.commands.forge_pipeline_secret_remove.disabled_reason",
+      "effect_contract": {
+        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
+        "effect_kind": "receipt",
+        "receipt_or_event_refs": [
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
+        ]
+      },
+      "event_test_requirements": [
+        "Assert cmd.forge.pipeline.secret.remove records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+      ],
+      "evidence_required": "Future production evidence for cmd.forge.pipeline.secret.remove: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "expected_event_types": [],
+      "handler_location": "handlers::forge::pipeline_secret_remove",
+      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
+      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+      "state_selector": "state.commands.forge_pipeline_secret_remove.availability",
+      "test_evidence": [
+        {
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.forge.pipeline.secret.remove reaches only its sole handler; the target string itself is not proof.",
+          "test_id": "wiring.catalog.forge_pipeline_secret_remove.dispatcher"
+        },
+        {
+          "evidence_kind": "state_projection",
+          "requirement": "Prove exact availability and disabled reason, including handler_unavailable before native evidence.",
+          "test_id": "wiring.catalog.forge_pipeline_secret_remove.state"
+        },
+        {
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "test_id": "wiring.catalog.forge_pipeline_secret_remove.effect"
+        },
+        {
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "test_id": "wiring.catalog.forge_pipeline_secret_remove.accessibility"
+        }
+      ],
+      "ui_command_id": "cmd.forge.pipeline.secret.remove",
+      "ui_element_id": "catalog.forge_pipeline_secret_remove",
+      "ui_location": "Source Control Actions & Pipelines or provider-neutral forge workspace; Settings Source Control; Project setup; palette/API"
+    },
+    "catalog.forge_pipeline_variable_set": {
+      "acceptance_checks": [
+        "cmd.forge.pipeline.variable.set names exactly one owner-adjudicated future target handlers::forge::pipeline_variable_set in Plans/Forge_Integrations.md#FGI-021; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "Validate Plans/forge_integration_contracts.schema.json#/$defs/command_request -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with AutomationBinding scope, exact setting name and settings scope, remote_side_effect permission, a plain non-secret value that passes the secret scan, and target-bound confirmation; secret-like bytes belong in the secret broker flow instead.",
+        "The FGI-015 hosted-administration matrix gates each area's read/write independently; secret values are never returned.",
+        "Read state.commands.forge_pipeline_variable_set.availability and state.commands.forge_pipeline_variable_set.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
+        "Project the central v2 response envelope (Plans/ui_command_response.schema.json) for acceptance, pending, and terminal state while the owner typed result remains the separate effect truth per UIW-023; dispatch acceptance is never completion.",
+        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+      ],
+      "accessibility_contract": {
+        "disabled_announcement": "Announce state.commands.forge_pipeline_variable_set.disabled_reason, including handler_unavailable, without secrets or raw output.",
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.forge.pipeline.variable.set request only when available.",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.forge.pipeline.variable.set in every named consumer."
+      },
+      "disabled_reason_projection": "state.commands.forge_pipeline_variable_set.disabled_reason",
+      "effect_contract": {
+        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
+        "effect_kind": "receipt",
+        "receipt_or_event_refs": [
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
+        ]
+      },
+      "event_test_requirements": [
+        "Assert cmd.forge.pipeline.variable.set records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+      ],
+      "evidence_required": "Future production evidence for cmd.forge.pipeline.variable.set: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "expected_event_types": [],
+      "handler_location": "handlers::forge::pipeline_variable_set",
+      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
+      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+      "state_selector": "state.commands.forge_pipeline_variable_set.availability",
+      "test_evidence": [
+        {
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.forge.pipeline.variable.set reaches only its sole handler; the target string itself is not proof.",
+          "test_id": "wiring.catalog.forge_pipeline_variable_set.dispatcher"
+        },
+        {
+          "evidence_kind": "state_projection",
+          "requirement": "Prove exact availability and disabled reason, including handler_unavailable before native evidence.",
+          "test_id": "wiring.catalog.forge_pipeline_variable_set.state"
+        },
+        {
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "test_id": "wiring.catalog.forge_pipeline_variable_set.effect"
+        },
+        {
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "test_id": "wiring.catalog.forge_pipeline_variable_set.accessibility"
+        }
+      ],
+      "ui_command_id": "cmd.forge.pipeline.variable.set",
+      "ui_element_id": "catalog.forge_pipeline_variable_set",
+      "ui_location": "Source Control Actions & Pipelines or provider-neutral forge workspace; Settings Source Control; Project setup; palette/API"
+    },
+    "catalog.forge_pipeline_variable_remove": {
+      "acceptance_checks": [
+        "cmd.forge.pipeline.variable.remove names exactly one owner-adjudicated future target handlers::forge::pipeline_variable_remove in Plans/Forge_Integrations.md#FGI-021; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "Validate Plans/forge_integration_contracts.schema.json#/$defs/command_request -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with AutomationBinding scope, exact setting name and settings scope, remote_side_effect permission, and target-bound confirmation.",
+        "The FGI-015 hosted-administration matrix gates each area's read/write independently; secret values are never returned.",
+        "Read state.commands.forge_pipeline_variable_remove.availability and state.commands.forge_pipeline_variable_remove.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
+        "Project the central v2 response envelope (Plans/ui_command_response.schema.json) for acceptance, pending, and terminal state while the owner typed result remains the separate effect truth per UIW-023; dispatch acceptance is never completion.",
+        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+      ],
+      "accessibility_contract": {
+        "disabled_announcement": "Announce state.commands.forge_pipeline_variable_remove.disabled_reason, including handler_unavailable, without secrets or raw output.",
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.forge.pipeline.variable.remove request only when available.",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.forge.pipeline.variable.remove in every named consumer."
+      },
+      "disabled_reason_projection": "state.commands.forge_pipeline_variable_remove.disabled_reason",
+      "effect_contract": {
+        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
+        "effect_kind": "receipt",
+        "receipt_or_event_refs": [
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
+        ]
+      },
+      "event_test_requirements": [
+        "Assert cmd.forge.pipeline.variable.remove records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+      ],
+      "evidence_required": "Future production evidence for cmd.forge.pipeline.variable.remove: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "expected_event_types": [],
+      "handler_location": "handlers::forge::pipeline_variable_remove",
+      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
+      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+      "state_selector": "state.commands.forge_pipeline_variable_remove.availability",
+      "test_evidence": [
+        {
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.forge.pipeline.variable.remove reaches only its sole handler; the target string itself is not proof.",
+          "test_id": "wiring.catalog.forge_pipeline_variable_remove.dispatcher"
+        },
+        {
+          "evidence_kind": "state_projection",
+          "requirement": "Prove exact availability and disabled reason, including handler_unavailable before native evidence.",
+          "test_id": "wiring.catalog.forge_pipeline_variable_remove.state"
+        },
+        {
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "test_id": "wiring.catalog.forge_pipeline_variable_remove.effect"
+        },
+        {
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "test_id": "wiring.catalog.forge_pipeline_variable_remove.accessibility"
+        }
+      ],
+      "ui_command_id": "cmd.forge.pipeline.variable.remove",
+      "ui_element_id": "catalog.forge_pipeline_variable_remove",
+      "ui_location": "Source Control Actions & Pipelines or provider-neutral forge workspace; Settings Source Control; Project setup; palette/API"
     },
     "catalog.forge_pipeline_open_job": {
       "acceptance_checks": [
@@ -29437,6 +29740,66 @@
       "ui_command_id": "cmd.forge.repository.open_in_browser",
       "ui_element_id": "catalog.forge_repository_open_in_browser",
       "ui_location": "Source Control forge sections, Settings connections, Project setup, official-page routes"
+    },
+    "catalog.forge_repository_delete": {
+      "acceptance_checks": [
+        "cmd.forge.repository.delete names exactly one owner-adjudicated future target handlers::forge::repository_delete in Plans/Forge_Integrations.md#FGI-021; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "Validate Plans/forge_integration_contracts.schema.json#/$defs/command_request -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with exact provider, variant, normalized host, stable account, PM repo_id, provider repository ID, locator, and binding generation, current direct revalidation with mutation_safety=verified, effective authority, remote_side_effect permission with a human actor, verified-create result and receipt refs, and fresh target-bound human confirmation.",
+        "Admit only reconciliation-only retry through SCS-016 exact remote reconciliation on effect_unknown; delete never runs as automatic rollback, as part of Continue Setup or any resume, speculatively while the remote effect is unknown, on provider-scope reuse, or authorized by selected-source authentication.",
+        "Read state.commands.forge_repository_delete.availability and state.commands.forge_repository_delete.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
+        "Project the central v2 response envelope (Plans/ui_command_response.schema.json) for acceptance, pending, and terminal state while the owner typed result remains the separate effect truth per UIW-023; dispatch acceptance is never completion.",
+        "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+      ],
+      "accessibility_contract": {
+        "disabled_announcement": "Announce state.commands.forge_repository_delete.disabled_reason, including handler_unavailable, without secrets or raw output.",
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.forge.repository.delete request only when available.",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.forge.repository.delete in every named consumer."
+      },
+      "disabled_reason_projection": "state.commands.forge_repository_delete.disabled_reason",
+      "effect_contract": {
+        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
+        "effect_kind": "receipt",
+        "receipt_or_event_refs": [
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
+        ]
+      },
+      "event_test_requirements": [
+        "Assert cmd.forge.repository.delete records only its typed result/receipt/projection and emits no unexpected persisted domain event."
+      ],
+      "evidence_required": "Future production evidence for cmd.forge.repository.delete: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts. Destructive confirmation, verified-create binding, and reconciliation-only retry negatives are additionally required.",
+      "expected_event_types": [],
+      "handler_location": "handlers::forge::repository_delete",
+      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
+      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+      "state_selector": "state.commands.forge_repository_delete.availability",
+      "test_evidence": [
+        {
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.forge.repository.delete reaches only its sole handler; the target string itself is not proof.",
+          "test_id": "wiring.catalog.forge_repository_delete.dispatcher"
+        },
+        {
+          "evidence_kind": "state_projection",
+          "requirement": "Prove exact availability and disabled reason, including handler_unavailable before native evidence.",
+          "test_id": "wiring.catalog.forge_repository_delete.state"
+        },
+        {
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "test_id": "wiring.catalog.forge_repository_delete.effect"
+        },
+        {
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "test_id": "wiring.catalog.forge_repository_delete.accessibility"
+        }
+      ],
+      "ui_command_id": "cmd.forge.repository.delete",
+      "ui_element_id": "catalog.forge_repository_delete",
+      "ui_location": "Project recovery Delete Repository route; provider-neutral forge workspace; Settings Source Control; palette/API"
     },
     "catalog.forge_repository_policy_apply": {
       "acceptance_checks": [
@@ -44638,6 +45001,67 @@
       "event_test_requirements": [
         "Assert cmd.project.open records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
+    },
+    "catalog.project_resume_creation": {
+      "acceptance_checks": [
+        "cmd.project.resume_creation names exactly one owner-adjudicated future target handlers::project::resume_creation in Plans/Project_System.md#PJCT-007; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "Validate Plans/project_system_contracts.schema.json#/$defs/project_action_request -> Plans/project_system_contracts.schema.json#/$defs/project_action_result with the Plans/project_system_contracts.schema.json#/$defs/creation_recovery_resume_binding join over the retained Plans/project_system_contracts.schema.json#/$defs/project_creation_recovery_context; replaying the original creation idempotency key re-observes its terminal result with replayed=true and never resumes.",
+        "Require verified_created remote state, the exact reviewed draft binding, the verified repository binding, a fresh resume-namespaced attempt identity, current Project/registry fences, a revalidated permission snapshot with explicit resume authorization, and remaining-effects-only scope; stale or mismatched joins block before mutation.",
+        "Read state.commands.project_resume_creation.availability and state.commands.project_resume_creation.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
+        "Project the central v2 response envelope (Plans/ui_command_response.schema.json) for acceptance, pending, and terminal state while the owner typed project_action_result remains the separate effect truth per UIW-023; dispatch acceptance is never completion.",
+        "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
+        "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic return with the exact return context echoed byte-for-byte; Continue Setup stays visible but unavailable until this registration, wiring, and handler availability land.",
+        "Open Repository dispatches through the existing cmd.forge.repository.open_in_browser route and Delete Repository through the admitted cmd.forge.repository.delete route; neither is Project-local mutation."
+      ],
+      "accessibility_contract": {
+        "disabled_announcement": "Announce state.commands.project_resume_creation.disabled_reason, including handler_unavailable, without secrets or raw output.",
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.project.resume_creation request only when available.",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.project.resume_creation in every named consumer."
+      },
+      "disabled_reason_projection": "state.commands.project_resume_creation.disabled_reason",
+      "effect_contract": {
+        "description": "Resumed Project creation completing to listed/persisted with recovery plus terminal owner receipts; exact idempotent replay re-observes with replayed=true and no new effects. No new EventRecord is admitted.",
+        "effect_kind": "receipt",
+        "receipt_or_event_refs": [
+          "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
+          "Plans/project_system_contracts.schema.json#/$defs/project_setup_commit_binding"
+        ]
+      },
+      "event_test_requirements": [
+        "Assert cmd.project.resume_creation completes only to listed/persisted with recovery plus terminal receipts, replays idempotently with replayed=true, and emits zero unregistered EventRecord effects."
+      ],
+      "evidence_required": "Future production evidence for cmd.project.resume_creation: source-hashed dispatcher and native handler, typed request/result/resume-binding/recovery-context fixtures, state and disabled-reason fixtures, permission/currentness/authorization/idempotency and restart/race negatives, receipt/projection assertion with zero unregistered events, render/control/accessibility evidence, exact reverse coverage, and exact return-context echo. This production-intent row alone proves none of those runtime facts.",
+      "expected_event_types": [],
+      "handler_location": "handlers::project::resume_creation",
+      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
+      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
+      "state_selector": "state.commands.project_resume_creation.availability",
+      "test_evidence": [
+        {
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.project.resume_creation reaches only its sole handler; the target string itself is not proof.",
+          "test_id": "wiring.catalog.project_resume_creation.dispatcher"
+        },
+        {
+          "evidence_kind": "state_projection",
+          "requirement": "Prove exact availability and disabled reason, including handler_unavailable before native evidence.",
+          "test_id": "wiring.catalog.project_resume_creation.state"
+        },
+        {
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "test_id": "wiring.catalog.project_resume_creation.effect"
+        },
+        {
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "test_id": "wiring.catalog.project_resume_creation.accessibility"
+        }
+      ],
+      "ui_command_id": "cmd.project.resume_creation",
+      "ui_element_id": "catalog.project_resume_creation",
+      "ui_location": "Projects page; Product Onboarding automatic_preparation recovery; palette/API"
     },
     "catalog.project_open_settings": {
       "ui_element_id": "catalog.project_open_settings",

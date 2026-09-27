@@ -703,6 +703,40 @@
       ]
     },
     {
+      "disposition_id": "scd.project.recovery_context.v1",
+      "system_id": "project",
+      "owner_doc": "Plans/Project_System.md",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_creation_recovery_context",
+      "record_kinds": [
+        "pm.project.creation_recovery_context.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-AUTHORITY-INDEFINITE",
+          "RP-IDENTITY-365D"
+        ],
+        "hold_rule": "The retained recovery holds until the creation reaches a terminal Project outcome: listed registration or owner-confirmed abandonment after Forge-side reconciliation. Restart lookup returns the retained recovery under its recovery identity and original command-instance/idempotency keys.",
+        "expiry_rule": "Eligible for cleanup only after a terminal outcome with all references released. No ordinary expiry may drop an unfinished recovery; crash restart reconciles in-flight child effects through their owner before retry."
+      },
+      "redaction_transform_ids": [
+        "rt.project_named_plan.v1"
+      ],
+      "migration_rule": "Declared key shape project_creation_recovery_context.v1:{recovery_id} is stated intent; no writer, adapter, or restore path exists until physical registration. The durable context carries refs and digests to owner results and receipts and never re-mints them.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "not_applicable",
+      "runtime_evidence": false,
+      "rationale": "Pre-listing recovery has no ProjectRecord row, so the retained creation-recovery context is the durable owner record for the unfinished creation: original operation identity, immutable original terminal-result ref/digest, Forge create evidence with verified repository binding, reviewed draft binding, settled/remaining effects, composition revision/hash, and the one-atomic-claim one-active-resume slot. Durable custody is not a receipt family and admits no writer until physical registration.",
+      "source_refs": [
+        "Plans/Project_System.md#PJCT-007",
+        "Plans/storage-plan.md#SP-321",
+        "Plans/project_system_contracts.schema.json"
+      ]
+    },
+    {
       "disposition_id": "scd.named_plan.durable.v1",
       "system_id": "named_plan",
       "owner_doc": "Plans/Named_Plan_System.md",
@@ -15691,7 +15725,8 @@
                   "cmd.project.new_local",
                   "cmd.project.new_github_repo",
                   "cmd.project.add_existing",
-                  "cmd.project.open"
+                  "cmd.project.open",
+                  "cmd.project.resume_creation"
                 ]
               },
               "command_instance_id": {
@@ -76558,7 +76593,7 @@
             ]
           },
           "existing_index_root": {
-            "title": "Generic EventRecord index checkpoint custody — external proposal",
+            "title": "Generic EventRecord index checkpoint custody \u2014 external proposal",
             "description": "NEW derived checkpoint; typed source-selection binding is a verified reader projection of existing CURRENT/manifest owners, not a replacement on-disk control format. Native parsing/auth/durability remain separate proof obligations."
           },
           "existing_index_root__source_selection": {

@@ -25,6 +25,35 @@
   const serverNameOf = (S) => (S.sess.server.name == null ? suggestions(S)[0] : S.sess.server.name);
   const PLATFORM_NAMES = { truenas: 'TrueNAS', unraid: 'Unraid', synology: 'Synology', qnap: 'QNAP', linux: 'Linux', windows: 'Windows', macos: 'macOS' };
 
+  /* Owner-result gating (SRV-004/SRV-005 §4.2): claim, bootstrap, waiting PairingRun, explicit human identity
+     confirmation, and approve-with-ClientTrustRecord are five separate adopted outcomes. Claim/bootstrap never
+     imply trust. Transport (F.op phases) never mints anything; only O55.ownerResults.adopt() does, and the default
+     browser without a host adopts nothing — pending with retry. Pairing invite codes and candidate identity words
+     live only in O55.ephemeral (memory); the persisted session keeps generation/expiry/ids/trust, never raw code. */
+  const setupCodes = new Map(); // one-time claim input; never part of S.sess
+  const OR = () => O55.ownerResults;
+  const EPH = () => O55.ephemeral;
+  const selfCandidate = (S) => 'candidate:' + U.slug(S.env.client.name);
+  const claimChain = (S) => {
+    const u = unclaimed(S);
+    return { claim: F.state(S, 'claim:' + u.id), boot: F.state(S, 'bootstrap:' + u.id), reach: F.state(S, 'selfpair:' + u.id), ok: F.state(S, 'selfapprove:' + u.id) };
+  };
+  const adoptedRow = (label, adopted, transport, failed) => ({ key: label, label,
+    status: adopted ? 'done' : failed ? 'failed' : transport && transport.state === 'running' ? 'active' : transport && transport.state === 'done' ? 'waiting' : 'waiting' });
+  /* Attempt to adopt the injected test-only fixture for a request; default (no fixture/host) stays pending. */
+  const tryAdopt = (req, curGen) => {
+    if (!req || !OR() || !OR().take || !OR().adopt) return { ok: false, reason: 'host_unavailable' };
+    return OR().adopt(req, OR().take(req.id), curGen != null ? { generation: curGen } : {});
+  };
+  const pendingCopy = (reason) => {
+    if (reason === 'host_unavailable' || reason === 'pending_no_result' || reason === 'fixture_not_injected') return T('server.confirm.pendingHost');
+    if (reason === 'stale_generation' || reason === 'stale_nonce') return T('server.ready.staleAdopt');
+    if (reason === 'wrong_target' || reason === 'wrong_operation') return T('server.ready.wrongTarget');
+    if (reason === 'duplicate_replay') return T('server.ready.replayAdopt');
+    if (reason === 'postcondition_missing' || reason === 'postcondition_not_separate') return T('server.confirm.evidenceMissing');
+    return T('server.confirm.ownerFail', { reason: String(reason || 'refused') });
+  };
+
   /* ------------------------------------------------------------------ S1: what kind of computer + install steps */
   def('s-kind', {
     chapter: 'computer', stage: 'simple_path', charmSlot: 'server',
@@ -94,11 +123,67 @@
     bind: { addr(S, v) { S.sess.server.addr = v; if (String(v).trim().toLowerCase() !== unclaimed(S).address) S.sess.server.target = null; S.save(); O55.ui.refresh(); } }
   });
 
+  /* Staged adoption: each transport completion attempts to adopt its matching owner result. A missing,
+     failed, refused, stale, or wrong-target result keeps setup pending with retry and never advances. */
+  function adoptClaim(S) {
+    const sv = S.sess.server, u = unclaimed(S);
+    const v = tryAdopt(sv.orClaimReq);
+    if (!v.ok) { sv.orClaimErr = v.reason; S.save(); O55.ui.refresh(); return; }
+    sv.orClaimOk = true; sv.orClaimErr = null;
+    if (!sv.orBootReq) sv.orBootReq = OR().begin('cmd.server.bootstrap.start', { server: u.id });
+    sv.orBootErr = null; S.save();
+    const name = serverNameOf(S).trim(), form = (sv.kind || 'nas') === 'nas' ? 'container' : 'standalone';
+    F.reset(S, 'bootstrap:' + u.id);
+    F.op(S, 'bootstrap:' + u.id, 'cmd.server.bootstrap.start', [{ key: 'roots', ms: 800 }, { key: 'baseline', ms: 700 }, { key: 'ready', ms: 500 }], {
+      payload: { server: u.id, name, execution_form: form },
+      onDone: () => { adoptBoot(S); }
+    });
+    O55.ui.refresh();
+  }
+  function adoptBoot(S) {
+    const sv = S.sess.server, u = unclaimed(S);
+    const v = tryAdopt(sv.orBootReq);
+    if (!v.ok) { sv.orBootErr = v.reason; S.save(); O55.ui.refresh(); return; }
+    sv.orBootOk = true; sv.orBootErr = null;
+    if (!sv.orRunReq) sv.orRunReq = OR().begin('cmd.client.pair.start', { server: u.id, client: S.env.client.id, candidate: selfCandidate(S), generation: sv.selfPairGen });
+    sv.orRunErr = null; S.save();
+    F.reset(S, 'selfpair:' + u.id);
+    F.op(S, 'selfpair:' + u.id, 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }], {
+      payload: { server: u.id, pairing_candidate_id: selfCandidate(S), method: 'setup_code' },
+      onDone: () => { adoptSelfRun(S); }
+    });
+    O55.ui.refresh();
+  }
+  function adoptSelfRun(S) {
+    const sv = S.sess.server, u = unclaimed(S);
+    const res = OR().take(sv.orRunReq && sv.orRunReq.id);
+    const v = tryAdopt(sv.orRunReq);
+    if (!v.ok) { sv.orRunErr = v.reason; S.save(); O55.ui.refresh(); return; }
+    sv.orRunOk = true; sv.orRunErr = null; sv.selfRun = { id: res.pairing_run.id, generation: res.pairing_run.generation, expires_at: res.pairing_run.expires_at };
+    if (res && res.identity && res.identity.words && EPH()) EPH().setWords('self:' + u.id, res.identity.words);
+    S.save(); O55.ui.refresh();
+  }
+  function adoptSelfApprove(S) {
+    const sv = S.sess.server, u = unclaimed(S);
+    if (!sv.orApproveReq) { sv.orApproveErr = 'pending_no_result'; S.save(); O55.ui.refresh(); return; }
+    if (!sv.selfConfirmed || !sv.selfRun || sv.selfRun.generation !== sv.selfPairGen || sv.selfRun.expires_at <= Date.now() || !(EPH() && EPH().getWords('self:' + u.id))) { sv.orApproveErr = 'waiting_pairing_identity_missing'; S.save(); O55.ui.refresh(); return; }
+    const res = OR().take(sv.orApproveReq.id);
+    const v = tryAdopt(sv.orApproveReq);
+    if (!v.ok) { sv.orApproveErr = v.reason; S.save(); O55.ui.refresh(); return; }
+    const trustId = res.trust.id;
+    const name = serverNameOf(S).trim();
+    sv.claimed = true; sv.id = u.id; sv.displayName = name; sv.selfTrustId = trustId; sv.orApproveErr = null; S.save();
+    O55.draft.set(md(S), { server_mode: 'new_server', server_ref: sv.id, server_trust_confirmed: true, storage_mode: 'with_server', remote_mode: md(S).remote_mode === 'none' ? 'local_or_vpn' : md(S).remote_mode });
+    S.save(); O55.motion.after(O55.motion.T.success, () => { if (S.sess.screen === 's-confirm') O55.ui.go('s-ready'); });
+    O55.ui.refresh();
+  }
+
   /* ------------------------------------------------------------------ S2: name it and confirm (the Server preflow's commit) */
   def('s-confirm', {
     chapter: 'computer', stage: 'server_storage_client',
     scene: (S) => ({ id: 'where', beat: 'server' }),
     eyebrow: () => T('server.confirm.eyebrow'),
+    enter(S) { delete S.sess.server.code; S.save(); },
     title: (S) => T('server.confirm.title', { name: unclaimed(S).name }),
     lead: () => T('server.confirm.lead'),
     body(S) {
@@ -109,67 +194,231 @@
       out += C.field({ bind: 'name', label: T('server.confirm.nameLabel'), value: name, placeholder: 'Home NAS', error: F.nonEmpty(name) ? '' : T('name.empty'), invalid: !F.nonEmpty(name) });
       out += F.chips('suggest', suggestions(S), name);
       const st = F.state(S, 'claim:' + u.id);
-      out += C.field({ bind: 'code', label: T('server.confirm.codeLabel'), value: sv.code || '', placeholder: '482 913', hint: T('server.confirm.codeHint', { name: u.name }), error: st && st.state === 'failed' ? T('server.confirm.codeWrong', { name: u.name }) : '', invalid: st && st.state === 'failed' });
-      if (st && st.state !== 'failed') out += F.phases(S, 'claim:' + u.id, ['claim', 'pair', 'check'], { claim: T('server.confirm.phases.claim', { name: name }), pair: T('server.confirm.phases.pair'), check: T('server.confirm.phases.check') });
-      else out += C.note(T('server.confirm.willLine', { name }), 'info', 'lock');
+      const failedCode = (st && st.state === 'failed') || sv.orClaimErr === 'setup_code_mismatch';
+      out += C.field({ bind: 'code', label: T('server.confirm.codeLabel'), value: setupCodes.get(u.id) || '', placeholder: '482 913', hint: T('server.confirm.codeHint', { name: u.name }), error: failedCode ? T('server.confirm.codeWrong', { name: u.name }) : '', invalid: failedCode });
+      if (!sv.orClaimReq) { out += C.note(T('server.confirm.willLine', { name }), 'info', 'lock'); return out; }
+      const ch = claimChain(S);
+      out += C.phases([
+        adoptedRow(T('server.confirm.phases.claim', { name: name }), sv.orClaimOk, ch.claim, !!sv.orClaimErr),
+        adoptedRow(T('server.confirm.phases.setup', { name: name }), sv.orBootOk, ch.boot, !!sv.orBootErr),
+        adoptedRow(T('server.confirm.phases.check'), sv.orRunOk, ch.reach, !!sv.orRunErr),
+        adoptedRow(T('server.confirm.phases.approval'), false, ch.ok, !!sv.orApproveErr)
+      ]);
+      const err = sv.orApproveErr || sv.orRunErr || sv.orBootErr || sv.orClaimErr;
+      if (err && err !== 'setup_code_mismatch') out += C.note(pendingCopy(err), err === 'host_unavailable' || err === 'pending_no_result' ? 'info' : 'warn', 'server');
+      /* This Client's own waiting request: visible candidate identity confirmation, never auto-approved. */
+      if (sv.orRunOk && !sv.claimed) {
+        const w = (EPH() && EPH().getWords('self:' + u.id)) || '';
+        out += `<div class="o55-row" data-key="selfcand">${C.small('computer', 18)}`
+          + `<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.confirm.selfTitle'))}</span>`
+          + `<span class="o55-rowmeta">${U.esc(w || T('server.ready.wordsMissing'))}</span></span></div>`;
+        out += `<p class="o55-hint" data-key="selfhint">${U.esc(T('server.confirm.selfHint'))}</p>`;
+        out += `<div class="o55-checkline" data-key="selfmatch"><button type="button" role="checkbox" aria-checked="${sv.selfConfirmed ? 'true' : 'false'}" class="o55-check${sv.selfConfirmed ? ' is-on' : ''}" data-o55-do="selfMatch" data-pm-hover-exempt="true">${sv.selfConfirmed ? C.small('check', 13) : ''}</button><span>${U.esc(T('server.confirm.matchWords'))}</span></div>`;
+      }
       return out;
     },
     foot(S) {
-      const sv = S.sess.server, st = F.state(S, 'claim:' + unclaimed(S).id);
+      const sv = S.sess.server, ch = claimChain(S), u = unclaimed(S);
       if (sv.claimed) return { primary: { label: T('chrome.continue'), do: 'next' } };
       const name = serverNameOf(S);
-      const running = st && st.state === 'running';
-      const reason = !F.nonEmpty(name) ? T('name.empty') : !F.nonEmpty(sv.code) ? T('server.confirm.codeHint', { name: unclaimed(S).name }) : running ? T('chrome.working') : '';
-      return { primary: { label: T('server.confirm.button'), do: 'confirm', disabled: !!reason, reason } };
+      const running = [ch.claim, ch.boot, ch.reach, ch.ok].some((st) => st && st.state === 'running');
+      if (running) return { primary: { label: T('chrome.working'), do: 'noop', disabled: true, reason: T('chrome.working') } };
+      if (!sv.orClaimReq) {
+        const reason = !F.nonEmpty(name) ? T('name.empty') : !F.nonEmpty(setupCodes.get(u.id)) ? T('server.confirm.codeHint', { name: u.name }) : '';
+        return { primary: { label: T('server.confirm.button'), do: 'confirm', disabled: !!reason, reason } };
+      }
+      if (!sv.orClaimOk || !sv.orBootOk || !sv.orRunOk) return { primary: { label: T('server.confirm.retry'), do: 'retry' } };
+      if (!sv.selfConfirmed || !(EPH() && EPH().getWords('self:' + u.id))) return { primary: { label: T('server.confirm.approveSelf'), do: 'approveSelf', disabled: true, reason: T('server.confirm.matchWords') } };
+      if (F.state(S, 'selfapprove:' + u.id) && !sv.orApproveErr) return { primary: { label: T('server.confirm.retry'), do: 'retry' } };
+      return { primary: { label: T('server.confirm.approveSelf'), do: 'approveSelf' } };
     },
     do: {
       suggest(S, v) { S.sess.server.name = v; S.save(); O55.ui.refresh(); },
+      noop() {},
+      selfMatch(S) { if (!(EPH() && EPH().getWords('self:' + unclaimed(S).id))) return; S.sess.server.selfConfirmed = !S.sess.server.selfConfirmed; S.save(); O55.ui.refresh(); },
       confirm(S) {
         const sv = S.sess.server, u = unclaimed(S), name = serverNameOf(S).trim();
-        const ok = String(sv.code || '').replace(/\s/g, '') === u.setupCode.replace(/\s/g, '');
-        sv.confirmed = true; S.save();
+        const ok = String(setupCodes.get(u.id) || '').replace(/\s/g, '') === u.setupCode.replace(/\s/g, '');
+        setupCodes.delete(u.id); delete sv.code; sv.selfPairGen = (sv.selfPairGen || 0) + 1; sv.selfRun = null; if (EPH()) EPH().clearWords('self:' + u.id);
+        sv.orClaimReq = OR().begin('cmd.server.claim', { server: u.id });
+        sv.orClaimOk = false; sv.orClaimErr = null; sv.orBootReq = null; sv.orBootOk = false; sv.orBootErr = null;
+        sv.orRunReq = null; sv.orRunOk = false; sv.orRunErr = null; sv.selfConfirmed = false;
+        sv.orApproveReq = null; sv.orApproveErr = null; sv.confirmed = true; S.save();
         F.reset(S, 'claim:' + u.id);
-        F.op(S, 'claim:' + u.id, 'cmd.server.claim', [{ key: 'claim', ms: 900, fail: () => (ok ? null : 'setup_code_mismatch') }, { key: 'pair', ms: 800 }, { key: 'check', ms: 700 }], {
+        F.op(S, 'claim:' + u.id, 'cmd.server.claim', [{ key: 'claim', ms: 900, fail: () => (ok ? null : 'setup_code_mismatch') }], {
           payload: { server: u.id, name },
-          onFail: () => { sv.confirmed = false; S.save(); },
-          onDone: () => {
-            sv.claimed = true; sv.id = 'pm:' + U.slug(name); sv.displayName = name; S.save();
-            O55.draft.set(md(S), { server_mode: 'new_server', server_ref: sv.id, server_trust_confirmed: true, storage_mode: 'with_server', remote_mode: md(S).remote_mode === 'none' ? 'local_or_vpn' : md(S).remote_mode });
-            S.save(); O55.motion.after(O55.motion.T.success, () => { if (S.sess.screen === 's-confirm') O55.ui.go('s-ready'); });
-          }
+          onFail: () => { sv.confirmed = false; sv.orClaimErr = 'setup_code_mismatch'; S.save(); O55.ui.refresh(); },
+          /* Transport done is not a claim: adoption of a matching owner result is still required. */
+          onDone: () => { adoptClaim(S); }
+        });
+      },
+      retry(S) {
+        const sv = S.sess.server;
+        if (!sv.orClaimOk) return adoptClaim(S);
+        if (!sv.orBootOk) return adoptBoot(S);
+        if (!sv.orRunOk) return adoptSelfRun(S);
+        if (sv.selfConfirmed) return adoptSelfApprove(S);
+        O55.ui.refresh();
+      },
+      approveSelf(S) {
+        const sv = S.sess.server, u = unclaimed(S);
+        if (!sv.orRunOk || !sv.selfConfirmed || sv.claimed || !sv.selfRun || sv.selfRun.expires_at <= Date.now() || !(EPH() && EPH().getWords('self:' + u.id))) return;
+        if (!sv.orApproveReq) sv.orApproveReq = OR().begin('cmd.client.pair.approve', { server: u.id, candidate: selfCandidate(S), client: S.env.client.id, generation: sv.selfPairGen, run_id: sv.selfRun.id });
+        sv.orApproveErr = null; S.save();
+        F.reset(S, 'selfapprove:' + u.id);
+        F.op(S, 'selfapprove:' + u.id, 'cmd.client.pair.approve', [{ key: 'approve', ms: 800 }], {
+          payload: { server: u.id, pairing_candidate_id: selfCandidate(S), client: S.env.client.id },
+          onDone: () => { adoptSelfApprove(S); }
         });
       },
       next(S) { O55.ui.go('s-ready'); }
     },
     bind: {
       name(S, v) { S.sess.server.name = v; S.save(); O55.ui.refresh(); },
-      code(S, v) { S.sess.server.code = v; S.save(); O55.ui.refresh(); }
+      code(S, v) { setupCodes.set(unclaimed(S).id, String(v)); delete S.sess.server.code; O55.ui.refresh(); }
     }
   });
 
   /* ------------------------------------------------------------------ S3: ready + pairing card */
+  /* The pairing console: the invite a nearby device answers, a waiting request only this person can approve, and the
+     devices already trusted. Expiring or rotating the invite retires only the invite (SRV-004): a device whose
+     ClientTrustRecord was issued stays paired. Only a waiting request of the current invite generation can be approved. */
+  const GUEST = { id: 'client:phone', name: "Jared's iPhone" };
+  const guestCandidateId = (S) => 'pairing_candidate:' + U.slug(GUEST.name) + ':' + (S.sess.server.pairGen || 0);
+  function newInvite(S) {
+    const sv = S.sess.server;
+    sv.pairGen = (sv.pairGen || 0) + 1;
+    /* memory-only code: never written to the persisted session (finding 5). A reload loses it by design. */
+    if (EPH()) EPH().setInvite(sv.pairGen, 'P' + Math.floor(1000 + Math.random() * 8999) + '-' + ['K7Q', 'M2X', 'W9T'][Math.floor(Math.random() * 3)]);
+    sv.pairUntil = Date.now() + 600000;
+    sv.inviteId = 'pairingrun:' + (sv.id || 'pm:new') + ':' + sv.pairGen;
+    sv.runReqs = sv.runReqs || {}; sv.runOk = sv.runOk || {};
+    delete sv.pairCode; delete sv.candidateAt; /* legacy durable code/timer must not persist */
+    S.save();
+  }
+  /* A waiting candidate appears only after its current-generation PairingRun owner result is adopted. No timer
+     fabricates a request: the default preview shows "no requests yet" with the invite still usable. */
+  function ensureRunReq(S) {
+    const sv = S.sess.server;
+    sv.runReqs = sv.runReqs || {};
+    if (!sv.runReqs[sv.pairGen]) sv.runReqs[sv.pairGen] = OR().begin('cmd.client.pair.start', { server: sv.id, client: GUEST.id, candidate: guestCandidateId(S), generation: sv.pairGen });
+    S.save();
+    return sv.runReqs[sv.pairGen];
+  }
+  function pollGuestRun(S) {
+    const sv = S.sess.server;
+    if (!inviteOpen(S)) return;
+    if ((sv.candidates || []).some((c) => c.state === 'waiting' && c.gen === sv.pairGen)) return;
+    const req = ensureRunReq(S);
+    const res = OR().take(req.id);
+    const v = tryAdopt(req, sv.pairGen);
+    if (!v.ok) { sv.runErr = v.reason; S.save(); return; }
+    sv.runErr = null;
+    sv.runOk = sv.runOk || {}; sv.runOk[guestCandidateId(S)] = true;
+    if (res && res.identity && res.identity.words && EPH()) EPH().setWords(guestCandidateId(S), res.identity.words);
+    sv.candidates = (sv.candidates || []).concat([{ id: guestCandidateId(S), name: GUEST.name, gen: sv.pairGen, run_id: res.pairing_run.id, run_until: res.pairing_run.expires_at, state: 'waiting', confirmed: false }]);
+    S.save();
+  }
+  const inviteOpen = (S) => Date.now() <= (S.sess.server.pairUntil || 0);
+  function adoptGuestApprove(S, c) {
+    const sv = S.sess.server;
+    sv.approveReqs = sv.approveReqs || {};
+    const req = sv.approveReqs[c.id];
+    if (!req) return;
+    if (c.state !== 'waiting' || c.gen !== sv.pairGen || !inviteOpen(S) || c.run_until <= Date.now() || !c.confirmed || !(EPH() && EPH().getWords(c.id))) { sv.approveErr = 'stale_generation'; S.save(); O55.ui.refresh(); return; }
+    const res = OR().take(req.id);
+    const v = tryAdopt(req, sv.pairGen);
+    if (!v.ok) { sv.approveErr = v.reason; S.save(); O55.ui.refresh(); return; }
+    sv.approveErr = null;
+    c.state = 'approved';
+    const trustId = res.trust.id;
+    sv.paired = (sv.paired || []).concat([{ id: trustId, name: c.name }]);
+    S.save(); O55.ui.refresh();
+  }
   def('s-ready', {
     chapter: 'computer', stage: 'server_storage_client',
     scene: (S) => ({ id: 'where', beat: 'server' }),
     eyebrow: () => T('server.ready.eyebrow'),
     title: (S) => T('server.ready.title', { name: S.sess.server.displayName || 'Home NAS' }),
     lead: () => T('server.ready.lead'),
-    enter(S) { const sv = S.sess.server; if (!sv.pairUntil || Date.now() > sv.pairUntil) { sv.pairUntil = Date.now() + 600000; sv.pairCode = 'P' + Math.floor(1000 + Math.random() * 8999) + '-' + ['K7Q', 'M2X', 'W9T'][Math.floor(Math.random() * 3)]; S.save(); } },
+    enter(S) { const sv = S.sess.server; delete sv.pairCode; delete sv.candidateAt; if (!sv.pairUntil || Date.now() > sv.pairUntil) newInvite(S); else if (EPH() && !EPH().getInvite(sv.pairGen)) newInvite(S); },
     body(S) {
       const sv = S.sess.server, t = F.countdown(sv.pairUntil || Date.now()), link = 'https://' + U.slug(sv.displayName || 'home-nas') + '.local:7443/pair';
-      let card = `<div class="o55-paircard" data-key="pair"><div class="o55-qrbox">${F.qr('pair-' + (sv.pairCode || ''), 132)}</div><div class="o55-pairinfo">`
-        + `<span class="o55-pairtitle">${U.esc(T('server.ready.pairTitle'))}</span><span class="o55-paircode">${U.esc(sv.pairCode || '')}</span>`
+      const code = (EPH() && EPH().getInvite(sv.pairGen)) || '';
+      let card = `<div class="o55-paircard" data-key="pair"><div class="o55-qrbox">${code ? F.qr('pair-' + code, 132) : ''}</div><div class="o55-pairinfo">`
+        + `<span class="o55-pairtitle">${U.esc(T('server.ready.pairTitle'))}</span><span class="o55-paircode">${U.esc(code || T('server.ready.codeMissing'))}</span>`
         + `<span class="o55-hint">${U.esc(t.left ? T('chrome.expiresIn', { m: t.m, s: t.s }) : T('connect.pair.expired'))}</span>`
         + `<span class="o55-hint">${U.esc(T('server.ready.link'))}: ${U.esc(link)}</span>`
         + `<span class="o55-pairbtns">${O55.ui.btn({ label: T('chrome.newCode'), do: 'newCode', cls: 'o55-small' }, 'o55-secondary')}${F.copyBtn(link, 'pairlink')}</span></div></div>`;
       card += `<p class="o55-note o55-note-info" data-key="pairsub">${C.small('phone', 14)}<span>${U.esc(T('server.ready.pairSub'))}</span></p>`;
+      let shownWaiting = false;
+      (sv.candidates || []).forEach((c) => {
+        const fresh = inviteOpen(S) && c.gen === sv.pairGen;
+        const runOk = sv.runOk && sv.runOk[c.id];
+        if (c.state === 'waiting' && fresh && runOk) {
+          shownWaiting = true;
+          const w = (EPH() && EPH().getWords(c.id)) || '';
+          const apSt = F.state(S, 'approve:' + c.id), running = apSt && apSt.state === 'running';
+          const canApprove = !!c.confirmed && !running;
+          card += `<div class="o55-row" data-key="cand-${U.esc(U.slug(c.id))}">${C.small('phone', 18)}`
+            + `<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.ready.waiting', { name: c.name }))}</span>`
+            + `<span class="o55-rowmeta">${U.esc(w || T('server.ready.wordsMissing'))}</span></span>`
+            + `<span class="o55-pairbtns">${O55.ui.btn({ label: T('server.ready.approve'), do: 'approve', arg: c.id, cls: 'o55-small', disabled: !canApprove, reason: c.confirmed ? T('chrome.working') : T('server.ready.confirmWords') }, 'o55-primary')}${O55.ui.btn({ label: T('server.ready.deny'), do: 'deny', arg: c.id, cls: 'o55-small' }, 'o55-secondary')}</span></div>`;
+          card += `<p class="o55-hint" data-key="candhint-${U.esc(U.slug(c.id))}">${U.esc(T('server.ready.waitingHint', { name: c.name }))}</p>`;
+          card += `<div class="o55-checkline" data-key="match-${U.esc(U.slug(c.id))}"><button type="button" role="checkbox" aria-checked="${c.confirmed ? 'true' : 'false'}" class="o55-check${c.confirmed ? ' is-on' : ''}" data-o55-do="match" data-o55-arg="${U.esc(c.id)}" data-pm-hover-exempt="true">${c.confirmed ? C.small('check', 13) : ''}</button><span>${U.esc(T('server.ready.confirmWords'))}</span></div>`;
+          if (running) card += F.phases(S, 'approve:' + c.id, ['approve'], { approve: T('chrome.working') });
+          if (sv.approveErr) card += C.note(pendingCopy(sv.approveErr), 'warn', 'phone');
+        } else if (c.state === 'waiting') {
+          /* a request from an expired or rotated invite, or without an adopted waiting run, is stale: never approvable */
+          card += `<div class="o55-row o55-row-wait" data-key="stale-${U.esc(U.slug(c.id))}">${C.small('phone', 18)}`
+            + `<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.ready.staleReq', { name: c.name }))}</span></span></div>`;
+        }
+      });
+      if (!shownWaiting && inviteOpen(S)) {
+        card += `<p class="o55-hint" data-key="norun">${U.esc(T('server.ready.noRequests'))}</p>`;
+        if (sv.runErr && sv.runErr !== 'host_unavailable' && sv.runErr !== 'pending_no_result') card += C.note(pendingCopy(sv.runErr), 'warn', 'phone');
+        else card += `<div class="o55-sublinks" data-key="checkrun">${C.link(T('server.ready.retry'), 'checkRun')}</div>`;
+      }
+      if (!inviteOpen(S)) card += `<div class="o55-sublinks" data-key="expirednew">${C.link(T('chrome.newCode'), 'newCode')}</div>`;
+      if ((sv.paired || []).length) {
+        const rows = sv.paired.map((p) => `<div class="o55-row" data-key="paired-${U.esc(U.slug(p.id))}">${C.small('check', 18)}`
+          + `<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(p.name)}</span><span class="o55-rowmeta">${U.esc(T('server.ready.pairedDev'))}</span></span></div>`).join('');
+        card += C.group(T('server.ready.pairedTitle'), rows + `<p class="o55-hint" data-key="pairedsub">${U.esc(T('server.ready.pairedSub'))}</p>`);
+      }
       card += `<div class="o55-sublinks" data-key="restore">${C.link(T('server.ready.restore'), 'restore')}</div>`;
       return card;
     },
-    mounted(S) { F.ticker(S, 's-ready', 1000); },
+    mounted(S) { F.ticker(S, 's-ready', 1000); pollGuestRun(S); if (S.open && S.sess.screen === 's-ready') O55.ui.refresh(); },
     foot: () => ({ primary: { label: T('chrome.continue'), do: 'next' } }),
     do: {
-      newCode(S) { S.sess.server.pairUntil = 0; O55.screens.defs['s-ready'].enter(S); O55.ui.refresh(); },
+      match(S, id) { const sv = S.sess.server, c = (sv.candidates || []).find((x) => x.id === id); if (!c || !(EPH() && EPH().getWords(c.id))) return; c.confirmed = !c.confirmed; S.save(); O55.ui.refresh(); },
+      checkRun(S) { pollGuestRun(S); O55.ui.refresh(); },
+      approve(S, id) {
+        const sv = S.sess.server, c = (sv.candidates || []).find((x) => x.id === id);
+        if (!c || c.state !== 'waiting' || c.gen !== sv.pairGen || !inviteOpen(S)) return;
+        if (!(sv.runOk && sv.runOk[c.id])) return; /* guest needs a current adopted waiting run first */
+        if (!c.confirmed || !c.run_id || c.run_until <= Date.now() || !(EPH() && EPH().getWords(c.id))) return; /* explicit current identity confirmation */
+        const apSt = F.state(S, 'approve:' + c.id);
+        if (apSt && apSt.state === 'running') return;
+        sv.approveReqs = sv.approveReqs || {};
+        if (!sv.approveReqs[c.id]) sv.approveReqs[c.id] = OR().begin('cmd.client.pair.approve', { server: sv.id, client: GUEST.id, candidate: c.id, generation: sv.pairGen, run_id: c.run_id });
+        else { adoptGuestApprove(S, c); return; } // exactly one adoption per result
+        sv.approveErr = null; S.save();
+        F.reset(S, 'approve:' + c.id);
+        F.op(S, 'approve:' + c.id, 'cmd.client.pair.approve', [{ key: 'approve', ms: 800 }], {
+          payload: { server: sv.id, pairing_candidate_id: c.id, pairing_run: sv.inviteId },
+          onDone: () => { adoptGuestApprove(S, c); }
+        });
+      },
+      deny(S, id) {
+        const sv = S.sess.server, c = (sv.candidates || []).find((x) => x.id === id);
+        if (!c || c.state !== 'waiting') return;
+        F.op(S, 'deny:' + c.id, 'cmd.client.pair.reject', [{ key: 'reject', ms: 500 }], {
+          payload: { server: sv.id, pairing_candidate_id: c.id, reason: 'declined_by_owner' },
+          onDone: () => { if (EPH()) EPH().clearWords(id); sv.candidates = sv.candidates.filter((x) => x.id !== id); S.save(); O55.ui.refresh(); }
+        });
+      },
+      newCode(S) { newInvite(S); O55.ui.refresh(); }, /* rotates the invite only: trusted devices stay paired */
       restore(S) { S.sess.restore = { scope: 'server' }; S.save(); O55.ui.go('r-source'); },
       next(S) { S.sess.active = 'main'; S.save(); O55.ui.go('begin'); }
     },

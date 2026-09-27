@@ -5,6 +5,15 @@ PMConcept7 is ALWAYS a build artifact. As of the 2026-08-27 re-baseline the
 pinned base IS the prior shipped document: base/PM7-base.html. New work lands
 as T33+ transforms derived from that pin. See README.md ("Re-baseline").
 
+2026-09-26 publication change (user direction): the checked-in
+Concepts/PMConcept7.html is published byte-identical from
+Concepts/TestOpus5.5PmConcept.html via
+Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7. This pipeline's
+T33+ tail, including the old T44 Settings tome, T45 onboarding/tour, and T50
+Settings refresh stages, is retained for explicit historical output only: a
+run whose --out resolves to Concepts/PMConcept7.html aborts unless
+--allow-legacy-pm7-promotion is passed. See README.md ("PM7 publication").
+
 Never hand-edit the output. Never write anything under Concepts/pm6-build/
 (read-only; its emoji checker is invoked read-only as a gate).
 
@@ -22,7 +31,7 @@ Pipeline shape:
 
 Flags: --until N, --skip NAME (repeatable), --report, --out FILE,
        --outdir DIR (report/tmp destination; use the session scratchpad),
-       --allow-new-base, --base FILE.
+       --allow-new-base, --allow-legacy-pm7-promotion, --base FILE.
 """
 
 import argparse
@@ -83,6 +92,11 @@ T01_BYTE_BAND = (30000, 65000)
 T01_DESIGN_BAND = (40960, 61440)
 
 NO_EMOJI_CHECKER = REPO / "Concepts" / "pm6-build" / "checks" / "check_no_emoji.py"
+
+# Canonical checked-in PM7 artifact. Since the 2026-09-26 publication change
+# this file is published from TestOpus5.5PmConcept.html via the opus-5.5
+# generator; this pipeline may target it only with --allow-legacy-pm7-promotion.
+CANONICAL_PM7 = REPO / "Concepts" / "PMConcept7.html"
 
 
 class TransformAbort(Exception):
@@ -2644,11 +2658,29 @@ def main(argv=None):
                     help="also print the JSON report to stdout")
     ap.add_argument("--allow-new-base", action="store_true",
                     help="skip the BASE_SHA pin assertion (records actual sha)")
+    ap.add_argument("--allow-legacy-pm7-promotion", action="store_true",
+                    help="permit --out Concepts/PMConcept7.html (explicit "
+                    "historical-tail promotion; default refuses)")
     args = ap.parse_args(argv)
 
     outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     out_path = Path(args.out) if args.out else outdir / "PM7-phaseA.html"
+
+    try:
+        targets_canonical_pm7 = out_path.resolve() == CANONICAL_PM7.resolve()
+    except OSError:
+        targets_canonical_pm7 = False
+    if targets_canonical_pm7 and not args.allow_legacy_pm7_promotion:
+        print("FATAL: refusing to write the T33+ historical tail (old T44/T45/T50) "
+              "to Concepts/PMConcept7.html.\n"
+              "Since 2026-09-26 that file is published byte-identical from "
+              "Concepts/TestOpus5.5PmConcept.html via\n"
+              "  python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7\n"
+              "Build this pipeline to a scratch --out for historical output, or pass "
+              "--allow-legacy-pm7-promotion for an explicit historical promotion.",
+              file=sys.stderr)
+        return 2
 
     base_text = Path(args.base).read_text(encoding="utf-8")
     base_sha = sha256_text(base_text)
@@ -2671,6 +2703,8 @@ def main(argv=None):
         "base_sha256": base_sha,
         "base_sha_pinned": BASE_SHA,
         "base_pin_ok": base_sha == BASE_SHA,
+        "legacy_pm7_promotion": bool(targets_canonical_pm7 and
+                                     args.allow_legacy_pm7_promotion),
         "base_bytes": len(base_text.encode("utf-8")),
         "transforms": [],
         "gates": [],

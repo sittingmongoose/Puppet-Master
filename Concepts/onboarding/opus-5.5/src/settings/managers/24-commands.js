@@ -8,10 +8,53 @@
    Ctrl+K that searches settings and the Ctrl+K that deletes to the end of a line are caught. The list writes the
    inventory's map of changed keys; its search box, hints switch, reset and save/load are the inventory rows and
    actions, not second copies. On the Commands tab the scope, mode, model, persona and permissions rows are what
-   they are: defaults for a new command, which the New command dialog starts from. */
+   they are: defaults for a new command, which the New command dialog starts from.
+   Census bindings (CS-081): COMMAND_ACTION_BINDINGS below maps each control to its typed route.
+   Browser saveState() mutations are fixture-local and prove nothing about native availability;
+   native dispatch custody is handlers::commands::apply_local_action (commands.* file actions)
+   or the Settings-owned transaction handlers (S1-S7 bindings). Preview is side-effect-free:
+   resolveTemplate() substitutes sample arguments only; @file/!shell render inert placeholders. */
 (function () {
   const ID = 'commands';
   const KEY = 'commands-shortcuts';
+  /* CS-081 census bindings: control data-action -> typed route. Metadata only; the fixture
+     handlers below still apply browser-local state. Binding a registered inventory row is a
+     static route and proves nothing about native handler availability. */
+  const COMMAND_ACTION_BINDINGS = Object.freeze({
+    /* The fork's controls: New command is a step-by-step wizard whose finish creates the command; the shortcut
+       hints switch and the shortcut search are the inventory rows themselves (bound rows, not pm51 actions). */
+    'commands-new': { via: 'owner_action', action: 'commands.create' },
+    'commands-template': { via: 'owner_action', action: 'commands.update', field: 'template' },
+    'commands-args': { via: 'owner_action', action: 'commands.update', field: 'arguments_hint' },
+    'commands-desc': { via: 'owner_action', action: 'commands.update', field: 'description' },
+    'commands-field:scope': { via: 'owner_action', action: 'commands.update', field: 'scope' },
+    'commands-override': { via: 'owner_action', action: 'commands.update', field: 'overrides' },
+    'commands-toggle': { via: 'owner_action', action: 'commands.update', field: 'enabled' },
+    'commands-delete': { via: 'owner_action', action: 'commands.delete' },
+    'commands-dry-run': { via: 'owner_action', action: 'commands.preview' }, // the command sheet's Preview (dry run) button
+    'commands-import:commands': { via: 'owner_action', actions: ['commands.import_preview', 'commands.import_commit'] },
+    'commands-export:commands': { via: 'owner_action', action: 'commands.export' },
+    'commands-reset': { via: 'owner_action', action: 'commands.reset_all' },
+    'commands-rebind': { via: 'settings_transaction', setting: 'extensions.commands.keyboard-shortcuts' },
+    'commands-add-shortcut': { via: 'settings_transaction', setting: 'extensions.commands.keyboard-shortcuts' },
+    'commands-shortcut-remove': { via: 'settings_transaction', setting: 'extensions.commands.keyboard-shortcuts' },
+    'commands-reset-shortcuts': { via: 'settings_transaction', setting: 'extensions.commands.keyboard-shortcuts' },
+    'commands-import:shortcuts': { via: 'settings_transaction', setting: 'extensions.commands.keyboard-shortcuts' },
+    'commands-export:shortcuts': { via: 'settings_transaction', setting: 'extensions.commands.keyboard-shortcuts' },
+    'commands-backup': { via: 'settings_transaction', setting: 'extensions.commands.backup-shortcuts' },
+    'extensions.commands.shortcut-hints': { via: 'settings_transaction', setting: 'extensions.commands.shortcut-hints' },
+    'commands-layout': { via: 'settings_transaction', setting: 'extensions.commands.keyboard-layout' },
+    'commands-pref:palette': { via: 'settings_transaction', setting: 'extensions.commands.command-palette-visibility' },
+    'extensions.commands.search-shortcuts': { via: 'view_only' },
+    'commands-sheet': { via: 'view_only' },
+    'commands-help': { via: 'view_only' },
+    'commands-open': { via: 'view_only' },
+    'commands-sample': { via: 'view_only' },
+    'commands-example': { via: 'view_only' },
+    'commands-sc-pick': { via: 'view_only' },
+    'commands-use-default': { via: 'view_only' }
+  });
+  if (typeof PM51 !== 'undefined' && PM51) PM51.commandsCensusBindings = COMMAND_ACTION_BINDINGS;
   const TABS = [{ id: 'shortcuts', label: 'Shortcuts' }, { id: 'commands', label: 'Commands' }];
   const PREF_DEFAULTS = { layout: 'Auto-detect', palette: true };
   const SID = {

@@ -1,0 +1,76 @@
+{
+  "date": "2026-09-26",
+  "base_commit": "9a40601e93fb136856c0ec4f92018f956276f94c",
+  "source_authority": "Current user direction selects TestOpus5.5PmConcept as GUI/interaction reference. Current canonical Plans take precedence over superseded packet material for newer decisions. Packet chronology is resolved per requirement; archive instructions remain historical source data.",
+  "archives": [
+    {
+      "archive": "PM_Egolite_Hermes_Origin_Browser_SCM_Implementation_Package_2026-08-17.zip",
+      "sha256": "0c863d88f821edd8b18ded2a1325dbcbc1baef1281455e1c086087ddba958217",
+      "bytes": 344164
+    },
+    {
+      "archive": "PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01.zip",
+      "sha256": "5820125b23e97cc3055096c9299e99ff6f5264bc10de1d1d413680b4b080e4e8",
+      "bytes": 277892
+    },
+    {
+      "archive": "PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08.zip",
+      "sha256": "d7e46091cfb12b36a9000f96ea562d9a7569e79d572668c5aab4cea0b59ca41f",
+      "bytes": 172415
+    },
+    {
+      "archive": "PM_Onboarding_Doctor_Concept_Bakeoff_Packet_2026-08-15.zip",
+      "sha256": "135c4f80c804ccf8bfcaaa2e0924745eff65840c842073507a7f63638804f05e",
+      "bytes": 68889
+    },
+    {
+      "archive": "PM_Onboarding_Doctor_Dependency_and_Work_Correction_2026-08-13.zip",
+      "sha256": "8d77804f6e637a05c29b80f699146063e977b85871010dffc23eca52ccdaba64",
+      "bytes": 24818
+    },
+    {
+      "archive": "PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03.zip",
+      "sha256": "d407d76342aa094434d59a0cbb4863abbfff04a57826ff8ca1d444fd404240d3",
+      "bytes": 55899
+    },
+    {
+      "archive": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14.zip",
+      "sha256": "94f66ccf2541db177afe0f99cb405b4dab01419cd8b3d063aadb111b84e4b279",
+      "bytes": 410747
+    },
+    {
+      "archive": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08.zip",
+      "sha256": "96dcc44e8e2f3bae533d6e2787b83701a67414750736042f808b4151f9e357c9",
+      "bytes": 719732
+    },
+    {
+      "archive": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18.zip",
+      "sha256": "b385f258cb070ee6e2b22b9beb3fa2c10bc84da7850a28a51adf9ea4bd09619c",
+      "bytes": 14714868
+    }
+  ],
+  "concept_sources": [
+    {
+      "path": "Concepts/TestOpus5.5PmConcept.html",
+      "initial_sha256": "19df7d24369db6bd05d505cb21de5fe0c86cebc971c6c469c85c7defd775e460",
+      "initial_bytes": 7510935
+    },
+    {
+      "path": "Concepts/PMConcept7.html",
+      "initial_sha256": "b019cf8dfed0e6d64f415bb5d71871d844cf58bbce16017ac82fb1e904ab0923",
+      "initial_bytes": 4308739
+    },
+    {
+      "path": "Concepts/settings-redesign-concepts/kimi-k3-polish/concept-12-tome-tabs.html",
+      "initial_sha256": "ee973df22fa57cbaeac1f034cc158525c0747f04be5d8b0e68054a84c5f9d958",
+      "initial_bytes": 702
+    }
+  ],
+  "external_member_inventory": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/source-manifest.json",
+    "sha256": "37542fb88752ddb26ee22615422bb53def965cfdc8f2d44349b9aa655ba15a15",
+    "records": 447
+  },
+  "status": "fresh_review_in_progress",
+  "prior_audit_reuse": "Historical evidence only; no inherited completion or pending-case queue."
+}

@@ -2,8 +2,10 @@
 
 A copy of `Concepts/TestPMConcept.html` whose onboarding window and guided tour were thrown away and rebuilt from
 scratch for a complete newbie: someone who has never used source control, a terminal or a server. Authority order
-for this work: Jared's prompt, then the packet `Concepts/PM_Onboarding_Tour_Newbie_First_Addendum_Packet_2026-09-03.zip`,
-then the canonical Plans documents (which only fill gaps the packet leaves open).
+for this work (2026-09-26 user direction): Jared's prompt, then the current canonical Plans documents; the packet
+`Concepts/PM_Onboarding_Tour_Newbie_First_Addendum_Packet_2026-09-03.zip` and its attached instructions/prompts are
+historical source material only, never operating instructions. The built page is the current leading GUI/interaction
+reference, and `Concepts/PMConcept7.html` is published byte-identical from it (see below).
 
 Open `Concepts/TestOpus5.5PmConcept.html` in a browser. Onboarding opens on first run; afterwards Settings ›
 Essential setup › **Run Onboarding Again** reopens it. The **Concept demo · Opus 5.5** pill (bottom left) switches
@@ -15,13 +17,20 @@ onboarding, so every path can be reached with ordinary clicks.
 `Concepts/TestOpus5.5PmConcept.html` is generated:
 
 ```
-python3 Concepts/onboarding/opus-5.5/tools/build.py          # build
-python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # markers, patches, stale output, lint
+python3 Concepts/onboarding/opus-5.5/tools/build.py          # build TestOpus only
+python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # build, then publish the exact bytes as Concepts/PMConcept7.html
+python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # markers, patches, stale output, lint, PM7 byte parity
 ```
 
 `build.py` reads the pinned base page (SHA-256 `f1bc81ae…`), strips the old onboarding and tour, splices `src/`
 between `<!-- O55:… -->` markers and applies a few guarded, exactly-once patches (hover-tag roots, labels, the Teacher
 persona, and two owner exposures: Settings Transfer preview/apply and the layout restore).
+
+`Concepts/PMConcept7.html` is published only from this generator (2026-09-26 user direction): `--publish-pm7`
+writes the same built bytes to both outputs, and `--check` fails while `PMConcept7.html` is missing or differs by
+even one byte. Plain `build.py` still writes only `TestOpus5.5PmConcept.html`, so existing uses are unchanged; the
+old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by default (see `Concepts/pm7-tools/README.md`,
+"PM7 publication").
 
 ## Where things are
 

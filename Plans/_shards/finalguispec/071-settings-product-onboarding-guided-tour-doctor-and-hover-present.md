@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L34926-L35635
+Source lines: L34926-L35670
 
-Source SHA256: `2bfc2f0397bcf5b482c1bf0c610c93d64084692901a4d99af2ae5838d7f9c7ed`
+Source SHA256: `261b9e8d956ff63994bf4751f50868b6718b59df20d8e427337e7814e8bda0dd`
 
 ---
 
@@ -91,6 +91,8 @@ owner_boundary_notes:
 owner_hints: [Plans/FinalGUISpec.md, Plans/Settings_System.md, Plans/newtools.md]
 ```
 
+The recovery projection's `selected_route` records owner-route intent only. Project recovery-side eligibility never supplies effective Forge dispatch availability: Open Repository and Delete Repository remain disabled until the exact Forge currentness, permission, capability, central registration/wiring and handler gates resolve; missing owner proof stays unavailable. Opening an owner details/handoff view does not execute the operation.
+
 ### F3-520 - Simple Cinematic Product Onboarding Presentation
 
 ```yaml
@@ -108,18 +110,34 @@ canonical_text: >-
   fabricate empty first_project, source_control_setup, server_storage_client, provider_setup, or free_models_setup stages.
   Explicit Project Later uses the owner-defined deferred path, without a placeholder Project or provider setup.
   The bounded eight-theme choice
-  appears at welcome, before Project or infrastructure choices, and changes presentation only. In user language, the
+  appears at welcome, before Project or infrastructure choices, and changes presentation only. A persistent Look menu
+  (`Change the look`) and sound control remain reachable in the onboarding header on every stage beyond welcome. Look
+  selections preview presentation without dispatching owner work. Before a verified current Project exists, Look and sound
+  changes remain ephemeral and perform no durable Settings write; after Project commit or connection to an existing
+  Project, persistence requires that exact current Project Settings binding. The sound control consumes the Settings-owned
+  `general.interaction.sound-effects` effective pref (or its factory default while no Project exists), stays
+  keyboard-reachable with an explicit sound-off state, and audio is never the sole status signal. In user language, the
   main journey welcomes the person, chooses whether to begin here or connect to an existing Puppet Master, drafts how to
   create or open their first project, chooses its safe version history, chooses the computer and storage places that will
   do and hold the work, offers private access, reviews the complete setup plan, prepares only the approved choices, and
   commits the approved Project once, offers paid-provider setup and then Free Models, and finishes in a concise Ready state.
   First Project choices persist a bounded uncreated draft, including a fresh-settings default or explicit Settings-owned
   copy preview. Before commit, only owner-authorized read-only preflight and just-in-time authentication necessary for the
-  selected source are allowed by PWIZ-021; broad provider setup, enrollment, pairing, trust, restore, repository creation or
-  binding, filesystem writes, and Project creation are not. Source sign-in uses the protected MACS-005 first-time variant
+  selected source are allowed by PWIZ-021; broad provider setup, enrollment, Connected Server pairing/trust, restore,
+  repository creation or binding, filesystem writes, and Project creation are not. The sole pre-Review pairing exception
+  is PWIZ-029's individually consented Server-owned selected-source access to a chosen folder, backup, or network storage
+  on another Puppet Master: `cmd.client.pair.start` approval, code, or QR on the verified identity, recorded as
+  `puppet_master` transport with a non-secret device-and-path reference and bound `source_access_authorization_refs`,
+  limited to read-only browsing and validation of the chosen folder or backup under the current draft/session revision,
+  hash, and expiry. The paired device stays a Source Location, backup source, or storage location and never becomes the
+  Connected Server. Source sign-in uses the protected MACS-005 first-time variant
   when no verified account exists; it never invents a Project/account/repository identifier. Confirm and prepare validates
   the exact current draft/hash and PJCT-007 commit binding; Automatic Preparation observes the Project owner's one commit
-  chain and any Settings-owned post-commit rebind/apply results. Paid providers then use the actual committed Project,
+  chain and any Settings-owned post-commit rebind/apply results. When a remote repository was created and a later step
+  fails, Automatic Preparation keeps observing the same owner operation and shows the retained Project recovery with the
+  three owner-routed choices Continue Setup, Open Repository, and Delete Repository; each choice stays disabled with its
+  exact owner reason until its Project or Forge gates hold, an unknown remote effect offers reconciliation only, and no
+  setup commit binding or provider phase advances until the listed persisted Project exists. Paid providers then use the actual committed Project,
   followed by Free Models after paid readiness or explicit Skip. Each screen has
   one clear decision, one dominant primary action, short human copy, automatic detection, safe defaults, and calm
   progressive disclosure. The First Project decision is the deliberate exception to progressive hiding: its four equal
@@ -147,7 +165,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
-depends_on: [F3-519, PWIZ-021, PWIZ-022, PWIZ-024, RAS-014, SCS-012, FGI-011]
+depends_on: [F3-519, PWIZ-021, PWIZ-022, PWIZ-024, PWIZ-029, RAS-014, SCS-012, FGI-011]
 unblocks: [F3-521, F3-524]
 acceptance_criteria:
   - "Onboarding is a bounded, centered modal window over the visibly preserved live application at every desktop width; narrow and short windows retain an explicit outer margin and modal chrome rather than becoming a full-page route."
@@ -156,17 +174,21 @@ acceptance_criteria:
   - "Choosing connect-existing follows exactly welcome, simple_path, remote_access_setup, review_setup_plan, automatic_preparation, ready; it skips first_project, source_control_setup, and server_storage_client instead of mounting blank or inapplicable stages, while Back follows the same bounded shortcut in reverse."
   - "The connect-existing choice is composed as a first-class peer in simple_path, not a tacked-on admonition box; entering it lands on the route chooser, never on a premature Review summary or a redundant Use nearby devices/Find one I already use pre-step."
   - "The bounded eight-theme choice is available at welcome before Project and infrastructure decisions and changes presentation without dispatching owner work; Basic, Friendly, Glass, and Retro use drastically different scene imagery, composition, material, typography, and motion direction, while each family's light/dark pair preserves that family identity instead of presenting eight recolors of one illustration."
-  - "Precommit access consumes the closed PWIZ-021 read-only-preflight/selected-source-auth authorization and the target owner's actual request, current permission, selected-source scope, consent, draft/session revision, focus, Client/Host context, hash, and expiry. A ref-shaped string alone grants nothing. The necessary source sign-in exception is not paid/free-provider setup, enrollment, pairing, trust, restore, repository creation/binding, filesystem mutation, or Project creation."
+  - "Beyond welcome, the onboarding header keeps a persistent Look menu (`Change the look`: four families plus Light/Dark) and sound control reachable by keyboard on every stage; Look changes preview presentation without dispatching owner work and persist only through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`) with a verified current Project binding after commit or connection; Project Later and every no-Project state allow only ephemeral preview without durable writes, while the sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state, honors effective Reduced Motion, and audio never carries a status alone."
+  - "The header Look menu exposes its open state and family/mode choices as menuitemradio options, closes on Escape with focus returned to its button, and theme changes settle without blocking input; the sound button is a real keyboard-focusable control exposing its on/off state, and missing-audio handling follows the existing sound-control rule (hidden or labelled, never silent failure)."
+  - "Precommit access consumes the closed PWIZ-021 read-only-preflight/selected-source-auth authorization and the target owner's actual request, current permission, selected-source scope, consent, draft/session revision, focus, Client/Host context, hash, and expiry. A ref-shaped string alone grants nothing. The necessary source sign-in exception is not paid/free-provider setup, enrollment, Connected Server pairing/trust, restore, repository creation/binding, filesystem mutation, or Project creation; the sole permitted pre-Review pairing is PWIZ-029 Server-owned `cmd.client.pair.start` approval/code/QR access to the chosen folder, backup, or network storage on another Puppet Master, recorded as `puppet_master` with bound `source_access_authorization_refs` and limited to read-only browsing and validation, leaving the after-Review Connected Server pairing rule unchanged."
   - "Confirm and prepare at review_setup_plan validates the current path, revision, choices, consequences, and approved-plan hash, dispatches the approved owner work exactly once, and only then permits automatic_preparation to observe current real results; stale, unconfirmed, or expanded plans dispatch nothing."
   - "The first_project stage exposes four equal, aligned, keyboard-reachable choices together--Start a new project, Open a folder here, Bring one from online, and Restore a backup--with no More project choices disclosure, plus a working Project Later path. Each choice creates only a draft. Start fresh is the settings default; explicit copy offers a searchable real-Project picker, source-context summary and Settings preview, never bulk copies secrets, machine paths, runtime state, or account capability."
   - "Source-control setup keeps two independent visible axes: local Safe History uses Git or Jujutsu on the selected computer, while an optional forge account/repository keeps a separate online copy; Jujutsu is never presented as an account, website, or online-copy provider, and FileSafe is described only as complementary local recovery."
-  - "After current Review confirmation, a new-project owner route initializes local Git through `cmd.project.new_local {init_git:true}`; local-engine selection uses the canonical Source Control owner, while GitHub, GitLab, Azure DevOps, Bitbucket, and eligible Cursor Origin account verification, repository creation/selection, visibility, and binding remain explicit forge/auth owner routes. Cursor Origin is presented as a hosted Git forge, never as a no-host or local-only preview."
+  - "After current Review confirmation, a new-project owner route follows the reviewed Safe History choice through `cmd.project.new_local` and its backend-native child owner: local Git initializes only when the reviewed draft selected Git, a reviewed Jujutsu choice routes through the existing Jujutsu owner route and is never silently substituted with Git, and explicit no-history initializes no Git per PJCT-007 and Project_System.md:93; local-engine selection uses the canonical Source Control owner, while GitHub, GitLab, Azure DevOps, Bitbucket, and eligible Cursor Origin account verification, repository creation/selection, visibility, and binding remain explicit forge/auth owner routes. Cursor Origin is presented as a hosted Git forge, never as a no-host or local-only preview."
   - "An online copy becomes ready only after both a current verified account identity and the exact repository binding exist; Already connected must select and verify both and is never a no-op. Account creation, sign-in, organization/namespace/workspace/project selection, repository name, allowed visibility, and optional repository details follow the selected forge's owner contract rather than a generic one-field form."
   - "Open a folder here distinguishes a local folder, an OS-mounted SMB/NFS location, and an Advanced SSH/SFTP source; Restore a backup has its own source and transport rather than reusing an ordinary folder path. Server (where work runs), Storage (where files live), and this Client (the device in hand) remain visibly independent choices."
   - "Connect existing selects the route before discovery and pairing: Local or VPN looks on the local network and on any VPN this device is already connected to, with no VPN switch and the line `You can connect through a VPN too`, and asks for no private address by default; a usable active Tailscale tailnet needs no sign-in, otherwise one protected built-in sign-in is offered and an official site is used only for explicit account creation; Headscale takes its control URL and owner-managed enrollment; Reverse proxy accepts the existing protected Puppet Master HTTPS URL rather than offering proxy generation; Puppet Master Remote Link remains visible and accepts its link, QR, or short code. Manual Server identity/address entry appears only when safe discovery cannot find the intended Server."
   - "A visible recognition checkbox is absent. Reachability, a device label, or possession of an address never grants trust; the selected Server identity proceeds through its owner-controlled approval, code, or QR pairing after Review confirmation."
   - "Optional branches use one calm layer of progressive disclosure; read-only owner preflight and necessary selected-source authentication may inform the draft before commit. Every other owner mutation waits for its current owner-bound confirmation; no branch label, availability projection, or preview can satisfy that fence."
   - "Automatic preparation shows one calm owner-projected progress statement; determinate progress appears only with an owner denominator, questions appear only when the current owner projection cannot choose safely, and timers never synthesize work or readiness."
+  - "After a verified remote create with a later local failure, Automatic Preparation presents Continue Setup, Open Repository, and Delete Repository as projections of the retained Project recovery: Continue Setup dispatches only `cmd.project.resume_creation` with a fresh attempt identity under the one-active claim, Open Repository dispatches only `cmd.forge.repository.open_in_browser` on the verified binding, and Delete Repository routes only to the Forge FGI-021 `cmd.forge.repository.delete` admission with target-bound confirmation, never automatically and never while the remote effect is unknown."
+  - "Each recovery choice shows its exact owner disabled reason while unavailable: Continue Setup stays disabled until owner eligibility, current draft, permission, recovery claim, central registration, wiring, and handler availability all hold; an unknown remote effect shows reconciliation only with no repeat create, delete, or inferred identity; and no setup commit binding, paid-provider, or Free Models phase advances before the listed persisted Project exists."
   - "Pending, measured-running, ready, failed, and same-operation retry states remain visually calm and preserve the owner operation/work/dedupe identity across modal interruption and resume."
   - "Server, Storage, Client, source location, local Safe History, online copy, and access choices remain independently editable; selecting an already-owned Server exposes the appropriate discovery and pairing presentation without silently forcing storage or Client placement."
   - "Paid-provider setup offers compact provider tiles and the selected provider's current owner-supported auth path; Free Models follows even after paid-provider Skip, groups underlying-provider setup through existing owners, and offers explicit Skip. Detection is an observation, not authorization or readiness. Close after commit preserves the existing Project, settled phases and exact continuation; resume never recreates it or replays settled setup."
@@ -175,7 +197,7 @@ acceptance_criteria:
   - "Every visible sentence and disabled reason is understandable to a person who has never coded or used an IDE; `shell`, internal owner names, command IDs, schema IDs, route IDs, and unexplained implementation vocabulary never appear as product copy."
   - "Help uses one anchored explainer surface at a time: activating a typed SVG `?` opens a plain-language explanation attached to that exact option, replaces or closes any prior explanation, and never expands empty peer sections. The visible shared explainer is the control's actual `aria-controls` target and its active `aria-describedby` target; obsolete hidden per-card copies are absent. Primary and secondary card actions have visibly button-shaped treatment, consistent alignment and spacing, and recommended versus alternate choices differ through hierarchy, shape, iconography, and state rather than copy alone."
   - "All stages use one consistent grid, selection state, action hierarchy, explainer grammar, spacing rhythm, and in-flow footer model; specialized fields may vary by route, but controls do not change alignment or interaction rules from one setup screen to the next."
-  - "One terminal owner result auto-returns and advances without a preview-return/Continue/Done confirmation; discovery, availability, capability, preview, refresh, and test-only results remain on the current choice and never masquerade as completed setup."
+  - "One terminal owner result auto-returns and advances without a preview-return/Continue/Done confirmation; discovery, availability, capability, preview, refresh, and test-only results remain on the current choice and never masquerade as completed setup. A recovery-required result is not auto-advanced: it presents the explicit Continue Setup, Open Repository, and Delete Repository owner choices instead."
   - "Same-stage Details, `?`, and progressive-disclosure updates preserve the settled cinematic scene instead of replaying its entrance; forward/back stage changes use a non-overlapping directional handoff so outgoing and incoming headings never ghost through one another."
   - "Ready summarizes only the selections actually made, marks skipped choices as not set up, and never claims that all important systems or production owner work are ready."
   - "Modal controls use the typed `ui.onboarding.*` local-action vocabulary and owner branches route only to already-canonical domain commands; no `cmd.onboarding.*` family or Final-GUI-owned mutation path is introduced."
@@ -205,8 +227,11 @@ implementation_surfaces:
 node_compile_hint: {mode: onboarding_cinematic_presentation_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Plans/Planning_Wizard.md#PWIZ-021
+  - Plans/Project_System.md#PJCT-007
+  - Plans/Forge_Integrations.md#FGI-021
   - Plans/Planning_Wizard.md#PWIZ-022
   - Plans/Planning_Wizard.md#PWIZ-024
+  - Plans/Planning_Wizard.md#PWIZ-029
   - Plans/Remote_Access_System.md#RAS-014
   - Plans/Source_Control_System.md#SCS-012
   - Plans/Forge_Integrations.md#FGI-011
@@ -217,13 +242,14 @@ source_lineage:
   - Concepts/pm7-tools/onboarding_cinematic_source.py
   - Concepts/pm7-tools/home_workspace_source.py
   - Concepts/pm7-tools/home_workspace_refresh_source.py
-preserved_exact_tokens: [welcome, simple_path, first_project, source_control_setup, server_storage_client, remote_access_setup, review_setup_plan, automatic_preparation, ready, connect_existing, Get Started, Begin setup, Confirm and prepare, Do this later, Run setup wizard, Reset Layout, ui.onboarding.start, home_menu, Start a new project, Open a folder here, Bring one from online, Restore a backup, Safe History, FileSafe, Local or VPN, You can connect through a VPN too, Reverse proxy, Puppet Master Remote Link, Cursor Origin, SSH/SFTP, 1.2-1.5 seconds, 420-560 ms, 60-80 ms, 120-220 ms, 700 ms]
+preserved_exact_tokens: [welcome, simple_path, first_project, source_control_setup, server_storage_client, remote_access_setup, review_setup_plan, automatic_preparation, ready, connect_existing, Get Started, Begin setup, Confirm and prepare, Continue Setup, Open Repository, Delete Repository, Do this later, Run setup wizard, Reset Layout, ui.onboarding.start, home_menu, Start a new project, Open a folder here, Bring one from online, Restore a backup, Safe History, FileSafe, Local or VPN, You can connect through a VPN too, Reverse proxy, Puppet Master Remote Link, Cursor Origin, SSH/SFTP, 1.2-1.5 seconds, 420-560 ms, 60-80 ms, 120-220 ms, 700 ms, puppet_master, cmd.client.pair.start, source_access_authorization_refs, Source Location, Change the look, Sound on — click to mute, Sound off — click to turn on, general.visual.theme, general.visual.theme-mode, general.interaction.sound-effects]
 negative_constraints:
   - "Do not render Product Onboarding as a full-page route or replacement application experience."
   - "Do not restore F3-411's four-screen/provider-first choreography."
   - "Do not restore the predecessor five-stage simple-path order as the current main journey."
   - "Do not restore the superseded seven-stage presentation, insert first_project/source_control_setup/server_storage_client into connect-existing, or bypass review_setup_plan before automatic_preparation."
-  - "Do not broaden the selected-source authentication/read-only-preflight exception into provider setup, enrollment, pairing, trust, restore, repository/filesystem mutation, or Project commit before exact current Review confirmation. Do not treat a detected account, reachable endpoint, ref prefix, cached result, or GUI choice as owner authorization."
+  - "Do not broaden the selected-source authentication/read-only-preflight exception beyond PWIZ-029's individually consented Server-owned `puppet_master` pairing with bound `source_access_authorization_refs` into broad provider setup, enrollment, Connected Server pairing/trust, restore, repository/filesystem mutation, or Project commit before exact current Review confirmation. Do not treat a detected account, reachable endpoint, ref prefix, cached result, or GUI choice as owner authorization."
+  - "Do not initialize local Git for an explicit no-history choice, substitute Git for a reviewed Jujutsu choice, or let a legacy `init_git` payload summary override the reviewed PJCT-007 draft binding."
   - "Do not hide any of the four First Project choices behind More/Other project choices or frontload unrelated advanced Settings."
   - "Do not use left-edge accent rails, floating footer actions that cover scrollable content, multiple simultaneously expanded explainers, decorative duplicate warning/confirmation cards, or clipped hover/text treatment."
   - "Do not add a stage-skipping Review choices shortcut, a redundant discovery button after the route is selected, or an inert Set up access later action."
@@ -263,7 +289,14 @@ canonical_text: >-
   implementation terms. The overlay tracks and highlights mounted controls without cloning them, intercepting owner
   work, or fabricating success. Automatic scene transitions focus the current scene heading, never an action, and do
   not open a visual hover tag without user intent. Pause, Back, Skip, interruption, resize, theme change, and effective
-  Reduced Motion preserve real state and focus. Back and forward movement follow the valid story state and never become
+  Reduced Motion preserve real state and focus. The Tour bar carries the same persistent Look menu (`Change the look`)
+  and sound control beyond setup on every step: Look choices apply through the Settings owner at once only with a verified
+  current Project binding, and the Tour follows that Project's effective theme. Project switching invalidates stale bindings
+  and rebinds both controls before persistence; without a Project they offer ephemeral preview and no durable writes.
+  The sound control binds to the Settings-owned `general.interaction.sound-effects`
+  effective pref with a keyboard-accessible sound-off state. Both are shared chrome controls, not tour-specific
+  preference toggles, and audio is never the sole status signal. Back and forward movement follow the valid story state
+  and never become
   inert or skip required practice. Basic, Friendly, Glass, and Retro direct the film with substantially different
   callout composition, illustration, typography, target treatment, and motion--not one recolored overlay--while never
   using a left-edge accent rail. Transitions preserve the mounted application continuously without a black or empty
@@ -279,6 +312,7 @@ acceptance_criteria:
   - "The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current story."
   - "Every enabled Back or forward control moves exactly one valid story beat, remains reachable and visibly button-shaped, and preserves the scene's mounted state; a coached beat with a required real target advances only from that target's observed action rather than from unrelated clicks, elapsed time, or a generic forward control."
   - "The brief opening introduces `ui.guided_tour.toggle_eli5` beside Pause and Skip and explains Reduced Motion; it reads `general.visual.reduce-animations` and directs changes to Settings without inventing a separate toggle or detour."
+  - "The Tour bar keeps the persistent Look menu (`Change the look`: four families plus Light/Dark) and sound control reachable by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`) at once with presentation-only effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference toggle beside `ui.guided_tour.toggle_eli5`."
   - "Workspace practice explains page navigation and panel purpose, asks the learner to move/dock Chat and add, move, resize, or focus a real widget, and makes the destination and persisted owner result readable. The temporary layout is reversible."
   - "Every important action offers visible Try it and Show Me using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
   - "Planning receives at least half of meaningful action count and meaningful dwell time, measured against a declared step census. The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
@@ -321,7 +355,7 @@ source_lineage:
   - Concepts/pm7-tools/guided_tour_source.py
   - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/04_GUIDED_TOUR_REBUILD.md"
   - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md"
-preserved_exact_tokens: [Planning Wizard, Assistant Chat, Teacher, Guided example, "What happens before Puppet Master changes my files?", "Ask Teacher anything about Puppet Master…", ELI5, "ELI5: Off", Reduced Motion, general.visual.reduce-animations, ui.guided_tour.toggle_eli5, ui.guided_tour.show_me, programmatic-focus-landmark, Pause, Skip Tour, Back, Try it, Show Me, Finish tour]
+preserved_exact_tokens: [Planning Wizard, Assistant Chat, Teacher, Guided example, "What happens before Puppet Master changes my files?", "Ask Teacher anything about Puppet Master…", ELI5, "ELI5: Off", Reduced Motion, general.visual.reduce-animations, ui.guided_tour.toggle_eli5, ui.guided_tour.show_me, programmatic-focus-landmark, Pause, Skip Tour, Back, Try it, Show Me, Finish tour, "Change the look", "Sound off — click to turn on", general.visual.theme, general.visual.theme-mode, general.interaction.sound-effects]
 negative_constraints:
   - "Do not build a tooltip carousel, parallel demo application, or five-chapter tour."
   - "Do not clone live controls, fabricate success, or cancel owner work when a view closes."
@@ -330,6 +364,7 @@ negative_constraints:
   - "Do not omit navigation, real Chat movement, or the real widget practice; do not turn workspace instruction into a long feature checklist."
   - "Do not put Reduced Motion into a separate tour chapter; keep the brief introduction with ELI5 and preference ownership in Settings."
   - "Do not restore `ui.guided_tour.toggle_reduced_motion`; ELI5 is the only tour-specific top-bar preference toggle."
+  - "Do not persist Tour-bar Look or sound choices outside the Settings-owned effective prefs or invent new settings keys for them."
   - "Do not expose the internal word `shell`, raw action identifiers, receipts, owners, routes, or developer jargon in visible tour copy."
   - "Do not auto-focus a tour action on scene entry or leave the Teacher-practice placeholder installed after Skip."
   - "Do not use left-edge accent rails, paint-only theme variants, target-covering callouts when a safe placement exists, or any black/empty transition frame."

@@ -111,7 +111,7 @@
         {"type": "string", "pattern": "^TOUCH-[A-Z0-9]+-[0-9]{3}$"},
         {"type": "string", "pattern": "^TCP-[A-Z0-9-]+$"},
         {"enum": ["command", "command_alias", "ui_action", "presentation"]},
-        {"type": "string", "pattern": "^(cmd|ui|settings)\\.[a-z0-9_.-]+$"},
+        {"type": "string", "pattern": "^(?:(?:cmd|ui|settings)\\.[a-z0-9_.-]+|commands\\.(?:create|update|delete|preview|import_preview|import_commit|export|reset_all))$"},
         {"enum": ["implemented", "already_current_with_evidence", "superseded", "retired_bakeoff_process_only", "partial", "blocked", "missing"]},
         {"$ref": "#/$defs/non_empty_string"}
       ]

@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L775-L3503
+Source lines: L784-L3517
 
-Source SHA256: `0bc116b1fe31e387db534f872f9b4900540fcc19107cc442096f3145ce4e7a76`
+Source SHA256: `2477d4c139c46e1e96b8f95883d7aba95988697cf790673f8dbabd664eb3bc88`
 
 ---
 
@@ -1756,9 +1756,11 @@ status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
   The command editor Preview resolves a template with sample arguments and
-  renders the fully resolved prompt in a read-only Markdown view with
-  highlighted placeholder substitutions, file-include results, shell-injection
-  results, or permission-blocked placeholders.
+  renders the prompt in a read-only rendered Markdown view with highlighted
+  placeholder substitutions and inert file/shell placeholders. The earlier
+  file-include results, shell-injection results, and permission-blocked
+  placeholders wording is superseded for preview: no file is read, no shell
+  executes, and no permission is evaluated there.
 gui_related: true
 gui_classification_reason: Dry-run preview is a visible editor preview surface.
 split_recommended: true
@@ -1767,10 +1769,10 @@ depends_on: [CS-015, CS-016, CS-017, CS-024, CS-030]
 unblocks: [CS-035, CS-046, CS-049]
 acceptance_criteria:
   - DRY-RUN remains the anchor for dry-run preview behavior.
-  - Preview resolves the template with sample arguments.
-  - Preview displays the fully rendered prompt without submitting it.
+  - Preview resolves the template with sample arguments only.
+  - Preview displays the rendered prompt without submitting it.
   - Placeholder substitutions are highlighted.
-  - File-include and shell-injection results appear, or permission-blocked placeholders appear.
+  - File includes and shell injections appear only as inert placeholders; no file-include or shell-injection results appear and no permission-blocked evaluation occurs.
   - Preview uses a read-only rendered Markdown view.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -1803,9 +1805,11 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  Dry-run preview does not execute any run; shell injections in preview mode may
-  execute the shell command only under bash permission and must not submit the
-  result to any agent.
+  Dry-run preview does NOT execute any run; it substitutes sample arguments
+  only and renders @file and !shell as inert placeholders with no bash/read
+  ask-flow, no file read, no execution, and do not submit the result to any
+  agent. Invocation-time @/! resolution with permission checks is distinct
+  semantics and never runs in preview.
 gui_related: false
 gui_classification_reason: Preview execution safety is command execution policy, not visual presentation.
 split_recommended: true
@@ -1814,8 +1818,8 @@ depends_on: [CS-017, CS-024, CS-034]
 unblocks: []
 acceptance_criteria:
   - The preview does NOT execute any run.
-  - Shell injections in preview mode execute the shell command only subject to bash permission.
-  - Preview-mode shell results are not submitted to any agent.
+  - Preview substitutes sample arguments only; @file and !shell render as inert placeholders with no bash/read ask-flow, no file read, and no execution.
+  - Preview-mode output is not submitted to any agent.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1836,6 +1840,7 @@ preserved_exact_tokens:
   - "do not submit the result to any agent"
 negative_constraints:
   - "Dry-run preview must not submit the result to any agent."
+  - "Preview must not run a bash/read ask-flow, read a file, or execute a shell command."
 owner_hints:
   - Plans/Commands_System.md
 ```

@@ -2512,3 +2512,77 @@ negative_constraints:
   - "Do not fabricate controls, handlers, schemas, events, receipts, persistence, or runtime evidence to close a row."
 owner_hints: [Plans/DRY_Rules.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md]
 ```
+
+## Project recovery and Forge delete/CI central companion boundary — 2026-09-26
+
+Under DR-040 and DR-041, the seven UCC-165 primaries keep exact keys: one `command_id`, one owner contract set, one `sole_handler`, one `schema_ref` pair, and real `reverse_consumers`. `Plans/Project_System.md#PJCT-007` owns resume semantics, the `creation_recovery_resume_binding` join, and recovery availability; `Plans/Forge_Integrations.md#FGI-021` owns delete/CI semantics, the `official_destination_kind` destinations, and the protected-broker rule. Central companions own row identity only: `Plans/UI_Command_Catalog.md#UCC-165` carries the admission table, `Plans/Wiring_Matrix.md#WM-058` carries production intent, and `Plans/touch_closure.json` carries `TOUCH-PJCT-011` plus `TOUCH-FGI-047` through `TOUCH-FGI-052` under the existing `TCP-PROJECT` and `TCP-FORGE` profiles with `partial` disposition. No new profile, alias, peer row, peer handler, peer schema, EventRecord, or native proof is created here.
+
+Reverse wiring reuses owner routes: Continue Setup dispatches `cmd.project.resume_creation`; Open Repository dispatches the existing `cmd.forge.repository.open_in_browser`; Delete Repository dispatches `cmd.forge.repository.delete`. Neither open nor delete is Project-local mutation, and no synthetic control satisfies reverse coverage. All rows stay `handler_unavailable` with `expected_event_types=[]`; the visible-behavior flags live on the companion units (`gui_related: true` on UCC-165 and WM-058), not on a duplicated product specification. The Commands & Shortcuts local action census remains unadmitted.
+
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-040, ContractName:Plans/DRY_Rules.md#DR-041, ContractName:Plans/UI_Command_Catalog.md#UCC-165, ContractName:Plans/Wiring_Matrix.md#WM-058
+
+## Commands Shortcuts local-action namespace ownership — 2026-09-26
+
+`commands.*` is a Commands-owned typed local-action namespace (CS-081: `commands.create`, `commands.update`, `commands.delete`, `commands.preview`, `commands.import_preview`, `commands.import_commit`, `commands.export`, `commands.reset_all`). Only `Plans/Commands_System.md` may add or retire IDs under it; no other doc, catalog, wiring row, or User Command may mint, alias, or rebind them; no `cmd.*` spelling may shadow them; and the retired `commands.save_new`/`commands.save_override`/`commands.save_existing` spellings MUST NOT be reused.
+
+Classification: DR-041's "typed local UI actions use typed owner-local controllers and cannot contain a handlers:: domain identity" governs reversible-presentation local UI actions (the `settings.*` presentation set). The `commands.*` file actions are owner-local actions with persistent filesystem effects and exact DR-040 keys — one action ID, one owner contract, one sole native owner handler (`handlers::commands::apply_local_action`), availability with the closed disabled-reason set, and real reverse consumers — so they name their handler without becoming `cmd.*` primaries and without gaining catalog or production rows. Preview stays inert with no read, shell, ask-flow, permission evaluation, or dispatch.
+
+This section supersedes the UCC-165-batch note that the census remains unadmitted: central companions now admit it as `TOUCH-CMDSC-001` through `TOUCH-CMDSC-016` under profile `TCP-CMDSC` (`partial`), the `commands-shortcuts` descriptor's `owner_local_action_refs`, and the UCC-166/WM-059 reference companions. No EventRecord, native handler, or runtime is claimed.
+
+### DR-042 - Commands Local-Action Namespace Ownership
+
+```yaml
+plan_unit_id: DR-042
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  commands.* is a Commands-owned typed local-action namespace (CS-081: commands.create,
+  commands.update, commands.delete, commands.preview, commands.import_preview,
+  commands.import_commit, commands.export, commands.reset_all). Only
+  Plans/Commands_System.md may add or retire IDs under it; no other doc, catalog,
+  wiring row, or User Command may mint, alias, or rebind them; no cmd.* spelling
+  may shadow them; and the retired commands.save_new, commands.save_override, and
+  commands.save_existing spellings MUST NOT be reused. These owner-local file actions
+  carry exact DR-040 keys with sole native owner handler
+  handlers::commands::apply_local_action, gain no catalog or production row, and keep
+  preview inert.
+gui_related: true
+gui_classification_reason: The invariant fixes every Commands and Shortcuts manager control to its owning local action, Settings route, or view-only classification with no duplicate command identity.
+split_recommended: false
+depends_on: [DR-040, DR-041, CS-081, UCC-166, WM-059]
+unblocks: []
+acceptance_criteria:
+  - "The namespace admits exactly the eight CS-081 commands.* IDs; no ninth action and no cmd.* shadow spelling exists."
+  - "Only Plans/Commands_System.md adds or retires IDs under commands.*; retired commands.save_* spellings are never reused."
+  - "Owner-local file actions name sole handler handlers::commands::apply_local_action with persistent filesystem effects; reversible-presentation local UI actions carry no handlers:: identity."
+  - "No commands.* action has a catalog row or production wiring row; rejected cmd.commands.custom.*, cmd.shortcuts.*, cmd.user_command.*, and cmd.keybinding.* spellings stay rejected."
+  - "Preview substitutes sample arguments only with inert placeholders and no read, shell, ask-flow, permission evaluation, or dispatch."
+validation_surfaces:
+  - python3 scripts/pm-touch-closure-verify.py --json
+  - python3 scripts/pm-plans-verify.py validate-touch-closure
+  - python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_command_handler_schema_or_gui_authority
+reasoning_tier: high
+context_scope: commands_local_action_namespace_ownership
+implementation_surfaces:
+  - Plans/DRY_Rules.md
+  - Plans/touch_closure.json
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/settings_system_contract_fixtures.json
+node_compile_hint: {mode: exact_key_static_dry_gate_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Commands_System.md#CS-081
+  - Plans/commands_shortcuts_contracts.schema.json
+  - reports/packet-integration-completion-20260926/commands-shortcuts.md
+preserved_exact_tokens: [commands.create, commands.update, commands.delete, commands.preview, commands.import_preview, commands.import_commit, commands.export, commands.reset_all, handlers::commands::apply_local_action, commands.save_new, commands.save_override, commands.save_existing, TOUCH-CMDSC-001, TOUCH-CMDSC-016, TCP-CMDSC, owner_local_action_refs]
+negative_constraints:
+  - "Do not mint, alias, or rebind a commands.* ID outside Plans/Commands_System.md."
+  - "Do not give a commands.* action a catalog row, production row, or cmd.* primary spelling."
+  - "Do not present preview as reading, executing, asking, or dispatching."
+  - "Do not fabricate controls, handlers, schemas, events, receipts, persistence, or runtime evidence to close a row."
+owner_hints: [Plans/DRY_Rules.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md]
+```
+
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-040, ContractName:Plans/DRY_Rules.md#DR-041, ContractName:Plans/Commands_System.md#CS-081, ContractName:Plans/UI_Command_Catalog.md#UCC-166, ContractName:Plans/Wiring_Matrix.md#WM-059
