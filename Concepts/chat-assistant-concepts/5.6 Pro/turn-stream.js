@@ -398,13 +398,15 @@
     if (t && terminal === 'complete' && window.PM56_AUTO_MEMORY) window.PM56_AUTO_MEMORY.boundary(t, m);
     if (terminal === 'complete' && st.spec.followUp && t) followUp(c, t, st.spec.followUp);
     if (terminal === 'error' && st.spec.followUp && t) followUp(c, t, st.spec.followUp);
-    sound(terminal === 'complete' ? 'complete' : 'stop');
+    if (terminal === 'complete') sound('complete'); else if (terminal !== 'steered') sound('stop');
     if (st.revealRec) {
       var others = false; streams.forEach(function (o) { if (o.revealRec === st.revealRec) others = true; });
       if (!others) { c.releaseNextRun(st.revealRec); setTimeout(releaseRoom, K() ? K().ms(260) : 260); }
     }
     c.followIfSticky();
-    if (st.tid === c.state.selectedThread) c.maybeFlushQueue();
+    /* the queue advances on its own only when a turn completes; after a Stop
+       or an error it waits for the user (Send, Send now, Edit or Remove) */
+    if (st.tid === c.state.selectedThread && terminal === 'complete') c.maybeFlushQueue();
   }
 
   function followUp(c, t, f) {
@@ -426,6 +428,10 @@
   var owner = {
     busy: function (tid) { var b = false; streams.forEach(function (st) { if (st.tid === tid) b = true; }); directors.forEach(function (d) { if (d.tid === tid) b = true; }); return b; },
     stop: function (tid) { directors.forEach(function (d, k) { if (d.tid === tid) directors.delete(k); }); streams.forEach(function (st) { if (st.tid === tid) finalize(st, 'stopped'); }); },
+    /* Send now steers (DL-108): the reply written so far stays, unmarked, and
+       the steered message takes the turn from here; a live agent turn's work
+       keeps running. Not a Stop: no marker, no stop cue, no queue advance. */
+    steer: function (tid) { streams.forEach(function (st) { if (st.tid === tid && !st.hold) finalize(st, 'steered'); }); },
     cancel: function (tid) {
       /* leaving the thread: the turn finishes in the background -- it is
          complete, answer and all, when the reader comes back */

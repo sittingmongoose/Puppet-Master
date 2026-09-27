@@ -3864,9 +3864,10 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='queue-send-now'){
       const q=queueOf(); const i=q.findIndex(x=>x.id===btn.dataset.id); if(i<0)return;
       const [entry]=q.splice(i,1);
-      /* Send now interrupts a reply that is still being written, rather than
-         starting a second one alongside it. */
-      if(ownersBusy(state.selectedThread)) notifyTurnOwners('stop',state.selectedThread);
+      /* Send now steers (DL-108, ACD-219): the reply being written keeps what
+         it has written and the steered message is delivered now. It is not a
+         Stop, so the rest of the queue does not advance. */
+      if(ownersBusy(state.selectedThread)) notifyTurnOwners('steer',state.selectedThread);
       const outcome=deliverSend(entry.text);
       /* B20-R3-F3: a veto or validator exception keeps the queue entry in its
          slot unless the held input is already visible again (restored to the

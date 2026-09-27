@@ -47077,10 +47077,11 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
        for that frame it held the scroll height up, then let it drop at once. */
     layer.style.height = '';
     if (svg.hasAttribute('viewBox')) svg.removeAttribute('viewBox');
-    /* clientWidth, not the bounding width: the transcript keeps a stable
-       scrollbar gutter, and an SVG as wide as the border box overflowed it
-       sideways by the gutter (scrollWidth > clientWidth in every thread) */
-    set(svg, { width: tr.clientWidth, height: 1 });
+    /* 1x1 in both axes: everything is drawn as paint overflow. Any width it
+       took from the transcript was one frame stale whenever the pane narrowed
+       (a panel opening beside the chat), and in that frame it overflowed the
+       transcript sideways by the difference (measured 37-120px). */
+    set(svg, { width: 1, height: 1 });
     nodes.forEach(function (n) { n.__seen = false; });
     var turns = {}, order = [];
     var kids = inner.children;
@@ -47596,13 +47597,15 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     if (t && terminal === 'complete' && window.PM56_AUTO_MEMORY) window.PM56_AUTO_MEMORY.boundary(t, m);
     if (terminal === 'complete' && st.spec.followUp && t) followUp(c, t, st.spec.followUp);
     if (terminal === 'error' && st.spec.followUp && t) followUp(c, t, st.spec.followUp);
-    sound(terminal === 'complete' ? 'complete' : 'stop');
+    if (terminal === 'complete') sound('complete'); else if (terminal !== 'steered') sound('stop');
     if (st.revealRec) {
       var others = false; streams.forEach(function (o) { if (o.revealRec === st.revealRec) others = true; });
       if (!others) { c.releaseNextRun(st.revealRec); setTimeout(releaseRoom, K() ? K().ms(260) : 260); }
     }
     c.followIfSticky();
-    if (st.tid === c.state.selectedThread) c.maybeFlushQueue();
+    /* the queue advances on its own only when a turn completes; after a Stop
+       or an error it waits for the user (Send, Send now, Edit or Remove) */
+    if (st.tid === c.state.selectedThread && terminal === 'complete') c.maybeFlushQueue();
   }
 
   function followUp(c, t, f) {
@@ -47624,6 +47627,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   var owner = {
     busy: function (tid) { var b = false; streams.forEach(function (st) { if (st.tid === tid) b = true; }); directors.forEach(function (d) { if (d.tid === tid) b = true; }); return b; },
     stop: function (tid) { directors.forEach(function (d, k) { if (d.tid === tid) directors.delete(k); }); streams.forEach(function (st) { if (st.tid === tid) finalize(st, 'stopped'); }); },
+    /* Send now steers (DL-108): the reply written so far stays, unmarked, and
+       the steered message takes the turn from here; a live agent turn's work
+       keeps running. Not a Stop: no marker, no stop cue, no queue advance. */
+    steer: function (tid) { streams.forEach(function (st) { if (st.tid === tid && !st.hold) finalize(st, 'steered'); }); },
     cancel: function (tid) {
       /* leaving the thread: the turn finishes in the background -- it is
          complete, answer and all, when the reader comes back */
@@ -52216,9 +52223,10 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='queue-send-now'){
       const q=queueOf(); const i=q.findIndex(x=>x.id===btn.dataset.id); if(i<0)return;
       const [entry]=q.splice(i,1);
-      /* Send now interrupts a reply that is still being written, rather than
-         starting a second one alongside it. */
-      if(ownersBusy(state.selectedThread)) notifyTurnOwners('stop',state.selectedThread);
+      /* Send now steers (DL-108, ACD-219): the reply being written keeps what
+         it has written and the steered message is delivered now. It is not a
+         Stop, so the rest of the queue does not advance. */
+      if(ownersBusy(state.selectedThread)) notifyTurnOwners('steer',state.selectedThread);
       const outcome=deliverSend(entry.text);
       /* B20-R3-F3: a veto or validator exception keeps the queue entry in its
          slot unless the held input is already visible again (restored to the

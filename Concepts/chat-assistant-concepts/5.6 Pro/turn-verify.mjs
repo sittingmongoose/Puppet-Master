@@ -105,6 +105,39 @@ await safe('stop mid-stream', async () => {
   await p.close();
 });
 
+/* -------------------------------------------------------- busy sends */
+/* DL-108: sends while a reply is written queue by default; Stop never advances
+   the queue; Send now steers (the reply so far stays, unmarked) and sends only
+   that message. */
+await safe('busy sends', async () => {
+  const p = await fresh();
+  await p.evaluate(() => PM56_DEMO.selectThread('live-turn')); await sleep(300);
+  const users = () => p.evaluate(() => document.querySelectorAll('.transcript-inner > .message-user').length);
+  const queued = () => p.evaluate(() => document.querySelectorAll('.send-queue-row').length);
+  const writing = () => p.waitForFunction(() => { const a = [...document.querySelectorAll('.transcript-inner > .message-assistant')].pop(); return a && a.querySelectorAll('.tx-w').length > 3; }, null, { timeout: 6000 });
+  const u0 = await users();
+  await typeSend(p, 'Walk me through the steps for the rollout.'); await writing();
+  await typeSend(p, 'Also list the risks.'); await sleep(200);
+  check('a send while the reply is written joins the queue', (await queued()) === 1 && (await users()) === u0 + 1, { queued: await queued(), users: (await users()) - u0 });
+  await p.click('[data-action="stop-run"]'); await sleep(1500);
+  check('Stop does not advance the queue', (await queued()) === 1 && (await users()) === u0 + 1, { queued: await queued(), users: (await users()) - u0 });
+  /* Send now on a queued message while a new reply is written: it steers */
+  await p.click('.send-queue-row [data-action="queue-send-now"]'); await writing();
+  await typeSend(p, 'First queued.'); await sleep(150);
+  await typeSend(p, 'Second queued.'); await sleep(150);
+  const before = await p.evaluate(() => ({ users: document.querySelectorAll('.transcript-inner > .message-user').length, q: document.querySelectorAll('.send-queue-row').length }));
+  await p.click('.send-queue-row [data-action="queue-send-now"]'); await sleep(600);
+  const r = await p.evaluate(() => {
+    const as = [...document.querySelectorAll('.transcript-inner > .message-assistant')];
+    const steered = as[as.length - 2];
+    return { users: document.querySelectorAll('.transcript-inner > .message-user').length, q: document.querySelectorAll('.send-queue-row').length,
+      steeredMarked: !!(steered && steered.querySelector('.tx-terminal')), steeredText: steered ? steered.textContent.trim().length : 0, writing: !!document.querySelector('[data-streaming]') };
+  });
+  check('Send now steers: the reply so far stays unmarked and only that message is sent', r.users === before.users + 1 && r.q === before.q - 1 && !r.steeredMarked && r.steeredText > 5 && r.writing, { before, after: r });
+  check('no page errors during busy sends', p.__errs.length === 0, p.__errs.slice(0, 2));
+  await p.close();
+});
+
 /* ------------------------------------------------------------ live turn */
 await safe('live agent turn', async () => {
   const p = await fresh();

@@ -188,7 +188,15 @@ Build with `python3 build.py` then `--check`.
   reflow). A stopped reply keeps what was written with a **Stopped** marker;
   an error keeps it with the error's note.
 - While a reply is being written the composer shows **Stop** and a send joins
-  the follow-up queue. **Send now** on a queued message stops the reply first.
+  the follow-up queue. **Queue** is the default for sends made while the
+  assistant is busy (DL-108); the product composer also keeps the **Steer /
+  Queue** switch, where Steer sends straight into the running turn. The concept
+  demonstrates Queue only; the switch comes with the port.
+- **Send now** on a queued message **steers**: the reply written so far stays,
+  with no Stopped marker, and that message is sent at once; any other queued
+  message keeps waiting. The queue advances on its own only when a turn
+  **completes**, never after **Stop** or an error (then it waits for Send, Send
+  now, Edit or Remove).
   Leaving the thread lets the reply finish (it is complete when you return).
 - Messages revealed after a work burst (the Multi Orbit demo's interim and
   summary text) stream in the same way, and the next burst waits until the
@@ -774,8 +782,9 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
 - **A subject can fail or wait for the reader.** A failed node shakes once and turns
   danger-red with an x flag, and its panel chip reads **Failed**; a subject waiting for
   approval turns warning-amber with a pause flag, the core reads **Waiting for you**,
-  and an **Approval needed** item (Approve once / Deny) appears in the transcript right
-  under the card. Approving resumes the run; denying stops it with nothing applied.
+  and an **Approval needed** item appears in the transcript right under the card. The
+  product item offers the full approval ladder (deny, once, for this session, always;
+  ACD-011); the concept demonstrates Approve once and Deny. Approving resumes the run; denying stops it with nothing applied.
 - **Long runs stay legible.** Past 16 started subjects, adjacent subjects of the same
   kind merge into one **cluster node** with a count ("Read ×12"); past 30 nodes the
   oldest fold into one **Earlier** node. A cluster's panel lists every member (the
@@ -791,6 +800,11 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   button** in the card head that opens them as a drawer inside the head. They are
   concept-lab controls only (the product's Stop lives in the composer) and are
   **removed in the PMConcept7 port**.
+- **Lab only, never product** (ACD-474): Demo Studio and its variant indices, the
+  **Motion voice** picker (production follows the theme family), the **Live turns**
+  demos and thread, the Multi Orbit demo, the card's demo drawer, the instant/stream
+  reply switch, the scripted replies, the film clock (`PM56_CLOCK`) and every measured
+  timing in this file.
 - Collapsed activities show **receipt chips WITHOUT a "Worked for" chip** (elapsed
   already lives in the card head). Play/complete respect the user's pin and collapse;
   only Reset clears them.
