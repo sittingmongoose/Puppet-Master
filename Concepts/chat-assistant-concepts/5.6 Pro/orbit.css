@@ -312,6 +312,10 @@
   animation: orbit-node-in 360ms var(--spring-soft-ease) backwards;
   animation-delay: calc(var(--node-i, 0) * 40ms);
 }
+/* settled nodes drop the entrance (orbit.js stamps data-settled 900ms after
+   birth): keeping a finished var()-keyframe animation attached made every
+   ring restyle re-resolve it */
+.orbit-node[data-settled] { animation: none; }
 @keyframes orbit-node-in {
   from { opacity: 0; transform: rotate(var(--a)) translateX(0) rotate(calc(-1 * var(--a))) scale(.4); }
   to   { opacity: 1; transform: rotate(var(--a)) translateX(var(--orbit-r)) rotate(calc(-1 * var(--a))) scale(var(--pop)); }

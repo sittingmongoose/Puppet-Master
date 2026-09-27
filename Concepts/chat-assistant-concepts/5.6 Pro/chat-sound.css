@@ -1,0 +1,5 @@
+/* chat-sound.css -- Chat WOW (2026-09-26). OWNER: chat-sound.js.
+   The speaker in the chat header: on by default, one click to mute. */
+.tx-sound-btn { color: var(--muted); }
+.tx-sound-btn.is-muted { color: var(--subtle); opacity: .7; }
+.tx-sound-btn:hover { color: var(--text); opacity: 1; }

@@ -74,6 +74,13 @@ async function readPixels(page, clip) {
       centre: (() => {
         const i = ((Math.floor(c.height / 2) * c.width) + Math.floor(c.width / 2)) * 4;
         return '#' + ((d[i] << 16) | (d[i + 1] << 8) | d[i + 2]).toString(16).padStart(6, '0');
+      })(),
+      /* the fill band just inside the top edge, on the vertical centre line: a
+         node's 14px icon never reaches it, so it is the node's own fill whatever
+         the node's size (the exact centre can land on an icon stroke) */
+      band: (() => {
+        const y = Math.max(0, Math.round(c.height * 0.22)), i = ((y * c.width) + Math.floor(c.width / 2)) * 4;
+        return '#' + ((d[i] << 16) | (d[i + 1] << 8) | d[i + 2]).toString(16).padStart(6, '0');
       })()
     };
   }, dataUrl);
@@ -323,10 +330,10 @@ await safe('Orbit: every node hit-tests to itself and paints', async () => {
       const surf = getComputedStyle(document.querySelector('.working-card')).backgroundColor.match(/\d+/g).map(Number);
       return { fill: c.slice(0, 3), surface: surf.slice(0, 3) };
     });
-    const got = [1, 3, 5].map((i, k) => parseInt(px.centre.slice(1 + k * 2, 3 + k * 2), 16));
+    const got = [1, 3, 5].map((i, k) => parseInt(px.band.slice(1 + k * 2, 3 + k * 2), 16));
     const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
-    check('the live node paints its declared phase fill at its centre (delta <= 12)',
-      dist(got, want.fill) <= 12, { painted: px.centre, declared: want.fill, delta: +dist(got, want.fill).toFixed(1) });
+    check('the live node paints its declared phase fill (fill band, delta <= 12)',
+      dist(got, want.fill) <= 12, { painted: px.band, centre: px.centre, declared: want.fill, delta: +dist(got, want.fill).toFixed(1) });
     check('the live node is visibly distinct from the card behind it (delta >= 40)',
       dist(got, want.surface) >= 40, { painted: px.centre, surface: want.surface, delta: +dist(got, want.surface).toFixed(1) });
     check('the live node crop carries real ink, not a flat block', px.inkShare >= 0.08 && px.distinct >= 8, px);
@@ -1078,6 +1085,15 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
   const second = p12.locator('.transcript-inner .working-card').nth(1);
   if (await second.count()) await demoClick(p12, second, 'complete-working');
   await p12.waitForTimeout(500);
+  /* Chat WOW: B folds into its strip once its summary streams; reopen it (the
+     strip chevron follows the last subject) before reading its ring. */
+  await p12.waitForFunction(() => !document.querySelector('.transcript-inner [data-streaming]'), null, { timeout: 12000 }).catch(() => {});
+  await p12.waitForTimeout(900);
+  await p12.evaluate(() => {
+    const cards = [...document.querySelectorAll('.transcript-inner .working-card')];
+    for (const c of cards) { const chev = c.querySelector('.orbit-strip-chev'); if (chev && c.querySelectorAll('.orbit-strip-item').length >= 14) chev.click(); }
+  });
+  await p12.waitForTimeout(1000);
   const orbitB = await p12.evaluate(() => {
     const cards = [...document.querySelectorAll('.transcript-inner .working-card')];
     let best = null, n = 0;

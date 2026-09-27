@@ -216,6 +216,25 @@ Build with `python3 build.py` then `--check`.
     type in with a block cursor and phosphor bloom.
   PMConcept7 adopts voices by theme family (same eight theme ids).
 
+## Sound
+
+- The chat has a **subtle sound**, on by default. A speaker button in the chat
+  header mutes it in one click (its hover card says what it does); the choice
+  persists. Audio starts only after the first real click or key press, so
+  demos that run on load stay silent until then. Reduced motion does not mute.
+- Every sound is paired with a visual beat and never carries meaning alone:
+  **send** (a soft lift with the flight), **first word** (a breath), **work
+  born** (a low bloom), **step finished** (a tiny tick, at most one per 250ms
+  and silent inside bursts), **failure** (a soft knock), **needs you** (a
+  two-tone), **answer arrives** (a glide with the fold), **turn complete** (a
+  two-note resolve) and **stop** (a muted click). At most one sound per 120ms.
+- One kit per theme family (Basic, Friendly, Glass, Retro; dark and light
+  share a kit), synthesized with WebAudio: no audio files. Every event peaks at
+  or below -18 dBFS (checked by rendering each kit offline).
+- Production: these events map onto the app's **Notifications & Sounds**
+  settings (per-event toggles and the master volume live there); the header
+  button is the quick mute.
+
 ## Scroll to bottom
 
 - When the transcript is **not** at the bottom (more than ~24px of remaining
@@ -689,6 +708,14 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   status bar's elapsed time); completions, reveals, new cards and queue flushes
   run a full render. Its period is 500ms of motion time (`PM56_CLOCK`), so a film
   tool that slows the clock slows the tick with it.
+- **Cost at scale (measured on the review VM, software rendering).** At 140
+  subjects the tick costs ~45-50ms against ~100ms for a full render of the same
+  state (the old every-tick full render measured 185ms). About half of the tick
+  is the ring itself: every spawn re-spaces the nodes and turns the dial, so each
+  of the ~30 nodes restarts its transform transition. That is why the node count
+  is capped at 30 (clusters, then Earlier); keep the cap in the port. Settled
+  nodes drop their entrance animation, and the dial's turn lives on the ring
+  (its only reader) rather than on the whole stage.
 - **Clock-only work ticks** (card height unchanged, `|Δh| < 1px`) do **not** FLIP the
   working body or rewrite transcript `scrollTop`. User scroll during a live Orbit or
   Step Rail run is not stolen. Height-changing expand/collapse still FLIPs and

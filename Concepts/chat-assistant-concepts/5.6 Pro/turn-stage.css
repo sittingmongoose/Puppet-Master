@@ -303,3 +303,11 @@ body[data-theme] { --tx-gutter: 24px; }
    view UP whenever a card above the reader shrank -- a working card folding as
    the answer starts -- which read as the reader leaving the bottom. */
 .chat-stage .transcript { overflow-anchor: none; }
+
+/* accent budget, the remaining decoration: family hues instead of the accent */
+.transcript-inner > [data-family="time"] .sched-kind svg { color: var(--fam-time); border-color: transparent; }
+.transcript-inner .att-tracer-fill { background: color-mix(in srgb, var(--text) 42%, transparent); }
+.transcript-inner > [data-family="people"] .agent-progress i { background: var(--fam-people); }
+.transcript-inner > [data-family="deliverable"] .artifact-preview { color: var(--fam-deliverable); }
+.transcript-inner > [data-family="deliverable"] .artifact-preview svg { color: var(--fam-deliverable); border-color: transparent; }
+

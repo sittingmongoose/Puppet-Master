@@ -967,7 +967,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(art.kind==='mermaid') preview=`<div class="artifact-preview mermaid"><svg viewBox="0 0 500 120" width="100%" height="100%"><g font-family="var(--font-ui)" font-size="10" text-anchor="middle"><rect x="20" y="38" width="100" height="42" rx="10" fill="var(--accent)"/><text x="70" y="63" fill="white">Chat</text><rect x="200" y="38" width="110" height="42" rx="10" fill="var(--surface-3)" stroke="var(--border-strong)"/><text x="255" y="63" fill="var(--text)">Activity</text><rect x="390" y="38" width="90" height="42" rx="10" fill="var(--surface-3)" stroke="var(--border-strong)"/><text x="435" y="63" fill="var(--text)">Editor</text></g><path d="M120 59h80M310 59h80" stroke="var(--muted)" stroke-width="2"/></svg></div>`;
     else if(art.kind==='dashboard'||art.kind==='chart') preview=`<div class="artifact-preview"><div class="mini-graph">${[35,58,42,76,51,91,67,84].map((h,i)=>`<i style="height:${h}%;animation-delay:${i*45}ms"></i>`).join('')}</div></div>`;
     else if(art.kind==='image') preview=`<div class="artifact-preview"><div class="generated-scene"></div></div>`;
-    else preview=`<div class="artifact-preview" style="display:grid;place-items:center;color:var(--accent)">${icon(art.kind==='document'?'document':'chart',36)}</div>`;
+    else preview=`<div class="artifact-preview" style="display:grid;place-items:center;color:var(--fam-deliverable,var(--muted))">${icon(art.kind==='document'?'document':'chart',36)}</div>`;
     return `<article class="system-card" data-artifact-id="${esc(art.id)}"><div class="system-card-head"><span class="event-icon">${icon(art.kind==='image'?'image':art.kind==='mermaid'?'code':'artifact',14)}</span><div><span class="title">${esc(art.title)}</span><span class="sub"> · ${esc(art.kind)}</span></div><span class="spacer"></span><span class="meta-pill">${esc(lblOf('artifactStatus',art.status))}</span></div><div class="system-card-body">${preview}<div class="artifact-card"><div><strong>${esc(art.title)}</strong><p style="margin:3px 0 0;color:var(--muted);font-size:11px">${esc(art.summary)}</p></div><button class="soft-button" data-action="open-artifact" data-id="${esc(art.id)}">${icon('expand',13)} Open</button></div></div></article>`;
   }
 
@@ -2495,7 +2495,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      the next one). Only real input unsticks it: wheel-up, touch, a scrollbar
      drag, or a scrolling key outside a text field. Scroll events we cause are
      not input, so anchoring and clamping never flip the state. */
-  let tStick=true, tUserInputAt=0, tDragging=false, tExpectTop=null, tLastTop=null;
+  let tStick=true, tUserInputAt=0, tDragging=false, tExpectTop=null, tLastTop=null, tInputDir=0;
   let glideRAF=0, glideTs=0, tRO=null, tROTarget=null;
   const GLIDE_TAU=70;
   function tEl(){ return scrollKeyEl('transcript'); }
@@ -2534,13 +2534,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function inTranscript(t){ return !!(t&&t.closest&&t.closest('[data-scroll-key="transcript"]')); }
   const T_SCROLL_KEYS=new Set(['PageUp','PageDown','ArrowUp','ArrowDown','Home','End',' ']);
   const T_UP_KEYS=new Set(['PageUp','ArrowUp','Home']);
-  document.addEventListener('wheel',e=>{ if(!inTranscript(e.target)) return; tUserInputAt=performance.now(); if(e.deltaY<0){ tStick=false; cancelGlide(); } },{passive:true,capture:true});
-  document.addEventListener('touchstart',e=>{ if(!inTranscript(e.target)) return; tUserInputAt=performance.now(); tStick=false; cancelGlide(); },{passive:true,capture:true});
+  document.addEventListener('wheel',e=>{ if(!inTranscript(e.target)) return; tUserInputAt=performance.now(); tInputDir=e.deltaY<0?-1:1; if(e.deltaY<0){ tStick=false; cancelGlide(); } },{passive:true,capture:true});
+  document.addEventListener('touchstart',e=>{ if(!inTranscript(e.target)) return; tUserInputAt=performance.now(); tInputDir=0; tStick=false; cancelGlide(); },{passive:true,capture:true});
   document.addEventListener('keydown',e=>{
     const a=document.activeElement;
     if(a&&(a.tagName==='TEXTAREA'||a.tagName==='INPUT'||a.tagName==='SELECT'||a.isContentEditable)) return;
     if(!T_SCROLL_KEYS.has(e.key)) return;
     tUserInputAt=performance.now();
+    tInputDir=T_UP_KEYS.has(e.key)?-1:1;
     if(T_UP_KEYS.has(e.key)){ tStick=false; cancelGlide(); }
   },{capture:true});
   document.addEventListener('pointerdown',e=>{
@@ -2588,8 +2589,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const ours=tExpectTop!=null&&Math.abs(top-tExpectTop)<=1;
       if(!ours){
         tExpectTop=null;
-        if(tAtBottom(el)) tStick=true;
-        else if(tDragging||performance.now()-tUserInputAt<700||(prev!=null&&top<prev-8)){ tStick=false; cancelGlide(); }
+        const recent=tDragging||performance.now()-tUserInputAt<700;
+        /* an upward gesture never re-engages follow in its own first frames,
+           while the view is still within reach of the bottom */
+        if(tAtBottom(el)){ if(!(recent&&tInputDir<0)) tStick=true; }
+        else if(recent||(prev!=null&&top<prev-8)){ tStick=false; cancelGlide(); }
       }
     }
     syncJumpBottom();
