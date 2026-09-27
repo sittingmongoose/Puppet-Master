@@ -17,7 +17,8 @@
        progress included (see startOver in 60-ui-core.js) */
     replay: async () => {
       const returnFocus = document.activeElement;
-      if (O55.tour && O55.tour.running && O55.tour.reset) await O55.tour.reset({ silent: true });
+      if (O55.tour && O55.tour.hasUnresolved && O55.tour.hasUnresolved()) { O55.tour.start({}); return false; }
+      if (O55.tour && O55.tour.running && O55.tour.reset) { const result = await O55.tour.reset({ silent: true }); if (result === false || result?.status === 'restore-pending') return false; }
       return O55.ui.open({ fresh: true, returnFocus });
     },
     resume: () => O55.ui.open({ returnFocus: document.activeElement }),
@@ -54,12 +55,12 @@
   function tourChip() {
     const t = O55.store.get('tour', null);
     let el = document.getElementById('o55-tourchip');
-    if (!(t && t.status === 'running')) { if (el) el.remove(); return; }
+    if (!(t && ['running', 'restore-pending', 'resume-unavailable'].includes(t.status))) { if (el) el.remove(); return; }
     if (!el) {
       el = document.createElement('div'); el.id = 'o55-tourchip'; el.className = 'o55-resume'; el.setAttribute('data-pm-hover-exempt', 'true'); document.body.appendChild(el);
-      el.addEventListener('click', (e) => { const b = e.target.closest('[data-o55-chip]'); if (!b) return; el.remove(); if (b.getAttribute('data-o55-chip') === 'resume') O55.tour.start({}); else { O55.store.set('tour', Object.assign(t, { status: 'skipped' })); } });
+      el.addEventListener('click', (e) => { const b = e.target.closest('[data-o55-chip]'); if (!b) return; el.remove(); if (b.getAttribute('data-o55-chip') === 'resume') O55.tour.start({}); });
     }
-    el.innerHTML = `<button type="button" data-o55-chip="resume" data-pm-hover-exempt="true">${O55.c.small('spark', 14)}<span>${U.esc(T('tour.resume'))}</span></button><button type="button" class="o55-resume-x" data-o55-chip="hide" aria-label="${U.esc(T('chrome.hide'))}" data-pm-hover-exempt="true">×</button>`;
+    el.innerHTML = `<button type="button" data-o55-chip="resume" data-pm-hover-exempt="true">${O55.c.small('spark', 14)}<span>${U.esc(t.status === 'running' ? T('tour.resume') : T('tour.recoveryTitle'))}</span></button><button type="button" class="o55-resume-x" data-o55-chip="hide" aria-label="${U.esc(T('chrome.hide'))}" data-pm-hover-exempt="true">×</button>`;
   }
   O55.boot = { chip, tourChip };
 
@@ -69,7 +70,7 @@
        or tour bar renders its control from it */
     if (O55.sound && O55.sound.refresh) { try { O55.sound.refresh('boot'); } catch (_) {} }
     if (sw === 'off') return;
-    if (sw === 'fresh') { O55.store.clear('onboarding'); O55.store.clear('tour'); return O55.ui.open({ fresh: true }); }
+    if (sw === 'fresh') { O55.store.clear('onboarding'); return O55.ui.open({ fresh: true }); }
     if (sw.startsWith('screen=')) return O55.ui.open({ screen: sw.slice(7) });
     if (sw === 'tour') return O55.tour && O55.tour.start && O55.tour.start({ source: 'switch' });
     const saved = O55.store.get('onboarding', null);

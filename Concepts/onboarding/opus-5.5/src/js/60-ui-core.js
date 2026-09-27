@@ -405,6 +405,7 @@
   }
   function open(opts) {
     opts = opts || {};
+    if (opts.fresh && O55.tour && O55.tour.hasUnresolved && O55.tour.hasUnresolved()) { O55.tour.start({}); return false; }
     O55.motion.quiet(2200); /* building the window is expected to be heavy; it never counts as a slow computer */
     build();
     /* a Project that is being created is never abandoned half-made: starting over waits for it, on its own screen */

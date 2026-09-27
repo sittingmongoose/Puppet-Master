@@ -28,8 +28,9 @@ function ensurePm51State() {
    pass, so the same seeding runs here for every canonical row wherever it now renders. */
 function pm51SeedCanonicalValues() {
   const reg = PM51.placement && PM51.placement.byId; if (!reg || !state.settings || typeof state.settings !== 'object') return;
+  delete state.settings['system.advanced.update-frequency'];
   for (const entry of Object.values(reg)) {
-    const s = entry.setting; if (!s || state.settings[s.id] !== undefined || s.value === undefined) continue;
+    const s = entry.setting; if (!s || s.id === 'system.advanced.update-frequency' || state.settings[s.id] !== undefined || s.value === undefined) continue;
     state.settings[s.id] = typeof s.value === 'object' && s.value !== null ? clone(s.value) : s.value;
   }
 }
@@ -791,6 +792,7 @@ pm51SeedCanonicalValues();
 const pm51NarrowSettingRow = renderSettingRow;
 const pm51PlainSettingRow = typeof narrowOriginalSettingRow === 'function' ? narrowOriginalSettingRow : renderSettingRow;
 renderSettingRow = function (setting, section, workspace) {
+  if (setting.id === 'system.advanced.update-frequency') return '';
   if (!(pm51InlineDepth > 0 || (section && section.inline))) return pm51NarrowSettingRow(setting, section, workspace);
   const brief = pm51FirstSentence(setting.description);
   return pm51PlainSettingRow(brief === setting.description ? setting : Object.assign({}, setting, { description: brief }), section, workspace);
@@ -968,6 +970,20 @@ PM51.revealSetting = (id, { detail = false } = {}) => {
 const pm51OriginalApplySearchSelection = applySearchSelection;
 applySearchSelection = function (p) {
   if (p && p.kind === 'setting' && p.id && PM51.revealSetting(p.id)) return;
+  if (p && p.kind === 'provider-model' && p.providerId && p.id && PM51.revealProviderModel && PM51.revealProviderModel(p.providerId, p.id)) return;
+  if (p && (p.kind === 'history-session' || p.kind === 'artifact') && p.id && PM51.revealHistoryObject && PM51.revealHistoryObject(p.kind, p.id)) return;
+  if (p && (p.kind === 'sync-client' || p.kind === 'sync-location') && p.id) {
+    const list = p.kind === 'sync-client' ? state.projectSync?.clients : state.projectSync?.remotes;
+    const exact = Array.isArray(list) && list.find(row => row.id === p.id);
+    if (exact) {
+      PM51.s().searchExactTarget = { kind: p.kind, id: p.id };
+      navigate('projects', 'project-sync');
+      infoDrawer(p.kind === 'sync-client' ? `Client · ${exact.name}` : `Remote project · ${exact.name}`,
+        'Exact Project Sync concept object. Owner state and freshness must be checked before any change.',
+        [['Stable ID', exact.id], ['Kind', p.kind], ['Status', exact.status || 'Unknown'], ['Owner', 'Project Sync']]);
+      return;
+    }
+  }
   return pm51OriginalApplySearchSelection(p);
 };
 

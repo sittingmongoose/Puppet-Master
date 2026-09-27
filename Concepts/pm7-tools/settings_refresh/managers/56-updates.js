@@ -8,7 +8,7 @@
 #panel-settings .pm51-updates-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 `);
 
-  const up = () => { if (!state.updates) state.updates = { automatic: true, channel: 'Stable', source: 'GitHub Releases', checkInterval: 'On open and hourly', currentVersion: '0.8.0-dev', availableVersion: '0.8.1', lastCheck: '7 minutes ago', history: [] }; return state.updates; };
+  const up = () => { if (!state.updates) state.updates = { automatic: true, channel: 'Stable', source: 'GitHub Releases', currentVersion: '0.8.0-dev', availableVersion: '0.8.1', lastCheck: '7 minutes ago', history: [] }; delete state.updates.checkInterval; return state.updates; };
   const ux = () => PM51.s().updates;
   const refresh = () => { saveState(); PM51.refresh(ID, { swap: false }); };
   const hasUpdate = () => { const U = up(); return !!U.availableVersion && U.availableVersion !== U.currentVersion; };
@@ -101,7 +101,6 @@
   PM51.on('updates-rollback', el => rollback(Number(ds(el, 'index'))));
   PM51.on('updates-details', el => detailsPanel(Number(ds(el, 'index'))));
   PM51.onChange('updates-channel', el => { up().channel = el.value; saveState(); });
-  PM51.onChange('updates-interval', el => { up().checkInterval = el.value; saveState(); });
   PM51.onChange('updates-restart', el => { up().restartPolicy = el.value; saveState(); });
   PM51.on('updates-skipbad', () => { const U = up(); U.skipKnownBad = U.skipKnownBad === false; refresh(); });
   PM51.on('updates-diagnostics', () => { const U = up(); PM51.check({ title: 'App Updates diagnostics', steps: [
@@ -110,7 +109,7 @@
     { title: 'Restore point available', desc: U.history.find(x => x.result === 'Available for rollback') ? `Roll back to ${U.history.find(x => x.result === 'Available for rollback').version}` : 'None yet' },
     { title: 'Automatic updates', desc: U.automatic ? 'On' : 'Off', tone: U.automatic ? 'ready' : 'attention', status: U.automatic ? 'Checked' : 'Off' }
   ] }); });
-  PM51.on('updates-reset', () => PM51.confirm('Reset update settings?', 'Automatic updates turn on, the Stable channel is used, and checks run on open and hourly.', 'Reset', () => { const U = up(); U.automatic = true; U.channel = 'Stable'; U.checkInterval = 'On open and hourly'; U.restartPolicy = 'Wait until idle'; U.skipKnownBad = true; refresh(); PM51.toast('Update settings restored'); }));
+  PM51.on('updates-reset', () => PM51.confirm('Reset update settings?', 'Automatic updates turn on and the Stable channel is used.', 'Reset', () => { const U = up(); U.automatic = true; U.channel = 'Stable'; U.restartPolicy = 'Wait until idle'; U.skipKnownBad = true; refresh(); PM51.toast('Update settings restored'); }));
   PM51.on('updates-help', () => PM51.panel({
     title: 'How updates work',
     body: PM51.panelSection('In short', '<p class="pm51-ps-text">Puppet Master checks for new versions on its own, downloads them in the background, and installs when nothing is running. Every download is verified before it is used.</p>')

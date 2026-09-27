@@ -17,6 +17,7 @@ import argparse, hashlib, json, re, subprocess, sys, tempfile
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import settings_refresh_source as source  # noqa: E402
+import selected_checkpoint_repairs_source as selected_repairs  # noqa: E402
 
 SETTINGS_BLOCK_IDS = ["pm4-settings-css", "pm49-assistant-settings-css", "pm50-manager-layout",
                       "pm51-settings-refresh", "pm7-settings-data", "pm4-settings-js"]
@@ -69,7 +70,8 @@ def main():
     pin = json.loads((HERE / "settings_refresh_checkpoint.json").read_text())
     base = (HERE / "base/TestPMConcept-settings-refresh-base.html").read_bytes()
     need(sha(base) == pin["sha256"], "published checkpoint mismatch; no silent repin")
-    before = base.decode("utf-8")
+    pinned = base.decode("utf-8")
+    before = selected_repairs.apply(pinned)
     notes = {}
     after = source.apply(before, notes, need)
     scripts = source.check_scripts_unchanged(before, after, need)
@@ -86,7 +88,8 @@ def main():
     out = after.encode("utf-8")
     report = {"lane": "settings_refresh_checkpoint", "base_sha256": pin["sha256"], "base_commit": pin["source_commit"],
               "output_sha256": sha(out), "output_bytes": len(out), "scripts": scripts, "scripts_node_checked": checked,
-              "all_non_settings_scripts_byte_identical": True, "transform": notes}
+              "all_non_settings_scripts_byte_identical_after_selected_source_repairs": True,
+              "selected_source_repairs": ["T44 exact search", "T46 NamedPlan and EGOLITE", "T46P work-state fixtures"], "transform": notes}
     if a.parity:
         other = blocks(a.parity.read_text(encoding="utf-8"))
         mine = blocks(after)

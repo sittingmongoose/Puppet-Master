@@ -81,8 +81,8 @@ PERFORMANCE_MODEL_SOURCE = r'''  /* PM7 T46P deterministic concept models. The T
     {fixture_id:'queued',state:'queued',wait_reason:'admission-capacity',reevaluation:'governor-capacity-change',can_cancel:true,can_retry:false,phase:'queued'},
     {fixture_id:'running',state:'running',wait_reason:'not-waiting',reevaluation:'owner-phase-change',can_cancel:true,can_retry:false,phase:'executing'},
     {fixture_id:'waiting',state:'waiting',wait_reason:'provider-rate-window',reevaluation:'provider-window-reopens',can_cancel:true,can_retry:false,phase:'waiting'},
-    {fixture_id:'cancel-requested',state:'cancel-requested',wait_reason:'owner-cancellation-pending',reevaluation:'owner-terminal-receipt',can_cancel:false,can_retry:false,phase:'cancelling'},
-    {fixture_id:'terminal-unknown',state:'terminal-unknown',wait_reason:'terminal-receipt-unavailable',reevaluation:'owner-currentness-refresh',can_cancel:false,can_retry:true,phase:'terminal-unknown'},
+    {fixture_id:'cancel-requested',state:'running',command_outcome:'executing',wait_reason:'owner-cancellation-pending',reevaluation:'owner-terminal-receipt',can_cancel:false,can_retry:false,phase:'Cancelling'},
+    {fixture_id:'terminal-unknown',state:'recovery-required',command_outcome:'terminal-unknown',wait_reason:'terminal-receipt-unavailable',reevaluation:'owner-currentness-refresh',can_cancel:false,can_retry:true,phase:'reconcile receipt'},
     {fixture_id:'recovery-required',state:'recovery-required',wait_reason:'owner-recovery-required',reevaluation:'explicit-owner-retry',can_cancel:false,can_retry:true,phase:'recovery'},
     {fixture_id:'completed',state:'completed',wait_reason:'not-waiting',reevaluation:'terminal',can_cancel:false,can_retry:false,phase:'completed'}
   ];
@@ -110,7 +110,7 @@ PERFORMANCE_MODEL_SOURCE = r'''  /* PM7 T46P deterministic concept models. The T
   const PM7_PERFORMANCE_WORK_ID='concept-work:full-thread-performance:001';
   function performanceVocabulary(values){return `<div class="pm7-perf-vocab">${values.map(value=>`<code>${value}</code>`).join('')}</div>`;}
   function renderPerformanceTruthFixtures(){
-    const work=PM7_PERFORMANCE_WORK_FIXTURES.map(row=>`<div class="pm7-perf-fixture-row" data-observable-work-fixture="true" data-observable-work-id="${PM7_PERFORMANCE_WORK_ID}:${row.fixture_id}" data-work-state="${row.state}" data-wait-reason="${row.wait_reason}" data-reevaluation-condition="${row.reevaluation}" data-can-cancel="${row.can_cancel}" data-can-retry="${row.can_retry}" data-progress-denominator="phase-only"><strong>${row.state}</strong><span>${row.phase}</span></div>`).join('');
+    const work=PM7_PERFORMANCE_WORK_FIXTURES.map(row=>`<div class="pm7-perf-fixture-row" data-observable-work-fixture="true" data-fixture-id="${row.fixture_id}" data-observable-work-id="${PM7_PERFORMANCE_WORK_ID}:${row.fixture_id}" data-work-state="${row.state}" data-command-outcome="${row.command_outcome||''}" data-wait-reason="${row.wait_reason}" data-reevaluation-condition="${row.reevaluation}" data-can-cancel="${row.can_cancel}" data-can-retry="${row.can_retry}" data-progress-denominator="phase-only"><strong>${row.fixture_id}</strong><span>${row.state} · ${row.phase}</span></div>`).join('');
     const governor=PM7_PERFORMANCE_GOVERNOR_FIXTURES.map(row=>`<div class="pm7-perf-fixture-row" data-governor-outcome="${row.outcome}" data-observable-work-id="${PM7_PERFORMANCE_WORK_ID}:governor:${row.outcome}" data-outcome-reason="${row.reason}" data-reevaluation-condition="${row.reevaluation}"><strong>${row.outcome}</strong><span>${row.reason}</span></div>`).join('');
     const lists=PM7_PERFORMANCE_BOUNDED_LIST_FIXTURES.map(row=>`<div class="pm7-perf-fixture-row" data-bounded-list-family="${row.family}" data-row-limit="${row.row_limit}" data-byte-limit="${row.byte_limit}" data-load-trigger="explicit-inspection" data-runtime-availability="browser-fixture-only"><strong>${row.family}</strong><span>${row.row_limit} rows · ${row.byte_limit} bytes</span></div>`).join('');
     return `<details class="pm7-perf-fixtures"><summary>Deterministic browser truth fixtures</summary><div class="pm7-perf-fixture-groups"><section class="pm7-perf-fixture-group"><h5>ObservableWork rows</h5>${work}</section><section class="pm7-perf-fixture-group"><h5>Governor affected work</h5>${governor}</section><section class="pm7-perf-fixture-group"><h5>Bounded evidence families</h5>${lists}</section></div><p class="pm7-perf-boundary" style="padding:0 7px 7px">Fixture rows prove browser-concept contracts only. Native/runtime/provider/network execution remains unavailable here.</p></details>`;
@@ -758,9 +758,9 @@ def apply(doc, notes, need):
     need(PERFORMANCE_MODEL_SOURCE.count("{fixture_id:") == 7 and PERFORMANCE_MODEL_SOURCE.count("{outcome:") == 6
          and PERFORMANCE_MODEL_SOURCE.count("{family:") == 5,
          "T46P: deterministic work/governor/bounded-list fixture census mismatch")
-    need(all(("state:'%s'" % state) in PERFORMANCE_MODEL_SOURCE for state in
+    need(all(("fixture_id:'%s'" % scenario) in PERFORMANCE_MODEL_SOURCE for scenario in
              ("queued", "running", "waiting", "cancel-requested", "terminal-unknown", "recovery-required", "completed")),
-         "T46P: exact ObservableWork fixture states missing")
+         "T46P: exact ObservableWork fixture scenarios missing")
     need(all(("outcome:'%s'" % outcome) in PERFORMANCE_MODEL_SOURCE for outcome in
              ("admitted", "queued", "admitted-degraded", "permission-blocked", "resource-blocked", "cancelled")),
          "T46P: exact Governor outcome fixture states missing")

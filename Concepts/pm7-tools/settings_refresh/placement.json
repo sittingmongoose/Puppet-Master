@@ -956,8 +956,9 @@
     "updates-settings": {
       "to": "updates",
       "title": "Update checks",
-      "help": "When Puppet Master looks for updates and which channel it follows.",
-      "order": 10
+      "help": "Release channel and catalog options. Check timing is owned by Puppet Master.",
+      "order": 10,
+      "advanced": true
     },
     "app-visual": {
       "to": "app-input",

@@ -197,7 +197,7 @@
   function freeState(S, r) {
     const f = (S.sess.ai.freeRoutes = S.sess.ai.freeRoutes || {});
     if (f[r.id]) return f[r.id];
-    if (r.usesForge && S.sess.forgeAccounts[r.usesForge]) return 'ready';
+    if (r.usesForge && O55.official.accountFor(S, r.usesForge)) return 'ready';
     if (r.rateLimited) return 'limited';
     return 'needs';
   }

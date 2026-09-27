@@ -27,7 +27,7 @@ SOURCE = CONCEPTS / 'TestPMConcept.html'
 TARGET = CONCEPTS / 'TestOpus5.5PmConcept.html'
 PM7_TARGET = CONCEPTS / 'PMConcept7.html'
 SRC = PKG / 'src'
-BASE_SHA256 = 'fc4e0fede00b45a5e305cafe2610f2b699f270d0079223e4414785b6a93b4c07'
+BASE_SHA256 = 'f822c2baab5e8d074c72257fecb25b8f4b9a6e8c3830c4c9b727c60cfe658786'
 
 EMOJI = re.compile('[\U0001F000-\U0001FAFF☀-➿⬀-⯿️]')
 BANNED_COPY = re.compile(r'\b(repository|repositories|forge|runtime|adapter|endpoint|execution host|credential profile|'

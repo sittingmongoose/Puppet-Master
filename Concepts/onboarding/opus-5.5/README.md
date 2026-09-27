@@ -59,7 +59,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `tools/sheet.py` | Labelled contact sheets from screenshots or film frames. |
 | `tools/shots.mjs` | Settled screenshots of screens across themes and sizes. |
 | `tools/sound_render.mjs` + `tools/sound_board.py` | Offline renders of every sound kit, listening boards, spectrograms, live trace check. |
-| `tools/tour_scenarios.mjs <out> [--only t1,t2] [--snaps]` | Tour acceptance by real CDP input: t1 every step by hand then Restore, t2 every action through Show Me then Keep, t3 Skip restores, t4 resume after reload, t5 missing target. Every run also checks that no raw copy key shows and that a settled callout never covers its target. |
+| `tools/tour_scenarios.mjs <out> [--only t1,t2] [--snaps]` | Tour acceptance by real CDP input: t1 every step by hand then Restore, t2 every action through Show Me then Keep, t3 Skip restores, t4 reload recovery, t5 missing target. Every run also checks that no raw copy key shows and that a settled callout never covers its target. |
 | `tools/tour_shots.mjs <out> [--themes] [--width --height]` | Every tour step settled, in each theme (parallel browsers), plus after-states and the dock step mid-drag. |
 | `tools/tour_film.mjs <out> [--scenes] [--themes] [--rate]` | Slow-motion films of the handoff, the tour opening, every Show Me, the ELI5 rewrite, the plan read part by part and the finish. |
 | `tools/tour_census.mjs <out> [--wpm]` | Meaningful actions and dwell time per chapter, measured on the real tour. |
@@ -77,12 +77,16 @@ place it), **Plan before building** (open Planning Wizard by its visible route, 
 outcome, answer the access question with Why this matters, review, read the plan part by part, change the answer and
 see only the affected decisions change, then the fenced Approve And Build and Restore or Keep). Show Me drives the
 same handlers as doing it by hand. Skip and Finish restore the layout, the dashboard (added widgets leave through their
-own control, every card returns to its place and size), Chat's persona, ELI5, thread and draft. A reload resumes at
-the last safe step; a missing target offers Take me there. Onboarding's Ready screen hands over by turning its window
+own control, every card returns to its place and size), Chat's persona, ELI5, thread and draft. A same-page resume
+revalidates the current owner state; a reload without an owner-resolvable restoration basis stops at an explicit
+recovery panel instead of claiming the earlier layout or unsaved draft was restored. A missing target offers Take me there. Onboarding's Ready screen hands over by turning its window
 into the tour's first callout.
 
 Measured with `tools/tour_census.mjs`: 14 meaningful actions, 7 of them in Planning (50 %), and 4.5 minutes at 200
 words a minute, 53 % of it in Planning (the packet asks for at least half of both).
+
+Native durable owner snapshot admission remains to be implemented; the browser fixture cannot recover an unsaved
+composer draft from a bounded reference after a full reload.
 
 Narrow windows: the bar wraps and keeps every control; Open Planning goes through the pages menu when the tab strip
 folds; below the width where the workspace stacks its docks, dragging cannot reach any dock (the right dock's hit band
@@ -91,7 +95,8 @@ the planning chapter tucks Chat away through its real command (the shell lets Ch
 it back at the end.
 
 Canon check: the onboarding carries F3-520's exact eleven-stage main graph and six-stage connect graph
-(`src/js/40-stages.js`), and the tour resumes after a reload as F3-521 asks (scenario t4).
+(`src/js/40-stages.js`). The full-reload resume capability in F3-521 remains unverified until the native owner can
+resolve a bounded restoration reference; scenario t4 must verify the concept's explicit recovery state instead.
 
 ## Findings for the production app (found while building the tour)
 

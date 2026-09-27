@@ -131,7 +131,10 @@
       forges: {
         github: { accounts: [], orgs: ['book-club-crew'], repos: [{ name: 'recipe-app', owner: 'jared-p', private: true, updated: '2 days ago' }, { name: 'garden-planner', owner: 'jared-p', private: true, updated: 'last month' }, { name: 'dotfiles', owner: 'jared-p', private: false, updated: 'last year' }], taken: ['recipe-app'], signup: true },
         gitlab: { accounts: [], orgs: [], repos: [{ name: 'thesis', owner: 'jared', private: true, updated: '4 months ago' }], taken: [], signup: true },
-        azure_devops: { accounts: [], orgs: ['platyr'], projects: ['Website', 'Operations'], repos: [{ name: 'intranet', owner: 'platyr / Website', private: true, updated: 'last week' }], taken: [], signup: true },
+        azure_devops: { accounts: [], orgs: ['platyr'], projects: [
+          { id: 'd0b8b4c2-2e98-4ebf-86ca-28957a858cc1', name: 'Website', kind: 'Git', container: 'platyr' },
+          { id: '79682e68-758b-4a53-9257-fd975aa7829f', name: 'Operations', kind: 'Git', container: 'platyr' }
+        ], repos: [{ name: 'intranet', owner: 'platyr / Website', private: true, updated: 'last week' }], taken: [], signup: true },
         bitbucket_cloud: { accounts: [], orgs: ['jared-workspace'], repos: [], taken: [], signup: true },
         bitbucket_data_center: { accounts: [], orgs: ['PROJ'], repos: [], taken: [], signup: false },
         forgejo: { accounts: [], orgs: [], repos: [{ name: 'home-lab', owner: 'jared', private: true, updated: 'yesterday' }], taken: [], signup: false },

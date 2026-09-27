@@ -184,11 +184,12 @@
   /* ---------------------------------------------------------------- restore */
   C.restore = async function restore(snap, keep) {
     const dm = d(); const out = {};
-    if (!dm || !snap) return out;
-    if (!keep) {
+    if (!dm || !snap || !dm.state || !dm.state.chat) return { status: 'failed', reason: 'chat_owner_unavailable' };
+    try {
       if (snap.eli5 !== eli5On() && C.eli5Btn()) { C.eli5Btn().click(); out.eli5 = 'restored'; }
       if (snap.persona && C.persona() !== snap.persona && C.personaBtn() && await setPersona(snap.persona)) out.persona = 'restored';
-      if (snap.thread && dm.state.chat.threads[snap.thread]) { C.selectThread(snap.thread); out.thread = 'restored'; }
+      if (snap.thread && !dm.state.chat.threads[snap.thread]) return { status: 'failed', reason: 'original_thread_missing' };
+      if (snap.thread) { C.selectThread(snap.thread); out.thread = 'restored'; }
       if (C.threadId && dm.state.chat.threads[C.threadId]) {
         /* the Guided example thread leaves with the tour */
         delete dm.state.chat.threads[C.threadId];
@@ -196,9 +197,14 @@
         const row = document.querySelector(`.chat-thread-item[data-thread="${C.threadId}"]`); if (row) row.remove();
         out.guided = 'removed';
       }
-      const ta = C.composer(); if (ta && ta.value !== snap.draft) { ta.value = snap.draft || ''; ta.dispatchEvent(new Event('input', { bubbles: true })); }
-    }
+      const ta = C.composer(); if (!ta && snap.draft) return { status: 'failed', reason: 'composer_unavailable' };
+      if (ta && ta.value !== snap.draft) { ta.value = snap.draft || ''; ta.dispatchEvent(new Event('input', { bubbles: true })); }
+    } catch (_) { return { status: 'failed', reason: 'chat_restore_failed' }; }
+    if (snap.persona && C.persona() !== snap.persona) return { status: 'failed', reason: 'persona_restore_failed' };
+    if (snap.eli5 !== eli5On()) return { status: 'failed', reason: 'eli5_restore_failed' };
+    if (snap.thread && dm.state.chat.activeThread !== snap.thread) return { status: 'failed', reason: 'thread_restore_failed' };
     C.threadId = null; C.reset();
+    out.status = 'restored';
     return out;
   };
 })();
