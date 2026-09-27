@@ -236,8 +236,12 @@ Build with `python3 build.py` then `--check`.
   two-tone), **answer arrives** (a glide with the fold), **turn complete** (a
   two-note resolve) and **stop** (a muted click). At most one sound per 120ms.
 - One kit per theme family (Basic, Friendly, Glass, Retro; dark and light
-  share a kit), synthesized with WebAudio: no audio files. Every event peaks at
-  or below -18 dBFS (checked by rendering each kit offline).
+  share a kit), synthesized with WebAudio: no audio files. Every event is
+  leveled to a tier by its measured loudness, so a beat sounds equally loud in
+  every kit (within ~3 dB): needs you loudest, the turn's beats (send, work,
+  fail, answer, complete) next, stop below them, the first word and step ticks
+  quietest. No event peaks above -20 dBFS (checked by rendering each kit
+  offline).
 - Production: these events map onto the app's **Notifications & Sounds**
   settings (per-event toggles and the master volume live there); the header
   button is the quick mute.

@@ -175,6 +175,26 @@
     }, true);
   });
 
+  /* Level trims (dB), measured: the kits were synthesized by ear and came out
+     up to 16 dB apart (Friendly loudest, Glass's send nearly silent). Each
+     event is trimmed to a tier by its gated RMS: needs you -34, the turn's
+     beats (send, work, fail, answer, complete) -37, stop -40, the quiet ones
+     (first word, tick) -44; Retro's click-short first word and tick by peak.
+     No event peaks above -20 dBFS after its trim. */
+  var TRIM = {
+    basic: { send: 5.3, first: 6.9, work: 1.7, tick: 11.5, fail: 6.6, needs: 6.9, answer: 7.3, complete: 3.1, stop: 9.3 },
+    friendly: { send: -3.5, first: -2.6, work: -5.0, tick: -0.9, fail: -5.0, needs: -2.3, answer: -2.3, complete: -4.4, stop: 0.4 },
+    glass: { send: 24.7, first: 9.1, work: 2.0, tick: 9.5, fail: 3.5, needs: 5.3, answer: 5.0, complete: 1.9, stop: 7.3 },
+    retro: { send: 16.3, first: 10.5, work: 10.8, tick: 10.0, fail: 12.6, needs: 12.5, answer: 15.6, complete: 10.2, stop: 16.0 }
+  };
+  function trimmed(ctx, dest, fam, ev) {
+    var db = (TRIM[fam] && TRIM[fam][ev]) || 0;
+    if (!db) return dest;
+    var g = ctx.createGain(); g.gain.value = Math.pow(10, db / 20); g.connect(dest);
+    if (ctx.state !== undefined && !(ctx instanceof (window.OfflineAudioContext || Object))) setTimeout(function () { try { g.disconnect(); } catch (e) { } }, 4000);
+    return g;
+  }
+
   function play(ev) {
     S.log.push({ ev: ev, at: Math.round(performance.now()), muted: S.muted, armed: armed, family: family() });
     if (S.log.length > 200) S.log.shift();
@@ -191,7 +211,7 @@
     if (now - S.last < 120) return false;
     S.last = now;
     var ctx = ensure(); if (!ctx) return false;
-    try { fn(ctx, S.master, ctx.currentTime + 0.01); } catch (e) { return false; }
+    try { fn(ctx, trimmed(ctx, S.master, family(), ev), ctx.currentTime + 0.01); } catch (e) { return false; }
     return true;
   }
 
@@ -201,7 +221,7 @@
     if (!fn || typeof OfflineAudioContext === 'undefined') return Promise.resolve(null);
     var sr = 44100, ctx = new OfflineAudioContext(1, sr * 2, sr);
     var out = chain(ctx);
-    fn(ctx, out, 0.02);
+    fn(ctx, trimmed(ctx, out, fam, ev), 0.02);
     return ctx.startRendering().then(function (buf) {
       var d = buf.getChannelData(0), peak = 0, end = 0;
       for (var i = 0; i < d.length; i++) { var a = Math.abs(d[i]); if (a > peak) peak = a; if (a > 0.0005) end = i; }
