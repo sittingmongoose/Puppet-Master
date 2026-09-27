@@ -1,0 +1,42 @@
+{
+  "scope": "authorized offline development only",
+  "orchestrator": {
+    "requested_model": "GPT-6 Astra",
+    "requested_effort": "xhigh",
+    "effective_settings_independently_observed": null
+  },
+  "native_helper_requests": [
+    {
+      "task": "repair_delivery",
+      "model": "gpt-6-sol",
+      "reasoning_effort": "high",
+      "role": "worker"
+    },
+    {
+      "task": "trace_losses (reused for independent boundary review)",
+      "model": "gpt-6-sol",
+      "reasoning_effort": "high",
+      "role": "default"
+    },
+    {
+      "task": "baseline_checks",
+      "model": "gpt-6-sol",
+      "reasoning_effort": "medium",
+      "role": "worker"
+    }
+  ],
+  "native_request_acceptance": "spawn controls accepted; no independent effective model/effort telemetry supplied",
+  "development_provider_tokens": null,
+  "development_provider_cost": null,
+  "candidate_new_calls": 0,
+  "evaluation_new_calls": 0,
+  "formal_evaluator": "Opus 5.5 xhigh, independent and separately authorized only",
+  "candidate_models_unchanged": [
+    "Muse Code / Muse 1.3 Contributor / Max",
+    "zcode / GLM 5.3 Flash / Max"
+  ],
+  "account_probes": 0,
+  "account_usage_attribution": "none; no shared percentage attributed",
+  "new_launch_approval": false,
+  "pushes": 0
+}

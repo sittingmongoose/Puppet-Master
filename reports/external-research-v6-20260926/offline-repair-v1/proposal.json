@@ -1,0 +1,140 @@
+{
+  "schema": "er6.investigator_comparison.proposal.v1",
+  "status": "PREPARED_UNAUTHORIZED",
+  "authorized_schedules": [],
+  "launch_enabled": false,
+  "case": "ome-zarr-thin: familiar development case, not holdout",
+  "purpose": "One investigator-only matched comparison per app; acquisition and preservation measured separately.",
+  "single_variable": "observations then authored draft vs maintained complete findings then host-rendered report",
+  "retired_treatment": "bundle-first evidence access; frozen R1/R1b retained",
+  "reviewed_checkpoint": "8ac98ca248068291d003d329580dc67115c43aa7",
+  "case_manifest": {
+    "root": "case_bundle",
+    "manifest_sha256": "01e8109f6fa2cc387c05b2116e0d8339ae83e797b1db36d50443c52743b20218"
+  },
+  "reused_files_sha256": {
+    "tools/run_goal.py": "7325ed95a89767b377de49dbe27bf2f1af989ee04521ff8f7e92a560fb367d5b",
+    "tools/muse_goal_driver.py": "f5af9ef6ef420fbd6452677b11fb31341f17e57a6a0b90b4727dbe3e71adf218",
+    "tools/zcode_goal_driver.py": "b2d1a36308769a225005e586e894f180d7bb38bd9f5c481a1c86c49c41755eac",
+    "tools/run_arm.py": "330ae90097254192bf95fd52ebee4cdda0a9d19325bc3c4c88bde6ad4b4d4520",
+    "tools/r1b/run_goal_r1b.py": "4cfd7aee946cd8db9ef70a0adf2cfe8279a5cdc13cb3c8b7cd299775dee97ae7",
+    "tools/r1b/muse-serve-noshell.sh": "fecdb795d96fcdbf8895349dc81435dbf28b8e07ecbdbdaee2cff61c3f790586",
+    "tools/r1b/run_r1b.py": "a0694ff3d865497e3c7c511d752a5ad4c7e1b3136783fcfffec4e4ab8daf9a9d",
+    "tools/r1b/run_reviewer_v2.py": "7d2c410f16b96230e3b57448ee21e462009843f4dff6e461a04ce168d31a0189",
+    "tools/r1b/build_review_workspaces_r1b.py": "06b9c69a6fe46b6172655e1bc550a4b56ba001842006c035e3e38caf80bbc8a8",
+    "tools/r1b/test_r1b.py": "1be8849ec2500097dcc02e53a368c4d870675d4718acee273d2351c511f4fb13"
+  },
+  "runtime_pins_sha256": {
+    "/home/sittingmongoose/.local/bin/muse-bin-1.4.0-R4161.1": "1b68bd4518d53a2aaff063915df4d141b0a205e6d79038299d04e3a14e85a5b9",
+    "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+    "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/adapters/zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+  },
+  "apps": {
+    "M": {
+      "application": "Muse Code 1.4.0",
+      "model": "muse-spark-1.3-contributor",
+      "effort": "max",
+      "driver": "tools/r1b/run_goal_r1b.py --app muse"
+    },
+    "Z": {
+      "application": "zcode CLI 0.16.5",
+      "model": "GLM-5.3-Flash",
+      "effort": "max",
+      "driver": "tools/r1b/run_goal_r1b.py --app zcode"
+    }
+  },
+  "proposed_schedule": [
+    [
+      "I1-M-control",
+      "M",
+      "control"
+    ],
+    [
+      "I1-M-maintained",
+      "M",
+      "maintained"
+    ],
+    [
+      "I1-Z-maintained",
+      "Z",
+      "maintained"
+    ],
+    [
+      "I1-Z-control",
+      "Z",
+      "control"
+    ]
+  ],
+  "candidate_workspace_allowlist": [
+    "case/<exact manifest-listed files>",
+    "task.txt: exact app-independent common+carrier prompt",
+    "out/: generated only by this candidate"
+  ],
+  "candidate_excluded": [
+    "evaluator keys and reference IDs",
+    "known answers or evaluator-selected clues",
+    "prior outputs/reviews",
+    "cross-arm outputs",
+    "Astra/Sol evidence traces and solutions",
+    "development tests/fixtures",
+    "full lab or report tree",
+    "evidence bundles"
+  ],
+  "limits": {
+    "candidate_assignments": 4,
+    "candidate_seconds_each": 1800,
+    "candidate_responses_each": 160,
+    "candidate_seconds_total": 7200,
+    "candidate_parent_responses_total": 640,
+    "evaluation_assignments": 2,
+    "evaluation_seconds_each": 2700,
+    "evaluation_responses_each": 160,
+    "evaluation_seconds_total": 5400,
+    "evaluation_responses_total": 320,
+    "model_seconds_total": 12600,
+    "phase_wall_seconds": 14400,
+    "host_seconds_per_slot": 300,
+    "retries": 0,
+    "replacement_slots": 0,
+    "concurrency": 1
+  },
+  "response_count_limitation": "Muse reminder-child calls separate; child tokens unknown where unexposed; containing assignment wall cap still applies.",
+  "evaluation": {
+    "model": "claude-opus-5-5",
+    "requested_effort": "xhigh",
+    "observed_effective_effort": "record from future native receipt; never infer",
+    "fresh_reviewers": 2,
+    "one_per_app_pair": true,
+    "existing_key_sha256": "54fdca6a4aa9a6356da545a0c195c835557c2a8b1fe16feb9356d0d09a83fbde",
+    "existing_scoring_sha256": "aa1e2c7aab9128bd1b9e4b2f5c62f7325cc3ff39b6fcdd5d68818742169806bd",
+    "input_eligibility": "carry existing case limitations; no new answer key",
+    "sequence": [
+      "final reports, locked judgment",
+      "upstream acquisitions and preservation map"
+    ],
+    "masking": "random X1/X2; operational labels withheld; format-related partial unblinding disclosed",
+    "capacity_exhaustion": "retain partial results, no pass or retry"
+  },
+  "follow_on_flash_verifier": {
+    "authorized": false,
+    "included_in_I1_caps": false,
+    "required_before_end_to_end_claim": true,
+    "same_app_model_effort": true,
+    "fresh_context": true
+  },
+  "usage_lanes": [
+    "development:Astra/Sol",
+    "candidate:Muse/GLM flash",
+    "evaluation:independent Opus"
+  ],
+  "stop_rules": [
+    "quota or harness failure stops schedule",
+    "unexpected nonzero/signal/driver failure or missing receipt dominates success-shaped receipt",
+    "cap/incomplete model result retained; paired slot may run in original cap",
+    "malformed candidate carrier is an arm result, not paid repair",
+    "evaluation missing/native-error/invalid result never COMPLETED",
+    "no retries or best-of",
+    "no expansion on consequential false correction or material preservation loss"
+  ],
+  "authorization_note": "Offline development only. No approval file, candidate/evaluator dispatch, account probe or push permitted by this proposal."
+}

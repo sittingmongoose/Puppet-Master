@@ -1,0 +1,139 @@
+{
+  "schema": "external-research.offline-publication.v1",
+  "authorization": "User requested GitHub visibility for the reviewing agent; publication only, not run authorization.",
+  "created_utc": "2026-09-27T21:44:19.260093+00:00",
+  "git_base": "8ac98ca248068291d003d329580dc67115c43aa7",
+  "repository_root": "reports/external-research-v6-20260926/offline-repair-v1",
+  "files": {
+    "CHECKPOINT.md": {
+      "sha256": "db58cac97f1036637b56891509a863218de5427068ca5a1c284fe91871c2d9c2",
+      "bytes": 4714,
+      "vm_frozen_source": "CHECKPOINT.md"
+    },
+    "DIAGNOSIS.md": {
+      "sha256": "d13d9cd5db63f9025f7f49b07d21509d003fe9195612d858ad961e6dd3660e2c",
+      "bytes": 3882,
+      "vm_frozen_source": "DIAGNOSIS.md"
+    },
+    "EVIDENCE_POINTERS.json": {
+      "sha256": "619ebf0af1f5f32e26e11636d87427acb5cbc418864985bc6fde265461b2e2ab",
+      "bytes": 1819
+    },
+    "INDEPENDENT_DEVELOPMENT_REVIEW.md": {
+      "sha256": "9a52769a92b7a8be8d5761aaabf0b60be6c454d456232bcf994e3e04d8479222",
+      "bytes": 6346,
+      "vm_frozen_source": "evidence/independent_review.md"
+    },
+    "MANIFEST.sha256.json": {
+      "sha256": "b95f9d54ffd136be64fee7e03760a63f4a61ed5d9b8293080be1f3c92cc6f38f",
+      "bytes": 4484
+    },
+    "NEXT_TRIAL.md": {
+      "sha256": "1d4520163dc38a8d85369849c5a4f8e99f6f54b318ffdcb24a1dc604391708ec",
+      "bytes": 9100,
+      "vm_frozen_source": "NEXT_TRIAL.md"
+    },
+    "PATCH.diff": {
+      "sha256": "04e432b905c2b4fca43c906a2e9c6864ff9ef33e2968295603fda7a8529b14c1",
+      "bytes": 123780,
+      "vm_frozen_source": "PATCH.diff"
+    },
+    "README.md": {
+      "sha256": "740c339d1b2c1ba193e254ee8d85a464379f64a31dbd27ac2087ec27e4f8de92",
+      "bytes": 8194
+    },
+    "VALIDATION_RESULTS.json": {
+      "sha256": "d8ccda6e1fd71777a976d12a26a2d806bc442658f814a4b38759a1022412975c",
+      "bytes": 25159
+    },
+    "VM_FROZEN_README.md": {
+      "sha256": "58e78640151a1f45431fc82fb63fa3df77c3666006579a8649145b599dfa28d6",
+      "bytes": 5286,
+      "vm_frozen_source": "README.md"
+    },
+    "check_preparation.py": {
+      "sha256": "ed82cc60844e5cbc8fd0eebf75f104eada156b8b8a9f6c084ccb320b9596fc4f",
+      "bytes": 3377,
+      "vm_frozen_source": "check_preparation.py"
+    },
+    "historical-evidence.json": {
+      "sha256": "faa5546530f1b0a8931985d92de6d3c53b51c57af316ab0ea4063789309eb616",
+      "bytes": 2963,
+      "vm_frozen_source": "historical-evidence.json"
+    },
+    "prompts/common.txt": {
+      "sha256": "8e5a5b5d809d2d90a7fdf83e07d98048527499a9e3fe4121209261becf83db30",
+      "bytes": 2428,
+      "vm_frozen_source": "prompts/common.txt"
+    },
+    "prompts/control-carrier.txt": {
+      "sha256": "c2907e3056e5829897f4def0b501154ff599c7d24f0be7ebdfc9c3b221f0d8f7",
+      "bytes": 1167,
+      "vm_frozen_source": "prompts/control-carrier.txt"
+    },
+    "prompts/evaluator-i1.txt": {
+      "sha256": "48aee4c53a9c8011b2a2331fbb71aa4d3ce18e0937b0211930446532fc276e1f",
+      "bytes": 4136,
+      "vm_frozen_source": "prompts/evaluator-i1.txt"
+    },
+    "prompts/investigator-control.txt": {
+      "sha256": "bf36fc4149067dd883b2da661502ac1ecce1746bb74fd0842635a64f664d059f",
+      "bytes": 3596,
+      "vm_frozen_source": "prompts/investigator-control.txt"
+    },
+    "prompts/investigator-maintained.txt": {
+      "sha256": "f8de6fba7ec1a1996f886826b307c1042934ec0a578b56c6122c4f124675e9c6",
+      "bytes": 5786,
+      "vm_frozen_source": "prompts/investigator-maintained.txt"
+    },
+    "prompts/maintained-carrier.txt": {
+      "sha256": "93ab219dea543cbb86f2d1a242c1ba6beb1792d78c81d9486b72ecedeae5b829",
+      "bytes": 3357,
+      "vm_frozen_source": "prompts/maintained-carrier.txt"
+    },
+    "prompts/verifier-complete-findings.txt": {
+      "sha256": "9ed81613ad2c4db47d4c3e3b22e891e283488c8edc7a5a664df1dab03356dc37",
+      "bytes": 4034,
+      "vm_frozen_source": "prompts/verifier-complete-findings.txt"
+    },
+    "proposal.json": {
+      "sha256": "59ea1c3eeadde03c576278639435990222d660d476c2fb4339067c955dbea6fc",
+      "bytes": 5896,
+      "vm_frozen_source": "proposal.json"
+    },
+    "tools/SCHEMA.md": {
+      "sha256": "8a389f06804934d9d30323c55b8d1623d666923a45c92ef44bc370f5f356e68d",
+      "bytes": 10725,
+      "vm_frozen_source": "tools/SCHEMA.md"
+    },
+    "tools/delivery.py": {
+      "sha256": "02a91a53155ea5b6c4ed0ad6e2a2c5caa0b3c07d5cae73a70468142d39cd2750",
+      "bytes": 26017,
+      "vm_frozen_source": "tools/delivery.py"
+    },
+    "tools/test_delivery.py": {
+      "sha256": "e2ec4ccffb66b4a87fc8d5e7c3e307121203ff04e06bb55356d0f11eb5c665c8",
+      "bytes": 11692,
+      "vm_frozen_source": "tools/test_delivery.py"
+    },
+    "tools/test_independent_boundaries.py": {
+      "sha256": "6acb5fff8fd0600ea75768c19d3e69659955efafc93caeef91c055504836dc15",
+      "bytes": 11088,
+      "vm_frozen_source": "tools/test_independent_boundaries.py"
+    },
+    "usage-lanes.json": {
+      "sha256": "3e0c99abda253aa9e680280548655814d652a81400312df00a24d3f0f6e9c4c7",
+      "bytes": 1265,
+      "vm_frozen_source": "usage-lanes.json"
+    }
+  },
+  "excluded": [
+    "PUBLISHED_MANIFEST.json (self)",
+    "raw test/provider logs",
+    "corpus",
+    "evaluator keys",
+    "whole-lab inventory",
+    "runtime workspaces"
+  ],
+  "vm_manifest_note": "MANIFEST.sha256.json retains original VM freeze paths and withheld evidence hashes; files here are independently hashed above."
+}

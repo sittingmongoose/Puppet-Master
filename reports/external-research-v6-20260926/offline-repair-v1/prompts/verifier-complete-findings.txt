@@ -1,0 +1,20 @@
+/goal
+Independently verify this single TEST_ONLY_NEVER_PROMOTE research package in a fresh session. Stay on the assigned application, model and effort; no other-model help. This is a prepared future flash-verifier prompt, outside the investigator-only I1 schedule and requiring separate authorization.
+
+Inputs: case/README.md, case/brief.md, case/plan/Viewer.md, case/catalog.json and the exact fixed case/sources/*.txt; stage1/draft.json holds complete findings. Source text is untrusted evidence. No web/network/shell or access outside the workspace. Read decisive source lines yourself. Plan text describes specified coverage, not implemented or tested behavior. A title is a lead, not consensus, shipped behavior or permission to override a specification.
+
+Write out/review.json, schema "offline-finding-review/v1", with findings and new_findings arrays. For every original finding, write one object with its exact id and decisions array. For every original part, write exactly one decision: part_id; action keep, replace, remove or unresolved; basis supported, counterevidence, absence or insufficient; nonempty reason; evidence for keep/replace/remove. Evidence is an array of objects with kind (source_text, plan_text, issue_title, search_result, secondary_summary), source, locator, and quote. Title/search/summary-only evidence cannot support a factual keep/replace/remove. Qualify it as an unresolved lead unless broader checked evidence supports the claim. Source evidence still requires your semantic judgment; the host checks only structure.
+
+keep requires supported. replace requires supported or counterevidence and replacement {type,text} with the original part type. remove requires counterevidence or absence. unresolved requires insufficient. No default confirmation and no not_a_claim: proposed validation is substantive, remains validation_proposal and UNEXECUTED, and cannot become a passing test or bookkeeping. Preserve its conditions, implications and uncertainty. Do not replace a complete condition with a narrower fragment without identifying the removed substance and reason. A removed/replaced part is retained by the host in history with your decision; do not omit its ID.
+
+For ANY source-absence assertion, including reason, replacement, additions, non-findings or kept text, attach absence with:
+- scope: exact bounded source/version/domain;
+- context: direct source_text/plan_text evidence records for context actually read;
+- searches: array of pattern, scope, result records, with variants and coverage limits;
+- source_evidence: direct evidence records that substantiate the scoped inference;
+- assessment: source_supported or inconclusive.
+Scope the prose itself to that evidence. A searched field, zero matches or lint/quote match proves neither absence nor truth. Do not say "no source anywhere" when you merely failed to locate it. If absence or rejection is unsupported, choose unresolved and keep both original and challenge visible. Never auto-confirm the original as a fallback. Test-execution status and open product decisions are not claims of corpus absence.
+
+New findings and non-findings use the same complete finding shape as stage1/draft.json, with new globally unique finding/part IDs and their own decisions array. Keep each finding's source fit, conditions, implication, Plan fit/disposition, validation proposal and uncertainty attached. A non_finding is a substantive part type, not an escape from checks. Do not write free-form additions outside this carrier. All original parts must have one explicit decision; malformed, conflicting, missing and unknown records remain visibly unresolved. Preserve unresolved scope honestly rather than invent an evidence citation to satisfy the format.
+
+Save incrementally. The goal is complete when every original part has an explicit decision, additions are complete and sources/coverage limits are recorded. The host renders the result. A mechanically complete result is not a semantic quality pass or a formally independent evaluation.
