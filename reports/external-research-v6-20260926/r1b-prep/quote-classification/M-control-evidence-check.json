@@ -1,0 +1,1544 @@
+{
+ "summary": {
+  "observations": 68,
+  "observations_without_citation": 0,
+  "sources": 32,
+  "unknown_handles": [],
+  "cited_lines": 664,
+  "citations_beyond_source_end": [],
+  "delivered_lines": 1676,
+  "long_lines_partially_shown": [],
+  "quotes": 68,
+  "source_file_reads": 32,
+  "quote_classes": {
+   "exact_at_cited_lines": 34,
+   "markdown_code_variant_at_cited_lines": 4,
+   "not_located": 30
+  }
+ },
+ "checks": [
+  {
+   "observation": "O-001",
+   "quote": "\"OME-Zarr is implemented using the Zarr format as defined by the version 3 of the Zarr specification.\"",
+   "class": "exact_at_cited_lines",
+   "line": 66,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S003"
+  },
+  {
+   "observation": "O-002",
+   "quote": "\"The OME-Zarr Metadata is stored in the various zarr.json files throughout the above array hierarchy. In this file, the metadata is stored under the namespaced key ome in attributes.\"",
+   "class": "exact_at_cited_lines",
+   "line": 148,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S003"
+  },
+  {
+   "observation": "O-003",
+   "quote": "\"The order of the entries MUST correspond to the order of dimensions of the zarr arrays. In addition, the entries MUST be ordered by type where the time axis must come first (if present), followed by the channel or custom axis (if present) and the axes of type space.\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S003"
+  },
+  {
+   "observation": "O-004",
+   "quote": "\"The dimension_names attribute MUST be included in the zarr.json of the Zarr array of a multiscale level and MUST match the names in the axes metadata.\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S003"
+  },
+  {
+   "observation": "O-005",
+   "quote": "\"Each dictionary in datasets MUST contain the field coordinateTransformations, which contains a list of transformations that map the data coordinates to the physical coordinates (as specified by axes) for this resolution level.\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S003"
+  },
+  {
+   "observation": "O-006",
+   "quote": "\"The paths MUST be ordered from largest (i.e. highest resolution) to smallest.\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S003"
+  },
+  {
+   "observation": "O-007",
+   "quote": "\"If only one multiscale is provided, use it. Otherwise, the user can choose by name, using the first multiscale as a fallback:\"",
+   "class": "exact_at_cited_lines",
+   "line": 386,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S003"
+  },
+  {
+   "observation": "O-008",
+   "quote": "\"The omero metadata is optional, but if present it MUST contain the field channels, which is an array of dictionaries describing the channels of the image.\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S003"
+  },
+  {
+   "observation": "O-009",
+   "quote": "\"The pixels of the label images MUST be integer data types, i.e. one of [uint8, int8, uint16, int16, uint32, int32, uint64, int64]. Intermediate groups between labels and the images within it are allowed, but these MUST NOT contain metadata.\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S003"
+  },
+  {
+   "observation": "O-010",
+   "quote": "\"The zarr.json file for the label image MUST implement the multiscales specification. Within the multiscales object, the JSON array associated with the datasets key MUST have the same number of entries (scale levels) as the original unlabeled image.\"",
+   "class": "exact_at_cited_lines",
+   "line": 452,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S003"
+  },
+  {
+   "observation": "O-011",
+   "quote": "\"Three groups MUST be defined above the images: the group above the images defines the well and MUST implement the well specification.\"",
+   "class": "exact_at_cited_lines",
+   "line": 118,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S003"
+  },
+  {
+   "observation": "O-012",
+   "quote": "\"The plate dictionary MUST contain a wells key whose value MUST be a list of JSON objects defining the wells of the plate.\"",
+   "class": "exact_at_cited_lines",
+   "line": 550,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S003"
+  },
+  {
+   "observation": "O-013",
+   "quote": "\"The well dictionary MUST contain an images key whose value MUST be a list of JSON objects specifying all fields of views for a given well.\"",
+   "class": "exact_at_cited_lines",
+   "line": 742,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S003"
+  },
+  {
+   "observation": "O-014",
+   "quote": "\"MUST have the value 3 for the bioformats2raw.layout key in their OME-Zarr Metadata in the zarr.json at the top of the hierarchy;\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S003"
+  },
+  {
+   "observation": "O-015",
+   "quote": "\"0.5.0 2024-11-21 use Zarr v3 in OME-Zarr, see RFC-2.\"",
+   "class": "exact_at_cited_lines",
+   "line": 830,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S003"
+  },
+  {
+   "observation": "O-016",
+   "quote": "\"Changelog: added FormatV05 (May 2025): writing not supported yet\"",
+   "class": "exact_at_cited_lines",
+   "line": 366,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S016"
+  },
+  {
+   "observation": "O-017",
+   "quote": "\"if sum(t == scale for t in types) != 1: raise ValueError( Must supply 1 scale item in coordinate_transformations )\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S016"
+  },
+  {
+   "observation": "O-018",
+   "quote": "\"For zarr v3, everything is under the ome namespace if ome in self.zgroup: self.zgroup = self.zgroup[ome]\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S019"
+  },
+  {
+   "observation": "O-019",
+   "quote": "\"multiscales = self.lookup(multiscales, []) version = multiscales[0].get( version, 0.1 )\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S018"
+  },
+  {
+   "observation": "O-020",
+   "quote": "\"image_paths = [image[path] for image in self.well_data.get(images)]\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S018"
+  },
+  {
+   "observation": "O-021",
+   "quote": "\"coordinateTransformations: [ { scale: [ 1.0, 0.5002025531914894, 0.3603981534640209, 0.3603981534640209 ], type: scale } ]\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S054"
+  },
+  {
+   "observation": "O-022",
+   "quote": "\"name: sharding_indexed\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S055"
+  },
+  {
+   "observation": "O-023",
+   "quote": "\"wells: [ { columnIndex: 6, path: B/7, rowIndex: 1 }, ...\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S056"
+  },
+  {
+   "observation": "O-024",
+   "quote": "\"all v2 arrays converted to v3, optionally sharding the data - all .zattrs metadata migrated to zarr.json[attributes][ome]\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S034"
+  },
+  {
+   "observation": "O-025",
+   "quote": "\"Shape 1,1,1,93184,144384, Size 21.57 GB, from idr0083.\"",
+   "class": "markdown_code_variant_at_cited_lines",
+   "line": 68,
+   "exact": false,
+   "note": "located only after a non-carrier fold; spelling/case/typography differ (locator only)",
+   "source": "S034"
+  },
+  {
+   "observation": "O-026",
+   "quote": "\"Images split into one layer per channel via channel_axis, so the channel axis is dropped from the per-axis metadata\"",
+   "class": "markdown_code_variant_at_cited_lines",
+   "line": 202,
+   "exact": false,
+   "note": "located only after a non-carrier fold; spelling/case/typography differ (locator only)",
+   "source": "S048"
+  },
+  {
+   "observation": "O-027",
+   "quote": "\"lookup children from series of OME/METADATA.xml ... node_id.replace(Image:, )\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S048"
+  },
+  {
+   "observation": "O-028",
+   "quote": "\"Currently, Viv supports int8, int16, int32, uint8, uint16, uint32, float32, float64 arrays, but contributions are welcome to support more np.dtypes!\"",
+   "class": "markdown_code_variant_at_cited_lines",
+   "line": 79,
+   "exact": false,
+   "note": "located only after a non-carrier fold; spelling/case/typography differ (locator only)",
+   "source": "S025"
+  },
+  {
+   "observation": "O-029",
+   "quote": "\"Vizarr expects the same number of Z-sections for each pyramid resolution\"",
+   "class": "exact_at_cited_lines",
+   "line": 1,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S043"
+  },
+  {
+   "observation": "O-030",
+   "quote": "\"Can the viewer handle pyramids when the scale factor between levels is not equal to 2?\"",
+   "class": "exact_at_cited_lines",
+   "line": 78,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S043"
+  },
+  {
+   "observation": "O-031",
+   "quote": "\"Only the lowest resolution of a Plate is shown. Clicking a Well loads it in a new window\"",
+   "class": "exact_at_cited_lines",
+   "line": 212,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S043"
+  },
+  {
+   "observation": "O-032",
+   "quote": "\"Does the viewer open any images beyond the first item in the multiscales list?\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S043"
+  },
+  {
+   "observation": "O-033",
+   "quote": "\"Vizarr doesn't display a scalebar or support scaling info.\"",
+   "class": "exact_at_cited_lines",
+   "line": 316,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S043"
+  },
+  {
+   "observation": "O-034",
+   "quote": "\"3D translation causes image to disappear\"",
+   "class": "exact_at_cited_lines",
+   "line": 360,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S043"
+  },
+  {
+   "observation": "O-035",
+   "quote": "\"Does the viewer read the scale transformation for each item in multiscales list?\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S043"
+  },
+  {
+   "observation": "O-036",
+   "quote": "\"Is it possible to open more than 1 OME-NGFF image on the same canvas, to overlay them?\"",
+   "class": "exact_at_cited_lines",
+   "line": 471,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S043"
+  },
+  {
+   "observation": "O-037",
+   "quote": "\"Supported types depend upon the Zarr/NGFF version being written: | v3/0.5 | yes | yes | yes | no | yes |\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S033"
+  },
+  {
+   "observation": "O-038",
+   "quote": "\"Specifies the version of the OME-Zarr specification that should be used while writing Zarr. Current supported values are 0.4 and 0.5.\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S033"
+  },
+  {
+   "observation": "O-039",
+   "quote": "\"A Java format string that defines how series and resolutions should be described in the output directory hierarchy. The default value is %d/%d\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S033"
+  },
+  {
+   "observation": "O-040",
+   "quote": "\"For OME-Zarr (v0.5) datasets, the structure is slightly different (See OME-Zarr 0.5 spec)\"",
+   "class": "exact_at_cited_lines",
+   "line": 307,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S058"
+  },
+  {
+   "observation": "O-041",
+   "quote": "\"Use chunk sizes of 32 - 128 voxels^3 Enable sharding (only available in Zarr 3+) Use 3D downsampling\"",
+   "class": "exact_at_cited_lines",
+   "line": 383,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S058"
+  },
+  {
+   "observation": "O-042",
+   "quote": "\"Vizarr renders chunks repetitively for image data converted into OME-ZARR v0.5 format, using the resave command of https://github.com/ome/ome2024-ngff-challenge\"",
+   "class": "exact_at_cited_lines",
+   "line": 137,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S014"
+  },
+  {
+   "observation": "O-043",
+   "quote": "\"napari-ome-zarr depends on ome-zarr, which is pinned to zarr<3.\"",
+   "class": "exact_at_cited_lines",
+   "line": 149,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S011"
+  },
+  {
+   "observation": "O-044",
+   "quote": "\"The default napari reader (without napari-ome-zarr plugin) does not correctly read OME-Zarr coordinate transformations/scale metadata, resulting in incorrect anisotropic volume rendering.\"",
+   "class": "exact_at_cited_lines",
+   "line": 156,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S011"
+  },
+  {
+   "observation": "O-045",
+   "quote": "\"This command will traverse your local filesystem, looking for zarr images (only .zattrs for now - can add zarr v3 support as a follow-up) and collect them into a CSV.\"",
+   "class": "exact_at_cited_lines",
+   "line": 148,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S023"
+  },
+  {
+   "observation": "O-046",
+   "quote": "\"This PR adds support for writing OME-Zarr v0.5, which becomes the default CurrentFormat().\"",
+   "class": "exact_at_cited_lines",
+   "line": 148,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S013"
+  },
+  {
+   "observation": "O-047",
+   "quote": "\"ValueError: compressor cannot be used for arrays with zarr_format 3. Use bytes-to-bytes codecs instead.\"",
+   "class": "exact_at_cited_lines",
+   "line": 184,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S013"
+  },
+  {
+   "observation": "O-048",
+   "quote": "\"If I enter the OME-Zarr URL: https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240.zarr/ I get: Neithre array nor OME multiscale metadata found\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S038"
+  },
+  {
+   "observation": "O-049",
+   "quote": "\"Investigating a lighter-weight alternative to ome-zarr-py. Uses zarrv3.\"",
+   "class": "exact_at_cited_lines",
+   "line": 148,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S027"
+  },
+  {
+   "observation": "O-050",
+   "quote": "\"You can get the list of labels paths from Image.attributes.labels. But the labels part of the spec just says these point to labels objects, which I don't think are more specifically defined anywhere else?\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S027"
+  },
+  {
+   "observation": "O-051",
+   "quote": "\"AGAVE is a desktop application for viewing multichannel volume data. Several formats are supported, including OME-ZARR 0.4 and 0.5, OME-TIFF and Zeiss .czi files.\"",
+   "class": "exact_at_cited_lines",
+   "line": 1,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S072"
+  },
+  {
+   "observation": "O-052",
+   "quote": "\"The OME-Zarr format supports precomputed multiresolution data and will let you select the resolution level. The highest resolution is the default, so beware if you have a large dataset, you risk running out of memory.\"",
+   "class": "exact_at_cited_lines",
+   "line": 106,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S117"
+  },
+  {
+   "observation": "O-053",
+   "quote": "\"nlohmann::json multiscales; if (m_zarrVersion == 3) { ... multiscales = ome[multiscales]; } else { multiscales = attrs[multiscales]; }\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S098"
+  },
+  {
+   "observation": "O-054",
+   "quote": "\"Ome zarr v0.5 reading and writing by @will-moore in https://github.com/ome/ome-zarr-py/pull/413\"",
+   "class": "exact_at_cited_lines",
+   "line": 556,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S052"
+  },
+  {
+   "observation": "O-055",
+   "quote": "\"Version 0.3.0 and later uses the TCZYX order by default, for compatibility with https://ngff.openmicroscopy.org/0.4/#image-layout. The --dimension-order option is considered deprecated and may be removed in a future release, as it results in invalid OME-NGFF data.\"",
+   "class": "markdown_code_variant_at_cited_lines",
+   "line": 331,
+   "exact": false,
+   "note": "located only after a non-carrier fold; spelling/case/typography differ (locator only)",
+   "source": "S033"
+  },
+  {
+   "observation": "O-056",
+   "quote": "\"By default, the resolutions will be set so that the smallest resolution is no greater than 256x256. A scaling factor of 2 is used between consecutive resolutions.\"",
+   "class": "exact_at_cited_lines",
+   "line": 105,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S033"
+  },
+  {
+   "observation": "O-057",
+   "quote": "\"This currently 'works' for https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0073A/9798462.zarr but is too slow to be very usable.\"",
+   "class": "exact_at_cited_lines",
+   "line": 37,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S061"
+  },
+  {
+   "observation": "O-058",
+   "quote": "\"Volume data is provided to the core 3d viewer via one of the following file formats: - a url to a OME-ZARR image\"",
+   "class": "exact_at_cited_lines",
+   "line": 9,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S062"
+  },
+  {
+   "observation": "O-059",
+   "quote": "\"Deployed at https://ome.github.io/ome-ngff-validator See https://idr.github.io/ome-ngff-samples/ for samples to try.\"",
+   "class": "exact_at_cited_lines",
+   "line": 2,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S031"
+  },
+  {
+   "observation": "O-060",
+   "quote": "\"This PR proposes to adopt the version 3 of the Zarr format for OME-Zarr. Main changes: Only Zarr v3 is allowed for upcoming versions of OME-Zarr.\"",
+   "class": "exact_at_cited_lines",
+   "line": 147,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S004"
+  },
+  {
+   "observation": "O-061",
+   "quote": "\"This updates ome-zarr-py to use zarr-python v3 but doesn't include support for writing Zarr v3 (OME-Zarr v0.5). However, it does add support for reading OME-Zarr v0.5 (e.g. for use by napari-ome-zarr).\"",
+   "class": "exact_at_cited_lines",
+   "line": 147,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S008"
+  },
+  {
+   "observation": "O-062",
+   "quote": "\"napari labels layer MUST not have channel_axis ... for level in range(len(node_data)): darray = node_data[level] if darray.ndim > ch_axis: node_data[level] = da.squeeze(darray, axis=ch_axis)\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S048"
+  },
+  {
+   "observation": "O-063",
+   "quote": "\"if Labels.matches(root_group): # Try starting at parent Image parent_path = root_group.store.root.parent\"",
+   "class": "exact_at_cited_lines",
+   "line": 670,
+   "exact": true,
+   "note": "verbatim after documented carrier decoding",
+   "source": "S048"
+  },
+  {
+   "observation": "O-064",
+   "quote": "\"trans_aff = single_transform_to_affine(transf) if trans_aff is None: warnings.warn(fUnsupported transform type: {transf[type]}) continue\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S048"
+  },
+  {
+   "observation": "O-065",
+   "quote": "\"original_bytes: 0, view_lines: 0\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S002"
+  },
+  {
+   "observation": "O-066",
+   "quote": "\"coordinateTransformations: type array, minItems 1, contains { type scale }, maxContains 1\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S053"
+  },
+  {
+   "observation": "O-067",
+   "quote": "\"channels = self.image_data.get(channels, None) if channels is None: return # EARLY EXIT\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S018"
+  },
+  {
+   "observation": "O-068",
+   "quote": "\"elif self.zarr.zarray: LOGGER.debug(treating %s as raw zarr) node.data.append(self.zarr.load())\"",
+   "class": "not_located",
+   "line": null,
+   "exact": false,
+   "note": "not located in the cited source; this does not show the underlying fact is absent",
+   "source": "S018"
+  }
+ ],
+ "citations": [
+  {
+   "id": "O-001",
+   "cites": [
+    [
+     "S003",
+     68,
+     72
+    ]
+   ],
+   "quotes": [
+    "\"OME-Zarr is implemented using the Zarr format as defined by the version 3 of the Zarr specification.\""
+   ]
+  },
+  {
+   "id": "O-002",
+   "cites": [
+    [
+     "S003",
+     150,
+     156
+    ]
+   ],
+   "quotes": [
+    "\"The OME-Zarr Metadata is stored in the various zarr.json files throughout the above array hierarchy. In this file, the metadata is stored under the namespaced key ome in attributes.\""
+   ]
+  },
+  {
+   "id": "O-003",
+   "cites": [
+    [
+     "S003",
+     299,
+     303
+    ]
+   ],
+   "quotes": [
+    "\"The order of the entries MUST correspond to the order of dimensions of the zarr arrays. In addition, the entries MUST be ordered by type where the time axis must come first (if present), followed by the channel or custom axis (if present) and the axes of type space.\""
+   ]
+  },
+  {
+   "id": "O-004",
+   "cites": [
+    [
+     "S003",
+     173,
+     174
+    ]
+   ],
+   "quotes": [
+    "\"The dimension_names attribute MUST be included in the zarr.json of the Zarr array of a multiscale level and MUST match the names in the axes metadata.\""
+   ]
+  },
+  {
+   "id": "O-005",
+   "cites": [
+    [
+     "S003",
+     308,
+     312
+    ]
+   ],
+   "quotes": [
+    "\"Each dictionary in datasets MUST contain the field coordinateTransformations, which contains a list of transformations that map the data coordinates to the physical coordinates (as specified by axes) for this resolution level.\""
+   ]
+  },
+  {
+   "id": "O-006",
+   "cites": [
+    [
+     "S003",
+     305,
+     306
+    ]
+   ],
+   "quotes": [
+    "\"The paths MUST be ordered from largest (i.e. highest resolution) to smallest.\""
+   ]
+  },
+  {
+   "id": "O-007",
+   "cites": [
+    [
+     "S003",
+     388,
+     397
+    ]
+   ],
+   "quotes": [
+    "\"If only one multiscale is provided, use it. Otherwise, the user can choose by name, using the first multiscale as a fallback:\""
+   ]
+  },
+  {
+   "id": "O-008",
+   "cites": [
+    [
+     "S003",
+     426,
+     430
+    ]
+   ],
+   "quotes": [
+    "\"The omero metadata is optional, but if present it MUST contain the field channels, which is an array of dictionaries describing the channels of the image.\""
+   ]
+  },
+  {
+   "id": "O-009",
+   "cites": [
+    [
+     "S003",
+     437,
+     440
+    ]
+   ],
+   "quotes": [
+    "\"The pixels of the label images MUST be integer data types, i.e. one of [uint8, int8, uint16, int16, uint32, int32, uint64, int64]. Intermediate groups between labels and the images within it are allowed, but these MUST NOT contain metadata.\""
+   ]
+  },
+  {
+   "id": "O-010",
+   "cites": [
+    [
+     "S003",
+     454,
+     456
+    ]
+   ],
+   "quotes": [
+    "\"The zarr.json file for the label image MUST implement the multiscales specification. Within the multiscales object, the JSON array associated with the datasets key MUST have the same number of entries (scale levels) as the original unlabeled image.\""
+   ]
+  },
+  {
+   "id": "O-011",
+   "cites": [
+    [
+     "S003",
+     120,
+     127
+    ]
+   ],
+   "quotes": [
+    "\"Three groups MUST be defined above the images: the group above the images defines the well and MUST implement the well specification.\""
+   ]
+  },
+  {
+   "id": "O-012",
+   "cites": [
+    [
+     "S003",
+     552,
+     560
+    ]
+   ],
+   "quotes": [
+    "\"The plate dictionary MUST contain a wells key whose value MUST be a list of JSON objects defining the wells of the plate.\""
+   ]
+  },
+  {
+   "id": "O-013",
+   "cites": [
+    [
+     "S003",
+     744,
+     750
+    ]
+   ],
+   "quotes": [
+    "\"The well dictionary MUST contain an images key whose value MUST be a list of JSON objects specifying all fields of views for a given well.\""
+   ]
+  },
+  {
+   "id": "O-014",
+   "cites": [
+    [
+     "S003",
+     256,
+     270
+    ]
+   ],
+   "quotes": [
+    "\"MUST have the value 3 for the bioformats2raw.layout key in their OME-Zarr Metadata in the zarr.json at the top of the hierarchy;\""
+   ]
+  },
+  {
+   "id": "O-015",
+   "cites": [
+    [
+     "S003",
+     832,
+     833
+    ]
+   ],
+   "quotes": [
+    "\"0.5.0 2024-11-21 use Zarr v3 in OME-Zarr, see RFC-2.\""
+   ]
+  },
+  {
+   "id": "O-016",
+   "cites": [
+    [
+     "S016",
+     368,
+     384
+    ]
+   ],
+   "quotes": [
+    "\"Changelog: added FormatV05 (May 2025): writing not supported yet\""
+   ]
+  },
+  {
+   "id": "O-017",
+   "cites": [
+    [
+     "S016",
+     296,
+     330
+    ]
+   ],
+   "quotes": [
+    "\"if sum(t == scale for t in types) != 1: raise ValueError( Must supply 1 scale item in coordinate_transformations )\""
+   ]
+  },
+  {
+   "id": "O-018",
+   "cites": [
+    [
+     "S019",
+     87,
+     90
+    ]
+   ],
+   "quotes": [
+    "\"For zarr v3, everything is under the ome namespace if ome in self.zgroup: self.zgroup = self.zgroup[ome]\""
+   ]
+  },
+  {
+   "id": "O-019",
+   "cites": [
+    [
+     "S018",
+     279,
+     288
+    ]
+   ],
+   "quotes": [
+    "\"multiscales = self.lookup(multiscales, []) version = multiscales[0].get( version, 0.1 )\""
+   ]
+  },
+  {
+   "id": "O-020",
+   "cites": [
+    [
+     "S018",
+     404,
+     439
+    ]
+   ],
+   "quotes": [
+    "\"image_paths = [image[path] for image in self.well_data.get(images)]\""
+   ]
+  },
+  {
+   "id": "O-021",
+   "cites": [
+    [
+     "S054",
+     31,
+     44
+    ]
+   ],
+   "quotes": [
+    "\"coordinateTransformations: [ { scale: [ 1.0, 0.5002025531914894, 0.3603981534640209, 0.3603981534640209 ], type: scale } ]\""
+   ]
+  },
+  {
+   "id": "O-022",
+   "cites": [
+    [
+     "S055",
+     16,
+     58
+    ]
+   ],
+   "quotes": [
+    "\"name: sharding_indexed\""
+   ]
+  },
+  {
+   "id": "O-023",
+   "cites": [
+    [
+     "S056",
+     68,
+     73
+    ]
+   ],
+   "quotes": [
+    "\"wells: [ { columnIndex: 6, path: B/7, rowIndex: 1 }, ...\""
+   ]
+  },
+  {
+   "id": "O-024",
+   "cites": [
+    [
+     "S034",
+     43,
+     46
+    ]
+   ],
+   "quotes": [
+    "\"all v2 arrays converted to v3, optionally sharding the data - all .zattrs metadata migrated to zarr.json[attributes][ome]\""
+   ]
+  },
+  {
+   "id": "O-025",
+   "cites": [
+    [
+     "S034",
+     70,
+     83
+    ]
+   ],
+   "quotes": [
+    "\"Shape 1,1,1,93184,144384, Size 21.57 GB, from idr0083.\""
+   ]
+  },
+  {
+   "id": "O-026",
+   "cites": [
+    [
+     "S048",
+     204,
+     213
+    ]
+   ],
+   "quotes": [
+    "\"Images split into one layer per channel via channel_axis, so the channel axis is dropped from the per-axis metadata\""
+   ]
+  },
+  {
+   "id": "O-027",
+   "cites": [
+    [
+     "S048",
+     341,
+     365
+    ]
+   ],
+   "quotes": [
+    "\"lookup children from series of OME/METADATA.xml ... node_id.replace(Image:, )\""
+   ]
+  },
+  {
+   "id": "O-028",
+   "cites": [
+    [
+     "S025",
+     81,
+     86
+    ]
+   ],
+   "quotes": [
+    "\"Currently, Viv supports int8, int16, int32, uint8, uint16, uint32, float32, float64 arrays, but contributions are welcome to support more np.dtypes!\""
+   ]
+  },
+  {
+   "id": "O-029",
+   "cites": [
+    [
+     "S043",
+     2,
+     13
+    ]
+   ],
+   "quotes": [
+    "\"Vizarr expects the same number of Z-sections for each pyramid resolution\""
+   ]
+  },
+  {
+   "id": "O-030",
+   "cites": [
+    [
+     "S043",
+     80,
+     89
+    ]
+   ],
+   "quotes": [
+    "\"Can the viewer handle pyramids when the scale factor between levels is not equal to 2?\""
+   ]
+  },
+  {
+   "id": "O-031",
+   "cites": [
+    [
+     "S043",
+     214,
+     215
+    ]
+   ],
+   "quotes": [
+    "\"Only the lowest resolution of a Plate is shown. Clicking a Well loads it in a new window\""
+   ]
+  },
+  {
+   "id": "O-032",
+   "cites": [
+    [
+     "S043",
+     277,
+     286
+    ]
+   ],
+   "quotes": [
+    "\"Does the viewer open any images beyond the first item in the multiscales list?\""
+   ]
+  },
+  {
+   "id": "O-033",
+   "cites": [
+    [
+     "S043",
+     318,
+     329
+    ]
+   ],
+   "quotes": [
+    "\"Vizarr doesn't display a scalebar or support scaling info.\""
+   ]
+  },
+  {
+   "id": "O-034",
+   "cites": [
+    [
+     "S043",
+     362,
+     365
+    ]
+   ],
+   "quotes": [
+    "\"3D translation causes image to disappear\""
+   ]
+  },
+  {
+   "id": "O-035",
+   "cites": [
+    [
+     "S043",
+     394,
+     411
+    ]
+   ],
+   "quotes": [
+    "\"Does the viewer read the scale transformation for each item in multiscales list?\""
+   ]
+  },
+  {
+   "id": "O-036",
+   "cites": [
+    [
+     "S043",
+     473,
+     487
+    ]
+   ],
+   "quotes": [
+    "\"Is it possible to open more than 1 OME-NGFF image on the same canvas, to overlay them?\""
+   ]
+  },
+  {
+   "id": "O-037",
+   "cites": [
+    [
+     "S033",
+     157,
+     162
+    ]
+   ],
+   "quotes": [
+    "\"Supported types depend upon the Zarr/NGFF version being written: | v3/0.5 | yes | yes | yes | no | yes |\""
+   ]
+  },
+  {
+   "id": "O-038",
+   "cites": [
+    [
+     "S033",
+     223,
+     226
+    ]
+   ],
+   "quotes": [
+    "\"Specifies the version of the OME-Zarr specification that should be used while writing Zarr. Current supported values are 0.4 and 0.5.\""
+   ]
+  },
+  {
+   "id": "O-039",
+   "cites": [
+    [
+     "S033",
+     251,
+     256
+    ]
+   ],
+   "quotes": [
+    "\"A Java format string that defines how series and resolutions should be described in the output directory hierarchy. The default value is %d/%d\""
+   ]
+  },
+  {
+   "id": "O-040",
+   "cites": [
+    [
+     "S058",
+     309,
+     329
+    ]
+   ],
+   "quotes": [
+    "\"For OME-Zarr (v0.5) datasets, the structure is slightly different (See OME-Zarr 0.5 spec)\""
+   ]
+  },
+  {
+   "id": "O-041",
+   "cites": [
+    [
+     "S058",
+     385,
+     389
+    ]
+   ],
+   "quotes": [
+    "\"Use chunk sizes of 32 - 128 voxels^3 Enable sharding (only available in Zarr 3+) Use 3D downsampling\""
+   ]
+  },
+  {
+   "id": "O-042",
+   "cites": [
+    [
+     "S014",
+     139,
+     142
+    ]
+   ],
+   "quotes": [
+    "\"Vizarr renders chunks repetitively for image data converted into OME-ZARR v0.5 format, using the resave command of https://github.com/ome/ome2024-ngff-challenge\""
+   ]
+  },
+  {
+   "id": "O-043",
+   "cites": [
+    [
+     "S011",
+     151,
+     157
+    ]
+   ],
+   "quotes": [
+    "\"napari-ome-zarr depends on ome-zarr, which is pinned to zarr<3.\""
+   ]
+  },
+  {
+   "id": "O-044",
+   "cites": [
+    [
+     "S011",
+     158,
+     159
+    ]
+   ],
+   "quotes": [
+    "\"The default napari reader (without napari-ome-zarr plugin) does not correctly read OME-Zarr coordinate transformations/scale metadata, resulting in incorrect anisotropic volume rendering.\""
+   ]
+  },
+  {
+   "id": "O-045",
+   "cites": [
+    [
+     "S023",
+     150,
+     154
+    ]
+   ],
+   "quotes": [
+    "\"This command will traverse your local filesystem, looking for zarr images (only .zattrs for now - can add zarr v3 support as a follow-up) and collect them into a CSV.\""
+   ]
+  },
+  {
+   "id": "O-046",
+   "cites": [
+    [
+     "S013",
+     150,
+     157
+    ]
+   ],
+   "quotes": [
+    "\"This PR adds support for writing OME-Zarr v0.5, which becomes the default CurrentFormat().\""
+   ]
+  },
+  {
+   "id": "O-047",
+   "cites": [
+    [
+     "S013",
+     186,
+     186
+    ]
+   ],
+   "quotes": [
+    "\"ValueError: compressor cannot be used for arrays with zarr_format 3. Use bytes-to-bytes codecs instead.\""
+   ]
+  },
+  {
+   "id": "O-048",
+   "cites": [
+    [
+     "S038",
+     58,
+     58
+    ]
+   ],
+   "quotes": [
+    "\"If I enter the OME-Zarr URL: https://uk1s3.embassy.ebi.ac.uk/idr/share/ome2024-ngff-challenge/0.0.5/6001240.zarr/ I get: Neithre array nor OME multiscale metadata found\""
+   ]
+  },
+  {
+   "id": "O-049",
+   "cites": [
+    [
+     "S027",
+     150,
+     160
+    ]
+   ],
+   "quotes": [
+    "\"Investigating a lighter-weight alternative to ome-zarr-py. Uses zarrv3.\""
+   ]
+  },
+  {
+   "id": "O-050",
+   "cites": [
+    [
+     "S027",
+     269,
+     270
+    ]
+   ],
+   "quotes": [
+    "\"You can get the list of labels paths from Image.attributes.labels. But the labels part of the spec just says these point to labels objects, which I don't think are more specifically defined anywhere else?\""
+   ]
+  },
+  {
+   "id": "O-051",
+   "cites": [
+    [
+     "S072",
+     1,
+     3
+    ],
+    [
+     "S096",
+     8,
+     10
+    ],
+    [
+     "S096",
+     25,
+     28
+    ]
+   ],
+   "quotes": [
+    "\"AGAVE is a desktop application for viewing multichannel volume data. Several formats are supported, including OME-ZARR 0.4 and 0.5, OME-TIFF and Zeiss .czi files.\""
+   ]
+  },
+  {
+   "id": "O-052",
+   "cites": [
+    [
+     "S117",
+     108,
+     109
+    ],
+    [
+     "S108",
+     4,
+     17
+    ]
+   ],
+   "quotes": [
+    "\"The OME-Zarr format supports precomputed multiresolution data and will let you select the resolution level. The highest resolution is the default, so beware if you have a large dataset, you risk running out of memory.\""
+   ]
+  },
+  {
+   "id": "O-053",
+   "cites": [
+    [
+     "S098",
+     204,
+     219
+    ]
+   ],
+   "quotes": [
+    "\"nlohmann::json multiscales; if (m_zarrVersion == 3) { ... multiscales = ome[multiscales]; } else { multiscales = attrs[multiscales]; }\""
+   ]
+  },
+  {
+   "id": "O-054",
+   "cites": [
+    [
+     "S052",
+     558,
+     558
+    ]
+   ],
+   "quotes": [
+    "\"Ome zarr v0.5 reading and writing by @will-moore in https://github.com/ome/ome-zarr-py/pull/413\""
+   ]
+  },
+  {
+   "id": "O-055",
+   "cites": [
+    [
+     "S033",
+     333,
+     337
+    ]
+   ],
+   "quotes": [
+    "\"Version 0.3.0 and later uses the TCZYX order by default, for compatibility with https://ngff.openmicroscopy.org/0.4/#image-layout. The --dimension-order option is considered deprecated and may be removed in a future release, as it results in invalid OME-NGFF data.\""
+   ]
+  },
+  {
+   "id": "O-056",
+   "cites": [
+    [
+     "S033",
+     107,
+     109
+    ]
+   ],
+   "quotes": [
+    "\"By default, the resolutions will be set so that the smallest resolution is no greater than 256x256. A scaling factor of 2 is used between consecutive resolutions.\""
+   ]
+  },
+  {
+   "id": "O-057",
+   "cites": [
+    [
+     "S061",
+     39,
+     39
+    ]
+   ],
+   "quotes": [
+    "\"This currently 'works' for https://uk1s3.embassy.ebi.ac.uk/idr/zarr/v0.4/idr0073A/9798462.zarr but is too slow to be very usable.\""
+   ]
+  },
+  {
+   "id": "O-058",
+   "cites": [
+    [
+     "S062",
+     11,
+     15
+    ],
+    [
+     "S108",
+     13,
+     30
+    ]
+   ],
+   "quotes": [
+    "\"Volume data is provided to the core 3d viewer via one of the following file formats: - a url to a OME-ZARR image\""
+   ]
+  },
+  {
+   "id": "O-059",
+   "cites": [
+    [
+     "S031",
+     4,
+     6
+    ]
+   ],
+   "quotes": [
+    "\"Deployed at https://ome.github.io/ome-ngff-validator See https://idr.github.io/ome-ngff-samples/ for samples to try.\""
+   ]
+  },
+  {
+   "id": "O-060",
+   "cites": [
+    [
+     "S004",
+     149,
+     157
+    ],
+    [
+     "S003",
+     441,
+     450
+    ]
+   ],
+   "quotes": [
+    "\"This PR proposes to adopt the version 3 of the Zarr format for OME-Zarr. Main changes: Only Zarr v3 is allowed for upcoming versions of OME-Zarr.\""
+   ]
+  },
+  {
+   "id": "O-061",
+   "cites": [
+    [
+     "S008",
+     149,
+     150
+    ]
+   ],
+   "quotes": [
+    "\"This updates ome-zarr-py to use zarr-python v3 but doesn't include support for writing Zarr v3 (OME-Zarr v0.5). However, it does add support for reading OME-Zarr v0.5 (e.g. for use by napari-ome-zarr).\""
+   ]
+  },
+  {
+   "id": "O-062",
+   "cites": [
+    [
+     "S048",
+     707,
+     716
+    ]
+   ],
+   "quotes": [
+    "\"napari labels layer MUST not have channel_axis ... for level in range(len(node_data)): darray = node_data[level] if darray.ndim > ch_axis: node_data[level] = da.squeeze(darray, axis=ch_axis)\""
+   ]
+  },
+  {
+   "id": "O-063",
+   "cites": [
+    [
+     "S048",
+     672,
+     680
+    ]
+   ],
+   "quotes": [
+    "\"if Labels.matches(root_group): # Try starting at parent Image parent_path = root_group.store.root.parent\""
+   ]
+  },
+  {
+   "id": "O-064",
+   "cites": [
+    [
+     "S048",
+     119,
+     122
+    ]
+   ],
+   "quotes": [
+    "\"trans_aff = single_transform_to_affine(transf) if trans_aff is None: warnings.warn(fUnsupported transform type: {transf[type]}) continue\""
+   ]
+  },
+  {
+   "id": "O-065",
+   "cites": [
+    [
+     "S002",
+     0,
+     0
+    ]
+   ],
+   "quotes": [
+    "\"original_bytes: 0, view_lines: 0\""
+   ]
+  },
+  {
+   "id": "O-066",
+   "cites": [
+    [
+     "S053",
+     196,
+     217
+    ]
+   ],
+   "quotes": [
+    "\"coordinateTransformations: type array, minItems 1, contains { type scale }, maxContains 1\""
+   ]
+  },
+  {
+   "id": "O-067",
+   "cites": [
+    [
+     "S018",
+     335,
+     349
+    ]
+   ],
+   "quotes": [
+    "\"channels = self.image_data.get(channels, None) if channels is None: return # EARLY EXIT\""
+   ]
+  },
+  {
+   "id": "O-068",
+   "cites": [
+    [
+     "S018",
+     570,
+     600
+    ]
+   ],
+   "quotes": [
+    "\"elif self.zarr.zarray: LOGGER.debug(treating %s as raw zarr) node.data.append(self.zarr.load())\""
+   ]
+  }
+ ]
+}

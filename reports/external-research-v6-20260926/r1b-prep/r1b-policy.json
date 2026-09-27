@@ -1,0 +1,100 @@
+{
+ "schema": "er6.r1b_policy.v1",
+ "frozen_utc": "2026-09-27T02:15:58Z",
+ "status": "FROZEN_NOT_DISPATCHED: needs the user's explicit go; the external review authorizes no new spending",
+ "purpose": "verifier-stage diagnostic on frozen R1 stage-1 packages; not an end-to-end or discovery qualification",
+ "variable": "host-built source-centred evidence bundle v3 as the verifier's first view (candidate) vs reading cited lines directly (control)",
+ "common_to_both_arms": [
+  "same frozen stage-1 package (observations.md, draft.md) and host draft-blocks view",
+  "same corpus (full case_bundle)",
+  "same app/model/Max and caps: 1800 s, 160 native responses, 1 assignment",
+  "same delivery protocol: per-block decisions + additions; host assembles delivered.md; undecided blocks published UNVERIFIED",
+  "same negative-claim rule: absence rejections need recorded context + bounded corpus search, else unresolved",
+  "Muse host --disable-shell; zcode tools Read/Write/Edit/Grep/Glob; no web"
+ ],
+ "package_rule": "outcome-independent: the first stage-1 package produced per app in R1's preregistered order (Muse: M-control/stage1; zcode: Z-candidate/stage1)",
+ "block1": [
+  [
+   "R1b-M-P1-control",
+   "M-control",
+   "muse",
+   "control"
+  ],
+  [
+   "R1b-M-P1-candidate",
+   "M-control",
+   "muse",
+   "candidate"
+  ],
+  [
+   "R1b-Z-P1-candidate",
+   "Z-candidate",
+   "zcode",
+   "candidate"
+  ],
+  [
+   "R1b-Z-P1-control",
+   "Z-candidate",
+   "zcode",
+   "control"
+  ]
+ ],
+ "block1_order": "serial; Muse control->candidate, zcode candidate->control (counterbalanced)",
+ "block2_conditional_not_authorized": [
+  [
+   "R1b-M-P2-candidate",
+   "M-candidate"
+  ],
+  [
+   "R1b-M-P2-control",
+   "M-candidate"
+  ],
+  [
+   "R1b-Z-P2-control",
+   "Z-control"
+  ],
+  [
+   "R1b-Z-P2-candidate",
+   "Z-control"
+  ]
+ ],
+ "stop_rules": [
+  "harness fault stops the block (run_r1b --schedule stops at the first fault)",
+  "after block-1 evaluation: stop and repair if either arm loses materially confirmed upstream content, introduces a consequential false dismissal, or the harness faulted; no block 2 purchase to complete a table",
+  "no retries, no best-of"
+ ],
+ "metrics": [
+  "native responses (Muse parent + reminder-child counts)",
+  "input/cache-read/uncached/output/reasoning tokens where exposed",
+  "source read calls, unique sources, repeats (tool audit)",
+  "bundle bytes and delivered lines (candidate)",
+  "goal span, host prep and assembly seconds",
+  "decisions coverage (assembly report: decided/unverified/absence-without-search)",
+  "quality by finding identity from two blinded xhigh reviewers",
+  "tool-result bytes where the app log exposes them, else reported unavailable"
+ ],
+ "evaluation": {
+  "reviewers": 2,
+  "one_per_app_pair": true,
+  "prompt": "r1b/prompts/EVALUATOR_PROMPT_R1B.txt",
+  "runner": "tools/r1b/run_reviewer_v2.py (tools pinned, argv recorded, host JSON validation)",
+  "caps": "2700 s and 160 responses each",
+  "treatment_artifacts_withheld_until_after_grading": true,
+  "c07_transpose_adjudication": "eligible: handle or truthfully refuse transpose pipelines (S109 L553-600, L2720); unassessable: normative decode order"
+ },
+ "reviewer_effort": "requested --effort xhigh; R1 streams reported effort null and --restricted ignores user settings (effortLevel xhigh), so effective effort is unconfirmed; v2 records argv and init fields",
+ "offline_checks": "python3 -m unittest tools/r1b/test_r1b.py -> 19 tests OK; dry prep/assembly on all four packages OK",
+ "files_sha256": {
+  "r1b/prompts/EVALUATOR_PROMPT_R1B.txt": "8daa5bd4dd476bca23835a3372b02c40c5f198632199a89b6c34c3e7e7b761ef",
+  "r1b/prompts/verifier_candidate.txt": "f4a25d63dc9dd4ae917cf6972bda7303c340e3f095e568e084341fe27660acf6",
+  "r1b/prompts/verifier_control.txt": "ae62ce9754f6352be2b13adbf7255797005784a4dc6ca7a44fe093f5c7350295",
+  "tools/r1b/assemble_delivery.py": "a8d3943b08347c1474698fee967779d5bd81bc0c21dfcb48fa72ff4b8230588f",
+  "tools/r1b/build_evidence_bundle_v3.py": "3280ea0df5f3a3ffaf06d5065071338e9352a91fd1e2fbf96c07bb661f9c2063",
+  "tools/r1b/muse-serve-noshell.sh": "fecdb795d96fcdbf8895349dc81435dbf28b8e07ecbdbdaee2cff61c3f790586",
+  "tools/r1b/quote_locator.py": "c74f19ad84dedee22008b723f47b904f78b4d51f18e01e87662cca08fc65fa2b",
+  "tools/r1b/run_goal_r1b.py": "4cfd7aee946cd8db9ef70a0adf2cfe8279a5cdc13cb3c8b7cd299775dee97ae7",
+  "tools/r1b/run_r1b.py": "0bceeedd0655760bfdf4f1757f70fd25464bc4fd8e903cc6606eb29fb1a9401b",
+  "tools/r1b/run_reviewer_v2.py": "b4f933ca82721ce2167b28e5702171c36c18a5d51ae1db591b69072a7c088920",
+  "tools/r1b/test_r1b.py": "2ab8dc54b0f720bbcbb1ec06053b0d3f4b1a0160c0ff6fcbe065959062ecea35"
+ }
+}
