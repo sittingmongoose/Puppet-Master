@@ -41,11 +41,17 @@
           "writer_lease_ref": "lease:writer:7",
           "permission_snapshot_ref": "perm:stage:3",
           "file_safe_decision_ref": "filesafe:stage:3",
-          "paths": ["src/notes.rs", "assets/logo.bin", "docs/new_page.md"],
+          "paths": [
+            "src/notes.rs",
+            "assets/logo.bin",
+            "docs/new_page.md"
+          ],
           "status_selection_ref": "selection:status:44",
           "whole_file_only": true,
           "include_untracked": true,
-          "untracked_paths_declared": ["docs/new_page.md"]
+          "untracked_paths_declared": [
+            "docs/new_page.md"
+          ]
         },
         "permission_snapshot_ref": "perm:stage:3",
         "file_safe_decision_ref": "filesafe:stage:3",
@@ -90,7 +96,9 @@
           "writer_lease_ref": "lease:writer:8",
           "permission_snapshot_ref": "perm:unstage:3",
           "file_safe_decision_ref": "filesafe:unstage:3",
-          "paths": ["src/notes.rs"],
+          "paths": [
+            "src/notes.rs"
+          ],
           "status_selection_ref": "selection:status:45",
           "whole_file_only": true
         },
@@ -139,7 +147,9 @@
           "file_safe_decision_ref": "filesafe:remote-update:3",
           "remote_id": "remote:origin",
           "fetch_url": "https://forge.example.com/alpha/main.git",
-          "push_urls": ["ssh://forge.example.com:2222/alpha/main.git"],
+          "push_urls": [
+            "ssh://forge.example.com:2222/alpha/main.git"
+          ],
           "expected_config_generation": 3,
           "local_config_only": true
         },
@@ -372,15 +382,23 @@
           "writer_lease_ref": "lease:writer:7",
           "permission_snapshot_ref": "perm:stage:3",
           "file_safe_decision_ref": "filesafe:stage:3",
-          "paths": ["src/notes.rs", "assets/logo.bin", "docs/new_page.md"],
+          "paths": [
+            "src/notes.rs",
+            "assets/logo.bin",
+            "docs/new_page.md"
+          ],
           "status_selection_ref": "selection:status:44",
           "whole_file_only": true,
           "include_untracked": true,
-          "untracked_paths_declared": ["docs/new_page.md"]
+          "untracked_paths_declared": [
+            "docs/new_page.md"
+          ]
         },
         "outcome": "succeeded",
         "effect_state": "effects_applied",
-        "result_refs": ["stage-outcome:alpha:1"],
+        "result_refs": [
+          "stage-outcome:alpha:1"
+        ],
         "operation_receipt_ref": "receipt:git:stage:11",
         "completed_at_utc": "2026-09-27T00:01:00Z"
       }
@@ -477,7 +495,9 @@
         },
         "outcome": "effect_unknown",
         "effect_state": "effect_unknown",
-        "result_refs": ["stash-apply-attempt:alpha:1"],
+        "result_refs": [
+          "stash-apply-attempt:alpha:1"
+        ],
         "operation_receipt_ref": "receipt:git:stash-apply:12",
         "completed_at_utc": "2026-09-27T00:02:00Z"
       }
@@ -521,13 +541,17 @@
           "file_safe_decision_ref": "filesafe:remote-update:3",
           "remote_id": "remote:origin",
           "fetch_url": "https://forge.example.com/alpha/main.git",
-          "push_urls": ["ssh://forge.example.com:2222/alpha/main.git"],
+          "push_urls": [
+            "ssh://forge.example.com:2222/alpha/main.git"
+          ],
           "expected_config_generation": 3,
           "local_config_only": true
         },
         "outcome": "blocked",
         "effect_state": "no_effect",
-        "result_refs": ["remote-update-blocked:alpha:1"],
+        "result_refs": [
+          "remote-update-blocked:alpha:1"
+        ],
         "operation_receipt_ref": "receipt:git:remote-update:13",
         "completed_at_utc": "2026-09-27T00:02:00Z"
       }
@@ -548,7 +572,11 @@
         "before_config_generation": 3,
         "after_config_generation": 3,
         "effect_summary": {
-          "affected_paths": ["src/notes.rs", "assets/logo.bin", "docs/new_page.md"]
+          "affected_paths": [
+            "src/notes.rs",
+            "assets/logo.bin",
+            "docs/new_page.md"
+          ]
         },
         "reconciled": false,
         "completed_at_utc": "2026-09-27T00:01:00Z"
@@ -657,7 +685,9 @@
           "writer_lease_ref": "lease:writer:7",
           "permission_snapshot_ref": "perm:stage:3",
           "file_safe_decision_ref": "filesafe:stage:3",
-          "paths": ["src/notes.rs"],
+          "paths": [
+            "src/notes.rs"
+          ],
           "status_selection_ref": "selection:status:44",
           "whole_file_only": true,
           "include_untracked": false
@@ -751,7 +781,10 @@
           },
           "reason_code": "branch_protected",
           "blocking_ref": "policy:protected-branches:1",
-          "safe_next_actions": ["inspect", "none"],
+          "safe_next_actions": [
+            "inspect",
+            "none"
+          ],
           "observed_at_utc": "2026-09-27T00:00:00Z"
         },
         "checked_at_utc": "2026-09-27T00:00:00Z"
@@ -800,7 +833,10 @@
         "error_code": "effect_unknown",
         "effect_state": "effect_unknown",
         "retry_allowed": false,
-        "safe_next_actions": ["reconcile_effects", "inspect"],
+        "safe_next_actions": [
+          "reconcile_effects",
+          "inspect"
+        ],
         "detail_ref": "stash-apply-attempt:alpha:1",
         "occurred_at_utc": "2026-09-27T00:02:00Z"
       }
@@ -842,7 +878,9 @@
           "writer_lease_ref": "lease:writer:7",
           "permission_snapshot_ref": "perm:stage:3",
           "file_safe_decision_ref": "filesafe:stage:3",
-          "paths": ["src/notes.rs"],
+          "paths": [
+            "src/notes.rs"
+          ],
           "status_selection_ref": "selection:status:44",
           "whole_file_only": true,
           "include_untracked": false
@@ -850,7 +888,10 @@
         "error_code": "stale_index",
         "effect_state": "no_effect",
         "retry_allowed": true,
-        "safe_next_actions": ["refresh", "retry"],
+        "safe_next_actions": [
+          "refresh",
+          "retry"
+        ],
         "detail_ref": "index-fence:alpha:8",
         "occurred_at_utc": "2026-09-27T00:02:00Z"
       }
@@ -891,7 +932,9 @@
           "writer_lease_ref": "lease:writer:7",
           "permission_snapshot_ref": "perm:stage:3",
           "file_safe_decision_ref": "filesafe:stage:3",
-          "paths": ["src/notes.rs"],
+          "paths": [
+            "src/notes.rs"
+          ],
           "status_selection_ref": "selection:status:44",
           "whole_file_only": true,
           "include_untracked": false
@@ -1000,7 +1043,10 @@
         },
         "reason_code": "branch_checked_out",
         "blocking_ref": "worktree:alpha-side:1",
-        "safe_next_actions": ["inspect", "none"],
+        "safe_next_actions": [
+          "inspect",
+          "none"
+        ],
         "observed_at_utc": "2026-09-27T00:00:00Z"
       }
     },
@@ -1042,7 +1088,10 @@
           "writer_lease_ref": "lease:writer:7",
           "permission_snapshot_ref": "perm:stage:3",
           "file_safe_decision_ref": "filesafe:stage:3",
-          "paths": ["docs/meeting notes.md", "src/notes.rs"],
+          "paths": [
+            "docs/meeting notes.md",
+            "src/notes.rs"
+          ],
           "status_selection_ref": "selection:status:44",
           "whole_file_only": true,
           "include_untracked": false
@@ -1082,64 +1131,6 @@
       }
     },
     {
-      "name": "preview_stash_apply_stale_fence",
-      "definition": "stash_apply_preview",
-      "value": {
-        "schema_id": "pm.git_adapter.stash_apply_preview.v1",
-        "preview_id": "preview:stash-apply:2",
-        "repo_id": "repo:alpha",
-        "workspace_id": "git-worktree:alpha-main",
-        "scm_backend": "git",
-        "expected_git_state": {
-          "kind": "git",
-          "object_format": "sha1",
-          "head_oid": "1111111111111111111111111111111111111111",
-          "index_generation": 7,
-          "config_generation": 3
-        },
-        "stash_id": "stash@{0}",
-        "currentness_generation": 14,
-        "currentness_ref": "currentness:git:alpha:14",
-        "currentness_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-        "permission_snapshot_ref": "perm:stash-apply:3",
-        "file_safe_decision_ref": "filesafe:stash-apply:3",
-        "produced_at_utc": "2026-09-26T23:55:00Z",
-        "expires_at_utc": "2026-09-27T01:00:00Z",
-        "stash_exists": true,
-        "worktree_clean": true,
-        "conflicting_paths": []
-      }
-    },
-    {
-      "name": "preview_stash_apply_wrong_target",
-      "definition": "stash_apply_preview",
-      "value": {
-        "schema_id": "pm.git_adapter.stash_apply_preview.v1",
-        "preview_id": "preview:stash-apply:9",
-        "repo_id": "repo:alpha",
-        "workspace_id": "git-worktree:alpha-main",
-        "scm_backend": "git",
-        "expected_git_state": {
-          "kind": "git",
-          "object_format": "sha1",
-          "head_oid": "1111111111111111111111111111111111111111",
-          "index_generation": 8,
-          "config_generation": 3
-        },
-        "stash_id": "stash@{3}",
-        "currentness_generation": 14,
-        "currentness_ref": "currentness:git:alpha:14",
-        "currentness_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-        "permission_snapshot_ref": "perm:stash-apply:3",
-        "file_safe_decision_ref": "filesafe:stash-apply:3",
-        "produced_at_utc": "2026-09-26T23:55:00Z",
-        "expires_at_utc": "2026-09-27T01:00:00Z",
-        "stash_exists": true,
-        "worktree_clean": true,
-        "conflicting_paths": []
-      }
-    },
-    {
       "name": "preview_branch_delete_current",
       "definition": "branch_delete_preview",
       "value": {
@@ -1157,99 +1148,6 @@
         },
         "branch": "feature/stale-experiment",
         "expected_branch_head": "2222222222222222222222222222222222222222",
-        "currentness_generation": 15,
-        "currentness_ref": "currentness:git:alpha:15",
-        "currentness_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
-        "permission_snapshot_ref": "perm:branch-delete:3",
-        "file_safe_decision_ref": "filesafe:branch-delete:3",
-        "produced_at_utc": "2026-09-26T23:55:00Z",
-        "expires_at_utc": "2026-09-27T01:00:00Z",
-        "branch_exists": true,
-        "protected": false,
-        "checked_out": false,
-        "attached_worktree_refs": []
-      }
-    },
-    {
-      "name": "preview_branch_delete_expired",
-      "definition": "branch_delete_preview",
-      "value": {
-        "schema_id": "pm.git_adapter.branch_delete_preview.v1",
-        "preview_id": "preview:branch-delete:5",
-        "repo_id": "repo:alpha",
-        "workspace_id": "git-worktree:alpha-main",
-        "scm_backend": "git",
-        "expected_git_state": {
-          "kind": "git",
-          "object_format": "sha1",
-          "head_oid": "1111111111111111111111111111111111111111",
-          "index_generation": 8,
-          "config_generation": 3
-        },
-        "branch": "feature/stale-experiment",
-        "expected_branch_head": "2222222222222222222222222222222222222222",
-        "currentness_generation": 15,
-        "currentness_ref": "currentness:git:alpha:15",
-        "currentness_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
-        "permission_snapshot_ref": "perm:branch-delete:3",
-        "file_safe_decision_ref": "filesafe:branch-delete:3",
-        "produced_at_utc": "2026-09-26T22:00:00Z",
-        "expires_at_utc": "2026-09-26T23:00:00Z",
-        "branch_exists": true,
-        "protected": false,
-        "checked_out": false,
-        "attached_worktree_refs": []
-      }
-    },
-    {
-      "name": "preview_branch_delete_guarded_protected",
-      "definition": "branch_delete_preview",
-      "value": {
-        "schema_id": "pm.git_adapter.branch_delete_preview.v1",
-        "preview_id": "preview:branch-delete:5",
-        "repo_id": "repo:alpha",
-        "workspace_id": "git-worktree:alpha-main",
-        "scm_backend": "git",
-        "expected_git_state": {
-          "kind": "git",
-          "object_format": "sha1",
-          "head_oid": "1111111111111111111111111111111111111111",
-          "index_generation": 8,
-          "config_generation": 3
-        },
-        "branch": "feature/stale-experiment",
-        "expected_branch_head": "2222222222222222222222222222222222222222",
-        "currentness_generation": 15,
-        "currentness_ref": "currentness:git:alpha:15",
-        "currentness_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
-        "permission_snapshot_ref": "perm:branch-delete:3",
-        "file_safe_decision_ref": "filesafe:branch-delete:3",
-        "produced_at_utc": "2026-09-26T23:55:00Z",
-        "expires_at_utc": "2026-09-27T01:00:00Z",
-        "branch_exists": true,
-        "protected": true,
-        "checked_out": false,
-        "attached_worktree_refs": []
-      }
-    },
-    {
-      "name": "preview_branch_delete_wrong_branch",
-      "definition": "branch_delete_preview",
-      "value": {
-        "schema_id": "pm.git_adapter.branch_delete_preview.v1",
-        "preview_id": "preview:branch-delete:5",
-        "repo_id": "repo:alpha",
-        "workspace_id": "git-worktree:alpha-main",
-        "scm_backend": "git",
-        "expected_git_state": {
-          "kind": "git",
-          "object_format": "sha1",
-          "head_oid": "1111111111111111111111111111111111111111",
-          "index_generation": 8,
-          "config_generation": 3
-        },
-        "branch": "main",
-        "expected_branch_head": "1111111111111111111111111111111111111111",
         "currentness_generation": 15,
         "currentness_ref": "currentness:git:alpha:15",
         "currentness_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
@@ -1293,7 +1191,9 @@
       "command": "cmd.git.stage",
       "base_valid": "req_stage_whole_file_untracked_and_binary",
       "patch": {
-        "scope.hunk_ids": ["hunk-1"]
+        "scope.hunk_ids": [
+          "hunk-1"
+        ]
       },
       "rejection_layer": "schema",
       "expected_error": "whole-file stage carries no hunk field; hunk payloads belong to cmd.git.stage_hunks"
@@ -1303,7 +1203,9 @@
       "definition": "git_command_request",
       "command": "cmd.git.stage",
       "base_valid": "req_stage_whole_file_untracked_and_binary",
-      "remove": ["scope.include_untracked"],
+      "remove": [
+        "scope.include_untracked"
+      ],
       "rejection_layer": "schema",
       "expected_error": "stage requires an explicit include_untracked decision"
     },
@@ -1356,7 +1258,9 @@
       "definition": "git_command_request",
       "command": "cmd.source_control.remote.update",
       "base_valid": "req_remote_update_local_config",
-      "remove": ["scope.push_urls"],
+      "remove": [
+        "scope.push_urls"
+      ],
       "rejection_layer": "schema",
       "expected_error": "remote.update requires a distinct validated push URL array, not a bare fetch URL"
     },
@@ -1366,7 +1270,12 @@
       "command": "cmd.source_control.stash.create",
       "base_valid": "req_stash_create_with_untracked",
       "patch": {
-        "scope.message": {"$repeat": ["m", 501]}
+        "scope.message": {
+          "$repeat": [
+            "m",
+            501
+          ]
+        }
       },
       "rejection_layer": "schema",
       "expected_error": "stash messages are bounded at 500 characters"
@@ -1376,7 +1285,9 @@
       "definition": "git_command_request",
       "command": "cmd.source_control.stash.apply",
       "base_valid": "req_stash_apply_with_preview",
-      "remove": ["scope.preview_ref"],
+      "remove": [
+        "scope.preview_ref"
+      ],
       "rejection_layer": "schema",
       "expected_error": "stash.apply requires an approved current preview reference"
     },
@@ -1396,7 +1307,9 @@
       "definition": "git_command_request",
       "command": "cmd.source_control.branch.delete",
       "base_valid": "req_branch_delete_with_preview_and_confirmation",
-      "remove": ["scope.dangerous_confirmation"],
+      "remove": [
+        "scope.dangerous_confirmation"
+      ],
       "rejection_layer": "schema",
       "expected_error": "branch.delete requires explicit dangerous confirmation"
     },
@@ -1471,7 +1384,9 @@
       "definition": "git_command_request",
       "command": "cmd.git.stage",
       "base_valid": "req_stage_whole_file_untracked_and_binary",
-      "remove": ["scope.repo_id"],
+      "remove": [
+        "scope.repo_id"
+      ],
       "rejection_layer": "schema",
       "expected_error": "paths cannot substitute for repo_id identity; the scope stays incomplete without it"
     },
@@ -1492,7 +1407,9 @@
       "command": "cmd.git.stage",
       "base_valid": "req_stage_whole_file_untracked_and_binary",
       "patch": {
-        "scope.untracked_paths_declared": ["docs/ghost.md"]
+        "scope.untracked_paths_declared": [
+          "docs/ghost.md"
+        ]
       },
       "rejection_layer": "semantic",
       "expected_error": "declared untracked paths must be a subset of the staged paths"
@@ -1569,32 +1486,60 @@
     {
       "name": "join_stash_apply_stale_fence",
       "request": "req_stash_apply_with_preview",
-      "preview": "preview_stash_apply_stale_fence",
-      "expect": "stale"
+      "preview": "preview_stash_apply_current",
+      "expect": "stale",
+      "patch": {
+        "expected_git_state": {
+          "kind": "git",
+          "object_format": "sha1",
+          "head_oid": "1111111111111111111111111111111111111111",
+          "index_generation": 7,
+          "config_generation": 3
+        }
+      },
+      "expect_detail": "revision fence moved since the preview was produced"
     },
     {
       "name": "join_stash_apply_wrong_target",
       "request": "req_stash_apply_with_preview",
-      "preview": "preview_stash_apply_wrong_target",
-      "expect": "substitution"
+      "preview": "preview_stash_apply_current",
+      "expect": "substitution",
+      "patch": {
+        "stash_id": "stash@{3}"
+      },
+      "expect_detail": "preview names a different stash_id"
     },
     {
       "name": "join_branch_delete_expired",
       "request": "req_branch_delete_with_preview_and_confirmation",
-      "preview": "preview_branch_delete_expired",
-      "expect": "expired"
+      "preview": "preview_branch_delete_current",
+      "expect": "expired",
+      "patch": {
+        "produced_at_utc": "2026-09-26T22:00:00Z",
+        "expires_at_utc": "2026-09-26T23:00:00Z"
+      },
+      "expect_detail": "preview expired before the request was made"
     },
     {
       "name": "join_branch_delete_guarded_protected",
       "request": "req_branch_delete_with_preview_and_confirmation",
-      "preview": "preview_branch_delete_guarded_protected",
-      "expect": "guarded"
+      "preview": "preview_branch_delete_current",
+      "expect": "guarded",
+      "patch": {
+        "protected": true
+      },
+      "expect_detail": "preview reports a protected branch"
     },
     {
       "name": "join_branch_delete_wrong_branch",
       "request": "req_branch_delete_with_preview_and_confirmation",
-      "preview": "preview_branch_delete_wrong_branch",
-      "expect": "substitution"
+      "preview": "preview_branch_delete_current",
+      "expect": "substitution",
+      "patch": {
+        "branch": "main",
+        "expected_branch_head": "1111111111111111111111111111111111111111"
+      },
+      "expect_detail": "preview names a different branch"
     }
   ]
 }

@@ -589,6 +589,9 @@ def run_checks() -> dict[str, Any]:
             problems.append(f"join inventory missing: {missing}")
         if extra:
             problems.append(f"join inventory has unpinned cases: {extra}")
+    preview_ids = [case["value"].get("preview_id") for case in valid if case.get("definition") in {"stash_apply_preview", "branch_delete_preview"}]
+    if len(preview_ids) != len(set(preview_ids)):
+        problems.append("valid preview census reuses a physical preview_id")
     for join in joins:
         name = join.get("name", "<unnamed>")
         request_case = by_name.get(join.get("request"))
@@ -602,14 +605,34 @@ def run_checks() -> dict[str, Any]:
         }:
             problems.append(f"join/{name}: preview does not name a valid preview fixture")
             continue
+        preview_value = preview_case["value"]
+        if "patch" in join:
+            if not isinstance(join["patch"], dict) or not join["patch"]:
+                problems.append(f"join/{name}: counterfactual patch is empty")
+                continue
+            try:
+                preview_value = apply_case(preview_value, join)
+            except (KeyError, IndexError, TypeError, ValueError) as exc:
+                problems.append(f"join/{name}: unusable counterfactual patch: {exc}")
+                continue
+            schema_messages = subschema_errors(schema, preview_case["definition"], preview_value)
+            semantic_messages = semantic_problems(preview_case["definition"], preview_value)
+            if schema_messages or semantic_messages:
+                problems.append(f"join/{name}: counterfactual preview must remain individually valid: {schema_messages or semantic_messages}")
+                continue
+            if preview_value.get("preview_id") != preview_case["value"].get("preview_id"):
+                problems.append(f"join/{name}: counterfactual preview changed identity, masking the named join")
+                continue
         verdict, detail = preview_join_verdict(
-            request_case["value"], preview_case["definition"], preview_case["value"]
+            request_case["value"], preview_case["definition"], preview_value
         )
         expected = EXPECTED_JOIN_VERDICTS.get(name)
         if join.get("expect") != expected:
             problems.append(f"join/{name}: declared expect does not match its pin")
         if verdict != expected:
             problems.append(f"join/{name}: verdict {verdict} ({detail}) != pinned {expected}")
+        if "expect_detail" in join and detail != join["expect_detail"]:
+            problems.append(f"join/{name}: detail {detail!r} != pinned {join['expect_detail']!r}")
 
     report["counts"]["request_commands"] = sorted(request_commands)
     report["counts"]["negative_commands"] = sorted(c for c in negative_commands if c)
