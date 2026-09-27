@@ -53,6 +53,20 @@ def check():
         errors.append('time-cap arithmetic differs')
     if limits['retries'] != 0 or limits['replacement_slots'] != 0:
         errors.append('retry/replacement scope changed')
+    boundary = policy['evaluation'].get('access_boundary', {})
+    if boundary.get('kind') != 'prompt_only_chronological' or boundary.get('filesystem_isolation') is not False:
+        errors.append('I1 access boundary must disclose prompt-only chronology')
+    if boundary.get('same_workspace_and_assignment') is not True or boundary.get('host_enforced_midrun_lock') is not False:
+        errors.append('I1 must retain the same reviewer assignment without claiming a host lock')
+    follow_on = policy.get('follow_on_flash_verifier', {})
+    if follow_on.get('qualification') != 'NOT QUALIFIED FOR FOLLOW-ON VERIFIER USE' or follow_on.get('in_I1_execution_graph') is not False:
+        errors.append('unqualified follow-on verifier must stay outside I1')
+    inventory = policy.get('acquisition_inventory', {})
+    if not inventory.get('control') or not inventory.get('maintained') or 'not_recoverable' not in inventory.get('missing_early_records', ''):
+        errors.append('chronological acquisition inventories and missing-record limit required')
+    endpoints = policy.get('preservation_endpoints', {})
+    if not endpoints.get('mechanical_render_fidelity') or not endpoints.get('temporal_semantic_preservation'):
+        errors.append('I1 requires separate mechanical and temporal semantic endpoints')
     result = {'kind': 'offline preparation check; not run authorization or semantic quality proof',
               'errors': errors, 'ok': not errors, 'corpus_files': len(manifest),
               'candidate_prompt_sha256': prompts, 'calls_made': 0}

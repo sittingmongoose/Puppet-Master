@@ -1,0 +1,954 @@
+--- a/offline-repair-v1/tools/delivery.py
++++ b/offline-repair-v1/tools/delivery.py
+@@ -8,6 +8,7 @@
+ from __future__ import annotations
+
+ import argparse
++import copy
+ import json
+ import re
+ import sys
+@@ -17,6 +18,7 @@
+ SCHEMA_DRAFT = "offline-finding-draft/v1"
+ SCHEMA_REVIEW = "offline-finding-review/v1"
+ SCHEMA_DELIVERY = "offline-finding-delivery/v1"
++SCHEMA_CURRENT = "offline-finding-current/v1"
+ PART_TYPES = frozenset({
+     "assertion", "condition", "implication", "validation_proposal",
+     "uncertainty", "source_fit", "plan_fit", "non_finding",
+@@ -368,6 +370,25 @@
+     return output
+
+
++def project_current(draft: Any) -> dict[str, Any]:
++    """Project only the investigator's current typed content, never history or raw carrier.
++
++    This is an I1 first-view acquisition artifact, not a verifier decision.
++    """
++    findings = validate_draft(draft)
++    return {
++        "schema": SCHEMA_CURRENT,
++        "status": "UNVERIFIED",
++        "truth_validation": "not_established_by_projection",
++        "findings": [{
++            "id": finding["id"],
++            "title": finding["title"],
++            "parts": [{key: copy.deepcopy(part[key]) for key in ("id", "type", "text", "evidence") if key in part}
++                      for part in finding["parts"]],
++        } for finding in findings],
++    }
++
++
+ def _quoted(text: str) -> str:
+     return "\n".join("> " + line for line in text.splitlines())
+
+@@ -454,6 +475,23 @@
+     return "\n".join(lines)
+
+
++def render_current(current: dict[str, Any]) -> str:
++    if not isinstance(current, dict) or current.get("schema") != SCHEMA_CURRENT:
++        raise CarrierError(f"current.schema must be {SCHEMA_CURRENT}")
++    lines = ["# Current investigator findings", "", "Status: **UNVERIFIED**. This first-view report contains the current typed findings only.",
++             "Source citations are investigator leads. Validation proposals are UNEXECUTED; no test result is asserted.", ""]
++    for finding in current["findings"]:
++        lines.extend([f"## {finding['id']} — {_one_line(finding['title'])}", ""])
++        for part in finding["parts"]:
++            label = f"{part['id']} · {part['type']}"
++            if part["type"] == "validation_proposal":
++                label += " · UNEXECUTED PROPOSAL"
++            lines.extend([f"### {label}", _quoted(part["text"])])
++            lines.extend(_evidence_lines(part.get("evidence"), "Investigator source lead"))
++            lines.append("")
++    return "\n".join(lines)
++
++
+ def fail_visible(message: str, raw_carriers: dict[str, str] | None = None) -> tuple[dict[str, Any], str]:
+     raw_carriers = raw_carriers or {}
+     result = {"schema": SCHEMA_DELIVERY, "status": "CARRIER_INVALID", "diagnostics": [message],
+@@ -467,16 +505,48 @@
+
+ def main(argv: list[str] | None = None) -> int:
+     parser = argparse.ArgumentParser(description=__doc__)
+-    parser.add_argument("mode", choices=("render", "assemble"))
++    parser.add_argument("mode", choices=("render", "assemble", "render-current"))
+     parser.add_argument("--draft", type=Path, required=True)
+     parser.add_argument("--review", type=Path)
+     parser.add_argument("--out-md", type=Path, required=True)
+     parser.add_argument("--out-json", type=Path, required=True)
++    parser.add_argument("--history-md", type=Path)
++    parser.add_argument("--history-json", type=Path)
++    parser.add_argument("--raw-draft-out", type=Path)
+     args = parser.parse_args(argv)
+     if args.mode == "assemble" and args.review is None:
+         parser.error("assemble requires --review")
+     if args.mode == "render" and args.review is not None:
+         parser.error("render does not accept --review")
++    if args.mode == "render-current":
++        if args.review is not None:
++            parser.error("render-current does not accept --review")
++        if not all((args.history_md, args.history_json, args.raw_draft_out)):
++            parser.error("render-current requires --history-md, --history-json, and --raw-draft-out")
++        paths = [args.draft, args.out_md, args.out_json, args.history_md, args.history_json, args.raw_draft_out]
++        if len({path.resolve() for path in paths}) != len(paths):
++            parser.error("render-current input and output paths must all differ")
++        raw_bytes = b""
++        try:
++            raw_bytes = args.draft.read_bytes()
++            draft = load(args.draft)
++            current = project_current(draft)
++            current_md = render_current(current)
++            audit = assemble(draft)
++            audit_md = render(audit)
++            status = 0
++        except (CarrierError, OSError) as exc:
++            current, current_md = fail_visible("Invalid draft carrier; inspect deferred audit artifacts.")
++            current.pop("raw_carriers", None)
++            raw_text = raw_bytes.decode("utf-8", errors="replace")
++            audit, audit_md = fail_visible(str(exc), {"draft": raw_text})
++            status = 2
++        args.out_md.write_text(current_md, encoding="utf-8")
++        args.out_json.write_text(json.dumps(current, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
++        args.history_md.write_text(audit_md, encoding="utf-8")
++        args.history_json.write_text(json.dumps(audit, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
++        args.raw_draft_out.write_bytes(raw_bytes)
++        return status
+     status = 0
+     try:
+         draft = load(args.draft)
+--- a/offline-repair-v1/tools/SCHEMA.md
++++ b/offline-repair-v1/tools/SCHEMA.md
+@@ -85,3 +85,36 @@
+ `scope`, `context`, `searches`, `source_evidence`, and `assessment` are required. `context` cites direct `source_text` or `plan_text`; `source_evidence` contains at least one direct citation too. `assessment` is `source_supported` or `inconclusive`. Inconclusive assessment blocks keep, replace, remove, and additions. Search and heuristic lint alone do not validate absence; the host only checks that cited source context and a bounded search record exist. A verifier may still be wrong. An unsupported removal retains the original, the challenge, and the defect in the visible report; it never promotes the original to confirmed status or silently drops it.
+
+ The report's `mechanical_coverage` counts records and dispositions. Its `truth_validation` field is always `not_established_by_assembler`. Consumers must not treat structural success, issue titles, or proposed validation as independent grading or proof.
++
++## I1 current-view projection and acquisition inventory
++
++The I1 investigator comparison uses a current-only first view. This changes presentation of the draft, not the verifier protocol. `render-current` requires all five outputs so the host keeps a current Markdown report and JSON projection separate from the full audit Markdown, assembled audit JSON, and exact raw draft bytes:
++
++```sh
++python3 offline-repair-v1/tools/delivery.py render-current \
++  --draft draft.json \
++  --out-md current.md --out-json current.json \
++  --history-md history.md --history-json history.json \
++  --raw-draft-out raw-draft.json
++```
++
++The `offline-finding-current/v1` projection includes each current finding's ID, title, and **every current typed part** with its text and investigator source leads. It excludes `revision_history`, duplicate original/history records, review records, and raw JSON. Its status is `UNVERIFIED`; validation proposals display `UNEXECUTED PROPOSAL` and uncertainties remain attached. `project_current(draft)` and `render_current(current)` are the importable equivalents. On an invalid draft, current outputs contain only a carrier error with zero asserted claims; the separate history and raw outputs retain the malformed payload for repair. The existing `render` command and `render()` function continue to produce the full audit report.
++
++After private arm assignment, copy the **exact authored control** `out/draft.md` to its assigned `first_view/results/Xn/current.md`, and the **host-rendered maintained** `current.md` to the other arm's `current.md`. Either arm can be X1. The command below illustrates **control=X1, maintained=X2 only after that private assignment**. The helper copies only those two files into `first_view/results`; it copies explicitly enumerated acquisition files under `deferred/X1` and `deferred/X2`, and records their destination paths and SHA-256 hashes in `deferred/INVENTORY.json`. The existing case/key copy workflow supplies `first_view/case` and `first_view/key`. For the control arm, defer the exact raw `out/draft.md` as well as available `out/observations.md`, `out/history.md`, and every available `out/snapshots/*.md`. For the maintained arm, defer `current.json`, full history Markdown/JSON, exact raw `draft.json`, and every available snapshot. Missing early acquisition files are flagged `not_recoverable` in the experiment record, never fabricated. The raw current report alone is a valid minimal deferred artifact if no earlier file survives. Both arms require at least one explicit deferred mapping. The helper never discovers or silently drops files; the caller must enumerate the acquisition inventory. It refuses stray pre-existing files under `first_view` outside `case`, `key`, and the exact X1/X2 current report destinations.
++
++```sh
++python3 offline-repair-v1/tools/stage_i1.py \
++  --workspace reviewer-workspace \
++  --x1-current control/out/draft.md \
++  --x2-current maintained/current.md \
++  --x1-deferred control/out/draft.md=raw-draft.md \
++  --x1-deferred control/out/observations.md=observations.md \
++  --x1-deferred control/out/history.md=history.md \
++  --x1-deferred control/out/snapshots/prior.md=snapshots/prior.md \
++  --x2-deferred maintained/current.json=current.json \
++  --x2-deferred maintained/history.md=history.md \
++  --x2-deferred maintained/history.json=history.json \
++  --x2-deferred maintained/raw-draft.json=raw-draft.json
++```
++
++The deferred files are in the **same readable reviewer workspace**. Reading chronology is enforced by the reviewer prompt only; staging is not filesystem access isolation. There is no semantic scrub of the control's authored current report if it includes history despite its instruction. `V-FOLLOWON-1` absence-lint expansion remains deferred and is **not qualified for follow-on verifier use** by this I1 presentation change.
+--- /dev/null
++++ b/offline-repair-v1/tools/stage_i1.py
+@@ -0,0 +1,113 @@
++#!/usr/bin/env python3
++"""Copy I1 current reports and deferred acquisition artifacts into one reviewer workspace.
++
++This creates a presentation split, not an access barrier. Reading chronology is a
++reviewer-prompt instruction. Case corpus and key are staged by the existing workflow.
++"""
++
++from __future__ import annotations
++
++import argparse
++import hashlib
++import json
++import shutil
++from pathlib import Path
++
++
++def _mapping(value: str) -> tuple[Path, Path]:
++    if "=" not in value:
++        raise argparse.ArgumentTypeError("deferred mapping must be SOURCE=RELATIVE_DESTINATION")
++    source_text, relative_text = value.rsplit("=", 1)
++    source, relative = Path(source_text), Path(relative_text)
++    if not source_text or not relative_text or not relative.parts or relative.is_absolute() or any(p in ("", ".", "..") for p in relative.parts):
++        raise argparse.ArgumentTypeError("deferred destination must be a nonempty safe relative path")
++    return source, relative
++
++
++def _copy(source: Path, destination: Path, workspace: Path) -> dict[str, str]:
++    destination.parent.mkdir(parents=True, exist_ok=True)
++    shutil.copyfile(source, destination)
++    return {"path": destination.relative_to(workspace).as_posix(),
++            "sha256": hashlib.sha256(destination.read_bytes()).hexdigest()}
++
++
++def stage(workspace: Path, x1_current: Path, x2_current: Path,
++          x1_deferred: list[tuple[Path, Path]], x2_deferred: list[tuple[Path, Path]]) -> dict[str, object]:
++    if not x1_deferred or not x2_deferred:
++        raise ValueError("both arms require an explicit deferred acquisition inventory")
++    destinations: list[tuple[Path, Path]] = [
++        (x1_current, workspace / "first_view/results/X1/current.md"),
++        (x2_current, workspace / "first_view/results/X2/current.md"),
++    ]
++    workspace_root = workspace.resolve()
++    for label, mappings in (("X1", x1_deferred), ("X2", x2_deferred)):
++        for source, relative in mappings:
++            if relative.is_absolute() or not relative.parts or ".." in relative.parts:
++                raise ValueError(f"unsafe deferred destination: {relative}")
++            destination = workspace / "deferred" / label / relative
++            expected_root = workspace_root / "deferred" / label
++            if not destination.resolve().is_relative_to(expected_root):
++                raise ValueError(f"deferred destination escapes {label}: {relative}")
++            destinations.append((source, destination))
++    target_paths = [destination.resolve() for _, destination in destinations]
++    if len(set(target_paths)) != len(target_paths):
++        raise ValueError("duplicate staging destination")
++    if any(not target.is_relative_to(workspace_root) for target in target_paths):
++        raise ValueError("staging destination escapes reviewer workspace")
++    for label, (_, destination) in (("X1", destinations[0]), ("X2", destinations[1])):
++        expected_root = workspace_root / "first_view" / "results" / label
++        if not destination.resolve().is_relative_to(expected_root):
++            raise ValueError(f"current report destination escapes first_view/results/{label}")
++    for source, destination in destinations:
++        if not source.is_file():
++            raise ValueError(f"source is not a file: {source}")
++        if source.resolve() == destination.resolve():
++            raise ValueError(f"source equals destination: {source}")
++    first_view = workspace / "first_view"
++    if first_view.exists():
++        unexpected = {p.name for p in first_view.iterdir()} - {"case", "key", "results"}
++        if unexpected:
++            raise ValueError(f"unexpected first_view paths: {sorted(unexpected)}")
++    results = first_view / "results"
++    if results.exists():
++        unexpected = {p.name for p in results.iterdir()} - {"X1", "X2"}
++        if unexpected:
++            raise ValueError(f"unexpected first_view/results paths: {sorted(unexpected)}")
++    # A reused package may carry a superseded result. Refuse it rather than overwrite a subset.
++    for relative in ("first_view/results/X1", "first_view/results/X2", "deferred/X1", "deferred/X2"):
++        folder = workspace / relative
++        if folder.exists() and any(folder.iterdir()):
++            raise ValueError(f"staging directory must start empty: {folder}")
++    if (workspace / "deferred/INVENTORY.json").exists():
++        raise ValueError("deferred acquisition inventory already exists")
++    inventory: dict[str, object] = {
++        "schema": "i1-acquisition-inventory/v1",
++        "gate": "prompt_only_same_readable_workspace",
++        "case_and_key": "supplied by existing copy workflow under first_view",
++        "first_view": [], "deferred": [],
++    }
++    for source, destination in destinations:
++        group = destination.relative_to(workspace).parts[0]
++        inventory[group].append(_copy(source, destination, workspace))
++    inventory_path = workspace / "deferred/INVENTORY.json"
++    inventory_path.write_text(json.dumps(inventory, indent=2) + "\n", encoding="utf-8")
++    return inventory
++
++
++def main() -> int:
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--workspace", type=Path, required=True)
++    parser.add_argument("--x1-current", type=Path, required=True)
++    parser.add_argument("--x2-current", type=Path, required=True)
++    parser.add_argument("--x1-deferred", type=_mapping, action="append", default=[])
++    parser.add_argument("--x2-deferred", type=_mapping, action="append", default=[])
++    args = parser.parse_args()
++    try:
++        stage(args.workspace, args.x1_current, args.x2_current, args.x1_deferred, args.x2_deferred)
++    except (OSError, ValueError) as exc:
++        parser.exit(2, f"stage_i1: {exc}\n")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/offline-repair-v1/tools/test_i1_projection.py
+@@ -0,0 +1,149 @@
++"""Synthetic development checks for I1 current-view projection and staging only."""
++
++import json
++import subprocess
++import sys
++import tempfile
++import unittest
++from pathlib import Path
++
++import delivery
++import stage_i1
++
++
++SENTINEL = "SUPERSEDED_ONLY_SYNTHETIC_SENTINEL"
++TOOL = Path(__file__).with_name("delivery.py")
++
++
++def draft():
++    return {
++        "schema": delivery.SCHEMA_DRAFT,
++        "findings": [{
++            "id": "F-001", "title": "Synthetic current finding",
++            "parts": [
++                {"id": "P-001", "type": "assertion", "text": "The current synthetic index lists entries.",
++                 "evidence": [{"kind": "source_text", "source": "SYN-001", "locator": "line 2", "quote": "Current synthetic source line."}]},
++                {"id": "P-002", "type": "condition", "text": "When the current index is selected."},
++                {"id": "P-003", "type": "implication", "text": "The current entry name is shown."},
++                {"id": "P-004", "type": "validation_proposal", "text": "Compare a synthetic fixture; this is a proposed check."},
++                {"id": "P-005", "type": "uncertainty", "text": "The ordering rule remains unknown."},
++                {"id": "P-006", "type": "source_fit", "text": "The cited sample line concerns local entries."},
++                {"id": "P-007", "type": "plan_fit", "text": "The synthetic Plan names an entry list."},
++            ],
++        }],
++        "revision_history": [{"snapshot": "synthetic-prior", "text": SENTINEL}],
++    }
++
++
++class I1ProjectionTests(unittest.TestCase):
++    def test_current_projection_has_all_current_parts_but_no_history(self):
++        raw = draft()
++        current = delivery.project_current(raw)
++        text = delivery.render_current(current)
++        self.assertEqual(current["schema"], delivery.SCHEMA_CURRENT)
++        self.assertEqual([part["type"] for part in current["findings"][0]["parts"]],
++                         ["assertion", "condition", "implication", "validation_proposal", "uncertainty", "source_fit", "plan_fit"])
++        self.assertNotIn(SENTINEL, text + json.dumps(current))
++        self.assertNotIn("revision_history", text + json.dumps(current))
++        self.assertNotIn("Auditable history", text)
++        self.assertIn("P-005 · uncertainty", text)
++        self.assertIn("UNEXECUTED PROPOSAL", text)
++        self.assertIn("SYN-001 [source_text] line 2", text)
++        self.assertIn(SENTINEL, delivery.render(delivery.assemble(raw)))
++
++    def test_cli_writes_separate_current_history_and_raw(self):
++        with tempfile.TemporaryDirectory() as td:
++            root = Path(td)
++            source = root / "draft.json"
++            source.write_text(json.dumps(draft()), encoding="utf-8")
++            names = {key: root / name for key, name in (
++                ("current_md", "current.md"), ("current_json", "current.json"),
++                ("history_md", "history.md"), ("history_json", "history.json"),
++                ("raw", "raw-draft.json"),
++            )}
++            process = subprocess.run([
++                sys.executable, str(TOOL), "render-current", "--draft", str(source),
++                "--out-md", str(names["current_md"]), "--out-json", str(names["current_json"]),
++                "--history-md", str(names["history_md"]), "--history-json", str(names["history_json"]),
++                "--raw-draft-out", str(names["raw"]),
++            ], capture_output=True, text=True)
++            self.assertEqual(process.returncode, 0, process.stderr)
++            self.assertNotIn(SENTINEL, names["current_md"].read_text() + names["current_json"].read_text())
++            self.assertIn(SENTINEL, names["history_md"].read_text())
++            self.assertIn(SENTINEL, names["history_json"].read_text())
++            self.assertEqual(source.read_bytes(), names["raw"].read_bytes())
++
++    def test_invalid_carrier_current_has_no_raw_history_payload(self):
++        with tempfile.TemporaryDirectory() as td:
++            root = Path(td)
++            source = root / "draft.json"
++            malformed = draft()
++            malformed[SENTINEL] = "Historical-only text in an unsupported carrier field."
++            source.write_text(json.dumps(malformed), encoding="utf-8")
++            current_md, current_json = root / "current.md", root / "current.json"
++            history_md, history_json, raw = root / "history.md", root / "history.json", root / "raw.json"
++            process = subprocess.run([
++                sys.executable, str(TOOL), "render-current", "--draft", str(source),
++                "--out-md", str(current_md), "--out-json", str(current_json),
++                "--history-md", str(history_md), "--history-json", str(history_json),
++                "--raw-draft-out", str(raw),
++            ], capture_output=True, text=True)
++            self.assertEqual(process.returncode, 2)
++            self.assertNotIn(SENTINEL, current_md.read_text() + current_json.read_text())
++            self.assertIn("CARRIER INVALID", current_md.read_text())
++            self.assertIn(SENTINEL, history_md.read_text() + history_json.read_text() + raw.read_text())
++
++    def test_stage_current_only_first_view_and_acquisition_inventory(self):
++        with tempfile.TemporaryDirectory() as td:
++            root = Path(td)
++            workspace = root / "reviewer"
++            (workspace / "first_view/case").mkdir(parents=True)
++            (workspace / "first_view/key").mkdir(parents=True)
++            x1 = root / "control-current.md"
++            x2 = root / "maintained-current.md"
++            control_history = root / "control-history.md"
++            maintained_history = root / "maintained-history.md"
++            snapshot = root / "prior-snapshot.md"
++            x1.write_text("# Synthetic authored control current\n", encoding="utf-8")
++            x2.write_text(delivery.render_current(delivery.project_current(draft())), encoding="utf-8")
++            for path in (control_history, maintained_history, snapshot):
++                path.write_text(SENTINEL, encoding="utf-8")
++            inventory = stage_i1.stage(
++                workspace, x1, x2,
++                [(control_history, Path("history.md")), (snapshot, Path("snapshots/prior.md"))],
++                [(maintained_history, Path("history.md")),
++                 (maintained_history, Path("archive/first_view/history.md"))],
++            )
++            self.assertEqual((workspace / "first_view/results/X1/current.md").read_bytes(), x1.read_bytes())
++            self.assertEqual((workspace / "first_view/results/X2/current.md").read_bytes(), x2.read_bytes())
++            first_view_text = "\n".join(p.read_text() for p in (workspace / "first_view").rglob("*.md"))
++            self.assertNotIn(SENTINEL, first_view_text)
++            self.assertIn(SENTINEL, (workspace / "deferred/X1/snapshots/prior.md").read_text())
++            self.assertEqual(inventory["gate"], "prompt_only_same_readable_workspace")
++            self.assertEqual(len(inventory["first_view"]), 2)
++            self.assertEqual(len(inventory["deferred"]), 4)
++            self.assertIn("deferred/X2/archive/first_view/history.md",
++                          [item["path"] for item in inventory["deferred"]])
++            self.assertTrue((workspace / "deferred/INVENTORY.json").is_file())
++            with self.assertRaisesRegex(ValueError, "must start empty"):
++                stage_i1.stage(workspace, x1, x2,
++                               [(control_history, Path("history.md"))],
++                               [(maintained_history, Path("history.md"))])
++            with self.assertRaisesRegex(ValueError, "explicit deferred acquisition inventory"):
++                stage_i1.stage(root / "other-reviewer", x1, x2, [], [])
++            with self.assertRaisesRegex(ValueError, "unsafe deferred destination"):
++                stage_i1.stage(root / "traversal-reviewer", x1, x2,
++                               [(control_history, Path("../../first_view/history.md"))],
++                               [(maintained_history, Path("history.md"))])
++            self.assertFalse((root / "traversal-reviewer/first_view/history.md").exists())
++            stale = root / "stale-reviewer/first_view"
++            stale.mkdir(parents=True)
++            (stale / "history.md").write_text(SENTINEL, encoding="utf-8")
++            with self.assertRaisesRegex(ValueError, "unexpected first_view paths"):
++                stage_i1.stage(root / "stale-reviewer", x1, x2,
++                               [(control_history, Path("history.md"))],
++                               [(maintained_history, Path("history.md"))])
++
++
++if __name__ == "__main__":
++    unittest.main()
+--- a/offline-repair-v1/check_preparation.py
++++ b/offline-repair-v1/check_preparation.py
+@@ -53,6 +53,20 @@
+         errors.append('time-cap arithmetic differs')
+     if limits['retries'] != 0 or limits['replacement_slots'] != 0:
+         errors.append('retry/replacement scope changed')
++    boundary = policy['evaluation'].get('access_boundary', {})
++    if boundary.get('kind') != 'prompt_only_chronological' or boundary.get('filesystem_isolation') is not False:
++        errors.append('I1 access boundary must disclose prompt-only chronology')
++    if boundary.get('same_workspace_and_assignment') is not True or boundary.get('host_enforced_midrun_lock') is not False:
++        errors.append('I1 must retain the same reviewer assignment without claiming a host lock')
++    follow_on = policy.get('follow_on_flash_verifier', {})
++    if follow_on.get('qualification') != 'NOT QUALIFIED FOR FOLLOW-ON VERIFIER USE' or follow_on.get('in_I1_execution_graph') is not False:
++        errors.append('unqualified follow-on verifier must stay outside I1')
++    inventory = policy.get('acquisition_inventory', {})
++    if not inventory.get('control') or not inventory.get('maintained') or 'not_recoverable' not in inventory.get('missing_early_records', ''):
++        errors.append('chronological acquisition inventories and missing-record limit required')
++    endpoints = policy.get('preservation_endpoints', {})
++    if not endpoints.get('mechanical_render_fidelity') or not endpoints.get('temporal_semantic_preservation'):
++        errors.append('I1 requires separate mechanical and temporal semantic endpoints')
+     result = {'kind': 'offline preparation check; not run authorization or semantic quality proof',
+               'errors': errors, 'ok': not errors, 'corpus_files': len(manifest),
+               'candidate_prompt_sha256': prompts, 'calls_made': 0}
+--- a/offline-repair-v1/NEXT_TRIAL.md
++++ b/offline-repair-v1/NEXT_TRIAL.md
+@@ -34,8 +34,11 @@
+
+ ## Freeze, access and reuse
+
+-`proposal.json` binds original input and existing driver hashes; the development
+-manifest binds new tools, prompts and this design. The original manifest is
++`proposal.json` binds original input and existing driver hashes. The new
++`I1_AMENDMENT_MANIFEST.json` binds the affected tools, prompts and trial design
++after review I1-1; `MANIFEST.sha256.json` remains the prior development freeze,
++whose source is retained in `PATCH.diff` and Git commit `cdedeb7479`.
++The original case manifest is
+ `case_bundle/MANIFEST.sha256.json` with SHA-256
+ `01e8109f6fa2cc387c05b2116e0d8339ae83e797b1db36d50443c52743b20218`.
+ Use the existing `tools/r1b/run_r1b.py::copy_listed_corpus` and exact-membership
+@@ -61,13 +64,29 @@
+ Any hash drift requires disposition before dispatch; never silently refresh a
+ pin, reset a workspace or reconstruct a missing original input.
+
+-The control final is the exact `out/draft.md`; the maintained final is a host
+-render of frozen candidate-authored `out/draft.json` by `tools/delivery.py`
+-in investigator mode. Rendering adds status labels and layout only; no semantic
+-repair or case answer. Freeze and hash the raw acquisition records and final
+-report separately. Retain candidate-maintained history and native write traces
+-as provenance; neither is independent evidence. Invalid or absent records
+-produce a visible incomplete result; no paid repair or premium rewrite.
++The control final is the exact `out/draft.md`, prospectively instructed to contain
++current material only; prior versions, superseded content and change reasons go
++to `out/history.md` and chronological `out/snapshots/NNNN.md`. Observations remain
++in `out/observations.md`. Current uncertainty, current disputes, conditions and
++UNEXECUTED proposed validation stay in the report. No host semantic cleanup is
++allowed: if an author puts history in its current report despite these instructions,
++preserve it, record first-view contamination and do not claim a clean staged
++assessment or rerun the assignment.
++
++For the maintained arm use `tools/delivery.py render-current` on frozen
++`out/draft.json`. Its designated final is current Markdown with every current
++typed part and necessary source provenance. It contains no `revision_history`,
++duplicate raw records or superseded snapshots. Separately retain the exact raw
++JSON, current structured projection (for later render-fidelity checking), full
++audit Markdown/JSON, revision history and all snapshots. The existing full
++`render` remains an audit view; it is not the I1 designated final. An invalid
++carrier produces a current diagnostic without raw history, and retains the raw
++carrier separately. No paid repair or premium rewrite follows.
++
++Freeze/hash current and audit artifacts separately. Native write traces, where
++already available, remain provenance rather than independent source support.
++Do not reconstruct missing early acquisition records or run the flash-verifier
++`assemble` path during this investigator-only comparison.
+
+ ## Separate quality endpoints
+
+@@ -77,23 +96,57 @@
+ limitations; no new answer key is authored here. Requested versus observed
+ effort is recorded separately. Astra/Sol development tests do not replace them.
+
+-Within each pair, assign X1/X2 privately. First assess final reports, lock those
+-judgments, then open upstream acquisition records and map preservation. Withhold
+-prompts, policy names, operational logs and treatment labels. The rendered format
++Within each pair, assign X1/X2 privately. Reuse the existing corpus/key copy and
++read-only-input workflow. `tools/stage_i1.py` stages only the two current reports
++under `first_view/results/X1/current.md` and `X2/current.md`; the existing copy
++workflow supplies `first_view/case/` and `first_view/key/`. Stage raw acquisitions
++and audit/history separately under `deferred/X1/` and `deferred/X2/` in the same
++reviewer workspace. Current structured JSON also belongs to deferred material.
++The first-view package contains only fixed case/key and the two current reports.
++
++The same reviewer assignment first reads only `first_view/`, saves
++`out/final-assessment.json` and `out/final-assessment.md`, and treats those files
++as fixed before reading `deferred/`. They must not be edited after deferred access;
++subsequent corrections go in separately labelled preservation/errata records.
++This uses a **prompt-only chronological access boundary**: both directories are
++readable to the app in one workspace. There is no filesystem isolation or host-
++enforced mid-run lock. Audit existing tool/write traces for early deferred reads
++or later edits of the locked files; if observed or ordering cannot be established,
++report the limitation/contamination and do not claim independent staged judgments.
++No extra evaluator stage, session, model call or runner is introduced.
++
++Withhold operational treatment labels, prompts, blind maps and usage from the
++first view. Deferred native write provenance is available only where already
++captured and may reveal treatment; do not present it as blinded. The rendered format
+ may reveal treatment; record partial unblinding rather than claim perfect
+ blinding or alter substantive content to hide it. A renderer status UNVERIFIED
+ means no flash verifier has checked the finding; evaluator credit depends on
+ its meaning and source support, not that label.
+
+-1. Acquisition: eligible source-grounded complete findings and facets captured
+-   before final report production; novel supported findings separately; partial
+-   leads, uncertain propositions, unsupported claims, contradictions and missing
+-   eligible facets separately. Read counts are coverage activity, not quality.
+-2. Preservation: map each supported upstream finding/facet to final output as
+-   retained, narrowed, lost, contradicted or visibly unresolved; separately map
+-   conditions, implications, validation proposals and uncertainty. Use only the
+-   arm's supported upstream substance as the denominator; publish numerator and
+-   denominator, with N/A for zero. Do not count copied falsehoods as success.
++1. Acquisition inventory, opened only after final judgments are saved/fixed:
++   control uses `out/observations.md` including later qualifying blocks,
++   `out/history.md`, chronological `out/snapshots/*.md`, and current `out/draft.md`.
++   Maintained uses chronological `out/snapshots/*.json`, the complete raw
++   `out/draft.json` including `revision_history`, and its current finding records.
++   Use already available native write traces to corroborate ordering/contents;
++   do not infer earlier records from final prose. For each source-supported
++   proposition/facet, trace the earliest actually saved occurrence, attached
++   scope/conditions/proposal/uncertainty and later dispositions. De-duplicate
++   repeated snapshots by semantic identity. Keep complete supported findings,
++   partial/title-level leads, uncertain propositions and unsupported claims
++   separate. Report missing required early records and uncertain ordering.
++2. Report two separate preservation results. **Mechanical render fidelity** is
++   frozen current typed records to rendered current report (for control, exact
++   authored report to its copied final). It is not temporal acquisition quality.
++   **Semantic preservation** maps source-supported material actually recorded
++   during investigation to the final report: retained, narrowed, lost,
++   contradicted, visibly unresolved, or legitimately corrected/superseded with
++   source-supported reasons. Show legitimate changes separately from accidental
++   loss; do not award loss for correcting a false lead or count copied falsehoods
++   as success. Publish explicit numerator/denominator and dispositions, with N/A
++   for zero. If early records were not saved, mark the temporal preservation
++   denominator `not_recoverable` (and state the observable subset), rather than
++   using final `draft.json` as both acquisition inventory and rendered result.
+ 3. Derivation: distinguish a recorded lead from an established implication and
+    an adequate distinguishing test. A title, citation or test-shaped sentence
+    does not by itself earn complete-finding or executed-validation credit.
+@@ -112,6 +165,8 @@
+ Two evaluator assignments: at most 5400 seconds and 320 responses. Total scheduled
+ model span: 12600 seconds (3h30m), with a 14400-second phase wall ceiling including
+ host work. Host preparation/rendering cap: 300 seconds per slot within that phase.
++These are maximum experimental allowances, not a per-project latency promise
++or evidence that an ordinary research user should wait 3.5 hours.
+ Unused capacity is not transferred, and no extra assignment is admitted. Muse
+ reminder-child calls are recorded separately; their token cost remains unknown
+ where not exposed and they are not implied to be covered by a parent response
+@@ -138,10 +193,16 @@
+ requires a separately authorized end-to-end comparison through a fresh,
+ same-app/same-flash-model corrected verifier before any end-to-end claim.
+ That later verifier is not one of the six proposed I1 assignments.
++Its current assembler is **NOT QUALIFIED FOR FOLLOW-ON VERIFIER USE**: review
++`V-FOLLOWON-1` demonstrated an overbroad source-absence trigger on ordinary
++missing-input conditions and proposed unsupported-input tests. That issue is
++recorded in `FOLLOW_ON_VERIFIER_STATUS.md`, unchanged and outside I1's execution
++graph; it is a prerequisite for later verifier use, not an additional I1 gate.
+
+ ## Authorization
+
+-Development is authorized. Candidate/evaluator calls, retries, new approval files,
+-account probes and pushes are not. No launch approval has been created. Freeze
++Offline amendment and the already requested GitHub review publication are
++authorized. Candidate/evaluator calls, retries, new approval files and account
++probes are not. No launch approval has been created. Freeze
+ and review this proposal and its exact hashes, then obtain a separate user go
+ and applicable existing account headroom checks before any dispatch.
+--- a/offline-repair-v1/proposal.json
++++ b/offline-repair-v1/proposal.json
+@@ -109,18 +109,41 @@
+     "existing_scoring_sha256": "aa1e2c7aab9128bd1b9e4b2f5c62f7325cc3ff39b6fcdd5d68818742169806bd",
+     "input_eligibility": "carry existing case limitations; no new answer key",
+     "sequence": [
+-      "final reports, locked judgment",
+-      "upstream acquisitions and preservation map"
++      "read only first_view/case, first_view/key and first_view/results/{X1,X2}/current.md",
++      "save out/final-assessment.json and .md; treat as fixed before any deferred read",
++      "read deferred/{X1,X2}; measure chronological acquisition and semantic preservation; never overwrite initial judgments"
+     ],
+     "masking": "random X1/X2; operational labels withheld; format-related partial unblinding disclosed",
+-    "capacity_exhaustion": "retain partial results, no pass or retry"
++    "capacity_exhaustion": "retain partial results, no pass or retry",
++    "access_boundary": {
++      "kind": "prompt_only_chronological",
++      "filesystem_isolation": false,
++      "same_workspace_and_assignment": true,
++      "first_view_paths": [
++        "first_view/case/",
++        "first_view/key/",
++        "first_view/results/X1/current.md",
++        "first_view/results/X2/current.md"
++      ],
++      "deferred_paths": [
++        "deferred/X1/",
++        "deferred/X2/"
++      ],
++      "host_enforced_midrun_lock": false,
++      "audit": "Use existing read/write traces; disclose early deferred access, altered final judgments, current-report history or unavailable chronology. No clean staged-independence claim after contamination."
++    }
+   },
+   "follow_on_flash_verifier": {
+     "authorized": false,
+     "included_in_I1_caps": false,
+     "required_before_end_to_end_claim": true,
+     "same_app_model_effort": true,
+-    "fresh_context": true
++    "fresh_context": true,
++    "qualification": "NOT QUALIFIED FOR FOLLOW-ON VERIFIER USE",
++    "open_issue": "V-FOLLOWON-1",
++    "in_I1_execution_graph": false,
++    "I1_prerequisite": false,
++    "repair_in_this_amendment": false
+   },
+   "usage_lanes": [
+     "development:Astra/Sol",
+@@ -136,5 +159,40 @@
+     "no retries or best-of",
+     "no expansion on consequential false correction or material preservation loss"
+   ],
+-  "authorization_note": "Offline development only. No approval file, candidate/evaluator dispatch, account probe or push permitted by this proposal."
++  "authorization_note": "Offline development and previously requested GitHub review publication only. No approval file, candidate/evaluator dispatch, account probe or new benchmark authorized.",
++  "amendment": {
++    "id": "I1-1",
++    "reviewed_commit": "cdedeb74792c651dcd0e8e275ae3b026b14ae4a7",
++    "scope": "current-only I1 report/history separation and chronological acquisition inventory; no schedule or runner redesign",
++    "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
++  },
++  "report_artifacts": {
++    "control_current": "exact frozen out/draft.md, prospectively current-only",
++    "maintained_current": "tools/delivery.py render-current: current Markdown with all typed current parts and source provenance",
++    "deferred": "raw originals, full audit Markdown/JSON, revision_history, snapshots, change reasons and current JSON projection",
++    "posthoc_semantic_cleanup": false,
++    "invalid_current": "diagnostic only; raw invalid carrier retained in deferred audit"
++  },
++  "acquisition_inventory": {
++    "control": [
++      "out/observations.md and later qualifying blocks",
++      "out/history.md",
++      "chronological out/snapshots/*.md",
++      "current out/draft.md"
++    ],
++    "maintained": [
++      "chronological out/snapshots/*.json",
++      "raw out/draft.json including revision_history",
++      "current finding records"
++    ],
++    "corroboration": "native write traces only where already available; no reconstructed earlier records",
++    "identity": "earliest actually recorded source-supported substance and later dispositions; de-duplicate repeated snapshots, separate partial/title leads",
++    "missing_early_records": "temporal denominator not_recoverable; report observable subset and chronology uncertainty"
++  },
++  "preservation_endpoints": {
++    "mechanical_render_fidelity": "frozen current records -> current report; control exact draft -> copied final",
++    "temporal_semantic_preservation": "source-supported material actually recorded during investigation -> final report, distinguishing legitimate corrections/supersession, loss and unresolved disputes",
++    "denominators": "explicit numerator/denominator and dispositions; N/A at zero; not_recoverable for missing required early records; never final draft.json alone as both temporal inventory and final projection"
++  },
++  "limits_note": "Maximum experimental ceilings, not normal per-project latency expectations."
+ }
+--- /dev/null
++++ b/offline-repair-v1/FOLLOW_ON_VERIFIER_STATUS.md
+@@ -0,0 +1,38 @@
++# Future flash verifier: NOT QUALIFIED FOR FOLLOW-ON VERIFIER USE
++
++`V-FOLLOWON-1` remains OPEN and outside I1's execution graph. It is not an
++additional prerequisite for the investigator-only comparison. No change to the
++absence matcher, per-part decision semantics or whole-finding unresolved rule
++is included in amendment I1-1.
++
++The independent review at commit `cdedeb74792c651dcd0e8e275ae3b026b14ae4a7`
++reports deterministic synthetic reproductions in which the old absence matcher
++requires a corpus-absence packet for ordinary input behavior:
++
++- Condition: “If a required file is missing, show an error and leave the input
++  unchanged.”
++- Proposed validation: “Supply an unsupported codec and check that its name
++  appears in the error.”
++
++Neither sentence claims absence of corpus evidence. The matcher overflags these
++parts and makes the entire finding unresolved. The review's full probe bundle
++was not attached here; these are attributed review findings, not a claim that
++its original `reproduce_review.py` was rerun by this amendment.
++
++Before any later paid flash-verifier integration, distinguish actual source-
++absence assertions from conditional missing-data behavior, unsupported-input
++handling, quoted examples and unexecuted proposals. Preserve honest unresolved
++disputes. Do not build a universal natural-language classifier or hardcode case
++answers. Source evidence and semantic judgment remain necessary; lint cannot
++establish truth or exhaustive search.
++
++The documented rule that any unresolved part holds the whole finding unresolved
++is a separate design consideration. Explicitly keeping typed uncertainty keeps
++the question as a question; it does not resolve it. Later tests should examine
++that distinction without detaching essential conditions or default-confirming
++the surrounding finding. This amendment does not change that rule.
++
++I1 calls draft-only `render-current`; it does not run review assembly, the
++absence matcher or the future verifier prompt. A later separate user go,
++appropriate repair/testing and independent evaluation are still required before
++follow-on verifier or end-to-end claims.
+--- a/offline-repair-v1/prompts/control-carrier.txt
++++ b/offline-repair-v1/prompts/control-carrier.txt
+@@ -8,6 +8,8 @@
+ - conditions: version/configuration/scope/exceptions
+ - implication: consequence for this project
+ - open question: uncertainty, contradiction or next check
+-Never delete an earlier block; qualify it in a later block naming the earlier ID.
++Never delete an earlier block; qualify it in a later block naming the earlier ID. Preserve observations as they are recorded; do not reconstruct an earlier acquisition record from the final answer.
+
+-Then write out/draft.md as one coherent report: supported propositions linked to observation IDs, exact conditions, Plan fit citing Plan lines, one disposition (correction, optional_capability, product_choice, covered, unsupported, unresolved), exact constraint, consequence and distinguishing validation proposal. Keep proposals explicitly unexecuted. Include deferred items with reasons, unresolved disputes, and coverage (sources read, unvisited questions, unknowns). Preserve removed/replaced material in an appendix with its identity and reason. The goal is complete when out/draft.md is a complete coherent report and observations are saved.
++Then write out/draft.md as one coherent CURRENT report: supported propositions linked to observation IDs, exact conditions, Plan fit citing Plan lines, one disposition (correction, optional_capability, product_choice, covered, unsupported, unresolved), exact constraint, consequence and distinguishing validation proposal. Keep proposals explicitly unexecuted. Include current deferred items with reasons, unresolved disputes, and coverage (sources read, unvisited questions, unknowns). Current uncertainty is substantive report content, not historical material to discard.
++
++Save superseded/removed/replaced material separately in append-only out/history.md, with identity, previous whole record, new disposition and change reason. Save chronological out/snapshots/NNNN.md copies of substantive draft revisions before replacing them. Do not put a historical appendix, superseded text, copied observation inventory or prior snapshots inside out/draft.md. Current source citations/quotes and a currently unresolved dispute belong in the current report; earlier abandoned versions belong in history. Never erase history. The goal is complete when out/draft.md is a complete current report and observations, available revisions and history are saved. If an earlier record was never saved, disclose that gap instead of inventing it later.
+--- a/offline-repair-v1/prompts/maintained-carrier.txt
++++ b/offline-repair-v1/prompts/maintained-carrier.txt
+@@ -7,6 +7,6 @@
+ Minimal structural shape (replace placeholders with your own research; these are not case facts):
+ {"schema":"offline-finding-draft/v1","findings":[{"id":"F-001","title":"your finding title","parts":[{"id":"P-001","type":"assertion","text":"your supported proposition or explicitly qualified lead"},{"id":"P-002","type":"source_fit","text":"source handles, lines and quotations you actually read"},{"id":"P-003","type":"condition","text":"scope, versions and exceptions"},{"id":"P-004","type":"plan_fit","text":"Plan line, disposition and constraint"},{"id":"P-005","type":"implication","text":"project consequence"},{"id":"P-006","type":"validation_proposal","text":"distinguishing check proposed, not executed"},{"id":"P-007","type":"uncertainty","text":"remaining uncertainty or explicit explanation of its assessed scope"}]}],"revision_history":[]}
+
+-Optional evidence is an array on a part, with required kind, source, locator and quote strings. kind is source_text, plan_text, issue_title, search_result, or secondary_summary; identify title-only/search evidence honestly, as leads. Every new finding/part gets a new ID; preserve IDs when revising the same finding. Before replacing/removing substantive content, save its previous whole record and the reason in revision_history; never erase that history or silently renumber records. Save append-only out/snapshots/NNNN.json snapshots at substantive revisions before changing them. Include unresolved disputes, deferred items with reasons, and source/unknown coverage as identifiable parts/findings. Neither snapshots nor your source records are independent verification.
++Optional evidence is an array on a part, with required kind, source, locator and quote strings. kind is source_text, plan_text, issue_title, search_result, or secondary_summary; identify title-only/search evidence honestly, as leads. Every new finding/part gets a new ID; preserve IDs when revising the same finding. Before replacing/removing substantive content, save its previous whole record and the reason in revision_history; never erase that history or silently renumber records. Save append-only out/snapshots/NNNN.json snapshots at substantive revisions before changing them. Include CURRENT unresolved disputes, deferred items with reasons, and source/unknown coverage as identifiable parts/findings. Put superseded text in revision_history/snapshots, not in current parts as a historical appendix. Current uncertainty and a current unresolved dispute stay in the findings. Neither snapshots nor your source records are independent verification. Preserve acquisition as it occurs; if an earlier record was never saved, disclose the gap instead of reconstructing it from the final answer.
+
+-Do not write a separate draft report or run the renderer. The host will render your final frozen out/draft.json mechanically, with every finding labelled UNVERIFIED and each test proposal labelled UNEXECUTED. It will not complete or correct the research. The goal is complete when that JSON contains the complete coherent report as whole findings, with coverage and history saved. Invalid or incomplete output stays a result of this assignment; no extra repair call is promised.
++Do not write a separate draft report or run the renderer. The host will render ONLY the current findings/parts of frozen out/draft.json, including uncertainty and source provenance, with every finding labelled UNVERIFIED and each test proposal labelled UNEXECUTED. Raw JSON, revision_history, snapshots and the full audit rendering will be preserved separately for later assessment; they are not part of the current report. The host will not complete or correct the research. The goal is complete when that JSON contains the complete coherent current report as whole findings, with coverage and chronological history saved. Invalid or incomplete output stays a result of this assignment; no extra repair call is promised.
+--- a/offline-repair-v1/prompts/investigator-control.txt
++++ b/offline-repair-v1/prompts/investigator-control.txt
+@@ -21,6 +21,8 @@
+ - conditions: version/configuration/scope/exceptions
+ - implication: consequence for this project
+ - open question: uncertainty, contradiction or next check
+-Never delete an earlier block; qualify it in a later block naming the earlier ID.
++Never delete an earlier block; qualify it in a later block naming the earlier ID. Preserve observations as they are recorded; do not reconstruct an earlier acquisition record from the final answer.
+
+-Then write out/draft.md as one coherent report: supported propositions linked to observation IDs, exact conditions, Plan fit citing Plan lines, one disposition (correction, optional_capability, product_choice, covered, unsupported, unresolved), exact constraint, consequence and distinguishing validation proposal. Keep proposals explicitly unexecuted. Include deferred items with reasons, unresolved disputes, and coverage (sources read, unvisited questions, unknowns). Preserve removed/replaced material in an appendix with its identity and reason. The goal is complete when out/draft.md is a complete coherent report and observations are saved.
++Then write out/draft.md as one coherent CURRENT report: supported propositions linked to observation IDs, exact conditions, Plan fit citing Plan lines, one disposition (correction, optional_capability, product_choice, covered, unsupported, unresolved), exact constraint, consequence and distinguishing validation proposal. Keep proposals explicitly unexecuted. Include current deferred items with reasons, unresolved disputes, and coverage (sources read, unvisited questions, unknowns). Current uncertainty is substantive report content, not historical material to discard.
++
++Save superseded/removed/replaced material separately in append-only out/history.md, with identity, previous whole record, new disposition and change reason. Save chronological out/snapshots/NNNN.md copies of substantive draft revisions before replacing them. Do not put a historical appendix, superseded text, copied observation inventory or prior snapshots inside out/draft.md. Current source citations/quotes and a currently unresolved dispute belong in the current report; earlier abandoned versions belong in history. Never erase history. The goal is complete when out/draft.md is a complete current report and observations, available revisions and history are saved. If an earlier record was never saved, disclose that gap instead of inventing it later.
+--- a/offline-repair-v1/prompts/investigator-maintained.txt
++++ b/offline-repair-v1/prompts/investigator-maintained.txt
+@@ -20,6 +20,6 @@
+ Minimal structural shape (replace placeholders with your own research; these are not case facts):
+ {"schema":"offline-finding-draft/v1","findings":[{"id":"F-001","title":"your finding title","parts":[{"id":"P-001","type":"assertion","text":"your supported proposition or explicitly qualified lead"},{"id":"P-002","type":"source_fit","text":"source handles, lines and quotations you actually read"},{"id":"P-003","type":"condition","text":"scope, versions and exceptions"},{"id":"P-004","type":"plan_fit","text":"Plan line, disposition and constraint"},{"id":"P-005","type":"implication","text":"project consequence"},{"id":"P-006","type":"validation_proposal","text":"distinguishing check proposed, not executed"},{"id":"P-007","type":"uncertainty","text":"remaining uncertainty or explicit explanation of its assessed scope"}]}],"revision_history":[]}
+
+-Optional evidence is an array on a part, with required kind, source, locator and quote strings. kind is source_text, plan_text, issue_title, search_result, or secondary_summary; identify title-only/search evidence honestly, as leads. Every new finding/part gets a new ID; preserve IDs when revising the same finding. Before replacing/removing substantive content, save its previous whole record and the reason in revision_history; never erase that history or silently renumber records. Save append-only out/snapshots/NNNN.json snapshots at substantive revisions before changing them. Include unresolved disputes, deferred items with reasons, and source/unknown coverage as identifiable parts/findings. Neither snapshots nor your source records are independent verification.
++Optional evidence is an array on a part, with required kind, source, locator and quote strings. kind is source_text, plan_text, issue_title, search_result, or secondary_summary; identify title-only/search evidence honestly, as leads. Every new finding/part gets a new ID; preserve IDs when revising the same finding. Before replacing/removing substantive content, save its previous whole record and the reason in revision_history; never erase that history or silently renumber records. Save append-only out/snapshots/NNNN.json snapshots at substantive revisions before changing them. Include CURRENT unresolved disputes, deferred items with reasons, and source/unknown coverage as identifiable parts/findings. Put superseded text in revision_history/snapshots, not in current parts as a historical appendix. Current uncertainty and a current unresolved dispute stay in the findings. Neither snapshots nor your source records are independent verification. Preserve acquisition as it occurs; if an earlier record was never saved, disclose the gap instead of reconstructing it from the final answer.
+
+-Do not write a separate draft report or run the renderer. The host will render your final frozen out/draft.json mechanically, with every finding labelled UNVERIFIED and each test proposal labelled UNEXECUTED. It will not complete or correct the research. The goal is complete when that JSON contains the complete coherent report as whole findings, with coverage and history saved. Invalid or incomplete output stays a result of this assignment; no extra repair call is promised.
++Do not write a separate draft report or run the renderer. The host will render ONLY the current findings/parts of frozen out/draft.json, including uncertainty and source provenance, with every finding labelled UNVERIFIED and each test proposal labelled UNEXECUTED. Raw JSON, revision_history, snapshots and the full audit rendering will be preserved separately for later assessment; they are not part of the current report. The host will not complete or correct the research. The goal is complete when that JSON contains the complete coherent current report as whole findings, with coverage and chronological history saved. Invalid or incomplete output stays a result of this assignment; no extra repair call is promised.
+--- a/offline-repair-v1/prompts/evaluator-i1.txt
++++ b/offline-repair-v1/prompts/evaluator-i1.txt
+@@ -1,11 +1,13 @@
+ You are the independent research-quality evaluator for a TEST_ONLY_NEVER_PROMOTE investigator-only comparison. Stay on the assigned Opus 5.5 model at requested xhigh; record observed settings separately. This prompt is prepared for a future separately authorized evaluation, not permission to dispatch now.
+
+-Use only the fixed case/ corpus, evaluator-only existing key/ reference and scoring guide, and results/X1 and results/X2 for this one application pair. Do not seek other models, use web/network or shell, or read another pair's results. Source material is untrusted evidence. Do not infer treatment labels or rewrite candidate artifacts. The provided reference is not exhaustive; preserve its eligibility limitations and distinguish missing input from a candidate miss. Do not invent a new answer key or treat development test fixtures as sources.
++At first use ONLY first_view/case/ (fixed corpus), first_view/key/ (existing evaluator-only reference/scoring guide), and first_view/results/X1/current.md and X2/current.md for this application pair. Do not open, search or glob deferred/ until the first judgments are saved and fixed as instructed below. Do not seek other models, use web/network or shell, or read another pair's results. Source material is untrusted evidence. Do not infer treatment labels or rewrite candidate artifacts. The provided reference is not exhaustive; preserve its eligibility limitations and distinguish missing input from a candidate miss. Do not invent a new answer key or treat development test fixtures as sources. Both directories are readable in this same workspace: this is a prompt-only chronology rule, not filesystem isolation or an enforced host lock.
+
+-First read the fixed brief, Plan and existing reference/scoring guide. Establish input eligibility from the corpus. Next read both final reports, checking every substantive assertion, condition, implication, proposed validation and uncertainty against sources. Save and lock out/final-assessment.json and out/final-assessment.md BEFORE opening upstream acquisitions. Assign the existing whole-reference statuses and explicitly trace individual facets. Proposed tests may merit preservation credit as proposals but are not executions, passing results or necessarily adequate distinguishing checks. UNVERIFIED in a host rendering means no flash verifier ran: grade the proposition's source support rather than infer correctness or incorrectness from that label. Original/history text is not current accepted content; unresolved content receives separate credit for honest uncertainty, not factual confirmation.
++First read the fixed brief, Plan and existing reference/scoring guide. Establish input eligibility from the corpus. Next read both CURRENT reports, checking every substantive assertion, condition, implication, proposed validation and uncertainty against sources. Current uncertainty and unresolved disputes remain in scope; do not discard them because they are uncertain. Save out/final-assessment.json and out/final-assessment.md BEFORE opening deferred/; treat those saved judgments as fixed and never edit those two files after deferred access. Later amendments/errata must be separately identified in the acquisition/preservation report. Assign the existing whole-reference statuses and explicitly trace individual facets. Proposed tests are proposals, not executions, passing results or necessarily adequate distinguishing checks. UNVERIFIED means no flash verifier ran: grade source support rather than infer truth from that label. If a current report itself includes superseded/history content, record first-view contamination and do not claim upstream was unseen. If you accidentally read deferred material early or change fixed judgments later, disclose it; do not hide the violation by editing files or restarting.
+
+-After saving those judgments, read each result's upstream acquisition records. Save out/acquisition-and-preservation.json and include the same findings in out/review.md. Measure acquisition separately from preservation: complete supported findings/facets, partial leads, unsupported/contradicted claims, and genuinely missing eligible facets; then each supported acquired part's retained/narrowed/lost/contradicted/visibly unresolved status in the final report. Give numerator/denominator for preservation and N/A at zero. Keep conditions, implications, validation proposals and uncertainty attached to finding identity. Distinguish acquisition, derivation, drafting/rendering and later stages; this trial has no verifier-stage result. Do not count copied errors or title-level allegations as complete supported findings. Trace novel supported opportunities/problems separately from the fixed reference.
++After fixing those judgments, read deferred/X1/ and deferred/X2/. Each contains the arm's frozen raw outputs/audit material. For an observations-plus-draft result, the acquisition inventory is observations.md including qualifying blocks, history.md, chronological snapshots/*.md and current draft.md. For a maintained-record result, it is chronological snapshots/*.json, raw draft.json including revision_history, and current finding records. Native write traces, if already captured, may corroborate chronology and also reveal treatment; they are not source support or a claim of continued blinding. Trace source-supported substance to its EARLIEST actually saved occurrence and later disposition, keeping conditions, implications, proposed validation and uncertainty attached. De-duplicate repeated snapshots by semantic identity. A title-only lead is not a complete acquired finding. Never reconstruct unsaved early records from the final answer.
++
++Save out/acquisition-and-preservation.json and the same substance in out/review.md. Report separately: (1) mechanical render fidelity, frozen current records to current report (or exact control draft to copied final); and (2) semantic preservation, source-supported material actually recorded DURING investigation to final report. For semantic preservation list retained, narrowed, lost, contradicted, visibly unresolved, and legitimately corrected/superseded items, with evidence and reasons. Separate supported correction/supersession from accidental loss, unsupported rejection and copied error. Give explicit numerator/denominator and dispositions, with N/A for zero. If required early records were not saved, report temporal denominator not_recoverable and identify the observable subset; never substitute final draft.json alone as both acquisition denominator and its rendered result. Record uncertain chronology honestly. Measure complete supported acquisitions, partial leads, unsupported claims and missing eligible facets separately. Distinguish acquisition, derivation and drafting/rendering; this trial has no verifier-stage result. Trace novel supported opportunities/problems separately from the fixed reference.
+
+ Record every consequential false dismissal/confirmation, unscoped absence, dropped material part, unsupported specification override or silently approved product choice. New positives do not offset losses. Name exact candidate locations and decisive source lines; distinguish evidence actually read from unassessed scope. Report coherence and user decision burden. A filled search record or a successful lint/quote lookup is not semantic absence proof. Preserve original and challenge when a rejection is unsupported.
+
+-Write out/grades.json with per-result reference statuses/facets/evidence, unsupported claims, false dismissals, novel findings, non-findings, acquisition, preservation, coherence, burden and coverage; plus the X1/X2 comparison. Use the existing reference status names: retained, narrowed, lost, contradicted, inapplicable, unassessable_missing_input. Keep unknowns explicit. The existing runner checks parseable JSON and file existence, not the semantic completeness of these fields. Write out/review.md with the same substance. Within the fixed 2700-second/160-response ceiling, save incrementally. If unfinished, identify exactly what was not assessed and do not label the result complete. Final-report format and upstream carrier may reveal treatment: disclose that limitation and any accidental upstream exposure; never conceal a leak by editing candidate text. Do not read economics or operational treatment files until judgments are saved.
++Write out/grades.json with per-result reference statuses/facets/evidence, unsupported claims, false dismissals, novel findings, non-findings, acquisition inventory, mechanical render fidelity, temporal semantic preservation, coherence, burden and coverage; plus the X1/X2 comparison. Use the existing reference status names: retained, narrowed, lost, contradicted, inapplicable, unassessable_missing_input. Keep unknowns explicit. The existing runner checks parseable JSON and file existence, not semantic completeness or chronology. Write out/review.md with the same substance and any separately labelled post-deferred errata; do not overwrite fixed initial judgments. Within the SAME 2700-second/160-response assignment ceiling, save incrementally. If unfinished, identify unassessed scope and do not label the result complete. Current-report format and deferred carrier may reveal treatment: disclose that limitation and any early exposure. Do not read economics or operational treatment files until judgments are saved. No extra evaluation assignment, retry or later flash-verifier call is implied.
+--- /dev/null
++++ b/offline-repair-v1/I1_AMENDMENT.md
+@@ -0,0 +1,79 @@
++# I1-1 closure — offline amendment, ready for run decision
++
++The current-report/history and acquisition-inventory amendment requested against
++`cdedeb74792c651dcd0e8e275ae3b026b14ae4a7` is implemented. This is development
++evidence only. I1 has not run; its four investigator assignments and two formal
++Opus 5.5 xhigh reviews still require a separate user go. R1b Block 2 remains
++unauthorized. The original external review is preserved in `I1_REVIEW_REQUEST.md`.
++
++## Changes and evidence
++
++| Review requirement | Amendment | Evidence |
++|---|---|---|
++| Current-only report, complete current substance | `project_current`/`render_current` retain current typed parts, uncertainty, UNEXECUTED proposals and source provenance. Superseded history is excluded. | `tools/delivery.py`; projection and CLI tests in `tools/test_i1_projection.py` |
++| Preserve audit/history separately | Required audit Markdown/JSON and exact raw draft outputs; snapshots and reasons remain deferred. Invalid current input yields a generic diagnostic without echoing historical payload. | `render-current`; CLI and invalid-carrier tests |
++| Correct both arms prospectively | Control saves history separately from its exact authored current report; maintained saves revisions/snapshots separately from current records. Both carrier prompts are frozen before inference. | `prompts/investigator-{control,maintained}.txt` |
++| First judgments precede acquisition disclosure | Staging copies only designated current reports under `first_view/results`; the existing workflow supplies case/key. Enumerated acquisition artifacts go under `deferred`, with a path/hash inventory. | `tools/stage_i1.py`; staged sentinel regression; `prompts/evaluator-i1.txt` |
++| Honest evaluation boundary | Same two reviewer assignments and same readable workspace. Initial judgments are saved/fixed before deferred reads by prompt instruction; there is no filesystem barrier or host-enforced mid-run lock. Trace gaps and contamination must be disclosed. | `NEXT_TRIAL.md`; `proposal.json` |
++| Temporal acquisition inventory | Control observations/history/snapshots/current; maintained chronological snapshots/raw revision history/current; existing native write traces only as corroboration. Earliest actually saved supported substance is the basis. | `proposal.json: acquisition_inventory`; evaluator prompt |
++| Separate preservation endpoints | Mechanical current-record-to-render fidelity is separate from temporal semantic preservation. Legitimate correction/supersession is separate from loss; missing early records yield `not_recoverable`. | `proposal.json: preservation_endpoints`; evaluator prompt |
++
++The sentinel appears only in superseded synthetic history. Tests require it to
++be absent from current Markdown/JSON and the first-view package, while present
++in the audit/raw records. Current uncertainty and proposed validation remain in
++the current report. Staging also refuses reused or stray result files, unsafe
++destinations and empty acquisition mappings; a nested deferred path named
++`first_view` must stay classified as deferred. The helper copies artifacts; it
++does not semantically cleanse an authored report or prove an inventory complete.
++
++The independent Sol/high development review found no remaining I1-1 blocker
++within its bounded scope. It is published as `I1_INDEPENDENT_DEVELOPMENT_REVIEW.md`.
++It is not a substitute for the separately authorized formal Opus evaluations.
++
++## Verification and preservation
++
++All 30 portable tests pass: the unchanged original 26 plus four amendment tests.
++The four amendment tests were also run by the independent development reviewer.
++`I1_AMENDMENT_VALIDATION.json` records exact commands, results, source identities
++and VM-only log path/hash pointers. The read-only preparation check verifies
++129 original corpus files, unchanged driver/runtime pins, prompt composition,
++finite capacity and disabled launch. No missing input was reconstructed.
++
++The model assignments, schedule, caps, case identity, driver/runtime hashes,
++candidate access rules and stop rules match the reviewed proposal. Existing
++verifier decision functions and absence matcher remain unchanged. The two old
++test modules, common instructions and future verifier prompt remain byte-identical.
++The 62 historical runner regressions and original 3,403-file inventory comparison
++are retained historical evidence; this amendment does not claim to rerun them.
++Frozen R1/R1b reports, scores, runners and keys are not edited.
++
++`I1_AMENDMENT_MANIFEST.json` freezes the affected lab files and this amendment's
++evidence. `I1_AMENDMENT.diff` is an incremental lab-layout patch against the
++published reviewed version. The original `MANIFEST.sha256.json`, `PATCH.diff`,
++`CHECKPOINT.md`, development review and validation report remain historical.
++`PUBLISHED_MANIFEST.json` binds every file actually available in the GitHub
++package, distinguishing the original freeze from this amendment. Raw logs,
++corpus, keys and run workspaces stay on the VM.
++
++## Deferred issue and checkpoint
++
++`V-FOLLOWON-1` is OPEN: **NOT QUALIFIED FOR FOLLOW-ON VERIFIER USE**. The broad
++absence matcher can block ordinary missing-input conditions and unsupported-input
++test proposals. It is outside I1's execution graph, not an additional I1 gate,
++and has not been fixed here. See `FOLLOW_ON_VERIFIER_STATUS.md`. The review's
++reproduction bundle was not attached; its `reproduce_review.py` was not rerun.
++
++Next trial remains one matched pair per app, four serial investigator assignments
++at most 1,800 seconds/160 responses each and two independent Opus reviews at most
++2,700 seconds/160 responses each. Total scheduled model allowance is 12,600 seconds,
++within a 14,400-second phase ceiling. These are experimental ceilings, not a normal
++user latency target. No retries, replacement slots or automatic follow-on calls.
++
++This amendment used Astra orchestration and the already explicitly configured
++GPT-6 Sol/high implementation and independent development helpers. Development
++usage stays separate; amendment token/cost totals and effective model settings
++are not independently observed. The earlier reported 526,376 tokens/16m46s is
++historical development accounting, not this amendment or recurring research cost.
++Candidate calls, formal evaluation calls, account probes and new launch approvals
++are zero. GitHub publication is covered by the user's existing visibility request.
++Stop after publication, ready for a separate new-run decision.
+--- /dev/null
++++ b/offline-repair-v1/I1_REVIEW_REQUEST.md
+@@ -0,0 +1,70 @@
++Independent review: offline-repair-v1 / investigator comparison I1
++Decision
++CHANGES_REQUESTED_FOR_I1_EVALUATION_BOUNDARY. Accept the direction, corrected diagnosis, and reproduced portable checks. Make one bounded current-report/history and acquisition-inventory amendment before launch. Do not redesign the runner or expand the schedule.
++The future flash-verifier assembler has a separately demonstrated overbroad absence trigger. Record it as NOT QUALIFIED FOR FOLLOW-ON VERIFIER USE; it does not run in I1 and is not an additional I1 prerequisite.
++Technical review is not the user's spending go. No candidate, evaluator, native Goal, account probe, launch approval, repository mutation, commit, or push was performed during this review. R1b Block 2 remains unauthorized.
++Reviewed version and scope
++- Repository: sittingmongoose/Puppet-Master
++- Commit: cdedeb74792c651dcd0e8e275ae3b026b14ae4a7
++- Root: reports/external-research-v6-20260926/offline-repair-v1/
++- Read: README, DIAGNOSIS, NEXT_TRIAL, proposal.json, SCHEMA, delivery.py, both test modules, independent development review, investigator control/maintained prompts, evaluator prompt, and the visible compact validation record.
++- Three copied Python files match their published Git blob identities exactly. See source_hashes.json.
++- Reproduced all 26 portable tests, unchanged, successfully. See portable-tests.log.
++- Executed five synthetic probe groups against unchanged delivery.py. See probe_results.json and probes/.
++- Did not rerun the 62 historical VM tests, original-corpus preparation checks, or the 3,403-file preservation comparison. Their published results are attributed to the implementation agent, not independently reproduced here.
++- Did not measure a candidate speedup or establish semantic research reliability.
++What is sound
++The proposal retains one matched investigator pair per application, Muse Code Contributor Max and zcode GLM-5.3-Flash Max, with fresh native /goal assignments, identical legitimate case access, no premium candidate assistance, and two independent Opus xhigh evaluations. It names the combined record-maintenance/report-production policy as its variable rather than claiming to isolate JSON syntax. Prompt-length and formatting differences are disclosed. Existing keys remain evaluator-only; the OME case remains a familiar development case.
++The revised diagnosis distinguishes acquired information, partial leads, incomplete derivation, drafting loss, and verifier error without rewriting frozen grades. The new draft-only renderer preserves synthetic current parts and labels proposals UNEXECUTED and the investigator findings UNVERIFIED. Those labels are not independent semantic assessment.
++The old runner remains frozen. No new runner, Goal implementation, schema bureaucracy, model sweep, extra baseline, or canonical-planning repair is justified by this review.
++I1-1 — Separate the current deliverable from acquisition and revision history
++Source evidence
++tools/delivery.py:412-454, especially lines 448-453, always appends Auditable history and then the complete investigator revision_history to the rendered report. NEXT_TRIAL.md defines that report as the maintained arm's designated final. prompts/evaluator-i1.txt requires the final judgments to be locked before reading upstream acquisition records.
++The maintained prompt explicitly asks the agent to preserve previous whole records in revision_history. The control prompt also asks for removed/replaced material in an appendix of its report. Thus the correction belongs to both arms, not just the maintained one.
++Reproduction
++Probe P1 supplies valid current findings plus a historical sentinel that is absent from every current part. render(assemble(draft)) places that sentinel in the designated final report. This proves the first evaluation view includes historical acquisition material. It does not show that an evaluator has actually misgraded anything, and it is not a reference-key leak. I1 has not run.
++Why it matters
++“Do not give history credit” is not the same as “history has not been seen yet.” The proposed staged evaluation cannot honestly claim upstream was withheld if previous acquired records are already included in the first report. Repeating current records and history also makes a larger evaluator input without adding new current findings.
++Bounded correction
++Before any paid dispatch:
++1. Define a current-only report projection for I1. It contains every current substantive finding part, including uncertainty and UNEXECUTED proposed validation, plus necessary source provenance. Do not delete material because it is uncertain.
++2. Preserve original/raw JSON, superseded records, snapshots, and change reasons separately in an audit/history artifact. The existing full rendering may remain available there. No audit history is destroyed.
++3. Change the control prompt's appendix instruction to save historical material separately as well. Freeze the new control/maintained prompts before inference. This is not post-hoc cleanup of a result.
++4. The first evaluator view contains the fixed case/key plus the two current reports; raw acquisition/history is disclosed only after final-report judgments are saved and fixed. Reuse the same two reviewer assignments and existing file-copy/access workflow; no new evaluator model stage is needed. If the implementation can enforce only a prompt boundary, disclose that limitation rather than claim filesystem-level isolation.
++5. Add a synthetic regression: a marker present only in a superseded record is absent from the first-view report/package and present in the history artifact. A current uncertain finding and a validation proposal must still be in the current report.
++6. Re-freeze only the affected new files and proposed trial identities. Preserve all historical R1/R1b files and scores.
++Acquisition/preservation measurement clarification (same amendment)
++State exactly which records form each arm's acquisition inventory. Do not use only final draft.json as both the maintained arm's acquisition denominator and its rendered result: that would test copying of the last state, not preservation across research.
++After final judgments lock, use the control's observation records and preserved revisions, and the maintained arm's chronological snapshots/revision records/current records, with native write traces where already available. Trace source-supported substance to its earliest recorded occurrence and disposition. Separate legitimate correction or supersession from accidental loss; a title-only lead is not a complete acquired finding. If required early records were never saved, say the temporal preservation denominator is not recoverable rather than reconstruct it from the final answer.
++Report two separate results:
++- Mechanical render fidelity: current frozen record -> rendered current report.
++- Semantic preservation: source-supported material actually recorded during investigation -> final report, accounting for legitimate changes and unresolved disputes.
++No new answer key, extra paid reviewer, or generic temporal database is needed.
++V-FOLLOWON-1 — Absence lint blocks ordinary missing-input conditions and proposed tests
++Not executed by I1. Fix before a later paid flash-verifier integration; do not expand I1 to test it.
++tools/delivery.py:29-39 matches standalone missing, unsupported, and similar terms. Lines 231-242 apply this trigger to a kept part's text, not just explicit source-absence assertions. Lines 291-297 clear current content for the whole finding when any part has a defect.
++Against otherwise valid synthetic draft and keep decisions:
++- P2 condition: If a required file is missing, show an error and leave the input unchanged.
++- P3 validation proposal: Supply an unsupported codec and check that its name appears in the error.
++Both require a structured absence packet and make the whole finding UNRESOLVED. Neither sentence asserts that evidence is absent from the corpus. These are synthetic reproductions of deterministic behavior, not model runs.
++The code/schema disclose that the heuristic may overflag. Nevertheless, these are normal in-domain conditions and tests, not obscure adversarial wording. A broad keyword trigger must not become a mandatory demand for irrelevant corpus searching.
++Later correction: distinguish source-absence assertions from conditional missing-data behavior, unsupported-input handling, quoted negative examples, and unexecuted proposals. A heuristic can flag likely source-absence prose; it cannot determine truth, prove exhaustive search, or require every negative word to carry an absence packet. Preserve honest unresolved disputes. Do not create a universal natural-language classifier or hardcode the OME answer key.
++Documented design consideration, not a new blocker
++Probe P4 confirms the documented rule: an unresolved action on any part makes the whole finding unresolved. Keeping a typed uncertainty is a different operation that preserves the question as a question. This is not an undisclosed parser defect. The future verifier should be tested on this distinction, particularly where an optional unresolved question is not a precondition of a supported fact. Do not fix this by detaching essential conditions from their claims or default-confirming anything.
++What the 26 tests and development accounting do not prove
++The portable suite is useful evidence of record handling, not semantic completeness. The published total of 88 consists of 62 historical regressions plus these 26 new tests. Passing the historical runner suite does not mean the proposed new workflow has been executed end to end.
++The user-reported Codex accounting (526,376 tokens and 16m46s) is a development measurement. It is not directly comparable with mixed prior cache-token ledgers or recurring per-project candidate costs; total provider cost and helper inclusion are not independently confirmed here.
++Scope of the proposed trial to retain
++- Four serial investigator assignments, at most 1,800 seconds/160 native parent responses each.
++- Two independent Opus 5.5 xhigh evaluations, at most 2,700 seconds/160 responses each.
++- 12,600 seconds total scheduled model-span allowance; 14,400-second phase wall ceiling including host work.
++- No retries, best-of, replacement slots, investigator reruns of old campaigns, R1b Block 2, or automatic later flash-verifier run.
++- Astra xhigh orchestrates current development; Sol high/medium helpers remain development-only. Candidate semantic work remains Muse/zcode.
++- Requested/observed effort, hidden Muse child usage, account limitations, and evaluator unassessed scope remain explicit.
++- The ceilings are maximum experimental authorization, not evidence that an ordinary user should wait 3.5 hours per research case.
++Closure and next action
++Complete only I1-1 and its measurement clarification, run the portable regressions plus the small staging test, freeze the changed proposal, and return exact evidence. A narrow offline development review of that change is sufficient; do not redo the historical runner review. Keep the future-verifier issue explicitly open, outside I1's execution graph. The working agent must obtain a separate user go before the four investigator calls and two formal reviews.
++Reproduction
++PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s source/tools -p 'test*.py' -v
++PYTHONDONTWRITEBYTECODE=1 python3 reproduce_review.py
++The first command runs the 26 unchanged published portable tests. The second records five targeted probe groups, including one positive render-preservation check and the documented uncertainty tradeoff. Probes assert observed behavior at this pinned revision, not that the behavior should remain after repair. Source files in this review bundle are unchanged; this bundle is not a candidate patch or a new controlling handoff.
+\ No newline at end of file

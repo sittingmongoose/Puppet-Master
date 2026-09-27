@@ -19,6 +19,46 @@
       "sha256": "619ebf0af1f5f32e26e11636d87427acb5cbc418864985bc6fde265461b2e2ab",
       "bytes": 1819
     },
+    "FOLLOW_ON_VERIFIER_STATUS.md": {
+      "sha256": "c4daa19c7cbf5aacb5f4dcffe9a7e90e5be8b60e0048f3914faf547934443000",
+      "bytes": 2135,
+      "vm_amendment_source": "FOLLOW_ON_VERIFIER_STATUS.md",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
+    },
+    "I1_AMENDMENT.diff": {
+      "sha256": "8937f9fe165d0f424780cbec516a7887f7a5e911782b5fb85311968412fb98e3",
+      "bytes": 85770,
+      "vm_amendment_source": "I1_AMENDMENT.diff",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
+    },
+    "I1_AMENDMENT.md": {
+      "sha256": "af4fe2f59086fab9400e31ab61894de84058939aab864db058de694a6662dcdf",
+      "bytes": 6475,
+      "vm_amendment_source": "I1_AMENDMENT.md",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
+    },
+    "I1_AMENDMENT_MANIFEST.json": {
+      "sha256": "5e1fd908b0291af4d22bd8668465d518b75ad84c4aa9c10635fda1cd9ef75fb4",
+      "bytes": 3812
+    },
+    "I1_AMENDMENT_VALIDATION.json": {
+      "sha256": "474ab0395e1ccd4612d239c2d0a7751fd9bf7290505bbd6cf3a995843a729d8c",
+      "bytes": 11393,
+      "vm_amendment_source": "I1_AMENDMENT_VALIDATION.json",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
+    },
+    "I1_INDEPENDENT_DEVELOPMENT_REVIEW.md": {
+      "sha256": "2a3adb98195abc7196189f03c1a3f80075cc9d234c31173aefe8a57765f000c7",
+      "bytes": 5754,
+      "vm_amendment_source": "evidence/i1-amendment-independent-review.md",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
+    },
+    "I1_REVIEW_REQUEST.md": {
+      "sha256": "d5ae54be8529721262a5e717ac5134cc73d8d7ea294952751390556076381cbe",
+      "bytes": 11840,
+      "vm_amendment_source": "I1_REVIEW_REQUEST.md",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
+    },
     "INDEPENDENT_DEVELOPMENT_REVIEW.md": {
       "sha256": "9a52769a92b7a8be8d5761aaabf0b60be6c454d456232bcf994e3e04d8479222",
       "bytes": 6346,
@@ -29,9 +69,10 @@
       "bytes": 4484
     },
     "NEXT_TRIAL.md": {
-      "sha256": "1d4520163dc38a8d85369849c5a4f8e99f6f54b318ffdcb24a1dc604391708ec",
-      "bytes": 9100,
-      "vm_frozen_source": "NEXT_TRIAL.md"
+      "sha256": "29f9210580d4044a8e575055b461fcea3d4a0ac60e7e83c967866d9fe505ec5e",
+      "bytes": 13421,
+      "vm_amendment_source": "NEXT_TRIAL.md",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
     },
     "PATCH.diff": {
       "sha256": "04e432b905c2b4fca43c906a2e9c6864ff9ef33e2968295603fda7a8529b14c1",
@@ -39,8 +80,8 @@
       "vm_frozen_source": "PATCH.diff"
     },
     "README.md": {
-      "sha256": "740c339d1b2c1ba193e254ee8d85a464379f64a31dbd27ac2087ec27e4f8de92",
-      "bytes": 8194
+      "sha256": "b6fb9016c10643cfc67106bf2b70b38c6dcaeac62badeac507ba1195a55ef431",
+      "bytes": 5830
     },
     "VALIDATION_RESULTS.json": {
       "sha256": "d8ccda6e1fd71777a976d12a26a2d806bc442658f814a4b38759a1022412975c",
@@ -52,9 +93,10 @@
       "vm_frozen_source": "README.md"
     },
     "check_preparation.py": {
-      "sha256": "ed82cc60844e5cbc8fd0eebf75f104eada156b8b8a9f6c084ccb320b9596fc4f",
-      "bytes": 3377,
-      "vm_frozen_source": "check_preparation.py"
+      "sha256": "bf10562a45bffec191e87174ef204ac89c837137d1b7905a08f7fb34d593b949",
+      "bytes": 4685,
+      "vm_amendment_source": "check_preparation.py",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
     },
     "historical-evidence.json": {
       "sha256": "faa5546530f1b0a8931985d92de6d3c53b51c57af316ab0ea4063789309eb616",
@@ -67,29 +109,34 @@
       "vm_frozen_source": "prompts/common.txt"
     },
     "prompts/control-carrier.txt": {
-      "sha256": "c2907e3056e5829897f4def0b501154ff599c7d24f0be7ebdfc9c3b221f0d8f7",
-      "bytes": 1167,
-      "vm_frozen_source": "prompts/control-carrier.txt"
+      "sha256": "96d6d4848e08e73cf804bedf987d8ffaa2475f28443db3f9db0eca6682df53ca",
+      "bytes": 1969,
+      "vm_amendment_source": "prompts/control-carrier.txt",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
     },
     "prompts/evaluator-i1.txt": {
-      "sha256": "48aee4c53a9c8011b2a2331fbb71aa4d3ce18e0937b0211930446532fc276e1f",
-      "bytes": 4136,
-      "vm_frozen_source": "prompts/evaluator-i1.txt"
+      "sha256": "ca0778fc7fc55a50c557901d906f89bee53e96d3bbc37316a9eafbf39abb71da",
+      "bytes": 6180,
+      "vm_amendment_source": "prompts/evaluator-i1.txt",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
     },
     "prompts/investigator-control.txt": {
-      "sha256": "bf36fc4149067dd883b2da661502ac1ecce1746bb74fd0842635a64f664d059f",
-      "bytes": 3596,
-      "vm_frozen_source": "prompts/investigator-control.txt"
+      "sha256": "f19a85552269a069d70c38f1104ef6cb65c5952fbbb291f2abf6f6673d4cf305",
+      "bytes": 4398,
+      "vm_amendment_source": "prompts/investigator-control.txt",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
     },
     "prompts/investigator-maintained.txt": {
-      "sha256": "f8de6fba7ec1a1996f886826b307c1042934ec0a578b56c6122c4f124675e9c6",
-      "bytes": 5786,
-      "vm_frozen_source": "prompts/investigator-maintained.txt"
+      "sha256": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f",
+      "bytes": 6352,
+      "vm_amendment_source": "prompts/investigator-maintained.txt",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
     },
     "prompts/maintained-carrier.txt": {
-      "sha256": "93ab219dea543cbb86f2d1a242c1ba6beb1792d78c81d9486b72ecedeae5b829",
-      "bytes": 3357,
-      "vm_frozen_source": "prompts/maintained-carrier.txt"
+      "sha256": "506daef5ad78009ac7ecabc0420cb598719aaf979cb995b76b03cf15d785a8e6",
+      "bytes": 3923,
+      "vm_amendment_source": "prompts/maintained-carrier.txt",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
     },
     "prompts/verifier-complete-findings.txt": {
       "sha256": "9ed81613ad2c4db47d4c3e3b22e891e283488c8edc7a5a664df1dab03356dc37",
@@ -97,24 +144,39 @@
       "vm_frozen_source": "prompts/verifier-complete-findings.txt"
     },
     "proposal.json": {
-      "sha256": "59ea1c3eeadde03c576278639435990222d660d476c2fb4339067c955dbea6fc",
-      "bytes": 5896,
-      "vm_frozen_source": "proposal.json"
+      "sha256": "c8543110ae9048c176189d584d7490eeb2f66a61f80790c5699402e6f5b8512c",
+      "bytes": 9240,
+      "vm_amendment_source": "proposal.json",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
     },
     "tools/SCHEMA.md": {
-      "sha256": "8a389f06804934d9d30323c55b8d1623d666923a45c92ef44bc370f5f356e68d",
-      "bytes": 10725,
-      "vm_frozen_source": "tools/SCHEMA.md"
+      "sha256": "ee897fc2346d268b568a3a66d7236124b6a51885223335655a4f88ffe214ce94",
+      "bytes": 14561,
+      "vm_amendment_source": "tools/SCHEMA.md",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
     },
     "tools/delivery.py": {
-      "sha256": "02a91a53155ea5b6c4ed0ad6e2a2c5caa0b3c07d5cae73a70468142d39cd2750",
-      "bytes": 26017,
-      "vm_frozen_source": "tools/delivery.py"
+      "sha256": "e1c7ea2e32bd00ef2606b5974b690a4537b6b200fd3c4e620880ae430b9ebe59",
+      "bytes": 29650,
+      "vm_amendment_source": "tools/delivery.py",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
+    },
+    "tools/stage_i1.py": {
+      "sha256": "96686ac55c9f097d02695152b5b7c41d74050dd3f4d9dc9f2dc8d904ca1b0cf5",
+      "bytes": 5754,
+      "vm_amendment_source": "tools/stage_i1.py",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
     },
     "tools/test_delivery.py": {
       "sha256": "e2ec4ccffb66b4a87fc8d5e7c3e307121203ff04e06bb55356d0f11eb5c665c8",
       "bytes": 11692,
       "vm_frozen_source": "tools/test_delivery.py"
+    },
+    "tools/test_i1_projection.py": {
+      "sha256": "83604534706d029eccee0f6550211b03c55b9c10f512ac25a8865e0bcb234e44",
+      "bytes": 8571,
+      "vm_amendment_source": "tools/test_i1_projection.py",
+      "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
     },
     "tools/test_independent_boundaries.py": {
       "sha256": "6acb5fff8fd0600ea75768c19d3e69659955efafc93caeef91c055504836dc15",
@@ -135,5 +197,8 @@
     "whole-lab inventory",
     "runtime workspaces"
   ],
-  "vm_manifest_note": "MANIFEST.sha256.json retains original VM freeze paths and withheld evidence hashes; files here are independently hashed above."
+  "vm_manifest_note": "MANIFEST.sha256.json is the original historical VM freeze. I1_AMENDMENT_MANIFEST.json binds only this amendment. vm_frozen_source maps unchanged original files; vm_amendment_source maps changed or new files to the amendment freeze. Published file hashes above describe the actual current GitHub package.",
+  "amended_utc": "2026-09-27T22:33:49.205384+00:00",
+  "reviewed_base": "cdedeb74792c651dcd0e8e275ae3b026b14ae4a7",
+  "current_amendment": "I1-1"
 }

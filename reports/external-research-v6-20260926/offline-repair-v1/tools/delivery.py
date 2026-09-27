@@ -8,6 +8,7 @@ No network, source reading, model calls, or runner integration occurs here.
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import re
 import sys
@@ -17,6 +18,7 @@ from typing import Any
 SCHEMA_DRAFT = "offline-finding-draft/v1"
 SCHEMA_REVIEW = "offline-finding-review/v1"
 SCHEMA_DELIVERY = "offline-finding-delivery/v1"
+SCHEMA_CURRENT = "offline-finding-current/v1"
 PART_TYPES = frozenset({
     "assertion", "condition", "implication", "validation_proposal",
     "uncertainty", "source_fit", "plan_fit", "non_finding",
@@ -368,6 +370,25 @@ def assemble(draft: Any, review: Any | None = None) -> dict[str, Any]:
     return output
 
 
+def project_current(draft: Any) -> dict[str, Any]:
+    """Project only the investigator's current typed content, never history or raw carrier.
+
+    This is an I1 first-view acquisition artifact, not a verifier decision.
+    """
+    findings = validate_draft(draft)
+    return {
+        "schema": SCHEMA_CURRENT,
+        "status": "UNVERIFIED",
+        "truth_validation": "not_established_by_projection",
+        "findings": [{
+            "id": finding["id"],
+            "title": finding["title"],
+            "parts": [{key: copy.deepcopy(part[key]) for key in ("id", "type", "text", "evidence") if key in part}
+                      for part in finding["parts"]],
+        } for finding in findings],
+    }
+
+
 def _quoted(text: str) -> str:
     return "\n".join("> " + line for line in text.splitlines())
 
@@ -454,6 +475,23 @@ def render(delivery: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def render_current(current: dict[str, Any]) -> str:
+    if not isinstance(current, dict) or current.get("schema") != SCHEMA_CURRENT:
+        raise CarrierError(f"current.schema must be {SCHEMA_CURRENT}")
+    lines = ["# Current investigator findings", "", "Status: **UNVERIFIED**. This first-view report contains the current typed findings only.",
+             "Source citations are investigator leads. Validation proposals are UNEXECUTED; no test result is asserted.", ""]
+    for finding in current["findings"]:
+        lines.extend([f"## {finding['id']} — {_one_line(finding['title'])}", ""])
+        for part in finding["parts"]:
+            label = f"{part['id']} · {part['type']}"
+            if part["type"] == "validation_proposal":
+                label += " · UNEXECUTED PROPOSAL"
+            lines.extend([f"### {label}", _quoted(part["text"])])
+            lines.extend(_evidence_lines(part.get("evidence"), "Investigator source lead"))
+            lines.append("")
+    return "\n".join(lines)
+
+
 def fail_visible(message: str, raw_carriers: dict[str, str] | None = None) -> tuple[dict[str, Any], str]:
     raw_carriers = raw_carriers or {}
     result = {"schema": SCHEMA_DELIVERY, "status": "CARRIER_INVALID", "diagnostics": [message],
@@ -467,16 +505,48 @@ def fail_visible(message: str, raw_carriers: dict[str, str] | None = None) -> tu
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("mode", choices=("render", "assemble"))
+    parser.add_argument("mode", choices=("render", "assemble", "render-current"))
     parser.add_argument("--draft", type=Path, required=True)
     parser.add_argument("--review", type=Path)
     parser.add_argument("--out-md", type=Path, required=True)
     parser.add_argument("--out-json", type=Path, required=True)
+    parser.add_argument("--history-md", type=Path)
+    parser.add_argument("--history-json", type=Path)
+    parser.add_argument("--raw-draft-out", type=Path)
     args = parser.parse_args(argv)
     if args.mode == "assemble" and args.review is None:
         parser.error("assemble requires --review")
     if args.mode == "render" and args.review is not None:
         parser.error("render does not accept --review")
+    if args.mode == "render-current":
+        if args.review is not None:
+            parser.error("render-current does not accept --review")
+        if not all((args.history_md, args.history_json, args.raw_draft_out)):
+            parser.error("render-current requires --history-md, --history-json, and --raw-draft-out")
+        paths = [args.draft, args.out_md, args.out_json, args.history_md, args.history_json, args.raw_draft_out]
+        if len({path.resolve() for path in paths}) != len(paths):
+            parser.error("render-current input and output paths must all differ")
+        raw_bytes = b""
+        try:
+            raw_bytes = args.draft.read_bytes()
+            draft = load(args.draft)
+            current = project_current(draft)
+            current_md = render_current(current)
+            audit = assemble(draft)
+            audit_md = render(audit)
+            status = 0
+        except (CarrierError, OSError) as exc:
+            current, current_md = fail_visible("Invalid draft carrier; inspect deferred audit artifacts.")
+            current.pop("raw_carriers", None)
+            raw_text = raw_bytes.decode("utf-8", errors="replace")
+            audit, audit_md = fail_visible(str(exc), {"draft": raw_text})
+            status = 2
+        args.out_md.write_text(current_md, encoding="utf-8")
+        args.out_json.write_text(json.dumps(current, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        args.history_md.write_text(audit_md, encoding="utf-8")
+        args.history_json.write_text(json.dumps(audit, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        args.raw_draft_out.write_bytes(raw_bytes)
+        return status
     status = 0
     try:
         draft = load(args.draft)

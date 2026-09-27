@@ -1,0 +1,189 @@
+{
+  "schema": "i1-offline-amendment-validation/v1",
+  "created_utc": "2026-09-27T22:30:08.976312+00:00",
+  "reviewed_base": "cdedeb74792c651dcd0e8e275ae3b026b14ae4a7",
+  "scope": "I1-1 current-report/history and acquisition inventory only; development evidence, not formal evaluation",
+  "portable_tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools -p 'test*.py' -v",
+    "cwd": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/offline-repair-v1",
+    "exit_code": 0,
+    "passed": 30,
+    "failed": 0,
+    "skipped": 0,
+    "original_unchanged_tests": 26,
+    "amendment_tests": 4,
+    "raw_log": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/offline-repair-v1/evidence/i1-amendment-tests.log",
+      "sha256": "9a7824d8feb8f682daa2c0cb30ee9304876cc8ad7b65c4de62b1988b4a8f1615",
+      "bytes": 5095
+    },
+    "tests": [
+      "test_absence_packet_is_structural_and_inconclusive_rejection_is_unresolved (test_delivery.DeliveryBoundaryTests.test_absence_packet_is_structural_and_inconclusive_rejection_is_unresolved) ... ok",
+      "test_absence_variants_in_reason_replacement_and_non_finding (test_delivery.DeliveryBoundaryTests.test_absence_variants_in_reason_replacement_and_non_finding) ... ok",
+      "test_draft_only_is_nonempty_and_unverified (test_delivery.DeliveryBoundaryTests.test_draft_only_is_nonempty_and_unverified) ... ok",
+      "test_incomplete_absence_rejection_retains_original_and_challenge (test_delivery.DeliveryBoundaryTests.test_incomplete_absence_rejection_retains_original_and_challenge) ... ok",
+      "test_inconclusive_absence_blocks_keep_and_replace (test_delivery.DeliveryBoundaryTests.test_inconclusive_absence_blocks_keep_and_replace) ... ok",
+      "test_invalid_enum_containers_fail_visible (test_delivery.DeliveryBoundaryTests.test_invalid_enum_containers_fail_visible) ... ok",
+      "test_issue_title_only_is_lead_not_factual_support (test_delivery.DeliveryBoundaryTests.test_issue_title_only_is_lead_not_factual_support) ... ok",
+      "test_malformed_json_is_fail_visible_with_raw_carrier (test_delivery.DeliveryBoundaryTests.test_malformed_json_is_fail_visible_with_raw_carrier) ... ok",
+      "test_missing_or_duplicate_part_decision_blocks_whole_finding (test_delivery.DeliveryBoundaryTests.test_missing_or_duplicate_part_decision_blocks_whole_finding) ... ok",
+      "test_negative_new_finding_title_needs_absence_packet (test_delivery.DeliveryBoundaryTests.test_negative_new_finding_title_needs_absence_packet) ... ok",
+      "test_negative_reason_and_new_non_finding_cannot_bypass_absence_packet (test_delivery.DeliveryBoundaryTests.test_negative_reason_and_new_non_finding_cannot_bypass_absence_packet) ... ok",
+      "test_replacement_cannot_retype_validation_proposal_as_bookkeeping (test_delivery.DeliveryBoundaryTests.test_replacement_cannot_retype_validation_proposal_as_bookkeeping) ... ok",
+      "test_review_is_explicit_per_part_and_preserves_whole_finding (test_delivery.DeliveryBoundaryTests.test_review_is_explicit_per_part_and_preserves_whole_finding) ... ok",
+      "test_status_negation_does_not_require_corpus_absence_packet (test_delivery.DeliveryBoundaryTests.test_status_negation_does_not_require_corpus_absence_packet) ... ok",
+      "test_cli_writes_separate_current_history_and_raw (test_i1_projection.I1ProjectionTests.test_cli_writes_separate_current_history_and_raw) ... ok",
+      "test_current_projection_has_all_current_parts_but_no_history (test_i1_projection.I1ProjectionTests.test_current_projection_has_all_current_parts_but_no_history) ... ok",
+      "test_invalid_carrier_current_has_no_raw_history_payload (test_i1_projection.I1ProjectionTests.test_invalid_carrier_current_has_no_raw_history_payload) ... ok",
+      "test_stage_current_only_first_view_and_acquisition_inventory (test_i1_projection.I1ProjectionTests.test_stage_current_only_first_view_and_acquisition_inventory) ... ok",
+      "test_absence_hidden_in_reason_replacement_and_nonfinding_requires_packet (test_independent_boundaries.IndependentBoundaries.test_absence_hidden_in_reason_replacement_and_nonfinding_requires_packet) ... ok",
+      "test_draft_render_keeps_complete_finding_and_unexecuted_proposal (test_independent_boundaries.IndependentBoundaries.test_draft_render_keeps_complete_finding_and_unexecuted_proposal) ... ok",
+      "test_duplicate_ids_and_bad_type_fail_draft_validation (test_independent_boundaries.IndependentBoundaries.test_duplicate_ids_and_bad_type_fail_draft_validation) ... ok",
+      "test_explicit_keep_and_replace_preserve_all_parts_and_history (test_independent_boundaries.IndependentBoundaries.test_explicit_keep_and_replace_preserve_all_parts_and_history) ... ok",
+      "test_issue_title_only_is_lead_not_spec_override (test_independent_boundaries.IndependentBoundaries.test_issue_title_only_is_lead_not_spec_override) ... ok",
+      "test_malformed_input_is_fail_visible_with_raw_record (test_independent_boundaries.IndependentBoundaries.test_malformed_input_is_fail_visible_with_raw_record) ... ok",
+      "test_missing_duplicate_and_unknown_decisions_cannot_review_whole_finding (test_independent_boundaries.IndependentBoundaries.test_missing_duplicate_and_unknown_decisions_cannot_review_whole_finding) ... ok",
+      "test_negative_finding_title_cannot_bypass_absence_review (test_independent_boundaries.IndependentBoundaries.test_negative_finding_title_cannot_bypass_absence_review) ... ok",
+      "test_not_a_claim_cannot_drop_proposal (test_independent_boundaries.IndependentBoundaries.test_not_a_claim_cannot_drop_proposal) ... ok",
+      "test_search_only_and_inconclusive_absence_do_not_prove_negative (test_independent_boundaries.IndependentBoundaries.test_search_only_and_inconclusive_absence_do_not_prove_negative) ... ok",
+      "test_unsupported_removal_shows_original_and_challenge (test_independent_boundaries.IndependentBoundaries.test_unsupported_removal_shows_original_and_challenge) ... ok",
+      "test_untyped_top_level_addition_must_not_disappear_silently (test_independent_boundaries.IndependentBoundaries.test_untyped_top_level_addition_must_not_disappear_silently) ... ok"
+    ]
+  },
+  "read_only_preparation": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 check_preparation.py",
+    "exit_code": 0,
+    "result": {
+      "kind": "offline preparation check; not run authorization or semantic quality proof",
+      "errors": [],
+      "ok": true,
+      "corpus_files": 129,
+      "candidate_prompt_sha256": {
+        "control": "f19a85552269a069d70c38f1104ef6cb65c5952fbbb291f2abf6f6673d4cf305",
+        "maintained": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f"
+      },
+      "calls_made": 0
+    },
+    "raw_record": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/offline-repair-v1/evidence/i1-amendment-preparation.json",
+      "sha256": "efcdfa8f420fe9dd9d1865e6dd83a34773b4e6e8da5ce9006f72b6ed2f9607c8",
+      "bytes": 367
+    }
+  },
+  "preserved_reviewed_boundaries": {
+    "proposal_fields_unchanged": [
+      "apps",
+      "limits",
+      "proposed_schedule",
+      "case_manifest",
+      "reused_files_sha256",
+      "runtime_pins_sha256",
+      "usage_lanes",
+      "candidate_workspace_allowlist",
+      "candidate_excluded",
+      "stop_rules"
+    ],
+    "evaluation_fields_unchanged": [
+      "model",
+      "requested_effort",
+      "fresh_reviewers",
+      "one_per_app_pair",
+      "existing_key_sha256",
+      "existing_scoring_sha256"
+    ],
+    "byte_identical_files": {
+      "tools/test_delivery.py": "e2ec4ccffb66b4a87fc8d5e7c3e307121203ff04e06bb55356d0f11eb5c665c8",
+      "tools/test_independent_boundaries.py": "6acb5fff8fd0600ea75768c19d3e69659955efafc93caeef91c055504836dc15",
+      "prompts/common.txt": "8e5a5b5d809d2d90a7fdf83e07d98048527499a9e3fe4121209261becf83db30",
+      "prompts/verifier-complete-findings.txt": "9ed81613ad2c4db47d4c3e3b22e891e283488c8edc7a5a664df1dab03356dc37"
+    },
+    "delivery_original_functions_AST_unchanged": [
+      "_absence_packet",
+      "_allowed_keys",
+      "_decision_defects",
+      "_decision_lines",
+      "_evidence",
+      "_evidence_lines",
+      "_finding",
+      "_id",
+      "_json_block",
+      "_list",
+      "_one_line",
+      "_part",
+      "_quoted",
+      "_review_finding",
+      "_text",
+      "_unique_pairs",
+      "assemble",
+      "fail_visible",
+      "load",
+      "render",
+      "validate_draft"
+    ],
+    "delivery_original_assignments_AST_unchanged": [
+      "ABSENCE_WORDS",
+      "ACTION_TYPES",
+      "BASES",
+      "DIRECT_KINDS",
+      "EVIDENCE_KINDS",
+      "ID",
+      "PART_TYPES",
+      "SCHEMA_DELIVERY",
+      "SCHEMA_DRAFT",
+      "SCHEMA_REVIEW"
+    ],
+    "verification_method": "Compare JSON fields, source bytes and Python AST without location attributes against reviewed Git commit. Main CLI gains render-current; original helpers and all original constant values match."
+  },
+  "limits": {
+    "historical_62_tests_rerun": false,
+    "historical_3403_file_inventory_rerun": false,
+    "external_review_probe_bundle_available": false,
+    "external_reproduce_review_py_rerun": false,
+    "semantic_quality_established": false,
+    "prompt_only_evaluator_chronology": true,
+    "filesystem_access_barrier": false,
+    "V-FOLLOWON-1": "OPEN / NOT QUALIFIED FOR FOLLOW-ON VERIFIER USE; no repair in I1"
+  },
+  "usage": {
+    "development": "Astra orchestration; reused explicit native gpt-6-sol/high owner and independent reviewer",
+    "amendment_provider_tokens": null,
+    "amendment_provider_cost": null,
+    "effective_settings_independently_observed": null,
+    "candidate_calls": 0,
+    "formal_evaluation_calls": 0,
+    "account_probes": 0,
+    "launch_approvals_created": 0,
+    "publication": "Authorized by existing user GitHub visibility request; exact published revision is Git commit identity."
+  },
+  "published_snapshot_tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s reports/external-research-v6-20260926/offline-repair-v1/tools -p 'test*.py' -v",
+    "passed": 30,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "raw_log": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/offline-repair-v1/evidence/i1-amendment-published-tests.log",
+      "sha256": "d6272545a24d950025f7e518e5b629d94a7df61a0a500ace22d59aee6a317e03",
+      "bytes": 5095
+    }
+  },
+  "independent_development_review": {
+    "published_file": "I1_INDEPENDENT_DEVELOPMENT_REVIEW.md",
+    "source": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/offline-repair-v1/evidence/i1-amendment-independent-review.md",
+      "sha256": "2a3adb98195abc7196189f03c1a3f80075cc9d234c31173aefe8a57765f000c7"
+    },
+    "scope": "I1-1 and the narrow staging inventory classification fix",
+    "focused_tests_independently_passed": 4,
+    "formal_grader": false
+  },
+  "incremental_patch": {
+    "path": "I1_AMENDMENT.diff",
+    "sha256": "8937f9fe165d0f424780cbec516a7887f7a5e911782b5fb85311968412fb98e3",
+    "base": "cdedeb74792c651dcd0e8e275ae3b026b14ae4a7",
+    "applied_to_fresh_temporary_reviewed_source": true,
+    "exact_output_files_verified": 15,
+    "raw_evidence_in_patch": false,
+    "empty_context_encoding": "Empty context lines use blank lines accepted by git apply; exact reconstruction checked."
+  }
+}

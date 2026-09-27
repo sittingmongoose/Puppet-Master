@@ -85,3 +85,36 @@ Absence is a bounded source argument, not a search result. A decision with `basi
 `scope`, `context`, `searches`, `source_evidence`, and `assessment` are required. `context` cites direct `source_text` or `plan_text`; `source_evidence` contains at least one direct citation too. `assessment` is `source_supported` or `inconclusive`. Inconclusive assessment blocks keep, replace, remove, and additions. Search and heuristic lint alone do not validate absence; the host only checks that cited source context and a bounded search record exist. A verifier may still be wrong. An unsupported removal retains the original, the challenge, and the defect in the visible report; it never promotes the original to confirmed status or silently drops it.
 
 The report's `mechanical_coverage` counts records and dispositions. Its `truth_validation` field is always `not_established_by_assembler`. Consumers must not treat structural success, issue titles, or proposed validation as independent grading or proof.
+
+## I1 current-view projection and acquisition inventory
+
+The I1 investigator comparison uses a current-only first view. This changes presentation of the draft, not the verifier protocol. `render-current` requires all five outputs so the host keeps a current Markdown report and JSON projection separate from the full audit Markdown, assembled audit JSON, and exact raw draft bytes:
+
+```sh
+python3 offline-repair-v1/tools/delivery.py render-current \
+  --draft draft.json \
+  --out-md current.md --out-json current.json \
+  --history-md history.md --history-json history.json \
+  --raw-draft-out raw-draft.json
+```
+
+The `offline-finding-current/v1` projection includes each current finding's ID, title, and **every current typed part** with its text and investigator source leads. It excludes `revision_history`, duplicate original/history records, review records, and raw JSON. Its status is `UNVERIFIED`; validation proposals display `UNEXECUTED PROPOSAL` and uncertainties remain attached. `project_current(draft)` and `render_current(current)` are the importable equivalents. On an invalid draft, current outputs contain only a carrier error with zero asserted claims; the separate history and raw outputs retain the malformed payload for repair. The existing `render` command and `render()` function continue to produce the full audit report.
+
+After private arm assignment, copy the **exact authored control** `out/draft.md` to its assigned `first_view/results/Xn/current.md`, and the **host-rendered maintained** `current.md` to the other arm's `current.md`. Either arm can be X1. The command below illustrates **control=X1, maintained=X2 only after that private assignment**. The helper copies only those two files into `first_view/results`; it copies explicitly enumerated acquisition files under `deferred/X1` and `deferred/X2`, and records their destination paths and SHA-256 hashes in `deferred/INVENTORY.json`. The existing case/key copy workflow supplies `first_view/case` and `first_view/key`. For the control arm, defer the exact raw `out/draft.md` as well as available `out/observations.md`, `out/history.md`, and every available `out/snapshots/*.md`. For the maintained arm, defer `current.json`, full history Markdown/JSON, exact raw `draft.json`, and every available snapshot. Missing early acquisition files are flagged `not_recoverable` in the experiment record, never fabricated. The raw current report alone is a valid minimal deferred artifact if no earlier file survives. Both arms require at least one explicit deferred mapping. The helper never discovers or silently drops files; the caller must enumerate the acquisition inventory. It refuses stray pre-existing files under `first_view` outside `case`, `key`, and the exact X1/X2 current report destinations.
+
+```sh
+python3 offline-repair-v1/tools/stage_i1.py \
+  --workspace reviewer-workspace \
+  --x1-current control/out/draft.md \
+  --x2-current maintained/current.md \
+  --x1-deferred control/out/draft.md=raw-draft.md \
+  --x1-deferred control/out/observations.md=observations.md \
+  --x1-deferred control/out/history.md=history.md \
+  --x1-deferred control/out/snapshots/prior.md=snapshots/prior.md \
+  --x2-deferred maintained/current.json=current.json \
+  --x2-deferred maintained/history.md=history.md \
+  --x2-deferred maintained/history.json=history.json \
+  --x2-deferred maintained/raw-draft.json=raw-draft.json
+```
+
+The deferred files are in the **same readable reviewer workspace**. Reading chronology is enforced by the reviewer prompt only; staging is not filesystem access isolation. There is no semantic scrub of the control's authored current report if it includes history despite its instruction. `V-FOLLOWON-1` absence-lint expansion remains deferred and is **not qualified for follow-on verifier use** by this I1 presentation change.

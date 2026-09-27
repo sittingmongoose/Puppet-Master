@@ -109,18 +109,41 @@
     "existing_scoring_sha256": "aa1e2c7aab9128bd1b9e4b2f5c62f7325cc3ff39b6fcdd5d68818742169806bd",
     "input_eligibility": "carry existing case limitations; no new answer key",
     "sequence": [
-      "final reports, locked judgment",
-      "upstream acquisitions and preservation map"
+      "read only first_view/case, first_view/key and first_view/results/{X1,X2}/current.md",
+      "save out/final-assessment.json and .md; treat as fixed before any deferred read",
+      "read deferred/{X1,X2}; measure chronological acquisition and semantic preservation; never overwrite initial judgments"
     ],
     "masking": "random X1/X2; operational labels withheld; format-related partial unblinding disclosed",
-    "capacity_exhaustion": "retain partial results, no pass or retry"
+    "capacity_exhaustion": "retain partial results, no pass or retry",
+    "access_boundary": {
+      "kind": "prompt_only_chronological",
+      "filesystem_isolation": false,
+      "same_workspace_and_assignment": true,
+      "first_view_paths": [
+        "first_view/case/",
+        "first_view/key/",
+        "first_view/results/X1/current.md",
+        "first_view/results/X2/current.md"
+      ],
+      "deferred_paths": [
+        "deferred/X1/",
+        "deferred/X2/"
+      ],
+      "host_enforced_midrun_lock": false,
+      "audit": "Use existing read/write traces; disclose early deferred access, altered final judgments, current-report history or unavailable chronology. No clean staged-independence claim after contamination."
+    }
   },
   "follow_on_flash_verifier": {
     "authorized": false,
     "included_in_I1_caps": false,
     "required_before_end_to_end_claim": true,
     "same_app_model_effort": true,
-    "fresh_context": true
+    "fresh_context": true,
+    "qualification": "NOT QUALIFIED FOR FOLLOW-ON VERIFIER USE",
+    "open_issue": "V-FOLLOWON-1",
+    "in_I1_execution_graph": false,
+    "I1_prerequisite": false,
+    "repair_in_this_amendment": false
   },
   "usage_lanes": [
     "development:Astra/Sol",
@@ -136,5 +159,40 @@
     "no retries or best-of",
     "no expansion on consequential false correction or material preservation loss"
   ],
-  "authorization_note": "Offline development only. No approval file, candidate/evaluator dispatch, account probe or push permitted by this proposal."
+  "authorization_note": "Offline development and previously requested GitHub review publication only. No approval file, candidate/evaluator dispatch, account probe or new benchmark authorized.",
+  "amendment": {
+    "id": "I1-1",
+    "reviewed_commit": "cdedeb74792c651dcd0e8e275ae3b026b14ae4a7",
+    "scope": "current-only I1 report/history separation and chronological acquisition inventory; no schedule or runner redesign",
+    "freeze_manifest": "I1_AMENDMENT_MANIFEST.json"
+  },
+  "report_artifacts": {
+    "control_current": "exact frozen out/draft.md, prospectively current-only",
+    "maintained_current": "tools/delivery.py render-current: current Markdown with all typed current parts and source provenance",
+    "deferred": "raw originals, full audit Markdown/JSON, revision_history, snapshots, change reasons and current JSON projection",
+    "posthoc_semantic_cleanup": false,
+    "invalid_current": "diagnostic only; raw invalid carrier retained in deferred audit"
+  },
+  "acquisition_inventory": {
+    "control": [
+      "out/observations.md and later qualifying blocks",
+      "out/history.md",
+      "chronological out/snapshots/*.md",
+      "current out/draft.md"
+    ],
+    "maintained": [
+      "chronological out/snapshots/*.json",
+      "raw out/draft.json including revision_history",
+      "current finding records"
+    ],
+    "corroboration": "native write traces only where already available; no reconstructed earlier records",
+    "identity": "earliest actually recorded source-supported substance and later dispositions; de-duplicate repeated snapshots, separate partial/title leads",
+    "missing_early_records": "temporal denominator not_recoverable; report observable subset and chronology uncertainty"
+  },
+  "preservation_endpoints": {
+    "mechanical_render_fidelity": "frozen current records -> current report; control exact draft -> copied final",
+    "temporal_semantic_preservation": "source-supported material actually recorded during investigation -> final report, distinguishing legitimate corrections/supersession, loss and unresolved disputes",
+    "denominators": "explicit numerator/denominator and dispositions; N/A at zero; not_recoverable for missing required early records; never final draft.json alone as both temporal inventory and final projection"
+  },
+  "limits_note": "Maximum experimental ceilings, not normal per-project latency expectations."
 }

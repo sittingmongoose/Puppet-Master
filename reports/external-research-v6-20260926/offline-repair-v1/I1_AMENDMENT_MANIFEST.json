@@ -1,0 +1,99 @@
+{
+  "schema": "external-research.i1-offline-amendment-freeze.v1",
+  "created_utc": "2026-09-27T22:33:24.774332+00:00",
+  "reviewed_base": "cdedeb74792c651dcd0e8e275ae3b026b14ae4a7",
+  "scope": "I1-1 current-only report/history and acquisition inventory; original freeze retained",
+  "status": "PREPARED_UNAUTHORIZED",
+  "files": {
+    "FOLLOW_ON_VERIFIER_STATUS.md": {
+      "sha256": "c4daa19c7cbf5aacb5f4dcffe9a7e90e5be8b60e0048f3914faf547934443000",
+      "bytes": 2135
+    },
+    "I1_AMENDMENT.diff": {
+      "sha256": "8937f9fe165d0f424780cbec516a7887f7a5e911782b5fb85311968412fb98e3",
+      "bytes": 85770
+    },
+    "I1_AMENDMENT.md": {
+      "sha256": "af4fe2f59086fab9400e31ab61894de84058939aab864db058de694a6662dcdf",
+      "bytes": 6475
+    },
+    "I1_AMENDMENT_VALIDATION.json": {
+      "sha256": "474ab0395e1ccd4612d239c2d0a7751fd9bf7290505bbd6cf3a995843a729d8c",
+      "bytes": 11393
+    },
+    "I1_REVIEW_REQUEST.md": {
+      "sha256": "d5ae54be8529721262a5e717ac5134cc73d8d7ea294952751390556076381cbe",
+      "bytes": 11840
+    },
+    "NEXT_TRIAL.md": {
+      "sha256": "29f9210580d4044a8e575055b461fcea3d4a0ac60e7e83c967866d9fe505ec5e",
+      "bytes": 13421
+    },
+    "check_preparation.py": {
+      "sha256": "bf10562a45bffec191e87174ef204ac89c837137d1b7905a08f7fb34d593b949",
+      "bytes": 4685
+    },
+    "evidence/i1-amendment-independent-review.md": {
+      "sha256": "2a3adb98195abc7196189f03c1a3f80075cc9d234c31173aefe8a57765f000c7",
+      "bytes": 5754
+    },
+    "evidence/i1-amendment-preparation.json": {
+      "sha256": "efcdfa8f420fe9dd9d1865e6dd83a34773b4e6e8da5ce9006f72b6ed2f9607c8",
+      "bytes": 367
+    },
+    "evidence/i1-amendment-published-tests.log": {
+      "sha256": "d6272545a24d950025f7e518e5b629d94a7df61a0a500ace22d59aee6a317e03",
+      "bytes": 5095
+    },
+    "evidence/i1-amendment-tests.log": {
+      "sha256": "9a7824d8feb8f682daa2c0cb30ee9304876cc8ad7b65c4de62b1988b4a8f1615",
+      "bytes": 5095
+    },
+    "prompts/control-carrier.txt": {
+      "sha256": "96d6d4848e08e73cf804bedf987d8ffaa2475f28443db3f9db0eca6682df53ca",
+      "bytes": 1969
+    },
+    "prompts/evaluator-i1.txt": {
+      "sha256": "ca0778fc7fc55a50c557901d906f89bee53e96d3bbc37316a9eafbf39abb71da",
+      "bytes": 6180
+    },
+    "prompts/investigator-control.txt": {
+      "sha256": "f19a85552269a069d70c38f1104ef6cb65c5952fbbb291f2abf6f6673d4cf305",
+      "bytes": 4398
+    },
+    "prompts/investigator-maintained.txt": {
+      "sha256": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f",
+      "bytes": 6352
+    },
+    "prompts/maintained-carrier.txt": {
+      "sha256": "506daef5ad78009ac7ecabc0420cb598719aaf979cb995b76b03cf15d785a8e6",
+      "bytes": 3923
+    },
+    "proposal.json": {
+      "sha256": "c8543110ae9048c176189d584d7490eeb2f66a61f80790c5699402e6f5b8512c",
+      "bytes": 9240
+    },
+    "tools/SCHEMA.md": {
+      "sha256": "ee897fc2346d268b568a3a66d7236124b6a51885223335655a4f88ffe214ce94",
+      "bytes": 14561
+    },
+    "tools/delivery.py": {
+      "sha256": "e1c7ea2e32bd00ef2606b5974b690a4537b6b200fd3c4e620880ae430b9ebe59",
+      "bytes": 29650
+    },
+    "tools/stage_i1.py": {
+      "sha256": "96686ac55c9f097d02695152b5b7c41d74050dd3f4d9dc9f2dc8d904ca1b0cf5",
+      "bytes": 5754
+    },
+    "tools/test_i1_projection.py": {
+      "sha256": "83604534706d029eccee0f6550211b03c55b9c10f512ac25a8865e0bcb234e44",
+      "bytes": 8571
+    }
+  },
+  "exclusions": [
+    "I1_AMENDMENT_MANIFEST.json (self)",
+    "original frozen development files unchanged by this amendment",
+    "corpus, evaluator keys, runtime workspaces and provider logs"
+  ],
+  "publication_note": "Raw test logs remain VM-only. The independent development review is published as I1_INDEPENDENT_DEVELOPMENT_REVIEW.md. Other amendment artifacts retain their relative names."
+}

@@ -34,8 +34,11 @@ or generalization. The familiar OME-Zarr case is a development case.
 
 ## Freeze, access and reuse
 
-`proposal.json` binds original input and existing driver hashes; the development
-manifest binds new tools, prompts and this design. The original manifest is
+`proposal.json` binds original input and existing driver hashes. The new
+`I1_AMENDMENT_MANIFEST.json` binds the affected tools, prompts and trial design
+after review I1-1; `MANIFEST.sha256.json` remains the prior development freeze,
+whose source is retained in `PATCH.diff` and Git commit `cdedeb7479`.
+The original case manifest is
 `case_bundle/MANIFEST.sha256.json` with SHA-256
 `01e8109f6fa2cc387c05b2116e0d8339ae83e797b1db36d50443c52743b20218`.
 Use the existing `tools/r1b/run_r1b.py::copy_listed_corpus` and exact-membership
@@ -61,13 +64,29 @@ missing-receipt, timeout/process-group and exact-corpus protections remain.
 Any hash drift requires disposition before dispatch; never silently refresh a
 pin, reset a workspace or reconstruct a missing original input.
 
-The control final is the exact `out/draft.md`; the maintained final is a host
-render of frozen candidate-authored `out/draft.json` by `tools/delivery.py`
-in investigator mode. Rendering adds status labels and layout only; no semantic
-repair or case answer. Freeze and hash the raw acquisition records and final
-report separately. Retain candidate-maintained history and native write traces
-as provenance; neither is independent evidence. Invalid or absent records
-produce a visible incomplete result; no paid repair or premium rewrite.
+The control final is the exact `out/draft.md`, prospectively instructed to contain
+current material only; prior versions, superseded content and change reasons go
+to `out/history.md` and chronological `out/snapshots/NNNN.md`. Observations remain
+in `out/observations.md`. Current uncertainty, current disputes, conditions and
+UNEXECUTED proposed validation stay in the report. No host semantic cleanup is
+allowed: if an author puts history in its current report despite these instructions,
+preserve it, record first-view contamination and do not claim a clean staged
+assessment or rerun the assignment.
+
+For the maintained arm use `tools/delivery.py render-current` on frozen
+`out/draft.json`. Its designated final is current Markdown with every current
+typed part and necessary source provenance. It contains no `revision_history`,
+duplicate raw records or superseded snapshots. Separately retain the exact raw
+JSON, current structured projection (for later render-fidelity checking), full
+audit Markdown/JSON, revision history and all snapshots. The existing full
+`render` remains an audit view; it is not the I1 designated final. An invalid
+carrier produces a current diagnostic without raw history, and retains the raw
+carrier separately. No paid repair or premium rewrite follows.
+
+Freeze/hash current and audit artifacts separately. Native write traces, where
+already available, remain provenance rather than independent source support.
+Do not reconstruct missing early acquisition records or run the flash-verifier
+`assemble` path during this investigator-only comparison.
 
 ## Separate quality endpoints
 
@@ -77,23 +96,57 @@ reuse the existing OME reference key, scoring guide and input-eligibility
 limitations; no new answer key is authored here. Requested versus observed
 effort is recorded separately. Astra/Sol development tests do not replace them.
 
-Within each pair, assign X1/X2 privately. First assess final reports, lock those
-judgments, then open upstream acquisition records and map preservation. Withhold
-prompts, policy names, operational logs and treatment labels. The rendered format
+Within each pair, assign X1/X2 privately. Reuse the existing corpus/key copy and
+read-only-input workflow. `tools/stage_i1.py` stages only the two current reports
+under `first_view/results/X1/current.md` and `X2/current.md`; the existing copy
+workflow supplies `first_view/case/` and `first_view/key/`. Stage raw acquisitions
+and audit/history separately under `deferred/X1/` and `deferred/X2/` in the same
+reviewer workspace. Current structured JSON also belongs to deferred material.
+The first-view package contains only fixed case/key and the two current reports.
+
+The same reviewer assignment first reads only `first_view/`, saves
+`out/final-assessment.json` and `out/final-assessment.md`, and treats those files
+as fixed before reading `deferred/`. They must not be edited after deferred access;
+subsequent corrections go in separately labelled preservation/errata records.
+This uses a **prompt-only chronological access boundary**: both directories are
+readable to the app in one workspace. There is no filesystem isolation or host-
+enforced mid-run lock. Audit existing tool/write traces for early deferred reads
+or later edits of the locked files; if observed or ordering cannot be established,
+report the limitation/contamination and do not claim independent staged judgments.
+No extra evaluator stage, session, model call or runner is introduced.
+
+Withhold operational treatment labels, prompts, blind maps and usage from the
+first view. Deferred native write provenance is available only where already
+captured and may reveal treatment; do not present it as blinded. The rendered format
 may reveal treatment; record partial unblinding rather than claim perfect
 blinding or alter substantive content to hide it. A renderer status UNVERIFIED
 means no flash verifier has checked the finding; evaluator credit depends on
 its meaning and source support, not that label.
 
-1. Acquisition: eligible source-grounded complete findings and facets captured
-   before final report production; novel supported findings separately; partial
-   leads, uncertain propositions, unsupported claims, contradictions and missing
-   eligible facets separately. Read counts are coverage activity, not quality.
-2. Preservation: map each supported upstream finding/facet to final output as
-   retained, narrowed, lost, contradicted or visibly unresolved; separately map
-   conditions, implications, validation proposals and uncertainty. Use only the
-   arm's supported upstream substance as the denominator; publish numerator and
-   denominator, with N/A for zero. Do not count copied falsehoods as success.
+1. Acquisition inventory, opened only after final judgments are saved/fixed:
+   control uses `out/observations.md` including later qualifying blocks,
+   `out/history.md`, chronological `out/snapshots/*.md`, and current `out/draft.md`.
+   Maintained uses chronological `out/snapshots/*.json`, the complete raw
+   `out/draft.json` including `revision_history`, and its current finding records.
+   Use already available native write traces to corroborate ordering/contents;
+   do not infer earlier records from final prose. For each source-supported
+   proposition/facet, trace the earliest actually saved occurrence, attached
+   scope/conditions/proposal/uncertainty and later dispositions. De-duplicate
+   repeated snapshots by semantic identity. Keep complete supported findings,
+   partial/title-level leads, uncertain propositions and unsupported claims
+   separate. Report missing required early records and uncertain ordering.
+2. Report two separate preservation results. **Mechanical render fidelity** is
+   frozen current typed records to rendered current report (for control, exact
+   authored report to its copied final). It is not temporal acquisition quality.
+   **Semantic preservation** maps source-supported material actually recorded
+   during investigation to the final report: retained, narrowed, lost,
+   contradicted, visibly unresolved, or legitimately corrected/superseded with
+   source-supported reasons. Show legitimate changes separately from accidental
+   loss; do not award loss for correcting a false lead or count copied falsehoods
+   as success. Publish explicit numerator/denominator and dispositions, with N/A
+   for zero. If early records were not saved, mark the temporal preservation
+   denominator `not_recoverable` (and state the observable subset), rather than
+   using final `draft.json` as both acquisition inventory and rendered result.
 3. Derivation: distinguish a recorded lead from an established implication and
    an adequate distinguishing test. A title, citation or test-shaped sentence
    does not by itself earn complete-finding or executed-validation credit.
@@ -112,6 +165,8 @@ Four candidate assignments: at most 7200 seconds and 640 parent/native responses
 Two evaluator assignments: at most 5400 seconds and 320 responses. Total scheduled
 model span: 12600 seconds (3h30m), with a 14400-second phase wall ceiling including
 host work. Host preparation/rendering cap: 300 seconds per slot within that phase.
+These are maximum experimental allowances, not a per-project latency promise
+or evidence that an ordinary research user should wait 3.5 hours.
 Unused capacity is not transferred, and no extra assignment is admitted. Muse
 reminder-child calls are recorded separately; their token cost remains unknown
 where not exposed and they are not implied to be covered by a parent response
@@ -138,10 +193,16 @@ reported. One pair cannot establish reliability. Even a promising I1 result
 requires a separately authorized end-to-end comparison through a fresh,
 same-app/same-flash-model corrected verifier before any end-to-end claim.
 That later verifier is not one of the six proposed I1 assignments.
+Its current assembler is **NOT QUALIFIED FOR FOLLOW-ON VERIFIER USE**: review
+`V-FOLLOWON-1` demonstrated an overbroad source-absence trigger on ordinary
+missing-input conditions and proposed unsupported-input tests. That issue is
+recorded in `FOLLOW_ON_VERIFIER_STATUS.md`, unchanged and outside I1's execution
+graph; it is a prerequisite for later verifier use, not an additional I1 gate.
 
 ## Authorization
 
-Development is authorized. Candidate/evaluator calls, retries, new approval files,
-account probes and pushes are not. No launch approval has been created. Freeze
+Offline amendment and the already requested GitHub review publication are
+authorized. Candidate/evaluator calls, retries, new approval files and account
+probes are not. No launch approval has been created. Freeze
 and review this proposal and its exact hashes, then obtain a separate user go
 and applicable existing account headroom checks before any dispatch.
