@@ -22,7 +22,8 @@ python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # build, then
 python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # markers, patches, stale output, lint, PM7 byte parity
 ```
 
-`build.py` reads the pinned base page (SHA-256 `f1bc81ae…`), strips the old onboarding and tour, splices `src/`
+`build.py` reads the pinned base page (SHA-256 `fc4e0fed…`), swaps the base's Settings managers for the fork in
+`src/settings` (see Settings below), strips the old onboarding and tour, splices `src/`
 between `<!-- O55:… -->` markers and applies a few guarded, exactly-once patches (hover-tag roots, labels, the Teacher
 persona, and two owner exposures: Settings Transfer preview/apply and the layout restore).
 
@@ -46,6 +47,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `src/js/90–95` | Concept demo pill; boot, shims for the shell's existing callers, driver switches (`?o55=fresh|off|screen=<id>`, `?o55scenario=<id>`). |
 | `src/css/` | Window, components, motion, art. Colours come from the live theme tokens. |
 | `src/coverage.map.json` → `src/coverage.json` | Every setup-plan field (63) and conditional (26) mapped to the screen or control that sets it, plus screens → scenes and scenarios → drivers. |
+| `src/settings/` | The Settings layer, forked from the base's T50 Settings refresh and composed by `tools/settings_layer.py`: `kit.js` + `kit.d/*.js` (rows, controls, placement, plain pages, look settings, wizard, flows), `managers/*.js` (one per manager page), `styles.css` + `styles.d/*.css`, `data.json` + `data.d/`, `placement.json` + `o55/placement.d/*.json` (where every canonical setting id is drawn), `o55/rows.d/*.json` (per-row wording and behaviour). |
 
 ## Tools (all file:// with the local Chrome; outputs go to /tmp or the Evidence share, never the repository)
 
@@ -67,6 +69,35 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 Recorded media (screenshots, contact sheets, film frames, videos, audio renders) is scratch: it goes to `/tmp` or
 `~/pm-scratch`, is reviewed, and is deleted when the work is finished (Jared, 2026-09-24). Results are written down
 inline in the landing records and in `REPORT.md` instead. Every tool deletes its Chrome profile when it exits.
+
+## Settings
+
+Settings keeps the shell's layout (chapter rail, Settings Home, page index, manager tabs) and reworks what is inside
+it for someone who has never configured a developer tool. Rules the pages follow:
+
+- **One home per setting.** Every one of the 892 canonical ids is drawn once. `o55/placement.d/<nn>-<page>.json`
+  decides the groups of a page (`sections`: title, one-line help, `order`, `advanced` = under the page's single
+  "More options"), which ids go where and in what order (`overrides`, first match wins), hand-written rows moved into
+  a group (`hand_moves`, placed with a section's `after`) and hand-written rows retired because they repeated an
+  inventory row (`hand_drops`). The build validates that every id lands in a real group and that no rule is dead.
+- **Plain words, decided per row.** `o55/rows.d/<nn>-<page>.json` holds a row's label, help, option labels, unit and
+  bounds (a bound may follow another setting: `maxFrom` / `minFrom`), visibility (`when`, which follows chains),
+  routes to the page that really owns an action (`route`, `pm51`), step flows (`flow`), editors for structured
+  values (`editor`) and `themeOwn` for numbers the theme decides. A row id may be decided in one file only. Labels
+  without a decision fall back to sentence case.
+- **Guided set-ups look like onboarding.** `PM51.wizard` (kit.d/60-wizard.js) draws the onboarding window, rail,
+  cards and footer for every step-by-step helper (MCP, plugins, skills, commands, shortcuts, personas, crews, goal
+  templates, repositories, notification agents).
+- **Settings change something.** Actions open their owner or run a flow; a stored value that changed nothing is a
+  bug. The look settings (kit.d/17-look.js, styles.d/12-look.css) write the PM6 token contract on `:root` or a root
+  attribute, only once changed, so each theme keeps its own values until you choose otherwise and a reset removes
+  exactly what was written. Text size, line spacing and animation speed scale the page's own values through one
+  generated sheet that exists only while one of them is changed.
+- **No side colour bars, no pills, no emoji** in Settings; icons are SVG. Styles avoid `:has()` (lint enforces it;
+  a page-wide `:has()` made every DOM insertion restyle the whole document).
+
+Verifying a change: `build.py --check`, then open the page with `?o55=off` (skips onboarding, which freezes headless
+Chrome) and drive `PM51.go(domain, workspace)`; check all eight themes and 760 / 900 / 1280 / 1700 px widths.
 
 ## The Guided Tour
 
