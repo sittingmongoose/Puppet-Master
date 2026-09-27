@@ -1,0 +1,153 @@
+{
+ "schema": "er6.r1b_policy.v2",
+ "revision": "rev2 (responds to CHANGES_REQUESTED on d9664af3c)",
+ "frozen_utc": "2026-09-27T02:49:56Z",
+ "status": "FROZEN_NOT_DISPATCHED: launch requires r1b/APPROVAL.json written on the user's explicit go (schedule + this file's sha256 + account headroom snapshot)",
+ "purpose": "verifier-stage diagnostic on frozen R1 stage-1 packages; not an end-to-end or discovery qualification",
+ "variable": "host-built source-centred evidence bundle v3 as the verifier's first view (candidate) vs reading cited lines directly (control)",
+ "common_to_both_arms": [
+  "same frozen stage-1 package (observations.md, draft.md) and host draft-blocks view",
+  "same corpus (full case_bundle)",
+  "same app/model/Max and caps: 1800 s, 160 native responses, 1 assignment",
+  "same delivery protocol: per-block decisions + additions; host assembles delivered.md; undecided blocks published UNVERIFIED",
+  "same negative-claim rule: absence rejections need recorded context + bounded corpus search, else unresolved",
+  "Muse host --disable-shell; zcode tools Read/Write/Edit/Grep/Glob; no web",
+  "replacement text delimited by <<< and >>>; conflicting or malformed records are published as not verified",
+  "graded projection: section 1 current asserted findings + section 4 additions; sections 2/3 earn no retention credit; section 5 history"
+ ],
+ "package_rule": "outcome-independent: the first stage-1 package produced per app in R1's preregistered order (Muse: M-control/stage1; zcode: Z-candidate/stage1)",
+ "authorized_schedules": [
+  "block1"
+ ],
+ "schedules": {
+  "block1": [
+   [
+    "R1b-M-P1-control",
+    "M-control",
+    "muse",
+    "control"
+   ],
+   [
+    "R1b-M-P1-candidate",
+    "M-control",
+    "muse",
+    "candidate"
+   ],
+   [
+    "R1b-Z-P1-candidate",
+    "Z-candidate",
+    "zcode",
+    "candidate"
+   ],
+   [
+    "R1b-Z-P1-control",
+    "Z-candidate",
+    "zcode",
+    "control"
+   ]
+  ],
+  "block2": [
+   [
+    "R1b-M-P2-candidate",
+    "M-candidate",
+    "muse",
+    "candidate"
+   ],
+   [
+    "R1b-M-P2-control",
+    "M-candidate",
+    "muse",
+    "control"
+   ],
+   [
+    "R1b-Z-P2-control",
+    "Z-control",
+    "zcode",
+    "control"
+   ],
+   [
+    "R1b-Z-P2-candidate",
+    "Z-control",
+    "zcode",
+    "candidate"
+   ]
+  ]
+ },
+ "block2_status": "listed for identity only; NOT authorized; the launcher refuses it",
+ "block1_order": "serial; Muse control->candidate, zcode candidate->control (counterbalanced)",
+ "outcome_rules": {
+  "continue": [
+   "goal_complete",
+   "cap_stop",
+   "incomplete_semantic"
+  ],
+  "stop": [
+   "quota_stop",
+   "harness_failure"
+  ],
+  "carrier": "a malformed verifier carrier is the arm's own result (non-authoritative blocks; assembly complete=false); it does not stop the paired slot",
+  "relaunch": "a slot directory without a terminal continue-outcome stops the schedule; manual disposition required"
+ },
+ "stop_rules": [
+  "harness fault stops the block (run_r1b --schedule stops at the first fault)",
+  "after block-1 evaluation: stop and repair if either arm loses materially confirmed upstream content, introduces a consequential false dismissal, or the harness faulted; no block 2 purchase to complete a table",
+  "no retries, no best-of"
+ ],
+ "metrics": [
+  "native responses (Muse parent + reminder-child counts)",
+  "input/cache-read/uncached/output/reasoning tokens where exposed",
+  "source read calls, unique sources, repeats (tool audit)",
+  "bundle bytes and delivered lines (candidate)",
+  "goal span, host prep and assembly seconds",
+  "decisions coverage (assembly report: decided/unverified/absence-without-search)",
+  "quality by finding identity from two blinded xhigh reviewers",
+  "tool-result bytes where the app log exposes them, else reported unavailable",
+  "serialized bundle bytes AND tool-result traffic, output tokens and elapsed time (file size is not token charge)"
+ ],
+ "evaluation": {
+  "reviewers": 2,
+  "one_per_app_pair": true,
+  "prompt": "r1b/prompts/EVALUATOR_PROMPT_R1B.txt",
+  "runner": "tools/r1b/run_reviewer_v2.py rev2 (output-independent watchdog, process-group kill, receipt in finally, FAILED_INCOMPLETE on missing/invalid grades)",
+  "caps": "2700 s and 160 responses each",
+  "treatment_artifacts_withheld_until_after_grading": true,
+  "c07_transpose_adjudication": "eligible: handle or truthfully refuse transpose pipelines (S109 L553-600, L2720); unassessable: normative decode order",
+  "workspace_builder": "tools/r1b/build_review_workspaces_r1b.py (neutral titles, treatment artifacts withheld, leak scan refuses operational markers)"
+ },
+ "reviewer_effort": "requested --effort xhigh; R1 streams reported effort null and --restricted ignores user settings (effortLevel xhigh), so effective effort is unconfirmed; v2 records argv and init fields; requested and observed effort are recorded separately; neither is inferred from the other",
+ "account_headroom": "checked once at go time with the supported mechanisms (Claude get_usage; Muse usage/read after each Muse slot via the runner gate) and recorded in APPROVAL.json",
+ "offline_checks": "python3 -m unittest tools/r1b/test_r1b.py -> 51 tests OK (stubs for every native boundary, process and clock)",
+ "case_manifest": {
+  "root": "case_bundle",
+  "manifest_sha256": "01e8109f6fa2cc387c05b2116e0d8339ae83e797b1db36d50443c52743b20218"
+ },
+ "files_sha256": {
+  "/home/sittingmongoose/.local/bin/muse-bin-1.4.0-R4161.1": "1b68bd4518d53a2aaff063915df4d141b0a205e6d79038299d04e3a14e85a5b9",
+  "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+  "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/adapters/zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633",
+  "r1b/prompts/EVALUATOR_PROMPT_R1B.txt": "4cfa8ea508c5c9df0c5913e6c03a184c56618f93d83bab5dfc0c8ceb83e5b930",
+  "r1b/prompts/verifier_candidate.txt": "1104172530285ad97d155267051e81148474fdfd2077c4a7212d68cb328ec77e",
+  "r1b/prompts/verifier_control.txt": "7e3e2cb5e3477f8fee5a69cdad125cddff4873bb3c8651496115f33bf031587b",
+  "runs/M-candidate/frozen/stage1/draft.md": "557e0810f9db3c44612e8092d396c4b90c37e611e067bfe956b6d804045fc1ee",
+  "runs/M-candidate/frozen/stage1/observations.md": "1275afeb741f6abb27019e9d31fa5cd9b5269837e544ea6239e0ba234de197d7",
+  "runs/M-control/frozen/stage1/draft.md": "c8aa5f38cec8445a424595b1f4b234b0729b5dac89ad5502de12011adbb36216",
+  "runs/M-control/frozen/stage1/observations.md": "8ddf2ec0d7f4336a2d163df6e46a8cae270eef6ae531d16d4bdc3d59fdb36ddd",
+  "runs/Z-candidate/frozen/stage1/draft.md": "c6985f0a4faacf63cd8640d86234f9208679cec18f0cf19c12862b2640edf5b6",
+  "runs/Z-candidate/frozen/stage1/observations.md": "c22d281c6e81306435c4df9694e0a561dc421700a0a43639d6b422453413b1d1",
+  "runs/Z-control/frozen/stage1/draft.md": "78b480f1f7b81251528d1db882f2392e89b55cd75905c5e4dd0b5190941be896",
+  "runs/Z-control/frozen/stage1/observations.md": "88c59fc776e10e9739b45047121224478e052c30e75f2f9085c7722d0f2d5e1f",
+  "tools/muse_goal_driver.py": "f5af9ef6ef420fbd6452677b11fb31341f17e57a6a0b90b4727dbe3e71adf218",
+  "tools/r1b/assemble_delivery.py": "c502440ae92bcdfab6b3775f6cde625db722c4732a5d8b9cb363581a88f24c1a",
+  "tools/r1b/build_evidence_bundle_v3.py": "3280ea0df5f3a3ffaf06d5065071338e9352a91fd1e2fbf96c07bb661f9c2063",
+  "tools/r1b/build_review_workspaces_r1b.py": "eef91992c3c33a8d667ba1c3f9db126f9f2dcadc8b75abc91b08c15b1ee8149e",
+  "tools/r1b/muse-serve-noshell.sh": "fecdb795d96fcdbf8895349dc81435dbf28b8e07ecbdbdaee2cff61c3f790586",
+  "tools/r1b/quote_locator.py": "e14de3cb7cb5575a86bd4f4f2c7e07ee39575fc6fb39834c209cee7a73693788",
+  "tools/r1b/run_goal_r1b.py": "4cfd7aee946cd8db9ef70a0adf2cfe8279a5cdc13cb3c8b7cd299775dee97ae7",
+  "tools/r1b/run_r1b.py": "6eddb5b76c1328563dd3ec2c2a4b7c2e4e993cbb7fca5824e3d17632e2173e0d",
+  "tools/r1b/run_reviewer_v2.py": "37f96fdbae6222f631565c321c856534ce033dda5a1984ad349d148b9b5fdb08",
+  "tools/r1b/test_r1b.py": "5951a30b90b3920823936075a098e69cbbdc7224a90d474eb7355b2fd79968c1",
+  "tools/run_arm.py": "330ae90097254192bf95fd52ebee4cdda0a9d19325bc3c4c88bde6ad4b4d4520",
+  "tools/run_goal.py": "7325ed95a89767b377de49dbe27bf2f1af989ee04521ff8f7e92a560fb367d5b",
+  "tools/zcode_goal_driver.py": "b2d1a36308769a225005e586e894f180d7bb38bd9f5c481a1c86c49c41755eac"
+ }
+}
