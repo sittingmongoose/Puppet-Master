@@ -18,7 +18,7 @@ html[data-o55-nier-scene] #panel-settings[data-o55-home] { background: transpare
    drawn as the surface itself; the current project's tint keeps its gradient over the canvas). */
 html[data-o55-nier-scene] #pm7UsageApp .pm7u-rail { background-color: var(--surface); }
 html[data-o55-nier-scene] .page-projects .project-card-bento { background-color: var(--background); }
-html[data-o55-nier-scene][data-theme$="-dark"] #o55-nier-scene { --o55-nier-scene-a: .19; }
+html[data-o55-nier-scene][data-theme$="-dark"] #o55-nier-scene { --o55-nier-scene-a: .2; }
 .o55-nier-scene-art {
   position: absolute; left: 0; right: 0; bottom: 0; height: 60%;
   color: var(--o55-nier-ink, var(--text-primary)); opacity: var(--o55-nier-scene-a);

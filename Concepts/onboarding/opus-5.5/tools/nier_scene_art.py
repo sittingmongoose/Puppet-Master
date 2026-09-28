@@ -186,10 +186,10 @@ class Scene:
         if d:
             self.items.append(f'<path{self._a(None, op, cls, fill=True)} d="{d}"/>')
 
-    def k(self, d: str, w=None, op=None):
-        """An outline filled with the ground colour, hiding what is behind it."""
+    def k(self, d: str, w=None, op=None, stroke=True):
+        """An outline filled with the ground colour, hiding what is behind it (stroke=False: the fill alone)."""
         if d:
-            self.items.append(f'<path{self._a(w, op, "k")} d="{d}"/>')
+            self.items.append(f'<path{self._a(w, op, "k")}{"" if stroke else " stroke=\"none\""} d="{d}"/>')
 
     def open(self, attrs: str):
         self.items.append(f'<g {attrs}>')
@@ -863,8 +863,186 @@ def bunker() -> Scene:
     sc.f(solid, op=.85)
     return sc
 
+# =====================================================================================================================
+# Desert: long dunes burying apartment blocks, a great pipe arching out of the sand, heat shimmering over it all.
+# =====================================================================================================================
+def dune_profile(x0, x1, base, crests, rng, step=16):
+    """A dune line: smooth swells with sharper crests. crests = [(x, height, width)]; returns points."""
+    ps = []
+    x = x0
+    while x <= x1 + step:
+        y = base
+        for cx_, ch_, cw_ in crests:
+            d = (x - cx_) / cw_
+            # windward side long and gentle (left), lee side short and steep (right)
+            y -= ch_ * (math.exp(-d * d * 2.2) if d < 0 else math.exp(-d * d * 6.5))
+        y += math.sin(x * .013 + base) * 2.5
+        ps.append((x, y))
+        x += step
+    return ps
 
-SCENES = {'city': city, 'bunker': bunker}
+
+def lee_hatch(ps, crests, rng, gap=5.0, depth=26, angle=112):
+    """Shade the steep side just past each crest with short slanted strokes."""
+    out = ''
+    for cx_, ch_, cw_ in crests:
+        span = [p for p in ps if cx_ + 2 < p[0] < cx_ + cw_ * .55]
+        if len(span) < 2:
+            continue
+        poly_ = span + [(p[0], p[1] + depth * (1 - (p[0] - cx_) / (cw_ * .55))) for p in reversed(span)]
+        out += hatch(poly_, angle, gap, rng, keep=.85, inset=1.2)
+    return out
+
+
+def ripples(x0, x1, y0, y1, rng, count):
+    out = ''
+    for _ in range(count):
+        x, y = rng.uniform(x0, x1), rng.uniform(y0, y1)
+        L = rng.uniform(10, 26)
+        out += f'M{n(x)} {n(y)}q{n(L / 2)} {n(-rng.uniform(1.5, 3))} {n(L)} 0'
+    return out
+
+
+def desert() -> Scene:
+    sc = Scene('desert', 'Desert')
+    rng = random.Random(1717)
+    # the sun behind haze, heat trembling low over the sand
+    sc.s(circle_path(1210, 214, 46), w=.9, op=.7)
+    sc.s(hline(1150, 202, 120) + hline(1158, 222, 104) + hline(1172, 240, 76), w=.7, op=.55)
+    heat = ''
+    for i in range(22):
+        x = rng.uniform(40, 1560)
+        y = rng.uniform(270, 336) if i < 15 else rng.uniform(170, 260)
+        L = rng.uniform(24, 64)
+        k = max(2, int(L / 9))
+        heat += f'M{n(x)} {n(y)}' + ''.join(f'q{n(4.5)} {n(-2 if j % 2 else 2)} 9 0' for j in range(k))
+    sc.s(heat, w=.7, op=.45)
+    # the far horizon: a mesa and a line of drowned towers, one leaning, faint and hatched
+    far = [(-10, 358), (120, 355), (150, 336), (178, 337), (196, 356), (420, 354), (1310, 354), (1350, 306), (1470, 302),
+           (1512, 354), (1610, 356)]
+    sc.k(poly(far + [(1610, 380), (-10, 380)]), stroke=False)
+    sc.s(poly(far, close=False), w=.75, op=.55)
+    sc.s(hatch([(1350, 306), (1470, 302), (1512, 354), (1310, 354)], 90, 7, rng, keep=.8, inset=3), w=.55, op=.35)
+    towers = ''
+    th = ''
+    for tx, tw, tt, lean in ((560, 26, 210, 0), (598, 18, 262, 3), (640, 30, 236, -4), (980, 22, 176, 6), (1010, 34, 250, 0)):
+        pts_ = [(tx, 356), (tx + lean, tt + rng.uniform(0, 10)), (tx + tw * .5 + lean, tt + rng.uniform(4, 18)), (tx + tw + lean, tt + rng.uniform(0, 8)), (tx + tw, 356)]
+        towers += poly(pts_)
+        th += hatch(pts_, 90, 5, rng, keep=.7, inset=2)
+    sc.k(towers, w=.7, op=.5)
+    sc.s(th, w=.5, op=.3)
+
+    # back dunes, with telephone poles marching over them, their wires sagging
+    d1c = [(260, 70, 260), (820, 54, 300), (1340, 80, 280)]
+    d1 = dune_profile(-20, 1620, 420, d1c, rng)
+    sc.k(poly(d1 + [(1620, 600), (-20, 600)]), stroke=False)
+    sc.s(smooth(d1), w=.9)
+    sc.s(lee_hatch(d1, d1c, rng, gap=6, depth=22), w=.55, op=.6)
+    yat = lambda prof, x: min(prof, key=lambda p: abs(p[0] - x))[1]
+    poles = ''
+    tops = []
+    for i, px in enumerate((820, 905, 982, 1052, 1116, 1174)):
+        hh = 88 - i * 10
+        gy = yat(d1, px) + 4
+        lean = (-3, 2, -1, 4, -2, 6)[i]
+        tops.append((px + lean, gy - hh))
+        poles += line(px, gy, px + lean, gy - hh) + line(px + lean - 9 + i, gy - hh + 7, px + lean + 9 - i, gy - hh + 7)
+    wires = ''
+    for (x0, y0), (x1, y1) in zip(tops, tops[1:]):
+        for dy in (7, 10):
+            wires += f'M{n(x0)} {n(y0 + dy)}Q{n((x0 + x1) / 2)} {n((y0 + y1) / 2 + dy + 14)} {n(x1)} {n(y1 + dy)}'
+    wires += f'M{n(tops[-1][0])} {n(tops[-1][1] + 7)}q12 26 6 56'
+    sc.s(poles, w=.85)
+    sc.s(wires, w=.6, op=.8)
+
+    # a far block, nearly swallowed
+    sc.open('transform="rotate(-6 760 400)"')
+    sc.k(poly([(730, 400), (730, 330), (792, 330), (792, 400)]), w=.85)
+    sc.f(''.join(rect(737 + c * 14, 337 + r * 15, 7, 7) for c in range(4) for r in range(3) if (c + r) % 3), op=.6)
+    sc.close()
+
+    # the great pipe: out of the sand, over, and back in, ringed at its joints
+    PX, PY, PRo, PRi = 560, 522, 176, 146
+    outer = arc_pts(PX, PY, PRo, PRo * .92, 180, 360, 44)
+    inner = arc_pts(PX, PY, PRi, PRi * .91, 180, 360, 44)
+    sc.k(poly(outer + list(reversed(inner))))
+    rings = ''
+    for a in (200, 226, 254, 284, 314, 340):
+        ca, sa = math.cos(math.radians(a)), math.sin(math.radians(a))
+        p0 = (PX + PRo * ca, PY + PRo * .92 * sa)
+        p1 = (PX + PRi * ca, PY + PRi * .91 * sa)
+        q0 = (PX + (PRo + 4) * ca, PY + (PRo + 4) * .92 * sa)
+        rings += line(*p0, *p1) + line(*q0, p1[0] + (q0[0] - p0[0]) * 1.2, p1[1] + (q0[1] - p0[1]) * 1.2)
+    sc.s(rings, w=.8)
+    sh = [p for p in inner if p[0] > PX + 20] + list(reversed([p for p in outer if p[0] > PX + 20]))
+    sc.s(hatch(sh, 62, 4.6, rng, keep=.88, inset=1.5), w=.55, op=.75)
+    # a broken pipe standing out of the sand at the right, its mouth dark
+    sc.open('transform="rotate(26 1400 486)"')
+    sc.k(poly([(1382, 486), (1382, 356), (1418, 356), (1418, 486)]))
+    sc.k('M1382 356a18 7 0 1 0 36 0a18 7 0 1 0 -36 0Z', w=.9)
+    sc.f('M1387 356a13 4.5 0 1 0 26 0a13 4.5 0 1 0 -26 0Z')
+    sc.s(hline(1382, 392, 36) + hline(1382, 397, 36) + hline(1382, 450, 36) + hline(1382, 455, 36), w=.7)
+    sc.s(hatch([(1406, 362), (1418, 362), (1418, 486), (1406, 486)], 90, 3.4, rng, inset=1), w=.55, op=.75)
+    sc.close()
+
+    # mid dunes, burying the pipe's feet
+    d2c = [(120, 46, 220), (380, 40, 180), (760, 44, 200), (1030, 62, 240), (1480, 44, 220)]
+    d2 = dune_profile(-20, 1620, 490, d2c, rng)
+    sc.k(poly(d2 + [(1620, 600), (-20, 600)]), stroke=False)
+    sc.s(smooth(d2), w=.95)
+    sc.s(lee_hatch(d2, d2c, rng, gap=5.5, depth=24), w=.55, op=.65)
+
+    # two apartment blocks sinking into the front dunes: balconies in bands, windows in dark rows, some filled with sand
+    def block(x, base, w, h, tilt, floors, cols, seed):
+        br = random.Random(seed)
+        sc.open(f'transform="rotate({num(tilt)} {n(x + w / 2)} {n(base)})"')
+        top = base - h
+        sc.k(poly([(x, base), (x, top + 6), (x + w * .3, top), (x + w * .55, top + 10), (x + w * .8, top + 4), (x + w, top + 8), (x + w, base)]))
+        fh, cw = h / floors, w / cols
+        slabs, voids = '', ''
+        for f in range(1, floors):
+            yy = base - f * fh
+            slabs += hline(x - 4, yy, w + 8) + hline(x - 4, yy + 3, w + 8)
+            for c in range(cols):
+                if br.random() < .6:
+                    voids += rect(x + c * cw + cw * .24, yy - fh * .7, cw * .52, fh * .48)
+        sc.s(slabs, w=.7, op=.85)
+        sc.f(voids, op=.8)
+        sc.s(hatch([(x + w * .84, base), (x + w, base), (x + w, top + 8), (x + w * .84, top + 6)], 75, 4.2, rng, keep=.9, inset=1), w=.55, op=.7)
+        sc.close()
+    block(140, 548, 188, 262, 7, 9, 6, 3)
+    block(1098, 548, 158, 216, -13, 7, 5, 5)
+
+    # a machine's round head, half sunk in the sand, still looking out
+    mh = circle_path(944, 530, 17) + 'M927 526q17 -7 34 0'
+    sc.k(mh, w=1)
+    sc.f(circle_path(938, 520, 2.6) + circle_path(951, 520, 2.6))
+    sc.s('M944 513v-9M941 504h6', w=.8)
+    # the front dunes over the blocks' lower floors; sand blowing off the crests
+    d3c = [(250, 78, 240), (720, 30, 260), (1180, 90, 250), (1560, 40, 200)]
+    d3 = dune_profile(-20, 1620, 552, d3c, rng)
+    sc.k(poly(d3 + [(1620, 600), (-20, 600)]), stroke=False)
+    sc.s(smooth(d3), w=1.1)
+    sc.s(lee_hatch(d3, d3c, rng, gap=4.6, depth=32), w=.6, op=.72)
+    wisps = ''
+    for prof, cr in ((d1, d1c), (d2, d2c), (d3, d3c)):
+        for cx_, ch_, cw_ in cr:
+            cy_ = yat(prof, cx_)
+            for j in range(3):
+                L = rng.uniform(18, 40)
+                wisps += f'M{n(cx_ + 2)} {n(cy_ - 1 - j * 2)}q{n(L * .5)} {n(-4 - j * 2)} {n(L)} {n(-2 - j * 3)}'
+    sc.s(wisps, w=.55, op=.55)
+    sc.s(ripples(0, 1600, 505, 556, rng, 24), w=.6, op=.55)
+    # a dead shrub, a snapped pole leaning into the wind
+    shrub = ''
+    for i in range(7):
+        a = math.radians(-160 + i * 22)
+        shrub += f'M880 {n(yat(d3, 880) + 2)}q{n(math.cos(a) * 6)} {n(math.sin(a) * 9)} {n(math.cos(a) * 14)} {n(math.sin(a) * 16)}'
+    sc.s(shrub, w=.75)
+    return sc
+
+
+SCENES = {'city': city, 'bunker': bunker, 'desert': desert}
 
 
 def main(argv=None) -> int:
