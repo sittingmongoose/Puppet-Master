@@ -1,0 +1,116 @@
+{
+  "schema": "er6.i2-preparation-freeze.v1",
+  "created_utc": "2026-09-28T04:26:13.538191+00:00",
+  "status": "PREPARED_UNAUTHORIZED",
+  "authorization": false,
+  "reviewed_base": "9a345ce3377e7a412fa32884d709f5379360740b",
+  "files": {
+    "CRITERION.md": {
+      "sha256": "3ce2d0f13d325c657cd8bfa16b0eb56752f65409d621284132b51a29a1ef2192",
+      "bytes": 3671
+    },
+    "NEXT_TRIAL.md": {
+      "sha256": "79c8913efa89e83f721d05dd1412d66184f4bf9fe397e78fd4a31e38168b88ac",
+      "bytes": 14403
+    },
+    "proposal.json": {
+      "sha256": "991a3d3d350573cd6179e63e604798c8a75f3660117f2f0f39649dd89009567b",
+      "bytes": 7302
+    },
+    "D1_INDEPENDENT_REVIEW.md": {
+      "sha256": "b7168d19345a2814e02588ccd01884b3113ea717ec60c04c52fc177f42141643",
+      "bytes": 12237
+    },
+    "tools/current_criterion.py": {
+      "sha256": "a6c225dfb882cbc9ebd78194e1159d53336c042c6bad4567af1fe7616f4487a3",
+      "bytes": 10769
+    },
+    "tools/evaluator_dispatch.py": {
+      "sha256": "f01a7501705361c4cfe5d79864e159fa8c19a95a06aecd4af7b9bb73fed75661",
+      "bytes": 12629
+    },
+    "tools/prep_plan.py": {
+      "sha256": "cda8a5eb39c17622e328fa1d63d639c1b409d18af9f1d356eb827beb5673df79",
+      "bytes": 5018
+    },
+    "tools/research_store.py": {
+      "sha256": "8cba600b240cddb6951aa600146e3b0ccc8d4d1ffcd7e90bedc5f99378b05762",
+      "bytes": 2238
+    },
+    "tools/test_current_criterion.py": {
+      "sha256": "abb3b827914a8773633e3db6e3df1925bc9529df586eb96440485915468580e9",
+      "bytes": 11837
+    },
+    "tools/test_evaluator_dispatch.py": {
+      "sha256": "4943bcd4584dab235802b887e2940e4fb22e76462b45300f9761690315837e4f",
+      "bytes": 18227
+    },
+    "tools/test_prep_plan.py": {
+      "sha256": "03b45464451dda3627ef31c2bab9558176031f24299ded592b3653b9d2f39a33",
+      "bytes": 9750
+    },
+    "prompts/common.txt": {
+      "sha256": "8e5a5b5d809d2d90a7fdf83e07d98048527499a9e3fe4121209261becf83db30",
+      "bytes": 2428
+    },
+    "prompts/evaluator-task.txt": {
+      "sha256": "98179f83255e85be231fe1c262077eca2380d7580681934700342364a6232643",
+      "bytes": 7590
+    },
+    "prompts/investigator-control.txt": {
+      "sha256": "7d13fed2bc8b23a200e71b5464b92963ce7c0c60f8735e0a6cee853f0f2406c3",
+      "bytes": 6198
+    },
+    "prompts/investigator-maintained.txt": {
+      "sha256": "b193f19c919f0b9e71a41f96fc8955d24cfa453a3b3175418121fa94f5aee69b",
+      "bytes": 7175
+    },
+    "fixtures/criterion-task.json": {
+      "sha256": "6b86863d4c29ab5b01254fcaf3bf6a87a1af8ef66b2c5eba6b3415f496d83d71",
+      "bytes": 4821
+    }
+  },
+  "reused_files_sha256": {
+    "tools/run_goal.py": "7325ed95a89767b377de49dbe27bf2f1af989ee04521ff8f7e92a560fb367d5b",
+    "tools/muse_goal_driver.py": "f5af9ef6ef420fbd6452677b11fb31341f17e57a6a0b90b4727dbe3e71adf218",
+    "tools/zcode_goal_driver.py": "b2d1a36308769a225005e586e894f180d7bb38bd9f5c481a1c86c49c41755eac",
+    "tools/run_arm.py": "330ae90097254192bf95fd52ebee4cdda0a9d19325bc3c4c88bde6ad4b4d4520",
+    "tools/r1b/run_goal_r1b.py": "4cfd7aee946cd8db9ef70a0adf2cfe8279a5cdc13cb3c8b7cd299775dee97ae7",
+    "tools/r1b/muse-serve-noshell.sh": "fecdb795d96fcdbf8895349dc81435dbf28b8e07ecbdbdaee2cff61c3f790586",
+    "tools/r1b/run_r1b.py": "a0694ff3d865497e3c7c511d752a5ad4c7e1b3136783fcfffec4e4ab8daf9a9d",
+    "tools/r1b/run_reviewer_v2.py": "7d2c410f16b96230e3b57448ee21e462009843f4dff6e461a04ce168d31a0189",
+    "tools/r1b/build_review_workspaces_r1b.py": "06b9c69a6fe46b6172655e1bc550a4b56ba001842006c035e3e38caf80bbc8a8",
+    "tools/r1b/test_r1b.py": "1be8849ec2500097dcc02e53a368c4d870675d4718acee273d2351c511f4fb13",
+    "delivery-v2/tools/delivery_store.py": "81364fd1a4040ba457dd04779d096709c3524bee8704a2c8f453fb18264c85c7",
+    "delivery-v2/tools/evaluator_launch.py": "a89f3336a8471209096105beba78c44d65bf68d1dca2087bebcbe5de6d05fef0",
+    "offline-repair-v1/prompts/common.txt": "8e5a5b5d809d2d90a7fdf83e07d98048527499a9e3fe4121209261becf83db30",
+    "offline-repair-v1/prompts/control-carrier.txt": "96d6d4848e08e73cf804bedf987d8ffaa2475f28443db3f9db0eca6682df53ca",
+    "offline-repair-v1/prompts/investigator-control.txt": "f19a85552269a069d70c38f1104ef6cb65c5952fbbb291f2abf6f6673d4cf305",
+    "offline-repair-v1/tools/stage_i1.py": "96686ac55c9f097d02695152b5b7c41d74050dd3f4d9dc9f2dc8d904ca1b0cf5",
+    "tools/run_reviewer.py": "73541b291dfe4928fb9178f68b2e3b67d3b68c2ab3a79a7f92c3d4c8bdfe5908",
+    "tools/build_review_workspaces.py": "496a0a43d0f51c5868c43f740c95b715db6c59e1ff2c282837a7c9c4f4a564b1",
+    "delivery-v2/tools/run_delivery_check.py": "9684d41027ebb32f67473531e652c783fae377256f8f44b9eb2ebb651d96da23",
+    "delivery-v2/prompts/evaluator-task.txt": "98179f83255e85be231fe1c262077eca2380d7580681934700342364a6232643",
+    "offline-repair-v1/tools/delivery.py": "e1c7ea2e32bd00ef2606b5974b690a4537b6b200fd3c4e620880ae430b9ebe59",
+    "tools/r1b/assemble_delivery.py": "387d9df9d9d5f10673da66cb03545485f04a7c9ce55279ebe65045a8275b5574",
+    "tools/r1b/build_evidence_bundle_v3.py": "3280ea0df5f3a3ffaf06d5065071338e9352a91fd1e2fbf96c07bb661f9c2063",
+    "tools/r1b/quote_locator.py": "e14de3cb7cb5575a86bd4f4f2c7e07ee39575fc6fb39834c209cee7a73693788"
+  },
+  "runtime_pins_sha256": {
+    "/home/sittingmongoose/.local/bin/muse-bin-1.4.0-R4161.1": "1b68bd4518d53a2aaff063915df4d141b0a205e6d79038299d04e3a14e85a5b9",
+    "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+    "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/adapters/zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+  },
+  "case_manifest": {
+    "root": "case_bundle",
+    "manifest_sha256": "01e8109f6fa2cc387c05b2116e0d8339ae83e797b1db36d50443c52743b20218"
+  },
+  "existing_evaluator_key_sha256": "54fdca6a4aa9a6356da545a0c195c835557c2a8b1fe16feb9356d0d09a83fbde",
+  "existing_scoring_sha256": "aa1e2c7aab9128bd1b9e4b2f5c62f7325cc3ff39b6fcdd5d68818742169806bd",
+  "excluded_from_execution": [
+    "synthetic criterion oracle/fixtures/tests",
+    "development reviews/results",
+    "all D1/I1 original answers"
+  ],
+  "note": "Identity only, not an approval record. Existing paid-boundary restrictions persist; transitive imported assembler modules are not invoked."
+}

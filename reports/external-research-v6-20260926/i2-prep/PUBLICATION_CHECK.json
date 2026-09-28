@@ -1,0 +1,25 @@
+{
+  "schema": "er6.i2-publication-check.v1",
+  "created_utc": "2026-09-28T04:27:08.821860+00:00",
+  "reviewed_base": "9a345ce3377e7a412fa32884d709f5379360740b",
+  "freeze_sha256": "994cc7974acd438fc3b74b06197ee0de9007a252db6c432cc63e17c4424e17e4",
+  "frozen_files": 16,
+  "new_offline_tests": 58,
+  "reused_store_tests": 24,
+  "reused_envelope_tests": 12,
+  "published_layout_tests": 58,
+  "candidate_calls": 0,
+  "evaluator_calls": 0,
+  "native_smoke_calls": 0,
+  "account_probes": 0,
+  "new_live_approval_files": 0,
+  "D1_rescore": false,
+  "existing_tracked_edits": [],
+  "publication_scope": "User explicitly requested compact offline amendment/preparation GitHub publication on the research branch. No main landing.",
+  "preservation_check": "evidence/final-preservation.json",
+  "notes": [
+    "Development helpers are not formal graders; actual helper requests used explicit Sol high/medium native controls.",
+    "Offline test authorization objects and mock phase/slot files are disposable synthetic data, never live run authorization.",
+    "Preparation has an operator binding of existing candidate components; no new scheduler or paid native integration proof."
+  ]
+}

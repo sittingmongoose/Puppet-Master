@@ -1,0 +1,78 @@
+test_closed_65th_attempt_cap_error_is_incomplete (test_current_criterion.CurrentCriterionTests.test_closed_65th_attempt_cap_error_is_incomplete) ... ok
+test_closed_unsubmitted_payload_is_incomplete (test_current_criterion.CurrentCriterionTests.test_closed_unsubmitted_payload_is_incomplete) ... ok
+test_corrupt_raw_or_marker_snapshot (test_current_criterion.CurrentCriterionTests.test_corrupt_raw_or_marker_snapshot) ... ok
+test_exact_source_quotes_and_all_fields (test_current_criterion.CurrentCriterionTests.test_exact_source_quotes_and_all_fields) ... ok
+test_field_order_and_markdown_changes_fail (test_current_criterion.CurrentCriterionTests.test_field_order_and_markdown_changes_fail) ... ok
+test_history_cannot_drop_rejected_or_old_attempts (test_current_criterion.CurrentCriterionTests.test_history_cannot_drop_rejected_or_old_attempts) ... ok
+test_i2_32KiB_payload_parser_compatibility (test_current_criterion.CurrentCriterionTests.test_i2_32KiB_payload_parser_compatibility) ... ok
+test_i2_64_attempt_lineage_compatibility (test_current_criterion.CurrentCriterionTests.test_i2_64_attempt_lineage_compatibility) ... ok
+test_invalid_latest_cannot_fall_back (test_current_criterion.CurrentCriterionTests.test_invalid_latest_cannot_fall_back) ... ok
+test_invalid_latest_with_independent_record (test_current_criterion.CurrentCriterionTests.test_invalid_latest_with_independent_record) ... ok
+test_json_type_fidelity_and_duplicate_keys (test_current_criterion.CurrentCriterionTests.test_json_type_fidelity_and_duplicate_keys) ... ok
+test_legitimate_old_source_citation_retained_exactly (test_current_criterion.CurrentCriterionTests.test_legitimate_old_source_citation_retained_exactly) ... ok
+test_missing_latest_snapshot_withholds_identity (test_current_criterion.CurrentCriterionTests.test_missing_latest_snapshot_withholds_identity) ... ok
+test_missing_old_snapshot_is_incomplete (test_current_criterion.CurrentCriterionTests.test_missing_old_snapshot_is_incomplete) ... ok
+test_nonclosed_or_truthy_closed_archive_refuses_without_writes (test_current_criterion.CurrentCriterionTests.test_nonclosed_or_truthy_closed_archive_refuses_without_writes) ... ok
+test_required_condition_loss (test_current_criterion.CurrentCriterionTests.test_required_condition_loss) ... ok
+test_stale_condition_candidate_can_be_structurally_faithful (test_current_criterion.CurrentCriterionTests.test_stale_condition_candidate_can_be_structurally_faithful) ... ok
+test_stale_rule_in_source_fit_or_condition_is_not_exempt (test_current_criterion.CurrentCriterionTests.test_stale_rule_in_source_fit_or_condition_is_not_exempt) ... ok
+test_stale_source_fit_candidate_can_be_structurally_faithful (test_current_criterion.CurrentCriterionTests.test_stale_source_fit_candidate_can_be_structurally_faithful) ... ok
+test_state_finding_and_raw_identity_are_checked (test_current_criterion.CurrentCriterionTests.test_state_finding_and_raw_identity_are_checked) ... ok
+test_true_stale_fallback (test_current_criterion.CurrentCriterionTests.test_true_stale_fallback) ... ok
+test_unknown_current_fields_at_every_level (test_current_criterion.CurrentCriterionTests.test_unknown_current_fields_at_every_level) ... ok
+test_wrong_current_value_without_old_marker (test_current_criterion.CurrentCriterionTests.test_wrong_current_value_without_old_marker) ... ok
+test_actual_parent_policy_rejects_wrong_pair_failed_arm_and_changed_report (test_evaluator_dispatch.DispatchTests.test_actual_parent_policy_rejects_wrong_pair_failed_arm_and_changed_report) ... ERROR
+test_callback_exception_terminalizes_consumption_and_cannot_restart (test_evaluator_dispatch.DispatchTests.test_callback_exception_terminalizes_consumption_and_cannot_restart) ... ok
+test_changed_caps_refused (test_evaluator_dispatch.DispatchTests.test_changed_caps_refused) ... ok
+test_changed_task_never_reaches_callback (test_evaluator_dispatch.DispatchTests.test_changed_task_never_reaches_callback) ... ok
+test_completed_driver_missing_assessment_acquisition_empty_or_bad_json_is_incomplete (test_evaluator_dispatch.DispatchTests.test_completed_driver_missing_assessment_acquisition_empty_or_bad_json_is_incomplete) ... ok
+test_corrupted_saved_composed_input_never_dispatches_and_consumes_slot (test_evaluator_dispatch.DispatchTests.test_corrupted_saved_composed_input_never_dispatches_and_consumes_slot) ... ok
+test_default_driver_actual_argv_contains_entire_composed_saved_prompt (test_evaluator_dispatch.DispatchTests.test_default_driver_actual_argv_contains_entire_composed_saved_prompt)
+Real build_cmd/run path; Popen itself is synthetic and cannot execute. ... ok
+test_entire_composed_input_and_identity_are_saved_before_callback (test_evaluator_dispatch.DispatchTests.test_entire_composed_input_and_identity_are_saved_before_callback) ... ok
+test_existing_dangling_not_terminal_failed_and_malformed_slots_refused (test_evaluator_dispatch.DispatchTests.test_existing_dangling_not_terminal_failed_and_malformed_slots_refused) ... ok
+test_ineligible_pair_does_not_claim_slot (test_evaluator_dispatch.DispatchTests.test_ineligible_pair_does_not_claim_slot) ... ok
+test_missing_false_truthy_and_task_schedule_mismatched_auth_zero_calls (test_evaluator_dispatch.DispatchTests.test_missing_false_truthy_and_task_schedule_mismatched_auth_zero_calls) ... ok
+test_nonzero_error_missing_and_incomplete_receipts_never_success (test_evaluator_dispatch.DispatchTests.test_nonzero_error_missing_and_incomplete_receipts_never_success) ... ok
+test_original_continue_outcomes_allow_other_assignment (test_evaluator_dispatch.DispatchTests.test_original_continue_outcomes_allow_other_assignment) ... ok
+test_pair_becomes_ineligible_after_claim_never_calls_native (test_evaluator_dispatch.DispatchTests.test_pair_becomes_ineligible_after_claim_never_calls_native) ... ok
+test_phase_budget_is_rechecked_after_consumption_before_native (test_evaluator_dispatch.DispatchTests.test_phase_budget_is_rechecked_after_consumption_before_native) ... ok
+test_phase_missing_wrong_freeze_closed_invalid_start_or_expired_zero_calls (test_evaluator_dispatch.DispatchTests.test_phase_missing_wrong_freeze_closed_invalid_start_or_expired_zero_calls) ... ok
+test_prior_dangling_dispatched_stopped_and_stop_schedule_block_second (test_evaluator_dispatch.DispatchTests.test_prior_dangling_dispatched_stopped_and_stop_schedule_block_second) ... ok
+test_recreated_gate_refuses_successful_terminal_slot (test_evaluator_dispatch.DispatchTests.test_recreated_gate_refuses_successful_terminal_slot) ... ok
+test_second_assignment_uses_distinct_slot_and_third_is_refused (test_evaluator_dispatch.DispatchTests.test_second_assignment_uses_distinct_slot_and_third_is_refused) ... ok
+test_staged_hash_and_eligibility_rechecked_immediately_before_callback (test_evaluator_dispatch.DispatchTests.test_staged_hash_and_eligibility_rechecked_immediately_before_callback) ... ok
+test_unknown_assignment_and_three_slot_schedule_refused (test_evaluator_dispatch.DispatchTests.test_unknown_assignment_and_three_slot_schedule_refused) ... ok
+test_wrong_staged_paths_or_duplicate_reports_refuse_without_consumption (test_evaluator_dispatch.DispatchTests.test_wrong_staged_paths_or_duplicate_reports_refuse_without_consumption) ... ok
+test_32KiB_boundary_and_oversized_raw_preserved (test_prep_plan.PreparationTests.test_32KiB_boundary_and_oversized_raw_preserved) ... ok
+test_any_failed_or_diagnostic_arm_skips_pair (test_prep_plan.PreparationTests.test_any_failed_or_diagnostic_arm_skips_pair) ... ok
+test_attempt_cap_counts_invalid_revisions_and_surviving_overflow (test_prep_plan.PreparationTests.test_attempt_cap_counts_invalid_revisions_and_surviving_overflow) ... ok
+test_capacity_isolated_from_frozen_D1_module (test_prep_plan.PreparationTests.test_capacity_isolated_from_frozen_D1_module) ... ok
+test_caps_and_prompts_match_proposal_without_spending_increase (test_prep_plan.PreparationTests.test_caps_and_prompts_match_proposal_without_spending_increase) ... ok
+test_carrier_kind_and_effective_control_capacity_bound (test_prep_plan.PreparationTests.test_carrier_kind_and_effective_control_capacity_bound) ... ok
+test_complete_original_pair_eligible_but_not_authorized (test_prep_plan.PreparationTests.test_complete_original_pair_eligible_but_not_authorized) ... ok
+test_exact_original_pair_no_replacements_or_cross_app (test_prep_plan.PreparationTests.test_exact_original_pair_no_replacements_or_cross_app) ... ok
+test_file_count_invalid_paths_and_required_control_artifacts (test_prep_plan.PreparationTests.test_file_count_invalid_paths_and_required_control_artifacts) ... ok
+test_inventory_does_not_trim_oversized_payload (test_prep_plan.PreparationTests.test_inventory_does_not_trim_oversized_payload) ... ok
+test_malformed_metadata_truthy_flags_and_unknown_fields_refuse (test_prep_plan.PreparationTests.test_malformed_metadata_truthy_flags_and_unknown_fields_refuse) ... ok
+test_report_missing_empty_changed_or_not_utf8_refuses (test_prep_plan.PreparationTests.test_report_missing_empty_changed_or_not_utf8_refuses) ... ok
+test_retained_inventory_counts_all_files_and_bytes (test_prep_plan.PreparationTests.test_retained_inventory_counts_all_files_and_bytes) ... ok
+
+======================================================================
+ERROR: test_actual_parent_policy_rejects_wrong_pair_failed_arm_and_changed_report (test_evaluator_dispatch.DispatchTests.test_actual_parent_policy_rejects_wrong_pair_failed_arm_and_changed_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-prep/tools/test_evaluator_dispatch.py", line 183, in test_actual_parent_policy_rejects_wrong_pair_failed_arm_and_changed_report
+    self.dispatch(pair_metadata=metadata)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-prep/tools/test_evaluator_dispatch.py", line 86, in dispatch
+    return glue.dispatch(**{**self.kw, **changes})
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-prep/tools/evaluator_dispatch.py", line 167, in dispatch
+    raise LaunchRefused("pair is ineligible for the frozen semantic reviewer")
+evaluator_launch.LaunchRefused: pair is ineligible for the frozen semantic reviewer
+
+----------------------------------------------------------------------
+Ran 58 tests in 3.929s
+
+FAILED (errors=1)

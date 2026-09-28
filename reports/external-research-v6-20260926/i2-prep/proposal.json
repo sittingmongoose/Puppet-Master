@@ -1,0 +1,147 @@
+{
+  "schema": "er6.i2-preparation.v1",
+  "status": "PREPARED_UNAUTHORIZED",
+  "launch_enabled": false,
+  "authorized_schedules": [],
+  "reviewed_checkpoint": "9a345ce3377e7a412fa32884d709f5379360740b",
+  "closed_D1": {
+    "Muse": "15/15",
+    "zcode": "14/15, structural_checks_passed=false",
+    "rescore": false
+  },
+  "case": "ome-zarr-thin: familiar development case, not holdout",
+  "case_manifest": {
+    "root": "case_bundle",
+    "manifest_sha256": "01e8109f6fa2cc387c05b2116e0d8339ae83e797b1db36d50443c52743b20218"
+  },
+  "apps": {
+    "M": {
+      "application": "Muse Code 1.4.0",
+      "model": "muse-spark-1.3-contributor",
+      "effort": "max",
+      "driver": "tools/r1b/run_goal_r1b.py --app muse"
+    },
+    "Z": {
+      "application": "zcode CLI 0.16.5",
+      "model": "GLM-5.3-Flash",
+      "effort": "max",
+      "driver": "tools/r1b/run_goal_r1b.py --app zcode"
+    }
+  },
+  "reused_files_sha256": {
+    "tools/run_goal.py": "7325ed95a89767b377de49dbe27bf2f1af989ee04521ff8f7e92a560fb367d5b",
+    "tools/muse_goal_driver.py": "f5af9ef6ef420fbd6452677b11fb31341f17e57a6a0b90b4727dbe3e71adf218",
+    "tools/zcode_goal_driver.py": "b2d1a36308769a225005e586e894f180d7bb38bd9f5c481a1c86c49c41755eac",
+    "tools/run_arm.py": "330ae90097254192bf95fd52ebee4cdda0a9d19325bc3c4c88bde6ad4b4d4520",
+    "tools/r1b/run_goal_r1b.py": "4cfd7aee946cd8db9ef70a0adf2cfe8279a5cdc13cb3c8b7cd299775dee97ae7",
+    "tools/r1b/muse-serve-noshell.sh": "fecdb795d96fcdbf8895349dc81435dbf28b8e07ecbdbdaee2cff61c3f790586",
+    "tools/r1b/run_r1b.py": "a0694ff3d865497e3c7c511d752a5ad4c7e1b3136783fcfffec4e4ab8daf9a9d",
+    "tools/r1b/run_reviewer_v2.py": "7d2c410f16b96230e3b57448ee21e462009843f4dff6e461a04ce168d31a0189",
+    "tools/r1b/build_review_workspaces_r1b.py": "06b9c69a6fe46b6172655e1bc550a4b56ba001842006c035e3e38caf80bbc8a8",
+    "tools/r1b/test_r1b.py": "1be8849ec2500097dcc02e53a368c4d870675d4718acee273d2351c511f4fb13"
+  },
+  "runtime_pins_sha256": {
+    "/home/sittingmongoose/.local/bin/muse-bin-1.4.0-R4161.1": "1b68bd4518d53a2aaff063915df4d141b0a205e6d79038299d04e3a14e85a5b9",
+    "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+    "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/adapters/zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+  },
+  "proposed_schedule": [
+    [
+      "I2-M-control",
+      "M",
+      "control"
+    ],
+    [
+      "I2-M-maintained",
+      "M",
+      "maintained"
+    ],
+    [
+      "I2-Z-maintained",
+      "Z",
+      "maintained"
+    ],
+    [
+      "I2-Z-control",
+      "Z",
+      "control"
+    ]
+  ],
+  "limits": {
+    "candidate_assignments": 4,
+    "candidate_seconds_each": 1800,
+    "candidate_responses_each": 160,
+    "candidate_seconds_total": 7200,
+    "candidate_parent_responses_total": 640,
+    "evaluation_assignments": 2,
+    "evaluation_seconds_each": 2700,
+    "evaluation_responses_each": 160,
+    "evaluation_seconds_total": 5400,
+    "evaluation_responses_total": 320,
+    "model_seconds_total": 12600,
+    "phase_wall_seconds": 14400,
+    "host_seconds_per_slot": 300,
+    "retries": 0,
+    "replacement_slots": 0,
+    "concurrency": 1
+  },
+  "treatment": "Complete bundle: incrementally maintained whole findings + host identity/revision/snapshot/current rendering + same-Goal structural receipts; not representation alone.",
+  "control_feedback": "Native file write/read/error results only; no host structural or semantic feedback. Original observations-then-current-draft with model-saved snapshots/history.",
+  "capacities": {
+    "scope": "I2 familiar-case finite output capacities only; not inherited D1 limits or universal product defaults",
+    "maintained_attempts_total_including_invalid_and_revisions": 64,
+    "maintained_payload_bytes": 32768,
+    "control_file_bytes": 1048576,
+    "model_authored_files_each": 128,
+    "model_authored_bytes_each": 8388608,
+    "current_report_bytes_each": 4194304,
+    "host_snapshots_and_derived_copies_excluded_from_model_authored_capacity": true,
+    "time_or_response_ceiling_increase_vs_I1": false,
+    "counter_meaning": "64 is the store acknowledgement ceiling, counting valid/invalid initial and revision requests together. Native failed writes, surviving unsubmitted requests and overflow are separately included in observed attempt/usage inventory; they are never dropped or called free replacements. Any pending/overflow state is incomplete.",
+    "byte_count_meaning": "128 files/8 MiB is retained model-authored out/ inventory at freeze, not cumulative write volume. Actual Write/Edit operations and cumulative written bytes are separately reported from native traces. Host-derived snapshots/reports do not consume model-authored capacity.",
+    "control_current_effective_bytes": 1048576
+  },
+  "evaluation": {
+    "max_pairs": 2,
+    "pair_assignments": {
+      "EVAL-001": [
+        "I2-M-control",
+        "I2-M-maintained"
+      ],
+      "EVAL-002": [
+        "I2-Z-control",
+        "I2-Z-maintained"
+      ]
+    },
+    "model": "claude-opus-5-5",
+    "requested_effort": "xhigh",
+    "observed_effort": "future native receipt; unknown until authorized execution",
+    "existing_key_sha256": "54fdca6a4aa9a6356da545a0c195c835557c2a8b1fe16feb9356d0d09a83fbde",
+    "existing_scoring_sha256": "aa1e2c7aab9128bd1b9e4b2f5c62f7325cc3ff39b6fcdd5d68818742169806bd",
+    "admission": "Only pairs whose BOTH original arms have native goal_complete and structurally complete, faithful, nonempty nondiagnostic current reports. Otherwise skip that pair premium call, retain all candidate failures/usage, mark semantic outcomes unassessed. No singleton/raw-output diagnosis or replacement; unused capacity not transferred.",
+    "dispatcher": "tools/evaluator_dispatch.py, approval-bound full composed text; never immutable task alone",
+    "launch_authorization": "Separate actual user authorization binding NEW FREEZE.json and exact admitted finite schedule; no existing D1/I1 authority reused",
+    "chronology": "Scoped first_view then fixed first judgments then deferred in same readable workspace; prompt-only and possible format unblinding disclosed"
+  },
+  "usage_lanes": [
+    "development:Astra/Sol",
+    "candidate:Muse/GLM flash",
+    "evaluation:independent Opus"
+  ],
+  "excluded": [
+    "V-FOLLOWON-1 remains OPEN",
+    "follow-on verifier",
+    "I1/D1 rerun/rescore",
+    "R1b Block 2",
+    "canonical/governance/WorkNodes",
+    "new Goal engine or transport",
+    "native smoke/model calls during preparation"
+  ],
+  "prompt_hashes": {
+    "investigator-maintained.txt": "b193f19c919f0b9e71a41f96fc8955d24cfa453a3b3175418121fa94f5aee69b",
+    "investigator-control.txt": "7d13fed2bc8b23a200e71b5464b92963ce7c0c60f8735e0a6cee853f0f2406c3",
+    "evaluator-task.txt": "98179f83255e85be231fe1c262077eca2380d7580681934700342364a6232643",
+    "common.txt": "8e5a5b5d809d2d90a7fdf83e07d98048527499a9e3fe4121209261becf83db30"
+  },
+  "limits_note": "I1 ceilings unchanged, no present spending authorized. 14400 seconds includes all scheduling/startup/waits/cleanup/host work; per-slot maxima are not guaranteed allocations. Refuse any slot without its whole cap+300s reserve; unused capacity never transferred."
+}

@@ -1,0 +1,105 @@
+{
+  "schema": "artificial-criterion-task/v1",
+  "scope": "Synthetic task assertions only; not a general semantic validator.",
+  "payloads": {
+    "old_alpha": "# Alpha current blue-mode value\n## assertion\nAlpha reports 2 units under ALPHA_V1.\n## condition\nApplies only in blue mode.\n## source_fit\nArtificial source revision 1 says: “ALPHA_V1: 2 units in blue mode.”\n## plan_fit\nArtificial plan has no Alpha value; applicability remains unreviewed.\n## implication\nUse 2 units only under the stated condition.\n## validation_proposal\nUNEXECUTED: inspect the artificial source and condition.\n## uncertainty\nSynthetic expectation only; no real research claim.\n",
+    "independent": "# Independent red-mode scope\n## non_finding\nThe artificial source does not prescribe red mode.\n## condition\nScope: artificial revisions 1–2, markers ALPHA_V1/ALPHA_V2.\n## source_fit\nExact source quotes: “ALPHA_V1: 2 units in blue mode.” and “ALPHA_V2: 3 units in blue mode.”\n## plan_fit\nArtificial plan is silent about red mode.\n## implication\nNo red-mode value follows from this bounded source.\n## validation_proposal\nUNEXECUTED: inspect both artificial revisions.\n## uncertainty\nThis non-finding applies only to the supplied artificial source.\n",
+    "current_alpha": "# Alpha current blue-mode value\n## assertion\nAlpha reports 3 units under ALPHA_V2.\n## condition\nApplies only in blue mode.\n## source_fit\nArtificial source revision 2 says: “ALPHA_V2: 3 units in blue mode.”\n## plan_fit\nArtificial plan has no Alpha value; applicability remains unreviewed.\n## implication\nUse 3 units only under the stated condition.\n## validation_proposal\nUNEXECUTED: inspect the artificial source and condition.\n## uncertainty\nSynthetic expectation only; no real research claim.\n## change_reason\nReplace revision 1 with the artificial revision 2 value.\n"
+  },
+  "findings": [
+    {
+      "id": "F0001",
+      "title": "Alpha current blue-mode value",
+      "parts": [
+        {
+          "id": "F0001_ASSERTION",
+          "type": "assertion",
+          "text": "Alpha reports 3 units under ALPHA_V2.\n"
+        },
+        {
+          "id": "F0001_CONDITION",
+          "type": "condition",
+          "text": "Applies only in blue mode.\n"
+        },
+        {
+          "id": "F0001_SOURCE_FIT",
+          "type": "source_fit",
+          "text": "Artificial source revision 2 says: “ALPHA_V2: 3 units in blue mode.”\n"
+        },
+        {
+          "id": "F0001_PLAN_FIT",
+          "type": "plan_fit",
+          "text": "Artificial plan has no Alpha value; applicability remains unreviewed.\n"
+        },
+        {
+          "id": "F0001_IMPLICATION",
+          "type": "implication",
+          "text": "Use 3 units only under the stated condition.\n"
+        },
+        {
+          "id": "F0001_VALIDATION_PROPOSAL",
+          "type": "validation_proposal",
+          "text": "UNEXECUTED: inspect the artificial source and condition.\n"
+        },
+        {
+          "id": "F0001_UNCERTAINTY",
+          "type": "uncertainty",
+          "text": "Synthetic expectation only; no real research claim.\n"
+        }
+      ]
+    },
+    {
+      "id": "F0002",
+      "title": "Independent red-mode scope",
+      "parts": [
+        {
+          "id": "F0002_NON_FINDING",
+          "type": "non_finding",
+          "text": "The artificial source does not prescribe red mode.\n"
+        },
+        {
+          "id": "F0002_CONDITION",
+          "type": "condition",
+          "text": "Scope: artificial revisions 1–2, markers ALPHA_V1/ALPHA_V2.\n"
+        },
+        {
+          "id": "F0002_SOURCE_FIT",
+          "type": "source_fit",
+          "text": "Exact source quotes: “ALPHA_V1: 2 units in blue mode.” and “ALPHA_V2: 3 units in blue mode.”\n"
+        },
+        {
+          "id": "F0002_PLAN_FIT",
+          "type": "plan_fit",
+          "text": "Artificial plan is silent about red mode.\n"
+        },
+        {
+          "id": "F0002_IMPLICATION",
+          "type": "implication",
+          "text": "No red-mode value follows from this bounded source.\n"
+        },
+        {
+          "id": "F0002_VALIDATION_PROPOSAL",
+          "type": "validation_proposal",
+          "text": "UNEXECUTED: inspect both artificial revisions.\n"
+        },
+        {
+          "id": "F0002_UNCERTAINTY",
+          "type": "uncertainty",
+          "text": "This non-finding applies only to the supplied artificial source.\n"
+        }
+      ]
+    }
+  ],
+  "designated_assertion": {
+    "finding_id": "F0001",
+    "part_id": "F0001_ASSERTION",
+    "type": "assertion",
+    "text": "Alpha reports 3 units under ALPHA_V2.\n"
+  },
+  "required_condition": {
+    "finding_id": "F0001",
+    "part_id": "F0001_CONDITION",
+    "type": "condition",
+    "text": "Applies only in blue mode.\n"
+  }
+}
