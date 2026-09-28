@@ -289,7 +289,7 @@ await safe('item families', async () => {
     const o = await p.evaluate(accRgb => {
       /* the accent's jobs: live work, things that need the reader, the one
          primary action, Send/Stop */
-      const ALLOW = el => el.closest('[data-family="needs"], .working-card:not(.is-done), .primary-button, .pd-build, .send-button, .tx-caret, [data-streaming], .qs, .decision-host, .collab-status-working, .pd-attn');
+      const ALLOW = el => el.closest('[data-family="needs"], .working-card:not(.is-done), .primary-button, .pd-build, .send-button, .tx-caret, [data-streaming], .qs, .decision-host, .pd-attn');
       const res = [];
       document.querySelectorAll('.transcript-inner *').forEach(el => {
         const cs = getComputedStyle(el);
