@@ -1,0 +1,13 @@
+D1 synthetic source. All statements below are invented for delivery testing; no product or research conclusion follows.
+Revision 1: widget Alpha reports 2 units only when mode is blue. Marker ALPHA_V1.
+Revision 2: widget Alpha reports 3 units only when mode is blue; the condition remains necessary. Marker ALPHA_V2.
+Exact quoted sentence: He said "blue", then typed C:\demo\alpha.
+Exact code (preserve quotes, backslashes and the literal heading inside the fence):
+```text
+  mode = "blue"
+  path = "C:\demo\alpha"
+## condition
+  units = 3
+```
+This synthetic source makes no claim about red mode. Its silence is bounded to this file; it does not prove anything about real widgets.
+Any proposed test is UNEXECUTED. Do not run this code or claim a test passed.

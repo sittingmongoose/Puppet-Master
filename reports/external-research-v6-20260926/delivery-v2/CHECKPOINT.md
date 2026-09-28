@@ -1,0 +1,8 @@
+# Compact checkpoint — delivery v2 / D1
+
+- Branch: `research/external-research-v6-20260927`; reviewed base `3aadcea3e7be7e83f764107ba53d824b84575f65`. Start at [RESULTS.md](RESULTS.md), then the changed code/tests and per-app native audits. Work is confined to this new experiment-owned bundle and VM lab.
+- D1 freeze: `f690210f840ab2369291a51a28efc32937e751312b2b285dd31de53bd5621b70`. Two original slots consumed and closed, no retries: Muse 15/15 host checks; zcode 14/15, with its marker-citation failure preserved. Both native Goals completed within declared limits. No formal evaluator calls.
+- VM code: `/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/delivery-v2/`. Runtime: sibling `d1-20260928/`; dispatch state is stopped with Muse and zcode both terminal. Never relaunch those slots.
+- Offline: 52 new + 30 reused tests pass. Published-layout reproduction also passes 52. Frozen R1/R1b/I1 artifacts and grades remain unchanged; no missing history reconstructed. Code/prompts were not edited after D1 freeze.
+- Current decision: no two-app D1 pass. Review the literal old-marker criterion prospectively before authorizing another run. No full research campaign, extra synthetic slot, replacement evaluation, approval file, account probe or semantic repair is authorized here. V-FOLLOWON-1 remains OPEN; R1b Block 2 unauthorized.
+- Publication scope is the compact bundle under the earlier explicit GitHub-review request, on this branch only. No main landing or general automatic push authority. Raw provider logs/snapshots/corpus/keys remain VM-only; published current/history are exact derived synthetic result projections, not repaired answers.

@@ -1,0 +1,29 @@
+{
+  "app": "muse",
+  "outcome": "goal_complete",
+  "detail": "goal_complete",
+  "process_exit": 0,
+  "host_error": null,
+  "elapsed_host_seconds": 259.31358886700764,
+  "checks": {
+    "four_attempts": true,
+    "statuses": true,
+    "final_structurally_complete": true,
+    "two_current_findings": true,
+    "all_eight_byte_snapshots": true,
+    "no_snapshot_gaps": true,
+    "stable_revision_identity": true,
+    "invalid_latest_did_not_fallback": true,
+    "independent_finding_survived": true,
+    "unknown_field_reported": true,
+    "current_history_separation": true,
+    "proposal_unexecuted": true,
+    "nonfinding_preserved": true,
+    "quote_and_code_preserved": true,
+    "inputs_unchanged": true
+  },
+  "structural_checks_passed": true,
+  "native_tool_trace_audit": "pending; host checks alone are not native protocol proof",
+  "semantic_grade": "not_performed",
+  "formal_evaluator_calls": 0
+}

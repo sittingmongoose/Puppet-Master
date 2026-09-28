@@ -1,0 +1,37 @@
+TEST_ONLY_NEVER_PROMOTE — D1 synthetic delivery interface qualification.
+The host has actual user approval for this one small native Goal assignment. Execute it now within 300 seconds and 48 parent responses. Stay on the selected native app/model at Max. This is not research, an I1 retry, or semantic evaluation. No network, shell, other models, external corpus, keys, prior experiments or workspace-external reads. Use native file Read/Write/Edit tools (no Edit is needed) and the app's native Goal completion/progress tools; paths are case/SYNTHETIC.txt, your out/submissions/ and out/requests/, and host feedback/. Do not modify case/, task.txt or feedback/. The host's existing native driver enforces the ceiling; no retry/new Goal is available.
+
+Read case/SYNTHETIC.txt. Submit four whole findings/attempts in the exact sequence below. Each finding is ONE Markdown file, not one model task per field. You supply the substantive text. The host serializes JSON, assigns stable finding/part IDs and revision numbers, snapshots bytes, and renders current/history separately. You do not write JSON, snapshots, a history file or a second report.
+
+File shape:
+# A nonempty finding title
+## assertion
+A substantive claim, OR use ## non_finding instead of assertion for a scoped non-finding.
+## source_fit
+Actual synthetic source lines and quotes; no invented external source.
+## condition
+Conditions, limits and exceptions.
+## implication
+What follows if the synthetic condition holds.
+## validation_proposal
+An UNEXECUTED proposal, never a passed test.
+## uncertainty
+What remains unknown or the scope of uncertainty.
+## plan_fit
+TEST_ONLY; no canonical plan change. Give the applicable synthetic disposition.
+
+These seven sections are required and nonempty, with exactly one assertion OR non_finding. Each typed heading appears once. Revisions also need ## change_reason describing the change. No other headings/metadata fields are allowed. Bodies can contain quotes, backslashes and fenced code verbatim, without JSON escaping. Literal ## headings inside code must be within a closed ``` or ~~~ fence. Keep whole-finding context on every revision; do not emit field patches. Maximum 16 KiB per finding, 16 requests in the entire assignment.
+
+Submission protocol (native file tools only):
+1. Write out/submissions/<attempt>.md once, then wait for a successful native Write result.
+2. Write out/requests/<attempt> with exactly the text submit followed by one newline. This ready marker requests structural validation; do not create it before the payload write succeeds.
+3. Read feedback/<attempt>.json. The host snapshots bytes before issuing this receipt. If it is not yet present, reread that exact path at most six times, within your original budget. Feedback is structural only and provides no substantive answers. Read feedback/status.json for the current aggregate state.
+4. Never overwrite or delete an earlier payload, marker or host feedback. Every changed attempt gets a fresh name. New findings use new--<slug>; revisions use the finding_id returned by the host, followed by --<new-slug>. For example, if the host returns F0001, a revision name is F0001--rev2. You do not choose or renumber finding IDs.
+
+Exact exercise:
+A. Submit new--alpha with marker ALPHA_V1 in the assertion, the revision-1 synthetic fact, all conditions, a proposed test and uncertainty. Read its receipt and remember the host's finding_id.
+B. Submit new--red with a scoped non_finding about the synthetic source's silence on red mode, including the bounded source scope and uncertainty. Read its receipt. This independent finding must remain visible when A is invalid.
+C. Submit a revision of A named <its finding_id>--invalid with marker ALPHA_PENDING, all required sections and change_reason, plus one deliberately unsupported heading ## snapshots_note containing a clearly synthetic note. Read its receipt and feedback/status.json. Expect INVALID and incomplete status: A's older version must NOT be accepted as current, while B remains valid. This is an intentional structural exercise, not a passing research result. Do not remove or rewrite the invalid file.
+D. In the SAME Goal, submit a new revision named <its finding_id>--fixed: ALPHA_V2, the revision-2 synthetic fact, all necessary conditions/implications/source/proposal/uncertainty/plan_fit, and change_reason. Include the exact quoted sentence and code from the synthetic source in source_fit or condition. Omit the unsupported heading from this NEW complete record. Read this receipt and feedback/status.json. The desired final state is two current VALID_UNVERIFIED findings, four saved attempts, with the invalid attempt and initial A retained only in audit history.
+
+Only mark your native Goal complete after those four submissions and receipt reads, and after reporting the actual structural status. If a cap, native write failure, receipt timeout or unresolved error prevents this, report incomplete; do not claim success, perform external repairs or start another Goal. Structural acceptance establishes no source truth and executes none of the proposed tests.

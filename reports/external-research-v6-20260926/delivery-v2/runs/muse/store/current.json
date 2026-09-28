@@ -1,0 +1,91 @@
+{
+  "schema": "offline-finding-current/v1",
+  "status": "UNVERIFIED",
+  "truth_validation": "not_established_by_projection",
+  "findings": [
+    {
+      "id": "F0001",
+      "title": "Alpha widget blue-mode report V2 synthetic",
+      "parts": [
+        {
+          "id": "F0001_ASSERTION",
+          "type": "assertion",
+          "text": "Widget Alpha reports 3 units only when mode is blue; the condition remains necessary. Marker ALPHA_V2. This is the revision-2 synthetic fact for delivery interface testing.\n"
+        },
+        {
+          "id": "F0001_SOURCE_FIT",
+          "type": "source_fit",
+          "text": "Synthetic source revision 2 states Revision 2: widget Alpha reports 3 units only when mode is blue; the condition remains necessary. Marker ALPHA_V2.\nExact quoted sentence: He said \"blue\", then typed C:\\demo\\alpha.\nExact code:\n```text\n  mode = \"blue\"\n  path = \"C:\\demo\\alpha\"\n## condition\n  units = 3\n```\nFile header says D1 synthetic source. All statements below are invented for delivery testing.\n"
+        },
+        {
+          "id": "F0001_CONDITION",
+          "type": "condition",
+          "text": "Conditions: mode is blue is necessary; the 3-unit report applies only when mode is blue. Limits: synthetic revision-2 scope only; invented for delivery testing; no claim about other modes or real widgets.\n"
+        },
+        {
+          "id": "F0001_IMPLICATION",
+          "type": "implication",
+          "text": "If the synthetic condition holds and mode is blue, the synthetic record reports 3 units. If mode is not blue, the 3-unit report does not apply.\n"
+        },
+        {
+          "id": "F0001_VALIDATION_PROPOSAL",
+          "type": "validation_proposal",
+          "text": "UNEXECUTED proposal: inspect the synthetic file for the revision-2 line, quoted sentence and code block, and compare mode value to blue without running code. This proposal has not been executed and no result is claimed.\n"
+        },
+        {
+          "id": "F0001_UNCERTAINTY",
+          "type": "uncertainty",
+          "text": "Unknown whether any real widget behaves this way. Uncertainty covers real-world mapping, other modes, and any revision beyond synthetic revision 2.\n"
+        },
+        {
+          "id": "F0001_PLAN_FIT",
+          "type": "plan_fit",
+          "text": "TEST_ONLY; no canonical plan change. Synthetic disposition is to retain the revision-2 fact for interface testing only, with no research conclusion.\n"
+        }
+      ]
+    },
+    {
+      "id": "F0002",
+      "title": "Red mode silence scoped synthetic non-finding",
+      "parts": [
+        {
+          "id": "F0002_NON_FINDING",
+          "type": "non_finding",
+          "text": "This synthetic source makes no claim about red mode. Its silence is bounded to this file and does not prove anything about real widgets. This is a scoped non-finding for delivery interface testing.\n"
+        },
+        {
+          "id": "F0002_SOURCE_FIT",
+          "type": "source_fit",
+          "text": "Synthetic source states This synthetic source makes no claim about red mode. Its silence is bounded to this file; it does not prove anything about real widgets. The file header says D1 synthetic source. All statements below are invented for delivery testing.\n"
+        },
+        {
+          "id": "F0002_CONDITION",
+          "type": "condition",
+          "text": "Conditions: silence applies only within the synthetic file; bounded source scope is this file only. Limits: no inference about real widgets, no claim about red-mode behavior, no extension beyond the synthetic source.\n"
+        },
+        {
+          "id": "F0002_IMPLICATION",
+          "type": "implication",
+          "text": "If the bounded silence holds, no red-mode conclusion follows from this source; any red-mode claim would need a different source.\n"
+        },
+        {
+          "id": "F0002_VALIDATION_PROPOSAL",
+          "type": "validation_proposal",
+          "text": "UNEXECUTED proposal: search the synthetic file for red-mode claims and confirm only the silence statement appears, without running code. This proposal has not been executed and no result is claimed.\n"
+        },
+        {
+          "id": "F0002_UNCERTAINTY",
+          "type": "uncertainty",
+          "text": "Uncertainty covers all real red-mode behavior and any source outside this synthetic file. The silence does not bound real-world facts.\n"
+        },
+        {
+          "id": "F0002_PLAN_FIT",
+          "type": "plan_fit",
+          "text": "TEST_ONLY; no canonical plan change. Synthetic disposition is to retain the bounded silence as a non-finding for interface testing only.\n"
+        }
+      ]
+    }
+  ],
+  "delivery_status": "STRUCTURALLY_COMPLETE_UNVERIFIED",
+  "incomplete_records": {}
+}

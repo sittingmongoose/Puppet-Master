@@ -1,0 +1,110 @@
+{
+  "schema": "delivery-v2.compact-run-evidence.v1",
+  "copies": {
+    "result.json": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/result.json",
+      "sha256": "229dfe6150fe6274ffc06a15cacc2d222a1e4dabececa05d2ec995e4b1a337c9",
+      "bytes": 907,
+      "copy": "exact"
+    },
+    "store/current.json": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/current.json",
+      "sha256": "b4eb6e60fde1282f2091214f9ed48d90fea522d09a9ea37d0f87126b20a6c222",
+      "bytes": 4789,
+      "copy": "exact"
+    },
+    "store/current.md": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/current.md",
+      "sha256": "86de623fc6f4048f9779d481cec2691efdfec8492147843919f50701673a6d58",
+      "bytes": 3750,
+      "copy": "exact"
+    },
+    "store/history.json": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/history.json",
+      "sha256": "26bd988fd91fb1896826817c5c50c04f956c9cb84e191b276bc869b822e0c20c",
+      "bytes": 10723,
+      "copy": "exact"
+    },
+    "ws/feedback/status.json": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/ws/feedback/status.json",
+      "sha256": "b863dcdc197abae51f41f7d1163fb51717101e0b082f6cd169e6f56f2a919fb9",
+      "bytes": 428,
+      "copy": "exact"
+    },
+    "ws/feedback/F0001--fixed.json": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/ws/feedback/F0001--fixed.json",
+      "sha256": "3b565bdaf6d2a1bf513245382687f87934ad0e6b97fe2bb2c2d1ab31a8162249",
+      "bytes": 571,
+      "copy": "exact"
+    },
+    "ws/feedback/F0001--invalid.json": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/ws/feedback/F0001--invalid.json",
+      "sha256": "44cbeeae0dea42faa708264dc35a90b179b4bf9072b621490cec45da13d9f96b",
+      "bytes": 605,
+      "copy": "exact"
+    },
+    "ws/feedback/new--alpha.json": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/ws/feedback/new--alpha.json",
+      "sha256": "4f17106d29ad2a22f116a48b4a3298f19d4fe91f47d455d9ca988cd1f7a7bd69",
+      "bytes": 485,
+      "copy": "exact"
+    },
+    "ws/feedback/new--red.json": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/ws/feedback/new--red.json",
+      "sha256": "52312b19746e78a5c58e22ec3f32d65e5017e6b5782aef64c2d3e6ce0aa1df1a",
+      "bytes": 567,
+      "copy": "exact"
+    }
+  },
+  "raw_snapshots": {
+    "store/snapshots/0001.md": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0001.md",
+      "sha256": "53c0388a287f665aa2d65a9c7f93e59fd1850be4767146a1863c7d2b39a27cd7",
+      "bytes": 1374,
+      "content_published": false
+    },
+    "store/snapshots/0001.request": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0001.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7,
+      "content_published": false
+    },
+    "store/snapshots/0002.md": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0002.md",
+      "sha256": "48a523305302aae194ab40e12bcb579cd23613d764e0b2978e1cb5e775cfd8fa",
+      "bytes": 1429,
+      "content_published": false
+    },
+    "store/snapshots/0002.request": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0002.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7,
+      "content_published": false
+    },
+    "store/snapshots/0003.md": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0003.md",
+      "sha256": "6309120612db8a2a26b7b428f2a1acbfcbbe01717c31e7b51a716048bc9f0b75",
+      "bytes": 1478,
+      "content_published": false
+    },
+    "store/snapshots/0003.request": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0003.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7,
+      "content_published": false
+    },
+    "store/snapshots/0004.md": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0004.md",
+      "sha256": "82921fcdbaecd4350cf1ffc3cbecbae4154a6464e72833b4767cde73f93a192a",
+      "bytes": 1825,
+      "content_published": false
+    },
+    "store/snapshots/0004.request": {
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0004.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7,
+      "content_published": false
+    }
+  },
+  "note": "Synthetic current/history projections and structural receipts are exact compact results. Raw byte snapshots/provider logs stay on VM; no failed answer modified. Native result pending-audit field remains frozen; see separate post-run protocol audit."
+}

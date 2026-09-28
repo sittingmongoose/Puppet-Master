@@ -1,0 +1,699 @@
+{
+  "schema": "d1-muse-native-mechanical-audit/v1",
+  "created_utc": "2026-09-28T02:01:07.928548+00:00",
+  "role": {
+    "requested_helper_model": "gpt-6-sol",
+    "requested_helper_effort": "high",
+    "effective_helper_identity": "unconfirmed",
+    "scope": "bounded native protocol/structural audit, not semantic grading or candidate feedback"
+  },
+  "outcome": "mechanical_checks_pass",
+  "checks": {
+    "four_attempts_correct_statuses": true,
+    "all_payload_success_before_marker": true,
+    "all_raw_snapshot_matches": true,
+    "all_four_receipts_read": true,
+    "same_parent_session_and_turn": true,
+    "input_manifest_unchanged": true,
+    "no_repeated_write_paths": true,
+    "exactly_eight_saved_snapshots": true,
+    "state_closed_no_protocol_errors": true,
+    "invalid_status_no_fallback_and_red_valid": true,
+    "final_two_current_findings": true,
+    "current_has_v2_without_superseded_markers": true,
+    "quote_and_code_exact_in_current_json": true,
+    "validation_proposal_unexecuted": true,
+    "pinchecks": true,
+    "dispatch_freeze_matches": true,
+    "normal_native_completion_under_caps": true,
+    "alpha_stable_identity_revisions": true,
+    "alpha_stable_typed_part_ids": true,
+    "red_current_equals_independent_accepted_record": true,
+    "current_matches_latest_accepted_records": true,
+    "surviving_marker_bytes_match_snapshots": true,
+    "host_history_retains_all_attempts": true,
+    "recorded_read_paths_within_allowed_scope": true
+  },
+  "artifacts": {
+    "spec": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/delivery-v2/D1_SPEC.md",
+      "sha256": "f072320b456c2979049cb095f10c31c2c8cefc21a653c28630f47ebb6ce40fa1"
+    },
+    "prompt": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/ws/task.txt",
+      "sha256": "dfad7d3275a4d2cd68f578ea241cae55e8303ca140927851b14c9b18b2b1e56a"
+    },
+    "freeze": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/delivery-v2/FREEZE.json",
+      "sha256": "f690210f840ab2369291a51a28efc32937e751312b2b285dd31de53bd5621b70"
+    },
+    "dispatch": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/dispatch.json",
+      "sha256": "3bb128bf07d089ed7ed48f1e028b27a77698a52f46130b3ff8180c8fdacb782e"
+    },
+    "input_manifest": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/input-manifest.json",
+      "sha256": "b9fba8774b9fcb66dbf94c0fc1e87833d627224966669607d371e62c1d32c194"
+    },
+    "native_receipt": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/native/receipt.json",
+      "sha256": "3953c0e6f81e5d9ef0d9d9d43fa2ed0e380fa88895a4fd59128765ef8276823d"
+    },
+    "result": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/result.json",
+      "sha256": "229dfe6150fe6274ffc06a15cacc2d222a1e4dabececa05d2ec995e4b1a337c9"
+    },
+    "session_log": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/native/muse-session.jsonl",
+      "sha256": "d5645a666d276074bc974b001daa7fa39489da2cdf19bbd3c8c8930590da9b3a"
+    },
+    "msp_log": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/native/muse-msp.jsonl",
+      "sha256": "eff0b27b02e0be54007ddf6269deb9df41fb6ebbd01edf7f9398cc5c830d9ca6"
+    },
+    "state": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/state.json",
+      "sha256": "b5416ae66f8547cc008e30eec1e77daa18c9499117f4bfce8cae1bbfbf1d1f80"
+    },
+    "history": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/history.json",
+      "sha256": "26bd988fd91fb1896826817c5c50c04f956c9cb84e191b276bc869b822e0c20c"
+    },
+    "current_json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/current.json",
+      "sha256": "b4eb6e60fde1282f2091214f9ed48d90fea522d09a9ea37d0f87126b20a6c222"
+    },
+    "current_md": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/current.md",
+      "sha256": "86de623fc6f4048f9779d481cec2691efdfec8492147843919f50701673a6d58"
+    },
+    "host_runner": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/delivery-v2/tools/run_delivery_check.py",
+      "sha256": "9684d41027ebb32f67473531e652c783fae377256f8f44b9eb2ebb651d96da23"
+    },
+    "store_code": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/delivery-v2/tools/delivery_store.py",
+      "sha256": "81364fd1a4040ba457dd04779d096709c3524bee8704a2c8f453fb18264c85c7"
+    },
+    "goal_driver": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/run_goal.py",
+      "sha256": "7325ed95a89767b377de49dbe27bf2f1af989ee04521ff8f7e92a560fb367d5b"
+    },
+    "muse_driver": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/muse_goal_driver.py",
+      "sha256": "f5af9ef6ef420fbd6452677b11fb31341f17e57a6a0b90b4727dbe3e71adf218"
+    },
+    "wrapper": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/r1b/run_goal_r1b.py",
+      "sha256": "4cfd7aee946cd8db9ef70a0adf2cfe8279a5cdc13cb3c8b7cd299775dee97ae7"
+    },
+    "shell_disabled_wrapper": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/r1b/muse-serve-noshell.sh",
+      "sha256": "fecdb795d96fcdbf8895349dc81435dbf28b8e07ecbdbdaee2cff61c3f790586"
+    }
+  },
+  "frozen_pinchecks": {
+    "D1_SPEC.md": true,
+    "prompts/delivery-check.txt": true,
+    "tools/delivery_store.py": true,
+    "tools/run_delivery_check.py": true,
+    "tools/run_goal.py": true,
+    "tools/muse_goal_driver.py": true,
+    "tools/r1b/run_goal_r1b.py": true,
+    "tools/r1b/muse-serve-noshell.sh": true,
+    "offline-repair-v1/tools/delivery.py": true
+  },
+  "native_identity": {
+    "requested_model": "muse-spark-1.3-contributor",
+    "observed_model": "muse-spark-1.3-contributor",
+    "requested_effort": "max",
+    "observed_effort": "max",
+    "effort_ack": "accepted",
+    "effort_msp_events": [
+      {
+        "line": 7,
+        "effort": "max"
+      }
+    ],
+    "session_id": "01a0e5b6-dc5f-7811-b8fa-0d68a9de2b17",
+    "turn_ids": [
+      "01a0e5b6-dd54-7616-a5a6-5d3778fa2780"
+    ],
+    "goal_bindings": [
+      {
+        "line": 25,
+        "goal_id": "goal-a44734bb-bb8c-4e37-9922-5e699c8b3b50",
+        "goal_session_id": "01a0e5b6-dc5f-7811-b8fa-0d68a9de2b17",
+        "run_id": "01a0e5b6-dd54-7616-a5a6-5d3778fa2780",
+        "continuation_generation": 1
+      },
+      {
+        "line": 627,
+        "goal_id": "goal-a44734bb-bb8c-4e37-9922-5e699c8b3b50",
+        "goal_session_id": "01a0e5b6-dc5f-7811-b8fa-0d68a9de2b17",
+        "run_id": "01a0e5b6-dd54-7616-a5a6-5d3778fa2780",
+        "continuation_generation": null
+      }
+    ],
+    "goal_status_events": [
+      {
+        "line": 9,
+        "status": "active",
+        "goal_id": null
+      },
+      {
+        "line": 133,
+        "status": "complete",
+        "goal_id": null
+      }
+    ],
+    "fresh_session": true,
+    "goal_entry": "/goal via MSP goal/set",
+    "native_responses": 18,
+    "elapsed_seconds": 258.2,
+    "host_elapsed_seconds": 259.31358886700764,
+    "caps": {
+      "seconds": 300.0,
+      "responses": 48
+    },
+    "native_terminal": "goal_complete",
+    "process_exit": 0,
+    "host_error": null,
+    "msp_goal_id_limit": "MSP goalChanged exposes status/objective/percentComplete only; concrete goal ID comes from native session goal_run_binding records."
+  },
+  "attempts": [
+    {
+      "request": "new--alpha",
+      "finding_id": "F0001",
+      "revision": 1,
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "bytes": 1374,
+      "raw_sha256": "53c0388a287f665aa2d65a9c7f93e59fd1850be4767146a1863c7d2b39a27cd7",
+      "snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0001.md",
+        "sha256": "53c0388a287f665aa2d65a9c7f93e59fd1850be4767146a1863c7d2b39a27cd7",
+        "matches_native_write_bytes": true,
+        "matches_surviving_payload": true
+      },
+      "marker_snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0001.request",
+        "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "matches_native_write_bytes": true,
+        "is_submit_newline": true
+      },
+      "native_order": {
+        "payload_call_line": 139,
+        "payload_success_result_line": 152,
+        "payload_success_result_exact": true,
+        "marker_call_line": 179,
+        "marker_result_line": 192,
+        "receipt_read_call_line": 211,
+        "receipt_read_result_line": 223,
+        "payload_success_before_marker_call": true,
+        "marker_success_before_receipt_read": true
+      },
+      "receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/ws/feedback/new--alpha.json",
+        "sha256": "4f17106d29ad2a22f116a48b4a3298f19d4fe91f47d455d9ca988cd1f7a7bd69",
+        "read_matches_saved_object": true,
+        "read_status": "VALID_UNVERIFIED",
+        "read_complete": true,
+        "read_current_states": {
+          "F0001": {
+            "status": "VALID_UNVERIFIED",
+            "latest_attempt": 1
+          }
+        },
+        "read_count": 1
+      },
+      "host_changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": null,
+        "added_parts": [
+          "F0001_ASSERTION",
+          "F0001_CONDITION",
+          "F0001_IMPLICATION",
+          "F0001_PLAN_FIT",
+          "F0001_SOURCE_FIT",
+          "F0001_UNCERTAINTY",
+          "F0001_VALIDATION_PROPOSAL"
+        ],
+        "removed_parts": [],
+        "replaced_parts": [],
+        "title_changed": false
+      }
+    },
+    {
+      "request": "new--red",
+      "finding_id": "F0002",
+      "revision": 1,
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "bytes": 1429,
+      "raw_sha256": "48a523305302aae194ab40e12bcb579cd23613d764e0b2978e1cb5e775cfd8fa",
+      "snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0002.md",
+        "sha256": "48a523305302aae194ab40e12bcb579cd23613d764e0b2978e1cb5e775cfd8fa",
+        "matches_native_write_bytes": true,
+        "matches_surviving_payload": true
+      },
+      "marker_snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0002.request",
+        "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "matches_native_write_bytes": true,
+        "is_submit_newline": true
+      },
+      "native_order": {
+        "payload_call_line": 245,
+        "payload_success_result_line": 258,
+        "payload_success_result_exact": true,
+        "marker_call_line": 285,
+        "marker_result_line": 298,
+        "receipt_read_call_line": 317,
+        "receipt_read_result_line": 329,
+        "payload_success_before_marker_call": true,
+        "marker_success_before_receipt_read": true
+      },
+      "receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/ws/feedback/new--red.json",
+        "sha256": "52312b19746e78a5c58e22ec3f32d65e5017e6b5782aef64c2d3e6ce0aa1df1a",
+        "read_matches_saved_object": true,
+        "read_status": "VALID_UNVERIFIED",
+        "read_complete": true,
+        "read_current_states": {
+          "F0001": {
+            "status": "VALID_UNVERIFIED",
+            "latest_attempt": 1
+          },
+          "F0002": {
+            "status": "VALID_UNVERIFIED",
+            "latest_attempt": 2
+          }
+        },
+        "read_count": 1
+      },
+      "host_changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": null,
+        "added_parts": [
+          "F0002_CONDITION",
+          "F0002_IMPLICATION",
+          "F0002_NON_FINDING",
+          "F0002_PLAN_FIT",
+          "F0002_SOURCE_FIT",
+          "F0002_UNCERTAINTY",
+          "F0002_VALIDATION_PROPOSAL"
+        ],
+        "removed_parts": [],
+        "replaced_parts": [],
+        "title_changed": false
+      }
+    },
+    {
+      "request": "F0001--invalid",
+      "finding_id": "F0001",
+      "revision": 2,
+      "status": "INVALID",
+      "diagnostics": [
+        "line 18: unknown field 'snapshots_note'"
+      ],
+      "bytes": 1478,
+      "raw_sha256": "6309120612db8a2a26b7b428f2a1acbfcbbe01717c31e7b51a716048bc9f0b75",
+      "snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0003.md",
+        "sha256": "6309120612db8a2a26b7b428f2a1acbfcbbe01717c31e7b51a716048bc9f0b75",
+        "matches_native_write_bytes": true,
+        "matches_surviving_payload": true
+      },
+      "marker_snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0003.request",
+        "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "matches_native_write_bytes": true,
+        "is_submit_newline": true
+      },
+      "native_order": {
+        "payload_call_line": 351,
+        "payload_success_result_line": 364,
+        "payload_success_result_exact": true,
+        "marker_call_line": 391,
+        "marker_result_line": 404,
+        "receipt_read_call_line": 424,
+        "receipt_read_result_line": 436,
+        "payload_success_before_marker_call": true,
+        "marker_success_before_receipt_read": true
+      },
+      "receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/ws/feedback/F0001--invalid.json",
+        "sha256": "44cbeeae0dea42faa708264dc35a90b179b4bf9072b621490cec45da13d9f96b",
+        "read_matches_saved_object": true,
+        "read_status": "INVALID",
+        "read_complete": false,
+        "read_current_states": {
+          "F0001": {
+            "status": "INVALID",
+            "latest_attempt": 3
+          },
+          "F0002": {
+            "status": "VALID_UNVERIFIED",
+            "latest_attempt": 2
+          }
+        },
+        "read_count": 1
+      },
+      "host_changes": null
+    },
+    {
+      "request": "F0001--fixed",
+      "finding_id": "F0001",
+      "revision": 3,
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "bytes": 1825,
+      "raw_sha256": "82921fcdbaecd4350cf1ffc3cbecbae4154a6464e72833b4767cde73f93a192a",
+      "snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0004.md",
+        "sha256": "82921fcdbaecd4350cf1ffc3cbecbae4154a6464e72833b4767cde73f93a192a",
+        "matches_native_write_bytes": true,
+        "matches_surviving_payload": true
+      },
+      "marker_snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/store/snapshots/0004.request",
+        "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "matches_native_write_bytes": true,
+        "is_submit_newline": true
+      },
+      "native_order": {
+        "payload_call_line": 499,
+        "payload_success_result_line": 512,
+        "payload_success_result_exact": true,
+        "marker_call_line": 539,
+        "marker_result_line": 552,
+        "receipt_read_call_line": 571,
+        "receipt_read_result_line": 583,
+        "payload_success_before_marker_call": true,
+        "marker_success_before_receipt_read": true
+      },
+      "receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/ws/feedback/F0001--fixed.json",
+        "sha256": "3b565bdaf6d2a1bf513245382687f87934ad0e6b97fe2bb2c2d1ab31a8162249",
+        "read_matches_saved_object": true,
+        "read_status": "VALID_UNVERIFIED",
+        "read_complete": true,
+        "read_current_states": {
+          "F0001": {
+            "status": "VALID_UNVERIFIED",
+            "latest_attempt": 4
+          },
+          "F0002": {
+            "status": "VALID_UNVERIFIED",
+            "latest_attempt": 2
+          }
+        },
+        "read_count": 1
+      },
+      "host_changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": 1,
+        "added_parts": [],
+        "removed_parts": [],
+        "replaced_parts": [
+          "F0001_ASSERTION",
+          "F0001_CONDITION",
+          "F0001_IMPLICATION",
+          "F0001_PLAN_FIT",
+          "F0001_SOURCE_FIT",
+          "F0001_UNCERTAINTY",
+          "F0001_VALIDATION_PROPOSAL"
+        ],
+        "title_changed": true
+      }
+    }
+  ],
+  "aggregate_status_reads": [
+    {
+      "call_line": 97,
+      "result_line": 109,
+      "status": "INCOMPLETE",
+      "complete": false,
+      "current_states": {}
+    },
+    {
+      "call_line": 455,
+      "result_line": 467,
+      "status": "INCOMPLETE",
+      "complete": false,
+      "current_states": {
+        "F0001": {
+          "status": "INVALID",
+          "latest_attempt": 3
+        },
+        "F0002": {
+          "status": "VALID_UNVERIFIED",
+          "latest_attempt": 2
+        }
+      }
+    },
+    {
+      "call_line": 611,
+      "result_line": 625,
+      "status": "STRUCTURALLY_COMPLETE_UNVERIFIED",
+      "complete": true,
+      "current_states": {
+        "F0001": {
+          "status": "VALID_UNVERIFIED",
+          "latest_attempt": 4
+        },
+        "F0002": {
+          "status": "VALID_UNVERIFIED",
+          "latest_attempt": 2
+        }
+      }
+    }
+  ],
+  "tool_scope": {
+    "counts": {
+      "read_file": 8,
+      "write_file": 8,
+      "update_goal": 1
+    },
+    "read_paths": [
+      "case/SYNTHETIC.txt",
+      "feedback/status.json",
+      "feedback/new--alpha.json",
+      "feedback/new--red.json",
+      "feedback/F0001--invalid.json",
+      "feedback/status.json",
+      "feedback/F0001--fixed.json",
+      "feedback/status.json"
+    ],
+    "write_paths": [
+      "out/submissions/new--alpha.md",
+      "out/requests/new--alpha",
+      "out/submissions/new--red.md",
+      "out/requests/new--red",
+      "out/submissions/F0001--invalid.md",
+      "out/requests/F0001--invalid",
+      "out/submissions/F0001--fixed.md",
+      "out/requests/F0001--fixed"
+    ],
+    "native_completed_items": [
+      {
+        "line": 21,
+        "call_id": "call_01a0e5b71b0872038994cef543a4bbdd",
+        "tool": "read_file",
+        "status": "completed"
+      },
+      {
+        "line": 31,
+        "call_id": "call_01a0e5b8069b71fda37e3e6e0df52658",
+        "tool": "read_file",
+        "status": "completed"
+      },
+      {
+        "line": 42,
+        "call_id": "call_01a0e5b890a9709d94c01c46f9233967",
+        "tool": "write_file",
+        "status": "completed"
+      },
+      {
+        "line": 49,
+        "call_id": "call_01a0e5b8aba674b8a1521ab1696f9d8f",
+        "tool": "write_file",
+        "status": "completed"
+      },
+      {
+        "line": 53,
+        "call_id": "call_01a0e5b8b81077e29d0f05f081b7b9d2",
+        "tool": "read_file",
+        "status": "completed"
+      },
+      {
+        "line": 61,
+        "call_id": "call_01a0e5b8e2b07140bf3bd1fbac023983",
+        "tool": "write_file",
+        "status": "completed"
+      },
+      {
+        "line": 68,
+        "call_id": "call_01a0e5b8f84273d789f1985c5e446e62",
+        "tool": "write_file",
+        "status": "completed"
+      },
+      {
+        "line": 72,
+        "call_id": "call_01a0e5b9021471959d51f1fe666eafef",
+        "tool": "read_file",
+        "status": "completed"
+      },
+      {
+        "line": 81,
+        "call_id": "call_01a0e5b9463c7370b5456000f1968aa2",
+        "tool": "write_file",
+        "status": "completed"
+      },
+      {
+        "line": 88,
+        "call_id": "call_01a0e5b95a1976fda9cac9fd0d6a67df",
+        "tool": "write_file",
+        "status": "completed"
+      },
+      {
+        "line": 92,
+        "call_id": "call_01a0e5b9667a77ab901dcc139a7d8bc7",
+        "tool": "read_file",
+        "status": "completed"
+      },
+      {
+        "line": 96,
+        "call_id": "call_01a0e5b973d0721899079d667bc6ca39",
+        "tool": "read_file",
+        "status": "completed"
+      },
+      {
+        "line": 107,
+        "call_id": "call_01a0e5ba1eca739fa656171bcd8557ac",
+        "tool": "write_file",
+        "status": "completed"
+      },
+      {
+        "line": 114,
+        "call_id": "call_01a0e5ba3b0e745b93540fb2e326d56c",
+        "tool": "write_file",
+        "status": "completed"
+      },
+      {
+        "line": 118,
+        "call_id": "call_01a0e5ba44517612b9d0b1181b36cd55",
+        "tool": "read_file",
+        "status": "completed"
+      },
+      {
+        "line": 124,
+        "call_id": "call_01a0e5ba51967600b51d7ccb4ef804e2",
+        "tool": "read_file",
+        "status": "completed"
+      },
+      {
+        "line": 132,
+        "call_id": "call_01a0e5ba94bf74989609bd9ded414c2a",
+        "tool": "update_goal",
+        "status": "completed"
+      }
+    ],
+    "all_completed": true,
+    "external_or_disallowed_call_names": [],
+    "explicit_candidate_shell_web_network_or_model_calls": 0,
+    "catalogue_limit": "Muse has broader app builtins; actual observed usage is audited, not a three-tool allowlist.",
+    "native_internal_reminder_children": 10,
+    "reminder_child_tokens": "unexposed/unknown; not counted as zero",
+    "reminder_links": [
+      {
+        "line": 31,
+        "child_session_id": "27d906ae-e0a6-4fea-bd22-cf24d5cdfbf5",
+        "parent_session_id": "01a0e5b6-dc5f-7811-b8fa-0d68a9de2b17",
+        "parent_run_id": "01a0e5b6-dd54-7616-a5a6-5d3778fa2780",
+        "reminder_agent_id": "skill-reminder"
+      },
+      {
+        "line": 74,
+        "child_session_id": "d13be384-9891-4e88-ab19-a984dc27e87e",
+        "parent_session_id": "01a0e5b6-dc5f-7811-b8fa-0d68a9de2b17",
+        "parent_run_id": "01a0e5b6-dd54-7616-a5a6-5d3778fa2780",
+        "reminder_agent_id": "skill-reminder"
+      },
+      {
+        "line": 119,
+        "child_session_id": "0ef99708-13c5-4688-8452-9196c90eb33e",
+        "parent_session_id": "01a0e5b6-dc5f-7811-b8fa-0d68a9de2b17",
+        "parent_run_id": "01a0e5b6-dd54-7616-a5a6-5d3778fa2780",
+        "reminder_agent_id": "skill-reminder"
+      },
+      {
+        "line": 162,
+        "child_session_id": "978b07c2-dc71-42a1-8976-19827149b832",
+        "parent_session_id": "01a0e5b6-dc5f-7811-b8fa-0d68a9de2b17",
+        "parent_run_id": "01a0e5b6-dd54-7616-a5a6-5d3778fa2780",
+        "reminder_agent_id": "skill-reminder"
+      },
+      {
+        "line": 268,
+        "child_session_id": "dfe6c3a5-25b3-453c-af5d-0882eb8faf92",
+        "parent_session_id": "01a0e5b6-dc5f-7811-b8fa-0d68a9de2b17",
+        "parent_run_id": "01a0e5b6-dd54-7616-a5a6-5d3778fa2780",
+        "reminder_agent_id": "skill-reminder"
+      },
+      {
+        "line": 374,
+        "child_session_id": "8dbea66c-9d24-450e-aac7-b28446d51e07",
+        "parent_session_id": "01a0e5b6-dc5f-7811-b8fa-0d68a9de2b17",
+        "parent_run_id": "01a0e5b6-dd54-7616-a5a6-5d3778fa2780",
+        "reminder_agent_id": "skill-reminder"
+      },
+      {
+        "line": 477,
+        "child_session_id": "ba32304b-49b1-4b62-b2c4-9279b814d517",
+        "parent_session_id": "01a0e5b6-dc5f-7811-b8fa-0d68a9de2b17",
+        "parent_run_id": "01a0e5b6-dd54-7616-a5a6-5d3778fa2780",
+        "reminder_agent_id": "skill-reminder"
+      },
+      {
+        "line": 522,
+        "child_session_id": "20db124c-a82b-4dea-bdbc-af52dd15e72b",
+        "parent_session_id": "01a0e5b6-dc5f-7811-b8fa-0d68a9de2b17",
+        "parent_run_id": "01a0e5b6-dd54-7616-a5a6-5d3778fa2780",
+        "reminder_agent_id": "skill-reminder"
+      },
+      {
+        "line": 593,
+        "child_session_id": "4c1275d7-d3f9-4fc5-bdae-474eb59da682",
+        "parent_session_id": "01a0e5b6-dc5f-7811-b8fa-0d68a9de2b17",
+        "parent_run_id": "01a0e5b6-dd54-7616-a5a6-5d3778fa2780",
+        "reminder_agent_id": "skill-reminder"
+      },
+      {
+        "line": 671,
+        "child_session_id": "41324cd6-3e17-423a-83a5-de58ef307ead",
+        "parent_session_id": "01a0e5b6-dc5f-7811-b8fa-0d68a9de2b17",
+        "parent_run_id": "01a0e5b6-dd54-7616-a5a6-5d3778fa2780",
+        "reminder_agent_id": "skill-reminder"
+      }
+    ]
+  },
+  "host_separation": {
+    "raw_write_bytes_repaired_by_host": false,
+    "current_truth_status": "UNVERIFIED",
+    "host_bookkeeping_only": "IDs/revision count/mechanical part changes; last parsed record is diff basis, never latest-current fallback",
+    "host_snapshot_ack_order_evidence": "Pinned delivery_store.py:169-219 captures snapshot, publishes persistent state, then receipt; native Read receipts embed matching SHA/snapshot paths. No independent OS write-time trace.",
+    "host_polling": "Pinned run_delivery_check.py:115-119 polls beside the existing driver; final close at :140-143; no new Goal/provider transport.",
+    "invalid_latest_current_evidence": "Native delivered invalid receipt/current_states and aggregate status show no accepted Alpha fallback. Transient current.md was not separately snapshotted; byte replay of that transient view is unavailable."
+  },
+  "gaps_and_limits": [
+    "No semantic grade, source-truth certification, corpus benchmark or follow-on verifier qualification.",
+    "Native session/MSP/tool traces corroborate actual tool use; they are not OS-level access tracing.",
+    "Internal Muse reminder children are exposed as links; their hidden content/tokens were not audited and remain unknown.",
+    "No independent per-attempt host fsync/disk-durability or OS-timestamp proof; snapshot-before-ack is supported by pinned host order and matching native receipt uptake.",
+    "One same-Goal synthetic success does not establish general reliability; no retries or replacements occurred."
+  ],
+  "concrete_deviations": []
+}

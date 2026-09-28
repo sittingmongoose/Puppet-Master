@@ -1,0 +1,26 @@
+{
+  "request": "F0001--invalid",
+  "sequence": 3,
+  "finding_id": "F0001",
+  "revision": 2,
+  "status": "INVALID",
+  "diagnostics": [
+    "line 26: unknown field 'snapshots_note'"
+  ],
+  "raw_sha256": "10394a838651e2165c058a5924716493fd0394ae588f8654fd3b476882e3cb87",
+  "snapshot": "snapshots/0003.md",
+  "structural_only": true,
+  "semantic_validation": "not_performed",
+  "current_states": {
+    "F0001": {
+      "status": "INVALID",
+      "latest_attempt": 3
+    },
+    "F0002": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 2
+    }
+  },
+  "complete": false,
+  "protocol_errors": []
+}

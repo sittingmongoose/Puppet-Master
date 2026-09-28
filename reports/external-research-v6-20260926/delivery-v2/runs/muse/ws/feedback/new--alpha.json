@@ -1,0 +1,20 @@
+{
+  "request": "new--alpha",
+  "sequence": 1,
+  "finding_id": "F0001",
+  "revision": 1,
+  "status": "VALID_UNVERIFIED",
+  "diagnostics": [],
+  "raw_sha256": "53c0388a287f665aa2d65a9c7f93e59fd1850be4767146a1863c7d2b39a27cd7",
+  "snapshot": "snapshots/0001.md",
+  "structural_only": true,
+  "semantic_validation": "not_performed",
+  "current_states": {
+    "F0001": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 1
+    }
+  },
+  "complete": true,
+  "protocol_errors": []
+}

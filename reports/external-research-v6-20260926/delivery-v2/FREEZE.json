@@ -1,0 +1,91 @@
+{
+  "schema": "d1.freeze.v1",
+  "created_utc": "2026-09-28T01:52:16.668625+00:00",
+  "scope": "Two finite synthetic native delivery assignments only; not an approval grant or formal evaluation",
+  "files": {
+    "D1_SPEC.md": {
+      "sha256": "f072320b456c2979049cb095f10c31c2c8cefc21a653c28630f47ebb6ce40fa1",
+      "bytes": 5282
+    },
+    "I1_RESULTS_REVIEW_AND_NEXT_STEP.md": {
+      "sha256": "ab1b1df34c95fe6600ab859073f23ea62cf9f8dea870794a210adb71a805af2e",
+      "bytes": 15777
+    },
+    "fixtures/SYNTHETIC.txt": {
+      "sha256": "5e613f67fba1794f0b4ec060cf5484691f319fa0798b3c2dea5ba9b64c039e0f",
+      "bytes": 759
+    },
+    "fixtures/duplicate-field.md": {
+      "sha256": "bcd13064e828361cb03aab7af63aedc9da8ab33f72a8d81be2eb3282542b7ac0",
+      "bytes": 1268
+    },
+    "fixtures/malformed.md": {
+      "sha256": "a31a465a3cd85c91c65089a5f132684df92db446748d8f4d1219ec80d5b91a03",
+      "bytes": 1181
+    },
+    "fixtures/missing-field.md": {
+      "sha256": "e5eb03c1b941cd525abfd51fe2298e678a81a0a4f3072e808b036c56ae341d4d",
+      "bytes": 1092
+    },
+    "fixtures/revision.md": {
+      "sha256": "2a0a251c8c560c2eedd798fff94763390c19b67ff3cfcb9309aa1f0045ae4412",
+      "bytes": 1417
+    },
+    "fixtures/unknown-field.md": {
+      "sha256": "149191f20e9e6b629cbf872ec08899666b3127e1a6195fa977a49bb4e7c3a2fb",
+      "bytes": 1296
+    },
+    "fixtures/valid.md": {
+      "sha256": "9d8f35727b840877d37bd2dc774e81455a0319206e41f40e109ce4d2ea40758a",
+      "bytes": 1185
+    },
+    "prompts/delivery-check.txt": {
+      "sha256": "dfad7d3275a4d2cd68f578ea241cae55e8303ca140927851b14c9b18b2b1e56a",
+      "bytes": 5118
+    },
+    "prompts/evaluator-task.txt": {
+      "sha256": "98179f83255e85be231fe1c262077eca2380d7580681934700342364a6232643",
+      "bytes": 7590
+    },
+    "tools/delivery_store.py": {
+      "sha256": "81364fd1a4040ba457dd04779d096709c3524bee8704a2c8f453fb18264c85c7",
+      "bytes": 16313
+    },
+    "tools/evaluator_launch.py": {
+      "sha256": "a89f3336a8471209096105beba78c44d65bf68d1dca2087bebcbe5de6d05fef0",
+      "bytes": 8639
+    },
+    "tools/run_delivery_check.py": {
+      "sha256": "9684d41027ebb32f67473531e652c783fae377256f8f44b9eb2ebb651d96da23",
+      "bytes": 8870
+    },
+    "tools/test_delivery_store.py": {
+      "sha256": "af6e060486a4ccf72eb8621f49474ce4b60b7fea57d0d9e7837086f043c712a2",
+      "bytes": 20832
+    },
+    "tools/test_evaluator_launch.py": {
+      "sha256": "38ea7d237db9302be606fbbc8a98d1d57d5d76ca8b030293fec7a237b3b0871e",
+      "bytes": 8565
+    },
+    "tools/test_run_delivery_check.py": {
+      "sha256": "45f0b90c1f1127b4cddf83636edb902836b74b51a8a7893aac9d2decfbcabf6e",
+      "bytes": 10946
+    }
+  },
+  "reused_pins": {
+    "tools/run_goal.py": "7325ed95a89767b377de49dbe27bf2f1af989ee04521ff8f7e92a560fb367d5b",
+    "tools/muse_goal_driver.py": "f5af9ef6ef420fbd6452677b11fb31341f17e57a6a0b90b4727dbe3e71adf218",
+    "tools/zcode_goal_driver.py": "b2d1a36308769a225005e586e894f180d7bb38bd9f5c481a1c86c49c41755eac",
+    "tools/run_arm.py": "330ae90097254192bf95fd52ebee4cdda0a9d19325bc3c4c88bde6ad4b4d4520",
+    "tools/r1b/run_goal_r1b.py": "4cfd7aee946cd8db9ef70a0adf2cfe8279a5cdc13cb3c8b7cd299775dee97ae7",
+    "tools/r1b/muse-serve-noshell.sh": "fecdb795d96fcdbf8895349dc81435dbf28b8e07ecbdbdaee2cff61c3f790586",
+    "tools/r1b/run_r1b.py": "a0694ff3d865497e3c7c511d752a5ad4c7e1b3136783fcfffec4e4ab8daf9a9d",
+    "tools/r1b/run_reviewer_v2.py": "7d2c410f16b96230e3b57448ee21e462009843f4dff6e461a04ce168d31a0189",
+    "tools/r1b/build_review_workspaces_r1b.py": "06b9c69a6fe46b6172655e1bc550a4b56ba001842006c035e3e38caf80bbc8a8",
+    "tools/r1b/test_r1b.py": "1be8849ec2500097dcc02e53a368c4d870675d4718acee273d2351c511f4fb13",
+    "/home/sittingmongoose/.local/bin/muse-bin-1.4.0-R4161.1": "1b68bd4518d53a2aaff063915df4d141b0a205e6d79038299d04e3a14e85a5b9",
+    "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+    "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/adapters/zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633",
+    "offline-repair-v1/tools/delivery.py": "e1c7ea2e32bd00ef2606b5974b690a4537b6b200fd3c4e620880ae430b9ebe59"
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "attempts": [
+    {
+      "sequence": 1,
+      "request": "new--alpha",
+      "finding_id": "F0001",
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "raw_sha256": "b69b0a844ad772d5623ade3599d7f66dee4b229df6661d8a67c660586acedee5",
+      "marker_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "snapshot": "snapshots/0001.md",
+      "marker_snapshot": "snapshots/0001.request",
+      "finding": {
+        "id": "F0001",
+        "title": "Alpha blue-mode unit reporting (synthetic, revision 1)",
+        "parts": [
+          {
+            "id": "F0001_ASSERTION",
+            "type": "assertion",
+            "text": "ALPHA_V1: in the D1 synthetic source, revision 1 states that widget Alpha reports 2 units only when mode is blue — \"widget Alpha reports 2 units only when mode is blue.\" Within the fictional scenario, the word \"only\" makes blue mode a necessary condition for the 2-unit report.\n\n"
+          },
+          {
+            "id": "F0001_SOURCE_FIT",
+            "type": "source_fit",
+            "text": "case/SYNTHETIC.txt line 2: \"Revision 1: widget Alpha reports 2 units only when mode is blue. Marker ALPHA_V1.\"\ncase/SYNTHETIC.txt line 1 bounds the corpus: \"D1 synthetic source. All statements below are invented for delivery testing; no product or research conclusion follows.\"\nNo external or real-world source is cited or implied; every claim above traces to these invented lines.\n\n"
+          },
+          {
+            "id": "F0001_CONDITION",
+            "type": "condition",
+            "text": "- Holds only inside the D1 synthetic delivery-testing corpus, which the source itself declares invented for delivery testing.\n- Applies to the revision-1 statement specifically; the source also carries a revision-2 sentence with a different unit count, so the number is revision-scoped.\n- \"Only when\" is read as blue mode being necessary for the 2-unit report; whether blue mode is sufficient is not stated.\n- Says nothing about real widgets, other modes, or any product behavior.\n\n"
+          },
+          {
+            "id": "F0001_IMPLICATION",
+            "type": "implication",
+            "text": "If the synthetic condition holds, then within this fictional model any scenario in which mode is not blue should not show widget Alpha reporting 2 units; conversely, observing a 2-unit report in the synthetic fixtures would imply blue mode.\n\n"
+          },
+          {
+            "id": "F0001_VALIDATION_PROPOSAL",
+            "type": "validation_proposal",
+            "text": "UNEXECUTED proposal: a future synthetic-harness pass (not this session, not executed here) would build fictional fixture cases pairing mode ∈ {blue, non-blue} with a recorded unit value and check that the 2-unit value co-occurs with blue mode only, using revision-1 fixtures exclusively. This is a proposal only; no test has been run and no result exists.\n\n"
+          },
+          {
+            "id": "F0001_UNCERTAINTY",
+            "type": "uncertainty",
+            "text": "The mechanism linking mode to units is unstated; whether \"only when\" also excludes other unit values while in blue mode is unspecified; and the relationship between the revision-1 and revision-2 sentences (supersession vs. coexistence) is not defined by the file. Scope is limited to the bytes of case/SYNTHETIC.txt.\n\n"
+          },
+          {
+            "id": "F0001_PLAN_FIT",
+            "type": "plan_fit",
+            "text": "TEST_ONLY synthetic disposition: record as delivery-interface exercise data for the D1 qualification. No canonical plan change, no product or research conclusion, and no execution of the proposed test.\n"
+          }
+        ]
+      },
+      "change_reason": null,
+      "revision": 1,
+      "changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": null,
+        "added_parts": [
+          "F0001_ASSERTION",
+          "F0001_CONDITION",
+          "F0001_IMPLICATION",
+          "F0001_PLAN_FIT",
+          "F0001_SOURCE_FIT",
+          "F0001_UNCERTAINTY",
+          "F0001_VALIDATION_PROPOSAL"
+        ],
+        "removed_parts": [],
+        "replaced_parts": [],
+        "title_changed": false
+      }
+    },
+    {
+      "sequence": 2,
+      "request": "new--red",
+      "finding_id": "F0002",
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "raw_sha256": "d912ab3f0b4f5b38cdae03eb7d457190323f60d5a07561d6f21f5bde56d72b15",
+      "marker_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "snapshot": "snapshots/0002.md",
+      "marker_snapshot": "snapshots/0002.request",
+      "finding": {
+        "id": "F0002",
+        "title": "Non-finding: the synthetic source is silent on red mode",
+        "parts": [
+          {
+            "id": "F0002_NON_FINDING",
+            "type": "non_finding",
+            "text": "The D1 synthetic source (case/SYNTHETIC.txt) makes no statement about red mode: it neither affirms nor denies any widget behavior under red. This is a scoped record of that silence, not a substantive claim about red mode. Bounded scope: exactly this 14-line file (revisions 1–2, markers ALPHA_V1/ALPHA_V2); it covers no other file, corpus, or real widget.\n\n"
+          },
+          {
+            "id": "F0002_SOURCE_FIT",
+            "type": "source_fit",
+            "text": "case/SYNTHETIC.txt line 12: \"This synthetic source makes no claim about red mode. Its silence is bounded to this file; it does not prove anything about real widgets.\"\nThe only mode named anywhere else in the file is blue (lines 2, 3, 7, and 11 of the embedded code); the word \"red\" appears solely in the line-12 statement of silence. No external source is cited or implied.\n\n"
+          },
+          {
+            "id": "F0002_CONDITION",
+            "type": "condition",
+            "text": "- The silence is bounded to this one synthetic file by the file's own text.\n- Silence is not evidence: nothing about red-mode behavior, synthetic or real, follows from the absence of a statement.\n- If a later revision of the source mentions red mode, this record no longer describes the current file and should be revised or retired.\n\n"
+          },
+          {
+            "id": "F0002_IMPLICATION",
+            "type": "implication",
+            "text": "If the synthetic condition holds, any scenario requiring a red-mode rule must source it elsewhere; this file can neither support nor contradict a red-mode claim.\n\n"
+          },
+          {
+            "id": "F0002_VALIDATION_PROPOSAL",
+            "type": "validation_proposal",
+            "text": "UNEXECUTED proposal: a future text scan (not run in this session) over the current bytes of case/SYNTHETIC.txt would check that no line other than the line-12 silence statement mentions red mode, confirming the boundary still holds. Proposed only; never executed, no result claimed.\n\n"
+          },
+          {
+            "id": "F0002_UNCERTAINTY",
+            "type": "uncertainty",
+            "text": "Unknown whether synthetic corpora outside this file address red mode, and whether future revisions of this file will break the silence. The record's accuracy is limited to the file bytes read on 2026-09-28.\n\n"
+          },
+          {
+            "id": "F0002_PLAN_FIT",
+            "type": "plan_fit",
+            "text": "TEST_ONLY synthetic disposition: retain as a scoped negative-coverage note for the D1 delivery qualification. No canonical plan change and no inference about real systems.\n"
+          }
+        ]
+      },
+      "change_reason": null,
+      "revision": 1,
+      "changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": null,
+        "added_parts": [
+          "F0002_CONDITION",
+          "F0002_IMPLICATION",
+          "F0002_NON_FINDING",
+          "F0002_PLAN_FIT",
+          "F0002_SOURCE_FIT",
+          "F0002_UNCERTAINTY",
+          "F0002_VALIDATION_PROPOSAL"
+        ],
+        "removed_parts": [],
+        "replaced_parts": [],
+        "title_changed": false
+      }
+    },
+    {
+      "sequence": 3,
+      "request": "F0001--invalid",
+      "finding_id": "F0001",
+      "status": "INVALID",
+      "diagnostics": [
+        "line 26: unknown field 'snapshots_note'"
+      ],
+      "raw_sha256": "10394a838651e2165c058a5924716493fd0394ae588f8654fd3b476882e3cb87",
+      "marker_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "snapshot": "snapshots/0003.md",
+      "marker_snapshot": "snapshots/0003.request",
+      "finding": null,
+      "change_reason": null,
+      "revision": 2,
+      "changes": null
+    },
+    {
+      "sequence": 4,
+      "request": "F0001--fixed",
+      "finding_id": "F0001",
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "raw_sha256": "67da13bf6edd05de4dccafc2816268a8caf1d104248305c8d8bf6e6f768ba73c",
+      "marker_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "snapshot": "snapshots/0004.md",
+      "marker_snapshot": "snapshots/0004.request",
+      "finding": {
+        "id": "F0001",
+        "title": "Alpha blue-mode unit reporting (synthetic, revision 2)",
+        "parts": [
+          {
+            "id": "F0001_ASSERTION",
+            "type": "assertion",
+            "text": "ALPHA_V2: in the D1 synthetic source, revision 2 states that widget Alpha reports 3 units only when mode is blue, with blue mode remaining a necessary condition — \"Revision 2: widget Alpha reports 3 units only when mode is blue; the condition remains necessary. Marker ALPHA_V2.\" Within the fictional scenario, blue mode is necessary for the 3-unit report.\n\n"
+          },
+          {
+            "id": "F0001_SOURCE_FIT",
+            "type": "source_fit",
+            "text": "case/SYNTHETIC.txt line 3: \"Revision 2: widget Alpha reports 3 units only when mode is blue; the condition remains necessary. Marker ALPHA_V2.\"\ncase/SYNTHETIC.txt line 1 bounds the corpus: \"D1 synthetic source. All statements below are invented for delivery testing; no product or research conclusion follows.\"\nExact quoted sentence, verbatim from case/SYNTHETIC.txt line 4: He said \"blue\", then typed C:\\demo\\alpha.\nExact code, verbatim from case/SYNTHETIC.txt lines 6–11, preserving quotes, backslashes, indentation, and the literal heading inside the closed fence:\n```text\n  mode = \"blue\"\n  path = \"C:\\demo\\alpha\"\n## condition\n  units = 3\n```\nThe fenced code's `units = 3` matches the revision-2 unit count; no external or real-world source is cited or implied.\n\n"
+          },
+          {
+            "id": "F0001_CONDITION",
+            "type": "condition",
+            "text": "- Holds only inside the D1 synthetic delivery-testing corpus, which the source itself declares invented for delivery testing.\n- Applies to the revision-2 statement; the source also carries a revision-1 sentence with a 2-unit count, so the number is revision-scoped and this record treats revision 2 as the operative statement.\n- \"Only when\" is read as blue mode being necessary for the 3-unit report; whether blue mode is sufficient is not stated.\n- The embedded code is illustrative synthetic text; it must not be executed (the source itself says \"Any proposed test is UNEXECUTED. Do not run this code or claim a test passed.\").\n- Says nothing about real widgets, red mode, or any product behavior.\n\n"
+          },
+          {
+            "id": "F0001_IMPLICATION",
+            "type": "implication",
+            "text": "If the synthetic condition holds, then within this fictional model any scenario in which mode is not blue should not show widget Alpha reporting 3 units; conversely, observing a 3-unit report in the synthetic fixtures would imply blue mode. Synthetic fixtures still carrying the revision-1 2-unit value would be stale relative to revision 2.\n\n"
+          },
+          {
+            "id": "F0001_VALIDATION_PROPOSAL",
+            "type": "validation_proposal",
+            "text": "UNEXECUTED proposal: a future synthetic-harness pass (not this session, not executed here) would build fictional fixture cases pairing mode ∈ {blue, non-blue} with a recorded unit value and check that the 3-unit value co-occurs with blue mode only, using revision-2 fixtures exclusively, plus a boundary case confirming no 3-unit report for non-blue modes. This is a proposal only; no test has been run and no result exists.\n\n"
+          },
+          {
+            "id": "F0001_UNCERTAINTY",
+            "type": "uncertainty",
+            "text": "The mechanism linking mode to units is unstated; whether \"only when\" also excludes other unit values while in blue mode is unspecified; whether revision 2 supersedes revision 1 or both coexist for different fixture generations is not defined by the file; and the quoted sentence's mention of \"C:\\demo\\alpha\" carries no stated relationship to the unit count. Scope is limited to the bytes of case/SYNTHETIC.txt.\n\n"
+          },
+          {
+            "id": "F0001_PLAN_FIT",
+            "type": "plan_fit",
+            "text": "TEST_ONLY synthetic disposition: record as delivery-interface exercise data for the D1 qualification. No canonical plan change, no product or research conclusion, and no execution of the proposed test.\n\n"
+          }
+        ]
+      },
+      "change_reason": "Revision 2 → 3 of finding F0001, repairing the deliberately invalid attempt F0001--invalid: updated the marker to ALPHA_V2 and the unit count from 2 to 3 per the revision-2 sentence, embedded the exact quoted sentence and fenced code verbatim from the source, tightened condition/implication/uncertainty accordingly, and removed the intentionally unsupported ## snapshots_note heading that caused the INVALID receipt. Earlier revisions are retained in audit history; this attempt is a new complete record with whole-finding context.\n",
+      "revision": 3,
+      "changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": 1,
+        "added_parts": [],
+        "removed_parts": [],
+        "replaced_parts": [
+          "F0001_ASSERTION",
+          "F0001_CONDITION",
+          "F0001_IMPLICATION",
+          "F0001_PLAN_FIT",
+          "F0001_SOURCE_FIT",
+          "F0001_UNCERTAINTY",
+          "F0001_VALIDATION_PROPOSAL"
+        ],
+        "title_changed": true
+      }
+    }
+  ],
+  "history_gaps": []
+}

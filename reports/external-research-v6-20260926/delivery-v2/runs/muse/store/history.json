@@ -1,0 +1,232 @@
+{
+  "attempts": [
+    {
+      "sequence": 1,
+      "request": "new--alpha",
+      "finding_id": "F0001",
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "raw_sha256": "53c0388a287f665aa2d65a9c7f93e59fd1850be4767146a1863c7d2b39a27cd7",
+      "marker_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "snapshot": "snapshots/0001.md",
+      "marker_snapshot": "snapshots/0001.request",
+      "finding": {
+        "id": "F0001",
+        "title": "Alpha widget blue-mode report V1 synthetic",
+        "parts": [
+          {
+            "id": "F0001_ASSERTION",
+            "type": "assertion",
+            "text": "Widget Alpha reports 2 units only when mode is blue. Marker ALPHA_V1. This is the revision-1 synthetic fact for delivery interface testing.\n"
+          },
+          {
+            "id": "F0001_SOURCE_FIT",
+            "type": "source_fit",
+            "text": "Synthetic source states Revision 1: widget Alpha reports 2 units only when mode is blue. Marker ALPHA_V1. The file header says D1 synthetic source. All statements below are invented for delivery testing; no product or research conclusion follows.\n"
+          },
+          {
+            "id": "F0001_CONDITION",
+            "type": "condition",
+            "text": "Conditions: mode is blue is necessary; the 2-unit report applies only when mode is blue. Limits: synthetic revision-1 scope only; invented for delivery testing; no claim about other modes or real widgets.\n"
+          },
+          {
+            "id": "F0001_IMPLICATION",
+            "type": "implication",
+            "text": "If the synthetic condition holds and mode is blue, the synthetic record reports 2 units. If mode is not blue, the 2-unit report does not apply.\n"
+          },
+          {
+            "id": "F0001_VALIDATION_PROPOSAL",
+            "type": "validation_proposal",
+            "text": "UNEXECUTED proposal: inspect the synthetic file for the revision-1 line and compare the mode value to blue without running code. This proposal has not been executed and no result is claimed.\n"
+          },
+          {
+            "id": "F0001_UNCERTAINTY",
+            "type": "uncertainty",
+            "text": "Unknown whether any real widget behaves this way. Uncertainty covers real-world mapping, other modes, and any revision beyond synthetic revision 1.\n"
+          },
+          {
+            "id": "F0001_PLAN_FIT",
+            "type": "plan_fit",
+            "text": "TEST_ONLY; no canonical plan change. Synthetic disposition is to retain the revision-1 fact for interface testing only, with no research conclusion.\n"
+          }
+        ]
+      },
+      "change_reason": null,
+      "revision": 1,
+      "changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": null,
+        "added_parts": [
+          "F0001_ASSERTION",
+          "F0001_CONDITION",
+          "F0001_IMPLICATION",
+          "F0001_PLAN_FIT",
+          "F0001_SOURCE_FIT",
+          "F0001_UNCERTAINTY",
+          "F0001_VALIDATION_PROPOSAL"
+        ],
+        "removed_parts": [],
+        "replaced_parts": [],
+        "title_changed": false
+      }
+    },
+    {
+      "sequence": 2,
+      "request": "new--red",
+      "finding_id": "F0002",
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "raw_sha256": "48a523305302aae194ab40e12bcb579cd23613d764e0b2978e1cb5e775cfd8fa",
+      "marker_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "snapshot": "snapshots/0002.md",
+      "marker_snapshot": "snapshots/0002.request",
+      "finding": {
+        "id": "F0002",
+        "title": "Red mode silence scoped synthetic non-finding",
+        "parts": [
+          {
+            "id": "F0002_NON_FINDING",
+            "type": "non_finding",
+            "text": "This synthetic source makes no claim about red mode. Its silence is bounded to this file and does not prove anything about real widgets. This is a scoped non-finding for delivery interface testing.\n"
+          },
+          {
+            "id": "F0002_SOURCE_FIT",
+            "type": "source_fit",
+            "text": "Synthetic source states This synthetic source makes no claim about red mode. Its silence is bounded to this file; it does not prove anything about real widgets. The file header says D1 synthetic source. All statements below are invented for delivery testing.\n"
+          },
+          {
+            "id": "F0002_CONDITION",
+            "type": "condition",
+            "text": "Conditions: silence applies only within the synthetic file; bounded source scope is this file only. Limits: no inference about real widgets, no claim about red-mode behavior, no extension beyond the synthetic source.\n"
+          },
+          {
+            "id": "F0002_IMPLICATION",
+            "type": "implication",
+            "text": "If the bounded silence holds, no red-mode conclusion follows from this source; any red-mode claim would need a different source.\n"
+          },
+          {
+            "id": "F0002_VALIDATION_PROPOSAL",
+            "type": "validation_proposal",
+            "text": "UNEXECUTED proposal: search the synthetic file for red-mode claims and confirm only the silence statement appears, without running code. This proposal has not been executed and no result is claimed.\n"
+          },
+          {
+            "id": "F0002_UNCERTAINTY",
+            "type": "uncertainty",
+            "text": "Uncertainty covers all real red-mode behavior and any source outside this synthetic file. The silence does not bound real-world facts.\n"
+          },
+          {
+            "id": "F0002_PLAN_FIT",
+            "type": "plan_fit",
+            "text": "TEST_ONLY; no canonical plan change. Synthetic disposition is to retain the bounded silence as a non-finding for interface testing only.\n"
+          }
+        ]
+      },
+      "change_reason": null,
+      "revision": 1,
+      "changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": null,
+        "added_parts": [
+          "F0002_CONDITION",
+          "F0002_IMPLICATION",
+          "F0002_NON_FINDING",
+          "F0002_PLAN_FIT",
+          "F0002_SOURCE_FIT",
+          "F0002_UNCERTAINTY",
+          "F0002_VALIDATION_PROPOSAL"
+        ],
+        "removed_parts": [],
+        "replaced_parts": [],
+        "title_changed": false
+      }
+    },
+    {
+      "sequence": 3,
+      "request": "F0001--invalid",
+      "finding_id": "F0001",
+      "status": "INVALID",
+      "diagnostics": [
+        "line 18: unknown field 'snapshots_note'"
+      ],
+      "raw_sha256": "6309120612db8a2a26b7b428f2a1acbfcbbe01717c31e7b51a716048bc9f0b75",
+      "marker_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "snapshot": "snapshots/0003.md",
+      "marker_snapshot": "snapshots/0003.request",
+      "finding": null,
+      "change_reason": null,
+      "revision": 2,
+      "changes": null
+    },
+    {
+      "sequence": 4,
+      "request": "F0001--fixed",
+      "finding_id": "F0001",
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "raw_sha256": "82921fcdbaecd4350cf1ffc3cbecbae4154a6464e72833b4767cde73f93a192a",
+      "marker_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "snapshot": "snapshots/0004.md",
+      "marker_snapshot": "snapshots/0004.request",
+      "finding": {
+        "id": "F0001",
+        "title": "Alpha widget blue-mode report V2 synthetic",
+        "parts": [
+          {
+            "id": "F0001_ASSERTION",
+            "type": "assertion",
+            "text": "Widget Alpha reports 3 units only when mode is blue; the condition remains necessary. Marker ALPHA_V2. This is the revision-2 synthetic fact for delivery interface testing.\n"
+          },
+          {
+            "id": "F0001_SOURCE_FIT",
+            "type": "source_fit",
+            "text": "Synthetic source revision 2 states Revision 2: widget Alpha reports 3 units only when mode is blue; the condition remains necessary. Marker ALPHA_V2.\nExact quoted sentence: He said \"blue\", then typed C:\\demo\\alpha.\nExact code:\n```text\n  mode = \"blue\"\n  path = \"C:\\demo\\alpha\"\n## condition\n  units = 3\n```\nFile header says D1 synthetic source. All statements below are invented for delivery testing.\n"
+          },
+          {
+            "id": "F0001_CONDITION",
+            "type": "condition",
+            "text": "Conditions: mode is blue is necessary; the 3-unit report applies only when mode is blue. Limits: synthetic revision-2 scope only; invented for delivery testing; no claim about other modes or real widgets.\n"
+          },
+          {
+            "id": "F0001_IMPLICATION",
+            "type": "implication",
+            "text": "If the synthetic condition holds and mode is blue, the synthetic record reports 3 units. If mode is not blue, the 3-unit report does not apply.\n"
+          },
+          {
+            "id": "F0001_VALIDATION_PROPOSAL",
+            "type": "validation_proposal",
+            "text": "UNEXECUTED proposal: inspect the synthetic file for the revision-2 line, quoted sentence and code block, and compare mode value to blue without running code. This proposal has not been executed and no result is claimed.\n"
+          },
+          {
+            "id": "F0001_UNCERTAINTY",
+            "type": "uncertainty",
+            "text": "Unknown whether any real widget behaves this way. Uncertainty covers real-world mapping, other modes, and any revision beyond synthetic revision 2.\n"
+          },
+          {
+            "id": "F0001_PLAN_FIT",
+            "type": "plan_fit",
+            "text": "TEST_ONLY; no canonical plan change. Synthetic disposition is to retain the revision-2 fact for interface testing only, with no research conclusion.\n"
+          }
+        ]
+      },
+      "change_reason": "Changed marker from ALPHA_PENDING to ALPHA_V2, updated fact from 2 units to 3 units per synthetic revision 2, added exact quoted sentence and code, and omitted the unsupported heading to restore a complete valid record.\n",
+      "revision": 3,
+      "changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": 1,
+        "added_parts": [],
+        "removed_parts": [],
+        "replaced_parts": [
+          "F0001_ASSERTION",
+          "F0001_CONDITION",
+          "F0001_IMPLICATION",
+          "F0001_PLAN_FIT",
+          "F0001_SOURCE_FIT",
+          "F0001_UNCERTAINTY",
+          "F0001_VALIDATION_PROPOSAL"
+        ],
+        "title_changed": true
+      }
+    }
+  ],
+  "history_gaps": []
+}

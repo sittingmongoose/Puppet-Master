@@ -1,0 +1,39 @@
+{
+  "schema": "delivery-v2.publication-check.v1",
+  "created_utc": "2026-09-28T02:07:42.340324+00:00",
+  "reviewed_base": "3aadcea3e7be7e83f764107ba53d824b84575f65",
+  "freeze_sha256": "f690210f840ab2369291a51a28efc32937e751312b2b285dd31de53bd5621b70",
+  "frozen_inputs_verified": 17,
+  "reused_pins_verified": 14,
+  "D1_terminal_slots": [
+    "muse",
+    "zcode"
+  ],
+  "native_retries": 0,
+  "formal_evaluator_calls": 0,
+  "compact_results_match_originals": true,
+  "snapshot_hashes_match": true,
+  "existing_tracked_files_changed": [],
+  "independent_document_check": "Sol high read-only consistency check found no material claim errors; no formal semantic evaluation",
+  "publication_scope": "New compact delivery-v2 bundle on existing research branch under prior explicit GitHub-review publication request; no main landing",
+  "excluded": [
+    "raw provider logs",
+    "raw snapshots",
+    "real corpus",
+    "keys",
+    "bytecode",
+    "approval files"
+  ],
+  "notes": [
+    "Initial operator here-doc syntax error occurred before imports/dispatch; no app/model call occurred in it.",
+    "Two initial publication-layout checks failed on missing import/driver paths; preserved logs and temporary-layout reproduction passes52."
+  ],
+  "git_diff_cached_check": {
+    "exit_code": 2,
+    "findings": [
+      "fixtures/missing-field.md: frozen extra EOF blank line",
+      "runs/zcode/store/current.md: exact renderer output has blockquote blank lines with a trailing space"
+    ],
+    "disposition": "Preserve frozen fixture and original derived output bytes; do not normalize scored/native artifacts for whitespace style."
+  }
+}

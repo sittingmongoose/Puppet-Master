@@ -1,0 +1,24 @@
+{
+  "request": "F0001--fixed",
+  "sequence": 4,
+  "finding_id": "F0001",
+  "revision": 3,
+  "status": "VALID_UNVERIFIED",
+  "diagnostics": [],
+  "raw_sha256": "67da13bf6edd05de4dccafc2816268a8caf1d104248305c8d8bf6e6f768ba73c",
+  "snapshot": "snapshots/0004.md",
+  "structural_only": true,
+  "semantic_validation": "not_performed",
+  "current_states": {
+    "F0001": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 4
+    },
+    "F0002": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 2
+    }
+  },
+  "complete": true,
+  "protocol_errors": []
+}

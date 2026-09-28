@@ -1,0 +1,343 @@
+{
+  "D1_candidates": {
+    "muse": {
+      "arithmetic_input_minus_cache_read": 40252,
+      "caps": {
+        "responses": 48,
+        "seconds": 300.0
+      },
+      "cost_usd": null,
+      "evidence_inventory": {
+        "d1-20260928/muse/dispatch.json": {
+          "bytes": 887,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "metadata_pointer_here_separate_publication_possible",
+          "sha256": "3bb128bf07d089ed7ed48f1e028b27a77698a52f46130b3ff8180c8fdacb782e",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/dispatch.json"
+        },
+        "d1-20260928/muse/input-manifest.json": {
+          "bytes": 177,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "metadata_pointer_here_separate_publication_possible",
+          "sha256": "b9fba8774b9fcb66dbf94c0fc1e87833d627224966669607d371e62c1d32c194",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/input-manifest.json"
+        },
+        "d1-20260928/muse/native/muse-msp.jsonl": {
+          "bytes": 165712,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "raw_provider_log_always_vm_only",
+          "sha256": "eff0b27b02e0be54007ddf6269deb9df41fb6ebbd01edf7f9398cc5c830d9ca6",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/native/muse-msp.jsonl"
+        },
+        "d1-20260928/muse/native/muse-session.jsonl": {
+          "bytes": 919233,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "raw_provider_log_always_vm_only",
+          "sha256": "d5645a666d276074bc974b001daa7fa39489da2cdf19bbd3c8c8930590da9b3a",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/native/muse-session.jsonl"
+        },
+        "d1-20260928/muse/native/muse-stderr.log": {
+          "bytes": 0,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "raw_provider_log_always_vm_only",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/native/muse-stderr.log"
+        },
+        "d1-20260928/muse/native/progress.jsonl": {
+          "bytes": 392,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "raw_provider_log_always_vm_only",
+          "sha256": "753a9828b02edd7d8c69d767d988223e866c380dad33e19f94e433896a739102",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/native/progress.jsonl"
+        },
+        "d1-20260928/muse/native/receipt.json": {
+          "bytes": 2357,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "metadata_pointer_here_separate_publication_possible",
+          "sha256": "3953c0e6f81e5d9ef0d9d9d43fa2ed0e380fa88895a4fd59128765ef8276823d",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/native/receipt.json"
+        },
+        "d1-20260928/muse/native/usage-events.jsonl": {
+          "bytes": 13904,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "raw_provider_log_always_vm_only",
+          "sha256": "cf4db92185bf90ae5425ce26aabd4154bce35e682be879557670cf041e39a66b",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/native/usage-events.jsonl"
+        },
+        "d1-20260928/muse/result.json": {
+          "bytes": 907,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "metadata_pointer_here_separate_publication_possible",
+          "sha256": "229dfe6150fe6274ffc06a15cacc2d222a1e4dabececa05d2ec995e4b1a337c9",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/muse/result.json"
+        }
+      },
+      "host_checks_observed": {
+        "failed_check_names": [],
+        "false": 0,
+        "named_checks": 15,
+        "note": "Copied terminal host-check metadata only; no rescoring.",
+        "source_sha256": "229dfe6150fe6274ffc06a15cacc2d222a1e4dabececa05d2ec995e4b1a337c9",
+        "structural_checks_passed": true,
+        "true": 15
+      },
+      "host_outcome": "goal_complete",
+      "host_seconds": 259.31358886700764,
+      "muse_trace": {
+        "attempts_terminal_children": 10,
+        "attempts_terminal_other": 0,
+        "attempts_terminal_parent": 18,
+        "child_models": {
+          "muse-spark-1.3-contributor": 10
+        },
+        "parent_run_ids": 1,
+        "reminder_child_sessions": 10,
+        "terminal_outcomes": {
+          "completed": 1,
+          "tool_calls": 27
+        },
+        "trace_logs": [
+          {
+            "bytes": 218646,
+            "content_published": false,
+            "publication_policy": "raw_provider_log_always_vm_only",
+            "sha256": "ed2b88502d2788a0bd03d5050ca82d4f2894348146f6c34d1eb2ce329c0a1491",
+            "vm_path": "/home/sittingmongoose/.local/share/muse/local-tracing/bootstrap/cli-25e3f2de-9785-4228-b8c7-19cadafb5907.log"
+          }
+        ]
+      },
+      "native_responses": 18,
+      "native_seconds": 258.2,
+      "native_stop_reason": "goal_complete",
+      "observed": {
+        "effort_effective": "max",
+        "model_id": "muse-spark-1.3-contributor",
+        "provider_id": "meta"
+      },
+      "process_exit": 0,
+      "reminder_child_tokens": null,
+      "requested": {
+        "effort": "max",
+        "model": "muse-spark-1.3-contributor",
+        "source": "delivery-v2/D1_SPEC.md"
+      },
+      "semantic_grade": "not_performed",
+      "status": "terminal",
+      "token_usage_events": 18,
+      "tokens_reported": {
+        "cacheReadTokens": 496769,
+        "cacheWriteTokens": 0,
+        "cachedTokens": 496769,
+        "inputTokens": 537021,
+        "outputTokens": 13044,
+        "reasoningTokens": 9827
+      },
+      "tool_audit": {
+        "paths_outside_workspace": [],
+        "repeat_source_reads": 0,
+        "responses_seen_in_log": 17,
+        "shell_call_count": 0,
+        "source_read_calls": 0,
+        "tool_call_names": {
+          "read_file": 8,
+          "update_goal": 1,
+          "write_file": 8
+        },
+        "tool_calls": 17,
+        "unique_sources_read": 0,
+        "web_tool_call_count": 0
+      }
+    },
+    "zcode": {
+      "arithmetic_input_minus_cache_read": 14670,
+      "caps": {
+        "responses": 48,
+        "seconds": 300.0
+      },
+      "cost_usd": null,
+      "evidence_inventory": {
+        "d1-20260928/zcode/dispatch.json": {
+          "bytes": 950,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "metadata_pointer_here_separate_publication_possible",
+          "sha256": "3301bdafdacbe1d7b509beafa8aaa035e3d508b505fc86b11975fad908f94687",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/zcode/dispatch.json"
+        },
+        "d1-20260928/zcode/input-manifest.json": {
+          "bytes": 177,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "metadata_pointer_here_separate_publication_possible",
+          "sha256": "b9fba8774b9fcb66dbf94c0fc1e87833d627224966669607d371e62c1d32c194",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/zcode/input-manifest.json"
+        },
+        "d1-20260928/zcode/native/progress.jsonl": {
+          "bytes": 503,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "raw_provider_log_always_vm_only",
+          "sha256": "9e1b6e5f1b78a7f249e9abec153a2a7b5ba39717fadb019688d9826614b7dd75",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/zcode/native/progress.jsonl"
+        },
+        "d1-20260928/zcode/native/receipt.json": {
+          "bytes": 2430,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "metadata_pointer_here_separate_publication_possible",
+          "sha256": "b55c5ae83b5467604f7ffcaeb77a80f6a6e65289bc8370493632356f254902ac",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/zcode/native/receipt.json"
+        },
+        "d1-20260928/zcode/native/usage-events.jsonl": {
+          "bytes": 9063,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "raw_provider_log_always_vm_only",
+          "sha256": "9a7de160ee3506641cce3b661841f3db9a4593f326afc213a30b8f3726bbc557",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/zcode/native/usage-events.jsonl"
+        },
+        "d1-20260928/zcode/native/zcode-model-io.jsonl": {
+          "bytes": 1084673,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "raw_provider_log_always_vm_only",
+          "sha256": "30690b2110730b738cc364dca2798df92f7597c9014c7e2c3d398a68e56e29d6",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/zcode/native/zcode-model-io.jsonl"
+        },
+        "d1-20260928/zcode/native/zcode-stderr.log": {
+          "bytes": 0,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "raw_provider_log_always_vm_only",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/zcode/native/zcode-stderr.log"
+        },
+        "d1-20260928/zcode/native/zcode-stdout.jsonl": {
+          "bytes": 4084495,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "raw_provider_log_always_vm_only",
+          "sha256": "6118ad125c14348c3a84732b17804266f4630c791baa0f3a3cc3679acd5cdc3d",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/zcode/native/zcode-stdout.jsonl"
+        },
+        "d1-20260928/zcode/result.json": {
+          "bytes": 910,
+          "content_published": false,
+          "content_published_note": "Not published by this evidence inventory; compact metadata may be published separately later under parent ownership.",
+          "publication_policy": "metadata_pointer_here_separate_publication_possible",
+          "sha256": "fb625b3dc8025763824afda347fe368e3da33099e68b47866b72c209298b63b0",
+          "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/d1-20260928/zcode/result.json"
+        }
+      },
+      "host_checks_observed": {
+        "failed_check_names": [
+          "current_history_separation"
+        ],
+        "false": 1,
+        "named_checks": 15,
+        "note": "Copied terminal host-check metadata only; no rescoring.",
+        "source_sha256": "fb625b3dc8025763824afda347fe368e3da33099e68b47866b72c209298b63b0",
+        "structural_checks_passed": false,
+        "true": 14
+      },
+      "host_outcome": "goal_complete",
+      "host_seconds": 223.65560141399328,
+      "native_responses": 17,
+      "native_seconds": 219.6,
+      "native_stop_reason": "goal_complete",
+      "observed": {
+        "effort_effective": "max",
+        "model_id": "GLM-5.3-Flash",
+        "provider_id": "builtin:zai-coding-plan"
+      },
+      "process_exit": 0,
+      "request_status_counts": {
+        "model_request_completed": 17
+      },
+      "requested": {
+        "effort": "max",
+        "model": "GLM-5.3-Flash",
+        "source": "delivery-v2/D1_SPEC.md"
+      },
+      "semantic_grade": "not_performed",
+      "status": "terminal",
+      "tokens_reported": {
+        "cacheReadTokens": 164992,
+        "cacheWriteTokens": 0,
+        "inputTokens": 179662,
+        "outputTokens": 6835,
+        "reasoningTokens": 0,
+        "totalTokens": 186497
+      },
+      "tool_audit": {
+        "paths_outside_workspace": [],
+        "repeat_source_reads": 0,
+        "responses_seen_in_log": 17,
+        "shell_call_count": 0,
+        "source_read_calls": 0,
+        "tool_call_names": {
+          "Read": 7,
+          "Write": 8
+        },
+        "tool_calls": 15,
+        "unique_sources_read": 0,
+        "web_tool_call_count": 0
+      },
+      "tool_result_bytes": {
+        "bytes": 5910,
+        "note": "tool-result text delivered to the model, each counted once; spilled artifacts count by what was returned",
+        "tool_results": 15
+      },
+      "usage_requests_with_delta": 16
+    }
+  },
+  "available_totals": {
+    "all_attempts_denominator": 2,
+    "candidate_cost_usd": null,
+    "muse_reminder_child_terminal_attempts": 10,
+    "native_parent_responses": 35,
+    "native_seconds": 477.8,
+    "scheduled_candidate_assignments": 2,
+    "terminal_candidate_assignments": 2
+  },
+  "count_provenance": "Host-check counts come from named terminal result.json checks; no rescoring performed.",
+  "development": {
+    "cost_usd": null,
+    "model_requested": "GPT-6 Astra xhigh orchestration; explicitly native GPT-6 Sol high/medium development helpers",
+    "note": "Development usage is unknown, not zero, and not attributed to D1 candidate economics.",
+    "observed_effective_settings": "not independently exposed",
+    "tokens": null
+  },
+  "formal_evaluation": {
+    "assignments": 0,
+    "cost_usd": 0,
+    "model_calls": 0,
+    "note": "No formal evaluator assignment is part of this synthetic delivery check.",
+    "tokens": 0
+  },
+  "limits": [
+    "Synthetic delivery/protocol development check, not a research-quality benchmark or semantic grade.",
+    "Native responses are parent counts; reminder-child attempts are separately observed, with child token totals unavailable.",
+    "Native token counters are cumulative provider-reported fields; cached input is not unique context and input-minus-cache is not total spend.",
+    "Reasoning token counts do not certify reasoning quality or semantic preservation.",
+    "No candidate dollar cost/subscription debit derived from token counts or shared account percentages.",
+    "Raw logs remain VM-only; inventory contains path/hash/byte metadata only.",
+    "Both assignments remain in the denominator, including the failed zcode host check; native Goal completion does not make the delivery qualification pass.",
+    "Zcode exposes usage deltas for 16 of 17 native requests; the missing delta is not inferred as zero.",
+    "Zcode reports reasoningTokens=0; this does not prove absence of reasoning.",
+    "Historic source-read counters match Sxxx corpus paths only, so zero here does not mean no synthetic fixture/feedback reads.",
+    "content_published=false describes this pointer inventory, not a prohibition on later exact compact metadata copies; raw provider logs always remain VM-only."
+  ],
+  "mechanical_discrepancies": [],
+  "schema": "delivery-v2.d1-usage-lanes.v1",
+  "status": "Both D1 candidates terminal; failed zcode host check preserved"
+}

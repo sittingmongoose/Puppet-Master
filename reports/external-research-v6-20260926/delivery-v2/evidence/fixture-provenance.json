@@ -1,0 +1,73 @@
+{
+  "classification": "Development-only synthetic/minimized derivatives; not exact real-carrier reproductions, repaired scored outputs, source answers, or quality grades.",
+  "created_utc": "2026-09-28T01:37:12.753346+00:00",
+  "fixtures": {
+    "duplicate-field.md": {
+      "bytes": 1268,
+      "expected_structural_behavior": "Rejected: duplicate ## uncertainty.",
+      "origin_kind": "synthetic minimized derivative; artificial topic only",
+      "sha256": "bcd13064e828361cb03aab7af63aedc9da8ab33f72a8d81be2eb3282542b7ac0"
+    },
+    "malformed.md": {
+      "bytes": 1181,
+      "expected_structural_behavior": "Rejected: deliberately unclosed fenced code block.",
+      "origin_kind": "synthetic minimized derivative; artificial topic only",
+      "sha256": "a31a465a3cd85c91c65089a5f132684df92db446748d8f4d1219ec80d5b91a03"
+    },
+    "missing-field.md": {
+      "bytes": 1092,
+      "expected_structural_behavior": "Rejected: ## plan_fit missing; uses non_finding branch.",
+      "origin_kind": "synthetic minimized derivative; artificial topic only",
+      "sha256": "e5eb03c1b941cd525abfd51fe2298e678a81a0a4f3072e808b036c56ae341d4d"
+    },
+    "revision.md": {
+      "bytes": 1417,
+      "expected_structural_behavior": "Accepted structural revision with required change_reason and distinct old/new markers.",
+      "origin_kind": "synthetic minimized derivative; artificial topic only",
+      "sha256": "2a0a251c8c560c2eedd798fff94763390c19b67ff3cfcb9309aa1f0045ae4412"
+    },
+    "unknown-field.md": {
+      "bytes": 1296,
+      "expected_structural_behavior": "Rejected: deliberate unknown field ## snapshots_note.",
+      "origin_kind": "synthetic minimized derivative; artificial topic only",
+      "sha256": "149191f20e9e6b629cbf872ec08899666b3127e1a6195fa977a49bb4e7c3a2fb"
+    },
+    "valid.md": {
+      "bytes": 1185,
+      "expected_structural_behavior": "Accepted structural initial finding; fenced literal ## condition is body content.",
+      "origin_kind": "synthetic minimized derivative; artificial topic only",
+      "sha256": "9d8f35727b840877d37bd2dc774e81455a0319206e41f40e109ce4d2ea40758a"
+    }
+  },
+  "negative_constraints": [
+    "No real corpus facts, reference IDs, keys, or source answers appear in fixtures.",
+    "No original carrier was edited, repaired, rendered differently, or regraded.",
+    "Missing snapshots and unsaved versions were not reconstructed.",
+    "No native execution, model call, account probe, semantic grading, or code change performed."
+  ],
+  "original_carriers": {
+    "I1-M-maintained": {
+      "bytes": 60066,
+      "sha256_after": "348793f39ebb6781a46f34228aadf4718f9eab2ebcbb79ea487f81374441b4a7",
+      "sha256_before": "348793f39ebb6781a46f34228aadf4718f9eab2ebcbb79ea487f81374441b4a7",
+      "snapshot_limit": "Frozen manifest records one carrier file and no saved snapshots. Missing chronology is not reconstructed.",
+      "structural_defect_origin": "Immutable I1 carrier failed JSON parsing. Review reports closing-brace errors at finding-batch boundaries; fixtures minimize structural framing failure, without reproducing or repairing its text.",
+      "unchanged": true,
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-M-maintained/frozen/investigator/draft.json"
+    },
+    "I1-Z-maintained": {
+      "bytes": 94978,
+      "sha256_after": "4e4b50c2bd015ac99803e9cccdc363c39fcad7153139e350fbfeb3bfed550ec4",
+      "sha256_before": "4e4b50c2bd015ac99803e9cccdc363c39fcad7153139e350fbfeb3bfed550ec4",
+      "structural_defect_origin": "Immutable I1 carrier parsed but strict validation first rejected top-level snapshots_note. Unknown-field fixture uses that exact field token with an entirely artificial body; it does not establish that removing the field would validate the real carrier.",
+      "unchanged": true,
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-maintained/frozen/investigator/draft.json"
+    }
+  },
+  "review_source": {
+    "sha256": "ab1b1df34c95fe6600ab859073f23ea62cf9f8dea870794a210adb71a805af2e",
+    "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/delivery-v2/I1_RESULTS_REVIEW_AND_NEXT_STEP.md"
+  },
+  "schema": "delivery-v2.synthetic-fixture-provenance.v1",
+  "whitespace_policy": "UTF-8 literal Markdown bodies; quote, backslash, fenced-code text and indentation preserved as authored."
+}

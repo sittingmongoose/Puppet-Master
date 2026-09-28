@@ -1,0 +1,18 @@
+{
+  "schema": "delivery-v2.preservation-check.v1",
+  "reviewed_checkpoint": "3aadcea3e7be7e83f764107ba53d824b84575f65",
+  "frozen_manifests": {
+    "/home/sittingmongoose/pm-worktrees/external-research-v6-20260927/reports/external-research-v6-20260926/i1/PUBLISHED_MANIFEST.json": {
+      "entries": 50,
+      "mismatches": [],
+      "manifest_sha256": "265b4a4fbefb62c3cc37c5521750dce01c62a5ee597e12ce08a70e8ba0144fad"
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/offline-repair-v1/I1_AMENDMENT_MANIFEST.json": {
+      "entries": 21,
+      "mismatches": [],
+      "manifest_sha256": "5e1fd908b0291af4d22bd8668465d518b75ad84c4aa9c10635fda1cd9ef75fb4"
+    }
+  },
+  "D1_freeze": "17 new inputs and 14 reused pins verified",
+  "verification_note": "Initial I1-amendment check against publication layout found four absent evidence/ paths. This is a VM freeze manifest; all 21 entries pass at its original VM root. No original file repaired or reconstructed."
+}
