@@ -140,12 +140,14 @@ function o55ThemeOwn(setting, value) {
   }
   return `<span class="o55-inherit">${o55Number(setting, chosen)}<button type="button" class="o55-textbtn" data-action="o55-auto-number" data-setting="${a(setting.id)}">Use the theme's</button></span>`;
 }
-/* Swatches with names people can hear and a first choice that keeps the theme's own accent. */
+/* Swatches with names people can hear and a first choice that keeps the theme's own accent. The chosen swatch wears a
+   ring in its own color (so the ring is always the accent in use); the theme's own is drawn half filled, the usual
+   sign for "automatic", instead of with an inner ring that looked like a selection left behind in the old color. */
 const O55_SWATCH = { Violet: '#8b5cf6', Cyan: '#39bfe6', Rose: '#e96a9d', Amber: '#e9aa52', Emerald: '#43c78b' };
 function o55Swatches(setting, value) {
   return `<div class="swatches o55-swatches" role="radiogroup" aria-label="${a(PM51.rowLabel(setting))}">${(setting.options || []).map(o => {
     const on = String(o) === String(value), label = PM51.valueLabel(setting.id, o), theme = o === 'Theme';
-    return `<button type="button" class="swatch${on ? ' active' : ''}${theme ? ' is-theme' : ''}" role="radio" aria-checked="${on}" aria-label="${a(label)}" title="${a(label)}" style="background:${theme ? 'var(--o55-theme-accent, var(--accent-primary))' : (O55_SWATCH[o] || '#888')}" data-action="set-setting" data-setting="${a(setting.id)}" data-value="${a(o)}"></button>`;
+    return `<button type="button" class="swatch o55-sw${on ? ' active' : ''}${theme ? ' is-theme' : ''}" role="radio" aria-checked="${on}" aria-label="${a(label)}" data-pm-hover-label="${a(label)}" style="--sw:${theme ? 'var(--o55-theme-accent, var(--accent-primary))' : (O55_SWATCH[o] || '#888')}" data-action="set-setting" data-setting="${a(setting.id)}" data-value="${a(o)}"></button>`;
   }).join('')}</div>`;
 }
 function o55Structured(setting, value) {
@@ -305,9 +307,12 @@ handleChangeAction = function (action, el) {
   return o55ChangeAction(action, el);
 };
 function o55MarkChanged(id) {
-  const row = root.querySelector(`#setting-${cssEscape(id)}`); if (!row || row.classList.contains('is-changed')) return;
-  row.classList.add('is-changed');
-  const lab = row.querySelector('.setting-label'); if (lab && !lab.querySelector('.o55-changed')) lab.insertAdjacentHTML('beforeend', '<span class="o55-changed" title="Changed from the default"><i></i><span>Changed</span></span>');
+  const row = root.querySelector(`#setting-${cssEscape(id)}`); if (!row) return;
+  const on = !!(state.changed || {})[id];
+  row.classList.toggle('is-changed', on);
+  const lab = row.querySelector('.setting-label'), mark = lab && lab.querySelector('.o55-changed:not(.o55-needed)');
+  if (on && lab && !mark) lab.insertAdjacentHTML('beforeend', '<span class="o55-changed" title="Changed from the default"><i></i><span>Changed</span></span>');
+  if (!on && mark) mark.remove();
 }
 
 /* ---------- editors: lists, key/value pairs, numbers, keys, actions ------------------------------------------- */

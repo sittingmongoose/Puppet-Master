@@ -2,8 +2,12 @@
    privacy, sources (settings audit, 2026-09-27).
    - Memories: the master switch "Remember things between chats" heads the list; the list's Show menu is the
      inventory's review view (unconfirmed first); an unconfirmed note can be confirmed where it is read.
-   - Context space: the working space of one run is not a saved memory, so it has its own tab: a live gauge with the
-     three thresholds marked on it and "Squeeze now", then when space runs low, the working notebook, and the split.
+   - Context space: the working space of a chat is not a saved memory, so it has its own tab: whether chats show a
+     space meter, when space runs low, the working notebook, and the split.
+   - Settings has no open chat (user review, 2026-09-27). Nothing here reads or changes a live chat: the gauge of "the
+     open chat" and its Squeeze now are gone; Squeeze now is named under More options as something each chat's own
+     menu does for that chat. Notes kept for a single chat read "One chat", never "This thread", and Settings adds
+     memories only for the project or for you.
    - Instructions: the two rule documents are edited in an editor, not a one-line box; the rule-pack list the
      inventory's "Which rule packs to list" filters is drawn here.
    - Finding memories: "Try a question" honours the real settings (how many, by meaning or recency, pinned notes
@@ -27,7 +31,7 @@
   ];
   const S = {
     on: 'memory.retention.enabled', show: 'memory.retention.gist-review-filter',
-    meter: 'general.interaction.context-usage', squeeze: 'memory.limits.manual-compact', auto: 'memory.limits.auto-compress',
+    meter: 'general.interaction.context-usage', auto: 'memory.limits.auto-compress',
     start: 'memory.limits.pressure-start-threshold', hard: 'memory.limits.pressure-aggressive-threshold', low: 'memory.limits.low-context-warning',
     buckets: 'memory.limits.budget-buckets', immune: 'memory.limits.compaction-immune-pct',
     appRules: 'memory.assembly.app-rules', projectRules: 'memory.assembly.project-rules', packing: 'memory.assembly.instruction-budget-mode', reuse: 'memory.assembly.dry-method-guard',
@@ -37,8 +41,9 @@
     pinnedUnconfirmed: 'memory.retention.pinned-unverified-injection',
     helpers: 'memory.retention.subagent-access', history: 'memory.retention.history-retention'
   };
-  const STORE_LABEL = { Project: 'Project', User: 'You', Thread: 'This thread' };
-  const STORE_CHOICES = [{ value: 'Project', label: 'Project' }, { value: 'User', label: 'You' }, { value: 'Thread', label: 'This thread' }];
+  const STORE_LABEL = { Project: 'Project', User: 'You', Thread: 'One chat' };
+  /* a note kept for one chat is made in that chat; here a memory is kept for the project or for you */
+  const STORE_CHOICES = [{ value: 'Project', label: 'Project' }, { value: 'User', label: 'You' }];
   const TYPES = ['Rule', 'Decision', 'Preference'];
   const STOP = new Set(['the', 'and', 'for', 'are', 'what', 'which', 'this', 'that', 'with', 'from', 'about', 'how', 'should', 'does', 'have', 'our', 'your', 'when', 'where', 'into', 'rules', 'rule']);
   /* "meaning" in this preview: a few words that stand for each other */
@@ -51,10 +56,10 @@
     'Manager records': 'Settings and status from other managers, such as connected services.'
   };
   const CANDIDATES = [
-    { id: 'm4', title: 'Temporary build path', meta: 'This thread · 8 minutes ago', why: 'A scratch path from tool output that stops being true when the build folder moves.' },
-    { id: 'cand-port', title: 'Dev server on port 5174', meta: 'This thread · 2 days ago', why: 'Only mattered for one debugging session.' },
-    { id: 'cand-names', title: 'Draft names for the tab motion study', meta: 'This thread · 5 days ago', why: 'The final names now live in the plan.' },
-    { id: 'cand-worktree', title: 'Old worktree location', meta: 'This thread · 2 weeks ago', why: 'That worktree was removed.' }
+    { id: 'm4', title: 'Temporary build path', meta: 'One chat · 8 minutes ago', why: 'A scratch path from tool output that stops being true when the build folder moves.' },
+    { id: 'cand-port', title: 'Dev server on port 5174', meta: 'One chat · 2 days ago', why: 'Only mattered for one debugging session.' },
+    { id: 'cand-names', title: 'Draft names for the tab motion study', meta: 'One chat · 5 days ago', why: 'The final names now live in the plan.' },
+    { id: 'cand-worktree', title: 'Old worktree location', meta: 'One chat · 2 weeks ago', why: 'That worktree was removed.' }
   ];
   /* notes the assistant noticed on its own, so the review view has something to review */
   const NOTICED = [
@@ -69,8 +74,8 @@
   };
   const PARTS = [
     ['immune', 'Protected', 'Rules, the Goal and pinned memories. Never squeezed.'],
-    ['history', 'Earlier conversation', 'What was said before this turn.'],
-    ['current_turn', 'This reply', 'Room for the reply being written.'],
+    ['history', 'Earlier conversation', 'What was said earlier in the chat.'],
+    ['current_turn', 'The reply', 'Room for the reply being written.'],
     ['tool_results', 'Tool results', 'What tests, terminals and the browser returned.'],
     ['contingency', 'Spare', 'Kept free for surprises.']
   ];
@@ -115,18 +120,6 @@
 #panel-settings .pm51-memory-try .text-control { flex: 1 1 260px; width: auto; max-width: 100%; }
 #panel-settings .pm51-memory-rank { font-size: 11px; font-weight: 720; }
 #panel-settings .pm51-memory-pair { display: flex; gap: 6px; }
-#panel-settings .o55-mem-gauge { display: grid; gap: 12px; }
-#panel-settings .o55-mem-gauge-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-#panel-settings .o55-mem-gauge-value { font-size: 28px; font-weight: 760; letter-spacing: -0.02em; color: var(--k3-text-1); font-variant-numeric: tabular-nums; }
-#panel-settings .o55-mem-gauge-label { font-size: 12.5px; color: var(--k3-text-3); }
-#panel-settings .o55-mem-bar { position: relative; height: 12px; border-radius: 6px; background: var(--k3-bg-2); box-shadow: inset 0 0 0 1px var(--k3-line); overflow: visible; }
-#panel-settings .o55-mem-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px; background: var(--k3-accent); transition: width 700ms var(--k3-ease-out, ease), background-color 300ms ease; }
-#panel-settings .o55-mem-fill.is-trim { background: var(--k3-amber); }
-#panel-settings .o55-mem-fill.is-hard { background: var(--k3-red, #e5484d); }
-#panel-settings .o55-mem-tick { position: absolute; top: -4px; bottom: -4px; width: 2px; margin-left: -1px; border-radius: 1px; background: var(--k3-text-3); opacity: .7; }
-#panel-settings .o55-mem-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; padding: 0; list-style: none; font-size: 12px; color: var(--k3-text-3); }
-#panel-settings .o55-mem-legend b { color: var(--k3-text-2); font-weight: 650; font-variant-numeric: tabular-nums; }
-#panel-settings .o55-mem-gauge-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 #panel-settings .o55-mem-doc { display: grid; gap: 4px; min-width: 0; }
 #panel-settings .o55-mem-doc-preview { font-family: var(--k3-mono, ui-monospace, monospace); font-size: 11.5px; color: var(--k3-text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 360px; }
 #panel-settings .o55-mem-doc-preview.is-empty { font-family: inherit; color: var(--k3-text-3); }
@@ -140,7 +133,7 @@
 #panel-settings .o55-mem-split-row .o55-num .text-control { width: 64px; }
 #panel-settings .o55-mem-split-total { margin: 10px 0 0; font-size: 12.5px; font-weight: 650; color: var(--k3-text-2); }
 #panel-settings .o55-mem-split-total.is-off { color: var(--k3-amber); }
-@media (prefers-reduced-motion: reduce) { #panel-settings .o55-mem-fill, #panel-settings .o55-mem-split-bar span { transition: none; } }
+@media (prefers-reduced-motion: reduce) { #panel-settings .o55-mem-split-bar span { transition: none; } }
 `);
   const SPLIT_COLORS = ['var(--k3-accent)', 'color-mix(in srgb, var(--k3-accent) 55%, var(--k3-bg-1))', 'var(--k3-green, #30a46c)', 'var(--k3-amber)', 'color-mix(in srgb, var(--k3-text-3) 55%, var(--k3-bg-1))'];
 
@@ -156,7 +149,7 @@
       body: PM51.bound.rows([S.on]) + (onNow ? '' : PM51.note('Memory is off: every chat starts with a clean slate. The notes below are kept until you delete them.', 'info'))
     });
     const stats = PM51.stats([
-      { label: 'Memories', value: all.length, help: `${all.filter(x => x.store === 'Project').length} project · ${all.filter(x => x.store === 'User').length} about you · ${all.filter(x => x.store === 'Thread').length} this thread` },
+      { label: 'Memories', value: all.length, help: [`${all.filter(x => x.store === 'Project').length} project`, `${all.filter(x => x.store === 'User').length} about you`, all.some(x => x.store === 'Thread') ? `${all.filter(x => x.store === 'Thread').length} for one chat` : ''].filter(Boolean).join(' · ') },
       { label: 'Pinned', value: all.filter(x => x.pinned).length, help: 'Always considered first' },
       { label: 'Unconfirmed', value: unconfirmed, help: 'Noticed by the assistant; nobody has checked them yet', tone: unconfirmed ? 'attention' : undefined }
     ]);
@@ -166,8 +159,10 @@
     if (!cur) return head + stats + toolbar + PM51.empty(showValue() === 'Unverified' ? 'Nothing waiting to be confirmed' : 'Nothing to show', showValue() === 'Unverified' ? 'Every note the assistant noticed has been checked.' : 'No memory matches this view.', { label: 'Show all memories', action: 'pm51-memory-show-all', icon: 'eye' });
     const conflicts = conflictsFor(cur);
     const noticed = cur.confidence === 'Observed';
-    const body = (noticed ? PM51.note('The assistant noticed this on its own. Confirm it if it is right, or edit or forget it.', 'info') : '') + PM51.rows([
-      { label: 'Store', help: 'Where this memory lives and who can see it.', value: storeLabel(cur.store) },
+    const oneChat = cur.store === 'Thread';
+    const body = (noticed ? PM51.note('The assistant noticed this on its own. Confirm it if it is right, or edit or forget it.', 'info') : '')
+      + (oneChat ? PM51.note('Kept for one chat only, and it fades when that chat ends. Move it to the project or to you to keep it.', 'info') : '') + PM51.rows([
+      { label: 'Kept for', help: 'Where this memory lives and who can see it.', value: storeLabel(cur.store) },
       { label: 'Source', help: 'How the assistant learned it.', value: cur.source },
       { label: 'Updated', value: cur.updated },
       { label: 'Confidence', help: 'Explicit means you said it. Confirmed means you checked it. Observed means the assistant noticed it.', value: cur.confidence },
@@ -190,11 +185,13 @@
       }
     });
   }
+  /* menus here: blank icons fixed and room for each item's line (styles.d/63-memory-goals-personas.css) */
+  function menu(anchor, items, title) { const pop = PM51.menu(anchor, items, title); if (pop) pop.classList.add('o55-mgp-menu'); return pop; }
   function memoryMenu(anchor, x) {
-    PM51.menu(anchor, [
+    return menu(anchor, [
       x.confidence === 'Observed' ? { label: 'Edit', icon: 'edit', onClick: () => editMemory(x) } : null,
       { label: x.pinned ? 'Unpin' : 'Pin', icon: 'pin', onClick: () => { x.pinned = !x.pinned; saveState(); refresh(); } },
-      { label: 'Move to store', icon: 'archive', onClick: () => moveStore(x) },
+      { label: x.store === 'Thread' ? 'Keep it longer' : 'Move', icon: 'archive', meta: x.store === 'Thread' ? 'For the project or for you' : 'Between the project and you', onClick: () => moveStore(x) },
       { label: 'View source', icon: 'file', onClick: () => viewSource(x) },
       { separator: true },
       { label: 'Forget', icon: 'history', meta: 'Recoverable for 30 days', onClick: () => forget(x) },
@@ -208,7 +205,7 @@
       title: isNew ? 'Add memory' : 'Edit memory', subtitle: isNew ? 'Something the assistant should keep in mind.' : v.title,
       body: formField('Title', 'title', v.title, { full: true, autofocus: true, placeholder: 'A short name for this memory' })
         + formField('Text', 'text', v.text, { type: 'textarea', full: true, help: 'Write it the way you would tell a colleague.' })
-        + formField('Store', 'store', v.store, { type: 'select', choices: STORE_CHOICES, help: 'Project memories stay with this workspace. Memories about you follow you everywhere.' })
+        + formField('Keep it for', 'store', STORE_CHOICES.some(c => c.value === v.store) ? v.store : 'Project', { type: 'select', choices: STORE_CHOICES, help: 'Project memories stay with this workspace. Memories about you follow you everywhere.' })
         + formField('Type', 'type', TYPES.includes(v.type) ? v.type : 'Rule', { type: 'select', choices: TYPES, help: 'Rules are always followed. Decisions record a choice. Preferences shape style.' }),
       saveLabel: isNew ? 'Add memory' : 'Save changes',
       onSave: data => {
@@ -218,22 +215,24 @@
           const rec = { id: newId(), title, text: String(data.text || ''), store: data.store, type: data.type, source: 'You added it', updated: 'Now', confidence: 'Explicit', pinned: false };
           memories().unshift(rec); PM51.setSel(ID, rec.id);
           if (!SHOW[showValue()](rec)) { commitSettingValue(S.show, 'All'); o55Notify(S.show, 'All'); }
-        } else Object.assign(x, { title, text: String(data.text || ''), store: data.store, type: data.type, updated: 'Now', confidence: x.confidence === 'Observed' ? 'Confirmed' : x.confidence });
+        } else Object.assign(x, { title, text: String(data.text || ''), store: data.store || x.store, type: data.type, updated: 'Now', confidence: x.confidence === 'Observed' ? 'Confirmed' : x.confidence });
         saveState(); refresh(); PM51.toast(isNew ? 'Memory added' : 'Memory saved', title);
       }
     });
   }
   function moveStore(x) {
+    const oneChat = x.store === 'Thread';
     PM51.panel({
-      title: 'Move to store', subtitle: x.title,
-      body: PM51.panelSection('Store', PM51.field('Keep this memory in', PM51.select(x.store, STORE_CHOICES.map(c => [c.value, c.label]), { label: 'Store' }), 'Project memories stay with this workspace. Memories about you follow you everywhere. Thread memories expire with the conversation.')),
-      primaryLabel: 'Move', onPrimary: wrap => { const sel = wrap.querySelector('select'); if (sel) x.store = sel.value; x.updated = 'Now'; saveState(); refresh(); PM51.toast('Memory moved', `${x.title} is now a ${storeLabel(x.store).toLowerCase()} memory.`); }
+      title: oneChat ? 'Keep it longer' : 'Move memory', subtitle: x.title,
+      body: (oneChat ? PM51.note('Kept for one chat now, so it fades when that chat ends.', 'info') : '')
+        + PM51.panelSection('Who it is for', PM51.field('Keep this memory for', PM51.select(oneChat ? 'Project' : x.store, STORE_CHOICES.map(c => [c.value, c.label]), { label: 'Keep it for' }), 'Project memories stay with this workspace. Memories about you follow you everywhere.')),
+      primaryLabel: oneChat ? 'Keep it' : 'Move', onPrimary: wrap => { const sel = wrap.querySelector('select'); if (sel) x.store = sel.value; x.updated = 'Now'; saveState(); refresh(); PM51.toast(oneChat ? 'Memory kept' : 'Memory moved', x.store === 'User' ? `${x.title} now follows you everywhere.` : `${x.title} now stays with this project.`); }
     });
   }
   function viewSource(x) {
     PM51.panel({
       title: `Where “${x.title}” came from`,
-      body: PM51.panelSection('Source', PM51.kv([['Learned from', x.source], ['Store', storeLabel(x.store)], ['Type', x.type], ['Confidence', x.confidence], ['Updated', x.updated]]))
+      body: PM51.panelSection('Source', PM51.kv([['Learned from', x.source], ['Kept for', storeLabel(x.store)], ['Type', x.type], ['Confidence', x.confidence], ['Updated', x.updated]]))
         + PM51.panelSection('Memory text', `<div class="pm51-example">${h(x.text || '')}</div>`)
         + PM51.panelSection('What this means', `<p class="pm51-ps-text">${h(x.confidence === 'Explicit' ? 'You stated this directly, so the assistant treats it as a firm instruction.' : x.confidence === 'Confirmed' ? 'This was recorded from a decision you confirmed.' : 'The assistant noticed this on its own. It may re-check it before relying on it.')}</p>`)
     });
@@ -254,20 +253,9 @@
   }
 
   /* ---------- Context space -------------------------------------------- */
-  function gaugeHtml() {
-    const m = mem(); const v = Math.max(0, Math.min(100, Number(m.contextInUse) || 0));
-    const start = num(S.start, 70), hard = num(S.hard, 85), low = num(S.low, 15), warnAt = 100 - low;
-    const cls = v >= hard ? ' is-hard' : v >= start ? ' is-trim' : '';
-    const said = v >= hard ? 'Old context is being squeezed firmly.' : v >= start ? 'Gentle trimming has started.' : 'Plenty of room.';
-    return `<div class="o55-mem-gauge">
-      <div class="o55-mem-gauge-top"><span class="o55-mem-gauge-value">${v}%</span><span class="o55-mem-gauge-label">of the working space in use in the open chat. ${h(said)}</span></div>
-      <div class="o55-mem-bar" role="img" aria-label="${a(`${v}% in use. Trimming starts at ${start}%, trims hard at ${hard}%, warns when ${low}% is left.`)}"><span class="o55-mem-fill${cls}" style="width:${v}%"></span>${[start, hard, warnAt].filter((x, i, all) => all.indexOf(x) === i).map(x => `<span class="o55-mem-tick" style="left:${Math.max(0, Math.min(100, x))}%"></span>`).join('')}</div>
-      <ul class="o55-mem-legend"><li>Trimming starts at <b>${start}%</b></li><li>Trims hard at <b>${hard}%</b></li><li>Warns when <b>${low}%</b> is left</li></ul>
-      <div class="o55-mem-gauge-actions">${PM51.home(S.squeeze, PM51.btn({ label: 'Squeeze now', icon: 'bolt', small: true, action: 'pm51-memory-squeeze', disabled: v < 5, reason: 'There is nothing old enough to squeeze yet.' }), 'span')}<span class="o55-quiet-line">Summarizes the older part of the open chat right away.</span></div>
-    </div>`;
-  }
+  /* defaults for every chat's working space; how full one chat is shows in that chat, not here */
   function contextTab() {
-    return PM51.section({ title: 'Context in use', help: 'How full the assistant\'s working space is right now. When it fills, older parts are summarized so the run can go on.', body: gaugeHtml() + PM51.bound.rows([S.meter]) })
+    return PM51.section({ title: 'In chats', help: 'The working space is what a chat can hold at once. When it fills, older parts are summarized so the work can go on.', body: PM51.bound.rows([S.meter]) })
       + PM51.slot();
   }
 
@@ -327,7 +315,7 @@
       ['At most', `${Math.round(num(S.maxMem, 5))} memories, ${Math.round(num(S.memBudget, 350))} tokens per reply`],
       ['Pinned', mem().retrieval.preferPinned ? 'Considered before anything else' : 'Ranked like any other memory'],
       ['Pinned but unconfirmed', on(PM51.value(S.pinnedUnconfirmed)) ? 'Used' : 'Left out until confirmed'],
-      ['Thread memories', 'Only used in the thread that created them']
+      ['Notes kept for one chat', 'Only used in the chat that made them']
     ]);
   }
   function retrievalTab() {
@@ -395,7 +383,7 @@
       + PM51.advanced([
         PM51.section({ title: 'Single owners', help: 'Each shared resource is managed in exactly one place. These links take you there.', body: PM51.rows((m.owners || []).map(([resource, manager, domain, workspace]) => ({ label: resource, value: manager, action: { label: 'Open', action: 'pm51-go', data: { domain, workspace }, icon: 'arrowRight' } }))) }),
         PM51.section({ title: 'Coverage', help: 'Confirms that every source above has an owner feeding it.', action: { label: 'Check coverage', small: true, icon: 'test', action: 'pm51-memory-coverage' }, body: PM51.kv([['Sources on', `${m.sources.filter(s => s[1]).length} of ${m.sources.length}`], ['Owners linked', String((m.owners || []).length)], ['Last check', m.coverage || 'Not run yet']]) }),
-        PM51.section({ title: 'What is included when', body: PM51.kv([['Always', 'This chat, the project\'s rules, the active Goal'], ['When a question needs it', 'Earlier chats, files, memories, manager records'], ['Never', 'Credential values, secret files, unrelated personal data'], ['Large sources', 'Summarized, with a pointer and a size limit']]) })
+        PM51.section({ title: 'What is included when', body: PM51.kv([['Always', 'The chat itself, the project\'s rules, and the Goal it works on'], ['When a question needs it', 'Earlier chats, files, memories, manager records'], ['Never', 'Credential values, secret files, unrelated personal data'], ['Large sources', 'Summarized, with a pointer and a size limit']]) })
       ].join(''));
   }
 
@@ -424,17 +412,10 @@
   PM51.on('memory-show-all', () => { if (commitSettingValue(S.show, 'All')) { saveState(); o55Notify(S.show, 'All'); } refresh(); });
   PM51.on('memory-open', el => { closeOverlay(); const id = ds(el, 'id'); const x = memories().find(o => o.id === id); if (x && !SHOW[showValue()](x) && commitSettingValue(S.show, 'All')) saveState(); PM51.setSel(ID, id); PM51.setTab(ID, 'memories'); PM51.refresh(ID); });
   PM51.on('memory-diagnostics', () => PM51.check({ title: 'Memory diagnostics', steps: [
-    { title: 'Memory stores readable', desc: `${memories().length} memories across the project, you, and this thread` },
+    { title: 'Memory stores readable', desc: `${memories().length} memories for the project, for you, and for single chats` },
     { title: 'Search index', desc: 'Rebuilt whenever a memory changes', status: 'Example', tone: 'info' },
     { title: 'Fade timers', desc: 'Unused notes fade by the times under Keeping & privacy', status: 'Example', tone: 'info' }
   ] }));
-  PM51.on('memory-squeeze', () => {
-    const m = mem(); const before = Number(m.contextInUse) || 0; if (before < 5) return;
-    m.contextInUse = Math.max(8, Math.round(before * 0.55)); saveState();
-    const fill = root.querySelector('[data-pm51-manager="context-memory"] .o55-mem-fill');
-    if (fill) { fill.style.width = m.contextInUse + '%'; window.setTimeout(refresh, motionReduced() ? 0 : 720); } else refresh();
-    PM51.toast('Squeezed', `The open chat went from ${before}% to ${m.contextInUse}%. Older turns are now a short summary.`);
-  });
 
   PM51.onInput('memory-query', el => { mem().query = el.value; });
   PM51.on('memory-search', el => {
@@ -532,7 +513,7 @@
   PM51.on('memory-protect', el => { const p = mem().privacy.protect; const k = ds(el, 'key'); p[k] = !p[k]; el.classList.toggle('on', p[k]); el.setAttribute('aria-checked', p[k] ? 'true' : 'false'); saveState(); });
   PM51.on('memory-candidates', () => {
     const body = () => { const c = mem().candidates; return c.length
-      ? PM51.panelSection('Review each one', PM51.list(c.map(x => ({ title: x.title, meta: `${x.meta} · ${x.why}`, end: `<span class="pm51-memory-pair">${PM51.btn({ label: 'Keep', small: true, action: 'pm51-memory-candidate', data: { id: x.id, keep: '1' } })}${PM51.btn({ label: 'Forget', small: true, action: 'pm51-memory-candidate', data: { id: x.id, keep: '0' } })}</span>` }))))
+      ? PM51.panelSection('Review each one', PM51.list(c.map(x => ({ title: x.title, meta: `${String(x.meta || '').replace(/^This thread\b/, 'One chat')} · ${x.why}`, end: `<span class="pm51-memory-pair">${PM51.btn({ label: 'Keep', small: true, action: 'pm51-memory-candidate', data: { id: x.id, keep: '1' } })}${PM51.btn({ label: 'Forget', small: true, action: 'pm51-memory-candidate', data: { id: x.id, keep: '0' } })}</span>` }))))
       : PM51.panelSection('Review each one', PM51.note('Nothing left to review.')); };
     const wrap = PM51.panel({ title: 'Candidates to forget', subtitle: 'Keep anything that still matters. Forgotten items stay recoverable for 30 days.', body: body(), primaryLabel: 'Done', onPrimary: () => refresh() });
     wrap._pm51Rerender = () => { const b = wrap.querySelector('.pm51-panel-body'); if (b) b.innerHTML = body(); };
@@ -566,7 +547,7 @@
   });
   PM51.on('memory-export', () => PM51.panel({
     title: 'Export memories', subtitle: 'A plain file you can read, keep, or bring into another workspace.',
-    body: PM51.panelSection('What is included', PM51.kv([['Memories', String(memories().length)], ['Stores', 'Project and you (thread memories are left out)'], ['Format', 'Plain text or JSON · no secrets']])) + PM51.note('Saving a file needs the desktop app. Nothing is written in this preview.'),
+    body: PM51.panelSection('What is included', PM51.kv([['Memories', String(memories().filter(x => x.store !== 'Thread').length)], ['Kept for', 'The project and you (notes kept for one chat are left out)'], ['Format', 'Plain text or JSON · no secrets']])) + PM51.note('Saving a file needs the desktop app. Nothing is written in this preview.'),
     primaryLabel: 'Save file', onPrimary: () => PM51.toast('Nothing saved', 'Example data only. Saving a file needs the desktop app.', 'info')
   }));
   PM51.on('memory-delete-all', () => PM51.confirm('Delete all memories?', 'Every memory in this workspace is removed, including pinned rules. This cannot be undone.', 'Delete all', () => {
@@ -583,8 +564,8 @@
   PM51.on('memory-help', () => PM51.panel({
     title: 'How memory works',
     body: PM51.panelSection('In short', '<p class="pm51-ps-text">The assistant keeps short notes about this workspace and about you. Before it answers, it looks for notes that fit the question and reads them first.</p>')
-      + PM51.panelSection('Three stores', PM51.kv([['Project', 'Rules and decisions about this workspace. Crews can read them if you allow it.'], ['You', 'Your preferences. They follow you between projects and stay private.'], ['This thread', 'Working context from one conversation. It fades on its own.']]))
-      + PM51.panelSection('Memory and context space', '<p class="pm51-ps-text">Memories are kept between chats. The context space is the room one run has to work in; when it fills, older parts of the chat are summarized.</p>')
+      + PM51.panelSection('Who a memory is kept for', PM51.kv([['Project', 'Rules and decisions about this workspace. Crews can read them if you allow it.'], ['You', 'Your preferences. They follow you between projects and stay private.'], ['One chat', 'Working notes from a single chat. They fade when it ends; keep one longer by moving it to the project or to you.']]))
+      + PM51.panelSection('Memory and context space', '<p class="pm51-ps-text">Memories are kept between chats. The context space is the room a chat has to work in; when it fills, older parts of the chat are summarized. Each chat shows how full it is, and its own menu can squeeze it at once. This page sets the defaults every chat follows.</p>')
       + PM51.panelSection('You stay in control', '<p class="pm51-ps-text">Confirm what the assistant noticed, pin what matters, edit anything, and forget what no longer applies. Forgotten memories can be restored for 30 days.</p>')
   }));
 })();

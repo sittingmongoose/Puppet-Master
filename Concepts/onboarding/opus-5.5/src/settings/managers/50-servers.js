@@ -1,4 +1,16 @@
-/* Server & Project Location — where the workspace lives, where work runs, which devices reach it. */
+/* Server & Project Location — where the workspace lives, where work runs, which devices reach it.
+   Setting things up is guided (PM51.wizard), the way onboarding does it (src/js 66-68, copy.json nas/server/away):
+   - Add a server: what kind of computer, how to reach it, how Puppet Master signs in (its setup code when it already
+     runs Puppet Master, or an SSH key), putting the key there, a connection check, a name, a recap.
+   - SSH keys are one list (Servers tab). A key is made new, taken from a key file, or pasted as a public key; only the
+     public half is ever read. Anywhere an SSH connection is shown (a server, an SSH computer, and Git sign-in in
+     Source Control through PM51.sysSsh) a key can be attached: pick it, put the public half there (with the exact
+     line to copy, or with a password used once), then Check connection.
+   - Away from home: the canonical ways in (Plans/Remote_Access_System.md RAS-002, RAS-006): Tailscale (hosted or a
+     Headscale server), a VPN you already run, your own web address through a reverse proxy (the one that needs port
+     forwarding on your router), and Puppet Master Remote Link (no account, domain or router change).
+   - Move & Copy: move, copy, or bring in a project from an SSH computer; what goes along, where to, what happens to
+     history, a check before anything moves, and a recap. Nothing moves in this preview; the result is recorded. */
 (function () {
   const ID = 'servers';
   const KEY = 'servers-hosts-environments';
@@ -11,7 +23,6 @@
     { id: 'move', label: 'Move & Copy', ui: TAB_UI }
   ];
   const FILE_KINDS = ['Server folder', 'Another computer or NAS', 'Existing checkout', 'Clone from a code service', 'Folder on an SSH computer', 'Restored backup'];
-  const ADD_HOW = ['Find nearby', 'Enter address', 'Claim a new server', 'Use this computer as a server'];
   const CONFLICT_POLICIES = ['Preserve both, pause affected work, and show a three-way comparison', 'Keep the server copy and save this device’s copy beside it', 'Keep this device’s copy and save the server copy beside it'];
   const h = PM51.h, a = PM51.a;
 
@@ -144,22 +155,195 @@
       v = sp().sshFolders.map(f => { const [user, host] = String(f.address).includes('@') ? String(f.address).split('@') : ['', f.address]; return { name: f.name, address: host, user, folder: f.folder || '', auth: 'SSH key' }; });
       PM51.s().o55SshSeeded = true; if (commitSettingValue(SSH, v)) saveState();
     }
-    return (Array.isArray(v) ? v : []).map(x => typeof x === 'string' ? { name: x, address: x, user: '', folder: '', auth: 'SSH key' } : x);
+    let list = (Array.isArray(v) ? v : []).map(x => typeof x === 'string' ? { name: x, address: x, user: '', folder: '', auth: 'SSH key' } : x);
+    /* entries saved before keys were a list sign in with the key that was in the agent; they name it once */
+    if (list.some(x => x.keyId === undefined) && keys().length) {
+      const first = (keys().find(k => !k.old) || keys()[0]).id;
+      list = list.map(x => x.keyId === undefined ? Object.assign({}, x, { keyId: /key/i.test(x.auth || 'SSH key') ? first : '' }) : x);
+      if (commitSettingValue(SSH, list)) saveState();
+    }
+    return list;
   }
   const saveSsh = list => { if (commitSettingValue(SSH, list)) { saveState(); o55Notify(SSH, list); } refresh(); };
   function sshSection() {
     const list = sshRemotes();
-    const body = list.length ? PM51.list(list.map((f, i) => ({
-      title: f.name, meta: `${f.user ? f.user + '@' : ''}${f.address}${f.folder ? ' · ' + f.folder : ''} · ${f.auth || 'SSH key'}`, avatar: icon('terminal'),
-      end: PM51.btn({ label: 'Test', small: true, icon: 'test', callback: () => PM51.check({ title: `Check ${f.name}`, steps: [{ title: 'Address answers', desc: f.address, status: 'Example', tone: 'info' }, { title: 'Signs in with your SSH key', desc: 'The key stays in your keychain', status: 'Example', tone: 'info' }, { title: 'Folder is there', desc: f.folder || 'Home folder', status: 'Example', tone: 'info' }] }) })
-        + PM51.iconBtn({ icon: 'more', label: `More for ${f.name}`, callback: el => PM51.menu(el, [
-          { label: 'Edit', icon: 'edit', onClick: () => sshDialog(i) },
-          { label: 'Remove', icon: 'trash', danger: true, onClick: () => PM51.confirm(`Remove ${f.name}?`, 'Nothing on that computer is touched. Only the entry here is removed.', 'Remove', () => { const next = list.slice(); next.splice(i, 1); saveSsh(next); }, true) }
-        ], f.name) })
-    }))) : PM51.empty('No SSH computers', 'Add another computer you reach over SSH, for files or for running work.');
-    return PM51.section({ title: 'SSH computers', help: 'Other computers you reach over SSH. Keys stay in the system keychain.', action: { label: 'Add SSH computer', icon: 'plus', small: true, action: 'pm51-servers-ssh-add' }, body: PM51.home(SSH, body) });
+    const body = list.length ? PM51.list(list.map((f, i) => {
+      const k = keyById(f.keyId);
+      return {
+        title: f.name, meta: `${f.user ? f.user + '@' : ''}${f.address}${f.port && String(f.port) !== '22' ? ':' + f.port : ''}${f.folder ? ' · ' + f.folder : ''}`, avatar: icon('terminal'),
+        sub: k ? `Signs in with ${k.name}` : f.auth && !/key/i.test(f.auth) ? `Signs in with ${f.auth}` : '',
+        note: !k && (!f.auth || /key/i.test(f.auth)) ? 'No key attached yet, so it cannot sign in.' : '',
+        end: (k || (f.auth && !/key/i.test(f.auth)) ? PM51.btn({ label: 'Test', small: true, icon: 'test', callback: () => PM51.check({ title: `Check ${f.name}`, steps: [{ title: 'Address answers', desc: f.address, status: 'Example', tone: 'info' }, { title: k ? `Signs in with ${k.name}` : `Signs in with ${f.auth}`, desc: 'No password needed; the private half never leaves where it is kept', status: 'Example', tone: 'info' }, { title: 'Folder is there', desc: f.folder || 'Home folder', status: 'Example', tone: 'info' }] }) })
+          : PM51.btn({ label: 'Attach a key', small: true, primary: true, icon: 'key', action: 'pm51-servers-ssh-key', data: { index: i } }))
+          + PM51.iconBtn({ icon: 'more', label: `More for ${f.name}`, callback: el => PM51.menu(el, [
+            { label: k ? 'Attach a different key…' : 'Attach a key…', icon: 'key', onClick: () => attachSshKey(i) },
+            { label: 'Edit', icon: 'edit', onClick: () => sshDialog(i) },
+            { separator: true },
+            { label: 'Remove', icon: 'trash', danger: true, onClick: () => PM51.confirm(`Remove ${f.name}?`, 'Nothing on that computer is touched. Only the entry here is removed.', 'Remove', () => { const next = list.slice(); next.splice(i, 1); saveSsh(next); }, true) }
+          ], f.name) })
+      };
+    })) : PM51.empty('No SSH computers', 'Add another computer you reach over SSH, for files or for running work.', { label: 'Add SSH computer', action: 'pm51-servers-ssh-add' });
+    return PM51.section({ title: 'SSH computers', help: 'Other computers you reach over SSH, each with the key it signs in with.', action: { label: 'Add SSH computer', icon: 'plus', small: true, action: 'pm51-servers-ssh-add' }, body: PM51.home(SSH, body) });
+  }
+  function attachSshKey(i) {
+    const list = sshRemotes(), f = list[i]; if (!f) return;
+    keyWizard({ target: { kind: 'ssh', name: f.name, user: f.user, address: f.address, port: f.port || '22', folder: f.folder }, keyId: f.keyId, onDone: id => { const next = sshRemotes().slice(); next[i] = Object.assign({}, next[i], { keyId: id, auth: 'SSH key' }); if (commitSettingValue(SSH, next)) { saveState(); o55Notify(SSH, next); } } });
+  }
+  function keysSection() {
+    const K = keys();
+    return PM51.section({ title: 'SSH keys', help: 'Keys Puppet Master signs in with. Only the public half is ever read.', cls: 'o55-srv-keys', action: { label: 'Add a key', icon: 'plus', small: true, action: 'pm51-servers-key-add' },
+      body: K.length ? PM51.list(K.map(k => {
+        const uses = keyUses(k.id);
+        return {
+          title: k.name, meta: `${k.type} · ${k.where} on ${k.on}`, sub: uses.length ? `Used by ${uses.join(', ')}` : 'Not attached anywhere yet', note: k.old ? 'Older key type. A new Ed25519 key is safer; attach it where this one is used.' : '', avatar: icon('key'),
+          end: PM51.btn({ label: 'Copy public key', small: true, icon: 'copy', action: 'pm51-servers-copy-text', data: { text: k.public, what: 'Public key' } })
+            + PM51.iconBtn({ icon: 'more', label: `More for ${k.name}`, callback: el => PM51.menu(el, [
+              { label: 'Details', icon: 'info', onClick: () => keyPanel(k.id) },
+              { label: 'Rename', icon: 'edit', onClick: () => openDialog({ title: `Rename ${k.name}`, body: PM51.form([{ label: 'Name', name: 'name', value: k.name, autofocus: true }]), saveLabel: 'Save', onSave: data => { const n = String(data.name || '').trim(); if (!n) return false; k.name = n; refresh(); } }) },
+              { separator: true },
+              { label: 'Remove', icon: 'trash', danger: true, onClick: () => PM51.confirm(`Remove ${k.name}?`, `${uses.length ? `${uses.join(', ')} will need another key. ` : ''}The key itself stays on ${k.on}; only Puppet Master forgets it.`, 'Remove', () => removeKey(k.id), true) }
+            ], k.name) })
+        };
+      })) : PM51.empty('No SSH keys yet', 'Add one to sign in to other computers without a password.', { label: 'Add a key', action: 'pm51-servers-key-add' }) });
+  }
+  function keyPanel(id) {
+    const k = keyById(id); if (!k) return;
+    PM51.panel({ title: k.name, subtitle: `${k.type} · ${k.where}`, icon: 'key',
+      body: PM51.panelSection('Public half', copyBox(k.public, 'Public key'), 'Safe to share. Give it to any computer or service that should let you in.', { icon: 'key' })
+        + PM51.panelSection('Details', PM51.kv([['Kept on', k.on], ['File', k.path || 'Not a file'], ['Fingerprint', k.fingerprint || keyFp(k.public)], ['Added', k.added || 'Today'], ['Used by', keyUses(k.id).join(', ') || 'Nothing yet']])) });
+  }
+  function removeKey(id) {
+    const S = sp(); S.sshKeys = keys().filter(k => k.id !== id);
+    const list = sshRemotes().map(f => f.keyId === id ? Object.assign({}, f, { keyId: '' }) : f);
+    if (commitSettingValue(SSH, list)) o55Notify(SSH, list);
+    S.servers.forEach(s => { if (s.signIn && s.signIn.keyId === id) { delete s.signIn.keyId; if (s.signIn.method === 'ssh') s.state = 'Needs attention'; } });
+    ((state.sourceControl || {}).forges || []).forEach(f => { if (f.pushKeyId === id) { f.pushKeyId = ''; f.pushAccess = 'Not set up'; } });
+    refresh(); PM51.toast('Key removed', 'Anything that used it needs another key.', 'info');
   }
   const runLabel = () => { const o = runOptions().find(x => x[0] === sp().executionHost); return o ? o[1] : 'Automatic (Home server)'; };
+
+  /* ---------- SSH keys: one list, attachable wherever an SSH connection is shown ---------------------------------- */
+  /* A key is { id, name, type, where, on, path, public, fingerprint, added }. Only the public half is ever held here. */
+  function keys() { const S = sp(); if (!Array.isArray(S.sshKeys)) S.sshKeys = clone((PM51_DATA.serverProject || {}).sshKeys || []); return S.sshKeys; }
+  const keyById = id => keys().find(k => k.id === id);
+  const thisComputer = () => { const S = sp(); const d = S.devices.find(x => x.current || x.thisDevice) || S.devices.find(x => x.name === 'Windows Workstation') || S.devices[0]; return d ? d.name : 'this computer'; };
+  const slugHost = n => String(n || 'server').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'server';
+  const B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  const fakeB64 = (seed, n) => { let x = 2166136261; for (const c of String(seed)) x = Math.imul(x ^ c.charCodeAt(0), 16777619) >>> 0; let out = ''; for (let i = 0; i < n; i++) { x = (Math.imul(x ^ (x >>> 13), 1103515245) + 12345) >>> 0; out += B64[(x >>> 7) % 64]; } return out; };
+  const makePublic = (type, seed, comment) => /rsa/i.test(type) ? `ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQ${fakeB64(seed, 60)} ${comment}` : `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI${fakeB64(seed, 43)} ${comment}`;
+  const keyFp = pub => `SHA256:${fakeB64('fp' + pub, 10)}…${fakeB64('tail' + pub, 4)}`;
+  function keyUses(id) {
+    const out = [];
+    sshRemotes().forEach(f => { if (f.keyId === id) out.push(f.name); });
+    sp().servers.forEach(s => { if (s.signIn && s.signIn.keyId === id) out.push(s.name); });
+    ((state.sourceControl || {}).forges || []).forEach(f => { if (f.pushKeyId === id) out.push(`${f.name} (Git)`); });
+    return out;
+  }
+  function copyText(text, what) { const done = () => PM51.toast(`${what} copied`, text.length > 90 ? text.slice(0, 88) + '…' : text); try { navigator.clipboard.writeText(text).then(done, done); } catch (_e) { done(); } }
+  const copyBox = (text, what) => `<div class="o55-key-line"><code class="o55-key-code">${h(text)}</code>${PM51.btn({ label: 'Copy', small: true, icon: 'copy', action: 'pm51-servers-copy-text', data: { text, what: what || 'Text' } })}</div>`;
+  const NAS_SSH = { Synology: 'Control Panel › Terminal & SNMP › Terminal › Enable SSH service', TrueNAS: 'System Settings › Services › SSH', QNAP: 'Control Panel › Network & File Services › Telnet / SSH', Unraid: 'Settings › Management Access' };
+  const FORGE_KEYS = { GitHub: 'Settings › SSH and GPG keys › New SSH key', 'GitHub Enterprise': 'Settings › SSH and GPG keys › New SSH key', 'GitLab.com': 'Preferences › SSH Keys › Add new key', 'GitLab Self-Managed': 'Preferences › SSH Keys › Add new key', Bitbucket: 'Personal settings › SSH keys › Add key', 'Azure DevOps': 'User settings › SSH public keys › New key', Forgejo: 'Settings › SSH / GPG Keys › Add key', Gitea: 'Settings › SSH / GPG Keys › Add key' };
+  /* the key step: keys already here, a new one, a key file, or a pasted public key */
+  function keyPick(d) {
+    const home = homeServer().name;
+    const cards = (d.noExisting ? [] : keys().map(k => { const uses = keyUses(k.id); return { title: k.name, text: `${k.type} · ${k.where} on ${k.on}`, meta: k.old ? 'Older key type; a new key is safer' : uses.length ? `Already used by ${uses.join(', ')}` : 'Not used yet', icon: 'key', selected: d.keyMode === 'existing' && d.keyId === k.id, data: { mode: 'existing', key: k.id } }; }))
+      .concat([
+        { title: 'Make a new key just for Puppet Master', text: `Made on ${home}, where the work runs. Easy to remove later; your other keys are not touched.`, meta: 'Recommended', icon: 'plus', selected: d.keyMode === 'new', data: { mode: 'new' } },
+        { title: 'Use a key file', text: 'A key you already have, such as ~/.ssh/id_ed25519.', icon: 'file', selected: d.keyMode === 'file', data: { mode: 'file' } },
+        { title: 'Paste a public key', text: 'For a key kept in a password manager or on a security key.', icon: 'copy', selected: d.keyMode === 'paste', data: { mode: 'paste' } }
+      ]);
+    const f = PM51.field;
+    const extra = d.keyMode === 'new' ? f('Key name', `<input class="text-control o55-key-name o55-setup-mono" value="${a(d.newName || '')}" autocomplete="off" spellcheck="false"/>`, 'Shown in lists so you can tell keys apart.') + f('Kind of key', PM51.select(d.newType || 'Ed25519', [['Ed25519', 'Ed25519 (recommended)'], ['RSA 4096', 'RSA 4096 (for older computers)']], { cls: 'o55-key-type', label: 'Kind of key' }))
+      : d.keyMode === 'file' ? f('Key file', `<input class="text-control o55-key-path o55-setup-mono" value="${a(d.filePath || '~/.ssh/id_ed25519')}" autocomplete="off" spellcheck="false"/>`, 'Only the public half next to it (the .pub file) is read. The private key never leaves this computer.')
+      : d.keyMode === 'paste' ? f('Public key', `<textarea class="form-textarea o55-key-paste o55-setup-mono" rows="3" spellcheck="false" placeholder="ssh-ed25519 AAAA… you@laptop">${h(d.pasted || '')}</textarea>`, 'One line that starts with ssh-ed25519, ssh-rsa or ecdsa-sha2. The private half stays where it is.')
+      : '';
+    return PM51.tiles(cards, { action: 'pm51-servers-key-mode', cls: 'o55-key-cards' }) + (extra ? `<div class="o55-setup-fields o55-key-extra">${extra}</div>` : '')
+      + PM51.note('Only the public half of a key is read. Private keys are never read, copied or stored.', 'info');
+  }
+  function keyCollect(w, d) {
+    const v = s => { const el = w && w.querySelector(s); return el ? String(el.value || '').trim() : null; };
+    const n = v('.o55-key-name'), t = v('.o55-key-type'), p = v('.o55-key-path'), x = v('.o55-key-paste');
+    if (n != null) d.newName = n; if (t) d.newType = t; if (p != null) d.filePath = p; if (x != null) d.pasted = x.replace(/\s+/g, ' ');
+  }
+  const PUB_RE = /^(ssh-(ed25519|rsa|dss)|ecdsa-sha2-[\w-]+|sk-(ssh-ed25519|ecdsa-sha2-[\w-]+)@openssh\.com)\s+[A-Za-z0-9+/=]{16,}/;
+  function keyCheck(d) {
+    if (!d.keyMode) return 'Pick a key, or make a new one.';
+    if (d.keyMode === 'existing' && !keyById(d.keyId)) return 'Pick a key.';
+    if (d.keyMode === 'new' && !d.newName) return 'Give the new key a name.';
+    if (d.keyMode === 'new' && keys().some(k => k.name.toLowerCase() === d.newName.toLowerCase())) return `There is already a key called ${d.newName}.`;
+    if (d.keyMode === 'file' && !/^(~|\/|[A-Za-z]:\\)\S*[^/\\]$/.test(d.filePath || '')) return 'Enter the key file, for example ~/.ssh/id_ed25519.';
+    if (d.keyMode === 'paste' && !PUB_RE.test(d.pasted || '')) return 'That does not look like a public key. It starts with ssh-ed25519, ssh-rsa or ecdsa-sha2.';
+    return '';
+  }
+  function pubOf(d) {
+    if (d.keyMode === 'existing') return (keyById(d.keyId) || {}).public || '';
+    if (d.keyMode === 'new') return makePublic(d.newType, d.newName, `puppet-master@${slugHost(homeServer().name)}`);
+    if (d.keyMode === 'file') return makePublic(/rsa/i.test(d.filePath) ? 'RSA 4096' : 'Ed25519', d.filePath, `you@${slugHost(thisComputer())}`);
+    return d.pasted || '';
+  }
+  const keyLabel = d => d.keyMode === 'existing' ? ((keyById(d.keyId) || {}).name || 'your key') : d.keyMode === 'new' ? d.newName : d.keyMode === 'file' ? String(d.filePath || '').split(/[\\/]/).pop() : 'the pasted key';
+  function commitKey(d) {
+    if (d.keyMode === 'existing') return d.keyId;
+    const pub = pubOf(d), found = keys().find(k => k.public === pub); if (found) return found.id;
+    const name = d.keyMode === 'paste' ? (pub.split(/\s+/)[2] || 'Pasted key') : keyLabel(d);
+    const k = { id: uid('sshkey', name), name, type: d.keyMode === 'new' ? (d.newType || 'Ed25519') : /^ssh-rsa/.test(pub) ? 'RSA' : /ecdsa/.test(pub) ? 'ECDSA' : 'Ed25519',
+      where: d.keyMode === 'new' ? 'Made by Puppet Master' : d.keyMode === 'file' ? 'Key file' : 'Pasted public key', on: d.keyMode === 'new' ? homeServer().name : thisComputer(),
+      path: d.keyMode === 'file' ? d.filePath : d.keyMode === 'new' ? `~/.ssh/${slugHost(name)}` : '', public: pub, fingerprint: keyFp(pub), added: 'Today' };
+    keys().push(k); return k.id;
+  }
+  /* putting the public half where it is needed: a line to copy, or a password used once, or the code service does it */
+  function placeStep(d) {
+    const t = d.target || {}, pub = pubOf(d);
+    if (t.kind === 'git') {
+      const tiles = t.canAdd ? PM51.tiles([{ title: `Add it to my ${t.name} account for me`, text: `Uses your ${t.name} sign-in (${t.account}) once to add it.`, icon: 'link', selected: d.place === 'auto', data: { place: 'auto' } }, { title: 'I’ll add it myself', text: 'Copy the key and paste it on the website.', icon: 'copy', selected: d.place === 'self', data: { place: 'self' } }], { action: 'pm51-servers-key-place' }) : '';
+      const self = !t.canAdd || d.place === 'self' ? PM51.panelSection(`On ${t.name}`, `<p class="pm51-ps-text">${h(`Open ${FORGE_KEYS[t.name] || 'your account settings › SSH keys'}, give it a title such as “Puppet Master”, and paste this line:`)}</p>` + copyBox(pub, 'Public key'), '', { icon: 'key' }) : '';
+      return tiles + self;
+    }
+    const name = t.name || 'the other computer', user = t.user || 'you';
+    const tiles = PM51.tiles([{ title: 'Add it for me', text: `Sign in to ${name} once with your password. It is used once and never saved.`, icon: 'lock', selected: d.place === 'password', data: { place: 'password' } }, { title: 'I’ll add it myself', text: `Copy one line into a file on ${name}.`, icon: 'copy', selected: d.place === 'self', data: { place: 'self' } }], { action: 'pm51-servers-key-place' });
+    const body = d.place === 'password' ? `<div class="o55-setup-fields">${PM51.field('Username', `<input class="text-control o55-key-user o55-setup-mono" value="${a(user)}" autocomplete="off" spellcheck="false"/>`, t.brand ? `The name you use for ${name}’s web page.` : '')}${PM51.field('Password', '<input class="text-control o55-key-pass" type="password" autocomplete="off" placeholder="Used once to add your key"/>', 'Used once to add your key. Never saved.')}</div>`
+      : d.place === 'self' ? PM51.panelSection(`Add your key to ${name} yourself`, `<p class="pm51-ps-text">${h(`Add this line to ~/.ssh/authorized_keys for the user ${user} on ${name}. It is the public half of ${keyLabel(d)}.`)}</p>` + copyBox(pub, 'Public key') + `<p class="pm51-ps-text o55-key-or">${h('Already in a terminal on that computer? This does the same:')}</p>` + copyBox(`mkdir -p ~/.ssh && echo '${pub}' >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys`, 'Command'), '', { icon: 'key' }) : '';
+    const tip = t.brand && NAS_SSH[t.brand] ? PM51.note(`SSH has to be on for this. On ${t.brand}: ${NAS_SSH[t.brand]}.`, 'info') : '';
+    return tiles + body + tip;
+  }
+  function placeCollect(w, d) { const u = w.querySelector('.o55-key-user'), p = w.querySelector('.o55-key-pass'); if (u && d.target) d.target.user = String(u.value || '').trim() || d.target.user; if (p) d.pwGiven = !!String(p.value || '').trim(); }
+  function placeCheck(d) { if (!d.place) return 'Choose how the key gets there.'; if (d.place === 'password' && !d.pwGiven) return 'Enter the password once, or add the key yourself.'; return ''; }
+  /* one connection check, pressed on purpose; the result stays until something above it changes */
+  function checkResults(d) {
+    const t = d.target || {};
+    if (t.kind === 'git') return [{ title: `Reached ${t.host || t.name}`, desc: `${t.host || t.name} on port 22` }, { title: `Signed in with ${keyLabel(d)}`, desc: t.account && t.account !== 'None' ? `As ${t.account}; no password` : 'No password needed' }, { title: 'Can fetch and push', desc: 'A test push was refused on purpose, so nothing changed' }];
+    const out = [];
+    if (t.method !== 'local') out.push({ title: 'Address answers', desc: `${t.address || '—'}${t.port && String(t.port) !== '22' ? ':' + t.port : ''}` }, { title: 'It is the computer you expect', desc: `Its ID was saved: ${keyFp('host' + (t.address || ''))}` });
+    if (t.kind === 'ssh' || t.method === 'ssh') out.push({ title: `Signed in with ${keyLabel(d)}`, desc: `As ${t.user || 'you'}; no password needed` });
+    if (t.method === 'pair') out.push({ title: 'Setup code accepted', desc: 'Only devices you approve can use it' });
+    if (t.method === 'local') out.push({ title: 'Puppet Master can run as a server here', desc: `On ${thisComputer()}; your other devices find it on your network` });
+    if (t.folder) out.push({ title: 'Folder can be read', desc: t.folder });
+    if (t.kind === 'server') out.push({ title: t.method === 'ssh' ? 'Puppet Master can be installed' : 'Puppet Master answers', desc: t.method === 'ssh' ? 'Enough space, and Docker or Linux found' : 'Version 0.8.0' });
+    return out;
+  }
+  function checkStep(d) {
+    const t = d.target || {};
+    if (!d.checked) return PM51.note(t.kind === 'git' ? `Puppet Master signs in to ${t.name} with the key and makes sure it can fetch and push.` : t.method === 'local' ? 'Puppet Master makes sure it can run as a server on this computer.' : `Puppet Master connects to ${t.name || 'the computer'} and makes sure it is the one you expect. Nothing is changed.`, 'info')
+      + `<div class="pm51-perm-actions">${PM51.btn({ label: 'Check connection', primary: true, icon: 'test', action: 'pm51-servers-key-check' })}</div>`;
+    return PM51.steps(checkResults(d).map(s => Object.assign({ status: 'Example', tone: 'info', done: true }, s)))
+      + PM51.note('Example data only. In the app these checks run for real.', 'info')
+      + `<div class="pm51-perm-actions">${PM51.btn({ label: 'Check again', small: true, icon: 'refresh', action: 'pm51-servers-key-check' })}</div>`;
+  }
+  /* A step that does not apply to this answer steps aside in the direction you were going. */
+  const track = (wrap, d, api) => { d._last = api.step(); };
+  const skipFor = pred => (wrap, d, api) => { const here = api.step(), back = d._last != null && d._last > here; d._last = here; if (pred(d)) window.setTimeout(() => { if (api.step() === here) api.go(back ? here - 1 : here + 1); }, 0); };
+  function keyWizard({ target, keyId, onDone, refreshWith } = {}) {
+    const draft = { target: target || null, noExisting: !target, keyMode: keyId && keyById(keyId) ? 'existing' : '', keyId: keyId || '', newName: target ? `puppet-master-${slugHost(target.name)}` : 'puppet-master', newType: 'Ed25519', filePath: '~/.ssh/id_ed25519', pasted: '', place: target && target.canAdd ? 'auto' : '', checked: false };
+    const steps = [{ label: 'Key', icon: 'key', title: target ? `Which key should sign in to ${target.name}?` : 'Which key do you want to add?', lead: target ? 'A key lets Puppet Master connect without a password.' : 'Make a new one, or add one you already have.', render: keyPick, collect: keyCollect, check: keyCheck, recap: keyLabel }];
+    if (target) {
+      steps.push({ label: 'Put it there', icon: 'copy', title: target.kind === 'git' ? `Add the key to ${target.name}` : `Put the key on ${target.name}`, lead: target.kind === 'git' ? `${target.name} needs the public half so it knows it is you.` : `${target.name} needs the public half once. After that, no password is needed.`, render: placeStep, collect: placeCollect, check: placeCheck, recap: d => d.place === 'auto' ? 'Added for me' : d.place === 'password' ? 'With my password' : 'Added myself' });
+      steps.push({ label: 'Check', icon: 'test', title: 'Does it work?', lead: 'A quick sign-in with the key, and nothing else.', render: checkStep, check: d => d.checked ? '' : 'Run Check connection first.', recap: () => 'Works' });
+    } else steps.push({ label: 'Recap', icon: 'check', title: 'Here is its public half', lead: 'Give this line to any computer or service that should let you in. It is safe to share.', render: d => copyBox(pubOf(d), 'Public key') + PM51.kv([['Name', keyLabel(d)], ['Kind', d.keyMode === 'new' ? d.newType : d.keyMode === 'file' ? 'From a key file' : 'Pasted'], ['Fingerprint', keyFp(pubOf(d))]]) });
+    PM51.wizard({ title: target ? `Attach a key to ${target.name}` : 'Add an SSH key', subtitle: 'An SSH key is a pair: a private half that stays where it is made, and a public half you give to the computers and services that should let you in.', eyebrow: 'SSH key', icon: 'key', steps, draft, finishLabel: target ? 'Use this key' : 'Add key',
+      onFinish: d => { const id = commitKey(d); if (onDone) onDone(id, d); saveState(); (refreshWith || refresh)(); const k = keyById(id) || { name: 'The key' }; PM51.toast(target ? `${target.name} signs in with ${k.name}` : `${k.name} added`, target ? 'Example only: nothing was changed on the other side.' : 'Copy its public half from SSH keys whenever you need it.', target ? 'info' : 'success'); } });
+  }
+  /* Source Control's Git sign-in uses the same keys and steps. */
+  PM51.sysSsh = { keys, keyById, keyUses, keyPick, keyCollect, keyCheck, pubOf, keyLabel, commitKey, placeStep, placeCollect, placeCheck, checkStep, keyWizard, copyBox, keyFp };
 
   /* ---------- Home & Location -------------------------------------------- */
   function renderHome() {

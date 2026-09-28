@@ -92,6 +92,44 @@ if (!Element.prototype.o55Animate) {
   };
 }
 
+/* ---------- the accent and the tokens made from it ------------------------------------------------------------------ */
+/* Themes derive a few tokens from their accent with its value written in: the soft and glow fills (--accent-soft,
+   --accent-glow, the glass glow, the hover lift) and the scrollbar thumb in Retro; and the Basic, Glass and Friendly
+   themes use their accent as their blue (--accent-blue), which draws the shell's active tab ink, the section tab
+   underline, the changed-row mark and the switches' neighbours. Only --accent-primary was replaced, so those kept
+   the old color: the ring on a chosen tab or item stayed the theme's blue after picking Violet. Each such token now
+   has the theme's accent swapped for the chosen one (the hex and the "r,g,b" form); --accent-blue only where it is
+   the theme's accent (Retro Dark's steel blue is its own color). html[data-o55-accent] lets CSS follow the rest. */
+const O55_ACCENT_TOKENS = ['--accent-soft', '--accent-glow', '--elev-hover', '--glass-glow-color', '--pm6-sb-thumb', '--pm6-sb-thumb-hover'];
+const o55AccentSet = new Set();
+const o55Hex3 = hex => { const x = String(hex || '').trim().replace('#', ''); const f = x.length === 3 ? x.split('').map(c => c + c).join('') : x; return f.length === 6 ? [0, 2, 4].map(i => parseInt(f.slice(i, i + 2), 16)) : null; };
+function o55AccentTokens(html, chosen, light) {
+  const st = html.style;
+  ['--accent-primary', '--accent-primary-rgb', '--accent-blue', '--accent-blue-rgb', ...O55_ACCENT_TOKENS].forEach(n => { if (o55AccentSet.has(n) || n === '--accent-primary' || n === '--accent-primary-rgb') st.removeProperty(n); });
+  o55AccentSet.clear();
+  const cs = getComputedStyle(html), themeHex = cs.getPropertyValue('--accent-primary').trim();
+  if (themeHex) st.setProperty('--o55-theme-accent', themeHex); else st.removeProperty('--o55-theme-accent');
+  const acc = O55_ACCENTS[chosen], pick = acc ? acc[light ? 'light' : 'dark'] : null;
+  if (!pick) { html.removeAttribute('data-o55-accent'); st.removeProperty('--o55-on-accent'); return; }
+  const put = (n, v) => { st.setProperty(n, v); o55AccentSet.add(n); };
+  put('--accent-primary', pick[0]); put('--accent-primary-rgb', pick[1]);
+  const from = o55Hex3(themeHex), to = pick[1].split(',').map(Number);
+  if (from) {
+    const hexRe = new RegExp(themeHex.replace(/[^#\w]/g, ''), 'ig');
+    const rgbRe = new RegExp(`\\b${from[0]}\\s*,\\s*${from[1]}\\s*,\\s*${from[2]}\\b`, 'g');
+    O55_ACCENT_TOKENS.forEach(n => {
+      const v = cs.getPropertyValue(n).trim(); if (!v) return;
+      const next = v.replace(hexRe, pick[0]).replace(rgbRe, to.join(','));
+      if (next !== v) put(n, next);
+    });
+    const blue = o55Hex3(cs.getPropertyValue('--accent-blue'));
+    if (blue && blue.join() === from.join()) { put('--accent-blue', pick[0]); put('--accent-blue-rgb', pick[1]); }
+  }
+  html.setAttribute('data-o55-accent', String(chosen).toLowerCase());
+  const lum = to.map(c => { const x = c / 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); });
+  put('--o55-on-accent', 0.2126 * lum[0] + 0.7152 * lum[1] + 0.0722 * lum[2] > 0.4 ? '#101114' : '#fff');
+}
+
 /* ---------- tokens and attributes ------------------------------------------------------------------------------------ */
 let o55LookKey = '';
 function o55ApplyLook() {
@@ -102,13 +140,9 @@ function o55ApplyLook() {
   const set = (name, val) => { if (val == null) st.removeProperty(name); else if (st.getPropertyValue(name) !== String(val)) st.setProperty(name, String(val)); };
   const attr = (name, val) => { if (val == null) html.removeAttribute(name); else if (html.getAttribute(name) !== val) html.setAttribute(name, val); };
   const light = /-light$/.test(html.getAttribute('data-theme') || '');
-  /* Accent color */
-  /* the theme's own accent, read with no override in place, for the first swatch */
-  if (st.getPropertyValue('--accent-primary')) { st.removeProperty('--accent-primary'); st.removeProperty('--accent-primary-rgb'); }
-  set('--o55-theme-accent', getComputedStyle(html).getPropertyValue('--accent-primary').trim() || null);
-  const acc = O55_ACCENTS[V('general.visual.accent-color')];
-  const pick = acc ? acc[light ? 'light' : 'dark'] : null;
-  set('--accent-primary', pick && pick[0]); set('--accent-primary-rgb', pick && pick[1]);
+  /* Accent color. The theme's own accent is read with no override in place (for the first swatch); a chosen one
+     replaces it in --accent-primary and in every theme token derived from it (o55AccentTokens). */
+  o55AccentTokens(html, V('general.visual.accent-color'), light);
   /* Size of everything: the whole app, like the browser zoom */
   const ui = o55Px(V('general.visual.ui-scale'));
   if (document.body) document.body.style.zoom = ui && ui !== 100 ? String(ui / 100) : '';

@@ -5,18 +5,180 @@
         "order": "recommended",
         "actual": "lan",
         "routes": [
-          { "id": "lan", "name": "Local network", "kind": "lan", "status": "active", "enabled": true, "locked": true, "priority": 1, "private": true, "recommended": false, "description": "Your devices reach the server directly at home.", "lastCheck": "Just now", "setupLabel": "" },
-          { "id": "tailscale", "name": "Tailscale", "kind": "tailscale", "status": "not-set-up", "enabled": false, "locked": false, "priority": 2, "private": true, "recommended": true, "description": "Built into Puppet Master. A private network between your devices.", "lastCheck": "Never", "setupLabel": "Set Up" },
-          { "id": "vpn", "name": "Existing VPN", "kind": "vpn", "status": "not-set-up", "enabled": false, "locked": false, "priority": 3, "private": true, "recommended": false, "description": "A VPN you already run. Puppet Master only uses it.", "lastCheck": "Never", "setupLabel": "Connect" },
-          { "id": "domain", "name": "Custom domain", "kind": "domain", "status": "not-set-up", "enabled": false, "locked": false, "priority": 4, "private": false, "recommended": false, "description": "Your own address through NGINX or Traefik.", "lastCheck": "Never", "setupLabel": "Configure" },
-          { "id": "remote-link", "name": "Puppet Master Remote Link", "kind": "remote-link", "status": "not-set-up", "enabled": false, "locked": false, "priority": 5, "private": true, "recommended": false, "description": "No account or domain needed. Direct when possible, relayed otherwise.", "lastCheck": "Never", "setupLabel": "Set Up" }
+          {
+            "id": "lan",
+            "name": "Local network",
+            "kind": "lan",
+            "status": "active",
+            "enabled": true,
+            "locked": true,
+            "priority": 1,
+            "private": true,
+            "recommended": false,
+            "description": "Your devices reach the server directly at home.",
+            "lastCheck": "Just now",
+            "setupLabel": ""
+          },
+          {
+            "id": "tailscale",
+            "name": "Tailscale",
+            "kind": "tailscale",
+            "status": "not-set-up",
+            "enabled": false,
+            "locked": false,
+            "priority": 2,
+            "private": true,
+            "recommended": true,
+            "description": "Built into Puppet Master. A private network between your devices.",
+            "lastCheck": "Never",
+            "setupLabel": "Set Up"
+          },
+          {
+            "id": "vpn",
+            "name": "Existing VPN",
+            "kind": "vpn",
+            "status": "not-set-up",
+            "enabled": false,
+            "locked": false,
+            "priority": 3,
+            "private": true,
+            "recommended": false,
+            "description": "A VPN you already run. Puppet Master only uses it.",
+            "lastCheck": "Never",
+            "setupLabel": "Connect"
+          },
+          {
+            "id": "domain",
+            "name": "Custom domain",
+            "kind": "domain",
+            "status": "not-set-up",
+            "enabled": false,
+            "locked": false,
+            "priority": 4,
+            "private": false,
+            "recommended": false,
+            "description": "Your own address through a reverse proxy such as Caddy or NGINX.",
+            "lastCheck": "Never",
+            "setupLabel": "Configure"
+          },
+          {
+            "id": "remote-link",
+            "name": "Puppet Master Remote Link",
+            "kind": "remote-link",
+            "status": "not-set-up",
+            "enabled": false,
+            "locked": false,
+            "priority": 5,
+            "private": true,
+            "recommended": false,
+            "description": "No account or domain needed. Direct when possible, relayed otherwise.",
+            "lastCheck": "Never",
+            "setupLabel": "Set Up"
+          }
         ],
-        "funnel": { "enabled": false },
+        "funnel": {
+          "enabled": false
+        },
         "headscale": null,
         "domain": null,
         "vpn": null,
         "remoteLink": null
-      }
+      },
+      "sshKeys": [
+        {
+          "id": "key-ed25519",
+          "name": "id_ed25519",
+          "type": "Ed25519",
+          "where": "In your SSH agent",
+          "on": "Windows Workstation",
+          "path": "~/.ssh/id_ed25519",
+          "public": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGk7Qm2vR8xT4pLw9nZ3cH5sYd1eF6uJ0aB2kV3mN7oP you@windows-workstation",
+          "fingerprint": "SHA256:3kQv9mTzY1…Xr2T",
+          "added": "In March"
+        },
+        {
+          "id": "key-rsa",
+          "name": "id_rsa",
+          "type": "RSA 2048",
+          "old": true,
+          "where": "File in your .ssh folder",
+          "on": "Windows Workstation",
+          "path": "~/.ssh/id_rsa",
+          "public": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7vQx2Lk9pWm4Hs8Tf1Yd3eR6uJ0aB2kV3mN7oPq5 you@windows-workstation",
+          "fingerprint": "SHA256:Lp0wQe7Nv…8dZq",
+          "added": "Two years ago"
+        }
+      ],
+      "nearby": [
+        {
+          "id": "studio-pc",
+          "kind": "network",
+          "name": "studio-pc.local",
+          "address": "192.168.1.42",
+          "detail": "Linux · SSH on",
+          "user": "you"
+        },
+        {
+          "id": "office-mac",
+          "kind": "network",
+          "name": "office-mac.local",
+          "address": "192.168.1.57",
+          "detail": "macOS · SSH on (Remote Login)",
+          "user": "you"
+        },
+        {
+          "id": "synology",
+          "kind": "nas",
+          "name": "DiskStation",
+          "address": "192.168.1.30",
+          "detail": "Synology · SSH on",
+          "brand": "Synology",
+          "user": "admin"
+        },
+        {
+          "id": "qnap",
+          "kind": "nas",
+          "name": "qnap-ts464.local",
+          "address": "192.168.1.31",
+          "detail": "QNAP · SSH off",
+          "brand": "QNAP",
+          "user": "admin",
+          "sshOff": true
+        }
+      ],
+      "moveItems": [
+        {
+          "id": "files",
+          "title": "Files",
+          "text": "Everything in the workspace folder.",
+          "icon": "folder",
+          "locked": true
+        },
+        {
+          "id": "history",
+          "title": "Version history",
+          "text": "Every saved change, branches and worktrees.",
+          "icon": "history"
+        },
+        {
+          "id": "work",
+          "title": "Chats, Goals and Plans",
+          "text": "What you and the assistant were working on.",
+          "icon": "spark"
+        },
+        {
+          "id": "settings",
+          "title": "This project’s settings",
+          "text": "Permissions, testing and the rest. Secrets stay behind.",
+          "icon": "settings"
+        },
+        {
+          "id": "artifacts",
+          "title": "Build output and artifacts",
+          "text": "Can be large; it can be rebuilt instead.",
+          "icon": "archive"
+        }
+      ]
     }
   }
 }

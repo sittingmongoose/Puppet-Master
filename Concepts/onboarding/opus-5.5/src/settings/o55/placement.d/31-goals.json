@@ -1,11 +1,11 @@
 {
- "_about": "Goals: Recovery and Checks are one control each (the manager's own copies of cadence, resume, retries, evidence, helpers and risky-step approval are gone); the progress view's rows are its toolbar; a Goal's kind is set per template; the receipt is shown, not chosen.",
+ "_about": "Goals: Settings only sets what Goals start with; Goals are started, watched and stopped in the assistant chat (or handed over by the Planning Wizard), so there is no Active Goals tab. The progress view's rows are Defaults, the receipt is explained under Checks (earned, not chosen), a Goal's kind is set per template, and Recovery and Checks are one control each.",
  "sections": {
   "goals-legacy": null,
   "goals-template-fields": {
    "to": "goals",
    "title": "Kind of job",
-   "help": "Set in each template and when a Goal starts.",
+   "help": "Set in each template; a Goal started from it begins with it.",
    "order": 1,
    "tab": "templates",
    "composed": true
@@ -13,17 +13,16 @@
   "goals-progress": {
    "to": "goals",
    "title": "Progress view",
-   "help": "How the graph of a running Goal is drawn.",
-   "order": 102,
-   "tab": "active",
-   "composed": true
+   "help": "How the assistant chat draws a running Goal's progress.",
+   "order": 207,
+   "tab": "defaults"
   },
   "goals-receipt": {
    "to": "goals",
-   "title": "Receipt earned",
-   "help": "Shown in each Goal's panel once it finishes.",
-   "order": 103,
-   "tab": "active",
+   "title": "Receipt strength",
+   "help": "Earned from the checks a Goal passed; explained under Checks.",
+   "order": 410.5,
+   "tab": "verification",
    "composed": true
   },
   "goals-defaults": {
@@ -188,13 +187,12 @@
  "managers": {
   "goals": {
    "tabs": {
-    "templates": "Templates",
-    "active": "Active Goals",
     "defaults": "Defaults",
+    "templates": "Templates",
     "checkpoints": "Recovery",
     "verification": "Checks"
    },
-   "defaultTab": "templates"
+   "defaultTab": "defaults"
   }
  }
 }

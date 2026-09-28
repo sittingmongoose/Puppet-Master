@@ -1,10 +1,13 @@
 /* O55 · the setting Details panel. The panel itself (its spring in and out, its width, the scrim) is the engine's and
    is unchanged; what it says is rebuilt so it answers a newcomer's questions in order:
-     where am I (chapter › page), what is it set to now (and is that the default), what does it do, what are my choices
-     (each in plain words, the current one ticked, the default and the recommended one marked, and clickable), where
-     does it apply, and which settings sit next to it. The technical name is last and folded away.
+     where am I (chapter › page), what is it set to now and what the default is (with a way back to it), what does it
+     do, what are my choices (each in plain words, the current one ticked, the default and the recommended one marked,
+     and clickable), where does it apply, and which settings sit next to it. The technical name is last and folded away.
    The inventory's machine fields (tier, curation flags, "Recommended: false", the raw default as an "example") are
-   never shown as prose. Moving between two settings' Details cross-fades instead of snapping. */
+   never shown as prose. Moving between two settings' Details cross-fades instead of snapping.
+   A change made while the panel is open (in it, or in the row beside it) updates the panel in place: only the blocks
+   whose content changed are swapped, the panel keeps its scroll, its open "For experts" and the focused choice, and
+   the value that changed glows once. Nothing is torn down and sprung back in (that was the black flash). */
 
 const O55_REF = (() => { const m = new Map(); const ref = window.PM12_REFERENCE; if (ref && ref.byCat) for (const c of Object.values(ref.byCat)) for (const r of c.settings || []) m.set(r.id, r); return m; })();
 const O55_SCOPE = {
@@ -21,6 +24,8 @@ const o55Where = (id, workspace) => {
   const w = d && d.workspaces.find(x => x.id === (e ? e.workspace : (workspace && workspace.id)));
   return { domain: d, workspace: w || workspace };
 };
+const o55SameValue = (x, y) => (x == null || x === '') && (y == null || y === '') ? true : (typeof x === 'object' || typeof y === 'object') ? JSON.stringify(x) === JSON.stringify(y) : String(x) === String(y);
+PM51.sameValue = o55SameValue;
 const o55IsJunkNote = t => !t || /^(simple|advanced)(\s*·.*)?$/i.test(String(t).trim());
 const o55IsRecommendLine = t => /^recommended\s*:/i.test(String(t || '').trim());
 function o55ChoicesFor(setting, current) {
@@ -36,6 +41,10 @@ function o55ChoicesFor(setting, current) {
     const opts = o55Options(setting); if (!opts.length) return null;
     return { kind: 'single', items: opts.map(o => ({ raw: o, label: PM51.valueLabel(setting.id, o), hint: PM51.valueHint(setting.id, o), on: String(o) === String(current), marks: mark(o) })) };
   }
+  if (control === 'swatches') {
+    const opts = (setting.options || []).slice(); if (!opts.length) return null;
+    return { kind: 'single', items: opts.map(o => ({ raw: o, label: PM51.valueLabel(setting.id, o), on: String(o) === String(current), marks: mark(o), swatch: o === 'Theme' ? 'var(--o55-theme-accent, var(--accent-primary))' : ((typeof O55_SWATCH === 'object' && O55_SWATCH[o]) || '') })) };
+  }
   if (control === 'multiselect') {
     const opts = o55Options(setting); if (!opts.length) return null;
     const cur = Array.isArray(current) ? current.map(String) : [];
@@ -46,14 +55,16 @@ function o55ChoicesFor(setting, current) {
 }
 function o55ChoicesHtml(setting, ch) {
   if (!ch) return '';
-  return `<section class="o55-insp-block"><h4>${ch.kind === 'multi' ? 'Choose any' : 'Your choices'}</h4><div class="o55-insp-choices" role="${ch.kind === 'multi' ? 'group' : 'radiogroup'}" aria-label="${a(PM51.rowLabel(setting))}">${ch.items.map(it => `<button type="button" class="o55-insp-choice${it.on ? ' is-on' : ''}" role="${ch.kind === 'multi' ? 'checkbox' : 'radio'}" aria-checked="${it.on}" data-action="o55-insp-choose" data-setting="${a(setting.id)}" data-kind="${ch.kind}" data-value="${a(typeof it.raw === 'boolean' ? (it.raw ? '__true' : '__false') : it.raw)}"><span class="o55-insp-mark">${it.on ? icon('check') : ''}</span><span class="o55-insp-choice-copy"><span class="o55-insp-choice-label">${h(it.label)}${it.marks.map(m => `<em>${h(m)}</em>`).join('')}</span>${it.hint ? `<span class="o55-insp-choice-hint">${h(it.hint)}</span>` : ''}</span></button>`).join('')}</div></section>`;
+  return `<section class="o55-insp-block"><h4>${ch.kind === 'multi' ? 'Choose any' : 'Your choices'}</h4><div class="o55-insp-choices" role="${ch.kind === 'multi' ? 'group' : 'radiogroup'}" aria-label="${a(PM51.rowLabel(setting))}">${ch.items.map(it => `<button type="button" class="o55-insp-choice${it.on ? ' is-on' : ''}" role="${ch.kind === 'multi' ? 'checkbox' : 'radio'}" aria-checked="${it.on}" data-action="o55-insp-choose" data-setting="${a(setting.id)}" data-kind="${ch.kind}" data-value="${a(typeof it.raw === 'boolean' ? (it.raw ? '__true' : '__false') : it.raw)}"><span class="o55-insp-mark">${it.on ? icon('check') : ''}</span>${it.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${it.swatch}"></span>` : ''}<span class="o55-insp-choice-copy"><span class="o55-insp-choice-label">${h(it.label)}${it.marks.map(m => `<em>${h(m)}</em>`).join('')}</span>${it.hint ? `<span class="o55-insp-choice-hint">${h(it.hint)}</span>` : ''}</span></button>`).join('')}</div></section>`;
 }
 renderDetailInspectorBody = function (setting, section, workspace) {
   const row = O55R[setting.id] || {};
   const ref = O55_REF.get(setting.id) || {};
   const d = setting.detail || {};
   const current = settingValue(setting);
-  const changed = !!state.changed[setting.id];
+  /* "is it the default" is decided by the value, not by whether it was ever touched: choosing the default again
+     reads as the default */
+  const isDefault = o55SameValue(current, setting.value);
   const where = o55Where(setting.id, workspace);
   const label = PM51.rowLabel(setting);
   const iconName = (where.workspace && PANEL_ICONS[where.workspace.id]) || (where.domain && DOMAIN_ICONS[where.domain.id]) || 'settings';
@@ -73,10 +84,12 @@ renderDetailInspectorBody = function (setting, section, workspace) {
       <button type="button" class="icon-btn pm51-panel-close" data-action="close-details" aria-label="Close">${icon('close')}</button>
     </div>
     <div class="detail-body pm51-panel-body o55-insp-body">
-      <section class="o55-insp-now${changed ? ' is-changed' : ''}">
-        <div class="o55-insp-now-label">${changed ? 'You changed this' : 'Set to the default'}</div>
+      <section class="o55-insp-now${isDefault ? '' : ' is-changed'}" data-o55-now="${a(JSON.stringify(current == null ? null : current))}">
+        <div class="o55-insp-now-label">${isDefault ? 'Set to the default' : 'You changed this'}</div>
         <div class="o55-insp-now-value">${h(nowText)}</div>
-        ${changed ? `<div class="o55-insp-now-foot"><span>Default: ${h(defText)}</span><button type="button" class="o55-textbtn" data-action="reset-setting" data-setting="${a(setting.id)}">${icon('restore')}<span>Go back to the default</span></button></div>` : ''}
+        <div class="o55-insp-now-foot">${isDefault
+          ? `<span class="o55-insp-isdef">${icon('check')}<span>This is the default</span></span>`
+          : `<span>Default: <strong>${h(defText)}</strong></span><button type="button" class="o55-textbtn" data-action="reset-setting" data-setting="${a(setting.id)}">${icon('restore')}<span>Go back to the default</span></button>`}</div>
       </section>
       ${what ? `<section class="o55-insp-block"><h4>What it does</h4><p>${h(what)}</p></section>` : ''}
       ${why ? `<section class="o55-insp-block"><h4>When you might change it</h4><p>${h(why)}</p></section>` : ''}
@@ -102,9 +115,61 @@ populateDetailInspector = function () {
   o55Morph(current, next, { host: inspector, dir: 0, dur: 240 });
   return true;
 };
+/* Update the open panel in place. The fresh body is compared block by block with what is on screen; a block that
+   differs is swapped (a disclosure keeps its open state, a focused choice keeps focus), the others are left alone, so
+   the panel never loses its scroll or blinks. A block whose value changed glows once (not with reduced motion). */
+function o55InspPatch(page, html) {
+  const tpl = document.createElement('template'); tpl.innerHTML = html;
+  const nextHead = tpl.content.querySelector(':scope > .detail-head'), nextBody = tpl.content.querySelector(':scope > .detail-body');
+  const head = page.querySelector(':scope > .detail-head'), body = page.querySelector(':scope > .detail-body');
+  if (!nextHead || !nextBody || !head || !body) { page.innerHTML = html; return; }
+  if (head.outerHTML !== nextHead.outerHTML) head.replaceWith(nextHead);
+  const olds = [...body.children], news = [...nextBody.children];
+  const sameShape = olds.length === news.length && olds.every((n, i) => n.tagName === news[i].tagName && n.className.split(' ')[0] === news[i].className.split(' ')[0]);
+  if (!sameShape) { const top = body.scrollTop; body.replaceWith(nextBody); nextBody.scrollTop = top; return; }
+  const act = document.activeElement;
+  olds.forEach((o, i) => {
+    const n = news[i];
+    if (o.tagName === 'DETAILS') { if (o.open) n.setAttribute('open', ''); else n.removeAttribute('open'); }
+    if (o.outerHTML === n.outerHTML) return;
+    const focused = act && o.contains(act) ? act : null;
+    const valueMoved = o.dataset && n.dataset && o.dataset.o55Now !== undefined && o.dataset.o55Now !== n.dataset.o55Now;
+    o.replaceWith(n);
+    if (focused) {
+      const key = ['data-action', 'data-value', 'data-setting'].filter(k => focused.hasAttribute(k)).map(k => `[${k}="${cssEscape(focused.getAttribute(k))}"]`).join('');
+      let again = (key && n.querySelector(key)) || n.querySelector('button, [tabindex]');
+      if (!again) { n.tabIndex = -1; again = n; }
+      try { again.focus({ preventScroll: true }); } catch (e) { again.focus(); }
+    }
+    if (valueMoved && !o55Still()) n.animate([{ boxShadow: '0 0 0 3px color-mix(in srgb, var(--k3-accent) 45%, transparent)' }, { boxShadow: '0 0 0 0 transparent' }], { duration: 700, easing: 'ease-out' });
+  });
+}
+PM51.syncInspector = function () {
+  if (!state.detailSetting || !detailInspectorVisible) return false;
+  const { inspector } = getDetailNodes(); if (!inspector) return false;
+  const found = findSettingInDomain(state.detailSetting, getDomain()) || findSettingGlobal(state.detailSetting); if (!found) return false;
+  let page = inspector.querySelector(':scope > .o55-insp-page:not(.o55-leaving)');
+  if (!page) { page = document.createElement('div'); page.className = 'o55-insp-page'; while (inspector.firstChild) page.appendChild(inspector.firstChild); inspector.appendChild(page); }
+  o55InspPatch(page, renderDetailInspectorBody(found.setting, found.section, found.workspace));
+  try { syncDetailButtonStates(); } catch (e) { /* the About buttons' pressed state is cosmetic */ }
+  return true;
+};
+/* Any saved change (a row's dropdown, a switch, a number, a reset, a manager's own control) refreshes the panel once,
+   on the next frame, while it is open. A value set back to its default no longer counts as changed. */
+let o55InspFrame = 0;
+const o55InspSoon = () => { if (o55InspFrame || !detailInspectorVisible) return; o55InspFrame = requestAnimationFrame(() => { o55InspFrame = 0; PM51.syncInspector(); }); };
+const o55InspCommit = commitSettingValue;
+commitSettingValue = function (id, value) {
+  const ok = o55InspCommit.apply(this, arguments);
+  if (ok && state.changed && state.changed[id]) { const f = findSettingGlobal(id); if (f && o55SameValue(state.settings[id], f.setting.value)) delete state.changed[id]; }
+  if (ok) o55InspSoon();
+  return ok;
+};
+const o55InspRestore = restoreSettingDefault;
+restoreSettingDefault = function () { const ok = o55InspRestore.apply(this, arguments); if (ok) o55InspSoon(); return ok; };
 function o55InspRefresh(id) {
   refreshSettingRow(id);
-  if (state.detailSetting === id) { const { inspector } = getDetailNodes(); const found = findSettingGlobal(id); if (inspector && found) { const page = inspector.querySelector('.o55-insp-page'); const html = renderDetailInspectorBody(found.setting, found.section, found.workspace); if (page) page.innerHTML = html; else inspector.innerHTML = html; } }
+  PM51.syncInspector();
 }
 const o55InspDispatch = dispatchAction;
 dispatchAction = function (action, el, event) {

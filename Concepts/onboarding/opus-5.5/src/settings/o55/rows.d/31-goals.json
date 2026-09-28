@@ -1,5 +1,5 @@
 {
- "_about": "Goals rows (settings audit, 2026-09-27).",
+ "_about": "Goals rows (settings audit, 2026-09-27; user review 2026-09-27: defaults only, nothing here starts a Goal).",
  "rows": {
   "planning.verification.goal-template": {
    "label": "Kind of job",
@@ -14,7 +14,10 @@
     "audit_and_repair": "Audit and fix",
     "ledger_to_plan_transfer": "Turn a ledger into a plan",
     "governance_seal": "Seal records"
-   }
+   },
+   "help": "Set in each template. A Goal started from a template begins with its kind of job.",
+   "per": "template",
+   "perWhere": "Change it in each template: Memory & Automation › Goals & Automation › Templates."
   },
   "planning.verification.goal-write-mode": {
    "label": "What new Goals may change",
@@ -52,11 +55,12 @@
    "label": "Explain cloud and local handoffs"
   },
   "general.interaction.run-graph-mode": {
-   "label": "Graph shows",
+   "label": "Progress graph opens on",
    "options": {
-    "Live": "Live",
+    "Live": "What is happening now",
     "Historical": "A past run"
-   }
+   },
+   "help": "What the graph of a Goal shows when you open it in the assistant chat."
   },
   "general.interaction.graph-density": {
    "label": "Graph detail",
@@ -65,11 +69,12 @@
     "Simplified": "Simplified",
     "Package swimlanes": "Grouped by package",
     "Seam boundaries": "Grouped by seam"
-   }
+   },
+   "help": "How much of a Goal's steps the graph draws."
   },
   "general.interaction.progress-widget-layout": {
    "label": "Progress view layout",
-   "help": "Pick which panels the progress view shows.",
+   "help": "Which panels a Goal's progress view shows, and where.",
    "empty": "The standard layout",
    "pair": [
     "Panel",
@@ -177,15 +182,18 @@
    }
   },
   "planning.verification.receipt-type": {
-   "label": "Receipt earned",
-   "help": "Set by the checks a Goal passed; not a choice.",
+   "label": "Receipt strength",
+   "help": "Earned from the checks a Goal passed, not chosen. Shown on each finished Goal in the assistant chat.",
    "options": {
     "lightweight": "Light",
     "standard": "Standard",
     "strong": "Strong",
     "degraded": "Finished, not fully checked",
     "blocked": "Blocked"
-   }
+   },
+   "control": "status",
+   "tone": "neutral",
+   "readout": "Earned from the checks"
   },
   "planning.verification.repair-loop": {
    "label": "Fix attempts",

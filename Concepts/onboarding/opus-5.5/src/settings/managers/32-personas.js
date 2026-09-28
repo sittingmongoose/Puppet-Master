@@ -9,7 +9,15 @@
    - Crews, Group work (BrainStorm, Review, Chat Room) and Helpers are separate tabs; Review came from Goals.
    - Defaults: the chat default is the inventory row (real personas to pick); the Goals default lives in Goals;
      planning helpers and reviewers are shown with a way to change them where they live; the own "inheritance"
-     switches repeated the per-persona model and permission rows and are gone. */
+     switches repeated the per-persona model and permission rows and are gone. Settings has no open chat, so the
+     chat rows read as what new chats start with and where one chat changes its own (review, 2026-09-27).
+   - Creativity and Word choice range are sliders with plain words at each end, and read "Same as the project" until
+     a persona sets its own; the Spending cap reads "No cap" until a cap is set. They were number boxes that showed
+     nothing but a placeholder. Notes on using tools open an editor like Instructions instead of a one-line box, and
+     a persona's own tools, skills and plugins stay visible as chips even when they are not in the usual list.
+   - Menus opened here carry o55-mgp-menu (styles.d/63-memory-goals-personas.css): the kit's menus live in <body>,
+     outside the rule that strokes Settings icons, so their icons were blank; "New persona or import" gets two-line
+     items so "Step by step" is no longer cut off. */
 (function () {
   const ID = 'personas';
   const KEY = 'goals-crew-personas';
@@ -65,6 +73,40 @@
   /* a persona's value: the record's own fields for name, what it's for and instructions, else its props */
   const MIRROR = { [S.name]: 'name', [S.desc]: 'description', [S.prompt]: 'prompt' };
   const pval = (p, id) => MIRROR[id] ? (p[MIRROR[id]] || '') : id === S.pid ? p.id : id === S.prefer ? ((p.props && p.props[id]) || p.tools || []) : PM51.scopedValue(p, id);
+  /* a persona's own number, or "the project's": sliders with a word for where they sit, and a cap that is off at 0 */
+  const TUNE = {
+    [S.temp]: { min: 0, max: 2, step: 0.1, start: 0.8, ends: ['Predictable', 'Inventive'], word: v => v < 0.3 ? 'Very predictable' : v < 0.6 ? 'Predictable' : v <= 1 ? 'Balanced' : v <= 1.4 ? 'Inventive' : 'Very inventive' },
+    [S.topp]: { min: 0.05, max: 1, step: 0.05, start: 0.9, ends: ['Likeliest words', 'Any word'], word: v => v < 0.4 ? 'Narrow' : v < 0.75 ? 'Focused' : v < 0.95 ? 'Wide' : 'Full range' }
+  };
+  const tuneNum = v => (v == null || v === '' || v === 'inherit') ? NaN : Number(v);
+  const tuneText = (id, v) => { const n = tuneNum(v); return Number.isFinite(n) ? `${+n.toFixed(2)} · ${TUNE[id].word(n)}` : 'Same as the project'; };
+  const capOn = v => Number(v) > 0;
+  function tuneCtl(p, id) {
+    const t = TUNE[id], n = tuneNum(pval(p, id)), d = { id: p.id, setting: id };
+    if (!Number.isFinite(n)) return `<span class="o55-inherit o55-mgp-own"><span class="o55-auto">${icon('spark')}<span>Same as the project</span></span><button type="button" class="o55-textbtn" data-action="pm51-personas-own" ${dataAttrs(d)}>Set its own</button></span>`;
+    const v = Math.max(t.min, Math.min(t.max, n));
+    return `<div class="o55-mgp-tune"><div class="o55-mgp-tune-track"><span class="o55-mgp-tune-end" aria-hidden="true">${h(t.ends[0])}</span><input type="range" min="${t.min}" max="${t.max}" step="${t.step}" value="${v}" data-action="pm51-personas-tune" ${dataAttrs(d)} aria-label="${a(PM51.rowLabel(PM51.setting(id)))}" aria-valuetext="${a(tuneText(id, v))}"><span class="o55-mgp-tune-end" aria-hidden="true">${h(t.ends[1])}</span></div><div class="o55-mgp-tune-foot"><output class="o55-mgp-tune-now">${h(tuneText(id, v))}</output><button type="button" class="o55-textbtn" data-action="pm51-personas-inherit" ${dataAttrs(d)}>Same as the project</button></div></div>`;
+  }
+  function capCtl(p) {
+    const v = pval(p, S.budget), d = { id: p.id, setting: S.budget };
+    if (!capOn(v)) return `<span class="o55-inherit o55-mgp-own"><span class="o55-auto">${icon('spark')}<span>No cap</span></span><button type="button" class="o55-textbtn" data-action="pm51-personas-own" ${dataAttrs(d)}>Set a cap</button></span>`;
+    return `<span class="o55-inherit o55-mgp-own">${PM51.scoped.control(S.budget, v, { scope: 'persona', data: { id: p.id } })}<button type="button" class="o55-textbtn" data-action="pm51-personas-inherit" ${dataAttrs(d)}>Remove the cap</button></span>`;
+  }
+  /* written notes open an editor; the row shows their first line */
+  function notesCtl(p) {
+    const text = String(pval(p, S.guidance) || '').trim(), first = text.split('\n').find(l => l.trim()) || '';
+    return `<span class="o55-mgp-doc${text ? '' : ' is-empty'}">${h(text ? first : 'None yet')}</span>${PM51.btn({ label: text ? 'Edit notes' : 'Write notes', icon: 'edit', small: true, action: 'pm51-personas-guidance', data: { id: p.id } })}`;
+  }
+  /* chips: the usual list plus anything this persona already has, so "Standard tools" shows as chosen */
+  const PICKS = { [S.prefer]: () => TOOLS, [S.avoid]: () => TOOLS, [S.skills]: () => ((PM51.s().skills) || []).map(k => k.name), [S.plugins]: () => ((PM51.s().plugins) || []).map(k => k.name) };
+  const pickList = (p, id) => { const cur = pval(p, id); return [...new Set([...PICKS[id](), ...(Array.isArray(cur) ? cur.map(String) : [])])]; };
+  const ownText = (p, id) => TUNE[id] ? tuneText(id, pval(p, id)) : id === S.budget && !capOn(pval(p, id)) ? 'No cap' : null;
+  /* menus here: blank icons fixed and room for each item's line (see the note at the top) */
+  const menu = (anchor, items, title, { wide } = {}) => {
+    const pop = PM51.menu(anchor, items, title);
+    if (pop) { pop.classList.add('o55-mgp-menu'); if (wide) { pop.classList.add('is-described'); positionPopout(pop, anchor, { align: 'right', width: 264 }); } }
+    return pop;
+  };
   const renameEverywhere = (from, to) => {
     if (!from || from === to) return;
     crews().forEach(c => { c.members = (c.members || []).map(m => m === from ? to : m); if (c.lead === from) c.lead = to; });
@@ -85,9 +127,10 @@
 `);
 
   /* ---------- Personas ------------------------------------------------- */
-  const srow = (p, id, opts) => PM51.scoped.row(id, pval(p, id), Object.assign({ scope: 'persona', data: { id: p.id }, noChanged: true }, opts || {}));
+  const srow = (p, id, opts) => PM51.scoped.row(id, pval(p, id), Object.assign({ scope: 'persona', data: { id: p.id }, noChanged: true },
+    TUNE[id] ? { control: tuneCtl(p, id) } : id === S.budget ? { control: capCtl(p) } : id === S.guidance ? { control: notesCtl(p) } : PICKS[id] ? { choices: pickList(p, id) } : {}, opts || {}));
   const valueRow = (p, id, action, wrap) => { const s = PM51.setting(id); if (!s) return ''; const v = pval(p, id); const text = Array.isArray(v) ? (v.length ? v.join(', ') : 'None') : (String(v || '').trim() || 'Not set'); return PM51.home(id, PM51.rows([wrap ? { label: PM51.rowLabel(s), help: PM51.rowHelp(s), cls: 'is-wrap', control: `<p class="pm51-personas-text">${h(text)}</p>`, action } : { label: PM51.rowLabel(s), help: PM51.rowHelp(s), value: text, action }])); };
-  const lockedGroup = (p, ids) => ids.reduce((html, id) => PM51.home(id, html), PM51.kv(ids.map(id => { const s = PM51.setting(id); return s ? [PM51.rowLabel(s), id === S.pid ? p.id : PM51.valueText(s, pval(p, id))] : null; })));
+  const lockedGroup = (p, ids) => ids.reduce((html, id) => PM51.home(id, html), PM51.kv(ids.map(id => { const s = PM51.setting(id); return s ? [PM51.rowLabel(s), id === S.pid ? p.id : (ownText(p, id) || PM51.valueText(s, pval(p, id)))] : null; })));
   function promptRow(p) {
     const text = String(p.prompt || '').trim();
     return PM51.home(S.prompt, PM51.rows([{ label: 'Instructions', help: 'The standing instructions it works from.', cls: 'is-wrap', control: `<p class="pm51-personas-prompt">${h(text || 'None yet.')}</p>` }]) + (p.locked ? '' : `<div class="pm51-mcp-actions">${PM51.btn({ label: text ? 'Edit instructions' : 'Write instructions', icon: 'edit', small: true, action: 'pm51-personas-prompt', data: { id: p.id } })}</div>`));
@@ -127,7 +170,7 @@
       detail: {
         title: p.name, subtitle: [p.locked ? 'Core persona' : p.group === 'Bundled' ? 'Bundled persona' : 'Your persona', (p.crews || []).length ? `In ${p.crews.join(', ')}` : 'Not in a crew'].join(' · '),
         primary: p.locked ? { label: 'Duplicate to edit', icon: 'copy', action: 'pm51-personas-duplicate', data: { id: p.id } } : { label: 'Try it', icon: 'play', action: 'pm51-personas-try-open', data: { id: p.id } },
-        menu: anchor => PM51.menu(anchor, [
+        menu: anchor => menu(anchor, [
           { label: 'Duplicate', icon: 'copy', onClick: () => duplicate(p) },
           { label: 'Add to crew', icon: 'users', onClick: () => addToCrew(p) },
           p.group === 'Bundled' ? { label: isHidden(p) ? 'Show in pickers' : 'Hide from pickers', icon: 'eye', onClick: () => toggleHidden(p) } : null,
@@ -227,7 +270,7 @@
       detail: {
         title: c.name, subtitle: `${(c.members || []).length} members · ${c.route}`,
         primary: { label: 'Edit', icon: 'edit', action: 'pm51-personas-crew-edit', data: { id: c.id } },
-        menu: anchor => PM51.menu(anchor, [
+        menu: anchor => menu(anchor, [
           { label: 'Add member', icon: 'plus', onClick: () => addMember(c) },
           { label: 'Duplicate', icon: 'copy', onClick: () => { const copy = clone(c); copy.id = newId('crew'); copy.name = c.name + ' copy'; crews().push(copy); PM51.setSel(CREW_SEL, copy.id); saveState(); refresh(); PM51.toast('Crew duplicated', copy.name); } },
           { separator: true },
@@ -286,7 +329,7 @@
 
   /* ---------- Defaults ------------------------------------------------- */
   function defaultsTab() {
-    const active = personas().find(p => p.id === String(PM51.value(S.active))) || personas().find(p => p.id === 'assistant');
+    const first = personas().find(p => p.id === String(PM51.value(S.chatDefault))) || personas().find(p => p.id === 'assistant');
     const roster = PM51.value(S.reviewRoster);
     return PM51.slot()
       + PM51.section({
@@ -294,14 +337,14 @@
         body: PM51.rows([
           { label: 'Planning helpers', help: 'Who asks the questions and drafts the plan, in the Planning chapter.', value: PM51.valueLabel(S.planner, PM51.value(S.planner)), action: { label: 'Change', icon: 'arrowRight', action: 'pm51-personas-reveal', data: { setting: S.planner } } },
           { label: 'Reviewers', help: 'Who checks finished work, under Group work.', value: Array.isArray(roster) && roster.length ? roster.join(', ') : 'Puppet Master picks', action: { label: 'Change', icon: 'arrowRight', action: 'pm51-personas-reveal', data: { setting: S.reviewRoster } } },
-          { label: 'Goals', help: 'New Goals start with the persona set in Goals & Automation.', value: ((PM51.s().goals || {}).defaults || {}).persona || 'Assistant', action: { label: 'Change', icon: 'arrowRight', action: 'pm51-go', data: { domain: 'memory', workspace: 'goals' } } }
+          { label: 'Goals', help: 'New Goals start with the persona set in Goals & Automation.', value: ((PM51.s().goals || {}).defaults || {}).persona || 'Assistant', action: { label: 'Change', icon: 'arrowRight', action: 'pm51-personas-goal-default' } }
         ])
       })
       + PM51.section({
-        title: 'In a chat', help: 'The persona of the open chat, and how to switch.',
-        body: PM51.home(S.active, PM51.rows([{ label: "This chat's persona", help: 'Change it from the persona chip in chat.', value: active ? active.name : 'Assistant' }]))
+        title: 'In chats', help: 'What new chats start with. Each chat can change its own persona.',
+        body: PM51.home(S.active, PM51.rows([{ label: 'Persona in one chat', help: `Each chat shows who is answering in its persona chip; change it there for that chat only. New chats start with ${first ? first.name : 'the default persona'}.`, value: 'Set in each chat' }]))
           + PM51.bound.rows([S.lock])
-          + PM51.home(S.ask, PM51.rows([{ label: 'Switch by asking', help: 'Say "let the researcher handle this" in chat, and that persona takes over.', value: 'Always on' }]))
+          + PM51.home(S.ask, PM51.rows([{ label: 'Switch by asking', help: 'In any chat, say "let the researcher handle this" and that persona takes over.', value: 'Always on' }]))
       });
   }
 
@@ -335,13 +378,13 @@
   /* a lineup sets the size: a lineup of 5 with a size of 3 cannot happen */
   PAIRS.forEach(([roster, size]) => PM51.watch(roster, v => { if (Array.isArray(v) && v.length && commitSettingValue(size, v.length)) { saveState(); refreshSettingRow(size); } }));
   PM51.watch('branching.subagents.delegation-depth', v => { const max = Number(PM51.value('branching.subagents.max-nesting-depth')) || 4; if (Number(v) > max) { commitSettingValue('branching.subagents.delegation-depth', max); saveState(); refreshSettingRow('branching.subagents.delegation-depth'); PM51.toast('Kept within the hard stop', `Helpers can go ${max} levels deep at most (Limits for all agents).`, 'info'); } });
-  [S.hidden, S.crews].forEach(id => PM51.watch(id, () => refresh()));
+  [S.hidden, S.crews, S.chatDefault].forEach(id => PM51.watch(id, () => refresh()));
 
   /* ---------- actions -------------------------------------------------- */
-  PM51.on('personas-add', el => PM51.menu(el, [
-    { label: 'New persona', icon: 'plus', meta: 'Step by step', onClick: () => personaWizard() },
-    { label: 'Import', icon: 'upload', meta: 'From a PERSONA.md file', onClick: () => PM51.panel({ title: 'Import persona', subtitle: 'Bring in a persona exported from another workspace.', body: PM51.panelSection('File', PM51.field('Persona file', '<input class="text-control" type="file" aria-label="Persona file"/>', 'A PERSONA.md file exported from Puppet Master.')) + PM51.note('Reading a file needs the desktop app. Nothing is read in this preview.'), primaryLabel: 'Import', onPrimary: () => PM51.toast('Nothing imported', 'Example data only. Importing a file needs the desktop app.', 'info') }) }
-  ], 'Add'));
+  PM51.on('personas-add', el => menu(el, [
+    { label: 'New persona', icon: 'plus', meta: 'Set one up step by step, or start from a copy', onClick: () => personaWizard() },
+    { label: 'Import a persona', icon: 'upload', meta: 'From a PERSONA.md file made in another workspace', onClick: () => PM51.panel({ title: 'Import persona', subtitle: 'Bring in a persona exported from another workspace.', body: PM51.panelSection('File', PM51.field('Persona file', '<input class="text-control" type="file" aria-label="Persona file"/>', 'A PERSONA.md file exported from Puppet Master.')) + PM51.note('Reading a file needs the desktop app. Nothing is read in this preview.'), primaryLabel: 'Import', onPrimary: () => PM51.toast('Nothing imported', 'Example data only. Importing a file needs the desktop app.', 'info') }) }
+  ], 'Add a persona', { wide: true }));
   PM51.on('personas-new', () => personaWizard());
   PM51.on('personas-manage', () => { ps().show = 'all'; PM51.setTab(ID, 'personas'); PM51.go('memory', ID); PM51.toast('This is the persona list', 'Pick a persona to change it, or add one with the plus button.', 'info'); });
   PM51.on('personas-show', el => { ps().show = el.value || ds(el, 'value') || 'all'; saveState(); refresh(); });
@@ -361,7 +404,7 @@
         if (!name) { PM51.toast('Give it a name', 'A persona needs a name.', 'info'); return false; }
         if (name !== p.name && (names().some(n => n.toLowerCase() === name.toLowerCase()) || RESERVED.has(slug(name)))) { PM51.toast('Pick another name', `${name} is already taken.`, 'info'); return false; }
         const old = p.name; p.name = name; p.description = desc; renameEverywhere(old, name);
-        (p.crews || []).forEach(() => {}); saveState(); refresh(); PM51.toast('Saved', old === name ? name : `${old} is now ${name}.`);
+        saveState(); refresh(); PM51.toast('Saved', old === name ? name : `${old} is now ${name}.`);
       }
     });
   });
@@ -383,6 +426,36 @@
     });
   });
   PM51.on('personas-reveal', el => { if (PM51.revealSetting) PM51.revealSetting(ds(el, 'setting')); });
+  PM51.on('personas-goal-default', () => { PM51.setTab('goals', 'defaults'); PM51.go('memory', 'goals'); });
+  /* a persona's own number: set one, slide it, or hand it back to the project */
+  const ownPersona = el => { const p = personas().find(x => x.id === ds(el, 'id')); if (!p || p.locked) return null; p.props = p.props || {}; return p; };
+  const focusOwn = id => window.setTimeout(() => { const row = root.querySelector(`[data-pm51-manager="personas"] .o55-scoped[data-setting-id="${cssEscape(id)}"]`); const f = row && row.querySelector('input, .o55-textbtn'); if (f) f.focus({ preventScroll: true }); }, 30);
+  PM51.on('personas-own', el => {
+    const p = ownPersona(el), id = ds(el, 'setting'); if (!p) return;
+    p.props[id] = TUNE[id] ? TUNE[id].start : 5; saveState(); refresh(); focusOwn(id);
+    PM51.toast('Saved', TUNE[id] ? `${PM51.rowLabel(PM51.setting(id))} for ${p.name}: ${tuneText(id, p.props[id])}. Slide to change it.` : `${p.name} may spend up to $${p.props[id]} per run. Change the amount beside it.`);
+  });
+  PM51.on('personas-inherit', el => {
+    const p = ownPersona(el), id = ds(el, 'setting'); if (!p) return;
+    if (id === S.budget) p.props[id] = 0; else delete p.props[id];
+    saveState(); refresh(); focusOwn(id);
+    PM51.toast('Saved', id === S.budget ? `${p.name} has no spending cap.` : `${PM51.rowLabel(PM51.setting(id))} for ${p.name} is the same as the project again.`);
+  });
+  const tuneLive = el => { const id = ds(el, 'setting'), text = tuneText(id, el.value); el.setAttribute('aria-valuetext', text); const out = el.closest('.o55-mgp-tune')?.querySelector('.o55-mgp-tune-now'); if (out) out.textContent = text; return id; };
+  PM51.onInput('personas-tune', el => tuneLive(el));
+  PM51.onChange('personas-tune', el => {
+    const p = ownPersona(el), id = tuneLive(el); if (!p) return;
+    p.props[id] = Number(el.value); saveState();
+    PM51.toast('Saved', `${PM51.rowLabel(PM51.setting(id))} for ${p.name}: ${tuneText(id, p.props[id])}.`, 'success');
+  });
+  PM51.on('personas-guidance', el => {
+    const p = ownPersona(el); if (!p) return;
+    PM51.panel({
+      title: 'Notes on using tools', subtitle: p.name, icon: 'file', size: 'wide', summary: 'When and how this persona should reach for its tools. Plain sentences are fine.',
+      body: `<textarea class="o55-persona-editor" spellcheck="false" aria-label="Notes on using tools for ${a(p.name)}" placeholder="For example: search the web before guessing a version number, and run the tests after every change." data-autofocus>${h(String(pval(p, S.guidance) || ''))}</textarea>`,
+      primaryLabel: 'Save', onPrimary: w => { const v = w.querySelector('.o55-persona-editor').value.replace(/\r\n/g, '\n').trim(); p.props[S.guidance] = v; saveState(); refresh(); PM51.toast('Notes saved', v ? p.name : `${p.name} has no tool notes.`); }
+    });
+  });
   PM51.on('personas-duplicate', el => { const p = personas().find(x => x.id === ds(el, 'id')); if (p) duplicate(p); });
   const tryPanel = (p, question) => PM51.panel({
     title: `Try ${p.name}`, subtitle: 'This preview cannot run a model. Here is what would shape the reply.',

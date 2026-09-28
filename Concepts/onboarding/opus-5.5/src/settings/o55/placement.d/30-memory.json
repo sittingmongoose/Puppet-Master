@@ -1,5 +1,5 @@
 {
- "_about": "Context & Memory: memory on/off and the list first; the working space of a run on its own tab; standing instructions apart from memories; one answer each for how long memories last and who may read them. Per-run and per-Goal token caps move to Permissions Run limits.",
+ "_about": "Context & Memory: memory on/off and the list first; the working space of a chat on its own tab, as defaults for every chat (Settings has no open chat, so no live gauge and no Squeeze now); standing instructions apart from memories; one answer each for how long memories last and who may read them. Per-run and per-Goal token caps move to Permissions Run limits.",
  "sections": {
   "memory-home": {
    "to": "context-memory",
@@ -11,8 +11,8 @@
   },
   "memory-context-meter": {
    "to": "context-memory",
-   "title": "Context in use",
-   "help": "How full the assistant's working space is right now.",
+   "title": "In chats",
+   "help": "Whether each chat shows how full its working space is.",
    "order": 102,
    "tab": "context",
    "composed": true
@@ -20,7 +20,7 @@
   "memory-limits": {
    "to": "context-memory",
    "title": "When space runs low",
-   "help": "How old context is squeezed so long runs keep going.",
+   "help": "How old context is squeezed so long chats keep going.",
    "order": 103,
    "tab": "context"
   },
@@ -121,6 +121,14 @@
    "help": "Every set of standing rules, where it comes from, and whether it loaded.",
    "order": 207.5,
    "composed": true
+  },
+  "memory-per-chat": {
+   "to": "context-memory",
+   "title": "In one chat",
+   "help": "A chat's own menu does these for that chat only; here you only see where.",
+   "order": 106,
+   "tab": "context",
+   "advanced": true
   }
  },
  "overrides": [
@@ -134,7 +142,12 @@
   {
    "section": "memory-context-meter",
    "ids": [
-    "general.interaction.context-usage",
+    "general.interaction.context-usage"
+   ]
+  },
+  {
+   "section": "memory-per-chat",
+   "ids": [
     "memory.limits.manual-compact"
    ]
   },

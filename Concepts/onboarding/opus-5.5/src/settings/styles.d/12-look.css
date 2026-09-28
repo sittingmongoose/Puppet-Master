@@ -35,8 +35,24 @@ html[data-density="compact"] #panel-settings .setting-row.o55-row { min-height: 
 html[data-density="compact"] #panel-settings .o55-group-head { padding-top: 10px; }
 html[data-density="compact"] #panel-settings .settings-section.o55-group + .settings-section.o55-group { margin-top: 10px; }
 
-/* Accent swatches: the first keeps the theme's own accent and carries an inner ring so it reads as "the default". */
-#panel-settings .o55-swatches .swatch.is-theme { box-shadow: inset 0 0 0 3px var(--k3-surface-1); }
+/* Accent swatches. Each is filled with its own color (--sw); the chosen one wears a ring in that same color, so the
+   ring is always the accent in use. The first keeps the theme's own accent and is drawn half filled ("automatic");
+   its old inner ring looked like a selection ring left on the default color after another accent was picked. */
+#panel-settings .o55-swatches { gap: 10px; align-items: center; }
+#panel-settings .o55-swatches .swatch.o55-sw { width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; background: var(--sw); color: var(--sw);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.2); transition: box-shadow var(--k3-dur-fast, 160ms) var(--k3-ease-out, ease), transform var(--k3-dur-fast, 160ms) var(--k3-ease-out, ease); }
+#panel-settings .o55-swatches .swatch.o55-sw:hover { transform: scale(1.08); }
+#panel-settings .o55-swatches .swatch.o55-sw.is-theme { background: linear-gradient(135deg, var(--sw) 0 50%, var(--k3-surface-3, var(--surface-alt)) 50% 100%); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sw) 70%, transparent); }
+#panel-settings .o55-swatches .swatch.o55-sw.active,
+#panel-settings .o55-swatches .swatch.o55-sw.is-theme.active { border: 0; box-shadow: 0 0 0 2px var(--k3-surface-1, var(--surface)), 0 0 0 4px currentColor, inset 0 0 0 1px rgba(255,255,255,.2); }
+#panel-settings .o55-swatches .swatch.o55-sw:focus-visible { outline: 2px solid var(--k3-text-1, var(--text-primary)); outline-offset: 5px; }
+
+/* A chosen accent reaches the rest of the selection marks: Settings' second accent (tab inks, the chapter tab
+   underline), the changed-row mark and the set-up wizard's accent. Each theme keeps its own while none is chosen
+   (kit.d/17-look.js sets data-o55-accent and the accent's own soft, glow and scrollbar tokens). */
+html[data-o55-accent] #panel-settings { --k3-accent-2: var(--accent-primary); }
+html[data-o55-accent] #panel-settings .o55g-wrap { --g-accent: var(--accent-primary); --g-on-accent: var(--o55-on-accent, #fff); }
+html[data-o55-accent] #panel-settings .setting-row.is-changed::before { background: var(--k3-accent); }
 
 /* Theme preview bar: centred at the bottom, above everything, in the current theme's surface colours. */
 .o55-preview-bar { position: fixed; left: 50%; bottom: 44px; transform: translateX(-50%); z-index: 10050; display: flex; align-items: center; gap: 10px; max-width: calc(100vw - 32px); padding: 10px 12px 10px 16px; border: 1px solid var(--k3-line, var(--border)); border-radius: 12px; background: var(--k3-surface-2, var(--surface-elevated)); color: var(--k3-text-1, var(--text-primary)); box-shadow: 0 14px 40px rgba(0,0,0,.28); font-size: 13px; }

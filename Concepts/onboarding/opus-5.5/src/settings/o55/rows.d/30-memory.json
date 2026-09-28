@@ -1,5 +1,5 @@
 {
- "_about": "Context & Memory rows (settings audit, 2026-09-27).",
+ "_about": "Context & Memory rows (settings audit, 2026-09-27). Settings has no open chat (user review, 2026-09-27): rows name what every chat does, and Squeeze now reads as a thing each chat's own menu does.",
  "rows": {
   "memory.retention.enabled": {
    "label": "Remember things between chats",
@@ -16,26 +16,26 @@
    "help": "Which memories the list shows when you open it."
   },
   "general.interaction.context-usage": {
-   "label": "Show this gauge in chat",
-   "help": "A small meter in chat shows how full the space is."
+   "label": "Show a space meter in each chat",
+   "help": "A small meter in each chat shows how full its working space is."
   },
   "memory.limits.manual-compact": {
-   "label": "Squeeze now",
-   "help": "Summarizes old context in the open chat right away.",
-   "pm51": "pm51-memory-squeeze",
-   "actionLabel": "Squeeze now",
-   "icon": "bolt"
+   "label": "Squeeze one chat now",
+   "help": "Each chat's own menu has Squeeze now: it summarizes that chat's older part at once, for that chat only.",
+   "control": "status",
+   "tone": "neutral",
+   "readout": "In each chat's menu"
   },
   "memory.limits.auto-compress": {
    "label": "Squeeze old context automatically",
-   "help": "Summarizes stale context so long runs don't stop."
+   "help": "Summarizes stale context so long chats don't stop."
   },
   "memory.limits.compaction-mode": {
    "label": "When automatic squeezing is off",
    "help": "What happens once the space is full.",
    "options": {
     "manual": "Wait for me",
-    "disabled": "Never; the run stops"
+    "disabled": "Never; the chat stops"
    },
    "when": {
     "id": "memory.limits.auto-compress",
@@ -67,7 +67,7 @@
   },
   "memory.limits.low-context-warning": {
    "label": "Warn me when this much is left",
-   "help": "Time to wrap up, or to squeeze.",
+   "help": "Time to wrap up, or to squeeze the chat.",
    "unit": "% left",
    "min": 1,
    "max": 99,
@@ -89,7 +89,7 @@
    "keys": {
     "immune": "Protected",
     "history": "Earlier conversation",
-    "current_turn": "This reply",
+    "current_turn": "The reply",
     "tool_results": "Tool results",
     "contingency": "Spare"
    },
@@ -282,9 +282,9 @@
     "Fades after (days)"
    ],
    "noun": "kind",
-   "editorHelp": "CurrentThread is what this chat is working on, Blocker is something stopping progress, Constraint is a rule the work must follow. An unused note of that kind fades after this many days.",
+   "editorHelp": "What a chat is working on, something stopping progress, and a rule the work must follow: an unused note of that kind fades after this many days.",
    "keys": {
-    "CurrentThread": "This chat's work",
+    "CurrentThread": "What a chat is working on",
     "Blocker": "Blockers",
     "Constraint": "Rules the work follows"
    },
@@ -302,7 +302,7 @@
   },
   "memory.retention.auto-save-unverified": {
    "label": "Keep unconfirmed notes",
-   "help": "Notes the assistant proposes wait for someone to check them. Off drops them when the run ends."
+   "help": "Notes the assistant proposes wait for someone to check them. Off drops them when the chat ends."
   },
   "memory.retention.pinned-unverified-injection": {
    "label": "Use pinned notes even if unconfirmed",

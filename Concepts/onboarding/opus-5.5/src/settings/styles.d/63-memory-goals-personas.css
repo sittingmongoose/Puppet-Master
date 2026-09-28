@@ -1,0 +1,55 @@
+/* O55 · Context & Memory, Goals & Automation, Personas & Crews (user review, 2026-09-27).
+   - Menus these managers open carry .o55-mgp-menu. The kit's menus are placed in <body>, outside #panel-settings,
+     so the rule that strokes Settings icons never reached them and every menu icon was blank; the items also cut
+     their second line ("Step by st…"). Here the icon is stroked, sits in its own column, and a line under the label
+     wraps instead of being cut. .is-described (New persona or import) gives each icon a small tile. The popout's
+     own colour variables are used, because the --k3-* ones live on #panel-settings.
+   - A persona's Creativity and Word choice range are sliders with a word at each end and a readout of where they
+     sit; "Same as the project" and "No cap" read like the kit's other automatic values (.o55-inherit).
+   - Written notes (a persona's tool notes) show their first line beside an Edit button.
+   - A short lead under a manager's tabs says what the tab is for (Goals: started in the assistant chat). */
+
+/* ---- menus ----------------------------------------------------------------------------------------------------- */
+.pm51-popout.o55-mgp-menu .icon svg { width: 100%; height: 100%; display: block; stroke: currentColor; }
+.pm51-popout.o55-mgp-menu .pm51-menu-item {
+  display: grid; grid-template-columns: 16px minmax(0, 1fr); column-gap: 10px; row-gap: 2px; align-items: center;
+  padding: 8px 12px; font-size: 12px; letter-spacing: 0; line-height: 1.3;
+}
+.pm51-popout.o55-mgp-menu .pm51-menu-item > .icon { grid-row: 1 / span 2; display: grid; place-items: center; width: 16px; height: 16px; color: var(--text-muted, #8f8ab0); }
+.pm51-popout.o55-mgp-menu .pm51-menu-item > .icon svg { width: 14px; height: 14px; }
+.pm51-popout.o55-mgp-menu .pm51-menu-item:hover > .icon,
+.pm51-popout.o55-mgp-menu .pm51-menu-item:focus-visible > .icon { color: var(--text-primary, #f4f2ff); }
+.pm51-popout.o55-mgp-menu .pm51-menu-item.is-danger > .icon { color: var(--accent-red, #f27791); }
+.pm51-popout.o55-mgp-menu .pm51-popout-label { grid-column: 2; min-width: 0; max-width: none; white-space: normal; overflow: visible; }
+.pm51-popout.o55-mgp-menu .pm51-popout-meta {
+  grid-column: 2; min-width: 0; text-align: left; white-space: normal; overflow: visible;
+  font-size: 11.5px; font-weight: 500; line-height: 1.35; color: var(--text-muted, #8f8ab0);
+}
+.pm51-popout.o55-mgp-menu.is-described .pm51-menu-item { grid-template-columns: 30px minmax(0, 1fr); column-gap: 12px; padding: 9px 12px; }
+.pm51-popout.o55-mgp-menu.is-described .pm51-menu-item > .icon {
+  width: 30px; height: 30px; border-radius: 8px; color: var(--accent-primary, #7c6cff);
+  background: color-mix(in srgb, var(--accent-primary, #7c6cff) 14%, transparent);
+}
+.pm51-popout.o55-mgp-menu.is-described .pm51-menu-item > .icon svg { width: 15px; height: 15px; }
+.pm51-popout.o55-mgp-menu.is-described .pm51-popout-label { font-size: 12.5px; font-weight: 650; color: var(--text-primary, #f4f2ff); }
+.pm51-popout.o55-mgp-menu .pm51-popout-title { padding: 8px 12px 4px; }
+html[data-theme^="retro"] .pm51-popout.o55-mgp-menu.is-described .pm51-menu-item > .icon { border-radius: 0; }
+
+/* ---- a persona's own number ------------------------------------------------------------------------------------ */
+#panel-settings .o55-mgp-own { flex-wrap: wrap; row-gap: 4px; }
+#panel-settings .o55-mgp-tune { display: grid; gap: 4px; width: min(320px, 100%); min-width: 0; }
+#panel-settings .o55-mgp-tune-track { display: grid; grid-template-columns: auto minmax(90px, 1fr) auto; align-items: center; gap: 10px; }
+#panel-settings .o55-mgp-tune-end { font-size: 11.5px; color: var(--k3-text-3); white-space: nowrap; }
+#panel-settings .o55-mgp-tune input[type="range"] { width: 100%; min-width: 0; margin: 0; accent-color: var(--k3-accent); cursor: pointer; }
+#panel-settings .o55-mgp-tune input[type="range"]:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 3px; border-radius: 4px; }
+#panel-settings .o55-mgp-tune-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+#panel-settings .o55-mgp-tune-now { font-size: 12.5px; font-weight: 650; color: var(--k3-text-2); font-variant-numeric: tabular-nums; }
+
+/* ---- written notes ------------------------------------------------------------------------------------------- */
+#panel-settings .o55-scoped .setting-control .o55-mgp-doc { display: block; min-width: 0; max-width: 240px; margin: 0 0 6px; font-size: 12.5px; color: var(--k3-text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-settings .o55-mgp-doc.is-empty { color: var(--k3-text-3); }
+
+/* ---- tab leads ----------------------------------------------------------------------------------------------- */
+#panel-settings .o55-mgp-lead { display: flex; align-items: flex-start; gap: 8px; margin: 0; max-width: 72ch; font-size: 13px; line-height: 1.5; color: var(--k3-text-3); }
+#panel-settings .o55-mgp-lead .icon { flex: 0 0 auto; width: 15px; height: 15px; margin-top: 2px; color: var(--k3-accent); }
+#panel-settings .o55-mgp-lead b { font-weight: 650; color: var(--k3-text-2); }

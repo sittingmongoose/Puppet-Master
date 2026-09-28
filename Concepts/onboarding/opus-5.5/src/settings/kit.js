@@ -440,16 +440,34 @@ PM51.settingRows = (ids, { title, help, overrides = {}, cls, id: sectionId } = {
 };
 /* The engine's refreshSettingRow re-renders a row from the inventory alone; rows drawn through
    PM51.settingRows with a presentation override get their override back (managers that own the
-   row, like Back Seat Driver, still wrap this again for their stats). */
+   row, like Back Seat Driver, still wrap this again for their stats).
+   While the Details panel is open the engine re-rendered the whole of Settings instead (renderApp soft): the panel
+   was torn down and sprang back in over a fading scrim, which read as the screen flashing black on every change made
+   in it. Now only the row is swapped (focus stays on the control that was used), and the panel updates in place
+   (PM51.syncInspector, kit.d/30-inspector.js). A row in All Settings keeps its list bookkeeping attributes. */
 const pm51OriginalRefreshSettingRow = refreshSettingRow;
+const pm51FocusIndex = el => { const act = document.activeElement; if (!act || !el.contains(act)) return -1; return [...el.querySelectorAll('button, input, select, textarea, [tabindex]')].indexOf(act); };
+PM51.swapRow = (el, next) => {
+  if (!el || !next) return;
+  const at = pm51FocusIndex(el);
+  [...el.attributes].forEach(att => { if (att.name.startsWith('data-all-setting') && !next.hasAttribute(att.name)) next.setAttribute(att.name, att.value); });
+  el.replaceWith(next);
+  if (at >= 0) { const t = [...next.querySelectorAll('button, input, select, textarea, [tabindex]')][at]; if (t) { try { t.focus({ preventScroll: true }); } catch (e) { t.focus(); } } }
+};
 refreshSettingRow = function (id) {
   const override = pm51RowOverrides[id];
-  const el = override && root.querySelector(`#setting-${cssEscape(id)}`);
-  if (!override || !el || !el.closest('.pm51-setting-rows') || state.detailSetting === id || detailInspectorVisible) return pm51OriginalRefreshSettingRow.apply(this, arguments);
+  const el = root.querySelector(`#setting-${cssEscape(id)}`);
+  const inspecting = state.detailSetting === id || detailInspectorVisible;
+  const own = !!(override && el && el.closest('.pm51-setting-rows'));
+  if (!own && !inspecting) return pm51OriginalRefreshSettingRow.apply(this, arguments);
   saveState();
-  const tpl = document.createElement('template'); tpl.innerHTML = PM51.settingRows([id], { overrides: { [id]: override } });
-  const next = tpl.content.querySelector('.setting-row');
-  if (next) el.replaceWith(next); else pm51OriginalRefreshSettingRow.apply(this, arguments);
+  if (el) {
+    const found = own ? null : findSettingGlobal(id);
+    const tpl = document.createElement('template');
+    tpl.innerHTML = own ? PM51.settingRows([id], { overrides: { [id]: override } }) : (found ? renderSettingRow(found.setting, found.section, found.workspace) : '');
+    PM51.swapRow(el, tpl.content.querySelector('.setting-row'));
+  }
+  if (inspecting && PM51.syncInspector) PM51.syncInspector();
 };
 
 /* A programmatic `select.value = …; dispatchEvent(change)` must keep the trigger label in step. */

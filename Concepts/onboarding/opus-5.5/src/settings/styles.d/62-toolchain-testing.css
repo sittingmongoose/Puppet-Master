@@ -1,0 +1,32 @@
+/* Toolchain and Testing & Debug: the pieces their step-by-step helpers and Edit panels add to the shared kit.
+   - A program box: the path field with Browse and Check on one line, and the check's answer under it as a dot and
+     a word (never a capsule).
+   - File kinds (*.rs, *.ts …) are the kit's pick-several tiles in a wrapping row.
+   - Fields a card opens in place (a different tool, a path, your own command) sit a little below the cards.
+   Scoped to #panel-settings like every Settings style; the eight themes come through the kit's variables. */
+
+#panel-settings .tt-path { display: grid; gap: 6px; min-width: 0; }
+#panel-settings .tt-path[hidden], #panel-settings .tt-reveal[hidden] { display: none; }
+#panel-settings .tt-path-row { display: flex; align-items: stretch; gap: 8px; min-width: 0; }
+#panel-settings .tt-path-row > .tt-path-input { flex: 1 1 auto; min-width: 0; width: auto; }
+#panel-settings .tt-path-row > .btn { flex: 0 0 auto; align-self: center; }
+#panel-settings .o55g-win .o55g-layer .tt-path-row > .tt-path-input { width: auto; }
+#panel-settings .tt-path-result { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 2px 0 0; font-size: 12.5px; line-height: 1.45; color: var(--text-secondary); overflow-wrap: anywhere; }
+#panel-settings .tt-path-result[hidden] { display: none; }
+#panel-settings .tt-path-result > span:last-child { flex: 1 1 220px; min-width: 0; }
+#panel-settings .o55g-main > .tt-path, #panel-settings .o55g-main > .tt-reveal { margin-top: 4px; }
+
+#panel-settings .tt-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+#panel-settings .tt-chips .pm51-chip-toggle { min-height: 32px; font-family: var(--k3-mono, ui-monospace, monospace); font-size: 12.5px; }
+
+#panel-settings .tt-w-flags .pm51-rows { margin: 0; }
+#panel-settings .tt-w-flags .pm51-row { padding-left: 0; padding-right: 0; }
+
+/* the review step's summary reads as a plain two-column list in the helper */
+#panel-settings .o55g-win .o55g-main > .pm51-kv { padding: 4px 16px; border: 1px solid var(--g-line, var(--k3-line)); border-radius: var(--g-card-r, 10px); background: var(--g-card-bg, transparent); }
+html[data-theme^="friendly"] #panel-settings .o55g-win .o55g-main > .pm51-kv { border-width: 2px; }
+
+@media (max-width: 720px) {
+  #panel-settings .tt-path-row { flex-wrap: wrap; }
+  #panel-settings .tt-path-row > .tt-path-input { flex-basis: 100%; }
+}

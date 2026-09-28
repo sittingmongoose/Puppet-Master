@@ -1,15 +1,19 @@
 {
- "_about": "Personas & Crews rows (settings audit, 2026-09-27).",
+ "_about": "Personas & Crews rows (settings audit, 2026-09-27). Rows that belong to one persona carry `per: persona`: outside the persona (All Project Settings, Details) they point at the personas and list what each one has, instead of drawing one control that seems to change every persona. The chat rows read as what new chats start with (review, 2026-09-27).",
  "rows": {
   "personas.library.persona-id": {
    "label": "Short id",
-   "help": "Lowercase with dashes; used in files and automation."
+   "help": "Lowercase with dashes; used in files and automation.",
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.library.persona-aliases": {
    "label": "Other names it answers to",
    "help": "So 'ask the prof' reaches your teacher persona.",
    "noun": "name",
-   "placeholder": "For example: prof, the teacher"
+   "placeholder": "For example: prof, the teacher",
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.library.persona-tags": {
    "label": "Tags",
@@ -38,7 +42,9 @@
     "domain",
     "framework",
     "freeform"
-   ]
+   ],
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.library.default-persona": {
    "label": "Default persona",
@@ -46,18 +52,20 @@
    "choices": []
   },
   "personas.library.active-persona": {
-   "label": "This chat's persona",
-   "help": "Change it from the chat, or just ask for someone else.",
+   "label": "Persona in one chat",
+   "help": "Each chat shows who is answering in its persona chip; change it there for that chat only.",
    "choices": [],
    "control": "status",
-   "tone": "neutral"
+   "tone": "neutral",
+   "readout": "Set in each chat"
   },
   "personas.library.lock-persona": {
-   "label": "Keep one persona for the whole chat"
+   "label": "Keep one persona for a whole chat",
+   "help": "New chats stay with the persona they start with. A chat's own menu can change this for that chat."
   },
   "personas.library.ask-by-name": {
    "label": "Switch by asking",
-   "help": "Say 'let the researcher handle this' in chat.",
+   "help": "In any chat, say 'let the researcher handle this'.",
    "control": "status",
    "tone": "neutral",
    "empty": "Try: \"let the researcher handle this\""
@@ -103,28 +111,41 @@
     "never": "Never",
     "auto": "When it helps",
     "always": "Whenever it can"
-   }
+   },
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tools.preferred-tools": {
    "label": "Tools it prefers",
-   "choices": []
+   "choices": [],
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tools.discouraged-tools": {
    "label": "Tools it avoids",
    "help": "A nudge, not a ban. Use permissions to block a tool.",
-   "choices": []
+   "choices": [],
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tools.tool-guidance": {
    "label": "Notes on using tools",
-   "empty": "None"
+   "empty": "None",
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas.",
+   "help": "When and how it should reach for its tools, in plain sentences."
   },
   "personas.tools.system-prompt": {
    "label": "Instructions",
-   "help": "The standing instructions it works from."
+   "help": "The standing instructions it works from.",
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tools.default-skills": {
    "label": "Skills it carries",
-   "choices": []
+   "choices": [],
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tools.permission-profile": {
    "label": "What it may do without asking",
@@ -133,11 +154,15 @@
    },
    "choices": [
     "inherit"
-   ]
+   ],
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tools.disabled-plugins": {
    "label": "Plugins it ignores",
-   "choices": []
+   "choices": [],
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tuning.default-platform": {
    "label": "Preferred AI service",
@@ -146,7 +171,9 @@
    },
    "choices": [
     "inherit"
-   ]
+   ],
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tuning.default-model": {
    "label": "Preferred model",
@@ -155,7 +182,9 @@
    },
    "choices": [
     "inherit"
-   ]
+   ],
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tuning.default-variant": {
    "label": "Faster or smarter edition",
@@ -163,7 +192,9 @@
     "inherit": "Same as the project",
     "fast": "Faster",
     "powerful": "Smarter"
-   }
+   },
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tuning.reasoning-effort": {
    "label": "Thinking effort",
@@ -173,7 +204,9 @@
     "low": "Low",
     "medium": "Medium",
     "high": "High"
-   }
+   },
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tuning.cost-budget": {
    "label": "Spending cap",
@@ -182,27 +215,29 @@
    "min": 0,
    "step": 0.5,
    "placeholder": "No cap",
-   "zero": "No cap"
+   "zero": "No cap",
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tuning.temperature": {
    "label": "Creativity",
    "help": "Higher is more inventive, less predictable.",
-   "control": "number",
    "min": 0,
    "max": 2,
    "step": 0.1,
-   "placeholder": "Same as the project",
-   "empty": "Same as the project"
+   "empty": "Same as the project",
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tuning.top-p": {
    "label": "Word choice range",
-   "help": "Rarely needed; it stacks with Creativity.",
-   "control": "number",
-   "min": 0,
+   "help": "How far it looks past the likeliest words. Rarely needed; it stacks with Creativity.",
+   "min": 0.05,
    "max": 1,
    "step": 0.05,
-   "placeholder": "Same as the project",
-   "empty": "Same as the project"
+   "empty": "Same as the project",
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tuning.response-style": {
    "label": "Answer style",
@@ -210,7 +245,9 @@
     "concise": "Short and to the point",
     "balanced": "Balanced",
     "detailed": "Thorough"
-   }
+   },
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tuning.verbosity": {
    "label": "Answer length",
@@ -219,7 +256,9 @@
     "terse": "Short",
     "normal": "Normal",
     "verbose": "Long"
-   }
+   },
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tuning.talkativeness": {
    "label": "Chatter while working",
@@ -240,7 +279,9 @@
     "markdown": "Formatted text",
     "json": "Data (JSON)",
     "plain_text": "Plain text"
-   }
+   },
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.tuning.default-mode": {
    "label": "Starts by",
@@ -250,7 +291,9 @@
     "plan": "Planning first",
     "regular": "Getting on with it",
     "yolo": "Working without asking"
-   }
+   },
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "branching.crew.crew-enabled": {
    "label": "Use crews",
@@ -687,11 +730,15 @@
   },
   "personas.library.persona-name": {
    "label": "Name",
-   "help": "Shown in pickers and in chat."
+   "help": "Shown in pickers and in chat.",
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
   "personas.library.persona-description": {
    "label": "What it is for",
-   "help": "One line. It also helps automatic picking."
+   "help": "One line. It also helps automatic picking.",
+   "per": "persona",
+   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   }
  }
 }
