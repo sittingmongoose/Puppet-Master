@@ -4,5 +4,13 @@
   "execution_phase_terminal_seconds": 41.32252502441406,
   "scope": "Post-check explanation and bundle preparation; Git push completion follows.",
   "pre_execution_orchestration_seconds": 464.2463662624359,
-  "pre_execution_orchestration_basis": "Native Codex goal created_epoch1790624845; includes source inspection and one-use operator/audit construction, not candidate usage."
+  "pre_execution_orchestration_basis": "Native Codex goal created_epoch1790624845; includes source inspection and one-use operator/audit construction, not candidate usage.",
+  "first_push_confirmation": {
+    "push_observed_complete_epoch": 1790625707.8557117,
+    "seconds_since_execution_phase_start": 398.60934591293335,
+    "execution_check_seconds": 41.32252502441406,
+    "commit": "39c919c0cf1e53779cc190cf7b5895a5a2933a83"
+  },
+  "authorization_goal_to_first_push_confirmation_seconds": 862.8557116985321,
+  "scope_limit": "Execution/staging/closure/automatic audit completed in41.323s. GitHub publication was confirmed398.609s after run-clock start; actual earlier push finish is unmeasured. Completion of the broader workflow including publication within390s is not established. Source inspection/operator construction before the run clock is also reported separately, not hidden in native usage."
 }
