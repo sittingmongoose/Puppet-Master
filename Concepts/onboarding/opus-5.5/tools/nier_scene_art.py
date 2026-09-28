@@ -1041,8 +1041,199 @@ def desert() -> Scene:
     sc.s(shrub, w=.75)
     return sc
 
+# =====================================================================================================================
+# Forest Castle: a castle of pointed towers on a rocky hill, a viaduct to its gate, rising out of a deep forest.
+# =====================================================================================================================
+def canopy_band(x0, x1, base, rng, r=(10, 22), lift=0.0, wave=(0, 0, 0), big=.18):
+    """The top edge of a forest seen from above: overlapping crowns as bumps of mixed sizes along an undulating line
+    (now and then a big clump). Returns the edge path, the bumps [(cx, top, r)] and the edge points."""
+    amp, freq, ph = wave
+    by = lambda xx: base + amp * math.sin(xx * freq + ph)
+    x = x0
+    out = f'M{n(x0)} {n(by(x0))}'
+    bumps, edge = [], [(x0, by(x0))]
+    while x < x1:
+        rr = rng.uniform(*r) * (rng.uniform(1.5, 2.1) if rng.random() < big else 1)
+        nx = min(x + rr * 2 * rng.uniform(.7, 1.0), x1)
+        y0, y1 = by(x) + rng.uniform(-3, 5), by(nx) + rng.uniform(-3, 5)
+        h = rr * rng.uniform(.75, 1.2) + lift
+        top = min(y0, y1) - h
+        # the crown's rim as a few small leafy scallops round a half ellipse
+        ecx, ecy, erx, ery = (x + nx) / 2, max(y0, y1), (nx - x) / 2, max(y0, y1) - top
+        k = 3 if rr < 14 else 4 if rr < 24 else 5
+        ang = [180 + 180 * i / k + (rng.uniform(-8, 8) if 0 < i < k else 0) for i in range(k + 1)]
+        ps = [(ecx + erx * math.cos(math.radians(a_)), ecy + ery * math.sin(math.radians(a_))) for a_ in ang]
+        ps[0], ps[-1] = (x, y0), (nx, y1)
+        for (ax, ay), (bx, by_), a_ in zip(ps, ps[1:], ang[1:]):
+            mx, my = (ax + bx) / 2, (ay + by_) / 2
+            am = math.radians(a_ - 90 / k)
+            bl = math.hypot(bx - ax, by_ - ay) * rng.uniform(.28, .5)
+            out += f'Q{n(mx + math.cos(am) * bl)} {n(my + math.sin(am) * bl * 1.1)} {n(bx)} {n(by_)}'
+        bumps.append(((x + nx) / 2, top + h * .05, rr))
+        edge += [((x + nx) / 2, top), (nx, y1)]
+        x = nx
+    return out, bumps, edge
 
-SCENES = {'city': city, 'bunker': bunker, 'desert': desert}
+
+def crown_marks(bumps, rng, keep=.55, n_=3):
+    """Shade on the lee of each crown: a few short slanted strokes low on its right side."""
+    out = ''
+    for cx_, top, rr in bumps:
+        if rng.random() > keep:
+            continue
+        for j in range(n_):
+            x = cx_ + rr * (.05 + .22 * j)
+            y = top + rr * (.75 + .15 * j) + rng.uniform(-1, 1)
+            L = rr * rng.uniform(.35, .55)
+            out += f'M{n(x)} {n(y)}l{n(-L * .45)} {n(L)}'
+    return out
+
+
+def pine(x, g, h, rng, solid=False):
+    """A conifer: a narrow spire of drooping tiers."""
+    tiers = max(4, int(h / 11))
+    pts_l, pts_r = [], []
+    for i in range(tiers + 1):
+        t = i / tiers
+        y = g - h + h * t
+        w = 2 + h * .2 * t
+        pts_l.append((x - w, y + (5 if i else 0)))
+        pts_r.append((x + w, y + (5 if i else 0)))
+        if i < tiers:
+            yn = g - h + h * (i + 1) / tiers
+            wn = (2 + h * .2 * (i + 1) / tiers) * .55
+            pts_l.append((x - wn, yn))
+            pts_r.append((x + wn, yn))
+    shape = [(x, g - h - 6)] + pts_r + list(reversed(pts_l))
+    return poly(shape)
+
+
+def interp(ps, x):
+    """y on a polyline at x (clamped at its ends)."""
+    if x <= ps[0][0]:
+        return ps[0][1]
+    for (x0, y0), (x1, y1) in zip(ps, ps[1:]):
+        if x0 <= x <= x1:
+            return y0 + (y1 - y0) * (x - x0) / ((x1 - x0) or 1)
+    return ps[-1][1]
+
+
+def forest() -> Scene:
+    sc = Scene('forest', 'Forest Castle')
+    rng = random.Random(2525)
+    # a pale moon; crows wheeling round the high tower
+    sc.s('M1382 112a30 30 0 1 0 24 48a24 24 0 1 1 -24 -48Z', w=.9, op=.75)
+    sc.s(birds([(1110, 64), (1136, 52), (1162, 70), (1236, 96), (1256, 88)], rng, size=5), w=.85)
+
+    # the far forest, rising in soft hills on either side, faint
+    far, fb, fe = canopy_band(-20, 1640, 404, rng, r=(7, 14), wave=(24, .006, 1.1), big=.1)
+    sc.k(poly([(222, 400), (222, 316), (230, 310), (236, 322), (244, 304), (252, 318), (258, 312), (258, 396)]) + 'M231 346v-10a3 3 0 0 1 6 0v10Z', w=.75, op=.55)
+    sc.k(far + 'L1640 600L-20 600Z', w=.75, op=.55)
+    sc.s(crown_marks(fb, rng, .3, 2), w=.5, op=.4)
+
+    # the crag: an uneven rock mass, a sheer cliff on its right
+    crag = [(760, 480), (800, 440), (832, 420), (858, 396), (884, 384), (930, 378), (962, 366), (1010, 362), (1060, 360),
+            (1150, 356), (1210, 352), (1262, 350), (1300, 348), (1318, 356), (1326, 392), (1340, 418), (1360, 432),
+            (1400, 446), (1450, 470), (1500, 490)]
+    sc.k(poly(crag + [(1500, 600), (760, 600)]))
+    rock = ''
+    for x0 in range(800, 1470, 22):
+        yy = interp(crag, x0) + rng.uniform(10, 24)
+        rock += f'M{n(x0)} {n(yy)}l{n(rng.uniform(-5, 5))} {n(rng.uniform(12, 26))}l{n(rng.uniform(3, 9))} {n(rng.uniform(6, 12))}'
+    sc.s(rock, w=.7, op=.75)
+    sc.s(hatch([(1300, 350), (1318, 356), (1326, 392), (1340, 418), (1360, 432), (1360, 480), (1300, 480)], 96, 3.4, rng, keep=.9, inset=1.5), w=.55, op=.7)
+
+    # the stone bridge to the gate, on round arches
+    deck = lambda x: 402 - (x - 540) * .06
+    br = poly([(548, deck(548) - 12), (884, deck(884) - 12), (884, deck(884) + 6), (560, deck(560) + 6), (553, deck(553) + 1), (556, deck(556) - 4), (544, deck(544) - 6)])
+    piers, arches = '', ''
+    xs = [650, 744, 838]
+    for i, px in enumerate(xs):
+        piers += poly([(px - 9, deck(px) + 6), (px + 9, deck(px) + 6), (px + 11, 540), (px - 11, 540)])
+        if i < len(xs) - 1:
+            qx = xs[i + 1]
+            r_ = (qx - px - 18) / 2
+            arches += f'M{n(px + 9)} {n(deck(px) + 30)}a{n(r_)} {n(r_ * .9)} 0 0 1 {n(2 * r_)} 0'
+    sc.k(piers, w=.9)
+    sc.k(br)
+    sc.s(arches + ''.join(line(x, deck(x) - 12, x, deck(x) - 18) for x in range(558, 884, 12)) + line(556, deck(556) - 18, 884, deck(884) - 18)
+         + line(552, deck(552) - 3, 884, deck(884) - 3) + f'M{n(572)} {n(deck(572) + 30)}a{n(29)} {n(26)} 0 0 1 {n(69)} 0'
+         + rebar(556, deck(556) + 6, rng, 3, 12), w=.7, op=.85)
+    sc.s('M548 420l-6 10l5 2ZM536 448l-5 8l6 1Z', w=.7, op=.8)
+
+    # the castle: a barbican, a curtain wall, the great hall with its buttresses and rose window, the high keep,
+    # a tower broken open to the sky
+    body, detail, dark, roofs, roofh = '', '', '', '', ''
+
+    def gothic(x, y, w, h):
+        return f'M{n(x)} {n(y + h)}v{n(-h + w)}q0 {n(-w * .9)} {n(w / 2)} {n(-w * 1.4)}q{n(w / 2)} {n(w * .5)} {n(w / 2)} {n(w * 1.4)}v{n(h - w)}Z'
+
+    def spire(x, w, top, rh, finial=True):
+        nonlocal roofs, roofh
+        roofs += poly([(x - 4, top), (x + w / 2, top - rh), (x + w + 4, top)])
+        roofh += hatch([(x + w / 2, top - rh), (x + w + 4, top), (x + w / 2 + 1, top)], 98, 3.2, rng, inset=1)
+        if finial:
+            roofs += f'M{n(x + w / 2)} {n(top - rh)}v-12'
+    # barbican
+    body += poly([(884, 386), (884, 256), (918, 256), (918, 380)])
+    spire(884, 34, 256, 84)
+    detail += hline(884, 264, 34)
+    dark += gothic(897, 300, 8, 22) + gothic(897, 336, 8, 20)
+    # curtain wall
+    wall = [(918, 378), (918, 322)]
+    x = 918
+    while x < 1004:
+        wall += [(x, 316), (x + 7, 316), (x + 7, 322), (min(x + 14, 1004), 322)]
+        x += 14
+    wall += [(1004, 316), (1004, 364)]
+    body += poly(wall)
+    # the great hall
+    body += poly([(1004, 364), (1004, 236), (1150, 236), (1150, 356)])
+    roofs += poly([(996, 236), (1077, 164), (1158, 236)])
+    roofh += hatch([(1077, 164), (1158, 236), (1080, 236)], 98, 3.6, rng, inset=1)
+    dark += circle_path(1077, 212, 9) + ''.join(gothic(1016 + i * 32, 262, 9, 40) for i in range(5) if i != 2) + gothic(1066, 300, 22, 64)
+    detail += circle_path(1077, 212, 14) + hline(1004, 244, 146) + hline(1004, 318, 146)
+    for bx in (1004, 1150):
+        sgn = -1 if bx == 1004 else 1
+        detail += line(bx, 270, bx + sgn * 26, 330) + line(bx + sgn * 26, 330, bx + sgn * 26, 366) + line(bx + sgn * 20, 318, bx + sgn * 32, 318)
+    # the high keep, a tattered banner hanging from it
+    body += poly([(1158, 354), (1158, 138), (1200, 138), (1200, 352)])
+    spire(1154, 50, 138, 96)
+    detail += hline(1154, 146, 50) + hline(1154, 150, 50) + poly([(1150, 196), (1208, 196), (1208, 204), (1150, 204)])
+    dark += gothic(1173, 162, 12, 24) + gothic(1174, 224, 10, 30) + gothic(1174, 282, 10, 30)
+    detail += 'M1204 212h10v52l-4 -8l-3 10l-3 -6Z'
+    # the broken tower
+    body += poly([(1232, 350), (1232, 228), (1240, 222), (1246, 236), (1254, 214), (1262, 232), (1270, 226), (1270, 348)])
+    dark += gothic(1245, 262, 10, 26)
+    # the wall to the cliff's edge
+    body += poly([(1270, 348), (1270, 318), (1306, 318), (1306, 348)])
+    sc.k(body)
+    sc.s(detail, w=.7, op=.85)
+    sc.f(dark)
+    sc.k(roofs)
+    sc.s(roofh, w=.55, op=.75)
+    sc.s(hatch([(1188, 352), (1200, 352), (1200, 154), (1188, 154)], 90, 3.2, rng, inset=1) +
+         hatch([(1136, 356), (1150, 356), (1150, 248), (1136, 248)], 90, 3.4, rng, inset=1) +
+         hatch([(906, 380), (918, 380), (918, 268), (906, 268)], 90, 3.4, rng, inset=1), w=.55, op=.7)
+    hang_vines(sc, rng, [(924, 324), (960, 324), (1010, 246), (1140, 246), (1162, 154), (1236, 232), (1264, 234), (1290, 320)], (24, 90), sway=(2, 5))
+
+    # the mid forest closing round the crag's foot, pines standing out of it
+    pines = ''
+    for px, ph_ in ((110, 120), (160, 92), (404, 142), (452, 102), (1488, 132), (1534, 156), (1586, 108), (700, 100)):
+        pines += pine(px, 474, ph_, rng)
+    sc.k(pines, w=.9)
+    mid, mb, me = canopy_band(-20, 1640, 474, rng, r=(10, 20), wave=(12, .011, .3))
+    sc.k(mid + 'L1640 600L-20 600Z')
+    sc.s(crown_marks(mb, rng, .6, 3), w=.6, op=.7)
+
+    # the near forest: big clumps, the dark under them
+    near, nb, ne = canopy_band(-20, 1640, 534, rng, r=(15, 30), wave=(9, .017, 2), big=.25)
+    sc.k(near + 'L1640 600L-20 600Z', w=1.05)
+    sc.s(crown_marks(nb, rng, .85, 4), w=.65, op=.85)
+    return sc
+
+
+SCENES = {'city': city, 'bunker': bunker, 'desert': desert, 'forest': forest}
 
 
 def main(argv=None) -> int:
