@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6020,
+      "line_count": 6021,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "5f053eeb354849486f4cf4dcd83c2317628d7d2b0a59ea8fa14b43f2eb23b04e",
+      "sha256": "004561ba95363bab18115f41167eebec5ff4425108bc1905dd314146e87e1fc3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -16565,13 +16565,15 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 1,
-        "True": 39
+        "True": 40
       },
       "heading_count": 88,
       "implementation_surfaces": [
         "Concepts/PMConcept7.html",
         "Concepts/onboarding/opus-5.5/src/settings/kit.d",
         "Concepts/onboarding/opus-5.5/src/settings/kit.d/17-look.js",
+        "Concepts/onboarding/opus-5.5/src/settings/kit.d/60-wizard.js",
+        "Concepts/onboarding/opus-5.5/src/settings/managers",
         "Concepts/onboarding/opus-5.5/src/settings/o55/placement.d",
         "Concepts/onboarding/opus-5.5/src/settings/o55/rows.d",
         "Concepts/onboarding/opus-5.5/src/settings/styles.d/12-look.css",
@@ -16628,9 +16630,9 @@
         "future native Slint Plugins manager projection",
         "future typed Settings owner projections"
       ],
-      "line_count": 2645,
+      "line_count": 2714,
       "path": "Plans/Settings_System.md",
-      "plan_unit_count": 40,
+      "plan_unit_count": 41,
       "plan_unit_ids": [
         "SSYS-001",
         "SSYS-002",
@@ -16671,7 +16673,8 @@
         "SSYS-037",
         "SSYS-038",
         "SSYS-039",
-        "SSYS-040"
+        "SSYS-040",
+        "SSYS-041"
       ],
       "reasoning_tiers": [
         "high",
@@ -16700,6 +16703,7 @@
         "settings_identity_drift_or_optimistic_persistence",
         "settings_information_architecture_or_duplicate_control_drift",
         "settings_inventory_or_denominator_drift",
+        "settings_live_work_or_guided_setup_drift",
         "settings_manager_registry_or_dry_projection_drift",
         "settings_onboarding_doctor_false_readiness",
         "settings_ownership_drift",
@@ -16720,10 +16724,10 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "8542d896ad8f9a7b3e88f4fc7cf26fb76f97e1c2e2ab1aa937e59de1620f48c3",
+      "sha256": "079bb3415691dd5da23b56f60de50e779e10d6a80ee4f24e73d726fa672a752e",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 40
+        "accepted": 41
       },
       "title": "Settings System",
       "unit_type_counts": {
@@ -16731,7 +16735,7 @@
         "contract": 5,
         "integration_contract": 4,
         "owner_boundary": 4,
-        "requirement": 23,
+        "requirement": 24,
         "schema_contract": 1,
         "security_constraint": 1,
         "validation": 1
@@ -20172,7 +20176,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-28T05:28:46Z",
+  "generated_at_utc": "2026-09-28T05:35:31Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20181,12 +20185,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3551,
-      "True": 3220
+      "True": 3221
     },
-    "plan_unit_count": 6771,
+    "plan_unit_count": 6772,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6580,
+      "accepted": 6581,
       "retired": 182,
       "superseded": 9
     },
@@ -20253,7 +20257,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5306,
+      "requirement": 5307,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

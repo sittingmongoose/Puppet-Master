@@ -2376,8 +2376,8 @@ The former 20-row Plan depth & questions group and 26-row Terminal & shell group
 | Skills; Plugins; MCP Servers | The list first, owning its search, Show, Sort, add, remove and per-item switches; then Skills: How skills are used, New skills, Share with other AI tools (More options: Size and display); Plugins: New plugins and updates, Limits and safety; MCP Servers: Servers from other apps, Connection defaults (More options: Refresh and secrets, What each server ended up with) |
 | Commands & Shortcuts | Shortcuts (one shortcut list in three groups, everywhere, in the message box and in the terminal, with clashes checked across all three; shortcut hints, with clash display on CS-081's warn policy; More options: Reset and back up); Commands (Safety; Your commands; More options: Defaults for new commands, Built-in names) |
 | Testing & Debug | Profiles (Running sessions); When to test (the one switch for all automated testing; Before merging); What it can test, was Browser & Native (Browser testing; Desktop and mobile apps; Behind the scenes; More options: Test tools and windows); Debug (Debug profiles; What debugging may do on its own; More options: Debug loop limits); History (Keeping proof) |
-| Context & Memory | Memories (the on/off switch heading the list); Context space (Context in use; When space runs low; Working notebook; More options: Fine-tune context space); Instructions (Standing instructions; What you can see; Rule packs; More options: Prompt safety checks); Finding memories (When memories are used; How memories are matched); Keeping & privacy (How long memories last; Unconfirmed notes; Who else can read memories; More options: Tidy up); Sources |
-| Goals | Templates (kind of job set per template); Active Goals (Progress view; Receipt earned); Defaults (New Goals start with; Keeping an eye on progress; Scheduled runs); Recovery (If something interrupts; Changing the plan; When a check fails); Checks (Before a Goal is called done; Goal evidence; More options: Stricter proof) |
+| Context & Memory | Memories (the on/off switch heading the list); Context space (In chats; When space runs low; Working notebook; More options: Fine-tune context space, and In one chat, which only says that Squeeze now is in each chat's own menu); Instructions (Standing instructions; What you can see; Rule packs; More options: Prompt safety checks); Finding memories (When memories are used; How memories are matched); Keeping & privacy (How long memories last; Unconfirmed notes; Who else can read memories; More options: Tidy up); Sources |
+| Goals | Defaults, shown first (New Goals start with; Keeping an eye on progress; Scheduled runs; Progress view); Templates (kind of job set per template); Recovery (If something interrupts; Changing the plan; When a check fails); Checks (Before a Goal is called done; Goal evidence, with the receipt a finished Goal earns shown as a read-only line; More options: Stricter proof); no Active Goals tab |
 | Personas | Personas (Your personas; inside the selected persona: About this persona, How it answers, Model and cost, Tools and instructions; More options: Skipped settings); Crews (Crews; New crews start with; Crew Auto); Group work (BrainStorm: who takes part; BrainStorm: debate and vote; Review; Chat Room); Helpers (Helper agents; Which helpers; Keeping helpers safe; More options: Limits for all agents, Helper contracts); Defaults (Choosing a persona; In a chat) |
 | Back Seat Driver | Overview (one Advisor group; More options: Expert options); Stages (Where the advisor watches); Findings |
 | Source Control | Code Services (each service connected through a guided set-up; GitHub sign-in inside GitHub; push access by SSH key or HTTPS token); Local Tools; Repositories (Create a new repository; Contribute to another project; Workspaces for chats; Before and after each run; More options: Workspace storage); Defaults & Safety (Git on this server: the name and email on changes, how Git signs in and signing changes, set up by Set up Git; Files that need care: big files and files never saved in history; How runs use version history; Safety, with protected branches as an editable list; Recovery; More options: Source Control panel); Actions & Pipelines (Pinned workflows; Keeping checks current) |
@@ -2510,6 +2510,14 @@ that would reach an outside computer or service says so and, in the concept, is 
 - Source Control connects each code service through a guided set-up, sets up push access with a shared SSH key or an
   HTTPS token, and sets up Git on this server (the name and email on changes, signing, big files and files never
   saved in history); protected branches are an editable list.
+- Settings sets defaults and does no live work: no view shows, starts, pauses or stops a live chat or Goal. Goals are
+  started in the assistant chat or by the Planning Wizard, so Goals in Settings holds the defaults every new Goal
+  starts with, templates (which can be created, edited, duplicated, exported and deleted) and the recovery and check
+  rules; memories kept for one chat read One chat and a new memory is kept for the project or for you; one chat's own
+  actions, such as Squeeze now, live in that chat's menu.
+- A persona's tuning rows (Creativity, Word choice range, Spending cap) read Same as the project until the persona
+  sets its own value, which is then set with a slider or amount that can go back to the project's; a persona-only row
+  drawn outside its persona is a way to the personas (section 8), reading Set in each persona.
 - The Git name and email, commit signing, Git's sign-in method and key, the big-file threshold and file types, default
   ignore patterns, protected-branch patterns, the SSH key list and each server's sign-in are concept-stage proposals
   without inventory ids until admitted, in the sense of section 19.
@@ -2643,3 +2651,64 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/FinalGUISpec.md#F3-426
+
+```yaml
+plan_unit_id: SSYS-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  Settings sets defaults and runs guided set-ups; it does no live work. No Settings view shows, starts, pauses or
+  stops a live chat or Goal: Goals start in the assistant chat or the Planning Wizard, Goals in Settings holds new-Goal
+  defaults, templates, recovery and check rules, and one chat's own actions live in that chat's menu. Every set-up
+  listed in the presentation section's owner-routes subsection runs in the onboarding wizard's form and ends with its
+  result shown where it was started, changeable and removable. A permission profile carries its four answers and its
+  own rules, which form the profile layer above the project's rules and win rule by rule; built-in profiles change
+  only through a copy. SSH keys are one shared list that servers, SSH computers and Git's sign-in attach from, never
+  showing or moving a private half. Settings Transfer previews every change in plain labels and values and never
+  moves passwords, keys, sign-ins or device pairings.
+gui_related: true
+gui_classification_reason: Governs which Settings views may act on live work and how every guided set-up, permission profile, SSH key and transfer is presented.
+split_recommended: false
+depends_on: [SSYS-013, SSYS-039]
+unblocks: []
+acceptance_criteria:
+  - No Settings view lists, starts, pauses or stops a live chat or Goal, and no Settings row reads "this thread" or "this chat".
+  - Each listed guided set-up reaches its end in the wizard form and leaves its result on the page it started from, with a way to change or remove it.
+  - A permission profile shows its four answers and its own rules; a rule can move between a profile and the project; the profile's rule wins where both cover an action; a built-in profile's answers change only through Make a copy.
+  - Servers, SSH computers and Git's sign-in attach keys from one SSH key list, and no private key half is rendered.
+  - The transfer preview shows each changing setting by its plain label with plain before and after values, and lists what is never copied.
+validation_surfaces:
+  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
+  - python3 scripts/pm-plan-index.py validate
+risk_class: settings_live_work_or_guided_setup_drift
+reasoning_tier: standard
+context_scope: settings_manager_presentation
+implementation_surfaces:
+  - Plans/Settings_System.md
+  - Concepts/onboarding/opus-5.5/src/settings/managers
+  - Concepts/onboarding/opus-5.5/src/settings/kit.d/60-wizard.js
+node_compile_hint:
+  mode: settings_manager_specification
+  create_worknodes: false
+source_lineage:
+  - Concepts/onboarding/opus-5.5/src/settings/managers/31-goals.js
+  - Concepts/onboarding/opus-5.5/src/settings/managers/50-servers.js
+  - Concepts/onboarding/opus-5.5/src/settings/managers/52-permissions.js
+  - Concepts/onboarding/opus-5.5/src/settings/managers/53-transfer.js
+  - Plans/Permissions_System.md#PRECEDENCE-LAYERS
+preserved_exact_tokens:
+  - "Make a copy"
+  - "Same as the project"
+  - "One chat"
+negative_constraints:
+  - Do not start, pause, stop or list live Goals or chats from Settings.
+  - Do not let a built-in permission profile's answers be edited in place.
+  - Do not render or transfer a private key half, password, sign-in or device pairing.
+  - Do not treat concept fixtures, Example only steps or wizard results as runtime evidence.
+owner_hints:
+  - Plans/Settings_System.md
+  - Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-039, ContractName:Plans/Permissions_System.md#PRECEDENCE-LAYERS
