@@ -1,0 +1,83 @@
+{
+  "copied_sources": {
+    "current.md": {
+      "bytes": 21568,
+      "copied_bytes_unchanged": true,
+      "published_is_symlink": false,
+      "sha256": "acc0db280d0b20ff320c5dff2119da54565d74989e204f43d5572dfda2fcb2f7",
+      "source_is_symlink": false,
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-control/host-rendered/current.md"
+    },
+    "metrics.json": {
+      "bytes": 6279,
+      "copied_bytes_unchanged": true,
+      "published_is_symlink": false,
+      "sha256": "26bca3b5b6447f79700a6e81d47e34d4126f83ce011684716e32b6f95935d6ba",
+      "source_is_symlink": false,
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/evidence/I1-Z-control/mechanical-metrics.json"
+    },
+    "receipt.json": {
+      "bytes": 586,
+      "copied_bytes_unchanged": true,
+      "published_is_symlink": false,
+      "sha256": "4add269abfb91aef7d583bd48b44c171cd31db9e011f926e7783f74b698dc4b1",
+      "source_is_symlink": false,
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-control/arm-receipt.json"
+    },
+    "render.json": {
+      "bytes": 409,
+      "copied_bytes_unchanged": true,
+      "published_is_symlink": false,
+      "sha256": "9d2c269b9c0c9f0861efc0705821a52eb428b72e35e0e1c5e4fffd8259c2031f",
+      "source_is_symlink": false,
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-control/host-render-record.json"
+    }
+  },
+  "schema": "external-research.i1-slot-evidence.v1",
+  "scope": "Exact compact report copies and VM evidence pointers only; no raw logs, acquisition trace contents, corpus, keys, snapshots, carrier or runtime workspace copied.",
+  "slot": "I1-Z-control",
+  "vm_only_evidence": {
+    "acquisition_write_trace": {
+      "bytes": 271769,
+      "content_published": false,
+      "sha256": "783376d41e54aa4539bc7a98ab7c838c0a5502ed6b04403bfc151140d2094287",
+      "source_is_symlink": false,
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/evidence/I1-Z-control/acquisition-write-trace.jsonl"
+    },
+    "frozen_manifest": {
+      "bytes": 560,
+      "content_published": false,
+      "sha256": "2e3728f353189109da379a2e75e6ff2f0c2b1beac1757427105c074a8aa25cd0",
+      "source_is_symlink": false,
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-control/frozen-manifest.json"
+    },
+    "input_manifest": {
+      "bytes": 17421,
+      "content_published": false,
+      "sha256": "9d7ce4663eeddce87b2de3a46d83cd411ecad76c177a84420dd6d80552dc5fc9",
+      "source_is_symlink": false,
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-control/input-manifest.json"
+    },
+    "native_model_io_log": {
+      "bytes": 14321541,
+      "content_published": false,
+      "sha256": "680b6f4f153724269de126677d4bbf38db38d552e1be6d585776d0c50b850f34",
+      "source_is_symlink": false,
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-control/native/zcode-model-io.jsonl"
+    },
+    "native_receipt": {
+      "bytes": 2530,
+      "content_published": false,
+      "sha256": "dbfdac4422eea016b0743e7b14f36caffd0a82795c75e8a28afe10bed3469ca0",
+      "source_is_symlink": false,
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-control/native/receipt.json"
+    },
+    "native_stdout_log": {
+      "bytes": 168648566,
+      "content_published": false,
+      "sha256": "52e4345421b3b79a3aca602dc151e4cec0fe6ee8859932716ef404d7f1acc8d7",
+      "source_is_symlink": false,
+      "vm_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-control/native/zcode-stdout.jsonl"
+    }
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "limitations": [
+    "Tool audit counts explicit logged tool calls; it does not establish semantic acquisition or source relevance.",
+    "Trace-log attempt counts are host-trace observations and may differ from native response counts.",
+    "No unsaved revisions reconstructed; exact call argument strings and result text only."
+  ],
+  "muse_trace": {
+    "attempts_terminal_children": 43,
+    "attempts_terminal_other": 0,
+    "attempts_terminal_parent": 45,
+    "child_models": {
+      "muse-spark-1.3-contributor": 43
+    },
+    "parent_run_ids": 1,
+    "reminder_child_sessions": 43,
+    "terminal_outcomes": {
+      "completed": 1,
+      "tool_calls": 87
+    },
+    "trace_logs": [
+      {
+        "path": "/home/sittingmongoose/.local/share/muse/local-tracing/bootstrap/cli-a4118b53-8a24-4e6a-a83d-1c1788e92ddc.log",
+        "sha256": "18a697ecea8234775bd4cfcf9bec6401e6f0115e2081f55f476a2c011b350f7f"
+      }
+    ]
+  },
+  "native": {
+    "counters": {
+      "cacheReadTokens": 7397100,
+      "cacheWriteTokens": 0,
+      "cachedTokens": 7397100,
+      "inputTokens": 7676114,
+      "last_cumulative": {
+        "outputTokens": 43717,
+        "promptTokens": 7676114,
+        "totalTokens": 7719831
+      },
+      "outputTokens": 43717,
+      "prompt_tokens": 7676114,
+      "reasoningTokens": 9994,
+      "token_usage_events": 45,
+      "turns_completed": [
+        {
+          "durationMs": 1120985,
+          "reason": null,
+          "terminal": "completed",
+          "turnId": "01a0e51d-6fa1-795c-b8e9-698aa35881a3",
+          "usage": null
+        }
+      ],
+      "turns_started": 1
+    },
+    "effort_effective": "max",
+    "elapsed_seconds": 1122.3,
+    "end_utc": "2026-09-27T23:23:49.069186+00:00",
+    "goal_submitted_utc": "2026-09-27T23:05:06.721458+00:00",
+    "model_id": "muse-spark-1.3-contributor",
+    "native_responses": 45,
+    "provider_id": "meta",
+    "session_id": "01a0e51d-6ebf-76d2-a9cd-5e918697fb1d",
+    "start_utc": "2026-09-27T23:05:04.702649+00:00",
+    "stop_reason": "goal_complete"
+  },
+  "observed_settings": {
+    "effort_effective": "max",
+    "parent_model_id": "muse-spark-1.3-contributor",
+    "provider_id": "meta",
+    "reminder_child_models_by_terminal_attempt": {
+      "muse-spark-1.3-contributor": 43
+    },
+    "reminder_child_token_limitations": "muse_trace exposes child attempt/model counts but no child token totals; native receipt counters are retained as reported and no child attribution is inferred.",
+    "reminder_child_tokens": null
+  },
+  "outcome": {
+    "effort_effective": "max",
+    "goal_span_seconds": 1124.6613426208496,
+    "host_prep_seconds": 0.23548102378845215,
+    "last_native_stop": "goal_complete",
+    "model_id": "muse-spark-1.3-contributor",
+    "native_responses": 45,
+    "outcome": "goal_complete",
+    "process_exit": 0,
+    "prompt_sha256": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f",
+    "total_elapsed_seconds": 1124.9063963890076
+  },
+  "requested_settings": {
+    "application": "Muse Code 1.4.0",
+    "driver": "tools/r1b/run_goal_r1b.py --app muse",
+    "effort": "max",
+    "model": "muse-spark-1.3-contributor"
+  },
+  "schema": "i1.mechanical-acquisition-provenance.v1",
+  "slot": "I1-M-maintained",
+  "source_files": {
+    "arm_receipt": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-M-maintained/arm-receipt.json",
+      "sha256": "af836f2a36a40342f2568d30c8656d12fa77e4eb5ecf11261d45f4c8b9d0397d"
+    },
+    "frozen_manifest": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-M-maintained/frozen-manifest.json",
+      "sha256": "e7f17846e9c137d4705e1b338058e7e8300b8f093124370005ca391e8db0cce0"
+    },
+    "input_manifest": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-M-maintained/input-manifest.json",
+      "sha256": "4854dab4a69b2b9ba407f337f512631137a0e52466e49e11d5ea960ca05e045e"
+    },
+    "muse_msp_jsonl": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-M-maintained/native/muse-msp.jsonl",
+      "sha256": "e9735b9613d0147554d2774aec554c857edb1e6504b6c3dc2b182e63db689418"
+    },
+    "muse_session_jsonl": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-M-maintained/native/muse-session.jsonl",
+      "sha256": "d9276120efe2b2eced1babe286f8a867e21e68e8c53a9a2f8729810805d1d24f"
+    },
+    "native_receipt": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-M-maintained/native/receipt.json",
+      "sha256": "d90138845d0397903ba6fd3294b97aec17169c252c49c02cffdb4534a25c4035"
+    }
+  },
+  "tool_audit": {
+    "log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-M-maintained/native/muse-session.jsonl",
+    "paths_outside_workspace": [],
+    "reads_per_source": {
+      "S001": 1,
+      "S003": 3,
+      "S004": 1,
+      "S005": 1,
+      "S006": 1,
+      "S007": 1,
+      "S008": 2,
+      "S010": 1,
+      "S011": 1,
+      "S012": 1,
+      "S013": 1,
+      "S016": 1,
+      "S017": 1,
+      "S018": 2,
+      "S019": 1,
+      "S021": 1,
+      "S025": 1,
+      "S030": 1,
+      "S032": 1,
+      "S033": 1,
+      "S034": 1,
+      "S035": 2,
+      "S036": 1,
+      "S038": 1,
+      "S041": 1,
+      "S042": 1,
+      "S043": 2,
+      "S045": 1,
+      "S046": 1,
+      "S048": 2,
+      "S049": 1,
+      "S050": 1,
+      "S051": 1,
+      "S053": 1,
+      "S054": 1,
+      "S055": 1,
+      "S056": 1,
+      "S058": 1,
+      "S059": 1,
+      "S060": 1,
+      "S062": 1,
+      "S069": 1,
+      "S070": 1,
+      "S071": 1,
+      "S072": 1,
+      "S077": 1,
+      "S095": 1,
+      "S096": 1,
+      "S099": 1,
+      "S108": 1,
+      "S120": 1,
+      "S121": 1
+    },
+    "repeat_source_reads": 7,
+    "responses_seen_in_log": 44,
+    "shell_calls": [],
+    "source_read_calls": 59,
+    "tool_call_names": {
+      "edit_file": 9,
+      "read_file": 68,
+      "report_progress": 3,
+      "search": 14,
+      "write_file": 1
+    },
+    "tool_calls": 95,
+    "unique_sources_read": 52,
+    "web_tool_calls": []
+  },
+  "workspace_integrity": {
+    "case_entries": 129,
+    "expected_output_paths": [
+      "out/draft.json"
+    ],
+    "expected_prompt_sha256": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f",
+    "frozen_entries": 1,
+    "input_entries": 130,
+    "input_or_frozen_issues": [],
+    "missing_input_paths": [],
+    "task_sha256": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f",
+    "unexpected_candidate_file_paths": []
+  }
+}

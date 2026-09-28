@@ -1,0 +1,177 @@
+{
+  "limitations": [
+    "Request-message timestamps mark when a result was exposed to the subsequent model request, not tool execution time.",
+    "Tool-call originating response startedAt/completedAt are preserved without asserting a tool execution timestamp.",
+    "Native input string values and result content are copied exactly; no unsaved versions reconstructed.",
+    "Metadata and structural checks do not establish semantic correctness or quality.",
+    "cap_actions intentionally omitted; no huge full snapshots copied into metrics."
+  ],
+  "native": {
+    "effort_effective": "max",
+    "elapsed_seconds": 1817.1,
+    "end_utc": "2026-09-27T23:55:06.536963+00:00",
+    "goal_submitted_utc": "2026-09-27T23:24:49.484469+00:00",
+    "model_id": "GLM-5.3-Flash",
+    "native_responses": 32,
+    "provider_id": "builtin:zai-coding-plan",
+    "request_status_counts": {
+      "model_request_completed": 31,
+      "model_request_failed": 1
+    },
+    "session_id": "sess_a546b008-2b88-42eb-a3b7-00f2882e362d",
+    "start_utc": "2026-09-27T23:24:44.361485+00:00",
+    "stop_reason": "cap_seconds",
+    "usage_requests_with_delta": 31,
+    "usage_totals": {
+      "cacheReadTokens": 4404416,
+      "cacheWriteTokens": 0,
+      "inputTokens": 4637079,
+      "outputTokens": 77524,
+      "reasoningTokens": 0,
+      "totalTokens": 4714603
+    }
+  },
+  "observed_settings": {
+    "effort_effective": "max",
+    "model_id": "GLM-5.3-Flash",
+    "provider_id": "builtin:zai-coding-plan"
+  },
+  "outcome": {
+    "effort_effective": "max",
+    "goal_span_seconds": 1822.8934500217438,
+    "host_prep_seconds": 0.15413427352905273,
+    "last_native_stop": "cap_seconds",
+    "model_id": "GLM-5.3-Flash",
+    "native_responses": 32,
+    "outcome": "cap_stop",
+    "process_exit": 0,
+    "prompt_sha256": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f",
+    "total_elapsed_seconds": 1823.0682666301727
+  },
+  "requested_settings": {
+    "application": "zcode CLI 0.16.5",
+    "driver": "tools/r1b/run_goal_r1b.py --app zcode",
+    "effort": "max",
+    "model": "GLM-5.3-Flash"
+  },
+  "schema": "i1.mechanical-acquisition-provenance.v1",
+  "slot": "I1-Z-maintained",
+  "source_files": {
+    "arm_receipt": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-maintained/arm-receipt.json",
+      "sha256": "dc7ed42e9eade19fa83d787fdb56e9a3a3b3acb89fa10311054a76f8765f9547"
+    },
+    "frozen_manifest": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-maintained/frozen-manifest.json",
+      "sha256": "c557f982054872b627e86ef411789ca613a5e51f5b85a6899fc0e1fa9e81c58f"
+    },
+    "input_manifest": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-maintained/input-manifest.json",
+      "sha256": "4854dab4a69b2b9ba407f337f512631137a0e52466e49e11d5ea960ca05e045e"
+    },
+    "model_io": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-maintained/native/zcode-model-io.jsonl",
+      "sha256": "5c960279922b6eff62278ff426db581b70d8bf6d5cc8cbca94eb3931b5ccbe82"
+    },
+    "native_receipt": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-maintained/native/receipt.json",
+      "sha256": "c22f6210a2eaa94f66f2307bc104930f3c049e5c7c6654241efb53c16953c5a2"
+    }
+  },
+  "tool_audit": {
+    "log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-maintained/native/zcode-model-io.jsonl",
+    "paths_outside_workspace": [],
+    "reads_per_source": {
+      "S003": 1,
+      "S004": 1,
+      "S005": 1,
+      "S007": 1,
+      "S010": 2,
+      "S011": 1,
+      "S014": 1,
+      "S016": 1,
+      "S018": 1,
+      "S019": 1,
+      "S021": 1,
+      "S028": 5,
+      "S029": 1,
+      "S030": 1,
+      "S031": 1,
+      "S032": 1,
+      "S033": 1,
+      "S034": 1,
+      "S035": 1,
+      "S036": 1,
+      "S038": 1,
+      "S042": 1,
+      "S043": 2,
+      "S044": 1,
+      "S045": 1,
+      "S046": 1,
+      "S048": 1,
+      "S049": 1,
+      "S050": 1,
+      "S051": 1,
+      "S053": 1,
+      "S054": 1,
+      "S055": 1,
+      "S056": 1,
+      "S060": 1,
+      "S063": 1,
+      "S065": 1,
+      "S068": 1,
+      "S069": 1,
+      "S071": 1,
+      "S072": 1,
+      "S077": 1,
+      "S094": 1,
+      "S102": 1
+    },
+    "repeat_source_reads": 6,
+    "responses_seen_in_log": 32,
+    "shell_calls": [],
+    "source_read_calls": 50,
+    "tool_call_names": {
+      "Edit": 10,
+      "Grep": 8,
+      "Read": 57,
+      "Write": 3
+    },
+    "tool_calls": 78,
+    "unique_sources_read": 44,
+    "web_tool_calls": []
+  },
+  "tool_result_bytes": {
+    "bytes": 440671,
+    "note": "tool-result text delivered to the model, each counted once; spilled artifacts count by what was returned",
+    "tool_results": 78
+  },
+  "workspace_integrity": {
+    "case_entries": 129,
+    "expected_output_paths": [
+      "out/draft.json",
+      "out/snapshots/0001.json"
+    ],
+    "expected_prompt_sha256": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f",
+    "frozen_entries": 2,
+    "input_entries": 130,
+    "issues": [],
+    "missing_input_paths": [],
+    "task_sha256": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f",
+    "unexpected_candidate_file_paths": []
+  },
+  "write_edit_extraction": {
+    "conflicting_duplicate_messages": [],
+    "deduplication": "first native request message at messageOffset+array index; calls uniquely identified by toolCall ID; cacheControl-only variations do not alter extracted arguments/result text",
+    "duplicate_metadata_variations": {
+      "cacheControl_only": 347
+    },
+    "linked_results": 13,
+    "missing_conversation_indexes": 0,
+    "native_result_isError_false": 12,
+    "native_result_isError_true": 1,
+    "records": 13,
+    "trace_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/evidence/I1-Z-maintained/acquisition-write-trace.jsonl",
+    "trace_sha256": "9bdd765fdbf1160ad40491c913236536c90d2f3ec94db8376762bdc4be882611"
+  }
+}

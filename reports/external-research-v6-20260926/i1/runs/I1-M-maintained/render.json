@@ -1,0 +1,32 @@
+{
+  "slot": "I1-M-maintained",
+  "variant": "maintained",
+  "mode": "render-current",
+  "returncode": 2,
+  "carrier_valid": false,
+  "elapsed_seconds": 0.07471394538879395,
+  "files": {
+    "current.json": {
+      "sha256": "1d3ae59a7ca54fed14549274bd4ad50725190e11e279c91d5935fd9a1a99f600",
+      "bytes": 260
+    },
+    "current.md": {
+      "sha256": "088c0d914c9e990dd0c0fda1152c009004d5d786a01cbca0c902d9a64ee229f1",
+      "bytes": 130
+    },
+    "history.json": {
+      "sha256": "56356d93854e82802e62737392e8907bb48fa69f5944b7868db93be6d3d326b8",
+      "bytes": 62790
+    },
+    "history.md": {
+      "sha256": "6e99cbbfdd08c2384976031d64046bb4ab79aa9488fdf8a05536d72a1d8ef8a9",
+      "bytes": 60369
+    },
+    "raw-draft.json": {
+      "sha256": "348793f39ebb6781a46f34228aadf4718f9eab2ebcbb79ea487f81374441b4a7",
+      "bytes": 60066
+    }
+  },
+  "semantic_host_edits": false,
+  "review_assembly_or_absence_matcher_invoked": false
+}
