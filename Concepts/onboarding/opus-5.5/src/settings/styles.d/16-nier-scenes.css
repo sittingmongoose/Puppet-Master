@@ -1,0 +1,62 @@
+/* O55 · NieR Mode scenes (kit.d/21-nier-scenes.js). An ink panorama in a fixed layer behind the shell, placed like the
+   Glass wallpaper (#glass-bg): fixed, contained, inert, first among the shell's siblings, the shell lifted above it.
+   The art is one ink (currentColor = the NieR text colour) at low opacity; shapes of class k are filled with the
+   canvas colour so nearer things hide farther ones. A canvas-coloured gradient (no mask) thins the scene toward the
+   top. Present only while html[data-o55-nier-scene] is set; every rule below is scoped by it or by the layer. */
+#o55-nier-scene {
+  position: fixed; inset: 0; z-index: 0; contain: strict; overflow: hidden; pointer-events: none; display: none;
+  --o55-nier-scene-a: .15;
+}
+html[data-o55-nier-scene] #o55-nier-scene { display: block; }
+html[data-o55-nier-scene] .app-shell { position: relative; z-index: 1; }
+/* Grounds the scene shows through: the dashboard, Projects and Orchestrator grounds are already the body's; the Usage
+   board and Settings Home are made clear here. Panels, cards and docks keep their own fill, and pages whose text sits
+   on the ground where the scene is (the Planning Wizard, every other Settings page) keep theirs. */
+html[data-o55-nier-scene] #pm7UsageApp.pm7u-shell,
+html[data-o55-nier-scene] #panel-settings[data-o55-home] { background: transparent; }
+/* Text never sits on the scene: see-through fills on those grounds become opaque (the Usage rail's 88 % surface is
+   drawn as the surface itself; the current project's tint keeps its gradient over the canvas). */
+html[data-o55-nier-scene] #pm7UsageApp .pm7u-rail { background-color: var(--surface); }
+html[data-o55-nier-scene] .page-projects .project-card-bento { background-color: var(--background); }
+html[data-o55-nier-scene][data-theme$="-dark"] #o55-nier-scene { --o55-nier-scene-a: .2; }
+.o55-nier-scene-art {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 60%; container-type: size;
+  color: var(--o55-nier-ink, var(--text-primary)); opacity: var(--o55-nier-scene-a);
+  transform: translateZ(0);
+}
+.o55-nier-scene-art > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: hidden; }
+.o55-nier-art path, .o55-nier-art rect, .o55-nier-art circle, .o55-nier-art ellipse, .o55-nier-art line,
+.o55-nier-art polyline, .o55-nier-art polygon { vector-effect: non-scaling-stroke; }
+.o55-nier-art .k { fill: var(--background); }
+/* the soft thinning toward the top: the canvas colour, opaque above the art, clear over its lower half */
+.o55-nier-scene-fade {
+  position: absolute; left: 0; right: 0; top: 0; height: 74%; z-index: 1;
+  background: linear-gradient(to bottom, var(--background) 0%, var(--background) 54%, transparent 100%);
+}
+
+/* A moving part, lifted out of the scene into its own small SVG over the same spot: the scene is drawn "xMidYMax slice"
+   at scale s = max(width / 1600, height / 560), so a box (x, y, w, h) in scene units sits at
+   ((width - 1600 s) / 2 + x s, height - 560 s + y s), w s by h s. */
+.o55-nier-scene-art > svg.o55-nier-part {
+  --s: max(100cqw / 1600, 100cqh / 560);
+  inset: auto; overflow: visible;
+  left: calc((100cqw - 1600 * var(--s)) / 2 + var(--bx) * var(--s));
+  top: calc(100cqh - 560 * var(--s) + var(--by) * var(--s));
+  width: calc(var(--bw) * var(--s)); height: calc(var(--bh) * var(--s));
+}
+/* The one ambient touch of each scene: only while the NieR part "Drifting particles" is installed, never with Reduce
+   motion (the app's or the system's), never under the onboarding window. Transform and opacity only, on those small
+   layers; a scene without them is painted once and stands still. */
+@keyframes o55-scn-turn { to { transform: rotate(360deg); } }
+@keyframes o55-scn-drift { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(5%, -9%); } 50% { transform: translate(10%, 0); } 75% { transform: translate(5%, 7%); } }
+@keyframes o55-scn-bloom { 0%, 18%, 100% { opacity: 0; } 30% { opacity: 1; } 62% { opacity: .7; } 84% { opacity: 0; } }
+@keyframes o55-scn-shimmer { 0% { transform: translateX(-1.2%); opacity: .55; } 100% { transform: translateX(1.2%); opacity: 1; } }
+@keyframes o55-scn-cross { 0% { transform: translate(-40%, 6%); opacity: 0; } 8% { opacity: 1; } 88% { opacity: 1; } 100% { transform: translate(60%, -8%); opacity: 0; } }
+@keyframes o55-scn-twinkle { 0%, 100% { opacity: .25; } 20% { opacity: 1; } 45% { opacity: .4; } 70% { opacity: .9; } }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]):not([data-o55-open]) .o55-nier-part.a-wheel { animation: o55-scn-turn 240s linear infinite; will-change: transform; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]):not([data-o55-open]) .o55-nier-part.a-fireworks { animation: o55-scn-bloom 11s ease-in-out infinite; will-change: opacity; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]):not([data-o55-open]) .o55-nier-part.a-birds { animation: o55-scn-drift 38s ease-in-out infinite; will-change: transform; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]):not([data-o55-open]) .o55-nier-part.a-heat { animation: o55-scn-shimmer 4.5s ease-in-out infinite alternate; will-change: transform, opacity; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]):not([data-o55-open]) .o55-nier-part.a-shuttle { animation: o55-scn-cross 70s linear infinite; will-change: transform, opacity; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]):not([data-o55-open]) .o55-nier-part.a-glints { animation: o55-scn-twinkle 6s steps(6, end) infinite; will-change: opacity; }
+@media (prefers-reduced-motion: reduce) { .o55-nier-scene-art > .o55-nier-part { animation: none !important; will-change: auto !important; } }
