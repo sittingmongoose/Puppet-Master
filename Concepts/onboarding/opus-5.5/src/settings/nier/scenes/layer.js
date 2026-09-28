@@ -14,93 +14,93 @@
    - It works against the NieR engine's PM_NIER when present (on(), has(), background(), onChange()) and falls back to
      the <html data-o55-nier> attribute and the stored setting before the engine exists.
    window.PM_NIER_SCENES = { keys, label(key), sceneFor(page), svg(key), current() } serves thumbnails.
-   The SVG strings (O55_NIER_SCENE_SVG, above) are generated from src/settings/nier/scenes/*.svg by
+   The SVG strings (O55_SCN_SVG, above) are generated from src/settings/nier/scenes/*.svg by
    tools/nier_scenes.py; this file is the hand-written half. */
-const O55_NIER_SCENE_LABEL = { city: 'City Ruins', bunker: 'The Bunker', desert: 'Desert', forest: 'Forest Castle', park: 'Amusement Park', flooded: 'Flooded City' };
-const O55_NIER_SCENE_KEYS = Object.keys(O55_NIER_SCENE_LABEL).filter(k => O55_NIER_SCENE_SVG[k]);
+const O55_SCN_LABEL = { city: 'City Ruins', bunker: 'The Bunker', desert: 'Desert', forest: 'Forest Castle', park: 'Amusement Park', flooded: 'Flooded City' };
+const O55_SCN_KEYS = Object.keys(O55_SCN_LABEL).filter(k => O55_SCN_SVG[k]);
 /* Follow the page: the dashboard is the city you come home to; Projects are the kingdom in the forest; the Planning
    Wizard is the Bunker, where missions are briefed; the Orchestrator is the flooded city, where every current meets;
    Usage is the desert, where resources run dry; Settings is the amusement park, all rides and switches. */
-const O55_NIER_PAGE_SCENE = { dashboard: 'city', projects: 'forest', wizard: 'bunker', orchestrator: 'flooded', usage: 'desert', settings: 'park', chat: 'park' };
-const O55_NIER_BG_ID = 'general.visual.nier-background';
-const O55_NIER_FOLLOW = 'follow';
+const O55_SCN_PAGE = { dashboard: 'city', projects: 'forest', wizard: 'bunker', orchestrator: 'flooded', usage: 'desert', settings: 'park', chat: 'park' };
+const O55_SCN_BG_ID = 'general.visual.nier-background';
+const O55_SCN_FOLLOW = 'follow';
 
-function o55NierSceneKeyOf(label) {
+function o55ScnKeyOf(label) {
   const v = String(label == null ? '' : label).trim().toLowerCase();
   if (!v) return 'city';
   if (v === 'parchment' || v === 'none' || v === 'off') return null;
-  if (v === 'follow the page' || v === 'follow' || v === 'page') return O55_NIER_FOLLOW;
-  if (O55_NIER_SCENE_LABEL[v]) return v;
-  const hit = Object.keys(O55_NIER_SCENE_LABEL).find(k => O55_NIER_SCENE_LABEL[k].toLowerCase() === v);
+  if (v === 'follow the page' || v === 'follow' || v === 'page') return O55_SCN_FOLLOW;
+  if (O55_SCN_LABEL[v]) return v;
+  const hit = Object.keys(O55_SCN_LABEL).find(k => O55_SCN_LABEL[k].toLowerCase() === v);
   return hit || 'city';
 }
-function o55NierIsOn() {
+function o55ScnIsOn() {
   const N = window.PM_NIER;
   if (N && typeof N.on === 'function') { try { return !!N.on(); } catch (e) { /* fall through */ } }
   return document.documentElement.getAttribute('data-o55-nier') === 'on';
 }
-function o55NierBackgroundLabel() {
+function o55ScnBackgroundLabel() {
   const N = window.PM_NIER;
   if (N && typeof N.background === 'function') { try { const v = N.background(); if (v != null && v !== '') return String(v); } catch (e) { /* fall through */ } }
-  try { const v = PM51.value(O55_NIER_BG_ID); return v == null ? 'City Ruins' : String(v); } catch (e) { return 'City Ruins'; }
+  try { const v = PM51.value(O55_SCN_BG_ID); return v == null ? 'City Ruins' : String(v); } catch (e) { return 'City Ruins'; }
 }
-function o55NierPageNow() {
+function o55ScnPageNow() {
   const P = window.PM_PAGES;
   if (P && P.current) return String(P.current);
   const el = document.querySelector('.primary-content > .page.active');
   const m = el && /(?:^|\s)page-([a-z0-9-]+)/.exec(el.className);
   return m ? m[1] : 'dashboard';
 }
-function o55NierSceneFor(page) {
-  const k = O55_NIER_PAGE_SCENE[String(page || '').toLowerCase()] || 'city';
-  return O55_NIER_SCENE_SVG[k] ? k : O55_NIER_SCENE_KEYS[0] || null;
+function o55ScnFor(page) {
+  const k = O55_SCN_PAGE[String(page || '').toLowerCase()] || 'city';
+  return O55_SCN_SVG[k] ? k : O55_SCN_KEYS[0] || null;
 }
 /* The scene that should show now, or null. */
-function o55NierSceneWanted() {
-  if (!o55NierIsOn()) return null;
-  const k = o55NierSceneKeyOf(o55NierBackgroundLabel());
+function o55ScnWanted() {
+  if (!o55ScnIsOn()) return null;
+  const k = o55ScnKeyOf(o55ScnBackgroundLabel());
   if (!k) return null;
-  const key = k === O55_NIER_FOLLOW ? o55NierSceneFor(o55NierPageNow()) : k;
-  return O55_NIER_SCENE_SVG[key] ? key : (O55_NIER_SCENE_KEYS[0] || null);
+  const key = k === O55_SCN_FOLLOW ? o55ScnFor(o55ScnPageNow()) : k;
+  return O55_SCN_SVG[key] ? key : (O55_SCN_KEYS[0] || null);
 }
 
 /* ---------- the layer ------------------------------------------------------------------------------------------------ */
-let o55NierLayer = null, o55NierShown = null, o55NierTimer = 0, o55NierPageWatch = null;
-function o55NierLayerEl() {
-  if (o55NierLayer && o55NierLayer.isConnected) return o55NierLayer;
+let o55ScnLayer = null, o55ScnShown = null, o55ScnTimer = 0, o55ScnPageWatch = null;
+function o55ScnLayerEl() {
+  if (o55ScnLayer && o55ScnLayer.isConnected) return o55ScnLayer;
   const shell = document.querySelector('body > .app-shell');
   if (!document.body) return null;
   const el = document.createElement('div');
   el.id = 'o55-nier-scene'; el.className = 'o55-nier-scene'; el.setAttribute('aria-hidden', 'true');
   el.innerHTML = '<div class="o55-nier-scene-fade"></div>';
   document.body.insertBefore(el, shell || document.body.firstChild);
-  return (o55NierLayer = el);
+  return (o55ScnLayer = el);
 }
-function o55NierArt(key) {
+function o55ScnArt(key) {
   const art = document.createElement('div');
   art.className = 'o55-nier-scene-art'; art.dataset.scene = key;
-  art.innerHTML = O55_NIER_SCENE_SVG[key];
+  art.innerHTML = O55_SCN_SVG[key];
   return art;
 }
 /* Put the wanted scene up (or take the layer down). A change between two scenes cross-fades by opacity. */
-function o55NierSceneApply() {
-  o55NierTimer = 0;
-  const html = document.documentElement, key = o55NierSceneWanted();
-  o55NierFollow(key != null && o55NierSceneKeyOf(o55NierBackgroundLabel()) === O55_NIER_FOLLOW);
-  if (key === o55NierShown && (!key || (o55NierLayer && o55NierLayer.isConnected))) return;
+function o55ScnApply() {
+  o55ScnTimer = 0;
+  const html = document.documentElement, key = o55ScnWanted();
+  o55ScnFollow(key != null && o55ScnKeyOf(o55ScnBackgroundLabel()) === O55_SCN_FOLLOW);
+  if (key === o55ScnShown && (!key || (o55ScnLayer && o55ScnLayer.isConnected))) return;
   if (!key) {
-    o55NierShown = null;
+    o55ScnShown = null;
     if (html.hasAttribute('data-o55-nier-scene')) html.removeAttribute('data-o55-nier-scene');
-    if (o55NierLayer) { o55NierLayer.remove(); o55NierLayer = null; }
+    if (o55ScnLayer) { o55ScnLayer.remove(); o55ScnLayer = null; }
     return;
   }
-  const layer = o55NierLayerEl(); if (!layer) return;
+  const layer = o55ScnLayerEl(); if (!layer) return;
   const fade = layer.querySelector('.o55-nier-scene-fade');
   const olds = [...layer.querySelectorAll(':scope > .o55-nier-scene-art')];
-  const art = o55NierArt(key);
+  const art = o55ScnArt(key);
   layer.insertBefore(art, fade);
   layer.dataset.scene = key;
-  o55NierShown = key;
+  o55ScnShown = key;
   if (html.getAttribute('data-o55-nier-scene') !== key) html.setAttribute('data-o55-nier-scene', key);
   const still = typeof o55Still === 'function' ? o55Still() : html.getAttribute('data-motion') === 'reduced';
   if (!olds.length || still || typeof art.animate !== 'function') { olds.forEach(o => o.remove()); return; }
@@ -110,72 +110,72 @@ function o55NierSceneApply() {
   a.onfinish = done; a.oncancel = done;
 }
 /* Coalesce every trigger into one apply; while a page change is animating, wait for it to finish. */
-function o55NierSceneSoon(delay) {
-  if (o55NierTimer) window.clearTimeout(o55NierTimer);
-  o55NierTimer = window.setTimeout(function tick() {
-    if (document.documentElement.hasAttribute('data-pm-page-transition')) { o55NierTimer = window.setTimeout(tick, 120); return; }
-    o55NierSceneApply();
+function o55ScnSoon(delay) {
+  if (o55ScnTimer) window.clearTimeout(o55ScnTimer);
+  o55ScnTimer = window.setTimeout(function tick() {
+    if (document.documentElement.hasAttribute('data-pm-page-transition')) { o55ScnTimer = window.setTimeout(tick, 120); return; }
+    o55ScnApply();
   }, delay == null ? 0 : delay);
 }
 /* Follow the page: watch the page roots' class attribute, only while following. */
-function o55NierFollow(on) {
-  if (!on) { if (o55NierPageWatch) { o55NierPageWatch.disconnect(); o55NierPageWatch = null; } return; }
-  if (o55NierPageWatch) return;
+function o55ScnFollow(on) {
+  if (!on) { if (o55ScnPageWatch) { o55ScnPageWatch.disconnect(); o55ScnPageWatch = null; } return; }
+  if (o55ScnPageWatch) return;
   const pages = document.querySelectorAll('.primary-content > .page'); if (!pages.length) return;
-  let last = o55NierPageNow();
-  o55NierPageWatch = new MutationObserver(() => {
-    const now = o55NierPageNow(); if (now === last) return; last = now;
-    if (o55NierSceneFor(now) !== o55NierShown) o55NierSceneSoon(60);
+  let last = o55ScnPageNow();
+  o55ScnPageWatch = new MutationObserver(() => {
+    const now = o55ScnPageNow(); if (now === last) return; last = now;
+    if (o55ScnFor(now) !== o55ScnShown) o55ScnSoon(60);
   });
-  pages.forEach(p => o55NierPageWatch.observe(p, { attributes: true, attributeFilter: ['class'] }));
+  pages.forEach(p => o55ScnPageWatch.observe(p, { attributes: true, attributeFilter: ['class'] }));
 }
 
 /* ---------- triggers ------------------------------------------------------------------------------------------------- */
 /* NieR switched on or off, or its parts changed: the <html> attributes (the engine writes them). */
-new MutationObserver(() => o55NierSceneSoon(0)).observe(document.documentElement, { attributes: true, attributeFilter: ['data-o55-nier'] });
+new MutationObserver(() => o55ScnSoon(0)).observe(document.documentElement, { attributes: true, attributeFilter: ['data-o55-nier'] });
 /* The Background row, and NieR Mode itself, changed in Settings. */
-const o55NierSceneCommit = commitSettingValue;
+const o55ScnCommit = commitSettingValue;
 commitSettingValue = function (id, value) {
-  const ok = o55NierSceneCommit.apply(this, arguments);
-  if (id === O55_NIER_BG_ID || id === 'general.visual.nier-mode') o55NierSceneSoon(0);
+  const ok = o55ScnCommit.apply(this, arguments);
+  if (id === O55_SCN_BG_ID || id === 'general.visual.nier-mode') o55ScnSoon(0);
   return ok;
 };
-const o55NierSceneRestore = restoreSettingDefault;
+const o55ScnRestore = restoreSettingDefault;
 restoreSettingDefault = function (id) {
-  const ok = o55NierSceneRestore.apply(this, arguments);
-  if (id === O55_NIER_BG_ID || id === 'general.visual.nier-mode') o55NierSceneSoon(0);
+  const ok = o55ScnRestore.apply(this, arguments);
+  if (id === O55_SCN_BG_ID || id === 'general.visual.nier-mode') o55ScnSoon(0);
   return ok;
 };
 /* Settings Home is ground the scene may show through (the other Settings pages keep their ground: rows and help text
    sit on it). The panel carries data-o55-home while Home is shown, so CSS needs no :has(). */
-function o55NierHomeMark() {
+function o55ScnHomeMark() {
   const ps = document.getElementById('panel-settings'); if (!ps || !state) return;
   const on = !!state.home;
   if (on !== ps.hasAttribute('data-o55-home')) { if (on) ps.setAttribute('data-o55-home', ''); else ps.removeAttribute('data-o55-home'); }
 }
-const o55NierSceneRender = renderApp;
-renderApp = function () { const r = o55NierSceneRender.apply(this, arguments); o55NierHomeMark(); return r; };
-window.setTimeout(o55NierHomeMark, 0);
+const o55ScnRender = renderApp;
+renderApp = function () { const r = o55ScnRender.apply(this, arguments); o55ScnHomeMark(); return r; };
+window.setTimeout(o55ScnHomeMark, 0);
 /* The engine's own change feed, once it exists (it may arrive after this file). */
-let o55NierSubscribed = false;
-function o55NierSubscribe() {
+let o55ScnSubscribed = false;
+function o55ScnSubscribe() {
   const N = window.PM_NIER;
-  if (o55NierSubscribed || !N || typeof N.onChange !== 'function') return !!o55NierSubscribed;
-  try { N.onChange(() => o55NierSceneSoon(0)); o55NierSubscribed = true; } catch (e) { /* keep the fallbacks */ }
-  return o55NierSubscribed;
+  if (o55ScnSubscribed || !N || typeof N.onChange !== 'function') return !!o55ScnSubscribed;
+  try { N.onChange(() => o55ScnSoon(0)); o55ScnSubscribed = true; } catch (e) { /* keep the fallbacks */ }
+  return o55ScnSubscribed;
 }
-if (!o55NierSubscribe()) {
+if (!o55ScnSubscribe()) {
   let tries = 0;
-  const again = () => { if (!o55NierSubscribe() && ++tries < 20) window.setTimeout(again, 500); else o55NierSceneSoon(0); };
+  const again = () => { if (!o55ScnSubscribe() && ++tries < 20) window.setTimeout(again, 500); else o55ScnSoon(0); };
   window.setTimeout(again, 0);
 }
-window.setTimeout(() => o55NierSceneSoon(0), 0);
+window.setTimeout(() => o55ScnSoon(0), 0);
 
 window.PM_NIER_SCENES = {
-  keys: O55_NIER_SCENE_KEYS.slice(),
-  label: key => O55_NIER_SCENE_LABEL[key] || '',
-  sceneFor: page => o55NierSceneFor(page),
-  svg: key => O55_NIER_SCENE_SVG[key] || '',
-  current: () => o55NierShown,
-  refresh: () => o55NierSceneApply()
+  keys: O55_SCN_KEYS.slice(),
+  label: key => O55_SCN_LABEL[key] || '',
+  sceneFor: page => o55ScnFor(page),
+  svg: key => O55_SCN_SVG[key] || '',
+  current: () => o55ScnShown,
+  refresh: () => o55ScnApply()
 };

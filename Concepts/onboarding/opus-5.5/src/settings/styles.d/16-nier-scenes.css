@@ -21,7 +21,7 @@ html[data-o55-nier-scene] .page-projects .project-card-bento { background-color:
 html[data-o55-nier-scene][data-theme$="-dark"] #o55-nier-scene { --o55-nier-scene-a: .19; }
 .o55-nier-scene-art {
   position: absolute; left: 0; right: 0; bottom: 0; height: 60%;
-  color: var(--text-primary); opacity: var(--o55-nier-scene-a);
+  color: var(--o55-nier-ink, var(--text-primary)); opacity: var(--o55-nier-scene-a);
   transform: translateZ(0);
 }
 .o55-nier-scene-art.is-leaving { z-index: 0; }
