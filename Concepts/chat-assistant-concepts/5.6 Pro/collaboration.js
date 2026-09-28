@@ -819,7 +819,29 @@
     if (s === 'configuring') return 'waiting';
     if (UI.waiting[run.id] && !hasStarted(run)) return 'waiting';
     if (provenance(run.id) === 'recorded' && !hasStarted(run)) return 'starting';
+    if (roomYourMove(run)) return 'attention';
     return 'running';
+  }
+  /* A Chat Room between rounds waits for you. The room view (room-view.js statusHtml, canon for rooms) reads its
+     RoomDiscussionVM: nobody speaking, no round going and a primary to press = "Round N done · … Your move." The card,
+     the dock, Activity and the composer read the same VM here, so all of them say the same thing (A1-20). Returns
+     {round, summed, text, primary} or null. */
+  function roomYourMove(run) {
+    if (!run || run.kind !== 'chat_room' || run.status !== 'running') return null;
+    var R = window.PM56_ROOM, vm = null;
+    try { vm = R && typeof R.discussionVM === 'function' ? R.discussionVM(run) : null; } catch (e) { vm = null; }
+    if (vm) {
+      if (vm.waiting || vm.status !== 'running' || vm.speaking || (vm.round && !vm.round.complete)) return null;
+      var pr = vm.controls && vm.controls.primary;
+      if (!pr || pr.disabled) return null;
+      var so = Number(vm.roundsSoFar || 0), summed = !!(vm.summary && vm.summary.current && so);
+      return { round: so, summed: summed, primary: { action: pr.action, label: pr.label },
+        text: so ? 'Round ' + so + ' done' + (summed ? ' · The Moderator summed it up.' : '.') : 'Start the first round.' };
+    }
+    /* no room view loaded: the record alone (a helper at work or a round going means the room is not waiting) */
+    var c = run.chatRoom || {}, so2 = Number(c.roundsSoFar || 0);
+    if ((run.participants || []).some(function (p) { return p.status === 'working'; }) || (c.round && !c.round.complete) || !so2) return null;
+    return { round: so2, summed: false, primary: null, text: 'Round ' + so2 + ' done.' };
   }
 
   function names(list) {
@@ -870,6 +892,8 @@
     }
     if (c.missing_outputs.length) return mk('warm', 'The final summary was never written.', '');
     if (c.attention_reason === 'vote_tie_unresolved') return mk('warm', 'The vote is tied.', 'Write the plan from your rules and the evidence, or run one more debate round.');
+    var ym = roomYourMove(run);
+    if (ym) return mk('accent', 'Your move.', ym.text, 'Your move');
     if (run.pendingUserDecision) return mk('accent', 'Your move.', 'The ' + K + ' is waiting for your decision.', 'Your move');
     return mk('warm', 'Needs attention', run.blockedReason ? '· ' + String(run.blockedReason) : '· Open the panel to see what it is waiting for.');
   }
@@ -879,6 +903,7 @@
   function roomSpeaker(run) {
     var P = run.participants || [], sp = P.filter(function (p) { return p.status === 'working'; })[0] || null;
     var next = P.filter(function (p) { return p !== sp && p.status !== 'done' && p.status !== 'failed' && p.status !== 'disabled' && !(p.outcome && p.outcome !== 'completed'); })[0] || null;
+    if (!sp && next && roomYourMove(run)) next = null;
     return { sp: sp, next: next };
   }
   /* the live sentence, from the record (a kind replaces it through cardParts().sentence) */
@@ -956,7 +981,7 @@
        drops its own word and the "· " (A1-20: Activity, the view status and the composer destination read this) */
     if (st === 'attention') {
       var a = attentionOf(run);
-      return { status: a.tone === 'accent' ? 'yourmove' : 'needs', word: a.word, reason: a.strong === 'Needs attention' ? a.text.replace(/^·\s*/, '') : a.plain };
+      return { status: a.tone === 'accent' ? 'yourmove' : 'needs', word: a.word, reason: a.strong === 'Needs attention' ? a.text.replace(/^·\s*/, '') : a.strong === 'Your move.' && a.text ? a.text : a.plain };
     }
     return runningSentence(run);
   }
@@ -992,7 +1017,7 @@
     else if (run.kind === 'crew') { var cp = crewProgress(run); count = cp.all ? cp.done + ' of ' + cp.all + ' checked' : 'not split yet'; }
     else if (run.kind === 'review') { var P = run.participants || []; count = P.filter(function (p) { return p.status === 'done' || p.outcome === 'completed'; }).length + ' of ' + P.length + ' done'; }
     else if (run.kind === 'brainstorm') { var b = run.brainstorm || {}; count = idx === 5 ? (b.votes || []).length + ' of ' + (run.participants || []).filter(function (p) { return p.required; }).length + ' voted' : idx === 1 ? (b.proposals || []).length + ' drafts in' : 'in progress'; }
-    else { var sp = roomSpeaker(run).sp; count = sp ? sp.role + ' is speaking' : 'in progress'; }
+    else { var sp = roomSpeaker(run).sp; count = sp ? sp.role + ' is speaking' : roomYourMove(run) ? 'your move' : 'in progress'; }
     if (st === 'starting') count = 'starting';
     /* a stopped run (paused, cancelled, at your limit, failed) never says "in progress" or "is speaking", and its
        stop keeps no shimmer (5.6: no motion for work that is not happening); one that never started says so */
@@ -1001,10 +1026,12 @@
     else if (stopped && /in progress|is speaking/.test(count)) count = st === 'paused' ? 'paused' : 'stopped here';
     /* at the L tier every stop shows its label beside its dot (C4): long tracks carry short dot labels (BrainStorm's
        seven chapters, a room past six rounds) so the row never runs wider than the card; nowText keeps the full name */
+    /* a room between rounds: the round that just ended is done (no shimmer: nothing is happening until you move) */
+    var ym = st === 'attention' ? roomYourMove(run) : null, roundDone = !!(ym && ym.round);
     var dotLabel = run.kind === 'brainstorm' ? function (l, i) { return STORM_SHORT[i] || l; } : n > 6 ? function (l, i) { return String(i + 1); } : function (l) { return l; };
     return {
       stops: stops.map(function (l, i) {
-        var s = i < idx ? 'done' : i === idx ? (st === 'failed' || st === 'attention' && run.status === 'failed' ? 'failed' : stopped ? 'next' : 'now') : 'next';
+        var s = i < idx ? 'done' : i === idx ? (st === 'failed' || st === 'attention' && run.status === 'failed' ? 'failed' : stopped ? 'next' : roundDone ? 'done' : 'now') : 'next';
         return { key: 'pmx-stop:' + run.id + ':' + i, label: esc(dotLabel(l, i)), state: s };
       }),
       nowText: '<b>' + esc(st === 'completed' ? stops[n - 1] : cur) + '</b> · ' + esc(count)
@@ -1071,8 +1098,66 @@
   function voteWords(body) {
     return String(body || '').replace(/^\s*(support|oppose|against|abstain|neutral)\s*[·:-]\s*/i, function (m, w) { return STANCE[w.toLowerCase()] + ' '; });
   }
+  /* ---- OWNER ANSWER E-31 (DL-137, 2026-09-27): a helper's line streams live, reusing the reply streaming. A helper's
+     message that arrives while its run is going streams its words into the lane's data-pm-keep island through
+     PM56_PMX.stream (the one pacer: Chat WOW's PM56_STREAM pacing). Once every word is in, the next render swaps the
+     island (its key goes from stream:{mid} to {mid}) for the whole message with its inline markup, once. Stop, pause,
+     a failed helper or one that abstained end the stream at once: the island is dropped and the lane shows only what
+     was written in full (a product partial is never kept or shown as the helper's words), never words still arriving
+     for a helper that stopped. The first render of a run's lanes takes every message that exists as read, so nothing
+     streams on open or on a thread switch; under reduced motion every message lands whole. ---- */
+  var LANE_SEEN = {}, LANE_STREAM = {}, laneJob = 0;
+  function laneClock() { var C = window.PM56_CLOCK; return C && C.now ? C.now() : performance.now(); }
+  function laneReduced() { var P = PMX_(); return !!(P && P.reduced && P.reduced()); }
+  function laneFlowing(run) { var st = presentState(run); return st === 'running' || st === 'attention'; }
+  function noteLaneMessages(run) {
+    var seen = LANE_SEEN[run.id], msgs = run.messages || [];
+    if (!seen) { seen = LANE_SEEN[run.id] = {}; msgs.forEach(function (m) { seen[m.id] = 1; }); return; }
+    var flowing = laneFlowing(run) && !laneReduced();
+    msgs.forEach(function (m) {
+      if (seen[m.id]) return;
+      seen[m.id] = 1;
+      if (flowing && m.senderKind === 'participant' && m.senderId && m.body) LANE_STREAM[m.id] = { text: plainLine(voteWords(m.body)), at: null, done: false, state: null };
+    });
+  }
+  function laneStreaming(run, p, said) {
+    var ls = LANE_STREAM[said.id];
+    if (!ls || ls.done) return false;
+    /* a helper that failed, was switched off or abstained (any outcome but completed) has stopped speaking */
+    var stopped = p.status === 'failed' || p.status === 'disabled' || (p.outcome && p.outcome !== 'completed');
+    if (!laneFlowing(run) || stopped || laneReduced()) { ls.done = true; return false; }
+    return true;
+  }
+  function lanePoll() {
+    laneJob = 0;
+    var active = false, changed = false;
+    Object.keys(LANE_STREAM).forEach(function (mid) {
+      var ls = LANE_STREAM[mid];
+      if (ls.done || !ls.state) return;
+      if (ls.state.shown >= ls.state.words.length) { ls.done = true; changed = true; return; }
+      if (ls.state.island && ls.state.island.isConnected) active = true;
+    });
+    if (changed) { var c = EXT.ctx && EXT.ctx(); if (c && c.renderApp) c.renderApp(); }
+    else if (active) laneJob = setTimeout(lanePoll, 200);
+  }
+  function laneAfterApp() {
+    var P = PMX_(), qs = document.querySelectorAll('.transcript .pmx-lane-l2[data-pm-keep] q[data-collab-stream]'), any = false;
+    for (var i = 0; i < qs.length; i++) {
+      var q = qs[i], ls = LANE_STREAM[q.getAttribute('data-collab-stream')], isl = q.parentElement;
+      if (!ls || ls.done || !isl) continue;
+      if (ls.at == null) ls.at = laneClock();
+      /* the same island keeps its stream; a remounted one (resize, pin, thread switch) catches up from when it began */
+      ls.state = P && P.stream ? P.stream(isl, ls.text, { startAt: ls.at }) : null;
+      if (!ls.state) { q.textContent = ls.text; ls.done = true; continue; }
+      any = true;
+    }
+    if (any && !laneJob) laneJob = setTimeout(lanePoll, 200);
+  }
+  if (PMX_() && PMX_().after) PMX_().after(function (ctx, phase) { if (phase === 'app') laneAfterApp(); });
   function laneLine2(run, p, s) {
+    noteLaneMessages(run);
     var said = (run.messages || []).filter(function (m) { return m.senderId === p.id && m.body; }).slice(-1)[0];
+    if (said && s !== 'queued' && laneStreaming(run, p, said)) return { kind: 'quote', html: '<q data-collab-stream="' + esc(said.id) + '"></q>', src: 'stream:' + said.id, keep: true };
     if (said && s !== 'queued') return { kind: 'quote', html: '“' + quoteHtml(voteWords(said.body)) + '”', src: said.id };
     if (run.kind === 'crew' && s === 'queued') {
       var cp = crewProgress(run), a = cp.list.filter(function (x) { return x.participantId === p.id || x.assignedRole === p.role; })[0];
@@ -1091,7 +1176,7 @@
     return {
       rank: verb === 'up next' ? 2 : LANE_RANK[s] != null ? LANE_RANK[s] : 3, state: s,
       html: S.pmxLane({ key: 'pmx-lane:' + run.id + ':' + p.id, state: s === 'queued' ? 'queued' : s, mark: markOfP(run, p, 22), name: esc(p.role), sub: esc(sub), verb: esc(verb),
-        verbKey: 'vb:' + p.id + ':' + S.pmxHash(verb), line2: l2.html, line2Kind: l2.kind, keepKey: 'l2:' + run.id + ':' + p.id + ':' + l2.kind + ':' + l2.src,
+        verbKey: 'vb:' + p.id + ':' + S.pmxHash(verb), line2: l2.html, line2Kind: l2.kind, keep: !!l2.keep, keepKey: 'l2:' + run.id + ':' + p.id + ':' + l2.kind + ':' + l2.src,
         action: 'collab-open-participant', attrs: 'data-run="' + esc(run.id) + '" data-participant="' + esc(p.id) + '"', time: '' })
     };
   }
@@ -1194,6 +1279,14 @@
       out.push({ action: 'collab-approve', attrs: pa, label: 'Allow once', primary: true });
       out.push({ action: 'collab-deny', attrs: pa, label: 'Don’t allow' });
       out.push({ action: 'collab-open-participant', attrs: pa, label: 'Details', soft: true });
+      return out;
+    }
+    /* a room between rounds: the room's own next step, as the view offers it and as room-protocol's owned rooms draw
+       it (the primary, then Summarize Now while rounds are left); Cancel stays in More, Open Panel in the actions row */
+    var ym = roomYourMove(run);
+    if (ym && ym.primary) {
+      out.push({ action: ym.primary.action, label: esc(ym.primary.label), primary: true });
+      if (ym.primary.action === 'collab-room-next-round') out.push({ action: 'collab-room-summarize', label: 'Summarize Now', soft: true });
       return out;
     }
     out.push({ action: 'collab-open-panel', attrs: 'data-tab="participants"', label: 'Details', soft: !out.length });
@@ -1341,7 +1434,8 @@
     if (prev && prev !== st) {
       if (TERMINAL[st] && !TERMINAL[prev]) UI.doneMark[run.id] = { users: userCount(run.threadId), runs: runsForThread(run.threadId).length };
       var P = PMX_();
-      if (P && P.sound) { if (st === 'attention') P.sound('needs'); else if (st === 'completed') P.sound('complete'); }
+      /* a room between rounds is your move (accent), not a helper that needs you: no needs chime for it */
+      if (P && P.sound) { if (st === 'attention' && !roomYourMove(run)) P.sound('needs'); else if (st === 'completed') P.sound('complete'); }
     }
     UI.last[run.id] = st;
   }
@@ -2357,6 +2451,7 @@
     if (r.config) d.config = Object.assign({}, d.config, r.config);
     if (d.kind === 'review') { d._previousMultiRows = null; d._lastStrategy = d.config.strategy; normalizeReview(d); }
     if (r.wonderer != null) d.wonderer = !!r.wonderer;
+    clampCrewParallel(d);
     UI.seat = {};
     UI.removed = null;
     d.lastFailure = null;
@@ -2515,9 +2610,12 @@
   function rosterHtml(ctx, d, parts) {
     var S = S_();
     var R = parts.roster || {};
+    /* five or more rows (a common case, 6.3): the column heads' one-line helpers go (their hover cards keep the words),
+       so the plate keeps its 72 px strip instead of falling to the caption */
+    var many = d.rows.length >= 5;
     var cols = (parts.rosterCols || []).map(function (c) {
       var hover = c.hover || COL_HOVER[c.label];
-      return { label: hover ? '<span data-hover-key="collab-col-' + esc(c.label) + '" data-hover-tip="' + esc(hover) + '">' + esc(c.label) + '</span>' : esc(c.label), helper: esc(c.helper || '') };
+      return { label: hover ? '<span data-hover-key="collab-col-' + esc(c.label) + '" data-hover-tip="' + esc(hover) + '">' + esc(c.label) + '</span>' : esc(c.label), helper: many ? '' : esc(c.helper || '') };
     });
     var rows = d.rows.map(function (r, i) { return draftRowHtml(ctx, d, r, i, parts); }).join('');
     var n = d.rows.length, max = R.max || KIND_PARTICIPANT_LIMIT[d.kind][1];
@@ -2967,7 +3065,9 @@
     var needsJob = !String(d.purpose || '').trim();
     if (d.kind === 'crew' && !d.autoMode) {
       var coord = optionOf(CONFIG_CHOICES.coordinator.options, cfg.coordinator), asg = optionOf(CONFIG_CHOICES.assignmentStrategy.options, cfg.assignmentStrategy);
-      var asked = clamp(cfg.parallelism || 1, 1, 8), cap = capacityOf(d), eff = Math.min(asked, cap);
+      /* the stepper stops at the team size (Crew Auto does the same at its 4), so the clamp sentence beside it only
+         ever names helpers that exist */
+      var maxC = Math.max(1, Math.min(8, n)), asked = Math.min(clamp(cfg.parallelism || 1, 1, 8), maxC), cap = capacityOf(d), eff = Math.min(asked, cap);
       var clamp1 = S.pmxClamp({ asked: asked, runs: cap });
       Object.assign(p, {
         title: 'Set up a Crew', lead: 'A small team of AIs splits your job into parts. A Coordinator hands them out and only accepts a part once its result is checked.',
@@ -2979,7 +3079,7 @@
           S.pmxCtl({ key: 'ctl-coordinator', label: 'Coordinator', helper: 'Splits the job, hands out the parts, checks and combines the results.', affects: 'lead', control: choiceTrigger(d, 'coordinator', null, ctx) }) +
           S.pmxCtl({ key: 'ctl-assign', label: 'Who decides who does what', helper: 'How parts are handed out.', affects: 'assign', control: choiceTrigger(d, 'assignmentStrategy', false, ctx) }) +
           S.pmxCtl({ key: 'ctl-parallel', label: 'Working at the same time', helper: 'More at once is faster but uses your limits faster.', capSay: clamp1 ? esc(clamp1.sheet) : '', affects: 'parallel',
-            control: S.pmxStepper({ key: 'step-parallel', input: { key: 'cfg-parallelism', attrs: 'data-collab-input="cfg-parallelism"' }, value: asked, min: 1, max: 8, cap: cap, unit: 'at once', affects: 'parallel' }) }),
+            control: S.pmxStepper({ key: 'step-parallel', input: { key: 'cfg-parallelism', attrs: 'data-collab-input="cfg-parallelism"' }, value: asked, min: 1, max: maxC, cap: cap, unit: 'at once', affects: 'parallel' }) }),
         promises: [
           { key: 'pr-perm', glyph: 'lock', strong: 'Helpers can’t do more than this chat:', text: 'same tools and Skills, and it asks first.', part: 'permission' },
           crewAutoOn(ctx && ctx.state && ctx.state.selectedThread)
@@ -3233,6 +3333,19 @@
     if (!own) return gen;
     var out = Object.assign({}, gen);
     Object.keys(own).forEach(function (k) { if (own[k] !== undefined) out[k] = own[k]; });
+    /* a kind's own "Working at the same time" stepper stops at the team size too (as COLLAB's and Crew Auto's do):
+       the draft value is already clamped (clampCrewParallel), this keeps + disabled at the team size */
+    if (d.kind === 'crew' && !d.autoMode && typeof out.howHtml === 'string' && out.howHtml !== gen.howHtml) {
+      var S = S_(), maxC = Math.max(1, Math.min(8, d.rows.length)), val = Math.min(clamp(d.config.parallelism || 1, 1, 8), maxC);
+      out.howHtml = out.howHtml.replace(/<div class="pmx-stepper"[^>]*data-k="step-parallel"[^>]*>[\s\S]*?<\/div>/, function () {
+        return S.pmxStepper({ key: 'step-parallel', input: { key: 'cfg-parallelism', attrs: 'data-collab-input="cfg-parallelism"' }, value: val, min: 1, max: maxC, cap: capacityOf(d), unit: 'at once', affects: 'parallel' });
+      });
+    }
+    /* the clamp sentence keeps one line in a short window with a specialist added (collaboration.css): its hover card
+       carries the whole sentence */
+    if (d.kind === 'crew' && !d.autoMode && typeof out.howHtml === 'string') out.howHtml = out.howHtml.replace(/<span class="pmx-step-capsay">([^<]*)<\/span>/, function (m, t) {
+      return '<span class="pmx-step-capsay" data-hover-key="collab-capsay" data-hover-tip="' + t.replace(/"/g, '&quot;') + '">' + t + '</span>';
+    });
     return out;
   }
   function refusalOf(d) {
@@ -3241,7 +3354,7 @@
     var helper = f.helper || (d.rows.filter(function (r) { return r.rowId === f.rowId; })[0] || {}).role || '';
     var t = S.pmxRefusalText(f.error, { helper: helper, kind: KIND_LABEL[d.kind], version: f.version, over: f.over }) || null;
     var fix = f.rowId && t && t.fix === 'Fix' ? { action: 'collab-refusal-fix', attrs: 'data-row="' + esc(f.rowId) + '"', label: 'Fix' } : null;
-    return S.pmxRefusal({ code: f.error, strong: t ? t.strong || 'Can’t start yet.' : 'Can’t start yet.', text: t ? t.text : esc(f.message || 'Nothing was started. Your setup is unchanged.'), fix: fix });
+    return S.pmxRefusal({ code: f.error, strong: t ? t.strong || 'Can’t start yet.' : 'Can’t start yet.', text: t ? t.text : 'Nothing was started. Your setup is unchanged.', fix: fix });
   }
   function heroHtml(ctx, d, p) {
     var S = S_();
@@ -3275,11 +3388,8 @@
     UI.jobEmpty = !String(d.purpose || '').trim();
     var main = p.main != null ? p.main : S.pmxQuestion({ key: 'q-who', n: 2, title: esc(p.whoTitle), meta: p.whoMeta, affects: p.whoAffects || 'team', body: (p.plate || '') + rosterHtml(ctx, d, p) });
     var promises = (p.promises || []).map(function (x) { return S.pmxPromise(x); }).join('');
-    /* the Crew Auto promise is the owner's E-02 statement and the sheet's only way to Crew Auto's settings (G-27): in
-       short windows (<= 820 px) the side column has no line to spare (the foundation drops it there), so it moves
-       under the roster, where the plate yields the height (collaboration.css shows exactly one of the two) */
-    var autoPr = p.main == null && !d.autoMode ? (p.promises || []).filter(function (x) { return x && x.part === 'auto'; })[0] : null;
-    if (autoPr) main += '<div class="pmx-collab-auto-short">' + S.pmxPromises(S.pmxPromise(Object.assign({}, autoPr, { key: 'pr-auto-short' }))) + '</div>';
+    /* the Crew Auto promise is the owner's E-02 statement and the sheet's only way to Crew Auto's settings (G-27): it
+       stays in the side column at every size (collaboration.css keeps it there in short windows) */
     var side = p.side != null ? p.side :
       S.pmxQuestion({ key: 'q-how', n: p.howN || 3, title: p.howTitle, affects: p.howAffects || '', body: p.howHtml || '' }) +
       (p.sideExtra || '') +
@@ -3447,6 +3557,12 @@
     return true;
   });
   function clearFailure(d, rowId) { if (d.lastFailure && (!rowId || !d.lastFailure.rowId || d.lastFailure.rowId === rowId)) d.lastFailure = null; }
+  /* "Working at the same time" never asks for more helpers than the team has (Crew Auto: at most 4): a remove, a
+     recipe or a typed value clamps it, so the sheet never promises a helper that isn't there */
+  function clampCrewParallel(d) {
+    if (!d || d.kind !== 'crew' || !d.config) return;
+    d.config.parallelism = clamp(d.config.parallelism || 1, 1, Math.max(1, Math.min(d.autoMode ? 4 : 8, d.rows.length)));
+  }
   EXT.action('collab-modal-add-participant', function (ctx) {
     var d = RTC.draft; if (!d) return true;
     var lim = KIND_PARTICIPANT_LIMIT[d.kind];
@@ -3471,8 +3587,10 @@
     var row = d.rows.splice(i, 1)[0];
     if (d.kind === 'review') { d.config.reviewerCount = d.rows.length; if (d.config.strategy === 'multi_pass') d._previousMultiRows = d.rows.slice(); }
     clearFailure(d, row.rowId);
+    var parallel = d.config && d.config.parallelism;
+    clampCrewParallel(d);
     /* "Removed Tester · Bring back" for 6 s (G-33) */
-    var token = { draft: d, row: row, index: i, seat: UI.seat[row.rowId] };
+    var token = { draft: d, row: row, index: i, seat: UI.seat[row.rowId], parallel: parallel };
     UI.removed = token; UI.saved = false;
     setTimeout(function () { if (UI.removed === token) { UI.removed = null; var c = EXT.ctx && EXT.ctx(); if (c && RTC.draft === d) c.renderOverlays(); } }, clockMs(waitMs('undo', 6000)));
     ctx.renderOverlays();
@@ -3486,6 +3604,8 @@
     if (d.rows.length >= KIND_PARTICIPANT_LIMIT[d.kind][1]) { ctx.renderOverlays(); return true; }
     d.rows.splice(Math.min(u.index, d.rows.length), 0, u.row);
     if (u.seat) UI.seat[u.row.rowId] = u.seat;
+    /* Bring back restores the team and the "at once" it had */
+    if (d.kind === 'crew' && u.parallel != null) { d.config.parallelism = u.parallel; clampCrewParallel(d); }
     if (d.kind === 'review') { d.config.reviewerCount = d.rows.length; d._previousMultiRows = d.rows.slice(); }
     ctx.renderOverlays();
     return true;
@@ -3610,7 +3730,7 @@
       var LIM = { parallelism: [1, 8], debateRounds: [1, 4], maxRounds: [1, 20] };
       var lim = LIM[field];
       d.config[field] = lim ? clamp(t.value, lim[0], lim[1]) : t.value;
-      if (d.autoMode && field === 'parallelism') d.config.parallelism = clamp(d.config.parallelism, 1, Math.max(1, Math.min(4, d.rows.length)));
+      if (field === 'parallelism') clampCrewParallel(d);
       normalizeReview(d);
     }
     UI.saved = false;
@@ -4075,11 +4195,13 @@
     return true;
   });
 
-  EXT.action('collab-build-with-crew', function (ctx, btn) {
-    var planId = btn.dataset.planId || 'ap-index', planVersion = Number(btn.dataset.planVersion) || 5;
-    /* G-28 Build With Crew mode: the hero comes from the Plan and is read-only; Start dispatches
-       cmd.chat.plan.build_with_crew (8.15, IMPACT A3-08) */
+  /* G-28 Build With Crew mode: the hero comes from the Plan and is read-only; Start dispatches
+     cmd.chat.plan.build_with_crew (8.15, IMPACT A3-08). One path for the wand row, the Plan card's More > Build With
+     Crew (pd-build-crew, chained below so plans.js's old pd-crew dialog never opens) and PM56_COLLAB.buildWithCrew. */
+  function openBuildWithCrew(ctx, planId, planVersion) {
+    planId = planId || 'ap-index';
     var plan = window.PM56_PLANS && window.PM56_PLANS.get ? window.PM56_PLANS.get(planId) : null;
+    planVersion = Number(planVersion) || (plan && Number(plan.version)) || 5;
     openConfigureDraft('crew', null, false);
     RTC.draft.buildWithCrew = true;
     RTC.draft.name = 'Build ' + (plan ? plan.title : planId);
@@ -4089,6 +4211,12 @@
     UI.stash = null;
     openSheet(ctx, true);
     return true;
+  }
+  EXT.action('collab-build-with-crew', function (ctx, btn) { return openBuildWithCrew(ctx, btn.dataset.planId, btn.dataset.planVersion); });
+  EXT.chainAction('pd-build-crew', function (ctx, btn) {
+    var id = btn && btn.dataset && btn.dataset.id; if (!id) return false;
+    if (ctx.closeMenu) ctx.closeMenu();
+    return openBuildWithCrew(ctx, id, null);
   });
 
 
@@ -4342,6 +4470,7 @@
     UI.expanded = {}; UI.more = {}; UI.selectedFindings = {};
     UI.face = {}; UI.settling = {}; UI.arriving = {}; UI.cancelAsk = {}; UI.tech = {}; UI.last = {}; UI.doneMark = {}; UI.sentTo = {};
     UI.prov = {}; UI.waiting = {}; UI.allLanes = {};
+    LANE_SEEN = {}; LANE_STREAM = {};
     return false;
   });
 
@@ -4522,10 +4651,7 @@
     restore: restoreFixture,
     fixture: function () { return JSON.parse(SEED_RUNS_JSON); },
     openConfigure: function (kind, reconfigureRunId, autoMode) { openConfigureDraft(kind, reconfigureRunId, autoMode); },
-    buildWithCrew: function (planId, planVersion) {
-      openConfigureDraft('crew', null, false);
-      RTC.draft.boundPlanId = planId; RTC.draft.boundPlanVersion = planVersion;
-    },
+    buildWithCrew: function (planId, planVersion) { var c = EXT.ctx && EXT.ctx(); return c ? openBuildWithCrew(c, planId, planVersion) : false; },
     /* Additive Correction v4 (MODAL / PART / WONV). */
     effects: effectsSnapshot,
     setOutcome: setOutcome,

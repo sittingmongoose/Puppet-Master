@@ -8,142 +8,16 @@
   'use strict';
   if (window.PM56_SHELL) return;
 
-  var CLOSE_ICON = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>';
   var CHEVRON = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  /* dialog({iconHtml,title,sub,pill,width,ariaLabel,body,foot,closeAction,closeIcon}) */
-  function dialog(o) {
-    o = o || {};
-    return '<section class="dialog mdl' + (o.cls ? ' ' + o.cls : '') + '" style="width:min(' + (o.width || 640) + 'px,calc(100vw - 20px))" role="dialog" aria-modal="true" aria-label="' + esc(o.ariaLabel || o.title) + '">' +
-        '<div class="mdl-head">' +
-          '<span class="mdl-icon">' + (o.iconHtml || '') + '</span>' +
-          '<div class="mdl-title"><strong>' + (o.title || '') + '</strong>' + (o.sub ? '<span>' + o.sub + '</span>' : '') + '</div>' +
-          (o.pill ? '<span class="meta-pill">' + o.pill + '</span>' : '') +
-          '<span class="spacer"></span>' +
-          '<button type="button" class="icon-button" data-action="' + esc(o.closeAction || 'close-dialog') + '" aria-label="Close dialog">' + (o.closeIcon || CLOSE_ICON) + '</button>' +
-        '</div>' +
-        '<div class="mdl-body">' + (o.body || '') + '</div>' +
-        (o.foot ? '<footer class="mdl-foot">' + o.foot + '</footer>' : '') +
-      '</section>';
-  }
-
-  /* section({iconHtml,label,meta,body}) */
-  function section(o) {
-    o = o || {};
-    return '<section class="mdl-section">' +
-        '<div class="mdl-section-head">' + (o.iconHtml || '') +
-          '<span class="mdl-section-label">' + (o.label || '') + '</span>' +
-          (o.meta ? '<span class="mdl-section-meta">' + o.meta + '</span>' : '') +
-        '</div>' +
-        '<div class="mdl-section-body">' + (o.body || '') + '</div>' +
-      '</section>';
-  }
-
-  /* field(labelHtml, controlHtml, hintHtml?) — exactly one interactive control. */
-  function field(labelHtml, controlHtml, hintHtml) {
-    return '<label class="mdl-field"><span>' + labelHtml + '</span>' + (controlHtml || '') +
-      (hintHtml ? '<small class="mdl-note">' + hintHtml + '</small>' : '') + '</label>';
-  }
-
-  function grid2(bodyHtml) { return '<div class="mdl-grid2">' + (bodyHtml || '') + '</div>'; }
-
-  /* seg(options,current,action,extraAttrsFn?) — options: [[value,label],…] or {value,label}. */
-  function seg(options, current, action, extraAttrsFn) {
-    return '<div class="mdl-seg" role="group">' + (options || []).map(function (opt) {
-      var value = Array.isArray(opt) ? opt[0] : opt.value;
-      var label = Array.isArray(opt) ? opt[1] : opt.label;
-      var active = String(value) === String(current);
-      return '<button type="button" class="' + (active ? 'active' : '') + '" data-action="' + esc(action) + '" data-value="' + esc(String(value)) + '" aria-pressed="' + active + '"' + (extraAttrsFn ? (extraAttrsFn(value, label) || '') : '') + '>' + label + '</button>';
-    }).join('') + '</div>';
-  }
-
-  /* tabs(items,current,{action,attr}) — same option shape as seg; attr defaults to data-value. */
-  function tabs(items, current, o) {
-    o = o || {};
-    var attr = o.attr || 'data-value';
-    return '<div class="mdl-tabs" role="tablist">' + (items || []).map(function (it) {
-      var value = Array.isArray(it) ? it[0] : it.value;
-      var label = Array.isArray(it) ? it[1] : it.label;
-      var active = String(value) === String(current);
-      return '<button type="button" role="tab" aria-selected="' + active + '" class="' + (active ? 'active' : '') + '" data-action="' + esc(o.action) + '" ' + attr + '="' + esc(String(value)) + '">' + label + '</button>';
-    }).join('') + '</div>';
-  }
-
-  /* disclosure(key,summaryHtml,bodyHtml,open?,cls?) — cls appends legacy classes. */
-  function disclosure(key, summaryHtml, bodyHtml, open, cls) {
-    return '<details class="mdl-disclosure' + (cls ? ' ' + cls : '') + '" data-k="' + esc(key) + '"' + (open ? ' open' : '') + '>' +
-        '<summary>' + summaryHtml + CHEVRON + '</summary>' +
-        '<div class="mdl-disclosure-body">' + (bodyHtml || '') + '</div>' +
-      '</details>';
-  }
-
-  /* choice({value,label,detail,active,action,extra}) — data-value is String(value) verbatim. */
-  function choice(o) {
-    o = o || {};
-    var active = !!o.active;
-    return '<button type="button" class="mdl-choice' + (active ? ' active' : '') + '" role="radio" aria-checked="' + active + '" data-action="' + esc(o.action) + '" data-value="' + esc(String(o.value)) + '"' + (o.extra || '') + '>' +
-        '<span class="mdl-radio" aria-hidden="true"></span>' +
-        '<span><strong>' + (o.label || '') + '</strong>' + (o.detail ? '<small>' + o.detail + '</small>' : '') + '</span>' +
-      '</button>';
-  }
-
-  function chip(tone, labelHtml) {
-    return '<span class="mdl-chip"' + (tone ? ' data-tone="' + esc(tone) + '"' : '') + '>' + labelHtml + '</span>';
-  }
-
-  /* rows([[keyHtml,valueHtml],…]) */
-  function rows(pairs) {
-    return '<div class="mdl-rows">' + (pairs || []).map(function (p) {
-      return '<div><span>' + p[0] + '</span><strong>' + p[1] + '</strong></div>';
-    }).join('') + '</div>';
-  }
-
-  function note(html, tone) {
-    return '<p class="mdl-note' + (tone ? ' ' + esc(tone) : '') + '">' + html + '</p>';
-  }
-
-
-  function stat(labelHtml, valueHtml) {
-    return '<div class="mdl-stat"><strong>' + valueHtml + '</strong><span>' + labelHtml + '</span></div>';
-  }
-
-  /* stats([[label,valueHtml],…]) */
-  function stats(items) {
-    return '<div class="mdl-stats">' + (items || []).map(function (it) { return stat(it[0], it[1]); }).join('') + '</div>';
-  }
-
-  function foot(leftHtml, rightHtml) {
-    return (leftHtml || '') + '<span class="spacer"></span>' + (rightHtml || '');
-  }
-
-  /* card({attrs,head,body,actions}) + cardHead/copy helpers for list rows. */
-  function card(o) {
-    o = o || {};
-    return '<article class="mdl-card"' + (o.attrs || '') + '>' +
-      (o.head ? '<div class="mdl-card-head">' + o.head + '</div>' : '') +
-      (o.body || '') +
-      (o.actions ? '<div class="mdl-card-actions">' + o.actions + '</div>' : '') +
-      '</article>';
-  }
-
-  function cardHead(o) {
-    o = o || {};
-    return (o.iconHtml ? '<span class="mdl-card-icon">' + o.iconHtml + '</span>' : '') +
-      (o.copy ? '<span class="mdl-card-copy">' + o.copy + '</span>' : '') +
-      (o.extra || '');
-  }
-
-  function copy(strongHtml, spanHtml) {
-    return '<strong>' + strongHtml + '</strong>' + (spanHtml ? '<span>' + spanHtml + '</span>' : '');
-  }
-
-  function check(labelHtml, checked, attrs) {
-    return '<label class="mdl-check"><input type="checkbox"' + (checked ? ' checked' : '') + (attrs || '') + '><span>' + labelHtml + '</span></label>';
-  }
+  /* F0 step 8 (IMPACT A1-51, closing 2026-09-28): the legacy dialog-grammar builders (dialog, section, field,
+     grid2, seg, tabs, disclosure, choice, chip, rows, note, stat, stats, foot, card, cardHead, copy, check) are
+     retired: every wand module now builds from the pmx builders below, and no *.js called them. pickerButton
+     stays (Collaboration, Scheduling, BSD, ELI5, New chat defaults, Review, BrainStorm and the run views call it). */
 
   /* pickerButton({action,anchor,strong,small,markHtml,iconHtml,extra}) —
      markup-compatible with PM56_PICKERS.modelButton and bsd.js choices(). */
@@ -158,10 +32,6 @@
 
   window.PM56_SHELL = {
     esc: esc,
-    dialog: dialog, section: section, field: field, grid2: grid2,
-    seg: seg, tabs: tabs, choice: choice, chip: chip, rows: rows, note: note,
-    disclosure: disclosure, stat: stat, stats: stats, foot: foot,
-    card: card, cardHead: cardHead, copy: copy, check: check,
     pickerButton: pickerButton,
     CHEVRON: CHEVRON
   };
@@ -257,6 +127,10 @@
     'edit': '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',
     'search': '<circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/>',
     'undo': '<path d="M9 7 4.5 11.5 9 16"/><path d="M5 11.5h9.5a5 5 0 0 1 0 10H12"/>',
+    /* closing (ROOM-B FR 2): the "→ To-Do created" and "↳ to you" marks; the embedded Inter / Plex subsets have no
+       arrow glyphs, so the text arrows fell back to another face */
+    'arrow-right': '<path d="M4.5 12h15M13.5 6l6 6-6 6"/>',
+    'reply': '<path d="M6 4.5V11a4 4 0 0 0 4 4h9.5"/><path d="m15.5 11 4 4-4 4"/>',
     'sev-critical': '<path class="pmx-g-fill" d="M12 4.5 19.5 12 12 19.5 4.5 12z"/>',
     'sev-major': '<path class="pmx-g-fill" d="M12 5 20 19H4z"/>',
     'sev-minor': '<circle class="pmx-g-fill" cx="12" cy="12" r="4.5"/>',
@@ -617,17 +491,21 @@
          line to nothing inside its own bottom padding without fading the border with it */
       : '<div class="pmx-hero-box"><textarea class="pmx-hero-field" rows="' + num(f.rows, 3) + '" data-pmx-autofocus' + raw(f.attrs) + ' placeholder="' + esc(f.placeholder) + '">' + esc(f.value) + '</textarea></div>';
     var side = (o.preview || o.aside) ? '<div class="pmx-hero-side">' + str(o.preview) + str(o.aside) + '</div>' : '';
-    return '<div class="' + cls('mdl-section pmx-hero', o.cls) + '"' + k(o.key) + ' data-aside="' + (side ? 1 : 0) + '"' + at('data-pmx-affects', o.affects || 'job') + raw(o.attrs) + '>' +
+    /* before (closing, COLLAB FR 3): a control drawn beside the field, ahead of it (Review's target trigger); the hero
+       marks itself data-before="1" for the layout that puts it there */
+    return '<div class="' + cls('mdl-section pmx-hero', o.cls) + '"' + k(o.key) + ' data-aside="' + (side ? 1 : 0) + '"' + (o.before ? ' data-before="1"' : '') + at('data-pmx-affects', o.affects || 'job') + raw(o.attrs) + '>' +
       '<div class="pmx-hero-main"><header class="pmx-q-head">' + (o.n != null && o.n !== '' ? '<span class="pmx-q-n">' + o.n + '</span>' : '') + '<h3 class="pmx-q-title">' + str(o.title) + '</h3>' +
         (o.headAside ? '<span class="pmx-hero-aside">' + o.headAside + '</span>' : '') + '</header>' +
-        field + (o.helper ? '<p class="pmx-help">' + o.helper + '</p>' : '') + '</div>' + side + '</div>';
+        str(o.before) + field + (o.helper ? '<p class="pmx-help">' + o.helper + '</p>' : '') + '</div>' + side + '</div>';
   }
   /* pmxCtl({..., capSay}) - capSay: the plan's cap sentence ("You asked for 3; your plan runs 2 at once..."),
      which takes the helper's place under a stepper and always wraps (J-2 reference update) */
+  /* width (closing, BSD): the control column's width in px (row layout; the default column is 216) */
   function pmxCtl(o) {
     o = o || {};
     var helper = o.capSay ? '<span class="pmx-step-capsay">' + o.capSay + '</span>' : o.helper;
-    return '<div class="' + cls('pmx-ctl', o.cls) + '"' + k(o.key) + ' data-layout="' + (o.layout === 'stack' ? 'stack' : 'row') + '"' + at('data-pmx-affects', o.affects) + (o.disabled ? ' data-state="disabled"' : '') + raw(o.attrs) + '>' +
+    var w = o.width != null && isFinite(Number(o.width)) ? ' data-width="1" style="--pmx-ctl-w:' + num(o.width, 216) + 'px"' : '';
+    return '<div class="' + cls('pmx-ctl', o.cls) + '"' + k(o.key) + ' data-layout="' + (o.layout === 'stack' ? 'stack' : 'row') + '"' + at('data-pmx-affects', o.affects) + (o.disabled ? ' data-state="disabled"' : '') + w + raw(o.attrs) + '>' +
       '<div class="pmx-ctl-copy"><span class="pmx-ctl-label">' + str(o.label) + '</span>' + (helper ? '<span class="pmx-help">' + helper + '</span>' : '') + '</div>' +
       '<div class="pmx-ctl-control">' + str(o.control) + '</div>' + (o.reason ? '<p class="pmx-reason">' + o.reason + '</p>' : '') + '</div>';
   }
@@ -681,7 +559,7 @@
   function pmxStepper(o) {
     o = o || {};
     var inp = o.input || {};
-    var min = num(o.min, 1), max = num(o.max, 8), value = num(o.value, min);
+    var min = num(o.min, 1), max = num(o.max, 8), value = num(o.value, min), step = Math.max(1, num(o.step, 1));
     var cap = o.cap == null ? max : num(o.cap, max);
     var cells = '';
     if (o.cells !== false && max <= 12) {
@@ -690,20 +568,22 @@
     }
     var forKey = inp.key || '';
     return '<div class="' + cls('pmx-stepper', o.cls) + '"' + k(o.key) + at('data-pmx-affects', o.affects) + raw(o.attrs) + '>' +
-      '<button type="button" class="pmx-step" data-action="pmx-step"' + at('data-for', forKey) + ' data-delta="-1" aria-label="Fewer"' + (value <= min ? ' disabled' : '') + '>' + pmxGlyph('minus', 13) + '</button>' +
+      '<button type="button" class="pmx-step" data-action="pmx-step"' + at('data-for', forKey) + ' data-delta="-' + step + '" aria-label="Fewer"' + (value <= min ? ' disabled' : '') + '>' + pmxGlyph('minus', 13) + '</button>' +
       cells + '<output class="pmx-step-val"><b data-k="cnt:' + value + '">' + value + '</b>' + (o.unit ? ' <small>' + o.unit + '</small>' : '') + '</output>' +
-      '<button type="button" class="pmx-step" data-action="pmx-step"' + at('data-for', forKey) + ' data-delta="1" aria-label="More"' + (value >= max ? ' disabled' : '') + '>' + pmxGlyph('plus', 13) + '</button>' +
+      '<button type="button" class="pmx-step" data-action="pmx-step"' + at('data-for', forKey) + ' data-delta="' + step + '" aria-label="More"' + (value >= max ? ' disabled' : '') + '>' + pmxGlyph('plus', 13) + '</button>' +
       '<input type="number" class="pmx-step-input"' + raw(inp.attrs) + ' value="' + value + '" min="' + min + '" max="' + max + '" tabindex="-1" aria-hidden="true"></div>' +
       (o.capText ? '<p class="pmx-step-cap">' + o.capText + '</p>' : '');
   }
+  /* unset:true (closing, MEMTEACH): nothing chosen yet (Teach's Replace / Keep both); no option is checked and the
+     rule is hidden (data-state="unset"). Keyboard: one tab stop, arrows move the choice (pmx-system.js). */
   function pmxSwitch(o) {
     o = o || {};
     var opts = o.options || [];
-    var idx = 0;
+    var idx = 0, unset = !!o.unset;
     opts.forEach(function (op, i) { if (String(op.value) === String(o.current)) idx = i; });
-    return '<div class="' + cls(o.size === 'small' ? 'pmx-switch pmx-switch--small' : 'pmx-switch', o.cls) + '" role="radiogroup"' + k(o.key) + at('data-pmx-affects', o.affects) + at('aria-label', o.label) + ' style="--i:' + idx + ';--n:' + Math.max(1, opts.length) + '"' + raw(o.attrs) + '>' +
+    return '<div class="' + cls(o.size === 'small' ? 'pmx-switch pmx-switch--small' : 'pmx-switch', o.cls) + '" role="radiogroup"' + k(o.key) + at('data-pmx-affects', o.affects) + at('aria-label', o.label) + (unset ? ' data-state="unset"' : '') + ' style="--i:' + idx + ';--n:' + Math.max(1, opts.length) + '"' + raw(o.attrs) + '>' +
       opts.map(function (op, i) {
-        var on = i === idx;
+        var on = !unset && i === idx;
         return '<button type="button" role="radio" aria-checked="' + on + '" class="pmx-switch-opt" data-action="' + esc(op.action || o.action) + '" data-value="' + esc(op.value) + '"' + raw(op.attrs) + '>' +
           '<span class="pmx-switch-word">' + str(op.label) + '</span>' + (op.helper ? '<span class="pmx-switch-help">' + op.helper + '</span>' : '') + '</button>';
       }).join('') + '<i class="pmx-switch-rule" aria-hidden="true"></i></div>';
@@ -769,18 +649,48 @@
     return '<p class="' + cls('pmx-refusal', o.cls) + '" role="alert"' + at('data-failure', o.code) + raw(o.attrs) + '>' + pmxGlyph('warn', 15) + '<span><b>' + str(o.strong || 'Can’t start yet.') + '</b> ' + str(o.text) +
       (fix ? ' <button type="button" class="text-button" data-action="' + esc(fix.action) + '"' + raw(fix.attrs) + '>' + str(fix.label || 'Fix') + '</button>' : '') + '</span></p>';
   }
+  /* the number of top-level elements (and loose text runs) in an HTML string: one foot grid column each */
+  var VOID_TAG = { area: 1, br: 1, col: 1, embed: 1, hr: 1, img: 1, input: 1, link: 1, meta: 1, source: 1, track: 1, wbr: 1 };
+  function topCount(html) {
+    var n = 0, depth = 0, last = 0, m, re = /<(\/?)([a-zA-Z][\w-]*)[^>]*?(\/?)>/g;
+    html = str(html);
+    while ((m = re.exec(html))) {
+      if (depth === 0 && html.slice(last, m.index).trim()) n++;
+      var tag = m[2].toLowerCase();
+      if (m[1]) depth = Math.max(0, depth - 1);
+      else if (VOID_TAG[tag] || m[3]) { if (depth === 0) n++; }
+      else { if (depth === 0) n++; depth++; }
+      last = re.lastIndex;
+    }
+    if (depth === 0 && html.slice(last).trim()) n++;
+    return n;
+  }
+  /* pmxFoot({cls,attrs,save,readback,estimate,refusal,extra,cancel,primary})
+     Closing (lane FOUNDATION REQUESTS): cancel:false draws no Cancel (sheets whose changes apply at once: ELI5, Memory,
+     New chat defaults, BSD's read-only sheets, a confirmation whose secondary is its own); primary:null|false draws no
+     primary (Revert's Ineligible face, 8.12); primary.key keys the primary's identity (data-k, so a relabelled warm
+     primary never tweens to accent in place); the grid gets one column per part actually drawn, extra's own elements
+     included (--pmx-foot-cols), so an extra never pushes the primary to a second row; a primary.reason takes the
+     estimate's place in the say column (COLLAB FR 1: a wrapped read-back plus the estimate left it no room) and the
+     foot grows past 80 px rather than clip. */
   function pmxFoot(o) {
     o = o || {};
-    var s = o.save, c = o.cancel || {}, p = o.primary || {};
+    var s = o.save, c = o.cancel === false ? null : (o.cancel || {}), p = o.primary === null || o.primary === false ? null : (o.primary || {});
     var save = s ? '<button type="button" class="text-button pmx-save" data-action="' + esc(s.action) + '" data-state="' + (s.state === 'saved' ? 'saved' : 'idle') + '"' + raw(s.attrs) + '>' +
       pmxGlyph(s.state === 'saved' ? 'check' : 'bookmark', 14) + '<span>' + (s.state === 'saved' ? 'Saved as your default' : (s.label || 'Save as my default')) + '</span></button>' : '';
-    var tone = p.tone === 'warm' ? 'warm' : 'accent';
-    return '<footer class="' + cls('mdl-foot pmx-foot', o.cls) + '" data-save="' + (s ? 1 : 0) + '"' + (p.reason ? ' data-reason="1"' : '') + raw(o.attrs) + '>' + save +
+    var reason = p && p.reason;
+    var tone = p && p.tone === 'warm' ? 'warm' : 'accent';
+    var cols = (s ? ['auto'] : []).concat(['minmax(0,1fr)']);
+    for (var i = topCount(o.extra); i > 0; i--) cols.push('auto');
+    if (c) cols.push('auto');
+    if (p) cols.push('auto');
+    return '<footer class="' + cls('mdl-foot pmx-foot', o.cls) + '" data-save="' + (s ? 1 : 0) + '"' + (reason ? ' data-reason="1"' : '') + (c ? '' : ' data-cancel="0"') + (p ? '' : ' data-primary="0"') +
+      ' style="--pmx-foot-cols:' + cols.join(' ') + '"' + raw(o.attrs) + '>' + save +
       /* a refusal takes the read-back's place and the estimate's line too (J-2: two stacked notes crowded the foot) */
-      '<div class="pmx-foot-say">' + (o.refusal ? str(o.refusal) : str(o.readback) + str(o.estimate)) + '</div>' + str(o.extra) +
-      '<button type="button" class="soft-button pmx-cancel" data-action="' + esc(c.action || 'close-dialog') + '"' + raw(c.attrs) + '>' + str(c.label || 'Cancel') + '</button>' +
-      '<button type="button" class="primary-button pmx-primary" data-action="' + esc(p.action) + '" data-tone="' + tone + '"' + raw(p.attrs) + (p.disabled ? ' disabled' : '') + '><span class="pmx-primary-label">' + str(p.label) + '</span></button>' +
-      (p.reason ? '<p class="' + cls('pmx-reason pmx-foot-reason', p.reasonCls) + '">' + p.reason + '</p>' : '') + '</footer>';
+      '<div class="pmx-foot-say">' + (o.refusal ? str(o.refusal) : str(o.readback) + (reason ? '' : str(o.estimate))) + '</div>' + str(o.extra) +
+      (c ? '<button type="button" class="soft-button pmx-cancel" data-action="' + esc(c.action || 'close-dialog') + '"' + raw(c.attrs) + '>' + str(c.label || 'Cancel') + '</button>' : '') +
+      (p ? '<button type="button" class="primary-button pmx-primary" data-action="' + esc(p.action) + '" data-tone="' + tone + '"' + k(p.key) + raw(p.attrs) + (p.disabled ? ' disabled' : '') + '><span class="pmx-primary-label">' + str(p.label) + '</span></button>' : '') +
+      (reason ? '<p class="' + cls('pmx-reason pmx-foot-reason', p.reasonCls) + '">' + reason + '</p>' : '') + '</footer>';
   }
   function pmxConfirm(o) {
     o = o || {};
@@ -821,7 +731,11 @@
     o = o || {};
     var density = DENSITIES[o.density] ? o.density : 'live';
     if (o.preview) {
-      return '<article class="pmx-run" data-k="pv:' + esc(o.key || 'run') + '" data-pmx-preview="1" data-density="' + density + '"' + at('data-pmx-kind', o.kind) + at('data-tone', o.tone) + ' aria-hidden="true">' +
+      /* closing (COLLAB FR 15): the preview keeps a caller's pmx-* classes and its attrs, run through the same inert
+         filter as the card's markup (no action, run id or hook survives); non-pmx classes are dropped as before */
+      var pvCls = str(o.cls).split(/\s+/).filter(function (c) { return c.indexOf('pmx-') === 0; }).join(' ');
+      var pvAttrs = o.attrs ? inert('<i ' + str(o.attrs).trim() + '>').replace(/^<i|>$/g, '') : '';
+      return '<article class="' + cls('pmx-run', pvCls) + '" data-k="pv:' + esc(o.key || 'run') + '" data-pmx-preview="1" data-density="' + density + '"' + at('data-pmx-kind', o.kind) + at('data-tone', o.tone) + pvAttrs + ' aria-hidden="true">' +
         '<header class="pmx-run-head">' + inert(o.headHtml) + '</header><div class="pmx-run-body">' + inert(o.bodyHtml) + '</div></article>';
     }
     return '<article class="' + cls('pmx-run', o.cls) + '"' + k(o.key) + ' data-density="' + density + '"' + at('data-pmx-kind', o.kind) + at('data-run-id', o.runId) + at('data-tone', o.tone) +
@@ -864,7 +778,9 @@
   var STOP_STATES = { done: 1, now: 1, next: 1, skipped: 1, failed: 1 };
   function pmxTrack(o) {
     o = o || {};
-    return '<div class="' + cls('pmx-track', o.cls) + '"' + k(o.key) + raw(o.attrs) + '><ol class="pmx-track-line">' + (o.stops || []).map(function (s) {
+    /* data-n (closing, STORM-A): the stop count; a long track (6 or more stops) keeps its M form at the L tier, where
+       every label beside its dot would not fit */
+    return '<div class="' + cls('pmx-track', o.cls) + '"' + k(o.key) + ' data-n="' + (o.stops || []).length + '"' + raw(o.attrs) + '><ol class="pmx-track-line">' + (o.stops || []).map(function (s) {
       var st = STOP_STATES[s.state] ? s.state : 'next';
       return '<li class="pmx-stop"' + k(s.key) + ' data-state="' + st + '"><i class="pmx-stop-dot"></i><span class="pmx-stop-label">' + str(s.label) + '</span></li>';
     }).join('') + '</ol><p class="pmx-track-now">' + str(o.nowText) + '</p></div>';
@@ -900,6 +816,10 @@
     var t = a.tone || (a.primary ? 'primary' : (a.soft ? 'soft' : 'text'));
     return cls((t === 'primary' ? 'primary-button' : t === 'soft' ? 'soft-button' : 'text-button') + ' ' + base, a.cls);
   }
+  /* closing (STORM-A): a disabled action's reason is printed under the row, never dropped */
+  function actReasons(items) {
+    return (items || []).filter(function (a) { return a && a.disabled && a.reason; }).map(function (a) { return '<p class="pmx-reason pmx-act-reason">' + a.reason + '</p>'; }).join('');
+  }
   function actButton(a, base) {
     a = a || {};
     return '<button type="button" class="' + btnCls(a, base || 'pmx-act') + '"' + at('data-action', a.action) + raw(a.attrs) + (a.disabled ? ' disabled' : '') + (a.aria ? ' aria-label="' + esc(a.aria) + '"' : '') + '>' +
@@ -917,7 +837,7 @@
         a = a || {};
         var extra = a.extra != null ? !!a.extra : (i >= 2 && !a.primary && !a.soft && (!a.tone || a.tone === 'text'));
         return actButton(extra ? Object.assign({}, a, { cls: cls('pmx-act-extra', a.cls) }) : a, 'pmx-act');
-      }).join('') + '</div></div>';
+      }).join('') + '</div>' + actReasons(o.actions) + '</div>';
   }
   function pmxResult(o) {
     o = o || {};
@@ -967,7 +887,7 @@
     }).join('') +
       ((ea || ma) ? '<span class="pmx-grow"></span>' : '') +
       (ea ? '<button type="button" class="icon-button pmx-act" data-action="' + esc(ea) + '"' + raw(e.attrs) + ' aria-label="' + (e.open ? 'Collapse' : 'Expand') + '" aria-expanded="' + !!e.open + '">' + pmxGlyph(e.open ? 'chevron-up' : 'chevron-down', 15) + '</button>' : '') +
-      (ma ? '<button type="button" class="icon-button pmx-act" data-action="' + esc(ma) + '"' + raw(m.attrs) + ' aria-label="More" aria-expanded="' + !!m.open + '">' + pmxGlyph('more', 16) + '</button>' : '') + '</div>';
+      (ma ? '<button type="button" class="icon-button pmx-act" data-action="' + esc(ma) + '"' + raw(m.attrs) + ' aria-label="More" aria-expanded="' + !!m.open + '">' + pmxGlyph('more', 16) + '</button>' : '') + actReasons(items) + '</div>';
   }
   /* pmxLedgerLine({key,cls,attrs,kind,kindWord,markHtml,cluster,title,headline,glyph,time,cost,recorded,runId,actions,footHtml,
                    hoverKey,headCls,footCls,badgeCls,titleCls,statusCls,metaCls}) - IMPACT A2-14: the one-line receipt every
@@ -977,8 +897,13 @@
      (IMPACT A1-24). The run title stays in the DOM for the harness at every tier (IMPACT A2-19). */
   function pmxLedgerLine(o) {
     o = o || {};
-    var meta = [o.time, o.cost].filter(nonEmpty).map(function (p, i) { return '<span class="' + (i ? 'pmx-receipt-cost' : 'pmx-receipt-time') + '">' + p + '</span>'; }).join('<span class="pmx-receipt-sep"> · </span>');
-    var tip = [o.recorded ? PMX_COPY.cost.recorded : '', [o.time, o.cost].filter(nonEmpty).map(plainText).join(' · ')].filter(nonEmpty).join('\n');
+    /* closing review (DESIGN major): a recorded run's play-ring already says "recorded", and its hover card's first line
+       says "Recorded example · no AI cost" (A1-24); printing the same words as the line's cost left the headline ~70 px
+       at the L tier ("Export re..."), so that cost stays in the hover card only */
+    var cost = o.recorded && plainText(o.cost) === PMX_COPY.cost.recorded ? '' : o.cost;
+    var meta = [o.time, cost].filter(nonEmpty).map(function (p, i) { return '<span class="' + (i ? 'pmx-receipt-cost' : 'pmx-receipt-time') + '">' + p + '</span>'; }).join('<span class="pmx-receipt-sep"> · </span>');
+    /* tip (closing, MEMTEACH): the headline's hover-card text, given outright */
+    var tip = o.tip != null ? plainText(o.tip) : [o.recorded ? PMX_COPY.cost.recorded : '', [o.time, cost].filter(nonEmpty).map(plainText).join(' · ')].filter(nonEmpty).join('\n');
     var hk = o.hoverKey || (o.key != null && o.key !== '' ? 'rcpt:' + o.key : '');
     var hover = tip && hk ? ' data-hover-key="' + esc(hk) + '" data-hover-tip="' + esc(tip) + '"' : '';
     var foot = o.footHtml != null ? str(o.footHtml) : (o.actions || []).slice(0, 2).map(function (a) { return actButton(a, 'pmx-act'); }).join('');
@@ -1000,31 +925,44 @@
     var open = o.open || {}, ex = o.expand || {}, mo = o.more || {};
     var ea = ex.action || (collab ? 'collab-toggle-expand' : ''), oa = open.action || (collab ? 'collab-open-panel' : ''), ma = mo.action || (collab ? 'collab-toggle-more' : '');
     var foot = (ea ? '<button type="button" class="icon-button pmx-act" data-action="' + esc(ea) + '"' + run + raw(ex.attrs) + ' aria-label="Expand">' + pmxGlyph('chevron-down', 15) + '</button>' : '') +
-      (oa ? '<button type="button" class="text-button pmx-act pmx-open" data-action="' + esc(oa) + '"' + run + raw(open.attrs) + '>' + str(open.label || 'Open<span class="pmx-long"> Panel</span>') + '</button>' : '') +
+      (oa ? '<button type="button" class="text-button pmx-act pmx-open" data-action="' + esc(oa) + '"' + run + raw(open.attrs) + '>' + str(open.label || '<span>Open<span class="pmx-long"> Panel</span></span>') + '</button>' : '') +
       (ma ? '<button type="button" class="icon-button pmx-act" data-action="' + esc(ma) + '"' + run + raw(mo.attrs) + ' aria-label="More">' + pmxGlyph('more', 16) + '</button>' : '');
     var p = {}; for (var key in o) if (Object.prototype.hasOwnProperty.call(o, key)) p[key] = o[key];
     p.footHtml = foot;
     return pmxLedgerLine(p);
+  }
+  /* closing review (dock lines): the 9.1 deck reads "Crew · <title> · <reason>". A sentence that starts a clause of its
+     own (a capital, a digit, a quote) gets " · " after the bold kind word; one that continues the kind word ("1 scheduled
+     message" + "needs you") or brings its own separator ("· Next: ...") joins with a space, as before. */
+  function dockJoin(kindWord, sentence) {
+    if (!nonEmpty(kindWord)) return '';
+    var first = plainText(sentence).replace(/^\s+/, '').charAt(0);
+    return !first || first === '·' || /[a-z]/.test(first) ? ' ' : '<span class="pmx-dock-sep"> · </span>';
   }
   function pmxDockLine(o) {
     o = o || {};
     var tone = { live: 1, needs: 1, yourmove: 1, comingup: 1 }[o.tone] ? o.tone : 'live';
     var a = o.action || {};
     return '<div class="' + cls('pmx-dock-line', o.cls) + '"' + k(o.key) + ' data-tone="' + tone + '"' + at('data-run', o.runId) + raw(o.attrs) + '>' + str(o.markHtml) +
-      '<p class="pmx-dock-say"><b>' + str(o.kindWord) + '</b> ' + str(o.sentence) + '</p>' + (o.time != null && o.time !== '' ? '<span class="pmx-clock">' + o.time + '</span>' : '') +
+      '<p class="pmx-dock-say">' + (nonEmpty(o.kindWord) ? '<b>' + str(o.kindWord) + '</b>' : '') + dockJoin(o.kindWord, o.sentence) + str(o.sentence) + '</p>' + (o.time != null && o.time !== '' ? '<span class="pmx-clock">' + o.time + '</span>' : '') +
       (a.action ? '<button type="button" class="text-button pmx-dock-act" data-action="' + esc(a.action) + '"' + raw(a.attrs) + '>' + str(a.label || 'Show') + '</button>' : '') + '</div>';
   }
   function pmxDock(linesHtml, overflowText) {
     return '<div class="pmx-dock" data-k="pmx-dock">' + str(linesHtml) + (overflowText ? '<p class="pmx-dock-more">' + overflowText + '</p>' : '') + '</div>';
   }
+  /* closing: num (REVIEW-B FR 2) prints the finding's number ahead of its claim ("created from findings 1 and 2");
+     wrap (REVIEW-A FR 1) lets the meta line wrap as whole parts, each part after the first carrying its own "·" in an
+     18 px lead-in that is clipped away where a part starts a line, so a wrapped line never starts with "·" */
   function pmxFinding(o) {
     o = o || {};
     var b = o.box || {};
     var sevKey = o.severityKey || o.sev || (SEV_WORD[str(o.severity).toLowerCase()] ? str(o.severity).toLowerCase() : '');
-    return '<div class="' + cls('pmx-finding', o.cls) + '"' + k(o.key) + at('data-severity', sevKey) + raw(o.attrs) + '>' +
+    var parts = [o.severity, o.disposition, o.agree].filter(function (p) { return p != null && p !== ''; });
+    var meta = o.wrap ? parts.map(function (p) { return '<span class="pmx-fpart">' + p + '</span>'; }).join('') : parts.join('<span class="pmx-sep"> · </span>');
+    return '<div class="' + cls('pmx-finding', o.cls) + '"' + k(o.key) + at('data-severity', sevKey) + (o.wrap ? ' data-wrap="1"' : '') + raw(o.attrs) + '>' +
       '<label class="pmx-finding-tick"><input type="checkbox"' + raw(b.attrs) + (b.checked ? ' checked' : '') + (b.disabled ? ' disabled' : '') + '><span class="pmx-box" aria-hidden="true"></span><span class="pmx-sr">Include finding ' + str(o.n) + '</span></label>' +
-      '<div class="pmx-finding-copy"><p class="pmx-finding-claim">' + str(o.claim) + '</p>' +
-        '<p class="pmx-finding-meta">' + [o.severity, o.disposition, o.agree].filter(function (p) { return p != null && p !== ''; }).join('<span class="pmx-sep"> · </span>') + '</p>' +
+      '<div class="pmx-finding-copy"><p class="pmx-finding-claim">' + (o.num != null && o.num !== '' ? '<span class="pmx-finding-n">' + o.num + '</span>' : '') + str(o.claim) + '</p>' +
+        '<p class="pmx-finding-meta"' + (o.wrap ? ' data-wrap="1"' : '') + '>' + meta + '</p>' +
         (o.why ? '<p class="pmx-finding-why">' + o.why + '</p>' : '') + (o.todo ? '<p class="pmx-finding-todo">' + o.todo + '</p>' : '') +
         (b.reason ? '<p class="pmx-reason">' + b.reason + '</p>' : '') + '</div></div>';
   }
@@ -1043,25 +981,37 @@
     o = o || {};
     return '<span class="' + cls('pmx-agree', o.cls) + '"' + raw(o.attrs) + '><span class="pmx-agree-dots">' + (o.votes || []).map(agreeDot).join('') + '</span><span>' + str(o.words) + '</span></span>';
   }
+  /* closing (STORM-A): the aisle is drawn only while someone is deciding and the wing only when someone abstained
+     (with omitEmpty: true, or when deciding / abstained is given as ''), wingLabel names the wing ("Doesn’t vote"),
+     op.names prints the backers' names once under a column (names under the 22 px marks were capped at 64 px),
+     op.ruledText replaces the ruled-out sentence after its fixed part, grow:true lets the board take its content's
+     height with two-line titles, and a ruled option keeps its words at full contrast (only its marks dim) */
   function pmxVoteBoard(o) {
     o = o || {};
     var opts = o.options || [];
+    var omit = o.omitEmpty === true;
+    var hasAisle = !(omit || o.deciding === '') || nonEmpty(o.deciding), hasWing = !(omit || o.abstained === '') || nonEmpty(o.abstained);
+    if (omit) { hasAisle = nonEmpty(o.deciding); hasWing = nonEmpty(o.abstained); }
     var optHtml = opts.map(function (op) {
       var backers = (op.backers || []).map(function (b) {
         var conf = Math.max(1, Math.min(3, Math.round(num(b.conf, 2))));
         return '<span class="pmx-voter"' + k(b.key) + '>' + str(b.markHtml || b.mark) + '<i class="pmx-conf" aria-hidden="true"><i data-off="0"></i><i data-off="' + (conf < 2 ? 1 : 0) + '"></i><i data-off="' + (conf < 3 ? 1 : 0) + '"></i></i>' + (b.name ? '<span>' + b.name + '</span>' : '') + '</span>';
       }).join('');
-      return '<div class="pmx-vote-opt"' + k(op.key) + (op.ruledOut ? ' data-state="ruled"' : '') + '><p class="pmx-vote-title">' + str(op.title) + '</p><p class="pmx-vote-count">' + str(op.count) + '</p><div class="pmx-vote-floor">' + backers + '</div></div>';
+      return '<div class="pmx-vote-opt"' + k(op.key) + (op.ruledOut ? ' data-state="ruled"' : '') + '><p class="pmx-vote-title">' + str(op.title) + '</p><p class="pmx-vote-count">' + str(op.count) + '</p><div class="pmx-vote-floor">' + backers + '</div>' +
+        (nonEmpty(op.names) ? '<p class="pmx-vote-names">' + op.names + '</p>' : '') + '</div>';
     });
-    var aisle = '<div class="pmx-vote-aisle"><p>deciding</p>' + str(o.deciding) + '</div>';
-    var wing = '<div class="pmx-vote-wing">' + (o.abstained ? '<p>Abstained</p>' + o.abstained : '') + '</div>';
-    /* J-1/J-2 reference update: columns 1fr 72px 1fr 58px (the aisle 72, the abstain wing 58) */
-    var cols = opts.length === 2 ? 'minmax(0,1fr) 72px minmax(0,1fr) 58px' : 'repeat(' + Math.max(1, opts.length) + ',minmax(0,1fr)) 72px 58px';
+    var aisle = hasAisle ? '<div class="pmx-vote-aisle"><p>deciding</p>' + str(o.deciding) + '</div>' : '';
+    var wing = hasWing ? '<div class="pmx-vote-wing">' + (o.abstained ? '<p>' + str(o.wingLabel || 'Abstained') + '</p>' + o.abstained : '') + '</div>' : '';
+    /* J-1/J-2 reference update: columns 1fr 72px 1fr 58px (the aisle 72, the abstain wing 58); an omitted aisle or
+       wing takes its column with it */
+    var A = hasAisle ? ' 72px' : '', Wg = hasWing ? ' 58px' : '';
+    var cols = opts.length === 2 ? 'minmax(0,1fr)' + A + ' minmax(0,1fr)' + Wg : 'repeat(' + Math.max(1, opts.length) + ',minmax(0,1fr))' + A + Wg;
     var body = opts.length === 2 ? optHtml[0] + aisle + optHtml[1] + wing : optHtml.join('') + aisle + wing;
     var ruled = opts.filter(function (op) { return op.ruledOut; }).map(function (op) {
-      return '<p class="' + cls('pmx-ruled', o.ruledCls) + '">' + pmxGlyph('not', 14) + '<span><s>' + str(op.title) + '</s> is ruled out: it breaks your rule “' + str(op.rule) + '”. Votes can’t override a rule.</span></p>';
+      return '<p class="' + cls('pmx-ruled', o.ruledCls) + '">' + pmxGlyph('not', 14) + '<span><s>' + str(op.title) + '</s> ' +
+        (nonEmpty(op.ruledText) ? op.ruledText : 'is ruled out: it breaks your rule “' + str(op.rule) + '”. Votes can’t override a rule.') + '</span></p>';
     }).join('');
-    return '<div class="' + cls('pmx-votes', o.cls) + '"' + k(o.key) + ' style="--pmx-vote-cols:' + cols + '"' + raw(o.attrs) + '>' + body + '</div>' + ruled;
+    return '<div class="' + cls('pmx-votes', o.cls) + '"' + k(o.key) + ' data-aisle="' + (hasAisle ? 1 : 0) + '" data-wing="' + (hasWing ? 1 : 0) + '"' + (o.grow ? ' data-grow="1"' : '') + ' style="--pmx-vote-cols:' + cols + '"' + raw(o.attrs) + '>' + body + '</div>' + ruled;
   }
   function pmxFindings(itemsHtml, o) { o = o || {}; return '<div class="' + cls('pmx-findings', o.cls) + '"' + k(o.key) + '>' + str(itemsHtml) + '</div>'; }
   /* pmxSealed(n) - face-down note squares for a blind round (lane line 2). */
@@ -1071,21 +1021,32 @@
     return '<figure class="' + cls('pmx-quote', o.cls) + '"' + k(o.key) + raw(o.attrs) + '>' + pmxGlyph('quote', 15) + '<blockquote>' + str(o.text) + '</blockquote>' +
       ((o.who || o.note) ? '<figcaption>' + [o.who, o.note].filter(function (p) { return p; }).join(' · ') + '</figcaption>' : '') + '</figure>';
   }
+  /* closing (BSD): line (html) draws the one-line form with its own glyph (default eye) and data-state (default
+     "aside"): the aside weight, "From earlier", catch-up, failure and safety lines; weight writes data-weight
+     (note | aside, G-30) on either form */
   function pmxNote(o) {
     o = o || {};
     var state = o.dismissed ? 'dismissed' : (o.stale ? 'stale' : 'emitted');
+    var wt = o.weight === 'aside' || o.weight === 'note' ? ' data-weight="' + o.weight + '"' : '';
+    if (o.line != null) {
+      return '<aside class="' + cls('pmx-note', o.cls) + '"' + k(o.key) + at('data-severity', o.severity) + ' data-state="' + esc(o.state || 'aside') + '" data-form="line"' + wt + ' data-flip' + raw(o.attrs) + '><span class="pmx-note-eye">' + g(o.glyph || 'eye', 15) + '</span>' +
+        '<div class="pmx-note-line">' + str(o.line) + '</div>' + (o.actions ? '<div class="pmx-note-acts">' + o.actions + '</div>' : '') + '</aside>';
+    }
     if (state === 'dismissed') {
-      return '<aside class="' + cls('pmx-note', o.cls) + '"' + k(o.key) + at('data-severity', o.severity) + ' data-state="dismissed" data-flip' + raw(o.attrs) + '><span class="pmx-note-eye">' + pmxGlyph('eye-closed', 15) + '</span>' +
+      return '<aside class="' + cls('pmx-note', o.cls) + '"' + k(o.key) + at('data-severity', o.severity) + ' data-state="dismissed"' + wt + ' data-flip' + raw(o.attrs) + '><span class="pmx-note-eye">' + pmxGlyph('eye-closed', 15) + '</span>' +
         '<p class="pmx-note-line">Dismissed · ' + str(o.title) + '</p>' + (o.actions ? '<div class="pmx-note-acts">' + o.actions + '</div>' : '') + '</aside>';
     }
-    return '<aside class="' + cls('pmx-note', o.cls) + '"' + k(o.key) + at('data-severity', o.severity) + ' data-state="' + state + '" data-flip' + raw(o.attrs) + '><span class="pmx-note-eye">' + pmxGlyph('eye', 15) + '</span>' +
+    return '<aside class="' + cls('pmx-note', o.cls) + '"' + k(o.key) + at('data-severity', o.severity) + ' data-state="' + state + '"' + wt + ' data-flip' + raw(o.attrs) + '><span class="pmx-note-eye">' + pmxGlyph('eye', 15) + '</span>' +
       '<p class="pmx-note-kicker">Advisor note' + (o.severity ? ' · ' + (o.severityHtml || esc(o.severity)) : '') + '</p><p class="pmx-note-title">' + str(o.title) + '</p>' +
       (o.body ? '<p class="pmx-note-body">' + o.body + '</p>' : '') + (o.checked ? '<p class="pmx-fine">' + o.checked + '</p>' : '') +
       (o.actions ? '<div class="pmx-note-acts">' + o.actions + '</div>' : '') + '</aside>';
   }
+  /* hover (closing, PREFS): the app hover card's text (data-hover-key / data-hover-tip, which the hover layer reads;
+     the old data-hover was read by nothing); hoverKey names it, else tick:{key} */
   function pmxTick(o) {
     o = o || {};
-    return '<span class="' + cls('pmx-tick', o.cls) + '"' + k(o.key) + at('data-hover', o.hover) + raw(o.attrs) + '>' + g(o.glyph || 'check', 13) + '<span>' + str(o.text) + '</span></span>';
+    var hk = o.hover ? (o.hoverKey || 'tick:' + (nonEmpty(o.key) ? o.key : pmxHash(plainText(o.text)))) : '';
+    return '<span class="' + cls('pmx-tick', o.cls) + '"' + k(o.key) + (hk ? ' data-hover-key="' + esc(hk) + '" data-hover-tip="' + esc(plainText(o.hover)) + '"' : '') + raw(o.attrs) + '>' + g(o.glyph || 'check', 13) + '<span>' + str(o.text) + '</span></span>';
   }
   /* pmxWash({key,html}) - a revised line's highlighter wash (M2 ink model). Key it
      by the revision so the wash plays once, on the new node only. */
@@ -1094,12 +1055,18 @@
     o = o || {};
     return '<div class="' + cls('pmx-divider', o.cls) + '" role="separator"' + k(o.key) + raw(o.attrs) + '><span>' + str(o.text) + '</span></div>';
   }
+  /* closing (REVERT FR 3, 6, 10): state + text draw the row in another state in place ("Reverted · 3 files put back",
+     glyph o.glyph, default check) with data-state; sides:'changed' prints only the figures that changed ("+4", not
+     "+4 −0"); the reason follows the same " · " the Revert action does */
   function pmxFilesRow(o) {
     o = o || {};
-    var r = o.revert;
-    return '<p class="' + cls('pmx-files', o.cls) + '"' + k(o.key) + raw(o.attrs) + '>' + pmxGlyph('file-edit', 13) + '<span>Changed ' + num(o.count, 0) + (num(o.count, 0) === 1 ? ' file' : ' files') + '</span> <i class="pmx-add">+' + num(o.add, 0) + '</i> <i class="pmx-del">−' + num(o.del, 0) + '</i>' +
+    var r = o.revert, add = num(o.add, 0), del = num(o.del, 0), one = o.sides === 'changed' && (add || del);
+    var figs = (!one || add ? ' <i class="pmx-add">+' + add + '</i>' : '') + (!one || del ? ' <i class="pmx-del">−' + del + '</i>' : '');
+    var lead = o.state && o.text != null ? g(o.glyph || 'check', 13) + '<span class="pmx-files-said">' + str(o.text) + '</span>'
+      : pmxGlyph('file-edit', 13) + '<span>Changed ' + num(o.count, 0) + (num(o.count, 0) === 1 ? ' file' : ' files') + '</span>' + figs;
+    return '<p class="' + cls('pmx-files', o.cls) + '"' + k(o.key) + at('data-state', o.state) + raw(o.attrs) + '>' + lead +
       (r ? '<span class="pmx-sep"> · </span><button type="button" class="text-button" data-action="' + esc(r.action) + '"' + raw(r.attrs) + (r.disabled ? ' disabled' : '') + '>' + str(r.label || 'Revert') + '</button>' : '') +
-      (o.reason ? '<span class="pmx-reason">' + o.reason + '</span>' : '') + '</p>';
+      (o.reason ? '<span class="pmx-sep"> · </span><span class="pmx-reason pmx-files-reason">' + o.reason + '</span>' : '') + '</p>';
   }
   function pmxCodeRow(o) {
     o = o || {};
@@ -1112,17 +1079,30 @@
     o = o || {};
     var placement = { dock: 1, sheet: 1, doc: 1 }[o.placement] ? o.placement : 'dock';
     var c = o.close;
-    return '<section class="' + cls('pmx-guide', o.cls) + '"' + k(o.key) + ' data-placement="' + placement + '"' + raw(o.attrs) + '>' +
+    /* data-acts: how many actions it carries; below 420 px of guide width (520 with two actions) the dock and doc
+       placements stack the actions under the step (module-shell.css, closing: PREFS, MEMTEACH, REVERT FR 5, CREW-B FR 2,
+       REVIEW-B FR 4) */
+    return '<section class="' + cls('pmx-guide', o.cls) + '"' + k(o.key) + ' data-placement="' + placement + '" data-acts="' + Math.min(2, (o.actions || []).length) + '"' + raw(o.attrs) + '>' +
       '<p class="pmx-guide-cap">' + pmxGlyph('play-ring', 13) + (o.caption || 'Recorded example · no AI cost') + '</p>' +
       '<p class="pmx-guide-step">' + str(o.step) + '</p>' + str(o.extra) +
       '<div class="pmx-guide-acts">' + (o.actions || []).slice(0, 2).map(function (a) { return '<button type="button" class="text-button" data-action="' + esc(a.action) + '"' + raw(a.attrs) + '>' + str(a.label) + '</button>'; }).join('') + '</div>' +
       (c ? '<button type="button" class="icon-button pmx-guide-close" data-action="' + esc(c.action) + '"' + raw(c.attrs) + ' aria-label="' + esc(c.label || 'Close') + '">' + pmxGlyph('close', 13) + '</button>' : '') + '</section>';
   }
 
+  /* pmxDisclosure({key,cls,attrs,summary,body,open,affects}) (closing, PREFS): an unboxed summary row and its body, the
+     pmx form of a disclosure (the legacy builder drew a bordered box, DON'T 5). The chevron turns; the body is text. */
+  function pmxDisclosure(o) {
+    o = o || {};
+    return '<details class="' + cls('pmx-disc', o.cls) + '"' + k(o.key) + at('data-pmx-affects', o.affects) + (o.open ? ' open' : '') + raw(o.attrs) + '>' +
+      '<summary class="pmx-disc-sum"><span>' + str(o.summary) + '</span>' + pmxGlyph('chevron-down', 14, 'pmx-disc-chev') + '</summary><div class="pmx-disc-body">' + str(o.body) + '</div></details>';
+  }
+
   /* ---------------------------------------------------------------- D: run view */
+  /* closing: stickyHead (ROOM-B FR 1) pins the head while the document scrolls, on the opaque --pmx-view-bg;
+     guideHtml (CREW-B FR 1) is the C27 doc guide, the view's first row */
   function pmxView(o) {
     o = o || {};
-    return '<article class="' + cls('pmx-view', o.cls) + '"' + k(o.key) + at('data-pmx-kind', o.kind) + raw(o.attrs) + '>' +
+    return '<article class="' + cls('pmx-view', o.cls) + '"' + k(o.key) + at('data-pmx-kind', o.kind) + (o.stickyHead ? ' data-sticky="1"' : '') + raw(o.attrs) + '>' + str(o.guideHtml) +
       '<header class="pmx-view-head drawer-head"><strong class="pmx-view-title">' + str(o.title) + '</strong>' +
         '<p class="pmx-view-kind">' + (o.markHtml != null ? o.markHtml : pmxKindMark(o.kind, 20)) + '<span>' + str(o.kindWord) + '</span></p>' +
         (o.statusHtml ? '<p class="pmx-view-status">' + o.statusHtml + '</p>' : '') +
@@ -1405,7 +1385,9 @@
     notAvailable: 'Not available in this preview.',
     oneControlSet: { review: 'Choosing in the report beside the chat', panel: 'Deciding in the panel beside the chat' },
     provenance: { review: 'Example report: no AI was contacted.', revert: 'Demo: no real files are touched.', guide: 'Recorded example · no AI cost' },
-    ticks: { noted: 'Noted', verified: 'Verified', rules: 'Used {n} of your rules', rule: 'Used 1 of your rules', simple: 'Simple explanation', sentOnSchedule: 'Sent on schedule' },
+    /* E-36 answered B (owner, 2026-09-27): "Followed", with what counts as following defined in canon; a rule the
+       reply did not follow is named ("Missed 1 of your rules") */
+    ticks: { noted: 'Noted', verified: 'Verified', rules: 'Followed {n} of your rules', rule: 'Followed 1 of your rules', missed: 'Missed 1 of your rules', missedN: 'Missed {n} of your rules', simple: 'Simple explanation', sentOnSchedule: 'Sent on schedule' },
     exampleHelper: 'Opens a recorded {kind} in a new chat, with its own team. Your setup stays on this card.',
     degraded: 'Degraded result: {done} of {all} reviewers finished'
   };
@@ -1431,18 +1413,19 @@
       var T = window.PM56_SCHEDULE_TIME;
       if (T && typeof T.parts === 'function') {
         var p = T.parts(zone, t);
-        if (p) return { h: p.h, mi: p.mi, wd: typeof T.weekday === 'function' ? T.weekday(p) : new Date(Date.UTC(p.y, p.mo - 1, p.d, 12)).getUTCDay() };
+        if (p) return { h: p.h, mi: p.mi, wd: typeof T.weekday === 'function' ? T.weekday(p) : new Date(Date.UTC(p.y, p.mo - 1, p.d, 12)).getUTCDay(), y: p.y, mo: p.mo, d: p.d };
         return null;
       }
       try {
-        var f = new Intl.DateTimeFormat('en-US', { timeZone: zone, weekday: 'short', hour: 'numeric', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date(t)), q = {};
+        var f = new Intl.DateTimeFormat('en-US', { timeZone: zone, weekday: 'short', hour: 'numeric', minute: '2-digit', hourCycle: 'h23', year: 'numeric', month: 'numeric', day: 'numeric' }).formatToParts(new Date(t)), q = {};
         f.forEach(function (x) { q[x.type] = x.value; });
-        return { h: Number(q.hour) % 24, mi: Number(q.minute), wd: DAY3.indexOf(q.weekday) };
+        return { h: Number(q.hour) % 24, mi: Number(q.minute), wd: DAY3.indexOf(q.weekday), y: Number(q.year), mo: Number(q.month), d: Number(q.day) };
       } catch (e) { return null; }
     }
     var d = new Date(t);
-    return { h: d.getHours(), mi: d.getMinutes(), wd: d.getDay() };
+    return { h: d.getHours(), mi: d.getMinutes(), wd: d.getDay(), y: d.getFullYear(), mo: d.getMonth() + 1, d: d.getDate() };
   }
+  var MON3 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function hm(p) { return ((p.h % 12) || 12) + ':' + pad2(p.mi) + ' ' + (p.h < 12 ? 'AM' : 'PM'); }
   function relSpan(s) {
     if (s < 60) return Math.max(1, Math.round(s)) + ' s';
@@ -1480,11 +1463,27 @@
       var s = (n - t) / 1000;
       return s < 45 ? 'just now' : relSpan(s) + ' ago';
     },
-    until: function (iso, now) {
+    /* until(iso, now, {minutes:true}) (closing, SCHED): minutes precision under a day ("in 5 h 30 m", "in 12 min") */
+    until: function (iso, now, o) {
       var t = toMs(iso), n = now == null ? Date.now() : toMs(now);
       if (!isFinite(t) || !isFinite(n)) return '';
+      if (o && o.minutes) {
+        var m = Math.round((t - n) / 60000);
+        if (m <= 0) return 'now';
+        if (m < 60) return 'in ' + m + ' min';
+        if (m < 1440) { var h = Math.floor(m / 60), r = m % 60; return 'in ' + h + ' h' + (r ? ' ' + r + ' m' : ''); }
+        var dd = Math.round(m / 1440); return 'in ' + dd + (dd === 1 ? ' day' : ' days');
+      }
       var s = (t - n) / 1000;
       return s <= 0 ? 'now' : 'in ' + relSpan(s);
+    },
+    /* day(iso, zone, {now}) (closing, SCHED): "Sat, Sep 27"; with now, the year follows when it is not now's year */
+    day: function (iso, zone, o) {
+      var p = wallParts(toMs(iso), zone);
+      if (!p || p.mo == null) return '';
+      var out = DAY3[p.wd] + ', ' + MON3[p.mo - 1] + ' ' + p.d;
+      if (o && o.now != null) { var q = wallParts(toMs(o.now), zone); if (q && q.y != null && q.y !== p.y) out += ', ' + p.y; }
+      return out;
     }
   };
   /* pmxMoney(n) - "$0.92"; a positive amount under a cent is "under $0.01", never "$0.00" */
@@ -1540,7 +1539,7 @@
     if (!req || (!o.noSubstitute && (!eff || eff === req))) return null;
     var R = esc(req), E = esc(eff), why = esc(o.reason || 'offline');
     if (o.noSubstitute) {
-      return { strong: 'Nothing can stand in', text: 'for ' + R + ', so pick another model or remove this helper.', fine: 'requested ' + R + ' · no substitute', tone: 'failed',
+      return { strong: 'Nothing can stand in', text: 'for ' + R + ', so pick another model or remove this ' + esc(o.role || 'helper') + '.', fine: 'requested ' + R + ' · no substitute', tone: 'failed',
         card: 'Couldn’t take part: ' + R + ' is unavailable and no stand-in is allowed.', team: R + ' · no stand-in allowed', failed: 'Couldn’t take part: ' + R + ' is unavailable and no stand-in is allowed.' };
     }
     return { strong: R + ' is ' + why + ' right now,', text: 'so ' + E + ' stands in' + (o.sameProvider ? ' (same provider).' : '.'), fine: 'requested ' + R + ' · effective ' + E, tone: 'info',
@@ -1580,7 +1579,7 @@
     current_plan_requires_explicit_resolution: ['', 'This chat already has a Plan. Open it to replace or revise it.', 'Open Plan'],
     synthesis_not_ready: ['', 'The plan can be written after the vote.'],
     question_budget_exhausted: ['', 'The team has asked all the questions it’s allowed. It will decide the rest from research and your earlier answers.'],
-    round_limit_reached: ['', 'That was the last round. Sum it up or add rounds.'],
+    round_limit_reached: ['', 'That was the last round. Sum it up, or send it to the assistant instead.'],
     round_incomplete: ['', 'Wait for everyone to finish this round first.'],
     current_summary_required: ['', 'Sum up the latest round before ending.'],
     finish_current_round: ['', 'This round is still going. You can send when it ends.'],
@@ -1618,8 +1617,36 @@
     no_findings_selected: ['', 'Tick at least one finding.'],
     confirmed_evidenced_findings_only: ['', 'Only confirmed findings with proof can become To-Dos.'],
     plan_version_changed: ['This plan changed while this was open.', 'Reopen it to use version {version}.'],
+    plan_version_changed_any: ['This plan changed while this was open.', 'Reopen it to see the latest version.'],
     stopped_at_limit: ['Stopped at your limit', '({limit}) · everything so far is kept.'],
-    composer_has_text: ['', 'Your message box already has text. Send or clear it first.']
+    composer_has_text: ['', 'Your message box already has text. Send or clear it first.'],
+    /* closing review (ENG 5): every code COLLAB's scheduledBad() and PM56_ROOM.canSend() can return. Where SCHED's own
+       table (scheduling.js SCHED_REFUSE) words the same code, the sentence is the same, so the Crew sheet and the
+       Build At sheet never say it two ways. */
+    plan_not_ready_for_crew: ['', 'A Crew can’t build this plan: its steps aren’t set up to be split between helpers. Pick another way to build it.'],
+    crew_configuration_required: ['', 'Set up the Crew first.'],
+    crew_definition_changed: ['', 'The Crew changed since you set it up. Set it up again.'],
+    destination_scope_mismatch: ['', 'That destination belongs to another chat.'],
+    destination_not_found: ['', 'The chat or Crew this goes to is no longer available.'],
+    destination_not_accepting: ['', 'The {kind} this goes to isn’t taking messages right now. Try again once it’s running.'],
+    destination_generation_changed: ['', 'The {kind} this goes to changed since you picked it. Reopen to pick it again.'],
+    participant_not_found: ['', 'That helper isn’t part of this {kind} any more.'],
+    room_missing: ['', 'This room is no longer available.'],
+    transaction_required: ['', 'This couldn’t be saved safely, so nothing changed. Try again.'],
+    crew_already_active: ['', 'A Crew is already building this plan. Let it finish, or stop it first.'],
+    crew_admission_conflict: ['', 'This build already has a Crew with a different setup. Reopen to see the latest.'],
+    crew_admission_binding_changed: ['', 'The Crew changed while it was starting. Set it up again.'],
+    crew_definition_not_committed: ['', 'This Crew setup wasn’t saved. Set it up again.'],
+    crew_binding_missing: ['', 'This build’s Crew is no longer available.'],
+    crew_assignment_missing: ['', 'This step has no helper assigned. Set up the Crew again.'],
+    crew_assignment_invalid: ['', 'The Crew’s parts no longer match this plan’s steps. Set it up again.'],
+    crew_assignment_changed: ['', 'A helper changed since this build started. Set up the Crew again.'],
+    invalid_crew_configuration: ['', 'Check the Crew’s helpers and settings, then try again.'],
+    invalid_crew_concurrency: ['', 'Pick between 1 and 8 helpers at once.'],
+    crew_more_required_slots_than_work: ['', 'This plan has fewer steps than helpers. Remove a helper so each one has a step.'],
+    scheduled_specialist_adapter_unavailable: ['', 'Scheduled builds can’t include the Wonderer or Grill Me: they run while you’re away. Turn them off to schedule this.'],
+    scheduled_coordinator_adapter_unavailable: ['', 'Scheduled builds are led by this chat’s assistant. Pick it as the Coordinator to schedule this.'],
+    scheduled_adaptive_adapter_unavailable: ['', 'In a scheduled build each helper keeps its part. Pick another way to decide who does what.']
   };
   var REFUSE_ALIAS = {
     provider_unavailable: 'model_unresolved', route_unavailable: 'model_unresolved', crew_route_unavailable: 'model_unresolved',
@@ -1627,8 +1654,13 @@
     recorded_example_supports_moderated_or_ask_everyone_once: 'recorded_example', recorded_example_has_one_or_two_rounds: 'recorded_example',
     parent_mode_disallows_example_execution: 'parent_mode_disallows_execution', wrong_thread: 'participant_missing', source_changed: 'stale_promotion',
     definition_changed: 'stale_epoch', room_not_running: 'stale_epoch', stale_schedule_revision: 'idempotency_conflict', scope_changed: 'idempotency_conflict',
-    stale_policy_revision: 'bsd_stale', stale_projection: 'bsd_stale', bsd_finding_not_found: 'bsd_assignment_not_found'
+    stale_policy_revision: 'bsd_stale', stale_projection: 'bsd_stale', bsd_finding_not_found: 'bsd_assignment_not_found',
+    plan_changed_during_crew_configuration: 'plan_version_changed', crew_plan_binding_changed: 'plan_version_changed',
+    destination_ended: 'destination_owner_unavailable', collaboration_message_conflict: 'idempotency_conflict', crew_definition_conflict: 'idempotency_conflict',
+    collaboration_transaction_required: 'transaction_required', crew_transaction_required: 'transaction_required'
   };
+  /* short forms for narrow rows (closing, REVERT FR 9): {short} comes back beside the sentence when the map has one */
+  var REFUSE_SHORT = { revert_not_latest: 'Not the latest change', revert_done: 'Already reverted', no_eligible_mutating_turn: 'Nothing to revert yet' };
   function pmxRefusalText(code, vars) {
     vars = vars || {};
     var c = str(code);
@@ -1638,10 +1670,12 @@
     if (c === 'invalid_message_text' && vars.tooLong) c = 'invalid_message_text_long';
     if (c === 'no_eligible_mutating_turn' && vars.variant === 'not-latest') c = 'revert_not_latest';
     if (c === 'no_eligible_mutating_turn' && vars.variant === 'done') c = 'revert_done';
+    /* a caller without the new version number (COLLAB's scheduled Crew path) never prints "version ." */
+    if (c === 'plan_version_changed' && (vars.version == null || vars.version === '')) c = 'plan_version_changed_any';
     var e = REFUSE[c];
     if (!e) return null;
     var v = { helper: vars.helper || 'This helper', kind: vars.kind || 'Crew', version: vars.version != null ? vars.version : '', limit: vars.limit || '', part: vars.part || 'the part before it' };
-    return { strong: pmxFill(e[0], v), text: pmxFill(e[1], v), fix: e[2] || '', code: str(code) };
+    return { strong: pmxFill(e[0], v), text: pmxFill(e[1], v), fix: e[2] || '', code: str(code), short: REFUSE_SHORT[c] || '' };
   }
 
   var API = {
@@ -1656,7 +1690,9 @@
     pmxDockLine: pmxDockLine, pmxDock: pmxDock, pmxFinding: pmxFinding, pmxFindings: pmxFindings, pmxSealed: pmxSealed, pmxSeverity: pmxSeverity, pmxAgree: pmxAgree, pmxVoteBoard: pmxVoteBoard,
     pmxQuote: pmxQuote, pmxWash: pmxWash, pmxNote: pmxNote, pmxTick: pmxTick, pmxDivider: pmxDivider, pmxFilesRow: pmxFilesRow, pmxCodeRow: pmxCodeRow, pmxMd: pmxMd, pmxGuide: pmxGuide,
     pmxView: pmxView, pmxViewSection: pmxViewSection, pmxTimeline: pmxTimeline, pmxTeamRow: pmxTeamRow, pmxParticipant: pmxParticipant,
-    pmxInert: inert, pmxLangName: langName
+    pmxInert: inert, pmxLangName: langName,
+    /* closing: pmxMd's inline renderer (a note body is itself a <p>, BSD) and the disclosure primitive (PREFS) */
+    pmxMdInline: inlineOnly, pmxDisclosure: pmxDisclosure
   };
   for (var name in API) if (Object.prototype.hasOwnProperty.call(API, name)) SHELL[name] = API[name];
 })();

@@ -580,6 +580,10 @@
      what stays here is the fallback when those modules are not in the build.
      There is one answer, simple or standard, never two side by side (the old
      paired preview card and its CSS are gone).
+     Owner answer E-11 (DL-126): ELI5 is the popup plus the quick dot, never a
+     one-click toggle; the toggle row below is only the fallback for a build
+     without eli5-preferences.js. Project default + per-chat override stay, and
+     Explain this reply simply lives in eli5-preferences.js.
      ===================================================================== */
   function eli5Effective(threadId){
     if(window.PM56_ELI5) return window.PM56_ELI5.resolve(threadId).effective;
@@ -1498,7 +1502,7 @@
     var sp=E5 && E5.specimen ? E5.specimen(ctx, eliOn) : { word:eliOn?'Simple answer':'Standard answer', html:'', reset:'' };
     var vn=d.dfltVoice||0;
     var q1=S.pmxCtl({ key:'dflt-q:eli5', cls:'pmx-dflt-ctl', layout:'stack', affects:'voice',
-      label:hoverLabel(e, 'eli5', 'Explain simply in new chats', 'New chats answer in everyday words. You can change it per chat. This is the Explain Terms Everywhere setting.'),
+      label:hoverLabel(e, 'eli5', 'Explain simply in new chats', 'New chats answer in everyday words. A project default, or a chat’s own choice, overrides it for those chats only. Switching changes only later replies. This is the Explain Terms Everywhere setting.'),
       helper:'New chats answer in everyday words. You can change it per chat.',
       control:S.pickerButton({ action:'af-defaults-pick', anchor:'af-defaults-eli5', strong:e(eliOpt.label), small:'Explain Terms Everywhere',
         extra:'data-field="eli5"'+(d.focus==='title'?'':' data-pmx-autofocus') }) });

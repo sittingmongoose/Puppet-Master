@@ -32,8 +32,8 @@ body[data-theme^="retro"]{--font-mono:'IBM Plex Mono',ui-monospace,'SF Mono','Ca
    IMPACT A2-22: every pmx duration, delay and ease is a token here, and JS reads
    the same tokens (PM56_PMX.t / PM56_PMX.ease through getComputedStyle), so no
    module CSS or JS writes a literal. A theme block may override one; that is
-   how retro's x0.6 is written (IMPACT A1-13, provisional pending owner decision
-   E-22). --pmx-t-* are motion (retro scales them); --pmx-wait-* are logic
+   how each theme family's motion personality is written (E-22, answered C by the
+   owner 2026-09-27; see the family blocks below). --pmx-t-* are motion (retro scales them); --pmx-wait-* are logic
    waits (hysteresis, freshness, batching) and are never scaled. */
 :root{
   --pmx-t-swap:90ms;--pmx-t-pop:150ms;--pmx-t-row:180ms;--pmx-t-cascade:40ms;
@@ -44,11 +44,16 @@ body[data-theme^="retro"]{--font-mono:'IBM Plex Mono',ui-monospace,'SF Mono','Ca
   --pmx-t-breathe:2800ms;--pmx-t-pulse:900ms;--pmx-t-sweep:900ms;
   --pmx-t-light:120ms;--pmx-t-fade:120ms;--pmx-t-face:150ms;--pmx-t-flip:240ms;--pmx-t-page:240ms;--pmx-t-tab:220ms;--pmx-t-stop:240ms;--pmx-t-tint:400ms;
   --pmx-t-walk:380ms;--pmx-t-at-walk:60ms;
+  --pmx-t-at-view-plate:60ms;--pmx-t-at-view-tabs:80ms;--pmx-t-at-view-body:120ms;
   /* choreography offsets (M1 5.5, 5.3, M3, M5, M6) */
   --pmx-t-at-head:60ms;--pmx-t-at-guide:80ms;--pmx-t-at-hero:90ms;--pmx-t-at-q:110ms;--pmx-t-at-plate:120ms;--pmx-t-at-tray:130ms;
   --pmx-t-at-rows:150ms;--pmx-t-at-lines:160ms;--pmx-t-at-line-step:60ms;--pmx-t-at-marks:200ms;--pmx-t-at-foot:220ms;--pmx-t-at-you:520ms;
   --pmx-t-at-late:60ms;--pmx-t-at-sweep:180ms;--pmx-t-at-r1:20ms;--pmx-t-at-r2:40ms;--pmx-t-at-r3:60ms;--pmx-t-at-r4:100ms;
   --pmx-t-settle:700ms;--pmx-t-swap-hold:200ms;--pmx-t-ghost-max:450ms;--pmx-t-land-at:40ms;--pmx-t-land-max:900ms;
+  /* closing: G-07's named holds (COLLAB FR 9: M6 beat 1, M7), the ELI5 retype and pulse (PREFS), the chat title's
+     width FLIP and New chat defaults' naming specimen (PREFS), adopted from the lanes' own :root declarations */
+  --pmx-t-hold-result:260ms;--pmx-t-hold-receipt:120ms;
+  --pmx-t-eli5-char:16ms;--pmx-t-eli5-reset:480ms;--pmx-t-eli5-pulse:600ms;--pmx-t-title-flip:280ms;--pmx-t-title-naming:520ms;
   /* the one "still working" band (= the house --pm-shimmer-cycle; not a pmx duration, never scaled) */
   --pmx-shimmer:1370ms;
   --pmx-ease-out:cubic-bezier(.22,.80,.28,1);--pmx-ease-in:cubic-bezier(.3,0,.8,.15);
@@ -58,14 +63,30 @@ body[data-theme^="retro"]{--font-mono:'IBM Plex Mono',ui-monospace,'SF Mono','Ca
   /* logic waits (never scaled) */
   --pmx-wait-light:80ms;--pmx-wait-hint:3000ms;--pmx-wait-origin:1500ms;--pmx-wait-flight:2500ms;--pmx-wait-dock:400ms;
   --pmx-wait-verb:1200ms;--pmx-wait-batch:40ms;--pmx-wait-sound:120ms;--pmx-wait-slack:20ms;
+  /* closing (COLLAB FR 2): PM56_PMX.wait('undo') (how long "Removed X · Bring back" stays) and wait('saved') */
+  --pmx-wait-undo:6000ms;--pmx-wait-saved:2400ms;
   /* word pacing (IMPACT A1-47): Chat WOW's constants (turn-stream.js BASE_MS and interval()), read by PM56_PMX.stream
      until PM56_STREAM exports its pacing; they are not pmx motion and are never scaled */
   --pmx-pace-base:33.333ms;--pmx-pace-backlog:16;--pmx-pace-floor:9ms;
   --pmx-pace-sentence:150ms;--pmx-pace-sentence-min:30ms;--pmx-pace-sentence-step:6ms;
   --pmx-pace-clause:50ms;--pmx-pace-clause-min:10ms;--pmx-pace-clause-step:3ms;
 }
-/* IMPACT A1-13 (provisional, E-22): the same motion in every theme, except retro: every --pmx-t-* x 0.6, and the
-   sheet enters with opacity and rise only (no scale; the rule is with the M1 entrance below). */
+/* E-22, answered C (owner, 2026-09-27): each theme family has its own motion personality, aligned with the Chat WOW
+   motion voices (turn-stage / turn-stream data-voice), which keep durations and change only path, easing and texture:
+   - basic: the house curves above.
+   - friendly: a springy settle (the ease overshoots a little, the pop a little more), same durations.
+   - glass: a long, soft settle (Chat WOW's glass curve); the sheet settles down from slightly larger (depth without
+     blur: IMPACT A1-04 still bars element blur), same durations.
+   - retro: every --pmx-t-* x 0.6, stepped eases like a terminal's (Chat WOW's retro voice steps its entrances), and
+     the sheet enters with opacity and rise only (no scale; the rules are with the M1 entrance below).
+   Reduced motion is the instant end state in every family (5.7). */
+body[data-theme^="friendly"]{
+  --pmx-ease-out:cubic-bezier(.34,1.3,.64,1);--pmx-ease-emph:cubic-bezier(.3,1.14,.5,1);
+  --pmx-ease-pop:cubic-bezier(.34,1.56,.64,1);--pmx-ease-move:cubic-bezier(.5,0,.3,1.12);
+}
+body[data-theme^="glass"]{
+  --pmx-ease-out:cubic-bezier(.05,.7,.1,1);--pmx-ease-emph:cubic-bezier(.05,.7,.1,1);--pmx-ease-move:cubic-bezier(.45,0,.1,1);
+}
 body[data-theme^="retro"]{
   --pmx-t-swap:54ms;--pmx-t-pop:90ms;--pmx-t-row:108ms;--pmx-t-cascade:24ms;
   --pmx-t-scrim:108ms;--pmx-t-scrim-out:96ms;--pmx-t-sheet:168ms;--pmx-t-sheet-fade:96ms;
@@ -74,11 +95,15 @@ body[data-theme^="retro"]{
   --pmx-t-ink-in:144ms;--pmx-t-ink-hold:420ms;--pmx-t-ink-dry:540ms;--pmx-t-wash:720ms;
   --pmx-t-breathe:1680ms;--pmx-t-pulse:540ms;--pmx-t-sweep:540ms;
   --pmx-t-light:72ms;--pmx-t-fade:72ms;--pmx-t-face:90ms;--pmx-t-flip:144ms;--pmx-t-page:144ms;--pmx-t-tab:132ms;--pmx-t-stop:144ms;--pmx-t-tint:240ms;
-  --pmx-t-walk:228ms;--pmx-t-at-walk:36ms;
+  --pmx-t-walk:228ms;--pmx-t-at-walk:36ms;--pmx-t-at-view-plate:36ms;--pmx-t-at-view-tabs:48ms;--pmx-t-at-view-body:72ms;
   --pmx-t-at-head:36ms;--pmx-t-at-guide:48ms;--pmx-t-at-hero:54ms;--pmx-t-at-q:66ms;--pmx-t-at-plate:72ms;--pmx-t-at-tray:78ms;
   --pmx-t-at-rows:90ms;--pmx-t-at-lines:96ms;--pmx-t-at-line-step:36ms;--pmx-t-at-marks:120ms;--pmx-t-at-foot:132ms;--pmx-t-at-you:312ms;
   --pmx-t-at-late:36ms;--pmx-t-at-sweep:108ms;--pmx-t-at-r1:12ms;--pmx-t-at-r2:24ms;--pmx-t-at-r3:36ms;--pmx-t-at-r4:60ms;
   --pmx-t-settle:420ms;--pmx-t-swap-hold:120ms;--pmx-t-ghost-max:270ms;--pmx-t-land-at:24ms;--pmx-t-land-max:540ms;
+  --pmx-t-hold-result:156ms;--pmx-t-hold-receipt:72ms;
+  --pmx-t-eli5-char:9.6ms;--pmx-t-eli5-reset:288ms;--pmx-t-eli5-pulse:360ms;--pmx-t-title-flip:168ms;--pmx-t-title-naming:312ms;
+  --pmx-ease-out:steps(4,jump-end);--pmx-ease-in:steps(3,jump-end);--pmx-ease-emph:steps(8,jump-end);--pmx-ease-move:steps(6,jump-end);
+  --pmx-ease-pop:steps(3,jump-end);
 }
 
 /* ================================================================ keyframes
@@ -90,6 +115,7 @@ body[data-theme^="retro"]{
 @keyframes pmx-pop{from{opacity:0;scale:.6}to{opacity:1;scale:1}}
 @keyframes pmx-sheet-rise{from{transform:translateY(10px) scale(.965)}to{transform:none}}
 @keyframes pmx-sheet-rise-flat{from{transform:translateY(10px)}to{transform:none}}
+@keyframes pmx-sheet-settle{from{transform:translateY(6px) scale(1.018)}to{transform:none}}
 @keyframes pmx-draw-down{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
 @keyframes pmx-draw-up{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
 @keyframes pmx-draw-right{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
@@ -110,13 +136,18 @@ body[data-theme^="retro"]{
 @keyframes pmx-wash{from{background-color:var(--pmx-wash)}to{background-color:transparent}}
 
 /* ================================================================ scrim (module-owned, below dialogs)
-   A flat colour: nothing behind it is blurred in any theme or motion setting (IMPACT A1-02, provisional E-24). */
+   A flat colour: nothing behind it is blurred in any theme or motion setting (IMPACT A1-02; E-24 resolved 2026-09-27:
+   Slint 1.18.1 still has no backdrop blur, so solid popups and a flat scrim). */
 .pmx-scrim{position:fixed;inset:0;z-index:var(--pmx-z-scrim);background:var(--pmx-scrim);pointer-events:auto;cursor:default;
   animation:pmx-fade-in var(--pmx-t-scrim) var(--pmx-ease-linear) backwards;}
 
 /* The app hover card explains a sheet's labels (VIS-06, 6.5); it sits above an
-   open sheet (1150) and below menus and toasts (1200). Stacking only. */
-#pmOverlayRoot:has(> .pmx-sheet) > [data-overlay="hover"]{z-index:1190;}
+   open sheet (1150) and below menus and toasts (1200). Stacking only.
+   closing review (turn-verify blocker): the rightmost compound names the class every hover overlay carries
+   (.hover-card). With only [data-overlay] there, Chromium's shared :has invalidation set gained that attribute, and
+   each :has anchor restyled every element carrying it on every DOM insertion under it (a streaming reply inserts one
+   per word). Same elements, same stacking. */
+#pmOverlayRoot:has(> .pmx-sheet) > .hover-card[data-overlay="hover"]{z-index:1190;}
 
 /* ================================================================ M1 sheet entrance (≈ 620 ms, interactive from frame 0)
    transform-origin is the clicked wand row (--pmx-from-x/y on #pmOverlayRoot,
@@ -129,6 +160,8 @@ body[data-theme^="retro"]{
 }
 /* retro enters with opacity and rise only (IMPACT A1-13) */
 body[data-theme^="retro"] #pmOverlayRoot:not(.pmx-swapping) > .pmx-sheet{animation-name:pmx-sheet-rise-flat,pmx-fade-in;}
+/* E-22 C: glass settles down from a touch larger */
+body[data-theme^="glass"] #pmOverlayRoot:not(.pmx-swapping) > .pmx-sheet{animation-name:pmx-sheet-settle,pmx-fade-in;}
 /* one sheet replacing another: the incoming one enters with opacity only */
 #pmOverlayRoot.pmx-swapping > .pmx-sheet{animation:pmx-fade-in var(--pmx-t-swapdlg) var(--pmx-ease-linear) backwards;}
 .pmx-sheet .pmx-head{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-head) backwards;}
@@ -211,6 +244,14 @@ body[data-theme^="retro"] #pmOverlayRoot:not(.pmx-swapping) > .pmx-sheet{animati
 .pmx-divider::after{transform-origin:left center;animation:pmx-scale-x var(--pmx-t-move) var(--pmx-ease-out) backwards;}
 .pmx-tab.active::after{animation:pmx-scale-x var(--pmx-t-tab) var(--pmx-ease-out) backwards;}
 .pmx-view .pmx-entry{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;}
+/* closing (REVIEW-B FR 1, 5.5 Review "To-Dos created"): each "To-Do created" line materializes (the row recipe) */
+.pmx-finding-todo{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;}
+/* closing (REVIEW-B FR 3): M8 for every run view: the head rises (the row recipe at the page duration), then the
+   plate (+60), the tabs (+80) and the body (+120) */
+.pmx-view > .pmx-view-head{animation:pmx-row-in var(--pmx-t-page) var(--pmx-ease-out) backwards;}
+.pmx-view > .pmx-view-plate{animation:pmx-row-in var(--pmx-t-page) var(--pmx-ease-out) var(--pmx-t-at-view-plate) backwards;}
+.pmx-view > .pmx-tabs{animation:pmx-row-in var(--pmx-t-page) var(--pmx-ease-out) var(--pmx-t-at-view-tabs) backwards;}
+.pmx-view > .pmx-view-grid{animation:pmx-row-in var(--pmx-t-page) var(--pmx-ease-out) var(--pmx-t-at-view-body) backwards;}
 .pmx-view .pmx-entry-body[data-k^="body:"]{animation:pmx-fade-in var(--pmx-t-fade) var(--pmx-ease-linear) backwards;}
 /* M5: the one loud moment. The perimeter breathes twice, then holds. */
 .pmx-run[data-tone="warm"], .pmx-run[data-density="attention"]:not([data-tone="accent"]){animation:pmx-breathe var(--pmx-t-breathe) var(--pmx-ease-breathe) 2;}
@@ -259,7 +300,7 @@ body[data-theme^="retro"] #pmOverlayRoot:not(.pmx-swapping) > .pmx-sheet{animati
    surface drops its card look; the needs family's halo never reaches a
    surface. What stays here is surface-specific. */
 /* the look each surface gives back inside a family */
-.pmx-run[data-density]{--pmx-own-display:flex;--pmx-own-dir:column;--pmx-own-pad:12px 14px 10px;--pmx-own-edge:0;--pmx-own-r:var(--pmx-r-card);--pmx-own-bg:var(--pmx-card);--pmx-own-shadow:none;}
+.pmx-run[data-density]{--pmx-own-display:flex;--pmx-own-dir:column;--pmx-own-pad:12px 0 10px;--pmx-own-edge:0;--pmx-own-r:var(--pmx-r-card);--pmx-own-bg:var(--pmx-card);--pmx-own-shadow:none;}
 .pmx-run[data-density][data-tone="warm"], .pmx-run[data-density="attention"]:not([data-tone="accent"]){--pmx-own-bg:var(--pmx-card-warm);--pmx-own-shadow:0 0 0 1px var(--pmx-edge-warm);}
 .pmx-run.pmx-receipt[data-density]{--pmx-own-dir:row;--pmx-own-pad:0 2px;--pmx-own-r:0;--pmx-own-bg:none;--pmx-own-shadow:0 -1px 0 var(--border),0 1px 0 var(--border);}
 .pmx-note{--pmx-own-display:block;--pmx-own-dir:row;--pmx-own-pad:2px 0 2px 30px;--pmx-own-edge:0;--pmx-own-r:0;--pmx-own-bg:none;--pmx-own-shadow:none;}
@@ -278,7 +319,7 @@ body[data-theme^="retro"] #pmOverlayRoot:not(.pmx-swapping) > .pmx-sheet{animati
 .transcript .transcript-inner > [data-family] .pmx-run .collab-kind-badge > svg, .transcript .transcript-inner > [data-family].pmx-run .collab-kind-badge > svg{color:var(--muted);}
 
 /* ================================================================ 5.7 reduced motion
-   IMPACT A1-03 (provisional pending owner decision E-25; canon F3-473(7), ACD-439, F3-424): reduced motion is the
+   IMPACT A1-03 (E-25 answered A, "Instant", 2026-09-27; canon F3-473(7), ACD-439, F3-424): reduced motion is the
    instant end state, never a fade. Every pmx node drops its animations, transitions and delays; the end state
    is the element's own CSS, the same as after normal motion. Entrances, exits, draw-ons, flights, glides, folds,
    ghosts (pmx-system.js skips them), ink washes, the shimmer and the breathe all go; the needs-you perimeter is

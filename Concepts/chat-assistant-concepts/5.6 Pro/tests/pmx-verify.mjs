@@ -124,9 +124,11 @@
  *                    (`canon`) are in its visible text (not only in an aria-label or hover card),
  *                    and no visible text misspells a canon name (Brainstorm, Chat room,
  *                    Multi-pass review, Back-seat driver, Crew auto, Grill me, Eli5, Open panel,
- *                    Cancelled, ...), nor a recovery verb that is not canon's (A1-34: Try again,
- *                    Check again -> Retry; Open recovery -> Recover; A1-41: Followed 1 of your
- *                    rules -> Used 1 of your rules)
+ *                    Cancelled outside a run surface, ...), nor a recovery verb that is not canon's
+ *                    (A1-34: Try again, Check again -> Retry; Open recovery -> Recover; E-36 B:
+ *                    Used 1 of your rules -> Followed 1 of your rules). "Cancelled" is the run
+ *                    spelling (9.0 rule 7, lead ruling 2026-09-28): text inside .pmx-run,
+ *                    .pmx-receipt or .pmx-dock-line is exempt; scheduling keeps "Canceled".
  *   parts            6.6 (lead fix 2026-09-27): PM56_PMX.PARTS is exported and holds the spec's
  *                    vocabulary; every data-pmx-affects / data-pmx-part value is in it (a
  *                    `name:*` entry admits `name:<id>` values); pmx-system.css has a light rule
@@ -248,7 +250,8 @@ export function guardOut(p) {
 }
 
 /* ------------------------------------------------------------------ spec numbers */
-/* 7.2 budgets: live S 360 / M 340 / L 340; attention and result S 400 / M 360 / L 360,
+/* 7.2 budgets: live S 360 / M 346 / L 346 (lead ruling 2026-09-28: 340 and waiting 186 became 346 and 190, the sums of
+   the primitives at the J-2 floor); attention and result S 400 / M 360 / L 360,
    raised by the spec's J-1/J-2 reference update ("heights that grew ... the 7.2 budgets
    follow these numbers"): needs-you 405 (at 417), BrainStorm live 347 (417 = M), live
    Crew 363 at 591 (L), Review result 361 at 591 (L). failed keeps 7.1's <= 360 at the M
@@ -261,13 +264,16 @@ export function guardOut(p) {
 const BUDGET = {
   live: { S: 360, M: 347, L: 363 }, attention: { S: 405, M: 405, L: 405 }, result: { S: 400, M: 360, L: 361 }, failed: { S: 400, M: 360, L: 360 },
   receipt: { S: 44, M: 44, L: 44 }, starting: { S: 360, M: 347, L: 363 }, waiting: { S: 360, M: 347, L: 363 }, collapsed: { S: 360, M: 347, L: 363 },
-  kinds: { crew: { live: { M: 363 }, starting: { M: 363 }, waiting: { M: 363 }, collapsed: { M: 363 } } },
+  kinds: { crew: { live: { M: 363 }, starting: { M: 363 }, waiting: { M: 363 }, collapsed: { M: 363 } },
+    /* closing (SCHED C13 ruling): a scheduled message's Failed / Expired receipt wraps its reason to a second line at the
+       S and M tiers rather than cut it (J-2); the one-line 44 px row holds from L */
+    schedule: { receipt: { S: 84, M: 64, L: 44 } } },
   /* `themes` overrides by theme family (data-theme up to the first '-'). Lead ruling R-31 (F0 review cycle 2):
      retro result faces may run to 400 at M and L (the monospace headline takes both of its lines); S is 400
      already and every other budget is unchanged */
   themes: { retro: { result: { M: 400, L: 400 } } }
 };
-const NOMINAL = { starting: 190, waiting: 186, live: 330, collapsed: 120, attention: 360, result: 360, failed: 360, receipt: 44 };
+const NOMINAL = { starting: 190, waiting: 190, live: 346, collapsed: 120, attention: 360, result: 360, failed: 360, receipt: 44 };
 const STRICT_UNIQUE = ['collab-review-toggle-finding', 'collab-review-create-todos', 'review-open-todos', 'review-export-report', 'review-report-view', 'review-demo-play', 'collab-modal-commit'];
 const SIZES = {
   sheet: [[1440, 900], [1280, 800], [1024, 768], [900, 800], [700, 800]],
@@ -936,7 +942,8 @@ export function inPageLint(o) {
       ['Back Seat Driver', 'back[\\s-]*seat[\\s-]+driver'], ['Crew Auto', 'crew[\\s-]+auto(?![\\w-])'], ['Grill Me', 'grill[\\s-]+me(?![\\w])'], ['Wonderer', 'wonderer'], ['ELI5', 'eli[\\s-]*5'],
       ['Revert Last Agent Edit', 'revert[\\s-]+last[\\s-]+agent[\\s-]+edit'], ['Open Panel', 'open[\\s-]+panel'], ['Build With Crew', 'build[\\s-]+with[\\s-]+crew'], ['Canceled', 'cancelled']];
     /* the copy: every rendered text node of the surface, code excepted (a file name or a snippet is not copy) */
-    const bits = [];
+    const bits = [], offRun = [];
+    const RUN_SURFACE = '.pmx-run, .pmx-receipt, .pmx-dock-line';
     for (const r of roots) {
       if (skipped(r)) continue;
       const tw = document.createTreeWalker(r, NodeFilter.SHOW_TEXT);
@@ -944,26 +951,30 @@ export function inPageLint(o) {
         const p = n.parentElement;
         if (!p || skipped(p) || p.closest('code, pre, kbd, samp, script, style') || !p.getClientRects().length) continue;
         bits.push(n.nodeValue);
+        if (!p.closest(RUN_SURFACE)) offRun.push(n.nodeValue);
       }
-      bits.push('\n');
+      bits.push('\n'); offRun.push('\n');
     }
     const copy = bits.join(' ').replace(/\s+/g, ' ');
+    /* "Cancelled" is the run spelling (9.0 rule 7): the Canceled check reads only the text outside run surfaces */
+    const copyOffRun = offRun.join(' ').replace(/\s+/g, ' ');
     const spelt = [];
     for (const [canon, pat, lowerOk] of CANON) {
+      const text = canon === 'Canceled' ? copyOffRun : copy;
       /* an identifier (kind-brainstorm, chat_room, a class or glyph name printed as a caption) is not copy */
-      for (const m of copy.matchAll(new RegExp('(^|[^\\w\\-./:])(' + pat + ')(?![\\w\\-])', 'gi'))) {
+      for (const m of text.matchAll(new RegExp('(^|[^\\w\\-./:])(' + pat + ')(?![\\w\\-])', 'gi'))) {
         const got = m[2];
         if (got === canon) continue;
         if (lowerOk && got === got.toLowerCase()) continue;
         const at = m.index + m[1].length;
-        spelt.push({ wrote: got, canon, context: copy.slice(Math.max(0, at - 24), at + got.length + 24).trim() });
+        spelt.push({ wrote: got, canon, context: text.slice(Math.max(0, at - 24), at + got.length + 24).trim() });
       }
     }
     /* IMPACT A1-34 (7.6, 9.1): recovery verbs are canon's, everywhere: "Retry", never "Try again" or "Check
        again"; "Recover", never "Open recovery" (review cycle 1: the gallery's failed card said "Try again") */
-    /* IMPACT A1-41 (C22, 8.11; provisional pending E-36): the rule tick says "Used 1 of your rules", never
-       "Followed" (the system can prove a rule was included, not that it was obeyed) */
-    for (const [canon, pat] of [['Retry', 'try[\\s-]+again'], ['Retry', 'check[\\s-]+again'], ['Recover', 'open[\\s-]+recovery'], ['Used N of your rules', 'followed\\s+(?:\\d+|one|all)\\s+of\\s+your\\s+rules?']]) {
+    /* E-36 answered B (owner, 2026-09-27; was IMPACT A1-41 provisional): the rule tick says "Followed 1 of your rules",
+       never "Used" */
+    for (const [canon, pat] of [['Retry', 'try[\\s-]+again'], ['Retry', 'check[\\s-]+again'], ['Recover', 'open[\\s-]+recovery'], ['Followed N of your rules', 'used\\s+(?:\\d+|one|all)\\s+of\\s+your\\s+rules?']]) {
       for (const m of copy.matchAll(new RegExp('(^|[^\\w])(' + pat + ')(?![\\w])', 'gi'))) {
         const at = m.index + m[1].length;
         spelt.push({ wrote: m[2], canon, context: copy.slice(Math.max(0, at - 24), at + m[2].length + 24).trim() });
@@ -1731,7 +1742,12 @@ export function inPageSpyArm(spec) {
     const k = seg[seg.length - 1];
     if (!obj || typeof obj[k] !== 'function') { S.calls[p] = -1; continue; }
     const f = obj[k]; S.calls[p] = 0;
-    obj[k] = function () { S.calls[p]++; return f.apply(this, arguments); };
+    /* closing (CREW-A): the wrapper keeps the function's own properties and arity, so a declared flag such as
+       PM56_CREW.evaluate.dryRun survives the spy */
+    const w = function () { S.calls[p]++; return f.apply(this, arguments); };
+    try { Object.defineProperty(w, 'length', { value: f.length }); } catch (e) { }
+    Object.assign(w, f);
+    obj[k] = w;
     S.restore.push(() => { obj[k] = f; });
   }
   return S.calls;
@@ -1745,7 +1761,7 @@ export const factories = {
   wand(id, o) {
     return {
       id, title: o.title || id, kind: 'sheet', tags: ['app', 'wand'].concat(o.tags || []), common: o.common !== false, roots: o.roots, rosterMayScroll: o.rosterMayScroll, rosterScrollAfterYield: o.rosterScrollAfterYield,
-      canon: o.canon, edit: o.edit, ledger: o.ledger, ledgerWays: o.ledgerWays, ledgerSpy: o.ledgerSpy,
+      canon: o.canon, edit: o.edit, ledger: o.ledger, ledgerWays: o.ledgerWays, ledgerSpy: o.ledgerSpy, setup: o.setup,
       async open(h) { const ok = await h.wandDialog(o.group, o.sel, o.hover); if (!ok) throw new Error('wand row not found: ' + o.sel); if (o.then) await o.then(h); },
       async after(h) { await h.closeAll(); }
     };

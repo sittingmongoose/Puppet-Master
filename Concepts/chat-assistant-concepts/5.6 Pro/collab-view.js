@@ -120,6 +120,9 @@
   }
   function finished(state) { return state === 'done' || state === 'cancelled' || state === 'failed' || state === 'limit'; }
   function live(state) { return !finished(state) && state !== 'waiting'; }
+  /* OWNER ANSWER E-31 (DL-137): a helper's words stream only while the run is going (running, or one helper needs you
+     and the others keep working); a paused, stopped or finished run never shows words still arriving */
+  function flowing(state) { return state === 'running' || state === 'needs'; }
   function canPause(run, st) { var c = C(); if (c && typeof c.canPause === 'function') { try { return !!c.canPause(run); } catch (e) { } } return st === 'running' || st === 'needs'; }
   function canCancel(run, st) { var c = C(); if (c && typeof c.canCancel === 'function') { try { return !!c.canCancel(run); } catch (e) { } } return !finished(st); }
 
@@ -313,11 +316,19 @@
     var key = (o.keyPrefix || 'collab-msg-') + m.id;
     if (m.senderKind === 'system') return { key: key, mid: m.id, kind: 'system', cls: o.cls, bodyHtml: esc(systemText(m)) };
     var s = sender(run, m), st = STREAMS[m.id], t = nowMs();
+    /* E-31: stop, pause, a failed helper or one that abstained end the stream at once. The message was written in full,
+       so it lands whole (the same one-time swap as a stream that ran out); a partial is never shown as its words */
+    if (st && !st.done && streamEnded(run, m)) settleStream(st);
     var streaming = !!(st && !st.done && o.stream);
     var fresh = FRESH[m.id] && t - FRESH[m.id] < 1400, swap = st && st.done && st.doneAt && t - st.doneAt < 600;
     return { key: key, mid: m.id, cls: o.cls, markHtml: s.mark, who: s.who, when: whenOf(run, m) + (streaming ? ' · writing now' : ''),
       attrs: (fresh ? 'data-cv-fresh="1"' : '') + (swap ? ' data-cv-swap="1"' : ''), streaming: streaming,
       bodyHtml: streaming ? '<p></p>' : S().pmxMd(sayOf(m.body), { mode: 'full' }) };
+  }
+  function streamEnded(run, m) {
+    if (!flowing(present(run)) || reduced()) return true;
+    var p = m.senderId ? participantById(run, m.senderId) : null;
+    return !!(p && (p.status === 'failed' || p.status === 'disabled' || (p.outcome && p.outcome !== 'completed')));
   }
   function filterButton(run) {
     var v = vs(run.id), p = v.filter !== 'all' ? participantById(run, v.filter) : null;
@@ -542,7 +553,7 @@
   /* ================================================================ the participant view (D5, 7.9) */
   function participantView(run, p) {
     var st = present(run), msgs = ownMessages(run, p), kw = KIND_WORD[run.kind] || 'run';
-    noteSeen(run, list(run.messages), live(st));
+    noteSeen(run, list(run.messages), flowing(st));
     var entries = msgs.map(function (m) { return entryOf(run, m, { stream: true, cls: 'collab-msg' }); });
     var msgBtn = btn({ action: 'collab-message', attrs: (runAttr(run) + attr('data-participant', p.id)).trim(), disabled: finished(st), label: 'Message ' + esc(p.role) });
     var head = '<p class="collab-view-pstate">' + markOf(run, p, 18) + '<span><b>' + esc(helperWord(p)) + '</b>' + (p.current ? ' · ' + esc(p.current) : '') + '</span></p>' +
@@ -576,7 +587,7 @@
   }
   function common(run, tab) {
     var st = present(run);
-    if (tab === 'transcript') { noteSeen(run, list(run.messages), live(st)); return roomExtras(run, st) + conversation(run); }
+    if (tab === 'transcript') { noteSeen(run, list(run.messages), flowing(st)); return roomExtras(run, st) + conversation(run); }
     if (tab === 'participants') return team(run);
     if (tab === 'usage') return cost(run);
     noteSeen(run, list(run.messages), false);
@@ -712,7 +723,8 @@
      A message that arrives while a live run's Conversation or helper view is on screen streams its words into
      its data-pm-keep island through PM56_PMX.stream (which paces with Chat WOW's PM56_STREAM); once every word
      is in, the next render swaps the island for the full markdown (its key changes from stream:{mid} to
-     body:{mid}; a 120 ms crossfade, the entry never moves). */
+     body:{mid}; a 120 ms crossfade, the entry never moves). Live helper text is the owner's answer E-31 (DL-137,
+     2026-09-27): the same streaming the replies use; stop, pause, fail and abstain end it (streamEnded). */
   var pollJob = 0;
   function settleStream(st) { st.done = true; st.doneAt = nowMs(); }
   function pollStreams() {

@@ -264,6 +264,10 @@
       stopped: false,
       stopReason: null,
       stopAt: null,
+      /* SQR-018 / DL-136: the project-wide "Pause all automations" switch, a separate record from the manual
+         Stop latch above. Only cmd.runtime.automation_pause.set (setAutomationPause) changes it, and only a
+         user actor may turn it off. It is never a Settings value. */
+      automationPause: { paused: false, user_stop_epoch: 0, changed_by: null, changed_at: null, revision: 0 },
       scheduledMessages: [
         {
           scheduled_dispatch_id: 'sm-nightly-digest',
@@ -572,6 +576,7 @@
     if (!Array.isArray(S.events)) S.events = [];
     if (!Array.isArray(S.quotaConsents)) S.quotaConsents = [];
     if (typeof S.stopEpoch !== 'number') S.stopEpoch = 0;
+    if (!S.automationPause || typeof S.automationPause.user_stop_epoch !== 'number') S.automationPause = { paused: false, user_stop_epoch: 0, changed_by: null, changed_at: null, revision: 0 };
     S.scheduledMessages.forEach(function (m) { if (!m.idempotencyKey) m.idempotencyKey = m.scheduled_dispatch_id; });
     S.buildSchedules.forEach(function (b) {
       if (!Array.isArray(b.occurrencesFired)) b.occurrencesFired = [];
@@ -650,13 +655,62 @@
     logEvent('runtime.quota_resume_attempted', 'precedence', null, 'Manual Stop cleared by explicit user action at epoch ' + S.stopEpoch + '. Nothing automatic could have done this.');
   }
 
+  /* SQR-018 / DL-136 — "Pause all automations", the project-wide switch (cmd.runtime.automation_pause.set).
+     Turning it on advances the project's own user_stop_epoch; every scheduled message, scheduled build, window
+     resume and quota resume in the project then fails the eligibility clause project_automation_paused. It
+     cancels nothing, invalidates nothing and releases no per-run latch. Only a user actor turns it off; setting
+     the value it already has returns the record unchanged. Work the user starts directly (Send now, Build) is
+     not an automation and is not held. */
+  function autoPause() { return P().automationPause; }
+  function projectId() { var c = EXT.ctx && EXT.ctx(), sc = c && window.PM56_GOAL && PM56_GOAL.scope ? PM56_GOAL.scope(c.state.selectedThread) : null; return sc && sc.projectId || 'project'; }
+  function setAutomationPause(paused, actor) {
+    var A = autoPause(), want = !!paused;
+    if ((actor || 'user') !== 'user') return { ok: false, error: 'permission_denied', detail: 'Only you can turn Pause all automations on or off.' };
+    if (A.paused === want) return { ok: true, unchanged: true, record: copy(A) };
+    if (want) A.user_stop_epoch += 1;
+    A.paused = want; A.changed_by = 'user'; A.changed_at = nowIso(); A.revision += 1;
+    logEvent('runtime.automation_pause_changed', projectId(), null, (want ? 'Turned on' : 'Turned off') + ' by you at project epoch ' + A.user_stop_epoch + '.');
+    if (!want) releaseAfterPause();
+    persistNow();
+    return { ok: true, record: copy(A) };
+  }
+  /* switch-off: nothing is dispatched by the switch itself, and each item it held is judged again by the one
+     predicate, once. A message whose send time came while the switch was on follows its own missed policy:
+     hold -> stays held, naming the missed time; next_available, or cancel_after_grace still within grace ->
+     back to scheduled and dispatched once through both checks; past grace -> expired. Builds re-capture the
+     project epoch and are started by their own window tick when the predicate passes (no backlog burst). */
+  function releaseAfterPause() {
+    var S = P(), A = S.automationPause, now = Date.now();
+    S.buildSchedules.forEach(function (b) { if (b.held_reason === PAUSE_HELD) b.held_reason = null; if (['active', 'paused', 'held'].indexOf(b.state) >= 0 && !b.dispatchReceipt) b.project_stop_epoch = A.user_stop_epoch; });
+    S.scheduledMessages.forEach(function (m) {
+      var a = (m.dispatch_attempts || []).slice(-1)[0], code = a && a.result && (a.result.error || a.result.clause);
+      if (m.state !== 'held' || code !== 'project_automation_paused') return;
+      if (m.missed_policy === 'hold') {
+        m.dispatch_attempts = m.dispatch_attempts.concat({ attempt_id: m.scheduled_dispatch_id + ':pause-off:' + A.revision, at: new Date(now).toISOString(),
+          result: { ok: false, error: 'missed_time_held', held: true, detail: 'The send time came while Pause all automations was on. You asked us to check with you first.' } });
+        m.heldReason = 'The send time was missed while Pause all automations was on.'; m.updatedAt = nowIso(); return;
+      }
+      /* the demo clock may be ahead of the wall clock (the explicit local clock controls): never earlier than the held check */
+      m.state = 'scheduled'; m.heldReason = null; m.updatedAt = nowIso();
+      dispatchMessageAt(m.scheduled_dispatch_id, Math.max(now, Date.parse(a.at) || 0));
+    });
+  }
+  /* the pause clause for an automatic dispatch; userStarted work (Send now) is exempt (SQR-006) */
+  function pauseGate(pauseEpochAtDecision, userStarted) {
+    var A = autoPause();
+    if (userStarted) return { ok: true };
+    if (pauseEpochAtDecision != null && pauseEpochAtDecision !== A.user_stop_epoch) return { ok: false, clause: 'project_automation_paused', detail: 'Decided before Pause all automations was turned on (project epoch ' + pauseEpochAtDecision + ', now ' + A.user_stop_epoch + '). Discarded rather than delivered.' };
+    if (A.paused) return { ok: false, clause: 'project_automation_paused', detail: 'Pause all automations is on for this project (turned on by you at project epoch ' + A.user_stop_epoch + '). Only you can turn it off.' };
+    return { ok: true };
+  }
+
   /* =====================================================================
      4. SHARED ELIGIBILITY PREDICATE — SQR-006. One function, three kinds,
      used before every scheduled message dispatch, build-schedule window
      admission, and quota auto-resume attempt. Returns the exact failed
      clause so a refusal is always actionable, never silent.
      ===================================================================== */
-  function evaluateEligibility(kind, rec, epochAtDecision) {
+  function evaluateEligibility(kind, rec, epochAtDecision, pauseEpochAtDecision, userStarted) {
     var S = P();
     /* Race check first: a decision computed against an older epoch is the
        more specific, more actionable diagnostic than the generic "stopped"
@@ -667,6 +721,7 @@
     if (S.stopped) {
       return { ok: false, clause: 'manual_stop_latched', detail: 'Manual Stop is latched at epoch ' + S.stopEpoch + (S.stopReason ? (' — ' + S.stopReason) : '') + '.' };
     }
+    var pz = pauseGate(pauseEpochAtDecision, userStarted); if (!pz.ok) return pz;
     if (kind === 'message') {
       if (['cancelled','canceled'].includes(rec.state)) return { ok: false, clause: 'schedule_not_found', detail: 'This scheduled message was cancelled and is retained only for audit.' };
       if (['dispatched','sent'].includes(rec.state)) return { ok: false, clause: 'dispatch_already_started', detail: 'Already dispatched under idempotency key "' + rec.idempotencyKey + '"; the original result is returned rather than sending again.' };
@@ -814,12 +869,12 @@
     if(!messageProjection(m).can_cancel)return msgError('dispatch_already_started');
     const TX=PM56_TX;return TX.run(()=>{TX.set(m,'state','canceled');TX.set(m,'revision',m.revision+1);TX.set(m,'cancelReason','Canceled by explicit user action; the snapshot and attempts remain in history.');TX.set(m,'updatedAt',nowIso());persistNow();return {ok:true,id};});
   }
-  function messageTicket(id,atMs=Date.now()){
-    const m=findMessage(id);return !m?msgError('schedule_not_found'):{ok:true,ticket:{...captureMessage(id),at:atMs,stop_epoch:P().stopEpoch,attempt_id:id+':r'+m.revision+':a'+((m.dispatch_attempts||[]).length+1)}};
+  function messageTicket(id,atMs=Date.now(),userStarted=false){
+    const m=findMessage(id);return !m?msgError('schedule_not_found'):{ok:true,ticket:{...captureMessage(id),at:atMs,stop_epoch:P().stopEpoch,pause_epoch:autoPause().user_stop_epoch,...(userStarted?{user_started:true}:{}),attempt_id:id+':r'+m.revision+':a'+((m.dispatch_attempts||[]).length+1)}};
   }
   function messageEligibility(m,ticket,publishedMessage){
     if(!Number.isFinite(ticket.at))return msgError('invalid_dispatch_time');
-    const gate=evaluateEligibility('message',m,ticket.stop_epoch);if(!gate.ok)return msgError(gate.clause,gate.detail);
+    const gate=evaluateEligibility('message',m,ticket.stop_epoch,ticket.pause_epoch,!!ticket.user_started);if(!gate.ok)return msgError(gate.clause,gate.detail);
     if(m.binding_kind!=='scheduled_message_v2')return msgError('legacy_snapshot_requires_review','This historical fixture has no complete frozen snapshot. Edit it before dispatch.');
     if(window.PM56_ARTIFACTS.key(msgBinding(m))!==m.snapshot_key)return msgError('snapshot_changed');
     if(!identical(scopeMessage(m.thread_id),m.scope_snapshot))return msgError('scope_changed');
@@ -848,6 +903,9 @@
     if(!messageProjection(m).can_edit)return msgError('dispatch_already_started');
     let eligible=messageEligibility(m,ticket);
     if(eligible.error==='not_due'||eligible.error==='invalid_dispatch_time')return eligible;
+    /* a decision taken before Pause all automations was turned on, delivered after it went off again: discarded; the
+       record stays as it is and its next check decides afresh (it never keeps the switch's reason once it is off) */
+    if(eligible.error==='project_automation_paused'&&!autoPause().paused)return {...eligible,discarded:true};
     const TX=PM56_TX;
     if(!eligible.ok)return TX.run(()=>{
       const result={...eligible,held:eligible.error!=='grace_expired',expired:eligible.error==='grace_expired',message_id:null};
@@ -869,6 +927,7 @@
       eligible=messageEligibility(m,ticket,message);if(!eligible.ok)TX.fail(eligible.error);
       if(ticket.currentness!==msgCurrent(m))TX.fail('stale_schedule_revision');
       if(P().stopped||ticket.stop_epoch!==P().stopEpoch)TX.fail('manual_stop_latched');
+      if(!pauseGate(ticket.pause_epoch,!!ticket.user_started).ok)TX.fail('project_automation_paused');
       const receipt={schedule_id:m.scheduled_dispatch_id,revision:m.revision,attempt_id:ticket.attempt_id,message_id:id,at:message.time,requested_runtime:copy(m.requested_runtime),effective_runtime:copy(m.requested_runtime),snapshot_key:m.snapshot_key,session_only:true};
       const result={ok:true,dispatched:true,message_id:id,receipt};
       TX.set(m,'state','sent');TX.set(m,'dispatchedMessageId',id);TX.set(m,'dispatchedAt',message.time);TX.set(m,'dispatch_receipt',receipt);TX.set(m,'heldReason',null);TX.set(m,'updatedAt',nowIso());
@@ -883,7 +942,7 @@
     return delivered;
   }
   function ctxAppend(thread,message){return EXT.ctx().appendMessage(message,thread);}
-  function dispatchMessageAt(id,at,expected){const decision=expected?.attempt_id?{ok:true,ticket:expected}:messageTicket(id,at);return decision.ok?deliverMessage(decision.ticket):decision;}
+  function dispatchMessageAt(id,at,expected,userStarted){const decision=expected?.attempt_id?{ok:true,ticket:expected}:messageTicket(id,at,userStarted);return decision.ok?deliverMessage(decision.ticket):decision;}
 
   /* =====================================================================
      5. SCHEDULED MESSAGES — SQR-002. Freeze, revalidate, dispatch or hold.
@@ -959,7 +1018,7 @@
       schedule_id: id, project_id: currentSnapshot.project_id, target_kind: 'assistant_plan_run', target_id: d.planId,
       exact_target_version: d.version, exact_target_hash: hash,
       binding_kind:'plan_content_v1',execution_topology:d.executionTopology||'agent',thread_id:plan.thread_id,
-      topology_snapshot:{schema:'pm.schedule.plan_topology_snapshot.v1',execution_topology:d.executionTopology||'agent'},user_stop_epoch:P().stopEpoch,
+      topology_snapshot:{schema:'pm.schedule.plan_topology_snapshot.v1',execution_topology:d.executionTopology||'agent'},user_stop_epoch:P().stopEpoch,project_stop_epoch:autoPause().user_stop_epoch,
       owner_worktree_snapshot:currentSnapshot.worktree,runtime_created:false,plan_run_id:null,goal_id:null,
       runtime_snapshot:{modelId:model.id,modelName:model.name,provider:model.provider,accountId:model.accountId},
       permission_snapshot:ctx.state.permissions,worktree_snapshot:ctx.state.worktree,
@@ -1106,8 +1165,9 @@
     }else if(b.state==='canceled'||b.state==='cancelled'){tone='done';lead='Schedule canceled';say='V'+esc(b.exact_target_version)+' won’t be built on a schedule.';}
     else if(b.state==='held'){tone='update';lead='Held';say=esc(buildHeldWords(b));}
     else if(b.state==='expired'){tone='done';lead='Skipped';say='it was more than '+Math.round((b.grace_seconds||SCHED_DEFAULTS.build.graceMinutes*60)/60)+' min late.';}
-    /* Pause all automations is on: nothing scheduled starts, so the line says so first (A1-30), never "next: …" */
-    else if(P().stopped&&!(b.dispatchReceipt&&(b.state==='completed'||plan&&plan.status==='completed'))){tone='pause';lead='Paused';say='Pause all automations is on, so nothing starts. Turn it back on in Scheduled.';}
+    /* Pause all automations is on: nothing scheduled starts, so the line says so first (A1-30, SQR-018), never "next: …" */
+    else if(autoPause().paused&&!(b.dispatchReceipt&&(b.state==='completed'||plan&&plan.status==='completed'))){tone='pause';lead='Paused';say='Pause all automations is on, so nothing starts until you turn it off in Scheduled.';}
+    else if(P().stopped&&!(b.dispatchReceipt&&(b.state==='completed'||plan&&plan.status==='completed'))){tone='pause';lead='Paused';say='you pressed Stop, so nothing scheduled starts until you resume it in Scheduled.';}
     else if(b.dispatchReceipt&&(b.state==='completed'||plan&&plan.status==='completed')){tone='done';lead='Scheduled build completed';say=steps?'built '+steps+'.':'';}
     else if(b.dispatchReceipt&&a&&a.condition_kind==='window'){
       tone='pause';ribbon=!one;lead='Outside execution window';
@@ -1140,8 +1200,10 @@
     return '<p class="plan-sched-overnight"><b>Overnight:</b> '+esc(parts.join(' · '))+
       ' <button type="button" class="text-button" data-action="sched-open-plan-record" data-id="'+esc(b.schedule_id)+'">Open</button></p>';
   }
+  var PAUSE_HELD='Held by Pause all automations; no run was created.';
   function buildHeldWords(b){
     var r=String(b.held_reason||'');
+    if(r===PAUSE_HELD)return autoPause().paused?'Pause all automations is on, so nothing was started.':'it waited while Pause all automations was on; it starts at its next time.';
     if(/worktree/i.test(r))return 'the worktree this plan builds in no longer exists, so nothing was started.';
     if(/usage/i.test(r))return 'Usage wasn’t available, so nothing was started.';
     if(/window/i.test(r))return 'it was outside its time slot, so nothing was started.';
@@ -1159,8 +1221,9 @@
     if(!b||!api||!c)return fail('target_not_found');
     if(expectedRevision!=null&&expectedRevision!==b.revision)return fail('stale_schedule_revision');
     if(b.dispatchReceipt)return {ok:true,duplicate:true,receipt:b.dispatchReceipt};
-    const captured=epochAtDecision??b.user_stop_epoch??P().stopEpoch;
-    const eligible=evaluateEligibility('build',b,captured);if(!eligible.ok)return fail(eligible.clause,eligible.detail);
+    const captured=epochAtDecision??b.user_stop_epoch??P().stopEpoch,pauseAt=b.project_stop_epoch??null;
+    const eligible=evaluateEligibility('build',b,captured,pauseAt);if(!eligible.ok){if(eligible.clause==='project_automation_paused'&&b.held_reason!==PAUSE_HELD){b.held_reason=PAUSE_HELD;persistNow();}return fail(eligible.clause,eligible.detail);}
+    if(b.held_reason===PAUSE_HELD)b.held_reason=null;
     if(b.state!=='active')return fail('schedule_not_active');
     if(b.topology_snapshot?.execution_topology!==b.execution_topology)return fail('topology_snapshot_changed');
     if(b.binding_kind!=='plan_content_v1'||!['one_time','recurring_window'].includes(b.schedule_kind)||!['agent','goal_driven','crew'].includes(b.execution_topology))return fail('unsupported_demo_schedule');
@@ -1189,7 +1252,7 @@
     const out=TX.run(()=>{
       const result=api.admitScheduled(b);if(!result.ok)TX.fail(result.error||result.clause||'plan_admission_refused');
       if(JSON.stringify(b)!==frozen||b.revision!==revision)TX.fail('schedule_changed_during_admission');
-      if(!evaluateEligibility('build',b,captured).ok)TX.fail('stale_stop_epoch');
+      const again=evaluateEligibility('build',b,captured,pauseAt);if(!again.ok)TX.fail(again.clause==='project_automation_paused'?'project_automation_paused':'stale_stop_epoch');
       const occurrence=new Date(due).toISOString(),receipt={schedule_id:b.schedule_id,plan_id:b.target_id,version:b.exact_target_version,hash:b.exact_target_hash,occurrence,at:new Date(atMs).toISOString(),concept:true,
         execution_topology:b.execution_topology,plan_run_id:result.plan_run_id,crew_run_id:result.crew_run_id||null,goal_id:result.goal_id||null};
       for(const [k,v] of Object.entries({clock_ms:atMs,held_reason:null,lastOccurrenceStart:occurrence,occurrencesFired:b.occurrencesFired.concat(occurrence),dispatchReceipt:receipt,
@@ -1220,6 +1283,9 @@
     const schedules=P().buildSchedules.filter(b=>b.binding_kind==='plan_content_v1'&&b.target_id===planId&&b.plan_run_id===run&&b.state==='active'&&b.schedule_kind==='recurring_window');
     if(!schedules.length)return {ok:true};
     const stop=window.PM56_SCHED.checkEpoch({epoch:P().stopEpoch});if(!stop.ok)return stop;
+    /* SQR-018: with Pause all automations on, a running scheduled build admits no new work; the step in flight
+       finishes and the run waits at that safe point until you turn the switch off */
+    const pz=pauseGate(null);if(!pz.ok)return msgError(pz.clause,pz.detail);
     for(const b of schedules){const valid=buildRoute(b);if(!valid.ok)return valid;
       const w=buildWindow(b,Number.isFinite(b.clock_ms)?b.clock_ms:Date.now());if(!w.ok||!w.open)return msgError('window_inactive','Outside execution window. The same unfinished PlanRun is retained.');
       if(w.phase==='winding_down'){
@@ -1247,6 +1313,7 @@
     if(p?.status==='completed'){if(b.state==='active'){b.state='completed';b.runPhase='completed';b.revision++;persistNow();}return {ok:true,completed:true,plan_run_id:b.plan_run_id};}
     if(p?.status!=='building'||p.approved?.plan_run_id!==b.plan_run_id||!['active','paused'].includes(b.state))return msgError('run_no_longer_active');
     const stop=PM56_SCHED.checkEpoch({epoch:expected?.epoch??b.user_stop_epoch});if(!stop.ok)return stop;
+    const pz=pauseGate(null);if(!pz.ok)return msgError(pz.clause,pz.detail);
     const route=buildRoute(b);if(!route.ok){b.held_reason=route.detail;persistNow();return route;}
     const w=buildWindow(b,at);if(!w.ok)return w;
     b.clock_ms=at;b.demoClockIso=new Date(at).toISOString();b.last_window_decision={at:b.demoClockIso,phase:w.phase,start:w.start||null,end:w.end||null};
@@ -1469,6 +1536,14 @@
   var MANAGER_SORT_OPTIONS = [
     { value: 'time_asc', label: 'Soonest first', description: 'The next thing to happen at the top.' },
     { value: 'time_desc', label: 'Latest first', description: 'The most recent at the top.' }];
+  /* A Crew needs a plan whose steps are tied to real work it can split (plans.js workRef, the check
+     PM56_COLLAB.preparePlanCrew makes); on any other plan the option is listed, disabled, with its reason */
+  var CREW_OFF = 'Not for this plan: its steps aren’t set up to be split between helpers.';
+  function crewAllowed(planId) { var p = window.PM56_PLANS && PM56_PLANS.get(planId); return !!(p && p.workRef); }
+  function topologyMenu(planId) {
+    var ok = crewAllowed(planId);
+    return choiceMenu(TOPOLOGY_OPTIONS).map(function (o) { return o.value === 'crew' && !ok ? Object.assign(o, { disabled: true, reason: CREW_OFF }) : o; });
+  }
   function optionOf(list, value) { for (var i = 0; i < list.length; i++) if (list[i].value === value) return list[i]; return list[0]; }
   function optionWords(o, grace) { return String(o.label).replace('{grace}', String(Math.round(Number(grace) || SCHED_DEFAULTS.message.graceMinutes))); }
   function choiceMenu(list, grace) { return list.map(function (o) { return { value: o.value, label: optionWords(o, grace), description: o.description }; }); }
@@ -1504,7 +1579,7 @@
     schedule_form_changed: 'This changed while it was saving. Reopen to see the latest.',
     crew_configuration_required: 'Set up the Crew first.',
     crew_definition_changed: 'The Crew changed since you set it up. Set it up again.',
-    plan_not_ready_for_crew: 'This plan isn’t ready to build yet.'
+    plan_not_ready_for_crew: 'A Crew can’t build this plan: its steps aren’t set up to be split between helpers. Pick another way to build it.'
   };
   function refuse(d, code, detail, vars) { if (!d) return; d.errorCode = code || ''; d.error = detail || ''; d.errorVars = vars || null; }
   function clearRefusal(d) { if (d) { d.errorCode = ''; d.error = ''; d.errorVars = null; } }
@@ -1522,6 +1597,12 @@
   function refusalSlot(d) { return refusalHtml(d) || ''; }
 
   var EMPTY_ALERT = '<p class="sched-form-error" role="alert"></p>';
+  /* DL-136 lead ruling: creating a schedule never lifts Pause all automations; while it is on, the sheet says so in
+     one plain line before its primary, and the new item is recorded and waits like the others */
+  var PAUSE_NOTE = 'Pause all automations is on, so this will wait until you turn it off.';
+  /* it takes the read-back's second sentence (the foot keeps its 80 px, so the sheet never scrolls for it; the model,
+     the destination and the slot's details stay in the body) */
+  function pausePart(key) { return { key: key, html: '<span class="pmx-sched-pausenote">' + PAUSE_NOTE + '</span>' }; }
 
   /* '' when the wall time resolves in the future, else the refusal code */
   function validateWall(date,time,zone){const r=PM56_SCHEDULE_TIME.resolve(zone,PM56_SCHEDULE_TIME.parse(date,time));return !r.ok?(r.error==='invalid_timezone'?'invalid_timezone':'invalid_local_time'):r.at<=Date.now()?'time_not_future':'';}
@@ -1594,6 +1675,9 @@
 
   /* ---------------------------------------------------------------- the next 48 hours (8.7 plate) */
   var TRACK_H = 106;
+  /* a plate label's half width, generous for the widest theme font (Poppins, the retro mono): 3.8 px a character */
+  function labelHalf(text) { return String(text).length * 3.8 + 2; }
+  var NOW_W = 24;  /* the "now" label */
   function trackSvg(d, w, now, W) {
     var PP = SH.pmxPlateParts, zone = d.timezone, X0 = 24, X1 = W - 24, TL = 44, span = 48 * 3600000, full = W >= 700;
     var p0 = zp(zone, now - 2 * 3600000);
@@ -1601,6 +1685,9 @@
     function x(t) { return Math.round((X0 + (t - start) / span * (X1 - X0)) * 10) / 10; }
     var sendX = w.ok ? (w.at < start ? X0 : w.at > end ? X1 : x(w.at)) : null, nowX = x(now);
     var labStep = full ? 6 : 12, minorStep = full ? 1 : 3, out = '', firstMid = null;
+    /* LINT-4: an hour label keeps 16 px from either end of the track (12 px from the plate edge whatever the clock
+       says) and 8 px from the "now" label, which is drawn to the left of the now line */
+    var nowBox = [nowX - 10 - NOW_W, nowX - 10];
     for (var t = start; t <= end; t += 3600000) {
       var q = zp(zone, t); if (!q || q.mi !== 0) continue;
       var hx = x(t), major = q.h === 0, mid = !major && q.h % labStep === 0;
@@ -1610,7 +1697,9 @@
         if (firstMid == null) firstMid = hx;
         if (hx + 10 + 84 <= X1) out += PP.label({ x: hx + 10, y: 20, text: esc(dayLabel(t, zone)), cls: 'lab', part: 'when' });
       } else if (mid && Math.abs(hx - nowX) > 40 && (sendX == null || Math.abs(hx - sendX) > 26)) {
-        out += PP.label({ x: hx, y: 66, text: esc(hourWord(pad2(q.h) + ':00')), anchor: 'middle', cls: 'sub' });
+        var hw = hourWord(pad2(q.h) + ':00'), half = labelHalf(hw);
+        if (hx - X0 >= 16 && X1 - hx >= 16 && !(hx + half + 8 > nowBox[0] && hx - half - 8 < nowBox[1]))
+          out += PP.label({ x: hx, y: 66, text: esc(hw), anchor: 'middle', cls: 'sub' });
       }
     }
     if (firstMid == null || firstMid - X0 > 108) out = PP.label({ x: X0, y: 20, text: esc(dayLabel(start + 3600000, zone)), cls: 'lab', part: 'when' }) + out;
@@ -1689,7 +1778,8 @@
         out += '<g class="pmx-sched-once" data-pmx-part="when"><circle class="pmx-sched-dot" cx="' + mx + '" cy="' + rowY(rr) + '" r="4"/>' + (soon ? '' : PP.glyph('chevron-right', X1 + 2, rowY(rr) - 6, 12)) + '</g>';
       }
     }
-    if (todayWd >= 0) { var ny = rowY(rowOf(todayWd)); out += '<line class="pmx-sched-nowline" data-pmx-part="when" x1="' + x(nowMin) + '" x2="' + x(nowMin) + '" y1="' + (ny - 7) + '" y2="' + (ny + 7) + '"/>'; }
+    /* on the first row the line starts lower, so it keeps 8 px clear of an hour label above it (J-2; Mondays near a label) */
+    if (todayWd >= 0) { var nr = rowOf(todayWd), ny = rowY(nr); out += '<line class="pmx-sched-nowline" data-pmx-part="when" x1="' + x(nowMin) + '" x2="' + x(nowMin) + '" y1="' + (ny - (nr === 0 ? 2 : 7)) + '" y2="' + (ny + (nr === 0 ? 9 : 7)) + '"/>'; }
     return out;
   }
   function nextWords(d, now) {
@@ -1789,7 +1879,7 @@
     /* foot: the read-back in the voice, the refusal in its place when Schedule is refused */
     var over = text.length > 8000, empty = !text.trim();
     var reason = empty ? 'Write a message first.' : over ? 'That’s too long (8,000 characters max).' : '';
-    var rb = SH.pmxReadback({ key: 'sched-msg-rb', parts: reason ? [{ html: 'Sends to <b>' + dw.rb + '</b> ' }, { part: 'when', html: w.ok ? 'on <b>' + inked('rbwhen', w.day + ' at ' + w.clock) + '</b>.' : 'at the time you pick.' }] : [
+    var rb = SH.pmxReadback({ key: 'sched-msg-rb', parts: !reason && autoPause().paused ? [{ html: 'Sends ' }, { part: 'when', html: w.ok ? '<b>' + inked('rbwhen', w.day + ' at ' + w.clock) + '</b>. ' : 'at the time you pick. ' }, pausePart('sched-msg-pausenote')] : reason ? [{ html: 'Sends to <b>' + dw.rb + '</b> ' }, { part: 'when', html: w.ok ? 'on <b>' + inked('rbwhen', w.day + ' at ' + w.clock) + '</b>.' : 'at the time you pick.' }] : [
       { html: 'Sends exactly this text' + (files.length ? ' and <b>' + files.length + (files.length === 1 ? ' file' : ' files') + '</b>' : '') + ' to <b>' + dw.rb + '</b> ' },
       { part: 'when', html: w.ok ? 'on <b>' + inked('rbwhen', w.day + ' at ' + w.clock) + '</b> ' : '' },
       { part: 'route', html: 'using <b>' + inked('rbmodel', modelWords(d.modelId)) + '</b>.' }] });
@@ -1805,7 +1895,7 @@
     var base = msgSheetBase(c.editing);
     base.lead = 'We’ll send exactly what you see here, to ' + c.destRb + ', at the time you pick. Nothing is sent until then.';
     base.body = SH.pmxConfirm({ key: 'sched-msg-confirm', cls: 'pmx-sched-confirm', markHtml: '<div class="pmx-sched-sealed" data-k="sched-sealed"><span class="pmx-sched-sealtext">' + esc(c.text) + '</span></div>',
-      headline: esc(c.headline), text: c.editing ? 'It still waits in your chat until it sends. Nothing was sent.' : 'It waits in your chat until it sends. Your message box is cleared.' });
+      headline: esc(c.headline), text: (c.editing ? 'It still waits in your chat until it sends. Nothing was sent.' : 'It waits in your chat until it sends. Your message box is cleared.') + (autoPause().paused ? ' ' + PAUSE_NOTE : '') });
     base.foot = SH.pmxFoot({ cls: 'pmx-sched-foot pmx-sched-foot--done', readback: SH.pmxReadback({ key: 'sched-msg-rb-done', parts: [{ html: c.readback }] }) + EMPTY_ALERT,
       cancel: { action: 'sched-open-manage', label: 'See all scheduled' }, primary: { action: 'sched-close-dialog', label: 'Done' } });
     return SH.pmxSheet(base);
@@ -1852,6 +1942,7 @@
     var x = ctx.state.dialog;
     if (ui.buildConfirm) return renderBuildConfirm(ctx, ui.buildConfirm);
     var d = ui.buildDraft; if (!d || d.planId !== x.planId) d = ui.buildDraft = defaultBuildDraft(x.planId, x.version);
+    if (d.executionTopology === 'crew' && !crewAllowed(d.planId) && !d.crewDefinition) d.executionTopology = 'agent';
     var one = d.kind === 'one_time', now = nowMinute(), editing = !!ui.editingBuildId;
     var hash = d.contentHash || demoHash(d.planId + ':' + d.version), base = buildSheetBase(editing, d.version);
     var guide = window.PM56_SCHEDULE_DEMOS ? window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx) : '';
@@ -1890,7 +1981,7 @@
     var promises = SH.pmxPromises(
       SH.pmxPromise({ key: 'sched-bp1', glyph: 'lock', text: 'If you edit the plan, we’ll ask before building the new version.' }) +
       SH.pmxPromise({ key: 'sched-bp2', glyph: 'pause', text: '<b>Pause all automations</b> always wins.' })) +
-      '<p class="pmx-fine pmx-sched-pausefine">In Scheduled › Resume &amp; Safety Policy. In this preview it is one switch for all scheduling.</p>';
+      '<p class="pmx-fine pmx-sched-pausefine">In Scheduled › Resume &amp; Safety Policy: it holds every scheduled send and build.</p>';
     var tech = techBlock('build', [(editing ? 'Command: cmd.execution_window.update' : 'Command: cmd.chat.plan.schedule_build'), 'Plan ' + d.planId + ' · version V' + d.version + ' · hash ' + hash]);
     /* foot */
     var words = buildWords(d), reason = !one && !d.days.length ? 'Pick at least one night.' : !one && d.startTime === d.pauseTime ? 'Start and stop must be different times.'
@@ -1901,7 +1992,7 @@
     base.hero = weekPlate(d, now, tech);
     base.main = whenQ + nightly;
     base.side = who + crew + miss + grace + keep + promises;
-    base.foot = SH.pmxFoot({ cls: 'pmx-sched-foot', readback: SH.pmxReadback({ key: 'sched-bld-rb', parts: words.parts }) + EMPTY_ALERT, refusal: refusalSlot(d),
+    base.foot = SH.pmxFoot({ cls: 'pmx-sched-foot', readback: SH.pmxReadback({ key: 'sched-bld-rb', parts: !reason && autoPause().paused ? [words.parts[0], pausePart('sched-bld-pausenote')] : words.parts }) + EMPTY_ALERT, refusal: refusalSlot(d),
       estimate: dst.relevant ? SH.pmxEstimate({ text: esc(dst.relevant), cls: 'pmx-sched-dstnote' }) : '',
       cancel: { action: 'sched-close-dialog' },
       primary: { action: 'sched-create-build', attrs: 'data-plan-id="' + esc(d.planId) + '" data-plan-version="' + esc(d.version) + '"', label: esc(editing ? 'Save changes' : words.primary), disabled: !!reason, reason: reason } });
@@ -1912,11 +2003,24 @@
     base.guide = window.PM56_SCHEDULE_DEMOS ? window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx) : '';
     /* the picture of what was scheduled stays: the week map, sealed (no entrance), with the next occurrence lit */
     base.body = SH.pmxConfirm({ key: 'sched-bld-confirm', cls: 'pmx-sched-confirm pmx-sched-confirm--build', markHtml: c.draft ? '<div class="pmx-sched-confirmweek" data-k="sched-confirm-week">' + weekPlate(c.draft, nowMinute(), '') + '</div>' : '<span class="pmx-sched-confirmmark">' + SH.pmxKindMark('build-at', 36) + '</span>', headline: esc(c.headline),
-      text: 'Builds V' + esc(c.version) + ' of ' + esc(c.title) + ' while you’re away. If you edit the plan, we’ll ask before building the new version.' });
+      text: 'Builds V' + esc(c.version) + ' of ' + esc(c.title) + ' while you’re away. If you edit the plan, we’ll ask before building the new version.' + (autoPause().paused ? ' ' + PAUSE_NOTE : ''), actions: tryNow(c.id) });
     base.foot = SH.pmxFoot({ cls: 'pmx-sched-foot pmx-sched-foot--done', readback: SH.pmxReadback({ key: 'sched-bld-rb-done', parts: [{ html: c.readback }] }) + EMPTY_ALERT,
       cancel: { action: 'sched-open-plan-record', attrs: 'data-id="' + esc(c.id) + '"', label: 'See it in Scheduled' }, primary: { action: 'sched-close-dialog', label: 'Done' } });
     return SH.pmxSheet(base);
   }
+  /* the saved record's quiet demo line, folded (a native details whose open state the sheet keeps across a
+     re-render): nothing runs in the background in this preview, so "Start it now" walks the local clock to the
+     slot's start, exactly as the manager's row does. .schedule-item .schedule-details > summary is the record hook
+     tests/b15 opens (G-23: b15 is read-only). */
+  function tryNow(id) {
+    var b = findBuild(id); if (!b || b.state !== 'active' || b.dispatchReceipt || b.binding_kind !== 'plan_content_v1') return '';
+    var open = !!(ui.tryOpen && ui.tryOpen[id]);
+    return '<div class="schedule-item pmx-sched-trynow" data-k="sched-try-' + esc(id) + '"><details class="schedule-details" data-sched-try="' + esc(id) + '"' + (open ? ' open' : '') + '>' +
+      '<summary>' + SH.pmxGlyph('chevron-right', 13) + '<span>Try it without waiting</span></summary>' +
+      '<p class="pmx-fine pmx-sched-demo">' + SH.pmxGlyph('play-ring', 13) + '<span>Demo:</span><button type="button" class="text-button" data-action="sched-advance-window" data-id="' + esc(id) + '">' +
+      (b.schedule_kind === 'one_time' ? 'Jump to its start time' : 'Jump to the next start') + '</button></p></details></div>';
+  }
+  document.addEventListener('toggle', function (e) { var el = e.target; if (!el || !el.matches || !el.matches('details[data-sched-try]')) return; (ui.tryOpen || (ui.tryOpen = {}))[el.getAttribute('data-sched-try')] = el.open; }, true);
   function buildConfirmation(rec, d, editing) {
     var plan = window.PM56_PLANS && window.PM56_PLANS.get(rec.target_id), words = buildWords(d);
     var draft = d ? { kind: d.kind, date: d.date, time: d.time, startTime: d.startTime, pauseTime: d.pauseTime, days: (d.days || []).slice(), windDown: d.windDown, timezone: d.timezone } : null;
@@ -2008,7 +2112,12 @@
       if (!major && !mark && q.h % 3) continue;
       out += '<line class="pmx-sched-tick" data-kind="' + (major ? 'day' : mark ? 'mark' : 'hour') + '" x1="' + hx + '" x2="' + hx + '" y1="' + (major ? 24 : mark ? 31 : 34) + '" y2="' + TL + '"/>';
       if (major) { if (firstMid == null) firstMid = hx; if (hx + 10 + 84 <= X1) out += PP.label({ x: hx + 10, y: 19, text: esc(dayLabel(t, zone)), cls: 'lab', part: 'when' }); }
-      else if (mark && Math.abs(hx - nowX) > 34) out += PP.label({ x: hx, y: 68, text: esc(hourWord(pad2(q.h) + ':00')), anchor: 'middle', cls: 'sub' });
+      else if (mark && Math.abs(hx - nowX) > 34) {
+        /* LINT-4: 16 px from either end of the track, 8 px from the "now" label (drawn to the right of the now line) */
+        var mw = hourWord(pad2(q.h) + ':00'), mh = labelHalf(mw);
+        if (hx - X0 >= 16 && X1 - hx >= 16 && !(hx + mh + 8 > nowX + 6 && hx - mh - 8 < nowX + 6 + NOW_W))
+          out += PP.label({ x: hx, y: 68, text: esc(mw), anchor: 'middle', cls: 'sub' });
+      }
     }
     if (firstMid == null || firstMid - X0 > 108) out = PP.label({ x: X0, y: 19, text: esc(dayLabel(start + 3600000, zone)), cls: 'lab', part: 'when' }) + out;
     out += PP.line({ key: 'sched-mgr-trk', from: { x: X0, y: TL }, to: { x: X1, y: TL }, style: 'fixed', part: 'when' });
@@ -2035,9 +2144,9 @@
       '<li data-pmx-part="when"><i class="pmx-sched-sw" data-kind="band"></i>A build slot</li><li data-pmx-part="wind"><i class="pmx-sched-sw" data-kind="wind"></i>Wrap-up</li>' +
       '<li data-pmx-part="when"><i class="pmx-sched-sw" data-kind="now"></i>Now</li></ul>';
     /* with Pause all automations on, the marks dim: nothing on the plate will start until it is turned back on */
-    var paused = !!P().stopped;
+    var paused = !!autoPause().paused;
     return '<div class="pmx-sched-slot pmx-sched-slot--mgr" data-k="sched-mgr-slot"' + (paused ? ' data-paused="1"' : '') + '>' + SH.pmxPlateFit({ key: 'sched-mgr-plate', kind: 'scheduled', affects: 'when', plates: [one('full', 1064), one('compact', 860), one('strip', 560)] }) + '</div>' +
-      '<div class="pmx-sched-mgrlegend"><p class="pmx-fine">The next 48 hours, your time (' + esc(zoneCity(deviceZone())) + ').' + (paused ? ' Paused: none of this starts until you turn it back on.' : '') + '</p>' + legend + '</div>';
+      '<div class="pmx-sched-mgrlegend"><p class="pmx-fine">The next 48 hours, your time (' + esc(zoneCity(deviceZone())) + ').' + (paused ? ' Paused: none of this starts until you turn it off.' : '') + '</p>' + legend + '</div>';
   }
   /* a row and its plate mark light each other (CSS :has, one rule per record; nothing is written from JS) */
   function linkStyle(ids) {
@@ -2064,8 +2173,9 @@
     var pr = messageProjection(m), id = esc(m.scheduled_dispatch_id), st = stateOf(m);
     var token = ' data-id="' + id + '" data-revision="' + m.revision + '" data-currentness="' + esc(msgCurrent(m)) + '"';
     var b = function (action, attrs, label, cls) { return '<button type="button" class="' + (cls || 'text-button') + ' pmx-act" data-action="' + action + '"' + attrs + '>' + label + '</button>'; };
-    return (st === 'held' && missedAt(m) != null ? b('sched-card-send-now', token, 'Send now') : '') +
-      (pr.can_edit ? b('sched-card-edit', ' data-id="' + id + '"', st === 'held' ? (missedAt(m) != null ? 'Reschedule' : 'Edit and send') : 'Edit') : '') +
+    var sendNow = st === 'held' && (missedAt(m) != null || pauseHeld(m));
+    return (sendNow ? b('sched-card-send-now', token, 'Send now') : '') +
+      (pr.can_edit ? b('sched-card-edit', ' data-id="' + id + '"', st === 'held' ? (sendNow ? 'Reschedule' : 'Edit and send') : 'Edit') : '') +
       (pr.can_cancel ? b('sched-card-cancel', token, 'Cancel') : '') +
       (pr.dispatched_message_id ? b('sched-open-sent', ' data-id="' + id + '"', 'Open message') : '') +
       b('sched-focus-record', ' data-id="' + id + '"', 'Details');
@@ -2160,7 +2270,9 @@
     if (one) { var t = Date.parse(b.scheduled_at_utc); when = 'Once, ' + (isFinite(t) ? dayLabel(t, zone) + ' at ' + clockAt(t, zone) : 'at a time not set') + ' (' + zoneCity(zone) + ')'; }
     else when = cap1(nightsWord(b.days_of_week)) + ', ' + slotText(b.local_start, b.local_pause) + ' (' + zoneCity(zone) + ')' + (st === 'active' && !b.dispatchReceipt ? ' · next: ' + (nextWords({ kind: 'recurring_window', timezone: zone, days: b.days_of_week, startTime: b.local_start, pauseTime: b.local_pause }, now) || 'not set') : '');
     var who = optionOf(TOPOLOGY_OPTIONS, b.execution_topology || 'agent').label;
-    var status = st === 'invalidated' ? 'Bound to V' + esc(b.exact_target_version) + '. You edited this plan (now V' + esc(b.pendingVersion) + '). <b>Build V' + esc(b.pendingVersion) + ' instead?</b>'
+    var held = ['active', 'paused'].indexOf(st) >= 0 && !(b.dispatchReceipt && plan && plan.status === 'completed');
+    var status = held && autoPause().paused ? '<b>Paused</b> · Pause all automations is on, so nothing starts until you turn it off.'
+      : st === 'invalidated' ? 'Bound to V' + esc(b.exact_target_version) + '. You edited this plan (now V' + esc(b.pendingVersion) + '). <b>Build V' + esc(b.pendingVersion) + ' instead?</b>'
       : st === 'held' ? '<b>Held</b> · ' + esc(buildHeldWords(b))
       : b.held_reason && st === 'active' ? '<b>Waiting</b> · ' + esc(buildHeldWords(b))
       : '';
@@ -2182,18 +2294,30 @@
       '<div class="pmx-sched-agenda" data-k="sched-agenda-builds">' + (rows.length ? rows.map(function (b) { return buildRow(ctx, b, now); }).join('') : emptyLine(P().buildSchedules.length ? 'Nothing matches. Clear the search, or show everything.' : 'No build slots yet. Build At… on a plan sets one.')) + '</div>';
   }
 
-  /* ---------------------------------------------------------------- Resume & Safety Policy (read-only until D-12) */
+  /* ---------------------------------------------------------------- Resume & Safety Policy (SQR-018 / DL-136) */
+  /* how many scheduled things the switch is holding right now, in words ("2 messages and 1 build slot") */
+  function pauseHolding() {
+    var S = P(), m = S.scheduledMessages.filter(function (x) { return ['scheduled', 'held'].indexOf(stateOf(x)) >= 0 && (stateOf(x) === 'scheduled' || pauseHeld(x)); }).length;
+    var b = S.buildSchedules.filter(function (x) { return ['active', 'paused'].indexOf(x.state) >= 0; }).length;
+    var parts = [m ? m + (m === 1 ? ' message' : ' messages') : '', b ? b + (b === 1 ? ' build slot' : ' build slots') : ''].filter(Boolean);
+    return parts.length ? parts.join(' and ') : '';
+  }
   function safetyBody() {
-    var S = P(), q = RT.quota || {}, at = Date.parse(S.stopAt);
-    var pause = S.stopped
-      ? '<p class="pmx-sched-polsay"><b>Paused by you' + (isFinite(at) ? ' at ' + esc(clockAt(at, deviceZone())) : '') + '.</b> Nothing scheduled starts until you turn it back on.</p>' +
-        '<button type="button" class="soft-button pmx-act" data-action="sched-clear-stop">Turn back on</button>'
+    var S = P(), A = autoPause(), q = RT.quota || {}, at = Date.parse(A.changed_at), holding = pauseHolding();
+    var sw = SH.pmxSwitch({ key: 'sched-pause-switch', size: 'small', cls: 'pmx-sched-pauseswitch', action: 'sched-set-pause', label: 'Pause all automations',
+      current: A.paused ? 'on' : 'off', options: [{ value: 'off', label: 'Off' }, { value: 'on', label: 'Paused' }] });
+    var pause = A.paused
+      ? '<p class="pmx-sched-polsay"><b>Paused by you' + (isFinite(at) ? ' at ' + esc(clockAt(at, deviceZone())) : '') + '.</b> Nothing scheduled in this project starts until you turn it back on.' + (holding ? ' Holding ' + esc(holding) + '.' : '') + '</p>' +
+        '<button type="button" class="soft-button pmx-act" data-action="sched-clear-pause">Turn back on</button>'
       : '<p class="pmx-sched-polsay"><b>Off:</b> scheduled things start on time.</p>';
+    /* a manual Stop is its own latch (SQR-001): the switch never clears it, and it never turns the switch on */
+    var stop = S.stopped ? '<p class="pmx-sched-polsay pmx-sched-stopsay"><b>You pressed Stop' + (isFinite(Date.parse(S.stopAt)) ? ' at ' + esc(clockAt(Date.parse(S.stopAt), deviceZone())) : '') + '.</b> Scheduled sends and builds wait until you resume.</p>' +
+      '<button type="button" class="soft-button pmx-act" data-action="sched-clear-stop">Resume</button>' : '';
     var usage = q.waiting ? '<p class="pmx-sched-polsay"><b>Waiting for Usage:</b> ' + esc(quotaWords(q)) + '.</p>'
       : '<p class="pmx-sched-polsay"><b>No limit reached.</b> When one is, this says when it resets and where that time came from: the provider, an estimate, or unknown (then there is no countdown).</p>';
     return '<div class="pmx-sched-policy">' +
-      '<section class="mdl-section pmx-sched-pol" data-k="sched-safety" data-state="' + (S.stopped ? 'paused' : 'off') + '"><h3 class="pmx-q-title">' + SH.pmxGlyph('pause', 16) + 'Pause all automations</h3>' + pause +
-        '<p class="pmx-fine">In this preview this is one switch for all scheduling. The finished app pauses each run separately.</p></section>' +
+      '<section class="mdl-section pmx-sched-pol" data-k="sched-safety" data-state="' + (A.paused ? 'paused' : 'off') + '"><div class="pmx-sched-polhead"><h3 class="pmx-q-title">' + SH.pmxGlyph('pause', 16) + 'Pause all automations</h3>' + sw + '</div>' + pause +
+        '<p class="pmx-fine">It stops every scheduled send and scheduled build in this project until you turn it off. Only you can turn it off: a usage reset, a slot opening or a new schedule never does. Send now and Build still work.</p>' + stop + '</section>' +
       '<section class="mdl-section pmx-sched-pol" data-k="sched-usage"><h3 class="pmx-q-title">' + SH.pmxGlyph('clock', 16) + 'When you hit a usage limit</h3>' + usage +
         '<p class="pmx-fine">Change this in the usage notice in chat. Resuming by itself is ' + (q.resumeAutomatically ? 'on' : 'off') + ' for the run that hit the limit.</p></section></div>';
   }
@@ -2202,9 +2326,10 @@
   var EVENT_WORDS = {
     'scheduled_dispatch.created': 'Scheduled a message', 'scheduled_dispatch.updated': 'Changed a scheduled message', 'scheduled_dispatch.held': 'Held a message',
     'scheduled_dispatch.dispatched': 'Sent or started something on schedule', 'execution_window.created': 'Set a build slot', 'execution_window.updated': 'Changed a build slot',
-    'execution_window.invalidated': 'Paused a build slot', 'runtime.quota_resume_attempted': 'Checked whether to go on', 'runtime.quota_wait_started': 'Usage came back' };
+    'execution_window.invalidated': 'Paused a build slot', 'runtime.quota_resume_attempted': 'Checked whether to go on', 'runtime.quota_wait_started': 'Usage came back',
+    'runtime.automation_pause_changed': 'Changed Pause all automations' };
   var CLAUSE_WORDS = { route_unavailable: 'the model or the chat it needs wasn’t available', target_version_changed: 'the plan changed, so it waits for your OK',
-    manual_stop_latched: 'Pause all automations is on', quota_unavailable: 'Usage wasn’t available', reset_truth_unknown: 'the reset time is unknown',
+    manual_stop_latched: 'you pressed Stop', project_automation_paused: 'Pause all automations is on', quota_unavailable: 'Usage wasn’t available', reset_truth_unknown: 'the reset time is unknown',
     grace_expired: 'it was too late', missed_time_held: 'the time was missed', dispatch_already_started: 'it had already happened' };
   function eventState(e) {
     if (/held|invalidated/.test(e.type) || e.clause === 'target_version_changed') return 'held';
@@ -2215,8 +2340,9 @@
   function eventSentence(e) {
     var w = EVENT_WORDS[e.type] || 'Scheduling changed something', c = e.clause ? CLAUSE_WORDS[e.clause] || 'it was refused' : '';
     if (e.type === 'scheduled_dispatch.dispatched' && /[Dd]uplicate/.test(e.detail || '')) return 'Ignored a repeat: nothing ran twice';
-    if (e.type === 'runtime.quota_resume_attempted' && !e.clause) return /cleared/i.test(e.detail || '') ? 'Pause all automations was turned off' : 'Went on after the usage limit';
-    if (e.type === 'runtime.quota_resume_attempted' && e.clause === 'manual_stop_latched' && /latched at epoch/i.test(e.detail || '')) return 'Pause all automations was turned on';
+    if (e.type === 'runtime.automation_pause_changed') return /^Turned on/.test(e.detail || '') ? 'You turned Pause all automations on' : 'You turned Pause all automations off';
+    if (e.type === 'runtime.quota_resume_attempted' && !e.clause) return /cleared/i.test(e.detail || '') ? 'You resumed after Stop' : 'Went on after the usage limit';
+    if (e.type === 'runtime.quota_resume_attempted' && e.clause === 'manual_stop_latched' && /latched at epoch/i.test(e.detail || '')) return 'You pressed Stop: scheduled things wait';
     return w + (c ? ': ' + c : '');
   }
   function eventsBody(ctx) {
@@ -2258,7 +2384,7 @@
     var held = S.scheduledMessages.filter(function (m) { return stateOf(m) === 'held'; }).length;
     var count = [waiting ? waiting + ' waiting' : '', held ? held + (held === 1 ? ' needs you' : ' need you') : ''].filter(Boolean).join(' · ');
     var needs = held || S.buildSchedules.some(function (b) { return b.state === 'invalidated' || b.state === 'held'; });
-    var badge = S.stopped ? 'Paused by you' : needs ? 'Needs your OK' : '';
+    var badge = autoPause().paused ? 'Paused by you' : S.stopped ? 'Stopped by you' : needs ? 'Needs your OK' : '';
     return '<button class="menu-item" data-action="sched-open-message" data-k="sched-wand-msg">' +
       '<span class="menu-icon">' + SH.pmxKindMark('schedule', 13) + '</span>' +
       '<span class="menu-copy"><strong>Schedule Message</strong><span>Send a message later, even if you’re away.</span></span>' +
@@ -2382,6 +2508,7 @@
   function lastAttempt(rec) { var a = list(rec && rec.dispatch_attempts); return a.length ? a[a.length - 1] : null; }
   function attemptCode(rec) { var a = lastAttempt(rec), r = a && a.result; return (r && (r.error || r.clause)) || ''; }
   /* "Missed while away" is the canon Held state with a missed reason (G-30), never a seventh state */
+  function pauseHeld(rec) { return stateOf(rec) === 'held' && attemptCode(rec) === 'project_automation_paused'; }
   function missedAt(rec) { return stateOf(rec) === 'held' && attemptCode(rec) === 'missed_time_held' ? Date.parse(rec.scheduled_at_utc) : null; }
   function snippet(s, n) {
     s = String(s || '').replace(/\s+/g, ' ').trim(); if (s.length <= n) return s;
@@ -2429,7 +2556,8 @@
     if ((rec.destination_ref && rec.destination_ref.unresolvable) || /^destination_/.test(code)) return (rec.destination_ref && rec.destination_ref.label ? rec.destination_ref.label : 'The chat it goes to') + ' has ended, so we didn’t send it anywhere else.';
     if (code === 'route_unavailable') return (model || 'The model you picked') + ' wasn’t available, so we didn’t send. We never swap the model.';
     if (code === 'quota_unavailable') return 'your usage limit was reached, so we didn’t send.';
-    if (code === 'manual_stop_latched') return 'Pause all automations was on, so we didn’t send.';
+    if (code === 'project_automation_paused') return 'Pause all automations is on, so we didn’t send. It waits until you turn it off.';
+    if (code === 'manual_stop_latched') return 'you pressed Stop, so we didn’t send.';
     if (code === 'scope_changed' || code === 'permission_snapshot_changed') return 'this chat’s settings changed after you scheduled it, so we didn’t send.';
     if (code === 'legacy_snapshot_requires_review') return 'it was scheduled before exact copies were kept, so check it before it sends.';
     return 'we couldn’t send it as scheduled, so it waits for you.';
@@ -2446,7 +2574,8 @@
      manager's row and its detail all read it */
   function chatSentence(m, now) {
     var st = stateOf(m), at = Date.parse(m.scheduled_at_utc), zone = viewZone(), word = STATE_WORD[st] || String(st || ''), rest = '';
-    if (st === 'scheduled') rest = at > now ? 'sends <b>' + esc(nb(chatWhen(at, zone, now))) + '</b> · ' + esc(nb(SH.pmxTime.until(at, now))) : 'was due <b>' + esc(nb(chatWhen(at, zone, now))) + '</b> · not sent yet';
+    if (st === 'scheduled') rest = at > now ? 'sends <b>' + esc(nb(chatWhen(at, zone, now))) + '</b> · ' + (autoPause().paused ? 'waits: Pause all automations is on' : esc(nb(SH.pmxTime.until(at, now))))
+      : 'was due <b>' + esc(nb(chatWhen(at, zone, now))) + '</b> · ' + (autoPause().paused ? 'held: Pause all automations is on' : 'not sent yet');
     else if (st === 'held') rest = esc(heldWhy(m));
     else if (st === 'sent') {
       /* on the narrowest cards "1:00 AM" reads "1 AM" (the same time, shorter), so the row keeps one line */
@@ -2499,7 +2628,7 @@
       esc(otherZone(m.timezone) ? 'set for ' + clockAt(at, m.timezone) + ' ' + zonePhrase(m.timezone) : zonePhrase(m.timezone))].filter(Boolean).join(' · ');
     var face;
     if (st === 'held') {
-      var missed = missedAt(m) != null;
+      var missed = missedAt(m) != null || pauseHeld(m);
       face = SH.pmxDecision({ key: 'sched-dec-' + id, cls: 'pmx-bubble-decision', tone: 'warm', glyph: 'warn', sentence: s.html, actions: (missed
         ? [{ action: 'sched-card-send-now', attrs: token, label: 'Send now', primary: true }, { action: 'sched-card-edit', attrs: 'data-id="' + eid + '"', label: 'Reschedule', soft: true }, { action: 'sched-card-cancel', attrs: token, label: 'Cancel', extra: false }]
         : [{ action: 'sched-card-edit', attrs: 'data-id="' + eid + '"', label: 'Edit and send', primary: true }, { action: 'sched-card-cancel', attrs: token, label: 'Cancel', extra: false }]).concat([more]) });
@@ -2526,12 +2655,15 @@
     var foot = (st === 'sent' && pr.dispatched_message_id ? '<button type="button" class="text-button pmx-act pmx-sched-go" data-action="sched-open-sent" data-id="' + eid + '" aria-label="Go to message">' + SH.pmxGlyph('open', 15) + '<span>Go to message</span></button>' : '') +
       (st === 'failed' && pr.can_edit ? '<button type="button" class="text-button pmx-act" data-action="sched-card-edit" data-id="' + eid + '">Edit</button>' : '') +
       '<button type="button" class="icon-button pmx-act" data-action="sched-card-details" data-id="' + eid + '" aria-label="Details" aria-expanded="' + open + '">' + SH.pmxGlyph(open ? 'chevron-up' : 'chevron-down', 15) + '</button>';
-    /* a Failed or Expired reason wraps onto a second line of the row rather than end in an ellipsis (J-2, design
-       review M2); the row is 44 px whenever it fits on one line */
-    /* the receipt's Failed sentence is the brief one (one line at a 591 px card); "we never swap the model" is in Details */
-    var headline = st === 'failed' ? '<b class="pmx-sched-word">' + esc(s.word) + '</b> · ' + esc(failedWhy(m, true)) + '. Edit it to retry.' : s.html;
+    /* an Expired reason wraps onto a second line of the row rather than end in an ellipsis (J-2, design review M2);
+       the row is 44 px whenever it fits on one line. Failed is always one line (the C13 receipt budget, closing
+       review LINT-4 C): the canon word and the brief cause, which may end in an ellipsis on a narrow card; the whole
+       sentence ("..., and we never swap the model. Edit it to retry.") is the line's hover card, the Edit beside it
+       retries, and Details has the full record */
+    var headline = st === 'failed' ? '<b class="pmx-sched-word">' + esc(s.word) + '</b> · ' + esc(failedWhy(m, true)) : s.html;
+    var tip = st === 'failed' ? cap1(failedWhy(m)) + '. Edit it to retry.\n' + receiptTip(m, st, now) : null;
     var line = SH.pmxLedgerLine({ key: 'sched-line-' + id, cls: 'pmx-sched-line', attrs: 'data-state="' + st + '"', kind: 'schedule', markHtml: SH.pmxKindMark('schedule', 16), kindWord: '',
-      title: esc(snippet(m.text, 80)), headline: headline, glyph: RECEIPT_GLYPH[st] || 'clock', time: esc(receiptTip(m, st, now)), footHtml: foot });
+      title: esc(snippet(m.text, 80)), headline: headline, glyph: RECEIPT_GLYPH[st] || 'clock', time: esc(receiptTip(m, st, now)), tip: tip, footHtml: foot });
     return '<article class="sched-card sched-card-' + st + '" data-k="sched-card-' + eid + '" data-schedule-id="' + eid + '" data-schedule-state="' + st + '" data-flip>' + line + (open ? recordHtml(m, now) : '') + '</article>';
   }
   function renderMessageCard(ctx, m) {
@@ -2704,13 +2836,14 @@
   /* Held, missed while away: "Send now" is an update that reschedules the same message to now (CDRY-008: there is no
      send-now command), and then the time is evaluated through the shared scheduler exactly as its own tick would be */
   EXT.action('sched-card-send-now', function (ctx, btn) {
-    var m = findMessage(btn.dataset.id); if (!m || missedAt(m) == null) return true;
+    var m = findMessage(btn.dataset.id); if (!m || (missedAt(m) == null && !pauseHeld(m))) return true;
     if (Number(btn.dataset.revision) !== m.revision || btn.dataset.currentness !== msgCurrent(m)) { ctx.toast('This changed', 'Reopen the message to see the latest.'); ctx.renderApp(); return true; }
     var d = loadMessageForEdit(m), at = Math.ceil((Date.now() + 60000) / 60000) * 60000, p = PM56_SCHEDULE_TIME.parts(m.timezone, at);
     d.date = p.y + '-' + pad2(p.mo) + '-' + pad2(p.d); d.time = pad2(p.h) + ':' + pad2(p.mi);
     var saved = saveMessage(ctx, d, m.scheduled_dispatch_id);
     if (!saved.ok) { ctx.toast('Not sent', SCHED_REFUSE[saved.error] || (SH.pmxRefusalText(saved.error, {}) || {}).text || saved.detail || saved.error); ctx.renderApp(); return true; }
-    var out = dispatchMessageAt(m.scheduled_dispatch_id, Date.parse(findMessage(m.scheduled_dispatch_id).scheduled_at_utc));
+    /* Send now is work you start yourself: its one dispatch is exempt from Pause all automations, which stays on (SQR-006/018) */
+    var out = dispatchMessageAt(m.scheduled_dispatch_id, Date.parse(findMessage(m.scheduled_dispatch_id).scheduled_at_utc), null, true);
     ctx.renderApp();
     if (!out.ok) ctx.toast('Not sent', out.detail || out.error);
     return true;
@@ -2761,7 +2894,11 @@
   });
   EXT.action('sched-pick-build-topology',function(ctx,btn){
     var d=ui.buildDraft;if(!d)return true;
-    window.PM56_PICKERS.openChoice(btn,'Who builds it',d.executionTopology||'agent',choiceMenu(TOPOLOGY_OPTIONS),v=>{if(ui.buildDraft!==d||ctx.state.dialog?.type!=='sched-build-at')return;d.executionTopology=v;clearRefusal(d);ctx.renderOverlays();});return true;
+    /* A Crew stays listed, disabled with its reason, on a plan a Crew can't be given (no work reference: the Crew
+       sheet would refuse "Use this Crew for the build" every time) */
+    var opts=topologyMenu(d.planId),apply=v=>{if(ui.buildDraft!==d||ctx.state.dialog?.type!=='sched-build-at')return;d.executionTopology=v;clearRefusal(d);ctx.renderOverlays();};
+    if(window.PM56_PMX&&PM56_PMX.pick)PM56_PMX.pick(btn,{title:'Who builds it',current:d.executionTopology||'agent',options:opts,onChange:apply});
+    else window.PM56_PICKERS.openChoice(btn,'Who builds it',d.executionTopology||'agent',opts.filter(o=>!o.disabled),apply);return true;
   });
   EXT.action('sched-pick-build-tz',function(ctx,btn){
     var d=ui.buildDraft;if(!d)return true;
@@ -2815,10 +2952,15 @@
   function reRender(ctx) { ctx.renderApp(); ctx.renderOverlays && ctx.renderOverlays(); }
   /* the plain sentence for an eligibility or refusal clause in a toast (9.x copy deck); the owner's own words stay
      in the record's log and in Events' hover card */
-  var PLAIN_CLAUSE = { manual_stop_latched: 'Pause all automations is on, so nothing starts until you turn it back on.',
+  var PLAIN_CLAUSE = { manual_stop_latched: 'You pressed Stop, so nothing scheduled starts until you resume.',
+    project_automation_paused: 'Pause all automations is on, so nothing starts until you turn it off.', permission_denied: 'Only you can turn Pause all automations off.',
     quota_unavailable: 'Your usage limit is reached, so it waits for the reset.', reset_truth_unknown: 'We don’t know when your usage limit resets, so nothing resumes by itself.',
     target_version_changed: 'The plan changed since it was scheduled, so it waits for you.', stale_schedule_revision: 'This changed somewhere else. Reopen to see the latest.',
-    schedule_not_found: 'That schedule no longer exists.', stale_stop_epoch: 'Pause all automations was turned on while this was deciding, so it didn’t start.' };
+    schedule_not_found: 'That schedule no longer exists.', stale_stop_epoch: 'You pressed Stop while this was deciding, so it didn’t start.',
+    window_not_open: 'It isn’t time for it yet, so nothing started.', window_inactive: 'It was outside its time slot, so nothing started.',
+    grace_expired: 'It was too late, so it was skipped as you asked.', missed_time_held: 'The start time was missed, so it waits for you.',
+    schedule_not_active: 'This schedule isn’t active, so nothing started.', worktree_snapshot_changed: 'The folder this plan builds in changed, so nothing started.',
+    permission_snapshot_changed: 'This chat’s permissions changed after you scheduled it, so nothing started.' };
   function plainClause(res) { var c = res && (res.clause || res.error); return PLAIN_CLAUSE[c] || SCHED_REFUSE[c] || (c && SH.pmxRefusalText ? (SH.pmxRefusalText(c, {}) || {}).text : '') || 'It couldn’t start, so nothing changed.'; }
 
   /* Contract for plans.js (integrator-owned Plan card): register an action
@@ -2911,7 +3053,7 @@
     ui.buildDraft={requestKey:ctx.uid('build-schedule-update'),expectedCurrentness:buildCurrent(b),executionTopology:b.execution_topology||'agent',crewDefinition:b.topology_snapshot?.collaboration_definition_ref||null,expected:window.PM56_PLANS.admissionSnapshot(b.target_id),planId:b.target_id,version:b.exact_target_version,contentHash:b.exact_target_hash,expectedRevision:b.revision,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||SCHED_DEFAULTS.build.stop,timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy,grace:(b.grace_seconds||SCHED_DEFAULTS.build.graceMinutes*60)/60};
     ctx.openDialog({type:'sched-build-at',planId:b.target_id,version:b.exact_target_version});
   };
-  ACT['sched-configure-crew']=function(ctx){const d=ui.buildDraft;if(!d)return;const out=PM56_COLLAB.openScheduledCrew({...d.expected},d.crewDefinition);if(!out.ok){refuse(d,out.error,out.message);ctx.renderOverlays();}};
+  ACT['sched-configure-crew']=function(ctx){const d=ui.buildDraft;if(!d)return;if(!crewAllowed(d.planId)){refuse(d,'plan_not_ready_for_crew');ctx.renderOverlays();return;}const out=PM56_COLLAB.openScheduledCrew({...d.expected},d.crewDefinition);if(!out.ok){refuse(d,out.error,out.message);ctx.renderOverlays();}};
   ACT['sched-create-build'] = function (ctx, btn) {
     // A completed or canceled form cannot be replayed into a second schedule.
     if (!ui.buildDraft) return;
@@ -2994,14 +3136,25 @@
     latchStop('Manual Stop, simulated from Scheduled & Automations.');
     persistNow();
     reRender(ctx);
-    ctx.toast('Paused all automations', 'Nothing scheduled starts until you turn it back on.');
+    ctx.toast('Stopped', 'Scheduled sends and builds wait until you resume. Pause all automations is unchanged.');
   };
   ACT['sched-clear-stop'] = function (ctx) {
     clearStop();
     persistNow();
     reRender(ctx);
-    ctx.toast('Automations back on', 'Scheduled things start on time again. Only you can turn this back on.');
+    ctx.toast('Resumed', 'Scheduled things can start again. Pause all automations is unchanged.');
   };
+  /* cmd.runtime.automation_pause.set, from the Resume & Safety Policy tab: the switch and "Turn back on" */
+  function applyPause(ctx, paused) {
+    var out = setAutomationPause(paused, 'user');
+    reRender(ctx);
+    if (!out.ok) { ctx.toast('Not changed', plainClause(out)); return; }
+    if (out.unchanged) return;
+    if (paused) ctx.toast('Paused all automations', 'Nothing scheduled in this project starts until you turn it off.');
+    else ctx.toast('Automations back on', 'Anything that came due while paused follows its own “if it’s missed” choice. Nothing fires in a burst.');
+  }
+  ACT['sched-set-pause'] = function (ctx, btn) { applyPause(ctx, btn.dataset.value === 'on'); };
+  ACT['sched-clear-pause'] = function (ctx) { applyPause(ctx, false); };
   ACT['sched-race-demo'] = function (ctx) {
     var epoch = P().stopEpoch;
     latchStop('Manual Stop, latched mid-flight by the race demo.');
@@ -3083,12 +3236,17 @@
     registerMessageReceiver:(threadId,receiver)=>{if(messageReceivers.has(threadId))throw Error('duplicate_schedule_receiver');messageReceivers.set(threadId,receiver);},
     registerMessageDestination:(kind,owner)=>{if(kind==='assistant'||messageDestinations.has(kind)||!owner?.validate||!owner?.deliver)throw Error('invalid_destination_owner');messageDestinations.set(kind,owner);},
     latchStop:(reason)=>{latchStop(reason);persistNow();},
+    /* SQR-018 / DL-136: cmd.runtime.automation_pause.set (actor defaults to the user) and its record */
+    setAutomationPause:(paused,actor)=>setAutomationPause(paused,actor),
+    automationPause:()=>copy(autoPause()),
     stopSnapshot:()=>({epoch:P().stopEpoch,stopped:P().stopped}),
     checkEpoch:token=>token?.epoch!==P().stopEpoch?{ok:false,error:"stale_stop_epoch"}:P().stopped?{ok:false,error:"manual_stop_latched"}:{ok:true},
     planSummary:planSummary,
     provenance:id=>findMessage(id)||findBuild(id)?(SEED_IDS[id]?'seed':'wand'):null,
     defaults:()=>JSON.parse(JSON.stringify(SCHED_DEFAULTS)),
     dispatchBuildAt:dispatchBuildAt,
+    /* the one plain sentence for a refusal or eligibility clause (9.3): the code itself is never printed */
+    refusalText:function(res){return plainClause(typeof res==='string'?{clause:res}:res);},
     bindGoalQuotaConsent,attemptAutoResume,simulateQuotaReset,
     list: function () { return { messages: P().scheduledMessages, builds: P().buildSchedules, consents: P().quotaConsents, events: P().events }; },
     /* Additive Correction v4 (SMSG / PSCHED). */

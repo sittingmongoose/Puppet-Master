@@ -607,6 +607,53 @@ async function main() {
     (await runsLen()) === runsBeforeRerun + 1 && fresh.id !== firstId && fresh.purpose === 'Changed job' && fresh.rerunOf === firstId && fresh.density === 'waiting' &&
     endedBefore.status === 'canceled' && JSON.stringify(endedAfter) === JSON.stringify(endedBefore), JSON.stringify({ endedBefore, endedAfter, fresh }));
 
+  /* ---- owner answer E-31 (DL-137, 2026-09-27): live helper text streams, reusing the reply streaming ---- */
+  /* on a freshly loaded page, so every seed is as it was loaded (the sections above pause, synthesize and cancel them) */
+  await page.goto(TARGET, { waitUntil: 'load', timeout: 45000 });
+  await page.waitForTimeout(1200);
+  await selectThread('plan-deep');
+  const E31 = 'brainstorm-provider-failover';
+  await ev(r => { const c = document.querySelector(`.pmx-run[data-run-id="${r}"]`); if (c) c.scrollIntoView({ block: 'center' }); }, E31);
+  await page.waitForTimeout(300);
+  /* runs started earlier in this suite may have folded the BrainStorm card (F.9): open it with its own chevron */
+  const e31Density = await ev(r => (document.querySelector(`.pmx-run[data-run-id="${r}"]`) || {}).dataset?.density || 'missing', E31);
+  if (e31Density === 'collapsed') { await clickSel(`.pmx-run[data-run-id="${E31}"] [data-action="collab-toggle-expand"][data-run="${E31}"]`); await page.waitForTimeout(300); }
+  const e31Say = (i, body) => ev(([r, i, body]) => { const run = window.PM56_COLLAB.run(r), p = run.participants[i]; const m = window.PM56_COLLAB.appendMessage(r, { senderKind: 'participant', senderId: p.id, senderName: p.role, messageType: 'message', body }); (window.__e31Mids = window.__e31Mids || []).push(m.id); window.PM56_EXT.ctx().renderApp(); return p.id; }, [E31, i, body]);
+  const e31Lane = pid => ev(([r, pid]) => { const l = document.querySelector(`.pmx-run[data-run-id="${r}"] .pmx-lane[data-participant="${pid}"] .pmx-lane-l2`); if (!l) return null; const q = l.querySelector('q[data-collab-stream]'); return { streaming: !!q, keep: l.hasAttribute('data-pm-keep'), words: (q ? q.textContent : '').split(/\s+/).filter(Boolean).length, html: l.innerHTML, text: l.textContent }; }, [E31, pid]);
+  const e31State = await ev(r => window.PM56_COLLAB.presentState(r), E31);
+  const e31Pid = await e31Say(0, 'I would keep the **account boundary** first-class: the spend guard says no before a single token leaves, for every helper in the run.');
+  await page.waitForTimeout(250);
+  const e31Mid = await e31Lane(e31Pid);
+  await page.waitForTimeout(2600);
+  const e31End = await e31Lane(e31Pid);
+  check('E-31: a helper message that arrives on a live run streams into its lane through PM56_PMX.stream (a kept island, words arriving)',
+    e31State === 'running' && e31Mid && e31Mid.streaming && e31Mid.keep && e31Mid.words > 0 && e31Mid.words < 26, JSON.stringify({ e31State, e31Density, e31Mid }));
+  check('E-31: once every word is in, the whole message lands once, with its inline markup, and the island is gone',
+    e31End && !e31End.streaming && !e31End.keep && /<(b|strong)>account<\/(b|strong)>/.test(e31End.html), JSON.stringify(e31End));
+  await e31Say(0, 'A long second thought that is still arriving when the run stops: ' + 'more words '.repeat(60));
+  await page.waitForTimeout(250);
+  const e31Before = await e31Lane(e31Pid);
+  await clickSel(`.pmx-run[data-run-id="${E31}"] [data-action="collab-toggle-more"][data-run="${E31}"]`);
+  await clickSel(`.pmx-run[data-run-id="${E31}"] [data-action="collab-pause"][data-run="${E31}"]`);
+  await page.waitForTimeout(300);
+  const e31Paused = await e31Lane(e31Pid);
+  check('E-31: pausing the run mid-stream ends the stream at once: no island, the written message whole, no words still arriving',
+    e31Before && e31Before.streaming && e31Paused && !e31Paused.streaming && /still arriving when the run stops/.test(e31Paused.text), JSON.stringify({ e31Before, e31Paused }));
+  await clickSel(`.pmx-run[data-run-id="${E31}"] [data-action="collab-resume"][data-run="${E31}"]`);
+  await page.waitForTimeout(300);
+  const e31Pid2 = await e31Say(1, 'Words from a helper that fails part-way: ' + 'still coming '.repeat(60));
+  await page.waitForTimeout(250);
+  const e31Fb = await e31Lane(e31Pid2);
+  /* the provider failing is simulated on the record (nothing in the demo fails a seed helper), then put back */
+  const e31Was = await ev(([r, pid]) => { const p = window.PM56_COLLAB.run(r).participants.find(x => x.id === pid); const was = { status: p.status, outcome: p.outcome }; p.status = 'failed'; p.outcome = 'failed'; window.PM56_EXT.ctx().renderApp(); return was; }, [E31, e31Pid2]);
+  await page.waitForTimeout(300);
+  const e31Fa = await e31Lane(e31Pid2);
+  await ev(([r, pid, was]) => { const run = window.PM56_COLLAB.run(r), p = run.participants.find(x => x.id === pid); p.status = was.status; p.outcome = was.outcome;
+    /* and the four messages this section said are taken back, so the protocol sections below read the seed as loaded */
+    run.messages = run.messages.filter(m => !window.__e31Mids.includes(m.id)); window.PM56_EXT.ctx().renderApp(); }, [E31, e31Pid2, e31Was]);
+  check('E-31: a helper that fails mid-stream stops streaming (its lane says it didn’t finish; nothing still arriving)',
+    e31Fb && e31Fb.streaming && e31Fa && !e31Fa.streaming, JSON.stringify({ e31Fb, e31Fa }));
+
   /* ---- console clean ---- */
   check('no console errors during the whole run', consoleErrors.length === 0, consoleErrors.slice(0, 5).join(' | '));
 

@@ -8,7 +8,9 @@
    ELI5 in the chat is driven through the real composer: the recorded example (eli5-demo-start override) makes
    two chats; Chat A is set to Simple through the ELI5 sheet, the question is sent, then Chat A follows its usual
    setting again and a second question is sent. That leaves exactly two dividers ("Simple explanations from here",
-   "Back to standard explanations") and one reply marked "Simple explanation". */
+   "Back to standard explanations") and one reply marked "Simple explanation".
+   Owner answer E-11 (DL-126, 2026-09-28): the sheet's foot says only replies after the switch change (prefs:eli5
+   asserts it), and prefs:eli5-explain drives Explain this reply simply from a reply's More menu. */
 
 const Q1 = 'Explain the retry limit.', Q2 = 'What does the zero limit do?';
 /* DOM clicks (the same click path as a pointer click through the app's delegated handler), so a hover card or a
@@ -54,6 +56,40 @@ async function flipTurn(h) {
       { id: id + '-a', role: 'assistant', type: 'text', body: 'The limit you give is kept, even 0; 3 is used only when none is given.', explanationPreference: JSON.parse(snap) });
     c.renderApp();
   });
+}
+
+/* Explain this reply simply (owner answer E-11, DL-126): the recorded answer's More menu writes ONE simpler reply
+   directly under it. The surface fails outright if the row is missing, if it is offered while the reply streams,
+   if a second click adds a second reply, or if the chat's own setting moved. The reduced-motion census's change
+   explains one more finished reply (its simpler reply must arrive whole, with nothing running). */
+async function explainOnce(h) {
+  await send(h, Q1);
+  const id = await h.ev(() => { const t = window.PM56_EXT.ctx().thread; const m = [...t.messages].reverse().find(x => x.role === 'assistant' && !x.eli5ExplainsId); return m && m.id; });
+  const before = await h.ev(() => JSON.stringify(window.PM56_ELI5.resolve(window.PM56_EXT.ctx().thread.id)));
+  await tap(h, '[data-action="message-overflow"][data-id="' + id + '"]');
+  await h.wait(300);
+  if (!await tap(h, '[data-action="eli5-explain-reply"][data-id="' + id + '"]')) throw new Error('explain: no Explain this reply simply row on ' + id);
+  for (let i = 0; i < 80; i++) { if (await h.ev(id => { const x = window.PM56_EXT.ctx().thread.messages.find(m => m.eli5ExplainsId === id); return !!(x && !x.streaming); }, id)) break; await h.wait(100); }
+  const got = await h.ev(([id, before]) => {
+    const t = window.PM56_EXT.ctx().thread, i = t.messages.findIndex(m => m.id === id), again = window.PM56_ELI5.explainReply(id);
+    return { next: t.messages[i + 1] && t.messages[i + 1].eli5ExplainsId === id, count: t.messages.filter(m => m.eli5ExplainsId === id).length,
+      again: again.error, same: JSON.stringify(window.PM56_ELI5.resolve(t.id)) === before, row: window.PM56_ELI5.explainItems(t.messages[i])[0] };
+  }, [id, before]);
+  if (!got.next || got.count !== 1 || got.again !== 'already_explained' || !got.same || !got.row.disabled) throw new Error('explain: ' + JSON.stringify(got));
+  await h.ev(() => { const t = document.querySelector('.transcript'); if (t) t.scrollTop = t.scrollHeight; });
+}
+async function explainAnother(h) {
+  await h.ev(() => {
+    const c = window.PM56_EXT.ctx(), t = c.thread, id = c.uid('pmxv-eli5x');
+    t.messages.push({ id: id + '-u', role: 'user', type: 'text', body: 'And the fallback?' }, { id: id + '-a', role: 'assistant', type: 'text', body: 'The fallback of 3 applies only when maxRetries is null or undefined.' });
+    const b = document.createElement('button'); b.dataset.value = id + '-a';
+    window.PM56_EXT._actions['eli5-explain-reply'](c, b, new Event('click'));
+  });
+}
+/* the owner's answer in the sheet: switching changes only later replies, never earlier ones */
+async function laterOnly(h) {
+  const foot = await h.ev(() => document.querySelector('#pmOverlayRoot .pmx-eli5-foot')?.textContent || '');
+  if (!/Only replies after the switch change\./.test(foot) || !/never rewritten/.test(foot)) throw new Error('eli5 sheet foot: ' + foot);
 }
 
 /* ---- New chat defaults (8.14). Its choices are the app's own settings, so every surface puts them back after
@@ -140,7 +176,7 @@ function titleSurface(id, title, setup) {
 export default ({ wand, demo }) => [
   /* the sheet as it opens: the two voices, Follow my usual setting and the How it's decided trace (open unless the
      reader folds it; it fits the fixed 560 px) */
-  wand('prefs:eli5', { group: 'assist', sel: '[data-action="eli5-open"]', title: 'ELI5 sheet: the two voices and How it’s decided (8.13)', canon: [] }),
+  wand('prefs:eli5', { group: 'assist', sel: '[data-action="eli5-open"]', title: 'ELI5 sheet: the two voices and How it’s decided (8.13)', canon: [], then: laterOnly }),
   /* after a choice: Simple chosen (its words re-set once), then Follow my usual setting (one pulse along the trace) */
   wand('prefs:eli5-chosen', { group: 'assist', sel: '[data-action="eli5-open"]', title: 'ELI5 sheet after choosing Simple, then Follow my usual setting', canon: [],
     async then(h) {
@@ -159,6 +195,9 @@ export default ({ wand, demo }) => [
   /* in the chat: two flips leave two dividers and one reply marked Simple */
   demo('prefs:eli5-chat', { action: 'eli5-demo-start', flow: 'override', title: 'ELI5 in the chat: dividers where the style changes, the Simple explanation tick', canon: ['ELI5'],
     then: twoFlips, change: flipTurn }),
+  /* Explain this reply simply (E-11): one simpler reply under the reply, marked at rest */
+  demo('prefs:eli5-explain', { action: 'eli5-demo-start', flow: 'override', title: 'ELI5: Explain this reply simply writes one simpler reply under it (E-11)', canon: ['ELI5'],
+    then: explainOnce, change: explainAnother }),
   /* the recorded example's evidence page (G-26): "Your code, unchanged" */
   demo('prefs:eli5-evidence', { action: 'eli5-demo-start', flow: 'override', kind: 'view', title: 'ELI5 evidence page: Your code, unchanged (G-26)', canon: ['ELI5'] }),
 

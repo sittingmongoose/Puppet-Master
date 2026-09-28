@@ -12,72 +12,18 @@
 .mdl-title span{font-size:11.5px;line-height:1.45;color:var(--muted);}
 .mdl-body{min-height:0;overflow:auto;padding:16px 20px;}
 .mdl-body>*+*{margin-top:12px;}
-.mdl-section{border:1px solid var(--border);border-radius:12px;background:var(--pmx-mdl-section-bg);overflow:hidden;align-self:start;}
-.mdl-section-head{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);
-  background:var(--pmx-mdl-section-head-bg);}
-.mdl-section-head svg{color:var(--subtle);flex:none;}
-.mdl-section-label{flex:1;font-size:10px;font-weight:750;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
-.mdl-section-meta{font-size:10.5px;color:var(--subtle);}
-.mdl-section-body{padding:14px;display:grid;gap:12px;}
-.mdl-field{display:grid;gap:6px;min-width:0;}
-.mdl-field>span{font-size:11px;font-weight:600;color:var(--muted);}
+/* F0 step 8 (IMPACT A1-51, closing 2026-09-28): the rules of the retired legacy builders (.mdl-section*, -field,
+   -grid2, -seg, -choice, -radio, -chip, -rows, -note, -disclosure, -stat(s), -tabs, -card*, -check) are gone. What
+   stays is what the pmx builders still emit as harness hooks: .dialog.mdl, .mdl-head, .mdl-icon, .mdl-title,
+   .mdl-body, .mdl-foot and the .mdl input look. */
 .mdl input[type=text],.mdl input[type=date],.mdl input[type=time],.mdl input[type=number],.mdl textarea{
   width:100%;box-sizing:border-box;font:inherit;font-size:12px;color:var(--text);background:var(--surface-2);
   border:1px solid var(--border);border-radius:9px;padding:8px 10px;}
 .mdl textarea{resize:vertical;min-height:96px;line-height:1.6;}
-.mdl-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-@media(max-width:620px){.mdl-grid2{grid-template-columns:1fr;}}
-.mdl-seg{display:flex;gap:4px;padding:3px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;flex-wrap:wrap;}
-.mdl-seg button{flex:1;min-height:30px;padding:0 10px;border:0;border-radius:8px;font:600 11.5px var(--font-ui);color:var(--muted);background:transparent;cursor:pointer;}
-.mdl-seg button:hover{color:var(--text);}
-.mdl-seg button.active{background:var(--surface-4);color:var(--text);}
-.mdl-choice{display:flex;gap:10px;align-items:flex-start;width:100%;padding:10px 12px;border:1px solid var(--border);
-  border-radius:10px;background:var(--surface-2);cursor:pointer;text-align:left;color:var(--text);font:inherit;}
-.mdl-choice:hover{border-color:var(--border-strong);}
-.mdl-choice.active{border-color:var(--pmx-focus-edge);background:var(--pmx-mdl-choice-bg);}
-.mdl-radio{width:16px;height:16px;flex:none;margin-top:2px;border-radius:50%;border:1.5px solid var(--border-strong);box-sizing:border-box;}
-.mdl-choice.active .mdl-radio{border-color:var(--accent);background:radial-gradient(circle,var(--accent) 0 4px,transparent 5px);}
-.mdl-choice strong{display:block;font-size:12px;font-weight:600;}
-.mdl-choice small{display:block;margin-top:2px;font-size:11px;line-height:1.45;color:var(--muted);}
-.mdl-chip{padding:2px 7px;border-radius:6px;border:1px solid var(--border);font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
-.mdl-chip[data-tone=accent]{color:var(--accent);border-color:var(--pmx-mdl-chip-accent);}
-.mdl-chip[data-tone=positive]{color:var(--positive);border-color:var(--pmx-mdl-chip-positive);}
-.mdl-chip[data-tone=warning]{color:var(--warning);border-color:var(--pmx-mdl-chip-warning);}
-.mdl-chip[data-tone=danger]{color:var(--danger);border-color:var(--pmx-mdl-chip-danger);}
 .mdl .shared-picker-copy strong{white-space:normal;overflow:visible;text-overflow:clip;}
 .mdl .shared-picker-button{min-width:0;width:100%;}
-.mdl-rows>div{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--border);font-size:11.5px;}
-.mdl-rows>div:first-child{border-top:0;}
-.mdl-rows span{color:var(--muted);}
-.mdl-rows strong{color:var(--text);font-weight:600;text-align:right;overflow-wrap:anywhere;}
-.mdl-note{margin:0;font-size:11px;line-height:1.5;color:var(--muted);}
-.mdl-note.danger{color:var(--danger);}
-.mdl-disclosure{border:1px solid var(--border);border-radius:10px;background:var(--surface-2);}
-.mdl-disclosure>summary{display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;font-size:12px;font-weight:600;color:var(--text);list-style:none;}
-.mdl-disclosure>summary::-webkit-details-marker{display:none;}
-.mdl-disclosure>summary svg:last-child{margin-left:auto;color:var(--subtle);transition:transform 160ms ease;}
-.mdl-disclosure[open]>summary svg:last-child{transform:rotate(180deg);}
-.mdl-disclosure-body{padding:12px;border-top:1px solid var(--border);display:grid;gap:12px;}
-.mdl-stat{display:grid;gap:2px;padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:var(--pmx-mdl-section-bg);}
-.mdl-stat strong{font-size:18px;font-weight:700;letter-spacing:-.3px;color:var(--text);}
-.mdl-stat span{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);}
-.mdl-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
-@media(max-width:620px){.mdl-stats{grid-template-columns:1fr;}}
-.mdl-tabs{display:flex;gap:4px;padding:4px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;}
-.mdl-tabs button{flex:1;min-height:32px;padding:0 8px;border:0;border-radius:8px;font:600 11.5px var(--font-ui);color:var(--muted);background:transparent;cursor:pointer;}
-.mdl-tabs button:hover{color:var(--text);}
-.mdl-tabs button.active{background:var(--surface-4);color:var(--text);}
 .mdl-foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 20px;border-top:1px solid var(--border);}
 .mdl-foot .spacer{flex:1;}
-.mdl-card{border:1px solid var(--border);border-radius:12px;background:var(--surface-2);padding:12px 14px;display:grid;gap:10px;}
-.mdl-card-head{display:flex;align-items:center;gap:9px;}
-.mdl-card-head .mdl-card-icon{width:28px;height:28px;flex:none;border-radius:9px;display:grid;place-items:center;color:var(--muted);background:var(--surface-3);}
-.mdl-card-copy{flex:1;min-width:0;display:grid;gap:2px;}
-.mdl-card-copy strong{font-size:12.5px;font-weight:600;color:var(--text);overflow-wrap:anywhere;}
-.mdl-card-copy span{font-size:11px;color:var(--muted);}
-.mdl-card-actions{display:flex;gap:8px;flex-wrap:wrap;}
-.mdl-check{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text);cursor:pointer;}
-.mdl-check input[type=checkbox]{accent-color:var(--accent);width:14px;height:14px;flex:none;margin:0;}
 
 /* =====================================================================
    pmx TOKENS (DESIGN-SPEC section 3) and PRIMITIVES (section 4).
@@ -113,6 +59,9 @@ body{
   --pmx-seat-1:var(--ctxseg-2);--pmx-seat-2:var(--ctxseg-5);--pmx-seat-3:var(--ctxseg-3);--pmx-seat-4:var(--ctxseg-6);
   --pmx-seat-5:var(--ctxseg-4);--pmx-seat-6:var(--ctxseg-1);--pmx-seat-7:var(--accent-2);--pmx-seat-8:var(--ctxseg-5);
   --pmx-seat-lead:var(--text);--pmx-seat-you:var(--muted);
+  /* closing (ROOM-B FR 3): the run view's opaque fill for sticky heads: the pane's own surface, and in glass (where
+     --surface is translucent) the opaque sheet fill */
+  --pmx-view-bg:var(--surface);
   /* the regular text weight: 450 on Inter's variable axis; 400 on the static Poppins and IBM Plex Mono
      cuts (J-1), which would otherwise snap 450 up to their 500 */
   --pmx-w-reg:450;
@@ -161,14 +110,15 @@ body[data-theme="retro-light"]{--pmx-card:#efedd2;--pmx-card-warm:#e8e3c4;--pmx-
    pulse, the soft fill, the two sheen stops, the breathe's low stop, the primary hover (the accent lightened 6 %,
    IMPACT A1-04) and the legacy .mdl fills (retired with those rules at A1-51). Derived once by
    f0/impact/derive-tokens.mjs from each theme's own tokens. */
-body[data-theme="basic-dark"]{--pmx-sheet-bg:#141417;--pmx-seat-fill-1:rgba(92,200,255,.16);--pmx-seat-fill-2:rgba(255,143,179,.16);--pmx-seat-fill-3:rgba(92,214,155,.16);--pmx-seat-fill-4:rgba(255,122,69,.16);--pmx-seat-fill-5:rgba(245,189,85,.16);--pmx-seat-fill-6:rgba(139,114,255,.16);--pmx-seat-fill-7:rgba(92,200,255,.16);--pmx-seat-fill-8:rgba(255,143,179,.16);--pmx-seat-fill-lead:rgba(243,243,245,.16);--pmx-seat-fill-you:rgba(150,150,159,.16);--pmx-seat-fill-accent:rgba(139,114,255,.16);--pmx-seat-fill-warning:rgba(245,189,85,.16);--pmx-focus-edge:#5d4f9f;--pmx-focus-ring:rgba(139,114,255,.1);--pmx-focus-outline:#ae9cff;--pmx-grid:rgba(74,74,83,.14);--pmx-table-fill:rgba(74,74,83,.12);--pmx-accent-halo:rgba(139,114,255,.22);--pmx-accent-pulse:rgba(139,114,255,.55);--pmx-soft-fill:rgba(243,243,245,.04);--pmx-sheen-card:rgba(23,23,27,.68);--pmx-sheen-warm:rgba(42,37,29,.72);--pmx-edge-warm-low:rgba(245,189,85,.226);--pmx-primary-hover:#9379ff;--pmx-mdl-icon-bg:#262238;--pmx-mdl-icon-edge:#403961;--pmx-mdl-section-bg:rgba(21,21,24,.72);--pmx-mdl-section-head-bg:rgba(28,28,32,.55);--pmx-mdl-choice-bg:#211e2f;--pmx-mdl-chip-accent:#53488a;--pmx-mdl-chip-positive:#3e755d;--pmx-mdl-chip-warning:#83693d;--pmx-mdl-chip-danger:#87454f;}
-body[data-theme="basic-light"]{--pmx-sheet-bg:#ffffff;--pmx-seat-fill-1:rgba(15,111,150,.16);--pmx-seat-fill-2:rgba(194,56,95,.16);--pmx-seat-fill-3:rgba(22,132,90,.16);--pmx-seat-fill-4:rgba(196,90,26,.16);--pmx-seat-fill-5:rgba(169,100,0,.16);--pmx-seat-fill-6:rgba(101,82,223,.16);--pmx-seat-fill-7:rgba(24,125,168,.16);--pmx-seat-fill-8:rgba(194,56,95,.16);--pmx-seat-fill-lead:rgba(22,22,26,.16);--pmx-seat-fill-you:rgba(107,107,116,.16);--pmx-seat-fill-accent:rgba(101,82,223,.16);--pmx-seat-fill-warning:rgba(169,100,0,.16);--pmx-focus-edge:#9d92e2;--pmx-focus-ring:rgba(101,82,223,.1);--pmx-focus-outline:#9386e9;--pmx-grid:rgba(182,182,190,.14);--pmx-table-fill:rgba(182,182,190,.12);--pmx-accent-halo:rgba(101,82,223,.22);--pmx-accent-pulse:rgba(101,82,223,.55);--pmx-soft-fill:rgba(22,22,26,.04);--pmx-sheen-card:rgba(245,245,247,.68);--pmx-sheen-warm:rgba(247,239,226,.72);--pmx-edge-warm-low:rgba(169,100,0,.203);--pmx-primary-hover:#6b57ec;--pmx-mdl-icon-bg:#e3e0f5;--pmx-mdl-icon-edge:#c1bce3;--pmx-mdl-section-bg:rgba(247,247,248,.72);--pmx-mdl-section-head-bg:rgba(236,236,239,.55);--pmx-mdl-choice-bg:#e8e7f5;--pmx-mdl-chip-accent:#a9a1e2;--pmx-mdl-chip-positive:#86b7a6;--pmx-mdl-chip-warning:#c8a97e;--pmx-mdl-chip-danger:#d596a3;}
-body[data-theme="friendly-dark"]{--pmx-sheet-bg:#1d1b28;--pmx-seat-fill-1:rgba(143,219,207,.16);--pmx-seat-fill-2:rgba(127,196,245,.16);--pmx-seat-fill-3:rgba(255,208,120,.16);--pmx-seat-fill-4:rgba(255,154,98,.16);--pmx-seat-fill-5:rgba(185,162,255,.16);--pmx-seat-fill-6:rgba(255,142,176,.16);--pmx-seat-fill-7:rgba(143,219,207,.16);--pmx-seat-fill-8:rgba(127,196,245,.16);--pmx-seat-fill-lead:rgba(255,248,244,.16);--pmx-seat-fill-you:rgba(181,174,189,.16);--pmx-seat-fill-accent:rgba(255,142,176,.16);--pmx-seat-fill-warning:rgba(255,208,120,.16);--pmx-focus-edge:#a5657f;--pmx-focus-ring:rgba(255,142,176,.1);--pmx-focus-outline:#ffb0c8;--pmx-grid:rgba(102,94,113,.14);--pmx-table-fill:rgba(102,94,113,.12);--pmx-accent-halo:rgba(255,142,176,.22);--pmx-accent-pulse:rgba(255,142,176,.55);--pmx-soft-fill:rgba(255,248,244,.04);--pmx-sheen-card:rgba(33,31,46,.68);--pmx-sheen-warm:rgba(51,45,52,.72);--pmx-edge-warm-low:rgba(255,208,120,.226);--pmx-primary-hover:#ff97bb;--pmx-mdl-icon-bg:#402f40;--pmx-mdl-icon-edge:#6b4a5f;--pmx-mdl-section-bg:rgba(33,31,46,.72);--pmx-mdl-section-head-bg:rgba(42,39,56,.55);--pmx-mdl-choice-bg:#372a3b;--pmx-mdl-chip-accent:#915b74;--pmx-mdl-chip-positive:#5b7d70;--pmx-mdl-chip-warning:#91795b;--pmx-mdl-chip-danger:#915462;}
-body[data-theme="friendly-light"]{--pmx-sheet-bg:#fffaf7;--pmx-seat-fill-1:rgba(28,125,114,.16);--pmx-seat-fill-2:rgba(47,111,155,.16);--pmx-seat-fill-3:rgba(155,104,21,.16);--pmx-seat-fill-4:rgba(196,90,26,.16);--pmx-seat-fill-5:rgba(109,91,189,.16);--pmx-seat-fill-6:rgba(207,95,133,.16);--pmx-seat-fill-7:rgba(38,143,131,.16);--pmx-seat-fill-8:rgba(47,111,155,.16);--pmx-seat-fill-lead:rgba(56,46,53,.16);--pmx-seat-fill-you:rgba(117,103,114,.16);--pmx-seat-fill-accent:rgba(207,95,133,.16);--pmx-seat-fill-warning:rgba(155,104,21,.16);--pmx-focus-edge:#db97a9;--pmx-focus-ring:rgba(207,95,133,.1);--pmx-focus-outline:#dd8ea7;--pmx-grid:rgba(191,172,170,.14);--pmx-table-fill:rgba(191,172,170,.12);--pmx-accent-halo:rgba(207,95,133,.22);--pmx-accent-pulse:rgba(207,95,133,.55);--pmx-soft-fill:rgba(56,46,53,.04);--pmx-sheen-card:rgba(247,236,232,.68);--pmx-sheen-warm:rgba(241,227,217,.72);--pmx-edge-warm-low:rgba(155,104,21,.203);--pmx-primary-hover:#db658d;--pmx-mdl-icon-bg:#f1d8da;--pmx-mdl-icon-edge:#e3bbc1;--pmx-mdl-section-bg:rgba(247,236,232,.72);--pmx-mdl-section-head-bg:rgba(239,223,218,.55);--pmx-mdl-choice-bg:#f3dede;--pmx-mdl-chip-accent:#dea3b2;--pmx-mdl-chip-positive:#96b8a2;--pmx-mdl-chip-warning:#c6a77f;--pmx-mdl-chip-danger:#db9c9f;}
-body[data-theme="glass-dark"]{--pmx-sheet-bg:rgba(24,17,52,.97);--pmx-seat-fill-1:rgba(117,215,239,.16);--pmx-seat-fill-2:rgba(255,129,152,.16);--pmx-seat-fill-3:rgba(123,224,175,.16);--pmx-seat-fill-4:rgba(255,138,74,.16);--pmx-seat-fill-5:rgba(255,208,116,.16);--pmx-seat-fill-6:rgba(178,135,255,.16);--pmx-seat-fill-7:rgba(117,215,239,.16);--pmx-seat-fill-8:rgba(255,129,152,.16);--pmx-seat-fill-lead:rgba(250,247,255,.16);--pmx-seat-fill-you:rgba(176,168,201,.16);--pmx-seat-fill-accent:rgba(178,135,255,.16);--pmx-seat-fill-warning:rgba(255,208,116,.16);--pmx-focus-edge:rgba(178,138,255,.622);--pmx-focus-ring:rgba(178,135,255,.1);--pmx-focus-outline:#c9abff;--pmx-grid:rgba(101,92,140,.14);--pmx-table-fill:rgba(101,92,140,.12);--pmx-accent-halo:rgba(178,135,255,.22);--pmx-accent-pulse:rgba(178,135,255,.55);--pmx-soft-fill:rgba(250,247,255,.04);--pmx-sheen-card:rgba(34,25,65,.584);--pmx-sheen-warm:rgba(52,40,69,.649);--pmx-edge-warm-low:rgba(255,208,116,.226);--pmx-primary-hover:#bd8fff;--pmx-mdl-icon-bg:rgba(61,45,100,.761);--pmx-mdl-icon-edge:rgba(179,143,255,.379);--pmx-mdl-section-bg:rgba(34,25,65,.52);--pmx-mdl-section-head-bg:rgba(54,40,88,.373);--pmx-mdl-choice-bg:rgba(53,40,90,.749);--pmx-mdl-chip-accent:rgba(178,139,255,.538);--pmx-mdl-chip-positive:rgba(133,213,188,.538);--pmx-mdl-chip-warning:rgba(243,200,139,.538);--pmx-mdl-chip-danger:rgba(243,134,169,.538);}
-body[data-theme="glass-light"]{--pmx-sheet-bg:rgba(255,255,255,.96);--pmx-seat-fill-1:rgba(23,112,143,.16);--pmx-seat-fill-2:rgba(186,67,92,.16);--pmx-seat-fill-3:rgba(31,122,85,.16);--pmx-seat-fill-4:rgba(196,90,26,.16);--pmx-seat-fill-5:rgba(155,103,16,.16);--pmx-seat-fill-6:rgba(122,85,202,.16);--pmx-seat-fill-7:rgba(35,126,157,.16);--pmx-seat-fill-8:rgba(186,67,92,.16);--pmx-seat-fill-lead:rgba(40,33,61,.16);--pmx-seat-fill-you:rgba(113,105,135,.16);--pmx-seat-fill-accent:rgba(122,85,202,.16);--pmx-seat-fill-warning:rgba(155,103,16,.16);--pmx-focus-edge:rgba(119,83,196,.608);--pmx-focus-ring:rgba(122,85,202,.1);--pmx-focus-outline:rgba(161,135,217,.988);--pmx-grid:rgba(174,164,199,.14);--pmx-table-fill:rgba(174,164,199,.12);--pmx-accent-halo:rgba(122,85,202,.22);--pmx-accent-pulse:rgba(122,85,202,.55);--pmx-soft-fill:rgba(40,33,61,.04);--pmx-sheen-card:rgba(250,248,255,.584);--pmx-sheen-warm:rgba(243,238,238,.649);--pmx-edge-warm-low:rgba(155,103,16,.203);--pmx-primary-hover:#815ad6;--pmx-mdl-icon-bg:rgba(227,219,245,.777);--pmx-mdl-icon-edge:rgba(114,81,184,.356);--pmx-mdl-section-bg:rgba(250,248,255,.534);--pmx-mdl-section-head-bg:rgba(238,233,250,.408);--pmx-mdl-choice-bg:rgba(233,227,248,.767);--pmx-mdl-chip-accent:rgba(118,83,193,.521);--pmx-mdl-chip-positive:rgba(45,123,100,.521);--pmx-mdl-chip-warning:rgba(146,98,32,.521);--pmx-mdl-chip-danger:rgba(173,67,98,.521);}
-body[data-theme="retro-dark"]{--pmx-sheet-bg:#081612;--pmx-seat-fill-1:transparent;--pmx-seat-fill-2:transparent;--pmx-seat-fill-3:transparent;--pmx-seat-fill-4:transparent;--pmx-seat-fill-5:transparent;--pmx-seat-fill-6:transparent;--pmx-seat-fill-7:transparent;--pmx-seat-fill-8:transparent;--pmx-seat-fill-lead:transparent;--pmx-seat-fill-you:transparent;--pmx-seat-fill-accent:transparent;--pmx-seat-fill-warning:transparent;--pmx-focus-edge:#41a06a;--pmx-focus-ring:rgba(96,243,154,.1);--pmx-focus-outline:#90f7b8;--pmx-grid:rgba(66,113,92,.14);--pmx-table-fill:rgba(66,113,92,.12);--pmx-accent-halo:rgba(96,243,154,.22);--pmx-accent-pulse:rgba(96,243,154,.55);--pmx-soft-fill:rgba(217,255,231,.04);--pmx-sheen-card:rgba(16,34,29,.68);--pmx-sheen-warm:rgba(34,48,34,.72);--pmx-edge-warm-low:rgba(242,211,94,.226);--pmx-primary-hover:#66ffa3;--pmx-mdl-icon-bg:#1b3f2f;--pmx-mdl-icon-edge:#2d6b4c;--pmx-mdl-section-bg:rgba(16,34,29,.72);--pmx-mdl-section-head-bg:rgba(22,48,40,.55);--pmx-mdl-choice-bg:#183729;--pmx-mdl-chip-accent:#3a8e60;--pmx-mdl-chip-positive:#43936a;--pmx-mdl-chip-warning:#7c7f45;--pmx-mdl-chip-danger:#82514d;}
-body[data-theme="retro-light"]{--pmx-sheet-bg:#f8f6df;--pmx-seat-fill-1:transparent;--pmx-seat-fill-2:transparent;--pmx-seat-fill-3:transparent;--pmx-seat-fill-4:transparent;--pmx-seat-fill-5:transparent;--pmx-seat-fill-6:transparent;--pmx-seat-fill-7:transparent;--pmx-seat-fill-8:transparent;--pmx-seat-fill-lead:transparent;--pmx-seat-fill-you:transparent;--pmx-seat-fill-accent:transparent;--pmx-seat-fill-warning:transparent;--pmx-focus-edge:#6e9e7a;--pmx-focus-ring:rgba(25,115,76,.1);--pmx-focus-outline:#5c9a78;--pmx-grid:rgba(164,166,137,.14);--pmx-table-fill:rgba(164,166,137,.12);--pmx-accent-halo:rgba(25,115,76,.22);--pmx-accent-pulse:rgba(25,115,76,.55);--pmx-soft-fill:rgba(34,52,43,.04);--pmx-sheen-card:rgba(239,237,210,.68);--pmx-sheen-warm:rgba(232,227,196,.72);--pmx-edge-warm-low:rgba(134,96,13,.203);--pmx-primary-hover:#1b7a51;--pmx-mdl-icon-bg:#d1dcbf;--pmx-mdl-icon-edge:#a5b997;--pmx-mdl-section-bg:rgba(239,237,210,.72);--pmx-mdl-section-head-bg:rgba(226,223,191,.55);--pmx-mdl-choice-bg:#dae1c5;--pmx-mdl-chip-accent:#81a784;--pmx-mdl-chip-positive:#80a784;--pmx-mdl-chip-warning:#b29f68;--pmx-mdl-chip-danger:#bf8f80;}
+body[data-theme="basic-dark"]{--pmx-sheet-bg:#141417;--pmx-seat-fill-1:rgba(92,200,255,.16);--pmx-seat-fill-2:rgba(255,143,179,.16);--pmx-seat-fill-3:rgba(92,214,155,.16);--pmx-seat-fill-4:rgba(255,122,69,.16);--pmx-seat-fill-5:rgba(245,189,85,.16);--pmx-seat-fill-6:rgba(139,114,255,.16);--pmx-seat-fill-7:rgba(92,200,255,.16);--pmx-seat-fill-8:rgba(255,143,179,.16);--pmx-seat-fill-lead:rgba(243,243,245,.16);--pmx-seat-fill-you:rgba(150,150,159,.16);--pmx-seat-fill-accent:rgba(139,114,255,.16);--pmx-seat-fill-warning:rgba(245,189,85,.16);--pmx-focus-edge:#5d4f9f;--pmx-focus-ring:rgba(139,114,255,.1);--pmx-focus-outline:#ae9cff;--pmx-grid:rgba(74,74,83,.14);--pmx-table-fill:rgba(74,74,83,.12);--pmx-accent-halo:rgba(139,114,255,.22);--pmx-accent-pulse:rgba(139,114,255,.55);--pmx-soft-fill:rgba(243,243,245,.04);--pmx-sheen-card:rgba(23,23,27,.68);--pmx-sheen-warm:rgba(42,37,29,.72);--pmx-edge-warm-low:rgba(245,189,85,.226);--pmx-primary-hover:#9379ff;--pmx-mdl-icon-bg:#262238;--pmx-mdl-icon-edge:#403961;}
+body[data-theme="basic-light"]{--pmx-sheet-bg:#ffffff;--pmx-seat-fill-1:rgba(15,111,150,.16);--pmx-seat-fill-2:rgba(194,56,95,.16);--pmx-seat-fill-3:rgba(22,132,90,.16);--pmx-seat-fill-4:rgba(196,90,26,.16);--pmx-seat-fill-5:rgba(169,100,0,.16);--pmx-seat-fill-6:rgba(101,82,223,.16);--pmx-seat-fill-7:rgba(24,125,168,.16);--pmx-seat-fill-8:rgba(194,56,95,.16);--pmx-seat-fill-lead:rgba(22,22,26,.16);--pmx-seat-fill-you:rgba(107,107,116,.16);--pmx-seat-fill-accent:rgba(101,82,223,.16);--pmx-seat-fill-warning:rgba(169,100,0,.16);--pmx-focus-edge:#9d92e2;--pmx-focus-ring:rgba(101,82,223,.1);--pmx-focus-outline:#9386e9;--pmx-grid:rgba(182,182,190,.14);--pmx-table-fill:rgba(182,182,190,.12);--pmx-accent-halo:rgba(101,82,223,.22);--pmx-accent-pulse:rgba(101,82,223,.55);--pmx-soft-fill:rgba(22,22,26,.04);--pmx-sheen-card:rgba(245,245,247,.68);--pmx-sheen-warm:rgba(247,239,226,.72);--pmx-edge-warm-low:rgba(169,100,0,.203);--pmx-primary-hover:#6b57ec;--pmx-mdl-icon-bg:#e3e0f5;--pmx-mdl-icon-edge:#c1bce3;}
+body[data-theme="friendly-dark"]{--pmx-sheet-bg:#1d1b28;--pmx-seat-fill-1:rgba(143,219,207,.16);--pmx-seat-fill-2:rgba(127,196,245,.16);--pmx-seat-fill-3:rgba(255,208,120,.16);--pmx-seat-fill-4:rgba(255,154,98,.16);--pmx-seat-fill-5:rgba(185,162,255,.16);--pmx-seat-fill-6:rgba(255,142,176,.16);--pmx-seat-fill-7:rgba(143,219,207,.16);--pmx-seat-fill-8:rgba(127,196,245,.16);--pmx-seat-fill-lead:rgba(255,248,244,.16);--pmx-seat-fill-you:rgba(181,174,189,.16);--pmx-seat-fill-accent:rgba(255,142,176,.16);--pmx-seat-fill-warning:rgba(255,208,120,.16);--pmx-focus-edge:#a5657f;--pmx-focus-ring:rgba(255,142,176,.1);--pmx-focus-outline:#ffb0c8;--pmx-grid:rgba(102,94,113,.14);--pmx-table-fill:rgba(102,94,113,.12);--pmx-accent-halo:rgba(255,142,176,.22);--pmx-accent-pulse:rgba(255,142,176,.55);--pmx-soft-fill:rgba(255,248,244,.04);--pmx-sheen-card:rgba(33,31,46,.68);--pmx-sheen-warm:rgba(51,45,52,.72);--pmx-edge-warm-low:rgba(255,208,120,.226);--pmx-primary-hover:#ff97bb;--pmx-mdl-icon-bg:#402f40;--pmx-mdl-icon-edge:#6b4a5f;}
+body[data-theme="friendly-light"]{--pmx-sheet-bg:#fffaf7;--pmx-seat-fill-1:rgba(28,125,114,.16);--pmx-seat-fill-2:rgba(47,111,155,.16);--pmx-seat-fill-3:rgba(155,104,21,.16);--pmx-seat-fill-4:rgba(196,90,26,.16);--pmx-seat-fill-5:rgba(109,91,189,.16);--pmx-seat-fill-6:rgba(207,95,133,.16);--pmx-seat-fill-7:rgba(38,143,131,.16);--pmx-seat-fill-8:rgba(47,111,155,.16);--pmx-seat-fill-lead:rgba(56,46,53,.16);--pmx-seat-fill-you:rgba(117,103,114,.16);--pmx-seat-fill-accent:rgba(207,95,133,.16);--pmx-seat-fill-warning:rgba(155,104,21,.16);--pmx-focus-edge:#db97a9;--pmx-focus-ring:rgba(207,95,133,.1);--pmx-focus-outline:#dd8ea7;--pmx-grid:rgba(191,172,170,.14);--pmx-table-fill:rgba(191,172,170,.12);--pmx-accent-halo:rgba(207,95,133,.22);--pmx-accent-pulse:rgba(207,95,133,.55);--pmx-soft-fill:rgba(56,46,53,.04);--pmx-sheen-card:rgba(247,236,232,.68);--pmx-sheen-warm:rgba(241,227,217,.72);--pmx-edge-warm-low:rgba(155,104,21,.203);--pmx-primary-hover:#db658d;--pmx-mdl-icon-bg:#f1d8da;--pmx-mdl-icon-edge:#e3bbc1;}
+body[data-theme="glass-dark"]{--pmx-sheet-bg:#181134;--pmx-seat-fill-1:rgba(117,215,239,.16);--pmx-seat-fill-2:rgba(255,129,152,.16);--pmx-seat-fill-3:rgba(123,224,175,.16);--pmx-seat-fill-4:rgba(255,138,74,.16);--pmx-seat-fill-5:rgba(255,208,116,.16);--pmx-seat-fill-6:rgba(178,135,255,.16);--pmx-seat-fill-7:rgba(117,215,239,.16);--pmx-seat-fill-8:rgba(255,129,152,.16);--pmx-seat-fill-lead:rgba(250,247,255,.16);--pmx-seat-fill-you:rgba(176,168,201,.16);--pmx-seat-fill-accent:rgba(178,135,255,.16);--pmx-seat-fill-warning:rgba(255,208,116,.16);--pmx-focus-edge:rgba(178,138,255,.622);--pmx-focus-ring:rgba(178,135,255,.1);--pmx-focus-outline:#c9abff;--pmx-grid:rgba(101,92,140,.14);--pmx-table-fill:rgba(101,92,140,.12);--pmx-accent-halo:rgba(178,135,255,.22);--pmx-accent-pulse:rgba(178,135,255,.55);--pmx-soft-fill:rgba(250,247,255,.04);--pmx-sheen-card:rgba(34,25,65,.584);--pmx-sheen-warm:rgba(52,40,69,.649);--pmx-edge-warm-low:rgba(255,208,116,.226);--pmx-primary-hover:#bd8fff;--pmx-mdl-icon-bg:rgba(61,45,100,.761);--pmx-mdl-icon-edge:rgba(179,143,255,.379);}
+body[data-theme="glass-light"]{--pmx-sheet-bg:#fefeff;--pmx-seat-fill-1:rgba(23,112,143,.16);--pmx-seat-fill-2:rgba(186,67,92,.16);--pmx-seat-fill-3:rgba(31,122,85,.16);--pmx-seat-fill-4:rgba(196,90,26,.16);--pmx-seat-fill-5:rgba(155,103,16,.16);--pmx-seat-fill-6:rgba(122,85,202,.16);--pmx-seat-fill-7:rgba(35,126,157,.16);--pmx-seat-fill-8:rgba(186,67,92,.16);--pmx-seat-fill-lead:rgba(40,33,61,.16);--pmx-seat-fill-you:rgba(113,105,135,.16);--pmx-seat-fill-accent:rgba(122,85,202,.16);--pmx-seat-fill-warning:rgba(155,103,16,.16);--pmx-focus-edge:rgba(119,83,196,.608);--pmx-focus-ring:rgba(122,85,202,.1);--pmx-focus-outline:rgba(161,135,217,.988);--pmx-grid:rgba(174,164,199,.14);--pmx-table-fill:rgba(174,164,199,.12);--pmx-accent-halo:rgba(122,85,202,.22);--pmx-accent-pulse:rgba(122,85,202,.55);--pmx-soft-fill:rgba(40,33,61,.04);--pmx-sheen-card:rgba(250,248,255,.584);--pmx-sheen-warm:rgba(243,238,238,.649);--pmx-edge-warm-low:rgba(155,103,16,.203);--pmx-primary-hover:#815ad6;--pmx-mdl-icon-bg:rgba(227,219,245,.777);--pmx-mdl-icon-edge:rgba(114,81,184,.356);}
+body[data-theme="retro-dark"]{--pmx-sheet-bg:#081612;--pmx-seat-fill-1:transparent;--pmx-seat-fill-2:transparent;--pmx-seat-fill-3:transparent;--pmx-seat-fill-4:transparent;--pmx-seat-fill-5:transparent;--pmx-seat-fill-6:transparent;--pmx-seat-fill-7:transparent;--pmx-seat-fill-8:transparent;--pmx-seat-fill-lead:transparent;--pmx-seat-fill-you:transparent;--pmx-seat-fill-accent:transparent;--pmx-seat-fill-warning:transparent;--pmx-focus-edge:#41a06a;--pmx-focus-ring:rgba(96,243,154,.1);--pmx-focus-outline:#90f7b8;--pmx-grid:rgba(66,113,92,.14);--pmx-table-fill:rgba(66,113,92,.12);--pmx-accent-halo:rgba(96,243,154,.22);--pmx-accent-pulse:rgba(96,243,154,.55);--pmx-soft-fill:rgba(217,255,231,.04);--pmx-sheen-card:rgba(16,34,29,.68);--pmx-sheen-warm:rgba(34,48,34,.72);--pmx-edge-warm-low:rgba(242,211,94,.226);--pmx-primary-hover:#66ffa3;--pmx-mdl-icon-bg:#1b3f2f;--pmx-mdl-icon-edge:#2d6b4c;}
+body[data-theme="retro-light"]{--pmx-sheet-bg:#f8f6df;--pmx-seat-fill-1:transparent;--pmx-seat-fill-2:transparent;--pmx-seat-fill-3:transparent;--pmx-seat-fill-4:transparent;--pmx-seat-fill-5:transparent;--pmx-seat-fill-6:transparent;--pmx-seat-fill-7:transparent;--pmx-seat-fill-8:transparent;--pmx-seat-fill-lead:transparent;--pmx-seat-fill-you:transparent;--pmx-seat-fill-accent:transparent;--pmx-seat-fill-warning:transparent;--pmx-focus-edge:#6e9e7a;--pmx-focus-ring:rgba(25,115,76,.1);--pmx-focus-outline:#5c9a78;--pmx-grid:rgba(164,166,137,.14);--pmx-table-fill:rgba(164,166,137,.12);--pmx-accent-halo:rgba(25,115,76,.22);--pmx-accent-pulse:rgba(25,115,76,.55);--pmx-soft-fill:rgba(34,52,43,.04);--pmx-sheen-card:rgba(239,237,210,.68);--pmx-sheen-warm:rgba(232,227,196,.72);--pmx-edge-warm-low:rgba(134,96,13,.203);--pmx-primary-hover:#1b7a51;--pmx-mdl-icon-bg:#d1dcbf;--pmx-mdl-icon-edge:#a5b997;}
+body[data-theme^="glass"]{--pmx-view-bg:var(--pmx-sheet-bg);}
 /* 3.1 / 3.6: retro steps interface sizes above 12 down 1 px (monospace runs
    ~12 % wider), titles 19/24/700 with no negative tracking, helpers 11 px;
    friendly titles 21/27/600, questions 14.5/600 (Poppins has no 620/650). */
@@ -215,6 +165,9 @@ body[data-theme^="friendly"]{
 :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide) .primary-button{box-shadow:none;}
 :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide) .primary-button:hover{filter:none;background:var(--pmx-primary-hover);}
 :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide) .primary-button[data-tone="warm"]:hover{background:var(--warning);}
+/* closing (MEMTEACH, REVERT FR 4, STORM-A): styles.css gives every focused control a color-mix() outline, a runtime
+   colour mix (IMPACT A1-15); inside pmx surfaces the ring takes the precomputed --pmx-focus-outline */
+:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide, .pmx-files, .pmx-bubble, .pmx-receipt) :is(button, input, textarea, select, summary, a, [tabindex]):focus-visible{outline-color:var(--pmx-focus-outline);}
 /* J-2: every text button in a pmx surface keeps 10 px side padding and a 32 px box; a link inside running
    text (display inline, padding 0) sets its own rule and stays a link */
 :where(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-bubble, .pmx-guide, .pmx-files) .text-button{padding-left:10px;padding-right:10px;min-height:32px;}
@@ -250,6 +203,9 @@ body[data-theme^="friendly"]{
 .pmx-sheet .pmx-body > * + *{margin-top:0;}
 /* a one-column body taller than its sheet scrolls inside itself; it never paints over the foot */
 .pmx-sheet .pmx-body[data-layout="one"]{grid-template-columns:minmax(0,1fr);overflow:hidden auto;scrollbar-width:thin;}
+/* closing (PREFS): a scrolling body clipped the outer half of the 2 px focus ring of any control flush with its edge;
+   4 px of inline padding, given back by the body's own negative margin, keeps every ring whole and moves nothing */
+@media (min-width: 948px){ .pmx-sheet .pmx-body[data-layout="one"]{padding-left:4px;padding-right:4px;margin-left:-4px;margin-right:-4px;} }
 .pmx-sheet--standard .pmx-body{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
 .pmx-sheet .pmx-col{min-width:0;min-height:0;display:flex;flex-direction:column;}
 .pmx-sheet .pmx-col{overflow:hidden auto;scrollbar-width:thin;}
@@ -277,7 +233,9 @@ body[data-theme^="friendly"]{
 /* a heading straight over its first control keeps 10 px (controls and plates carry their own margins) */
 .pmx-sheet .pmx-q-head + .pmx-q-body > :first-child:not(.pmx-ctl, .pmx-plate, .pmx-plate-fit, .pmx-roster){margin-top:10px;}
 .pmx-sheet .pmx-q > .pmx-help + .pmx-q-body{margin-top:8px;}
-.pmx-sheet .pmx-q[data-state="error"]{background:var(--pmx-card-warm);border-radius:12px;box-shadow:0 0 0 8px var(--pmx-card-warm);}
+/* closing (SCHED, MEMTEACH): the warm fill is the block's own padding (it was an 8 px box-shadow spread, so the fill
+   had no box and every title in it measured 0-3 px from its edge); the negative margin keeps the layout in place */
+.pmx-sheet .pmx-q[data-state="error"]{background:var(--pmx-card-warm);border-radius:12px;padding:8px;margin-left:-8px;margin-right:-8px;box-shadow:none;}
 .pmx-sheet .pmx-q[data-state="error"] :is(.pmx-q-n, .pmx-q-title){color:var(--warning);}
 
 /* ================================================================ A3 hero */
@@ -315,6 +273,8 @@ body[data-theme^="friendly"]{
 /* ================================================================ A4 control row */
 .pmx-sheet .pmx-ctl{display:grid;grid-template-columns:minmax(0,1fr) 216px;gap:6px 16px;align-items:center;margin-top:12px;min-width:0;}
 .pmx-sheet .pmx-ctl[data-layout="stack"]{grid-template-columns:minmax(0,1fr);gap:8px;}
+/* closing (BSD): pmxCtl({width}) sets the control column */
+.pmx-sheet .pmx-ctl[data-layout="row"][data-width="1"]{grid-template-columns:minmax(0,1fr) var(--pmx-ctl-w,216px);}
 /* a stepper row sizes its control column to the stepper, capped so a long cap sentence beside it can never squeeze the label away */
 .pmx-sheet .pmx-ctl[data-layout="row"]:has(> .pmx-ctl-control > .pmx-stepper){grid-template-columns:minmax(0,1fr) fit-content(264px);}
 .pmx-sheet .pmx-ctl-copy{min-width:0;}
@@ -402,9 +362,9 @@ body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr
 .pmx-sheet .pmx-spec-control .shared-picker-button{width:172px;}
 .pmx-sheet .pmx-spec[data-state="disabled"] .pmx-spec-copy b{color:var(--muted);}
 .pmx-sheet .pmx-spec[data-state="disabled"] .pmx-reason{margin:0;max-width:170px;text-align:right;}
-.pmx-sheet .pmx-add{position:relative;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 10px;font:600 12.5px/17px var(--font-ui);color:var(--accent);cursor:pointer;white-space:nowrap;}
-.pmx-sheet .pmx-add[data-on="1"]{color:var(--muted);}
-.pmx-sheet .pmx-add:hover > span{text-decoration:underline;text-underline-offset:3px;}
+.pmx-sheet .pmx-spec .pmx-add{position:relative;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 10px;font:600 12.5px/17px var(--font-ui);color:var(--accent);cursor:pointer;white-space:nowrap;}
+.pmx-sheet .pmx-spec .pmx-add[data-on="1"]{color:var(--muted);}
+.pmx-sheet .pmx-spec .pmx-add:hover > span{text-decoration:underline;text-underline-offset:3px;}
 .pmx-sheet .pmx-add-input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;}
 
 /* ================================================================ A9 stepper */
@@ -427,6 +387,10 @@ body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr
 .pmx-switch::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--border);}
 .pmx-switch-opt{display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0;min-height:0;padding:0 14px 2px 0;border:0;border-radius:0;background:none;text-align:left;color:var(--subtle);cursor:pointer;}
 .pmx-switch-opt:hover{background:none;color:var(--muted);}
+/* closing review (focus rings): the ring goes round the option's word, not the whole column: round the column it ran
+   into the next option's word ("Simple"). (0,4,0) so a lane's own box ring on its switch (REVERT) gives way too. */
+.pmx-switch > .pmx-switch-opt.pmx-switch-opt:focus-visible{outline:none;}
+.pmx-switch > .pmx-switch-opt:focus-visible > .pmx-switch-word{outline:2px solid var(--pmx-focus-outline);outline-offset:2px;border-radius:4px;}
 .pmx-switch-word{font:var(--pmx-voice-w) 18px/24px var(--pmx-voice);letter-spacing:-.012em;color:inherit;transition:color var(--pmx-t-row) var(--pmx-ease-linear);}
 .pmx-switch-help{font:var(--pmx-fs-help);color:var(--subtle);transition:color var(--pmx-t-row) var(--pmx-ease-linear);}
 .pmx-switch-opt[aria-checked="true"]{color:var(--text);}
@@ -436,8 +400,18 @@ body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr
 .pmx-switch--small .pmx-switch-word{font:var(--pmx-fs-ctl);}
 .pmx-switch--small .pmx-switch-opt{min-height:32px;justify-content:center;padding-bottom:0;}
 
+/* ================================================================ disclosure (closing, PREFS): unboxed (DON'T 5) */
+.pmx-disc{margin:0;min-width:0;}
+.pmx-disc-sum{display:flex;align-items:center;gap:8px;min-height:32px;cursor:pointer;list-style:none;font:var(--pmx-fs-ctl);color:var(--text);}
+.pmx-disc-sum::-webkit-details-marker{display:none;}
+.pmx-disc-sum > span{min-width:0;}
+.pmx-disc-chev{color:var(--muted);transition:transform var(--pmx-t-flip) var(--pmx-ease-out);}
+.pmx-disc[open] > .pmx-disc-sum .pmx-disc-chev{transform:rotate(180deg);}
+.pmx-disc-body{margin:6px 0 0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-disc-sum:focus-visible{outline:2px solid var(--pmx-focus-outline);outline-offset:2px;border-radius:4px;}
+
 /* ================================================================ A11 checkbox (also the finding tick) */
-.pmx-check{position:relative;display:flex;align-items:flex-start;gap:10px;min-height:22px;cursor:pointer;}
+.pmx-check{position:relative;display:flex;align-items:flex-start;gap:10px;min-height:22px;flex-shrink:0;cursor:pointer;}
 .pmx-check + .pmx-check{margin-top:12px;}
 .pmx-check > input{position:absolute;left:0;top:2px;width:16px;height:16px;margin:0;opacity:0;cursor:pointer;}
 .pmx-box{flex:none;width:15px;height:15px;margin-top:2px;border-radius:4px;border:1.5px solid var(--border-strong);background:transparent;display:grid;place-items:center;box-sizing:border-box;transition:background-color var(--pmx-t-pop) var(--pmx-ease-linear),border-color var(--pmx-t-pop) var(--pmx-ease-linear),box-shadow var(--pmx-t-pop) var(--pmx-ease-linear);}
@@ -512,9 +486,9 @@ body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr
 .pmx-run[data-pmx-preview="1"] .pmx-run-body > .pmx-track ~ *{visibility:hidden;}
 
 /* ================================================================ A17-A19 footer */
-.pmx-sheet .pmx-foot{flex:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;column-gap:18px;align-items:center;height:80px;margin:0 -28px;padding:0 28px;border-top:1px solid var(--border);background:none;}
+.pmx-sheet .pmx-foot{flex:none;display:grid;grid-template-columns:var(--pmx-foot-cols,auto minmax(0,1fr) auto auto);column-gap:18px;align-items:center;height:80px;margin:0 -28px;padding:0 28px;border-top:1px solid var(--border);background:none;}
 .pmx-sheet--standard .pmx-foot, .pmx-sheet--compact .pmx-foot{height:80px;}
-.pmx-sheet .pmx-foot[data-save="0"]{grid-template-columns:minmax(0,1fr) auto auto;}
+.pmx-sheet .pmx-foot[data-save="0"]{grid-template-columns:var(--pmx-foot-cols,minmax(0,1fr) auto auto);}
 .pmx-sheet .pmx-foot-say{min-width:0;}
 .pmx-sheet .pmx-save{display:inline-flex;align-items:center;gap:8px;height:32px;min-height:32px;padding:0 10px;margin-left:-10px;border:0;background:none;color:var(--muted);font:var(--pmx-w-reg) 12.5px/18px var(--font-ui);white-space:nowrap;}
 .pmx-sheet .pmx-save:hover{color:var(--text);background:none;}
@@ -540,6 +514,10 @@ body[data-theme$="-light"] .pmx-sheet .pmx-primary[data-tone="warm"]{color:#fff;
 .pmx-view .pmx-view-acts.collab-panel-foot{padding:0 !important;border-top:0;}
 .pmx-sheet .pmx-foot[data-reason="1"] > :not(.pmx-foot-reason){grid-row:1;}
 .pmx-sheet .pmx-foot-reason{grid-row:2;grid-column:1 / -1;margin:0;text-align:right;}
+/* closing (COLLAB FR 1): a foot with a reason row takes the height its rows need (never under 80) instead of clipping
+   a wrapped read-back; the reason already took the estimate's line in the builder */
+.pmx-sheet .pmx-foot[data-reason="1"]{height:auto;min-height:80px;}
+.pmx-sheet > .pmx-foot[data-reason="1"]{padding:10px 28px !important;}
 
 /* ================================================================ A18 refusal, A20 confirm */
 .pmx-sheet .pmx-refusal{margin:0;display:flex;gap:8px;align-items:flex-start;font:var(--pmx-w-reg) 12.5px/19px var(--font-ui);color:var(--muted);}
@@ -552,7 +530,9 @@ body[data-theme$="-light"] .pmx-sheet .pmx-primary[data-tone="warm"]{color:#fff;
 .pmx-sheet .pmx-confirm-acts > button{height:34px;min-height:34px;padding:0 14px;}
 
 /* ================================================================ A21 tabs */
-.pmx-tabs{display:flex;gap:22px;border-bottom:1px solid var(--border);min-width:0;overflow:hidden;}
+/* closing review (focus rings): the strip still clips its tabs, but keeps 4 px round them (offset 2 + ring 2), so a
+   focused tab's ring is drawn whole instead of clipped to a 2 px accent bar at its side (it read as a side stripe) */
+.pmx-tabs{display:flex;gap:22px;border-bottom:1px solid var(--border);min-width:0;overflow:clip;overflow-clip-margin:4px;}
 .pmx-tab{position:relative;display:inline-flex;align-items:baseline;gap:6px;height:34px;min-height:34px;padding:0 1px;border:0;border-radius:0;background:none;color:var(--muted);font:600 12.5px/34px var(--font-ui);white-space:nowrap;}
 .pmx-tab:hover{background:none;color:var(--text);}
 .pmx-tab small{font:500 11px var(--font-ui);color:var(--subtle);}
@@ -676,7 +656,10 @@ body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 /* Hook-carrying elements (cls, headCls, badgeCls, titleCls, statusCls, metaCls, bodyCls, footCls) are
    keyed at (0,2,0) or more, so a module's legacy hook rule (.collab-card, .collab-status, ...) that
    loads later cannot restyle them before its package deletes it (G-21). */
-.pmx-run[data-density]{position:relative;container:pmxrun / inline-size;display:flex;flex-direction:column;gap:8px;min-width:0;padding:12px 14px 10px;border:0;border-radius:var(--pmx-r-card);background:var(--pmx-card);color:var(--text);box-shadow:none;box-sizing:border-box;
+/* closing (COLLAB FR 13, STORM-A): the side padding sits on the card's rows, not the card, so the pmxrun container
+   (the card) measures its whole width and the 7.2 tiers (S < 360, L >= 520, the title at 640) follow the card's own
+   width, as the spec says; with the padding on the card they began 28 px early (S at a 387 px card) */
+.pmx-run[data-density]{position:relative;container:pmxrun / inline-size;display:flex;flex-direction:column;gap:8px;min-width:0;padding:12px 0 10px;border:0;border-radius:var(--pmx-r-card);background:var(--pmx-card);color:var(--text);box-shadow:none;box-sizing:border-box;
   transition:background-color var(--pmx-t-tint) var(--pmx-ease-out),box-shadow var(--pmx-t-tint) var(--pmx-ease-out);}
 .pmx-run[data-density][data-tone="warm"], .pmx-run[data-density="attention"]:not([data-tone="accent"]){background:var(--pmx-card-warm);box-shadow:0 0 0 1px var(--pmx-edge-warm);}
 .pmx-run[data-pmx-arrive="1"]{opacity:0;}
@@ -696,6 +679,7 @@ body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 .pmx-run .pmx-run-body:empty{display:none;}
 .pmx-run .pmx-run-foot{display:flex;flex-wrap:nowrap;align-items:center;gap:0;min-width:0;padding:0;border:0;}
 .pmx-run .pmx-run-foot:empty{display:none;}
+.pmx-run[data-density]:not(.pmx-receipt) > :is(.pmx-run-head, .pmx-run-body, .pmx-run-foot){padding-left:14px;padding-right:14px;}
 
 /* C3 sentence (fixed 36 px, two lines) */
 .pmx-sentence[data-status]{margin:0;display:flex;gap:8px;align-items:flex-start;height:37px;min-width:0;padding:0;border:0;border-radius:0;background:none;font:var(--pmx-fs-sentence);color:var(--muted);overflow:hidden;white-space:normal;}
@@ -812,12 +796,15 @@ p.pmx-meta, .pmx-meta{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-r
 .pmx-run.pmx-receipt{flex-direction:row;align-items:center;gap:8px;height:var(--pmx-receipt-h);min-height:var(--pmx-receipt-h);padding:0 2px;border-radius:0;background:none;box-shadow:0 -1px 0 var(--border),0 1px 0 var(--border);}
 .pmx-receipt .pmx-run-head{flex:1;min-width:0;height:44px;}
 .pmx-receipt .pmx-receipt-title{display:none;min-width:0;flex:0 1 auto;max-width:160px;font:600 12px/16px var(--font-ui);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.pmx-receipt .pmx-receipt-say{flex:1;min-width:0;display:flex;align-items:center;gap:6px;padding:0;border:0;border-radius:0;background:none;white-space:nowrap;overflow:hidden;}
+/* closing review: answer first. The time · cost meta gives way first, ending in an ellipsis; before, the meta never
+   shrank and squeezed the headline to "Export re..." at the L tier (591 px). Where the meta shows (520 px and up) the
+   headline also keeps at least 16ch (container rule below the tiers). */
+.pmx-receipt .pmx-receipt-say{flex:1 1 0%;min-width:0;display:flex;align-items:center;gap:6px;padding:0;border:0;border-radius:0;background:none;white-space:nowrap;overflow:hidden;}
 .pmx-receipt-say > svg{flex:none;color:var(--muted);}
 /* IMPACT A1-24: a recorded run's receipt carries a 13 px play-ring at every tier */
 .pmx-receipt-say > svg.pmx-receipt-rec{color:var(--subtle);}
 .pmx-receipt-headline{min-width:0;font:var(--pmx-fs-receipt);color:var(--text);overflow:hidden;text-overflow:ellipsis;}
-.pmx-receipt .pmx-receipt-meta{flex:none;margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);white-space:nowrap;}
+.pmx-receipt .pmx-receipt-meta{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);white-space:nowrap;}
 .pmx-receipt .pmx-run-foot{flex:none;gap:0;}
 .pmx-receipt .pmx-run-foot .pmx-open{color:var(--text);font-weight:600;padding:0 10px;}
 
@@ -855,6 +842,15 @@ p.pmx-meta, .pmx-meta{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-r
 body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 .pmx-view .pmx-finding-claim{white-space:normal;}
 .pmx-finding-meta{margin:4px 0 0;display:flex;align-items:center;gap:6px;min-width:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);white-space:nowrap;overflow:hidden;}
+/* closing (REVIEW-A FR 1): with wrap, a card's claim takes two lines before it is cut (opt-in: it costs the 7.2 budget); data-wrap lets the meta line wrap as
+   whole parts, each later part's "·" sitting in an 18 px lead-in that the line's clip hides where a part starts a line */
+.pmx-run .pmx-finding[data-wrap="1"] .pmx-finding-claim{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;}
+.pmx-finding-meta[data-wrap="1"]{flex-wrap:wrap;column-gap:0;row-gap:2px;white-space:normal;overflow:visible;margin-left:-18px;clip-path:inset(-4px -4px -4px 18px);}
+.pmx-finding-meta[data-wrap="1"] > .pmx-fpart{display:inline-flex;align-items:center;gap:6px;min-width:0;}
+.pmx-finding-meta[data-wrap="1"] > .pmx-fpart:first-child{margin-left:18px;}
+.pmx-finding-meta[data-wrap="1"] > .pmx-fpart + .pmx-fpart::before{content:"\00B7";flex:none;display:inline-block;width:18px;margin-right:-6px;text-align:center;color:var(--subtle);}
+/* closing (REVIEW-B FR 2): the finding's number, ahead of its claim */
+.pmx-finding-n{margin-right:6px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums;}
 .pmx-finding-why{margin:4px 0 0;font:var(--pmx-fs-body);color:var(--muted);}
 .pmx-finding-todo{margin:4px 0 0;font:var(--pmx-fs-meta);color:var(--positive);}
 .pmx-finding-todo .text-button, .pmx-finding-todo .text-button.text-button{display:inline;min-height:0;height:auto;padding:0;border:0;background:none;color:var(--text);font-weight:600;text-decoration:underline;text-decoration-color:var(--border-strong);text-underline-offset:3px;}
@@ -871,8 +867,14 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 .pmx-agree > span:last-child{overflow:hidden;text-overflow:ellipsis;}
 .pmx-votes{position:relative;display:grid;grid-template-columns:var(--pmx-vote-cols,minmax(0,1fr) 72px minmax(0,1fr) 58px);gap:0 10px;height:104px;padding:8px 12px;border-radius:var(--pmx-r-md);background:var(--pmx-floor);align-items:stretch;box-sizing:border-box;min-width:0;}
 .pmx-vote-opt{display:flex;flex-direction:column;align-items:center;min-width:0;text-align:center;}
-.pmx-vote-opt[data-state="ruled"]{opacity:.55;}
+/* closing (STORM-A): a ruled-out option keeps its words at full contrast; only its marks dim */
+.pmx-vote-opt[data-state="ruled"] .pmx-vote-floor{opacity:.55;}
+.pmx-vote-names{margin:4px 0 0;max-width:100%;font:var(--pmx-w-reg) 10px/14.5px var(--font-ui);color:var(--subtle);text-align:center;overflow-wrap:anywhere;}
 .pmx-vote-title{margin:0;max-width:100%;font:var(--pmx-w-620) 11.5px/17px var(--font-ui);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* closing (STORM-A): pmxVoteBoard({grow:true}) lets the board take its content's height and each title two lines (opt-in:
+   it costs the 7.2 budget at the S tier) */
+.pmx-votes[data-grow="1"]{height:auto;min-height:104px;}
+.pmx-votes[data-grow="1"] .pmx-vote-title{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .pmx-vote-count{margin:4px 0 0;font:var(--pmx-w-reg) 11px/16px var(--font-ui);color:var(--muted);}
 .pmx-vote-floor{margin-top:auto;display:flex;gap:12px;justify-content:center;align-items:flex-end;max-width:100%;}
 .pmx-voter{display:flex;flex:0 1 auto;min-width:0;flex-direction:column;align-items:center;gap:2px;max-width:64px;font:var(--pmx-w-reg) 10px/14.5px var(--font-ui);color:var(--subtle);}
@@ -939,6 +941,22 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 .pmx-guide-acts{grid-column:2;grid-row:1 / 3;display:flex;gap:4px;}
 .pmx-guide-acts .text-button{height:32px;min-height:32px;padding:0 10px;color:var(--accent);font-weight:600;white-space:nowrap;}
 .pmx-guide > .pmx-guide-close{position:absolute;right:0;top:50%;margin-top:-15px;color:var(--muted);}
+/* closing (PREFS, MEMTEACH, REVERT FR 5, CREW-B FR 2, REVIEW-B FR 4): a dock or doc guide is its own inline-size
+   container; below 420 px of guide width (520 with two actions) caption, step and any extra line take the full width
+   (the empty action column's gap goes back to the text), the actions move to their own row under them (their text
+   aligned with the step: -10 px, the text button's padding), and the close X keeps the top-right corner */
+.pmx-guide:is([data-placement="dock"], [data-placement="doc"]){container:pmxguide / inline-size;}
+@container pmxguide (max-width: 419.98px){
+  .pmx-guide[data-placement] > :not(.pmx-guide-acts, .pmx-guide-close){grid-column:1 / -1;margin-right:-12px;}
+  .pmx-guide[data-placement] > .pmx-guide-acts{grid-column:1 / -1;grid-row:auto;flex-wrap:wrap;gap:4px 10px;margin:6px 0 0 -10px;}
+  .pmx-guide[data-placement] > .pmx-guide-acts:empty{display:none;}
+  .pmx-guide[data-placement] > .pmx-guide-close{top:3px;margin-top:0;}
+}
+@container pmxguide (min-width: 420px) and (max-width: 519.98px){
+  .pmx-guide[data-placement][data-acts="2"] > :not(.pmx-guide-acts, .pmx-guide-close){grid-column:1 / -1;margin-right:-12px;}
+  .pmx-guide[data-placement][data-acts="2"] > .pmx-guide-acts{grid-column:1 / -1;grid-row:auto;flex-wrap:wrap;gap:4px 10px;margin:6px 0 0 -10px;}
+  .pmx-guide[data-placement][data-acts="2"] > .pmx-guide-close{top:3px;margin-top:0;}
+}
 .pmx-guide[data-placement="sheet"]{flex:none;margin-top:8px;padding-top:4px;padding-bottom:4px;grid-template-columns:auto minmax(0,1fr) auto;}
 .pmx-guide[data-placement="sheet"] .pmx-guide-step{grid-column:2;grid-row:1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pmx-guide[data-placement="sheet"] .pmx-guide-acts{grid-column:3;grid-row:1;}
@@ -982,6 +1000,9 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 
 /* ================================================================ D1-D5 run view (docked in the editor pane) */
 .pmx-view{container:pmxview / inline-size;min-width:0;max-width:980px;margin:0 auto;padding:4px 4px 60px;color:var(--text);box-sizing:border-box;}
+/* closing (ROOM-B FR 1): pmxView({stickyHead}) keeps the head in reach while the document scrolls, on the opaque
+   --pmx-view-bg (ROOM-B FR 3: the pane's own look; glass panes are translucent, so glass uses the opaque sheet fill) */
+.pmx-view[data-sticky="1"] > .pmx-view-head{position:sticky;top:0;z-index:3;background:var(--pmx-view-bg);box-shadow:0 1px 0 var(--border);}
 .pmx-view .pmx-view-head.drawer-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 16px;align-items:start;min-height:0;padding:0;border:0;background:none;box-shadow:none;}
 .pmx-view .pmx-view-head .pmx-view-title{grid-column:1;display:block;margin:0;font:var(--pmx-fs-view-title);letter-spacing:var(--pmx-ls-view-title,-.018em);color:var(--text);}
 .pmx-view .pmx-view-kind{grid-column:1;grid-row:2;max-width:none;margin:4px 0 0;display:flex;align-items:center;gap:6px;font:600 12px/16px var(--font-ui);color:var(--muted);}
@@ -1067,10 +1088,11 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
   /* the output keeps two preview lines; "+N more" takes the credits band's fourth column */
   .pmx-output-pre > span:nth-child(n+3){display:none;}
 }
-/* A receipt keeps its headline readable (R-21): below the L tier the kind word drops (the mark stays), and the
-   mini cluster and time · cost move into the headline's hover card, which the builder writes (with "Recorded
+/* A receipt keeps its headline readable (R-21): below the L tier the mini cluster and time · cost move into the
+   headline's hover card (the kind word stays: R-21 does not move it, and canon names stay visible), which the builder writes (with "Recorded
    example · no AI cost" first for a recorded run, IMPACT A1-24). The three actions always stay. */
 @container pmxrun (max-width: 519.98px){ .pmx-receipt .pmx-cluster--mini, .pmx-receipt .pmx-receipt-meta{display:none;} }
+@container pmxrun (min-width: 520px){ .pmx-receipt .pmx-receipt-say{min-width:min(16ch,100%);} }
 @container pmxrun (min-width: 520px){
   .pmx-lane-sub{display:inline;}
   .pmx-stop-label{display:inline;}
@@ -1084,6 +1106,12 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
   .pmx-did{-webkit-line-clamp:1;}
   .pmx-result-headline{font:var(--pmx-fs-result-l);}
   .pmx-result-sub{margin-left:28px;}
+}
+/* closing (STORM-A): a track of 6 or more stops keeps its M form up to 720 px (each label beside its dot needs ~700) */
+@container pmxrun (min-width: 520px) and (max-width: 719.98px){
+  .pmx-track:is([data-n="6"], [data-n="7"], [data-n="8"], [data-n="9"], [data-n="10"]) .pmx-stop-label{display:none;}
+  .pmx-track:is([data-n="6"], [data-n="7"], [data-n="8"], [data-n="9"], [data-n="10"]) .pmx-track-now{display:block;flex:1 1 auto;}
+  .pmx-track:is([data-n="6"], [data-n="7"], [data-n="8"], [data-n="9"], [data-n="10"]) .pmx-track-line .pmx-stop + .pmx-stop::before{width:22px;margin:0 3px;}
 }
 /* R-21: the run title shows only on a card of 640 px or more (at 591 it left the headline nothing) */
 @container pmxrun (min-width: 640px){ .pmx-receipt .pmx-receipt-title{display:block;} }
@@ -1147,7 +1175,7 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 /* Below a 900 px sheet (the 900 / 700 wide windows): one column, the body
    scrolls inside itself with fades; head and foot stay put. */
 @media (max-width: 947.98px){
-  .pmx-sheet .pmx-body{grid-template-columns:minmax(0,1fr);gap:20px;overflow:hidden auto;margin-right:-14px;padding-right:14px;scrollbar-width:thin;
+  .pmx-sheet .pmx-body{grid-template-columns:minmax(0,1fr);gap:20px;overflow:hidden auto;margin-right:-14px;padding-right:14px;margin-left:-4px;padding-left:4px;scrollbar-width:thin;
     -webkit-mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 14px),transparent);mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 14px),transparent);}
   .pmx-sheet .pmx-body > .pmx-col{min-height:auto;}
   .pmx-sheet .pmx-col, .pmx-sheet .pmx-col--side{overflow:visible;}
@@ -1184,6 +1212,12 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
    intro drop, side-column helpers truncate to one line with an ellipsis, specialists drop their helper
    line, the roster's column helpers drop, and the plate yields to the richest mode that fits. */
 @media (max-height: 820px){
+  /* closing (COLLAB FR 4): the drop hook. Any element a kind marks .pmx-drop-short leaves in a window 820 px tall
+     or less, in the same step as the foundation's own secondary lines */
+  .pmx-drop-short{display:none !important;}
+  /* closing (COLLAB FR 7, lead ruling 2026-09-28): a collaboration sheet's job box is two lines here (the hero was 88 px,
+     three full lines; the reference's field was 66), which gives every collaboration sheet its room at 1280 x 800 */
+  .pmx-sheet:is([data-pmx-kind="crew"], [data-pmx-kind="crew-auto"], [data-pmx-kind="crew_auto"], [data-pmx-kind="chat_room"], [data-pmx-kind="brainstorm"], [data-pmx-kind="review"]) textarea.pmx-hero-field{height:calc(2 * var(--pmx-hero-lh) + 10px);}
   .pmx-sheet .pmx-hero-main > .pmx-help{display:none;}
   .pmx-sheet .pmx-col--side .pmx-ctl-copy .pmx-help{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .pmx-sheet .pmx-col--side .pmx-shelf > .pmx-help{display:none;}

@@ -450,7 +450,10 @@ async function main() {
   await page.waitForTimeout(300);
   /* Re-baselined 2026-09-27 (spec 8.9): the Precedence panel is the "Pause all
      automations" block on the Resume & Safety Policy tab (data-tab quota);
-     the stop, resume-attempt and race demos are registered-only handlers. */
+     the stop, resume-attempt and race demos are registered-only handlers.
+     Re-baselined 2026-09-28 (DL-136, owner answer p12/E-19 A): a manual Stop is
+     its own latch and never turns the project-wide switch on; the panel names
+     it ("You pressed Stop") beside the switch, which stays Off. */
   await click(sel('sched-manage-tab', { tab: 'quota' }));
   await page.waitForTimeout(200);
   await runAction('sched-simulate-stop');
@@ -460,7 +463,7 @@ async function main() {
     return el ? { state: el.getAttribute('data-state'), text: el.textContent } : null;
   });
   const stopState = await safety();
-  check('a manual Stop latches, visibly, in the Pause all automations panel', stopState && stopState.state === 'paused' && /Paused by you/.test(stopState.text), JSON.stringify(stopState));
+  check('a manual Stop latches, visibly, in the Resume & Safety panel (and does not turn the project switch on)', stopState && stopState.state === 'off' && /You pressed Stop/.test(stopState.text), JSON.stringify(stopState));
 
   await runAction('sched-attempt-resume');
   await page.waitForTimeout(250);
@@ -477,9 +480,78 @@ async function main() {
   await click(sel('sched-clear-stop'));
   await page.waitForTimeout(250);
   const stopCleared = await safety();
-  check('an explicit user resume clears the latch', stopCleared && stopCleared.state === 'off' && /Off:/.test(stopCleared.text), JSON.stringify(stopCleared));
+  check('an explicit user resume clears the latch', stopCleared && stopCleared.state === 'off' && /Off:/.test(stopCleared.text) && !/You pressed Stop/.test(stopCleared.text), JSON.stringify(stopCleared));
+
+  /* ================================================================
+     6b. PAUSE ALL AUTOMATIONS (SQR-018, DL-136 — owner answer p12/E-19 A):
+         the real project-wide switch, driven through its visible control
+     ================================================================ */
+  const sw = await ev(() => [...document.querySelectorAll('[data-k="sched-pause-switch"] [data-action="sched-set-pause"]')].map(b => ({ v: b.dataset.value, disabled: b.disabled, role: b.getAttribute('role') })));
+  check('the Pause all automations switch is interactive (two enabled choices, never read-only)', sw.length === 2 && sw.every(x => !x.disabled && x.role === 'radio'), JSON.stringify(sw));
+  const offCopy = await safety();
+  check('the preview fine print is gone and the panel says plainly what the switch does and who turns it off',
+    offCopy && !/In this preview|each run separately/i.test(offCopy.text) && /every scheduled send and scheduled build in this project/.test(offCopy.text) && /[Oo]nly you can turn it off/.test(offCopy.text), offCopy && offCopy.text);
+  await click('[data-k="sched-pause-switch"] [data-action="sched-set-pause"][data-value="on"]');
+  await page.waitForTimeout(250);
+  const onState = await safety();
+  check('turning the switch on shows "Paused by you" and "Turn back on"', onState && onState.state === 'paused' && /Paused by you/.test(onState.text) && /Turn back on/.test(onState.text), JSON.stringify(onState));
+  const pauseEv = await ev(() => window.PM56_SCHED.list().events[0]);
+  check('the change emits runtime.automation_pause_changed', pauseEv && pauseEv.type === 'runtime.automation_pause_changed' && /Turned on/.test(pauseEv.detail), JSON.stringify(pauseEv));
+  const badge = await ev(() => { const S = window.PM56_SCHED, rec = S.automationPause(), again = S.setAutomationPause(true), bot = S.setAutomationPause(false, 'assistant'); return { rec, again, bot, after: S.automationPause() }; });
+  check('setting the value it already has returns the record unchanged (the epoch does not move)', badge.again.ok && badge.again.unchanged && badge.after.user_stop_epoch === badge.rec.user_stop_epoch, JSON.stringify(badge));
+  check('only a user actor may turn it off (anything else: permission_denied)', badge.bot.error === 'permission_denied' && badge.after.paused === true, JSON.stringify(badge.bot));
+  await runAction('sched-attempt-resume');
+  await page.waitForTimeout(200);
+  const qEv = await ev(() => window.PM56_SCHED.list().events[0]);
+  check('a quota auto-resume while paused is refused with project_automation_paused', qEv && qEv.clause === 'project_automation_paused', JSON.stringify(qEv));
+  await click(sel('sched-clear-pause'));
+  await page.waitForTimeout(250);
+  const offAgain = await safety();
+  check('"Turn back on" turns the switch off', offAgain && offAgain.state === 'off' && /Off:/.test(offAgain.text), JSON.stringify(offAgain));
   await click(sel('sched-close-dialog'));
   await page.waitForTimeout(200);
+
+  /* the canon's switch-off rules, on real owner commands in a private test thread (restored afterwards) */
+  const pauseCases = await ev(() => {
+    const out = [], ck = (n, v, d) => out.push({ n, v: !!v, d: d === undefined ? '' : JSON.stringify(d).slice(0, 300) });
+    const S = window.PM56_SCHED, C = window.PM56_COMPOSER_STATE, ctx = window.PM56_EXT.ctx(), prevThread = ctx.state.selectedThread;
+    const t = JSON.parse(JSON.stringify(ctx.state.threads.find(x => x.id === 'query')));
+    Object.assign(t, { id: 'pause-test', title: 'Pause verification', messages: [], projectId: 'pause', worktreeId: 'pause', archived: false });
+    ctx.state.threads.push(t); ctx.switchThread(t.id); ctx.state.model = window.PM56_DATA.models.find(m => m.status === 'ready').id; S.restore();
+    const make = (text, missed, date) => { ctx.state.composer = text; const b = C.bufferFor(t.id); b.text = text; b.attachments = []; b.destination = null;
+      const d = S.messageDraft(); d.date = date || '2027-05-10'; d.time = '22:00'; d.timezone = 'America/New_York'; d.missed = missed; const r = S.saveMessage(d); if (!r.ok) throw Error(JSON.stringify(r)); return r.record; };
+    const sent = () => t.messages.filter(m => m.viaSchedule).length;
+    try {
+      S.setAutomationPause(true);
+      const hold = make('Pause probe: hold', 'hold'), next = make('Pause probe: next available', 'next_available', '2027-05-11');
+      ck('a schedule created while paused does not lift the switch', S.automationPause().paused === true && hold.state === 'scheduled');
+      const dueAt = Date.parse(hold.scheduled_at_utc), r1 = S.dispatchMessageAt(hold.scheduled_dispatch_id, dueAt), r2 = S.dispatchMessageAt(next.scheduled_dispatch_id, Date.parse(next.scheduled_at_utc));
+      ck('a send time that arrives while paused is held with project_automation_paused, nothing sent',
+        hold.state === 'held' && next.state === 'held' && hold.dispatch_attempts.at(-1).result.error === 'project_automation_paused' && sent() === 0, [hold.state, next.state, r1, r2]);
+      ctx.renderApp();
+      const card = document.querySelector('.transcript .sched-card[data-schedule-id="' + CSS.escape(hold.scheduled_dispatch_id) + '"]');
+      ck('the held card names the pause as its reason and offers Send now', card && /Held/.test(card.textContent) && /Pause all automations is on/.test(card.textContent) && !!card.querySelector('[data-action="sched-card-send-now"]'), card && card.textContent);
+      const tk = S.messageTicket(next.scheduled_dispatch_id, Date.now()).ticket;
+      S.setAutomationPause(false);
+      ck('switch-off: under "hold" the message stays held and now names the missed time, not the switch',
+        hold.state === 'held' && hold.dispatch_attempts.at(-1).result.error === 'missed_time_held', hold.dispatch_attempts.at(-1));
+      ck('switch-off: under "next available" it dispatches exactly once, no backlog burst', next.state === 'sent' && sent() === 1, [next.state, sent()]);
+      ck('no item keeps the reason "Pause all automations is on" once it is off', !S.list().messages.some(m => m.state === 'held' && (m.dispatch_attempts || []).at(-1)?.result?.error === 'project_automation_paused'));
+      S.setAutomationPause(true);
+      const late = make('Pause probe: decided before', 'next_available', '2027-05-12'), tk2 = S.messageTicket(late.scheduled_dispatch_id, Date.parse(late.scheduled_at_utc)).ticket;
+      S.setAutomationPause(false); S.setAutomationPause(true); S.setAutomationPause(false);
+      const r3 = S.deliverMessage(tk2);
+      ck('a dispatch decided before the switch was turned on and delivered after it is discarded', r3.discarded && r3.error === 'project_automation_paused' && late.state === 'scheduled' && sent() === 1, [r3, late.state]);
+      S.setAutomationPause(true);
+      const again = make('Pause probe: send now', 'hold', '2027-05-13'); S.dispatchMessageAt(again.scheduled_dispatch_id, Date.parse(again.scheduled_at_utc)); ctx.renderApp();
+      const btn = document.querySelector('.transcript .sched-card[data-schedule-id="' + CSS.escape(again.scheduled_dispatch_id) + '"] [data-action="sched-card-send-now"]');
+      if (btn) btn.click();
+      ck('Send now on a paused-held message sends that one message and leaves the switch on', again.state === 'sent' && S.automationPause().paused === true, [again.state, again.dispatch_attempts.at(-1)?.result]);
+    } catch (e) { ck('pause cases ran', false, String(e && e.stack || e)); }
+    finally { S.setAutomationPause(false); S.restore(); ctx.state.threads = ctx.state.threads.filter(x => x.id !== 'pause-test'); ctx.switchThread(prevThread); ctx.renderApp(); }
+    return out;
+  });
+  for (const c of pauseCases) check(c.n, c.v, c.d);
 
   /* ================================================================
      7. QUOTA WAIT STRIP: reset truth AND its source shown together, opt-in

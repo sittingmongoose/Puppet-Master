@@ -5,9 +5,7 @@ the 5.6 Pro chat concept. When behavior changes, DELETE the outdated sentence an
 write the new truth in its place. Never append a changelog, never keep superseded
 statements "for history" — an appended history will mislead the next agent.
 Everything below is implemented and verified in this directory's build, except
-where a sentence says a control only arms state or is a preview. A paragraph
-ending "(re-check at closing)" describes behaviour a build lane is still
-finishing.
+where a sentence says a control only arms state or is a preview.
 
 The Context Lens header trigger is retained at every supported chat-pane
 width. At 420px and below the compact Goal projection yields the shared header
@@ -580,10 +578,9 @@ Presence:
   start" and an unmet dependency reads "starts after …", never "Blocked") and
   its clock or "not started", and it says "helpers", never "participants".
   Clicking a row pins Activity on that run. Activity Detail shows a short
-  summary of the run (its title, sentence, current phase, a compact team list
-  with a stand-in sentence only where requested and effective differ, and Open
-  Panel · Message), with the full record one click away in the run view
-  (provisional pending owner decision E-04). (re-check at closing)
+  summary of the run (its title, sentence, current phase, a compact team list,
+  and Open Panel · Message), with the full record one click away in the run
+  view.
 - **Changes** — `changes[].threadId` matches. `agent-work` file edits without
   a change row do not count.
 - **Artifacts** — `artifacts[].threadId` matches, or the transcript opened
@@ -952,9 +949,9 @@ fourth regular depth and no Light / Balanced / Comprehensive labelling. Every
 sidecar choice only arms state for the next composer send. It sets the mode and
 its strategy (`set-plan-strategy`, `set-review-strategy`), closes the menu and
 opens nothing. Choosing BrainStorm, Single Agent or Multi-Pass Review does not
-open a configuration sheet today: those sheets open from the wand's Multi-Agent
-Workflows rows (BrainStorm…, Review…) (provisional pending owner decision
-E-01).
+open a configuration sheet in this concept: those sheets open from the wand's
+Multi-Agent Workflows rows (BrainStorm…, Review…). When the chat moves into
+PMConcept7, the Mode menu opens these sheets instead.
 
 `Debug` is a primary mode, not a wand toggle. **Context Lens stays a standalone
 header control and is never a wand item.**
@@ -1134,20 +1131,23 @@ Each module supplies only its own content.
   tall. Body and helper text keep a line height of at least 1.45 and headlines
   at least 1.25. When space runs short, text wraps, truncates with an ellipsis,
   or a secondary element drops; padding and gaps never compress.
-- **Height budgets in the chat.** A run card is at most 340px live and 360px
-  when it needs you or has finished (400px at the narrowest card tier), and a
+- **Height budgets in the chat.** At the default card width a run card is at
+  most 346px live, 190px while waiting to start, and 360px when it needs you or
+  has finished (360px live and 400px otherwise at the narrowest tier), and a
   receipt is one 44px line. A reply that changed files, took a note and used a
   rule grows by at most 40px. The 500ms tick only changes text inside fixed
   boxes; heights change only at state boundaries.
 - **Surfaces and motion.** Sheets are opaque in-window modal surfaces over a
-  flat scrim; nothing uses a backdrop blur or an element blur (provisional
-  pending owner decision E-24). Motion is only transform, opacity, height and
-  clip, and every draw-on is a clip reveal. Motion is the same in every theme
-  except retro, which runs at 0.6× the durations with no scale on sheet entry
-  (provisional pending owner decision E-22). Under reduced motion every change
-  is its instant end state, never a fade (provisional pending owner decision
-  E-25). A closing sheet stops taking input at once; its exit plays on a
-  non-interactive copy.
+  flat scrim; nothing uses a backdrop blur or an element blur, because Slint
+  (checked at 1.18.1) still cannot draw a backdrop blur. Motion is only
+  transform, opacity, height and clip, and every draw-on is a clip reveal.
+  Motion personality belongs to the theme family: every duration and easing is
+  a foundation token (`--pmx-t-*`, `--pmx-ease-*`) that a theme family can
+  override, and no module keeps its own timing. Today retro is the one family
+  with its own values (0.6× the durations and no scale on sheet entry); basic,
+  glass and friendly share the base timing. Under reduced motion every change is its instant end
+  state, never a fade. A closing sheet stops taking input at once; its exit
+  plays on a non-interactive copy.
 - **Keyboard and focus.** A sheet opens with focus in its hero field.
   Ctrl/Cmd+Enter fires the primary, except that a warm (destructive) primary
   such as "Revert 3 files" fires only when it has focus itself. Escape follows
@@ -1172,11 +1172,10 @@ one sheet frame, one card, one run view, one Activity projection and one
 composer-target path. Each kind supplies its own parts to that frame
 (`PM56_<KIND>.sheetParts`, `cardParts`, `viewParts`); a kind never draws a
 second frame. On screen the people in a run are **helpers** (**reviewers** in
-Review); the data keeps `participant` (provisional pending owner decision
-E-06).
+Review); the data keeps `participant`.
 
 **Where they start.** The wand's Multi-Agent Workflows rows open Crew…, Chat
-Room…, Review… and BrainStorm… (provisional pending owner decision E-01). A
+Room…, Review… and BrainStorm…. A
 natural-language request for a BrainStorm opens the BrainStorm sheet with the
 request prefilled word for word, and Cancel puts that text back in the
 composer. A card's More › Change setup… / Run again with changes…, Build At ›
@@ -1191,30 +1190,35 @@ the same sheet.
   where the plan is the job.
 - The plate over the roster. Each helper row has its job, its own model
   trigger, its own Persona trigger, Copy and Remove; a removed row can be
-  brought back for 6 s. **Requested versus effective** identity is always
-  disclosed: a stand-in is named in a sentence under its row ("Qwen 3.8 stands
-  in for Qwen 3.8 Coder (offline)") before Start, it is allowed only when the
-  sheet's "If a model isn't available" row permits it, and otherwise Start is
-  refused (provisional pending owner decision E-03). Nothing is ever
-  substituted silently.
+  brought back for 6 s. **No model ever stands in for another.** When a chosen
+  model is offline (a helper's, a specialist's, the Moderator's or the plan
+  writer's), its row says so under its controls ("{Model} is offline right
+  now. Pick another model to start." with a [Fix] that opens that row's model
+  picker) and Start is disabled with the same sentence until you pick another
+  model; Advanced shows "If a model is offline · Start waits until you pick
+  another model." instead of a choice. Scheduled starts and Crew Auto rules
+  refuse the same way.
 - The roster foot: **Add a helper**, with a suggested next role, and **Start
   from a team ▾** (the kind's team presets, with "Your default" first when one
-  is saved). Review has no Start from a team (provisional pending owner decision
-  E-37).
+  is saved). Review's presets are Careful review (Security, Bugs, Tests), Quick
+  check (one reviewer, Single Agent) and Deep audit (5 reviewers, one of them a
+  Critical Advisor).
 - **Add specialists** (Crew, Chat Room and BrainStorm; never Review):
   **Wonderer** is a built-in Persona plus a reusable methodology skill that
   brings ideas from other fields, kept labelled as hypotheses until researched;
   it doesn't vote. **Grill Me** is a skill that asks you the key decisions
-  first, with suggested answers (provisional pending owner decision E-35). Both
+  first, with suggested answers. Both
   are off by default, are added on top of the helpers and never replace one,
   and each shows its own model trigger; they join the run on those visible
   models.
 - Every collaboration Advanced page starts with the same rows, in this order:
   Time and cost limit · Token limit · What helpers can see · Tools they can use
-  · If a helper gets stuck · If a model isn't available · Keep the full record
+  · If a helper gets stuck · If a model is offline · Keep the full record
   for · How it finishes · Permissions (a sentence, not a setting: helpers can't
-  do more than this chat). The kind's own rows follow. The limits and estimates
-  are concept numbers.
+  do more than this chat). The kind's own rows follow. A run's own time and
+  cost limit is used instead of your general run limit ("This Crew stops after
+  45 minutes or $6.00, whichever comes first."), and everything done before it
+  stops is kept. The limits and estimates are concept numbers.
 - Every choice reads one option catalog. "One of the helpers" as the Crew's
   Coordinator is listed disabled with "Not available in this preview yet."
 - The foot: **Save as my default**, the read-back, the estimate, Cancel and
@@ -1230,31 +1234,32 @@ the same sheet.
   being a recording.
 - The sheet is a transaction: before a successful Start there is no run,
   provider call, usage, event, card or settings write, and open → configure →
-  cancel changes nothing. Only after the commit succeeds does the preview fly
-  onto the new card (when you are at the bottom of the chat) and focus move to
-  the composer. (re-check at closing)
+  cancel changes nothing. Only after the commit succeeds does the sheet's
+  preview fly onto the new card, or toward the dock and fade when the card is
+  off-screen; the chat first makes room only for a reader already at the
+  bottom. When there is no preview to fly (a narrow window hides it) or motion
+  is reduced, the card simply appears. Focus then moves to the composer.
 
 **The run card in the chat.** One card per run, on one node, in one of eight
 densities: `starting` (Start accepted, no participant event yet; in this
 concept only recorded runs reach it), `waiting` (only before any participant
 attempt has started), `live` (the newest live run in the thread), `collapsed`
-(older live runs, or collapsed by you), `attention` (needs you), `result` (just
-finished, until your next message), `failed`, and `receipt` (one line once the
-chat moves on). Every surface that shows or acts on a run's state (the card,
+(older live runs, or collapsed by you), `attention` (needs you, or your move),
+`result` (just finished, until your next message or a newer run), `failed`, and
+`receipt` (one line once the chat moves on). Every surface that shows or acts on a run's state (the card,
 the dock, the receipt, Activity's counts and rows, the run view, the composer
 destination, and which of Pause and Cancel is offered) reads it from one place,
 never from the raw record status. A card turns to `result` only on a clean
-completion, and nothing on a cancelled card changes again. (re-check at
-closing)
+completion, and nothing on a cancelled card changes again.
 - The card shows the kind mark and word, the card title, the cast (the lead
   first) and a clock; then one true sentence (status word · reason); a track of
   the kind's phases; at most three lanes plus "+N more · Show all"; a meta line;
   and the actions. A lane gives a verb plus either the helper's current words
-  (one line, in quotation marks, streaming live; provisional pending owner
-  decision E-31) or what it waits for. Raw tool output is never quoted as
-  speech. An unmet dependency reads "starts after …", never "blocked". The
-  Coordinator's mark uses the text colour, not the accent (provisional pending
-  owner decision E-17). (re-check at closing)
+  (one line, in quotation marks, streaming live through the same pacing as
+  assistant replies; the finished message then lands once, whole) or what it
+  waits for. Raw tool output is never quoted as speech. An unmet dependency
+  reads "starts after …", never "blocked". The Coordinator's mark uses the text
+  colour, not the accent.
 - A run started from the wand with no recorded input is born `waiting` and
   stays there: "**Waiting to start** · Nothing runs by itself in this preview,
   so the Coordinator hasn't split the job yet." (each kind supplies its own
@@ -1262,104 +1267,116 @@ closing)
   clock and no motion loop. Its actions are [Watch a recorded example], which
   opens the kind's recorded example in a new chat and leaves your setup on this
   card, Open Panel, the expand chevron, and More (Change setup…, Cancel).
-  (re-check at closing)
 - **Needs you** is the one loud moment: a warm decision row says who needs what
-  and who is not blocked ("**CSV specialist needs your OK** to restore a
-  snapshot. Only this helper waits; the others keep working." [Allow once]
-  [Don't allow] [Details]). An accent decision row is "your move" when nothing
-  is wrong (a Chat Room round ended; a BrainStorm is ready to write the plan).
-  (re-check at closing)
+  and who is not blocked ("**CSV specialist needs your OK** to go on. Only
+  this helper waits; the others keep working." [Allow once] [Don't allow]
+  [Details]). An accent decision row is "your move" when nothing is wrong (a
+  Chat Room round ended; a BrainStorm is ready to write the plan).
 - Failures and stops offer only the owner's allowed actions and use the canon
-  verbs **Retry** and **Recover** (provisional pending owner decision E-38): "**1
-  helper didn't finish.** …" [Retry] [Use another model] [Continue without
-  it]; a Coordinator or Moderator that stopped reads "**Needs attention** · …";
-  "**Stopped at your limit** ($6.00 or 45 min) · everything so far is kept."
-  (warm, not a failure); "Cancelled · 2 of 3 parts done · everything so far is
-  kept."; and "Paused · nothing is lost." An accepted partial result adds
-  "Degraded result: …" to its figures. No findings, no promotions and nothing
-  to fix are success faces. (re-check at closing)
+  verbs **Retry** and **Recover**, never "Try again": "**1 helper didn't
+  finish.** {Role} ran out of time." with [Retry] among the kind's actions; a
+  Review that lost a reviewer reads "Only 2 of 3 reviewers finished (…). This
+  is a partial review." [Retry] [Continue with 2] [Cancel]; a Coordinator or
+  Moderator that stopped reads "**Needs attention** · …"; "**Stopped at your
+  limit** ($6.00 or 45 min) · everything so far is kept." (warm, not a
+  failure); "Cancelled · 2 of 3 parts done · everything so far is kept."; and
+  "Paused · nothing is lost." An accepted partial review adds "Degraded result:
+  2 of 3 reviewers finished" to its figures. No findings, no promotions and
+  nothing to fix are success faces.
 - The result face leads with the answer: a headline, a figures sentence, one
   output or the kind's board, and who did what; then **Open Panel**, the kind's
   follow-ons, Message and More. On a finished run, Message sits in More,
   disabled with "This {Kind} has finished, so it can't take messages. Ask the
   assistant instead." A collapsed or narrow card may keep Open Panel, Message
-  and More behind Expand and the helper count in a hover card (provisional
-  pending owner decision E-05). (re-check at closing)
+  and More behind Expand and the helper count in a hover card.
 - **One control set per run.** While a run's view is the active editor tab, the
   card's follow-on controls and finding ticks are replaced by one line
   ("Choosing in the report beside the chat" / "Deciding in the panel beside the
   chat") and come back when the view closes. A decision from an approval owner
-  stays in the card. (re-check at closing)
+  stays in the card.
 - More holds Pause or Resume (only when valid), Cancel {Kind} with an in-place
   confirm ("Everything so far is kept. [Cancel Crew] [Keep going]"), Change
-  setup… or Run again with changes…, Download transcript (disabled with "Not
-  available in this preview.") and Technical details. (re-check at closing)
+  setup… or Run again with changes…, Download transcript once the run has
+  started (disabled with "Not available in this preview.") and Technical
+  details.
 - **Receipts** share one grammar: "Crew · Export ready: all 3 parts checked ·
   8m 40s · $0.92 · Open Panel". The chevron expands a receipt back to its result
-  face. (re-check at closing)
+  face.
 
 **The dock** (up to three lines above the composer, only for runs whose cards
 are off-screen, or only partly visible when they need you): needs you → your
 move → live runs, newest first → scheduling's "Coming up"; a fourth item
-becomes "and 2 more · Activity". Permission decisions are never taken from the
-dock; BrainStorm questions may be ("Answer now"). (re-check at closing)
+becomes "and 2 more · Activity". A run waiting to start and a finished run get
+no line. Each line has one control, [Review] on a needs-you line and [Show]
+otherwise, which brings its card into view; no decision is ever taken from the
+dock.
 
 **The run view.** Open Panel opens the run's full record in the editor pane
 beside the chat, never as a centred modal: Summary, Report or How they decided,
 then Conversation, Team and Cost (a Chat Room opens its room document with
 Discussion, Team and Cost). A lane, team row or speaker name opens that
 helper's own transcript. **Message** targets the ordinary composer, whose
-destination reads "{Kind} · {card title} · N helpers", and the message you
-send shows "Sent to {Kind} · {card title}" in its meta (a room adds " · 3
-replies"; there is no "Read"). (re-check at closing)
+destination reads "{Kind} · {card title}" with "N helpers" beside it, and the
+message you send shows "Sent to {Kind} · {card title}" in its meta (a room adds
+" · 3 replies" once they answer; there is no "Read").
 
 **Crew.** A Coordinator (this chat's assistant by default; "A separate AI"
 adds one more AI) splits the job into parts, hands them out, and accepts a part
 only once its expected output is verified. Each part's "Done when" and "Starts
-after" come from the Coordinator's split, not from the sheet (provisional
-pending owner decision E-14). Working at the same time is clamped by the plan's
-capacity and the card says so ("2 at a time (you asked for 3)"). After a
-recorded Crew finishes, the assistant's summary reply appears under the card
-labelled "Recorded example · no AI cost"; a real run never gets an invented
-reply, and "Changed N files · Revert" appears only when Revert holds a manifest
-for that turn. Crew stays **distinct from Subagents**. (re-check at closing)
+after" come from the Coordinator's split, not from the sheet. Working at the
+same time is clamped by the plan's capacity and the card says so ("2 at a time
+(you asked for 3)"; a Crew Auto run says "rules allow 3"). After a recorded
+Crew finishes, the assistant's summary reply appears under the card labelled
+"Recorded example · no AI cost"; a real run never gets an invented reply, and
+"Changed N files · Revert" appears only when Revert holds a manifest for that
+turn. Crew stays **distinct from Subagents**.
 
-**Crew Auto.** A checkable wand item plus its own sheet, reached from **Crew
-Auto settings…** (the wand row and the Crew sheet). From the Crew sheet the two
-sheets swap: Back to Crew, Cancel, Escape and a successful commit restore the
-Crew draft, while × and the scrim close both. Nothing starts from this sheet. It
-sets when Puppet Master may bring in a Crew by itself: big jobs only, or medium
-and big; only when the job splits into 2 or more (or 3 or more) parts; which
-team, at most 4 helpers with no specialists; and how many work at once. The cap
-of 4 is never raised: a larger team is refused with "Crew Auto teams have at
-most 4 helpers. Remove one to turn it on." "How it would decide" re-evaluates
-four sample requests live from the draft. Turning it on commits the rules as
-version N, adds one line to the chat ("Crew Auto is on · big jobs that split
-into 2+ parts · rules v1 · Change"; provisional pending owner decision E-15)
-and creates no card; the wand's check appears only after that commit succeeds.
-Crew Auto cannot start without committed rules and cannot widen authority. A
-declined evaluation creates no card; an admitted one is an ordinary Crew card
-whose meta begins "Started by Crew Auto: …". (re-check at closing)
-
-**Allow Crews in this chat** (the legacy wand row, On / Off) gates nothing:
-both options carry "Preview: shown, not enforced yet.", and turning it On opens
-nothing (provisional pending owner decision E-02).
+**Crew Auto** is the assistant's permission to bring in a Crew by itself when
+a job needs one (you can still start a Crew yourself). It is on by default for
+the project, with a default set of rules (rules v1). The wand's checkable Crew Auto item shows this chat's answer ("The
+assistant may call a Crew when a job needs one" / "Off in this chat: no Crew
+starts by itself"), and toggling it changes this chat only; the project's rules
+stay as they are. The legacy wand row **Allow Crews in this chat** (On / Off)
+sets the same per-chat answer. The Crew sheet's promise line reads "Crew Auto
+is on: big jobs may get a Crew. Settings…". Crew Auto's own sheet is reached
+from **Crew Auto settings…** (the wand row and that Settings… link). From the
+Crew sheet the two sheets swap: Back to Crew, Cancel, Escape and a successful
+commit restore the Crew draft, while × and the scrim close both. Nothing starts
+from this sheet. It sets when the assistant may bring in a Crew: big jobs only,
+or medium and big; only when the job splits into 2 or more (or 3 or more)
+parts; which team, at most 4 helpers with no specialists; and how many work at
+once. The cap of 4 is never raised: a larger team is refused with "Crew Auto
+teams have at most 4 helpers. Remove one to turn it on." "How it would decide"
+re-evaluates four sample requests live from the draft. While Crew Auto is on,
+the primary reads "Save Crew Auto rules" ("Saving changes the rules for every
+chat."). Saving commits the rules as the next version, adds one line to the
+chat ("Crew Auto is on · big jobs that split into 2+ parts · rules v2 ·
+Change", or "Crew Auto rules saved · off in this chat · …" when this chat's
+answer is off) and creates no card. Crew Auto never runs without committed
+rules and cannot widen authority. A declined evaluation creates no card; an
+admitted one is an ordinary Crew card whose meta begins "Started by Crew Auto:
+…".
 
 **Chat Room.** A **Moderator** row is pinned first (fixed role, its own model
 and Persona; it picks who speaks next and sums up each round), then four
 helpers by default, "Who talks when" (Moderator guides / Take turns / Open
 discussion / One answer each) and 1-20 rounds, default 5. The card shows the
 current speaker, who is up next and the previous turn folded, with "Round 2 of
-5". The end of a round is an accent "Your move." with [Next Round] [Summarize
-Now] [Message]; End discussion is in More. A message sent while a round is
-still going is refused with "This round is still going. You can send when it
-ends." in the card's meta, and the text stays in the composer (provisional
-pending owner decision E-18). The summary board is What we agreed · Still
-debated · Open questions. Discussion creates no To-Do, Plan or Goal without an
-explicit **Promote to** To-Do · Plan · Goal (three text buttons; Goal is
-disabled on the protocol path with "Can't make a Goal from a room yet"). A room
-without a recording is born waiting like every other kind. (re-check at
-closing)
+5". Before the first round and at the end of each round it is your move: an
+accent decision row ("**Round 2 done.** Your move." [Next Round] [Summarize
+Now]; once summed up, End discussion becomes the primary). A message sent while
+a round is still going works like the main chat's queue: it waits, at most two
+at a time, in "Queued" rows above the composer (Edit · Send now), goes to the
+room when the round ends, and the next round answers it; the card's meta says
+"1 message queued for the next round". **Send now** steers the current round
+without interrupting the helper who is speaking: the next helper to speak reads
+it ("reads your note on their turn"). When the room can no longer take it
+(ended, last round used), the row reads "Not sent" with the reason. The room
+document lists queued messages as words only. The result shows the Moderator's
+summary. Discussion creates no To-Do, Plan or Goal without an explicit
+**Promote to** To-Do · Plan · Goal (three text buttons; Goal is disabled with
+"Can't make a Goal from a room yet"). A room without a recording is born
+waiting like every other kind.
 
 **BrainStorm.** The third Deep Plan choice and a strict superset of
 Exhaustive. Its phases are Understand the ask · Draft ideas alone · Line up the
@@ -1372,18 +1389,18 @@ checked against evidence (a research tool install is a warm decision); then
 they vote. Evidence decides and votes inform it, and a rule always wins: an
 option that breaks a must-have is ruled out whatever the votes. Dissent is kept
 word for word, and Wonderer abstains and leaves the vote count. A tie is a warm
-decision. **Write the plan** (canon: Synthesize; provisional pending owner
-decision E-38) produces exactly **one** Deep Plan document, whose Plan card
-appears directly beneath; the BrainStorm card stays. "Who writes the plan"
-(the synthesis model) is its own Advanced row. (re-check at closing)
+decision. **Write the plan** (the Plans' new label for Synthesize) produces
+exactly **one** Deep Plan document, whose Plan card appears directly beneath;
+the BrainStorm card stays. "Who writes the plan" (the synthesis model) is its
+own Advanced row.
 
 **Review.** Single Agent, or Multi-Pass with **1–8 reviewers, default 3**
 (the count and the approach stay in sync: 1 is Single Agent), repeated models
 allowed, each in its own fresh session; no specialists. You pick what to
 review (your latest changes, the last answer, the last agent run, a Plan, file
 changes, artifacts or a task result); a **frozen** snapshot is taken at Start
-(shown as "snapshot"; canon: frozen target pack; provisional pending owner
-decision E-38), and every reviewer sees that exact version. Initial passes are
+(shown as "snapshot"; the data keeps "frozen target pack"), and every reviewer
+sees that exact version. Initial passes are
 **blind and concurrent**. Findings are normalized, then exchanged for
 corroboration and disagreement. A target that changes mid-run is a warm
 decision, and notes about the new version are set aside, never mixed in. Review
@@ -1391,10 +1408,10 @@ is **read-only and never auto-repairs**. The result reads "2 to fix · 1 unsure
 · nothing was changed"; only confirmed findings are ticked and only they can
 become To-Dos through **Create To-Dos (N)**. **Send Findings To Agent** writes a
 fix request into your empty message box and never sends by itself; if the box
-already has text it refuses, and the finding lineage travels in metadata, not
-in the text (provisional pending owner decision E-07). A Single Agent result
-says "Single pass: one reviewer, so nothing was double-checked." and shows no
-agreement words. (re-check at closing)
+already has text it refuses ("Your message box already has text. Send or clear
+it first."), and the finding lineage travels in metadata, not in the text. A
+Single Agent result says "Single pass: one reviewer, so nothing was
+double-checked." and shows no agreement words.
 
 ## Back Seat Driver
 
@@ -1417,9 +1434,8 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   note names the version it was checked against ("Checked against the latest
   work (v2)", or "Checked against an earlier version (v2)" once the work has
   moved on). A critical that could not be re-checked before the assistant
-  finished shows a dashed outline and "**Stale · not re-checked (v3):** this
-  was about an earlier version, and it wasn't re-checked before the assistant
-  finished."
+  finished shows a dashed outline and "**About an earlier version (v3):** not
+  re-checked before the assistant finished."
 - **The sheet** (standard). The cue sheet plate draws a typical task as six
   steps, with hollow cues where the current settings check quietly and a filled
   cue where it speaks up, hanging a miniature margin note; the catch-up wait
@@ -1478,17 +1494,18 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   - A **safety pause**: "Paused for safety: its last two answers weren't
     usable. [Resume] [Change model]"; Resume saves the same settings again.
   - `resume_only`: "Will be shared with the assistant when you resume."
-- **Status words** come from one table and print the canon Context word first,
-  then a plain helper, in the eye's hover card, the Context row and Context
-  Details alike: **Off** · **Caught up** · checked 18 s ago (only when a review
-  completed and the cursor converged) · **Idle** · watching, nothing to check
-  yet · **Reviewing** · checking the latest work… · **Catching up** · 3 updates
-  behind · **Finding held** · double-checking 1 thing (Context row and Details
-  only, never the eye or the chat) · **Advice delivered** · 1 note in this chat
-  · **Quota paused** · usage limit reached; your main work continues ·
-  **Failed** · couldn't check this time · **Unavailable** · stopped for this
-  run. A pause you asked for prints "**Unavailable** · paused by you"
-  (provisional pending owner decision E-10).
+- **Status words** come from one table and are plain words only (the Plans'
+  status words change to match; each row still maps onto one of canon's nine
+  Context states in data), in the eye's hover card, the Context row and Context
+  Details alike: Off · Up to date · checked 18 s ago (only when a review
+  completed and the cursor converged) · Watching · nothing to check yet ·
+  Checking the latest work… · 3 updates behind · Getting up to speed · Holding
+  a moment for your advisor · up to 30 s · Double-checking 1 thing (Context row
+  and Details only, never the eye or the chat) · 1 note in this chat · Paused:
+  usage limit reached · your main work continues · Couldn't check this time
+  (took too long) · Paused for safety · its last two answers weren't usable ·
+  Couldn't reach its model this time · {Model} isn't available right now ·
+  Paused by you · Stopped for this run.
 - It runs in its own isolated context and tool session over bounded deltas, with
   a cursor, cooldown, catch-up, quarantine and self-compaction that never
   touches the user's conversation.
@@ -1502,9 +1519,8 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   separate from your chat's usage"), never folded into the primary run. Usage
   and the advisor transcript open as compact sheets with a readable summary
   first.
-- **Dismiss** and **Don't wait** are new command requests
-  (`cmd.bsd.finding.dismiss`, `cmd.bsd.catch_up.release`; provisional pending
-  owner decision E-32).
+- **Dismiss** and **Don't wait** are new commands
+  (`cmd.bsd.finding.dismiss`, `cmd.bsd.catch_up.release`).
 
 ## Scheduling, execution windows, and quota resume
 
@@ -1564,10 +1580,8 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   receipts ("**Sent** · 10:00 PM · you scheduled this on Sep 2 · Go to
   message"), and the real sent message carries the tick "Sent on schedule".
   Scheduled and Held are Time family with no stub; the other four are Ledger.
-  (re-check at closing)
 - **Dock lines**: "1 scheduled message needs you · [Show]", and at the lowest
-  priority "Coming up · Next: 10:00 PM · '…' · +1 more · [Show]". (re-check at
-  closing)
+  priority "Coming up · Next: 10:00 PM · '…' · +1 more · [Show]".
 - **The Plan card's schedule line** sits beside the Build control and never
   replaces its `Building…`. Each secondary state leads with its canon token:
   "Builds weeknights 10 PM–2 AM · next: tonight" with a night ribbon; "Building
@@ -1578,7 +1592,7 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   countdown when the reset is unknown; and "**Paused** · …" for a build you
   paused. The next morning one receipt sums up the night: "Overnight: built 2
   of 5 steps (10:00 PM–1:52 AM, paused safely) · sent 1 scheduled message · 1
-  message needs you · Open". (re-check at closing)
+  message needs you · Open".
 - **The Scheduled manager** (wide): the next 48 hours as a plate, where hovering
   a marker lights its row and hovering a row lights its marker; four tabs with
   their canonical labels (Scheduled Messages · Execution & Build Windows ·
@@ -1586,12 +1600,15 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   Needs you · Tonight · Tomorrow · Later · Past; search, status and sort on
   every list tab; each build slot with a mini week strip and a night journal;
   events as sentences; and a focused view of one record beside the agenda.
-  (re-check at closing)
 - **Manual pause / cancel / Stop always overrides** scheduled or quota
-  auto-resume, and the refusal is visible. "Pause all automations always wins"
-  names where the control lives, Scheduled › Resume & Safety Policy; in this
-  concept it is one read-only switch for all scheduling, while canon latches
-  each run separately (provisional pending owner decision E-19). Quota resume
+  auto-resume, and the refusal is visible. **Pause all automations** (Scheduled
+  › Resume & Safety Policy) is a real project-wide pause: it stops every
+  scheduled send and scheduled build in this project until you turn it back
+  on, only you can turn it off, and every held item names the pause as its
+  reason. Creating a schedule while it is on does not lift it: Schedule Message
+  and Build At say so in one line before Start ("Pause all automations is on, so
+  this will wait until you turn it off.") and the new item is created held.
+  Quota resume
   shows the reset time and its source ("from Anthropic", "your estimate", or
   no countdown when unknown), and it is changed only in the usage notice in
   the chat.
@@ -1619,8 +1636,8 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   **never switches Persona**. The wand, `/teach`, "remember that…" and a
   message's More › **Save as a rule…** all open the **Teach sheet**, prefilled
   with the rule text and its source ("From: your message at 10:31"); the
-  user's message stays in the chat as sent, and nothing is saved until Save
-  (provisional pending owner decision E-12). The sheet holds Your rule (with
+  user's message stays in the chat as sent, and nothing is saved until Save;
+  there is no separate capture card. The sheet holds Your rule (with
   "Try:" examples that fill it), a safety line that refuses anything that looks
   like a password or key, **Where it applies** as three nested rings (This
   thread ⊂ This project ⊂ Every project; Every project needs "It's safe to use
@@ -1629,16 +1646,21 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   similar rule exists, a word-by-word comparison with **Replace the old rule ·
   Keep both**, which Save waits for. The primary reads Save rule, Save and
   replace, or Save as version N. In correct mode an edit cannot widen where a
-  rule applies, and the old wording stays in history. (re-check at closing)
+  rule applies, and the old wording stays in history.
 - **Teach in the chat.** One receipt line per change ("**Rule saved:** 'Always
   use pnpm' · This project · locked · View", "Rule updated to v2", "**Rule
   turned off:** '…'"); consecutive saves coalesce ("3 rules saved · View").
-  Replies whose context included a rule carry the tick "**Used 1 of your
-  rules**", never "Followed": inclusion can be proven, obedience cannot
-  (provisional pending owner decision E-36). Turning a rule off is an inline
-  confirm, never a modal ("Stop using this rule? It stays in history, and older
-  versions don't come back."). Lock and Turn off are new command requests
-  (provisional pending owner decision E-32). (re-check at closing)
+  A reply the rule applied to carries "**Followed 1 of your rules**" only when
+  the rule's check passed on the finished reply. A rule has a check only when
+  its wording gives a clear test (a recorded example's rule, or "use X, not Y",
+  "prefer X over Y", "never use Y"); a rule without one never shows Followed or
+  Missed, and its version details in the Your rules document list "Its check"
+  as None.
+  A failed check shows "**Missed 1 of your rules**" with [Ask for a fix], which
+  puts a fix request in the message box and sends nothing. Turning a rule off is
+  an inline confirm, never a modal ("Stop using this rule? It stays in history,
+  and older versions don't come back."). Lock and Turn off are new commands, as
+  is Export memory (`cmd.chat.memory.export`).
 - **Teacher** is a distinct **Persona** that explains Puppet Master to the user.
   Teach and Teacher are never conflated; the Teach sheet's fine print says
   "Teach isn't the Teacher Persona."
@@ -1655,7 +1677,7 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   a locked rule is a warm decision, [Keep my rule] or [Edit my rule…]. **Also
   keep notes that aren't verified yet** is on by default: unverified notes are
   kept for you to review and never used. The notes document is titled "Notes it
-  took" (canon: Gist Review; provisional pending owner decision E-38).
+  took" (the data keeps "Gist Review").
 - **Memory in the chat** is never a card. A reply's meta row gets "Noted",
   which relaxes to the glyph alone after 3 s, and "Verified: label checks pass
   (3/3)" once a check proves it; a note going out of date makes no chat noise.
@@ -1663,20 +1685,26 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   your rule · 'Edit the source…' · it won't change unless you say so" [Review]).
 - **Automatic memory creation** stays active under the Assistant memory owner
   and is not replaced by Teach.
-- **ELI5** is an independent conversation override plus an application default —
-  not a Persona and not a mode. It changes presentation only and never mutates
-  artifacts. Its compact sheet shows two voices, Standard and Simple, over one
-  shared code line that never moves; a choice applies from the next message
-  ("Answers already here keep their wording"), and "Follow my usual setting"
-  removes this chat's override. **How it's decided** traces All chats (the
-  Explain Terms Everywhere setting, default Off) → Chats in this project (a
-  preview level) → This chat, and lights the level that decides (provisional
-  pending owner decision E-11). Replies answered in Simple carry the tick "Simple
-  explanation", and a divider marks each change ("Simple explanations from
-  here" / "Back to standard explanations"). Crew, Review and BrainStorm results
-  stay technical. The composer's ELI5 dot is a speech bubble ("Simple
-  explanations in this chat"). A retried answer does not yet re-resolve ELI5,
-  so it carries no tick (a request to the thread-operations owner).
+- **ELI5** has a project default that applies to every chat in the project,
+  and a chat's own choice overrides it for that chat only. It is not a Persona
+  and not a mode: it changes presentation only and never mutates artifacts.
+  Switching changes only replies written after the switch; it never re-sends or
+  rewrites an earlier reply ("Answers already here keep their wording"), so no
+  second response is needed. Its compact sheet shows two voices, Standard and
+  Simple, over one shared code line that never moves, and "Follow my usual
+  setting" removes this chat's override. **How it's decided** traces All chats
+  (the Explain Terms Everywhere setting, default Off) → Project default → This
+  chat, and lights the level that decides. Each finished assistant reply offers
+  **Explain this reply simply**, which writes one extra, simpler reply under it
+  only when asked (not while that reply is still streaming). Replies answered
+  in Simple carry the tick "Simple explanation", and a divider marks each change
+  ("Simple explanations from here" / "Back to standard explanations"). Crew,
+  Review and BrainStorm results stay technical. The composer's ELI5 dot is the
+  quick on/off for this chat, a speech bubble ("Simple explanations in this
+  chat"). Expert and simple versions of an explanation exist only in hover
+  cards and help, not in the helper lines. A retried answer does not yet
+  re-resolve ELI5, so it carries no tick (a request to the thread-operations
+  owner).
 - **Debug** is a primary mode with a full Investigation Context and
   verification / cleanup / recovery states.
 - **Revert Last Agent Edit** restores the exact latest eligible **whole-turn**
@@ -1697,31 +1725,29 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   `restore_recovery_required`). A conflict reads "**Couldn't revert:**
   checkout.js changed after the assistant's edit. Nothing was touched." with
   **Retry**; **Leave my files as they are** only dismisses it and writes no
-  outcome record; a recovery case offers **Recover** (provisional pending owner
-  decision E-38). No wording ever reads as a partial success. "See what
+  outcome record; a recovery case offers **Recover**. No wording ever reads as a partial success. "See what
   happened" opens the Revert document: a timeline and one diff per file with
   What the assistant changed · What revert put back · Now. The word is always
-  "Revert", never Undo, Rollback or Rewind. (re-check at closing)
+  "Revert", never Undo, Rollback or Rewind.
 - **New chat defaults** is a compact sheet with Done only: Explain simply in new
   chats (the ELI5 application default), Thought Stream (While it thinks / Always
   open), and Name new chats, each beside a live specimen. **Thought Stream
   drives nothing yet**: only its wand row, its sidecar and this sheet read it,
-  and the sheet says so. (re-check at closing)
+  and the sheet says so.
 - **Thread title policy** is Automatic (a fast, low-cost model that is ready
   now), Don't name chats, or an explicit model with its account. An unavailable
   model stays pickable, reads "Not available now · {reason}", and chats are not
   named until it is available again — it is never silently substituted. A
   manual rename **locks** the auto-title until an explicit **Name it for me**
-  (canon: Regenerate Title; provisional pending owner decision E-38), which sits
+  (the Plans' new label for Regenerate Title), which sits
   in the thread menu directly under Rename and is disabled with its reason when
   naming is off or unavailable. The header shows a shimmer on "New chat" while
   naming, a lock glyph once you named the chat (it opens the thread menu), and
   a warning glyph when naming is unavailable (it opens New chat defaults at
   Name new chats); a generated title arrives word by word. Naming outcomes read
-  Naming… · Named "{title}" · Not named: automatic naming is off · Couldn't
+  Naming… · Named '{title}' · Not named: automatic naming is off · Couldn't
   name: {model} isn't available · Waiting for your first message · Kept your
-  name: you renamed this chat. An untitled thread reads **New chat**. (re-check
-  at closing)
+  name: you renamed this chat. An untitled thread reads **New chat**.
 
 ## What is fixture and what is not
 
@@ -1740,9 +1766,10 @@ This is a concept lab, and the distinction is kept visible rather than blurred:
   recorded receipt shows a play-ring glyph at every width. Whether a record is
   recorded comes from one provenance marker per module (`recorded`, `wand` or
   `seed`), never from the shape of its data. A real run never carries a recorded
-  label, and recorded inputs are never written into user fields: a recorded
-  example copies its values into those fields as a prefill. (re-check at
-  closing)
+  label. A recorded example's own inputs are used only for its recorded run:
+  when it opens a sheet it copies its values into your fields as a visible
+  prefill, and a run started from those fields is recorded only because of the
+  marker, never because of what the fields hold.
 - Progress timers here are client-side. No client-local timer is authoritative
   in the runtime spec, and these are not either.
 - No required behaviour is represented by a toast alone.

@@ -9,7 +9,7 @@
 /* 8.1 card, below the L tier: Message leaves the action row before More would wrap under it, while the recorded
    example's Play the recording is there (Message stays in the chat's composer and the run view) */
 @container pmxrun (max-width: 519.98px){
-  .pmx-run[data-pmx-kind="crew"] .pmx-actions:has(> [data-action="crew-example-play"]) > [data-action="collab-message"]{display:none}
+  .pmx-run[data-pmx-kind="crew"] .pmx-actions:has(> [data-action="crew-example-play"]) > .pmx-act[data-action="collab-message"]{display:none}
   /* the receipt's short headline carries its time · cost, which R-21 takes off the line here */
   .pmx-receipt[data-pmx-kind="crew"] .crew-rc-l{display:none}
 }
@@ -30,11 +30,11 @@
 .message-chrome>.crew-summary-rec{flex:0 0 100%;order:-1;min-width:0;overflow:hidden}
 .message-chrome>.crew-summary-rec>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .message-chrome:has(> .crew-summary-rec){flex-wrap:wrap;row-gap:10px;opacity:1;visibility:visible;transform:none}
-.message-chrome:has(> .crew-summary-rec) > :not(.crew-summary-rec){opacity:0;visibility:hidden;transition:opacity var(--pmx-t-fade) linear,visibility 0s linear var(--pmx-t-fade)}
-:is(.message:hover, .message:focus-within, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .crew-summary-rec) > :not(.crew-summary-rec),
-.message-chrome.is-overflow-open:has(> .crew-summary-rec) > :not(.crew-summary-rec){opacity:1;visibility:visible;transition:opacity var(--pmx-t-fade) linear,visibility 0s}
-@media (max-width: 590px){ .message-chrome:has(> .crew-summary-rec) > :not(.crew-summary-rec){opacity:1;visibility:visible;transition:none} }
-@media (prefers-reduced-motion: reduce){ .message-chrome:has(> .crew-summary-rec) > *{transition:none !important} }
+.message-chrome:has(> .crew-summary-rec) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.crew-summary-rec){opacity:0;visibility:hidden;transition:opacity var(--pmx-t-fade) linear,visibility 0s linear var(--pmx-t-fade)}
+:is(.message:hover, .message:focus-within, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .crew-summary-rec) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.crew-summary-rec),
+.message-chrome.is-overflow-open:has(> .crew-summary-rec) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.crew-summary-rec){opacity:1;visibility:visible;transition:opacity var(--pmx-t-fade) linear,visibility 0s}
+@media (max-width: 590px){ .message-chrome:has(> .crew-summary-rec) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.crew-summary-rec){opacity:1;visibility:visible;transition:none} }
+@media (prefers-reduced-motion: reduce){ .message-chrome:has(> .crew-summary-rec) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick){transition:none !important} }
 
 /* 7.13: the legacy crew Activity domain in the collaboration grammar (hover rows, Detail body) */
 .ab-card .pmx-crew-abrow .pmx-crew-abmark{flex:none;display:inline-flex;color:var(--muted);align-self:flex-start;margin-top:2px}

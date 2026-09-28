@@ -149,11 +149,14 @@
    const ev=(f.evidence||[]).map(e=>'<li>'+evidenceSay(c,e)+'</li>').join('');
    const hist=(f.history||[]).map(h=>'<li><span class="pmx-bsd-v">v'+c.esc(h.generation)+'</span>'+c.esc(historySay(h.what))+'</li>').join('');
    body='<div class="pmx-bsd-why"><div class="pmx-bsd-why-say">'+(window.PM56_SHELL.pmxMd?window.PM56_SHELL.pmxMd(String(f.detail||''),{mode:'full'}):'<p>'+c.esc(f.detail)+'</p>')+'</div>'+(ev?'<p class="pmx-bsd-sub">What it looked at</p><ul class="pmx-bsd-list">'+ev+'</ul>':'')+(hist?'<p class="pmx-bsd-sub">What happened</p><ol class="pmx-bsd-list pmx-bsd-hist">'+hist+'</ol>':'')+
-    '<details class="pmx-bsd-raw" data-k="bsd12-raw:'+fid+'"'+opened('bsd12-raw:'+f.id)+'><summary>'+chev()+'<span>Show raw data</span></summary><pre>'+c.esc(JSON.stringify({evidence:f.evidence,history:f.history,raisedAgainst:f.raisedAgainst,latestChecked:f.latestChecked,status:f.status,channel:f.channel||null},null,2))+'</pre></details></div>';
+    rawDisc('bsd12-raw:'+f.id,'Show raw data','<pre>'+c.esc(JSON.stringify({evidence:f.evidence,history:f.history,raisedAgainst:f.raisedAgainst,latestChecked:f.latestChecked,status:f.status,channel:f.channel||null},null,2))+'</pre>')+'</div>';
   }
   return '<div class="pmx-bsd-frow" data-k="bsd12-f:'+fid+'" data-finding="'+fid+'" data-state="'+st.key+'"><p class="pmx-bsd-frow-head">'+sevHtml(f.severity)+'<span class="pmx-bsd-frow-title">'+c.esc(f.title)+'</span></p><p class="pmx-bsd-frow-state">'+st.html+'</p><div class="pmx-bsd-acts">'+why+dismiss+'</div>'+body+'</div>';
  }
  const chev=()=>window.PM56_SHELL.pmxGlyph('chevron-right',14,'pmx-bsd-chev');
+ /* raw data behind a pmxDisclosure (closing review: the hand-built summary cut its last glyph and had no side
+    padding, J-2 item 2); the key stays in data-k so `disclosures` remembers it and foldRaw folds it */
+ const rawDisc=(key,summary,body,cls)=>window.PM56_SHELL.pmxDisclosure({key,cls:'pmx-bsd-raw'+(cls?' '+cls:''),open:!!disclosures.get(key),summary,body});
  function disc(c,key,label,body){return '<details class="pmx-bsd-disc" data-k="'+c.esc(key)+'"'+opened(key)+'><summary>'+chev()+'<span>'+label+'</span></summary><div class="pmx-bsd-disc-body">'+body+'</div></details>';}
  function sessionBody(c,a,cur){
   const idn=a.identity||{},row=K.stageRow?K.stageRow(a.stage):a.stage,stage=row?STAGE_PLAIN[row]||row:'Ordinary work in this chat',id=a.threadId;
@@ -368,11 +371,11 @@
    body='<p class="pmx-bsd-say"><b>'+n+(n===1?' check':' checks')+'</b> · no real AI calls · cost not reported.</p><p class="pmx-bsd-fine">Watching '+c.esc(lowerFirst(row?STAGE_PLAIN[row]||row:'ordinary work'))+' with '+c.esc(advisorWords(a.identity))+'.</p>'+
     '<p class="pmx-bsd-fine">A check reads only what changed since the one before. When nothing changed it is skipped, and a skip makes no AI call.</p>'+
     (a.cycles.length?'<p class="pmx-bsd-sub">Each check</p><ol class="pmx-bsd-list pmx-bsd-cycles">'+a.cycles.map(cy=>'<li><span class="pmx-bsd-v">v'+c.esc(cy.generation)+'</span><span class="pmx-bsd-cy"><span>'+c.esc(cycleSay(cy))+'</span><span class="pmx-bsd-cyfine">'+c.esc(cycleFine(cy))+'</span></span></li>').join('')+'</ol>':'<p class="pmx-bsd-fine">No checks yet.</p>')+
-    '<details class="pmx-bsd-raw" data-k="bsd12-raw-usage:'+c.esc(tid)+'"'+opened('bsd12-raw-usage:'+tid)+'><summary>'+chev()+'<span>Show raw data</span></summary><pre>'+c.esc(JSON.stringify({assignmentId:a.id,stage:a.stage,identity:a.identity,usage:a.usage,cycles:a.cycles.map(cy=>({id:cy.id,status:cy.status,generation:cy.generation,epoch:cy.epoch,reason:cy.reason,latencyMs:cy.latencyMs}))},null,2))+'</pre></details>';
+    rawDisc('bsd12-raw-usage:'+tid,'Show raw data','<pre>'+c.esc(JSON.stringify({assignmentId:a.id,stage:a.stage,identity:a.identity,usage:a.usage,cycles:a.cycles.map(cy=>({id:cy.id,status:cy.status,generation:cy.generation,epoch:cy.epoch,reason:cy.reason,latencyMs:cy.latencyMs}))},null,2))+'</pre>');
   }else{
    lead=a.policy.retainTranscript?'What the advisor read at each check. Kept because Keep the advisor’s notes is on.':'Keeping the advisor’s notes is off.';
    body=!a.policy.retainTranscript?'<p class="pmx-bsd-say">Nothing was kept. Turn on Keep the advisor’s notes in Back Seat Driver to read what it looked at next time.</p>'
-    :a.transcript.length?a.transcript.map(x=>'<details class="pmx-bsd-raw pmx-bsd-tx" data-k="bsd12-tx:'+c.esc(x.cycleId)+'"'+opened('bsd12-tx:'+x.cycleId)+'><summary>'+chev()+'<span class="pmx-bsd-v">v'+c.esc(x.generation)+'</span><span>'+c.esc(cycleSay({status:x.outcome}))+' · read '+((n=>n+(n===1?' update':' updates'))(x.manifest&&x.manifest.delta?x.manifest.delta.length:0))+'</span></summary><pre>'+c.esc(JSON.stringify(x,null,2))+'</pre></details>').join('')
+    :a.transcript.length?'<div class="pmx-bsd-txs">'+a.transcript.map(x=>rawDisc('bsd12-tx:'+x.cycleId,'<span class="pmx-bsd-v">v'+c.esc(x.generation)+'</span><span class="pmx-bsd-txsay">'+c.esc(cycleSay({status:x.outcome}))+' · read '+((n=>n+(n===1?' update':' updates'))(x.manifest&&x.manifest.delta?x.manifest.delta.length:0))+'</span>','<pre>'+c.esc(JSON.stringify(x,null,2))+'</pre>','pmx-bsd-tx')).join('')+'</div>'
     :'<p class="pmx-bsd-say">Nothing kept yet. It keeps what it read at each check.</p>';
   }
   const foot=S.pmxFoot({cls:'pmx-bsd-rawfoot',readback:S.pmxReadback({key:'bsd-raw-rb',parts:[{html:'Preview only: no real AI calls.'}]}),

@@ -89,8 +89,21 @@
  const demoError=e=>DEMO_ERR[e]||DEMO_ERR.invalid_request;  /* an unmapped code reads as the plain sentence; the code stays in data-failure */
  const chev=()=>window.PM56_SHELL.pmxGlyph('chevron-right',14,'bsd12-chev');
  /* G-25: the guide above the composer is the one recorded-example look (pmxGuide), key and class kept */
+ /* closing review: the "resolves" guide follows the example step by step and ends on its result, because the result
+    is that nothing shows in the chat, which alone reads as nothing happened */
+ function guideStep(g){
+  if(g.flow==='survives')return 'Start the work, carry on without measuring, then ask the advisor for another look.';
+  const first='Start the work, record a measurement, then ask the advisor for another look.';
+  const a=B.engine.snapshot(g.threadId),fs=a?a.findings:[],p=g.primary;
+  if(p.status==='ready'||p.status==='cancelled')return first;
+  if(fs.some(f=>f.status==='cleared'))return 'Resolved before it reached you: the measurement settled it, so nothing was shown in the chat. Open its Details to see why.';
+  const held=fs.some(f=>f.status==='held');
+  if(held&&!p.measurements)return 'The advisor found something and is double-checking it before telling you. Now record a measurement.';
+  if(held)return 'Measurement recorded. Now ask the advisor for another look.';
+  return first;
+ }
  function guide(c){const g=get(c.thread.id);if(!g||!g.guide)return '';const t=c.esc(g.threadId);return window.PM56_SHELL.pmxGuide({key:'bsd12-guide:'+g.threadId,cls:'bsd12-guide',placement:'dock',
-  step:g.flow==='survives'?'Start the work, carry on without measuring, then ask the advisor for another look.':'Start the work, record a measurement, then ask the advisor for another look.',
+  step:guideStep(g),
   actions:[{action:'bsd12-open-work',attrs:'data-thread="'+t+'"',label:'Work and evidence'}],close:{action:'bsd12-close-guide',attrs:'data-thread="'+t+'"',label:'Close guide'}});}
  E.action('bsd12-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('bsd12-work',act);
   /* one editor tab for the recorded example: opening a run's work reuses the tab an earlier run opened (in its place),

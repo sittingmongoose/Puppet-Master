@@ -149,6 +149,10 @@ body.pmx-title-morphing .chat-title .pmx-chat-title-word{ display:inline-block; 
 /* and the title clips instead of showing an ellipsis after words that are not visible yet (a body class, set for the
    length of the morph by assistant-features.js) */
 body.pmx-title-morphing .chat-title .pmx-chat-title{ text-overflow:clip; }
+/* a narrow header (391 px with Activity open) cuts the NAME, never the status word: .chat-state is the title's flex
+   sibling, and styles.css's .chat-title span rule would otherwise shrink and ellipsize it too */
+.chat-header .chat-title .pmx-chat-title{ flex:0 1 auto; min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.chat-header .chat-title .chat-state{ flex:none; overflow:visible; text-overflow:clip; white-space:nowrap; }
 /* the mark (headerExtras) sits right after the title: the flex order moves it ahead of the header's tools */
 .chat-header > :is(.pmx-chat-title-mark, .pmx-chat-title-naming){ order:1; }
 .chat-header > .chat-head-spacer, .chat-header > .chat-head-spacer ~ :not(.pmx-chat-title-mark, .pmx-chat-title-naming){ order:2; }

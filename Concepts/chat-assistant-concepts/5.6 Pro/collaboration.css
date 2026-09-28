@@ -45,6 +45,14 @@
    "+N more · Show all" row for the others, as the S tier does (module-shell.css); Show all lists every lane */
 .pmx-run.collab-card[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > :is(.pmx-lane ~ .pmx-lane, .pmx-lanes-more:not(.pmx-lanes-more-s)) { display: none; }
 .pmx-run.collab-card[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s { display: flex; }
+/* OWNER ANSWER E-31 (DL-137): a helper's line streaming into its lane (collaboration.js laneLine2). The words wear the
+   lane's own line-2 face, the same as the whole quote that replaces them once every word is in, so the swap changes
+   nothing but the markup; the empty island before the first word keeps its line box and shows no bare quote marks. */
+.pmx-run .pmx-lane-l2 q[data-collab-stream] { font: inherit; color: inherit; quotes: "\201C" "\201D"; }
+.pmx-run .pmx-lane-l2 q[data-collab-stream]:empty { visibility: hidden; }
+/* a lane's line 2 is one line (7.2): inline code in a quoted helper line keeps the line's nowrap (the shared code
+   face is pre-wrap and breaks anywhere, which wrapped a long quote onto a second line under the next lane) */
+.pmx-run .pmx-lane-l2 code { white-space: nowrap; overflow-wrap: normal; }
 /* 7.2 S tier (260-360): "Who did what" in two columns of mark + full name (the run view has what each did); four
    narrow columns cut every name to a few letters */
 @container pmxrun (min-width: 260px) and (max-width: 359.98px) {
@@ -176,11 +184,13 @@
 .pmx-sheet .pmx-collab-pv{min-width:0;}
 .pmx-sheet .pmx-collab-pv .pmx-preview-card{top:calc((82px - var(--collab-pv-h, 120px) * var(--pmx-preview-scale, .62)) / 2);}
 .pmx-run.pmx-collab-pvrun[data-pmx-preview="1"]{height:var(--collab-pv-h, 120px);}
-/* the short-window home of the Crew Auto promise (under the roster): hidden while the side column shows it */
-.pmx-sheet .pmx-collab-auto-short{display:none;}
-.pmx-sheet .pmx-collab-auto-short > .pmx-promises{margin-top:12px;}
 @media (max-height: 820px){
-  .pmx-sheet .pmx-col--main > .pmx-collab-auto-short{display:block;flex:none;}
+  /* the Crew Auto promise (E-02, the sheet's way to its settings) keeps its place in the side column at every size, over
+     the foundation's short-window drop; with a specialist added the side column pays for it instead: the clamp
+     sentence under "Working at the same time" keeps one line (its whole sentence is the hover card's, and the stepper's
+     hatched cell and the read-back still say how many wait) */
+  .pmx-sheet.collab-configure .pmx-col--side .pmx-promise:is([data-pmx-part~="auto"], [data-pmx-affects~="auto"]){display:flex;}
+  .pmx-sheet.collab-configure .pmx-col--side:has(.pmx-spec[data-state="on"]) .pmx-ctl[data-k="ctl-parallel"] .pmx-ctl-copy .pmx-help:has(> .pmx-step-capsay){-webkit-line-clamp:1;}
   .pmx-sheet .pmx-collab-focus .pmx-check-copy small{display:none;}
   .pmx-sheet .pmx-col--side [data-k="q-count"] > .pmx-help{display:none;}
   .pmx-sheet .pmx-collab-count .shared-picker-copy small{display:none;}
@@ -201,3 +211,27 @@
   .pmx-sheet.collab-configure .pmx-col--side > .pmx-adv{min-height:32px;}
   .pmx-sheet .pmx-collab-decide .pmx-help{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 }
+/* the roster keeps one 28 px slot for a row's actions (Remove), and the persona column takes the other 38 px, so the
+   default personas ("Product Manager", "Critical Advisor") read whole at 1440 (design-lead ruling, FR 17). Copy sits
+   over the persona's trailing edge only while the pointer (or keyboard focus) is in that slot, and the persona trigger narrows
+   for that moment. The
+   total width of every variant is the foundation's (module-shell.css), only the last two columns trade. */
+body .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28px minmax(96px,1fr) 176px 178px 28px;}
+body[data-theme^="friendly"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28px minmax(90px,1fr) 188px 182px 28px;}
+body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 188px 188px 28px;}
+@media (max-width: 1167.98px){
+  body .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:24px minmax(80px,1fr) 172px 170px 28px;}
+  body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:24px minmax(64px,1fr) 176px 170px 28px;}
+}
+@media (max-width: 947.98px){
+  body .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28px minmax(96px,1fr) 176px 178px 28px;}
+  body[data-theme^="friendly"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28px minmax(90px,1fr) 188px 182px 28px;}
+  body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 188px 188px 28px;}
+}
+.pmx-sheet.collab-configure .pmx-row-acts{position:relative;justify-content:flex-end;}
+.pmx-sheet.collab-configure .pmx-row-acts > .pmx-row-act:first-child:not(:last-child){position:absolute;top:50%;right:38px;margin-top:-14px;background:var(--pmx-sheet-bg);visibility:hidden;}
+.pmx-sheet.collab-configure .pmx-row[data-state="error"] .pmx-row-acts > .pmx-row-act:first-child:not(:last-child){background:var(--pmx-card-warm);}
+.pmx-sheet.collab-configure .pmx-row-acts:is(:hover, :has(:focus-visible)) > .pmx-row-act:first-child:not(:last-child){visibility:visible;}
+/* while Copy shows, the persona trigger gives it the 38 px (its label ellipsizes for that moment), so no control sits
+   over another */
+.pmx-sheet.collab-configure .pmx-row:has(> .pmx-row-acts:is(:hover, :has(:focus-visible))) > .pmx-row-persona{margin-right:38px;}

@@ -88,11 +88,21 @@
  /* G-30, IMPACT A1-46: the parent assistant's ordinary reply under the card. Only a recorded run gets one (the
     recorded example's own summary, with the recorded tick in its meta row); a real run never gets an invented
     assistant turn. No Revert row: this example changes no project file, so REVERT has no manifest for it. */
+ /* M6 (5.5): the reply follows the result. It is held until beat 3's actions land: COLLAB switches the card to its
+    result face after the held beat (settleFace: stop + at-r1, 260 ms) and the actions enter 180 ms (the row token)
+    after that. Tokens, so retro's x0.6 applies; on PM56_PMX's timeline clock like COLLAB's hold; reduced motion
+    posts the reply at once, as the face switches at once. */
+ const summaryHeld=new Map();
+ function summaryDelay(){const P=X_();if(!P||P.reduced?.())return 0;const tk=(n,f)=>{const v=Number(P.t?.(n));return v>0?v:f;};return tk('stop',240)+tk('at-r1',20)+tk('row',180);}
+ function summaryLater(ms,fn){const P=X_();return P?.timeline?.after?P.timeline.after(ms,fn):setTimeout(fn,ms);}
  function parentSummary(r,output){
-  if(C.provenance?.(r.id)!=='recorded')return;
-  const c=E.ctx(),t=c.state.threads.find(t=>t.id===r.threadId);if(!t||t.messages.some(m=>m.crewSummaryOf===r.id))return;
-  c.appendMessage({id:'crew-summary-'+r.id,role:'assistant',type:'text',crewSummaryOf:r.id,recordedExample:true,time:new Date().toISOString(),
-   body:'The Crew finished '+output.filename+': '+output.rowCount+' rows in their original order, titles trimmed, and every comma and quote kept inside its cell. Each part was checked before it counted, and nothing in your project was changed.'},t);
+  if(C.provenance?.(r.id)!=='recorded'||summaryHeld.has(r.id))return;
+  const post=()=>{summaryHeld.delete(r.id);const c=E.ctx(),t=c.state.threads.find(t=>t.id===r.threadId);if(!t||t.messages.some(m=>m.crewSummaryOf===r.id)||!run(r.id))return;
+   c.appendMessage({id:'crew-summary-'+r.id,role:'assistant',type:'text',crewSummaryOf:r.id,recordedExample:true,time:new Date().toISOString(),
+    body:'The Crew finished '+output.filename+': '+output.rowCount+' rows in their original order, titles trimmed, and every comma and quote kept inside its cell. Each part was checked before it counted, and nothing in your project was changed.'},t);
+   c.renderApp();};
+  const ms=summaryDelay();if(!ms){post();return;}
+  summaryHeld.set(r.id,true);summaryLater(ms,post);
  }
  /* IMPACT A1-32 (canon CW:155): the Crew Auto member cap is configuration (4) and the roster never raises it. A
     team over the cap is refused with invalid_policy_roster, naming the row that pushes it over (COLLAB marks that
@@ -206,7 +216,7 @@
  E.chainAction('collab-crew-complete',(c,b)=>{if(!owns(b.dataset.run))return false;c.state.editorRevealed=true;c.openEditor('crew-work:'+b.dataset.run);return true;});
  E.action('crew-open-work',(c,b)=>{if(!owns(b.dataset.run))return true;c.closeDialog();c.closeMenu();c.state.editorRevealed=true;c.openEditor('crew-work:'+b.dataset.run);return true;});
  E.action('crew-export-result',(c,b)=>{const r=run(b.dataset.run),a=r?.artifacts.find(a=>a.id===r.crew?.summary?.artifactId);if(!a)return true;const url=URL.createObjectURL(new Blob([a.body],{type:'text/csv;charset=utf-8'})),link=document.createElement('a');link.href=url;link.download=a.label;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);c.renderApp();return true;});
- E.chainAction('reset-all',()=>{autoRequests.clear();checkedSeen.clear();retryPending.clear();return false;});
+ E.chainAction('reset-all',()=>{autoRequests.clear();checkedSeen.clear();retryPending.clear();summaryHeld.clear();return false;});
  /* Retry (7.6, IMPACT A1-34; cmd.collaboration.reconfigure): a new attempt for the failed slot (the Coordinator's, or
     the first failed helper's). It changes the run, so it lives here, above the presentation section. Nothing runs by
     itself in this preview, so the run then waits honestly instead of pretending the retry is working; retryPending
@@ -273,7 +283,7 @@
     S.pmxCtl({key:'ctl-coordinator',label:'Coordinator',helper:'Splits the job, hands out the parts, checks and combines the results.',affects:'lead',control:choiceTrigger(d,'coordinator')})+
     S.pmxCtl({key:'ctl-assign',label:'Who decides who does what',helper:'How parts are handed out.',affects:'assign',control:choiceTrigger(d,'assignmentStrategy',false)})+
     S.pmxCtl({key:'ctl-parallel',label:'Working at the same time',helper:'More at once is faster but uses your limits faster.',capSay:clamp?H(clamp.sheet):'',affects:'parallel',
-     control:S.pmxStepper({key:'step-parallel',input:{key:'cfg-parallelism',attrs:'data-collab-input="cfg-parallelism"'},value:asked,min:1,max:8,cap,unit:'at once',affects:'parallel'})}),
+     control:S.pmxStepper({key:'step-parallel',input:{key:'cfg-parallelism',attrs:'data-collab-input="cfg-parallelism"'},value:Math.min(asked,Math.max(1,Math.min(8,n))),min:1,max:Math.max(1,Math.min(8,n)),cap,unit:'at once',affects:'parallel'})}),
    promises:[
     {key:'pr-perm',glyph:'lock',strong:'Helpers can’t do more than this chat.',text:'',part:'permission'},
     autoOn?{key:'pr-auto',glyph:'kind-crew-auto',strong:'Crew Auto is on',text:'for '+H(aw.size)+'.',extra:settings,part:'auto'}

@@ -101,10 +101,17 @@
     if(state.capabilities.bsd==='Off') return '';
     return capDot('bsd',kindMark(state.capabilities.bsd==='On'?'bsd-on':'bsd-auto',16,'eye'),CAP_HOVER.bsd+' active');
   }
+  /* E-02: whether the assistant may call a Crew in this chat: Collaboration's answer (this chat's Crew Auto check over
+     the project default) when it is loaded, else the legacy flag */
+  function crewAutoHere(){
+    const C=window.PM56_COLLAB;
+    if(C&&typeof C.crewAutoAllowed==='function'){ try{ return !!C.crewAutoAllowed(state.selectedThread); }catch(err){} }
+    return !!state.capabilities.crew;
+  }
   function renderCapabilityDots(){
     const dots=[];
     if(state.capabilities.goal) dots.push(capDot('goal',icon('goal',16),CAP_HOVER.goal+' active'));
-    if(state.capabilities.crew) dots.push(capDot('crew',kindMark('crew',16,'users'),CAP_HOVER.crew+' active'));
+    if(crewAutoHere()) dots.push(capDot('crew',kindMark('crew',16,'users'),'Crew Auto on in this chat'));
     const bsd=bsdCapabilityDot(); if(bsd) dots.push(bsd);
     if(state.capabilities.context!=='Off') dots.push(capDot('context',icon('lens',16),CAP_HOVER.context+' active'));
     if(state.capabilities.eli5) dots.push(capDot('eli5',kindMark('eli5',16,'chat'),'Simple explanations in this chat'));
@@ -137,7 +144,9 @@
        Review submenu entry. `thoroughness` above is retained only so older fixtures and
        harnesses that read it keep working -- nothing new writes it. */
     planStrategy:'Standard', deepPlanStrategy:'Thorough', grillMe:false, reviewStrategy:'Multi-Pass Review',
-    capabilities:{goal:true,crew:false,bsd:'Auto',context:'Auto',eli5:false,thought:'Auto'},
+    /* E-02 (owner, 2026-09-27): crew is this chat's Crew Auto answer ("may the assistant call a Crew?"), on by default;
+       the project-wide Crew Auto setting decides the default (PM56_COLLAB.crewAutoAllowed reads both) */
+    capabilities:{goal:true,crew:true,bsd:'Auto',context:'Auto',eli5:false,thought:'Auto'},
     activityCaps:{goal:{},crew:{}},
     messageExpanded:{}, messageDetails:{}, copyFlashId:null, workTerminal:{}, work:{step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null}, works:{},
     decision:null, questionIndex:0, questions:clone(D.questions), questionQueue:2,
@@ -254,6 +263,9 @@
     /* Chat WOW: FIRST-non-empty (not concatenated) -- a module names the family
        of a message type it renders: prose|user|work|deliverable|needs|people|time|ledger. */
     'transcriptFamily',
+    /* closing (PREFS request): inside .chat-title, right after the title's words and before the status, for a mark that
+       belongs to the name (ELI5's lock / warning glyph); headerExtras still renders after the search button */
+    'headerTitleAfter',
     /* pmx foundation (F0b, DESIGN-SPEC 4.5): an OBSERVER slot, not markup. Each
        registrant is called as fn(ctx, info) with info.phase === ctx.phase:
          'overlay' after every renderOverlays() (info.patched: did the payload change),
@@ -890,7 +902,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="chat-header">
       <button class="icon-button" data-action="toggle-history"${hoverAttrs('open-history','Open thread history')}>${icon('history',14)}</button>
       <button class="icon-button" data-action="new-thread"${hoverAttrs('new-thread','Start a new thread')}>${icon('plus',16,'hh-plus-glyph')}</button>
-      <div class="chat-title" data-pmx-title-state="${titleState(t)}"><span class="pmx-chat-title">${titleWords(t)}</span><span class="chat-state"><i class="status-dot ${t.status}"></i>${esc(statusLabel(t.status))}</span></div>
+      <div class="chat-title" data-pmx-title-state="${titleState(t)}"><span class="pmx-chat-title">${titleWords(t)}</span>${extRender('headerTitleAfter',{thread:t})}<span class="chat-state"><i class="status-dot ${t.status}"></i>${esc(statusLabel(t.status))}</span></div>
       <span class="chat-head-spacer"></span>
       ${extRender('headerLeading',{thread:t})}
       <button class="icon-button" data-action="thread-search" data-menu-anchor="thread-search"${hoverAttrs('thread-search','Search this thread or every thread')}>${icon('search',14)}</button>
@@ -1593,7 +1605,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const subagents=(D.subagents||[]).filter(a=>a.parentThreadId===tid);
     const hasSubagents=subagents.length>0||msgs.some(m=>m.type==='live-agents');
     const hasCrewEvent=msgs.some(m=>m.type==='crew');
-    const hasCrew=hasCrewEvent||(!!state.capabilities.crew&&tid===state.selectedThread);
+    /* E-02: the crew capability is a permission (Crew Auto may call a Crew), on by default, so it no longer conjures an
+       empty Crew domain in every chat's Activity; a Crew shows there when one has run (COLLAB_DOMAINS below) */
+    const hasCrew=hasCrewEvent;
     /* F0b (j): no invented members. Real Crew runs are collab.crew (projected below by
        activityDefs); the legacy domain alone says "No Crews in this chat yet." */
     const crew=[];
@@ -2603,7 +2617,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      so a reader at the bottom is not pulled down with the shrink */
   let workShrinkFn=null;
   function onWorkShrink(fn){ workShrinkFn=typeof fn==='function'?fn:null; }
-  function workFlipped(flips){ const g=workFlipGrowth(flips); if(g<-4&&workShrinkFn){ try{ workShrinkFn(-g); }catch(e){} } return g; }
+  /* workFlipGrowth returns {total, el, h0, h1, instant} since F0b (b); the shrink hold reads
+     the working-card total, as it did when the growth was a bare number. Comparing the object
+     itself with -4 was always false, so the hold never fired and a shrinking card snapped the
+     thread down mid-turn (turn-verify "the thread never jumps down mid-turn"). */
+  function workFlipped(flips){ const g=workFlipGrowth(flips); const tot=typeof g==='number'?g:((g&&g.total)||0); if(tot<-4&&workShrinkFn){ try{ workShrinkFn(-tot); }catch(e){} } return g; }
   function stickToBottom(instant){
     tStick=true;
     const el=tEl();
@@ -3138,8 +3156,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderWandMenu(){
     const rows=[
       ['goal','Goal Mode','Create and manage a durable goal','goal-menu',state.capabilities.goal?'On':'Off','goal'],
-      /* F0b (d), D-2: the legacy Crew permission, in plain words. Same submenu and values. */
-      ['crew','Allow Crews in this chat','Lets Puppet Master use Crews in this chat','crew-menu',state.capabilities.crew?'On':'Off','users'],
+      /* F0b (d), D-2, E-02 (owner, 2026-09-27): the legacy Crew permission is this chat's Crew Auto override. Same
+         submenu and values; the answer is Collaboration's (the Crew Auto check below reads the same flag). */
+      ['crew','Crew Auto in this chat','Lets the assistant call a Crew when a job needs one','crew-menu',crewAutoHere()?'On':'Off','users'],
       /* Assistant-redesign wave: the BSD and ELI5 rows are gone from here.
          Both were superseded and both now have ONE owner that renders through
          `wandRows`, so leaving these produced two Back Seat Driver rows and two
@@ -3280,9 +3299,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       return `<div class="menu-head"><strong>Review</strong><span class="spacer"></span><span class="chat-meta">Read-only</span></div>${opts.map(o=>`<button class="menu-item ${state.reviewStrategy===o[0]?'active':''}" data-action="set-review-strategy" data-value="${esc(o[0])}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${state.reviewStrategy===o[0]?icon('check',11):''}</button>`).join('')}`;
     }
     if(id==='goal-menu')return renderCapabilitySub('Goal Mode',[['On','Enable natural-language, /goal, and button invocation'],['Off','Disable the visible Goal Mode capability']],state.capabilities.goal?'On':'Off','set-goal-cap');
-    /* F0b (d): checked 2026-09-27 -- state.capabilities.crew gates nothing (no module reads it;
-       app.js uses it only for the composer dot and the Activity stub), hence the fine line. */
-    if(id==='crew-menu')return renderCapabilitySub('Allow Crews in this chat',[['On','Crews may run in this chat.','','Preview: shown, not enforced yet.'],['Off',"Puppet Master won't use Crews in this chat.",'','Preview: shown, not enforced yet.']],state.capabilities.crew?'On':'Off','set-crew-cap');
+    /* E-02 (owner, 2026-09-27): set-crew-cap answers this chat's Crew Auto (collaboration.js chains it), so the choice is
+       enforced where Crew Auto decides; turning Crew Auto off in the project settings stops it being on by default. */
+    if(id==='crew-menu')return renderCapabilitySub('Crew Auto in this chat',[['On','The assistant may call a Crew when a job needs one.'],['Off','No Crew starts by itself in this chat. Your Crew Auto settings are kept.']],crewAutoHere()?'On':'Off','set-crew-cap');
     if(id==='bsd-menu')return renderCapabilitySub('Back Seat Driver',[['Off','No second opinion'],['Auto','Checks at key moments'],['On','Checks after every step']],state.capabilities.bsd,'set-bsd-cap');
     if(id==='context-lens')return extReplace('contextLensMenu',{}, `<div class="menu-head"><strong>Context Lens</strong></div>${[['Auto','Use source-aware automatic selection'],['Focus','Prioritize selected current sources'],['Mute','Omit selected superseded sources'],['Subcompact','Preview a staged context reduction'],['Off','Disable Context Lens receipts']].map(o=>`<button class="menu-item ${state.capabilities.context===o[0]?'active':''}" data-action="set-context-cap" data-value="${o[0]}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${state.capabilities.context===o[0]?icon('check',11):''}</button>`).join('')}${state.capabilities.context==='Subcompact'?`<div class="menu-divider"></div><div style="padding:7px"><p style="font-size:10px;color:var(--muted);margin:0 0 7px">Preview: remove 18.4K tokens while retaining provenance.</p><div class="plan-actions"><button class="soft-button" data-action="cancel-subcompact">Cancel</button><button class="primary-button" data-action="apply-subcompact">Apply</button></div></div>`:''}`);
     if(id==='eli5-menu')return renderCapabilitySub('ELI5',[['On','Show a simpler explanation after selected responses'],['Off','Keep standard response depth']],state.capabilities.eli5?'On':'Off','set-eli5-cap');

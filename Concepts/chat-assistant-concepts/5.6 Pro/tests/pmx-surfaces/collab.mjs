@@ -93,6 +93,25 @@ function chat(id, title, setup, extra = {}) {
     async after(h) { await h.closeAll(); }
   }, Object.fromEntries(Object.entries(extra).filter(([k]) => k !== 'canon')));
 }
+/* streaming realism (owner answer E-31, DL-137: live helper text, reusing the reply streaming). A helper of a live run
+   says a 1,500-word markdown message (code, a table): its words stream into that helper's lane through
+   PM56_PMX.stream while the check runs, so the lane stays one line and the card in budget mid-stream. The helper
+   is the first one the card draws a lane for. */
+const STREAM_HELPER = async (h, md) => {
+  const ok = await h.ev(md => {
+    const r = window.__pmxCollab && window.__pmxCollab.run, run = r && window.PM56_COLLAB.run(r);
+    const lane = run && document.querySelector(`.transcript .pmx-run[data-run-id="${run.id}"] .pmx-lane[data-participant]`);
+    const p = lane && run.participants.find(x => x.id === lane.dataset.participant);
+    if (!p) return false;
+    window.PM56_COLLAB.appendMessage(run.id, { senderKind: 'participant', senderId: p.id, senderName: p.role, messageType: 'message', body: md });
+    window.PM56_EXT.ctx().renderApp();
+    return true;
+  }, md);
+  if (!ok) throw new Error('streaming: no helper lane on the live card');
+  await h.wait(600);
+  const n = await h.ev(() => document.querySelectorAll('.transcript .pmx-lane-l2[data-pm-keep] q[data-collab-stream]').length);
+  if (!n && !(await h.ev(() => window.PM56_PMX.reduced()))) throw new Error('streaming: the helper\u2019s words did not stream into its lane');
+};
 const CARD_SURFACES = [
   chat('collab:card-waiting', 'A Crew started from the wand with no recording: born waiting, "Watch a recorded example" (7.7, D-6)', async h => {
     await wandStart(h, 'crew', 'Export the collection to CSV without losing quotes or order.');
@@ -113,9 +132,12 @@ const CARD_SURFACES = [
   chat('collab:card-attention', 'A Crew that needs you, opened: the warm decision row in the sentence’s place, Details, Cancel Crew…', async h => {
     await h.selectThread('recovery-collaboration');
     await h.clickVisible(`${CARD('crew-query-perf')} [data-action="collab-toggle-expand"][data-run="crew-query-perf"]`); await h.wait(300);
-  }, { thread: 'recovery-collaboration', run: 'crew-query-perf', canon: ['Crew', 'Open Panel'] }),
+    await h.ev(() => { window.__pmxCollab = { run: 'crew-query-perf', thread: 'recovery-collaboration' }; });
+  }, { thread: 'recovery-collaboration', run: 'crew-query-perf', canon: ['Crew', 'Open Panel'], stream: STREAM_HELPER }),
   chat('collab:card-review-live', 'A live Multi-Pass Review (three reviewers on their own) above a Review receipt', async () => {}, { thread: 'subagents', run: 'review-orchestrator-boundary', canon: ['Review', 'Open Panel', 'Message'] }),
-  chat('collab:card-brainstorm-live', 'A live BrainStorm at its vote', async () => {}, { thread: 'plan-deep', run: 'brainstorm-provider-failover', canon: ['BrainStorm', 'Open Panel', 'Message'] }),
+  chat('collab:card-brainstorm-live', 'A live BrainStorm at its vote (a helper\u2019s words stream into its lane: owner answer E-31)', async h => {
+    await h.ev(() => { window.__pmxCollab = { run: 'brainstorm-provider-failover', thread: 'plan-deep' }; });
+  }, { thread: 'plan-deep', run: 'brainstorm-provider-failover', canon: ['BrainStorm', 'Open Panel', 'Message'], stream: STREAM_HELPER }),
   chat('collab:card-result', 'A recorded Crew just finished: the result face (headline, figures, the CSV, who did what), Open Panel and Download', async h => { await crewDemo(h); }, { canon: ['Crew', 'Open Panel'] }),
   chat('collab:card-receipt', 'A finished Crew condensed to its 44 px receipt (the card\u2019s own chevron: auto -> open -> closed, G-19) with the recorded play-ring', async h => {
     await crewDemo(h);

@@ -74,11 +74,13 @@
 
 /* ---- the confirmation: the bubble seals, its dashed outline drawn over solid (M9, a clip reveal); the bubble is
    there in the first frame (it is the same bubble), only the outline and the words under it move */
-.pmx-sheet .pmx-sched-sealed{position:relative;max-width:460px;box-sizing:border-box;padding:11px 14px;border:1.5px solid var(--muted);border-radius:18px 18px 6px 18px;background:var(--surface-2);
+.pmx-sheet .pmx-sched-sealed{position:relative;max-width:460px;box-sizing:border-box;padding:11px 14px;border:1.5px solid transparent;border-radius:18px 18px 6px 18px;background:var(--surface-2);
   font:var(--pmx-fs-hero);line-height:var(--pmx-hero-lh);color:var(--text);text-align:left;overflow-wrap:anywhere;
   animation:pmx-sched-dashed calc(var(--pmx-t-at-q) + var(--pmx-t-draw)) var(--pmx-ease-linear) backwards;}
-/* the bubble keeps its dashed outline while the solid one draws over it, then is solid itself */
-@keyframes pmx-sched-dashed{0%,99.9%{border-style:dashed;border-color:var(--border-strong);}100%{border-style:solid;border-color:var(--muted);}}
+/* the bubble keeps its dashed outline while the solid one draws over it; the drawn stroke (::after, the final
+   border token) is then the outline itself, so the weight never steps when the draw ends (closing review: the
+   dashed edge used to turn solid under the stroke and double it in one frame) */
+@keyframes pmx-sched-dashed{0%,99.9%{border-style:dashed;border-color:var(--border-strong);}100%{border-style:solid;border-color:transparent;}}
 .pmx-sheet .pmx-sched-sealtext{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
 .pmx-sheet .pmx-sched-sealed::after{content:"";position:absolute;inset:-1.5px;border:1.5px solid var(--muted);border-radius:inherit;pointer-events:none;
   animation:pmx-draw-right var(--pmx-t-draw) var(--pmx-ease-out) var(--pmx-t-at-q) backwards;}
@@ -90,6 +92,17 @@
 .pmx-sheet .pmx-sched-confirmweek{align-self:stretch;width:100%;min-width:0;margin-bottom:8px;text-align:left;}
 .pmx-sheet .pmx-sched-confirmweek .pmx-sched-week{margin:0;}
 .pmx-sheet .pmx-sched-confirmweek .pmx-sched-band{animation:none;}
+/* the saved record's folded demo line (tests/b15's .schedule-item .schedule-details > summary hook): a quiet text
+   disclosure under the words, never a box; open, it shows the manager row's demo line */
+.pmx-sheet .pmx-confirm-acts:has(> .pmx-sched-trynow){margin-top:4px;}
+.pmx-sheet .pmx-sched-trynow{display:flex;flex-direction:column;align-items:center;min-width:0;}
+.pmx-sheet .pmx-sched-trynow > details{display:flex;flex-direction:column;align-items:center;}
+.pmx-sheet .pmx-sched-trynow summary{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;list-style:none;cursor:pointer;border-radius:var(--pmx-r-sm);color:var(--muted);font:600 12px/17.5px var(--font-ui);}
+.pmx-sheet .pmx-sched-trynow summary::-webkit-details-marker{display:none;}
+.pmx-sheet .pmx-sched-trynow summary:hover{color:var(--text);}
+.pmx-sheet .pmx-sched-trynow summary:focus-visible{outline:none;box-shadow:0 0 0 3px var(--pmx-focus-ring);}
+.pmx-sheet .pmx-sched-trynow details[open] > summary > svg{transform:rotate(90deg);}
+.pmx-sheet .pmx-sched-trynow .pmx-sched-demo{margin:2px 0 0;}
 
 /* ---- Build At: the week map over the two columns */
 .pmx-sheet .pmx-sched-week{margin:12px 0 0;padding:0;border:0;border-radius:0;background:none;overflow:visible;flex:none;min-width:0;align-self:stretch;}
@@ -246,8 +259,8 @@ body[data-theme^="retro"] .pmx-sheet.sched-dialog .pmx-promise > span{white-spac
 .sched-card-failed .pmx-sched-line .pmx-receipt-say > svg{color:var(--danger);}
 /* A receipt never cuts its fact (J-2): the canon word and the time are whole (they wrap below a 311 px card rather
    than end in an ellipsis), only the "you scheduled this" clause drops when the card is narrow, and a Failed or
-   Expired reason wraps onto more lines of the row (64 px and up: FOUNDATION REQUEST, the C13 44 px budget).
-   Canceled's quote is the one part that may end in an ellipsis. The time and zone are in the hover card (G-30),
+   Expired reason wraps onto more lines of the row. Canceled's quote and Failed's brief cause (its whole sentence
+   is the hover card) are the parts that may end in an ellipsis. The time and zone are in the hover card (G-30),
    not a column of their own. */
 .sched-card .pmx-sched-line{height:auto;min-height:var(--pmx-receipt-h);align-items:flex-start;}
 .sched-card .pmx-sched-line .pmx-run-head{height:auto;min-height:44px;align-items:flex-start;}
@@ -259,6 +272,10 @@ body[data-theme^="retro"] .pmx-sheet.sched-dialog .pmx-promise > span{white-spac
 .sched-card .pmx-sched-line .pmx-run-foot{margin-top:6px;}
 .sched-card-canceled .pmx-sched-line .pmx-receipt-say{white-space:nowrap;overflow:hidden;}
 .sched-card-canceled .pmx-sched-line .pmx-receipt-headline{overflow:hidden;text-overflow:ellipsis;}
+/* Failed is one 44 px line at every card width (C13 receipt budget): the canon word leads, the brief cause may end
+   in an ellipsis on a narrow card, and the whole sentence is the line's hover card (closing review LINT-4 C) */
+.sched-card-failed .pmx-sched-line .pmx-receipt-say{white-space:nowrap;overflow:hidden;}
+.sched-card-failed .pmx-sched-line .pmx-receipt-headline{min-width:0;overflow:hidden;text-overflow:ellipsis;}
 .pmx-sched-line .pmx-sched-go{display:inline-flex;align-items:center;gap:6px;}
 .pmx-sched-line .pmx-sched-go > svg{display:none;}
 /* the row keeps one 44 px line at every card width by dropping, never by cutting the word or the time: the "you
@@ -389,13 +406,17 @@ body[data-theme^="retro"] .pmx-sheet.sched-dialog .pmx-promise > span{white-spac
 .pmx-sheet .pmx-sched-demo .text-button{height:32px;min-height:32px;padding:0 10px;margin-left:0;color:var(--muted);font:var(--pmx-w-560) 11.5px/16px var(--font-ui);}
 .pmx-sched-focusline{flex:none;margin:12px 0 0;}
 .pmx-sheet .pmx-sched-focusline .text-button{height:32px;min-height:32px;margin-left:-10px;padding:0 10px;color:var(--text);font:600 12px/16px var(--font-ui);}
-/* Resume & Safety Policy: two calm blocks side by side (read-only until D-12) */
+/* Resume & Safety Policy: two calm blocks side by side; Pause all automations is a real switch (SQR-018, DL-136) */
 .pmx-sched-policy{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px 32px;margin-top:4px;overflow:hidden auto;}
 .pmx-sheet .pmx-sched-pol.mdl-section{margin:0;padding:0;border:0;border-radius:0;background:none;overflow:visible;align-self:start;min-width:0;}
 .pmx-sheet .pmx-sched-pol .pmx-q-title{display:flex;align-items:center;gap:8px;}
 .pmx-sched-polsay{margin:10px 0 0;font:var(--pmx-fs-body);color:var(--muted);}
 .pmx-sheet .pmx-sched-pol .soft-button{margin-top:12px;height:32px;min-height:32px;padding:0 12px;}
 .pmx-sched-pol .pmx-fine{margin:8px 0 0;}
+.pmx-sheet .pmx-sched-polhead{display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:0;}
+.pmx-sheet .pmx-sched-polhead .pmx-q-title{margin:0;min-width:0;}
+.pmx-sheet .pmx-sched-pauseswitch{flex:none;}
+.pmx-sheet .pmx-sched-pol .pmx-sched-stopsay{margin-top:20px;}
 /* Events & Automation: sentences; the technical name is in each line's hover card */
 .pmx-sched-events{list-style:none;margin:0;padding:0;}
 .pmx-sched-event{display:grid;grid-template-columns:18px 132px minmax(0,1fr);gap:0 14px;align-items:center;min-height:44px;padding:8px 4px;box-sizing:border-box;box-shadow:0 1px 0 var(--border);}

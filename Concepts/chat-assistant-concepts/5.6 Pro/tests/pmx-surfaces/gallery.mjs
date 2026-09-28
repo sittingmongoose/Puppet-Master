@@ -412,7 +412,7 @@ export function galleryInPage() {
       case 'live-new': return liveCard(t, 'collab-card-g10', 'g10');
       case 'receipt': return receipt(t, 3, 'crew', 'Add CSV export', ['Export ready', 'Export ready: all 3 parts checked and the docs note is written'], 'rr3');
       case 'files': return '<div class="pmx-gallery-row" style="display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;padding:4px 0">' + S.pmxFilesRow({ key: 'fr', count: 4, add: 121, del: 46, revert: { action: 'noop' } }) +
-        S.pmxTick({ key: 'tk1', glyph: 'notebook', text: 'Noted', hover: 'Saved to memory' }) + S.pmxTick({ key: 'tk2', glyph: 'pin-lock', text: 'Used 1 of your rules' }) +
+        S.pmxTick({ key: 'tk1', glyph: 'notebook', text: 'Noted', hover: 'Saved to memory' }) + S.pmxTick({ key: 'tk2', glyph: 'pin-lock', text: 'Followed 1 of your rules' }) +
         S.pmxTick({ key: 'tk3', glyph: 'check-circle', text: 'Verified' }) + S.pmxWash({ key: 'wash:' + t, html: 'revised line' }) + '</div>';
       case 'notes': return notes(t);
       case 'divider': return S.pmxDivider({ key: 'dv', text: 'Simple explanations from here' });

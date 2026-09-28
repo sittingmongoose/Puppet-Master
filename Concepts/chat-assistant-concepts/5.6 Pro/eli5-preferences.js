@@ -10,8 +10,16 @@
  * meta row, and a divider marks the turn where the style changes. ELI5 is not a Persona and not a
  * mode: nothing here touches code, Plans, artifacts or message bodies.
  * Commands (8.15): Standard / Simple / Follow send cmd.chat.eli5.set {on | off | inherit}; the All
- * chats node is a Settings transaction (general.interaction.eli5-default); the project node (Project default,
- * owner answer E-11) has no Settings wiring in this concept; the wand row only opens the sheet (no command). */
+ * chats node is a Settings transaction (general.interaction.eli5-default); the project node (Project default)
+ * has no Settings wiring in this concept; the wand row only opens the sheet (no command).
+ * OWNER ANSWER E-11 (DL-126, 2026-09-28): the project-level default is KEPT and a chat's own choice overrides it
+ * for that chat only; switching changes only replies written after the switch and never rewrites earlier ones
+ * (the sheet says so in its foot); ELI5 stays a popup with the quick dot by the message box, not a one-click
+ * toggle; helper lines ship one plain string each, and simple/expert pairs live only in tooltips and help.
+ * "Explain this reply simply" (cmd.chat.eli5.explain_reply) sits in every finished assistant reply's More
+ * menu (transcript.js's PM56_MSG_OVERFLOW registry, so no Chat WOW-owned file changes): one click writes ONE
+ * extra, simpler reply directly under it and leaves this chat's setting alone; it is unavailable while that
+ * reply is still streaming and once its simpler reply exists. */
 (function(){
  'use strict';
  const E=window.PM56_EXT,RT=window.PM56_RUNTIME,has=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
@@ -36,7 +44,7 @@
 
  /* ------------------------------------------------------------------ copy (9.2, E.13; {simple, expert} per 9.0.9:
     this wave ships the simple strings, expert falls back to them) */
- const SHEET={title:'Explain things simply in this chat?',lead:'Answers use everyday words and explain terms as they go. Your code, plans and files never change.'};
+ const SHEET={title:'Explain things simply in this chat?',lead:'Answers use everyday words and explain terms as they go. This choice is for this chat only; your code, plans and files never change.'};
  const CODE='const q = query.trim().toLowerCase();';
  /* The two voices answer the same question. `code` spans stay one unit when the words re-set (never split a word). */
  const VOICES=[
@@ -59,14 +67,14 @@
  const MENU_TITLE={application:'All chats',project:'Project default'};
  /* A1-53: the one Technical details line (fine print; the full sentence is its hover text) */
  const TECH='Technical details · cmd.chat.eli5.set (on, off, inherit) · All chats: general.interaction.eli5-default';
- const TECH_TIP='Standard, Simple and Follow my usual setting send cmd.chat.eli5.set with on, off or inherit (inherit removes this chat’s own choice). All chats is a Settings change to general.interaction.eli5-default. Project default has no Settings key yet in this concept. The wand row and Done send no command.';
+ const TECH_TIP='Standard, Simple and Follow my usual setting send cmd.chat.eli5.set with on, off or inherit (inherit removes this chat’s own choice). All chats is a Settings change to general.interaction.eli5-default. Project default has no Settings key yet in this concept. The wand row and Done send no command. Explain this reply simply, in a reply’s More menu, sends cmd.chat.eli5.explain_reply: it adds one simpler reply under that reply and changes no setting.';
 
  /* ------------------------------------------------------------------ wand row (the assist group) */
  function kindMark(c,size){const S=window.PM56_SHELL;return S&&S.pmxKindMark?S.pmxKindMark('eli5',size):c.icon('chat',size);}
  function wand(c){
   const r=resolve(c.thread.id),now=onOff(r.effective)+(r.source==='conversation'?' · this chat':'');
   /* the .menu-copy span becomes the row's hover text (delivery-polish); the state stays visible in .shortcut */
-  return '<button class="menu-item af-wand-row" data-action="eli5-open"><span class="menu-icon">'+kindMark(c,13)+'</span><span class="menu-copy"><strong>ELI5 · Explain simply</strong><span>Answers use everyday words and explain terms. Your code and files never change.</span></span><span class="shortcut">'+c.esc(now)+'</span></button>';
+  return '<button class="menu-item af-wand-row" data-action="eli5-open"><span class="menu-icon">'+kindMark(c,13)+'</span><span class="menu-copy"><strong>ELI5 · Explain simply</strong><span>Answers use everyday words and explain terms. Your code and files never change. To explain just one reply, use Explain this reply simply in its More menu.</span></span><span class="shortcut">'+c.esc(now)+'</span></button>';
  }
 
  /* ------------------------------------------------------------------ the sheet */
@@ -100,7 +108,7 @@
   let body;
   if(scope==='application')body=S.pickerButton({action:'eli5-pick-scope',anchor:'eli5-scope-application',strong:onOff(r.appDefault),small:'Explain Terms Everywhere',extra:'data-scope="application" data-thread="'+tid+'"'});
   else if(scope==='project')body=S.pickerButton({action:'eli5-pick-scope',anchor:'eli5-scope-project',strong:r.projectDefault===null?'Follow all chats':onOff(r.projectDefault),small:'Chats in this project',extra:'data-scope="project" data-thread="'+tid+'"'});
-  else body='<p class="pmx-eli5-node-val"><b>'+valueWord(r.effective)+'</b><span>'+(r.source==='conversation'?'chosen here':r.source==='project'?'follows the project default':'follows all chats')+'</span></p>';
+  else body='<p class="pmx-eli5-node-val"><b>'+valueWord(r.effective)+'</b><span>'+(r.source==='conversation'?'this chat only':r.source==='project'?'follows the project default':'follows all chats')+'</span></p>';
   return '<div class="pmx-eli5-node" data-k="eli5-node:'+scope+'" data-on="'+(lit?1:0)+'">'+head+body+'</div>';
  }
  const NODE_INDEX={application:0,project:1,conversation:2};
@@ -127,7 +135,7 @@
  function streamingNow(c){return !!(c.thread&&c.thread.messages.some(m=>m.streaming));}
  function sheetFoot(c,stale){
   const S=window.PM56_SHELL;
-  const rb=stale?'':S.pmxReadback({key:'pmx-readback',parts:[{html:'<b>Takes effect from your next message.</b> ',part:'voice'},{html:streamingNow(c)?'This answer keeps its current style.':'Answers already here keep their wording.'}]});
+  const rb=stale?'':S.pmxReadback({key:'pmx-readback',parts:[{html:'<b>Only replies after the switch change.</b> ',part:'voice'},{html:streamingNow(c)?'Earlier ones, and this one, are never rewritten.':'Earlier ones are never rewritten.'}]});
   const foot=S.pmxFoot({cls:'pmx-eli5-foot',readback:rb,estimate:S.pmxEstimate({text:'Demo: resets when you reload.'}),primary:{action:'close-dialog',label:'Done'}});
   /* ELI5 applies each choice at once, so a Cancel would undo nothing: the sheet has one primary, Done
      (FOUNDATION REQUEST: pmxFoot({cancel:false}); the reference build's pmxFoot omits Cancel when none is given) */
@@ -211,7 +219,7 @@
   const hit=cpMemo.get(msgs);if(hit&&hit.key===key)return hit.map;
   const map={};let prev=null,seen=false;
   for(const m of msgs){
-   if(m.internalOnly)continue;
+   if(m.internalOnly||m.eli5ExplainsId)continue;
    if(snapped(m)){const eff=!!m.explanationPreference.effective;if(prev===null&&seen)prev=false;if(prev!==null&&eff!==prev)map[m.id]=eff;prev=eff;}
    else if(talk(m))seen=true;
   }
@@ -225,14 +233,66 @@
  });
  E.slot('messageMeta',c=>{
   const m=c.message;if(!m||m.role!=='assistant'||!snapped(m)||!m.explanationPreference.effective)return '';
+  if(m.eli5ExplainsId)return '';
   const S=window.PM56_SHELL,tip='Written in everyday words because ELI5 is on for this chat. Your code and files were not changed.';
   /* the app's hover card reads data-hover-key / data-hover-tip (FOUNDATION REQUEST: pmxTick({hover}) writes data-hover) */
   return S.pmxTick({key:'eli5-tick:'+m.id,cls:'pmx-eli5-tick',glyph:'kind-eli5',text:'Simple explanation',attrs:'data-hover-key="eli5-tick-'+c.esc(m.id)+'" data-hover-tip="'+c.esc(tip)+'"'});
  });
 
+ /* ------------------------------------------------------------------ Explain this reply simply (owner answer E-11) */
+ /* One finished assistant reply gets ONE extra, simpler reply written directly under it (cmd.chat.eli5.explain_reply).
+    It changes no setting and never rewrites the reply it explains. The row lives in the reply's More menu through
+    transcript.js's PM56_MSG_OVERFLOW registry (the reply's action row is the Chat WOW owner's). The simpler text is
+    the recorded example's own simpler wording where there is one (PM56_ELI5_DEMOS.simpler), otherwise a plain
+    concept stand-in that says what a real chat writes there: nothing here calls a model. */
+ const explainable=m=>!!(m&&m.role==='assistant'&&(m.type==='text'||m.type==='eli5-example-answer')&&!m.internalOnly&&!m.eli5ExplainsId&&!m.liveTurnOf);
+ const explanationOf=(t,id)=>(t&&t.messages||[]).find(x=>x.eli5ExplainsId===id)||null;
+ const STANDIN='Put simply: this is the reply above in everyday words, with each term explained as it comes up. In this concept the wording is a stand-in; a real chat writes it from that reply. Your code and files are not changed.';
+ function simplerText(m){const d=window.PM56_ELI5_DEMOS;const own=d&&d.simpler?d.simpler(m):null;return own||STANDIN;}
+ function explainItems(c,m){
+  if(!explainable(m))return null;
+  const t=c.thread,done=explanationOf(t,m.id);
+  const reason=m.streaming?'Available when this reply finishes.':done?(done.streaming?'The simpler reply is being written below.':'Its simpler reply is already below.'):'';
+  return [{id:'eli5-explain-reply',label:'Explain this reply simply',detail:'Adds one simpler reply under this one. This chat’s setting stays as it is.',
+   icon:'chat',action:'eli5-explain-reply',value:m.id,danger:false,disabled:!!reason,reason}];
+ }
+ if(window.PM56_MSG_OVERFLOW&&window.PM56_MSG_OVERFLOW.register)window.PM56_MSG_OVERFLOW.register(explainItems);
+ function explainReply(c,id){
+  const t=c.thread,list=t&&t.messages||[],i=list.findIndex(x=>x.id===id),m=list[i];
+  if(!explainable(m))return {ok:false,error:'not_explainable'};
+  if(m.streaming)return {ok:false,error:'still_streaming'};
+  if(explanationOf(t,id))return {ok:false,error:'already_explained'};
+  const body=simplerText(m),now=new Date().toISOString();
+  const x={id:c.uid('eli5-explain'),role:'assistant',type:'text',body:'',rich:false,time:now,eli5ExplainsId:id,sourceMessageId:id,
+   command:'cmd.chat.eli5.explain_reply',recordedExample:!!m.recordedExample};
+  if(m.runtime){x.runtime=copy(m.runtime);Object.assign(x.runtime,{startedAt:now,completedAt:null,terminal:null,tokens:{},cost:{}});}
+  list.splice(i+1,0,x);
+  const ST=window.PM56_STREAM,instant=c.state.replyMode==='instant'||!!window.PM56_MOTION?.reduced?.()||document.body.classList.contains('pm56-reduced');
+  if(ST&&ST.begin&&!instant){
+   const words=body.split(/(\s+)/),per=Math.ceil(words.length/3),chunks=[];
+   for(let k=0;k<words.length;k+=per)chunks.push(words.slice(k,k+per).join(''));
+   ST.begin(x,t.id,{chunks,delayMs:420,chunkMs:300,terminal:'complete'},{rich:false,quiet:true});
+  }else x.body=body;
+  return {ok:true,messageId:x.id,explains:id};
+ }
+ E.action('eli5-explain-reply',(c,b)=>{
+  window.PM56_MSG_OVERFLOW?.close?.();
+  explainReply(c,b.dataset.value||b.dataset.id);
+  c.renderApp();
+  return true;
+ });
+ /* the simpler reply says what it is at rest (the meta row is hover-gated): one quiet line across its top, out of
+    its flow like the change-point divider */
+ E.slot('messageAffordance',c=>{
+  const m=c.message;if(!m||!m.eli5ExplainsId)return '';
+  const S=window.PM56_SHELL,tip='Written in everyday words for the reply above, because you asked. This chat’s ELI5 setting did not change, and the reply above was not rewritten.';
+  return '<div class="eli5-explains" data-k="eli5-explains:'+c.esc(m.id)+'">'+S.pmxTick({key:'eli5-explains-t:'+m.id,cls:'pmx-eli5-explains',glyph:'kind-eli5',text:'Simpler explanation of the reply above',
+   attrs:'data-hover-key="eli5-explains-'+c.esc(m.id)+'" data-hover-tip="'+c.esc(tip)+'"'})+'</div>';
+ });
+
  /* catalog(scope) and specimen(c, on) are read by New chat defaults (assistant-features.js): its "Explain simply in
     new chats" row is the All chats level here, so both sheets list the same options (IMPACT A3-01) */
- window.PM56_ELI5={resolve,setThread,setProject,setApplication,wand,open,project,
+ window.PM56_ELI5={resolve,setThread,setProject,setApplication,wand,open,project,explainReply:id=>explainReply(E.ctx(),id),explainItems:(m)=>explainItems(E.ctx(),m),
   snapshot:()=>copy(state()),changePoints:t=>copy(changePoints(t||E.ctx().thread)),
   catalog:scope=>copy(CATALOG[scope]||[]),specimen};
 })();

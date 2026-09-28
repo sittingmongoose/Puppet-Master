@@ -118,3 +118,13 @@ body.pm56-reduced .transcript-inner > .message:has(> .eli5-change){animation:non
 /* the reply's "Simple explanation" tick sits in the meta row (hover-gated with the rest of that row) */
 .message-chrome .pmx-eli5-tick{flex:none;padding:0 4px;}
 .message-chrome .pmx-eli5-tick > svg{color:var(--muted);}
+
+/* ---- Explain this reply simply (owner answer E-11): the one simpler reply under a reply says what it is at rest,
+   in one quiet line across its top (the kind glyph, then the words), out of the turn's flow like the change-point
+   divider above, so it never takes a speaker column or a grid cell from the bubble. No pill, no stripe. */
+.transcript-inner > .message:has(> .eli5-explains){padding-top:26px;}
+.transcript-inner > .message:has(> .eli5-change):has(> .eli5-explains){padding-top:34px;}
+.transcript-inner .message > .eli5-explains{position:absolute;left:0;right:0;top:0;min-width:0;margin:0;display:flex;align-items:center;height:20px;}
+.transcript-inner .message > .eli5-explains > .pmx-eli5-explains{min-width:0;max-width:100%;color:var(--muted);}
+.transcript-inner .message > .eli5-explains > .pmx-eli5-explains > span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.transcript-inner .message > .eli5-explains > .pmx-eli5-explains > svg{flex:none;color:var(--muted);}

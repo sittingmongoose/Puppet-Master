@@ -20,43 +20,16 @@ window.PM56_EXT = { ctx: () => ({
   hasIcon: appHas
 }) };
 const S = window.PM56_SHELL;
-const body =
-  S.section({ label: 'Sec', iconHtml: '<svg/>', meta: 'm', body:
-    S.grid2(
-      S.field('Model', S.pickerButton({ action: 'a', anchor: 'b', strong: 'V', small: 's', iconHtml: '<svg/>' })) +
-      S.field('X', '<input type="text">')
-    ) }) +
-  S.seg([['off', 'Off'], ['on', 'On']], 'on', 'act') +
-  S.tabs([['a', 'A'], ['b', 'B']], 'a', { action: 'tab', attr: 'data-tab' }) +
-  S.choice({ value: null, label: 'Use default', detail: 'd', active: true, action: 'c' }) +
-  S.chip('warning', 'W') +
-  S.rows([['k', 'v']]) +
-  S.note('n', 'danger') +
-  S.disclosure('dk', 'sum', 'body', true, 'legacy-cls') +
-  S.stats([['L', '1']]) +
-  S.card({ attrs: ' data-k="ck"', head: S.cardHead({ iconHtml: '<svg/>', copy: S.copy('strong', 'span'), extra: '<i/>' }), body: '<p></p>', actions: '<button></button>' }) +
-  S.check('lbl', true, ' data-x="1"');
-const d = S.dialog({ iconHtml: '<svg/>', title: 'T', sub: 'S', pill: 'P', width: 600, cls: 'legacy-dialog', body, foot: S.foot('left', 'right'), closeAction: 'x-close' });
+/* The legacy dialog-grammar builders were retired at F0 step 8 (IMPACT A1-51, closing 2026-09-28); the first
+   IIFE keeps esc, pickerButton (still called by Collaboration, Scheduling, BSD, ELI5, New chat defaults, Review,
+   BrainStorm and the run views) and CHEVRON. */
+const d = S.pickerButton({ action: 'a', anchor: 'b', strong: 'V', small: 's', iconHtml: '<svg/>' });
+const RETIRED = ['dialog', 'section', 'field', 'grid2', 'seg', 'tabs', 'disclosure', 'choice', 'chip', 'rows', 'note', 'stat', 'stats', 'foot', 'card', 'cardHead', 'copy', 'check'];
 const checks = [
-  ['dialog class', d.startsWith('<section class="dialog mdl legacy-dialog"')],
-  ['width style', d.includes('width:min(600px,calc(100vw - 20px))')],
-  ['aria-label', d.includes('aria-label="T"')],
-  ['pill', d.includes('meta-pill')],
-  ['close action', d.includes('data-action="x-close"')],
-  ['foot', d.includes('mdl-foot') && d.includes('left<span class="spacer"></span>right')],
-  ['section', d.includes('mdl-section-label">Sec') && d.includes('mdl-section-meta">m')],
-  ['seg active', d.includes('data-value="on" aria-pressed="true"') && d.includes('class="">') === false ? true : d.includes('data-action="act" data-value="off" aria-pressed="false"')],
-  ['tabs data-tab', d.includes('data-tab="a"') && d.includes('role="tablist"')],
-  ['choice null', d.includes('data-value="null"') && d.includes('role="radio" aria-checked="true"')],
-  ['disclosure open', d.includes('data-k="dk" open') && d.includes('class="mdl-disclosure legacy-cls"')],
-  ['rows', d.includes('<div><span>k</span><strong>v</strong></div>')],
-  ['note danger', d.includes('class="mdl-note danger"')],
-  ['disclosure open', d.includes('data-k="dk" open')],
-  ['stats', d.includes('mdl-stats') && d.includes('<strong>1</strong><span>L</span>')],
-  ['card', d.includes('<article class="mdl-card" data-k="ck">') && d.includes('mdl-card-actions')],
-  ['dialog cls', d.includes('class="dialog mdl legacy-dialog"')],
-  ['picker', d.includes('shared-picker-button') && d.includes('data-menu-anchor="b"') && d.includes('<small>s</small>')],
+  ['picker', d.includes('shared-picker-button') && d.includes('data-menu-anchor="b"') && d.includes('<small>s</small>') && d.includes('data-action="a"')],
+  ['picker default chevron', S.pickerButton({ action: 'a', anchor: 'b', strong: 'V' }).includes(S.CHEVRON)],
   ['esc', S.esc('<a b="c">') === '&lt;a b=&quot;c&quot;&gt;'],
+  ['A1-51 the retired legacy builders stay retired', RETIRED.every(n => S[n] === undefined)],
 ];
 
 /* ======================================================================
@@ -92,11 +65,13 @@ const B = (name, html) => { built.push([name, html]); return html; };
   const crypto = require('crypto');
   const path = require('path');
 
-  /* 0. The original builders are byte-identical: the file's first IIFE is the
-        pre-pmx module-shell.js (HEAD 45cefbecd8, 8510 bytes). */
+  /* 0. The first IIFE (the pre-pmx module-shell.js, HEAD 45cefbecd8) is no longer byte-identical: F0 step 8 (IMPACT
+        A1-51) retired its unused legacy builders. What must hold is that it still defines only esc, pickerButton and
+        CHEVRON, unchanged in shape (the checks above), and nothing else. */
   const end = src.indexOf('})();\n');
   const prefix = end >= 0 ? src.slice(0, end + 6) : '';
-  pc('original builders byte-identical (first IIFE sha256)', crypto.createHash('sha256').update(prefix, 'utf8').digest('hex') === '3c7eb278363ae02b69ce4c93103ee2124b6604d720aa93cd48154e39bf0a5831');
+  const firstApi = (/window\.PM56_SHELL\s*=\s*\{([^}]*)\}/.exec(prefix) || ['', ''])[1].split(',').map(x => x.split(':')[0].trim()).filter(Boolean).sort();
+  pc('first IIFE exports only esc, pickerButton and CHEVRON (legacy builders retired, A1-51)', firstApi.join(',') === 'CHEVRON,esc,pickerButton', firstApi);
   pc('no emoji code points in module-shell.js (DON\'T 3)', !/[\p{Extended_Pictographic}\u{FE0F}\u{20E3}\u{1F1E6}-\u{1F1FF}]/u.test(src));
 
   /* 1. The API: every builder the spec names exists. */
@@ -292,7 +267,15 @@ const B = (name, html) => { built.push([name, html]); return html; };
   pc('A19 pmxFoot root keeps .mdl-foot + cls passthrough (b10/b13 .collab-configure-foot)', rootTag(foot).startsWith('<footer class="mdl-foot pmx-foot collab-configure-foot"'));
   pc('A19 Save as my default (idle)', has(foot, '<button type="button" class="text-button pmx-save" data-action="collab-save-default" data-state="idle" data-hook="save">', '<span>Save as my default</span></button>'));
   pc('A19 Save saved state is in place', has(X.pmxFoot({ save: { action: 'a', state: 'saved' }, primary: { action: 'p' } }), 'data-state="saved"', 'Saved as your default'));
-  pc('A19 read-back + estimate, then Cancel, then primary with attrs', has(foot, '<div class="pmx-foot-say"><p>RB</p><p>EST</p></div><i>EXTRA</i><button type="button" class="soft-button pmx-cancel" data-action="collab-modal-cancel">Cancel</button><button type="button" class="primary-button pmx-primary" data-action="collab-modal-commit" data-tone="accent" data-hook="go">'));
+  /* closing (COLLAB FR 1): a primary's reason takes the estimate's line in the say column */
+  pc('A19 read-back (the reason replaces the estimate), then extra, Cancel, primary with attrs', has(foot, '<div class="pmx-foot-say"><p>RB</p></div><i>EXTRA</i><button type="button" class="soft-button pmx-cancel" data-action="collab-modal-cancel">Cancel</button><button type="button" class="primary-button pmx-primary" data-action="collab-modal-commit" data-tone="accent" data-hook="go">'));
+  pc('A19 without a reason the estimate follows the read-back', has(X.pmxFoot({ readback: '<p>RB</p>', estimate: '<p>EST</p>', primary: { action: 'p', label: 'Go' } }), '<div class="pmx-foot-say"><p>RB</p><p>EST</p></div>'));
+  /* closing (lane FOUNDATION REQUESTS): cancel:false, primary:null, primary.key, one grid column per drawn part */
+  const fNoCancel = X.pmxFoot({ cancel: false, extra: '<button class="x">A</button><button class="y">B</button>', primary: { action: 'close-dialog', label: 'Done', key: 'done' } });
+  pc('closing pmxFoot cancel:false draws no Cancel; extra elements each get a column; primary.key', !fNoCancel.includes('pmx-cancel') && has(fNoCancel, 'data-cancel="0"', '--pmx-foot-cols:minmax(0,1fr) auto auto auto', 'data-k="done"'));
+  const fNoPrimary = X.pmxFoot({ primary: null, readback: 'R', cancel: { action: 'x', label: 'Close' } });
+  pc('closing pmxFoot primary:null draws no primary', !fNoPrimary.includes('pmx-primary') && has(fNoPrimary, 'data-primary="0"', '--pmx-foot-cols:minmax(0,1fr) auto"', '>Close</button>'));
+  pc('closing pmxFoot keeps a primary for primary:{} (Revert strips it until it passes null)', X.pmxFoot({ primary: {} }).includes('pmx-primary'));
   pc('A19 primary label + reason with reasonCls', has(foot, 'Start Crew', '<p class="pmx-reason pmx-foot-reason collab-limit-warn">Why not</p>'));
   pc('A19 the primary is the last .primary-button in the footer', foot.lastIndexOf('primary-button') === foot.indexOf('primary-button pmx-primary'));
   pc('A19 refusal replaces the read-back', has(X.pmxFoot({ readback: '<p>RB</p>', refusal: '<p>REF</p>', primary: { action: 'p' } }), '<div class="pmx-foot-say"><p>REF</p></div>'));
@@ -321,7 +304,7 @@ const B = (name, html) => { built.push([name, html]); return html; };
   pc('C3 every status draws a glyph (none missing)', stGlyphs.every(st => { const h = X.pmxSentence({ status: st, word: 'W' }); return has(h, 'data-status="' + st + '"', '<svg') && !h.includes('pmx-glyph-missing'); }));
 
   const tr = B('pmxTrack', X.pmxTrack({ key: 'tr', stops: [{ key: 's1', label: 'Split', state: 'done' }, { key: 's2', label: 'Do', state: 'now' }, { key: 's3', label: 'Combine', state: 'bogus' }], nowText: '<b>Do</b> · 1 of 3 checked' }));
-  pc('C4 pmxTrack: named stops with state, nowText', has(tr, '<div class="pmx-track" data-k="tr"><ol class="pmx-track-line"><li class="pmx-stop" data-k="s1" data-state="done"><i class="pmx-stop-dot"></i><span class="pmx-stop-label">Split</span></li>', 'data-k="s2" data-state="now"', '<p class="pmx-track-now"><b>Do</b> · 1 of 3 checked</p></div>'));
+  pc('C4 pmxTrack: named stops with state, nowText', has(tr, '<div class="pmx-track" data-k="tr" data-n="3"><ol class="pmx-track-line"><li class="pmx-stop" data-k="s1" data-state="done"><i class="pmx-stop-dot"></i><span class="pmx-stop-label">Split</span></li>', 'data-k="s2" data-state="now"', '<p class="pmx-track-now"><b>Do</b> · 1 of 3 checked</p></div>'));
   pc('C4 unknown stop state falls back to next', has(tr, 'data-k="s3" data-state="next"'));
 
   const ln = B('pmxLane', X.pmxLane({ key: 'pmx-lane:r1:p1', cls: 'collab-lane', attrs: 'data-run="r1" data-participant="p1"', action: 'collab-open-participant', mark: '<i>M</i>', name: 'Verify quoting', sub: 'Opus 5', verb: 'running tests', verbKey: 'vb:p1:4',
@@ -397,7 +380,7 @@ const B = (name, html) => { built.push([name, html]); return html; };
   pc('A2-16 a non-Collab receipt carries no collab-toggle-* in its foot', !rcRevert.includes('collab-') && rcRevert.includes('data-action="revert-open"'), rcRevert.slice(-300));
   const rfoot = (rc.match(/<footer[^]*<\/footer>/) || [''])[0];
   pc('C13/G-19 receipt foot: Expand, Open Panel, More, each with data-run', rfoot.startsWith('<footer class="pmx-run-foot collab-card-foot">') &&
-    /data-action="collab-toggle-expand" data-run="r2"[^>]*aria-label="Expand"/.test(rfoot) && /data-action="collab-open-panel" data-run="r2"[^>]*>Open(<span[^>]*>)? Panel/.test(rfoot) && /data-action="collab-toggle-more" data-run="r2"[^>]*aria-label="More"/.test(rfoot) &&
+    /data-action="collab-toggle-expand" data-run="r2"[^>]*aria-label="Expand"/.test(rfoot) && /data-action="collab-open-panel" data-run="r2"[^>]*>(<span>)?Open(<span[^>]*>)? Panel/.test(rfoot) && rfoot.includes('><span>Open<span class="pmx-long"> Panel</span></span></button>') && /data-action="collab-toggle-more" data-run="r2"[^>]*aria-label="More"/.test(rfoot) &&
     rfoot.indexOf('collab-toggle-expand') < rfoot.indexOf('collab-open-panel') && rfoot.indexOf('collab-open-panel') < rfoot.indexOf('collab-toggle-more'));
 
   const dl = B('pmxDockLine', X.pmxDockLine({ key: 'dk1', tone: 'needs', runId: 'r1', markHtml: '<i>M</i>', kindWord: 'BrainStorm needs you', sentence: '· 6 questions', time: '4:02', action: { action: 'pmx-dock-show', attrs: 'data-run="r1"', label: 'Answer now' } }));
@@ -430,7 +413,37 @@ const B = (name, html) => { built.push([name, html]); return html; };
   pc('C21 pmxNote: hook, severity, emitted, eye, kicker, title, body, checked, actions', has(nt, '<aside class="pmx-note bsd-card" data-k="nt" data-severity="concern" data-state="emitted"', '<span class="pmx-note-eye"><svg', '<p class="pmx-note-kicker">Advisor note · concern</p><p class="pmx-note-title">Drops a column</p><p class="pmx-note-body">Body</p><p class="pmx-fine">Checked 3 files</p><div class="pmx-note-acts"><i>A</i></div></aside>'));
   pc('C21 stale and dismissed states', has(X.pmxNote({ stale: true }), 'data-state="stale"') && has(X.pmxNote({ dismissed: true, title: 'T' }), 'data-state="dismissed"', 'Dismissed · T'));
 
-  pc('C22 pmxTick: key, hover, glyph, text', has(B('pmxTick', X.pmxTick({ key: 'tk', glyph: 'notebook', text: 'Noted', hover: 'Saved to memory' })), '<span class="pmx-tick" data-k="tk" data-hover="Saved to memory"><svg', '<span>Noted</span></span>'));
+  /* closing (PREFS): the hover reaches the app hover card (data-hover-key / data-hover-tip) */
+  pc('C22 pmxTick: key, hover card, glyph, text', has(B('pmxTick', X.pmxTick({ key: 'tk', glyph: 'notebook', text: 'Noted', hover: 'Saved to memory' })), '<span class="pmx-tick" data-k="tk" data-hover-key="tick:tk" data-hover-tip="Saved to memory"><svg', '<span>Noted</span></span>'));
+  pc('closing E-36 B: the rule tick says "Followed"', X.PMX_COPY.ticks.rule === 'Followed 1 of your rules' && X.PMX_COPY.ticks.rules === 'Followed {n} of your rules' && !!X.PMX_COPY.ticks.missed);
+  pc('closing pmxStepper step', has(X.pmxStepper({ min: 0, max: 60, value: 10, step: 5 }), 'data-delta="-5"', 'data-delta="5"'));
+  pc('closing pmxSwitch unset: nothing checked', (() => { const h = X.pmxSwitch({ unset: true, options: [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }] }); return h.includes('data-state="unset"') && !h.includes('aria-checked="true"'); })());
+  pc('closing pmxNote line form + weight', has(X.pmxNote({ key: 'nl', line: '<span>L</span>', state: 'aside', weight: 'aside', glyph: 'eye' }), 'data-state="aside"', 'data-form="line"', 'data-weight="aside"', '<div class="pmx-note-line"><span>L</span></div>'));
+  pc('closing pmxFilesRow sides, state and reason separator', (() => { const a = X.pmxFilesRow({ count: 1, add: 4, del: 0, sides: 'changed', reason: 'why' }), b = X.pmxFilesRow({ state: 'reverted', text: '<b>Reverted</b> · 3 files put back' });
+    return a.includes('+4') && !a.includes('−0') && a.includes('<span class="pmx-sep"> · </span><span class="pmx-reason pmx-files-reason">why</span>') && b.includes('data-state="reverted"') && b.includes('Reverted') && !b.includes('Changed'); })());
+  pc('closing pmxFinding num + wrap', (() => { const h = X.pmxFinding({ num: 2, claim: 'C', severity: 'S', disposition: 'D', wrap: true }); return h.includes('<span class="pmx-finding-n">2</span>C') && h.includes('data-wrap="1"') && !h.includes('pmx-sep') && (h.match(/pmx-fpart/g) || []).length === 2; })());
+  pc('closing pmxDisclosure: unboxed summary + body', has(X.pmxDisclosure({ key: 'dc', summary: 'How', body: '<p>B</p>', open: true }), '<details class="pmx-disc" data-k="dc" open>', '<summary class="pmx-disc-sum"><span>How</span>', '<div class="pmx-disc-body"><p>B</p></div></details>'));
+  pc('closing pmxTime.day and until minutes', X.pmxTime.day('2026-09-26T19:00:00Z', 'UTC') === 'Sat, Sep 26' && X.pmxTime.until(3.3e7, 0, { minutes: true }) === 'in 9 h 10 m');
+  pc('closing pmxRefusalText short form', X.pmxRefusalText('no_eligible_mutating_turn', { variant: 'not-latest' }).short === 'Not the latest change');
+  /* closing review (ENG 5): every code COLLAB's scheduledBad() returns has plain words, none of them the code's own */
+  const SCHED_BAD = ['collaboration_message_conflict', 'collaboration_transaction_required', 'crew_admission_binding_changed', 'crew_admission_conflict', 'crew_already_active',
+    'crew_assignment_changed', 'crew_assignment_invalid', 'crew_assignment_missing', 'crew_binding_missing', 'crew_configuration_required', 'crew_definition_changed', 'crew_definition_conflict',
+    'crew_definition_not_committed', 'crew_more_required_slots_than_work', 'crew_plan_binding_changed', 'crew_route_unavailable', 'crew_transaction_required', 'destination_ended',
+    'destination_generation_changed', 'destination_not_accepting', 'destination_not_found', 'destination_scope_mismatch', 'invalid_crew_concurrency', 'invalid_crew_configuration',
+    'participant_not_found', 'plan_changed_during_crew_configuration', 'plan_not_ready_for_crew', 'scheduled_adaptive_adapter_unavailable', 'scheduled_coordinator_adapter_unavailable',
+    'scheduled_specialist_adapter_unavailable', 'room_missing'];
+  const refMiss = SCHED_BAD.filter(c => { const t = X.pmxRefusalText(c, { kind: 'Crew' }); const w = t ? (t.strong + ' ' + t.text) : ''; return !t || !t.text || /_/.test(w) || w.includes(c.replace(/_/g, ' ')) || /\{\w+\}/.test(w); });
+  pc('closing review: pmxRefusalText words every scheduled-Crew code in plain language', refMiss.length === 0, refMiss);
+  pc('closing review: plan_version_changed without a version never prints "version ."', !/version \./.test(X.pmxRefusalText('plan_version_changed', {}).text) && X.pmxRefusalText('plan_version_changed', { version: 4 }).text === 'Reopen it to use version 4.');
+  /* closing review (receipt at 591 px): a recorded run's "Recorded example · no AI cost" lives in the hover card, not on the line */
+  const rcRecCost = X.pmxReceipt({ key: 'rc2', runId: 'r7', kind: 'crew', kindWord: 'Crew', title: 'T', headline: 'Export ready', recorded: true, time: '6s', cost: X.PMX_COPY.cost.recorded, open: { action: 'collab-open-panel' } });
+  const rcMeta = (rcRecCost.match(/<span class="pmx-receipt-meta">([\s\S]*?)<\/span><\/header>/) || [])[1] || '';
+  const rcTip = (rcRecCost.match(/data-hover-tip="([^"]*)"/) || [])[1] || '';
+  pc('closing review: a recorded receipt keeps its cost words in the hover card only (once), the line shows the time', rcMeta.includes('6s') && !rcMeta.includes('Recorded') && rcTip.split('Recorded example').length === 2, { rcMeta, rcTip });
+  /* closing review (dock lines): " · " after the kind word when the sentence starts its own clause, a space when it continues it */
+  const dj = s => X.pmxDockLine({ key: 'dj', kindWord: 'Crew', sentence: s });
+  pc('closing review: pmxDockLine separator', has(dj('Stream the export · editing'), '<b>Crew</b><span class="pmx-dock-sep"> · </span>Stream the export') &&
+    has(X.pmxDockLine({ kindWord: '1 scheduled message', sentence: 'needs you' }), '<b>1 scheduled message</b> needs you') && has(dj('· Next: tonight'), '<b>Crew</b> · Next: tonight'));
   pc('C23 pmxDivider', X.pmxDivider({ key: 'dv', text: 'Simple explanations from here' }) === '<div class="pmx-divider" role="separator" data-k="dv"><span>Simple explanations from here</span></div>');
   const fr = B('pmxFilesRow', X.pmxFilesRow({ key: 'fr', count: 3, add: 5, del: 3, revert: { action: 'af-revert-preview', attrs: 'data-msg="m1"' } }));
   pc('C24 pmxFilesRow: Changed N files +a −d · Revert', has(fr, '<p class="pmx-files" data-k="fr"><svg', '<span>Changed 3 files</span> <i class="pmx-add">+5</i> <i class="pmx-del">−3</i>', '<button type="button" class="text-button" data-action="af-revert-preview" data-msg="m1">Revert</button>'));
@@ -629,6 +642,43 @@ const j1 = [];
   const ital = [...css.matchAll(/--pmx-voice-italic\s*:\s*([^;}]+)/g)].map(m => m[1].trim()).filter(v => v !== 'normal');
   if (ital.length) j1.push('--pmx-voice-italic is not normal: ' + [...new Set(ital)].join(', '));
 })();
+/* Closing review (turn-verify blocker, 2026-09-28): a :has() in a NON-rightmost compound whose rightmost compound
+   carries no class, id, tag or attribute (`A:has(> X) > :not(X)`, `A:has(...) > *`) makes Chromium's shared :has
+   descendant invalidation set whole-subtree: every :has anchor (body, the transcript, each message) then restyles its
+   whole subtree on every DOM insertion under it, which doubled the style work of a streaming reply and let
+   turn-stream's clip spring run away under load. A rightmost compound with an attribute and no class, id or tag
+   (`A:has(X) > [data-action="y"]`) is the same fault in a narrower form: the shared set gains the attribute, and every
+   anchor restyles every element carrying it (every button with a data-action) on each insertion; measured
+   2026-09-28 (second rerun): about 7k extra element restyles in the 8 s fold/stream window. Every *.css of the
+   concept is scanned (comments stripped). Since the lane fix landed in the worktree (20:24Z, lane patch v2) this is a
+   hard check: a hit fails the selfcheck and prints a `has-scope` line naming file and selector. The fix is always to
+   give the rightmost compound a class the targets carry (`> :is(.a, .b):not(X)` for `> :not(X)`, `> .pmx-act[...]`). */
+const hasScope = [];
+(function hasScopeSources() {
+  const path = require('path');
+  const dir = path.join(__dirname, '..');
+  const topSplit = (s, sep) => { const out = []; let d = 0, cur = '', q = null; for (const c of s) { if (q) { cur += c; if (c === q) q = null; continue; } if (c === '"' || c === "'") { q = c; cur += c; continue; } if (c === '(' || c === '[') d++; else if (c === ')' || c === ']') d--; if (d === 0 && sep.test(c)) { out.push(cur); cur = ''; continue; } cur += c; } out.push(cur); return out; };
+  const compounds = sel => topSplit(sel.trim().replace(/\s*([>+~])\s*/g, ' '), /\s/).filter(Boolean);
+  const stripNot = c => { let out = '', d = 0; for (let i = 0; i < c.length; i++) { if (d === 0 && c.startsWith(':not(', i)) { let j = i + 5, dd = 1; while (j < c.length && dd) { if (c[j] === '(') dd++; else if (c[j] === ')') dd--; j++; } i = j - 1; continue; } out += c[i]; } return out; };
+  const bare = c => stripNot(c).replace(/::?[a-z-]+(\([^)]*\))?/g, m => /^:(is|where)\(/.test(m) ? m : '');
+  const hasFeature = c => { const x = bare(c); return /[.#\[]/.test(x) || /^[a-zA-Z]/.test(x); };
+  const attrOnly = c => { const x = bare(c); return /\[/.test(x) && !/[.#]/.test(x) && !/^[a-zA-Z]/.test(x); };
+  for (const f of fs.readdirSync(dir).filter(n => /\.css$/.test(n)).sort()) {
+    const css = fs.readFileSync(path.join(dir, f), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+    /* every prelude before a "{" that is a selector (not an at-rule, not a declaration block) */
+    const re = /([^{};]+)\{/g; let m;
+    while ((m = re.exec(css))) {
+      const pre = m[1].trim(); if (!pre || pre[0] === '@' || !pre.includes(':has(')) continue;
+      for (const cx of topSplit(pre, /,/)) {
+        const cs = compounds(cx); if (cs.length < 2) continue;
+        const right = cs[cs.length - 1];
+        if (/:has\(/.test(cs.slice(0, -1).join(' ')) && (!hasFeature(right) || attrOnly(right))) hasScope.push(f + ': ' + (hasFeature(right) ? '[attribute only] ' : '') + cx.trim().replace(/\s+/g, ' ').slice(0, 160));
+      }
+    }
+  }
+})();
+for (const h of hasScope) console.log('has-scope: ' + h);
+pc('closing review: no :has() rule widens the shared :has invalidation set (whole subtree or a bare attribute)', hasScope.length === 0, hasScope);
 /* IMPACT amendments (2026-09-27), read from the foundation sources (comments and embedded font data
    stripped): no color-mix() (A1-15), no backdrop-filter (A1-02), no element filter (A1-04), no
    stroke-dashoffset or pathLength (A1-05), PARTS defined, exported and holding the 6.6 vocabulary,

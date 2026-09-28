@@ -538,8 +538,9 @@
   if(vm.phase==='stale'){
    out.decision={key:'dec:'+r.id,tone:'warm',glyph:'warn',sentence:'<b>'+H(vm.target.file)+' changed after this review started.</b> Notes about the new version are set aside, never mixed in.',
     /* below 360 px the last word of each label drops (.pmx-long, as the receipt's "Open Panel"): at a 204 px card
-       "Finish on the old snapshot" ran 31 px past the card in retro */
-    actions:[{action:'collab-review-run-again',label:'Review the new<span class="pmx-long"> version</span>',primary:true,attrs:R},{action:'review-keep-snapshot',label:'Finish on the old<span class="pmx-long"> snapshot</span>',attrs:R}]};
+       "Finish on the old snapshot" ran 31 px past the card in retro. Each label is one outer span, so the button's
+       flex gap never falls between "new" and " version" (a double word gap) */
+    actions:[{action:'collab-review-run-again',label:'<span>Review the new<span class="pmx-long"> version</span></span>',primary:true,attrs:R},{action:'review-keep-snapshot',label:'<span>Finish on the old<span class="pmx-long"> snapshot</span></span>',attrs:R}]};
   }
   /* lanes (reading): reviewer mark, focus, verb, time; line 2 = sealed squares, never dispositions (REV-05) */
   out.lanes='';out.board='';

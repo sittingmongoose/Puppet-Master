@@ -10,8 +10,8 @@
  const flows={override:{title:'Simple answers in one chat',detail:'Turn ELI5 on for one chat and compare it with a chat that stays standard.'},inherit:{title:'Back to your usual setting',detail:'Undo one chat’s own choice so it follows its project again.'}};
  const code='const limit = options.maxRetries ?? 3;';
  const questions=['Explain the retry limit.','What does the zero limit do?'];
- const variants=[{standard:'The nullish-coalescing expression preserves an explicitly supplied maxRetries value, including zero, and falls back to 3 only for null or undefined.',simple:'Use the retry limit you provide—even 0. When the value is null or missing, use 3 instead.'},
-  {standard:'An explicit maxRetries value of 0 is not nullish, so the expression evaluates to 0 rather than the fallback value of 3.',simple:'A limit of 0 stays 0. This expression does not replace it with 3.'}];
+ const variants=[{standard:'The nullish-coalescing expression preserves an explicitly supplied maxRetries value, including zero, and falls back to 3 only for null or undefined.',simple:'Use the retry limit you provide—even 0. When the value is null or missing, use 3 instead.',simplest:'You pick how many times to try again, and that number is kept, even 0. Pick nothing, and it tries 3 times.'},
+  {standard:'An explicit maxRetries value of 0 is not nullish, so the expression evaluates to 0 rather than the fallback value of 3.',simple:'A limit of 0 stays 0. This expression does not replace it with 3.',simplest:'Zero means no second tries at all. It does not quietly turn into 3.'}];
  function snap(){return active?copy(active):null;}
  function S(){return window.PM56_SHELL;}
  function chatName(c,tid){if(active&&active.threads.includes(tid))return tid===active.threads[0]?'Chat A':'Chat B';const t=c.state.threads.find(x=>x.id===tid);return t?t.title:'this chat';}
@@ -48,6 +48,9 @@
   active={kind,threads:ids,projectId:pid,planId,artifactId,questions:copy(questions),code,initialPlan:copy(plan),initialArtifact:copy(artifact)};
   Object.assign(c.state,{mode:'Ask',menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,demoOpen:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,started:false,completed:false,elapsed:0};window.PM56_RUNTIME.composer.destination=null;c.switchThread(ids[0]);c.openEditor('eli5-evidence:'+ids[0]);
  }
+ /* Explain this reply simply (owner answer E-11, eli5-preferences.js): the recorded answers carry their own simpler
+    wording, one step simpler than the answer shown; any other reply gets the resolver's stand-in */
+ function simpler(m){if(!m||m.type!=='eli5-example-answer')return null;const v=variants.find(x=>x.standard===m.body||x.simple===m.body);if(!v)return null;return m.body===v.standard?v.simple:v.simplest;}
  function reply(t,raw,preference,requestId){if(!t.eli5Example)return null;const at=questions.indexOf(raw);if(at<0)return null;const v=variants[at];return {id:E.ctx().uid('eli5-answer'),role:'assistant',type:'eli5-example-answer',body:preference.effective?v.simple:v.standard,code:t.eli5Example.code,artifactId:t.eli5Example.artifactId,planId:t.eli5Example.planId,sourceMessageId:requestId,explanationPreference:copy(preference),time:new Date().toISOString(),recordedExample:true};}
  /* The example answer reads like any reply: the role line, one answer (simple or standard, never both), the
     code, and "See your code (unchanged)". Its meta row carries the ticks; the change-point divider comes from
@@ -57,7 +60,7 @@
    '<div class="message-surface"><div class="message-role">'+c.icon('sparkles',12)+' Assistant</div><div class="message-body eli5-answer-body"><p>'+c.esc(m.body)+'</p><pre><code>'+c.esc(m.code)+'</code></pre></div>'+
    '<button type="button" class="text-button eli5-answer-see" data-action="eli5-demo-evidence" data-thread="'+c.esc(c.thread.id)+'">'+S().pmxGlyph('code',13)+'<span>See your code (unchanged)</span></button></div>'+
    '<div class="message-chrome'+(opened?' is-overflow-open':'')+'">'+c.extRender('messageMeta',{message:m})+'<div class="message-actions"><button class="text-button icon-only" data-action="copy-message" data-id="'+c.esc(m.id)+'" aria-label="Copy reply">'+c.icon('copy',13)+'<span>Copy</span></button>'+more+'</div>'+panel+'</div></article>';});
- E.slot('messageMeta',c=>{const m=c.message;if(!m||m.type!=='eli5-example-answer'||!m.recordedExample)return '';return S().pmxTick({key:'eli5-rec:'+m.id,cls:'eli5-answer-rec',glyph:'play-ring',text:'Recorded example · no AI cost'});});
+ E.slot('messageMeta',c=>{const m=c.message;if(!m||!(m.type==='eli5-example-answer'||m.eli5ExplainsId)||!m.recordedExample)return '';return S().pmxTick({key:'eli5-rec:'+m.id,cls:'eli5-answer-rec',glyph:'play-ring',text:'Recorded example · no AI cost'});});
  function textButton(c,action,attr,value,label){return '<button type="button" class="text-button" data-action="'+action+'"'+(attr?' '+attr+'="'+c.esc(value)+'"':'')+'>'+label+'</button>';}
  function evidence(c){const t=c.thread,f=t.eli5Example;if(!f)return '';const plan=window.PM56_PLANS.get(f.planId),a=c.D.artifacts.find(x=>x.id===f.artifactId);if(!a)return '';
   const table=S().pmxMd('| Input | What it gives |\n|---|---|\n| `0` | `0` |\n| `null` | `3` |\n| `undefined` | `3` |',{mode:'full'});
@@ -82,5 +85,5 @@
  E.chainAction('reset-all',()=>{active=null;return false;});
  ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','crew-demo-start','room-demo-start','teach-demo-start','memory-demo-start','debug-demo-start','revert-demo-start'].forEach(a=>E.chainAction(a,()=>{active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided ELI5 examples</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="eli5-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
- window.PM56_ELI5_DEMOS={start,snapshot:snap,reply,questions:()=>copy(questions)};
+ window.PM56_ELI5_DEMOS={start,snapshot:snap,reply,simpler,questions:()=>copy(questions)};
 })();

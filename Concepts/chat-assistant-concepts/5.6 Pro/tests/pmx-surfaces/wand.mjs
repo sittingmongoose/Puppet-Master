@@ -13,14 +13,25 @@
    re-evaluated through PM56_CREW.evaluate, which must stay fixture-static: the ledger
    requires that it was reached and that nothing durable moved. */
 const SPECIALISTS = ['Wonderer', 'Grill Me'];
+/* closing (COLLAB request): the wand rows only. The unscoped selector also matched a finished or cancelled card's
+   "Run again with changes…" (data-reconfigure), as collab.mjs and collaboration-verify already avoid. */
+const ROW = (kind, auto) => 'button.menu-item[data-action="collab-open-configure"][data-kind="' + kind + '"]' + (auto ? '[data-auto="1"]' : ':not([data-auto])') + ':not([data-reconfigure])';
 export default ({ wand, demo }) => [
-  wand('wand:crew', { group: 'work', sel: '[data-action="collab-open-configure"][data-kind="crew"]:not([data-auto])', title: 'Crew setup sheet (8.1)', canon: ['Crew', ...SPECIALISTS] }),
-  wand('wand:crew-auto', { group: 'work', sel: '[data-action="collab-open-configure"][data-kind="crew"][data-auto="1"]', title: 'Crew Auto sheet (8.2)', canon: ['Crew Auto'],
+  wand('wand:crew', { group: 'work', sel: ROW('crew'), title: 'Crew setup sheet (8.1)', canon: ['Crew', ...SPECIALISTS] }),
+  wand('wand:crew-auto', { group: 'work', sel: ROW('crew', true), title: 'Crew Auto sheet (8.2)', canon: ['Crew Auto'],
     ledgerSpy: { 'PM56_CREW.evaluate': 1 } }),
-  wand('wand:chat_room', { group: 'work', sel: '[data-action="collab-open-configure"][data-kind="chat_room"]', title: 'Chat Room setup sheet (8.3)', canon: ['Chat Room', ...SPECIALISTS] }),
-  wand('wand:brainstorm', { group: 'work', sel: '[data-action="collab-open-configure"][data-kind="brainstorm"]', title: 'BrainStorm setup sheet (8.4)', canon: ['BrainStorm', ...SPECIALISTS] }),
-  wand('wand:review', { group: 'work', sel: '[data-action="collab-open-configure"][data-kind="review"]', title: 'Review setup sheet (8.5)', canon: ['Review', 'Multi-Pass Review'] }),
-  wand('wand:revert', { group: 'work', sel: '[data-action="af-revert-preview"]', title: 'Revert Last Agent Edit sheet (8.12)', canon: [] }),
+  /* lead ruling 2026-09-28 (COLLAB FR 6): Chat Room's 4 helpers + Moderator (MUST-KEEP) still overflow at 1280 x 800 after
+     the sheet has fully yielded (two-line job box included), so its roster may scroll inside its own region there
+     (the Crew 4-5 precedent) */
+  wand('wand:chat_room', { group: 'work', sel: ROW('chat_room'), title: 'Chat Room setup sheet (8.3)', canon: ['Chat Room', ...SPECIALISTS], rosterScrollAfterYield: ['1280x800'] }),
+  wand('wand:brainstorm', { group: 'work', sel: ROW('brainstorm'), title: 'BrainStorm setup sheet (8.4)', canon: ['BrainStorm', ...SPECIALISTS] }),
+  wand('wand:review', { group: 'work', sel: ROW('review'), title: 'Review setup sheet (8.5)', canon: ['Review', 'Multi-Pass Review'] }),
+  /* closing: the wand's Revert row is disabled until the chat holds an agent edit it can undo, so the surface first
+     runs the recorded Revert example to that point (as revert:sheet does); `setup` passes through the wand factory */
+  wand('wand:revert', { group: 'work', sel: '[data-action="af-revert-preview"]:not([disabled])', title: 'Revert Last Agent Edit sheet (8.12)', canon: [],
+    async setup(h) { await h.closeAll(); await h.demo('revert-demo-start', 'whole'); await h.action('revert-demo-apply'); await h.wait(250); },
+    /* the effects-ledger edit is Revert's own (revert.mjs): the generic step typed into Cancel and closed the sheet */
+    async edit(h) { await h.ev(() => { const s = document.querySelector('#pmOverlayRoot .pmx-revert-file:last-child > summary'); if (s) s.click(); }); await h.wait(200); return ['toggled the last file’s mini diff']; } }),
   wand('wand:bsd', { group: 'assist', hover: '[data-submenu="bsd-v2"]', sel: '[data-action="bsd-configure-stages"]', title: 'Back Seat Driver sheet (8.6)', canon: ['Back Seat Driver', 'Off', 'Auto', 'On'] }),
   wand('wand:eli5', { group: 'assist', sel: '[data-action="eli5-open"]', title: 'ELI5 sheet (8.13)', canon: [] }),
   wand('wand:schedule-message', { group: 'schedule', sel: '[data-action="sched-open-message"]', title: 'Schedule Message sheet (8.7)', canon: [] }),

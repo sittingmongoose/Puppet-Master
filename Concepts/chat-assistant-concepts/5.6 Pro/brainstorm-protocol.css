@@ -8,19 +8,22 @@
 /* retro's monospace side column has no line to spare at 1440 x 900: the label's hover card carries it there */
 body[data-theme^="retro"] .pmx-sheet .pmx-bs-qhelp{display:none;}
 /* the must-haves (review fix, J-2): the box carries border, fill and focus ring (the hero field's pattern); the field
-   inside grows with its rules from one line to two and scrolls past that (one line in short windows), its bottom 7 px
-   padding fading to nothing, so a hidden line never shows half cut. The label keeps to the first line. Two lines is
+   inside grows with its rules from one line to two and scrolls past that (one line in short windows). The box keeps
+   the 7 px padding above and below, outside the field, and the field is exactly whole 17.5 px lines tall, so typing
+   scrolls it by whole lines (its 2 px bottom scroll padding makes the caret reveal take in the caret line's
+   half-leading, so the end of the text sits on the field's bottom edge, one line or two; measured scrollTop within
+   0.5 px of a 17.5 px multiple, the whole-pixel scroll offset's limit) and a hidden line never shows half cut. The
+   label keeps to the first line. Two lines is
    what the hero's side holds without growing the sheet (measured: the side column has 5 px to spare at 1440 x 900),
    once the preview's "In your chat" caption leaves, as COLLAB's own short-window rule already does. */
 .pmx-sheet .pmx-hero-side:has(.pmx-bs-must) .pmx-preview > figcaption{display:none;}
 .pmx-sheet .pmx-collab-must.pmx-bs-must{align-items:start;}
 .pmx-sheet .pmx-bs-must > .pmx-ctl-label{padding-top:8px;}
-.pmx-sheet .pmx-bs-mbox{display:block;min-width:0;box-sizing:border-box;padding:7px 0 0;overflow:hidden;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;}
+.pmx-sheet .pmx-bs-mbox{display:block;min-width:0;box-sizing:border-box;padding:7px 0;overflow:hidden;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;}
 .pmx-sheet .pmx-bs-mbox:focus-within{border-color:var(--pmx-focus-edge);box-shadow:0 0 0 3px var(--pmx-focus-ring);}
-.pmx-sheet .pmx-collab-must .pmx-bs-mbox > textarea{display:block;width:100%;box-sizing:border-box;margin:0;padding:0 10px 7px;border:0;border-radius:0;background:transparent;outline:none;box-shadow:none;
- field-sizing:content;height:auto;min-height:calc(17.5px + 7px);max-height:calc(2 * 17.5px + 7px);line-height:17.5px;overflow:hidden auto;scrollbar-width:thin;
- -webkit-mask-image:linear-gradient(#000 calc(100% - 7px),transparent calc(100% - 3px));mask-image:linear-gradient(#000 calc(100% - 7px),transparent calc(100% - 3px));}
-@media (max-height:820px){.pmx-sheet .pmx-collab-must .pmx-bs-mbox > textarea{max-height:calc(17.5px + 7px);}}
+.pmx-sheet .pmx-collab-must .pmx-bs-mbox > textarea{display:block;width:100%;box-sizing:border-box;margin:0;padding:0 10px;border:0;border-radius:0;background:transparent;outline:none;box-shadow:none;
+ field-sizing:content;height:auto;min-height:17.5px;max-height:calc(2 * 17.5px);line-height:17.5px;overflow:hidden auto;scrollbar-width:thin;scroll-padding-block:0 2px;}
+@media (max-height:820px){.pmx-sheet .pmx-collab-must .pmx-bs-mbox > textarea{max-height:17.5px;}}
 /* a recorded example's rules, read-only: the first rule on the label's line, the note under both */
 .pmx-sheet .pmx-bs-must[data-recorded] > .pmx-ctl-label{padding-top:0;}
 .pmx-sheet .pmx-bs-mrule{min-width:0;font:var(--pmx-w-reg) 12.5px/18.5px var(--font-ui);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}

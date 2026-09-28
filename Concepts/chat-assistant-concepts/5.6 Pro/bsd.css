@@ -163,15 +163,17 @@
 .pmx-bsd-list li{min-width:0;overflow-wrap:anywhere;}
 .pmx-bsd-list b{font-weight:600;}
 .pmx-bsd-v{display:inline-block;min-width:30px;margin-right:8px;font:var(--pmx-fs-meta);color:var(--muted);font-variant-numeric:tabular-nums;}
-.pmx-bsd-raw{margin-top:10px;}
-.pmx-bsd-raw[open]{padding-bottom:12px;}
-.pmx-bsd-raw > summary{display:inline-flex;align-items:center;gap:8px;min-height:32px;cursor:pointer;list-style:none;font:var(--pmx-fs-meta);color:var(--muted);}
-.pmx-bsd-raw > summary::-webkit-details-marker{display:none;}
-.pmx-bsd-raw > summary .pmx-bsd-chev{flex:none;transition:transform var(--pmx-t-light) var(--pmx-ease-move);}
-.pmx-bsd-raw[open] > summary .pmx-bsd-chev{transform:rotate(90deg);}
+/* "Show raw data" is a pmxDisclosure (closing review): its summary is a text control with the J-2 10 px sides (its
+   words stay on the text column: the -10 px margin), the chevron 8 px after the words, never cut */
+.pmx-disc.pmx-bsd-raw{margin-top:10px;}
+.pmx-disc.pmx-bsd-raw[open]{padding-bottom:12px;}
+.pmx-bsd-raw > .pmx-disc-sum{min-height:32px;padding:0 10px;margin:0 0 0 -10px;font:var(--pmx-fs-meta);color:var(--muted);}
+.pmx-bsd-raw:not(.pmx-bsd-tx) > .pmx-disc-sum > span{flex:none;white-space:nowrap;}
+.pmx-bsd-raw > .pmx-disc-sum:hover{color:var(--text);}
+.pmx-bsd-raw > .pmx-disc-body{margin:6px 0 0;}
 /* the raw JSON is never its own scroller: the drawer or the sheet body around it scrolls (one scroller, not two) */
 /* pre-wrap lets a line's last space hang into the right padding; 20 px keeps even that space 12 px off the edge (J-2) */
-.pmx-bsd-raw > pre{margin:6px 0 0;padding:10px 20px 10px 12px;border-radius:var(--pmx-r-sm);background:var(--code);font:11px/16px var(--font-mono);white-space:pre-wrap;overflow-wrap:anywhere;color:var(--text);}
+.pmx-bsd-raw > .pmx-disc-body > pre{margin:0;padding:10px 20px 10px 12px;border-radius:var(--pmx-r-sm);background:var(--code);font:11px/16px var(--font-mono);white-space:pre-wrap;overflow-wrap:anywhere;color:var(--text);}
 .pmx-bsd-acts .soft-button{min-height:32px;padding:0 12px;}
 .pmx-bsd-acts .soft-button:disabled{opacity:.45;cursor:default;}
 .pmx-bsd-tech{margin-top:12px}
@@ -179,17 +181,21 @@
 .pmx-bsd-tech code{font:10.5px var(--font-mono);overflow-wrap:anywhere;}
 
 /* =====================================================================
-   6. THE RAW-DATA SHEETS (bsd-usage, bsd-transcript): compact pmx sheets as tall as what they hold, up to 560 (the
-   foot follows the content; no empty panel). The summary reads first; past 560 the body scrolls.
+   6. THE RAW-DATA SHEETS (bsd-usage, bsd-transcript): compact pmx sheets at the fixed 560 of 3.2 (closing review:
+   opening a check grew the sheet from 290 to 560 and re-centred it). Head and foot stay put; the list scrolls
+   inside the body.
    ===================================================================== */
-:is(#pmOverlayRoot, body) > .pmx-sheet.pmx-bsd-rawsheet{height:fit-content;max-height:min(var(--pmx-h),calc(100vh - 40px));}
-.pmx-bsd-rawsheet .pmx-body{overflow:auto;}
+:is(#pmOverlayRoot, body) > .pmx-sheet.pmx-bsd-rawsheet{height:min(var(--pmx-h,560px),calc(100vh - 40px));max-height:min(var(--pmx-h,560px),calc(100vh - 40px));}
+/* the body's clip reaches 14 px into the sheet's side padding (the foundation's is 4), so a summary's text-button
+   overhang (-10 px) and its focus ring are never cut; the content stays where it was */
+.pmx-sheet.pmx-bsd-rawsheet .pmx-body[data-layout]{flex:1 1 auto;min-height:0;overflow:hidden auto;scrollbar-width:thin;margin-left:-14px;padding-left:14px;}
 .pmx-bsd-rawbody{padding:4px 0 12px;min-width:0;}
 .pmx-bsd-rawbody > .pmx-bsd-raw:first-child{margin-top:0;}
-.pmx-bsd-rawbody .pmx-bsd-tx{border-top:1px solid var(--border);margin-top:0;}
+.pmx-bsd-rawbody .pmx-disc.pmx-bsd-tx{border-top:1px solid var(--border);margin-top:0;}
 .pmx-bsd-rawbody .pmx-bsd-tx:last-child{border-bottom:1px solid var(--border);}
-.pmx-bsd-rawbody .pmx-bsd-tx > summary{display:flex;min-height:40px;}
-.pmx-bsd-rawbody .pmx-bsd-tx > summary .pmx-bsd-v{margin-right:0;}
+.pmx-bsd-rawbody .pmx-bsd-tx > .pmx-disc-sum{min-height:40px;}
+.pmx-bsd-rawbody .pmx-bsd-tx > .pmx-disc-sum > span{display:flex;align-items:baseline;flex:0 1 auto;min-width:0;}
+.pmx-bsd-rawbody .pmx-bsd-tx .pmx-bsd-txsay{min-width:0;}
 /* the usage sheet's checks: what each one said, then what it read and took */
 .pmx-bsd-cycles{gap:12px;margin-top:8px;}
 .pmx-bsd-cycles li{display:flex;align-items:baseline;}

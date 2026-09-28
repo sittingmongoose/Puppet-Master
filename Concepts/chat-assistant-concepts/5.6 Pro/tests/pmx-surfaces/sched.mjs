@@ -91,7 +91,8 @@ const chat = (id, title, thread, open, extra) => Object.assign({
 }, extra || {});
 
 /* J-2 at the narrow cards (311 in the user's rule, 234 for the narrow pane): a receipt never cuts its canon word or its
-   time (only Canceled's quote may end in an ellipsis), a Failed / Expired reason is read whole (it wraps), and
+   time (only Canceled's quote and Failed's brief cause may end in an ellipsis; Failed keeps one line and its whole
+   reason is the hover card), an Expired reason is read whole (it wraps), and
    Held's reason is never clamped. The column is narrowed by a style rule (a re-render keeps it; an inline style would
    be patched away). */
 async function narrowCheck(h, width) {
@@ -106,7 +107,14 @@ async function narrowCheck(h, width) {
       const hl = el.querySelector('.pmx-receipt-headline');
       if (hl) {
         const cs = getComputedStyle(hl), word = hl.querySelector('.pmx-sched-word');
-        if (st !== 'canceled') {
+        if (st === 'failed') {
+          /* Failed is one line (C13 receipt budget): its brief cause may end in an ellipsis, the whole sentence is the
+             line's hover card, and the canon word is never cut */
+          const lh = parseFloat(cs.lineHeight) || 20, tip = (el.querySelector('.pmx-receipt-say') || {}).dataset?.hoverTip || '';
+          if (hl.getBoundingClientRect().height > lh * 1.5) out.push('failed: headline wraps (' + Math.round(hl.getBoundingClientRect().height) + ' px)');
+          if (!/Edit it to retry\./.test(tip) || !/never swap|couldn|wasn|isn/.test(tip)) out.push('failed: the hover card lacks the whole reason: "' + tip.slice(0, 80) + '"');
+          if (word && word.getBoundingClientRect().right > hl.getBoundingClientRect().right + 1) out.push('failed: canon word cut');
+        } else if (st !== 'canceled') {
           if (hl.scrollWidth > hl.clientWidth + 1) out.push(st + ': headline overflows (' + hl.scrollWidth + ' > ' + hl.clientWidth + ')');
           if (cs.textOverflow === 'ellipsis') out.push(st + ': headline ellipsizes');
           if (hl.scrollHeight > hl.clientHeight + 1) out.push(st + ': headline cut vertically');
@@ -140,12 +148,54 @@ export default () => [
   sheet('sched:message-confirm', 'Schedule Message: the confirmation after a commit (8.7)', async h => {
     await openMessage(h); await h.clickVisible('[data-action="sched-create-message"]'); await h.wait(400); await h.settle();
   }, { ledger: false, canon: ['Scheduled'] }),
+  /* DL-136 lead ruling: with Pause all automations on, the sheet says so in one plain line before its primary, and
+     Schedule never turns the switch off */
+  sheet('sched:message-paused', 'Schedule Message while Pause all automations is on: the one plain line before Schedule (DL-136)', async h => {
+    await h.ev(() => { window.PM56_SCHED.setAutomationPause(true); }); await openMessage(h);
+    const t = await h.ev(() => (document.querySelector('.pmx-sched-foot [data-k="sched-msg-pausenote"]') || {}).innerText || '');
+    if (!/Pause all automations is on, so this will wait until you turn it off\./.test(t)) throw new Error('no pause line in the foot: "' + t + '"');
+  }, { ledger: false, async after(h) { await h.closeAll(); await h.ev(() => { window.PM56_SCHED.restore(); }); } }),
+  sheet('sched:build-paused', 'Build At while Pause all automations is on: the plain line before the primary, and the switch stays on after Schedule (DL-136)', async h => {
+    await h.ev(() => { window.PM56_SCHED.setAutomationPause(true); }); await openBuild(h, 'night');
+    const t = await h.ev(() => (document.querySelector('.pmx-sched-foot [data-k="sched-bld-pausenote"]') || {}).innerText || '');
+    if (!/Pause all automations is on, so this will wait until you turn it off\./.test(t)) throw new Error('no pause line in the foot: "' + t + '"');
+  }, { ledger: false, async after(h) {
+    await h.clickVisible('[data-action="sched-create-build"]'); await h.wait(400);
+    const on = await h.ev(() => window.PM56_SCHED.automationPause().paused);
+    await h.closeAll(); await h.ev(() => { window.PM56_SCHED.restore(); });
+    if (!on) throw new Error('creating a build slot turned Pause all automations off');
+  } }),
   sheet('sched:build-nightly', 'Build At sheet: nightly time slot (8.8)', h => openBuild(h, 'night')),
   sheet('sched:build-skip', 'Build At: "Skip it if..." with its real minutes input (8.8, IMPACT A1-42)', async h => { await openBuild(h, 'night'); await pick(h, 'build-missed', 'cancel_after_grace'); },
     { change: h => h.clickVisible('.pmx-sched-missrow [data-action="pmx-step"][data-delta="5"]') }),
   sheet('sched:build-once', 'Build At sheet: one time (8.8)', h => openBuild(h, 'once')),
-  sheet('sched:build-crew', 'Build At: Who builds it = A Crew, before the Crew is set up (8.8)', async h => { await openBuild(h, 'night'); await pick(h, 'build-topology', 'crew'); },
-    { change: h => h.clickVisible('[data-action="sched-toggle-day"][data-day="6"]') }),
+  /* A Crew is offered only on a plan whose steps are tied to real work (plans.js workRef): on the fixture plans it is
+     listed, disabled, with its reason (closing review), so the surface first checks that, then opens Build At on the
+     plan the batch 18 request makes (the plan tests/b18-completion schedules a Crew on) */
+  /* A Crew is offered only on a plan whose steps are tied to real work (plans.js workRef): on the fixture plans it is
+     listed, disabled, with its reason (closing review), so the surface checks that on ap-index, then opens Build At
+     on the plan the batch 18 request makes (the plan tests/b18-completion schedules a Crew on). The request is sent
+     once, in setup, so reopening the surface (effects ledger) changes nothing durable. */
+  sheet('sched:build-crew', 'Build At: Who builds it = A Crew, before the Crew is set up (8.8)', async h => {
+    await openBuild(h, 'night');
+    await h.clickVisible('[data-action="sched-pick-build-topology"]'); await h.wait(320);
+    const off = await h.ev(() => (document.querySelector('.overlay-menu [data-action="shared-choice-pick"][data-value="crew"]') || {}).innerText || '');
+    if (!/Not for this plan/.test(off)) throw new Error('A Crew is offered on a plan a Crew cannot build: "' + off.replace(/\s+/g, ' ') + '"');
+    await h.closeAll();
+    const r = await h.ev(() => {
+      const w = window.PM56_B17_WORK && window.PM56_B17_WORK.snapshot(), p = w && window.PM56_PLANS.get(w.planId);
+      if (!p || !p.workRef) return 'no work plan';
+      window.PM56_SCHED.openBuildAt(window.PM56_EXT.ctx(), p.plan_id, p.version); return 'ok';
+    });
+    if (r !== 'ok') throw new Error('Build At (Crew): ' + r);
+    await h.wait(300); await h.settle(); await pick(h, 'build-topology', 'crew');
+  }, { change: h => h.clickVisible('[data-action="sched-toggle-day"][data-day="6"]'),
+    async setup(h) {
+      await h.closeAll();
+      await h.ev(() => { window.PM56_SCHED.restore(); window.PM56_RUNTIME.quota.waiting = false; window.PM56_B18.start('windows'); const send = document.querySelector('[data-action="send"]'); if (send) send.click(); });
+      await h.wait(400);
+    },
+    async after(h) { await h.closeAll(); } }),
   sheet('sched:build-confirm', 'Build At: the confirmation after a commit (8.8)', async h => {
     await openBuild(h, 'night'); await h.clickVisible('[data-action="sched-create-build"]'); await h.wait(400); await h.settle();
   }, { ledger: false }),
@@ -163,9 +213,19 @@ export default () => [
     await h.ev(() => { if (window.PM56_PLANS.get('ap-index').version === 5) window.PM56_PLANS.revise('ap-index', 'Also cover the p50 path in the fixture.'); });
     await openManager(h, 'builds');
   }, { async after(h) { await h.closeAll(); await h.ev(() => { window.PM56_SCHED.restore(); }); } }),
-  manager('sched:manager-safety', 'Scheduled manager: Resume & Safety Policy, paused by you (8.9, IMPACT A1-44)', async h => {
-    /* latched through PM56_SCHED (the demo action also raises the app's toast, whose motion is not this sheet's) */
-    await openManager(h, 'quota'); await h.ev(() => { window.PM56_SCHED.latchStop('Paused from the Scheduled manager.'); window.PM56_EXT.ctx().renderOverlays(); }); await h.wait(300); await h.settle();
+  manager('sched:manager-safety-off', 'Scheduled manager: Resume & Safety Policy, the Pause all automations switch Off (8.9, SQR-018, DL-136)', async h => {
+    await openManager(h, 'quota');
+    const t = await h.ev(() => (document.querySelector('[data-k="sched-safety"]') || {}).innerText || '');
+    if (/In this preview|each run separately/i.test(t)) throw new Error('preview fine print still shown: ' + t.slice(0, 160));
+    if (!/Off: scheduled things start on time/.test(t) || !/[Oo]nly you can turn it off/.test(t)) throw new Error('switch copy: ' + t.slice(0, 200));
+  }),
+  manager('sched:manager-safety', 'Scheduled manager: Resume & Safety Policy, paused by you through the real switch (8.9, IMPACT A1-44, SQR-018)', async h => {
+    /* DL-136 (owner answer p12/E-19 A): the switch is interactive; the reader turns it on */
+    await openManager(h, 'quota');
+    if (!(await h.clickVisible('[data-k="sched-pause-switch"] [data-action="sched-set-pause"][data-value="on"]'))) throw new Error('Pause all automations switch not found');
+    await h.wait(350); await h.settle();
+    const st = await h.ev(() => { const el = document.querySelector('[data-k="sched-safety"]'); return { state: el && el.dataset.state, text: el ? el.innerText : '' }; });
+    if (st.state !== 'paused' || !/Paused by you/.test(st.text) || !/Turn back on/.test(st.text)) throw new Error('switch did not turn on: ' + JSON.stringify(st).slice(0, 200));
     /* A1-30 / 8.8: with Pause all automations on, the Plan card's schedule line leads with Paused, never "next: …" */
     const line = await h.ev(() => { const d = document.createElement('div'); d.innerHTML = window.PM56_SCHED.planSummary('ap-index'); return (d.querySelector('.plan-sched-say') || d).textContent.trim(); });
     if (!/^Paused · Pause all automations is on/.test(line)) throw new Error('Plan schedule line while paused: "' + line + '"');
@@ -218,6 +278,24 @@ export default () => [
       if (r.st !== 'held' || !/missed at/.test(r.say)) throw new Error('expected a Held "missed at" bubble, got ' + r.st + ': ' + String(r.say).slice(0, 120));
       await h.settle();
     },
+    async after(h) { await h.closeAll(); }
+  }),
+  chat('sched:chat-paused', 'In chat: Held because Pause all automations is on (Send now, Reschedule, Cancel) (SQR-018, DL-136)', 'query', h => scrollCard(h, '.sched-card-held'), {
+    async setup(h) {
+      await openMessage(h);
+      await h.clickVisible('[data-action="sched-create-message"]'); await h.wait(400);
+      await h.closeAll(); await h.selectThread('query');
+      const r = await h.ev(() => { const S = window.PM56_SCHED, m = S.list().messages.filter(x => x.thread_id === 'query' && x.binding_kind === 'scheduled_message_v2').at(-1);
+        if (!m) return { err: 'no committed message' };
+        S.setAutomationPause(true); S.dispatchMessageAt(m.scheduled_dispatch_id, Date.parse(m.scheduled_at_utc)); window.PM56_EXT.ctx().renderApp();
+        const n = S.list().messages.find(x => x.scheduled_dispatch_id === m.scheduled_dispatch_id);
+        const card = document.querySelector('.transcript .sched-card-held[data-schedule-id="' + m.scheduled_dispatch_id + '"]');
+        return { st: n.state, say: card ? ((card.querySelector('.pmx-decision-say, .pmx-decision-sentence') || card).innerText + ' | ' + card.innerText) : '' }; });
+      if (r.err) throw new Error(r.err);
+      if (r.st !== 'held' || !/^Held/.test(r.say.trim()) || !/Pause all automations is on/.test(r.say) || !/Send now/.test(r.say)) throw new Error('expected a Held bubble naming the pause, got ' + r.st + ': ' + String(r.say).slice(0, 160));
+      await h.settle();
+    },
+    /* each surface runs in a fresh page, so the switch is left on for the next theme and layout */
     async after(h) { await h.closeAll(); }
   }),
   chat('sched:chat-dock', 'In chat: the "Coming up" dock line while the bubble is out of view (8.7, 7.8)', 'query', async h => {

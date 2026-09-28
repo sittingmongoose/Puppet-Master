@@ -111,8 +111,14 @@
   const counts=countsOf(src);
   const created=findings.filter(f=>f.todoId);
   const selected=findings.filter(f=>f.selected&&f.canTick);
-  const excluded=(v.excludedFindings||[]).map((x,i)=>{const w=EXCLUDED[x.reason]||['this note didn’t match the snapshot every reviewer read.',String(x.reason||'excluded')];
-   const old=x.payload&&x.payload.targetHash;return {key:'rx-'+i,text:w[0],tech:w[1]+(old&&x.reason==='different_target_hash'?' · '+old+' vs '+((pack.targetHashes||{}).primary||''):''),cls:'collab-finding collab-excluded'};});
+  /* a note set aside for a different frozen pack: the old hash sits on the record (x.targetHash; x.payload.targetHash in
+     older records), and the reason is read from the hash itself, since a record may carry its reason as a sentence */
+  const primary=(pack.targetHashes||{}).primary||'';
+  const excluded=(v.excludedFindings||[]).map((x,i)=>{
+   const old=x.targetHash||(x.payload&&x.payload.targetHash)||'';
+   const code=old&&primary&&old!==primary?'different_target_hash':x.reason;
+   const w=EXCLUDED[code]||['this note didn’t match the snapshot every reviewer read.',String(x.reason||'excluded')];
+   return {key:'rx-'+i,text:w[0],tech:w[1]+(code==='different_target_hash'&&old?' · '+old+' vs '+primary:''),cls:'collab-finding collab-excluded'};});
   const reviewers=parts.map((p,i)=>{const pass=(v.passes||[]).find(x=>x.participantId===p.id)||{};
    return {id:p.id,name:p.role,persona:p.effectivePersona,model:p.effectiveModelName,requested:p.requestedModelName,seat:i+1,state:p.status,
     notes:(pass.findings||[]).length,done:pass.status==='completed',outcome:p.outcome};});
@@ -215,15 +221,20 @@
  function renderReport(vm,ctx,o){
   o=Object.assign({mode:'rich',choose:true},o||{});
   if(o.mode==='markdown'&&vm.markdown)return '<pre class="'+esc(vm.cls.markdown)+' pmx-rview-plain" data-k="rv-md">'+esc(vm.markdown())+'</pre>';
-  if(!vm.report)return progressHtml(vm);
+  if(!vm.report)return progressHtml(vm)+setAsideHtml(vm);
   const c=vm.counts,out=[];
   const body=vm.findings.length?vm.findings.map(f=>findingHtml(vm,f,o)).join(''):'<p class="pmx-rview-none">'+g('check-circle',16)+'<span><b>No problems found.</b> Nothing was changed.</span></p>';
   out.push(S.pmxViewSection({key:'rv-found',title:'What they found',meta:esc(c.parts.join(' · ')),
    body:(vm.single?'<p class="pmx-rview-single">'+g('eye',14)+'<span><b>Single pass:</b> one reviewer, so nothing was double-checked.</span></p>':'')+body+(o.choose?chooseHtml(vm):'')}));
   const grid=agreementHtml(vm);if(grid)out.push(S.pmxViewSection({key:'rv-agree',title:'How they agreed',body:grid}));
   const q=dissentHtml(vm);if(q)out.push(S.pmxViewSection({key:'rv-dissent',title:'Still disagrees',body:q}));
-  if(vm.excluded.length)out.push(S.pmxViewSection({key:'rv-set',title:'Set aside',meta:'never mixed in',body:vm.excluded.map(x=>'<div class="'+esc(x.cls)+' pmx-rview-set" data-k="'+esc(x.key)+'"><p><b>Set aside:</b> '+esc(x.text)+'</p><p class="pmx-fine">Technical details · '+esc(x.tech)+'</p></div>').join('')}));
+  const sa=setAsideHtml(vm);if(sa)out.push(sa);
   return out.join('');
+ }
+ /* notes set aside (a different frozen pack, a restarted or stopped run): shown while the run is going as well as in
+    the report, so a set-aside note is never invisible until the end */
+ function setAsideHtml(vm){
+  return vm.excluded.length?S.pmxViewSection({key:'rv-set',title:'Set aside',meta:'never mixed in',body:vm.excluded.map(x=>'<div class="'+esc(x.cls)+' pmx-rview-set" data-k="'+esc(x.key)+'"><p><b>Set aside:</b> '+esc(x.text)+'</p><p class="pmx-fine">Technical details · '+esc(x.tech)+'</p></div>').join('')}):'';
  }
  /* before the report: who is reading, sealed notes, never dispositions (REV-05) */
  function progressHtml(vm){

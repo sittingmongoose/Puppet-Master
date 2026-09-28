@@ -107,6 +107,17 @@
     /* G-35 (5.5) item 3: a pmx surface never plays the transcript's message entrance (styles.css message-arrive);
        a run card arrives only through M3, the others through their own entrance */
     out.push('.transcript-inner > .message:is(' + SURFACE_SELECTOR + '), .transcript-inner > .message:has(' + SURFACES.map(function (c) { return '> .' + c; }).join(', ') + '){animation:none;}');
+    /* ...nor a Chat WOW family entrance (turn-stage.css `.transcript[data-variant="16"] .transcript-inner >
+       [data-family="…"]` at (0,4,0), and the needs ring `[data-family="needs"].event-card` at (0,5,0)). Those reach
+       roots that are not .message (article.sched-card.pmx-bubble slid in as a ticket; ledger receipts and notes took
+       the 4 px ledger slide), so this rule is keyed on [data-family] at (0,5,0); injected after the stylesheet, it
+       also wins the tie with the ring. */
+    var famRoot = '.transcript[data-variant] .transcript-inner > [data-family]';
+    out.push(famRoot + ':is(' + SURFACE_SELECTOR + '), ' + famRoot + ':has(> :is(' + SURFACE_SELECTOR + ')){animation:none;}');
+    /* a surface's own root motion (pmx-system.css) comes back above that rule: the note's gutter slide and the M5
+       breathe of a needs-you card (which the family rise had also been overriding) */
+    out.push(famRoot + '.pmx-note{animation:pmx-slide-gutter var(--pmx-t-row) var(--pmx-ease-out) backwards;}');
+    out.push(famRoot + '.pmx-run:is([data-tone="warm"], [data-density="attention"]:not([data-tone="accent"])){animation:pmx-breathe var(--pmx-t-breathe) var(--pmx-ease-breathe) 2;}');
     return out.join('\n');
   }
   (function injectGenerated() {
@@ -405,12 +416,18 @@
     root.classList.remove('pmx-sheet-settled');
     if (settleJob) settleJob.cancel();
     settleJob = timeline.after(t('settle'), function () { if (currentSheet === node && node.isConnected) { root.classList.add('pmx-sheet-settled'); fitSheet(node); } });
-    /* a first layout can use fallback font metrics: fit again once the web fonts are in */
-    fitSheet(node);
-    markSeats(node, false);
+    /* The overlay patch that inserted this sheet has already fitted it and recorded its seats (internalOverlay runs in
+       the same task, before this observer callback), so this second pass waits until the first frame is painted
+       (closing review, M1 film: a 44 ms first-frame gap on the Mac). A first layout can also use fallback font
+       metrics, so the pass is worth keeping, just not ahead of the first frame. */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { if (currentSheet === node && node.isConnected) { fitSheet(node); markSeats(node, false); } });
+    });
     if (document.fonts && document.fonts.status !== 'loaded' && document.fonts.ready) document.fonts.ready.then(function () { if (currentSheet === node) fitSheet(node); });
-    /* focus the hero once, caret at the end */
+    /* focus the hero once, caret at the end; a sheet with no autofocus field focuses its first control (closing, BSD:
+       focus used to stay on <body>) */
     var f = node.querySelector('[data-pmx-autofocus]');
+    if (!f || !focusable(f)) { var list = tabStops(node); f = list.filter(function (x) { return !x.classList.contains('pmx-close'); })[0] || list[0] || null; }
     if (f && !node.contains(document.activeElement)) {
       /* a programmatic focus is not the reader pointing at the job: no light */
       quietFocus = true;
@@ -489,7 +506,9 @@
      marked itself (a builder's own scroll flag stays). Nothing here animates. */
   var plateFitMem = {};
   /* one pass over the plate slots; true when a slot changed its mode */
-  function fitPlates(sheet) {
+  /* lean (closing): {slotKey: n} steps a slot n modes leaner than the richest that fits (fitSheet's yield loop);
+     quiet: set the mode without the settled-sheet fade (fitSheet plays it once, for the mode it ends on) */
+  function fitPlates(sheet, lean, quiet) {
     var changed = false, slots = sheet.querySelectorAll('.pmx-plate-fit');
     for (var i = 0; i < slots.length; i++) {
       var slot = slots[i], kids = slot.children, h = slot.clientHeight, w = slot.clientWidth, pick = null;
@@ -508,6 +527,8 @@
          else the leanest mode (the one case left where a drawing is scaled; a lane avoids it with a caption) */
       if (!pick) { for (var c = 0; c < kids.length; c++) if (kids[c].getAttribute('data-mode') === 'caption') pick = kids[c]; }
       if (!pick) pick = kids[kids.length - 1];
+      var lk = slot.getAttribute('data-k') || String(i);
+      if (lean && lean[lk]) { var at0 = Array.prototype.indexOf.call(kids, pick); pick = kids[Math.min(kids.length - 1, at0 + lean[lk])]; }
       var mode = pick.getAttribute('data-mode') || '', key = slot.getAttribute('data-k'), was = slot.getAttribute('data-fit');
       if (key) plateFitMem[key] = mode;
       if (was !== mode) {
@@ -517,7 +538,7 @@
            own M1 entrance (CSS animations that start when it stops being display:none) is finished at once, so
            the plate never draws itself on a second time */
         var root = overlayRoot();
-        if (was && root && root.classList.contains('pmx-sheet-settled')) {
+        if (!quiet && was && root && root.classList.contains('pmx-sheet-settled')) {
           var runs = pick.getAnimations ? pick.getAnimations({ subtree: true }) : [];
           for (var q = 0; q < runs.length; q++) { try { if (runs[q].effect && runs[q].effect.getTiming().iterations !== Infinity) runs[q].finish(); } catch (e) { } }
           if (!reduced()) animate(pick, [{ opacity: 0 }, { opacity: 1 }], { duration: t('row'), easing: ease('out') });
@@ -599,10 +620,38 @@
     return bottom - top > inner + 1;
   }
   /* plates first, then the overflow marks, then the plates again when a mark moved the slot (at most twice) */
+  /* closing (6.3 yield order; COLLAB FR 6/7): the plate yields before a roster's rows scroll. The richest mode that
+     fits the slot's flex height can still leave the rows overflowing (the slot and the rows share the column), so
+     while rows scroll and a plate can still go leaner, the plate steps down a mode and the marks are measured again.
+     The fade for a mode change on a settled sheet plays once, for the mode the loop ends on. */
   function fitSheet(sheet) {
     if (!sheet || !sheet.isConnected) return;
-    fitPlates(sheet); markOverflow(sheet);
-    if (fitPlates(sheet)) markOverflow(sheet);
+    var slots = sheet.querySelectorAll('.pmx-plate-fit'), before = [];
+    for (var i = 0; i < slots.length; i++) before.push(slots[i].getAttribute('data-fit'));
+    var lean = {};
+    fitPlates(sheet, lean, true); markOverflow(sheet);
+    if (fitPlates(sheet, lean, true)) markOverflow(sheet);
+    for (var step = 0; step < 4 && sheet.querySelector('.pmx-roster-rows[data-pmx-autoscroll="1"]'); step++) {
+      var moved = false;
+      for (var s = 0; s < slots.length; s++) {
+        var sl = slots[s], k2 = sl.getAttribute('data-k') || String(s), cur = sl.querySelector(':scope > [data-mode="' + cssEsc(sl.getAttribute('data-fit') || '') + '"]');
+        if (cur && cur.nextElementSibling) { lean[k2] = (lean[k2] || 0) + 1; moved = true; }
+      }
+      if (!moved) break;
+      fitPlates(sheet, lean, true); markOverflow(sheet);
+    }
+    var root = overlayRoot();
+    if (root && root.classList.contains('pmx-sheet-settled') && !reduced()) {
+      for (var j = 0; j < slots.length; j++) {
+        var now = slots[j].getAttribute('data-fit');
+        if (before[j] && now !== before[j]) {
+          var pk = slots[j].querySelector(':scope > [data-mode="' + cssEsc(now || '') + '"]'); if (!pk) continue;
+          var runs = pk.getAnimations ? pk.getAnimations({ subtree: true }) : [];
+          for (var q = 0; q < runs.length; q++) { try { if (runs[q].effect && runs[q].effect.getTiming().iterations !== Infinity) runs[q].finish(); } catch (e) { } }
+          animate(pk, [{ opacity: 0 }, { opacity: 1 }], { duration: t('row'), easing: ease('out') });
+        }
+      }
+    }
   }
   /* every seat is recorded once; after the sheet settled a new, visible seat walks on from 70 px to its right
      (t('walk') after t('at-walk'), the emphasised ease, fill backwards so its own CSS holds the end state) */
@@ -659,17 +708,45 @@
     if (!a || !a.closest('#pmOverlayRoot > .pmx-sheet')) return '';
     return partsOf(a.getAttribute('data-pmx-affects'));
   }
+  /* closing (COLLAB FR 8): only the parts the sheet actually draws in its visible mode light; a hover whose parts
+     are all absent (a plate mode that dropped them, a sheet with no read-back phrase for it) dims nothing, where it
+     used to dim every part to 35 % and light none */
+  function shownEl(el) {
+    for (var p = el; p && p.nodeType === 1; p = p.parentElement) { if (p.classList && (p.classList.contains('pmx-plate') || p.classList.contains('pmx-readback'))) break; }
+    var host = p && p.nodeType === 1 ? p : el;
+    if (!host.getClientRects().length) return false;
+    var r = el.getBoundingClientRect();
+    return r.width > 0 || r.height > 0;
+  }
+  function drawnParts(v) {
+    var sheet = currentSheet && currentSheet.isConnected ? currentSheet : document.querySelector('#pmOverlayRoot > .pmx-sheet');
+    if (!sheet) return '';
+    return String(v || '').split(' ').filter(function (p) {
+      if (!p) return false;
+      var els = sheet.querySelectorAll('.pmx-plate [data-pmx-part~="' + p + '"], .pmx-readback [data-pmx-part~="' + p + '"]');
+      for (var i = 0; i < els.length; i++) if (shownEl(els[i])) return true;
+      return false;
+    }).join(' ');
+  }
   function setLight(v) {
     var root = overlayRoot(); if (!root) return;
     if (lightJob) { lightJob.cancel(); lightJob = null; }
+    v = drawnParts(v);
     if (v) { if (root.getAttribute('data-pmx-focus') !== v) root.setAttribute('data-pmx-focus', v); }
+    else if (root.hasAttribute('data-pmx-focus')) root.removeAttribute('data-pmx-focus');
   }
   function clearLightSoon() {
     if (lightJob) lightJob.cancel();
     lightJob = timeline.after(wait('light'), function () { lightJob = null; var root = overlayRoot(); if (root) root.removeAttribute('data-pmx-focus'); });
   }
   var quietFocus = false;
-  function onOver(e) { if (quietFocus) return; var v = affectsOf(e.target); if (v) setLight(v); }
+  /* R-17: focus lights only from the keyboard. A focus the app moves itself (closeMenu handing focus back to a dropdown's
+     trigger after a pick) is not :focus-visible and lights nothing (closing, BSD observation) */
+  function onOver(e) {
+    if (quietFocus) return;
+    if (e.type === 'focusin') { try { if (e.target && e.target.matches && !e.target.matches(':focus-visible')) return; } catch (err) { } }
+    var v = affectsOf(e.target); if (v) setLight(v);
+  }
   function onOut(e) { if (!affectsOf(e.target)) return; if (!affectsOf(e.relatedTarget)) clearLightSoon(); }
 
   /* ---------------------------------------------------------------- mirrors
@@ -698,8 +775,60 @@
     }
   }
 
-  /* ---------------------------------------------------------------- keyboard (G-11) */
+  /* ---------------------------------------------------------------- keyboard (G-11)
+     closing (REVERT FR 12, BSD): while a sheet is open and no dropdown is, Tab and Shift+Tab cycle through the sheet's
+     own controls (they used to leave for <body> and the header chips behind the scrim); a pmxSwitch is one tab stop
+     (its chosen word, or the first while unset) and the arrow keys move its choice, as a radio group does. */
+  var TABBABLE = 'button, input:not([type="hidden"]), textarea, select, a[href], summary, [tabindex]';
+  function tabStops(sheet) {
+    var out = [], seenSwitch = new Set();
+    var all = sheet.querySelectorAll(TABBABLE);
+    for (var i = 0; i < all.length; i++) {
+      var el = all[i];
+      if (el.disabled || el.getAttribute('tabindex') === '-1' || el.closest('[inert], [aria-hidden="true"], .pmx-sr, [data-pmx-preview]')) continue;
+      var sw = el.closest('.pmx-switch');
+      if (sw && el.classList.contains('pmx-switch-opt')) {
+        if (seenSwitch.has(sw)) continue;
+        var chosen = sw.querySelector('.pmx-switch-opt[aria-checked="true"]') || sw.querySelector('.pmx-switch-opt');
+        seenSwitch.add(sw); el = chosen || el;
+      }
+      if (!focusable(el) && !(el.matches('input[type="checkbox"]') && el.parentElement && focusable(el.parentElement))) continue;
+      out.push(el);
+    }
+    return out;
+  }
+  function switchKey(e) {
+    var opt = e.target && e.target.closest ? e.target.closest('.pmx-switch-opt') : null;
+    if (!opt) return false;
+    var dir = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+    if (!dir) return false;
+    var sw = opt.closest('.pmx-switch'), opts = [].slice.call(sw.querySelectorAll('.pmx-switch-opt')).filter(function (x) { return !x.disabled; });
+    var i = opts.indexOf(opt), next = opts[(i + dir + opts.length) % opts.length];
+    if (!next || next === opt) return true;
+    e.preventDefault();
+    var val = next.getAttribute('data-value'), key = sw.getAttribute('data-k');
+    next.click();
+    requestAnimationFrame(function () {
+      var host = (key && document.querySelector('#pmOverlayRoot .pmx-switch[data-k="' + cssEsc(key) + '"]')) || (sw.isConnected ? sw : null);
+      var el = host && host.querySelector('.pmx-switch-opt[data-value="' + cssEsc(val) + '"]');
+      if (el) { quietFocus = true; try { el.focus({ preventScroll: true }); } catch (err) { } finally { quietFocus = false; } }
+    });
+    return true;
+  }
+  function trapTab(e) {
+    var sheet = document.querySelector('#pmOverlayRoot > .pmx-sheet'); if (!sheet) return;
+    if (document.querySelector('#pmOverlayRoot > .overlay-menu')) return;
+    var stops = tabStops(sheet); if (!stops.length) return;
+    var a = document.activeElement, i = stops.indexOf(a);
+    if (i < 0 && a && a.closest && a.closest('.pmx-switch') && sheet.contains(a)) i = stops.indexOf(a.closest('.pmx-switch').querySelector('.pmx-switch-opt[aria-checked="true"]') || a);
+    var next = i < 0 ? (e.shiftKey ? stops[stops.length - 1] : stops[0]) : stops[(i + (e.shiftKey ? -1 : 1) + stops.length) % stops.length];
+    e.preventDefault();
+    try { next.focus(); } catch (err) { }
+  }
   function onKeyDown(e) {
+    if (e.defaultPrevented) return;
+    if (e.key === 'Tab' && !e.ctrlKey && !e.metaKey && !e.altKey) { trapTab(e); return; }
+    if (/^Arrow/.test(e.key) && !e.ctrlKey && !e.metaKey && !e.altKey && switchKey(e)) return;
     if (e.key !== 'Enter' || !(e.ctrlKey || e.metaKey) || e.altKey || e.defaultPrevented) return;
     var sheet = document.querySelector('#pmOverlayRoot > .pmx-sheet'); if (!sheet) return;
     if (!sheet.contains(e.target) && e.target !== document.body) return;
@@ -890,6 +1019,7 @@
   }
   function fullyVisible(runId) { var v = vis.get(String(runId)); return v ? v.full : true; }
   var TONE_RANK = { needs: 0, yourmove: 1, live: 2, comingup: 3 };
+  function dockId(it) { return String(it.runId != null ? it.runId : (it.key != null ? it.key : '')); }
   function collectDock(c) {
     var all = [];
     for (var i = 0; i < providers.length; i++) {
@@ -905,7 +1035,9 @@
     shown.sort(function (a, b) {
       var ra = typeof a.priority === 'number' ? a.priority : (TONE_RANK[a.tone] != null ? TONE_RANK[a.tone] : 2);
       var rb = typeof b.priority === 'number' ? b.priority : (TONE_RANK[b.tone] != null ? TONE_RANK[b.tone] : 2);
-      return ra - rb || (b.at || 0) - (a.at || 0) || a.__i - b.__i;
+      /* closing review: equal rank and equal (or missing) `at` fall back to the run id / key, never to the order the
+         providers happened to answer in, so the same chat shows its dock lines in the same order in every theme */
+      return ra - rb || (b.at || 0) - (a.at || 0) || dockId(a).localeCompare(dockId(b)) || a.__i - b.__i;
     });
     return shown;
   }
@@ -984,7 +1116,8 @@
       var atBottom = o.atBottom != null ? !!o.atBottom : !!(tr && tr.scrollHeight - tr.scrollTop - tr.clientHeight < 24);
       /* a hidden preview (R-20: below a 960 px window) has no box to fly from: the card fades in instead */
       if (!src || reduced() || !src.getClientRects().length) { flight = { none: true, atBottom: atBottom }; return flight; }
-      var r = src.getBoundingClientRect(), w = src.offsetWidth || 391;
+      /* layoutWidth (closing, MEMTEACH): lay the clone out at the destination width for the flight only */
+      var r = src.getBoundingClientRect(), w = Number(o.layoutWidth) > 0 ? Number(o.layoutWidth) : (src.offsetWidth || 391);
       var clone = strip(src.cloneNode(true));
       clone.classList.add('pmx-flight');
       clone.setAttribute('aria-hidden', 'true');
@@ -1030,13 +1163,17 @@
     }
     var tr = card.closest('.transcript'), inner = tr && tr.querySelector('.transcript-inner');
     /* the chat makes room, only for a reader who was already at the bottom */
+    var dy = 0;
     if (f.atBottom && tr) {
       var before = tr.scrollTop;
       try { tr.scrollTo({ top: tr.scrollHeight, behavior: 'instant' }); } catch (e) { tr.scrollTop = tr.scrollHeight; }
-      var dy = tr.scrollTop - before;
-      if (dy > 1 && inner && !streamBusy()) animate(inner, [{ transform: 'translateY(' + dy + 'px)' }, { transform: 'none' }], { duration: t('room'), easing: ease('emph') });
+      dy = tr.scrollTop - before;
     }
+    /* Closing FR 12 (design review M3): measure the card where it will rest, BEFORE the make-room glide starts.
+       The glide's first frame holds .transcript-inner at translateY(+dy), so a rect read after it included +dy and
+       the clone landed ~190 px below the card, over the composer. */
     var cr = card.getBoundingClientRect(), tb = tr ? tr.getBoundingClientRect() : cr;
+    if (dy > 1 && inner && !streamBusy()) animate(inner, [{ transform: 'translateY(' + dy + 'px)' }, { transform: 'none' }], { duration: t('room'), easing: ease('emph') });
     var inView = cr.bottom > tb.top && cr.top < tb.bottom;
     var clone = f.clone, w = f.w, s0 = f.scale, x0 = f.rect.left, y0 = f.rect.top;
     if (Math.abs(cr.width - w) > 4) {

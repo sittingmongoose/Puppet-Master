@@ -68,7 +68,7 @@
   else if(r&&!active.played){step=r.crew.admissionKind==='auto'?'Crew brought in: this job splits into 2 parts that can run at once. Watch it work.':'The Crew is set up but hasn’t started. Watch it split the job and check each part.';acts=[{action:'crew-demo-play',label:'Watch the Crew work'}];}
   else if(r?.status==='running')step=runningStep(r);
   else if(r?.status==='paused')step='Paused. Resume it on its card to go on.';
-  else if(r?.status==='completed'){if(!active.opened)step='Done. Open the Crew’s panel from its card to see how each part was checked.';else if(!active.sourceSeen)step='In the panel, open “The locked copy of the job” to see exactly what the Crew started from.';else if(!active.exported){step='Download the checked CSV.';acts=[{action:'crew-export-result',attrs:'data-run="'+id+'"',label:'Download'}];}else step='The checked CSV is ready. Your collection didn’t change.';}
+  else if(r?.status==='completed'){if(!active.opened)step='Done. Open the Crew’s panel from its card to see how each part was checked.';else if(!active.sourceSeen)step='Scroll to the end of the panel’s Summary and open “The locked copy of the job” to see exactly what the Crew started from.';else if(!active.exported){step='Download the checked CSV.';acts=[{action:'crew-export-result',attrs:'data-run="'+id+'"',label:'Download'}];}else step='The checked CSV is ready. Your collection didn’t change.';}
   if(ended)step='This run ended. Replay starts a fresh setup.';
   if(active.errors.length){failure=active.errors[0];step=failureText(failure);}
   if(done()||ended||active.errors.length)acts=[{action:'crew-demo-replay',label:'Replay'}];

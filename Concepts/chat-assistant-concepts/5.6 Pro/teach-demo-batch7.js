@@ -31,8 +31,8 @@
  function step(){
   const latest=T.get(current.ids.at(-1)),td='data-thread="'+S.esc(current.threadId)+'"';
   if(current.kind==='capture'){
-   if(!latest)return {step:'Step 1 of 3 · Save the assistant’s advice as a rule. Its message’s More menu has the same Save as a rule… .',actions:[{action:'teach-from-message',attrs:'data-value="'+S.esc(current.sourceId)+'" '+td,label:'Save it as a rule…'}]};
-   if(!current.asked)return {step:'Step 2 of 3 · Ask something. The reply shows it followed your rule.',actions:[{action:'teach-demo-ask',label:'Ask a question'}]};
+   if(!latest)return {step:'Step 1 of 3 · Save the assistant’s advice as a rule. Its message’s More menu has the same Save as a rule… entry.',actions:[{action:'teach-from-message',attrs:'data-value="'+S.esc(current.sourceId)+'" '+td,label:'Save it as a rule…'}]};
+   if(!current.asked)return {step:'Step 2 of 3 · Ask something. Hover the reply: it says Followed 1 of your rules.',actions:[{action:'teach-demo-ask',label:'Ask a question'}]};
    if(!current.opened)return {step:'Step 3 of 3 · See your rules and what your next message will include.',actions:[{action:'teach-demo-rules',label:'Open your rules'}]};
    return {step:'Done · The rule rides along in this chat until you change it.',actions:[{action:'teach-demo-replay',label:'Replay'}]};
   }
