@@ -1,0 +1,51 @@
+{
+  "schema": "ack-boundary-offline-tests/v1",
+  "command": [
+    "/usr/bin/python3",
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/tools/test_ack_boundary.py"
+  ],
+  "exit_code": 0,
+  "tests": 36,
+  "unittest_seconds": 5.289,
+  "source_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/tools/test_ack_boundary.py",
+      "sha256": "bac64cc0f47cfde8c30245d47f9fa5325fd1ecf98ffd0997daf8faa6a4f2db06",
+      "bytes": 45964
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/tools/completion_store.py",
+      "sha256": "a1e460bd38afa2fab09d28442a7b59d2ac295aaee8921f9c127b57946c20f909",
+      "bytes": 17948
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/tools/native_completion.py",
+      "sha256": "83dac66a29bc0778ed0edfa134fd04db03eda34602e5c80d5938c17c4dc2fd38",
+      "bytes": 23815
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/tools/host_receiver.py",
+      "sha256": "3edefb29c495a642dc70748dd0a07b43cccc1493a74caee3ab7c4a855347d283",
+      "bytes": 2874
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/fixtures/native_events.py",
+      "sha256": "8423ffabb9b2ded62d6b1b60933e8606b2957339cfe5102c7f2e21f856823328",
+      "bytes": 5145
+    }
+  ],
+  "source_pins_unchanged": true,
+  "log": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/ack-boundary-tests-20260928-clejp4fa/test-run.log",
+    "sha256": "ac7d1c6d8473fadc31b3df1709feec25a09f0e7bc2a3744783940d6dd8f03c89",
+    "bytes": 5791
+  },
+  "trace_manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/ack-boundary-tests-20260928-clejp4fa/trace-manifest.json",
+    "sha256": "da2eb0b91d0d565f2bf7ffc9ee9d8da0e53e8d52720cf072a532a62969141730",
+    "bytes": 217417
+  },
+  "retained_workspaces": 47,
+  "retained_files": 657,
+  "limits": "Synthetic offline host tests only; no native inference or research qualification."
+}

@@ -1,0 +1,60 @@
+{
+  "schema": "ack-boundary-offline-verification/v1",
+  "base_commit": "8418b01038c083eaf00537192fb86b3e2bdac99a",
+  "offline_only": true,
+  "native_candidate_evaluator_account_calls": 0,
+  "new_boundary_tests": 36,
+  "unchanged_parser_store_tests": 50,
+  "total_test_methods_passed": 86,
+  "test_receipt": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/ack-boundary-tests-20260928-clejp4fa/run-receipt.json",
+    "sha256": "ef950a28b3d9d67fdfc0fdb9a2092b030474d96d1f0b04acb09714abbeee94b3"
+  },
+  "regressions": [
+    {
+      "test": "offline-repair-v1/tools/test_delivery.py",
+      "source_sha256": "e2ec4ccffb66b4a87fc8d5e7c3e307121203ff04e06bb55356d0f11eb5c665c8",
+      "returncode": 0,
+      "seconds": 0.250306,
+      "log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/evidence/regressions/test_delivery.log",
+      "log_sha256": "2a88df7c53aa47e5eda7666836e19772ba5cd23d1796dba4ff6e44880bc69744",
+      "tail": "..............\n----------------------------------------------------------------------\nRan 14 tests in 0.111s\n\nOK\n"
+    },
+    {
+      "test": "offline-repair-v1/tools/test_independent_boundaries.py",
+      "source_sha256": "6acb5fff8fd0600ea75768c19d3e69659955efafc93caeef91c055504836dc15",
+      "returncode": 0,
+      "seconds": 0.258264,
+      "log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/evidence/regressions/test_independent_boundaries.log",
+      "log_sha256": "e70dce3c1dbce36074b00e16b1a2c409428a2a8f0e6854a0dffe741a73a625ca",
+      "tail": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.115s\n\nOK\n"
+    },
+    {
+      "test": "delivery-v2/tools/test_delivery_store.py",
+      "source_sha256": "af6e060486a4ccf72eb8621f49474ce4b60b7fea57d0d9e7837086f043c712a2",
+      "returncode": 0,
+      "seconds": 0.362218,
+      "log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/evidence/regressions/test_delivery_store.log",
+      "log_sha256": "0cb8229f977a4b62a558b1b5f66e2d9fc447dc5510402bf2a3e4179dd17881fa",
+      "tail": "........................\n----------------------------------------------------------------------\nRan 24 tests in 0.188s\n\nOK\n"
+    }
+  ],
+  "preservation": {
+    "before_manifest": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/evidence/preservation-before.json",
+    "before_manifest_sha256": "6f49b4983f3f4ea0f0ff2231bddc74f0a60789ece6d99f0e788d0a196a4f8992",
+    "checked_files": 464,
+    "mismatches": [],
+    "method": "byte SHA-256 only, no research content interpretation"
+  },
+  "independent_development_review": {
+    "helper_requested_model": "gpt-6-sol",
+    "helper_requested_effort": "high",
+    "scope": "Store/attachment boundaries, not formal grading",
+    "disposition": "no remaining concrete blockers after lineage and cleanup fixes"
+  },
+  "limitations": [
+    "Synthetic event/host tests; native inference absent.",
+    "No research qualification, semantic grade, runtime latency or cost conclusion.",
+    "Raw traces remain VM-only; public receipt binds their manifest."
+  ]
+}
