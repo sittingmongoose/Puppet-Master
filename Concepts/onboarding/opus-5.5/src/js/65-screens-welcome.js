@@ -39,7 +39,7 @@
     body(S) {
       const th = O55.theme();
       const tiles = FAMS.map((f, i) => {
-        const on = th.family === f;
+        const on = th.chosen === f;
         return `<button type="button" class="o55-tile${on ? ' o55-on' : ''}" role="radio" aria-checked="${on}" data-o55-do="pickFamily" data-o55-sound="self" data-arg="${f}" data-theme="${f}-${th.mode}" data-key="tile-${f}" data-pm-hover-exempt="true" style="--ci:${i}">`
           + `<span class="o55-tileart o55-scene-host" data-family="${f}" data-tile="${f}" aria-hidden="true" data-morph-skip></span>`
           + `<span class="o55-tilename">${U.esc(T('look.families.' + f + '.name'))}</span><span class="o55-tilesub">${U.esc(T('look.families.' + f + '.sub'))}</span>`
@@ -73,7 +73,7 @@
         O55.ui.charm(el, T('look.families.' + f + '.name'), 'spark');
         O55.ui.applyLook(f, O55.theme().mode, el);
       },
-      pickMode(S, m, el) { ack(el, 'button'); O55.ui.applyLook(O55.theme().family, m, el); },
+      pickMode(S, m, el) { ack(el, 'button'); O55.ui.applyLook(O55.theme().chosen, m, el); },
       next(S) { O55.ui.go('where'); }
     }
   });
