@@ -1,0 +1,30 @@
+{
+  "schema": "muse-result-v2-replay-summary/v1",
+  "scope": "stopped journals only; not an acknowledgement replay or live qualification",
+  "original_disposition": "unchanged FAIL/INCOMPLETE",
+  "a1_completed_payload_proofs": 6,
+  "a1_marker_operations": 0,
+  "acknowledgements_created": 0,
+  "store_instantiated": false,
+  "observed_result_forms": {
+    "near_duplicate_sibling": 6,
+    "plain": 36
+  },
+  "all_a1_live_bytes_match_arguments": true,
+  "prior_plain_completed_writes": 36,
+  "all_replay_sources_unchanged": true,
+  "raw_replay": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/evidence/replay-full.json",
+    "sha256": "153d56248e233d00d4abef7c45f184380cadc21eb3dc253ccb069b35dcb2f291"
+  },
+  "source_journals": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-session.jsonl",
+      "sha256": "a36eece85612559f6a30b8676b77c37d83330c7fae3d6fc59a27fbc6a4aa3bfa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/muse-session.jsonl",
+      "sha256": "b4dcde0ff3d5fb9281b4f79969a4d396cd7efa206ca758299a19ea7d085827ed"
+    }
+  ]
+}

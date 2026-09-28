@@ -1,0 +1,87 @@
+{
+  "schema": "muse-result-v2-offline-validation/v1",
+  "observed_at_epoch": 1790627956.4487486,
+  "status": "PASS",
+  "test_methods": {
+    "reader_store_receiver": 53,
+    "audit": 8,
+    "operator_guards_and_import": 6,
+    "total": 67
+  },
+  "commands": [
+    "python3 tools/test_native_results.py",
+    "python3 tools/test_audit_check.py",
+    "python3 tools/test_operator_guards.py",
+    "python3 tools/replay_stopped.py"
+  ],
+  "raw_evidence": {
+    "native-results-tests.log": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/evidence/native-results-tests.log",
+      "sha256": "11c0a00f8b2d832010b81fdb17659553e57158d13e85642f6e6868f635e1ee48"
+    },
+    "audit-tests.log": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/evidence/audit-tests.log",
+      "sha256": "02b1534dfe410c3a6c3cc31153747939362166c3afc0cc9b664a5ab68b67d8a7"
+    },
+    "operator-guards-tests.log": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/evidence/operator-guards-tests.log",
+      "sha256": "55047355540486751514e4727c56377a096246e5f881e6e1f04d9d1fd6537870"
+    },
+    "native-results-trace-manifest.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/evidence/native-results-trace-manifest.json",
+      "sha256": "5ad9e65976f5aaf31adbd74c12acbeee97bad533c24e0ec7644ba1b41ef34dcf"
+    },
+    "preservation-before.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/evidence/preservation-before.json",
+      "sha256": "16057569a513631887c1fae56ffbb225deea3bcb375d7030e8010cdd8e4a1ac4"
+    },
+    "replay-full.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/evidence/replay-full.json",
+      "sha256": "153d56248e233d00d4abef7c45f184380cadc21eb3dc253ccb069b35dcb2f291"
+    }
+  },
+  "preservation": {
+    "files": 535,
+    "missing": [],
+    "changed": [],
+    "basis": "Pre-edit manifest; frozen experiment sources and A1/I2 artifacts. Bytecode excluded. No Store attached to any original workspace.",
+    "final_rechecked_epoch": 1790628128.7620769
+  },
+  "no_new_live_calls": {
+    "native": 0,
+    "provider": 0,
+    "candidate": 0,
+    "evaluator": 0,
+    "account": 0,
+    "smoke": 0
+  },
+  "development_usage": "Astra orchestration and explicitly configured Sol high helpers; development token/cost totals unmeasured, not candidate usage.",
+  "limitations": [
+    "Synthetic event integration is not live marker qualification.",
+    "Actual A1 replay has six payloads and no marker/ack operations.",
+    "Operator tests forbid dispatch and exercise guards/import route only.",
+    "Only the stopped A1 and I2 maintained journals were replayed; no general vendor format survey.",
+    "Future whole-check timing remains unproven; original A1 broader 390-second compliance is not established."
+  ],
+  "published_layout_checks": {
+    "published-native-results-tests.log": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/evidence/published-native-results-tests.log",
+      "sha256": "1c9ff4aae8611d5ae139ae116005e5d6b2a382a2b5a99220c28c51b874b2a3c2",
+      "test_methods": 53,
+      "exit_code": 0
+    },
+    "published-audit-tests.log": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/evidence/published-audit-tests.log",
+      "sha256": "3ac2c6b3a3f3225d5af8065c63459ebdd7184d6fc0b67bb06095daaeed97d602",
+      "test_methods": 8,
+      "exit_code": 0
+    },
+    "published-operator-tests.log": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/evidence/published-operator-tests.log",
+      "sha256": "e7e7cd65ea9e6c5a1bffc5d3eb21fe7fc60f65b98c14fa1ce81de40f7e5ef492",
+      "test_methods": 6,
+      "exit_code": 0
+    }
+  },
+  "published_layout_scope": "Same 67 methods rerun only to verify repository-relative dependency/import paths; not additional unique tests or native trials."
+}

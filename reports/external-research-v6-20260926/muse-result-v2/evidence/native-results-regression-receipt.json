@@ -1,0 +1,61 @@
+{
+  "account_calls": 0,
+  "candidate_calls": 0,
+  "command": "ACK_BOUNDARY_TEST_EVIDENCE=/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/evidence/synthetic-traces-final python3 /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/tools/test_native_results.py",
+  "evaluator_calls": 0,
+  "exit_code": 0,
+  "focused_methods": 17,
+  "imported_unchanged_methods": 36,
+  "native_calls": 0,
+  "original_workspace_store_attachment": false,
+  "provider_calls": 0,
+  "raw_trace_root": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/evidence/synthetic-traces-final",
+  "schema": "native-results-offline-regression-receipt/v1",
+  "semantic_grade": null,
+  "sources": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/tools/test_native_results.py",
+      "sha256": "bb6d8e47a2a93a04e60beca87db63dd5db95dd6186dd97e07b673bc551641248"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/tools/native_completion.py",
+      "sha256": "3c125f305febe3bcc84fd240edf94ca90d4651ccf88dda0b10dbf5db739dc52c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/tools/test_ack_boundary.py",
+      "sha256": "bac64cc0f47cfde8c30245d47f9fa5325fd1ecf98ffd0997daf8faa6a4f2db06"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/fixtures/native_events.py",
+      "sha256": "8423ffabb9b2ded62d6b1b60933e8606b2957339cfe5102c7f2e21f856823328"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/tools/completion_store.py",
+      "sha256": "a1e460bd38afa2fab09d28442a7b59d2ac295aaee8921f9c127b57946c20f909"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/tools/host_receiver.py",
+      "sha256": "3edefb29c495a642dc70748dd0a07b43cccc1493a74caee3ab7c4a855347d283"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-prep/tools/research_store.py",
+      "sha256": "8cba600b240cddb6951aa600146e3b0ccc8d4d1ffcd7e90bedc5f99378b05762"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/delivery-v2/tools/delivery_store.py",
+      "sha256": "81364fd1a4040ba457dd04779d096709c3524bee8704a2c8f453fb18264c85c7"
+    }
+  ],
+  "status": "PASS",
+  "test_log": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/evidence/native-results-tests.log",
+    "sha256": "11c0a00f8b2d832010b81fdb17659553e57158d13e85642f6e6868f635e1ee48"
+  },
+  "test_methods": 53,
+  "trace_manifest": {
+    "file_count": 1535,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/evidence/native-results-trace-manifest.json",
+    "sha256": "5ad9e65976f5aaf31adbd74c12acbeee97bad533c24e0ec7644ba1b41ef34dcf",
+    "workspace_count": 146
+  }
+}

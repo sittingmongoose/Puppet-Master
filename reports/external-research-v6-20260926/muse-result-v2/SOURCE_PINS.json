@@ -1,0 +1,101 @@
+{
+  "schema": "muse-result-v2-source-pins/v1",
+  "scope": "Offline successor; source identity only, not launch approval",
+  "reviewed_base_commit": "f250bb8acd0ccf882d47813ed811195285bfd90c",
+  "frozen_ack_implementation_commit": "655fa669c71fa9832df479a16efd3b54f425dd08",
+  "files": {
+    "RESULTS.md": {
+      "sha256": "fc7f00cfaea7a3e2825b459712d1a067c3525dcd3a6d22cdecd0aceb5c1d6e4a",
+      "bytes": 6682
+    },
+    "ERRATUM.md": {
+      "sha256": "78a2e073817be66db569810e9011ccfafe0ddb257dc535cc2596e22721c0352b",
+      "bytes": 1112
+    },
+    "NEXT_CHECK.md": {
+      "sha256": "4c5acadcca05b59d3666f46d4fe4ad401b43924b3042654ec3583f6128180b30",
+      "bytes": 5692
+    },
+    "VALIDATION.json": {
+      "sha256": "65e502f88682eba25573f9bb7215ec9c35f674acfd88545637a7efa0ff0c243d",
+      "bytes": 4147
+    },
+    "A1_M_RESULTS_REVIEW_AND_NEXT_STEP.md": {
+      "sha256": "79ad8150146227feae48eed7d338d69451baa65f64f0101d4a33387d4681afb3",
+      "bytes": 12307
+    },
+    "tools/audit_check.py": {
+      "sha256": "b6e285d446f74024a3f413d461d2ed13c2386934c191b6bdcf9d8bda9f8e6b83",
+      "bytes": 6031
+    },
+    "tools/native_completion.py": {
+      "sha256": "3c125f305febe3bcc84fd240edf94ca90d4651ccf88dda0b10dbf5db739dc52c",
+      "bytes": 6427
+    },
+    "tools/replay_stopped.py": {
+      "sha256": "aaf68344b750e6c611a17801c5ee40e9863023bc6671078bade67f1b6af20bf5",
+      "bytes": 3518
+    },
+    "tools/run_check.py": {
+      "sha256": "f0df40e2becbc95adbd4c1af8669cb148c16a39918fb02076e5b2b6f2e6839d5",
+      "bytes": 12201
+    },
+    "tools/test_audit_check.py": {
+      "sha256": "3e8330c83426f400e0e1c192aedb894e2fd5d809a5b32df9521417a341e9e3f3",
+      "bytes": 11643
+    },
+    "tools/test_native_results.py": {
+      "sha256": "bb6d8e47a2a93a04e60beca87db63dd5db95dd6186dd97e07b673bc551641248",
+      "bytes": 24005
+    },
+    "tools/test_operator_guards.py": {
+      "sha256": "0f63c260ea87b659658a3051a7e3e7ab26b4277c0dc5ef1d9d62e624e49003ad",
+      "bytes": 3384
+    },
+    "evidence/replay-summary.json": {
+      "sha256": "5b03f4a1bb1cc86f0e0c3df20e0cdbd406f202218c8ecd4c5f6b32679621258d",
+      "bytes": 1243
+    },
+    "evidence/native-results-regression-receipt.json": {
+      "sha256": "9ae82179ffc9da24e788a63a4883c6c153d698db35f88fcd228c3284f58379e1",
+      "bytes": 3098
+    },
+    "evidence/native-results-regressions.md": {
+      "sha256": "434e3f452e5545f4ada1c9c90b322c3a71e3b27d6775ca7465511ee99e8fca4e",
+      "bytes": 4661
+    },
+    "evidence/derived-a1-audit.json": {
+      "sha256": "dc6165c1d02b2b222a0c18e314f4935236bb824b19c6b55b1e6aba76a9ae1d02",
+      "bytes": 5483
+    },
+    "evidence/diagnostic-erratum.json": {
+      "sha256": "dd0da90e4eab8db50f2691c3949ccf1c81f4b1fbb405665bb1e3994e1a951855",
+      "bytes": 7100
+    },
+    "evidence/operator-reuse.patch": {
+      "sha256": "88c1bac3466d038048e96accc10ff8766011e8b12773ab353ac17433f118bc64",
+      "bytes": 15301
+    }
+  },
+  "unchanged_lab_dependencies": {
+    "ack-boundary-v1/SOURCE_PINS.json": "f5844a44719f14db1dcb696eede03696e4b57456dabc56703f709ac18e1b0f2e",
+    "ack-boundary-v1/tools/native_completion.py": "83dac66a29bc0778ed0edfa134fd04db03eda34602e5c80d5938c17c4dc2fd38",
+    "ack-boundary-v1/tools/completion_store.py": "a1e460bd38afa2fab09d28442a7b59d2ac295aaee8921f9c127b57946c20f909",
+    "ack-boundary-v1/tools/host_receiver.py": "3edefb29c495a642dc70748dd0a07b43cccc1493a74caee3ab7c4a855347d283",
+    "ack-boundary-v1/tools/test_ack_boundary.py": "bac64cc0f47cfde8c30245d47f9fa5325fd1ecf98ffd0997daf8faa6a4f2db06",
+    "ack-boundary-v1/fixtures/native_events.py": "8423ffabb9b2ded62d6b1b60933e8606b2957339cfe5102c7f2e21f856823328",
+    "a1-m-tools/run_a1.py": "8c4b325a8bf329c05d7d04d84fd9fdfa3c473b269b752041220f5aad5dec1ecf",
+    "a1-m-tools/audit_a1.py": "8126e1dabbaa5a397ea773d999a2e548e29af16fe6224d682cb894f13080bdf5",
+    "a1-m-20260928/input-manifest.json": "589abeadda52ad5267fdfeac65da7abe9cdc6ba9df65b1f0351712a9d7fb1a1b",
+    "tools/run_arm.py": "330ae90097254192bf95fd52ebee4cdda0a9d19325bc3c4c88bde6ad4b4d4520",
+    "tools/r1b/run_goal_r1b.py": "4cfd7aee946cd8db9ef70a0adf2cfe8279a5cdc13cb3c8b7cd299775dee97ae7",
+    "tools/r1b/muse-serve-noshell.sh": "fecdb795d96fcdbf8895349dc81435dbf28b8e07ecbdbdaee2cff61c3f790586"
+  },
+  "unchanged_transitive_dependencies": "Exact identities remain in ack-boundary-v1/SOURCE_PINS.json; the operator verifies that entire pinned manifest and its lab dependencies.",
+  "published_dependency_aliases": {
+    "a1-m-tools/run_a1.py": "a1-m/operator/run_a1.py",
+    "a1-m-tools/audit_a1.py": "a1-m/operator/audit_a1.py",
+    "a1-m-20260928/input-manifest.json": "a1-m/input-manifest.json",
+    "tools/r1b/run_goal_r1b.py": "r1b-prep-rev3/tools/run_goal_r1b.py"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "scope": "Append-only reporting correction; A1-M remains closed FAIL/INCOMPLETE",
+  "original_failure_diagnostic": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/post-check/failure.json",
+    "sha256": "7115b69eda44f36e2d850bf3d4aff16b2b0cc390e22164812f3db8b3abf8c6c5"
+  },
+  "correction": "The old expected-result diagnostic used a relative path. The frozen reader bound an absolute path. The old prefix boolean does not prove a path mismatch. All six results match the absolute completion header plus the exact observed advisory; bare whole-string equality still fails.",
+  "rows": [
+    {
+      "request": "new--batch-01",
+      "old_diagnostic_expected_result": "wrote 1194 bytes to a1-m-20260928/ws/out/submissions/new--batch-01.md",
+      "old_diagnostic_prefix_boolean": false,
+      "actual_bound_absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-01.md",
+      "correct_absolute_completion_header": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-01.md",
+      "native_result_verbatim": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-01.md; note: near-duplicate sibling new--batch-02.md exists in this directory — verify this new file is intended",
+      "correct_header_and_exact_advisory_match": true,
+      "whole_string_equality_with_bare_header": false,
+      "advisory_verbatim": "; note: near-duplicate sibling new--batch-02.md exists in this directory — verify this new file is intended"
+    },
+    {
+      "request": "new--batch-02",
+      "old_diagnostic_expected_result": "wrote 1194 bytes to a1-m-20260928/ws/out/submissions/new--batch-02.md",
+      "old_diagnostic_prefix_boolean": false,
+      "actual_bound_absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-02.md",
+      "correct_absolute_completion_header": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-02.md",
+      "native_result_verbatim": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-02.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+      "correct_header_and_exact_advisory_match": true,
+      "whole_string_equality_with_bare_header": false,
+      "advisory_verbatim": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended"
+    },
+    {
+      "request": "new--batch-03",
+      "old_diagnostic_expected_result": "wrote 1194 bytes to a1-m-20260928/ws/out/submissions/new--batch-03.md",
+      "old_diagnostic_prefix_boolean": false,
+      "actual_bound_absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-03.md",
+      "correct_absolute_completion_header": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-03.md",
+      "native_result_verbatim": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-03.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+      "correct_header_and_exact_advisory_match": true,
+      "whole_string_equality_with_bare_header": false,
+      "advisory_verbatim": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended"
+    },
+    {
+      "request": "new--batch-04",
+      "old_diagnostic_expected_result": "wrote 1194 bytes to a1-m-20260928/ws/out/submissions/new--batch-04.md",
+      "old_diagnostic_prefix_boolean": false,
+      "actual_bound_absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-04.md",
+      "correct_absolute_completion_header": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-04.md",
+      "native_result_verbatim": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-04.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+      "correct_header_and_exact_advisory_match": true,
+      "whole_string_equality_with_bare_header": false,
+      "advisory_verbatim": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended"
+    },
+    {
+      "request": "new--batch-05",
+      "old_diagnostic_expected_result": "wrote 1194 bytes to a1-m-20260928/ws/out/submissions/new--batch-05.md",
+      "old_diagnostic_prefix_boolean": false,
+      "actual_bound_absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-05.md",
+      "correct_absolute_completion_header": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-05.md",
+      "native_result_verbatim": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-05.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+      "correct_header_and_exact_advisory_match": true,
+      "whole_string_equality_with_bare_header": false,
+      "advisory_verbatim": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended"
+    },
+    {
+      "request": "new--batch-06",
+      "old_diagnostic_expected_result": "wrote 1194 bytes to a1-m-20260928/ws/out/submissions/new--batch-06.md",
+      "old_diagnostic_prefix_boolean": false,
+      "actual_bound_absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-06.md",
+      "correct_absolute_completion_header": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-06.md",
+      "native_result_verbatim": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-06.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+      "correct_header_and_exact_advisory_match": true,
+      "whole_string_equality_with_bare_header": false,
+      "advisory_verbatim": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended"
+    }
+  ]
+}
