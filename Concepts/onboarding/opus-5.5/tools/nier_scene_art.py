@@ -635,8 +635,10 @@ def city() -> Scene:
     sc.s(cracks, w=.75, op=.8)
     sc.s(grass_run(0, W, G, rng, density=.18, h=8), w=.75)
 
-    # 6. the sky: a few birds over the gap
+    # 6. the sky: a few birds over the gap (they drift when the scene may move)
+    sc.open('class="a-birds" data-box="720 70 340 110"')
     sc.s(birds([(760, 150), (781, 141), (799, 156), (1010, 96), (1027, 106)], rng, size=5), w=.9)
+    sc.close()
     return sc
 
 
@@ -820,8 +822,6 @@ def bunker() -> Scene:
     # a far satellite and a supply shuttle crossing
     s2 = rect(1318, 150, 18, 12) + line(1300, 156, 1318, 156) + line(1336, 156, 1354, 156) + rect(1286, 148, 14, 16) + rect(1354, 148, 14, 16)
     sc.k(s2, w=.8)
-    sc.k('M1110 330l30 -7l9 5l-9 5Z', w=.8)
-    sc.s('M1100 331h-50M1094 334h-26', w=.6, op=.5)
 
     # the great window: a rounded aperture; the frame around it paved with hexagonal panels, deeper at the corners
     L, Rt, B, CR = 46, W - 46, H - 30, 200
@@ -861,6 +861,11 @@ def bunker() -> Scene:
     sc.k(frame, w=.85)
     sc.s(inner, w=.55, op=.75)
     sc.f(solid, op=.85)
+    # a supply shuttle crossing (it glides across when the scene may move)
+    sc.open('class="a-shuttle" data-box="1010 300 200 50"')
+    sc.k('M1110 330l30 -7l9 5l-9 5Z', w=.8)
+    sc.s('M1100 331h-50M1094 334h-26', w=.6, op=.5)
+    sc.close()
     return sc
 
 # =====================================================================================================================
@@ -909,13 +914,17 @@ def desert() -> Scene:
     # the sun behind haze, heat trembling low over the sand
     sc.s(circle_path(1210, 214, 46), w=.9, op=.7)
     sc.s(hline(1150, 202, 120) + hline(1158, 222, 104) + hline(1172, 240, 76), w=.7, op=.55)
-    heat = ''
+    heat, heat_low = '', ''
     for i in range(22):
         x = rng.uniform(40, 1560)
         y = rng.uniform(270, 336) if i < 15 else rng.uniform(170, 260)
         L = rng.uniform(24, 64)
         k = max(2, int(L / 9))
-        heat += f'M{n(x)} {n(y)}' + ''.join(f'q{n(4.5)} {n(-2 if j % 2 else 2)} 9 0' for j in range(k))
+        path_ = f'M{n(x)} {n(y)}' + ''.join(f'q{n(4.5)} {n(-2 if j % 2 else 2)} 9 0' for j in range(k))
+        if i < 15:
+            heat_low += path_
+        else:
+            heat += path_
     sc.s(heat, w=.7, op=.45)
     # the far horizon: a mesa and a line of drowned towers, one leaning, faint and hatched
     far = [(-10, 358), (120, 355), (150, 336), (178, 337), (196, 356), (420, 354), (1310, 354), (1350, 306), (1470, 302),
@@ -1039,6 +1048,10 @@ def desert() -> Scene:
         a = math.radians(-160 + i * 22)
         shrub += f'M880 {n(yat(d3, 880) + 2)}q{n(math.cos(a) * 6)} {n(math.sin(a) * 9)} {n(math.cos(a) * 14)} {n(math.sin(a) * 16)}'
     sc.s(shrub, w=.75)
+    # the heat low over the dunes (it shimmers when the scene may move)
+    sc.open('class="a-heat" data-box="0 256 1600 90"')
+    sc.s(heat_low, w=.7, op=.45)
+    sc.close()
     return sc
 
 # =====================================================================================================================
@@ -1123,7 +1136,7 @@ def forest() -> Scene:
     rng = random.Random(2525)
     # a pale moon; crows wheeling round the high tower
     sc.s('M1382 112a30 30 0 1 0 24 48a24 24 0 1 1 -24 -48Z', w=.9, op=.75)
-    sc.s(birds([(1110, 64), (1136, 52), (1162, 70), (1236, 96), (1256, 88)], rng, size=5), w=.85)
+    crows = birds([(1110, 64), (1136, 52), (1162, 70), (1236, 96), (1256, 88)], rng, size=5)
 
     # the far forest, rising in soft hills on either side, faint
     far, fb, fe = canopy_band(-20, 1640, 404, rng, r=(7, 14), wave=(24, .006, 1.1), big=.1)
@@ -1230,6 +1243,10 @@ def forest() -> Scene:
     near, nb, ne = canopy_band(-20, 1640, 534, rng, r=(15, 30), wave=(9, .017, 2), big=.25)
     sc.k(near + 'L1640 600L-20 600Z', w=1.05)
     sc.s(crown_marks(nb, rng, .85, 4), w=.65, op=.85)
+    # crows round the high tower (they wheel when the scene may move)
+    sc.open('class="a-birds" data-box="1090 36 190 76"')
+    sc.s(crows, w=.85)
+    sc.close()
     return sc
 
 # =====================================================================================================================
@@ -1433,8 +1450,127 @@ def park() -> Scene:
     sc.close()
     return sc
 
+# =====================================================================================================================
+# Flooded City: towers standing tilted in still water, their reflections broken into horizontal strokes, a drowned
+# street's last signs showing above the surface.
+# =====================================================================================================================
+def reflect_strokes(outline, water_y, rng, gap=5.5, depth=1.0, keep=.8):
+    """The reflection of a shape standing on the water line: its mirror image cut into broken horizontal strokes that
+    thin out with depth."""
+    mirror = [(x, 2 * water_y - y) for x, y in outline]
+    ys = [p[1] for p in mirror]
+    y0, y1 = water_y + 3, min(max(ys), water_y + (max(ys) - water_y) * depth, H - 2)
+    out = ''
+    y = y0
+    while y < y1:
+        t = (y - y0) / max(y1 - y0, 1)
+        for a, b in clip_segments(mirror, (-100, y), (1, 0)):
+            xa, xb = -100 + a, -100 + b
+            if xb - xa < 3:
+                continue
+            x = xa + rng.uniform(0, 3)
+            while x < xb - 2:
+                L = rng.uniform(6, 26) * (1 - t * .55)
+                e = min(x + L, xb)
+                if rng.random() < keep * (1 - t * .5):
+                    out += hline(x + rng.uniform(-2, 2) * t, y, e - x)
+                x = e + rng.uniform(3, 10) * (1 + t * 1.4)
+        y += gap * (1 + t * .5)
+    return out
 
-SCENES = {'city': city, 'bunker': bunker, 'desert': desert, 'forest': forest, 'park': park}
+
+def flooded() -> Scene:
+    sc = Scene('flooded', 'Flooded City')
+    rng = random.Random(8484)
+    WL = 404  # the water line at the horizon
+    # long quiet clouds
+    sc.s(hline(120, 150, 260) + hline(180, 160, 160) + hline(1080, 120, 300) + hline(1160, 131, 180), w=.7, op=.45)
+    # the far drowned skyline on the horizon, faint
+    far = ''
+    x = -10
+    while x < W:
+        w = rng.uniform(26, 70)
+        h = rng.uniform(30, 120)
+        lean = rng.uniform(-6, 6) if rng.random() < .35 else 0
+        far += poly([(x, WL), (x + lean, WL - h + rng.uniform(0, 12)), (x + w * .5 + lean, WL - h + rng.uniform(-4, 16)), (x + w + lean, WL - h + rng.uniform(-6, 10)), (x + w, WL)])
+        x += w + rng.uniform(10, 50)
+    sc.k(far, w=.7, op=.5)
+    sc.s(reflect_strokes([(0, WL), (0, WL - 60), (1600, WL - 60), (1600, WL)], WL, rng, gap=7, depth=.35, keep=.35), w=.5, op=.3)
+    # the towers: (x, width, height, tilt, water line, windows?)
+    specs = [(80, 132, 420, -5, 494, None), (300, 86, 250, 8, 448, None), (378, 74, 290, -3, 444, None),
+             (1004, 58, 232, 4, 434, 'dark'), (1150, 64, 170, -9, 426, None), (1226, 158, 404, 4, 504, None),
+             (1470, 90, 176, -2, 440, None)]
+    order = sorted(specs, key=lambda t: t[4])
+    for (x, w, h, tilt, wl, kind) in order:
+        cx = x + w / 2
+        top = wl - h
+        k = rng.randint(3, 5)
+        jag = [(x + w * i / k, top + rng.uniform(0, 22)) for i in range(k + 1)]
+        outline = [(x, wl + 6)] + jag + [(x + w, wl + 6)]
+        rot_out = [rot(p, (cx, wl), tilt) for p in outline]
+        # reflection first, under the water line
+        sc.s(reflect_strokes([p for p in rot_out], wl, rng, gap=5.2, depth=.62), w=.7, op=.7)
+        sc.open(f'transform="rotate({num(tilt)} {n(cx)} {n(wl)})"')
+        if kind == 'dark':
+            sc.f(poly(outline))
+            sc.k(''.join(rect(x + 10 + c * 18, wl - h + 40 + r * 26, 8, 12) for c in range(int((w - 16) / 18)) for r in range(int((h - 60) / 26)) if rng.random() < .35), stroke=False)
+        else:
+            sc.k(poly(outline))
+            fl = ''
+            yy = wl - 22
+            while yy > top + 26:
+                fl += hline(x + 4, yy, w - 8) if rng.random() < .55 else hline(x + 4 + rng.uniform(0, w * .4), yy, w * rng.uniform(.2, .5))
+                yy -= 22
+            sc.s(fl, w=.65, op=.75)
+            sc.f(''.join(rect(x + 8 + c * 16, wl - h + 36 + r * 22, 7, 10) for c in range(int((w - 12) / 16)) for r in range(int((h - 56) / 22)) if rng.random() < .16), op=.8)
+            sc.s(hatch([(x + w * .8, wl), (x + w, wl), (x + w, jag[-1][1] + 3), (x + w * .8, jag[-2][1] + 6)], 75, 5, rng, keep=.9, inset=1), w=.55, op=.7)
+        sc.close()
+        # the water line itself: a ripple ring round the base
+        wlx0, wlx1 = rot((x, wl), (cx, wl), tilt)[0], rot((x + w, wl), (cx, wl), tilt)[0]
+        sc.s(f'M{n(wlx0 - 12)} {n(wl + 2)}h{n(wlx1 - wlx0 + 24)}M{n(wlx0 - 4)} {n(wl + 6)}h{n(wlx1 - wlx0 + 8)}', w=.8)
+        hang_vines(sc, rng, along([rot(p, (cx, wl), tilt) for p in jag], rng, 3), (30, 110), sway=(2, 5))
+        if h > 400:
+            px, py = rot(jag[len(jag) // 2], (cx, wl), tilt)
+            sc.k(canopy(px, py - 12, 26, 14, rng, ps=crown_pts(px, py - 12, 26, 14, rng)), w=.9)
+    # the water: long faint strokes, denser toward the horizon
+    wat = ''
+    y = WL + 6
+    while y < H:
+        t = (y - WL) / (H - WL)
+        for _ in range(int(3 + 5 * (1 - t))):
+            x0 = rng.uniform(-40, 1600)
+            wat += hline(x0, y, rng.uniform(30, 140) * (0.5 + t))
+        y += 9 + t * 16
+    sc.s(wat, w=.55, op=.45)
+    # a drowned overpass: its deck slanting into the water, railings still standing
+    ov = [(560, 452), (820, 424), (822, 434), (562, 464)]
+    sc.s(reflect_strokes(ov + [(560, 470)], 466, rng, gap=5, depth=.9), w=.6, op=.6)
+    sc.k(poly(ov))
+    sc.s(line(560, 443, 820, 415) + ''.join(line(566 + i * 16, 451 - i * 1.72, 566 + i * 16, 442 - i * 1.72) for i in range(16)), w=.7)
+    sc.s(rebar(822, 430, rng, 3, 12), w=.7)
+    hang_vines(sc, rng, [(600, 461), (680, 452), (760, 444)], (10, 30), sway=(1, 3))
+    # what shows above the surface: a sign, a lamp post, a bus roof, a drifting boat
+    sc.s('M902 500v-46M890 454h24v14h-24ZM902 502h-10M902 502h12', w=.85)
+    sc.s(reflect_strokes([(890, 502), (890, 454), (914, 454), (914, 502)], 502, rng, gap=5, depth=.8), w=.6, op=.6)
+    sc.s('M960 470v-80q0-10 10-12l12-2', w=.9)
+    sc.k('M1400 530l6 -12h96l6 12Z', w=.9)
+    sc.s(''.join(rect(1416 + i * 16, 521, 10, 6) for i in range(5)) + 'M1390 534h130', w=.6, op=.8)
+    boat = 'M690 516q30 10 62 0l-6 -9h-50Z'
+    sc.k(boat, w=.9)
+    sc.s('M706 507v-22l16 18M692 520h58M700 524h40', w=.7, op=.8)
+    sc.s(birds([(652, 176), (670, 168), (688, 182)], rng, size=5), w=.85)
+    # glints on the water, twinkling when the scene may move
+    gl = ''
+    for _ in range(18):
+        x, y = rng.uniform(40, 1560), rng.uniform(WL + 10, H - 10)
+        gl += hline(x, y, rng.uniform(4, 9))
+    sc.open('class="a-glints" data-box="0 400 1600 160"')
+    sc.s(gl, w=.9)
+    sc.close()
+    return sc
+
+
+SCENES = {'city': city, 'bunker': bunker, 'desert': desert, 'forest': forest, 'park': park, 'flooded': flooded}
 
 
 def main(argv=None) -> int:
