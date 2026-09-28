@@ -78,7 +78,8 @@
     if (fromObserver && S.open && want && want.theme_family && (th.chosen !== want.theme_family || th.mode !== want.theme_mode)) {
       try { window.PM_THEME.setFamily(want.theme_family, { persist: false }); window.PM_THEME.setMode(want.theme_mode, { persist: false }); th = O55.theme(); } catch (_) {}
     }
-    const look = th.family + '-' + th.mode;
+    /* NieR Mode repaints Basic in ink without changing the painted family, so it is part of the look */
+    const look = th.family + '-' + th.mode + (document.documentElement.hasAttribute('data-o55-nier') ? '-nier' : '');
     S.root.setAttribute('data-family', th.family); S.root.setAttribute('data-mode', th.mode);
     S.root.querySelector('.o55-stage').setAttribute('data-family', th.family);
     if (lastLook && lastLook !== look && fromObserver) { renderScene(true); renderRail(); refresh(); renderLook(); }

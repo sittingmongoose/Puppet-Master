@@ -134,6 +134,9 @@ html[data-o55-nier][data-theme="basic-light"] {
   --o55-nier-term-cursor: #211f1b;
   --o55-nier-shadow-rgb: 33,31,27;
 }
+html[data-o55-nier][data-theme="basic-light"] .left-panel {
+  --surface-alt: #bfbba4;
+}
 html[data-o55-nier][data-theme="basic-light"] #panel-settings {
   --k3-bg-0: #ccc8b1;
   --k3-bg-1: #bfbba4;
@@ -298,6 +301,9 @@ html[data-o55-nier][data-theme="basic-dark"] {
   --o55-nier-term-cursor: #d1cdb7;
   --o55-nier-shadow-rgb: 33,31,27;
 }
+html[data-o55-nier][data-theme="basic-dark"] .left-panel {
+  --surface-alt: #282620;
+}
 html[data-o55-nier][data-theme="basic-dark"] #panel-settings {
   --k3-bg-0: #2f2d26;
   --k3-bg-1: #282620;
@@ -383,6 +389,23 @@ html[data-o55-nier][data-theme^="basic"] .pm-term-subtab span,
 html[data-o55-nier][data-theme^="basic"] .pm-term-subtab svg { color: var(--text-secondary); }
 html[data-o55-nier][data-theme^="basic"] #pm-hover-tag-root .pm-hover-tag { box-shadow: var(--elev-3); }
 html[data-o55-nier][data-theme^="basic"] #pm-o55-onboarding[data-family="basic"] .o55-win { box-shadow: 0 30px 70px -30px rgba(var(--o55-nier-shadow-rgb), .55), 0 0 0 1px var(--border); }
+
+/* Found by tools/nier_hue_audit.mjs: rules every theme shares that paint a colour of their own. */
+/* the terminal's workgroup and pane identity colours (set inline per group by the terminal) read as ink */
+html[data-o55-nier] :is(.pm-term-wg-cluster, .pm-term-subtab, .terminal-pane) {
+  --wg-accent: var(--o55-nier-ink) !important; --sub-accent: var(--o55-nier-ink) !important;
+  --sub-text: var(--text-secondary) !important; --pane-wg-accent: var(--o55-nier-ink) !important;
+}
+/* chat bubbles lose their blue side glow */
+html[data-o55-nier] .message:is(.user, .assistant) .msg-body { box-shadow: none; }
+/* the cyan status pulse (a box-shadow ring) becomes a quiet ink blink, compositor-only */
+html[data-o55-nier] :is(.chat-thread-item .thread-working-pulse, .wizard-activity-pulse, .chat-footer-status .subagent-dot, .todo-status.working) { animation-name: o55-nier-blink; }
+@keyframes o55-nier-blink { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+/* Settings' own literal paint: the rail headings, the idle status dots, the violet primary button and its sheen */
+html[data-o55-nier] #panel-settings .rail-heading { color: var(--k3-text-3); }
+html[data-o55-nier] #panel-settings :is(.status-dot.disabled, .status-dot.not-installed, .status-dot.not-connected, .status-dot.not-run) { background: var(--o55-nier-line-strong); }
+html[data-o55-nier] #panel-settings .btn.primary { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); box-shadow: var(--elev-1); }
+html[data-o55-nier] #panel-settings .btn.primary::after { display: none; }
 
 /* Settings: the two rows NieR Mode decides while it is on say so above the person's own choice (kept for when it is
    off); the note for a family picked while it is on uses the theme preview bar's frame. */

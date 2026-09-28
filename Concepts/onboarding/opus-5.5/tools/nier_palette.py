@@ -156,6 +156,7 @@ def generate() -> str:
         base = f'html[data-o55-nier][data-theme="basic-{mode}"]'
         out.append(f'/* {mode}: the root tokens (Basic\'s full set, the diff, terminal and hover tokens, and NieR helpers) */')
         out.append(block(base, r['root']))
+        out.append(block(f'{base} .left-panel', {'--surface-alt': t[mode]['sidebar']}))  # Basic re-declares it there
         out.append(block(f'{base} #panel-settings', r['settings']))
         out.append(block(f'{base} :is({T37})', r['t37']))
         out.append(block(f'{base} #pm-o55-onboarding', r['onboarding']))
