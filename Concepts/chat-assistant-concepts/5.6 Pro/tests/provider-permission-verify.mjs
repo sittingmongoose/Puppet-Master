@@ -9,7 +9,8 @@
  *
  * What IS testable here is the part of the provider boundary the product renders
  * to the user, and the permission ceilings around it:
- *   - requested versus effective identity, with a reason — never a silent swap
+ *   - requested versus effective identity, with a reason — never a silent swap; an offline chosen model blocks
+ *     Start until the user picks another (owner answer E-03, 2026-09-27: nothing stands in by itself)
  *   - provider-native state refused as canon (whole-list To-Do proposal)
  *   - reset-source truth, including `unknown` suppressing an invented countdown
  *   - Usage attributed separately, never folded into the primary run
@@ -54,9 +55,9 @@ async function main() {
     ['requestedModelId', 'effectiveModelId', 'requestedPersona', 'effectivePersona', 'substitutionReason']
       .every(k => shape.includes(k)), shape.join(', '));
 
-  /* DRIVE a real substitution. The seeded fixture has none, so the earlier form
-     of this check passed over an empty set and measured nothing — the exact
-     failure mode tests/audit.mjs's own matcher-hygiene gate exists to catch. */
+  /* DRIVE the offline case for real (E-03: an offline chosen model blocks Start; nothing stands in by itself).
+     The seeded fixture has no offline model, so this picks one in the sheet rather than judging an empty set —
+     the exact failure mode tests/audit.mjs's own matcher-hygiene gate exists to catch. */
   await ev(() => { const b = document.querySelector('[data-action="collab-open-configure"][data-kind="crew"]'); if (b) b.click(); });
   await page.waitForTimeout(150);
   if (!(await ev(() => !!document.querySelector('.collab-participant-editor')))) {
@@ -76,13 +77,26 @@ async function main() {
     await page.waitForTimeout(400);
   }
   const editorOpen = await ev(() => !!document.querySelector('.collab-participant-editor [data-action="collab-pick-model"]'));
-  check('the Crew configuration modal opened so a substitution can actually be driven', editorOpen);
+  check('the Crew configuration modal opened so the offline case can actually be driven', editorOpen);
   await ev(() => { const b = document.querySelector('.collab-participant-editor .collab-participant-editor-row:first-child [data-action="collab-pick-model"]'); if (b) b.click(); });
   await page.waitForTimeout(250);
   await ev(() => { const o = document.querySelector('.overlay-menu.model-menu [data-action="set-model"][data-value="kimi-k3-turbo"]'); if (o) o.click(); });
   await page.waitForTimeout(250);
+  /* 6.4 (COLLAB step 1): Start stays disabled until the job has text, so the Crew gets a job first */
+  await ev(() => { const t = document.querySelector('.collab-configure [data-collab-input="purpose"]'); if (t) { t.value = 'Export the collection to CSV without losing quotes'; t.dispatchEvent(new Event('input', { bubbles: true })); } });
+  await page.waitForTimeout(150);
+  const runsBeforeOffline = await ev(() => window.PM56_COLLAB.runs().length);
+  const blocked = await ev(() => {
+    const b = document.querySelector('[data-action="collab-modal-commit"]');
+    const row = document.querySelector('.collab-participant-editor .collab-participant-editor-row:first-child');
+    const n = row && row.querySelector('.collab-route-eff');
+    return { disabled: !!(b && b.disabled), notice: n ? n.textContent.replace(/\s+/g, ' ').trim() : null };
+  });
   await ev(() => { const b = document.querySelector('[data-action="collab-modal-commit"]'); if (b) b.click(); });
   await page.waitForTimeout(500);
+  const runsAfterOffline = await ev(() => window.PM56_COLLAB.runs().length);
+  check('an offline chosen model blocks Start: the row says so, Start is disabled, and nothing runs on another model',
+    blocked.disabled && /offline right now/i.test(blocked.notice || '') && runsAfterOffline === runsBeforeOffline, JSON.stringify({ blocked, runsBeforeOffline, runsAfterOffline }));
   const subs = await ev(() => {
     const out = [];
     window.PM56_COLLAB.runs().forEach(r => (r.participants || []).forEach(p => {
@@ -91,11 +105,14 @@ async function main() {
     }));
     return out;
   });
-  check('an unavailable model really is substituted (the case exists to be judged, not an empty set)',
-    subs.length > 0, JSON.stringify(subs).slice(0, 180));
-  check('no substitution is silent — every differing effective model states a reason',
-    subs.length > 0 && subs.every(s => !!s.reason && s.reason.length > 10),
-    JSON.stringify(subs).slice(0, 200));
+  /* E-03: an offline model blocks Start instead of standing in, so no helper of any run (seeds included) runs on a
+     model other than the one chosen; checked over the whole run list, never an empty set by construction */
+  const helperCount = await ev(() => window.PM56_COLLAB.runs().reduce((n, r) => n + (r.participants || []).length, 0));
+  check('no substitution at all — every helper of every run runs on the model chosen for it (E-03)',
+    helperCount > 0 && subs.length === 0,
+    JSON.stringify({ helperCount, subs }).slice(0, 200));
+  await page.keyboard.press('Escape').catch(() => {}); await page.waitForTimeout(150);
+  await page.keyboard.press('Escape').catch(() => {}); await page.waitForTimeout(150);
 
   const bsdIdentity = await ev(() => window.PM56_BSD.policy().model);
   check('the advisor also discloses requested vs effective, not just workflows',
@@ -217,20 +234,38 @@ async function main() {
   check('the read-only advisor exposes no approve / certify / mutate action anywhere',
     mutating.length === 0, mutating.join(',') || 'none');
 
+  /* The refuse control's emitter (spec 8.2 last bullet, 10.2 G-23): a quiet "Recorded example" line inside the Crew
+     Auto sheet while the Crew demo is active. The demo opens its own chat and creates no run (it resets the Crew Auto rules, so the
+     "before" is read once the sheet is open); the sheet opens through
+     the wand row's own action (data-auto="1"), dispatched as a real click on a detached copy of that row. */
+  await page.keyboard.press('Escape').catch(() => {});
+  await page.waitForTimeout(150);
+  await ev(() => window.PM56_CREW_DEMOS && window.PM56_CREW_DEMOS.start('auto'));
+  await page.waitForTimeout(400);
+  await ev(() => {
+    const b = document.createElement('button');
+    b.dataset.action = 'collab-open-configure'; b.dataset.kind = 'crew'; b.dataset.auto = '1';
+    document.body.appendChild(b); b.click(); b.remove();
+  });
+  await page.waitForTimeout(350);
+  /* measured here: starting the Crew demo resets the Crew Auto rules to show them from the start (crew-demo-batch5) */
   const autoBefore = await ev(() => ({
     cfg: window.PM56_COLLAB.definitions().crew.autoConfigured === true,
     enabled: window.PM56_COLLAB.definitions().crew.autoEnabled === true,
     runs: window.PM56_COLLAB.runs().length
   }));
-  await ev(() => { const b = document.querySelector('[data-action="collab-crew-auto-refuse-demo"]'); if (b) b.click(); });
+  const refuseShown = await ev(() => { const b = document.querySelector('.collab-configure [data-action="collab-crew-auto-refuse-demo"]'); if (b) b.click(); return !!b; });
   await page.waitForTimeout(350);
   const autoAfter = await ev(() => ({
     enabled: window.PM56_COLLAB.definitions().crew.autoEnabled === true,
-    runs: window.PM56_COLLAB.runs().length
+    runs: window.PM56_COLLAB.runs().length,
+    refused: document.body.innerText.includes('Crew Auto refused')
   }));
   check('Crew Auto cannot widen authority — the attempt starts nothing and enables nothing',
-    autoAfter.runs === autoBefore.runs && autoAfter.enabled === autoBefore.enabled,
-    JSON.stringify({ autoBefore, autoAfter }));
+    refuseShown && autoAfter.refused && autoAfter.runs === autoBefore.runs && autoAfter.enabled === autoBefore.enabled,
+    JSON.stringify({ refuseShown, autoBefore, autoAfter }));
+  await ev(() => { const b = document.querySelector('.collab-configure [data-action="collab-modal-cancel"]'); if (b) b.click(); });
+  await page.waitForTimeout(250);
 
   const protectedRefusal = await ev(() => {
     const s = window.PM56_BROWSER && window.PM56_BROWSER.state();

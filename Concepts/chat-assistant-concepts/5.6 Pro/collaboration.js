@@ -43,14 +43,13 @@
  *    such legacy owner (app.js's own `activityScope()`/`activityDefs()` already
  *    project them correctly from `RT.collab.runs` — see `COLLAB_DOMAINS` in
  *    app.js, ~line 1246), so those three ARE registered through the Activity
- *    slots below. Crew's full panel, participant transcripts and hover-equivalent
- *    summary are instead always reachable through this module's OWN dialog
- *    overlay (`collab-open-panel` / `collab-open-participant`), which every
- *    other kind also uses as its primary "Open Panel" destination for the same
- *    reason: it never depends on Activity Detail's per-domain gating or its
- *    "all scope" per-section body (which has no per-domain override slot at
- *    all — only one aggregate `activityPanelBody` call per panel render).
- *    Exact integrator asks are in this wave's report.
+ *    slots below. Crew's full record, participant transcripts and hover-equivalent
+ *    summary are instead always reachable through the docked run view in the
+ *    editor pane (`collab-open-panel` / `collab-open-participant` open
+ *    `collab-run:{runId}`, collab-view.js; COLLAB step 3 retired the centred
+ *    dialog), which every other kind also uses as its primary "Open Panel"
+ *    destination for the same reason: it never depends on Activity Detail's
+ *    per-domain gating or its "all scope" per-section body.
  * 4. NO PROVIDER BRAND MARKS.  `ctx` does not expose `providerMark()` (only
  *    `icon()` is on the shared context), so participant rows show the provider
  *    name as text rather than inventing a letter-only substitute glyph, which
@@ -123,21 +122,6 @@
   var KINDS = ['crew', 'brainstorm', 'review', 'chat_room'];
   var KIND_LABEL = { crew: 'Crew', brainstorm: 'BrainStorm', review: 'Review', chat_room: 'Chat Room' };
   var KIND_ICON = { crew: 'users', brainstorm: 'brain', review: 'eye', chat_room: 'users' };
-  /* One-line explanation per kind, shown as the configure dialog's sub. */
-  var KIND_SUB = {
-    crew: 'A coordinator assigns bounded tasks to each role and combines only verified results.',
-    chat_room: 'A moderated multi-agent discussion. Nothing becomes a Task or Plan until you promote a message.',
-    brainstorm: 'Blind proposals, debate and a vote produce one Plan document.',
-    review: 'Independent read-only reviewers. Findings never auto-repair anything.'
-  };
-  var RUN_STATE_LABEL = {
-    configuring: 'Configuring', running: 'Running', paused: 'Paused', waiting: 'Waiting',
-    blocked: 'Blocked', completed: 'Completed', canceled: 'Cancelled', failed: 'Failed'
-  };
-  var RUN_STATE_TONE = {
-    configuring: 'idle', running: 'working', paused: 'idle', waiting: 'idle',
-    blocked: 'blocked', completed: 'done', canceled: 'idle', failed: 'blocked'
-  };
 
   /* =====================================================================
      1. DEFINITIONS — Settings-sourced defaults per kind (owner doc §14).
@@ -148,9 +132,19 @@
   var DEFINITIONS_SEED = {
     crew: {
       coordinator: 'parent_assistant', assignmentStrategy: 'manager_directed',
-      memberCount: 3, parallelism: 3, autoEnabled: false, autoComplexity: 'high',
+      /* Owner answer E-02 (2026-09-27): Crew Auto is the assistant's permission to call a Crew by itself when a job
+         needs one, ON by default as the project default, with default rules; a chat's Crew Auto check overrides it
+         for that chat (RTC.crewAutoChat). The policy shape is crew-protocol.js commitPolicy's. */
+      memberCount: 3, parallelism: 3, autoEnabled: true, autoConfigured: true, autoComplexity: 'high',
       autoMaxMembers: 4, contextSharing: 'shared', synthesisPolicy: 'coordinator_adjudicated',
-      timeLimitMinutes: 45, tokenLimit: 400000, costLimitUsd: 6
+      timeLimitMinutes: 45, tokenLimit: 400000, costLimitUsd: 6,
+      autoPolicy: { revision: 1, isDefault: true, name: 'Crew Auto default', purpose: '',
+        rows: [{ rowId: 'auto-default-1', role: 'Builder', requestedModelId: 'sonnet46', persona: 'Implementer', requestedEffort: '', requestedFast: false, additiveRoleKind: 'none' },
+          { rowId: 'auto-default-2', role: 'Builder', requestedModelId: 'sonnet46', persona: 'Implementer', requestedEffort: '', requestedFast: false, additiveRoleKind: 'none' },
+          { rowId: 'auto-default-3', role: 'Checker', requestedModelId: 'sonnet46', persona: 'Reviewer', requestedEffort: '', requestedFast: false, additiveRoleKind: 'none' }],
+        config: { coordinator: 'parent_assistant', assignmentStrategy: 'manager_directed', parallelism: 3, autoComplexity: 'high', autoMinIndependent: '2', timeLimitMinutes: 45, tokenLimit: 400000, costLimitUsd: 6 },
+        maxMembers: 4 },
+      autoRosterTemplate: [{ role: 'Builder', requestedModelId: 'sonnet46', persona: 'Implementer' }, { role: 'Builder', requestedModelId: 'sonnet46', persona: 'Implementer' }, { role: 'Checker', requestedModelId: 'sonnet46', persona: 'Reviewer' }]
     },
     brainstorm: {
       coreParticipants: 4, questionLimit: 20, grillExtension: 25,   /* Correction v4 QMAX-002/003 */
@@ -182,6 +176,7 @@
   RT.collab = RT.collab || {};
   var RTC = RT.collab;
   RTC.definitions = RTC.definitions || JSON.parse(JSON.stringify(DEFINITIONS_SEED));
+  RTC.crewAutoChat = RTC.crewAutoChat || {};
   RTC.runs = RTC.runs || [];
   RTC.draft = RTC.draft || null;
   RTC.seq = RTC.seq || 0;
@@ -727,6 +722,7 @@
 
   function restoreFixture() {
     RTC.definitions = JSON.parse(JSON.stringify(DEFINITIONS_SEED));
+    RTC.crewAutoChat = {};
     RTC.runs = JSON.parse(SEED_RUNS_JSON);
     RTC.draft = null;
     msgSeq = {};
@@ -767,383 +763,846 @@
   })();
 
   /* =====================================================================
-     5. SHARED RENDERERS — one card, one participant row, one message line,
-     reused by the card, the panel and the participant transcript. Kind
-     bodies (§B-E below) plug into `kindInline`/`kindPanelSections` only.
+     5. RUN UI STATE — the card's view-local state (the run view keeps its own
+     in collab-view.js; PM56_COLLAB.viewState reads it).
      ===================================================================== */
-  var UI = { expanded: {}, more: {}, panel: null, dialogTab: {} };
+  /* step 2 (the card): face = the density last rendered, settling = a face held one beat (G-07), arriving = a
+     card whose Start flight is in the air (M3), cancelAsk = the in-place Cancel confirm, tech = the Technical
+     details line, last = the presentation state last seen, doneMark = when a run finished in this session */
+  var UI = { expanded: {}, more: {}, face: {}, settling: {}, arriving: {}, cancelAsk: {}, tech: {}, last: {}, doneMark: {}, sentTo: {} };
 
-  function fmtClock(iso) {
-    if (!iso) return '';
-    var d = new Date(iso); if (isNaN(d)) return '';
-    return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  /* IMPACT A2-14: the phrase primitives replace the local formatters (fmtClock, fmtMoney, fmtTokens are gone). COLLAB step 3:
+     the centred panel's own renderers (status chip, participant row, message line, usage strip, the kind inline blocks)
+     went with it; the docked run view (collab-view.js) draws every tab from the pmx primitives. */
+
+  /* =====================================================================
+     7. THE RUN CARD (DESIGN-SPEC 7, 8.0 card bullets, 4.3; COLLAB step 2).
+     One article per run (data-k collab-card-{runId}) carries every density:
+     starting, waiting, live, collapsed, attention, result, failed, receipt.
+     Only data-density and the body's children change, so a card never
+     re-arrives. The frame is COLLAB's; a kind package supplies its parts
+     through PM56_<KIND>.cardParts(run, ctx, generic), looked up lazily at
+     render time: every field it returns (not undefined) replaces COLLAB's
+     generic one. Seeds and legacy runs always use the generic parts. The
+     shared faces (waiting, cancelled, paused, stopped at your limit, failed)
+     are COLLAB's (IMPACT A3-04); kinds supply only nouns.
+     ===================================================================== */
+  var TERMINAL = { completed: 1, cancelled: 1, failed: 1, limit: 1 };
+  var KIND_CLS = { crew: 'collab-kind-crew', brainstorm: 'collab-kind-brainstorm', review: 'collab-kind-review', chat_room: 'collab-kind-chat_room' };
+  var START_REASON = { crew: 'The Coordinator is reading the job.', chat_room: 'The Moderator is opening the first round.', review: 'Taking the snapshot.', brainstorm: 'The team is reading the question.' };
+  var LEAD_WORD = { crew: 'Coordinator', chat_room: 'Moderator', brainstorm: 'Coordinator', review: 'Coordinator' };
+
+  /* a participant counts as started once it has an attempt, an outcome or a word of its own */
+  function hasStarted(run) {
+    return (run.participants || []).some(function (p) { return (p.attempts && p.attempts.length) || p.outcome || p.status === 'working' || p.status === 'done' || p.status === 'failed'; }) ||
+      (run.messages || []).some(function (m) { return m.senderKind === 'participant'; });
   }
-  function fmtMoney(n) { return '$' + Number(n || 0).toFixed(2); }
-  function fmtTokens(n) {
-    n = Number(n) || 0;
-    if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
-    if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
-    return String(n);
+  /* a seed title that starts with its own kind word ("Crew · Query Performance…") shows without it: the kind word
+     already leads the card head, the dock line and the destination label */
+  function shownTitle(run) {
+    var t = String(run.title || ''), K = KIND_LABEL[run.kind] || '';
+    return K && t.indexOf(K + ' · ') === 0 ? t.slice(K.length + 3) : t;
+  }
+  function blockedHelper(run) { return (run.participants || []).filter(function (p) { return p.status === 'blocked'; })[0] || null; }
+
+  /* IMPACT A1-20: the one presentation state. Everything that shows or acts on a run's state reads this (card, dock,
+     receipt, Activity, canPause/canCancel, scheduled delivery, run-view status, the composer destination label). */
+  function presentState(run) {
+    if (!run) return 'waiting';
+    var s = run.status;
+    if (s === 'canceled' || s === 'cancelled') return 'cancelled';
+    if (run.stopReason === 'limit') return 'limit';
+    if (s === 'failed') return 'failed';
+    if (s === 'completed') return completionProjection(run).clean_completion ? 'completed' : 'attention';
+    if (s === 'paused') return 'paused';
+    if (s === 'blocked' || run.pendingUserDecision || blockedHelper(run)) return 'attention';
+    if (s === 'configuring') return 'waiting';
+    if (UI.waiting[run.id] && !hasStarted(run)) return 'waiting';
+    if (provenance(run.id) === 'recorded' && !hasStarted(run)) return 'starting';
+    return 'running';
   }
 
-  function statusChip(status, blockedReason) {
-    var label = RUN_STATE_LABEL[status] || status;
-    var tone = RUN_STATE_TONE[status] || 'idle';
-    return '<span class="collab-status collab-status-' + esc(tone) + '" data-k="collab-status" title="' + esc(blockedReason || label) + '">' +
-      '<i class="collab-status-dot"></i>' + esc(label) + '</span>';
+  function names(list) {
+    list = list.filter(Boolean);
+    if (list.length <= 2) return list.join(' and ');
+    return list.slice(0, 2).join(', ') + ' and ' + (list.length - 2) + ' more';
+  }
+  function crewProgress(run) {
+    var a = (run.crew && run.crew.assignments) || [];
+    return { all: a.length, done: a.filter(function (x) { return x.status === 'done'; }).length, list: a };
+  }
+  function reviewFindings(run) {
+    var r = run.review || {};
+    return (r.report && r.report.findings) || r.findings || [];
+  }
+  function roomRounds(run) { var c = run.chatRoom || {}; return { so: Number(c.roundsSoFar || (run.config || {}).roundsSoFar || 0), max: Number((run.config || {}).maxRounds || 5) }; }
+  var STORM_SHORT = ['Ask', 'Drafts', 'Options', 'Debate', 'Facts', 'Vote', 'Plan'];
+  var STORM_PHASE = { intake: 0, questions: 0, clarify: 0, proposals: 1, independent: 1, drafting: 1, normalize: 2, options: 2, debate: 3, evidence: 4, research: 4, vote: 5, voting: 5, synthesis: 6, synthesize: 6, done: 7 };
+
+  /* the progress phrase a cancelled card keeps ("2 of 3 parts done") */
+  function progressLine(run) {
+    if (run.kind === 'crew') { var c = crewProgress(run); return c.all ? c.done + ' of ' + c.all + ' parts done' : ''; }
+    if (run.kind === 'review') { var P = run.participants || []; var d = P.filter(function (p) { return p.outcome === 'completed' || p.status === 'done'; }).length; return P.length ? d + ' of ' + P.length + ' reviewers finished' : ''; }
+    if (run.kind === 'chat_room') { var rr = roomRounds(run); return rr.so ? plural(rr.so, 'round', 'rounds') + ' done' : ''; }
+    return '';
+  }
+  function limitText(run) {
+    var cfg = run.config || {}, def = RTC.definitions[run.kind] || {};
+    var usd = cfg.costLimitUsd || def.costLimitUsd, min = cfg.timeLimitMinutes || def.timeLimitMinutes;
+    var S = S_();
+    return '(' + [usd ? S.pmxMoney(usd) : '', min ? min + ' min' : ''].filter(Boolean).join(' or ') + ')';
   }
 
-  /* Requested-versus-effective disclosure. Always renders the requested route;
-     only adds the effective/reason chrome when they differ, per §2.2 "shown
-     wherever the participant appears... when a selected route is unavailable
-     or degraded" — showing it unconditionally for identical values would just
-     be noise, and the packet's own examples only light this up on divergence. */
-  function reqEff(ctx, p) {
-    var out = '<span class="collab-route" data-k="collab-route">' + esc(p.requestedModelName) + '</span>';
-    if (p.effectiveModelId !== p.requestedModelId || p.status === 'disabled') {
-      /* Whole class names, not 'prefix-' + ternary. A static analyser (and
-         tests/orphan-gate.mjs) cannot see through concatenation, so the two
-         rules that style these badges read as dead CSS and were nearly
-         deleted -- which would have silently stripped the colour off the
-         effective-substitute and slot-disabled states. */
-      out += '<span class="collab-route-eff ' + (p.status === 'disabled' ? 'collab-route-eff-failed' : 'collab-route-eff-sub') + '" data-k="collab-route-eff">' +
-        ctx.icon('warning', 11) + (p.effectiveModelName ? 'effective ' + esc(p.effectiveModelName) : 'no substitute available') +
-        '</span>';
+  /* IMPACT A1-20 / A1-28: the decision a run needs from you, in words (who needs what, and who is not blocked) */
+  function attentionOf(run) {
+    var c = completionProjection(run), K = KIND_LABEL[run.kind], lead = LEAD_WORD[run.kind] || 'Coordinator';
+    var b = blockedHelper(run), noun = NOUN[run.kind];
+    function mk(tone, strong, text, word) { return { tone: tone, strong: strong, text: text, word: word || 'Needs attention', plain: strong + (text ? ' ' + text : '') }; }
+    if (c.coordinator_failed) return mk('warm', 'Needs attention', '· The ' + lead + ' stopped, ' + (run.kind === 'chat_room' ? 'so nobody is calling on speakers.' : 'so the final summary is missing.'));
+    if (b) return mk('warm', b.role + ' needs your OK', 'to go on. Only this ' + noun + ' waits; the others keep working.', 'Needs you');
+    if (c.unresolved_required.length && c.failed_slots.length) {
+      var failed = (run.participants || []).filter(function (p) { return c.failed_slots.indexOf(p.id) >= 0 && p.required; });
+      var all = (run.participants || []).filter(function (p) { return p.required; }).length;
+      var done = all - c.unresolved_required.length;
+      var why = failed.length && failed[0].outcome === 'timed_out' ? 'ran out of time' : failed.length && failed[0].outcome === 'not_allowed' ? 'wasn’t allowed to go on' : 'didn’t finish';
+      if (run.kind === 'review') return mk('warm', 'Only ' + done + ' of ' + all + ' reviewers finished', '(' + names(failed.map(function (p) { return p.role; })) + ' ' + why + '). This is a partial review.');
+      return mk('warm', plural(failed.length || 1, noun, noun + 's') + ' didn’t finish.', failed.length ? names(failed.map(function (p) { return p.role; })) + ' ' + why + '.' : '');
     }
+    if (c.missing_outputs.length) return mk('warm', 'The final summary was never written.', '');
+    if (c.attention_reason === 'vote_tie_unresolved') return mk('warm', 'The vote is tied.', 'Write the plan from your rules and the evidence, or run one more debate round.');
+    if (run.pendingUserDecision) return mk('accent', 'Your move.', 'The ' + K + ' is waiting for your decision.', 'Your move');
+    return mk('warm', 'Needs attention', run.blockedReason ? '· ' + String(run.blockedReason) : '· Open the panel to see what it is waiting for.');
+  }
+
+  /* a Chat Room has one speaker at a time: the first helper at work speaks, the next one still able to take part is up
+     next; the sentence, the lanes and the track all read this one pick */
+  function roomSpeaker(run) {
+    var P = run.participants || [], sp = P.filter(function (p) { return p.status === 'working'; })[0] || null;
+    var next = P.filter(function (p) { return p !== sp && p.status !== 'done' && p.status !== 'failed' && p.status !== 'disabled' && !(p.outcome && p.outcome !== 'completed'); })[0] || null;
+    return { sp: sp, next: next };
+  }
+  /* the live sentence, from the record (a kind replaces it through cardParts().sentence) */
+  function runningSentence(run) {
+    var k = run.kind, P = run.participants || [];
+    var working = P.filter(function (p) { return p.status === 'working'; });
+    if (run.status === 'waiting') return { status: 'waiting', word: 'Waiting', reason: run.blockedReason ? String(run.blockedReason) : 'for its turn to run.' };
+    if (k === 'chat_room') {
+      var rr = roomRounds(run);
+      var pick = roomSpeaker(run), sp = pick.sp, next = pick.next;
+      if (!rr.so && !sp) return { status: 'running', word: 'Running', reason: 'The Moderator is opening the first round.' };
+      return { status: 'running', word: 'Round ' + Math.max(1, Math.min(rr.max, rr.so || 1)) + ' of ' + rr.max, reason: sp ? sp.role + ' is speaking' + (next ? ' · Up next: ' + next.role + '.' : '.') : 'The Moderator hasn’t called the next speaker yet.' };
+    }
+    if (k === 'brainstorm') {
+      var b = run.brainstorm || {}, ph = STORM_PHASE[b.phase] != null ? STORM_PHASE[b.phase] : 1;
+      var core = P.filter(function (p) { return p.required; });
+      if (ph === 5) { var v = (b.votes || []).length; return { status: 'running', word: 'Voting', reason: v + ' of ' + core.length + ' have voted.' }; }
+      if (ph === 3) return { status: 'running', word: 'Debating', reason: 'round ' + Math.max(1, Number(b.debateRound || 1)) + ' of ' + Number(b.debateRounds || (run.config || {}).debateRounds || 2) + '.' };
+      return { status: 'running', word: 'Running', reason: ['The team is reading the question.', 'Each helper is drafting a plan on its own.', 'Lining up the options side by side.', '', 'Checking the facts behind each option.', '', 'Writing the plan from the vote and your rules.'][ph] || 'The team is working.' };
+    }
+    if (k === 'review') {
+      var n = P.length, dn = P.filter(function (p) { return p.status === 'done' || p.outcome === 'completed'; }).length;
+      var ri = stopIndex(run, 'running', runStops(run).length);
+      if (ri >= runStops(run).length - 1) return { status: 'running', word: 'Running', reason: 'Writing the report from what the ' + (n === 1 ? 'reviewer' : 'reviewers') + ' found.' };
+      if (ri === 2) return { status: 'running', word: 'Running', reason: 'All ' + n + ' reviewers have finished reading; now they compare notes.' };
+      if (n <= 1) return { status: 'running', word: 'Running', reason: 'The reviewer is reading on its own.' };
+      if (dn && dn < n) return { status: 'running', word: 'Running', reason: dn + ' of ' + n + ' reviewers have finished reading; the others are still on their own.' };
+      return { status: 'running', word: 'Running', reason: n + ' reviewers are reading on their own; they can’t see each other’s notes yet.' };
+    }
+    var cp = crewProgress(run);
+    var r = working.length ? names(working.map(function (p) { return p.role; })) + (working.length === 1 ? ' is working.' : ' are working.') : '';
+    var nextA = cp.list.filter(function (a) { return a.status === 'pending' && a.dependsOn && a.dependsOn.length; })[0];
+    if (nextA && r) {
+      var deps = nextA.dependsOn.map(function (d) { var x = cp.list.filter(function (a) { return a.id === d; })[0]; return x ? x.title : d; });
+      var extra = ' ' + nextA.assignedRole + ' starts after ' + names(deps) + '.';
+      if ((r + extra).length <= 110) r += extra;
+    }
+    if (!r) r = cp.all ? cp.done + ' of ' + cp.all + ' parts checked.' : 'The Coordinator is splitting the job.';
+    return { status: 'running', word: 'Running', reason: r };
+  }
+
+  function headlineOf(run) {
+    var k = run.kind;
+    if (k === 'crew') {
+      var art = (run.artifacts || [])[0], cp = crewProgress(run);
+      return art && art.label ? art.label + ' ready: all ' + cp.all + ' parts checked' : (cp.all ? 'Done: all ' + cp.all + ' parts checked' : 'Done: the Crew finished');
+    }
+    if (k === 'review') {
+      var f = reviewFindings(run);
+      var fix = f.filter(function (x) { return x.disposition === 'confirmed'; }).length, uns = f.filter(function (x) { return x.disposition === 'uncertain' || x.disposition === 'unsure'; }).length;
+      if (!fix && !uns) return 'No problems found. Nothing was changed.';
+      return (fix ? fix + (fix === 1 ? ' thing' : ' things') + ' to fix' : 'Nothing to fix') + (uns ? ', ' + uns + ' unsure' : '');
+    }
+    if (k === 'brainstorm') {
+      var s = (run.brainstorm || {}).synthesis || {};
+      var t = s.title || s.planTitle || s.chosen || '';
+      return t ? 'Plan ready: ' + t : 'Decision ready: one plan to build';
+    }
+    var rr = roomRounds(run);
+    return 'Discussion ended after ' + plural(Math.max(1, rr.so), 'round', 'rounds');
+  }
+  function failReason(run) { return run.blockedReason ? String(run.blockedReason).replace(/\.?$/, '.') : 'it stopped before a result.'; }
+
+  /* IMPACT A1-20: the one sentence, as plain text parts {status, word, reason} (every surface escapes it) */
+  function sentenceOf(run) {
+    var st = presentState(run), k = run.kind;
+    if (st === 'waiting') return { status: 'waiting', word: 'Waiting to start', reason: waitingReason(run) };
+    if (st === 'starting') return { status: 'starting', word: 'Starting', reason: START_REASON[k] || 'Getting ready.' };
+    if (st === 'paused') return { status: 'paused', word: 'Paused', reason: 'nothing is lost.' };
+    if (st === 'cancelled') { var pl = progressLine(run); return { status: 'cancelled', word: 'Cancelled', reason: (pl ? pl + ' · ' : '') + 'everything so far is kept.' }; }
+    if (st === 'limit') return { status: 'limit', word: 'Stopped at your limit', reason: limitText(run) + ' · everything so far is kept.' };
+    if (st === 'failed') return { status: 'failed', word: 'Failed', reason: failReason(run) };
+    if (st === 'completed') return { status: 'done', word: 'Completed', reason: headlineOf(run) };
+    /* the reason is the card's whole decision sentence (strong clause + text); only the bare "Needs attention" form
+       drops its own word and the "· " (A1-20: Activity, the view status and the composer destination read this) */
+    if (st === 'attention') {
+      var a = attentionOf(run);
+      return { status: a.tone === 'accent' ? 'yourmove' : 'needs', word: a.word, reason: a.strong === 'Needs attention' ? a.text.replace(/^·\s*/, '') : a.plain };
+    }
+    return runningSentence(run);
+  }
+
+  /* ---- the stage track (C4): named stops, counted progress, never a percent ---- */
+  function runStops(run) {
+    if (run.kind === 'chat_room') { var rr = roomRounds(run), out = []; for (var i = 1; i <= Math.min(rr.max, 12); i++) out.push('Round ' + i); return out; }
+    if (run.kind === 'review' && (run.config || {}).strategy === 'single_agent') return ['Snapshot', 'Reading on its own', 'Writing the report'];
+    return KIND_STOPS[run.kind] || [];
+  }
+  function stopIndex(run, st, n) {
+    if (st === 'waiting') return -1;
+    if (st === 'completed') return n;
+    if (st === 'starting') return 0;
+    var k = run.kind;
+    if (k === 'crew') { var cp = crewProgress(run); return !cp.all ? 0 : cp.done < cp.all ? 1 : 2; }
+    if (k === 'review') {
+      var r = run.review || {}, single = n === 3;
+      if (r.report) return n - 1;
+      if ((r.findings || []).length && !single) return 2;
+      return 1;
+    }
+    if (k === 'brainstorm') { var b = run.brainstorm || {}; return STORM_PHASE[b.phase] != null ? Math.min(n - 1, STORM_PHASE[b.phase]) : 1; }
+    var rr = roomRounds(run); return Math.max(0, Math.min(n - 1, (rr.so || 1) - 1));
+  }
+  function trackOf(run, st) {
+    var stops = runStops(run), n = stops.length, idx = stopIndex(run, st, n);
+    if (!n) return null;
+    var cur = stops[Math.max(0, Math.min(n - 1, idx))];
+    var count = '';
+    if (st === 'waiting') count = 'not started';
+    else if (st === 'completed') count = 'done';
+    else if (run.kind === 'crew') { var cp = crewProgress(run); count = cp.all ? cp.done + ' of ' + cp.all + ' checked' : 'not split yet'; }
+    else if (run.kind === 'review') { var P = run.participants || []; count = P.filter(function (p) { return p.status === 'done' || p.outcome === 'completed'; }).length + ' of ' + P.length + ' done'; }
+    else if (run.kind === 'brainstorm') { var b = run.brainstorm || {}; count = idx === 5 ? (b.votes || []).length + ' of ' + (run.participants || []).filter(function (p) { return p.required; }).length + ' voted' : idx === 1 ? (b.proposals || []).length + ' drafts in' : 'in progress'; }
+    else { var sp = roomSpeaker(run).sp; count = sp ? sp.role + ' is speaking' : 'in progress'; }
+    if (st === 'starting') count = 'starting';
+    /* a stopped run (paused, cancelled, at your limit, failed) never says "in progress" or "is speaking", and its
+       stop keeps no shimmer (5.6: no motion for work that is not happening); one that never started says so */
+    var stopped = st === 'cancelled' || st === 'limit' || st === 'paused' || st === 'failed';
+    if (stopped && !hasStarted(run)) count = 'not started';
+    else if (stopped && /in progress|is speaking/.test(count)) count = st === 'paused' ? 'paused' : 'stopped here';
+    /* at the L tier every stop shows its label beside its dot (C4): long tracks carry short dot labels (BrainStorm's
+       seven chapters, a room past six rounds) so the row never runs wider than the card; nowText keeps the full name */
+    var dotLabel = run.kind === 'brainstorm' ? function (l, i) { return STORM_SHORT[i] || l; } : n > 6 ? function (l, i) { return String(i + 1); } : function (l) { return l; };
+    return {
+      stops: stops.map(function (l, i) {
+        var s = i < idx ? 'done' : i === idx ? (st === 'failed' || st === 'attention' && run.status === 'failed' ? 'failed' : stopped ? 'next' : 'now') : 'next';
+        return { key: 'pmx-stop:' + run.id + ':' + i, label: esc(dotLabel(l, i)), state: s };
+      }),
+      nowText: '<b>' + esc(st === 'completed' ? stops[n - 1] : cur) + '</b> · ' + esc(count)
+    };
+  }
+
+  /* ---- marks, lanes and the head cluster (B1, C2, C5): identity is silhouette x spike x hue, never initials ---- */
+  function markRole(p) {
+    if (p.additiveRoleKind === 'wonderer') return 'Wonderer';
+    if (p.additiveRoleKind === 'grill_me' || p.additiveRoleKind === 'grillMe') return 'Grill Me';
+    return p.effectivePersona || p.requestedPersona || 'Implementer';
+  }
+  function markState(p) {
+    if (p.status === 'blocked') return 'needs';
+    if (p.status === 'working') return 'working';
+    if (p.status === 'done' || p.outcome === 'completed') return 'done';
+    if (p.status === 'failed' || p.status === 'disabled' || (p.outcome && p.outcome !== 'completed')) return p.outcome === 'explicitly_waived' ? 'abstained' : 'failed';
+    return 'queued';
+  }
+  function standInOf(p) {
+    if (p.effectiveModelId === p.requestedModelId && p.status !== 'disabled') return null;
+    var S = S_(), req = String(p.requestedModelName || '').split(' · ')[0], eff = p.effectiveModelId ? String(p.effectiveModelName || '').split(' · ')[0] : '';
+    return S.pmxStandIn ? S.pmxStandIn({ requested: req, effective: eff, reason: 'offline', noSubstitute: !eff, sameProvider: !!eff }) : null;
+  }
+  function seatNo(run, p) { var i = (run.participants || []).indexOf(p); return (Math.max(0, i) % 8) + 1; }
+  function markOfP(run, p, size) {
+    var si = standInOf(p);
+    return S_().pmxMark({ role: markRole(p), seat: seatNo(run, p), size: size, state: markState(p), standin: !!(si && si.tone !== 'failed') });
+  }
+  function clusterOf(run, size, st) {
+    var S = S_(), out = [];
+    var leadState = st === 'waiting' ? 'queued' : st === 'completed' ? 'done' : (coordinatorSlot(run) && coordinatorSlot(run).outcome && coordinatorSlot(run).outcome !== 'completed') ? 'failed' : 'idle';
+    if (run.kind !== 'review') out.push(S.pmxMark({ role: 'lead', size: size, state: leadState }));
+    var blind = run.kind === 'review' && (run.participants || []).length > 1 && (run.config || {}).blindInitialPass !== false;
+    (run.participants || []).forEach(function (p, i) {
+      if (blind && i) out.push('|');
+      out.push(st === 'waiting' ? S.pmxMark({ role: markRole(p), seat: seatNo(run, p), size: size, state: 'queued' }) : markOfP(run, p, size));
+    });
+    return out;
+  }
+  var LANE_RANK = { needs: 0, failed: 0, working: 1, queued: 3, done: 4, abstained: 5 };
+  function laneVerb(run, p, s) {
+    if (s === 'needs') return 'needs your OK';
+    if (run.kind === 'chat_room' && (s === 'working' || s === 'queued')) { var rp = roomSpeaker(run); return p === rp.sp ? 'speaking' : p === rp.next ? 'up next' : 'waiting its turn'; }
+    if (s === 'working') return 'working';
+    if (s === 'done') return run.kind === 'review' ? 'finished reading' : 'done';
+    if (s === 'failed' && p.outcome === 'not_allowed') return 'not allowed';
+    if (s === 'failed') return p.outcome === 'timed_out' ? 'ran out of time' : p.outcome === 'unavailable' || p.status === 'disabled' ? 'couldn’t take part' : 'didn’t finish';
+    if (s === 'abstained') return 'skipped';
+    return 'waiting its turn';
+  }
+  /* C26 (G-35): a helper's words quoted in a card go through the compact presenter (pmxMd on PM56_RICH), then keep
+     only the first paragraph's inline markup (bold, code), since a lane's second line is one line */
+  function quoteHtml(text) {
+    var S = S_(), md = S && S.pmxMd ? S.pmxMd(String(text || ''), { mode: 'compact', max: 1, lines: 1 }) : '';
+    var m = /<p\b[^>]*>([\s\S]*?)<\/p>/.exec(md);
+    return m ? m[1].replace(/<(?!\/?(b|strong|code|em|i)\b)[^>]*>/g, '') : esc(plainLine(text));
+  }
+  function plainLine(text) {
+    return String(text || '').replace(/```[\s\S]*?```/g, ' ').replace(/[*_`#>]+/g, '').replace(/\s+/g, ' ').trim();
+  }
+  /* a recorded vote's body leads with its stance enum ("support · Snapshot worker search"): quote it in words */
+  var STANCE = { support: 'Backs', oppose: 'Against', against: 'Against', abstain: 'Abstains on', neutral: 'Undecided on' };
+  function voteWords(body) {
+    return String(body || '').replace(/^\s*(support|oppose|against|abstain|neutral)\s*[·:-]\s*/i, function (m, w) { return STANCE[w.toLowerCase()] + ' '; });
+  }
+  function laneLine2(run, p, s) {
+    var said = (run.messages || []).filter(function (m) { return m.senderId === p.id && m.body; }).slice(-1)[0];
+    if (said && s !== 'queued') return { kind: 'quote', html: '“' + quoteHtml(voteWords(said.body)) + '”', src: said.id };
+    if (run.kind === 'crew' && s === 'queued') {
+      var cp = crewProgress(run), a = cp.list.filter(function (x) { return x.participantId === p.id || x.assignedRole === p.role; })[0];
+      if (a && a.dependsOn && a.dependsOn.length) return { kind: 'detail', html: 'starts after ' + esc(names(a.dependsOn.map(function (d) { var x = cp.list.filter(function (y) { return y.id === d; })[0]; return x ? x.title : d; }))), src: 'dep' };
+    }
+    var si = standInOf(p);
+    if (si && si.card) return { kind: 'detail', html: si.card, src: 'route' };
+    var t = s === 'needs' ? (p.blockedReason || '') : (p.current || '');
+    return { kind: 'detail', html: esc(plainLine(t)), src: 'cur' };
+  }
+  function laneOf(run, p) {
+    var S = S_(), s = markState(p);
+    if (run.kind === 'chat_room' && s === 'working' && roomSpeaker(run).sp !== p) s = 'queued';
+    var verb = laneVerb(run, p, s), l2 = laneLine2(run, p, s);
+    var sub = String(p.effectiveModelName || p.requestedModelName || '').split(' · ')[0];
+    return {
+      rank: verb === 'up next' ? 2 : LANE_RANK[s] != null ? LANE_RANK[s] : 3, state: s,
+      html: S.pmxLane({ key: 'pmx-lane:' + run.id + ':' + p.id, state: s === 'queued' ? 'queued' : s, mark: markOfP(run, p, 22), name: esc(p.role), sub: esc(sub), verb: esc(verb),
+        verbKey: 'vb:' + p.id + ':' + S.pmxHash(verb), line2: l2.html, line2Kind: l2.kind, keepKey: 'l2:' + run.id + ':' + p.id + ':' + l2.kind + ':' + l2.src,
+        action: 'collab-open-participant', attrs: 'data-run="' + esc(run.id) + '" data-participant="' + esc(p.id) + '"', time: '' })
+    };
+  }
+  /* "Show all" (G-19 keeps the chevron for the face): every lane shows once asked, else at most 3 (2 + "+N more").
+     The narrow "+N more · Show all" row the builder adds is what an attention card shows under its first lane
+     (collaboration.css), so the loud face keeps its budget (7.2) and the other helpers are one click away. */
+  function lanesOf(run, open, rankOrder) {
+    var S = S_(), all = (run.participants || []).map(function (p, i) { var l = laneOf(run, p); l.i = i; return l; });
+    all.sort(function (a, b) { return a.rank - b.rank || a.i - b.i; });
+    /* the rank picks which lanes show; they are drawn in the team's own order, so a state change never moves a row
+       (a moved row re-enters: M6's settle face would lose lanes for a frame). The attention face keeps the rank
+       order: its first lane is the helper that needs you. */
+    function order(list) { return rankOrder ? list : list.slice().sort(function (a, b) { return a.i - b.i; }); }
+    var runAttr = 'data-run="' + esc(run.id) + '"', narrow = open ? false : { action: 'collab-show-lanes', attrs: runAttr };
+    if (open || all.length <= 3) return S.pmxLanes({ key: 'lanes:' + run.id, lanesHtml: order(all.slice(0, 8)).map(function (l) { return l.html; }).join(''), kind: run.kind, runId: run.id, narrow: narrow });
+    var shown = order(all.slice(0, 2)), rest = all.slice(2), count = {};
+    rest.forEach(function (l) { count[l.state] = (count[l.state] || 0) + 1; });
+    var WORD = { working: 'working', queued: 'waiting', done: 'done', needs: 'need you', failed: 'didn’t finish', abstained: 'skipped' };
+    var text = Object.keys(count).map(function (k) { return count[k] + ' ' + (WORD[k] || k); }).join(', ') + ' · Show all';
+    return S.pmxLanes({ key: 'lanes:' + run.id, lanesHtml: shown.map(function (l) { return l.html; }).join(''), more: { count: rest.length, text: esc(text), action: 'collab-show-lanes', attrs: runAttr }, narrow: narrow, kind: run.kind, runId: run.id });
+  }
+
+  /* ---- time, cost and the meta line (C11; IMPACT A2-14: phrase primitives only) ---- */
+  function clockOf(run, st) {
+    var T = S_().pmxTime;
+    /* a run that ended before anything started never worked: "not started", not a worked time */
+    if (st === 'waiting' || (TERMINAL[st] && st !== 'completed' && !hasStarted(run))) return T.clock(null);
+    var a = Date.parse(run.createdAt), b = run.completedAt ? Date.parse(run.completedAt) : Date.now();
+    if (!isFinite(a)) return T.clock(null);
+    return TERMINAL[st] ? T.worked(Math.max(0, b - a)) : T.clock(Math.max(0, b - a));
+  }
+  function costLimit(run) { var cfg = run.config || {}; return cfg.costLimitUsd || (RTC.definitions[run.kind] || {}).costLimitUsd; }
+  function costOf(run, st) {
+    var S = S_(), u = run.usage || {};
+    if (provenance(run.id) === 'recorded') return S.pmxCost({ state: 'recorded' });
+    if (st === 'waiting' || st === 'starting') return S.pmxCost({ state: 'before' });
+    /* a run with no cost record (a seed whose helpers are speaking) says "Cost not reported", never "Nothing spent" */
+    if (u.not_measured || u.costUsd == null || !isFinite(Number(u.costUsd)) || (provenance(run.id) === 'seed' && !(Number(u.costUsd) > 0) && hasStarted(run))) return S.pmxCost({ state: 'unknown' });
+    return S.pmxCost({ state: TERMINAL[st] ? 'done' : 'running', spent: u.costUsd, limit: costLimit(run) });
+  }
+  function metaOf(run, st) {
+    var S = S_(), rec = provenance(run.id) === 'recorded';
+    if (st === 'waiting') return { recorded: false, parts: ['Nothing spent', 'your setup is saved on this card'] };
+    var parts = [];
+    if (!rec) parts.push(esc(costOf(run, st)));
+    var asked = Number((run.config || {}).parallelism), eff = run.crew && run.crew.effectiveConcurrency;
+    var cl = run.kind === 'crew' && S.pmxClamp ? S.pmxClamp({ asked: asked, runs: eff, planBound: !!(run.crew && run.crew.planBinding) }) : null;
+    if (cl) parts.push(cl.card);
+    var si = (run.participants || []).map(standInOf).filter(Boolean)[0];
+    if (si && parts.length < 2) parts.push(si.card);
+    return { recorded: rec, parts: parts.slice(0, 3) };
+  }
+
+  /* ---- the finished face (C8-C10): answer first ---- */
+  function creditsOf(run) {
+    var S = S_();
+    return (run.participants || []).map(function (p) {
+      var s = markState(p);
+      /* a Crew helper's credit says what it did: its part's own title ("Map the fields"), not a generic phrase */
+      var part = run.kind === 'crew' ? ((run.crew && run.crew.assignments) || []).filter(function (a) { return a.participantId === p.id || a.assignedRole === p.role; })[0] : null;
+      var did = s === 'done' ? (part && part.title ? part.title : run.kind === 'review' ? 'read it on its own' : run.kind === 'chat_room' ? 'took part' : 'finished its part') : s === 'failed' ? 'didn’t finish' : s === 'abstained' ? 'skipped' : 'wasn’t needed';
+      return { mark: markOfP(run, p, 18), name: esc(p.role), did: esc(did) };
+    });
+  }
+  function outputOf(run) {
+    var art = (run.artifacts || []).filter(function (a) { return a && a.body && a.kind === 'csv'; })[0];
+    if (!art) return '';
+    var lines = String(art.body).split(/\r?\n/).filter(Boolean);
+    return S_().pmxOutput({ key: 'out:' + run.id, name: esc(art.label || 'Result'), meta: esc(plural(Math.max(0, lines.length - 1), 'row', 'rows')), lines: lines.slice(0, 3).map(esc) });
+  }
+
+  /* ---- actions: one control set per run (7.12), canon labels (9.1), every button carries data-run (G-19) ---- */
+  function openActionOf(run) {
+    if (window.PM56_CREW && window.PM56_CREW.owns && window.PM56_CREW.owns(run.id)) return 'crew-open-work';
+    if (run.kind === 'review' && run.review && run.review.report && window.PM56_REVIEW) return 'review-open-report';
+    if (window.PM56_BRAINSTORM && window.PM56_BRAINSTORM.owns && window.PM56_BRAINSTORM.owns(run.id)) return 'brainstorm-open-results';
+    return 'collab-open-panel';
+  }
+  var DEMO_API = { crew: 'PM56_CREW_DEMOS', review: 'PM56_REVIEW_DEMOS', brainstorm: 'PM56_BRAINSTORM_DEMOS' };
+  /* in-place playback of a recorded example (G-32): only what the kind's recorded example offers for this run */
+  function playOf(ctx, run) {
+    var api = window[DEMO_API[run.kind]];
+    if (!api || typeof api.controls !== 'function') return null;
+    var html = '';
+    try { html = String(api.controls(ctx, run) || ''); } catch (e) { html = ''; }
+    var a = /data-action="([^"]+)"/.exec(html), l = />([^<>]+)<\/button>/.exec(html);
+    if (!a || /\sdisabled[\s>]/.test(html)) return null;
+    return { action: a[1], label: esc(l ? l[1] : 'Play the recording') };
+  }
+  function decisionActions(run, att) {
+    var K = KIND_LABEL[run.kind], c = completionProjection(run), b = blockedHelper(run), out = [];
+    if (c.attention_reason === 'vote_tie_unresolved') {
+      out.push({ action: 'collab-brainstorm-synthesize', label: 'Write the plan', primary: true });
+      out.push({ action: 'collab-brainstorm-next-round', label: 'One more debate round', soft: true });
+    }
+    /* a helper that needs your OK gets the answer in the card (7.x needs-you: Allow once · Don't allow · Details);
+       Cancel {Kind}… stays in More so the loud row holds only the decision */
+    if (b) {
+      var pa = 'data-participant="' + esc(b.id) + '"';
+      out.push({ action: 'collab-approve', attrs: pa, label: 'Allow once', primary: true });
+      out.push({ action: 'collab-deny', attrs: pa, label: 'Don’t allow' });
+      out.push({ action: 'collab-open-participant', attrs: pa, label: 'Details', soft: true });
+      return out;
+    }
+    out.push({ action: 'collab-open-panel', attrs: 'data-tab="participants"', label: 'Details', soft: !out.length });
+    if (canCancel(run)) out.push({ action: 'collab-cancel-ask', label: 'Cancel ' + K + '…' });
     return out;
   }
 
-  var PSTATE_LABEL = { pending: 'Pending', waiting: 'Waiting', working: 'Working', blocked: 'Blocked', done: 'Done', failed: 'Failed', disabled: 'Disabled' };
-  var PSTATE_TONE = { pending: 'idle', waiting: 'idle', working: 'working', blocked: 'blocked', done: 'done', failed: 'blocked', disabled: 'blocked' };
-
-  /* Every participant row is clickable across its whole surface (§4.3 /
-     COLLAB-006) — the button IS the row, not a small glyph inside it. */
-  function participantRow(ctx, run, p) {
-    var tone = PSTATE_TONE[p.status] || 'idle';
-    return '<button class="collab-participant" data-action="collab-open-participant" data-run="' + esc(run.id) + '" data-participant="' + esc(p.id) + '" data-k="collab-p-' + esc(p.id) + '" data-tone="' + tone + '">' +
-      '<span class="collab-p-avatar" aria-hidden="true">' + esc((p.name || '?').slice(0, 2).toUpperCase()) + '</span>' +
-      '<span class="collab-p-copy">' +
-      '<strong>' + esc(p.role) + (p.additiveRoleKind !== 'none' ? ' <i class="collab-additive-tag">' + esc(p.additiveRoleKind === 'wonderer' ? 'Wonderer' : 'Grill Me') + '</i>' : '') + '</strong>' +
-      '<span class="collab-p-route">' + reqEff(ctx, p) + ' · Persona ' + esc(p.effectivePersona || p.requestedPersona) + '</span>' +
-      (p.current ? '<span class="collab-p-current">' + esc(p.current) + '</span>' : '') +
-      (p.blockedReason ? '<span class="collab-p-blocked">' + ctx.icon('lock', 10) + esc(p.blockedReason) + '</span>' : '') +
-      (p.outcome ? '<span class="collab-p-outcome collab-p-outcome-' + esc(p.outcome) + '">' + esc(OUTCOME_LABEL[p.outcome] || p.outcome) + '</span>' : '') +
-      (p.waiver ? '<span class="collab-p-waiver">waived by ' + esc(p.waiver.actor) + ' — ' + esc(p.waiver.reason) + '</span>' : '') +
-      (p.attempts && p.attempts.length > 1 ? '<span class="collab-p-attempts">' + p.attempts.length + ' attempts</span>' : '') +
-      '<span class="collab-p-req">' + (p.required ? 'required' : 'optional') + '</span>' +
-      '</span>' +
-      '<span class="collab-p-status collab-p-status-' + tone + '">' + esc(PSTATE_LABEL[p.status] || p.status) + '</span>' +
-      '</button>';
-  }
-
-  var MTYPE_LABEL = { message: '', request: 'Request', response: 'Response', warning: 'Warning', conflict: 'Conflict', dependency: 'Dependency', handoff: 'Handoff', vote: 'Vote', finding: 'Finding', pass: 'Pass' };
-  function messageLine(ctx, run, m) {
-    var badge = MTYPE_LABEL[m.messageType] ? '<span class="collab-msg-type collab-msg-type-' + esc(m.messageType) + '">' + esc(MTYPE_LABEL[m.messageType]) + '</span>' : '';
-    return '<div class="collab-msg collab-msg-' + esc(m.senderKind) + '" data-k="collab-msg-' + esc(m.id) + '">' +
-      '<div class="collab-msg-head"><strong>' + esc(m.senderName) + '</strong>' + badge + '<span class="collab-msg-clock">' + esc(fmtClock(m.createdAt)) + '</span></div>' +
-      '<p class="collab-msg-body">' + esc(m.body) + '</p>' +
-      '</div>';
-  }
-
-  function usageStrip(run) {
-    if(run.usage?.not_measured)return '<div class="collab-usage">No provider calls · no measured provider Usage</div>';
-    var u = run.usage || {};
-    return '<div class="collab-usage" data-k="collab-usage-' + esc(run.id) + '">' +
-      '<span>' + fmtTokens(u.inputTokens) + ' in</span><span>' + fmtTokens(u.outputTokens) + ' out</span><span>' + fmtMoney(u.costUsd) + '</span>' +
-      '</div>';
-  }
-
-  /* =====================================================================
-     6. KIND-SPECIFIC INLINE BLOCKS (expanded card — bounded, not the full
-     transcript) and the one-line "current phase / latest meaningful
-     activity" the collapsed card header shows (§7.3 of the packet).
-     ===================================================================== */
-  function latestSummary(run) {
-    if (run.kind === 'crew') {
-      var asg = (run.crew && run.crew.assignments) || [];
-      var done = asg.filter(function (a) { return a.status === 'done'; }).length;
-      var blocked = asg.filter(function (a) { return a.status === 'blocked'; }).length;
-      return done + '/' + asg.length + ' assignments done' + (blocked ? ' · ' + plural(blocked, 'assignment', 'assignments') + ' blocked' : '');
+  function genericCardParts(run, ctx, face, st) {
+    var S = S_(), K = KIND_LABEL[run.kind];
+    var s = sentenceOf(run), att = st === 'attention' ? attentionOf(run) : null;
+    var play = (st === 'starting' || st === 'running' || st === 'attention') ? playOf(ctx, run) : null;
+    var open = openActionOf(run);
+    var parts = {
+      sentence: { status: s.status, word: esc(s.word), reason: esc(s.reason) },
+      decision: att ? { tone: att.tone, glyph: att.tone === 'accent' ? 'ring-dot' : 'warn', sentence: '<b>' + esc(att.strong) + '</b>' + (att.text ? ' ' + esc(att.text) : ''), actions: decisionActions(run, att) } : null,
+      track: trackOf(run, st),
+      lanes: null,
+      board: '',
+      meta: metaOf(run, st),
+      cluster: clusterOf(run, 18, st),
+      clusterMini: clusterOf(run, 12, st),
+      clock: esc(clockOf(run, st)),
+      openAction: open,
+      actions: [],
+      followOns: [],
+      pointer: '',
+      moreExtra: [],
+      result: null,
+      receipt: null,
+      waitingNoun: WAIT_NOUN[run.kind],
+      progressNoun: run.kind === 'review' ? 'reviewers' : run.kind === 'chat_room' ? 'rounds' : 'parts'
+    };
+    var openBtn = { action: open, label: 'Open Panel', core: true };
+    var msgBtn = { action: 'collab-message', label: 'Message', core: true };
+    if (st === 'waiting') {
+      /* retro's wide monospace at the M tier says "Watch an example" (the hover card says it is recorded), so the chevron
+         and More keep the actions row's one line (collaboration.css) */
+      parts.actions = [{ action: 'collab-watch-example', label: '<span class="pmx-collab-wl">Watch a recorded example</span><span class="pmx-collab-ws">Watch an example</span>', glyph: 'play', attrs: 'data-hover-key="collab-example:' + esc(run.id) + '" data-hover-tip="' + esc(S.pmxFill(S.PMX_COPY.exampleHelper, { kind: K })) + '"' }, openBtn];
+    } else if (TERMINAL[st]) {
+      if (st === 'completed') {
+        parts.actions = [{ action: open, label: 'Open Panel', primary: true, core: true }];
+        var art = (run.artifacts || []).filter(function (a) { return a && a.kind === 'csv'; })[0];
+        if (art && window.PM56_CREW && window.PM56_CREW.owns && window.PM56_CREW.owns(run.id)) parts.followOns.push({ action: 'crew-export-result', label: 'Download' });
+      } else {
+        parts.actions = [{ action: 'collab-open-configure', attrs: 'data-kind="' + esc(run.kind) + '" data-reconfigure="' + esc(run.id) + '"', label: 'Run again with changes…', core: true }, openBtn];
+      }
+    } else if (st === 'paused') {
+      /* below 360 px the row keeps Resume and Open Panel; Message leaves it (pmx-act-extra) */
+      parts.actions = [{ action: 'collab-resume', label: 'Resume', core: true }, openBtn, { action: 'collab-message', label: 'Message', extra: true }];
+    } else {
+      parts.actions = play ? [{ action: play.action, label: play.label, primary: true, core: true }, openBtn, { action: 'collab-message', label: 'Message', extra: true }] : [openBtn, msgBtn];
     }
-    if (run.kind === 'brainstorm') {
-      var b = run.brainstorm || {};
-      if(b.protocolVersion)return window.PM56_BRAINSTORM.phaseLabel(run);
-      var qb = b.questionBank || {};
-      var eff = qb.baselineLimit + (qb.grillMeEnabled ? qb.grillExtension : 0);
-      return 'Phase: ' + (b.phase || 'intake') + ' · ' + (qb.askedIds || []).length + '/' + eff + ' questions used · ' + (b.proposals || []).length + ' proposals';
+    if (st === 'completed') {
+      var n = (run.participants || []).length;
+      var sub = [S.pmxFill(S.PMX_COPY.worked, { time: clockOf(run, st), n: n }).replace(/helpers$/, n === 1 ? NOUN[run.kind] : NOUN[run.kind] + 's'), esc(costOf(run, st))];
+      /* the honesty label leads a recorded example's figures (C11), so a narrow card never cuts it */
+      if (provenance(run.id) === 'recorded') sub.reverse();
+      parts.result = { glyph: 'check', headline: esc(headlineOf(run)), sub: sub.join(' · '), outputHtml: outputOf(run), boardHtml: '', creditsHtml: S.pmxCredits({ key: 'cred:' + run.id, items: creditsOf(run) }) };
     }
-    if (run.kind === 'review') {
-      var r = run.review || {};
-      var f = r.findings || [];
-      var conf = f.filter(function (x) { return x.disposition === 'confirmed'; }).length;
-      var unc = f.filter(function (x) { return x.disposition === 'uncertain'; }).length;
-      var excl = (r.excludedFindings || []).length;
-      return conf + ' confirmed · ' + unc + ' uncertain' + (excl ? ' · ' + excl + ' excluded (stale pack)' : '');
+    var glyph = st === 'completed' ? 'check' : st === 'cancelled' ? 'slash-circle' : 'warn';
+    var rh = st === 'completed' ? headlineOf(run) : s.word + (st === 'cancelled' ? '' : ' · ' + s.reason);
+    parts.receipt = { glyph: glyph, headline: esc(rh), time: esc(clockOf(run, st)), cost: esc(costOf(run, st)) };
+    return parts;
+  }
+  /* KIND INTERFACE (card): PM56_<KIND>.cardParts(run, ctx, face, generic), looked up lazily per render. Every field
+     it returns (not undefined) replaces COLLAB's generic one, in the reference build's C.card shape (proto-src
+     40-collab.js) that wave 2 builds against. Tolerated shapes, normalised here: cluster [html | '|' | {html, mini}]
+     (+ clusterMini [html]), meta [html] (+ recorded) or {parts, recorded}, result html or {glyph, headline, sub,
+     outputHtml, boardHtml, creditsHtml}, more [{action, label, attrs, disabled, reason}] (the kind's More entries),
+     technical html or {text}, nouns {waiting, progress, cancelExtra} (or waitingNoun / progressNoun), allowedActions
+     (the recovery buttons of a failed face), density (the face the run would take by itself), dock {tone, sentence}.
+     On the shared faces (waiting, paused, cancelled, stopped at your limit, a failed run with no decision of the
+     kind's own) COLLAB's sentence and actions stay (IMPACT A3-04); the kind supplies nouns, track, lanes and marks. */
+  var SHARED_OK = { track: 1, lanes: 1, cluster: 1, clusterMini: 1, clock: 1, openAction: 1, openAttrs: 1, kindWord: 1, technical: 1, nouns: 1, waitingNoun: 1, progressNoun: 1, allowedActions: 1, more: 1, recorded: 1, dock: 1 };
+  var DENSITY_OK = { starting: 1, waiting: 1, live: 1, attention: 1, result: 1, failed: 1 };
+  function kindParts(run, ctx, face, generic) {
+    var mod = kindModule(run.kind);
+    if (!mod || typeof mod.cardParts !== 'function') return null;
+    try { var own = mod.cardParts(run, ctx, face, generic); return own && typeof own === 'object' ? own : null; }
+    catch (e) { try { console.info('PM56_COLLAB: ' + run.kind + ' cardParts threw', e); } catch (e2) { } return null; }
+  }
+  function cardParts(run, ctx, face, st) {
+    var generic = genericCardParts(run, ctx, face, st);
+    var own = kindParts(run, ctx, face, generic);
+    if (!own) return generic;
+    var shared = st === 'waiting' || st === 'paused' || st === 'cancelled' || st === 'limit' || (st === 'failed' && !own.decision);
+    var out = {};
+    for (var k in generic) if (Object.prototype.hasOwnProperty.call(generic, k)) out[k] = generic[k];
+    for (var k2 in own) if (Object.prototype.hasOwnProperty.call(own, k2) && own[k2] !== undefined && own[k2] !== null && (!shared || SHARED_OK[k2])) out[k2] = own[k2];
+    if (!shared && own.decision === null) out.decision = null;
+    /* normalise the tolerated shapes */
+    if (Array.isArray(out.cluster)) {
+      var objs = out.cluster.filter(function (x) { return x && typeof x === 'object'; });
+      if (!own.clusterMini && objs.length) out.clusterMini = objs.map(function (x) { return x.mini || x.html; });
+      out.cluster = out.cluster.map(function (x) { return x && typeof x === 'object' ? (x.html || '') : x; });
     }
-    if (run.kind === 'chat_room') {
-      var c = run.chatRoom || {};
-      return 'Round ' + (c.roundsSoFar || 0) + ' of ' + ((run.config || {}).maxRounds || '—') + ' · ' + (c.turnPolicy || 'moderated') + (c.promotions && c.promotions.length ? ' · ' + c.promotions.length + ' promoted' : ' · nothing promoted yet');
+    if (!out.clusterMini) out.clusterMini = clusterOf(run, 12, st);
+    if (Array.isArray(out.meta)) out.meta = { parts: out.meta, recorded: own.recorded != null ? !!own.recorded : generic.meta.recorded };
+    if (typeof out.result === 'string') out.result = out.result ? { html: out.result } : generic.result;
+    if (Array.isArray(own.more)) out.moreExtra = own.more;
+    if (own.technical) out.techText = typeof own.technical === 'string' ? own.technical : esc(own.technical.text || own.technical.command || '');
+    var nouns = own.nouns || {};
+    var prog = nouns.cancelExtra || nouns.progress;
+    if (st === 'cancelled' && prog) out.sentence = { status: 'cancelled', word: 'Cancelled', reason: esc(prog) + ' · everything so far is kept.' };
+    var wn = nouns.waiting || own.waitingNoun;
+    if (st === 'waiting' && wn && !run.blockedReason) out.sentence = { status: 'waiting', word: 'Waiting to start', reason: esc('Nothing runs by itself in this preview, so ' + wn + ' yet.') };
+    if (shared && TERMINAL[st] && Array.isArray(own.allowedActions) && own.allowedActions.length) out.actions = own.allowedActions.concat([{ action: out.openAction, attrs: own.openAttrs || '', label: 'Open Panel', core: true }]);
+    if (own.openAction && (shared || !own.actions)) (out.actions || []).forEach(function (a) {
+      if (a && a.core && /^(collab-open-panel|crew-open-work|review-open-report|brainstorm-open-results)$/.test(a.action)) { a.action = own.openAction; if (own.openAttrs) a.attrs = own.openAttrs; }
+    });
+    out.own = own;
+    return out;
+  }
+
+  /* ---- the face (7.1, 7.8, G-07, G-19): which density this render shows ---- */
+  function userCount(tid) {
+    var th = ((EXT.ctx() || {}).state || {}).threads || [];
+    for (var i = 0; i < th.length; i++) if (th[i].id === tid) return (th[i].messages || []).filter(function (m) { return m.role === 'user'; }).length;
+    return 0;
+  }
+  function newestLive(run) {
+    var live = runsForThread(run.threadId).filter(function (r) { var s = presentState(r); return !TERMINAL[s] && s !== 'waiting'; });
+    return live.length ? live[live.length - 1] : null;
+  }
+  function fullFace(st) { return st === 'completed' ? 'result' : TERMINAL[st] ? 'failed' : st === 'attention' ? 'attention' : st === 'waiting' ? 'waiting' : st === 'starting' ? 'starting' : 'live'; }
+  function faceOf(run, st) {
+    var e = UI.expanded[run.id];
+    if (e === 'open') return fullFace(st);
+    if (e === 'closed') return TERMINAL[st] ? 'receipt' : 'collapsed';
+    if (TERMINAL[st]) {
+      var m = UI.doneMark[run.id];
+      return m && userCount(run.threadId) === m.users && runsForThread(run.threadId).length === m.runs ? fullFace(st) : 'receipt';
     }
-    return '';
+    /* a long chat with several wand-started runs keeps only the newest waiting one at full density; older ones fold
+       to head + sentence like older live runs (F.9) */
+    if (st === 'waiting') { var na = runsForThread(run.threadId).filter(function (r) { return !TERMINAL[presentState(r)]; }); return na.length && na[na.length - 1] !== run ? 'collapsed' : 'waiting'; }
+    if (st === 'starting') return fullFace(st);
+    var nl = newestLive(run);
+    return nl && nl !== run ? 'collapsed' : fullFace(st);
+  }
+  /* a change of state is noted once per render: a run that finishes in this session keeps its finished face until
+     your next message or a newer run in the thread (7.8); the two sound moments ride on it (G-35) */
+  function noteState(run, st) {
+    var prev = UI.last[run.id];
+    if (prev && prev !== st) {
+      if (TERMINAL[st] && !TERMINAL[prev]) UI.doneMark[run.id] = { users: userCount(run.threadId), runs: runsForThread(run.threadId).length };
+      var P = PMX_();
+      if (P && P.sound) { if (st === 'attention') P.sound('needs'); else if (st === 'completed') P.sound('complete'); }
+    }
+    UI.last[run.id] = st;
+  }
+  function tok(name, fallback) { var P = PMX_(); var v = P && P.t ? P.t(name) : 0; return v > 0 ? v : fallback; }
+  function later(ms, fn) { var P = PMX_(); if (P && P.timeline && P.timeline.after) return P.timeline.after(ms, fn); return setTimeout(fn, clockMs(ms)); }
+  /* G-07: live -> result (M6) and result -> receipt (M7) hold the old face one beat, decided in the template */
+  function settleFace(run, face) {
+    var id = run.id, prev = UI.face[id], s = UI.settling[id];
+    if (s) return { face: s.from, settling: true };
+    var fold = prev && prev !== face && !(PMX_() && PMX_().reduced && PMX_().reduced()) &&
+      (((prev === 'live' || prev === 'attention') && face === 'result') || ((prev === 'result' || prev === 'failed') && face === 'receipt'));
+    if (fold) {
+      /* M6 beat 1 is 260 ms (the stop fill 240 + one 20 ms step), M7's hold is the 120 ms fade (FOUNDATION REQUEST 9) */
+      var hold = face === 'receipt' ? tok('fade', 120) : tok('stop', 240) + tok('at-r1', 20);
+      UI.settling[id] = { from: prev, to: face, ms: hold };
+      later(hold, function () { UI.face[id] = face; UI.settling[id] = null; var c = EXT.ctx(); if (c && c.renderApp) c.renderApp(); });
+      return { face: prev, settling: true };
+    }
+    UI.face[id] = face;
+    return { face: face, settling: false };
   }
 
-  function crewInline(ctx, run) {
-    if(window.PM56_CREW?.owns(run.id))return window.PM56_CREW.renderSummary(ctx,run);
-    var c = run.crew || { assignments: [] };
-    var rows = c.assignments.map(function (a) {
-      var deps = a.dependsOn && a.dependsOn.length ? ' · depends on ' + a.dependsOn.join(', ') : '';
-      var evidence = a.status === 'done' ? '<p class="collab-evidence">' + esc(a.evidenceNote) + '</p>' : '';
-      var blockNote = a.status === 'blocked' ? '<p class="collab-blocked-note">' + ctx.icon('lock', 10) + esc((participantByRole(run, a.assignedRole) || {}).blockedReason || 'Blocked') + '</p>' : '';
-      return '<div class="collab-assignment collab-assignment-' + esc(a.status) + '" data-k="collab-a-' + esc(a.id) + '">' +
-        '<div class="collab-assignment-head"><strong>' + esc(a.title) + '</strong><span class="collab-assignment-status">' + esc(a.status) + '</span></div>' +
-        '<p class="collab-assignment-meta">' + esc(a.assignedRole) + deps + ' · expects: ' + esc(a.expectedOutput) + '</p>' +
-        evidence + blockNote +
-        (a.status !== 'done' ? '<div class="collab-assignment-actions"><button class="text-button" data-action="collab-crew-complete" data-run="' + esc(run.id) + '" data-assignment="' + esc(a.id) + '">Mark complete with evidence…</button></div>' : '') +
-        '</div>';
-    }).join('');
-    var bound = c.boundPlanId ? '<p class="collab-bound-plan">' + ctx.icon('document', 11) + 'Bound to Plan <b>' + esc(c.boundPlanId) + ' · V' + esc(c.boundPlanVersion) + '</b> and ' + plural((c.boundTodoIds || []).length, 'To-Do', 'To-Dos') + ' at build time. A Plan revision after this point requires stopping current execution first.</p>' : '';
-    return bound + '<div class="collab-assignments">' + rows + '</div>';
-  }
-  function participantByRole(run, role) {
-    var arr = run.participants;
-    for (var i = 0; i < arr.length; i++) if (arr[i].role === role) return arr[i];
-    return null;
-  }
-
-  function brainstormInline(ctx, run) {
-    if(window.PM56_BRAINSTORM?.owns(run.id))return window.PM56_BRAINSTORM.renderSummary(ctx,run);
-    var b = run.brainstorm || {};
-    var qb = b.questionBank || {};
-    var eff = qb.baselineLimit + (qb.grillMeEnabled ? qb.grillExtension : 0);
-    var qLine = qb.grillMeEnabled
-      ? 'Maximum questions: ' + eff + ' (' + qb.baselineLimit + ' + Grill Me ' + qb.grillExtension + ')'
-      : 'Maximum questions: ' + qb.baselineLimit;
-    var votes = (b.votes || []).map(function (v) {
-      return '<div class="collab-vote collab-vote-' + esc(v.position) + '" data-k="collab-vote-' + esc(v.id) + '"><b>' + esc(v.participantRole) + '</b> <span>' + esc(v.position) + '</span> <i>' + esc(v.confidence) + '</i><p>' + esc(v.reason) + '</p></div>';
-    }).join('');
-    var hard = (b.hardConstraintViolations || []).map(function (h) {
-      return '<div class="collab-hardconflict" data-k="collab-hc"><strong>Disqualified regardless of vote count</strong><p>' + esc(h.approach) + ' — violates: ' + esc(h.constraint) + '</p><p class="collab-sub">' + esc(h.detail) + '</p></div>';
-    }).join('');
-    var dissent = (b.dissent || []).map(function (d) {
-      return '<div class="collab-dissent" data-k="collab-dissent"><strong>' + ctx.icon('warning', 11) + 'Preserved dissent · ' + esc(d.participantRole) + '</strong><p>' + esc(d.reason) + '</p></div>';
-    }).join('');
-    var wonder = (b.wondererLeads || []).map(function (w) {
-      /* One vocabulary: state + tether. The old `status`/`connection` names are
-         still read so an older stored run renders rather than showing
-         `undefined`, but nothing writes them any more. */
-      var state = w.state || w.status || 'hypothesis';
-      var tether = w.tether || w.connection || '';
-      return '<div class="collab-lead" data-k="collab-lead-' + esc(w.id) + '" data-lead-state="' + esc(state) + '">' +
-        '<span class="collab-lead-tag">' + esc(state) + '</span><p>' + esc(w.lead) + '</p>' +
-        (w.seed ? '<p class="collab-sub">Seed: ' + esc(w.seed) + '</p>' : '') +
-        '<p class="collab-sub">Tether: ' + esc(tether) + '</p></div>';
-    }).join('');
-    return '<p class="collab-qmax" data-k="collab-qmax">' + esc(qLine) + '</p>' +
-      (votes ? '<div class="collab-votes">' + votes + '</div>' : '') +
-      (hard ? '<div class="collab-hardconflicts">' + hard + '</div>' : '') +
-      (dissent ? '<div class="collab-dissents">' + dissent + '</div>' : '') +
-      (wonder ? '<div class="collab-leads"><strong>Wonderer leads (hypotheses)</strong>' + wonder + '</div>' : '');
-  }
-
-  var SEV_LABEL = { critical: 'Critical', major: 'Major', minor: 'Minor', suggestion: 'Suggestion' };
-  var DISP_LABEL = { confirmed: 'Confirmed', rejected: 'Rejected', duplicate: 'Duplicate', uncertain: 'Uncertain' };
-  function reviewInline(ctx, run) {
-    if(window.PM56_REVIEW && run.review && run.review.protocolVersion) return window.PM56_REVIEW.renderSummary(ctx,run);
-    var r = run.review || {};
-    var pack = r.targetPack || {};
-    var findings = (r.findings || []).map(function (f) {
-      return '<div class="collab-finding collab-disp-' + esc(f.disposition) + '" data-k="collab-f-' + esc(f.id) + '">' +
-        '<div class="collab-finding-head"><span class="collab-sev collab-sev-' + esc(f.severity) + '">' + esc(SEV_LABEL[f.severity]) + '</span>' +
-        '<span class="collab-disp">' + esc(DISP_LABEL[f.disposition]) + '</span><strong>' + esc(f.claim) + '</strong></div>' +
-        (f.dissent ? '<p class="collab-dissent-inline">' + ctx.icon('warning', 10) + esc(f.dissent) + '</p>' : '') +
-        '</div>';
-    }).join('');
-    var excluded = (r.excludedFindings || []).map(function (x) {
-      return '<div class="collab-finding collab-excluded" data-k="collab-fx-' + esc(x.id) + '"><strong>Excluded — different frozen pack</strong><p>' + esc(x.claim) + '</p><p class="collab-sub">target_hash ' + esc(x.targetHash) + ' vs frozen ' + esc(pack.targetHashes && pack.targetHashes.primary) + '. ' + esc(x.reason) + '</p></div>';
-    }).join('');
-    return '<p class="collab-targetpack" data-k="collab-targetpack">Frozen target <b>' + esc(pack.targetKind) + '</b> · hash <code>' + esc(pack.targetHashes && pack.targetHashes.primary) + '</code> · frozen ' + esc(fmtClock(pack.frozenAt)) + '</p>' +
-      '<div class="collab-findings">' + findings + excluded + '</div>' +
-      '<p class="collab-readonly-note">' + ctx.icon('lock', 10) + 'Review is read-only and never auto-repairs. assistant.multi_agent.review.auto_repair is locked off.</p>';
-  }
-
-  function roomInline(ctx, run) {
-    if(window.PM56_ROOM?.owns(run.id))return window.PM56_ROOM.inline(ctx,run);
-    var c = run.chatRoom || {};
-    var recent = run.messages.slice(-4).map(function (m) { return messageLine(ctx, run, m); }).join('');
-    var promos = (c.promotions || []).map(function (p) {
-      return '<div class="collab-promotion" data-k="collab-promo-' + esc(p.id) + '">' + ctx.icon('check', 11) + 'Promoted to <b>' + esc(p.target) + '</b> — ' + esc(p.summary) + '</div>';
-    }).join('');
-    return '<div class="collab-room-recent">' + recent + '</div>' +
-      (promos ? '<div class="collab-promotions">' + promos + '</div>' : '<p class="collab-sub">Nothing promoted yet — ordinary discussion never creates a To-Do, Plan or Goal on its own.</p>');
-  }
-
-  function kindInline(ctx, run) {
-    if(run.crew?.planBinding)return renderPlanCrew(ctx,run);
-    if (run.kind === 'crew') return crewInline(ctx, run);
-    if (run.kind === 'brainstorm') return brainstormInline(ctx, run);
-    if (run.kind === 'review') return reviewInline(ctx, run);
-    return roomInline(ctx, run);
-  }
-
-  /* =====================================================================
-     7. THE SHARED TRANSCRIPT CARD — one shape for all four kinds (§4.1 /
-     COLLAB-005). Registered once on `transcriptMessage`, declining ('') for
-     every message type this module does not own so built-in cards keep
-     rendering (contract §4 / plans.js and bsd.js use the same pattern).
-     ===================================================================== */
-  function canPause(run) { return run.status === 'running'; }
+  function canPause(run) { return run.status === 'running' && presentState(run) !== 'waiting'; }
   function canResume(run) { return run.status === 'paused' || (run.status === 'waiting' && !run.blockedReason); }
   function canCancel(run) { return ['running', 'paused', 'waiting', 'blocked', 'configuring'].indexOf(run.status) >= 0; }
 
-  function moreRow(ctx, run) {
-    var pauseBtn = canPause(run)
-      ? '<button class="soft-button" data-action="collab-pause" data-run="' + esc(run.id) + '">' + ctx.icon('pause', 12) + ' Pause</button>'
-      : '<button class="soft-button" disabled title="Only a running workflow can pause.">' + ctx.icon('pause', 12) + ' Pause</button>';
-    var resumeBtn = canResume(run)
-      ? '<button class="soft-button" data-action="collab-resume" data-run="' + esc(run.id) + '">' + ctx.icon('play', 12) + ' Resume</button>'
-      : '<button class="soft-button" disabled title="' + esc(run.blockedReason || 'Not paused, so there is nothing to resume.') + '">' + ctx.icon('play', 12) + ' Resume</button>';
-    var cancelBtn = canCancel(run)
-      ? '<button class="soft-button danger" data-action="collab-cancel" data-run="' + esc(run.id) + '">' + ctx.icon('close', 12) + ' Cancel</button>'
-      : '<button class="soft-button" disabled title="Already terminal.">' + ctx.icon('close', 12) + ' Cancel</button>';
-    var reconfigBtn = '<button class="soft-button" '+(run.crew?.planBinding?'disabled title="Frozen build roster: cancel or revise before scheduling another"':'')+' data-action="collab-open-configure" data-kind="' + esc(run.kind) + '" data-reconfigure="' + esc(run.id) + '">' + ctx.icon('edit', 12) + ' Reconfigure</button>';
-    var exportBtn = '<button class="soft-button" data-action="collab-export" data-run="' + esc(run.id) + '">' + ctx.icon('download', 12) + ' Export</button>';
-    var kindExtra = '';
-    if (run.kind === 'review') kindExtra = '<button class="soft-button" data-action="collab-review-run-again" data-run="' + esc(run.id) + '">' + ctx.icon('refresh', 12) + ' Run Another Review</button>';
-    if (run.kind === 'brainstorm') kindExtra = '<button class="soft-button" data-action="collab-brainstorm-synthesize" data-run="' + esc(run.id) + '">' + ctx.icon('sparkles', 12) + ' Synthesize Deep Plan</button>';
-    if (run.kind === 'chat_room') kindExtra = '<button class="soft-button" data-action="collab-room-summarize" data-run="' + esc(run.id) + '">' + ctx.icon('document', 12) + ' Summarize Now</button>';
-    return '<div class="collab-more-row" data-k="collab-more-' + esc(run.id) + '">' + pauseBtn + resumeBtn + cancelBtn + kindExtra + reconfigBtn + exportBtn + '</div>';
+  /* the More row (G-12): an in-card row of real buttons that replaces the actions row in place */
+  var TECH_CMD = { 'collab-open-panel': 'cmd.collaboration.open {target: run_view}', 'crew-open-work': 'cmd.collaboration.open {target: run_view}', 'review-open-report': 'cmd.collaboration.open {target: run_view}', 'brainstorm-open-results': 'cmd.collaboration.open {target: run_view}', 'collab-resume': 'cmd.collaboration.resume', 'collab-open-configure': 'cmd.collaboration.start (seeded definition)', 'collab-watch-example': 'no command: demo' };
+  function moreItems(run, st, p, shown) {
+    var K = KIND_LABEL[run.kind], out = [], planBound = !!(run.crew && run.crew.planBinding);
+    if (canPause(run) && !TERMINAL[st]) out.push({ action: 'collab-pause', label: 'Pause' });
+    else if (canResume(run)) out.push({ action: 'collab-resume', label: 'Resume' });
+    if (canCancel(run)) out.push({ action: 'collab-cancel-ask', label: 'Cancel ' + K + '…' });
+    if (run.kind === 'review' && TERMINAL[st]) out.push({ action: 'collab-review-run-again', label: 'Run Another Review' });
+    if (run.kind === 'chat_room' && !TERMINAL[st] && st !== 'waiting' && !(window.PM56_ROOM && window.PM56_ROOM.owns && window.PM56_ROOM.owns(run.id))) out.push({ action: 'collab-room-summarize', label: 'Summarize Now' });
+    (p.moreExtra || []).forEach(function (x) { if (x && !out.some(function (y) { return y.action === x.action; })) out.push(x); });
+    var re = { action: 'collab-open-configure', attrs: 'data-kind="' + esc(run.kind) + '" data-reconfigure="' + esc(run.id) + '"', label: TERMINAL[st] ? 'Run again with changes…' : 'Change setup…' };
+    if (planBound) { re.disabled = true; re.reason = 'This Crew builds a frozen plan. Cancel it or change the plan first.'; }
+    out.push(re);
+    if (TERMINAL[st]) out.push({ action: 'collab-message', label: 'Message', disabled: true, reason: S_().pmxFill(S_().PMX_COPY.finishedMessage, { kind: K }) });
+    /* A1-38: disabled with its reason, unless the kind's own More already has a working export (ROOM-A (d)) */
+    /* a run that has not started has no transcript yet, so a waiting card's More does not offer one */
+    if ((hasStarted(run) || TERMINAL[st]) && !out.some(function (y) { return /export/.test(y.action) && !y.disabled; })) out.push({ action: 'collab-export', label: 'Download transcript', disabled: true, reason: 'Not in this preview', attrs: 'data-failure="command_not_registered"' });
+    out.push({ action: 'collab-tech', label: 'Technical details' });
+    /* DON'T 31: a control already on the card (decision row, actions row) is not repeated here */
+    var seen = {};
+    return out.filter(function (x) { var k = x.action + '|' + (x.attrs || ''); if (shown[x.action] || shown[k] || seen[k]) return false; seen[k] = 1; return true; });
+  }
+  function moreRowHtml(run, st, p, shown) {
+    var ra = ' data-run="' + esc(run.id) + '"';
+    var items = moreItems(run, st, p, shown).map(function (x) {
+      var at = /(^|\s)data-run=/.test(x.attrs || '') ? ' ' + x.attrs : ra + (x.attrs ? ' ' + x.attrs : '');
+      return '<span class="pmx-collab-mi"><button type="button" class="text-button pmx-act" data-action="' + esc(x.action) + '"' + at + (x.disabled ? ' disabled' : '') + '>' + x.label + '</button>' +
+        (x.disabled && x.reason ? '<span class="pmx-collab-why">' + esc(x.reason) + '</span>' : '') + '</span>';
+    }).join('');
+    var tech = UI.tech[run.id] ? '<p class="pmx-fine pmx-collab-tech" data-k="collab-tech-' + esc(run.id) + '">' + (p.techText ? p.techText + ' · ' : 'Open Panel: ' + esc(TECH_CMD[p.openAction] || 'cmd.collaboration.open {target: run_view}') + ' · ') + 'run ' + esc(run.id) + '</p>' : '';
+    return '<div class="pmx-actions pmx-collab-more" data-k="collab-more-' + esc(run.id) + '">' + items + '<span class="pmx-grow"></span>' +
+      '<button type="button" class="icon-button pmx-act" data-action="collab-toggle-more"' + ra + ' aria-label="Close More" aria-expanded="true">' + S_().pmxGlyph('close', 14) + '</button></div>' + tech;
+  }
+  function withRun(list, run) {
+    return (list || []).filter(Boolean).map(function (a) {
+      var o = {}; for (var k in a) o[k] = a[k];
+      o.attrs = /(^|\s)data-run=/.test(a.attrs || '') ? a.attrs : 'data-run="' + esc(run.id) + '"' + (a.attrs ? ' ' + a.attrs : '');
+      return o;
+    });
   }
 
-  /* PART-008/010/016..019/023. The completion truth, on the card, in words.
-     Requested-versus-completed counts, unresolved required slots, missing
-     outputs, coordinator failure, quorum and ties are all stated -- a generic
-     `Running` label that hides partial state is exactly what this replaces. */
-  function completionLine(ctx, run) {
-    if(run.kind === 'review' && run.review && run.review.protocolVersion) return '';
-    if(window.PM56_BRAINSTORM?.owns(run.id))return '';
-    var c = completionProjection(run);
-    if(['running','configuring'].includes(run.status)&&!c.failed_slots.length&&!c.coordinator_failed)return '';
-    if (c.clean_completion && !c.review_truth && !c.vote) return '';
-    var bits = [];
-    if (c.review_truth) bits.push('<span class="collab-truth-review">' + esc(c.review_truth.label) + '</span>');
-    if (c.vote) bits.push('<span class="collab-truth-vote">' +
-      esc('support ' + c.vote.support + ' · oppose ' + c.vote.oppose + ' · abstain ' + c.vote.abstain +
-          (c.vote.support_pct != null ? ' · ' + c.vote.support_pct + '% of ' + c.vote.denominator + ' eligible' : '') +
-          (c.vote.tie ? ' · TIE — resolved by constraints, evidence and feasibility, never by response order' : '')) + '</span>');
-    if (c.unresolved_required.length) bits.push('<span class="collab-truth-warn">' +
-      esc(c.unresolved_required.length + ' required slot(s) unresolved') + '</span>');
-    if (c.failed_slots.length) bits.push('<span class="collab-truth-warn">' + esc(c.failed_slots.length + ' failed') + '</span>');
-    if (c.waived_slots.length) bits.push('<span class="collab-truth-note">' + esc(c.waived_slots.length + ' explicitly waived') + '</span>');
-    if (c.missing_outputs.length) bits.push('<span class="collab-truth-warn">' +
-      esc('missing required output: ' + c.missing_outputs.join(', ')) + '</span>');
-    if (c.coordinator_failed) bits.push('<span class="collab-truth-warn">' +
-      'Coordinator failed — needs explicit replacement, retry or cancellation. No other participant becomes coordinator.</span>');
-    if (!bits.length) return '';
-    return '<div class="collab-truth' + (c.clean_completion ? '' : ' collab-truth-attention') + '" data-k="collab-truth-' + esc(run.id) + '"' +
-      ' data-attention="' + esc(c.attention_reason || 'none') + '" data-quorum="' + esc(c.quorum_status) + '">' +
-      (c.clean_completion ? '' : '<strong>Needs attention</strong>') + bits.join('') + '</div>';
-  }
-
-  /* Chat WOW: the roster reads at a glance -- up to four participant initials,
-     ringed by their live state, then +N. Presentation only; the list stays in
-     the expanded body and the panel. */
-  function avatarStack(run) {
-    var list = run.participants || [];
-    if (!list.length) return '';
-    var shown = list.slice(0, 4), more = list.length - shown.length;
-    return '<span class="tx-avatars" aria-hidden="true">' + shown.map(function (p) {
-      var tone = PSTATE_TONE[p.status] || 'idle';
-      return '<i data-tone="' + esc(tone === 'working' ? 'run' : tone === 'blocked' ? 'bad' : tone) + '">' + esc((p.name || '?').slice(0, 2).toUpperCase()) + '</i>';
-    }).join('') + (more > 0 ? '<i class="more">+' + more + '</i>' : '') + '</span>';
-  }
+  var VIEW_FOLLOW_ON = /^collab-(brainstorm|review|room)-/;
   function renderCard(ctx, run) {
-    if(run.crew?.planBinding)refreshPlanCrew(run.crew.planBinding.plan_id);
-    var expanded = !!UI.expanded[run.id];
-    var shownP = run.participants.slice(0, 4);
-    var moreP = run.participants.length - shownP.length;
-    var recentGeneric = run.kind !== 'chat_room' ? run.messages.slice(-3).map(function (m) { return messageLine(ctx, run, m); }).join('') : '';
-    var body = expanded
-      ? '<div class="collab-card-body" data-k="collab-body-' + esc(run.id) + '">' +
-          '<div class="collab-participants">' + shownP.map(function (p) { return participantRow(ctx, run, p); }).join('') + (moreP > 0 ? '<button class="text-button" data-action="collab-open-panel" data-run="' + esc(run.id) + '">+' + moreP + ' more…</button>' : '') + '</div>' +
-          '<div class="collab-kind-inline">' + kindInline(ctx, run) + '</div>' +
-          (recentGeneric ? '<div class="collab-recent"><strong>Recent</strong>' + recentGeneric + '</div>' : '') +
-          usageStrip(run) +
-        '</div>'
-      : '';
-    return '<article class="event-card collab-card collab-kind-' + esc(run.kind) + '" data-k="collab-card-' + esc(run.id) + '" data-run-id="' + esc(run.id) + '">' +
-      '<div class="collab-card-head">' +
-        '<span class="collab-kind-badge">' + ctx.icon(KIND_ICON[run.kind], 13) + esc(KIND_LABEL[run.kind]) + '</span>' +
-        avatarStack(run) +
-        '<strong class="collab-card-title">' + esc(run.title) + '</strong>' +
-        statusChip(run.status, run.blockedReason) +
-      '</div>' +
-      '<p class="collab-card-meta">' + plural(run.participants.length, 'participant', 'participants') + ' · ' + esc(latestSummary(run)) + '</p>' +
-      (run.crew?.planBinding?'<p class="collab-card-meta">Local bounded execution · models are configured, not invoked</p>':'')+
-      completionLine(ctx, run) +
-      body +
-      '<div class="collab-card-foot">' +
-        '<button class="text-button" data-action="collab-toggle-expand" data-run="' + esc(run.id) + '">' + ctx.icon(expanded ? 'collapse' : 'expand', 12) + ' ' + (expanded ? 'Collapse' : 'Expand') + '</button>' +
-        (window.PM56_BRAINSTORM?.owns(run.id)?'<button class="soft-button" data-action="brainstorm-open-results" data-run="'+esc(run.id)+'">Open exploration</button>':'') +
-        (run.kind==='review' && run.review && run.review.report ? '<button class="soft-button" data-action="review-open-report" data-run="'+esc(run.id)+'">'+ctx.icon('document',12)+' Open report</button>' : '') +
-        (window.PM56_CREW?.owns(run.id)?'<button class="soft-button" data-action="crew-open-work" data-run="'+esc(run.id)+'">'+ctx.icon('document',12)+' '+(run.status==='completed'?'Open result':'Open assignments')+'</button>':'<button class="soft-button" data-action="collab-open-panel" data-run="' + esc(run.id) + '">' + ctx.icon('expand', 12) + ' Open Panel</button>') +
-        '<button class="soft-button" data-action="collab-message" data-run="' + esc(run.id) + '">' + ctx.icon('send', 12) + ' Message</button>' +
-        '<button class="icon-button" data-action="collab-toggle-more" data-run="' + esc(run.id) + '" title="More">' + ctx.icon('more', 13) + '</button>' +
-      '</div>' +
-      (UI.more[run.id] ? moreRow(ctx, run) : '') +
-      '</article>';
+    if (run.crew && run.crew.planBinding) refreshPlanCrew(run.crew.planBinding.plan_id);
+    var S = S_(), id = run.id, K = KIND_LABEL[run.kind], st = presentState(run);
+    noteState(run, st);
+    var face0 = faceOf(run, st), p = cardParts(run, ctx, face0, st);
+    /* a kind may say which full face its run takes by itself (Review's partial pass is attention, 8.5) */
+    if (p.own && DENSITY_OK[p.own.density] && face0 !== 'receipt' && face0 !== 'collapsed' && UI.expanded[run.id] !== 'closed' && p.own.density !== face0 && !(TERMINAL[st] && p.own.density !== 'result' && p.own.density !== 'failed')) {
+      face0 = p.own.density; p = cardParts(run, ctx, face0, st);
+    }
+    var sf = settleFace(run, face0), face = sf.face;
+    if (face !== face0) p = cardParts(run, ctx, face, st);
+    var KW = p.kindWord ? p.kindWord : esc(K);
+    var ra = 'data-run="' + esc(id) + '"';
+    if (face === 'receipt') {
+      var rc = p.receipt || {};
+      var rrec = rc.recorded != null ? !!rc.recorded : provenance(id) === 'recorded';
+      return S.pmxReceipt({ key: 'collab-card-' + id, cls: 'collab-card ' + KIND_CLS[run.kind], runId: id, kind: run.kind, kindWord: KW,
+        cluster: p.clusterMini, title: esc(shownTitle(run)), headline: rc.headline, glyph: rc.glyph, time: rc.time, cost: rrec ? esc(S.PMX_COPY.cost.recorded) : rc.cost,
+        /* one flex item, so "Open" and " Panel" keep one word space (the button's gap would open a second one) */
+        recorded: rrec, open: { action: p.openAction, attrs: p.openAttrs || '', label: '<span>Open<span class="pmx-long"> Panel</span></span>' },
+        headCls: 'collab-card-head', footCls: 'collab-card-foot', badgeCls: 'collab-kind-badge', titleCls: 'collab-card-title', statusCls: 'collab-status', metaCls: 'collab-card-meta' });
+    }
+    var chevron = '<button type="button" class="icon-button pmx-collab-chev" data-action="collab-toggle-expand" ' + ra + ' aria-label="Expand" aria-expanded="false">' + S.pmxGlyph('chevron-down', 15) + '</button>';
+    var head = S.pmxRunHead({ kind: run.kind, kindWord: KW, title: esc(shownTitle(run)), badgeCls: 'collab-kind-badge', titleCls: 'collab-card-title', cluster: p.cluster, clock: p.clock, clockKey: 'clk:' + id, extra: face === 'collapsed' ? chevron : '' });
+    var shown = {}, viewing = !!(PMX_() && PMX_().viewOpen && PMX_().viewOpen(id)), inView = false;
+    function mark(list) { (list || []).forEach(function (a) { if (a) shown[a.action] = 1; }); }
+    var body = '';
+    if (face === 'result' && p.result && p.result.html) body = p.result.html;
+    else if (face === 'result' && p.result) {
+      var R = p.result;
+      body = S.pmxResult({ key: 'res:' + id, cls: 'collab-status', glyph: R.glyph, headline: R.headline, sub: R.sub ? '<span class="collab-card-meta">' + R.sub + '</span>' : '', outputHtml: R.outputHtml, boardHtml: R.boardHtml, creditsHtml: R.creditsHtml });
+    } else {
+      var dec = p.decision && (face === 'attention' || face === 'collapsed' || face === 'failed') ? p.decision : null;
+      if (dec) {
+        var dacts = face === 'collapsed' ? dec.actions.filter(function (x) { return x.action !== 'collab-cancel-ask'; }) : dec.actions;
+        /* 7.12 one control set: while the run view is open beside the chat, the legacy follow-ons it draws (Write the plan,
+           One more debate round, Next Round, Create To-Dos…) leave the card, and the card points at the view instead */
+        if (viewing) { var kept = dacts.filter(function (x) { return !VIEW_FOLLOW_ON.test(x.action); }); if (kept.length !== dacts.length) { inView = true; dacts = kept; } }
+        var da = withRun(dacts, run); mark(dacts); body += S.pmxDecision({ key: 'dec:' + id, cls: 'collab-status', tone: dec.tone, glyph: dec.glyph, sentence: dec.sentence, actions: da });
+      }
+      else body += S.pmxSentence({ key: 'collab-status', cls: 'collab-status', status: p.sentence.status, word: p.sentence.word, reason: p.sentence.reason });
+      /* a collapsed card has no meta row: its track's count line carries the .collab-card-meta hook (B.5) */
+      if (p.track) body += S.pmxTrack({ key: 'trk:' + id, cls: ((face === 'collapsed' ? 'collab-card-meta' : '') + (p.track.cls ? ' ' + p.track.cls : '')).trim(), stops: p.track.stops, nowText: p.track.nowText });
+      if (face !== 'collapsed') {
+        if (p.board) body += p.board;
+        if (face === 'live' || face === 'attention' || (face === 'failed' && hasStarted(run))) body += p.lanes != null ? p.lanes : lanesOf(run, !!UI.allLanes[id], face === 'attention');
+        if (p.meta) body += S.pmxMeta({ key: 'meta:' + id, cls: 'collab-card-meta', parts: p.meta.parts, recorded: p.meta.recorded });
+      }
+    }
+    var foot = '';
+    if (face !== 'collapsed') {
+      /* 7.12: only decision follow-ons (review ticks, To-Dos, Write the plan, Next Round…) move to the open view; an
+         export such as the Crew's Download stays on the card, and the pointer shows only when a decision moved */
+      var follow = (p.followOns || []).filter(function (x) { return !(viewing && x && !/export|download/i.test(x.action + ' ' + (x.label || ''))); });
+      if (viewing && follow.length !== (p.followOns || []).length) inView = true;
+      var acts = (p.actions || []).concat(follow);
+      if (UI.cancelAsk[id] && canCancel(run)) {
+        foot = S.pmxInlineConfirm({ key: 'cancelask:' + id, sentence: '<b>' + esc(S.pmxFill(S.PMX_COPY.cancelConfirm.sentence.split('?')[0] + '?', { kind: K })) + '</b> Everything so far is kept.',
+          confirm: { action: 'collab-cancel', attrs: ra, label: esc('Cancel ' + K), tone: 'soft' }, keep: { action: 'collab-cancel-keep', attrs: ra, label: 'Keep going' } });
+      } else if (UI.more[id]) {
+        foot = moreRowHtml(run, st, p, shown);
+      } else {
+        foot = S.pmxActions({ key: 'acts:' + id, collabHooks: true, items: withRun(acts, run), expand: { attrs: ra, open: UI.expanded[id] === 'open' || face === 'live' || face === 'attention' || face === 'result' || face === 'failed' }, more: { attrs: ra } });
+        var ptr = viewing && inView ? (p.pointer || (run.kind === 'review' ? S.PMX_COPY.oneControlSet.review : S.PMX_COPY.oneControlSet.panel)) : '';
+        if (ptr) foot = foot.replace(/^(<div[^>]*>)/, '$1<span class="pmx-collab-choosing" data-k="choosing:' + esc(id) + '">' + S.pmxGlyph('chevron-right', 14) + '<span>' + esc(ptr) + '</span></span>');
+      }
+    }
+    return S.pmxRun({ key: 'collab-card-' + id, runId: id, kind: run.kind, density: face, cls: 'collab-card ' + KIND_CLS[run.kind],
+      tone: face === 'attention' && p.decision && p.decision.tone === 'accent' ? 'accent' : '', arriving: !!UI.arriving[id], settling: sf.settling,
+      attrs: sf.settling && UI.settling[id] ? 'data-collab-settle="' + esc(UI.settling[id].to) + '"' : '',
+      headHtml: head, bodyHtml: body, bodyKey: 'collab-body-' + id, bodyCls: 'collab-card-body', footHtml: foot, headCls: 'collab-card-head', footCls: 'collab-card-foot' });
   }
 
   EXT.slot('transcriptMessage', function (ctx) {
     var m = ctx.m;
     if (!m || m.type !== 'collab-run') return '';
     var run = findRun(m.runId);
-    if (!run) return '<div class="event-card danger"><div class="event-copy"><strong>Collaborative run missing</strong><p>runId ' + esc(m.runId) + ' was referenced but no longer exists in this session.</p></div></div>';
+    if (!run) return '<p class="pmx-collab-missing" data-k="collab-missing-' + esc(m.runId) + '">This ' + 'run is no longer in this session.</p>';
     return renderCard(ctx, run);
+  });
+  /* 7.14: a run card is a team, so the spine gives it the people tick (first answer wins; this module loads before
+     turn-stage.js) */
+  EXT.slot('transcriptFamily', function (ctx) { var m = ctx && ctx.m; return m && m.type === 'collab-run' ? 'people' : ''; });
+
+  /* M6 beat 2 / M7 beat 1: the old body and foot fade before the template switches faces (opacity only; G-04: the
+     app's flipHeights is the one height animator). The fade is a CSS animation keyed on the settling attributes the
+     template writes (collaboration.css, motion tokens): it starts in the same DOM write as the hold, a film seek sees it
+     from the first frame, and it ends by itself when the attribute goes at the switch (no fill left on a kept node). */
+
+  /* ---- the dock (C14/C15, 7.8): a run whose card is off-screen keeps one line above the composer. Needs-you
+     lines show until the whole card is visible; live lines once the card's head has been away 400 ms (the host
+     decides). A waiting run is not doing anything, so it gets no line; finished runs get none. ---- */
+  if (PMX_() && PMX_().dock) PMX_().dock.provide(function (ctx) {
+    var S = S_(), out = [];
+    if (!S || !S.pmxDockLine || !ctx || !ctx.state) return out;
+    runsForThread(ctx.state.selectedThread).forEach(function (run) {
+      var st = presentState(run);
+      if (TERMINAL[st] || st === 'waiting') return;
+      var att = st === 'attention' ? attentionOf(run) : null;
+      var tone = att ? (att.tone === 'accent' ? 'yourmove' : 'needs') : 'live';
+      var say = esc(att ? att.plain : sentenceOf(run).reason);
+      /* a kind may word its own dock line ({tone, sentence} as HTML), e.g. a Chat Room round that is your move */
+      var own = kindParts(run, ctx, UI.face[run.id] || 'live', null);
+      if (own && own.dock && own.dock.sentence) { say = own.dock.sentence; if ({ live: 1, needs: 1, yourmove: 1 }[own.dock.tone]) tone = own.dock.tone; }
+      out.push({ runId: run.id, tone: tone, at: Date.parse(run.createdAt) || 0,
+        html: S.pmxDockLine({ key: 'pmx-dock:' + run.id, tone: tone, runId: run.id, markHtml: S.pmxKindMark(run.kind, 16), kindWord: esc(KIND_LABEL[run.kind]),
+          sentence: tone === 'live' ? esc(shownTitle(run)) + ' · ' + say : say, time: tone === 'live' ? esc(clockOf(run, st)) : '',
+          action: { action: 'pmx-dock-show', attrs: 'data-run="' + esc(run.id) + '"', label: tone === 'needs' ? 'Review' : 'Show' } }) });
+    });
+    return out;
+  });
+
+  /* G-30 DEST-04: a user message sent to a run says where it went; rooms add their replies (no "Read", A1-40) */
+  EXT.slot('messageMeta', function (ctx) {
+    var m = ctx && ctx.message;
+    if (!m || m.role !== 'user' || !m.id || !UI.sentTo[m.id]) return '';
+    var run = findRun(UI.sentTo[m.id]), S = S_();
+    if (!run || !S || !S.pmxTick) return '';
+    var txt = S.pmxFill(S.PMX_COPY.sentTo, { kind: KIND_LABEL[run.kind], title: shownTitle(run) });
+    if (run.kind === 'chat_room') { var n = (run.messages || []).filter(function (x) { return x.replyTo === m.id; }).length; if (n) txt += ' · ' + plural(n, 'reply', 'replies'); }
+    return S.pmxTick({ key: 'collab-sent:' + m.id, glyph: 'chevron-right', text: txt });
   });
 
   /* =====================================================================
      8. SHARED LIFECYCLE ACTIONS
      ===================================================================== */
-  EXT.action('collab-toggle-expand', function (ctx, btn) { UI.expanded[btn.dataset.run] = !UI.expanded[btn.dataset.run]; ctx.renderApp(); return true; });
-  EXT.action('collab-toggle-more', function (ctx, btn) { var id = btn.dataset.run; UI.more[id] = !UI.more[id]; ctx.renderApp(); return true; });
+  /* G-19: three states per card: auto (undefined), 'open', 'closed'; the first click on any card shows its body */
+  UI.allLanes = UI.allLanes || {};
+  /* view state (A3-07): "Show all" lists every helper's lane on the card; the run view's Team tab has the same list */
+  EXT.action('collab-show-lanes', function (ctx, btn) { var id = btn.dataset.run; UI.allLanes[id] = !UI.allLanes[id]; ctx.renderApp(); return true; });
+  EXT.action('collab-toggle-expand', function (ctx, btn) { var id = btn.dataset.run; UI.expanded[id] = UI.expanded[id] === 'open' ? 'closed' : 'open'; ctx.renderApp(); return true; });
+  EXT.action('collab-toggle-more', function (ctx, btn) {
+    var id = btn.dataset.run, run = findRun(id);
+    UI.more[id] = !UI.more[id]; UI.cancelAsk[id] = false;
+    /* a receipt has no room for the row: More opens its finished face with the row in place */
+    if (UI.more[id] && run && UI.face[id] === 'receipt') UI.expanded[id] = 'open';
+    ctx.renderApp(); return true;
+  });
+  /* new card actions (IMPACT A3-07): collab-cancel-ask / -keep and collab-tech are view state; collab-watch-example
+     is demo (8.15: a demo action never becomes a command) */
+  EXT.action('collab-cancel-ask', function (ctx, btn) { var id = btn.dataset.run; UI.cancelAsk[id] = true; UI.more[id] = false; ctx.renderApp(); return true; });
+  EXT.action('collab-cancel-keep', function (ctx, btn) { UI.cancelAsk[btn.dataset.run] = false; ctx.renderApp(); return true; });
+  EXT.action('collab-tech', function (ctx, btn) { var id = btn.dataset.run; UI.tech[id] = !UI.tech[id]; ctx.renderApp(); return true; });
+  var EXAMPLE_START = { crew: ['crew-demo-start', 'delegation'], review: ['review-demo-start', 'multi'], brainstorm: ['brainstorm-demo-start', 'synthesis'], chat_room: ['room-demo-start', 'discussion'] };
+  /* G-32: a wand-started run never plays in place; the recorded example opens in a new chat with its own team */
+  EXT.action('collab-watch-example', function (ctx, btn) {
+    var run = findRun(btn.dataset.run); if (!run) return true;
+    var ex = EXAMPLE_START[run.kind]; if (!ex) return true;
+    if (run.kind === 'review' && (run.config || {}).strategy === 'single_agent') ex = ['review-demo-start', 'single'];
+    var b = document.createElement('button'); b.dataset.action = ex[0]; b.dataset.flow = ex[1];
+    if (EXT.run) EXT.run(ex[0], b, new Event('click'));
+    else if (EXT._actions && EXT._actions[ex[0]]) EXT._actions[ex[0]](ctx, b, new Event('click'));
+    return true;
+  });
 
   EXT.action('collab-pause', function (ctx, btn) {
     var run = findRun(btn.dataset.run); if (!run || !canPause(run)) return true;
     if(run.crew?.planBinding){PM56_PLANS.boundPause(run.crew.planBinding.plan_id);refreshPlanCrew(run.crew.planBinding.plan_id);ctx.renderApp();return true;}
     run.status = 'paused'; run.stopEpoch += 1;
-    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Paused at a safe boundary. Participant state, the pending inbox and the transcript are preserved; nothing in flight was torn down.' }));
+    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Paused. Nothing was lost.' }));
     ctx.renderApp();
-    ctx.toast(KIND_LABEL[run.kind] + ' paused', 'Composer text targeting this run, if any, is kept.');
     return true;
   });
   EXT.action('collab-resume', function (ctx, btn) {
     var run = findRun(btn.dataset.run); if (!run) return true;
-    if(run.crew?.planBinding){const plan=PM56_PLANS.get(run.crew.planBinding.plan_id),v=crewExecutionGate(run.crew.planBinding.plan_id),stop=PM56_SCHED.checkEpoch(PM56_SCHED.stopSnapshot());if(!v.ok||!stop.ok||plan?.attention?.kind!=='paused'){ctx.toast('Cannot resume',v.error||stop.error||'Use the Plan recovery or scheduling owner for this condition.');return true;}PM56_PLANS.boundResume(run.crew.planBinding.plan_id);refreshPlanCrew(run.crew.planBinding.plan_id);ctx.renderApp();return true;}
-    if (!canResume(run)) { ctx.toast('Cannot resume', run.blockedReason || 'Not paused.'); return true; }
+    if(run.crew?.planBinding){const plan=PM56_PLANS.get(run.crew.planBinding.plan_id),v=crewExecutionGate(run.crew.planBinding.plan_id),stop=PM56_SCHED.checkEpoch(PM56_SCHED.stopSnapshot());if(!v.ok||!stop.ok||plan?.attention?.kind!=='paused'){ctx.toast('Can’t resume yet',v.error||stop.error||'Use the Plan recovery or scheduling owner for this condition.');return true;}PM56_PLANS.boundResume(run.crew.planBinding.plan_id);refreshPlanCrew(run.crew.planBinding.plan_id);ctx.renderApp();return true;}
+    if (!canResume(run)) { ctx.toast('Can’t resume yet', run.blockedReason || 'It isn’t paused.'); return true; }
     run.status = 'running';
-    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Resumed the same run. No participant work is duplicated.' }));
+    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Picked up where it left off.' }));
     ctx.renderApp();
-    ctx.toast(KIND_LABEL[run.kind] + ' resumed', 'Continuing the same run identity: ' + run.id + '.');
     return true;
   });
   EXT.action('collab-cancel', function (ctx, btn) {
-    var run = findRun(btn.dataset.run); if (!run || !canCancel(run)) return true;
+    var run = findRun(btn.dataset.run); if (!run) return true;
+    UI.cancelAsk[run.id] = false; UI.more[run.id] = false;
+    if (!canCancel(run)) { ctx.renderApp(); return true; }
     if(run.crew?.planBinding){PM56_PLANS.boundCancel(run.crew.planBinding.plan_id);refreshPlanCrew(run.crew.planBinding.plan_id);ctx.renderApp();return true;}
     run.status = 'canceled'; run.completedAt = nowIso(); run.stopEpoch += 1;
-    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Cancelled. New admissions stopped; the card, transcript, participants and artifacts remain with truthful cancelled state.' }));
+    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Cancelled. Everything it produced so far is kept here.' }));
     if (RT.composer.destination && RT.composer.destination.refId === run.id) {
       var buf = RT.composer.bufferFor ? RT.composer.bufferFor(ctx.state.selectedThread) : null;
       var emptyBuf = !buf || (!buf.text && !(buf.attachments && buf.attachments.length));
       if (emptyBuf) { RT.composer.destination = null; if (buf) buf.destination = null; }
-      else { RT.composer.destination.label = '(ended) ' + RT.composer.destination.label; RT.composer.destination.detail = 'This workflow has ended — retarget or clear.'; }
+      else { RT.composer.destination.label = '(ended) ' + RT.composer.destination.label; RT.composer.destination.detail = 'This ' + KIND_LABEL[run.kind] + ' has ended. Pick another destination or clear it.'; }
     }
     ctx.renderApp();
-    ctx.addReceipt('collab-receipt', KIND_LABEL[run.kind] + ' cancelled', run.title + ' — transcript and artifacts remain, marked cancelled.');
     return true;
   });
+  /* IMPACT A1-38: Download transcript renders disabled with its reason until export is wired; a dispatch that
+     still reaches this (a harness, an old caller) is refused in the same words */
   EXT.action('collab-export', function (ctx, btn) {
     var run = findRun(btn.dataset.run); if (!run) return true;
-    ctx.toast('Export not yet wired to a file', '`cmd.collaboration.export` is not registered in the central command catalog yet (Collaborative_Workflows.md §10). The transcript and any artifact version/hash are ready to export the moment it is.');
+    ctx.toast('Download transcript', 'Not available in this preview.');
     return true;
   });
 
@@ -1156,11 +1615,12 @@
   function destinationGlyph(kind) { return KIND_ICON[kind] || 'users'; }
   function runDestination(run, participantId) {
     var p = participantId ? participant(run, participantId) : null;
+    /* 8.0: "{Kind} · {card title} · {n} helpers" (composer-state renders label and detail) */
     return {
       kind: p ? 'participant' : 'workflow', destinationKind: run.kind,
       refId: run.id, participantId: p ? p.id : null,
-      label: (p ? run.title + ' → ' + p.role : KIND_LABEL[run.kind] + ' · ' + run.title),
-      detail: p ? 'direct to participant' : plural(run.participants.length, 'participant', 'participants'),
+      label: KIND_LABEL[run.kind] + ' · ' + shownTitle(run) + (p ? ' · ' + p.role : ''),
+      detail: p ? 'only this ' + NOUN[run.kind] : plural2(run.participants.length, NOUN[run.kind]),
       glyph: destinationGlyph(run.kind)
     };
   }
@@ -1177,10 +1637,10 @@
     RT.composer.destinationProviders.push(function (ctx) {
       var out = [];
       RTC.runs.forEach(function (run) {
-        if (['completed', 'canceled', 'failed'].indexOf(run.status) >= 0) return;
-        out.push({ id: 'collab:' + run.id, kind: 'workflow', destinationKind: run.kind, refId: run.id, label: KIND_LABEL[run.kind] + ' · ' + run.title, detail: plural(run.participants.length, 'participant', 'participants'), glyph: destinationGlyph(run.kind) });
+        if (TERMINAL[presentState(run)]) return;
+        out.push({ id: 'collab:' + run.id, kind: 'workflow', destinationKind: run.kind, refId: run.id, label: KIND_LABEL[run.kind] + ' · ' + shownTitle(run), detail: plural2(run.participants.length, NOUN[run.kind]), glyph: destinationGlyph(run.kind) });
         run.participants.forEach(function (p) {
-          out.push({ id: 'collab:' + run.id + ':' + p.id, kind: 'participant', destinationKind: run.kind, refId: run.id, participantId: p.id, label: run.title + ' → ' + p.role, detail: 'direct to participant', glyph: destinationGlyph(run.kind) });
+          out.push({ id: 'collab:' + run.id + ':' + p.id, kind: 'participant', destinationKind: run.kind, refId: run.id, participantId: p.id, label: KIND_LABEL[run.kind] + ' · ' + shownTitle(run) + ' · ' + p.role, detail: 'only this ' + NOUN[run.kind], glyph: destinationGlyph(run.kind) });
         });
       });
       return out;
@@ -1221,7 +1681,14 @@
     var held = heldRequestFrom(thread, { body: raw }, buffer);
     if (CS && CS.holdRequest) CS.holdRequest(held.threadId, held);
     openConfigureDraft('brainstorm', null, false);
-    if (RTC.draft) RTC.draft.heldRequest = held;
+    if (RTC.draft) {
+      RTC.draft.heldRequest = held;
+      /* 8.2: the job field opens prefilled with the held request, word for word. */
+      if (!String(RTC.draft.purpose || '').trim()) {
+        RTC.draft.purpose = held.text;
+        if (!RTC.draft.nameEdited) RTC.draft.name = deriveCardTitle(held.text) || RTC.draft.name;
+      }
+    }
     ctx.openDialog && ctx.openDialog({ type: 'collab-configure' });
     ctx.toast && ctx.toast('BrainStorm held',
       'Your request is held before any provider call. Configure it and press Start, or cancel and get the text back exactly as written.');
@@ -1234,6 +1701,8 @@
       if (!dest || (dest.kind !== 'workflow' && dest.kind !== 'participant') || !KIND_LABEL[dest.destinationKind]) return;
       var run = findRun(dest.refId);
       if (!run || !message) return;
+      /* G-30 DEST-04: the user's side says where it went ("Sent to {Kind} · {card title}") */
+      UI.sentTo[message.id || ''] = run.id;
       if(window.PM56_ROOM?.owns(run.id)){window.PM56_ROOM.receiveUser(run.id,message,buffer,thread);return;}
       run.messages.push(mkMsg(run, {
         senderKind: 'user', senderName: 'You', messageType: 'message',
@@ -1259,7 +1728,7 @@
     var d = RT.composer.destination;
     if (d && (d.kind === 'workflow' || d.kind === 'participant') && KIND_LABEL[d.destinationKind]) {
       var run = findRun(d.refId);
-      var ended = !run || ['completed', 'canceled', 'failed'].indexOf(run.status) >= 0;
+      var ended = !run || !!TERMINAL[presentState(run)];
       if (ended) {
         var buf = RT.composer.bufferFor ? RT.composer.bufferFor(ctx.state.selectedThread) : null;
         var empty = !buf || (!buf.text && !(buf.attachments && buf.attachments.length));
@@ -1271,123 +1740,67 @@
   });
 
   /* =====================================================================
-     10. PARTICIPANT TRANSCRIPT + FULL PANEL — a shared dialog overlay used
-     by every kind (§4.2/§4.3). This is the primary "Open Panel" destination
-     for all four kinds — see honesty note 3 at the top of this file for why
-     Crew never registers through `activityPanelBody`/`activityHoverCard`.
+     10. THE RUN VIEW (COLLAB step 3; spec 4.4, 7.9, 8.0 view bullets, G-14).
+     Open Panel opens the docked run view in the editor pane: collab-view.js
+     draws `collab-run:{runId}` (PM56_COLLAB_VIEW), a kind's own document
+     (crew-work:, review:, brainstorm:, room:) draws the same frame through
+     it. The kinds chainAction('collab-open-panel') for the runs they own and
+     return false otherwise; this handler opens `collab-run:` for everything
+     else. The centred `collab-panel` dialog is retired: an old caller that
+     still sets state.dialog = {type:'collab-panel', …} is redirected (G-14).
      ===================================================================== */
-  function panelTabsFor(kind) {
-    var t = ['overview', 'transcript', 'participants', 'usage'];
-    return t;
-  }
-  var TAB_LABEL = { overview: 'Overview', transcript: 'Transcript', participants: 'Participants', usage: 'Usage' };
-
-  function renderParticipantView(ctx, run, p) {
-    var own = run.messages.filter(function (m) { return m.senderId === p.id || m.senderKind==='user' && (m.recipientIds||[]).includes(p.id); });
-    var body = own.length
-      ? own.map(function (m) { return messageLine(ctx, run, m); }).join('')
-      : '<p class="collab-empty">No output from this participant yet. This is a truthful empty transcript, not a summary standing in for one.</p>';
-    return '<div class="collab-participant-view" data-k="collab-pv-' + esc(p.id) + '">' +
-      '<button class="text-button" data-action="collab-close-participant" data-run="' + esc(run.id) + '">' + ctx.icon('left', 11) + ' Back to panel</button>' +
-      '<h3>' + esc(p.role) + '</h3>' +
-      '<p class="collab-p-identity">Requested <b>' + esc(p.requestedModelName) + '</b>' + (p.effectiveModelId !== p.requestedModelId ? ' · effective <b>' + esc(p.effectiveModelName || 'none') + '</b>' : '') + ' · Persona ' + esc(p.effectivePersona) + '</p>' +
-      (p.substitutionReason ? '<p class="collab-sub-reason">' + ctx.icon('warning', 11) + esc(p.substitutionReason) + '</p>' : '') +
-      (p.blockedReason ? '<p class="collab-p-blocked">' + ctx.icon('lock', 11) + esc(p.blockedReason) + '</p>' : '') +
-      '<p class="collab-p-state">State: ' + esc(PSTATE_LABEL[p.status] || p.status) + (p.current ? ' — ' + esc(p.current) : '') + '</p>' +
-      '<button class="soft-button" data-action="collab-message" data-run="' + esc(run.id) + '" data-participant="' + esc(p.id) + '">' + ctx.icon('send', 12) + ' Message this participant</button>' +
-      renderPlanCrewParticipant(run,p) + '<div class="collab-participant-transcript">' + body + '</div>' +
-      '</div>';
-  }
-
-  function renderPanel(ctx, d) {
-    var run = findRun(d.runId);
-    if (!run) return '<section class="dialog collab-panel" style="width:min(720px,calc(100vw - 20px))"><div class="drawer-head"><strong>Collaborative run not found</strong><span class="spacer"></span><button class="icon-button" data-action="close-dialog">' + ctx.icon('close', 13) + '</button></div><div class="dialog-body"><p>runId ' + esc(d.runId) + ' no longer exists in this session.</p></div></section>';
-    if (d.participantId) {
-      var p = participant(run, d.participantId);
-      if (p) {
-        return '<section class="dialog collab-panel" style="width:min(720px,calc(100vw - 20px))"><div class="drawer-head">' +
-          '<span class="event-icon">' + ctx.icon(KIND_ICON[run.kind], 13) + '</span><strong>' + esc(run.title) + '</strong><span class="spacer"></span>' +
-          '<button class="icon-button" data-action="close-dialog">' + ctx.icon('close', 13) + '</button></div>' +
-          '<div class="dialog-body">' + renderParticipantView(ctx, run, p) + '</div></section>';
-      }
+  function CV() { return window.PM56_COLLAB_VIEW; }
+  var VIEW_TABS = { overview: 1, transcript: 1, participants: 1, usage: 1 };
+  /* M8: the view rises in place (collab-view.css); the card the user came from gets one perimeter pulse */
+  function openView(ctx, runId, o, btn) {
+    var run = findRun(runId), V = CV();
+    if (!run) return false;
+    /* collab-view.js is part of this module's unit: without it Open Panel must say so, never be a dead button */
+    if (!V || typeof V.open !== 'function') {
+      try { console.error('PM56_COLLAB: collab-view.js is not loaded, so the run view cannot open (build.py MODULES must list collab-view).'); } catch (e) { }
+      if (ctx && ctx.toast) ctx.toast('The run view is not available', 'This build is missing the run view, so ' + KIND_LABEL[run.kind] + ' details cannot open here. Nothing was changed.');
+      return false;
     }
-    var tab = d.tab || 'overview';
-    var tabs = panelTabsFor(run.kind);
-    var tabStrip = '<div class="collab-tabs" role="tablist">' + tabs.map(function (t) {
-      return '<button class="collab-tab' + (t === tab ? ' active' : '') + '" role="tab" aria-selected="' + (t === tab) + '" data-action="collab-panel-tab" data-run="' + esc(run.id) + '" data-tab="' + t + '">' + esc(TAB_LABEL[t]) + '</button>';
-    }).join('') + '</div>';
-    var body = '';
-    if (tab === 'overview') body = kindInline(ctx, run) + (run.kind === 'chat_room' ? '<div class="collab-recent"><strong>Full transcript is under the Transcript tab</strong></div>' : '');
-    else if (tab === 'transcript') body = '<div class="collab-full-transcript">' + (run.messages.length ? run.messages.map(function (m) { return messageLine(ctx, run, m); }).join('') : '<p class="collab-empty">No messages yet.</p>') + '</div>';
-    else if (tab === 'participants') body = '<div class="collab-participants collab-participants-full">' + run.participants.map(function (p2) { return participantRow(ctx, run, p2); }).join('') + '</div>';
-    else if (tab === 'usage') {
-      body = usageStrip(run) + '<div class="collab-usage-table">' + run.participants.map(function (p3) {
-        return '<div class="collab-usage-row"><b>' + esc(p3.role) + '</b><span>' + reqEff(ctx, p3) + '</span></div>';
-      }).join('') + '</div>';
-    }
-    /* Crew has no extra follow-on row here: `moreRow` below already carries
-       a generic Reconfigure control for every kind, and Build With Crew is
-       its own invocation surface (`collab-build-with-crew`), not a per-run
-       follow-on action. */
-    var followOn = '';
-    if (run.kind === 'review') followOn = renderReviewFollowOn(ctx, run);
-    if (run.kind === 'brainstorm') followOn = renderBrainstormFollowOn(ctx, run);
-    if (run.kind === 'chat_room') followOn = renderRoomFollowOn(ctx, run);
-    return '<section class="dialog collab-panel" style="width:min(880px,calc(100vw - 20px))" role="dialog" aria-modal="true" aria-label="' + esc(run.title) + '">' +
-      '<div class="drawer-head"><span class="event-icon">' + ctx.icon(KIND_ICON[run.kind], 13) + '</span><strong>' + esc(run.title) + '</strong>' + statusChip(run.status, run.blockedReason) +
-      '<span class="spacer"></span><button class="icon-button" data-action="close-dialog">' + ctx.icon('close', 13) + '</button></div>' +
-      tabStrip +
-      '<div class="dialog-body collab-panel-body">' + body + '</div>' +
-      '<div class="collab-panel-foot">' + moreRow(ctx, run) + followOn + '</div>' +
-      '</section>';
+    o = o || {};
+    if (ctx && ctx.state && ctx.state.dialog && ctx.state.dialog.type === 'collab-panel') ctx.state.dialog = null;
+    var ok = V.open(run.id, { tab: VIEW_TABS[o.tab] ? o.tab : undefined, participantId: o.participantId || null });
+    var card = btn && btn.closest ? btn.closest('[data-run-id]') : null;
+    if (ok && card && PMX_() && PMX_().reveal) requestAnimationFrame(function () { PMX_().reveal(run.id); });
+    return ok;
   }
-
   EXT.slot('dialog', function (ctx) {
     var d = ctx.state.dialog;
     if (!d || d.type !== 'collab-panel') return '';
-    return renderPanel(ctx, d);
+    /* G-14 redirect: never an empty dialog; the view opens once this render is done */
+    ctx.state.dialog = null;
+    var go = { runId: d.runId, tab: d.tab, participantId: d.participantId };
+    queueMicrotask(function () { openView(EXT.ctx(), go.runId, go, null); });
+    return '';
   });
-
+  /* Open Panel lands on the run's first tab (Summary / Report / How they decided / Discussion) unless it names one
+     (Details names Team), as the centred panel did; the tabs inside the view keep their own state */
   EXT.action('collab-open-panel', function (ctx, btn) {
-    var run = findRun(btn.dataset.run); if (!run) return true;
-    ctx.openDialog({ type: 'collab-panel', runId: run.id, tab: (ctx.state.dialog && ctx.state.dialog.runId === run.id && ctx.state.dialog.tab) || 'overview', participantId: null });
+    openView(ctx, btn.dataset.run, { tab: btn.dataset.tab || 'overview' }, btn);
     return true;
   });
+  /* collab-view.js chains these three for buttons inside a docked view; from anywhere else they open the view */
   EXT.action('collab-panel-tab', function (ctx, btn) {
-    if (!ctx.state.dialog || ctx.state.dialog.type !== 'collab-panel') return true;
-    ctx.state.dialog.tab = btn.dataset.tab; ctx.state.dialog.participantId = null;
-    ctx.renderOverlays(); return true;
+    openView(ctx, btn.dataset.run, { tab: btn.dataset.tab }, btn);
+    return true;
   });
   EXT.action('collab-open-participant', function (ctx, btn) {
-    var run = findRun(btn.dataset.run); if (!run) return true;
-    ctx.openDialog({ type: 'collab-panel', runId: run.id, tab: 'participants', participantId: btn.dataset.participant });
+    openView(ctx, btn.dataset.run, { tab: 'participants', participantId: btn.dataset.participant }, btn);
     return true;
   });
   EXT.action('collab-close-participant', function (ctx, btn) {
-    if (!ctx.state.dialog || ctx.state.dialog.type !== 'collab-panel') return true;
-    ctx.state.dialog.participantId = null; ctx.renderOverlays(); return true;
+    openView(ctx, btn.dataset.run, { tab: 'participants' }, null);
+    return true;
   });
 
   /* =====================================================================
      11. REVIEW FOLLOW-ON — read-only, never auto-repairs (§7.6/REVIEW-012).
      ===================================================================== */
   UI.selectedFindings = UI.selectedFindings || {};
-  function renderReviewFollowOn(ctx, run) {
-    if(window.PM56_REVIEW && run.review && run.review.protocolVersion) return window.PM56_REVIEW.renderActions(ctx,run);
-    var r = run.review || {};
-    var sel = UI.selectedFindings[run.id] || {};
-    var confirmed = (r.findings || []).filter(function (f) { return f.disposition === 'confirmed'; });
-    var picks = confirmed.map(function (f) {
-      return '<label class="collab-finding-pick" data-k="collab-pick-' + esc(f.id) + '"><input type="checkbox" data-action="collab-review-toggle-finding" data-run="' + esc(run.id) + '" data-finding="' + esc(f.id) + '"' + (sel[f.id] ? ' checked' : '') + (f.convertedToTodo ? ' disabled' : '') + '><span>' + esc(f.claim) + (f.convertedToTodo ? ' — <i>To-Do created</i>' : '') + '</span></label>';
-    }).join('');
-    var anySelected = confirmed.some(function (f) { return sel[f.id] && !f.convertedToTodo; });
-    return '<div class="collab-followon collab-review-followon" data-k="collab-review-followon-' + esc(run.id) + '">' +
-      '<strong>Confirmed findings</strong>' + (picks || '<p class="collab-empty">No confirmed findings yet.</p>') +
-      '<div class="collab-followon-actions">' +
-      '<button class="soft-button" data-action="collab-review-create-todos" data-run="' + esc(run.id) + '"' + (anySelected ? '' : ' disabled') + '>' + ctx.icon('todo', 12) + ' Create To-Dos</button>' +
-      '<button class="soft-button" data-action="collab-review-send-findings" data-run="' + esc(run.id) + '"' + (anySelected ? '' : ' disabled') + '>' + ctx.icon('send', 12) + ' Send Findings To Agent</button>' +
-      '</div></div>';
-  }
   EXT.action('collab-review-toggle-finding', function (ctx, btn) {
     if(window.PM56_REVIEW && window.PM56_REVIEW.owns(btn.dataset.run)) return window.PM56_REVIEW.toggleFinding(ctx,btn);
     var rid2 = btn.dataset.run, fid = btn.dataset.finding;
@@ -1422,8 +1835,10 @@
     var old = findRun(btn.dataset.run); if (!old) return true;
     openConfigureDraft('review',old.id,false);
     RTC.draft.reconfigureRunId=null;
+    RTC.draft.rerunOf=old.id;
     RTC.draft.name=old.title.replace(/\s*\(re-run.*\)$/,'')+' (re-run)';
-    if(old.review.protocolVersion) RTC.draft.reviewTarget=JSON.parse(JSON.stringify(old.review.targetPack));
+    /* IMPACT A1-01: a re-run writes the user field reviewTargetChoice, never the recorded reviewTarget */
+    if(old.review&&old.review.targetPack) RTC.draft.reviewTargetChoice=targetChoiceOf(old.review.targetPack);
     ctx.openDialog({type:'collab-configure'});
     return true;
   });
@@ -1434,18 +1849,6 @@
      ===================================================================== */
   var BS_PHASES = ['intake', 'blind_proposals', 'normalize', 'debate', 'evidence', 'vote', 'synthesis'];
   var BS_PHASE_LABEL = { intake: 'Intake and frontier', blind_proposals: 'Blind proposals', normalize: 'Normalize', debate: 'Debate', evidence: 'Evidence round', vote: 'Vote', synthesis: 'Synthesis' };
-  function renderBrainstormFollowOn(ctx, run) {
-    if(window.PM56_BRAINSTORM?.owns(run.id))return window.PM56_BRAINSTORM.renderActions(ctx,run);
-    var b = run.brainstorm;
-    var idx = BS_PHASES.indexOf(b.phase);
-    var next = idx >= 0 && idx < BS_PHASES.length - 1 ? BS_PHASES[idx + 1] : null;
-    var qb = b.questionBank;
-    return '<div class="collab-followon collab-brainstorm-followon" data-k="collab-bs-followon-' + esc(run.id) + '">' +
-      '<label class="collab-grill-toggle"><input type="checkbox" data-action="collab-brainstorm-toggle-grill" data-run="' + esc(run.id) + '"' + (qb.grillMeEnabled ? ' checked' : '') + '><span>Grill Me (raises the question maximum without resetting the ' + qb.askedIds.length + ' already asked)</span></label>' +
-      (b.synthesis ? '<div class="collab-synthesis"><strong>Synthesis</strong><p>' + esc(b.synthesis.summary) + '</p><p class="collab-sub">' + esc(b.synthesis.disclosure) + '</p></div>'
-        : '<button class="soft-button" data-action="collab-brainstorm-next-round" data-run="' + esc(run.id) + '"' + (next ? '' : ' disabled') + '>' + ctx.icon('play', 12) + (next ? ' Advance to ' + esc(BS_PHASE_LABEL[next]) : ' Protocol complete') + '</button>') +
-      '</div>';
-  }
   EXT.action('collab-brainstorm-toggle-grill', function (ctx, btn) {
     var run = findRun(btn.dataset.run); if (!run) return true;
     var qb = run.brainstorm.questionBank;
@@ -1490,22 +1893,6 @@
      13. CHAT ROOM FOLLOW-ON — rounds, summarize, and explicit-only promotion
      (§6.3/§6.4, ROOM-004/ROOM-005).
      ===================================================================== */
-  function renderRoomFollowOn(ctx, run) {
-    if(window.PM56_ROOM?.owns(run.id))return window.PM56_ROOM.controls(ctx,run);
-    var c = run.chatRoom;
-    var lastCoord = null;
-    for (var i = run.messages.length - 1; i >= 0; i--) if (run.messages[i].senderKind === 'coordinator') { lastCoord = run.messages[i]; break; }
-    var promoteRow = lastCoord ? '<div class="collab-promote-row" data-k="collab-promote-row-' + esc(run.id) + '">' +
-      '<span>Promote the moderator’s latest wrap-up:</span>' +
-      '<button class="text-button" data-action="collab-room-promote" data-run="' + esc(run.id) + '" data-target="plan" data-message="' + esc(lastCoord.id) + '">to Plan</button>' +
-      '<button class="text-button" data-action="collab-room-promote" data-run="' + esc(run.id) + '" data-target="todo" data-message="' + esc(lastCoord.id) + '">to To-Do</button>' +
-      '<button class="text-button" data-action="collab-room-promote" data-run="' + esc(run.id) + '" data-target="goal" data-message="' + esc(lastCoord.id) + '">to Goal</button>' +
-      '</div>' : '';
-    return '<div class="collab-followon collab-room-followon" data-k="collab-room-followon-' + esc(run.id) + '">' +
-      '<button class="soft-button" data-action="collab-room-next-round" data-run="' + esc(run.id) + '"' + (c.roundsSoFar >= run.config.maxRounds ? ' disabled' : '') + '>' + ctx.icon('play', 12) + ' Next Round (' + c.roundsSoFar + '/' + run.config.maxRounds + ')</button>' +
-      promoteRow +
-      '</div>';
-  }
   var ROOM_LINES = [
     ['Product', 0, 'One more data point: the resume nudge only needs to beat the banner on week-two retention, and we already have that number from the checklist pilot.'],
     ['Design Systems', 1, 'If the nudge is louder than a banner it has to be a first-class component, not a toast variant. That is a half-day, not a new epic.'],
@@ -1545,254 +1932,1391 @@
   });
 
   /* =====================================================================
-     14. SHARED CONFIGURATION MODAL (§3, COLLAB-002/COLLAB-003, CWR-002) —
-     every invocation opens this, prefilled from `RTC.definitions[kind]`.
-     Settings defaults prefill; they never skip it, and cancelling starts
-     nothing, creates no run, no card, and no Usage.
+     14. THE SHARED CONFIGURATION SHEET (DESIGN-SPEC 8.0, 8.2, 6; COLLAB step 1)
+     ---------------------------------------------------------------------
+     One frame draws every collaboration sheet (Crew, Chat Room, BrainStorm,
+     Review and Crew Auto) from the pmx builders. The kind modules supply
+     their parts through PM56_<KIND>.sheetParts(draft, ctx, generic), looked
+     up lazily at render time; until a kind lands, COLLAB's generic parts
+     below draw it. The draft is the transaction: opening, editing and
+     cancelling create nothing (RTC.effects moves only in commit), and a
+     refused Start keeps the sheet and every value.
      ===================================================================== */
-  var DEFAULT_ROLE_NAMES = {
-    crew: ['Migration Engineer', 'Benchmark Runner', 'Rollback Auditor', 'Extra Member'],
-    brainstorm: ['Architecture', 'Product', 'Implementation', 'Adversarial Review', 'Extra Core'],
-    review: ['Reviewer 1', 'Reviewer 2', 'Reviewer 3', 'Reviewer 4', 'Reviewer 5', 'Reviewer 6', 'Reviewer 7', 'Reviewer 8'],
-    chat_room: ['Participant 1', 'Participant 2', 'Participant 3', 'Participant 4']
-  };
-  var DEFAULT_ROW_MODEL = ['sonnet46', 'opus5', 'qwen38-coder', 'glm52', 'kimi-k3', 'gpt53', 'sonnet46-personal', 'haiku46'];
   var KIND_PARTICIPANT_LIMIT = { crew: [1, 8], brainstorm: [2, 8], review: [1, 8], chat_room: [2, 8] };
+  var DEFAULT_ROW_MODEL = ['sonnet46', 'opus5', 'qwen38-coder', 'glm52', 'kimi-k3', 'gpt53', 'sonnet46-personal', 'haiku46'];
+  /* Default teams for a new draft (8.1, 8.3, 8.4, 8.5). The counts are MUST-KEEP (B.4: crew 3, brainstorm 4,
+     review 3, chat_room 4), so the Chat Room's fourth helper is a Skeptic beside 8.3's three. */
+  var DEFAULT_TEAM = {
+    crew: [['Builder', 'Implementer'], ['Builder', 'Implementer'], ['Checker', 'Reviewer']],
+    brainstorm: [['Architecture', 'Architect', 'opus5'], ['Product', 'Product Manager', 'gpt53'], ['Implementation', 'Implementer', 'sonnet46'], ['Adversarial Review', 'Critical Advisor', 'kimi-k3']],
+    review: [['Security', 'Reviewer', 'sonnet46'], ['Bugs', 'Reviewer', 'opus5'], ['Fresh eyes', 'Critical Advisor', 'gpt53']],
+    chat_room: [['Product', 'Product Manager', 'gpt53'], ['Design', 'Architect', 'opus5'], ['Engineering', 'Implementer', 'sonnet46'], ['Skeptic', 'Critical Advisor', 'glm52']]
+  };
+  /* The job a new row suggests ("Add a helper · Suggested next: Tester"), per kind, in order. */
+  var SUGGEST = {
+    crew: [['Tester', 'Reviewer'], ['Docs writer', 'Teacher'], ['Integrator', 'Implementer'], ['Architect', 'Architect'], ['Second checker', 'Reviewer']],
+    brainstorm: [['Operations', 'Implementer'], ['User research', 'Product Manager'], ['Security', 'Critical Advisor'], ['Design', 'Architect']],
+    review: [['Speed', 'Reviewer'], ['Tests', 'Reviewer'], ['Easy to read', 'Reviewer'], ['Anything', 'Critical Advisor'], ['Second look', 'Reviewer']],
+    chat_room: [['Research', 'Product Manager'], ['Support', 'Teacher'], ['Operations', 'Implementer'], ['Design systems', 'Architect']]
+  };
+  /* IMPACT A3-02: one specialist default, read by the sheet's prefill and by commit (it used to be hard-coded in
+     commit only, so the sheet never showed which AI a specialist would use). */
+  var SPECIALIST_DEFAULTS = { wonderer: { modelId: 'sonnet46-personal', persona: 'Wonderer' }, grillMe: { modelId: 'haiku46', persona: 'Implementer' } };
+  var SPECIALIST_SEAT = { wonderer: 7, grillMe: 8 };
+  /* The plan's concurrency in this concept (the Crew example's capacity.maxConcurrent). "You asked for 3; your plan
+     runs 2 at once" reads it; a recorded draft reads its own fixture capacity. */
+  var PLAN_CAPACITY = 2;
+  var NOUN = { crew: 'helper', brainstorm: 'helper', chat_room: 'helper', review: 'reviewer' };
+  var KIND_ARTICLE_NAME = { crew: 'a Crew', brainstorm: 'a BrainStorm', review: 'a Review', chat_room: 'a Chat Room' };
+
+  function S_() { return window.PM56_SHELL; }
+  function PMX_() { return window.PM56_PMX || null; }
+  function plural2(n, noun) { return n + ' ' + noun + (n === 1 ? '' : 's'); }
+  function modelName(id) { var m = modelById(id); return m ? m.name : (id || 'No model'); }
+  function modelShort(id) { return modelName(id).replace(/^Claude /, ''); }
+  function chatModel(ctx) { var id = ctx && ctx.state && ctx.state.model; return modelById(id) ? id : 'sonnet46'; }
+  function inkText(key, text) { var P = PMX_(); return P && P.ink ? P.ink(key, text) : esc(text); }
+  function waitMs(name, fallback) { var P = PMX_(); var v = P && P.wait ? P.wait(name) : 0; return v > 0 ? v : fallback; }
+  function clockMs(ms) { var C = window.PM56_CLOCK; return C && C.ms ? C.ms(ms) : ms; }
 
   function draftRow(role, modelId, persona, additive) {
-    return { rowId: rid('draftp'), role: role, requestedModelId: modelId, persona: persona || 'Implementer', requestedEffort:'', requestedFast:false, additiveRoleKind: additive || 'none' };
+    return { rowId: rid('draftp'), role: role, requestedModelId: modelId, persona: persona || 'Implementer', requestedEffort: '', requestedFast: false, additiveRoleKind: additive || 'none' };
+  }
+  function defaultRows(kind, ctx) {
+    var team = DEFAULT_TEAM[kind] || [];
+    var base = chatModel(ctx);
+    return team.map(function (t) { return draftRow(t[0], t[2] || base, t[1]); });
+  }
+
+  /* ---- seats: a helper's hue is fixed by its row while the sheet is open (3.3) ---- */
+  UI.seat = UI.seat || {};
+  function seatOf(d, row) {
+    if (UI.seat[row.rowId]) return UI.seat[row.rowId];
+    var used = {};
+    d.rows.forEach(function (r) { if (UI.seat[r.rowId]) used[UI.seat[r.rowId]] = 1; });
+    for (var s = 1; s <= 8; s++) if (!used[s]) { UI.seat[row.rowId] = s; return s; }
+    UI.seat[row.rowId] = ((d.rows.indexOf(row) % 8) + 1);
+    return UI.seat[row.rowId];
+  }
+  function markOf(persona) { return String(persona || 'Implementer'); }
+
+  /* ---- the card title: auto-derived from the job until edited (8.0): the first sentence, at most 48
+     characters, cut at a word boundary ---- */
+  function deriveCardTitle(v) {
+    var s = String(v || '').replace(/\s+/g, ' ').trim();
+    if (!s) return '';
+    s = (s.split(/(?<=[.!?])\s/)[0] || s).trim();
+    if (s.length > 48) { var cut = s.slice(0, 48); var sp = cut.lastIndexOf(' '); s = (sp > 16 ? cut.slice(0, sp) : cut).replace(/[,;:\-]+$/, '') + '…'; }
+    else s = s.replace(/[.!?]+$/, '');
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+  function cardTitleOf(d) { return (d.name && String(d.name).trim()) || deriveCardTitle(d.purpose) || ('New ' + KIND_LABEL[d.kind]); }
+  /* the plate's "The job" paper mirrors the first four words, cut to what its 126 px of text fit (about 16
+     characters in the widest theme font) at a word boundary, so the words never run under the paper's edge */
+  function jobWords(d) {
+    var w = String(d.purpose || '').trim().split(/\s+/).filter(Boolean);
+    if (!w.length) return 'Not written yet';
+    var take = w.slice(0, 4), cut = w.length > 4;
+    while (take.length > 1 && take.join(' ').length > 16) { take.pop(); cut = true; }
+    var t = take.join(' ');
+    if (t.length > 16) { t = t.slice(0, 15); cut = true; }
+    return t + (cut ? '…' : '');
+  }
+
+  /* ---- provenance (IMPACT A3-03): a draft is recorded when a recorded example put it together. The demos set
+     draft.recorded through PM56_COLLAB.markRecorded(); until every demo does, a draft carrying a fixture input
+     counts as recorded, because since this step no user control writes crewInput, reviewTarget,
+     brainstormInput or roomInput (IMPACT A1-01). ---- */
+  function isRecordedDraft(d) {
+    return !!(d && (d.recorded === true || d.crewInput || d.reviewTarget || d.brainstormInput || d.roomInput));
+  }
+  UI.prov = UI.prov || {};
+  UI.waiting = UI.waiting || {};
+  var SEED_IDS = {};
+  JSON.parse(SEED_RUNS_JSON).forEach(function (r) { SEED_IDS[r.id] = 1; });
+  function provenance(runId) {
+    if (UI.prov[runId]) return UI.prov[runId];
+    if (SEED_IDS[runId]) return 'seed';
+    var r = findRun(runId);
+    if (r && ((r.crew && r.crew.protocolVersion) || (r.review && r.review.protocolVersion) || (r.brainstorm && r.brainstorm.protocolVersion) || (r.chatRoom && r.chatRoom.protocolVersion))) return 'recorded';
+    return 'wand';
+  }
+
+  /* ---- Save as my default (8.0): per kind, module-local and in localStorage (a Settings transaction in the
+     product, 8.15; where it is stored is out of scope). Prefills new wand drafts only. ---- */
+  var DEFAULTS_KEY = 'pm56-collab-defaults.v1';
+  UI.savedDefaults = UI.savedDefaults || null;
+  function loadDefaults() {
+    if (UI.savedDefaults) return UI.savedDefaults;
+    var all = {};
+    try { all = JSON.parse(window.localStorage.getItem(DEFAULTS_KEY) || '{}') || {}; } catch (e) { all = {}; }
+    UI.savedDefaults = all;
+    return all;
+  }
+  function savedDefault(kind) { var all = loadDefaults(); return all && all[kind] ? all[kind] : null; }
+  function storeDefault(kind, d) {
+    var all = loadDefaults();
+    all[kind] = {
+      rows: d.rows.map(function (r) { return { role: r.role, requestedModelId: r.requestedModelId, persona: r.persona, requestedEffort: r.requestedEffort || '', requestedFast: !!r.requestedFast }; }),
+      wonderer: !!d.wonderer, grillMe: !!d.grillMe,
+      specialistRoutes: JSON.parse(JSON.stringify(d.specialistRoutes || {})),
+      config: JSON.parse(JSON.stringify(d.config || {}))
+    };
+    UI.savedDefaults = all;
+    try { window.localStorage.setItem(DEFAULTS_KEY, JSON.stringify(all)); } catch (e) { }
+  }
+  function applySaved(d, saved) {
+    if (!saved) return;
+    d.rows = (saved.rows || []).map(function (r) { var x = draftRow(r.role, r.requestedModelId, r.persona); x.requestedEffort = r.requestedEffort || ''; x.requestedFast = !!r.requestedFast; return x; });
+    if (!d.rows.length) d.rows = defaultRows(d.kind);
+    d.wonderer = !!saved.wonderer; d.grillMe = !!saved.grillMe;
+    d.specialistRoutes = Object.assign(JSON.parse(JSON.stringify(SPECIALIST_DEFAULTS)), saved.specialistRoutes || {});
+    d.config = Object.assign({}, d.config, saved.config || {});
+    if (d.kind === 'review') { d._lastStrategy = d.config.strategy || 'multi_pass'; d._previousMultiRows = d.rows.slice(); d.config.reviewerCount = d.rows.length; }
   }
 
   function openConfigureDraft(kind, reconfigureRunId, autoMode) {
-    if(findRun(reconfigureRunId)?.crew?.planBinding)return;
+    if (findRun(reconfigureRunId)?.crew?.planBinding) return;
+    var ctx = EXT.ctx && EXT.ctx();
     var def = RTC.definitions[kind];
     var run = reconfigureRunId ? findRun(reconfigureRunId) : null;
     var rows = [];
+    var routes = JSON.parse(JSON.stringify(SPECIALIST_DEFAULTS));
     if (run) {
       run.participants.filter(function (p) { return p.additiveRoleKind === 'none'; }).forEach(function (p) {
-        rows.push(draftRow(p.role, p.requestedModelId, p.requestedPersona, 'none'));
+        var r = draftRow(p.role, p.requestedModelId, p.requestedPersona, 'none');
+        r.requestedEffort = p.requestedEffort || ''; r.requestedFast = !!p.requestedFast;
+        rows.push(r);
+      });
+      run.participants.forEach(function (p) {
+        if (p.additiveRoleKind === 'wonderer') routes.wonderer = { modelId: p.requestedModelId, persona: p.requestedPersona || 'Wonderer' };
+        if (p.additiveRoleKind === 'grill_me') routes.grillMe = { modelId: p.requestedModelId, persona: p.requestedPersona || 'Implementer' };
       });
     } else {
-      var count = kind === 'crew' ? def.memberCount : kind === 'brainstorm' ? def.coreParticipants : kind === 'review' ? def.reviewerCount : def.participantCount;
-      for (var i = 0; i < count; i++) rows.push(draftRow(DEFAULT_ROLE_NAMES[kind][i] || (KIND_LABEL[kind] + ' member ' + (i + 1)), DEFAULT_ROW_MODEL[i % DEFAULT_ROW_MODEL.length], kind === 'review' ? 'Reviewer' : 'Implementer'));
+      rows = defaultRows(kind, ctx);
     }
     var wonderer = run ? run.participants.some(function (p) { return p.additiveRoleKind === 'wonderer'; }) : false;
-    var grillMe = run ? (run.brainstorm && run.brainstorm.questionBank && run.brainstorm.questionBank.grillMeEnabled) : false;
+    var grillMe = run ? (run.participants.some(function (p) { return p.additiveRoleKind === 'grill_me'; }) || !!(run.brainstorm && run.brainstorm.questionBank && run.brainstorm.questionBank.grillMeEnabled)) : false;
+    var config = JSON.parse(JSON.stringify(run ? run.config : def));
     RTC.draft = {
       kind: kind, reconfigureRunId: reconfigureRunId || null, autoMode: !!autoMode,
-      name: run ? run.title : (KIND_LABEL[kind] + ' · New'),
+      name: run ? run.title : '',
+      nameEdited: !!run,
       purpose: run ? run.purpose : '',
       rows: rows, wonderer: wonderer, grillMe: grillMe,
-      config: JSON.parse(JSON.stringify(run ? run.config : def))
+      specialistRoutes: routes,
+      config: config
     };
+    var d = RTC.draft;
+    /* a run that has ended is never rewritten: "Run again with changes…" starts a fresh run from its setup and leaves
+       the ended record as it is (only a live run changes its setup in place) */
+    if (run && TERMINAL[presentState(run)]) { d.reconfigureRunId = null; d.rerunOf = run.id; }
+    if (kind === 'brainstorm') d.mustHaves = run && run.brainstorm && Array.isArray(run.brainstorm.mustHaves) ? run.brainstorm.mustHaves.join('\n') : '';
     if (kind === 'review') {
-      RTC.draft._lastStrategy = RTC.draft.config.strategy || 'multi_pass';
-      if (RTC.draft._lastStrategy === 'single_agent') {
-        RTC.draft.rows = RTC.draft.rows.slice(0, 1);
-        RTC.draft.config.reviewerCount = 1;
+      d.reviewTargetChoice = run && run.review && run.review.targetPack ? targetChoiceOf(run.review.targetPack) : defaultTarget(ctx);
+      d.reviewFocus = run && run.review && run.review.focus ? JSON.parse(JSON.stringify(run.review.focus)) : { bugs: true, security: true };
+      if (!d.config.alsoGive) d.config.alsoGive = { changes: true, tests: true, rules: true };
+    }
+    if (kind === 'chat_room') {
+      if (!d.config.moderatorModelId) d.config.moderatorModelId = chatModel(ctx);
+      if (!d.config.moderatorPersona) d.config.moderatorPersona = 'Product Manager';
+    }
+    if (kind === 'brainstorm' && !d.config.synthesisModelId) d.config.synthesisModelId = chatModel(ctx);
+    if (kind === 'crew' && autoMode) {
+      var pol = def.autoPolicy;
+      if (pol && Array.isArray(pol.rows) && pol.rows.length) d.rows = pol.rows.map(function (r) { return draftRow(r.role, r.requestedModelId, r.persona); });
+      if (!d.config.autoComplexity) d.config.autoComplexity = 'high';
+      if (!d.config.autoMinIndependent) d.config.autoMinIndependent = '2';
+      d.wonderer = false; d.grillMe = false;
+    }
+    if (kind === 'review') {
+      d._lastStrategy = d.config.strategy || 'multi_pass';
+      if (d._lastStrategy === 'single_agent') {
+        d.rows = d.rows.slice(0, 1);
+        d.config.reviewerCount = 1;
       } else {
-        RTC.draft._previousMultiRows = RTC.draft.rows.slice();
-        RTC.draft.config.reviewerCount = RTC.draft.rows.length;
+        d._previousMultiRows = d.rows.slice();
+        d.config.reviewerCount = d.rows.length;
       }
     }
+    UI.seat = {};
+    UI.removed = null;
+    UI.saved = false;
   }
 
-  function draftRowHtml(ctx, row, idx) {
-    const pick=window.PM56_PICKERS, S=window.PM56_SHELL;
-    const attrs='data-row="'+esc(row.rowId)+'"';
-    const fallback=UNAVAILABLE_DEMO[row.requestedModelId]?fallbackModelFor(row.requestedModelId):null;
-    /* Card grammar from module-shell (.mdl-card); the row keeps its own class
-       because the harnesses select through .collab-participant-editor-row. */
-    return '<article class="mdl-card collab-participant-editor-row" data-k="collab-draftrow-'+esc(row.rowId)+'">'+
-      '<div class="mdl-card-head collab-member-name"><span class="collab-member-number">'+(idx+1)+'</span><input class="collab-field-role" aria-label="Participant role" type="text" data-collab-input="role" data-row="'+esc(row.rowId)+'" value="'+esc(row.role)+'" placeholder="Role">'+
-      '<button class="icon-button" data-action="collab-modal-duplicate-participant" data-row="'+esc(row.rowId)+'" title="Duplicate participant">'+ctx.icon('copy',12)+'</button>'+
-      '<button class="icon-button" data-action="collab-modal-remove-participant" data-row="'+esc(row.rowId)+'" title="Remove participant">'+ctx.icon('close',12)+'</button></div>'+
-      '<div class="mdl-grid2">'+S.field('Model',pick.modelButton('collab-pick-model','collab-model-'+row.rowId,row.requestedModelId,attrs))+
-      S.field('Persona',pick.personaButton('collab-pick-persona','collab-persona-'+row.rowId,row.persona,attrs))+'</div>'+
-      (row.requestedEffort?'<p class="mdl-note collab-config-effort">'+esc(row.requestedEffort)+(row.requestedFast?' · Fast':'')+'</p>':'')+
-      (UNAVAILABLE_DEMO[row.requestedModelId]?'<p class="mdl-note collab-route-eff">Requested model unavailable · '+(fallback?'Uses '+esc(modelLabel(fallback.id)):'No substitute')+'</p>':'')+'</article>';
+  /* ---- IMPACT A3-01: ONE option catalog per enum. Every collaboration choice (the How questions, the recipes,
+     Review's target, the Advanced rows) comes from here, with a distinct line per option (C.5); a disabled
+     option stays listed with its reason. ---- */
+  var SCHEDULED_NO = 'Scheduled builds can’t use this: they run while you’re away.';
+  var CONFIG_CHOICES = {
+    coordinator: { title: 'Coordinator', options: [
+      { value: 'parent_assistant', label: 'This chat’s assistant', description: 'No extra AI. The assistant you’re chatting with leads.', small: 'No extra AI', sub: 'This chat’s assistant', read: 'this chat’s assistant' },
+      { value: 'one_of_helpers', label: 'One of the helpers', description: 'Your first helper leads and also does a part.', disabled: true, reason: 'Not available in this preview yet.', small: 'Leads and does a part', sub: 'One of the helpers', read: 'your first helper' },
+      { value: 'dedicated_synthesis_model', label: 'A separate AI', description: 'A dedicated lead. Adds one more AI, and its cost.', small: 'One more AI, and its cost', sub: 'A separate AI', read: 'a separate Coordinator' }] },
+    assignmentStrategy: { title: 'Who decides who does what', options: [
+      { value: 'manager_directed', label: 'The Coordinator decides', description: 'Each helper gets the part that fits it best.' },
+      { value: 'explicit_static', label: 'Everyone sticks to their job', description: 'Parts follow the jobs you wrote.' },
+      { value: 'adaptive', label: 'The Coordinator can shift work as it goes', description: 'Parts can move to whoever is free.' }] },
+    externalResearch: { title: 'Research depth', options: [
+      { value: 'maximum', label: 'Extensive research', description: 'Checks outside sources before deciding. Slower, and costs more.', read: 'thoroughly' },
+      { value: 'standard', label: 'Focused research', description: 'Checks only what the options disagree on.', read: 'where the options disagree' }] },
+    strategy: { title: 'Review approach', options: [
+      { value: 'multi_pass', label: 'Multi-Pass Review', description: 'Several reviewers check on their own, then compare notes. Slower, catches more, shows where they disagree.', small: 'Check alone, then compare' },
+      { value: 'single_agent', label: 'Single Agent', description: 'One fresh reviewer checks the work. Fastest and cheapest; nothing to compare against.', small: 'One fresh reviewer' }] },
+    turnPolicy: { title: 'Who talks when', options: [
+      { value: 'moderated', label: 'Moderator guides', description: 'A Moderator calls on whoever is most useful next.', read: 'the Moderator calls on whoever is most useful next' },
+      { value: 'round_robin', label: 'Take turns', description: 'Everyone speaks once per round, in order.', read: 'everyone speaks in turn' },
+      { value: 'free_discussion', label: 'Open discussion', description: 'Anyone can jump in when they have something to add.', read: 'anyone can jump in' },
+      { value: 'ask_everyone_once', label: 'One answer each', description: 'Everyone answers once, then it stops. Good for quick opinions.', read: 'everyone answers once' }] },
+    autoComplexity: { title: 'When to call the Crew', options: [
+      { value: 'high', label: 'Big jobs only', description: 'Most requests stay with one assistant. Recommended to start.', read: 'big' },
+      { value: 'medium', label: 'Medium and big jobs', description: 'Calls the Crew more often, and uses your limits faster.', read: 'medium or big' }] },
+    autoMinIndependent: { title: 'Only when the job splits into', options: [
+      { value: '2', label: '2 or more parts that can run at the same time', description: 'A job with two parts that don’t wait for each other is enough.', read: '2 or more' },
+      { value: '3', label: '3 or more parts that can run at the same time', description: 'Only wider jobs: three parts that can all run at once.', read: '3 or more' }] }
+  };
+  /* Start from a team (8.0 roster foot; 8.1, 8.3, 8.4). Review has its three too (owner answer E-37 A,
+     2026-09-27, over IMPACT A1-39); a kind may hand its own list through sheetParts roster.recipes. */
+  var RECIPES = {
+    review: [
+      { value: 'careful', label: 'Careful review', description: 'Security, Bugs and Tests (3 reviewers).', rows: [['Security', 'Reviewer', 'sonnet46'], ['Bugs', 'Reviewer', 'opus5'], ['Tests', 'Reviewer', 'gpt53']], config: { strategy: 'multi_pass' } },
+      { value: 'quick', label: 'Quick check', description: 'One fresh reviewer.', rows: [['Bugs', 'Reviewer', 'sonnet46']], config: { strategy: 'single_agent' } },
+      { value: 'deep', label: 'Deep audit', description: '5 reviewers, one of them a Critical Advisor.', rows: [['Security', 'Reviewer', 'sonnet46'], ['Bugs', 'Reviewer', 'opus5'], ['Tests', 'Reviewer', 'gpt53'], ['Speed', 'Reviewer', 'glm52'], ['Anything', 'Critical Advisor', 'qwen38-coder']], config: { strategy: 'multi_pass' } }],
+    crew: [
+      { value: 'build-check', label: 'Build and check', description: 'Two builders and one checker.', rows: [['Builder', 'Implementer'], ['Builder', 'Implementer'], ['Checker', 'Reviewer']] },
+      { value: 'split', label: 'Split a big change', description: 'One helper per area you name.', rows: [['Front end', 'Implementer'], ['Back end', 'Implementer'], ['Tests', 'Reviewer']] },
+      { value: 'two-ways', label: 'Try it two ways', description: 'Two builders take different approaches; one checker compares.', rows: [['First approach', 'Implementer'], ['Second approach', 'Architect'], ['Comparer', 'Reviewer']] }],
+    chat_room: [
+      { value: 'quick', label: 'Quick opinions', description: '3 helpers, one answer each.', rows: [['Product', 'Product Manager'], ['Design', 'Architect'], ['Engineering', 'Implementer']], config: { turnPolicy: 'ask_everyone_once', maxRounds: 1 } },
+      { value: 'debate', label: 'Debate', description: '4 helpers, Moderator guides, 3 rounds.', rows: [['Product', 'Product Manager'], ['Design', 'Architect'], ['Engineering', 'Implementer'], ['Skeptic', 'Critical Advisor']], config: { turnPolicy: 'moderated', maxRounds: 3 } },
+      { value: 'deep', label: 'Deep dive', description: '5 helpers, 5 rounds, and Wonderer.', rows: [['Product', 'Product Manager'], ['Design', 'Architect'], ['Engineering', 'Implementer'], ['Skeptic', 'Critical Advisor'], ['Research', 'Product Manager']], config: { turnPolicy: 'moderated', maxRounds: 5 }, wonderer: true }],
+    brainstorm: [
+      { value: 'balanced', label: 'Balanced four', description: 'The canonical roles.', rows: [['Architecture', 'Architect'], ['Product', 'Product Manager'], ['Implementation', 'Implementer'], ['Adversarial Review', 'Critical Advisor']] },
+      { value: 'quick', label: 'Quick call', description: 'Product and Implementation.', rows: [['Product', 'Product Manager'], ['Implementation', 'Implementer']] },
+      { value: 'wide', label: 'Wide search', description: 'Six roles and Wonderer.', rows: [['Architecture', 'Architect'], ['Product', 'Product Manager'], ['Implementation', 'Implementer'], ['Adversarial Review', 'Critical Advisor'], ['Operations', 'Implementer'], ['User research', 'Product Manager']], wonderer: true }]
+  };
+  /* Review's target (8.5): the user field draft.reviewTargetChoice (IMPACT A1-01). Each size line is measured
+     from this chat where the concept has the data, never invented. */
+  var TARGETS = [
+    { value: 'changes', label: 'Your latest changes', read: 'your latest changes', kind: 'changes' },
+    { value: 'answer', label: 'The last answer', read: 'the last answer', kind: 'assistant_response' },
+    { value: 'run', label: 'The last agent run', read: 'the last agent run', kind: 'agent_run' },
+    { value: 'plan', label: 'A Plan', read: 'the Plan', kind: 'plan' },
+    { value: 'files', label: 'File changes', read: 'the file changes', kind: 'files' },
+    { value: 'artifacts', label: 'Artifacts', read: 'the artifacts', kind: 'artifacts' },
+    { value: 'task', label: 'A task result', read: 'the task result', kind: 'task_result' }];
+  function targetOf(v) { for (var i = 0; i < TARGETS.length; i++) if (TARGETS[i].value === v) return TARGETS[i]; return TARGETS[0]; }
+  function targetChoiceOf(pack) {
+    var k = pack && pack.targetKind;
+    for (var i = 0; i < TARGETS.length; i++) if (TARGETS[i].kind === k || TARGETS[i].value === k) return TARGETS[i].value;
+    return 'answer';
   }
-  ['model','persona'].forEach(function(kind){
-    EXT.action('collab-pick-'+kind,function(ctx,btn){
-      var draft=RTC.draft, row=draft&&draft.rows.find(function(r){return r.rowId===btn.dataset.row;});
-      if(!row)return true;
-      window.PM56_PICKERS[kind==='model'?'openModel':'openPersona'](btn,{model:row.requestedModelId,persona:row.persona,effort:row.requestedEffort,fast:row.requestedFast},function(v){
-        if(RTC.draft!==draft||!draft.rows.includes(row)||!['collab-configure','collaboration-configure'].includes(ctx.state.dialog?.type))return;
-        row.requestedModelId=v.model;row.persona=v.persona;row.requestedEffort=v.effort;row.requestedFast=v.fast;
-        if(draft.kind==='review'){
-          if(draft.config.strategy==='multi_pass'){
-            draft._previousMultiRows=draft.rows.slice();
-          } else if(draft._previousMultiRows && draft._previousMultiRows.length>0 && draft.rows.length>0 && draft.rows[0].rowId===row.rowId){
-            draft._previousMultiRows[0]=Object.assign({},draft._previousMultiRows[0],row);
-          }
-        }
-        ctx.renderOverlays();
-      });return true;
-    });
-  });
+  function threadOf(ctx) { var t = ctx && ctx.state && (ctx.state.threads || []).filter(function (x) { return x.id === ctx.state.selectedThread; })[0]; return t || null; }
+  function threadChanges(ctx) { var tid = ctx && ctx.state && ctx.state.selectedThread; return list(D.changes).filter(function (c) { return c.threadId === tid; }); }
+  function defaultTarget(ctx) { return threadChanges(ctx).length ? 'changes' : 'answer'; }
+  function targetSmall(ctx, v) {
+    if (v === 'changes' || v === 'files') {
+      var ch = threadChanges(ctx), lines = 0;
+      ch.forEach(function (c) { (c.hunks || []).forEach(function (h) { (h.lines || []).forEach(function (l) { if (l.kind === 'add' || l.kind === 'del' || l.kind === 'remove') lines++; }); }); });
+      return ch.length ? plural2(ch.length, 'file') + (lines ? ' · ' + lines + ' changed lines' : '') : 'No file changes in this chat yet';
+    }
+    if (v === 'answer') {
+      var t = threadOf(ctx), last = null;
+      (t && t.messages || []).forEach(function (m) { if (m.role === 'assistant' && m.type === 'text') last = m; });
+      if (!last) return 'No answer in this chat yet';
+      var words = String(last.body || '').trim().split(/\s+/).filter(Boolean).length;
+      return '1 reply · ' + words + ' words';
+    }
+    if (v === 'plan') { var P = window.PM56_PLANS, p = P && P.current ? P.current(ctx.state.selectedThread) : null; return p ? (p.title || 'This chat’s Plan') + (p.version ? ' · V' + p.version : '') : 'No Plan in this chat'; }
+    if (v === 'run') return 'The assistant’s most recent turn';
+    if (v === 'artifacts') { var n = list(D.artifacts).filter(function (a) { return a.threadId === ctx.state.selectedThread; }).length; return n ? plural2(n, 'artifact') + ' in this chat' : 'No artifacts in this chat yet'; }
+    return 'The most recent finished task';
+  }
+  /* Advanced (G-29): the nine shared rows, then the kind rows. Each value writes the draft config. */
+  function limitOptions(kind) {
+    var T = { crew: [[30, 4], [45, 6], [90, 12]], brainstorm: [[60, 10], [90, 14], [120, 20]], review: [[15, 3], [30, 5], [60, 8]], chat_room: [[30, 2], [60, 4], [90, 6]] }[kind] || [[45, 6]];
+    return T.map(function (p) { return { value: p[0] + '|' + p[1], label: p[0] + ' minutes · $' + p[1].toFixed(2), description: 'Stops after ' + p[0] + ' minutes or $' + p[1].toFixed(2) + ', whichever comes first.' }; });
+  }
+  function tokenOptions(kind) {
+    var base = { crew: 400000, brainstorm: 900000, review: 350000, chat_room: 300000 }[kind] || 400000;
+    return [base / 2, base, base * 2].map(function (n) { return { value: String(n), label: n.toLocaleString('en-US') + ' tokens', description: 'About ' + Math.round(n * 0.75).toLocaleString('en-US') + ' words of reading and writing in all.' }; });
+  }
+  var ADV_CHOICES = {
+    visibility: { title: 'What helpers can see', options: [
+      { value: 'request_files', label: 'Your request and the files it mentions', description: 'Not your whole chat history unless you choose it.' },
+      { value: 'whole_chat', label: 'Your whole chat and its files', description: 'More context, and more tokens.' }] },
+    tools: { title: 'Tools they can use', options: [
+      { value: 'same_as_chat', label: 'The same tools as this chat', description: 'Files, terminal and search; no new connections.' },
+      { value: 'read_only', label: 'Read-only tools', description: 'Can read your project and the web. Can’t change anything.' }] },
+    stuck: { title: 'If a helper gets stuck', options: [
+      { value: 'ask_me', label: 'Ask me what to do', description: 'Nobody is swapped or skipped without you saying so.' },
+      { value: 'retry_once', label: 'Retry once, then ask me', description: 'Starts that part again with the same helper, once.' }] },
+    retention: { title: 'Keep the full record for', options: [
+      { value: '30', label: '30 days', description: 'Everything each helper said and did, readable in the panel.' },
+      { value: '7', label: '7 days', description: 'Kept for a week, then removed.' },
+      { value: '90', label: '90 days', description: 'Kept for three months, then removed.' }] },
+    output: { title: 'How it finishes', options: [
+      { value: 'summary', label: 'One summary in this chat', description: 'The assistant writes it; the parts stay in the panel.' },
+      { value: 'summary_parts', label: 'A summary and every part’s result', description: 'Each part’s result is posted under the summary.' }] },
+    notes: { title: 'Shared notes', options: [
+      { value: 'shared', label: 'Helpers share one notes space', description: 'Each helper can also keep private scratch notes.' },
+      { value: 'private', label: 'Private notes per helper', description: 'Helpers can’t read each other’s notes.' }] },
+    modStyle: { title: 'Moderator style', options: [
+      { value: 'guides', label: 'Keeps the talk on the question', description: 'Calls on helpers and steers away from side tracks.' },
+      { value: 'light', label: 'Steps in only to sum up', description: 'Lets the helpers talk and sums up each round.' }] },
+    mentions: { title: 'Mentions and replies', options: [
+      { value: 'both', label: 'Helpers can reply to each other and to you', description: 'A helper can answer another helper by name.' },
+      { value: 'you', label: 'Helpers answer only you', description: 'Nobody replies to another helper directly.' }] },
+    stop: { title: 'When to stop', options: [
+      { value: 'rounds_or_moderator_close', label: 'After the last round, or when you end it', description: 'The room never runs past its rounds.' },
+      { value: 'you', label: 'Only when you end it', description: 'Rounds keep going until you end the discussion.' }] },
+    summaryStyle: { title: 'Summary style', options: [
+      { value: 'three', label: 'Agreed · Still debated · Open questions', description: 'Three short lists, each point with who holds it.' },
+      { value: 'short', label: 'A short paragraph', description: 'One paragraph that sums up where the room landed.' }] },
+    provisioning: { title: 'Installing research tools', options: [
+      { value: 'ask', label: 'Ask me first', description: 'Nothing is installed without your OK.' },
+      { value: 'never', label: 'Never install', description: 'Research uses only tools that are already here.' }] },
+    voting: { title: 'Voting', options: [
+      { value: 'evidence_weighted', label: 'Evidence decides; votes inform it. A rule always wins.', description: 'A well-supported option can win over a head count.' },
+      { value: 'majority', label: 'Most votes wins', description: 'Canon decides by evidence, not by a simple majority.', disabled: true, reason: 'Not available: canon decides by evidence.' }] },
+    dissent: { title: 'Keep dissent', options: [
+      { value: 'verbatim', label: 'Keep it word for word', description: 'Where helpers disagree, you read both sides as written.' },
+      { value: 'note', label: 'Keep a one-line note', description: 'Each disagreement is noted in one line.' }] },
+    compare: { title: 'Who compares the notes', options: [
+      { value: 'coordinator', label: 'The Coordinator (this chat’s assistant)', description: 'It merges duplicates and asks each reviewer to vote.' },
+      { value: 'separate', label: 'A separate AI', description: 'A dedicated compare step. Adds one more AI, and its cost.' }] },
+    format: { title: 'Report format', options: [
+      { value: 'rich', label: 'Formatted', description: 'Plain text is one click away.' },
+      { value: 'markdown', label: 'Plain text', description: 'Formatted is one click away.' }] },
+    cite: { title: 'Evidence they must cite', options: [
+      { value: 'file_line', label: 'File and line for every finding', description: 'A finding without proof can’t become a To-Do.' },
+      { value: 'quote', label: 'A quoted passage for every finding', description: 'The passage is shown with each finding.' }] }
+  };
+  /* The config key and default value of each Advanced choice. */
+  var ADV_KEYS = { visibility: ['visibility', 'request_files'], tools: ['tools', 'same_as_chat'], stuck: ['stuck', 'ask_me'], retention: ['retentionDays', '30'],
+    output: ['outputStyle', 'summary'], notes: ['contextSharing', 'shared'], modStyle: ['moderatorStyle', 'guides'], mentions: ['mentions', 'both'], stop: ['stopCondition', 'rounds_or_moderator_close'],
+    summaryStyle: ['summaryStyle', 'three'], provisioning: ['provisioning', 'ask'], voting: ['voting', 'evidence_weighted'], dissent: ['dissent', 'verbatim'], compare: ['compare', 'coordinator'],
+    format: ['reportFormat', 'rich'], cite: ['cite', 'file_line'] };
+  function advValue(d, name) {
+    var k = ADV_KEYS[name]; if (!k) return '';
+    var v = d.config[k[0]];
+    if (name === 'tools' && v == null && (d.kind === 'chat_room' || d.kind === 'review')) return 'read_only';
+    return v == null || v === '' ? k[1] : String(v);
+  }
+  function optionOf(options, v) { for (var i = 0; i < options.length; i++) if (String(options[i].value) === String(v)) return options[i]; return options[0]; }
 
-  // Choice presentation reuses the main menu/picker host. Only the draft owns values.
-  const CONFIG_CHOICES = {"coordinator": [{"value": "parent_assistant", "label": "Current assistant", "description": "Your main assistant assigns work and brings the results together."}, {"value": "dedicated_synthesis_model", "label": "Separate coordinator", "description": "A dedicated coordinator combines the participants’ results."}], "assignmentStrategy": [{"value": "manager_directed", "label": "Coordinator assigns tasks", "description": "The coordinator divides the request into jobs for each role."}, {"value": "explicit_static", "label": "Keep assigned roles", "description": "Each participant stays with the role and scope you specify."}, {"value": "adaptive", "label": "Reassign as needed", "description": "The coordinator can redistribute work as new information arrives."}], "externalResearch": [{"value": "maximum", "label": "Extensive research", "description": "Compare more external sources before choosing an approach."}, {"value": "standard", "label": "Focused research", "description": "Research the sources needed to resolve the current question."}], "strategy": [{"value": "multi_pass", "label": "Multi-Pass Review", "description": "Several reviewers inspect independently, then compare findings."}, {"value": "single_agent", "label": "Single Agent", "description": "One reviewer inspects the work; repeat passes remain possible."}], "turnPolicy": [{"value": "moderated", "label": "Moderator guides", "description": "A moderator invites the relevant participant to speak next."}, {"value": "round_robin", "label": "Take turns", "description": "Every participant speaks in a fixed order each round."}, {"value": "free_discussion", "label": "Open discussion", "description": "Participants respond when they have a relevant contribution."}, {"value": "ask_everyone_once", "label": "One answer each", "description": "Collect one independent answer from each participant."}]};
+  /* Every choice the sheet offers, with how it reads and writes the draft. `collab-pick-choice` looks the field
+     up here; the menu title comes from the catalog (C.js used to read the trigger's label node). */
+  function choiceSpec(d, field, ctx) {
+    var sched = !!d.scheduleIntent;
+    if (CONFIG_CHOICES[field]) {
+      var c = CONFIG_CHOICES[field];
+      var opts = c.options.map(function (o) {
+        var x = Object.assign({}, o);
+        if (sched && ((field === 'coordinator' && o.value === 'dedicated_synthesis_model') || (field === 'assignmentStrategy' && o.value === 'adaptive'))) { x.disabled = true; x.reason = SCHEDULED_NO; }
+        return x;
+      });
+      return { title: c.title, current: d.config[field], options: opts, set: function (v) {
+        var prev = d.config[field];
+        d.config[field] = v;
+        if (d.kind === 'review' && field === 'strategy') handleReviewStrategyTransition(d, prev, v);
+        else normalizeReview(d);
+      } };
+    }
+    if (field === 'recipe') {
+      var list0 = recipeList(d).slice();
+      var saved = savedDefault(d.kind);
+      if (saved) list0.unshift({ value: 'default', label: 'Your default', description: 'The team and settings you saved for ' + KIND_LABEL[d.kind] + '.' });
+      return { title: 'Start from a team', current: '', options: list0, set: function (v) { applyRecipe(d, v); } };
+    }
+    if (field === 'target') {
+      return { title: 'What to review', current: d.reviewTargetChoice, options: TARGETS.map(function (t) { return { value: t.value, label: t.label, description: targetSmall(ctx, t.value) }; }), set: function (v) { d.reviewTargetChoice = v; } };
+    }
+    if (field === 'adv-limit') {
+      var lo = limitOptions(d.kind);
+      return { title: 'Time and cost limit', current: d.config.timeLimitMinutes + '|' + d.config.costLimitUsd, options: lo, set: function (v) { var p = String(v).split('|'); d.config.timeLimitMinutes = Number(p[0]); d.config.costLimitUsd = Number(p[1]); } };
+    }
+    if (field === 'adv-tokens') {
+      return { title: 'Token limit', current: String(d.config.tokenLimit || ''), options: tokenOptions(d.kind), set: function (v) { d.config.tokenLimit = Number(v); } };
+    }
+    if (field.indexOf('adv-') === 0 && ADV_CHOICES[field.slice(4)]) {
+      var name = field.slice(4), a = ADV_CHOICES[name], key = ADV_KEYS[name][0];
+      return { title: a.title, current: advValue(d, name), options: a.options, set: function (v) { d.config[key] = v; } };
+    }
+    return null;
+  }
+  /* the recipes a sheet offers: the kind's own list (sheetParts roster.recipes as an array, remembered by rosterHtml)
+     or COLLAB's catalog above */
+  function recipeList(d) { return UI.kindRecipes && UI.kindRecipes.kind === d.kind ? UI.kindRecipes.list : (RECIPES[d.kind] || []); }
+  function applyRecipe(d, v) {
+    if (v === 'default') { applySaved(d, savedDefault(d.kind)); UI.seat = {}; return; }
+    var r = recipeList(d).filter(function (x) { return x.value === v; })[0];
+    if (!r) return;
+    var base = chatModel(EXT.ctx && EXT.ctx());
+    d.rows = r.rows.map(function (t, i) { return draftRow(t[0], t[2] || (d.kind === 'crew' ? base : DEFAULT_ROW_MODEL[i % DEFAULT_ROW_MODEL.length]), t[1]); });
+    if (r.config) d.config = Object.assign({}, d.config, r.config);
+    if (d.kind === 'review') { d._previousMultiRows = null; d._lastStrategy = d.config.strategy; normalizeReview(d); }
+    if (r.wonderer != null) d.wonderer = !!r.wonderer;
+    UI.seat = {};
+    UI.removed = null;
+    d.lastFailure = null;
+  }
+
   function handleReviewStrategyTransition(d, oldStrategy, newStrategy) {
     if (!d || d.kind !== 'review') return;
     if (oldStrategy === newStrategy) return;
     d.config.strategy = newStrategy;
     if (newStrategy === 'single_agent') {
-      if (d.rows && d.rows.length >= 1) {
-        d._previousMultiRows = d.rows.slice();
-      }
-      if (!d.rows || !d.rows.length) {
-        d.rows = [draftRow('Reviewer', 'sonnet46', 'Reviewer')];
-      } else {
-        d.rows = d.rows.slice(0, 1);
-      }
+      if (d.rows && d.rows.length >= 1) d._previousMultiRows = d.rows.slice();
+      if (!d.rows || !d.rows.length) d.rows = [draftRow('Security', 'sonnet46', 'Reviewer')];
+      else d.rows = d.rows.slice(0, 1);
       d.config.reviewerCount = 1;
       d.wonderer = false;
       d.grillMe = false;
       d._lastStrategy = 'single_agent';
     } else if (newStrategy === 'multi_pass') {
       if (d._previousMultiRows && d._previousMultiRows.length >= 1) {
-        if (d.rows && d.rows.length > 0) {
-          d._previousMultiRows[0] = d.rows[0];
-        }
+        if (d.rows && d.rows.length > 0) d._previousMultiRows[0] = d.rows[0];
         d.rows = d._previousMultiRows.slice();
       } else if (d.rows && d.rows.length >= 1) {
         d.rows = d.rows.slice();
       } else {
-        d.rows = [];
-        for (var i = 0; i < 3; i++) {
-          d.rows.push(draftRow(DEFAULT_ROLE_NAMES.review[i] || ('Reviewer ' + (i + 1)), DEFAULT_ROW_MODEL[i % DEFAULT_ROW_MODEL.length], 'Reviewer'));
-        }
+        d.rows = defaultRows('review');
       }
+      if (d.rows.length < 2) while (d.rows.length < 2) d.rows.push(suggestedRow(d));
       d.config.reviewerCount = d.rows.length;
       d._previousMultiRows = d.rows.slice();
       d._lastStrategy = 'multi_pass';
     }
   }
 
-  function normalizeReview(d){
-    if(!d||d.kind!=='review')return;
-    if(!d.config) d.config = {};
-    if(!d.config.strategy) d.config.strategy = 'multi_pass';
-    if(d._lastStrategy && d._lastStrategy !== d.config.strategy){
+  function normalizeReview(d) {
+    if (!d || d.kind !== 'review') return;
+    if (!d.config) d.config = {};
+    if (!d.config.strategy) d.config.strategy = 'multi_pass';
+    if (d._lastStrategy && d._lastStrategy !== d.config.strategy) {
       handleReviewStrategyTransition(d, d._lastStrategy, d.config.strategy);
       return;
     }
     d._lastStrategy = d.config.strategy;
+    if (d.config.strategy === 'single_agent') {
+      if (!d.rows || !d.rows.length) d.rows = [draftRow('Security', 'sonnet46', 'Reviewer')];
+      else if (d.rows.length > 1) { d._previousMultiRows = d.rows.slice(); d.rows = d.rows.slice(0, 1); }
+      d.config.reviewerCount = 1;
+      d.wonderer = false;
+      d.grillMe = false;
+    } else if (d.config.strategy === 'multi_pass') {
+      if (!d.rows || d.rows.length === 0) d.rows = defaultRows('review');
+      else if (d.rows.length > 8) d.rows = d.rows.slice(0, 8);
+      d.config.reviewerCount = d.rows.length;
+      d._previousMultiRows = d.rows.slice();
+    }
+  }
+  /* the stepper and the strategy stay in sync (8.5: 1 = Single Agent) */
+  function setReviewerCount(d, n) {
+    n = clamp(n, 1, 8);
+    if (n === 1) { if (d.config.strategy !== 'single_agent') handleReviewStrategyTransition(d, d.config.strategy || 'multi_pass', 'single_agent'); return; }
+    if (d.config.strategy === 'single_agent') handleReviewStrategyTransition(d, 'single_agent', 'multi_pass');
+    while (d.rows.length < n) d.rows.push(suggestedRow(d));
+    while (d.rows.length > n) d.rows.pop();
+    d.config.reviewerCount = d.rows.length;
+    d._previousMultiRows = d.rows.slice();
+  }
+  function suggestion(d) {
+    var have = {};
+    d.rows.forEach(function (r) { have[String(r.role || '').toLowerCase()] = 1; });
+    var list0 = SUGGEST[d.kind] || [];
+    for (var i = 0; i < list0.length; i++) if (!have[list0[i][0].toLowerCase()]) return list0[i];
+    return [NOUN[d.kind] === 'reviewer' ? 'Reviewer ' + (d.rows.length + 1) : 'Helper ' + (d.rows.length + 1), d.kind === 'review' ? 'Reviewer' : 'Implementer'];
+  }
+  function suggestedRow(d) {
+    var s = suggestion(d);
+    var base = d.kind === 'crew' ? chatModel(EXT.ctx && EXT.ctx()) : DEFAULT_ROW_MODEL[d.rows.length % DEFAULT_ROW_MODEL.length];
+    return draftRow(s[0], base, s[1]);
+  }
 
-    if(d.config.strategy==='single_agent'){
-      if(!d.rows || !d.rows.length){
-        d.rows=[draftRow('Reviewer','sonnet46','Reviewer')];
-      } else if(d.rows.length>1){
-        d._previousMultiRows=d.rows.slice();
-        d.rows=d.rows.slice(0,1);
-      }
-      d.config.reviewerCount=1;
-      d.wonderer=false;
-      d.grillMe=false;
-    }else if(d.config.strategy==='multi_pass'){
-      if(!d.rows || d.rows.length===0){
-        d.rows=[];
-        for(var i=0;i<3;i++){
-          d.rows.push(draftRow(DEFAULT_ROLE_NAMES.review[i]||('Reviewer '+(i+1)),DEFAULT_ROW_MODEL[i%DEFAULT_ROW_MODEL.length],'Reviewer'));
-        }
-      } else if(d.rows.length>8){
-        d.rows=d.rows.slice(0,8);
-      }
-      d.config.reviewerCount=d.rows.length;
-      d._previousMultiRows=d.rows.slice();
-    }
+  /* ---- an offline model (owner answer E-03 B, 2026-09-27): nothing stands in automatically. The chosen model
+     going offline is a blocking notice on its row ("… is offline right now. Pick another model to start.") with a
+     Fix that opens that row's model picker, and Start stays disabled with the same sentence (offlineReason). The
+     notice keeps the .collab-route-eff hook. Returns null for an available model. ---- */
+  function offlineSentence(modelId, verb) { return modelName(modelId) + ' is offline right now. Pick another model to ' + (verb || 'start') + '.'; }
+  function standInFor(d, modelId) {
+    if (!UNAVAILABLE_DEMO[modelId]) return null;
+    return { tone: 'failed', offline: true, strong: esc(modelName(modelId)) + ' is offline right now.', text: 'Pick another model to ' + (d && d.autoMode ? 'save' : 'start') + '.', fine: '' };
   }
-  CONFIG_CHOICES.autoComplexity = [
-    {value:'high',label:'Complex requests',description:'Use a Crew only when the request is rated high complexity.'},
-    {value:'medium',label:'Moderate or complex',description:'Allow medium or high complexity when independent work is available.'}
-  ];
-  CONFIG_CHOICES.autoMinIndependent = [
-    {value:'2',label:'At least two independent tasks',description:'Only use a Crew when two tasks can make progress without waiting for one another.'},
-    {value:'3',label:'At least three independent tasks',description:'Reserve automatic delegation for a wider split of independent work.'}
-  ];
-  function configChoice(ctx,d,key,title){
-    const S=window.PM56_SHELL;
-    const options=CONFIG_CHOICES[key], selected=options.find(o=>o.value===d.config[key])||options[0];
-    /* SHELL.field keeps the title as the label's first child node, which is
-       exactly where the collab-pick-choice handler reads the menu title from. */
-    return S.field(esc(title),S.pickerButton({action:'collab-pick-choice',anchor:'collab-choice-'+key,strong:esc(selected.label),extra:'data-field="'+esc(key)+'"',iconHtml:ctx.icon('down',11)}));
+  function routeHtml(si, rowId) {
+    if (!si) return '';
+    /* the row's route slot (grid placement of .pmx-route[data-tone]) carrying the refusal's warn glyph and Fix */
+    return S_().pmxRefusal({ cls: 'pmx-route collab-route-eff collab-route-eff-failed', attrs: 'data-tone="failed"', code: 'model_offline', strong: si.strong, text: si.text,
+      fix: rowId ? { action: 'collab-refusal-fix', attrs: 'data-row="' + esc(rowId) + '"', label: 'Fix' } : null });
   }
-  EXT.action('collab-pick-choice',function(ctx,btn){
-    const draft=RTC.draft,key=btn.dataset.field;if(!draft||!CONFIG_CHOICES[key])return true;
-    window.PM56_PICKERS.openChoice(btn,btn.closest('label').childNodes[0].textContent,draft.config[key],CONFIG_CHOICES[key],value=>{
-      if(RTC.draft!==draft)return;
-      const prev=draft.config[key];
-      draft.config[key]=value;
-      if(draft.kind==='review'&&key==='strategy'){
-        handleReviewStrategyTransition(draft,prev,value);
-      }else{
-        normalizeReview(draft);
-      }
-      ctx.renderOverlays();
-    });return true;
-  });
-  function kindConfigFields(ctx, d) {
-    const S=window.PM56_SHELL;
-    if (d.kind === 'crew') {
-      return S.grid2(configChoice(ctx,d,'coordinator','Coordinator') +
-        configChoice(ctx,d,'assignmentStrategy','Task assignment') +
-        S.field('Simultaneous tasks','<input type="number" min="1" max="8" data-collab-input="cfg-parallelism" value="' + esc(d.config.parallelism) + '">')) +
-        '<span class="collab-authority" title="Cannot widen this thread’s permissions">Inherits thread permissions</span>';
+  /* The first offline choice in the draft (helpers, then specialists that are on, then the Moderator/synthesis
+     model), as the disabled-Start sentence; '' when every chosen model is available. */
+  function offlineReason(d) {
+    if (!d) return '';
+    var verb = d.autoMode ? 'save' : 'start';
+    for (var i = 0; i < d.rows.length; i++) if (UNAVAILABLE_DEMO[d.rows[i].requestedModelId]) return offlineSentence(d.rows[i].requestedModelId, verb);
+    var sr = d.specialistRoutes || {};
+    if (d.wonderer && sr.wonderer && UNAVAILABLE_DEMO[sr.wonderer.modelId]) return offlineSentence(sr.wonderer.modelId, verb);
+    if (d.grillMe && sr.grillMe && UNAVAILABLE_DEMO[sr.grillMe.modelId]) return offlineSentence(sr.grillMe.modelId, verb);
+    var c = d.config || {};
+    if (d.kind === 'chat_room' && UNAVAILABLE_DEMO[c.moderatorModelId]) return offlineSentence(c.moderatorModelId, verb);
+    if (UNAVAILABLE_DEMO[c.synthesisModelId]) return offlineSentence(c.synthesisModelId, verb);
+    return '';
+  }
+  var EFFORT_SAY = { Low: 'Thinks lightly', low: 'Thinks lightly', Medium: 'Thinks a fair amount', medium: 'Thinks a fair amount', High: 'Thinks hard', high: 'Thinks hard', Max: 'Thinks as hard as it can', max: 'Thinks as hard as it can' };
+  function effortNote(row) {
+    var a = row.requestedEffort ? (EFFORT_SAY[row.requestedEffort] || 'Thinks ' + String(row.requestedEffort).toLowerCase()) : '';
+    var b = row.requestedFast ? 'fast replies' : '';
+    return a && b ? a + ' · ' + b : (a || (b ? 'Fast replies' : ''));
+  }
+
+  /* ---- one roster row (A6) with the MUST-KEEP hooks: .collab-participant-editor-row keyed
+     collab-draftrow-{rowId}, exactly one collab-pick-model and one collab-pick-persona, the job input
+     data-collab-input="role", Copy / Remove, and the stand-in sentence as .collab-route-eff ---- */
+  function draftRowHtml(ctx, d, row, idx, parts) {
+    var S = S_(), PK = window.PM56_PICKERS;
+    var attrs = 'data-row="' + esc(row.rowId) + '"';
+    var extra = parts && typeof parts.rowExtras === 'function' ? (parts.rowExtras(row, idx) || {}) : {};
+    var failed = d.lastFailure && d.lastFailure.rowId === row.rowId;
+    var noun = NOUN[d.kind];
+    var note = extra.note != null ? extra.note : (sameModelNote(d, row, idx) || effortNote(row));
+    var si = standInFor(d, row.requestedModelId);
+    if (si && !failed) { failed = true; }
+    return S.pmxRosterRow({
+      key: 'collab-draftrow-' + row.rowId, cls: 'collab-participant-editor-row', attrs: attrs,
+      state: failed ? 'error' : '', failure: failed ? (d.lastFailure && d.lastFailure.rowId === row.rowId ? d.lastFailure.error : 'model_offline') : '',
+      mark: S.pmxMark({ role: extra.markRole || markOf(row.persona), seat: seatOf(d, row), size: 24, state: failed ? 'needs' : 'idle', standin: !!(si && si.tone !== 'failed') }),
+      job: { attrs: 'data-collab-input="role" ' + attrs + ' aria-label="' + (d.kind === 'review' ? 'Looks for' : 'Job') + '"', value: row.role, placeholder: d.kind === 'review' ? 'e.g. Security' : 'e.g. Tester' },
+      model: PK.modelButton('collab-pick-model', 'collab-model-' + row.rowId, row.requestedModelId, attrs),
+      persona: PK.personaButton('collab-pick-persona', 'collab-persona-' + row.rowId, row.persona, attrs),
+      actions: [
+        { action: 'collab-modal-duplicate-participant', attrs: attrs, label: noun === 'reviewer' ? 'Copy reviewer' : 'Copy helper', glyph: 'copy' },
+        { action: 'collab-modal-remove-participant', attrs: attrs, label: noun === 'reviewer' ? 'Remove reviewer' : 'Remove helper', glyph: 'trash' }],
+      route: extra.route != null ? extra.route : routeHtml(si, row.rowId),
+      note: si ? '' : note
+    });
+  }
+  function sameModelNote(d, row, idx) {
+    if (d.kind !== 'review' || idx === 0) return '';
+    for (var i = 0; i < idx; i++) if (d.rows[i].requestedModelId === row.requestedModelId) return 'Same model as ' + (d.rows[i].role || 'reviewer ' + (i + 1)) + ', in its own fresh session, so it can’t see ' + (d.rows[i].role || 'its') + '’ notes.';
+    return '';
+  }
+
+  /* The roster (A5): column heads with their one-line helpers (the hover card carries the rest), the rows in
+     .collab-participant-editor, a pinned row (the Chat Room's Moderator) above them outside that list, and the
+     foot: Add a helper, the suggestion or the Bring back line, and Start from a team. */
+  var COL_HOVER = {
+    Job: 'What this helper focuses on. Everyone also reads the job above.',
+    'Looks for': 'What this reviewer checks. Each focus goes into a reviewer’s job.',
+    'AI model': 'Which AI does this job, and which of your accounts pays for it (Work, Personal…). Stronger models think better but are slower and cost more.',
+    Persona: 'How this helper works: its habits and instructions. Implementer builds, Reviewer checks, Architect weighs trade-offs.'
+  };
+  function rosterHtml(ctx, d, parts) {
+    var S = S_();
+    var R = parts.roster || {};
+    var cols = (parts.rosterCols || []).map(function (c) {
+      var hover = c.hover || COL_HOVER[c.label];
+      return { label: hover ? '<span data-hover-key="collab-col-' + esc(c.label) + '" data-hover-tip="' + esc(hover) + '">' + esc(c.label) + '</span>' : esc(c.label), helper: esc(c.helper || '') };
+    });
+    var rows = d.rows.map(function (r, i) { return draftRowHtml(ctx, d, r, i, parts); }).join('');
+    var n = d.rows.length, max = R.max || KIND_PARTICIPANT_LIMIT[d.kind][1];
+    var removed = UI.removed && UI.removed.draft === d ? UI.removed : null;
+    var addLabel = R.addLabel || (NOUN[d.kind] === 'reviewer' ? 'Add a reviewer' : 'Add a helper');
+    var foot = S.pmxAddRow({ action: 'collab-modal-add-participant', label: addLabel, disabled: n >= max });
+    if (removed) foot += '<span class="pmx-fine pmx-collab-removed" data-k="removed:' + esc(removed.row.rowId) + '">Removed ' + esc(removed.row.role || NOUN[d.kind]) + '</span><button type="button" class="text-button pmx-collab-bringback" data-action="collab-modal-undo-remove">Bring back</button>';
+    else if (n >= max) foot += '<span class="pmx-fine">' + esc(KIND_LABEL[d.kind] + ' holds up to ' + max + ' ' + NOUN[d.kind] + 's.') + '</span>';
+    else if (R.suggest !== false) foot += '<span class="pmx-fine">Suggested next: ' + esc(suggestion(d)[0]) + '</span>';
+    foot += '<span class="pmx-grow"></span>';
+    UI.kindRecipes = Array.isArray(R.recipes) && R.recipes.length ? { kind: d.kind, list: R.recipes } : null;
+    if (R.recipes) foot += S.pickerButton({ action: 'collab-pick-choice', anchor: 'collab-choice-recipe', strong: 'Start from a team', extra: 'data-field="recipe" data-menu-title="Start from a team"' });
+    var html = S.pmxRoster({ key: 'collab-roster', cols: cols, rowsHtml: rows, rowsCls: 'collab-participant-editor', rowsAttrs: 'data-count="' + n + '"', foot: foot, affects: parts.whoAffects || 'team' });
+    if (R.pinned) html = html.replace('<div class="pmx-roster-rows', '<div class="pmx-collab-pinned">' + R.pinned + '</div><div class="pmx-roster-rows');
+    return html;
+  }
+
+  /* ---- the preview's first frame (A16): the card's top frame, drawn by the same builders the card uses ---- */
+  var KIND_STOPS = {
+    crew: ['Split the job', 'Do the parts', 'Put it together'],
+    chat_room: null,
+    brainstorm: ['Understand the ask', 'Draft ideas alone', 'Line up the options', 'Debate', 'Check the facts', 'Vote', 'Write the plan'],
+    review: ['Snapshot', 'Reading on their own', 'Comparing notes', 'Writing the report']
+  };
+  /* IMPACT A1-20: COLLAB owns the waiting sentence; each kind supplies only its noun phrase. */
+  var WAIT_NOUN = { crew: 'the Coordinator hasn’t split the job', chat_room: 'the Moderator hasn’t opened the first round', review: 'the snapshot hasn’t been taken', brainstorm: 'the team hasn’t started drafting' };
+  function waitingReason(run) {
+    if (run && run.blockedReason) return String(run.blockedReason);
+    var kind = run && run.kind, mod = kind ? kindModule(kind) : null;
+    var noun = mod && typeof mod.waitingNoun === 'string' && mod.waitingNoun ? mod.waitingNoun : WAIT_NOUN[kind];
+    return 'Nothing runs by itself in this preview, so ' + (noun || 'nothing has started') + ' yet.';
+  }
+  function draftStops(d) {
+    if (d.kind === 'chat_room') { var n = clamp(d.config.maxRounds || 5, 1, 20); var out = []; for (var i = 1; i <= Math.min(n, 12); i++) out.push('Round ' + i); return out; }
+    if (d.kind === 'review' && d.config.strategy === 'single_agent') return ['Snapshot', 'Reading on their own', 'Writing the report'];
+    return KIND_STOPS[d.kind] || [];
+  }
+  function firstFrameOf(d) {
+    var stops = draftStops(d);
+    var recorded = isRecordedDraft(d);
+    var first = stops[0] || '';
+    return recorded
+      ? { density: 'starting', status: 'starting', word: 'Starting', reason: d.kind === 'crew' ? 'The Coordinator is reading the job.' : d.kind === 'chat_room' ? 'The Moderator is opening the first round.' : d.kind === 'review' ? 'Taking the snapshot.' : 'The team is reading the question.', stops: stops, nowText: '<b>' + esc(first) + '</b> · starting' }
+      : { density: 'waiting', status: 'waiting', word: 'Waiting to start', reason: waitingReason({ kind: d.kind }), stops: stops, nowText: '<b>' + esc(first) + '</b> · not started' };
+  }
+  function draftCluster(d, state) {
+    var S = S_(), out = [];
+    if (d.kind !== 'review') out.push(S.pmxMark({ role: 'lead', size: 18, state: state }));
+    d.rows.forEach(function (r) { out.push(S.pmxMark({ role: markOf(r.persona), seat: seatOf(d, r), size: 18, state: state, standin: !!(standInFor(d, r.requestedModelId) || {}).strong && (standInFor(d, r.requestedModelId) || {}).tone !== 'failed' })); });
+    return out;
+  }
+  function previewCardHtml(d, ff) {
+    var S = S_();
+    var head = S.pmxRunHead({ kind: d.kind, kindWord: KIND_LABEL[d.kind], title: '<span data-collab-mirror="title">' + esc(cardTitleOf(d)) + '</span>', cluster: draftCluster(d, ff.density === 'starting' ? 'idle' : 'queued'), clock: esc(S.pmxTime ? S.pmxTime.clock(null) : 'not started') });
+    var body = S.pmxSentence({ status: ff.status, word: esc(ff.word), reason: esc(ff.reason) }) +
+      S.pmxTrack({ stops: ff.stops.map(function (l, i) { return { key: 'pv-stop:' + i, label: esc(l), state: 'next' }; }), nowText: ff.nowText });
+    /* its whole top frame's height rides on the frame itself, so the M3 flight clone keeps it too (heroHtml, fitPreview) */
+    return S.pmxRun({ key: 'collab-card-new', kind: d.kind, density: ff.density, preview: true, headHtml: head, bodyHtml: body })
+      .replace(/^<article class="pmx-run"/, '<article class="pmx-run pmx-collab-pvrun" style="--collab-pv-h:' + Math.max(120, UI.previewH || 120) + 'px"');
+  }
+  /* the preview renders at the destination card's width, measured when the sheet opens (R-02) */
+  UI.sheetScale = UI.sheetScale || 0;
+  function measureCardWidth() {
+    var el = document.querySelector('#pmRoot .transcript-inner');
+    var w = 0;
+    if (el) {
+      var cs = getComputedStyle(el);
+      w = el.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
     }
+    if (!(w > 200)) w = 417;
+    /* the preview is the card's top frame at the M tier at least: an S-tier card's three-line sentence would not fit
+       the tray, and the flight lays its clone out at the real card's width anyway (M3) */
+    return Math.max(360, Math.min(720, w));
+  }
+
+  /* =====================================================================
+     14a. GENERIC SHEET PARTS (COLLAB's fallback for every kind; a kind's own
+     PM56_<KIND>.sheetParts replaces any field it returns). Plates are built
+     only from PM56_SHELL.pmxPlateParts, so no kind CSS is needed for them.
+     ===================================================================== */
+  var PP = function () { return S_().pmxPlateParts; };
+  function fitLabel(text, px) { text = String(text || ''); var max = Math.max(4, Math.floor(px / 6.6)); return text.length > max ? text.slice(0, max - 1).replace(/\s+$/, '') + '…' : text; }
+  function capacityOf(d) { return d.crewInput && d.crewInput.capacity && d.crewInput.capacity.maxConcurrent ? d.crewInput.capacity.maxConcurrent : PLAN_CAPACITY; }
+
+  /* ---- Crew plate (8.1): the job and the Coordinator upstage, helpers on their marks (a floor bar works at once,
+     a hatched floor waits its turn), specialists in the right wing, the stage edge, You and the permission lock
+     in the house. Natural heights: full 225, compact 104, strip 72, caption 40 (J-2 reference update). ---- */
+  function crewPlateFit(d) {
+    var S = S_(), P = PP();
+    var n = d.rows.length, eff = Math.min(clamp(d.config.parallelism || 1, 1, 8), capacityOf(d), n);
+    var coord = optionOf(CONFIG_CHOICES.coordinator.options, d.config.coordinator);
+    var specs = (d.wonderer ? 1 : 0) + (d.grillMe ? 1 : 0);
+    function full() {
+      var H = 225, LX = 234, HY = 96, EY = 174;
+      var centre = specs ? 250 : 288, width = specs ? 250 : 300;
+      var span = n === 1 ? 0 : Math.min(specs ? 130 : 150, width / (n - 1));
+      var xs = d.rows.map(function (r, i) { return Math.round(centre + (i - (n - 1) / 2) * span); });
+      var lab = n === 1 ? 170 : Math.max(60, span - 14);
+      var s = P.paper({ key: 'pmx-p-job', x: 20, y: 8, w: 150, h: 50, label: 'The job', sub: '<span data-collab-mirror="job">' + esc(jobWords(d)) + '</span>', part: 'job' });
+      s += P.line({ key: 'pmx-p-l-job', from: { x: 170, y: 32 }, to: { x: LX - 20, y: 32 }, style: 'fixed', part: 'job' });
+      s += '<g class="pmx-p-seat" data-k="pmx-p-seat:crew:lead" style="--x:' + LX + 'px;--y:32px" data-pmx-part="lead">' +
+        P.seat({ x: 0, y: 0, role: 'lead' }).replace(/^<g class="pmx-p-seat"[^>]*>/, '').replace(/<\/g>$/, '') +
+        P.label({ x: 22, y: -2, text: 'Coordinator', cls: 'lab' }) + P.label({ x: 22, y: 16, text: esc(coord.sub || coord.label), cls: 'sub' }) + '</g>';
+      d.rows.forEach(function (r, i) {
+        var x = xs[i];
+        s += P.line({ key: 'pmx-p-l:' + r.rowId, d: 'M' + LX + ' 50 C ' + LX + ' ' + (HY - 12) + ', ' + x + ' ' + (HY - 30) + ', ' + x + ' ' + (HY - 18), style: 'hands', part: 'assign' });
+      });
+      d.rows.forEach(function (r, i) {
+        var x = xs[i], waits = i >= eff, si = standInFor(d, r.requestedModelId);
+        var sub = si ? modelShort(r.requestedModelId) + ' · offline' : modelShort(r.requestedModelId);
+        s += P.seat({ key: 'pmx-p-seat:crew:' + r.rowId, x: x, y: HY, role: markOf(r.persona), seat: seatOf(d, r), state: waits ? 'queued' : 'idle', floor: waits ? 'hatch' : 'bar', standin: !!(si && si.tone !== 'failed'),
+          label: esc(fitLabel(r.role || 'New helper', lab)), sub: esc(fitLabel(sub, lab)), part: waits ? 'team parallel' : 'team' });
+        if (waits && i === eff) s += P.label({ x: x - 24, y: HY + 4, text: 'waits its turn', anchor: 'end', part: 'parallel' });
+      });
+      var edgeTo = specs ? 460 : 554;
+      if (d.wonderer) s += P.seat({ key: 'pmx-p-seat:crew:wonderer', x: 518, y: 48, role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, label: 'Wonderer', sub: 'doesn’t vote', part: 'wonderer specialists' });
+      if (d.grillMe) s += P.seat({ key: 'pmx-p-seat:crew:grill', x: 518, y: 124, role: 'grill', seat: SPECIALIST_SEAT.grillMe, label: 'Grill Me', sub: 'asks you first', part: 'grill specialists' });
+      s += P.line({ key: 'pmx-p-edge', from: { x: 22, y: EY }, to: { x: edgeTo, y: EY }, style: 'fixed', part: 'permission' });
+      s += P.line({ key: 'pmx-p-toyou', from: { x: 288, y: EY + 4 }, to: { x: 288, y: EY + 12 }, style: 'toyou', part: 'you' });
+      s += P.you({ x: 288, y: EY + 26, label: 'You', sub: 'get one checked result' });
+      s += P.glyph('lock', 24, EY + 22, 11) + P.label({ x: 40, y: EY + 32, text: 'this chat’s permissions', part: 'permission' });
+      return S.pmxPlate({ key: 'pmx-plate-crew:full', kind: 'crew', mode: 'full', w: 576, h: H, fitH: H, svg: s,
+        legend: [{ sample: 'bar', label: 'works at once', part: 'parallel' }, { sample: 'hatch', label: 'waits its turn', part: 'parallel' }] });
+    }
+    /* compact (6.3, 4 rows or a short slot): the same three bands with names only, 156 tall. Upstage: the
+       Coordinator; stage: the helpers over their floor bars or hatches, the specialists in the wing; house: the
+       stage edge and You. */
+    function bands() {
+      var centre = specs ? 230 : 288, width = specs ? 220 : 330;
+      var H = 156, LX = centre, LY = 18, HY = 68, EY = 122;
+      var span = n === 1 ? 0 : Math.min(specs ? 110 : 120, width / (n - 1));
+      var xs = d.rows.map(function (r, i) { return Math.round(centre + (i - (n - 1) / 2) * span); });
+      var lab = n === 1 ? 150 : Math.max(56, span - 14);
+      var s = '<g class="pmx-p-seat" data-k="pmx-p-seat:crew:lead" style="--x:' + LX + 'px;--y:' + LY + 'px" data-pmx-part="lead">' +
+        P.seat({ x: 0, y: 0, role: 'lead' }).replace(/^<g class="pmx-p-seat"[^>]*>/, '').replace(/<\/g>$/, '') +
+        P.label({ x: -22, y: 5, text: 'Coordinator', cls: 'lab', anchor: 'end' }) + '</g>';
+      s = P.paper({ key: 'pmx-p-job', x: 20, y: 6, w: specs ? 80 : 130, h: 36, label: 'The job', part: 'job' }) + s;
+      d.rows.forEach(function (r, i) {
+        var x = xs[i];
+        s += P.line({ key: 'pmx-p-l:' + r.rowId, d: 'M' + LX + ' ' + (LY + 16) + ' C ' + LX + ' ' + (HY - 22) + ', ' + x + ' ' + (HY - 34) + ', ' + x + ' ' + (HY - 17), style: 'hands', part: 'assign' });
+      });
+      d.rows.forEach(function (r, i) {
+        var waits = i >= eff, si = standInFor(d, r.requestedModelId);
+        s += P.seat({ key: 'pmx-p-seat:crew:' + r.rowId, x: xs[i], y: HY, role: markOf(r.persona), seat: seatOf(d, r), state: waits ? 'queued' : 'idle', floor: waits ? 'hatch' : 'bar',
+          standin: !!(si && si.tone !== 'failed'), label: esc(fitLabel(r.role || 'New helper', lab)), part: waits ? 'team parallel' : 'team' });
+      });
+      if (d.wonderer) s += P.seat({ key: 'pmx-p-seat:crew:wonderer', x: d.grillMe ? 460 : 500, y: HY, role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, label: 'Wonderer', part: 'wonderer specialists' });
+      if (d.grillMe) s += P.seat({ key: 'pmx-p-seat:crew:grill', x: d.wonderer ? 530 : 500, y: HY, role: 'grill', seat: SPECIALIST_SEAT.grillMe, label: 'Grill Me', part: 'grill specialists' });
+      s += P.line({ key: 'pmx-p-edge', from: { x: 22, y: EY }, to: { x: specs ? 400 : 554, y: EY }, style: 'fixed', part: 'permission' });
+      s += P.line({ key: 'pmx-p-toyou', from: { x: LX, y: EY + 4 }, to: { x: LX, y: EY + 10 }, style: 'toyou', part: 'you' });
+      s += P.you({ x: LX, y: EY + 20, label: 'You', sub: '' });
+      return S.pmxPlate({ key: 'pmx-plate-crew:compact', kind: 'crew', mode: 'compact', w: 576, h: H, fitH: H, svg: s,
+        legend: [{ sample: 'bar', label: 'works at once', part: 'parallel' }, { sample: 'hatch', label: 'waits its turn', part: 'parallel' }] });
+    }
+    function row(mode) {
+      /* the strip is 500 wide (not 576), so it fits the 516 px main column of a 1024 window instead of falling to the caption */
+      var compact = mode === 'compact', h = compact ? 104 : 72, y = compact ? 40 : 36, W = compact ? 576 : 500;
+      var x0 = compact ? 54 : 40, last = (compact ? 446 : 284) - specs * 44; /* strip: 16 more units before You's sub line (retro's wider mono met the last hatch) */
+      var step = Math.min(110, (last - x0) / Math.max(1, n)), s = '';
+      s += P.seat({ key: 'pmx-p-seat:crew:lead', x: x0, y: y, role: 'lead', label: compact ? 'Coordinator' : '', part: 'lead assign job' });
+      d.rows.forEach(function (r, i) {
+        var waits = i >= eff;
+        s += P.seat({ key: 'pmx-p-seat:crew:' + r.rowId, x: Math.round(x0 + (i + 1) * step), y: y, role: markOf(r.persona), seat: seatOf(d, r), state: waits ? 'queued' : 'idle', floor: waits ? 'hatch' : 'bar',
+          standin: !!(standInFor(d, r.requestedModelId) && standInFor(d, r.requestedModelId).tone !== 'failed'), label: compact ? esc(fitLabel(r.role || 'New helper', step - 12)) : '', part: waits ? 'team parallel' : 'team' });
+      });
+      /* the specialists stand in the wing, after the helpers and well before You */
+      if (d.wonderer) s += P.seat({ key: 'pmx-p-seat:crew:wonderer', x: last + 44, y: y, role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, part: 'wonderer specialists' });
+      if (d.grillMe) s += P.seat({ key: 'pmx-p-seat:crew:grill', x: last + 44 * specs, y: y, role: 'grill', seat: SPECIALIST_SEAT.grillMe, part: 'grill specialists' });
+      s += P.you({ x: W - 24, y: y, anchor: 'end', label: 'You', sub: compact ? '' : 'one checked result' });
+      return S.pmxPlate({ key: 'pmx-plate-crew:' + mode, kind: 'crew', mode: mode, w: W, h: h, fitH: h, svg: s });
+    }
+    var waiting = n - eff;
+    var caption = (eff >= n ? (n === 1 ? 'The Coordinator and 1 helper.' : 'All ' + n + ' work at once.') : eff + ' work at once; the other ' + waiting + (waiting === 1 ? ' waits its turn.' : ' wait their turn.')) + ' You get one checked result.';
+    var plates = n <= 3 ? [full(), bands(), row('strip')] : n === 4 ? [bands(), row('strip')] : n <= 6 ? [row('strip')] : [];
+    return S.pmxPlateFit({ key: 'pmx-plate-fit:crew', affects: 'team', plates: plates, caption: '<span data-pmx-part="parallel job">' + esc(caption) + '</span>' });
+  }
+
+  /* ---- Review plate (8.5): the locked snapshot upstage, reviewers in an arc behind screens, sightlines to the
+     snapshot, compare lines to one junction, You and the findings in the house. ---- */
+  function reviewPlateFit(d, ctx) {
+    var S = S_(), P = PP();
+    var n = d.rows.length, single = n === 1 || d.config.strategy === 'single_agent';
+    var tgt = targetOf(d.reviewTargetChoice);
+    function full() {
+      var H = 244, cx = 300;
+      var span = n === 1 ? 0 : Math.min(128, 380 / (n - 1));
+      var xs = d.rows.map(function (r, i) { return Math.round(cx + (i - (n - 1) / 2) * span); });
+      var yOf = function (x) { return 100 + Math.round(Math.abs(x - cx) * 0.08); };
+      var lab = n === 1 ? 180 : Math.max(60, span - 14);
+      var s = P.paper({ key: 'pmx-p-snap', x: 24, y: 10, w: 170, h: 50, label: esc(tgt.label), sub: 'locked at Start', lock: true, part: 'target job' });
+      d.rows.forEach(function (r, i) { s += P.line({ key: 'pmx-p-sees:' + r.rowId, from: { x: 109, y: 60 }, to: { x: xs[i], y: yOf(xs[i]) - 18 }, style: 'sees', part: 'target' }); });
+      if (!single) for (var i = 0; i < n - 1; i++) { var mx = (xs[i] + xs[i + 1]) / 2; s += P.screen({ key: 'pmx-p-scr:' + i, x: mx, y: (yOf(xs[i]) + yOf(xs[i + 1])) / 2 - 2, h: 30, part: 'blind' }); }
+      d.rows.forEach(function (r, i) {
+        s += P.seat({ key: 'pmx-p-seat:rev:' + r.rowId, x: xs[i], y: yOf(xs[i]), role: markOf(r.persona), seat: seatOf(d, r), label: esc(fitLabel(r.role || 'Reviewer', lab)), sub: esc(fitLabel(modelShort(r.requestedModelId), lab)), part: 'count focus' });
+      });
+      var jy = 188;
+      if (!single) d.rows.forEach(function (r, i) { s += P.line({ key: 'pmx-p-cmp:' + r.rowId, d: 'M' + xs[i] + ' ' + (yOf(xs[i]) + 60) + ' Q ' + xs[i] + ' ' + jy + ', ' + cx + ' ' + jy, style: 'hands', part: 'blind' }); });
+      s += P.line({ key: 'pmx-p-toyou', from: { x: cx, y: single ? yOf(cx) + 60 : jy + 4 }, to: { x: cx, y: jy + 12 }, style: 'toyou', part: 'target' });
+      s += P.you({ x: cx, y: jy + 28, label: 'You', sub: 'get one report' });
+      s += P.paper({ key: 'pmx-p-report', x: 452, y: jy + 10, w: 100, h: 36, label: 'Findings', part: 'focus' });
+      return S.pmxPlate({ key: 'pmx-plate-review:full', kind: 'review', mode: 'full', w: 576, h: H, fitH: H, svg: s,
+        legend: single ? [] : [{ sample: 'screen', label: 'can’t see each other', part: 'blind' }, { sample: 'hands', label: 'compare notes', part: 'blind' }] });
+    }
+    /* compact (6.3): three bands, names only, 164 tall. Upstage: the locked snapshot; stage: the reviewers in a row
+       with screens between them, each on a sightline from the snapshot; house: one dotted line down to You. */
+    function bands() {
+      var H = 164, HY = 84, cx = 300;
+      var span = n === 1 ? 0 : Math.min(110, 300 / (n - 1));
+      var xs = d.rows.map(function (r, i) { return Math.round(cx + (i - (n - 1) / 2) * span); });
+      var lab = n === 1 ? 150 : Math.max(56, span - 14);
+      var s = P.paper({ key: 'pmx-p-snap', x: cx - 75, y: 6, w: 150, h: 36, label: esc(tgt.label), lock: true, part: 'target job' });
+      d.rows.forEach(function (r, i) { s += P.line({ key: 'pmx-p-sees:' + r.rowId, from: { x: cx, y: 42 }, to: { x: xs[i], y: HY - 16 }, style: 'sees', part: 'target' }); });
+      if (!single) for (var i = 0; i < n - 1; i++) s += P.screen({ key: 'pmx-p-scr:' + i, x: (xs[i] + xs[i + 1]) / 2, y: HY + 8, h: 22, part: 'blind' });
+      d.rows.forEach(function (r, i) {
+        s += P.seat({ key: 'pmx-p-seat:rev:' + r.rowId, x: xs[i], y: HY, role: markOf(r.persona), seat: seatOf(d, r), label: esc(fitLabel(r.role || 'Reviewer', lab)), part: 'count focus' });
+      });
+      s += P.line({ key: 'pmx-p-toyou', from: { x: cx, y: HY + 44 }, to: { x: cx, y: HY + 50 }, style: 'toyou', part: 'you' });
+      s += P.you({ x: cx, y: HY + 64, label: 'You', sub: '' });
+      return S.pmxPlate({ key: 'pmx-plate-review:compact', kind: 'review', mode: 'compact', w: 576, h: H, fitH: H, svg: s,
+        legend: single ? [] : [{ sample: 'screen', label: 'can’t see each other', part: 'blind' }] });
+    }
+    function row(mode) {
+      var compact = mode === 'compact', h = compact ? 104 : 72, y = compact ? 40 : 36, W = compact ? 576 : 500;
+      var x0 = compact ? 60 : 44, last = compact ? 446 : 300;
+      var step = n === 1 ? 0 : Math.min(110, (last - x0) / (n - 1)), s = '';
+      d.rows.forEach(function (r, i) {
+        var x = Math.round(x0 + i * step);
+        s += P.seat({ key: 'pmx-p-seat:rev:' + r.rowId, x: x, y: y, role: markOf(r.persona), seat: seatOf(d, r), label: compact ? esc(fitLabel(r.role || 'Reviewer', step - 12)) : '', part: 'count focus job' });
+        if (!single && i < n - 1) s += P.screen({ key: 'pmx-p-scr:' + i, x: x + step / 2, y: y, h: 24, part: 'blind' });
+      });
+      s += P.you({ x: W - 24, y: y, anchor: 'end', label: 'You', sub: compact ? '' : 'one report' });
+      return S.pmxPlate({ key: 'pmx-plate-review:' + mode, kind: 'review', mode: mode, w: W, h: h, fitH: h, svg: s });
+    }
+    var caption = single ? 'One fresh reviewer, nothing to compare against. You get one report.' : n + ' reviewers read on their own, then compare notes. You get one report.';
+    var plates = n <= 3 ? [full(), bands(), row('strip')] : n === 4 ? [bands(), row('strip')] : n <= 6 ? [row('strip')] : [];
+    return S.pmxPlateFit({ key: 'pmx-plate-fit:review', affects: 'count', plates: plates, caption: '<span data-pmx-part="blind job">' + esc(caption) + '</span>' });
+  }
+
+  /* ---- BrainStorm plate (8.4): the seven chapters upstage, helpers behind screens, Wonderer in the wing,
+     Grill Me by the stage edge, You get one plan. ---- */
+  var BS_CHAPTERS = [['Understand', 'questions'], ['Draft alone', 'blind'], ['Line up', 'team'], ['Debate', 'rounds'], ['Check facts', 'research'], ['Vote', 'team'], ['Write the plan', 'you']];
+  function brainstormPlateFit(d) {
+    var S = S_(), P = PP();
+    var n = d.rows.length, specs = (d.wonderer ? 1 : 0) + (d.grillMe ? 1 : 0);
+    function full() {
+      var H = 232, HY = 112, EY = 182;
+      var s = P.line({ key: 'pmx-p-chapters', from: { x: 48, y: 16 }, to: { x: 516, y: 16 }, style: 'fixed', part: 'rounds' });
+      BS_CHAPTERS.forEach(function (c, i) { s += P.chapter({ key: 'pmx-p-ch:' + i, x: 48 + i * 78, y: 16, label: c[0], state: 'next', part: c[1] + (i === 0 ? ' job' : '') }); });
+      var centre = specs ? 250 : 288, width = specs ? 270 : 330;
+      var span = n === 1 ? 0 : Math.min(128, width / (n - 1));
+      var xs = d.rows.map(function (r, i) { return Math.round(centre + (i - (n - 1) / 2) * span); });
+      var lab = Math.max(60, span - 14);
+      for (var i = 0; i < n - 1; i++) s += P.screen({ key: 'pmx-p-scr:' + i, x: (xs[i] + xs[i + 1]) / 2, y: HY, h: 30, part: 'blind' });
+      d.rows.forEach(function (r, i) {
+        s += P.seat({ key: 'pmx-p-seat:bs:' + r.rowId, x: xs[i], y: HY, role: markOf(r.persona), seat: seatOf(d, r), label: esc(fitLabel(r.role || 'Helper', lab)), sub: esc(fitLabel(modelShort(r.requestedModelId), lab)), part: 'team blind' });
+      });
+      if (d.wonderer) s += P.seat({ key: 'pmx-p-seat:bs:wonderer', x: 518, y: 70, role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, label: 'Wonderer', sub: 'doesn’t vote', part: 'wonderer specialists' });
+      if (d.grillMe) s += P.seat({ key: 'pmx-p-seat:bs:grill', x: 518, y: 150, role: 'grill', seat: SPECIALIST_SEAT.grillMe, label: 'Grill Me', part: 'grill questions specialists' });
+      s += P.line({ key: 'pmx-p-edge', from: { x: 22, y: EY }, to: { x: specs ? 460 : 554, y: EY }, style: 'fixed', part: 'team' });
+      s += P.line({ key: 'pmx-p-toyou', from: { x: 288, y: EY + 4 }, to: { x: 288, y: EY + 12 }, style: 'toyou', part: 'you' });
+      s += P.you({ x: 288, y: EY + 28, label: 'You', sub: 'get one plan' });
+      return S.pmxPlate({ key: 'pmx-plate-bs:full', kind: 'brainstorm', mode: 'full', w: 576, h: H, fitH: H, svg: s });
+    }
+    /* compact (6.3): three bands, names only, 160 tall. Upstage: the seven chapters; stage: the helpers behind
+       their screens, the specialists side by side in the wing; house: the stage edge and You. */
+    function bands() {
+      var H = 160, HY = 78, EY = 120;
+      var s = P.line({ key: 'pmx-p-chapters', from: { x: 48, y: 14 }, to: { x: 516, y: 14 }, style: 'fixed', part: 'rounds' });
+      BS_CHAPTERS.forEach(function (c, i) { s += P.chapter({ key: 'pmx-p-ch:' + i, x: 48 + i * 78, y: 14, label: c[0], state: 'next', part: c[1] + (i === 0 ? ' job' : '') }); });
+      var centre = specs ? 230 : 288, width = specs ? 240 : 330;
+      var span = n === 1 ? 0 : Math.min(120, width / (n - 1));
+      var xs = d.rows.map(function (r, i) { return Math.round(centre + (i - (n - 1) / 2) * span); });
+      var lab = Math.max(56, span - 14);
+      for (var i = 0; i < n - 1; i++) s += P.screen({ key: 'pmx-p-scr:' + i, x: (xs[i] + xs[i + 1]) / 2, y: HY + 4, h: 22, part: 'blind' });
+      d.rows.forEach(function (r, i) {
+        s += P.seat({ key: 'pmx-p-seat:bs:' + r.rowId, x: xs[i], y: HY, role: markOf(r.persona), seat: seatOf(d, r), label: esc(fitLabel(r.role || 'Helper', lab)), part: 'team blind' });
+      });
+      if (d.wonderer) s += P.seat({ key: 'pmx-p-seat:bs:wonderer', x: d.grillMe ? 460 : 500, y: HY, role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, label: 'Wonderer', part: 'wonderer specialists' });
+      if (d.grillMe) s += P.seat({ key: 'pmx-p-seat:bs:grill', x: d.wonderer ? 530 : 500, y: HY, role: 'grill', seat: SPECIALIST_SEAT.grillMe, label: 'Grill Me', part: 'grill questions specialists' });
+      s += P.line({ key: 'pmx-p-edge', from: { x: 22, y: EY }, to: { x: specs ? 410 : 554, y: EY }, style: 'fixed', part: 'team' });
+      s += P.line({ key: 'pmx-p-toyou', from: { x: centre, y: EY + 4 }, to: { x: centre, y: EY + 10 }, style: 'toyou', part: 'you' });
+      s += P.you({ x: centre, y: EY + 22, label: 'You', sub: '' });
+      return S.pmxPlate({ key: 'pmx-plate-bs:compact', kind: 'brainstorm', mode: 'compact', w: 576, h: H, fitH: H, svg: s });
+    }
+    function row(mode) {
+      var compact = mode === 'compact', h = compact ? 104 : 72, y = compact ? 40 : 36, W = compact ? 576 : 500;
+      var x0 = compact ? 60 : 44, last = (compact ? 446 : 300) - specs * 44;
+      var step = n === 1 ? 0 : Math.min(110, (last - x0) / (n - 1)), s = '';
+      d.rows.forEach(function (r, i) {
+        var x = Math.round(x0 + i * step);
+        s += P.seat({ key: 'pmx-p-seat:bs:' + r.rowId, x: x, y: y, role: markOf(r.persona), seat: seatOf(d, r), label: compact ? esc(fitLabel(r.role || 'Helper', step - 12)) : '', part: 'team blind job' });
+        if (i < n - 1) s += P.screen({ key: 'pmx-p-scr:' + i, x: x + step / 2, y: y, h: 24, part: 'blind' });
+      });
+      if (d.wonderer) s += P.seat({ key: 'pmx-p-seat:bs:wonderer', x: last + 44, y: y, role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, part: 'wonderer specialists' });
+      if (d.grillMe) s += P.seat({ key: 'pmx-p-seat:bs:grill', x: last + 44 * specs, y: y, role: 'grill', seat: SPECIALIST_SEAT.grillMe, part: 'grill questions specialists' });
+      s += P.you({ x: W - 24, y: y, anchor: 'end', label: 'You', sub: compact ? '' : 'one plan' });
+      return S.pmxPlate({ key: 'pmx-plate-bs:' + mode, kind: 'brainstorm', mode: mode, w: W, h: h, fitH: h, svg: s });
+    }
+    var caption = n + ' helpers draft alone, debate, check the facts and vote. You get one plan.';
+    var plates = n <= 4 ? [full(), bands(), row('strip')] : n <= 6 ? [bands(), row('strip')] : [];
+    return S.pmxPlateFit({ key: 'pmx-plate-fit:bs', affects: 'team', plates: plates, caption: '<span data-pmx-part="team job">' + esc(caption) + '</span>' });
+  }
+
+  /* ---- Chat Room plate (8.3): the round table, the Moderator at its head, helpers around it, the turn policy
+     drawn as a static path, You in the house. ---- */
+  function roomPlateFit(d) {
+    var S = S_(), P = PP();
+    var n = d.rows.length, pol = d.config.turnPolicy || 'moderated';
+    function full() {
+      var H = 226, cx = 288, cy = 104, EY = 176;
+      var s = P.table({ cx: cx, cy: cy, r: 30, part: 'rounds job' });
+      s += '<g class="pmx-p-seat" data-k="pmx-p-seat:room:mod" style="--x:' + cx + 'px;--y:40px" data-pmx-part="moderator">' +
+        P.seat({ x: 0, y: 0, role: 'lead' }).replace(/^<g class="pmx-p-seat"[^>]*>/, '').replace(/<\/g>$/, '') +
+        P.label({ x: 22, y: -2, text: 'Moderator', cls: 'lab' }) + P.label({ x: 22, y: 16, text: esc(d.config.moderatorPersona || 'Product Manager'), cls: 'sub' }) + '</g>';
+      var left = Math.ceil(n / 2), right = n - left;
+      var pos = [];
+      for (var i = 0; i < left; i++) pos.push({ x: Math.round(cx - 84 - (left - 1 - i) * 104), y: cy });
+      for (var j = 0; j < right; j++) pos.push({ x: Math.round(cx + 84 + j * 104), y: cy });
+      d.rows.forEach(function (r, k) {
+        var st = pol === 'free_discussion' && k < 2 ? 'working' : 'idle';
+        s += P.seat({ key: 'pmx-p-seat:room:' + r.rowId, x: pos[k].x, y: pos[k].y, role: markOf(r.persona), seat: seatOf(d, r), state: st, label: esc(fitLabel(r.role || 'Helper', 92)), sub: esc(fitLabel(modelShort(r.requestedModelId), 92)), part: 'team' });
+      });
+      if (n && pol === 'moderated') s += P.line({ key: 'pmx-p-policy', d: 'M' + (cx - 14) + ' 52 Q ' + (pos[0].x + 10) + ' 52, ' + pos[0].x + ' ' + (cy - 18), style: 'toyou', part: 'policy' });
+      if (pol === 'round_robin') s += P.line({ key: 'pmx-p-policy', d: 'M' + (cx - 44) + ' ' + cy + ' A 44 44 0 1 1 ' + (cx - 44) + ' ' + (cy + 1), style: 'hands', draw: 'out', part: 'policy' });
+      s += P.line({ key: 'pmx-p-edge', from: { x: 22, y: EY }, to: { x: 554, y: EY }, style: 'fixed', part: 'team' });
+      s += P.line({ key: 'pmx-p-toyou', from: { x: cx, y: EY + 4 }, to: { x: cx, y: EY + 12 }, style: 'toyou', part: 'you' });
+      s += P.you({ x: cx, y: EY + 28, label: 'You', sub: 'pick what, if anything, to keep' });
+      return S.pmxPlate({ key: 'pmx-plate-room:full', kind: 'chat_room', mode: 'full', w: 576, h: H, fitH: H, svg: s });
+    }
+    function row(mode) {
+      var compact = mode === 'compact', h = compact ? 104 : 72, y = compact ? 40 : 36, W = compact ? 576 : 500;
+      var x0 = compact ? 54 : 40, last = compact ? 446 : 300;
+      var step = Math.min(110, (last - x0) / Math.max(1, n)), s = '';
+      s += P.seat({ key: 'pmx-p-seat:room:mod', x: x0, y: y, role: 'lead', label: compact ? 'Moderator' : '', part: 'moderator job' });
+      d.rows.forEach(function (r, i) { s += P.seat({ key: 'pmx-p-seat:room:' + r.rowId, x: Math.round(x0 + (i + 1) * step), y: y, role: markOf(r.persona), seat: seatOf(d, r), label: compact ? esc(fitLabel(r.role || 'Helper', step - 12)) : '', part: 'team' }); });
+      s += P.you({ x: W - 24, y: y, anchor: 'end', label: 'You', sub: compact ? '' : 'you pick what to keep' });
+      return S.pmxPlate({ key: 'pmx-plate-room:' + mode, kind: 'chat_room', mode: mode, w: W, h: h, fitH: h, svg: s });
+    }
+    var caption = n + ' helpers and the Moderator talk it through. You pick what, if anything, to keep.';
+    var plates = n <= 4 ? [full(), row('compact'), row('strip')] : n <= 6 ? [row('compact'), row('strip')] : [];
+    return S.pmxPlateFit({ key: 'pmx-plate-fit:room', affects: 'team', plates: plates, caption: '<span data-pmx-part="team job">' + esc(caption) + '</span>' });
+  }
+
+  /* ---- a preserved choice trigger for a catalog field ---- */
+  function choiceTrigger(d, field, small, ctx) {
+    var S = S_(), spec = choiceSpec(d, field, ctx);
+    var cur = optionOf(spec.options, spec.current);
+    return S.pickerButton({ action: 'collab-pick-choice', anchor: 'collab-choice-' + field, strong: esc(cur.label), small: small === false ? '' : esc(small != null ? small : (cur.small || '')), extra: 'data-field="' + esc(field) + '" data-menu-title="' + esc(spec.title) + '"' });
+  }
+  function advTrigger(d, field, ctx) {
+    var S = S_(), spec = choiceSpec(d, field, ctx);
+    var cur = optionOf(spec.options, spec.current);
+    return S.pickerButton({ action: 'collab-pick-choice', anchor: 'collab-choice-' + field, strong: esc(cur.label), extra: 'data-field="' + esc(field) + '" data-menu-title="' + esc(spec.title) + '"' });
+  }
+  function advSet(d, key, label, sentence, helper, control) { return S_().pmxSetting({ key: 'adv-' + key, label: esc(label), sentence: sentence, helper: helper ? esc(helper) : '', control: control || '' }); }
+  function sharedAdvancedRows(d, ctx) {
+    var cfg = d.config, noun = NOUN[d.kind];
+    var rows = [
+      advSet(d, 'limit', 'Time and cost limit', 'This ' + esc(KIND_LABEL[d.kind]) + ' stops after <b>' + (cfg.timeLimitMinutes || 45) + ' minutes</b> or <b>$' + Number(cfg.costLimitUsd || 6).toFixed(2) + '</b>, whichever comes first.', 'Its own limit, used instead of your general run limit. Everything done so far is kept.', advTrigger(d, 'adv-limit', ctx)),
+      advSet(d, 'tokens', 'Token limit', 'About <b>' + Number(cfg.tokenLimit || 400000).toLocaleString('en-US') + '</b> tokens at most.', 'Tokens measure AI use, roughly ¾ of a word each.', advTrigger(d, 'adv-tokens', ctx)),
+      advSet(d, 'visibility', 'What ' + noun + 's can see', esc(optionOf(ADV_CHOICES.visibility.options, advValue(d, 'visibility')).label) + '.', optionOf(ADV_CHOICES.visibility.options, advValue(d, 'visibility')).description, advTrigger(d, 'adv-visibility', ctx)),
+      advSet(d, 'tools', 'Tools they can use', esc(optionOf(ADV_CHOICES.tools.options, advValue(d, 'tools')).label) + '.', optionOf(ADV_CHOICES.tools.options, advValue(d, 'tools')).description, advTrigger(d, 'adv-tools', ctx)),
+      advSet(d, 'stuck', 'If a ' + noun + ' gets stuck', esc(optionOf(ADV_CHOICES.stuck.options, advValue(d, 'stuck')).label) + '.', optionOf(ADV_CHOICES.stuck.options, advValue(d, 'stuck')).description, advTrigger(d, 'adv-stuck', ctx)),
+      advSet(d, 'offline', 'If a model is offline', 'Start waits until you pick another model.', 'Nothing stands in by itself: the helper’s line says which model is offline.', ''),
+      advSet(d, 'retention', 'Keep the full record for', '<b>' + esc(optionOf(ADV_CHOICES.retention.options, advValue(d, 'retention')).label) + '</b>.', optionOf(ADV_CHOICES.retention.options, advValue(d, 'retention')).description, advTrigger(d, 'adv-retention', ctx)),
+      advSet(d, 'output', 'How it finishes', esc(optionOf(ADV_CHOICES.output.options, advValue(d, 'output')).label) + '.', optionOf(ADV_CHOICES.output.options, advValue(d, 'output')).description, advTrigger(d, 'adv-output', ctx)),
+      advSet(d, 'permissions', 'Permissions', 'Helpers can do what this chat can: ' + esc((ctx && ctx.state && ctx.state.mode) || 'Agent') + ', asking before commands.', 'This isn’t a setting.', '')
+    ];
+    return rows;
+  }
+  function kindAdvancedRows(d, ctx) {
+    function pickRow(name, label) { var o = optionOf(ADV_CHOICES[name].options, advValue(d, name)); return advSet(d, name, label, esc(o.label) + (/[.!?]$/.test(o.label) ? '' : '.'), o.description, advTrigger(d, 'adv-' + name, ctx)); }
+    if (d.kind === 'crew') return [pickRow('notes', 'Shared notes')];
+    if (d.kind === 'chat_room') return [pickRow('modStyle', 'Moderator style'), pickRow('mentions', 'Mentions and replies'), pickRow('stop', 'When to stop'), pickRow('summaryStyle', 'Summary style')];
     if (d.kind === 'brainstorm') {
-      return S.grid2(S.field('Debate rounds','<input type="number" min="1" max="4" data-collab-input="cfg-debateRounds" value="' + esc(d.config.debateRounds) + '">') +
-        configChoice(ctx,d,'externalResearch','Research')) +
-        '<p class="collab-qmax">' + (d.grillMe ? 'Maximum questions: ' + (d.config.questionLimit + d.config.grillExtension) + ' (' + d.config.questionLimit + ' + Grill Me ' + d.config.grillExtension + ')' : 'Maximum questions: ' + d.config.questionLimit) + '</p>';
+      var PK = window.PM56_PICKERS;
+      return [advSet(d, 'synthesis', 'Who writes the plan', '<b>' + esc(modelName(d.config.synthesisModelId)) + '</b> writes the plan from the winning option.', 'Disagreements stay in the plan, word for word.', PK.modelButton('collab-pick-model', 'collab-model-synthesis', d.config.synthesisModelId, 'data-row="synthesis"')),
+        pickRow('provisioning', 'Installing research tools'), pickRow('voting', 'Voting'),
+        advSet(d, 'independent', 'Independent drafts first', 'Always on: every helper drafts alone before seeing the others.', 'This isn’t a setting.', ''),
+        pickRow('dissent', 'Keep dissent')];
     }
-    if (d.kind === 'review') {
-      return S.grid2(configChoice(ctx,d,'strategy','Review approach') +
-        S.field('Reviewers','<input type="number" min="1" max="8" data-collab-input="cfg-reviewerCount" value="' + esc(d.rows.length) + '" disabled title="Add or remove reviewer rows below to change this count.">')) +
-        '<label class="mdl-check collab-checkbox-row"><input type="checkbox" checked disabled><span>Independent first pass <small>Always on</small></span></label>' +
-        '<label class="mdl-check collab-checkbox-row"><input type="checkbox" disabled><span>Auto-repair <small>Off · review only</small></span></label>';
+    if (d.kind === 'review') return [pickRow('compare', 'Who compares the notes'), pickRow('format', 'Report format'), pickRow('cite', 'Evidence they must cite'), pickRow('dissent', 'Keep dissent')];
+    return [];
+  }
+  /* A1-53 / 8.15: the Technical details line names the command the primary would send */
+  function commandOf(d) {
+    if (d.autoMode) return 'cmd.chat.crew_auto.set';
+    if (d.buildWithCrew) return 'cmd.chat.plan.build_with_crew';
+    if (d.scheduleIntent) return 'no command: it writes the Build At draft (cmd.chat.plan.schedule_build commits it)';
+    if (d.reconfigureRunId) return 'cmd.collaboration.reconfigure';
+    return 'cmd.collaboration.start';
+  }
+  function technicalRow(d) {
+    var extra = d.buildWithCrew && d.boundPlanId ? ' Plan ' + esc(d.boundPlanId) + ' · version ' + esc(d.boundPlanVersion) + ' · fingerprint ' + esc(planFingerprint(d)) + '.' : '';
+    return advSet(d, 'technical', 'Technical details', 'Start sends <code>' + esc(commandOf(d)) + '</code>.' + extra, 'What the product would send. This preview changes only its own records.', '');
+  }
+  function planFingerprint(d) { var P = window.PM56_PLANS, h = P && P.hash ? P.hash(d.boundPlanId) : ''; return String(h || cfgFingerprint(d.config, [])).replace(/^[a-z]+:/, '').slice(0, 8); }
+
+  function specialistShelf(ctx, d) {
+    var S = S_(), PK = window.PM56_PICKERS;
+    var reason = d.autoMode ? 'Crew Auto teams can’t include specialists.' : d.scheduleIntent ? 'Scheduled builds can’t use specialists: they run while you’re away.' : '';
+    var rec = isRecordedDraft(d);
+    var routes = d.specialistRoutes || SPECIALIST_DEFAULTS;
+    function item(key, name, helper, role) {
+      var on = !!d[key];
+      var state = reason ? 'disabled' : (rec && !on) ? 'disabled' : on ? 'on' : 'off';
+      return { key: 'pmx-spec-' + key, name: name, helper: helper, state: state, reason: reason || (rec ? 'This recorded example uses its own team.' : ''),
+        affects: (key === 'wonderer' ? 'wonderer' : 'grill') + ' specialists',
+        mark: S.pmxMark({ role: role, seat: SPECIALIST_SEAT[key], size: 24, state: on ? 'idle' : 'optional' }),
+        input: { attrs: 'data-collab-input="' + key + '"' },
+        control: PK.modelButton('collab-pick-model', 'collab-model-spec-' + key, (routes[key] || SPECIALIST_DEFAULTS[key]).modelId, 'data-specialist="' + key + '"') };
     }
-    return S.grid2(configChoice(ctx,d,'turnPolicy','Conversation flow') +
-      S.field('Max rounds','<input type="number" min="1" max="20" data-collab-input="cfg-maxRounds" value="' + esc(d.config.maxRounds) + '">'));
+    var grillHelp = d.kind === 'brainstorm' ? 'Asks you the key decisions first. Allows 25 more questions.' : 'Asks you the key decisions first, with suggested answers.';
+    /* J-2 / 6.3: the canon helper ("Extra helpers that join the team. They never replace one.") rides in the
+       title's hover card and a short meta, so the side column fits the 88 px hero at 1440 x 900 */
+    return S.pmxShelf({ key: 'q-specialists', n: d.autoMode ? null : 4,
+      title: '<span data-hover-key="collab-specialists" data-hover-tip="Extra helpers that join the ' + (d.kind === 'crew' ? 'Crew' : d.kind === 'chat_room' ? 'room' : 'team') + '. They never replace one.">Add specialists</span>',
+      meta: 'Optional · they never replace a helper',
+      items: [item('wonderer', 'Wonderer', 'Ideas from other fields, marked hypothesis. Doesn’t vote.', 'wonderer'), item('grillMe', 'Grill Me', grillHelp, 'grill')] });
   }
 
+  /* E-02: the project default, or with a thread id this chat's answer (its Crew Auto check overrides the default) */
+  function crewAutoOn(threadId) {
+    var def = RTC.definitions.crew, proj = !!(def.autoEnabled && def.autoConfigured);
+    if (threadId == null) return proj;
+    var o = RTC.crewAutoChat[threadId];
+    return def.autoConfigured && typeof o === 'boolean' ? o : proj;
+  }
+
+  /* the generic parts, per kind */
+  function genericParts(d, ctx) {
+    var S = S_(), PK = window.PM56_PICKERS;
+    var n = d.rows.length, lim = KIND_PARTICIPANT_LIMIT[d.kind], noun = NOUN[d.kind];
+    var recorded = isRecordedDraft(d);
+    var cfg = d.config;
+    var p = {
+      mark: S.pmxKindMark(d.autoMode ? 'crew-auto' : d.kind, 26),
+      cardTitle: true, save: !d.autoMode,
+      whoAffects: 'team',
+      rosterCols: [{ label: 'Job', helper: 'What it focuses on' }, { label: 'AI model', helper: 'Which AI, which account pays' }, { label: 'Persona', helper: 'How it works (builds, checks…)' }],
+      roster: { recipes: !!RECIPES[d.kind] },
+      shelf: true,
+      firstFrame: firstFrameOf(d),
+      primaryLabel: 'Start ' + KIND_LABEL[d.kind] + ' · <span data-k="pc:' + n + '">' + plural2(n, noun) + '</span>'
+    };
+    var rangeBad = n < lim[0] || n > lim[1];
+    var needsJob = !String(d.purpose || '').trim();
+    if (d.kind === 'crew' && !d.autoMode) {
+      var coord = optionOf(CONFIG_CHOICES.coordinator.options, cfg.coordinator), asg = optionOf(CONFIG_CHOICES.assignmentStrategy.options, cfg.assignmentStrategy);
+      var asked = clamp(cfg.parallelism || 1, 1, 8), cap = capacityOf(d), eff = Math.min(asked, cap);
+      var clamp1 = S.pmxClamp({ asked: asked, runs: cap });
+      Object.assign(p, {
+        title: 'Set up a Crew', lead: 'A small team of AIs splits your job into parts. A Coordinator hands them out and only accepts a part once its result is checked.',
+        hero: { n: 1, title: 'What should the Crew get done?', helper: 'Describe the finished result in your own words. The Coordinator turns it into parts, and everyone in the Crew reads it.', placeholder: 'e.g. Export the collection to CSV without losing quotes or order' },
+        whoTitle: 'Who’s in the Crew', whoMeta: '<span data-k="cnt:' + n + '">' + plural2(n, 'helper') + '</span> · up to 8',
+        plate: crewPlateFit(d),
+        howTitle: 'How should they work together?',
+        howHtml:
+          S.pmxCtl({ key: 'ctl-coordinator', label: 'Coordinator', helper: 'Splits the job, hands out the parts, checks and combines the results.', affects: 'lead', control: choiceTrigger(d, 'coordinator', null, ctx) }) +
+          S.pmxCtl({ key: 'ctl-assign', label: 'Who decides who does what', helper: 'How parts are handed out.', affects: 'assign', control: choiceTrigger(d, 'assignmentStrategy', false, ctx) }) +
+          S.pmxCtl({ key: 'ctl-parallel', label: 'Working at the same time', helper: 'More at once is faster but uses your limits faster.', capSay: clamp1 ? esc(clamp1.sheet) : '', affects: 'parallel',
+            control: S.pmxStepper({ key: 'step-parallel', input: { key: 'cfg-parallelism', attrs: 'data-collab-input="cfg-parallelism"' }, value: asked, min: 1, max: 8, cap: cap, unit: 'at once', affects: 'parallel' }) }),
+        promises: [
+          { key: 'pr-perm', glyph: 'lock', strong: 'Helpers can’t do more than this chat:', text: 'same tools and Skills, and it asks first.', part: 'permission' },
+          crewAutoOn(ctx && ctx.state && ctx.state.selectedThread)
+            ? { key: 'pr-auto', glyph: 'kind-crew-auto', strong: 'Crew Auto is on:', text: 'big jobs may get a Crew. <button type="button" class="text-button" data-action="collab-open-configure" data-kind="crew" data-auto="1">Settings…</button>', part: 'auto' }
+            : { key: 'pr-auto', glyph: 'not', strong: 'Crew Auto is off:', text: 'no Crew starts by itself. <button type="button" class="text-button" data-action="collab-open-configure" data-kind="crew" data-auto="1">Settings…</button>', part: 'auto' }],
+        advanced: { summary: 'This Crew stops after ' + (cfg.timeLimitMinutes || 45) + ' min or $' + Number(cfg.costLimitUsd || 6).toFixed(2) },
+        readback: [
+          { part: 'team', html: '<b>' + inkText('rb:crew:n', plural2(n, 'helper')) + '</b> work on it, ' },
+          { part: 'parallel', html: '<b>' + inkText('rb:crew:eff', eff + ' at a time') + '</b>, ' },
+          { part: 'lead', html: 'and <b>' + inkText('rb:crew:lead', coord.read || coord.label) + '</b> checks every part before it counts.' }],
+        estimate: recorded ? { recorded: true } : { minutes: [5, 15], limitUsd: cfg.costLimitUsd || 6 },
+        primaryDisabled: rangeBad || needsJob,
+        primaryReason: rangeBad ? 'Crew needs 1 to 8 helpers.' : needsJob ? 'Add a job first.' : ''
+      });
+    } else if (d.kind === 'crew' && d.autoMode) {
+      var capA = RTC.definitions.crew.autoMaxMembers || 4;
+      var askedA = clamp(cfg.parallelism || 1, 1, 8), maxA = Math.max(1, Math.min(4, n));
+      var cx = optionOf(CONFIG_CHOICES.autoComplexity.options, cfg.autoComplexity), mi = optionOf(CONFIG_CHOICES.autoMinIndependent.options, String(cfg.autoMinIndependent || '2'));
+      Object.assign(p, {
+        title: 'Crew Auto', lead: 'Nothing starts now. This sets when Puppet Master may bring in your Crew by itself, and which team it uses.',
+        hero: null, cardTitle: false, firstFrame: null, save: false,
+        main: S.pmxQuestion({ key: 'q-decide', title: 'How it would decide', helper: 'Four sample requests, judged by the rules on the right.', affects: 'auto', body: crewAutoDecide(d) }) +
+          S.pmxQuestion({ key: 'q-who', title: 'Which team?', meta: '<span data-k="cnt:' + n + '">' + plural2(n, 'helper') + '</span> · up to ' + capA + ' for Crew Auto', affects: 'team', body: rosterHtml(ctx, d, Object.assign({}, p, { roster: { recipes: false, max: 8 } })) }),
+        side:
+          S.pmxQuestion({ key: 'q-when', n: 1, title: 'When should Puppet Master call the Crew?', helper: 'Small requests always stay with one assistant.', affects: 'auto', body: choiceTrigger(d, 'autoComplexity', false, ctx) }) +
+          S.pmxQuestion({ key: 'q-split', n: 2, title: 'Only when the job splits into', helper: 'A job that can’t be split stays with one assistant.', affects: 'auto', body: choiceTrigger(d, 'autoMinIndependent', false, ctx) }) +
+          S.pmxQuestion({ key: 'q-at-once', n: 3, title: 'Working at the same time', helper: 'How many of the Crew Auto team work at once. The team itself has at most ' + capA + ' helpers, and nothing here raises that.', affects: 'parallel',
+            body: S.pmxStepper({ key: 'step-parallel', input: { key: 'cfg-parallelism', attrs: 'data-collab-input="cfg-parallelism"' }, value: Math.min(askedA, maxA), min: 1, max: maxA, unit: 'at once', affects: 'parallel' }) }) +
+          /* the specialists, disabled with their reason (8.2), sit in the side column: under "Which team?" they pushed
+             the roster's rows into a scroll at every size once J-2's 60 px rows landed */
+          specialistShelf(ctx, d) +
+          S.pmxPromises(
+            S.pmxPromise({ key: 'pr-now', glyph: 'not', strong: 'Nothing starts now.', text: 'This only sets the rules.', part: 'auto' }) +
+            S.pmxPromise({ key: 'pr-perm', glyph: 'lock', text: 'A Crew Auto team never gets more permission than this chat.', part: 'permission' }) +
+            S.pmxPromise({ key: 'pr-quiet', glyph: 'eye', text: 'If one assistant is enough, you won’t see a Crew card at all.', part: 'auto' })) +
+          crewAutoRefuseDemo(ctx),
+        readback: [
+          { part: 'auto', html: 'When a <b>' + inkText('rb:auto:cx', cx.read) + '</b> request splits into <b>' + inkText('rb:auto:mi', mi.read) + '</b> parts, ' },
+          { part: 'team', html: 'Puppet Master starts <b>this Crew</b> by itself.' }],
+        estimate: { text: crewAutoOn() ? 'Each Crew it starts has its own time and cost limit. Saving changes the rules for every chat.' : 'Each Crew it starts has its own time and cost limit. Turning it on saves these rules as your Crew Auto default.' },
+        primaryLabel: crewAutoOn() ? 'Save Crew Auto rules' : 'Turn on Crew Auto',
+        primaryDisabled: rangeBad, primaryReason: rangeBad ? 'Crew Auto needs 1 to 8 helpers.' : '',
+        advanced: null
+      });
+    } else if (d.kind === 'chat_room') {
+      var pol = optionOf(CONFIG_CHOICES.turnPolicy.options, cfg.turnPolicy), rounds = clamp(cfg.maxRounds || 5, 1, 20);
+      Object.assign(p, {
+        title: 'Set up a Chat Room', lead: 'Several AIs talk your question through with you. A Moderator keeps it on track. Nothing in your project changes, and nothing becomes a To-Do or Plan unless you pick it.',
+        hero: { n: 1, title: 'What should the room talk about?', helper: 'Ask it the way you’d ask a group of colleagues. Everyone in the room reads this.', placeholder: 'e.g. Should search have a keyboard shortcut?' },
+        whoTitle: 'Who’s in the room', whoMeta: '<span data-k="cnt:' + n + '">' + plural2(n, 'helper') + '</span> · up to 8',
+        plate: roomPlateFit(d),
+        roster: { recipes: true, pinned: moderatorRow(ctx, d) },
+        howTitle: 'How should they talk?',
+        howHtml:
+          S.pmxCtl({ key: 'ctl-policy', label: 'Who talks when', helper: 'How the conversation moves from one helper to the next.', affects: 'policy', control: choiceTrigger(d, 'turnPolicy', false, ctx) }) +
+          S.pmxCtl({ key: 'ctl-rounds', label: 'Rounds', helper: 'A round means everyone gets one turn. You can end early or add more.', affects: 'rounds',
+            control: S.pmxStepper({ key: 'step-rounds', input: { key: 'cfg-maxRounds', attrs: 'data-collab-input="cfg-maxRounds"' }, value: rounds, min: 1, max: 20, cells: false, unit: 'rounds', affects: 'rounds' }) }),
+        promises: [
+          { key: 'pr-changes', glyph: 'not', strong: 'Talking changes nothing.', text: 'You pick what, if anything, to keep.', part: 'you' },
+          { key: 'pr-read', glyph: 'lock', text: 'Helpers can read your project and the web, never change it.', part: 'permission' }],
+        advanced: { summary: 'Stops after ' + (cfg.timeLimitMinutes || 60) + ' min or $' + Number(cfg.costLimitUsd || 4).toFixed(2) + ' · ' + (advValue(d, 'mentions') === 'both' ? 'mentions allowed' : 'answers only you') },
+        readback: [
+          { part: 'team', html: '<b>' + inkText('rb:room:n', plural2(n, 'helper')) + '</b> talk it through, ' },
+          { part: 'policy', html: '<b>' + inkText('rb:room:pol', pol.read) + '</b>, ' },
+          { part: 'rounds', html: 'for up to <b>' + inkText('rb:room:r', plural2(rounds, 'round')) + '</b>. Nothing changes unless you pick it.' }],
+        estimate: recorded ? { recorded: true } : { text: 'About ' + (n * Math.min(rounds, 5)) + ' replies · usually 4–10 min · stops at $' + Number(cfg.costLimitUsd || 4).toFixed(2) + ' · an estimate, not a promise' },
+        primaryDisabled: rangeBad || needsJob,
+        primaryReason: rangeBad ? 'Chat Room needs 2 to 8 helpers.' : needsJob ? 'Add a question first.' : ''
+      });
+    } else if (d.kind === 'brainstorm') {
+      var rs = optionOf(CONFIG_CHOICES.externalResearch.options, cfg.externalResearch), dr = clamp(cfg.debateRounds || 2, 1, 4);
+      Object.assign(p, {
+        title: 'Set up a BrainStorm', lead: 'Several AIs each draft a plan without peeking at the others. They debate, check the facts and vote, and you get one plan you can build.',
+        hero: { n: 1, title: 'What should the team decide?', helper: 'This becomes the plan’s goal. Everyone reads it.', placeholder: 'e.g. How should search stay fast without uploading anything?', aside: mustHavesBlock(d) },
+        whoTitle: 'Who’s on the team', whoMeta: '<span data-k="cnt:' + n + '">' + plural2(n, 'helper') + '</span> · 2 to 8',
+        rosterCols: [{ label: 'Job', helper: 'What it looks at', hover: 'What this helper looks at. The role name is the job; everyone also reads the question above.' }, { label: 'AI model', helper: 'Which AI, which account pays' }, { label: 'Persona', helper: 'How it works (builds, checks…)' }],
+        plate: brainstormPlateFit(d),
+        howTitle: 'How should they decide?',
+        howHtml:
+          S.pmxCtl({ key: 'ctl-debate', label: '<span data-hover-key="collab-debate" data-hover-tip="Each round, every helper challenges the others’ ideas.">Rounds of debate</span>', helper: '2 rounds is usually enough.', affects: 'rounds',
+            control: S.pmxStepper({ key: 'step-debate', input: { key: 'cfg-debateRounds', attrs: 'data-collab-input="cfg-debateRounds"' }, value: dr, min: 1, max: 4, unit: 'rounds', affects: 'rounds' }) }) +
+          S.pmxCtl({ key: 'ctl-research', label: 'Research depth', affects: 'research', control: choiceTrigger(d, 'externalResearch', false, ctx) }) +
+          qmaxBlock(d),
+        promises: [
+          { key: 'pr-built', glyph: 'not', strong: 'Nothing gets built.', text: 'You get one plan to review first.', part: 'you' },
+          { key: 'pr-dissent', glyph: 'check', text: 'Disagreements are kept word for word in the plan.', part: 'team' },
+          { key: 'pr-rules', glyph: 'lock', strong: 'Rules beat votes:', text: 'breaking a must-have rules an option out.', part: 'rules' }],
+        advanced: { summary: 'Stops after ' + (cfg.timeLimitMinutes || 90) + ' min or $' + Number(cfg.costLimitUsd || 14).toFixed(2) + ' · dissent kept' },
+        readback: [
+          { part: 'team', html: '<b>' + inkText('rb:bs:n', plural2(n, 'helper')) + '</b> each draft a plan alone, ' },
+          { part: 'rounds', html: 'debate for <b>' + inkText('rb:bs:r', plural2(dr, 'round')) + '</b>, ' },
+          { part: 'research', html: 'check the facts <b>' + inkText('rb:bs:rs', rs.read) + '</b>, then vote. You get <b>one plan</b>.' }],
+        estimate: recorded ? { recorded: true } : { text: 'About 10–40 min plus your answers · stops at $' + Number(cfg.costLimitUsd || 14).toFixed(2) + ' · an estimate, not a promise' },
+        primaryDisabled: rangeBad || needsJob,
+        primaryReason: rangeBad ? 'BrainStorm needs 2 to 8 helpers.' : needsJob ? 'Add a question first.' : ''
+      });
+    } else if (d.kind === 'review') {
+      var single = d.config.strategy === 'single_agent', tgt = targetOf(d.reviewTargetChoice);
+      var strat = optionOf(CONFIG_CHOICES.strategy.options, cfg.strategy);
+      Object.assign(p, {
+        title: d.rerunOf ? 'Run another Review' : 'Set up a Review', lead: 'Fresh AI reviewers check the work and list problems. They never change anything; you decide what to fix.',
+        hero: { n: 1, title: 'What should they review?', helper: 'We take a snapshot when you press Start. Every reviewer sees that exact version, even if you keep working.', placeholder: 'Anything specific? e.g. Does search still handle padded queries?',
+          before: '<div class="pmx-collab-target" data-pmx-affects="target">' + S.pickerButton({ action: 'collab-pick-choice', anchor: 'collab-choice-target', strong: esc(tgt.label), small: esc(targetSmall(ctx, tgt.value)), extra: 'data-field="target" data-menu-title="What to review"' }) + '</div>' },
+        whoTitle: 'Who reviews', whoMeta: '<span data-k="cnt:' + n + '">' + plural2(n, 'reviewer') + '</span> · up to 8', whoAffects: 'count',
+        rosterCols: [{ label: 'Looks for', helper: 'What it checks' }, { label: 'AI model', helper: 'Different models notice different things' }, { label: 'Persona', helper: 'How it works (checks, doubts…)' }],
+        roster: { recipes: true, addLabel: 'Add a reviewer' },
+        plate: reviewPlateFit(d, ctx),
+        shelf: null,
+        howN: 3, howTitle: '<span data-hover-key="collab-focus" data-hover-tip="Each focus goes into a reviewer’s job.">What should they look for?</span>', howAffects: 'focus',
+        howHtml: reviewFocusBlock(d),
+        sideExtra: S.pmxQuestion({ key: 'q-count', n: 4, title: 'How many reviewers?', helper: 'Set it to 1 for a Single Agent review.', affects: 'count',
+          body: '<div class="pmx-collab-count">' + S.pmxStepper({ key: 'step-reviewers', input: { key: 'cfg-reviewerCount', attrs: 'data-collab-input="cfg-reviewerCount"' }, value: n, min: 1, max: 8, cells: false, unit: n === 1 ? 'reviewer' : 'reviewers', affects: 'count' }) +
+            S.pickerButton({ action: 'collab-pick-choice', anchor: 'collab-choice-strategy', strong: esc(strat.label), small: esc(strat.small), extra: 'data-field="strategy" data-menu-title="Review approach"' }) + '</div>' }),
+        promises: [
+          single ? { key: 'pr-blind', glyph: 'eye-off', strong: 'A single pass:', text: 'one reviewer, so nothing is double-checked.', part: 'blind' }
+            : { key: 'pr-blind', glyph: 'eye-off', strong: 'They check alone first:', text: 'no one sees another’s notes early.', part: 'blind' },
+          { key: 'pr-ro', glyph: 'lock', strong: 'Review never changes your files.', text: 'You decide what to fix.', harness: '<label class="collab-checkbox-row"><input type="checkbox" disabled> Auto-repair: permanently off. Review never changes your files</label>' },
+          { key: 'pr-fresh', glyph: 'check', strong: 'Fresh eyes:', text: 'reviewers don’t see how the work was made.' }],
+        advanced: { summary: 'Stops after ' + (cfg.timeLimitMinutes || 30) + ' min or $' + Number(cfg.costLimitUsd || 5).toFixed(2) + ' · file and line cited' },
+        readback: single
+          ? [{ part: 'count', html: '<b>' + inkText('rb:rev:n', '1 reviewer') + '</b> reads a locked snapshot of ' }, { part: 'target', html: '<b>' + inkText('rb:rev:t', tgt.read) + '</b> in a single pass. <b>Nothing is changed.</b>' }]
+          : [{ part: 'count', html: '<b>' + inkText('rb:rev:n', plural2(n, 'reviewer')) + '</b> read a locked snapshot of ' }, { part: 'target', html: '<b>' + inkText('rb:rev:t', tgt.read) + '</b> ' }, { part: 'blind', html: 'on their own, then compare notes. <b>Nothing is changed.</b>' }],
+        estimate: recorded ? { recorded: true } : { text: single ? 'Usually under a minute · stops at $' + Number(cfg.costLimitUsd || 5).toFixed(2) + ' · an estimate, not a promise' : 'About 3–8 min · stops at $' + Number(cfg.costLimitUsd || 5).toFixed(2) + ' · an estimate, not a promise' },
+        primaryDisabled: rangeBad, primaryReason: rangeBad ? 'Review needs 1 to 8 reviewers.' : ''
+      });
+      if (d.rerunOf) { var old = findRun(d.rerunOf), lt = old && lastTimeOf(old); if (lt) p.lead += ' Last time: ' + esc(lt) + '.'; }
+    }
+    /* modes: reconfigure, a finished run, scheduled, Build With Crew (8.1, G-28, 9.2) */
+    if (!d.autoMode && (d.reconfigureRunId || d.rerunOf)) {
+      var ended = !d.reconfigureRunId;
+      if (!ended || d.kind !== 'review') p.title = ended ? 'Run this ' + KIND_LABEL[d.kind] + ' again' : 'Change this ' + KIND_LABEL[d.kind];
+      if (ended && d.kind !== 'review') p.lead = 'Starts a fresh run; this one stays as it is.';
+      if (!ended || d.kind !== 'review') p.primaryLabel = ended ? 'Run again with changes' : 'Save changes';
+    }
+    if (d.scheduleIntent) {
+      var plan = scheduledPlan(d);
+      if (!rangeBad) { p.primaryDisabled = false; p.primaryReason = ''; }
+      p.title = 'Choose the Crew for this build';
+      p.lead = 'Building <b>' + esc(plan ? plan.title : 'this plan') + '</b>' + (plan && plan.version ? ' (version ' + esc(plan.version) + ')' : '') + '. To change the plan, stop the Crew first.';
+      p.primaryLabel = 'Use this Crew for the build';
+      p.save = true;
+    }
+    if (d.buildWithCrew) {
+      var bp = window.PM56_PLANS && window.PM56_PLANS.get ? window.PM56_PLANS.get(d.boundPlanId) : null;
+      p.title = 'Build this plan with a Crew';
+      p.lead = 'Building <b>' + esc(bp ? bp.title : d.boundPlanId) + '</b> (version ' + esc(d.boundPlanVersion) + ') now. To change the plan, stop the Crew first.';
+      if (p.hero) { p.hero.readOnly = true; p.hero.helper = 'From the plan. The Crew reads it; to change it, revise the plan.'; }
+    }
+    if (p.advanced) p.advanced.rows = sharedAdvancedRows(d, ctx).concat(kindAdvancedRows(d, ctx)).concat([technicalRow(d)]).join('');
+    return p;
+  }
+  function scheduledPlan(d) {
+    var P = window.PM56_PLANS, id = d.scheduleIntent && d.scheduleIntent.expected && d.scheduleIntent.expected.plan_id;
+    if (!id && window.PM56_SCHED && window.PM56_SCHED.currentCrewTarget) id = window.PM56_SCHED.currentCrewTarget();
+    return P && P.get && id ? P.get(id) : null;
+  }
+  function moderatorRow(ctx, d) {
+    var S = S_(), PK = window.PM56_PICKERS;
+    return S.pmxRosterRow({ key: 'collab-modrow', cls: 'pmx-collab-modrow', attrs: 'data-row="moderator"',
+      mark: S.pmxMark({ role: 'lead', size: 24 }),
+      job: { attrs: 'aria-label="Job" data-row="moderator" data-hover-key="collab-moderator" data-hover-tip="The Moderator picks who speaks next and sums up each round."', value: 'Moderator', readonly: true },
+      model: PK.modelButton('collab-pick-model', 'collab-model-moderator', d.config.moderatorModelId || 'sonnet46', 'data-row="moderator"'),
+      persona: PK.personaButton('collab-pick-persona', 'collab-persona-moderator', d.config.moderatorPersona || 'Product Manager', 'data-row="moderator"'),
+      actions: [] });
+  }
+  /* BrainStorm's question budget (8.4): the exact .collab-qmax node (a harness hook, IMPACT A2-19), a 20-tick
+     meter with 25 ghost ticks under Grill Me, and the helper as its sibling */
+  function qmaxBlock(d) {
+    var base = d.config.questionLimit || 20, ext = d.config.grillExtension || 25;
+    var text = d.grillMe ? 'Maximum questions: ' + (base + ext) + ' (' + base + ' + Grill Me ' + ext + ')' : 'Maximum questions: ' + base;
+    var ticks = '';
+    for (var i = 0; i < base; i++) ticks += '<i data-on="1"></i>';
+    if (d.grillMe) for (var j = 0; j < ext; j++) ticks += '<i data-on="0"></i>';
+    return '<div class="pmx-collab-qmax" data-pmx-affects="questions grill">' +
+      '<span class="pmx-ctl-label" data-hover-key="collab-qmax-help" data-hover-tip="The most questions the team may ask you, shared by everyone. It’s a limit, not a target: most runs ask far fewer, and anything research can settle doesn’t count.">Questions for you</span>' +
+      '<span class="pmx-collab-qval">' + (d.grillMe ? 'Up to ' + (base + ext) + ' · ' + base + ' + Grill Me ' + ext : 'Up to ' + base) + '</span>' +
+      /* IMPACT A2-19: the exact legacy text stays for the harnesses, never painted */
+      '<p class="collab-qmax" data-k="collab-qmax" data-pmx-harness>' + esc(text) + '</p>' +
+      '<span class="pmx-collab-meter" aria-hidden="true">' + ticks + '</span></div>';
+  }
+  /* 8.0: the hero's aside holds BrainStorm's must-haves (the user field draft.mustHaves, IMPACT A1-01): one rule per
+     line in a one-line field that scrolls inside itself; the helper rides in the label's hover card and the
+     "Rules beat votes" promise says what a rule does */
+  function mustHavesBlock(d) {
+    return '<label class="pmx-collab-must" data-pmx-affects="rules"><span class="pmx-ctl-label" data-hover-key="collab-must" data-hover-tip="Anything non-negotiable? One rule per line. Rules beat votes.">Must-haves</span>' +
+      '<textarea rows="1" data-collab-input="mustHaves" aria-label="Must-haves, optional" placeholder="e.g. No uploads">' + esc(d.mustHaves || '') + '</textarea></label>';
+  }
+  var FOCUS = [['bugs', 'Bugs', 'Wrong results, crashes'], ['security', 'Security', 'Leaks, unsafe input'], ['speed', 'Speed', 'Slow paths, wasted work'], ['read', 'Easy to read', 'Confusing or tangled code'], ['tests', 'Tests', 'Missing or weak tests'], ['any', 'Anything', 'Whatever looks wrong']];
+  var GIVE = [['plan', 'The plan'], ['changes', 'The changes'], ['tests', 'Test results'], ['rules', 'Your rules']];
+  function reviewFocusBlock(d) {
+    var S = S_(), f = d.reviewFocus || {}, give = d.config.alsoGive || {};
+    return '<div class="pmx-collab-focus">' + FOCUS.map(function (x) { return S.pmxCheck({ key: 'focus-' + x[0], attrs: 'data-collab-input="focus-' + x[0] + '"', checked: !!f[x[0]], label: x[1], helper: x[2] }); }).join('') + '</div>' +
+      '<div class="pmx-collab-give"><span class="pmx-ctl-label">Also give them</span>' +
+      S.pmxWords({ key: 'give', action: 'collab-review-give', label: 'Also give them', items: GIVE.map(function (g) { return { value: g[0], label: g[1], on: !!give[g[0]], attrs: g[0] === 'rules' ? 'data-hover-key="collab-give-rules" data-hover-tip="Your rules = the rules you taught Puppet Master."' : '' }; }) }) + '</div>';
+  }
+  /* Crew Auto's "How it would decide" (8.2): four sample requests judged by the draft's rules. CREW's own
+     evaluation replaces this list through PM56_CREW.sheetParts (8.2: "re-evaluated through PM56_CREW.evaluate");
+     COLLAB's fallback applies the same two rules (size, and parts that can run at once) without calling it while
+     PM56_CREW.evaluate has no dry run: today it admits a Crew when Crew Auto is on, and a settings sheet must start nothing. */
+  var AUTO_SAMPLES = [
+    { text: 'Fix the typo in the README', size: 'low', parts: 1, small: 'small request' },
+    { text: 'Add a sort menu to the collection page', size: 'medium', parts: 2, small: 'it’s a medium job' },
+    { text: 'Add CSV export with tests and a docs note', size: 'high', parts: 3, small: 'big job that splits into 3 parts' },
+    { text: 'Rename the collection table, carefully', size: 'high', parts: 1, small: 'this can’t be split up' }];
+  /* When CREW declares a side-effect-free dry run (PM56_CREW.evaluate.dryRun === true), every sample goes through
+     PM56_CREW.evaluate(request, { dryRun: true, policy: { rows, config } }) and its { admitted, reason } decides
+     the verdict; the reason keys are crew-protocol's (complexity_below_threshold, insufficient_independent_work). */
+  function crewDryRun(d, s, i) {
+    var CR = window.PM56_CREW;
+    if (!CR || typeof CR.evaluate !== 'function' || CR.evaluate.dryRun !== true) return null;
+    try {
+      var r = CR.evaluate({ id: 'crew-auto-sample-' + i, threadId: 'crew-auto-sheet', explicitSingle: false, complexity: s.size, memberCount: d.rows.length,
+        input: { label: s.text, objective: s.text, independentParts: s.parts, capacity: { maxMembers: d.rows.length } } },
+        { dryRun: true, policy: { rows: d.rows, config: d.config } });
+      return r && r.ok !== false ? r : null;
+    } catch (e) { return null; }
+  }
+  function crewAutoDecide(d) {
+    var S = S_(), need = d.config.autoComplexity === 'medium' ? 2 : 3, min = Number(d.config.autoMinIndependent || 2);
+    var rank = { low: 1, medium: 2, high: 3 };
+    return '<ul class="pmx-collab-decide">' + AUTO_SAMPLES.map(function (s, i) {
+      var dry = crewDryRun(d, s, i);
+      var sizeOk = dry ? dry.reason !== 'complexity_below_threshold' : rank[s.size] >= need;
+      var split = dry ? dry.reason !== 'insufficient_independent_work' : s.parts >= min;
+      var crew = dry ? !!dry.admitted : sizeOk && split;
+      var why = crew ? 'Crew brought in: ' + s.small + '.' : 'One assistant is enough: ' + (!sizeOk ? (s.size === 'low' ? 'small request' : 'it’s a medium job') : s.parts < 2 ? 'this can’t be split up' : 'it splits into only ' + s.parts + ' parts') + '.';
+      return '<li data-k="decide:' + i + '" data-verdict="' + (crew ? 'crew' : 'one') + '">' + S.pmxGlyph(crew ? 'check' : 'minus', 14) +
+        '<span><span class="pmx-collab-decide-q">“' + esc(s.text) + '”</span><span class="pmx-help">' + inkText('decide:' + i, why) + '</span></span></li>';
+    }).join('') + '</ul>';
+  }
+  /* The demo-only refuse control (8.2 last bullet): a quiet recorded-example line while the Crew demo is active */
+  function crewAutoRefuseDemo(ctx) {
+    var D5 = window.PM56_CREW_DEMOS, snap = D5 && D5.snapshot ? D5.snapshot() : null;
+    if (!snap) return '';
+    return '<p class="pmx-collab-demo-line" data-k="crew-auto-refuse-demo">' + S_().pmxGlyph('play-ring', 14) + '<span>Recorded example: ' +
+      '<button type="button" class="text-button" data-action="collab-crew-auto-refuse-demo">try a request Crew Auto would refuse</button></span></p>';
+  }
+
+  /* =====================================================================
+     14b. THE FRAME: parts -> pmxSheet
+     ===================================================================== */
+  function kindModule(kind) {
+    return kind === 'crew' ? window.PM56_CREW : kind === 'review' ? window.PM56_REVIEW : kind === 'brainstorm' ? window.PM56_BRAINSTORM : kind === 'chat_room' ? window.PM56_ROOM : null;
+  }
+  /* KIND INTERFACE (step 1): PM56_<KIND>.sheetParts(draft, ctx, generic) returns any subset of the generic parts;
+     every field it returns replaces COLLAB's, every field it leaves undefined keeps COLLAB's. */
+  function sheetPartsFor(d, ctx) {
+    var gen = genericParts(d, ctx);
+    var K = kindModule(d.kind);
+    var own = K && typeof K.sheetParts === 'function' ? K.sheetParts(d, ctx, gen) : null;
+    if (!own) return gen;
+    var out = Object.assign({}, gen);
+    Object.keys(own).forEach(function (k) { if (own[k] !== undefined) out[k] = own[k]; });
+    return out;
+  }
+  function refusalOf(d) {
+    var f = d.lastFailure; if (!f) return null;
+    var S = S_();
+    var helper = f.helper || (d.rows.filter(function (r) { return r.rowId === f.rowId; })[0] || {}).role || '';
+    var t = S.pmxRefusalText(f.error, { helper: helper, kind: KIND_LABEL[d.kind], version: f.version, over: f.over }) || null;
+    var fix = f.rowId && t && t.fix === 'Fix' ? { action: 'collab-refusal-fix', attrs: 'data-row="' + esc(f.rowId) + '"', label: 'Fix' } : null;
+    return S.pmxRefusal({ code: f.error, strong: t ? t.strong || 'Can’t start yet.' : 'Can’t start yet.', text: t ? t.text : esc(f.message || 'Nothing was started. Your setup is unchanged.'), fix: fix });
+  }
+  function heroHtml(ctx, d, p) {
+    var S = S_();
+    if (!p.hero) return '';
+    var h = p.hero;
+    var ff = p.firstFrame;
+    /* the tray is 82 px tall: the scale fits the frame's width (242 / card width, R-02) AND its height, so a top frame
+       whose sentence wraps (a 362 px card at 1280 x 800) is never cut at the tray edge; the frame keeps the real card
+       width (--pmx-preview-w), so what flies into the chat is what the tray showed */
+    var pvW = UI.previewW || Math.round(242 / (UI.sheetScale || 0.58)), pvH = Math.max(120, UI.previewH || 120);
+    var scale = Math.min(UI.sheetScale || 0.58, 78 / pvH);
+    var preview = ff ? '<div class="pmx-collab-pv" style="--pmx-preview-w:' + pvW + 'px;--collab-pv-h:' + pvH + 'px">' + S.pmxPreview({ key: 'pmx-preview', scale: Math.round(scale * 1000) / 1000, cardHtml: previewCardHtml(d, ff) }) + '</div>' : '';
+    var titleIn = p.cardTitle === false ? '' :
+      '<span data-hover-key="collab-card-title" data-hover-tip="Shown on the card in your chat.">Card title</span>' +
+      '<input type="text" data-collab-input="name" data-pmx-source="name" aria-label="Card title" value="' + esc(d.nameEdited ? d.name : deriveCardTitle(d.purpose)) + '" placeholder="Shown on the card">';
+    var attrs = 'data-collab-input="purpose"' + (h.fieldAttrs ? ' ' + h.fieldAttrs : '') + (h.readOnly ? ' readonly' : '');
+    var html = S.pmxHero({ key: 'pmx-hero', n: h.n, title: esc(h.title), helper: esc(h.helper), headAside: titleIn, cls: h.before ? 'pmx-collab-hero--before' : '',
+      field: { tag: 'textarea', attrs: attrs, value: d.purpose || '', placeholder: h.placeholder || '' }, preview: preview, aside: h.aside || '' });
+    if (h.before) html = html.replace('<div class="pmx-hero-box">', h.before + '<div class="pmx-hero-box">');
+    return html;
+  }
   function renderConfigureModal(ctx) {
     var d = RTC.draft; if (!d) return '';
     normalizeReview(d);
-    var S = window.PM56_SHELL;
-    var limits = KIND_PARTICIPANT_LIMIT[d.kind];
-    var supportsAdditive = d.kind === 'crew' || d.kind === 'brainstorm' || d.kind === 'chat_room';
-    var overLimit = d.rows.length > limits[1] || d.rows.length < limits[0];
-    var runBody =
-      S.field('Name', '<input type="text" data-collab-input="name" value="' + esc(d.name) + '">') +
-      S.field('What should they accomplish?', '<input type="text" data-collab-input="purpose" value="' + esc(d.purpose) + '" placeholder="One line — why this run exists">') +
-      (d.kind === 'review' && d.reviewTarget ? S.note('Frozen on Start · recorded example') + S.rows([['Frozen on Start', esc(d.reviewTarget.label)], ['Access', 'Read-only · no provider calls']]) : '');
-    var participantsBody =
-      '<div class="collab-participant-editor">' + d.rows.map(function (r, i) { return draftRowHtml(ctx, r, i); }).join('') + '</div>' +
-      '<button class="text-button" data-action="collab-modal-add-participant">' + ctx.icon('plus', 12) + ' ' + (d.kind === 'review' && d.config.strategy === 'single_agent' ? 'Replace reviewer' : 'Add participant') + '</button>';
-    var howBody = kindConfigFields(ctx, d) +
-      (supportsAdditive ?
-        '<label class="mdl-check collab-checkbox-row"><input type="checkbox" data-collab-input="wonderer"' + (d.wonderer ? ' checked' : '') + '><span title="Explores adjacent leads; labels unresearched ideas as hypotheses">Wonderer</span></label>' +
-        '<label class="mdl-check collab-checkbox-row"><input type="checkbox" data-collab-input="grillMe"' + (d.grillMe ? ' checked' : '') + '><span>Grill Me' + (d.kind === 'brainstorm' ? ' — raises the question maximum by ' + d.config.grillExtension : '') + '</span></label>' : '') +
-      (d.scheduleIntent ? '<p class="schedule-caption">Scheduling freezes this roster without starting it. The local work adapter executes one bounded operation at a time; requested models are retained, not invoked.</p>' : '');
-    var body =
-      S.section({ iconHtml: ctx.icon('document', 12), label: 'Run', body: runBody }) +
-      S.section({ iconHtml: ctx.icon('users', 12), label: 'Participants', meta: d.rows.length + ' of ' + limits[1] + (overLimit ? ' · <span class="collab-limit-warn">out of range</span>' : ''), body: participantsBody }) +
-      S.section({ iconHtml: ctx.icon('settings', 12), label: 'How they work', body: howBody }) +
-      (d.kind === 'crew' && d.autoMode ? S.section({ iconHtml: ctx.icon('settings', 12), label: 'When to use a Crew', body: S.grid2(configChoice(ctx,d,'autoComplexity','Request complexity') + configChoice(ctx,d,'autoMinIndependent','Useful parallel work')) }) : '') +
-      (window.PM56_CREW_DEMOS?.guide(ctx,true)||'') + (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') + (window.PM56_BRAINSTORM_DEMOS?.guide(ctx,true)||'');
-    var refusal = d.lastFailure ? '<p class="mdl-note danger" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong> ' + esc(d.lastFailure.message) + '</p>' : '';
-    return S.dialog({
-      cls: 'collab-configure',
-      iconHtml: ctx.icon(KIND_ICON[d.kind], 15),
-      title: (d.reconfigureRunId ? 'Reconfigure ' : 'Configure ') + esc(KIND_LABEL[d.kind]),
-      sub: KIND_SUB[d.kind],
-      pill: d.autoMode ? 'Crew Auto' : '',
-      width: 760,
-      closeAction: 'collab-modal-cancel',
-      body: body,
-      foot: S.foot(refusal,
-        '<button class="soft-button" data-action="collab-modal-cancel">Cancel</button>' +
-        '<button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.scheduleIntent ? 'Use this Crew' : d.autoMode ? 'Enable Crew Auto' : d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button>')
+    var S = S_();
+    var p = sheetPartsFor(d, ctx);
+    /* E-03: an offline chosen model keeps Start disabled with its sentence, over any kind's own primary state */
+    var offline = offlineReason(d);
+    if (offline) { p.primaryDisabled = true; p.primaryReason = offline; }
+    var n = d.rows.length;
+    UI.jobEmpty = !String(d.purpose || '').trim();
+    var main = p.main != null ? p.main : S.pmxQuestion({ key: 'q-who', n: 2, title: esc(p.whoTitle), meta: p.whoMeta, affects: p.whoAffects || 'team', body: (p.plate || '') + rosterHtml(ctx, d, p) });
+    var promises = (p.promises || []).map(function (x) { return S.pmxPromise(x); }).join('');
+    /* the Crew Auto promise is the owner's E-02 statement and the sheet's only way to Crew Auto's settings (G-27): in
+       short windows (<= 820 px) the side column has no line to spare (the foundation drops it there), so it moves
+       under the roster, where the plate yields the height (collaboration.css shows exactly one of the two) */
+    var autoPr = p.main == null && !d.autoMode ? (p.promises || []).filter(function (x) { return x && x.part === 'auto'; })[0] : null;
+    if (autoPr) main += '<div class="pmx-collab-auto-short">' + S.pmxPromises(S.pmxPromise(Object.assign({}, autoPr, { key: 'pr-auto-short' }))) + '</div>';
+    var side = p.side != null ? p.side :
+      S.pmxQuestion({ key: 'q-how', n: p.howN || 3, title: p.howTitle, affects: p.howAffects || '', body: p.howHtml || '' }) +
+      (p.sideExtra || '') +
+      (p.shelf ? specialistShelf(ctx, d) : '') +
+      (promises ? S.pmxPromises(promises) : '') +
+      (p.advanced ? S.pmxAdvancedEntry({ key: 'pmx-adv', summary: esc(p.advanced.summary) }) : '');
+    var adv = ctx.state.dialog && ctx.state.dialog.pmxAdvanced && p.advanced;
+    var advancedHtml = adv ? S.pmxAdvancedPage({ key: 'pmx-adv-page', title: 'Advanced', intro: 'Every setting is written as what happens now.', rows: p.advanced.rows || '' }) : '';
+    var refusal = refusalOf(d);
+    var est = p.estimate ? S.pmxEstimate(typeof p.estimate === 'string' ? { text: esc(p.estimate) } : p.estimate) : '';
+    /* 6.4: a disabled primary prints its reason. It takes the estimate's line in the say column (the foot's own
+       reason row would push a two-line read-back through the 80 px foot; FOUNDATION REQUEST in COLLAB-NOTES) */
+    var reason = p.primaryDisabled && p.primaryReason ? '<p class="pmx-estimate collab-limit-warn">' + esc(p.primaryReason) + '</p>' : '';
+    if (reason) est = reason;
+    var removedGone = UI.removed && UI.removed.draft !== d;
+    if (removedGone) UI.removed = null;
+    var stash = UI.stash && d.autoMode ? UI.stash : null;
+    var foot = S.pmxFoot({
+      cls: 'collab-configure-foot',
+      save: p.save ? { action: 'collab-save-default', attrs: 'data-kind="' + esc(d.kind) + '"', state: UI.saved === d ? 'saved' : 'idle' } : null,
+      readback: S.pmxReadback({ key: 'pmx-readback', parts: p.readback || [] }),
+      estimate: est,
+      refusal: refusal ? refusal : '',
+      cancel: { action: 'collab-modal-cancel', label: stash ? 'Back to Crew' : 'Cancel' },
+      primary: { action: 'collab-modal-commit', label: p.primaryLabel, disabled: !!p.primaryDisabled }
+    });
+    var guide = (window.PM56_CREW_DEMOS?.guide(ctx, true) || '') + (window.PM56_REVIEW_DEMOS?.guide(ctx, true) || '') + (window.PM56_BRAINSTORM_DEMOS?.guide(ctx, true) || '');
+    var sheetKind = d.autoMode ? 'crew-auto' : d.kind;
+    if (sheetKind === 'crew-auto') UI.autoWatch = { rev: (RTC.definitions.crew.autoPolicy && RTC.definitions.crew.autoPolicy.revision) || 0, stash: !!stash };
+    return S.pmxSheet({
+      type: 'collab-configure', kind: sheetKind, size: 'wide', cls: 'collab-configure',
+      attrs: 'data-collab-kind="' + esc(d.kind) + '"' + (isRecordedDraft(d) ? ' data-recorded="1"' : ''),
+      scrimClose: 'collab-modal-cancel', closeAction: 'collab-modal-cancel', closeAttrs: 'data-close-all="1"',
+      markHtml: p.mark, title: p.title, lead: p.lead, titleText: String(p.title || '').replace(/<[^>]+>/g, ''),
+      guide: guide, hero: heroHtml(ctx, d, p), main: main, side: side,
+      advancedOpen: !!adv, advancedHtml: advancedHtml, foot: foot,
+      state: d.lastFailure ? 'refused' : ''
     });
   }
   EXT.slot('dialog', function (ctx) {
@@ -1803,154 +3327,326 @@
 
   /* Runtime-created runs (committed after boot) attach ONLY to the live
      `ctx.state.threads` clone, never to `D.threads`. `D.threads` is mutated
-     exactly once, at module load, for the four seed runs (see
-     `attachSeedCards` above) — that happens before app.js's
-     `state.threads = clone(D.threads)`. A run created after boot and later
-     cleared by `reset-all` must not leave an orphaned "run missing" card
-     permanently baked into `D.threads`; restricting this to `state.threads`
-     means `globalReset()`'s fresh clone drops it exactly like every other
-     runtime thread mutation. */
+     exactly once, at module load, for the seed runs (see `attachSeedCards`
+     above) -- that happens before app.js's `state.threads = clone(D.threads)`.
+     A run created after boot and later cleared by `reset-all` must not leave an
+     orphaned "run missing" card baked into `D.threads`. This is the one funnel
+     a new card enters a thread through (G-01). */
   function attachCardToThread(ctx, run) {
     var stThread = (ctx.state.threads || []).filter(function (t) { return t.id === run.threadId; })[0];
-    if (stThread) { if (!Array.isArray(stThread.messages)) stThread.messages = []; stThread.messages.push({ id: 'collab-card-' + run.id, role: 'system', type: 'collab-run', runId: run.id, time: run.createdAt, sentAt: run.createdAt }); }
+    if (!stThread) return;
+    /* M3 (G-01): arm the Start flight while the sheet and its preview are still in #pmOverlayRoot (the handler is
+       still running synchronously), and queue the landing to the render that creates the card. arm() sets the
+       start exit hint (the sheet ghost leaves as one object, focus goes to the composer). A run with no open sheet
+       (Crew Auto, a demo that committed itself) has no preview to fly from, so its card fades in. A refused Start
+       never reaches this function, so nothing is armed. */
+    var P = PMX_();
+    if (P && P.handoff && ctx.state.selectedThread === run.threadId) {
+      var id = run.id;
+      P.handoff.arm({});
+      UI.arriving[id] = true;
+      var landed = function () { if (!UI.arriving[id]) return; UI.arriving[id] = false; var c = EXT.ctx(); if (c && c.renderApp) c.renderApp(); };
+      P.handoff.land(id, { done: landed });
+      /* the card is never left invisible: the landing's own latest time, then this */
+      later(tok('land-max', 900) + tok('flight', 540), landed);
+    }
+    if (!Array.isArray(stThread.messages)) stThread.messages = [];
+    stThread.messages.push({ id: 'collab-card-' + run.id, role: 'system', type: 'collab-run', runId: run.id, time: run.createdAt, sentAt: run.createdAt });
   }
 
+  /* =====================================================================
+     14c. SHEET ACTIONS
+     ===================================================================== */
+  function composerText(ctx) {
+    var CS = window.PM56_COMPOSER_STATE, tid = ctx.state.selectedThread;
+    var buf = CS && CS.bufferFor ? CS.bufferFor(tid) : null;
+    var t = (buf && typeof buf.text === 'string' && buf.text) || ctx.state.composer || '';
+    return String(t).trim();
+  }
+  function clearComposerText(ctx) {
+    var CS = window.PM56_COMPOSER_STATE, tid = ctx.state.selectedThread;
+    var buf = CS && CS.bufferFor ? CS.bufferFor(tid) : null;
+    if (buf) { buf.text = ''; buf.revision = (buf.revision || 0) + 1; if (CS.touch) CS.touch(); }
+    ctx.state.composer = '';
+    if (ctx.state.drafts) ctx.state.drafts[tid] = '';
+    /* the patcher keeps a focused field's value, so the textarea is cleared too */
+    var ta = document.querySelector('textarea.composer-input'); if (ta) ta.value = '';
+  }
+  function openSheet(ctx, fresh) {
+    UI.previewW = measureCardWidth(); UI.previewH = 120;
+    UI.sheetScale = Math.round((242 / UI.previewW) * 1000) / 1000;
+    if (fresh) { ctx.closeMenu && ctx.closeMenu(); ctx.closeDialog && ctx.closeDialog(); }
+    ctx.openDialog({ type: 'collab-configure' });
+  }
   EXT.action('collab-open-configure', function (ctx, btn) {
     var kind = btn.dataset.kind;
     if (KINDS.indexOf(kind) < 0) return true;
-    if(findRun(btn.dataset.reconfigure)?.crew?.planBinding){ctx.toast('Frozen build roster','Cancel or revise the Plan before scheduling another roster. The admitted run is unchanged.');return true;}
-    openConfigureDraft(kind, btn.dataset.reconfigure || null, btn.dataset.auto === '1');
-    /* Close the wand menu first. Without this the menu stayed open BEHIND the
-       modal on all four kinds, so the dialog was not modal in practice and the
-       menu's own outside-click handling fought the dialog's. goals.js and
-       assistant-features.js already close the menu before opening a dialog;
-       this now matches. */
-    ctx.closeMenu && ctx.closeMenu();
-    ctx.closeDialog && ctx.closeDialog();
-    ctx.openDialog({ type: 'collab-configure' });
+    if (findRun(btn.dataset.reconfigure)?.crew?.planBinding) { ctx.toast('Frozen build roster', 'Cancel or revise the Plan before scheduling another roster. The admitted run is unchanged.'); return true; }
+    var auto = btn.dataset.auto === '1';
+    var cur = RTC.draft, dlg = ctx.state.dialog;
+    /* G-27: "Settings…" from an open Crew sheet stashes that draft and swaps to Crew Auto (one draft at a time) */
+    if (auto && kind === 'crew' && cur && cur.kind === 'crew' && !cur.autoMode && dlg && dlg.type === 'collab-configure') {
+      UI.stash = { draft: cur, advanced: !!dlg.pmxAdvanced };
+      openConfigureDraft('crew', null, true);
+      var P = PMX_(); if (P && P.exitHint) P.exitHint('swap');
+      ctx.state.dialog = { type: 'collab-configure' };
+      ctx.renderOverlays();
+      return true;
+    }
+    UI.stash = null;
+    openConfigureDraft(kind, btn.dataset.reconfigure || null, auto);
+    var d = RTC.draft;
+    /* a new wand draft: the saved default, and the job prefilled from the composer (8.1) */
+    if (d && !btn.dataset.reconfigure && !auto) {
+      applySaved(d, savedDefault(kind));
+      var text = composerText(ctx);
+      if (text && !d.purpose) { d.purpose = text; d.purposeFromComposer = text; }
+    }
+    openSheet(ctx, true);
     return true;
   });
-  /* MODAL-004/MODAL-012: cancel is a LOCAL view action. It discards the draft,
-     emits no domain event, and restores a held natural-language request intact
-     to the composer rather than running it with defaults. */
-  EXT.action('collab-modal-cancel', function (ctx) {
-    if(RTC.draft?.scheduleIntent){RTC.draft=null;PM56_SCHED.returnFromCrewConfiguration();return true;}
+  function restoreStash(ctx) {
+    var st = UI.stash; UI.stash = null;
+    if (!st) return false;
+    RTC.draft = st.draft;
+    var P = PMX_(); if (P && P.exitHint) P.exitHint('swap');
+    ctx.state.dialog = { type: 'collab-configure', pmxAdvanced: !!st.advanced };
+    ctx.renderOverlays();
+    return true;
+  }
+  /* MODAL-004/MODAL-012: cancel is a LOCAL view action. It discards the draft, emits no domain event, and
+     restores a held natural-language request intact to the composer. In the Crew Auto swap, Cancel and Escape
+     go back to the Crew sheet; the x and the scrim (data-close-all) close both (G-27, IMPACT A1-36). */
+  EXT.action('collab-modal-cancel', function (ctx, btn) {
+    var P = PMX_();
+    var all = !!(btn && btn.getAttribute && btn.getAttribute('data-close-all') === '1');
+    UI.removed = null; UI.autoWatch = null;
+    if (RTC.draft && RTC.draft.autoMode && UI.stash && !all) { restoreStash(ctx); return true; }
+    UI.stash = null;
+    if (RTC.draft?.scheduleIntent) { RTC.draft = null; if (P && P.exitHint) P.exitHint('swap'); PM56_SCHED.returnFromCrewConfiguration(); return true; }
     var d = RTC.draft;
     var held = d && d.heldRequest;
     RTC.draft = null;
+    if (P && P.exitHint) P.exitHint('cancel');
     ctx.closeDialog();
     if (!held) ctx.renderApp();
     if (held) {
       var CS = window.PM56_COMPOSER_STATE;
-      /* Prefer the durable hold: it returns the exact text AND attachments and
-         clears the hold in one operation, so a restored request cannot later
-         be released a second time. */
+      /* Prefer the durable hold: it returns the exact text AND attachments and clears the hold in one operation,
+         so a restored request cannot later be released a second time. The textarea reads state.composer, so
+         that is written too (the old path left the textarea empty while the buffer held the text). */
       if (CS && CS.restoreHeldRequest && CS.heldRequest && CS.heldRequest(held.threadId)) CS.restoreHeldRequest(held.threadId);
       else if (CS && CS.setBuffer) CS.setBuffer(held.threadId, held.text, held.attachments || []);
-      else if (ctx.state) ctx.state.composer = held.text;
+      if (ctx.state && (!held.threadId || held.threadId === ctx.state.selectedThread)) {
+        ctx.state.composer = held.text;
+        if (ctx.state.drafts) ctx.state.drafts[held.threadId || ctx.state.selectedThread] = held.text;
+      }
       ctx.renderApp();
       ctx.toast('BrainStorm cancelled', 'Your request was returned to the composer exactly as written. Nothing ran, and nothing ran with defaults.');
     }
     return true;
   });
+  function clearFailure(d, rowId) { if (d.lastFailure && (!rowId || !d.lastFailure.rowId || d.lastFailure.rowId === rowId)) d.lastFailure = null; }
   EXT.action('collab-modal-add-participant', function (ctx) {
     var d = RTC.draft; if (!d) return true;
-    if(d.kind==='review'){
-      if(d.config.strategy==='single_agent'){
-        d.rows=[draftRow('Reviewer',DEFAULT_ROW_MODEL[0],'Reviewer')];
-        d.config.reviewerCount=1;
-        ctx.renderOverlays();return true;
-      }
-      if(d.rows.length>=8)return true;
-    }
-    d.rows.push(draftRow((KIND_LABEL[d.kind] + ' member ' + (d.rows.length + 1)), DEFAULT_ROW_MODEL[d.rows.length % DEFAULT_ROW_MODEL.length], d.kind === 'review' ? 'Reviewer' : 'Implementer'));
-    if(d.kind==='review'){
-      d.config.reviewerCount=d.rows.length;
-      d._previousMultiRows=d.rows.slice();
-    }
-    ctx.renderOverlays(); return true;
+    var lim = KIND_PARTICIPANT_LIMIT[d.kind];
+    if (d.kind === 'review' && d.config.strategy === 'single_agent') { setReviewerCount(d, 2); ctx.renderOverlays(); return true; }
+    if (d.rows.length >= lim[1]) return true;
+    var r = suggestedRow(d);
+    d.rows.push(r);
+    if (d.kind === 'review') { d.config.reviewerCount = d.rows.length; d._previousMultiRows = d.rows.slice(); }
+    UI.removed = null; UI.saved = false;
+    ctx.renderOverlays();
+    /* focus lands in the new row's job field with the suggested text selected (M2) */
+    requestAnimationFrame(function () { var inp = document.querySelector('#pmOverlayRoot [data-collab-input="role"][data-row="' + r.rowId + '"]'); if (inp) { try { inp.focus({ preventScroll: true }); inp.select(); } catch (e) { } } });
+    return true;
   });
   EXT.action('collab-modal-remove-participant', function (ctx, btn) {
     var d = RTC.draft; if (!d) return true;
-    if(d.kind==='review'&&d.config.strategy==='single_agent')return true;
-    if(d.rows.length<=KIND_PARTICIPANT_LIMIT[d.kind][0])return true;
-    d.rows = d.rows.filter(function (r) { return r.rowId !== btn.dataset.row; });
-    if(d.kind==='review'){
-      d.config.reviewerCount=d.rows.length;
-      if(d.config.strategy==='multi_pass') d._previousMultiRows=d.rows.slice();
-    }
-    ctx.renderOverlays(); return true;
+    if (d.kind === 'review' && d.config.strategy === 'single_agent') return true;
+    if (d.rows.length <= KIND_PARTICIPANT_LIMIT[d.kind][0]) return true;
+    var i = -1;
+    d.rows.forEach(function (r, k) { if (r.rowId === btn.dataset.row) i = k; });
+    if (i < 0) return true;
+    var row = d.rows.splice(i, 1)[0];
+    if (d.kind === 'review') { d.config.reviewerCount = d.rows.length; if (d.config.strategy === 'multi_pass') d._previousMultiRows = d.rows.slice(); }
+    clearFailure(d, row.rowId);
+    /* "Removed Tester · Bring back" for 6 s (G-33) */
+    var token = { draft: d, row: row, index: i, seat: UI.seat[row.rowId] };
+    UI.removed = token; UI.saved = false;
+    setTimeout(function () { if (UI.removed === token) { UI.removed = null; var c = EXT.ctx && EXT.ctx(); if (c && RTC.draft === d) c.renderOverlays(); } }, clockMs(waitMs('undo', 6000)));
+    ctx.renderOverlays();
+    return true;
+  });
+  /* "Bring back" (G-33): draft state, never an undo command (8.15) */
+  EXT.action('collab-modal-undo-remove', function (ctx) {
+    var d = RTC.draft, u = UI.removed;
+    if (!d || !u || u.draft !== d) return true;
+    UI.removed = null;
+    if (d.rows.length >= KIND_PARTICIPANT_LIMIT[d.kind][1]) { ctx.renderOverlays(); return true; }
+    d.rows.splice(Math.min(u.index, d.rows.length), 0, u.row);
+    if (u.seat) UI.seat[u.row.rowId] = u.seat;
+    if (d.kind === 'review') { d.config.reviewerCount = d.rows.length; d._previousMultiRows = d.rows.slice(); }
+    ctx.renderOverlays();
+    return true;
   });
   EXT.action('collab-modal-duplicate-participant', function (ctx, btn) {
     var d = RTC.draft; if (!d) return true;
     var src = d.rows.filter(function (r) { return r.rowId === btn.dataset.row; })[0];
     if (src) {
-      var copy = draftRow(src.role + ' (copy)', src.requestedModelId, src.persona, 'none');
-      if(d.kind==='review'&&d.config.strategy==='single_agent'){
-        d.rows=[copy];
-        d.config.reviewerCount=1;
+      var copy = draftRow(src.role + ' 2', src.requestedModelId, src.persona, 'none');
+      copy.requestedEffort = src.requestedEffort; copy.requestedFast = src.requestedFast;
+      if (d.kind === 'review' && d.config.strategy === 'single_agent') {
+        setReviewerCount(d, 2); d.rows[1] = copy; d._previousMultiRows = d.rows.slice();
       } else {
-        if(d.kind==='review'&&d.rows.length>=8)return true;
-        d.rows.push(copy);
-        if(d.kind==='review'){
-          d.config.reviewerCount=d.rows.length;
-          if(d.config.strategy==='multi_pass') d._previousMultiRows=d.rows.slice();
-        }
+        if (d.rows.length >= KIND_PARTICIPANT_LIMIT[d.kind][1]) return true;
+        d.rows.splice(d.rows.indexOf(src) + 1, 0, copy);
+        if (d.kind === 'review') { d.config.reviewerCount = d.rows.length; if (d.config.strategy === 'multi_pass') d._previousMultiRows = d.rows.slice(); }
       }
     }
+    UI.saved = false;
     ctx.renderOverlays(); return true;
   });
+  /* Save as my default (D-3): a Settings transaction in the product (8.15); the saved state lasts 2.4 s in place */
+  EXT.action('collab-save-default', function (ctx) {
+    var d = RTC.draft; if (!d || d.autoMode) return true;
+    storeDefault(d.kind, d);
+    UI.saved = d;
+    ctx.renderOverlays();
+    setTimeout(function () { if (UI.saved === d) { UI.saved = false; var c = EXT.ctx && EXT.ctx(); if (c && RTC.draft === d) c.renderOverlays(); } }, clockMs(waitMs('saved', 2400)));
+    return true;
+  });
+  /* A refusal's [Fix] opens that row's own model picker (6.4), so the row keeps exactly one collab-pick-model */
+  EXT.action('collab-refusal-fix', function (ctx, btn) {
+    var row = btn && btn.dataset.row;
+    var trig = row && document.querySelector('#pmOverlayRoot [data-action="collab-pick-model"][data-row="' + row + '"]');
+    if (trig) { try { trig.scrollIntoView({ block: 'nearest' }); } catch (e) { } trig.click(); }
+    return true;
+  });
+  EXT.action('collab-review-give', function (ctx, btn) {
+    var d = RTC.draft; if (!d || d.kind !== 'review') return true;
+    var give = d.config.alsoGive = d.config.alsoGive || {};
+    give[btn.dataset.value] = !give[btn.dataset.value];
+    ctx.renderOverlays();
+    return true;
+  });
+  ['model', 'persona'].forEach(function (what) {
+    EXT.action('collab-pick-' + what, function (ctx, btn) {
+      var draft = RTC.draft; if (!draft) return true;
+      var spec = btn.dataset.specialist, rowId = btn.dataset.row;
+      var row = rowId ? draft.rows.filter(function (r) { return r.rowId === rowId; })[0] : null;
+      var P = window.PM56_PICKERS;
+      function guard() { return RTC.draft === draft && ['collab-configure', 'collaboration-configure'].indexOf(ctx.state.dialog?.type) >= 0; }
+      if (spec) {
+        var routes = draft.specialistRoutes = draft.specialistRoutes || JSON.parse(JSON.stringify(SPECIALIST_DEFAULTS));
+        var sr = routes[spec] = routes[spec] || JSON.parse(JSON.stringify(SPECIALIST_DEFAULTS[spec]));
+        P.openModel(btn, { model: sr.modelId, persona: sr.persona }, function (v) { if (!guard()) return; sr.modelId = v.model; ctx.renderOverlays(); });
+        return true;
+      }
+      if (rowId === 'moderator' || rowId === 'synthesis') {
+        var mk = rowId === 'moderator' ? 'moderatorModelId' : 'synthesisModelId';
+        if (what === 'model') P.openModel(btn, { model: draft.config[mk] }, function (v) { if (!guard()) return; draft.config[mk] = v.model; ctx.renderOverlays(); });
+        else P.openPersona(btn, { persona: draft.config.moderatorPersona }, function (v) { if (!guard()) return; draft.config.moderatorPersona = v.persona; ctx.renderOverlays(); });
+        return true;
+      }
+      if (!row) return true;
+      P[what === 'model' ? 'openModel' : 'openPersona'](btn, { model: row.requestedModelId, persona: row.persona, effort: row.requestedEffort, fast: row.requestedFast }, function (v) {
+        if (!guard() || draft.rows.indexOf(row) < 0) return;
+        row.requestedModelId = v.model; row.persona = v.persona; row.requestedEffort = v.effort; row.requestedFast = v.fast;
+        clearFailure(draft, row.rowId);
+        if (draft.kind === 'review') {
+          if (draft.config.strategy === 'multi_pass') draft._previousMultiRows = draft.rows.slice();
+          else if (draft._previousMultiRows && draft._previousMultiRows.length > 0 && draft.rows.length > 0 && draft.rows[0].rowId === row.rowId) draft._previousMultiRows[0] = Object.assign({}, draft._previousMultiRows[0], row);
+        }
+        ctx.renderOverlays();
+      });
+      return true;
+    });
+  });
+  /* IMPACT A2-30: one picker call contract (PM56_PMX.pick); the menu title comes from the catalog, with the
+     trigger's data-menu-title as the fallback (C.js used to read the label node) */
+  EXT.action('collab-pick-choice', function (ctx, btn) {
+    var draft = RTC.draft, field = btn.dataset.field; if (!draft) return true;
+    var spec = choiceSpec(draft, field, ctx); if (!spec) return true;
+    var P = PMX_();
+    var opts = spec.options.map(function (o) { return { value: o.value, label: o.label, description: o.description || '', disabled: !!o.disabled, reason: o.reason || '' }; });
+    var done = function (v) {
+      if (RTC.draft !== draft) return;
+      spec.set(v);
+      if (field === 'recipe') UI.removed = null;
+      ctx.renderOverlays();
+    };
+    if (P && P.pick) P.pick(btn, { title: spec.title || btn.dataset.menuTitle || '', current: spec.current, options: opts, onChange: done });
+    else window.PM56_PICKERS.openChoice(btn, spec.title || btn.dataset.menuTitle || '', spec.current, opts, done);
+    return true;
+  });
 
-  /* One value-applying function, used by BOTH listeners. It has to be in the
-     `change` path too: a browser fires input-then-change for a select, but a
-     harness (and some assistive tooling) dispatches `change` alone, and when
-     only the repaint ran the modal re-rendered from the unchanged draft and
-     silently discarded the selection. Idempotent, so running it twice is fine. */
+  /* One value-applying function, used by BOTH listeners. It has to be in the `change` path too: a harness (and some
+     assistive tooling) dispatches `change` alone. Idempotent, so running it twice is fine. */
   function applyDraftInput(t) {
     var k = t.getAttribute('data-collab-input'); if (!k) return false;
     var d = RTC.draft; if (!d) return false;
     var rowId = t.getAttribute('data-row');
-    if (rowId) {
+    if (rowId && rowId !== 'moderator') {
       var row = d.rows.filter(function (r) { return r.rowId === rowId; })[0]; if (!row) return false;
       if (k === 'role') row.role = t.value;
       else if (k === 'model') row.requestedModelId = t.value;
       else if (k === 'persona') row.persona = t.value;
       if (d.kind === 'review') {
-        if (d.config.strategy === 'multi_pass') {
-          d._previousMultiRows = d.rows.slice();
-        } else if (d._previousMultiRows && d._previousMultiRows.length > 0 && d.rows.length > 0 && d.rows[0].rowId === row.rowId) {
-          d._previousMultiRows[0] = Object.assign({}, d._previousMultiRows[0], row);
-        }
+        if (d.config.strategy === 'multi_pass') d._previousMultiRows = d.rows.slice();
+        else if (d._previousMultiRows && d._previousMultiRows.length > 0 && d.rows.length > 0 && d.rows[0].rowId === row.rowId) d._previousMultiRows[0] = Object.assign({}, d._previousMultiRows[0], row);
       }
       return true;
     }
-    if (k === 'name') d.name = t.value;
+    if (k === 'name') { d.name = t.value; d.nameEdited = !!String(t.value || '').trim(); }
     else if (k === 'purpose') d.purpose = t.value;
+    else if (k === 'mustHaves') d.mustHaves = t.value;
     else if (k === 'wonderer') d.wonderer = !!t.checked;
     else if (k === 'grillMe') d.grillMe = !!t.checked;
+    else if (k.indexOf('focus-') === 0) { d.reviewFocus = d.reviewFocus || {}; d.reviewFocus[k.slice(6)] = !!t.checked; }
+    else if (k === 'cfg-reviewerCount') { if (d.kind === 'review') setReviewerCount(d, t.value); }
     else if (k.indexOf('cfg-') === 0) {
       var field = k.slice(4);
-      var num = ['parallelism', 'debateRounds', 'maxRounds', 'reviewerCount'].indexOf(field) >= 0;
-      d.config[field] = num ? clamp(t.value, 1, 20) : t.value;normalizeReview(d);
+      var LIM = { parallelism: [1, 8], debateRounds: [1, 4], maxRounds: [1, 20] };
+      var lim = LIM[field];
+      d.config[field] = lim ? clamp(t.value, lim[0], lim[1]) : t.value;
+      if (d.autoMode && field === 'parallelism') d.config.parallelism = clamp(d.config.parallelism, 1, Math.max(1, Math.min(4, d.rows.length)));
+      normalizeReview(d);
     }
+    UI.saved = false;
     return true;
   }
-
+  /* caret-safe live words: the card title follows the job until edited, and the preview and the plate's job paper
+     update as text nodes (never a repaint per keystroke) */
+  function liveWords(d) {
+    var root = document.getElementById('pmOverlayRoot'); if (!root) return;
+    var title = cardTitleOf(d);
+    if (!d.nameEdited) {
+      var nameIn = root.querySelector('.pmx-sheet input[data-collab-input="name"]');
+      var derived = deriveCardTitle(d.purpose);
+      if (nameIn && document.activeElement !== nameIn && nameIn.value !== derived) nameIn.value = derived;
+    }
+    root.querySelectorAll('[data-collab-mirror="title"]').forEach(function (el) { if (el.textContent !== title) el.textContent = title; });
+    var jw = jobWords(d);
+    root.querySelectorAll('[data-collab-mirror="job"]').forEach(function (el) { if (el.textContent !== jw) el.textContent = jw; });
+  }
   document.addEventListener('input', function (e) {
     var t = e.target; if (!t || !t.getAttribute) return;
-    applyDraftInput(t);
+    var k = t.getAttribute('data-collab-input');
+    if (!applyDraftInput(t)) return;
+    if (k === 'purpose' || k === 'name') {
+      var d = RTC.draft; if (d) liveWords(d);
+      /* the Start button's "Add a job first." follows the job without a repaint while typing: the next change or
+         blur repaints; a transition between empty and not-empty repaints now (the caret stays: pmPatch keeps the
+         focused field) */
+      if (k === 'purpose' && d) {
+        var empty = !String(d.purpose || '').trim();
+        if (empty !== !!UI.jobEmpty) { UI.jobEmpty = empty; var c = EXT.ctx && EXT.ctx(); if (c) c.renderOverlays(); }
+      }
+    }
   });
-  /* `change` fires on commit for a select and on toggle for a checkbox, so it
-     is the caret-safe place to repaint. The `input` listener above deliberately
-     does NOT re-render: it also fires per keystroke in the role/name/purpose
-     text fields, and re-rendering mid-keystroke would fight the caret the same
-     way it did in goals.js's objective textarea.
-     Repainting here is what makes the modal HONEST while it is open: selecting
-     an unavailable model has to show its requested/effective substitution
-     immediately, and checking Grill Me has to move "Maximum questions" from 15
-     to 25 immediately. Before this the draft state was already correct but the
-     modal kept printing the pre-change figure until some other action forced a
-     re-render, so the user was reading a stale number at the moment of choice. */
+  /* `change` repaints (caret-safe): selecting an unavailable model shows its stand-in sentence at once, and
+     checking Grill Me moves "Maximum questions" from 20 to 45 at once. Focus goes back to the control used. */
   document.addEventListener('change', function (e) {
     var t = e.target; if (!t || !t.getAttribute) return;
     if (!applyDraftInput(t)) return;
@@ -1960,81 +3656,110 @@
       var key = active && active.getAttribute && active.getAttribute('data-collab-input');
       var row = active && active.getAttribute && active.getAttribute('data-row');
       ctx.renderOverlays();
-      /* Give focus back to the control the user just used, so a keyboard pass
-         through the modal is not reset by the repaint. */
       if (key) {
         var sel = '[data-collab-input="' + key + '"]' + (row ? '[data-row="' + row + '"]' : '');
-        var again = document.querySelector(sel);
-        if (again && again.focus) { try { again.focus(); } catch (err) { } }
+        var again = document.querySelector('#pmOverlayRoot ' + sel);
+        if (again && again.focus && document.activeElement !== again) { try { again.focus({ preventScroll: true }); } catch (err) { } }
       }
     }
   });
 
-  /* Typed Start preflight. `forceFailure` exists so the refusal path is
-     drivable in a concept that has no provider to fail; every other clause is
-     a real check over the draft the user configured. */
+  /* Typed Start preflight. `forceFailure` exists so the refusal path is drivable in a concept that has no provider
+     to fail; every other clause is a real check over the draft. A stand-in is allowed only when its sentence was
+     visible before Start, and the policy "none" refuses (guard A4-01). */
   function startPreflight(d) {
     normalizeReview(d);
     if (d.forceFailure)
-      return { ok:false, error:String(d.forceFailure), slot:null,
-               message:'Start was refused ('+d.forceFailure+'). Your configuration is unchanged; no run, card or participant record was created.' };
+      return { ok: false, error: String(d.forceFailure), slot: null, message: 'Start was refused (' + d.forceFailure + '). Your configuration is unchanged; no run, card or participant record was created.' };
     for (var i = 0; i < d.rows.length; i++) {
       var r = d.rows[i], m = modelById(r.requestedModelId);
       if (!m)
-        return { ok:false, error:'model_unresolved', slot:r.role,
-                 message:'“'+r.role+'” names a model this project cannot resolve. Nothing was started; pick a model or remove the slot.' };
-      if (UNAVAILABLE_DEMO[r.requestedModelId] && !fallbackModelFor(r.requestedModelId))
-        return { ok:false, error:'provider_unavailable', slot:r.role,
-                 message:'“'+r.role+'” is unavailable and no same-provider substitute is configured. Nothing was started, and no failed participant was recorded — no provider attempt was made.' };
+        return { ok: false, error: 'model_unresolved', slot: r.role, rowId: r.rowId, helper: r.role, message: '“' + r.role + '” names a model this project cannot resolve. Nothing was started; pick a model or remove the slot.' };
+      if (UNAVAILABLE_DEMO[r.requestedModelId])
+        return { ok: false, error: 'provider_unavailable', slot: r.role, rowId: r.rowId, helper: r.role, message: offlineSentence(r.requestedModelId) + ' Nothing was started.' };
     }
-    return { ok:true };
+    /* E-03: a specialist, the Moderator or the synthesis model that is offline blocks Start the same way */
+    var off = offlineReason(d);
+    if (off) return { ok: false, error: 'provider_unavailable', slot: null, message: off + ' Nothing was started.' };
+    return { ok: true };
   }
+
+  function specialistParticipant(d, key) {
+    var sr = (d.specialistRoutes && d.specialistRoutes[key]) || SPECIALIST_DEFAULTS[key];
+    return key === 'wonderer'
+      ? mkParticipant({ role: 'Wonderer', requestedModelId: sr.modelId, persona: sr.persona || 'Wonderer', additiveRoleKind: 'wonderer', required: false, status: 'waiting', current: 'Additive: explores adjacent leads. Abstains from the final vote by default.' })
+      : mkParticipant({ role: 'Grill Me', requestedModelId: sr.modelId, persona: sr.persona || 'Implementer', additiveRoleKind: 'grill_me', required: false, status: 'waiting', current: 'Additive: maps the decision frontier. No automatic vote.' });
+  }
+  function mustHaveLines(d) { return String(d.mustHaves || '').split(/\n+/).map(function (s) { return s.trim(); }).filter(Boolean); }
+  /* IMPACT A1-01: the review target comes from the user field draft.reviewTargetChoice */
+  function targetPackOf(ctx, d) {
+    var t = targetOf(d.reviewTargetChoice);
+    var basis = [ctx.state.selectedThread, t.value, targetSmall(ctx, t.value), nowIso()].join('|');
+    return { targetKind: t.kind, targetRefs: [t.label + ' · ' + targetSmall(ctx, t.value)], targetHashes: { primary: cfgFingerprint({ basis: basis }, []).slice(4) }, frozenAt: nowIso(), userConstraintRefs: [], acceptanceRefs: [] };
+  }
+  function lastTimeOf(run) {
+    var f = (run.review && run.review.findings) || [];
+    if (!f.length) return '';
+    var fix = f.filter(function (x) { return x.disposition === 'confirmed'; }).length, uns = f.filter(function (x) { return x.disposition === 'uncertain' || x.disposition === 'unsure'; }).length;
+    var T = S_().pmxTime, at = T ? T.at(run.completedAt || run.createdAt, null, { day: false }) : '';
+    return fix + ' to fix, ' + uns + ' unsure' + (at ? ' (' + at + ')' : '');
+  }
+  function focusOf(d) { var f = d.reviewFocus || {}; return FOCUS.filter(function (x) { return f[x[0]]; }).map(function (x) { return x[0]; }); }
 
   EXT.action('collab-modal-commit', function (ctx) {
     var d = RTC.draft; if (!d) return true;
-    if(d.scheduleIntent){const out=preparePlanCrew(d.scheduleIntent.expected.plan_id||window.PM56_SCHED.currentCrewTarget(),d);if(!out.ok){d.lastFailure=out;ctx.renderOverlays();return true;}
-      const used=PM56_SCHED.acceptCrewConfiguration(out.snapshot,d.scheduleIntent.expected);if(!used.ok){d.lastFailure=used;ctx.renderOverlays();return true;}RTC.draft=null;return true;}
-
+    var P = PMX_();
+    /* E-03: an offline chosen model refuses every start, scheduled ones and Crew Auto's rules included; the row
+       carries the notice and its Fix, the sheet and its values stay */
+    var offline = offlineReason(d);
+    if (offline) {
+      var offRow = d.rows.filter(function (r) { return UNAVAILABLE_DEMO[r.requestedModelId]; })[0];
+      d.lastFailure = { error: 'provider_unavailable', rowId: offRow ? offRow.rowId : null, helper: offRow ? offRow.role : '', message: offline + ' Nothing was started.' };
+      ctx.renderOverlays(); return true;
+    }
+    if (d.scheduleIntent) {
+      if (!String(d.purpose || '').trim()) { var sp = scheduledPlan(d); if (sp) d.purpose = sp.title || ''; }
+      const out = preparePlanCrew(d.scheduleIntent.expected.plan_id || window.PM56_SCHED.currentCrewTarget(), d);
+      if (!out.ok) { d.lastFailure = out; ctx.renderOverlays(); return true; }
+      const used = PM56_SCHED.acceptCrewConfiguration(out.snapshot, d.scheduleIntent.expected);
+      if (!used.ok) { d.lastFailure = used; ctx.renderOverlays(); return true; }
+      if (P && P.exitHint) P.exitHint('swap');
+      RTC.draft = null; return true;
+    }
     normalizeReview(d);
     var limits = KIND_PARTICIPANT_LIMIT[d.kind];
-    if (d.rows.length < limits[0] || d.rows.length > limits[1]) { ctx.toast('Out of range', KIND_LABEL[d.kind] + ' supports ' + limits[0] + '–' + limits[1] + ' participants.'); return true; }
-    /* Crew Auto's own modal commits a POLICY, not a run (§5.3/CREW-004): the
-       checkmark becomes reachable only after this commits, and this creates
-       no run, no card and no Usage — it stores the roster template and
-       criteria for whatever request meets them later. */
+    if (d.rows.length < limits[0] || d.rows.length > limits[1]) { ctx.renderOverlays(); return true; }
+    /* Crew Auto's own sheet commits a POLICY, not a run (5.3/CREW-004): no run, no card and no Usage.
+       crew-protocol.js claims this commit first (commitPolicy); this base path runs only without it. */
     if (d.autoMode) {
       var crewDefA = RTC.definitions.crew;
+      if (d.wonderer || d.grillMe) { d.lastFailure = { error: 'invalid_policy_roster', message: 'Crew Auto teams can’t include specialists.' }; ctx.renderOverlays(); return true; }
       crewDefA.autoConfigured = true;
       crewDefA.autoEnabled = true;
-      crewDefA.autoRosterTemplate = d.rows.map(function (r) { return { role: r.role, requestedModelId: r.requestedModelId, persona: r.persona, requestedEffort:r.requestedEffort, requestedFast:r.requestedFast }; });
-      crewDefA.autoMaxMembers = clamp(d.rows.length, 1, 8);
-      effect('settingsWrites');            /* MODAL-006/008: only HERE. */
-      RTC.draft = null;
+      crewDefA.autoRosterTemplate = d.rows.map(function (r) { return { role: r.role, requestedModelId: r.requestedModelId, persona: r.persona, requestedEffort: r.requestedEffort, requestedFast: r.requestedFast }; });
+      effect('settingsWrites');
+      RTC.draft = null; UI.autoWatch = null;
+      if (UI.stash) { restoreStash(ctx); return true; }
+      if (P && P.exitHint) P.exitHint('save');
       ctx.closeDialog();
-      ctx.renderOverlays();
-      ctx.toast('Crew Auto configured and enabled', 'Committed with a ' + crewDefA.autoRosterTemplate.length + '-member roster template and a cap of ' + crewDefA.autoMaxMembers + '. It still cannot widen authority or override an explicit single-agent selection.');
+      ctx.renderApp();
       return true;
     }
-    /* MODAL-005 / PART-021. PREFLIGHT, before anything durable exists. A
-       required slot whose model cannot be resolved is a refused START: the
-       draft keeps every value the user entered, the failure is typed, and no
-       run, card, participant record or provider attempt is created. A model
-       being unavailable at CONFIGURATION time is not a failed runtime
-       participant -- claiming one would assert a provider attempt that never
-       happened. */
+    if (d.buildWithCrew && window.PM56_PLANS && window.PM56_PLANS.get) {
+      var bp = window.PM56_PLANS.get(d.boundPlanId);
+      if (bp && bp.version != null && Number(bp.version) !== Number(d.boundPlanVersion)) { d.lastFailure = { error: 'plan_version_changed', version: bp.version, message: 'This plan changed while this was open.' }; ctx.renderOverlays(); return true; }
+    }
+    /* MODAL-005 / PART-021. PREFLIGHT, before anything durable exists: a refused START keeps every value, the
+       failure is typed, and no run, card, participant record or provider attempt is created. */
     var preflight = startPreflight(d);
-    if (!preflight.ok) {
-      d.lastFailure = preflight;                 /* shown in the modal, values kept */
-      ctx.renderOverlays();
-      ctx.toast('Start refused', preflight.message);
-      return true;
-    }
-    var coreParticipants = d.rows.map(function (r) { return mkParticipant({ role: r.role, requestedModelId: r.requestedModelId, persona: r.persona, requestedEffort:r.requestedEffort, requestedFast:r.requestedFast, status: 'waiting', current: 'Configured; waiting for the run to start.' }); });
-    /* PART-002/PART-011/WONV-007: core slots are REQUIRED by definition;
-       Wonderer and Grill Me are additive and therefore optional. An additive
-       specialist never replaces a core role. */
-    if (d.wonderer) coreParticipants.push(mkParticipant({ role: 'Wonderer', requestedModelId: 'sonnet46-personal', persona: 'Wonderer', additiveRoleKind: 'wonderer', required: false, status: 'waiting', current: 'Additive — explores adjacent leads. Abstains from the final vote by default.' }));
-    if (d.grillMe && d.kind !== 'review') coreParticipants.push(mkParticipant({ role: 'Grill Me', requestedModelId: 'haiku46', persona: 'Implementer', additiveRoleKind: 'grill_me', required: false, status: 'waiting', current: 'Additive — maps the decision frontier. No automatic vote.' }));
+    if (!preflight.ok) { d.lastFailure = preflight; ctx.renderOverlays(); return true; }
+    var recorded = isRecordedDraft(d);
+    if (!String(d.name || '').trim()) d.name = cardTitleOf(d);
+    var coreParticipants = d.rows.map(function (r) { return mkParticipant({ role: r.role, requestedModelId: r.requestedModelId, persona: r.persona, requestedEffort: r.requestedEffort, requestedFast: r.requestedFast, status: 'waiting', current: '' }); });
+    /* PART-002/PART-011/WONV-007: core slots are REQUIRED by definition; Wonderer and Grill Me are additive and
+       optional, and they join on the models the sheet showed (PART-01, IMPACT A3-02) */
+    if (d.wonderer) coreParticipants.push(specialistParticipant(d, 'wonderer'));
+    if (d.grillMe && d.kind !== 'review') coreParticipants.push(specialistParticipant(d, 'grillMe'));
 
     if (d.reconfigureRunId) {
       var run = findRun(d.reconfigureRunId);
@@ -2043,41 +3768,83 @@
         run.title = d.name; run.purpose = d.purpose;
         run.config = JSON.parse(JSON.stringify(d.config));
         run.participants = coreParticipants.map(function (p) { p.runId = run.id; return p; });
-        if (run.kind === 'brainstorm' && run.brainstorm) run.brainstorm.questionBank.grillMeEnabled = d.grillMe;
-        run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Reconfigured. Definition revision bumped to ' + run.definitionRevision + '. Prior transcript attribution is unchanged.' }));
-        ctx.toast('Reconfigured', run.title + ' is now on revision ' + run.definitionRevision + '.');
+        if (run.kind === 'brainstorm' && run.brainstorm) { if (run.brainstorm.questionBank) run.brainstorm.questionBank.grillMeEnabled = d.grillMe; run.brainstorm.mustHaves = mustHaveLines(d); }
+        run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Setup changed. Prior messages keep who said them.' }));
       }
-    } else {
-      var newRun = mkRun({
-        kind: d.kind, threadId: ctx.state.selectedThread, title: d.name, purpose: d.purpose,
-        status: 'running', config: JSON.parse(JSON.stringify(d.config)),
-        coordinator: d.kind === 'crew' ? { kind: d.config.coordinator, label: d.config.coordinator === 'parent_assistant' ? 'Parent assistant (this thread)' : 'Dedicated synthesis model' } : d.kind === 'chat_room' ? { kind: 'dedicated_moderator', label: 'Moderator' } : { kind: 'dedicated_synthesis_model', label: 'Synthesis model' },
-        participants: coreParticipants.map(function (p) { return p; })
-      });
-      newRun.participants.forEach(function (p) { p.runId = newRun.id; });
-      if (d.kind === 'crew') newRun.crew = { boundPlanId: d.boundPlanId || null, boundPlanVersion: d.boundPlanVersion || null, boundTodoIds: d.boundPlanId ? ['Bound at Crew start — see the Plan owner for the current To-Do set.'] : [], assignments: [] };
-      if (d.kind === 'review') newRun.review = { targetPack: { targetKind: 'assistant_response', targetRefs: ['latest assistant response on this thread'], targetHashes: { primary: Math.random().toString(16).slice(2, 10) }, frozenAt: nowIso(), userConstraintRefs: [], acceptanceRefs: [] }, findings: [], excludedFindings: [] };
-      if (d.kind === 'chat_room') newRun.chatRoom = { roundsSoFar: 0, turnPolicy: d.config.turnPolicy, promotions: [] };
-      if (d.kind === 'brainstorm') newRun.brainstorm = { phase: 'intake', questionBank: { baselineLimit: d.config.questionLimit, grillExtension: d.config.grillExtension, grillMeEnabled: d.grillMe, askedIds: [], resolvedIds: [], duplicateIds: [], researchRoutedIds: [] }, proposals: [], debateRounds: d.config.debateRounds, votes: [], hardConstraintViolations: [], dissent: [], wondererLeads: [], provisioning: [], synthesis: null };
-      newRun.messages.push(mkMsg(newRun, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Started from a committed configuration (revision 1). Settings defaults prefilled this modal; nothing started before you committed it.' }));
-      /* MODAL-002: the ONLY place a durable collaborative effect is counted.
-         Opening, editing and cancelling a modal reach none of these lines. */
-      effect('runs'); effect('cards'); effect('events');
-      effect('participants', newRun.participants.length);
-      if(!d.roomInput&&!d.wondererInput){effect('providerCalls', newRun.participants.length);effect('usageRecords', newRun.participants.length);}
-      RTC.runs.push(newRun);
-      if(newRun.kind==='chat_room' && d.roomInput && window.PM56_ROOM) window.PM56_ROOM.admit(newRun,d);
-      if(newRun.kind==='review' && window.PM56_REVIEW) window.PM56_REVIEW.admit(newRun,d);
-      if(newRun.kind==='brainstorm' && window.PM56_BRAINSTORM) window.PM56_BRAINSTORM.admit(newRun,d);
-      if(d.wondererInput && window.PM56_WONDERER) window.PM56_WONDERER.admit(newRun,d);
-      attachCardToThread(ctx, newRun);
-      ctx.toast(KIND_LABEL[d.kind] + ' started', newRun.title);
+      RTC.draft = null;
+      if (P && P.exitHint) P.exitHint('save');
+      ctx.closeDialog();
+      ctx.renderApp();
+      return true;
     }
+    var newRun = mkRun({
+      kind: d.kind, threadId: ctx.state.selectedThread, title: d.name, purpose: d.purpose,
+      status: 'running', config: JSON.parse(JSON.stringify(d.config)),
+      coordinator: d.kind === 'crew' ? { kind: d.config.coordinator, label: d.config.coordinator === 'parent_assistant' ? 'Parent assistant (this thread)' : 'Dedicated synthesis model' } : d.kind === 'chat_room' ? { kind: 'dedicated_moderator', label: 'Moderator', modelId: d.config.moderatorModelId || null, persona: d.config.moderatorPersona || 'Product Manager' } : { kind: 'dedicated_synthesis_model', label: 'Synthesis model' },
+      participants: coreParticipants.map(function (p) { return p; })
+    });
+    newRun.participants.forEach(function (p) { p.runId = newRun.id; });
+    if (d.rerunOf) newRun.rerunOf = d.rerunOf;
+    if (d.kind === 'crew') newRun.crew = { boundPlanId: d.boundPlanId || null, boundPlanVersion: d.boundPlanVersion || null, boundTodoIds: d.boundPlanId ? ['Bound at Crew start: see the Plan owner for the current To-Do set.'] : [], assignments: [] };
+    if (d.kind === 'review') newRun.review = { targetPack: targetPackOf(ctx, d), findings: [], excludedFindings: [], focus: focusOf(d) };
+    if (d.kind === 'chat_room') newRun.chatRoom = { roundsSoFar: 0, turnPolicy: d.config.turnPolicy, promotions: [] };
+    if (d.kind === 'brainstorm') newRun.brainstorm = { phase: 'intake', questionBank: { baselineLimit: d.config.questionLimit, grillExtension: d.config.grillExtension, grillMeEnabled: d.grillMe, askedIds: [], resolvedIds: [], duplicateIds: [], researchRoutedIds: [] }, proposals: [], debateRounds: d.config.debateRounds, votes: [], hardConstraintViolations: [], dissent: [], wondererLeads: [], provisioning: [], synthesis: null, mustHaves: mustHaveLines(d) };
+    newRun.messages.push(mkMsg(newRun, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Started with ' + plural2(coreParticipants.length, NOUN[d.kind]) + '.' }));
+    /* MODAL-002: the ONLY place a durable collaborative effect is counted. Opening, editing and cancelling a sheet
+       reach none of these lines. A wand-started run with no recording makes no provider call (it is born waiting). */
+    effect('runs'); effect('cards'); effect('events');
+    effect('participants', newRun.participants.length);
+    RTC.runs.push(newRun);
+    /* IMPACT A1-01 / A1-23: only a draft flagged recorded hands its fixture input to a protocol owner */
+    if (recorded) {
+      if (newRun.kind === 'chat_room' && d.roomInput && window.PM56_ROOM) window.PM56_ROOM.admit(newRun, d);
+      if (newRun.kind === 'review' && d.reviewTarget && window.PM56_REVIEW) window.PM56_REVIEW.admit(newRun, d);
+      if (newRun.kind === 'brainstorm' && d.brainstormInput && window.PM56_BRAINSTORM) window.PM56_BRAINSTORM.admit(newRun, d);
+    }
+    if (d.wondererInput && window.PM56_WONDERER) window.PM56_WONDERER.admit(newRun, d);
+    /* IMPACT A3-03 / D-6: provenance from the commit path, with no key on the run */
+    UI.prov[newRun.id] = recorded ? 'recorded' : 'wand';
+    if (!recorded) UI.waiting[newRun.id] = true;
+    attachCardToThread(ctx, newRun);
+    /* the job came from the composer (8.1): a Start consumes those words, so they cannot be sent again as an
+       ordinary message (Cancel keeps them); only text still identical to what the sheet took is cleared */
+    if (d.purposeFromComposer && composerText(ctx) === d.purposeFromComposer) clearComposerText(ctx);
     RTC.draft = null;
+    /* M3: attachCardToThread armed the flight and the start exit (focus goes to the composer, 6.7, IMPACT A1-36) */
     ctx.closeDialog();
     ctx.renderApp();
     return true;
   });
+
+  /* Crew Auto's commit is claimed by crew-protocol.js (commitPolicy), which closes the sheet itself. After that
+     render: a successful commit leaves with the save exit, and a Crew sheet stashed by "Settings…" comes back in
+     the same task, so the two sheets swap (G-27). */
+  function afterOverlay(ctx) {
+    var w = UI.autoWatch;
+    if (!w || RTC.draft || (ctx.state && ctx.state.dialog)) return;
+    UI.autoWatch = null;
+    var pol = RTC.definitions.crew.autoPolicy, rev = (pol && pol.revision) || 0;
+    var committed = rev > w.rev;
+    var P = PMX_();
+    if (!committed) { UI.stash = null; return; }
+    if (UI.stash) { restoreStash(ctx); return; }
+    if (P && P.exitHint) P.exitHint('save');
+  }
+  if (PMX_() && PMX_().after) PMX_().after(function (ctx, phase) { if (phase === 'overlay') { afterOverlay(ctx); fitPreview(ctx); } });
+  /* the preview's natural top-frame height (head, sentence, track) at the real card width; a frame taller than the
+     tray's 120 px design height re-renders once at the scale that fits it (heroHtml) */
+  function fitPreview(ctx) {
+    var run = document.querySelector('#pmOverlayRoot .pmx-collab-pv .pmx-preview-card > .pmx-run');
+    var trk = run && run.querySelector('.pmx-track');
+    if (!run || !trk) return;
+    var card = run.parentNode, m = /matrix\(([\d.]+)/.exec(getComputedStyle(card).transform || '');
+    var sc = m ? parseFloat(m[1]) : 0;
+    if (!(sc > 0)) return;
+    var nat = (trk.getBoundingClientRect().bottom - run.getBoundingClientRect().top) / sc + (parseFloat(getComputedStyle(run).paddingBottom) || 12);
+    var h = Math.max(120, Math.ceil(nat));
+    if (Math.abs(h - Math.max(120, UI.previewH || 120)) > 1) { UI.previewH = h; if (ctx && ctx.renderOverlays) ctx.renderOverlays(); }
+  }
+
 
   /* =====================================================================
      15. MULTI-AGENT WORKFLOWS MENU + CREW AUTO (§5.3, CREW-003/004/005) —
@@ -2092,10 +3859,14 @@
      ===================================================================== */
   EXT.slot('wandRows', function (ctx) {
     var crewDef = RTC.definitions.crew;
-    var autoChecked = !!(crewDef.autoEnabled && crewDef.autoConfigured);
+    var tid = ctx && ctx.state && ctx.state.selectedThread;
+    var autoChecked = crewAutoOn(tid);
     function row(kind, desc) {
       return '<button class="menu-item" data-action="collab-open-configure" data-kind="' + kind + '"><span class="menu-icon">' + ctx.icon(KIND_ICON[kind], 13) + '</span><span class="menu-copy"><strong>' + esc(KIND_LABEL[kind]) + '…</strong><span>' + esc(desc) + '</span></span></button>';
     }
+    /* E-02: the Crew Auto check is this chat's answer to "may the assistant call a Crew by itself?" (on by default) */
+    var autoSub = !crewDef.autoConfigured ? 'Opens its settings first'
+      : autoChecked ? 'The assistant may call a Crew when a job needs one' : 'Off in this chat: no Crew starts by itself';
     return '<div class="menu-divider" data-k="collab-div"></div>' +
       '<div class="menu-section-label">Multi-Agent Workflows</div>' +
       row('crew', 'Delegate bounded work to a coordinator and roles') +
@@ -2103,8 +3874,8 @@
       row('brainstorm', 'Deep Plan → BrainStorm: independent proposals, debate, one Plan') +
       row('review', 'Single Agent or Multi-Pass, read-only, never auto-repairs') +
       '<div class="menu-divider"></div>' +
-      '<label class="menu-item collab-auto-row" data-k="collab-auto-row"><input type="checkbox" data-action="collab-crew-auto-toggle"' + (autoChecked ? ' checked' : '') + '><span class="menu-copy"><strong>Crew Auto</strong><span>' + (crewDef.autoConfigured ? 'Configured · cap ' + crewDef.autoMaxMembers + ' · cannot widen authority' : 'Opens configuration before the check can appear') + '</span></span></label>' +
-      '<button class="menu-item" data-action="collab-open-configure" data-kind="crew" data-auto="1"><span class="menu-icon">' + ctx.icon('settings', 13) + '</span><span class="menu-copy"><strong>Manage Defaults…</strong><span>Crew Auto criteria and roster template</span></span></button>' +
+      '<label class="menu-item collab-auto-row" data-k="collab-auto-row"><input type="checkbox" data-action="collab-crew-auto-toggle"' + (autoChecked ? ' checked' : '') + '><span class="menu-copy"><strong>Crew Auto</strong><span>' + esc(autoSub) + '</span></span></label>' +
+      '<button class="menu-item" data-action="collab-open-configure" data-kind="crew" data-auto="1"><span class="menu-icon">' + ctx.icon('settings', 13) + '</span><span class="menu-copy"><strong>Crew Auto settings…</strong><span>When the assistant calls a Crew, and which team</span></span></button>' +
       '<button class="menu-item" data-action="collab-build-with-crew" data-plan-id="ap-index" data-plan-version="5"><span class="menu-icon">' + ctx.icon('document', 13) + '</span><span class="menu-copy"><strong>Build With Crew…</strong><span>Bind a Crew to Plan ap-index V5 and its To-Dos</span></span></button>';
   });
 
@@ -2116,11 +3887,20 @@
       ctx.openDialog({ type: 'collab-configure' });
       return true;
     }
-    crewDef.autoEnabled = !crewDef.autoEnabled;
+    var tid = ctx.state && ctx.state.selectedThread;
+    var on = !crewAutoOn(tid);
+    RTC.crewAutoChat[tid] = on;
     ctx.renderOverlays();
-    ctx.toast('Crew Auto ' + (crewDef.autoEnabled ? 'enabled' : 'disabled'),
-      crewDef.autoEnabled ? 'Admits automatically only when its committed criteria are met; it cannot widen authority or override an explicit single-agent route.' : 'Automatic admission is off. The stored configuration and roster template are kept for the next enable.');
+    ctx.toast(on ? 'Crew Auto is on in this chat' : 'Crew Auto is off in this chat',
+      on ? 'The assistant may call a Crew when a job needs one. It can’t do more than this chat can.' : 'No Crew starts by itself here. Your Crew Auto settings are kept.');
     return true;
+  });
+  /* E-02: the wand's legacy "crew" capability and the Crew Auto check are one concept, so setting the capability
+     answers Crew Auto for this chat too (app.js keeps its own handling: return false) */
+  EXT.chainAction('set-crew-cap', function (ctx, btn) {
+    var tid = ctx && ctx.state && ctx.state.selectedThread;
+    if (tid != null && btn && btn.dataset) RTC.crewAutoChat[tid] = btn.dataset.value === 'On';
+    return false;
   });
   EXT.action('collab-crew-auto-refuse-demo', function (ctx) {
     var crewDef = RTC.definitions.crew;
@@ -2143,19 +3923,34 @@
      own "Open Panel", independent of Activity Detail.
      ===================================================================== */
   var ACTIVITY_KINDS = ['brainstorm', 'review', 'chat_room'];
-  function renderActivityHover(ctx,run){
-    return '<button type="button" class="ab-row polish-collab-preview" data-k="collab-hover:'+esc(run.id)+'" data-action="collab-open-panel" data-run="'+esc(run.id)+'"><span class="ab-row-copy"><b>'+esc(run.title)+'</b><i>'+esc(KIND_LABEL[run.kind]||run.kind)+' · '+esc(run.status)+' · '+run.participants.length+' participants</i></span>'+ctx.icon('chevron',12)+'</button>';
+  /* 7.13 hover rows: the kind mark and the card title, then the run's one true sentence, then its clock */
+  function renderActivityHover(ctx, run) {
+    var S = S_(), st = presentState(run), sn = sentenceOf(run);
+    return '<button type="button" class="ab-row polish-collab-preview" data-k="collab-hover:' + esc(run.id) + '" data-action="collab-open-panel" data-run="' + esc(run.id) + '">' +
+      '<span class="pmx-collab-abmark">' + S.pmxKindMark(run.kind, 16) + '</span>' +
+      '<span class="ab-row-copy"><b>' + esc(shownTitle(run)) + '</b><span class="pmx-collab-absay"><span class="pmx-collab-absay-w">' + esc(sn.word) + '</span> · ' + esc(sn.reason) + '</span></span>' +
+      '<span class="pmx-clock">' + esc(clockOf(run, st)) + '</span></button>';
   }
 
+  /* 7.13 Activity Detail body: title, the sentence, the track's nowText, a compact team list (36 px rows with the
+     stand-in sentence only where requested differs from effective), Open Panel and Message. Never the whole card. */
   function renderActivityBody(ctx, run) {
+    var S = S_(), st = presentState(run), sn = sentenceOf(run), tr = trackOf(run, st), ra = 'data-run="' + esc(run.id) + '"';
+    var team = (run.participants || []).map(function (p) {
+      var si = standInOf(p);
+      return S.pmxTeamRow({ key: 'collab-ab-p:' + p.id, kind: run.kind, size: 's', markHtml: markOfP(run, p, 18), name: esc(p.role),
+        standIn: si ? { requested: String(p.requestedModelName || '').split(' · ')[0], effective: p.effectiveModelId ? String(p.effectiveModelName || '').split(' · ')[0] : '', noSubstitute: !p.effectiveModelId, sameProvider: true } : null,
+        outcome: esc(laneVerb(run, p, markState(p))), attrs: ra + ' data-participant="' + esc(p.id) + '"' });
+    }).join('');
+    var ended = !!TERMINAL[st];
     return '<div class="collab-activity-body" data-k="collab-ab-' + esc(run.id) + '">' +
-      '<div class="collab-activity-head"><strong>' + esc(run.title) + '</strong>' + statusChip(run.status, run.blockedReason) + '</div>' +
-      '<p class="collab-card-meta">' + esc(latestSummary(run)) + '</p>' +
-      '<div class="collab-participants">' + run.participants.map(function (p) { return participantRow(ctx, run, p); }).join('') + '</div>' +
-      '<div class="collab-kind-inline">' + kindInline(ctx, run) + '</div>' +
-      '<div class="collab-followon-actions">' +
-      '<button class="soft-button" data-action="collab-open-panel" data-run="' + esc(run.id) + '">' + ctx.icon('expand', 12) + ' Open Panel</button>' +
-      '<button class="soft-button" data-action="collab-message" data-run="' + esc(run.id) + '">' + ctx.icon('send', 12) + ' Message</button>' +
+      '<p class="pmx-collab-ab-title">' + esc(shownTitle(run)) + '</p>' +
+      S.pmxSentence({ status: sn.status, word: esc(sn.word), reason: esc(sn.reason) }) +
+      (tr ? '<p class="pmx-fine pmx-collab-ab-now">' + tr.nowText + '</p>' : '') +
+      '<div class="pmx-collab-ab-team">' + team + '</div>' +
+      '<div class="pmx-actions pmx-collab-ab-acts">' +
+        '<button type="button" class="text-button pmx-act" data-action="' + esc(openActionOf(run)) + '" ' + ra + '>Open Panel</button>' +
+        (ended ? '' : '<button type="button" class="text-button pmx-act" data-action="collab-message" ' + ra + '>Message</button>') +
       '</div></div>';
   }
   EXT.slot('activityHoverCard', function (ctx) {
@@ -2163,8 +3958,25 @@
     if (ACTIVITY_KINDS.indexOf(dom) < 0) return '';
     var runs = runsForThread(ctx.state.selectedThread).filter(function (r) { return r.kind === dom; });
     if (!runs.length) return '';
+    /* newest first, at most four rows (delivery-polish caps them), then the rest named in one line */
+    runs = runs.slice().reverse();
     return '<div class="hover-card ab-card" id="activity-domain-preview" data-overlay="hover" data-k="collab-hovercard" data-domain="' + esc(dom) + '" role="dialog" aria-modal="false" aria-label="' + esc(KIND_LABEL[dom]) + ' activity preview">' +
-      runs.slice(0,4).map(function (r) { return renderActivityHover(ctx, r); }).join('') + '</div>';
+      runs.slice(0,4).map(function (r) { return renderActivityHover(ctx, r); }).join('') +
+      (runs.length > 4 ? '<p class="pmx-fine pmx-collab-abmore">and ' + (runs.length - 4) + ' more · Show all in Activity</p>' : '') + '</div>';
+  });
+  /* 7.13: a collaboration kind's Activity chip reveals the newest card of that kind and pulses it once, instead of
+     opening Activity Detail (which stays reachable from the hover rows). Hover rows (.ab-card) and CREW's rows
+     (data-crew-run) keep their own routes; with no card of that kind on screen the chip opens Activity as before. */
+  EXT.chainAction('open-activity', function (ctx, btn) {
+    if (!btn || !btn.dataset || btn.dataset.crewRun || (btn.closest && btn.closest('.ab-card'))) return false;
+    var dom = btn.dataset.domain;
+    if (!KIND_LABEL[dom] || !ctx || !ctx.state) return false;
+    var runs = runsForThread(ctx.state.selectedThread).filter(function (r) { return r.kind === dom; });
+    for (var i = runs.length - 1; i >= 0; i--) {
+      var el = document.querySelector('#pmRoot .transcript .pmx-run[data-run-id="' + String(runs[i].id).replace(/"/g, '') + '"]');
+      if (el && PMX_() && PMX_().reveal) { ctx.state.hover = null; PMX_().reveal(runs[i].id); return true; }
+    }
+    return false;
   });
   EXT.slot('activityPanelBody', function (ctx) {
     var dom = ctx.domain;
@@ -2186,35 +3998,78 @@
     ctx.openDialog({ type: 'collab-evidence', runId: btn.dataset.run, assignmentId: btn.dataset.assignment, draft: '' });
     return true;
   });
+  /* needs-you answers (cmd.runtime.approve / cmd.runtime.decline): the one helper that waits for your OK is let go on
+     once, or told no; the others were never blocked. Nothing else about the run changes. */
+  function blockedOf(run, pid) { return (run.participants || []).filter(function (p) { return p.id === pid && p.status === 'blocked'; })[0] || null; }
+  function assignmentsOf(run, p) { return ((run.crew && run.crew.assignments) || []).filter(function (a) { return a.status === 'blocked' && (a.participantId === p.id || a.assignedRole === p.role); }); }
+  EXT.action('collab-approve', function (ctx, btn) {
+    var run = findRun(btn.dataset.run), p = run && blockedOf(run, btn.dataset.participant);
+    if (!p) return true;
+    p.status = 'working'; p.current = 'Allowed once by you: ' + String(p.blockedReason || 'going on.').replace(/;.*$/, '').replace(/\.?$/, '.'); p.blockedReason = '';
+    assignmentsOf(run, p).forEach(function (a) { a.status = 'in_progress'; });
+    if (run.status === 'blocked') run.status = 'running';
+    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'You allowed ' + p.role + ' once. The next time it needs this, it asks again.' }));
+    ctx.renderApp();
+    return true;
+  });
+  EXT.action('collab-deny', function (ctx, btn) {
+    var run = findRun(btn.dataset.run), p = run && blockedOf(run, btn.dataset.participant);
+    if (!p) return true;
+    p.status = 'failed'; p.outcome = 'not_allowed'; p.current = 'Not allowed by you. Its part was not done.'; p.blockedReason = '';
+    assignmentsOf(run, p).forEach(function (a) { a.status = 'skipped'; });
+    if (run.status === 'blocked') run.status = 'running';
+    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'You didn’t allow ' + p.role + ' to go on. Its part was not done; the others keep working.' }));
+    ctx.renderApp();
+    return true;
+  });
+
+  /* G-26: the evidence sheet (seed and legacy Crews; protocol-owned Crews chain it to their Crew work view). A compact
+     pmxSheet; typing writes the draft and toggles only the primary and its printed reason, never a repaint (D.6) */
+  var EVIDENCE_WHY = 'Write what shows it’s finished first.';
   EXT.slot('dialog', function (ctx) {
     var d = ctx.state.dialog;
     if (!d || d.type !== 'collab-evidence') return '';
-    var run = findRun(d.runId);
+    var S = S_(), run = findRun(d.runId);
     var a = run && run.crew ? run.crew.assignments.filter(function (x) { return x.id === d.assignmentId; })[0] : null;
-    if (!run || !a) return '<section class="dialog" style="width:min(480px,calc(100vw - 20px))"><div class="dialog-body"><p>Assignment no longer exists.</p></div></section>';
-    var over = !String(d.draft || '').trim();
-    return '<section class="dialog collab-evidence-dialog" style="width:min(560px,calc(100vw - 20px))" role="dialog" aria-modal="true" aria-label="Mark complete with evidence">' +
-      '<div class="drawer-head"><strong>Complete: ' + esc(a.title) + '</strong><span class="spacer"></span><button class="icon-button" data-action="collab-evidence-cancel">' + ctx.icon('close', 13) + '</button></div>' +
-      '<div class="dialog-body">' +
-      '<p class="collab-sub">Expected output: ' + esc(a.expectedOutput) + '</p>' +
-      '<textarea class="collab-evidence-input" data-collab-evidence-input rows="4" placeholder="Describe the evidence that satisfies the expected-output contract — a tool succeeding is not by itself completion.">' + esc(d.draft || '') + '</textarea>' +
-      '<div class="decision-actions"><button class="soft-button" data-action="collab-evidence-cancel">Cancel</button><button class="primary-button" data-action="collab-evidence-confirm" data-run="' + esc(run.id) + '" data-assignment="' + esc(a.id) + '"' + (over ? ' disabled' : '') + '>Mark complete</button></div>' +
-      '</div></section>';
+    var base = { type: 'collab-evidence', kind: 'crew', size: 'compact', height: 390, cls: 'collab-evidence-dialog', closeAction: 'collab-evidence-cancel', scrimClose: 'collab-evidence-cancel', ariaLabel: 'Mark this part as done' };
+    if (!run || !a) {
+      return S.pmxSheet(Object.assign(base, { height: 260, title: 'This part is no longer here', lead: 'Nothing was changed.', body: '',
+        foot: '<footer class="mdl-foot pmx-foot" data-save="0"><div class="pmx-foot-say"></div><button type="button" class="soft-button pmx-cancel" data-action="collab-evidence-cancel">Close</button></footer>' }));
+    }
+    var empty = !String(d.draft || '').trim();
+    var hero = S.pmxHero({ key: 'collab-ev-hero', title: 'What shows it’s done?', affects: 'job',
+      field: { rows: 3, value: d.draft || '', placeholder: 'e.g. tests pass: 42/42, and the CSV opens with quotes intact', attrs: ' data-collab-evidence-input aria-label="What shows it’s done?"' },
+      helper: 'The Coordinator records this as the proof for ' + esc(a.title) + '.' });
+    var body = '<p class="pmx-fine pmx-collab-evdone" data-k="collab-ev-done">Done when: ' + esc(a.expectedOutput || 'the part’s result is checked.') + '</p>';
+    var foot = S.pmxFoot({
+      readback: '<p class="pmx-estimate collab-limit-warn" data-collab-evidence-why' + (empty ? '' : ' hidden') + '>' + esc(EVIDENCE_WHY) + '</p>',
+      cancel: { action: 'collab-evidence-cancel' },
+      primary: { action: 'collab-evidence-confirm', attrs: ' data-run="' + esc(run.id) + '" data-assignment="' + esc(a.id) + '"', label: 'Mark as done', disabled: empty }
+    });
+    return S.pmxSheet(Object.assign(base, { title: 'Mark this part as done?', lead: 'Say what shows it’s finished. A command just running isn’t proof.', hero: hero, body: body, foot: foot }));
   });
   document.addEventListener('input', function (e) {
     var t = e.target; if (!t || !t.getAttribute) return;
     if (!t.hasAttribute('data-collab-evidence-input')) return;
     var ctx0 = EXT && EXT.ctx && EXT.ctx(); if (!ctx0) return;
-    if (ctx0.state.dialog && ctx0.state.dialog.type === 'collab-evidence') { ctx0.state.dialog.draft = t.value; ctx0.renderOverlays(); }
+    var dlg = ctx0.state.dialog;
+    if (!dlg || dlg.type !== 'collab-evidence') return;
+    dlg.draft = t.value;
+    var sheet = t.closest('.collab-evidence-dialog'), empty = !String(t.value || '').trim();
+    if (!sheet) return;
+    var btn = sheet.querySelector('[data-action="collab-evidence-confirm"]'), why = sheet.querySelector('[data-collab-evidence-why]');
+    if (btn) btn.disabled = empty;
+    if (why) why.hidden = !empty;
   });
   EXT.action('collab-evidence-cancel', function (ctx) { ctx.closeDialog(); return true; });
   EXT.action('collab-evidence-confirm', function (ctx, btn) {
     var run = findRun(btn.dataset.run); if (!run) return true;
     var a = run.crew.assignments.filter(function (x) { return x.id === btn.dataset.assignment; })[0]; if (!a) return true;
     var note = String((ctx.state.dialog && ctx.state.dialog.draft) || '').trim();
-    if (!note) { ctx.toast('Evidence required', 'A tool-success signal alone is not completion — describe what satisfies the expected-output contract.'); return true; }
+    /* the primary is disabled with its reason printed while the field is empty; a stray confirm changes nothing */
+    if (!note) { var f = document.querySelector('.collab-evidence-dialog [data-collab-evidence-input]'); if (f) f.focus(); return true; }
     a.status = 'done'; a.evidenceNote = note;
-    run.messages.push(mkMsg(run, { senderKind: 'coordinator', senderName: 'Coordinator', messageType: 'response', body: 'Marked "' + a.title + '" complete against its expected-output contract: ' + note }));
+    run.messages.push(mkMsg(run, { senderKind: 'coordinator', senderName: 'Coordinator', messageType: 'response', body: 'Marked “' + a.title + '” as done. What shows it: ' + note }));
     ctx.closeDialog();
     ctx.renderApp();
     return true;
@@ -2222,11 +4077,17 @@
 
   EXT.action('collab-build-with-crew', function (ctx, btn) {
     var planId = btn.dataset.planId || 'ap-index', planVersion = Number(btn.dataset.planVersion) || 5;
+    /* G-28 Build With Crew mode: the hero comes from the Plan and is read-only; Start dispatches
+       cmd.chat.plan.build_with_crew (8.15, IMPACT A3-08) */
+    var plan = window.PM56_PLANS && window.PM56_PLANS.get ? window.PM56_PLANS.get(planId) : null;
     openConfigureDraft('crew', null, false);
-    RTC.draft.name = 'Crew · Build ' + planId + ' V' + planVersion;
-    RTC.draft.purpose = 'Build With Crew — bound to Plan ' + planId + ' version ' + planVersion + ' and its current To-Dos.';
+    RTC.draft.buildWithCrew = true;
+    RTC.draft.name = 'Build ' + (plan ? plan.title : planId);
+    RTC.draft.nameEdited = true;
+    RTC.draft.purpose = 'Build the plan “' + (plan ? plan.title : planId) + '” (version ' + planVersion + ') as written, with its current To-Dos.';
     RTC.draft.boundPlanId = planId; RTC.draft.boundPlanVersion = planVersion;
-    ctx.openDialog({ type: 'collab-configure' });
+    UI.stash = null;
+    openSheet(ctx, true);
     return true;
   });
 
@@ -2479,6 +4340,8 @@
   EXT.chainAction('reset-all', function (ctx, btn, ev) {
     restoreFixture();
     UI.expanded = {}; UI.more = {}; UI.selectedFindings = {};
+    UI.face = {}; UI.settling = {}; UI.arriving = {}; UI.cancelAsk = {}; UI.tech = {}; UI.last = {}; UI.doneMark = {}; UI.sentTo = {};
+    UI.prov = {}; UI.waiting = {}; UI.allLanes = {};
     return false;
   });
 
@@ -2500,7 +4363,8 @@
     const r=findRun(d?.refId);if(!r||r.threadId!==scope.threadId||!EXT.ctx().state.threads.some(t=>t.id===scope.threadId&&(t.projectId||'pm')===scope.projectId))return scheduledBad('destination_not_found');
     if(!['workflow','participant'].includes(d.kind)||d.destinationKind!==r.kind||!d.scheduled_binding||JSON.stringify(d.scheduled_binding)!==JSON.stringify(scheduledDestinationBasis(r,d)))return scheduledBad('destination_generation_changed');
     if(r.crew?.planBinding){const pr=PM56_PLANS.runs()[r.crew.planBinding.plan_run_id];if(!pr||['completed','cancelled','canceled','failed'].includes(pr.state))return scheduledBad('destination_ended');if(pr.state!=='running')return scheduledBad('destination_not_accepting');}
-    if(r.status!=='running')return scheduledBad(['completed','canceled','cancelled','failed'].includes(r.status)?'destination_ended':'destination_not_accepting');
+    /* IMPACT A1-20: a born-waiting run (status running, nothing started) does not accept deliveries either */
+    if(r.status!=='running'||presentState(r)==='waiting')return scheduledBad(['completed','canceled','cancelled','failed'].includes(r.status)?'destination_ended':'destination_not_accepting');
     if(d.kind==='participant'&&!participant(r,d.participantId)||d.kind==='workflow'&&d.participantId)return scheduledBad('participant_not_found');
     if(window.PM56_ROOM?.owns(r.id)){
       const v=PM56_ROOM.canSend(r.id,d);
@@ -2544,7 +4408,7 @@
     const all=planCrewSteps(plan),leaves=all.filter(s=>!all.some(c=>c.parent_step_id===s.plan_step_id));
     if(d.rows.length>leaves.length)return scheduledBad('crew_more_required_slots_than_work','Choose at most '+leaves.length+' participants. Each required slot needs an actual bounded assignment.');
     const participants=[];
-    for(const row of d.rows){const m=modelById(row.requestedModelId);if(!m||m.status!=='ready'||UNAVAILABLE_DEMO[m.id]||!row.role?.trim()||!row.persona)return scheduledBad('crew_route_unavailable','Resolve every requested model and role before scheduling; this path never substitutes.');
+    for(const row of d.rows){const m=modelById(row.requestedModelId);if(!m||m.status!=='ready'||UNAVAILABLE_DEMO[m.id]||!row.role?.trim()||!row.persona)return scheduledBad('crew_route_unavailable',m&&UNAVAILABLE_DEMO[m.id]?offlineSentence(m.id):'Resolve every requested model and role before scheduling; this path never substitutes.');
       participants.push({id:row.rowId,role:row.role,model_id:m.id,model_name:m.name,provider_id:m.provider,account_id:m.accountId,persona:row.persona,effort:row.requestedEffort||'',fast:!!row.requestedFast,additive_role:row.additiveRoleKind||'none'});}
     if(d.wonderer||d.grillMe)return scheduledBad('scheduled_specialist_adapter_unavailable','Optional discovery specialists need their workflow adapter; this bounded execution does not simulate them.');
     if(d.config?.coordinator&&d.config.coordinator!=='parent_assistant')return scheduledBad('scheduled_coordinator_adapter_unavailable','Choose Current assistant for this bounded local execution. No dedicated provider coordinator is invoked.');
@@ -2564,7 +4428,7 @@
     const leaves=planCrewSteps(p).filter(s=>!planCrewSteps(p).some(c=>c.parent_step_id===s.plan_step_id));
     if(x.effective_concurrency!==1||x.assignments.length!==leaves.length||new Set(x.participants.map(p=>p.id)).size!==x.participants.length||new Set(x.assignments.map(a=>a.plan_step_id)).size!==leaves.length)return scheduledBad('crew_assignment_invalid');
     for(const a of x.assignments)if(!leaves.some(s=>s.plan_step_id===a.plan_step_id&&s.text===a.expected_outcome)||!x.participants.some(p=>p.id===a.participant_slot_id))return scheduledBad('crew_assignment_invalid');
-    for(const q of x.participants){const m=modelById(q.model_id);if(!m||m.status!=='ready'||UNAVAILABLE_DEMO[m.id]||m.provider!==q.provider_id||m.accountId!==q.account_id)return scheduledBad('crew_route_unavailable');if(!x.assignments.some(a=>a.participant_slot_id===q.id))return scheduledBad('crew_assignment_missing');}
+    for(const q of x.participants){const m=modelById(q.model_id);if(!m||m.status!=='ready'||UNAVAILABLE_DEMO[m.id]||m.provider!==q.provider_id||m.accountId!==q.account_id)return scheduledBad('crew_route_unavailable',m&&UNAVAILABLE_DEMO[m.id]?offlineSentence(m.id):undefined);if(!x.assignments.some(a=>a.participant_slot_id===q.id))return scheduledBad('crew_assignment_missing');}
     return {ok:true};
   }
   function commitPlanCrewDefinition(snapshot,planId){
@@ -2639,12 +4503,18 @@
     openScheduledCrew:(expected,snapshot)=>{
       if(snapshot){const v=validatePlanCrew(snapshot,snapshot.plan_id,false);if(!v.ok)return v;}
       openConfigureDraft('crew',null,false);const d=RTC.draft;
-      if(snapshot){d.name=snapshot.name;d.purpose=snapshot.purpose;d.config=scheduledCopy(snapshot.config);d.wonderer=false;d.grillMe=false;
+      if(snapshot){d.name=snapshot.name;d.nameEdited=true;d.purpose=snapshot.purpose;d.config=scheduledCopy(snapshot.config);d.wonderer=false;d.grillMe=false;
         d.rows=snapshot.participants.map(q=>({rowId:q.id,role:q.role,requestedModelId:q.model_id,persona:q.persona,requestedEffort:q.effort,requestedFast:q.fast,additiveRoleKind:q.additive_role}));}
-      d.scheduleIntent={expected:scheduledCopy(expected)};EXT.ctx().openDialog({type:'collab-configure'});return {ok:true};
+      d.scheduleIntent={expected:scheduledCopy(expected)};
+      /* scheduled mode (8.1): the job is the Plan's, so the hero starts from its title */
+      if(!d.purpose){const p=scheduledPlan(d);if(p)d.purpose='Build the plan “'+(p.title||'')+'” as written.';}
+      UI.stash=null;UI.previewW=measureCardWidth();UI.previewH=120;UI.sheetScale=Math.round((242/UI.previewW)*1000)/1000;
+      EXT.ctx().openDialog({type:'collab-configure'});return {ok:true};
     },
     kinds: KINDS.slice(),
     definitions: function () { return RTC.definitions; },
+    /* E-02: may the assistant call a Crew by itself in this chat? (the project default, or this chat's check) */
+    crewAutoAllowed: function (threadId) { return crewAutoOn(threadId == null ? ((EXT.ctx && EXT.ctx() && EXT.ctx().state || {}).selectedThread) : threadId); },
     runs: function () { return RTC.runs; },
     run: findRun,
     runsForThread: runsForThread,
@@ -2678,6 +4548,46 @@
     selectedFindings:function(runId){return UI.selectedFindings[runId]||(UI.selectedFindings[runId]={});},
     admitCrewWork: admitCrewWork,
     validateStart: startPreflight,
-    normalizeReview: normalizeReview
+    normalizeReview: normalizeReview,
+    /* COLLAB step 1 (KIND INTERFACE): provenance of a run (IMPACT A3-03), the recorded flag a demo sets on its
+       draft, the waiting sentence (IMPACT A1-20), the option catalog (A3-01) and the specialist default (A3-02) */
+    provenance: provenance,
+    markRecorded: function (d) { d = d || RTC.draft; if (d) d.recorded = true; return d; },
+    isRecordedDraft: isRecordedDraft,
+    waitingReason: waitingReason,
+    /* COLLAB step 2 (KIND INTERFACE, card): the one presentation state and sentence (IMPACT A1-20), the lifecycle
+       predicates that read it, COLLAB's generic card parts (a kind's cardParts(run, ctx, generic) extends them) */
+    presentState: function (r) { return presentState(typeof r === 'string' ? findRun(r) : r); },
+    sentenceOf: function (r) { return sentenceOf(typeof r === 'string' ? findRun(r) : r); },
+    canPause: function (r) { r = typeof r === 'string' ? findRun(r) : r; return !!r && canPause(r); },
+    canCancel: function (r) { r = typeof r === 'string' ? findRun(r) : r; return !!r && canCancel(r); },
+    card: {
+      generic: function (r, ctx) { r = typeof r === 'string' ? findRun(r) : r; var st = presentState(r); return genericCardParts(r, ctx || EXT.ctx(), faceOf(r, st), st); },
+      face: function (id) { return UI.face[id] || null; },
+      marks: function (r, size) { r = typeof r === 'string' ? findRun(r) : r; return clusterOf(r, size || 18, presentState(r)); },
+      lanes: function (r, open) { r = typeof r === 'string' ? findRun(r) : r; return lanesOf(r, !!open); },
+      track: function (r) { r = typeof r === 'string' ? findRun(r) : r; return trackOf(r, presentState(r)); },
+      attention: function (r) { r = typeof r === 'string' ? findRun(r) : r; return presentState(r) === 'attention' ? attentionOf(r) : null; },
+      openAction: function (r) { r = typeof r === 'string' ? findRun(r) : r; return openActionOf(r); },
+      /* the card's own clock and cost phrases, so the run view's status never disagrees with the card */
+      clock: function (r) { r = typeof r === 'string' ? findRun(r) : r; return clockOf(r, presentState(r)); },
+      cost: function (r) { r = typeof r === 'string' ? findRun(r) : r; return costOf(r, presentState(r)); }
+    },
+    /* COLLAB step 3 (KIND INTERFACE, view, G-14): the run view's state and common tabs (collab-view.js draws them), open
+       it, and the plan-bound Crew blocks the view shows in its Summary and a helper's own view (b18c hooks) */
+    viewState: function (runId) { var V = CV(); return V && V.state ? V.state(runId) : { tab: 'overview', participantId: null }; },
+    viewCommon: function (r, tab) { var V = CV(); return V && V.common ? V.common(r, tab) : ''; },
+    openView: function (runId, o) { return openView(EXT.ctx(), runId, o || {}, null); },
+    planCrewHtml: function (ctx, r) { r = typeof r === 'string' ? findRun(r) : r; return r && r.crew && r.crew.planBinding ? renderPlanCrew(ctx || EXT.ctx(), r) : ''; },
+    planCrewParticipantHtml: function (r, p) { r = typeof r === 'string' ? findRun(r) : r; if (r && p && typeof p === 'string') p = participant(r, p); return r && p ? renderPlanCrewParticipant(r, p) : ''; },
+    choices: function () { return JSON.parse(JSON.stringify(CONFIG_CHOICES)); },
+    specialistDefaults: function () { return JSON.parse(JSON.stringify(SPECIALIST_DEFAULTS)); },
+    /* for kind sheetParts (requests from CREW-A, STORM-A, ROOM-A, REVIEW-A): the roster's seat hue, the mark role of a
+       persona, the plan's concurrency, and Review's target catalogue with its measured size lines */
+    seatOf: function (d, row) { return seatOf(d || RTC.draft, row); },
+    markOf: function (persona) { return markOf(persona); },
+    capacity: function (d) { return capacityOf(d || RTC.draft || {}); },
+    targets: function (ctx) { var c = ctx || EXT.ctx(); return TARGETS.map(function (t) { return { value: t.value, label: t.label, read: t.read, kind: t.kind, small: targetSmall(c, t.value) }; }); },
+    sheet: { generic: function (d, ctx) { return genericParts(d || RTC.draft, ctx || EXT.ctx()); }, plateParts: { crew: function (d) { return crewPlateFit(d); }, review: function (d) { return reviewPlateFit(d, EXT.ctx()); }, brainstorm: function (d) { return brainstormPlateFit(d); }, chat_room: function (d) { return roomPlateFit(d); } } }
   };
 })();

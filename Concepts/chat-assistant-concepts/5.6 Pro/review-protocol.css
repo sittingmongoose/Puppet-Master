@@ -1,3 +1,53 @@
-/* Aligned narrow document rows. No decorative side borders or working-card edits. */
-.review-compact{padding:8px 0;min-width:0}.review-status-line{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;font-size:12px}.review-status-line span,.review-caption{font-size:11px;color:var(--muted)}.review-caption{margin:6px 0}.review-document{max-width:850px;margin:0 auto;padding:22px 24px 32px!important;min-width:0}.review-document h1{font-size:20px;line-height:1.35;overflow-wrap:anywhere;margin:10px 0}.review-doc-meta,.review-tags{display:flex;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:11px}.review-doc-meta{justify-content:space-between}.review-doc-summary{font-size:13px;margin:4px 0 14px}.review-doc-toolbar,.review-action-row,.review-doc-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.review-doc-toolbar{padding-bottom:16px}.review-target-label{display:grid;gap:5px;margin:6px 0 16px;font-size:12px;overflow-wrap:anywhere}.review-target-label span,.review-target-label small{color:var(--muted);font-size:11px}.review-finding{padding:17px 0;border-top:1px solid var(--line)}.review-finding-head{display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.5}.review-finding-head input{flex:none;margin-top:3px}.review-finding-head strong{font-weight:600;overflow-wrap:anywhere}.review-tags{margin:7px 0;text-transform:capitalize}.review-tags span+span:before{content:'·';margin-right:8px}.review-finding p{font-size:12px;line-height:1.55;margin:8px 0;color:var(--muted)}.review-evidence-links{display:flex;flex-wrap:wrap;gap:8px;font-size:11px}.review-evidence-links button{display:inline-flex;align-items:center;gap:5px}.review-technical,.review-dissent{padding:11px 0;font-size:12px;border-top:1px solid var(--line)}.review-technical summary,.review-dissent summary{cursor:pointer;font-weight:550}.review-dissent{border-top:0;padding:6px 0 0}.review-dissent p{white-space:pre-line}.review-person-row{display:grid;gap:3px;padding:10px 0}.review-person-row code{font-size:10px;overflow-wrap:anywhere}.review-agreement>div{padding:12px 0}.review-agreement p{line-height:1.6;margin:7px 0}.review-agreement p span{color:var(--muted)}.review-doc-actions{padding-top:16px;margin-top:10px;border-top:1px solid var(--line)}.review-doc-actions button{font-size:11px}.review-provenance{font-size:10px!important;color:var(--muted);line-height:1.6;margin-top:18px}.review-source,.review-markdown{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;font-size:12px;line-height:1.65;padding:14px;border:1px solid var(--line);border-radius:9px;background:var(--surface-2,transparent);max-width:100%}.review-action-row{padding:12px 16px}.review-document .soft-button{white-space:normal;text-align:left}.review-document .text-button{white-space:normal;text-align:left}.collab-kind-review .collab-card-title{min-width:0;overflow-wrap:anywhere}.collab-kind-review .collab-card-head{flex-wrap:wrap;align-items:center}.collab-kind-review .collab-card-title{flex:1 1 150px}.collab-kind-review .collab-card-foot{flex-wrap:wrap}
-@media(max-width:800px){.review-document{padding:16px!important}.review-document h1{font-size:18px}.review-doc-meta{justify-content:flex-start}}
+/* The legacy inline summary COLLAB's card still calls (renderSummary / renderActions). The legacy report document
+   is gone: the review: and review-evidence: documents are REVIEW-B's (review-view.js, IMPACT A1-50). */
+.review-compact{padding:8px 0;min-width:0}.review-status-line{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;font-size:12px}.review-status-line span,.review-caption{font-size:11px;color:var(--muted)}.review-caption{margin:6px 0}.review-action-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.review-action-row{padding:12px 16px}
+/* ---- REVIEW-A (DESIGN-SPEC 8.5): the Review card's kind parts. Primitives (.pmx-finding, .pmx-agree, .pmx-sev,
+   .pmx-result ...) are the foundation's and are not restyled here; these are only the Review-owned blocks.
+   J-2: text >= 8 px from any line, line-height >= 1.45, controls >= 10 px apart. ---- */
+/* comparing: the compact agreement grid (at most 4 rows, then "and N more") */
+.pmx-run .pmx-review-grid{display:flex;flex-direction:column;min-width:0;margin:0;}
+.pmx-run .pmx-review-grid-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;column-gap:10px;margin:0;padding:8px 0;min-width:0;font:var(--pmx-fs-meta);color:var(--muted);}
+.pmx-run .pmx-review-grid-row + .pmx-review-grid-row{box-shadow:0 -1px 0 var(--border);}
+.pmx-run .pmx-review-grid-claim{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-weight:var(--pmx-w-560,560);color:var(--text);}
+.pmx-run .pmx-review-grid-more{margin:0;padding:2px 0 0;font:var(--pmx-fs-meta);color:var(--muted);}
+/* the finished face: the tick rule / To-Do line / a refused follow-on, then its own row of links (J-2 rule 3) */
+.pmx-run .pmx-review-note{display:flex;align-items:flex-start;gap:8px;margin:0;min-width:0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-run .pmx-review-note > svg{flex:none;margin-top:2px;color:var(--positive);}
+.pmx-run .pmx-review-note[data-failure] > svg{color:var(--warning);}
+.pmx-run .pmx-review-note > span{min-width:0;}
+.pmx-run .pmx-review-links{display:flex;align-items:center;flex-wrap:wrap;gap:4px 16px;margin:-4px 0 0;min-width:0;min-height:32px;font:var(--pmx-fs-meta);color:var(--muted);}
+.pmx-run .pmx-review-links > .text-button:first-child{margin-left:-10px;}
+/* the sheet: the target's size line moved while the sheet was open (G-30 MOD-15) */
+.pmx-sheet .pmx-review-changed{display:flex;align-items:center;gap:6px;margin:6px 0 0;color:var(--warning);}
+.pmx-sheet .pmx-review-changed > svg{flex:none;}
+/* The card's findings (FOUNDATION REQUEST 1: pmxFinding's meta line is one nowrap row that cuts its parts, and its
+   claim is one ellipsized line). J-2: wrap or drop, never cut. The meta line wraps as whole parts; each "·"
+   separator rides the part after it and sits in an 18 px lead-in that the clip hides at a line start, so a wrapped
+   line never starts with a dot. The claim takes two lines before it ellipsizes. */
+.pmx-run .pmx-review-finding .pmx-finding-claim{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;}
+.pmx-run .pmx-review-finding .pmx-finding-meta{flex-wrap:wrap;column-gap:0;row-gap:2px;white-space:normal;margin-left:-18px;clip-path:inset(-4px -4px -4px 18px);}
+.pmx-run .pmx-review-finding .pmx-finding-meta > .pmx-sep{display:none;}
+.pmx-run .pmx-review-finding .pmx-finding-meta > .pmx-sev{margin-left:18px;}
+.pmx-run .pmx-review-finding :is(.pmx-review-disp, .pmx-review-agree)::before{content:"\00B7";flex:none;display:inline-block;width:18px;text-align:center;color:var(--subtle);}
+.pmx-run .pmx-review-finding .pmx-review-agree::before{margin-right:-5px;}
+.pmx-run .pmx-review-disp{flex:none;white-space:nowrap;}
+/* below 260 px the compact agreement grid drops; the sentence and the track's count say the same (J-2: drop, never
+   compress) */
+/* below 360 px (the S tier) the disposition word (or "To-Do created") drops from a finding that shows agreement dots,
+   and so does the agreement's tail ("· 1 unsure"): the tick, the dots and the note under the findings carry them,
+   and the sentence stays in the dots' hover card (J-2: drop, never compress) */
+@container pmxrun (max-width: 359.98px){
+  .pmx-run .pmx-review-opt, .pmx-run .pmx-review-tail{display:none;}
+  /* "Send Findings To Agent · 1 more": the links keep one row */
+  .pmx-run .pmx-review-long{display:none;}
+}
+@container pmxrun (max-width: 259.98px){
+  .pmx-run .pmx-review-grid{display:none;}
+  /* the 230 / 204 px cards (history pinned at 1024 / 900): the claim keeps one line and the agreement keeps its dots
+     (its words stay in the dots' hover card), so the result face holds its 400 px budget */
+  .pmx-run .pmx-review-finding .pmx-finding-claim{-webkit-line-clamp:1;}
+  .pmx-run .pmx-review-finding .pmx-review-agree > span:last-child{display:none;}
+  /* the actions row keeps one row ("To-Dos (2)" beside the chevron and More) and the links row keeps Send Findings
+     To Agent; "N more" drops (the headline counts every finding; More opens the report) */
+  .pmx-run .pmx-review-verb, .pmx-run .pmx-review-links > [data-finding]{display:none;}
+}

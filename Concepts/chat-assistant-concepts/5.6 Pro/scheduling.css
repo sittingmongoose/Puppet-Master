@@ -1,210 +1,431 @@
-/* scheduling.css — feature module styles.  OWNER: Plans/Scheduling_and_Quota_Resume.md
- * (Assistant-redesign wave, 2026-09-03).
+/* scheduling.css — Scheduling's look (OWNER: Plans/Scheduling_and_Quota_Resume.md; DESIGN-SPEC 8.7, 8.8, 8.9).
  *
- * Concatenated LAST, after styles.css / motion.css / variants-*.css /
- * transcripts.css / every other module's sheet, so rules here win at equal
- * specificity. Every colour is a theme token, so all eight themes work and
- * nothing here needs its own dark/light branch. Structural chrome (`.dialog`,
- * `.drawer-head`, `.dialog-body`, `.metric-card`, `.plan-actions`,
- * `.soft-button` / `.primary-button` / `.text-button` / `.icon-button`,
- * `.menu-item`) is reused from styles.css rather than redeclared here — only
- * classes this module owns are defined below, all scoped under `.sched-`.
- *
- * `prefers-reduced-motion` drops the row entrance and the state-chip pulse
- * (decoration) but never hides content or skips a state change.
+ * Every surface is built from the pmx primitives (module-shell.css) and the
+ * runtime (pmx-system.css); this file lays out only Scheduling's own parts,
+ * all named pmx-sched-* (and the bubble's pmx-bubble-*). The kept hooks stay
+ * on the markup unstyled: .sched-dialog(--message|--build|--manage|--focused)
+ * on the sheet roots, .sched-card / .sched-card-{state} on the transcript
+ * item, .sched-tabs on the manager's tab bar, .mdl-chip in a build row,
+ * .sched-form-error and .sched-dst. Theme tokens and pmx motion tokens only:
+ * no literal duration, no colour maths (IMPACT A2-22, A1-15); no pills, no
+ * side strips, no boxes inside the sheet.
  */
 
-/* ---------- shared field chrome (compose forms) ---------- */
-.sched-honesty{margin:0 0 10px;padding:8px 9px;border:1px solid var(--border);border-radius:9px;
-  background:var(--surface-2);color:var(--muted);font-size:11px;line-height:1.5}
-.sched-static{padding:7px 9px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);
-  color:var(--text);font-size:12px}
-.sched-text{width:100%;resize:vertical;min-height:64px;border:1px solid var(--border);border-radius:9px;
-  padding:8px 9px;background:var(--surface);color:var(--text);font-size:12px;line-height:1.5;outline:0;
-  font-family:var(--font-ui)}
-.sched-text:focus{border-color:var(--accent)}
-.sched-count{display:block;margin-top:3px;font-size:10px;color:var(--subtle);text-align:right;
-  font-variant-numeric:tabular-nums}
-.sched-count.over{color:var(--danger)}
-.sched-attach-list{list-style:none;margin:0;padding:0;display:grid;gap:3px}
-.sched-attach-list li{padding:5px 8px;border:1px solid var(--border);border-radius:7px;background:var(--surface-2);
-  font-size:11px;color:var(--muted)}
-.sched-subhead{font-size:11px;margin:14px 0 6px;color:var(--subtle);text-transform:uppercase;
-  letter-spacing:.05em;font-weight:800}
-.sched-empty{margin:0;padding:10px;color:var(--subtle);font-size:11px;text-align:center;
-  border:1px dashed var(--border);border-radius:9px}
-.sched-hint{margin:4px 0 0;color:var(--muted);font-size:10px;line-height:1.5}
-.sched-hint.attention{color:var(--warning)}
+/* ===========================================================================
+   The Schedule Message and Build At sheets (DESIGN-SPEC 8.7, 8.8), 2026-09-27.
+   The frame, questions, controls, stepper, switch, words, promises, foot and
+   plate are the pmx primitives; this file only lays out the scheduling parts
+   (pmx-sched-*) and keeps the kept hooks quiet. Theme tokens and pmx motion
+   tokens only: no literal duration, no colour maths (IMPACT A2-22, A1-15).
+   =========================================================================== */
+/* the kept hooks: .sched-form-error is the refusal (a pmx refusal) or an empty alert slot; .sched-dst is fine print */
+.pmx-sheet .sched-form-error:empty{display:none;}
+.pmx-sheet .sched-dst{margin:8px 0 0;display:flex;flex-direction:column;gap:2px;font:var(--pmx-fs-fine);color:var(--subtle);min-width:0;}
+.pmx-sheet .sched-dst-line{display:block;overflow-wrap:anywhere;}
 
-/* ---------- radios / day chips / checkboxes ---------- */
-.sched-radio-row{display:flex;gap:12px;flex-wrap:wrap;padding-top:2px}
-.sched-radio-row label{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--text);cursor:pointer}
-.sched-days{display:flex;gap:4px;flex-wrap:wrap}
-.sched-day-chip{display:inline-flex;align-items:center;gap:0;padding:5px 9px;border-radius:999px;
-  border:1px solid var(--border);background:var(--surface-2);color:var(--muted);font-size:10px;font-weight:700;
-  cursor:pointer;transition:background 140ms var(--ease),color 140ms var(--ease),border-color 140ms var(--ease)}
-.sched-day-chip input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
-.sched-day-chip.on{border-color:color-mix(in srgb,var(--accent) 50%,var(--border));
-  background:color-mix(in srgb,var(--accent) 15%,var(--surface-2));color:var(--text)}
+/* ---- Schedule Message: the message as a future bubble (a dashed full outline; never one side) */
+.pmx-sheet .pmx-sched-hero{margin:0;padding:0;border:0;border-radius:0;background:none;overflow:visible;display:flex;flex-direction:column;align-items:flex-end;min-width:0;align-self:stretch;}
+/* the message sheet's body is one column of three blocks that keep their own heights (no stretched rows) */
+.pmx-sheet .pmx-body:has(> .pmx-sched-hero){align-content:start;row-gap:0;}
+.pmx-sheet .pmx-sched-draft{width:min(600px,78%);box-sizing:border-box;padding:10px 14px;border:1.5px dashed var(--border-strong);border-radius:18px 18px 6px 18px;background:var(--surface-2);}
+.pmx-sheet .pmx-sched-draft:focus-within{border-color:var(--pmx-focus-edge);box-shadow:0 0 0 3px var(--pmx-focus-ring);}
+.pmx-sheet textarea.pmx-sched-text{display:block;width:100%;height:calc(3 * var(--pmx-hero-lh));min-height:0;margin:0;padding:0;resize:none;overflow:auto;border:0;border-radius:0;background:none;box-shadow:none;outline:none;
+  font:var(--pmx-fs-hero);line-height:var(--pmx-hero-lh);color:var(--text);scrollbar-width:thin;}
+.pmx-sheet .pmx-sched-under{margin:8px 0 0;max-width:100%;display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:4px 16px;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-sheet .pmx-sched-under > span{display:inline-flex;align-items:center;gap:6px;min-width:0;}
+.pmx-sheet .pmx-sched-under > span > span{min-width:0;overflow-wrap:anywhere;}
+.pmx-sheet .pmx-sched-under b{color:var(--text);font-weight:600;}
 
-/* ---------- DST summary ---------- */
-.sched-dst{display:grid;gap:6px;margin:2px 0 9px;padding:8px 9px;border-radius:9px;
-  border:1px solid color-mix(in srgb,var(--accent-2) 30%,var(--border));
-  background:color-mix(in srgb,var(--accent-2) 6%,var(--surface-2))}
-.sched-dst-line{margin:0;font-size:11px;line-height:1.55;color:var(--text)}
+/* ---- when it sends: presets on the question row, the 48-hour track, the real inputs */
+.pmx-sheet .pmx-sched-when{margin-top:20px;}
+.pmx-sheet .pmx-sched-when > .pmx-q-head{align-items:center;min-height:32px;}
+.pmx-sheet .pmx-sched-presets{gap:6px 18px;justify-content:flex-end;}
+.pmx-sheet .pmx-sched-slot{display:flex;flex-direction:column;height:114px;min-width:0;}
+.pmx-sheet .pmx-sched-inputs{display:grid;grid-template-columns:152px 128px 236px minmax(0,1fr);gap:12px 16px;align-items:start;margin-top:12px;min-width:0;}
+.pmx-sheet .pmx-sched-inputs > .pmx-ctl{margin-top:0;}
+/* the date and time boxes stand as tall as the preserved zone trigger beside them (its two lines), so the row's
+   labels and boxes line up; the trigger itself is untouched (DON'T 12) */
+.pmx-sheet .pmx-sched-inputs :is(input[type=date], input[type=time]){height:47px;padding:0 10px;font-size:12.5px;color-scheme:inherit;}
+.pmx-sheet .pmx-sched-resolved{margin:0;align-self:end;padding-bottom:14px;min-width:0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-sheet .pmx-sched-resolved b{color:var(--text);font-weight:var(--pmx-w-620);}
+/* a time and a countdown never break inside themselves ("in 2 h / 1 m") */
+.pmx-sheet .pmx-sched-resolved b, .pmx-sheet .pmx-sched-rel{white-space:nowrap;}
+.pmx-sheet .pmx-sched-late{color:var(--warning);}
+.pmx-sheet .pmx-sched-dstsay{margin:10px 0 0;display:flex;align-items:flex-start;gap:8px;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-sheet .pmx-sched-dstsay > svg{flex:none;margin-top:2px;}
 
-/* ---------- state chips ---------- */
-.sched-chip{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:9px;
-  font-weight:800;letter-spacing:.03em;text-transform:uppercase;white-space:nowrap;
-  border:1px solid var(--border);background:var(--surface-3);color:var(--muted)}
-.sched-tone-active{border-color:color-mix(in srgb,var(--accent) 45%,var(--border));
-  background:color-mix(in srgb,var(--accent) 14%,var(--surface-3));color:var(--text)}
-.sched-tone-attention{border-color:color-mix(in srgb,var(--warning) 45%,var(--border));
-  background:color-mix(in srgb,var(--warning) 15%,var(--surface-3));color:var(--warning)}
-.sched-tone-done{border-color:color-mix(in srgb,var(--positive) 45%,var(--border));
-  background:color-mix(in srgb,var(--positive) 14%,var(--surface-3));color:var(--positive)}
-.sched-tone-blocked{border-color:color-mix(in srgb,var(--danger) 45%,var(--border));
-  background:color-mix(in srgb,var(--danger) 14%,var(--surface-3));color:var(--danger)}
-.sched-tone-idle{color:var(--subtle)}
+/* ---- who answers, if it's missed, the promises, Technical details */
+.pmx-sheet .pmx-sched-lower{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 32px;margin-top:20px;align-items:start;min-width:0;}
+/* "Skip it if it's more than 30 min late": the real minutes input sits beside the trigger (10 px apart, J-2) */
+.pmx-sheet .pmx-sched-missrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;min-width:0;}
+.pmx-sheet .pmx-sched-cell{min-width:0;display:flex;flex-direction:column;}
+.pmx-sheet .pmx-sched-cell > .pmx-ctl:first-child{margin-top:0;}
+/* Technical details: the one disclosure, in the sheets and in a scheduled message's record in the chat */
+:is(.pmx-sheet, .sched-card) .pmx-sched-tech{margin-top:12px;min-width:0;}
+:is(.pmx-sheet, .sched-card) .pmx-sched-techbtn{display:inline-flex;align-items:center;gap:6px;height:32px;min-height:32px;margin-left:-10px;padding:0 10px;color:var(--muted);font:600 12px/17.5px var(--font-ui);}
+:is(.pmx-sheet, .sched-card) .pmx-sched-techbtn:hover{color:var(--text);background:none;}
+:is(.pmx-sheet, .sched-card) .pmx-sched-techsay{margin:6px 0 0;display:flex;flex-direction:column;gap:2px;font:var(--pmx-fs-fine);color:var(--subtle);overflow-wrap:anywhere;min-width:0;}
+:is(.pmx-sheet, .sched-card) .pmx-sched-techsay > span{display:block;}
 
-/* ---------- rows (scheduled messages / build schedules) ---------- */
-.sched-list{display:grid;gap:7px}
-.sched-row{border:1px solid var(--border);border-radius:11px;background:var(--surface-2);padding:9px 10px;
-  animation:sched-row-in 260ms var(--ease) both}
-.sched-row-head{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-.sched-row-title{font-size:11px;font-weight:650;color:var(--text)}
-.sched-row-text{margin:6px 0 0;font-size:12px;color:var(--text);line-height:1.5;overflow-wrap:anywhere}
-.sched-idem{font-family:var(--font-mono);font-size:9px;color:var(--subtle);white-space:nowrap;
-  overflow:hidden;text-overflow:ellipsis;max-width:220px}
-.sched-reason{margin:6px 0 0;padding:6px 8px;border-radius:7px;font-size:11px;line-height:1.5;
-  color:var(--warning);background:color-mix(in srgb,var(--warning) 12%,var(--surface-3));
-  border:1px solid color-mix(in srgb,var(--warning) 30%,var(--border))}
-.sched-reason.positive{color:var(--positive);background:color-mix(in srgb,var(--positive) 12%,var(--surface-3));
-  border-color:color-mix(in srgb,var(--positive) 30%,var(--border))}
-.sched-phase{margin:6px 0 0;font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums}
-.sched-row-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
-.sched-row-actions .danger{color:var(--danger)}
-@keyframes sched-row-in{0%{opacity:0;transform:translateY(-3px)}100%{opacity:1;transform:none}}
+/* ---- the foot carries See all scheduled beside Cancel (FOUNDATION REQUEST: pmxFoot sizes its grid for `extra`) */
+.pmx-sheet .pmx-foot.pmx-sched-foot:has(> .pmx-sched-all){grid-template-columns:minmax(0,1fr) auto auto auto;}
+.pmx-sheet .pmx-sched-all{height:34px;white-space:nowrap;color:var(--muted);}
+.pmx-sheet .pmx-sched-all:hover{color:var(--text);background:none;}
 
-/* ---------- build/message activity log ---------- */
-.sched-log{margin-top:8px;padding-top:7px;border-top:1px solid var(--border);display:grid;gap:3px}
-.sched-log-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:7px;font-size:10px;color:var(--muted);
-  line-height:1.5}
-.sched-log-when{color:var(--subtle);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* ---- the confirmation: the bubble seals, its dashed outline drawn over solid (M9, a clip reveal); the bubble is
+   there in the first frame (it is the same bubble), only the outline and the words under it move */
+.pmx-sheet .pmx-sched-sealed{position:relative;max-width:460px;box-sizing:border-box;padding:11px 14px;border:1.5px solid var(--muted);border-radius:18px 18px 6px 18px;background:var(--surface-2);
+  font:var(--pmx-fs-hero);line-height:var(--pmx-hero-lh);color:var(--text);text-align:left;overflow-wrap:anywhere;
+  animation:pmx-sched-dashed calc(var(--pmx-t-at-q) + var(--pmx-t-draw)) var(--pmx-ease-linear) backwards;}
+/* the bubble keeps its dashed outline while the solid one draws over it, then is solid itself */
+@keyframes pmx-sched-dashed{0%,99.9%{border-style:dashed;border-color:var(--border-strong);}100%{border-style:solid;border-color:var(--muted);}}
+.pmx-sheet .pmx-sched-sealtext{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
+.pmx-sheet .pmx-sched-sealed::after{content:"";position:absolute;inset:-1.5px;border:1.5px solid var(--muted);border-radius:inherit;pointer-events:none;
+  animation:pmx-draw-right var(--pmx-t-draw) var(--pmx-ease-out) var(--pmx-t-at-q) backwards;}
+.pmx-sheet .pmx-sched-confirm .pmx-help{max-width:420px;}
+.pmx-sheet .pmx-sched-confirm > :not(.pmx-sched-sealed){animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-hero) backwards;}
+.pmx-sheet .pmx-sched-confirmmark{display:block;color:var(--text);}
+.pmx-sheet .pmx-sched-confirm--build{max-width:none;width:100%;justify-self:stretch;}
+.pmx-sheet .pmx-sched-confirm--build > :not(.pmx-sched-confirmweek){max-width:520px;}
+.pmx-sheet .pmx-sched-confirmweek{align-self:stretch;width:100%;min-width:0;margin-bottom:8px;text-align:left;}
+.pmx-sheet .pmx-sched-confirmweek .pmx-sched-week{margin:0;}
+.pmx-sheet .pmx-sched-confirmweek .pmx-sched-band{animation:none;}
 
-/* ---------- precedence + quota metric strip ---------- */
-.sched-precedence{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px;margin:8px 0}
+/* ---- Build At: the week map over the two columns */
+.pmx-sheet .pmx-sched-week{margin:12px 0 0;padding:0;border:0;border-radius:0;background:none;overflow:visible;flex:none;min-width:0;align-self:stretch;}
+.pmx-sheet .pmx-sched-slot--week{height:154px;}
+/* under the week map: Technical details on the left, the legend on the right */
+.pmx-sheet .pmx-sched-weekfoot{display:flex;align-items:flex-start;justify-content:space-between;gap:4px 24px;margin-top:6px;min-width:0;}
+.pmx-sheet .pmx-sched-weekfoot > .pmx-sched-tech{margin-top:0;min-width:0;}
+.sched-dialog--build .pmx-body{margin-top:20px;}
+/* retro: helper lines and promises wrap here instead of ending in an ellipsis (J-2: wrap first; a promise is never
+   cut). FOUNDATION REQUEST: module-shell.css makes them nowrap + ellipsis in retro on every sheet. */
+body[data-theme^="retro"] .pmx-sheet.sched-dialog :is(.pmx-ctl-copy, .pmx-spec-copy) .pmx-help{white-space:normal;overflow:visible;text-overflow:clip;}
+body[data-theme^="retro"] .pmx-sheet.sched-dialog .pmx-promise > span{white-space:normal;overflow:visible;text-overflow:clip;}
+.pmx-sheet.sched-dialog .pmx-col--side .pmx-ctl-copy .pmx-help{white-space:normal;overflow:visible;text-overflow:clip;}
+.pmx-sheet .pmx-sched-legend{margin:8px 0 0 auto;padding:0;list-style:none;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px 18px;font:var(--pmx-fs-fine);color:var(--muted);}
+.pmx-sheet .pmx-sched-legend li{display:flex;align-items:center;gap:8px;white-space:nowrap;}
+.pmx-sched-sw{display:block;flex:none;width:16px;height:8px;border-radius:2px;background:var(--muted);opacity:.6;}
+.pmx-sched-sw[data-kind="next"]{background:var(--accent);opacity:1;}
+.pmx-sched-sw[data-kind="wind"]{opacity:1;background:repeating-linear-gradient(135deg,var(--pmx-hatch) 0 1.5px,transparent 1.5px 4px);box-shadow:inset 0 0 0 1px var(--pmx-hatch);}
+.pmx-sched-sw[data-kind="dot"]{width:8px;height:8px;border-radius:50%;background:var(--accent);opacity:1;}
+.pmx-sched-sw[data-kind="now"]{width:2px;height:12px;border-radius:1px;background:var(--accent);opacity:1;}
+.pmx-sheet .pmx-sched-bwhen .pmx-switch{margin-top:10px;}
+/* a column that runs short (1024 x 768) scrolls; its blocks never shrink into each other (a check's own min-height
+   would let the flex column squeeze it under the next block) */
+.pmx-sheet.sched-dialog--build .pmx-col > *{flex-shrink:0;}
+.pmx-sheet .pmx-sched-inputs--three{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.4fr);margin-top:16px;}
+.pmx-sheet .pmx-sched-bwhen + .pmx-ctl{margin-top:20px;}
+/* Days: the label and its seven words share one line (12 px between words, J-2 >= 10) */
+.pmx-sheet .pmx-ctl.pmx-sched-days{grid-template-columns:auto minmax(0,1fr);align-items:center;}
+.pmx-sheet .pmx-sched-days .pmx-words{gap:12px;justify-content:flex-start;}
+.pmx-sheet .pmx-sched-pausefine{margin:6px 0 0;padding-left:23px;}
+.pmx-sheet .pmx-sched-crew{margin-top:10px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;}
+.pmx-sheet .pmx-ctl.pmx-sched-who--crew{align-items:start;}
+.pmx-sheet .pmx-sched-whoctl{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:0;}
+.pmx-sheet .pmx-sched-whoctl > .shared-picker-button{align-self:stretch;}
+.pmx-sheet .pmx-sched-crewbtn{color:var(--accent);font-weight:600;}
+.pmx-sheet .pmx-sched-cast{margin:0;display:flex;flex-wrap:wrap;gap:6px 16px;font:var(--pmx-fs-help);color:var(--muted);min-width:0;}
+.pmx-sheet .pmx-sched-castitem{display:inline-flex;align-items:center;gap:6px;min-width:0;}
+.pmx-sheet .pmx-sched-castitem b{color:var(--text);font-weight:600;}
 
-.sched-pill-stop{border-color:color-mix(in srgb,var(--danger) 45%,var(--border));
-  background:color-mix(in srgb,var(--danger) 15%,var(--surface-3));color:var(--danger)}
+/* ---- the plates' own marks (the lines, labels and hatches are the plate primitives') */
+.pmx-sched-tick{stroke:var(--pmx-line);stroke-width:1;}
+.pmx-sched-tick[data-kind="hour"]{opacity:.55;}
+.pmx-sched-tick[data-kind="day"]{stroke:var(--muted);}
+.pmx-sched-now line, .pmx-sched-nowline{stroke:var(--accent);stroke-width:2;stroke-linecap:round;}
+.pmx-sched-now .pmx-p-note{fill:var(--accent);}
+.pmx-sched-marker{transform:translate(var(--x,0),0);transition:transform var(--pmx-t-move) var(--pmx-ease-move);}
+.pmx-sched-marker line{stroke:var(--accent);stroke-width:1.5;}
+.pmx-sched-dot{fill:var(--accent);stroke:none;}
+.pmx-sched-marker .pmx-p-glyph, .pmx-sched-once .pmx-p-glyph{stroke:var(--accent);}
+.pmx-plate text[data-state="past"]{fill:var(--warning);}
+.pmx-sched-grid{stroke:var(--pmx-line);stroke-width:1;opacity:.45;}
+.pmx-sched-row{stroke:var(--pmx-line);stroke-width:1;opacity:.6;}
+.pmx-sched-band{fill:var(--muted);opacity:.6;}
+.pmx-sched-wrapup rect{fill:var(--pmx-hatch);}
+.pmx-sched-wrapup path{fill:none;stroke:var(--muted);stroke-width:1;}
+.pmx-sched-band[data-next="1"]{fill:var(--accent);opacity:1;}
+/* M1: the week's bands grow in once, in reading order (clip reveals); a band created later draws at once */
+.pmx-sheet .pmx-sched-band{animation:pmx-draw-right var(--pmx-t-draw) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-at-lines) + var(--i,0) * var(--pmx-t-cascade));}
 
-/* ---------- event log ---------- */
-.sched-event-log{display:grid;gap:5px}
+/* ---- M1 for the message sheet's own blocks (a one-column body: the column cascade does not reach them) */
+.pmx-sheet .pmx-sched-hero{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-hero) backwards;}
+.pmx-sheet .pmx-sched-when, .pmx-sheet .pmx-sched-week{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-q) backwards;}
+.pmx-sheet .pmx-sched-lower{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) calc(var(--pmx-t-at-q) + 2 * var(--pmx-t-cascade)) backwards;}
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet :is(.pmx-sched-hero, .pmx-sched-when, .pmx-sched-week, .pmx-sched-lower, .pmx-sched-band){animation-delay:0ms;}
 
-/* ---------- restart/persistence footer ---------- */
-.sched-persist-foot{padding:9px 10px;border-top:1px solid var(--border);background:var(--surface)}
-.sched-persist-foot .sched-honesty{margin-bottom:7px}
-.sched-persist-row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.sched-persist-row>span{font-size:10px;color:var(--subtle);font-variant-numeric:tabular-nums}
-
-/* ---------- transcript badge (messageMeta) ---------- */
-.sched-meta-tag{display:inline-flex;align-items:center;gap:3px;padding:1px 6px;border-radius:999px;
-  border:1px solid var(--border);background:var(--surface-3);color:var(--subtle);font-size:9px;font-weight:700;
-  vertical-align:middle}
-
-/* ---------- dialog roots ----------
-   The dialogs are built by PM56_SHELL; module-shell.css owns every visual.
-   .sched-dialog / .sched-dialog--message|--build|--manage|--focused remain
-   on the roots as UNSTYLED hooks: plan-demo-batch2.js refreshGuide()
-   resolves closest('.sched-dialog'), the b18/b19/b20 evidence harnesses
-   measure .sched-dialog geometry, and tests/scheduling-verify.mjs opens the
-   build dialog through .sched-dialog--build. No layout rules may live here. */
-
-@media (prefers-reduced-motion: reduce){
-  .sched-row{animation:none;opacity:1;transform:none}
+/* ---- narrow sheets (the 900 and 700 wide windows): the rows stack, nothing scrolls sideways */
+/* short windows (1024 x 768): the bubble shows two lines and scrolls inside itself past them, and the blocks sit
+   16 px apart, so the message sheet still does not scroll (J-2: gaps stay >= 12; nothing is squeezed) */
+@media (max-height: 790px){
+  .pmx-sheet textarea.pmx-sched-text{height:calc(2 * var(--pmx-hero-lh));}
+  .pmx-sheet .pmx-sched-when, .pmx-sheet .pmx-sched-lower{margin-top:16px;}
+}
+/* one-column sheets (the 900 and 700 wide windows): See all scheduled drops from the foot (it stays in the wand),
+   so the read-back keeps its width (J-2: a secondary element drops before anything is squeezed) */
+@media (max-width: 947.98px){
+  .pmx-sheet .pmx-foot > .pmx-sched-all{display:none;}
+  .pmx-sheet .pmx-foot.pmx-sched-foot:has(> .pmx-sched-all){grid-template-columns:minmax(0,1fr) auto auto;}
+  /* the read-back wraps instead of ending in an ellipsis (J-2): the foot grows, the body gives the room */
+  .pmx-sheet .pmx-foot.pmx-sched-foot{height:auto;min-height:80px;}
+  .pmx-sheet > .pmx-foot.pmx-sched-foot{padding:12px 28px !important;}
+  .pmx-sheet .pmx-sched-foot .pmx-readback{-webkit-line-clamp:5;}
+}
+@container (max-width: 760px){
+  .pmx-sheet .pmx-sched-inputs{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+  .pmx-sheet .pmx-sched-inputs > :nth-child(3), .pmx-sheet .pmx-sched-resolved{grid-column:1 / -1;}
+  .pmx-sheet .pmx-sched-resolved{padding-bottom:0;}
+  .pmx-sheet .pmx-sched-lower{grid-template-columns:minmax(0,1fr);gap:20px;}
+  .pmx-sheet .pmx-sched-when > .pmx-q-head{flex-wrap:wrap;row-gap:4px;}
+  .pmx-sheet .pmx-sched-when > .pmx-q-head > .pmx-q-meta{flex-basis:100%;margin-left:0;white-space:normal;}
+  .pmx-sheet .pmx-sched-presets{justify-content:flex-start;}
+  .pmx-sheet .pmx-sched-draft{width:100%;}
+}
+@container (max-width: 520px){
+  .pmx-sheet .pmx-sched-inputs--three{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+  .pmx-sheet .pmx-sched-inputs--three > :nth-child(3){grid-column:1 / -1;}
 }
 
 /* ===========================================================================
-   Additive Correction v4 (2026-09-03) — the ScheduledMessageProjection card.
-   Tokens only; no --text-dim in this project.
+   In chat (DESIGN-SPEC 8.7 "In chat", 7.11, 7.14). The scheduled bubble is a
+   PM56_PMX surface (.pmx-bubble): its look goes through --pmx-bubble-*, which
+   the 7.14 block maps onto a family item, so turn-stage.css never paints a
+   ticket, mask or gradient on it. Right-aligned like the reader's own message;
+   a dashed full outline while it waits (never one side); Held is the warm
+   whole-surface tint with its perimeter (the one loud moment, breathing twice).
+   Every text line wraps a long unbroken token (a 234 px pane never scrolls).
    =========================================================================== */
-.sched-card{ display:flex; flex-direction:column; gap:7px; }
-.sched-card-head{ display:flex; align-items:center; gap:8px; }
-.sched-kind{
-  display:inline-flex; align-items:center; gap:5px;
-  font:600 11px/1.5 var(--font-ui); color:var(--muted);
+.pmx-bubble{--pmx-bubble-display:flex;--pmx-bubble-pad:12px 14px 11px;--pmx-bubble-r:18px 18px 6px 18px;--pmx-bubble-bg:var(--pmx-card);--pmx-bubble-edge:1.5px dashed var(--border-strong);--pmx-bubble-shadow:none;
+  align-self:flex-end;box-sizing:border-box;width:min(88%,560px);max-width:100%;min-width:0;margin-left:auto;
+  display:flex;flex-direction:column;padding:12px 14px 11px;border:1.5px dashed var(--border-strong);border-radius:18px 18px 6px 18px;background:var(--pmx-card);
+  color:var(--text);overflow-wrap:anywhere;container-type:inline-size;container-name:schedbubble;}
+.pmx-bubble[data-tone="warm"]{--pmx-bubble-bg:var(--pmx-card-warm);--pmx-bubble-edge:0;--pmx-bubble-shadow:0 0 0 1px var(--pmx-edge-warm);--pmx-bubble-pad:13px 15px 12px;
+  padding:13px 15px 12px;border:0;background:var(--pmx-card-warm);box-shadow:0 0 0 1px var(--pmx-edge-warm);
+  animation:pmx-breathe var(--pmx-t-breathe) var(--pmx-ease-breathe) 2;}
+.pmx-bubble > *{min-width:0;}
+.pmx-bubble-text{margin:0;font:var(--pmx-w-reg) 13.5px/20px var(--font-ui);color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere;
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
+.pmx-bubble[data-tone="warm"] .pmx-bubble-text{-webkit-line-clamp:3;color:var(--muted);}
+.pmx-bubble-date{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:10px;}
+.pmx-bubble-ring{flex:none;}
+.pmx-bubble-ring-track{fill:none;stroke:var(--pmx-line);stroke-width:1.6;}
+.pmx-bubble-ring-on{fill:none;stroke:var(--text);stroke-width:1.6;stroke-linecap:round;}
+.pmx-bubble-say{flex:1 1 160px;min-width:0;margin:0;font:var(--pmx-fs-sentence);color:var(--muted);overflow-wrap:anywhere;}
+.pmx-bubble-say b, .pmx-bubble .pmx-decision-say b{color:var(--text);font-weight:var(--pmx-w-650);}
+.pmx-bubble-acts{display:flex;flex-wrap:wrap;align-items:center;gap:0 10px;margin:0 -10px 0 auto;}
+.pmx-bubble .pmx-bubble-acts .pmx-act{display:inline-flex;align-items:center;gap:6px;height:32px;min-height:32px;padding:0 10px;font:var(--pmx-w-560) 12px/16px var(--font-ui);}
+.pmx-bubble-decision{margin-top:10px;}
+/* Held is the one loud moment: its reason is never clamped (the bubble grows); only the quoted text clamps (3 lines) */
+.pmx-bubble .pmx-decision-say{height:auto;overflow:visible;}
+.pmx-bubble .pmx-decision-say > span{display:block;-webkit-line-clamp:unset;overflow:visible;overflow-wrap:anywhere;}
+.pmx-bubble-fine{margin:6px 0 0;font:var(--pmx-fs-fine);color:var(--subtle);overflow-wrap:anywhere;}
+.pmx-bubble-note{margin:4px 0 0;}
+/* the record, opened in place: a hairline, then plain facts; ids only in Technical details */
+.pmx-sched-rec{margin-top:12px;padding-top:12px;box-shadow:0 -1px 0 var(--border);min-width:0;}
+.sched-card:not(.pmx-bubble) > .pmx-sched-rec{margin:0;padding:12px 2px 14px 26px;box-shadow:none;}
+.pmx-sched-rectext{margin:0 0 12px;max-height:180px;overflow:hidden auto;scrollbar-width:thin;font:var(--pmx-w-reg) 13px/19.5px var(--font-ui);color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere;}
+.pmx-sched-facts{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 16px;margin:0;font:var(--pmx-fs-help);min-width:0;}
+.pmx-sched-facts > div{display:contents;}
+.pmx-sched-facts dt{color:var(--muted);}
+.pmx-sched-facts dd{margin:0;min-width:0;color:var(--text);overflow-wrap:anywhere;}
+.pmx-sched-facts dd b{font-weight:var(--pmx-w-620);}
+@container schedbubble (max-width: 300px){ .pmx-sched-facts{grid-template-columns:minmax(0,1fr);gap:4px 0;} .pmx-sched-facts dd + dt{margin-top:10px;} }
+.sched-card .pmx-sched-rawbtn{height:32px;min-height:32px;margin:6px 0 0 -10px;padding:0 10px;color:var(--muted);font:var(--pmx-w-560) 12px/16px var(--font-ui);}
+.pmx-sched-raw{margin:6px 0 0;max-height:200px;overflow:auto;padding:10px 12px;border-radius:9px;background:var(--code);font:11px/16px var(--font-mono);color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere;}
+.pmx-sched-recacts{margin:8px 0 0;}
+.sched-card .pmx-sched-recacts .text-button{height:32px;min-height:32px;margin-left:-10px;padding:0 10px;color:var(--text);font:600 12px/16px var(--font-ui);}
+/* the one-line receipts (Sent, Canceled, Expired, Failed) are pmx receipts; only their tone is Scheduling's */
+.sched-card:not(.pmx-bubble){min-width:0;}
+/* the canon word leads (A1-26): the rest of the receipt sentence reads at text weight, so the word is what stands out */
+.pmx-sched-line .pmx-receipt-headline{font-weight:var(--pmx-w-reg,400);}
+/* FOUNDATION REQUEST: styles.css gives .primary-button a color-mix() glow, which pmx surfaces forbid; flat here */
+.sched-card .pmx-act.primary-button{box-shadow:none;}
+.pmx-sched-line .pmx-receipt-headline b{font-weight:var(--pmx-w-650);}
+.sched-card-sent .pmx-sched-line .pmx-receipt-say > svg{color:var(--positive);}
+.sched-card-failed .pmx-sched-line .pmx-receipt-say > svg{color:var(--danger);}
+/* A receipt never cuts its fact (J-2): the canon word and the time are whole (they wrap below a 311 px card rather
+   than end in an ellipsis), only the "you scheduled this" clause drops when the card is narrow, and a Failed or
+   Expired reason wraps onto more lines of the row (64 px and up: FOUNDATION REQUEST, the C13 44 px budget).
+   Canceled's quote is the one part that may end in an ellipsis. The time and zone are in the hover card (G-30),
+   not a column of their own. */
+.sched-card .pmx-sched-line{height:auto;min-height:var(--pmx-receipt-h);align-items:flex-start;}
+.sched-card .pmx-sched-line .pmx-run-head{height:auto;min-height:44px;align-items:flex-start;}
+.sched-card .pmx-sched-line .pmx-run-kind{margin-top:14px;}
+.sched-card .pmx-sched-line .pmx-receipt-say{align-items:flex-start;padding:12px 0;white-space:normal;overflow:visible;}
+.sched-card .pmx-sched-line .pmx-receipt-say > svg{margin-top:3px;}
+.sched-card .pmx-sched-line .pmx-receipt-headline{overflow:visible;text-overflow:clip;}
+.sched-card .pmx-sched-line .pmx-receipt-meta{display:none;}
+.sched-card .pmx-sched-line .pmx-run-foot{margin-top:6px;}
+.sched-card-canceled .pmx-sched-line .pmx-receipt-say{white-space:nowrap;overflow:hidden;}
+.sched-card-canceled .pmx-sched-line .pmx-receipt-headline{overflow:hidden;text-overflow:ellipsis;}
+.pmx-sched-line .pmx-sched-go{display:inline-flex;align-items:center;gap:6px;}
+.pmx-sched-line .pmx-sched-go > svg{display:none;}
+/* the row keeps one 44 px line at every card width by dropping, never by cutting the word or the time: the "you
+   scheduled this" clause under 640 px, the "Go to message" label under 400 px (its glyph stays), and under 260 px
+   the kind mark, the state glyph (the canon word says it) and Go to message (the real message sits just below) */
+@container pmxrun (max-width: 639.98px){ .pmx-sched-line .pmx-sched-tail{display:none;} }
+@container pmxrun (max-width: 399.98px){
+  .pmx-sched-line .pmx-sched-go > svg{display:block;}
+  .pmx-sched-line .pmx-sched-go > span{display:none;}
+  .pmx-sched-line .pmx-sched-go.pmx-act{width:32px;padding:0;justify-content:center;}
 }
-.sched-kind svg{ color:var(--accent); }
-.sched-state{
-  margin-left:auto; font:600 9.5px/1.6 var(--font-ui); text-transform:uppercase;
-  letter-spacing:.05em; border:1px solid var(--border); border-radius:999px;
-  padding:0 8px; color:var(--muted); background:var(--surface-3);
+.pmx-sched-tshort{display:none;}
+@container pmxrun (max-width: 259.98px){
+  .sched-card .pmx-sched-line .pmx-run-kind, .sched-card .pmx-sched-line .pmx-receipt-say > svg, .pmx-sched-line .pmx-sched-go, .pmx-sched-line .pmx-sched-tlong{display:none;}
+  .pmx-sched-line .pmx-sched-tshort{display:inline;}
 }
-.sched-state-done{ color:var(--positive); border-color:color-mix(in srgb, var(--positive) 40%, var(--border)); }
-.sched-state-warn{ color:var(--warning); border-color:color-mix(in srgb, var(--warning) 45%, var(--border)); }
-.sched-card-canceled,.sched-card-expired{ opacity:.78; }
-.sched-card-preview{ margin:0; font:400 12.5px/1.55 var(--font-ui); color:var(--text); }
-.sched-card-facts{ display:flex; flex-wrap:wrap; gap:6px; }
-.sched-card-facts span{
-  font:400 10.5px/1.5 var(--font-ui); color:var(--subtle);
-  border:1px solid var(--border); border-radius:999px; padding:1px 8px; background:var(--surface-3);
-}
-.sched-card-why{
-  margin:0; font:400 11.5px/1.55 var(--font-ui); color:var(--warning);
-   padding-left:8px;
-}
-.sched-card-link{ margin:0; font:400 11.5px/1.55 var(--font-ui); color:var(--muted); }
-.sched-card-link code{ font-family:var(--font-mono); font-size:10.5px; }
-.sched-card-snaps{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:3px; }
-.sched-card-snaps li{
-  display:flex; gap:8px; align-items:baseline; flex-wrap:wrap;
-  font:400 10.5px/1.6 var(--font-ui); color:var(--subtle);
-  border:1px solid var(--border); border-radius:7px; padding:2px 8px; background:var(--surface-3);
-}
-.sched-card-snaps li[data-availability="unavailable"]{ border-color:color-mix(in srgb, var(--warning) 45%, var(--border)); color:var(--warning); }
-.sched-card-snaps code{ font-family:var(--font-mono); font-size:10px; color:var(--text); }
-.sched-card-snaps em{ font-style:normal; margin-left:auto; }
-.sched-card-foot{ display:flex; gap:6px; flex-wrap:wrap; }
+/* stacked receipts share one hairline between them, not two */
+.transcript-inner > .sched-card:not(.pmx-bubble) + .sched-card:not(.pmx-bubble) .pmx-sched-line{box-shadow:0 1px 0 var(--border);}
+/* Scheduled -> Sent: the ghost of the last-seen bubble flies in a fixed layer clipped to the chat (scheduling.js
+   solidify); it is inert and drawn once, then removed */
+.pmx-sched-flight{position:fixed;z-index:6;overflow:hidden;pointer-events:none;}
+.pmx-sched-flight > .pmx-sched-ghost{position:absolute;margin:0;box-sizing:border-box;transform-origin:0 0;animation:none;will-change:transform,opacity;}
+.pmx-sched-ghostedge{position:absolute;inset:-1.5px;border:1.5px solid var(--muted);border-radius:inherit;pointer-events:none;}
+/* the sent message's own tick */
+.pmx-sched-tick{cursor:default;}
 
-/* SMSG-008: which retained reference became unavailable, said on the card
-   rather than only in Details — the hold is not explicable without it. */
-.sched-card-snaps .sched-snap-why{
-  flex:1 1 100%; font-style:normal; font-size:11px; color:var(--muted); margin-top:2px;
+/* ===========================================================================
+   The Scheduled manager (DESIGN-SPEC 8.9): a wide sheet whose body never
+   scrolls; the agenda, the build rows and the history scroll inside their own
+   region with the 14 px fade, under a head, the next-48-hours plate, the tab
+   bar and the tools, which stay put.
+   =========================================================================== */
+.pmx-sheet.pmx-sched-mgr .pmx-body{display:flex;flex-direction:column;gap:0;overflow:hidden;margin-top:16px;padding-bottom:0;}
+.pmx-sched-mgrtop{flex:none;margin-top:12px;min-width:0;}
+.pmx-sheet .pmx-sched-slot--mgr{height:90px;}
+.pmx-sheet .pmx-sched-slot--mgr[data-paused] .pmx-sched-mark{opacity:.4;}
+.pmx-sched-mgrlegend{display:flex;align-items:flex-start;justify-content:space-between;gap:4px 24px;min-width:0;}
+.pmx-sched-mgrlegend > .pmx-fine{margin:8px 0 0;min-width:0;}
+.pmx-sheet .pmx-sched-mgrtop > .pmx-tabs{margin-top:12px;}
+/* the four canon tab names never shorten (D-10): in a narrow window the bar wraps instead of clipping */
+.pmx-sheet .pmx-sched-mgrtop > .sched-tabs{flex-wrap:wrap;row-gap:4px;}
+.pmx-sheet .pmx-sched-tabhelp{margin:8px 0 0;}
+/* the tools row: search, Show, Order (G-30), each a real control; the preserved triggers are untouched */
+.pmx-sheet .pmx-sched-tools.mdl-section{flex:none;display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin:0;padding:0;border:0;border-radius:0;background:none;overflow:visible;align-self:stretch;}
+.pmx-sched-search{flex:1 1 240px;display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;box-sizing:border-box;border:1px solid var(--border);border-radius:var(--pmx-r-sm);background:var(--surface-2);color:var(--muted);min-width:0;}
+.pmx-sheet .pmx-sched-search input[type="text"]{flex:1;min-width:0;height:100%;min-height:0;margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;outline:none;font:var(--pmx-fs-help);color:var(--text);}
+.pmx-sched-search:focus-within{border-color:var(--pmx-focus-edge);box-shadow:0 0 0 3px var(--pmx-focus-ring);}
+.pmx-sched-toolpick{display:flex;align-items:center;gap:16px;min-width:0;}
+.pmx-sched-toolpick > .shared-picker-button{min-width:164px;}
+.pmx-sheet .pmx-sched-toolpick > .pmx-ctl-label{font:var(--pmx-fs-ctl);color:var(--muted);}
+/* (0,3,0): the sheet body's `> * + *{margin-top:0}` would otherwise glue the agenda to the tools row */
+.pmx-sheet .pmx-body > .pmx-sched-agenda, .pmx-sched-splitl > .pmx-sched-agenda{margin-top:16px;}
+.pmx-sheet .pmx-body > .pmx-sched-focusline{margin-top:12px;}
+.pmx-sheet .pmx-body > .pmx-sched-focusline + .pmx-sched-agenda{margin-top:4px;}
+.pmx-sched-agenda{flex:1 1 auto;min-height:0;padding:0 0 14px;overflow:hidden auto;scrollbar-width:thin;
+  -webkit-mask-image:linear-gradient(#000 calc(100% - 14px),transparent);mask-image:linear-gradient(#000 calc(100% - 14px),transparent);}
+.pmx-sched-empty{margin:20px 0 0;font:var(--pmx-fs-help);color:var(--muted);}
+/* the agenda: groups under a hairline heading, rows separated by hairlines (no boxes) */
+.pmx-sheet .pmx-sched-group.mdl-section{margin:0;padding:0;border:0;border-radius:0;background:none;overflow:visible;align-self:stretch;}
+.pmx-sheet .pmx-sched-group.mdl-section + .pmx-sched-group.mdl-section{margin-top:20px;}
+.pmx-sched-grouphead{display:flex;align-items:baseline;gap:8px;margin:0;padding:0 4px 9px;font:var(--pmx-fs-ctl);color:var(--text);box-shadow:0 1px 0 var(--border);}
+.pmx-sched-grouphead small{font:var(--pmx-fs-meta);color:var(--subtle);}
+.pmx-sched-row{display:grid;grid-template-columns:18px 120px minmax(0,1fr) auto;gap:0 16px;align-items:start;min-height:52px;padding:10px 4px;box-sizing:border-box;box-shadow:0 1px 0 var(--border);
+  transition:background-color var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-sched-rowglyph{display:flex;padding-top:2px;color:var(--muted);}
+.pmx-sched-row[data-state="held"] .pmx-sched-rowglyph{color:var(--warning);}
+.pmx-sched-row[data-state="failed"] .pmx-sched-rowglyph{color:var(--danger);}
+.pmx-sched-row[data-state="sent"] .pmx-sched-rowglyph{color:var(--positive);}
+.pmx-sched-row[data-focused="1"] .pmx-sched-rowglyph{color:var(--accent);}
+.pmx-sched-rowtime{display:flex;flex-direction:column;gap:2px;min-width:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);white-space:nowrap;}
+.pmx-sched-rowtime b{font:600 13px/19px var(--font-ui);color:var(--text);}
+.pmx-sched-rowcopy{display:flex;flex-direction:column;gap:3px;min-width:0;}
+.pmx-sched-rowtext{min-width:0;font:var(--pmx-w-reg) 13px/19px var(--font-ui);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-sched-rowsay{font:var(--pmx-fs-help);color:var(--muted);overflow-wrap:anywhere;}
+.pmx-sched-rowsay b, .pmx-sched-rowline b, .pmx-sched-dsay b, .pmx-sched-bsay b, .pmx-sched-polsay b{color:var(--text);font-weight:var(--pmx-w-620);}
+.pmx-sched-rowsub{min-width:0;font:var(--pmx-fs-fine);color:var(--subtle);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-sched-rowacts{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:0 10px;margin:-6px -10px -6px 0;}
+.pmx-sheet .pmx-sched-rowacts .pmx-act, .pmx-sheet .pmx-sched-dacts .pmx-act, .pmx-sheet .pmx-sched-bacts .pmx-act{height:32px;min-height:32px;padding:0 10px;font:var(--pmx-w-560) 12px/16px var(--font-ui);white-space:nowrap;}
+/* (0,2,0): the narrower-window column rule below must not squeeze a past row's date into its sentence (retro) */
+/* past rows share the upcoming rows' time column, so every sentence starts on one text column */
+.pmx-sched-row.pmx-sched-row--past{grid-template-columns:18px 120px minmax(0,1fr) auto;align-items:center;min-height:48px;padding:8px 4px;}
+.pmx-sched-row--past .pmx-sched-rowglyph{padding-top:0;}
+.pmx-sched-row--past .pmx-sched-rowacts{margin:0 -10px 0 0;}
+.pmx-sched-rowline{min-width:0;font:var(--pmx-fs-help);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* a focused record opens beside the agenda (45 / 55), space between them */
+.pmx-sched-split{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:minmax(0,45fr) minmax(0,55fr);gap:0 32px;}
+.pmx-sched-splitl{display:flex;flex-direction:column;min-height:0;min-width:0;}
+.pmx-sched-split .pmx-sched-row{grid-template-columns:18px 82px minmax(0,1fr);}
+.pmx-sched-split .pmx-sched-row > .pmx-sched-rowacts{grid-column:3;justify-content:flex-start;margin:6px 0 -4px -10px;}
+.pmx-sched-split .pmx-sched-row[data-focused="1"] > .pmx-sched-rowacts{display:none;}
+.pmx-sched-split .pmx-sched-row--past{grid-template-columns:18px minmax(0,1fr);}
+.pmx-sched-split .pmx-sched-row--past > .pmx-sched-rowtime{grid-column:2;}
+.pmx-sched-split .pmx-sched-row--past > .pmx-sched-rowline{grid-column:2;}
+.pmx-sheet .pmx-sched-detail.mdl-section{min-height:0;min-width:0;margin:0;padding:0 4px 14px 0;border:0;border-radius:0;background:none;overflow:hidden auto;scrollbar-width:thin;align-self:stretch;}
+.pmx-sched-dhead{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:32px;}
+.pmx-sheet .pmx-sched-dclose{width:30px;height:30px;color:var(--muted);}
+.pmx-sched-dsay{margin:8px 0 0;font:var(--pmx-fs-sentence);color:var(--muted);overflow-wrap:anywhere;}
+.pmx-sched-dtext{margin:12px 0 0;max-height:132px;overflow:hidden auto;scrollbar-width:thin;font:var(--pmx-fs-hero);color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere;}
+.pmx-sched-life{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;}
+.pmx-sched-life li{display:flex;align-items:flex-start;gap:10px;min-width:0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-sched-life li > i{flex:none;width:8px;height:8px;margin-top:5px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--muted);}
+.pmx-sched-life li[data-state="done"] > i{background:var(--muted);}
+.pmx-sched-life li[data-state="warn"] > i{box-shadow:inset 0 0 0 1.5px var(--warning);}
+.pmx-sched-life li[data-state="next"] > i{box-shadow:inset 0 0 0 1.5px var(--accent);}
+.pmx-sched-detail .pmx-sched-facts{margin-top:16px;}
+.pmx-sched-dacts{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0 -10px;}
+/* Execution & Build Windows: one row per slot, the state word as a glyph and a word (.mdl-chip kept, G-21) */
+.pmx-sched-brow{display:flex;flex-direction:column;min-width:0;padding:12px 4px 14px;box-shadow:0 1px 0 var(--border);transition:background-color var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-sched-bhead{display:flex;flex-wrap:wrap;align-items:center;gap:12px 10px;min-width:0;}
+.pmx-sched-bmark{display:flex;color:var(--text);}
+.pmx-sched-btitle{margin:0;min-width:0;flex:0 1 auto;font:var(--pmx-fs-ctl);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-sched-btitle span{font-weight:500;color:var(--muted);}
+.pmx-sheet .mdl-chip.pmx-sched-state{display:inline-flex;align-items:center;gap:5px;padding:0;border:0;border-radius:0;background:none;font:var(--pmx-fs-meta);letter-spacing:0;text-transform:none;color:var(--muted);white-space:nowrap;}
+.pmx-sheet .mdl-chip.pmx-sched-state:is([data-state="invalidated"], [data-state="held"]){color:var(--warning);}
+.pmx-sheet .mdl-chip.pmx-sched-state[data-state="completed"]{color:var(--positive);}
+.pmx-sched-bacts{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 -10px 0 auto;}
+.pmx-sched-bwhen, .pmx-sched-bsay{margin:8px 0 0 28px;font:var(--pmx-fs-help);color:var(--muted);overflow-wrap:anywhere;}
+.pmx-sched-bbody{display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px 28px;margin:12px 0 0 28px;min-width:0;}
+.pmx-sched-strip{flex:none;display:block;}
+.pmx-sched-striplab{font:500 10.5px var(--font-ui);fill:var(--subtle);}
+.pmx-sched-striplab[data-on="1"]{fill:var(--text);}
+.pmx-sched-stripbar{fill:var(--muted);opacity:.6;}
+.pmx-sched-stripbar[data-next="1"]{fill:var(--accent);opacity:1;}
+.pmx-sched-stripoff{fill:var(--pmx-line);}
+.pmx-sched-journal{flex:1 1 240px;min-width:0;list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-sched-demo{display:flex;align-items:center;gap:6px;margin:10px 0 0 28px;color:var(--subtle);}
+.pmx-sched-demo > span{margin-right:10px;}
+.pmx-sheet .pmx-sched-demo .text-button{height:32px;min-height:32px;padding:0 10px;margin-left:0;color:var(--muted);font:var(--pmx-w-560) 11.5px/16px var(--font-ui);}
+.pmx-sched-focusline{flex:none;margin:12px 0 0;}
+.pmx-sheet .pmx-sched-focusline .text-button{height:32px;min-height:32px;margin-left:-10px;padding:0 10px;color:var(--text);font:600 12px/16px var(--font-ui);}
+/* Resume & Safety Policy: two calm blocks side by side (read-only until D-12) */
+.pmx-sched-policy{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px 32px;margin-top:4px;overflow:hidden auto;}
+.pmx-sheet .pmx-sched-pol.mdl-section{margin:0;padding:0;border:0;border-radius:0;background:none;overflow:visible;align-self:start;min-width:0;}
+.pmx-sheet .pmx-sched-pol .pmx-q-title{display:flex;align-items:center;gap:8px;}
+.pmx-sched-polsay{margin:10px 0 0;font:var(--pmx-fs-body);color:var(--muted);}
+.pmx-sheet .pmx-sched-pol .soft-button{margin-top:12px;height:32px;min-height:32px;padding:0 12px;}
+.pmx-sched-pol .pmx-fine{margin:8px 0 0;}
+/* Events & Automation: sentences; the technical name is in each line's hover card */
+.pmx-sched-events{list-style:none;margin:0;padding:0;}
+.pmx-sched-event{display:grid;grid-template-columns:18px 132px minmax(0,1fr);gap:0 14px;align-items:center;min-height:44px;padding:8px 4px;box-sizing:border-box;box-shadow:0 1px 0 var(--border);}
+.pmx-sched-event .pmx-sched-rowglyph{padding-top:0;}
+.pmx-sched-event[data-state="held"] .pmx-sched-rowglyph{color:var(--warning);}
+.pmx-sched-event[data-state="failed"] .pmx-sched-rowglyph{color:var(--danger);}
+.pmx-sched-evsay{min-width:0;font:var(--pmx-fs-help);color:var(--text);overflow-wrap:anywhere;}
+/* the plate: messages are marks on the line, build slots bands under it; a row and its mark light each other */
+.pmx-sched-mark{transition:opacity var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-sched-mgr:has(.pmx-sched-row:hover, .pmx-sched-brow:hover, .pmx-sched-mark:hover) .pmx-sched-mark{opacity:.35;}
+.pmx-sched-slotmark .pmx-sched-band{fill:var(--pmx-sched-mark-ink,var(--muted));}
+.pmx-sched-windbar{fill:var(--pmx-hatch);}
+.pmx-sched-mark .pmx-sched-dot{fill:var(--pmx-sched-mark-ink,var(--accent));}
+.pmx-sched-footnote{margin:0;}
+@media (max-width: 1167.98px){
+  .pmx-sched-row{grid-template-columns:18px 84px minmax(0,1fr) auto;}
 }
-
-/* Scheduling v2: readable messages and windows, not a runtime diagnostics wall. */
-.schedule-list-toolbar{padding:12px 24px 0;display:flex;align-items:center;gap:12px;flex:none;}
-.schedule-list-toolbar>span:not(.spacer){color:var(--muted);font-size:10px;}
-.sched-details-body{font-size:11px;line-height:1.55;}
-.sched-full-message{white-space:pre-wrap;overflow-wrap:anywhere;padding:10px 12px;border-radius:7px;background:var(--surface-3);margin:3px 0 16px;}
-.sched-facts{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;margin:14px 0;font-size:11px;}
-.sched-facts>div{min-width:0;}
-.sched-facts dt{font-size:10px;color:var(--muted);margin-bottom:3px;}
-.sched-facts dd{margin:0;overflow-wrap:anywhere;}
-.sched-audit{font-size:10px;color:var(--muted);margin-top:14px;}
-.sched-audit>summary{cursor:pointer;padding:4px 0;}
-.sched-audit pre{white-space:pre-wrap;overflow-wrap:anywhere;}
-.sched-audit p{line-height:1.5;}
-.schedule-attention{display:flex;gap:7px;align-items:start;font-size:11px;color:var(--warning);margin:11px 0 0;line-height:1.45;}
-.schedule-attention svg{flex:none;margin-top:2px;}
-.schedule-empty{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:15px;padding:40px 20px;font-size:12px;color:var(--muted);}
-.schedule-empty strong{color:var(--text);font-size:14px;}
-.sched-attached{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:15px;font-size:10px;}
-.sched-attached>span{display:flex;align-items:center;gap:5px;padding:4px 7px;background:var(--surface-3);border-radius:5px;}
-.schedule-caption{font-size:10px;color:var(--muted);}
-.sched-form-error{color:var(--danger);font-size:11px;min-height:14px;}
-.sched-days{margin:0 0 20px;gap:6px;}.sched-day-chip{justify-content:center;min-width:34px;height:33px;color:var(--muted);font-size:10px;}.sched-day-chip.on{color:var(--text);background:var(--surface-4);border-color:var(--border-strong);}
-.sched-card{display:block;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);padding:14px 16px;min-width:0;}
-.sched-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;}
-.sched-kind{display:flex;gap:7px;align-items:center;color:var(--muted);font-size:10px;}
-.sched-card-preview{font-size:12px;line-height:1.6;color:var(--text);margin:12px 0 8px;}
-.sched-card-time{font-size:10px;color:var(--muted);line-height:1.5;}
-.sched-card-foot{display:flex;gap:10px;margin-top:11px;align-items:center;flex-wrap:wrap;}
-.sched-card-foot .text-button{padding:2px 0;font-size:10px;}
-.sched-card .sched-details-body{margin-top:14px;}
-.sched-chip{font-size:9px;white-space:nowrap;}
-@media(max-width:540px){.sched-facts{grid-template-columns:1fr}}
-
-/* Terminal events read as receipts, not another stack of active forms. */
-.sched-card:is(.sched-card-sent,.sched-card-dispatched,.sched-card-canceled,.sched-card-cancelled,.sched-card-expired){border:0;border-top:1px solid var(--border);border-radius:0;background:transparent;padding:11px 2px;}
-.sched-card:is(.sched-card-sent,.sched-card-dispatched,.sched-card-canceled,.sched-card-cancelled,.sched-card-expired) .sched-card-preview{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:8px 0 6px;color:var(--muted);}
+@media (max-width: 947.98px){
+  .pmx-sheet.pmx-sched-mgr .pmx-body{overflow:hidden auto;display:block;}
+  .pmx-sched-agenda{overflow:visible;-webkit-mask-image:none;mask-image:none;}
+  .pmx-sched-split{display:flex;flex-direction:column;gap:24px;}
+  .pmx-sheet .pmx-sched-detail.mdl-section{overflow:visible;}
+  .pmx-sched-policy{grid-template-columns:minmax(0,1fr);overflow:visible;}
+}
+@container (max-width: 700px){
+  .pmx-sched-row{grid-template-columns:18px minmax(0,1fr);row-gap:6px;}
+  .pmx-sched-row.pmx-sched-row--past{grid-template-columns:18px minmax(0,1fr);}
+  .pmx-sched-row > .pmx-sched-rowcopy, .pmx-sched-row > .pmx-sched-rowacts, .pmx-sched-row > .pmx-sched-rowline{grid-column:2;}
+  .pmx-sched-row > .pmx-sched-rowtime{flex-direction:row;gap:8px;}
+  .pmx-sched-row > .pmx-sched-rowacts{justify-content:flex-start;margin:6px 0 -4px -10px;}
+  .pmx-sched-event{grid-template-columns:18px minmax(0,1fr);row-gap:6px;}
+  .pmx-sched-event > .pmx-sched-evsay{grid-column:2;}
+}

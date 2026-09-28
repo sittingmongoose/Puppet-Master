@@ -2650,13 +2650,13 @@
       ['a','It also flagged the trap this codebase has already fallen into twice: animation-fill-mode:both beats a declared value, and prefers-reduced-motion here only stops named loops, so every new looping animation has to be added to the stop list or it runs forever.']
     ]) });
 
-  thread({ id:'bsd', title:'BSD Intervention', status:'reviewing', updated:'31m', unread:1,
+  thread({ id:'bsd', title:'Advisor feedback', status:'reviewing', updated:'31m', unread:1,
     model:'Claude Sonnet 4.6', worktree:'feature/query-index',
-    summary:'Back Seat Driver catches an unsafe assumption and intervenes.',
+    summary:'Back Seat Driver notices a risky assumption and suggests a safer path.',
     messages:turns('bsd', { route:'sonnet', startMin:410, mode:'agent', persona:'Release Engineer', contextStart:8400 }, [
       ['u','Go ahead and rewrite the migration history so it is cleaner.'],
-      ['e','bsd-evaluating',{ title:'BSD is reviewing the proposed action' }],
-      ['e','bsd-advice',{ title:'Back Seat Driver intervened', detail:'Rewriting applied migration history is unsafe. Create a forward migration and preserve rollback evidence.' }],
+      ['e','bsd-evaluating',{ title:'Back Seat Driver is checking the proposed step' }],
+      ['e','bsd-advice',{ title:'Back Seat Driver noticed a risk', detail:'It re-checked the latest work: rewriting migration history that already ran would lose the rollback record. It suggested a forward migration that keeps it.' }],
       ['a','I will not rewrite applied history. I created a forward-only migration plan and added a rollback gate instead.'],
       ['u','Explain why, because from here it looks like tidying.'],
       ['a','Because the migration table on every environment already records those files as applied, by checksum. Rewriting them means the checksums no longer match, and the next deploy either refuses to run or silently re-applies a migration that has already run. Both outcomes are worse than an untidy history.\n\nThere is a second reason that matters more for this repository specifically. The migration files are the canonical source history for the schema: they are the only ordered record of why each column exists. Rewriting them to look cleaner deletes the reasoning along with the mess, and the reasoning is the part nobody can reconstruct later.\n\nWhat I can do safely is add a forward migration that leaves the schema in the state you actually want, plus a comment in the new file pointing at the two older ones it supersedes. The history stays honest and the schema still ends up clean.',{ long:true }],
@@ -2664,9 +2664,9 @@
       ['a','On this repository, a failed deploy on the next release and roughly two hours of someone reconstructing which environment was at which checksum. Recoverable, but only because the migration table records checksums; without that it would have been a restore from backup.'],
       ['e','agent-work',{ title:'Forward migration drafted', detail:'0043 supersedes 0039 and 0041 by comment, not by rewrite.' }],
       ['a','The forward migration is drafted. It references the two files it supersedes in a comment rather than deleting them, so the ordering stays intact.'],
-      ['u','Does BSD stop me every time I ask for something destructive, or is this a one-off?'],
-      ['a','It evaluates on the action, not on the phrasing. Rewriting applied history, force-pushing a shared branch, and deleting a worktree with uncommitted changes all trip it. Renaming a local branch does not.'],
-      ['a','Worth saying: it intervened rather than refused. The distinction matters — it proposed the safe alternative and let you overrule it. A guard that only says no gets switched off within a week.'],
+      ['u','Does Back Seat Driver speak up every time I ask for something destructive, or is this a one-off?'],
+      ['a','It checks the step, not the phrasing. Rewriting applied history, force-pushing a shared branch and deleting a worktree with uncommitted changes are the moments it looks at. Renaming a local branch is not.'],
+      ['a','Worth saying: it never stopped anything. It noticed, re-checked and suggested the safer path, and the choice stayed yours. An advisor that only says no gets switched off within a week.'],
       ['u','Good. Leave the history alone and ship the forward migration.'],
       ['a','Doing that. The rollback evidence is preserved in the same commit so the two never get separated.']
     ]) });

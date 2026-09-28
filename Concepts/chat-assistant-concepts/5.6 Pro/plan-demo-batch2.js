@@ -13,9 +13,10 @@
  };
  const clone=x=>JSON.parse(JSON.stringify(x));
  function ctx(){return E.ctx();}function plan(){return active&&P.get(active.planId);}function schedule(){return active&&S.list().builds.find(b=>b.schedule_id===active.scheduleId);}
+ function query(action,data={}){return '[data-action="'+action+'"]'+Object.entries(data).map(([k,v])=>'[data-'+k.replace(/[A-Z]/g,c=>'-'+c.toLowerCase())+'="'+CSS.escape(String(v))+'"]').join('');}
+ function visible(action,data={}){return [...document.querySelectorAll(query(action,data))].some(b=>b.getClientRects().length&&!b.disabled&&!b.closest('.pmx-ghost'));}
  function control(action,data={}){
-  const q='[data-action="'+action+'"]'+Object.entries(data).map(([k,v])=>'[data-'+k.replace(/[A-Z]/g,c=>'-'+c.toLowerCase())+'="'+CSS.escape(String(v))+'"]').join('');
-  const b=[...document.querySelectorAll(q)].find(b=>b.getClientRects().length&&!b.disabled);if(!b)throw Error('Visible control unavailable: '+action);b.scrollIntoView({block:'nearest'});b.click();
+  const b=[...document.querySelectorAll(query(action,data))].find(b=>b.getClientRects().length&&!b.disabled&&!b.closest('.pmx-ghost'));if(!b)throw Error('Visible control unavailable: '+action);b.scrollIntoView({block:'nearest'});b.click();
  }
  function raw(action,data={}){const b=document.createElement('button');Object.assign(b.dataset,data);E.run(action,b,new Event('click'));}
  function start(flow){
@@ -23,7 +24,7 @@
   if(active){const old=plan(),b=schedule();if(old?.status==='building')raw('pd-cancel',{id:old.plan_id});if(b?.state==='active')raw('sched-cancel-build',{id:b.schedule_id});}
   window.PM56_PLAN_DEMOS.start('complete');const seed=window.PM56_PLAN_DEMOS.snapshot();raw('plan-demo-close');
   const c=ctx(),t=c.activeThread();t.title=flows[flow].label;
-  active={flow,planId:seed.planId,threadId:seed.threadId,step:0,scheduleId:null,initial:clone(P.get(seed.planId).revisions[1]),events:[],error:null,preview:null};
+  active={flow,planId:seed.planId,threadId:seed.threadId,step:0,scheduleId:null,initial:clone(P.get(seed.planId).revisions[1]),events:[],error:null,preview:null,known:S.list().builds.map(b=>b.schedule_id)};
   c.renderApp();
  }
  function field(name,value){const el=document.querySelector('[data-sched-input="'+name+'"]');if(!el)throw Error('Schedule field unavailable: '+name);el.value=value;el.dispatchEvent(new Event('change',{bubbles:true}));}
@@ -48,7 +49,7 @@
     if(b.exact_target_hash!==P.hash(p.plan_id)||b.exact_target_version!==p.version)throw Error('Binding does not match the Plan');
    }
    if(kind==='close'){
-    control('sched-close-dialog');await pause();if(active!==a)return;
+    if(visible('sched-close-dialog')){control('sched-close-dialog');await pause();if(active!==a)return;}  /* the reader may have closed it already */
     const b=document.querySelector('[data-action="pd-more-actions"][data-id="'+p.plan_id+'"][aria-expanded="true"]');if(b)b.click();
    }
    if(kind==='revise'){control('pd-revise',{id:p.plan_id});if(innerWidth<=1100)control('return-to-chat');}
@@ -60,7 +61,10 @@
    if(kind==='rebind'){
     control('sched-rebind-build',{id:a.scheduleId});if(schedule().exact_target_version!==2)throw Error('V2 was not bound');
    }
-   if(kind==='cancel'){control('sched-cancel-build',{id:a.scheduleId});if(schedule().state!=='canceled')throw Error('Cancellation did not persist');}
+   if(kind==='cancel'){
+    /* Build At now confirms in place; the schedule's own Cancel lives in Scheduled, one visible click away */
+    if(!visible('sched-cancel-build',{id:a.scheduleId})){control('sched-open-plan-record',{id:a.scheduleId});await pause();if(active!==a)return;}
+    control('sched-cancel-build',{id:a.scheduleId});if(schedule().state!=='canceled')throw Error('Cancellation did not persist');}
    if(kind==='due'){
     const b=schedule();a.preview=S.dispatchBuildAt(b.schedule_id,Date.parse(b.scheduled_at_utc),b.revision);
     if(a.flow==='cancel'){
@@ -73,15 +77,29 @@
    a.events.push({step:kind,at:performance.now(),planVersion:p.version,planStatus:p.status,scheduleState:schedule()?.state});a.step++;a.error=null;
   }catch(err){a.error=String(err.message||err);}finally{a.busy=false;if(active===a)refreshGuide();}
  }
+ /* the guide follows the reader's own click: a schedule for this Plan committed with the sheet's own primary (not
+    the guide's "Schedule build") moves the guide past its save step, so Done never strands the flow */
+ function follow(a){
+  if(!a||a.busy||a.scheduleId)return;const k=flows[a.flow].steps.map(s=>s[2]),at=k.indexOf('save');if(at<0||a.step>at)return;
+  const p=plan(),b=p&&S.list().builds.find(b=>b.target_id===p.plan_id&&b.state==='active'&&!a.known.includes(b.schedule_id));
+  if(!b||b.exact_target_version!==p.version)return;
+  a.scheduleId=b.schedule_id;a.events.push({step:'save',at:performance.now(),planVersion:p.version,planStatus:p.status,scheduleState:b.state,by:'reader'});a.step=at+1;a.error=null;
+ }
  function finished(){if(!active)return false;return active.flow==='due'?active.step>=7&&plan()?.status==='completed':active.step>=flows[active.flow].steps.length;}
+ /* The guide is the one pmx guide look (G-25): a sheet line inside Build At and the manager, a dock line in the
+    chat, a document line beside the Plan. No engine words and no batch numbers; the step is what to do next. */
  function guide(c,inDialog,inEditor=false){
   if(!active||c.state.selectedThread!==active.threadId)return '';
   if(!!c.state.dialog!==inDialog)return '';
   const covered=innerWidth<=1100&&c.state.editorRevealed;
   if(!inDialog&&covered!==inEditor)return '';
+  follow(active);
   const a=active,f=flows[a.flow],step=f.steps[a.step],done=finished(),wait=step?.[2]==='wait';
-  const title=done?(a.flow==='due'?'V1 completed · one scheduled build':a.flow==='revise'?'V2 started · V1 unchanged':'Canceled · no build or To-Dos'):step?.[0]||'Inspect result';
-  return '<div class="plan-demo-guide schedule-demo-guide" data-k="schedule-demo-guide"><div><small>Guided demo · '+c.esc(f.label)+(a.preview?' · Due time preview':'')+'</small><strong>'+c.esc(title)+'</strong></div><div class="plan-demo-controls"><button data-action="schedule-demo-'+(done?'replay':'next')+'"'+(!done&&(wait||a.busy)?' disabled':'')+'>'+c.esc(done?'Replay':step?.[1]||'Continue')+'</button><button class="plan-demo-close" data-action="schedule-demo-close" title="Close guide">'+c.icon('close',14)+'</button></div>'+(a.error?'<p role="status">'+c.esc(a.error)+'</p>':'')+'</div>';
+  const title=done?(a.flow==='due'?'Built V1 once, on schedule.':a.flow==='revise'?'V2 is building. The V1 schedule was never used.':'Canceled. Nothing was built and no To-Dos were made.'):(step?.[0]||'See the result')+(a.preview?' · the due time was previewed':'');
+  const SH=window.PM56_SHELL,btn=done?{action:'schedule-demo-replay',label:'Replay'}:{action:'schedule-demo-next',label:c.esc(step?.[1]||'Continue'),attrs:(wait||a.busy)?'disabled':''};
+  return SH.pmxGuide({key:'schedule-demo-guide',cls:'schedule-demo-guide',placement:inDialog?'sheet':inEditor?'doc':'dock',caption:'Guided example · '+c.esc(f.label),
+   step:c.esc(title),actions:[btn],close:{action:'schedule-demo-close',label:'Close the guide'},
+   extra:a.error?'<p class="pmx-fine schedule-demo-error" role="status">'+c.esc(a.error)+'</p>':''});
  }
  // Product controls already rendered their owned surfaces. Updating the guide
  // must not remount the entire app and restart unrelated transitions.
@@ -97,9 +115,13 @@
  E.action('schedule-demo-next',()=>{next();return true;});
  E.action('schedule-demo-replay',()=>{if(active)start(active.flow);return true;});
  E.action('schedule-demo-close',()=>{active=null;ctx().renderApp();return true;});
+ /* closing a Scheduling sheet re-renders only the overlays: scheduling.js calls afterClose() from sched-close-dialog,
+    and the guide comes back to the chat (or the Plan) once the sheet has gone (its exit keeps the dialog state for a
+    moment), whoever closed it (the reader's Done included) */
+ function afterClose(){if(!active)return;let n=0;const back=()=>{if(!active)return;if(ctx().state.dialog&&++n<40){setTimeout(back,50);return;}if(!ctx().state.dialog)refreshGuide();};setTimeout(back,50);}
  E.chainAction('reset-all',()=>{active=null;return false;});
  E.chainAction('plan-demo-start',()=>{active=null;return false;});
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;
  G.gallery=c=>'<section class="demo-section"><h3>Guided Plan scheduling</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="schedule-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
- window.PM56_SCHEDULE_DEMOS={start,snapshot:()=>active?clone({...active,finished:!!finished()}):null,dialogGuide:c=>guide(c,true),editorGuide:id=>active&&active.planId===id?guide(ctx(),false,true):''};
+ window.PM56_SCHEDULE_DEMOS={start,snapshot:()=>active?clone({...active,finished:!!finished()}):null,dialogGuide:c=>guide(c,true),editorGuide:id=>active&&active.planId===id?guide(ctx(),false,true):'',afterClose};
 })();

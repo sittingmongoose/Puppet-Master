@@ -9,563 +9,105 @@
  */
 
 /* =============================================================== card == */
-.collab-card {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+/* COLLAB step 2: the run card is the pmx primitive (.pmx-run and its parts, module-shell.css); its legacy look
+   (.collab-card, -head, -title, -meta, -body, -foot, the kind-badge tiles and the status capsule) is deleted with
+   the markup. Only the card's own module parts are styled here, under pmx-collab-*. */
+/* the More row (G-12): real buttons that replace the actions row in place; a disabled entry prints its reason
+   beside it (MOD-17) and the row wraps whole entries, never inside one */
+.pmx-run .pmx-collab-more { row-gap: 8px; column-gap: 6px; }
+.pmx-collab-mi { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; min-width: 0; max-width: 100%; }
+/* the reason sits beside its button, or under it when the card is narrow (it wraps, never squeezes); its ink
+   keeps 12 px from the card's edge (J-2) */
+.pmx-collab-why { flex: 0 1 auto; font: var(--pmx-fs-fine); color: var(--subtle); white-space: normal; min-width: 0; padding: 0 12px 0 0; }
+/* the waiting card's short "Watch an example" (retro, M tier); the long label everywhere else */
+.pmx-collab-ws { display: none; }
+@container pmxrun (max-width: 519.98px) {
+  body[data-theme^="retro"] .pmx-run.collab-card .pmx-collab-wl { display: none; }
+  body[data-theme^="retro"] .pmx-run.collab-card .pmx-collab-ws { display: inline; }
 }
-.collab-card-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+/* 7.2 S tier: the More row takes the meta line's room while it is open (the row wraps to three or four short lines
+   there), so the card stays inside its S budget; the meta returns when the row closes */
+@container pmxrun (max-width: 359px) {
+  .pmx-run.collab-card:has(> .pmx-run-foot > .pmx-collab-more) > .pmx-run-body > .collab-card-meta { display: none; }
 }
-.collab-kind-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 2px 8px;
-  border-radius: var(--radius-sm);
-  background: var(--surface-3);
-  border: 1px solid var(--border);
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text);
-  white-space: nowrap;
+.pmx-collab-tech { margin: 8px 0 0; font: var(--pmx-fs-fine); color: var(--subtle); overflow-wrap: anywhere; }
+/* 7.12: the one-control-set pointer takes the follow-on's place in the same row (R-28) */
+.pmx-collab-choosing { display: inline-flex; align-items: center; gap: 8px; min-width: 0; font: var(--pmx-fs-sentence, var(--pmx-fs-help)); color: var(--muted); }
+.pmx-collab-choosing > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmx-collab-choosing svg { flex: none; color: var(--subtle); }
+/* legacy card rules still shipped in review-protocol.css and brainstorm-protocol.css (.collab-kind-review /
+   .collab-kind-brainstorm .collab-card-head, -title, -foot; REVIEW and STORM delete them in wave 2) load later and
+   would wrap the head row: the primitive's own values, restated at (0,4,0) */
+.pmx-run.collab-card > .pmx-run-head.collab-card-head { flex-wrap: nowrap; align-items: center; }
+.pmx-run.collab-card > .pmx-run-head > .pmx-run-title.collab-card-title { flex: 1 1 auto; min-width: 0; overflow-wrap: normal; }
+.pmx-run.collab-card > .pmx-run-foot.collab-card-foot { flex-wrap: nowrap; }
+/* 7.2 attention budget (M 360, L 360): the loud face keeps the helper that needs you (its lane first) and the builder's
+   "+N more · Show all" row for the others, as the S tier does (module-shell.css); Show all lists every lane */
+.pmx-run.collab-card[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > :is(.pmx-lane ~ .pmx-lane, .pmx-lanes-more:not(.pmx-lanes-more-s)) { display: none; }
+.pmx-run.collab-card[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s { display: flex; }
+/* 7.2 S tier (260-360): "Who did what" in two columns of mark + full name (the run view has what each did); four
+   narrow columns cut every name to a few letters */
+@container pmxrun (min-width: 260px) and (max-width: 359.98px) {
+  .pmx-run.collab-card .pmx-credits ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 16px; }
+  .pmx-run.collab-card .pmx-credits li { grid-template-columns: 18px minmax(0, 1fr); grid-template-rows: auto; align-items: center; column-gap: 7px; }
+  .pmx-run.collab-card .pmx-credits li > .pmx-did { display: none; }
 }
-.collab-kind-crew .collab-kind-badge { color: var(--accent); }
-.collab-kind-brainstorm .collab-kind-badge { color: var(--accent-2); }
-.collab-kind-review .collab-kind-badge { color: var(--warning); }
-.collab-kind-chat_room .collab-kind-badge { color: var(--positive); }
-.collab-card-title {
-  font-size: 13px;
-  color: var(--text);
-  flex: 1 1 auto;
-  min-width: 120px;
+/* M6 / M7 (G-07, R-08): while the template holds the old face, its body and foot fade out and reach 0 exactly when the
+   face switches (M6: 140 ms ending at the 260 ms hold; M7: the 120 ms hold). The head stays. */
+@keyframes pmx-collab-fade-out { from { opacity: 1; } to { opacity: 0; } }
+.pmx-run.collab-card[data-pmx-settling="1"][data-collab-settle="result"] > :is(.pmx-run-body, .pmx-run-foot) {
+  animation: pmx-collab-fade-out var(--pmx-t-swapdlg) var(--pmx-ease-in) calc(var(--pmx-t-stop) + var(--pmx-t-at-r1) - var(--pmx-t-swapdlg)) both;
 }
-.collab-card-meta {
-  margin: 0;
-  font-size: 11px;
-  color: var(--muted);
+.pmx-run.collab-card[data-pmx-settling="1"][data-collab-settle="receipt"] > :is(.pmx-run-body, .pmx-run-foot) {
+  animation: pmx-collab-fade-out var(--pmx-t-fade) var(--pmx-ease-out) both;
 }
-.collab-card-body {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-top: 4px;
-  border-top: 1px dashed var(--border);
-}
-.collab-card-foot {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-  padding-top: 4px;
-}
-.collab-more-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 6px 0 0;
-  border-top: 1px dashed var(--border);
-}
+/* M6 beat 3: the result's content comes first (headline +20, figures +40, output +60, credits +100 with their caption)
+   and its actions last (+180), so no frame shows buttons under an empty body */
+.pmx-run.collab-card[data-density="result"] > .pmx-run-foot { animation: pmx-fade-in var(--pmx-t-row) var(--pmx-ease-out) calc(var(--pmx-t-at-r4) + 2 * var(--pmx-t-at-r2)) backwards; }
+.pmx-run.collab-card .pmx-credits > .pmx-fine { animation: pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-r4) backwards; }
+/* M7 beat 3: the receipt row is whole from its first frame (head and actions together) while the card folds to it;
+   a receipt whose head faded in under visible actions read as a hollow slab */
+.pmx-receipt.collab-card > .pmx-run-head { animation: none; }
+.pmx-collab-missing { margin: 0; padding: 8px 12px; font: var(--pmx-fs-sentence, var(--pmx-fs-help)); color: var(--muted); }
 
-/* ========================================================= status chip == */
-.collab-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: var(--surface-3);
-  border: 1px solid var(--border);
-  color: var(--text);
-}
-.collab-status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); flex: none; }
-.collab-status-working .collab-status-dot { background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
-.collab-status-done .collab-status-dot { background: var(--positive); }
-.collab-status-blocked .collab-status-dot { background: var(--danger); }
-.collab-status-idle .collab-status-dot { background: var(--muted); }
+/* ------------------------------------------------ Activity projections (7.13) */
+/* hover row: kind mark, title and the one true sentence, then the clock */
+.ab-card .polish-collab-preview .pmx-collab-abmark { flex: none; display: inline-flex; color: var(--muted); align-self: flex-start; margin-top: 2px; }
+.ab-card .polish-collab-preview .pmx-collab-absay { font: var(--pmx-fs-help); color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ab-card .polish-collab-preview .pmx-collab-absay-w { font-weight: var(--pmx-w-620); color: var(--text); }
+.ab-card .polish-collab-preview .pmx-clock { flex: none; font: var(--pmx-fs-meta); font-variant-numeric: tabular-nums; color: var(--subtle); align-self: flex-start; margin-top: 1px; }
+.ab-card .pmx-collab-abmore { margin: 4px 12px 8px; }
+/* Activity Detail body: title, sentence, nowText, a 36 px team list, Open Panel and Message */
+.collab-activity-body .pmx-collab-ab-title { margin: 0; font: var(--pmx-w-640) 13.5px/20px var(--font-ui); color: var(--text); overflow-wrap: anywhere; }
+.collab-activity-body .pmx-collab-ab-now { margin: 0; }
+.collab-activity-body .pmx-collab-ab-team { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
+.collab-activity-body .pmx-collab-ab-acts { margin-top: 4px; }
+/* ============================================================ panel == */
+/* COLLAB step 3: the centred panel is retired (the docked run view, collab-view.js / .css, draws every tab from the
+   pmx primitives), so its rules went with its markup: the status chip, participant rows, message lines, usage
+   strip, the kind inline blocks (assignments, votes, leads, findings, promotions), the follow-on rows, the tabs,
+   the panel body and foot, and the participant transcript. Only .collab-sub stays: the room protocol still
+   prints it. */
+.collab-sub { font-size: 11px; color: var(--muted); margin: 0; }
 
-/* ==================================================== participant row == */
-.collab-participants {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.collab-participant {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  width: 100%;
-  text-align: left;
-  padding: 7px 9px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--surface-2);
-  color: var(--text);
-  cursor: pointer;
-  transition: background var(--ease, .15s), border-color var(--ease, .15s), transform var(--spring-soft-ease, .18s);
-}
-.collab-participant:hover, .collab-participant:focus-visible {
-  background: var(--surface-3);
-  border-color: var(--border-strong);
-}
-.collab-participant:active { transform: scale(.99); }
-.collab-p-avatar {
-  flex: none;
-  width: 26px;
-  height: 26px;
-  border-radius: 8px;
-  display: grid;
-  place-items: center;
-  font-size: 10px;
-  font-weight: 700;
-  background: var(--surface-4);
-  color: var(--text);
-}
-.collab-p-copy {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-  flex: 1 1 auto;
-}
-.collab-p-copy strong { font-size: 12px; color: var(--text); }
-.collab-additive-tag {
-  font-style: normal;
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .03em;
-  color: var(--accent-2);
-  border: 1px solid var(--accent-2);
-  border-radius: 4px;
-  padding: 0 4px;
-  margin-left: 4px;
-}
-.collab-p-route, .collab-p-current, .collab-p-blocked, .collab-p-state {
-  font-size: 10.5px;
-  color: var(--muted);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  flex-wrap: wrap;
-}
-.collab-p-blocked { color: var(--danger); }
-.collab-p-status {
-  flex: none;
-  font-size: 10px;
-  font-weight: 600;
-  padding: 2px 7px;
-  border-radius: 999px;
-  background: var(--surface-3);
-  color: var(--muted);
-}
-.collab-p-status-working { color: var(--accent); }
-.collab-p-status-done { color: var(--positive); }
-.collab-p-status-blocked { color: var(--danger); }
-
-/* ============================================== requested/effective == */
-.collab-route { color: var(--text-dim, var(--muted)); }
-.collab-route-eff {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-weight: 600;
-}
-.collab-route-eff-sub { color: var(--warning); }
-.collab-route-eff-failed { color: var(--danger); }
-.collab-p-identity { font-size: 12px; color: var(--text); }
-.collab-sub-reason { font-size: 11px; color: var(--warning); display: flex; gap: 5px; align-items: flex-start; }
-
-/* ==================================================== messages/recent == */
-.collab-recent, .collab-room-recent, .collab-full-transcript {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.collab-recent strong { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
-.collab-msg {
-  
-  padding: 4px 0 4px 9px;
-}
-.collab-msg-user {  }
-.collab-msg-coordinator {  }
-.collab-msg-system {  }
-.collab-msg-head {
-  display: flex;
-  align-items: baseline;
-  gap: 7px;
-  font-size: 10.5px;
-}
-.collab-msg-head strong { color: var(--text); font-size: 11.5px; }
-.collab-msg-type {
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .03em;
-  color: var(--warning);
-  border: 1px solid var(--warning);
-  border-radius: 4px;
-  padding: 0 4px;
-}
-.collab-msg-type-conflict, .collab-msg-type-warning { color: var(--danger); border-color: var(--danger); }
-.collab-msg-type-vote, .collab-msg-type-finding { color: var(--accent-2); border-color: var(--accent-2); }
-.collab-msg-clock { color: var(--muted); margin-left: auto; }
-.collab-msg-body { margin: 2px 0 0; font-size: 12px; color: var(--text); white-space: pre-wrap; }
-
-/* ============================================================= usage == */
-.collab-usage {
-  display: flex;
-  gap: 12px;
-  font-size: 10.5px;
-  color: var(--muted);
-  font-family: var(--font-mono);
-}
-.collab-usage-table { display: flex; flex-direction: column; gap: 5px; margin-top: 6px; }
-.collab-usage-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 11px; }
-.collab-usage-row b { color: var(--text); }
-
-/* ============================================================ crew == */
-.collab-bound-plan {
-  font-size: 11.5px;
-  color: var(--text);
-  background: var(--surface-3);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 6px 9px;
-  display: flex;
-  gap: 6px;
-  align-items: flex-start;
-}
-.collab-assignments { display: flex; flex-direction: column; gap: 7px; }
-.collab-assignment {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 8px 10px;
-  background: var(--surface-2);
-}
-.collab-assignment-done { border-color: color-mix(in srgb, var(--positive) 45%, var(--border)); }
-.collab-assignment-blocked { border-color: color-mix(in srgb, var(--danger) 45%, var(--border)); }
-.collab-assignment-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.collab-assignment-head strong { font-size: 12px; color: var(--text); }
-.collab-assignment-status {
-  font-size: 9.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.collab-assignment-meta { margin: 3px 0 0; font-size: 11px; color: var(--muted); }
-.collab-evidence { margin: 5px 0 0; font-size: 11px; color: var(--positive); }
-.collab-blocked-note { margin: 5px 0 0; font-size: 11px; color: var(--danger); display: flex; gap: 5px; align-items: flex-start; }
-.collab-assignment-actions { margin-top: 6px; }
-
-/* ======================================================= brainstorm == */
-.collab-qmax { font-size: 12px; font-weight: 600; color: var(--text); margin: 0 0 6px; }
-.collab-votes, .collab-hardconflicts, .collab-dissents, .collab-leads {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 8px;
-}
-.collab-leads strong { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
-.collab-vote {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 6px 9px;
-  font-size: 11.5px;
-}
-.collab-vote b { color: var(--text); }
-.collab-vote span { text-transform: capitalize; font-weight: 600; margin-left: 4px; }
-.collab-vote-support span { color: var(--positive); }
-.collab-vote-oppose span { color: var(--danger); }
-.collab-vote-abstain span { color: var(--muted); }
-.collab-vote p, .collab-hardconflict p, .collab-dissent p, .collab-lead p { margin: 3px 0 0; font-size: 11px; color: var(--muted); }
-.collab-hardconflict {
-  border: 1px solid var(--danger);
-  border-radius: var(--radius-sm);
-  padding: 7px 9px;
-  background: color-mix(in srgb, var(--danger) 8%, var(--surface-2));
-}
-.collab-hardconflict strong { font-size: 11.5px; color: var(--danger); }
-.collab-dissent, .collab-dissent-inline {
-  border: 1px solid var(--warning);
-  border-radius: var(--radius-sm);
-  padding: 7px 9px;
-  background: color-mix(in srgb, var(--warning) 8%, var(--surface-2));
-  font-size: 11.5px;
-}
-.collab-dissent strong { display: flex; gap: 5px; align-items: center; color: var(--warning); font-size: 11.5px; }
-.collab-dissent-inline { display: flex; gap: 5px; align-items: flex-start; color: var(--warning); margin-top: 5px; }
-.collab-lead {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 6px 9px;
-}
-.collab-lead-tag {
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--accent-2);
-  border: 1px solid var(--accent-2);
-  border-radius: 4px;
-  padding: 0 4px;
-}
-.collab-synthesis {
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
-  padding: 9px 10px;
-  background: var(--surface-3);
-}
-.collab-synthesis strong { font-size: 12px; color: var(--text); }
-.collab-synthesis p { font-size: 11.5px; color: var(--text); margin: 5px 0 0; }
-.collab-grill-toggle { display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--text); margin-bottom: 8px; }
-
-/* ============================================================ review == */
-.collab-targetpack { font-size: 11.5px; color: var(--muted); margin: 0 0 8px; }
-.collab-targetpack code { font-family: var(--font-mono); color: var(--text); background: var(--surface-3); padding: 1px 5px; border-radius: 4px; }
-.collab-findings { display: flex; flex-direction: column; gap: 7px; }
-.collab-finding {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 8px 10px;
-  background: var(--surface-2);
-}
-.collab-finding-head { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
-.collab-finding-head strong { font-size: 12px; color: var(--text); flex: 1 1 auto; min-width: 140px; }
-.collab-sev {
-  font-size: 9.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  border-radius: 4px;
-  padding: 1px 6px;
-  border: 1px solid var(--border);
-  color: var(--muted);
-}
-.collab-sev-critical { color: var(--danger); border-color: var(--danger); }
-.collab-sev-major { color: var(--warning); border-color: var(--warning); }
-.collab-sev-minor, .collab-sev-suggestion { color: var(--muted); }
-.collab-disp {
-  font-size: 9.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.collab-finding.collab-disp-confirmed .collab-disp { color: var(--positive); }
-.collab-finding.collab-disp-uncertain .collab-disp { color: var(--warning); }
-.collab-finding.collab-disp-rejected .collab-disp { color: var(--danger); }
-.collab-excluded {
-  border-style: dashed;
-  opacity: .82;
-}
-.collab-readonly-note {
-  font-size: 10.5px;
-  color: var(--muted);
-  display: flex;
-  gap: 5px;
-  align-items: flex-start;
-  margin-top: 8px;
-}
-.collab-finding-pick {
-  display: flex;
-  align-items: flex-start;
-  gap: 7px;
-  font-size: 11.5px;
-  color: var(--text);
-  padding: 3px 0;
-}
-
-/* ========================================================= chat room == */
-.collab-promotions, .collab-promote-row { margin-top: 8px; }
-.collab-promotion {
-  display: flex;
-  gap: 6px;
-  align-items: flex-start;
-  font-size: 11.5px;
-  color: var(--positive);
-  border: 1px solid var(--positive);
-  border-radius: var(--radius-sm);
-  padding: 6px 9px;
-  background: color-mix(in srgb, var(--positive) 8%, var(--surface-2));
-  margin-bottom: 5px;
-}
-.collab-promote-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  font-size: 11px;
-  color: var(--muted);
-}
-.collab-promote-row .text-button { font-size: 11px; }
-
-/* ============================================================= empty == */
-.collab-empty, .collab-sub {
-  font-size: 11px;
-  color: var(--muted);
-  margin: 0;
-}
-
-/* ==================================================== follow-on rows == */
-.collab-followon {
-  border-top: 1px solid var(--border);
-  padding-top: 8px;
-  margin-top: 4px;
-}
-.collab-followon-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-
-/* ============================================================= panel == */
-.collab-panel { display: flex; flex-direction: column; max-height: min(82vh, 780px); }
-.collab-panel-body { overflow: auto; flex: 1 1 auto; display: flex; flex-direction: column; gap: 12px; }
-.collab-tabs {
-  display: flex;
-  gap: 2px;
-  padding: 6px 12px 0;
-  border-bottom: 1px solid var(--border);
-}
-.collab-tab {
-  font: inherit;
-  font-size: 11.5px;
-  font-weight: 600;
-  color: var(--muted);
-  background: transparent;
-  border: 1px solid transparent;
-  border-bottom: none;
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  padding: 7px 12px;
-  cursor: pointer;
-}
-.collab-tab:hover { color: var(--text); }
-.collab-tab.active {
-  color: var(--text);
-  background: var(--surface-2);
-  border-color: var(--border);
-}
-.collab-panel-foot {
-  border-top: 1px solid var(--border);
-  padding: 9px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.collab-participants-full { gap: 6px; }
-
-/* ================================================= participant view == */
-.collab-participant-view { display: flex; flex-direction: column; gap: 6px; }
-.collab-participant-view h3 { margin: 2px 0 0; font-size: 15px; color: var(--text); }
-.collab-participant-transcript {
-  margin-top: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-/* ======================================================= configure == */
-.collab-limit-warn { color: var(--danger); font-weight: 700; text-transform: none; }
-.collab-participant-editor { display: flex; flex-direction: column; gap: 6px; }
-.collab-checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text); }
-.collab-refusal-demo {
-  border: 1px solid var(--warning);
-  border-radius: var(--radius-sm);
-  padding: 8px 10px;
-  background: color-mix(in srgb, var(--warning) 8%, var(--surface-2));
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.collab-refusal-demo strong { font-size: 11.5px; color: var(--warning); }
-
-/* ===================================================== evidence dialog == */
-.collab-evidence-input {
-  width: 100%;
-  font: inherit;
-  font-size: 12.5px;
-  color: var(--text);
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 8px;
-  resize: vertical;
-  margin: 8px 0;
-}
+/* ===================================================== evidence sheet == */
+/* G-26: the compact evidence sheet is pmxSheet + pmxHero + pmxFoot; only its "Done when" line is COLLAB's */
+.collab-evidence-dialog .pmx-collab-evdone { margin: 0; line-height: 1.5; overflow-wrap: anywhere; }
+.collab-evidence-dialog [data-collab-evidence-why][hidden] { display: none; }
 
 /* ================================================== wand menu / auto == */
 .collab-auto-row { cursor: pointer; }
 .collab-auto-row input[type="checkbox"] { flex: none; }
 
 /* =================================================== activity domain == */
-.collab-hover { display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; max-width: 320px; }
-.collab-hover strong { font-size: 12.5px; color: var(--text); }
-.collab-hover p { margin: 0; font-size: 11px; color: var(--muted); }
 .collab-activity-body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 4px 0 12px;
-  border-bottom: 1px solid var(--border);
+  padding: 8px 0 14px;
   margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
 }
-.collab-activity-head { display: flex; align-items: center; gap: 8px; }
-.collab-activity-head strong { font-size: 12.5px; color: var(--text); }
-
-/* ================================================ reduced motion == */
-@media (prefers-reduced-motion: reduce) {
-  .collab-participant { transition: none; }
-  .collab-participant:active { transform: none; }
-}
-
-/* ===========================================================================
-   Additive Correction v4 (2026-09-03) — participant outcomes, waivers and the
-   completion-truth line. Tokens only (no --text-dim in this project).
-   =========================================================================== */
-.collab-participant .collab-p-outcome{
-  font:600 9.5px/1.5 var(--font-ui); text-transform:uppercase; letter-spacing:.05em;
-  border:1px solid var(--border); border-radius:999px; padding:0 6px;
-  color:var(--muted); background:var(--surface-3); align-self:flex-start;
-}
-.collab-participant .collab-p-outcome-completed{ color:var(--positive); border-color:color-mix(in srgb, var(--positive) 40%, var(--border)); }
-.collab-participant .collab-p-outcome-failed,
-.collab-participant .collab-p-outcome-timed_out,
-.collab-participant .collab-p-outcome-unavailable{ color:var(--warning); border-color:color-mix(in srgb, var(--warning) 45%, var(--border)); }
-.collab-participant .collab-p-outcome-canceled{ color:var(--subtle); border-style:dashed; }
-.collab-participant .collab-p-outcome-explicitly_waived{ color:var(--accent); border-style:dashed; }
-.collab-participant .collab-p-waiver,
-.collab-participant .collab-p-attempts,
-.collab-participant .collab-p-req{
-  font:400 10px/1.5 var(--font-ui); color:var(--subtle);
-}
-.collab-participant .collab-p-req{ letter-spacing:.03em; text-transform:uppercase; font-weight:600; }
-
-.collab-card .collab-truth{
-  display:flex; flex-wrap:wrap; gap:6px; align-items:center;
-  margin:2px 0 6px; padding:6px 9px; border-radius:8px;
-  border:1px solid var(--border); background:var(--surface-3);
-  font:400 11px/1.5 var(--font-ui); color:var(--muted);
-}
-.collab-card .collab-truth strong{ color:var(--text); font:600 11px/1.5 var(--font-ui); }
-.collab-card .collab-truth-attention{
-  border-color:color-mix(in srgb, var(--warning) 45%, var(--border));
-  background:color-mix(in srgb, var(--warning) 7%, var(--surface-3));
-}
-.collab-card .collab-truth-review,
-.collab-card .collab-truth-vote,
-.collab-card .collab-truth-note{ color:var(--muted); }
-.collab-card .collab-truth-warn{ color:var(--warning); font-weight:500; }
-
-/* Shared selector rows: identity and role, not a table of native selects. */
-.collab-participant-editor { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
-.collab-participant-editor-row { display:flex; flex-direction:column; gap:8px; padding:11px; border:1px solid var(--border); border-radius:11px; background:var(--surface-2); }
-.collab-member-name { display:flex; align-items:center; gap:6px; min-width:0; }
-.collab-member-name .collab-field-role { flex:1; min-width:0; border:0; background:transparent; padding:5px 2px; font-weight:600; }
-.collab-member-number { font-size:10px; color:var(--muted); width:16px; flex:none; }
-.collab-config-effort { color:var(--muted); font-size:10px; }
-.collab-authority { color:var(--muted); font-size:10px; }
-.collab-checkbox-row small { margin-left:7px; color:var(--muted); }
-.collab-msg { padding:8px 0; border-bottom:1px solid var(--border); }
-@media(max-width:760px){ .collab-participant-editor { grid-template-columns:1fr; } }
 
 .plan-crew-summary{padding:12px;overflow-wrap:anywhere}.plan-crew-summary>p{font-size:12px;opacity:.8}.plan-crew-assignment{display:flex;flex-direction:column;gap:4px;padding:10px 0;border-bottom:1px solid var(--border)}.plan-crew-assignment span{font-size:12px}
 
@@ -573,3 +115,89 @@
 .plan-crew-participant-work p { font-size:12px; color:var(--muted); }
 .plan-crew-participant-work div { display:grid; gap:4px; margin:12px 0; overflow-wrap:anywhere; }
 .plan-crew-participant-work span {font-size:12px;}
+
+/* ===========================================================================
+   COLLAB step 1 (2026-09-27): the shared configuration sheet's own layout pieces
+   (pmx-collab-*). Every primitive keeps the foundation's look (module-shell.css);
+   these rules only arrange COLLAB's generic parts: Review's target beside its
+   field, the focus grid, BrainStorm's question budget and must-haves, Crew Auto's
+   sample verdicts, the pinned Moderator row and the "Bring back" line. J-2: text
+   keeps 8 px from lines, controls keep 10 px apart, rows keep 12 px between blocks.
+   =========================================================================== */
+.pmx-sheet .pmx-collab-pinned{flex:none;min-width:0;}
+.pmx-sheet .pmx-collab-modrow input.pmx-row-job{color:var(--text);}
+/* Review's hero (8.5): the target trigger beside "Anything specific?", the helper under both */
+.pmx-sheet .pmx-collab-hero--before .pmx-hero-main{display:grid;grid-template-columns:236px minmax(0,1fr);column-gap:12px;align-items:start;}
+.pmx-sheet .pmx-collab-hero--before .pmx-hero-main > :is(.pmx-q-head, .pmx-help){grid-column:1 / -1;}
+.pmx-sheet .pmx-collab-hero--before .pmx-hero-main > .pmx-hero-box{grid-column:2;margin-top:12px;}
+.pmx-sheet .pmx-collab-target{grid-column:1;margin-top:12px;min-width:0;}
+/* Review's focus grid and "Also give them" (8.5) */
+.pmx-sheet .pmx-collab-focus{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px;min-width:0;}
+.pmx-sheet .pmx-collab-focus .pmx-check + .pmx-check{margin-top:0;}
+.pmx-sheet .pmx-collab-give{display:flex;flex-wrap:wrap;align-items:center;gap:0 16px;margin-top:12px;min-width:0;}
+.pmx-sheet .pmx-collab-give > .pmx-ctl-label{flex:none;}
+.pmx-sheet .pmx-collab-give .pmx-words{gap:0 16px;min-width:0;}
+.pmx-sheet .pmx-collab-count{display:flex;align-items:center;gap:16px;min-width:0;}
+.pmx-sheet .pmx-collab-count .pmx-stepper{flex:none;}
+.pmx-sheet .pmx-collab-count .shared-picker-button{flex:1 1 auto;min-width:0;}
+/* BrainStorm's question budget (8.4): "Up to N" is the value of "Questions for you"; the exact legacy .collab-qmax text is a hidden harness node (A2-19) */
+.pmx-sheet .pmx-collab-qmax{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:6px 16px;margin-top:12px;min-width:0;}
+.pmx-sheet .pmx-collab-qmax > .pmx-ctl-label{grid-column:1;grid-row:1;}
+.pmx-sheet .pmx-collab-qval{grid-column:2;grid-row:1;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;}
+.pmx-sheet .pmx-collab-qmax .collab-qmax[data-pmx-harness]{position:absolute;left:0;top:0;width:1px;height:1px;margin:0;overflow:hidden;white-space:nowrap;clip-path:inset(50%);}
+.pmx-sheet .pmx-collab-meter{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:2px;min-width:0;}
+.pmx-sheet .pmx-collab-meter > i{display:block;width:5px;height:12px;border-radius:1.5px;background:var(--border-strong);}
+.pmx-sheet .pmx-collab-meter > i[data-on="0"]{background:none;box-shadow:inset 0 0 0 1px var(--border-strong);}
+.pmx-sheet .pmx-collab-qmax > .pmx-help{grid-column:1 / -1;}
+/* BrainStorm's must-haves in the hero's aside, under the preview: the label and a one-line field on one row */
+.pmx-sheet .pmx-collab-must{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:10px;margin-top:12px;min-width:0;}
+.pmx-sheet .pmx-collab-must textarea{height:34px;min-height:34px;margin:0;padding:7px 10px;resize:none;line-height:17.5px;overflow:hidden auto;white-space:pre-wrap;}
+.pmx-sheet .pmx-collab-must textarea::placeholder{color:var(--subtle);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* Crew Auto's "How it would decide" (8.2): four sample requests and their verdicts */
+.pmx-sheet .pmx-collab-decide{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:10px;min-width:0;}
+.pmx-sheet .pmx-collab-decide > li{display:grid;grid-template-columns:14px minmax(0,1fr);column-gap:10px;align-items:start;min-width:0;}
+.pmx-sheet .pmx-collab-decide > li > svg{margin-top:2px;color:var(--subtle);}
+.pmx-sheet .pmx-collab-decide > li[data-verdict="crew"] > svg{color:var(--positive);}
+.pmx-sheet .pmx-collab-decide-q{display:block;font:var(--pmx-fs-ctl);color:var(--text);}
+.pmx-sheet .pmx-collab-decide .pmx-help{margin-top:4px;}
+.pmx-sheet .pmx-collab-demo-line{display:flex;gap:9px;align-items:flex-start;margin:12px 0 0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-sheet .pmx-collab-demo-line > svg{flex:none;margin-top:1px;}
+.pmx-sheet .pmx-collab-demo-line .text-button{display:inline;min-height:0;height:auto;padding:0;border:0;background:none;color:var(--accent);font:600 12px/17.5px var(--font-ui);}
+/* "Removed Tester · Bring back" (G-33) in the roster foot, for 6 s */
+.pmx-sheet .pmx-roster-foot .pmx-collab-bringback{height:32px;min-height:32px;padding:0 10px;border:0;background:none;color:var(--accent);font:600 12.5px/17px var(--font-ui);white-space:nowrap;}
+.pmx-sheet .pmx-roster-foot .pmx-collab-bringback:hover{background:none;text-decoration:underline;text-underline-offset:3px;}
+/* a refused Start marks its row (data-state="error", warm fill): when that row is the first under the column heads,
+   it keeps 8 px from their ink (J-2), which the 2 px row margin alone does not */
+.pmx-sheet :is(.pmx-roster-rows, .pmx-collab-pinned) > .pmx-row[data-state="error"]:first-child{margin-top:6px;}
+/* short windows (<= 820 px, 1280 x 800): the secondary lines of COLLAB's own parts drop, as the foundation's do,
+   before anything scrolls (J-2: drop, never compress) */
+/* the preview tray (R-02): a top frame taller than 120 px keeps its whole height and is centred at the scale that fits
+   the 82 px tray (heroHtml sets --collab-pv-h and the scale; the frame keeps the real card width) */
+.pmx-sheet .pmx-collab-pv{min-width:0;}
+.pmx-sheet .pmx-collab-pv .pmx-preview-card{top:calc((82px - var(--collab-pv-h, 120px) * var(--pmx-preview-scale, .62)) / 2);}
+.pmx-run.pmx-collab-pvrun[data-pmx-preview="1"]{height:var(--collab-pv-h, 120px);}
+/* the short-window home of the Crew Auto promise (under the roster): hidden while the side column shows it */
+.pmx-sheet .pmx-collab-auto-short{display:none;}
+.pmx-sheet .pmx-collab-auto-short > .pmx-promises{margin-top:12px;}
+@media (max-height: 820px){
+  .pmx-sheet .pmx-col--main > .pmx-collab-auto-short{display:block;flex:none;}
+  .pmx-sheet .pmx-collab-focus .pmx-check-copy small{display:none;}
+  .pmx-sheet .pmx-col--side [data-k="q-count"] > .pmx-help{display:none;}
+  .pmx-sheet .pmx-collab-count .shared-picker-copy small{display:none;}
+  .pmx-sheet .pmx-collab-meter{display:none;}
+  /* BrainStorm keeps its first promise ("Nothing gets built"); dissent and "Rules beat votes" drop (the must-haves
+     label's hover card says the rule), so both specialists fit at 1280 x 800 (6.3 common case) */
+  .pmx-sheet .pmx-col--side .pmx-promise:is([data-k="pr-dissent"], [data-k="pr-rules"]){display:none;}
+  /* BrainStorm's hero side (preview + must-haves) would stand taller than the field: the preview's caption drops */
+  .pmx-sheet .pmx-hero-side:has(.pmx-collab-must) .pmx-preview > figcaption{display:none;}
+  /* an added specialist's model trigger loses its second line like every side trigger (J-2 reference update), and
+     its row keeps 6 px above and below: 12 px between stacked triggers and 8 px under the shelf title's and meta's ink */
+  .pmx-sheet .pmx-col--side .pmx-spec-control .shared-picker-copy small{display:none;}
+  .pmx-sheet .pmx-col--side .pmx-spec[data-state="on"]{padding:6px 0;}
+  /* friendly's taller triggers: the first added specialist keeps 8 px under the shelf title's ink (STORM-A (g)) */
+  body[data-theme^="friendly"] .pmx-sheet .pmx-col--side .pmx-shelf > .pmx-q-head + .pmx-spec[data-state="on"]{padding-top:8px;}
+  /* the Advanced entry closes the side column: its text keeps its 11 px under the hairline, and the empty space
+     under the text (min-height 36) shrinks to 2 px, so Crew + one specialist fits in every theme (6.3 common case) */
+  .pmx-sheet.collab-configure .pmx-col--side > .pmx-adv{min-height:32px;}
+  .pmx-sheet .pmx-collab-decide .pmx-help{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+}

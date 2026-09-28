@@ -1,15 +1,44 @@
-/* B13 consumes theme tokens and existing surface primitives. No left accent. */
-.b13-guide {display:flex;align-items:center;gap:12px;margin:7px 0 0;padding:9px 12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);font-size:11px;line-height:1.45;min-width:0;}
-.b13-guide>div{flex:1;min-width:0}.b13-guide strong,.b13-guide span{display:block}.b13-guide span{color:var(--muted);margin-top:2px}.b13-guide .icon-button{flex-shrink:0}
-.b13-entry{display:flex;gap:14px;align-items:flex-start;padding:16px;border:1px solid var(--border);border-radius:15px;background:var(--surface-2);margin:12px 0;min-width:0}.b13-entry>div{min-width:0}.b13-entry h3{margin:0 0 6px;font-size:14px}.b13-entry p{margin:0 0 10px;color:var(--muted);font-size:12px;line-height:1.6}
-.b13-lens-tools{padding:14px;border:1px solid var(--border);border-radius:14px;background:var(--surface-2);margin:14px 0}.b13-lens-tools h3{margin:0;font-size:13px}.b13-lens-tools p{font-size:12px;line-height:1.6}
-.b13-workspace,.b13-source{box-sizing:border-box;width:100%;min-width:0;max-width:900px!important;margin:0 auto;padding:clamp(16px,3vw,30px)!important;overflow-wrap:anywhere}
-.b13-heading small{color:var(--accent);font-weight:650}.b13-heading h1{font-size:clamp(20px,2.3vw,29px)!important;line-height:1.3;margin:10px 0!important}.b13-heading p{color:var(--muted);font-size:13px;line-height:1.65}
-.b13-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:20px 0}.b13-stats span{padding:12px 10px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);font-size:11px;color:var(--muted)}.b13-stats strong{display:block;font-size:23px;color:var(--text);line-height:1.3}
-.b13-actions{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:12px 0}.b13-actions .soft-button{white-space:normal;line-height:1.4;min-height:30px;padding:7px 10px;max-width:100%}
-.b13-lead{border:1px solid var(--border);border-radius:16px;background:var(--surface-2);padding:18px;margin:18px 0;min-width:0;animation:b13-enter 280ms var(--spring-soft-ease,ease) both}.b13-lead-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px;justify-content:space-between}.b13-lead-head small{font-size:10.5px;color:var(--muted)}.b13-status{font-size:11px;color:var(--accent);font-weight:650}.b13-lead h2{font-size:16px!important;line-height:1.45;margin:11px 0!important}.b13-lead p{font-size:12px;line-height:1.65;margin:9px 0}.b13-tether strong{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.045em;color:var(--muted)}
-.b13-evidence{border:1px solid var(--border);border-radius:11px;background:var(--surface);padding:12px;margin:12px 0}.b13-evidence strong{font-size:11px}.b13-evidence small,.b13-quiet{font-size:10.5px!important;color:var(--muted);line-height:1.65;display:block}.b13-warning{color:var(--text);border:1px dashed var(--border-strong);border-radius:10px;padding:10px;background:var(--surface)}.b13-disposition{color:var(--text)}
-.b13-reason{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-top:14px}.b13-reason textarea{display:block;box-sizing:border-box;width:100%;max-width:100%;min-height:58px;margin-top:6px;border:1px solid var(--border);border-radius:9px;background:var(--surface);color:var(--text);padding:10px;font:12px/1.5 inherit;resize:vertical}.b13-reason textarea:focus{outline:1px solid var(--accent)}
-.b13-convergence{padding:16px;border:1px solid var(--border-strong);border-radius:14px;margin:22px 0;background:var(--surface-2)}.b13-convergence h2{font-size:17px!important;margin:0 0 8px!important}.b13-convergence p{font-size:12px;line-height:1.6}.b13-technical{font-size:11px;color:var(--muted);margin:20px 0}.b13-technical summary{cursor:pointer;padding:8px 0}.b13-technical pre,.b13-source pre{white-space:pre-wrap;overflow-wrap:anywhere;border:1px solid var(--border);padding:14px;border-radius:12px;font-size:11px;line-height:1.65;background:var(--surface-2);max-width:100%;box-sizing:border-box}
-@keyframes b13-enter{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-@media(max-width:600px){.b13-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.b13-lead{padding:13px}.b13-heading h1{font-size:21px!important}.b13-guide{padding:8px;font-size:10px}}
+/* lens-wonderer-batch13.css — STORM-B: the Wonderer workspace (8.4 G-26), its source page and receipt, and the Lens
+   exercise's two small controls. Kind parts only; no pmx- primitive is restyled. No boxes with side strips, no
+   nested boxes: ideas are rows between hairlines. J-2: text 8 px from every hairline, body 13/20, helper 12/17.5. */
+.b13-say { margin: 0; max-width: 78ch; font: var(--pmx-w-reg) 13px/20px var(--font-ui); color: var(--muted); }
+.b13-say b { color: var(--text); }
+.b13-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 12px 0 0; }
+
+/* one row per idea */
+.b13-leads { margin: 0; }
+.b13-lead { padding: 16px 0 20px; min-width: 0; }
+.b13-lead + .b13-lead { box-shadow: 0 -1px 0 var(--border); }
+.b13-idea { margin: 0; font: var(--pmx-voice-w) 15px/21px var(--pmx-voice); color: var(--text); overflow-wrap: anywhere; }
+.b13-line { margin: 6px 0 0; font: var(--pmx-fs-help); color: var(--muted); }
+.b13-line > span { color: var(--text); font-weight: 600; }
+.b13-state, .b13-decided { margin: 10px 0 0; font: var(--pmx-w-reg) 12.5px/19px var(--font-ui); color: var(--muted); }
+.b13-state b, .b13-decided b { color: var(--text); }
+.b13-lead[data-state="researched"] .b13-state b, .b13-lead[data-state="user_decided"] .b13-state b { color: var(--positive); }
+.b13-lead[data-state="stale"] .b13-state b { color: var(--warning); }
+.b13-prov { margin: 4px 0 0; font: var(--pmx-w-reg) 11px/16px var(--font-ui); color: var(--subtle); }
+.b13-reason { display: block; margin: 16px 0 0; max-width: 640px; }
+.b13-reason > span { display: block; font: var(--pmx-fs-help); color: var(--muted); }
+.b13-reason textarea { display: block; box-sizing: border-box; width: 100%; min-height: 62px; margin-top: 8px; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--pmx-r-sm, 9px); background: var(--pmx-card, var(--surface)); color: var(--text); font: var(--pmx-w-reg) 13px/20px var(--font-ui); resize: vertical; }
+.b13-reason textarea:focus { outline: none; border-color: var(--pmx-focus-edge, var(--accent)); box-shadow: 0 0 0 3px var(--pmx-focus-ring, transparent); }
+.b13-why { margin: 6px 0 0; }
+
+/* Bring the work together */
+.b13-convergence { margin-top: 28px; padding-top: 20px; box-shadow: 0 -1px 0 var(--border); }
+.b13-convergence .b13-say + .b13-say { margin-top: 4px; }
+.b13-convergence .primary-button { min-height: 32px; }
+
+/* Technical details (a native disclosure; its open state is kept across the async redraws) */
+.b13-technical { margin-top: 28px; box-shadow: 0 -1px 0 var(--border); }
+.b13-technical > summary { cursor: pointer; padding: 12px 0; font: 600 12.5px/19px var(--font-ui); color: var(--muted); }
+.b13-technical > .b13-say { margin-top: 8px; font-size: 12px; line-height: 17.5px; }
+
+/* the aside */
+.b13-aside { margin: 0; padding: 0; list-style: none; }
+.b13-aside > li { padding: 0 0 12px; font: var(--pmx-w-reg) 12.5px/19px var(--font-ui); color: var(--muted); }
+.b13-aside b { color: var(--text); }
+
+/* the Lens exercise's controls in the transcript: a line between hairlines, not a box */
+.b13-lens-tools { margin: 12px 0; padding: 12px 0; box-shadow: 0 -1px 0 var(--border), 0 1px 0 var(--border); min-width: 0; }
+.b13-lens-tools .b13-acts { margin-top: 8px; }
+.b13-pre { margin: 12px 0 0; padding: 12px 16px; border-radius: var(--pmx-r-md, 12px); background: var(--code); color: var(--text); font: 12px/1.6 var(--font-mono); white-space: break-spaces; overflow-wrap: anywhere; max-width: 100%; box-sizing: border-box; }

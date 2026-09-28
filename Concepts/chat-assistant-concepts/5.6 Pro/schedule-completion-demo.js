@@ -8,7 +8,7 @@ const get=()=>sessions.get(E.ctx()?.thread.id),message=r=>S.list().messages.filt
 const act=(name,data={})=>E.run(name,{dataset:data},new Event('click'));
 function selected(version=1){const values=[['notes.txt',version===1?'# Snapshot note\r\nOriginal V1 — keep this line.\r\n<script>not executed<\/script>\r\n':'REPLACED V2 must not be used\n'],['data/numbers.bin',new Uint8Array(version===1?[0,1,2,13,10,127,128,254,255]:[99])],['empty.txt','']];return values.map(([path,bytes])=>{const f=new File([bytes],path.split('/').at(-1),{type:path.endsWith('.txt')?'text/plain':'application/octet-stream'});Object.defineProperty(f,'webkitRelativePath',{value:'Sample/'+path});return f;});}
 function start(flow){
- if(flow==='crew'){PM56_B18.start('windows');PM56_B18.setInstruction('Send the prepared request. Open the Plan, then More → Build At → Build with Crew. Configure and schedule the roster before evaluating the local clock.','Frozen Crew across two windows');return;}
+ if(flow==='crew'){PM56_B18.start('windows');PM56_B18.setInstruction('Send the prepared request. Open the Plan, then More, then Build At, and choose A Crew under Who builds it. Set up and schedule the Crew before evaluating the local clock.','Frozen Crew across two windows');return;}
  if(!['folder','room'].includes(flow))return;
  let ctx=E.ctx(),t;
  if(flow==='room'){
@@ -25,20 +25,22 @@ function start(flow){
  }
  const r={flow,threadId:t.id,note:null,ticket:null,sourceId:null,sourceVersion:1,missing:false};sessions.set(t.id,r);PM56_RUNTIME.quota.waiting=false;ctx.renderApp();
 }
-function button(action,label,attrs=''){return '<button class="soft-button" data-action="'+action+'" '+attrs+'>'+label+'</button>';}
+function button(action,label,attrs=''){return '<button type="button" class="text-button" data-action="'+action+'" '+attrs+'>'+label+'</button>';}
 function openRef(ref,label){return button('open-artifact',label,'data-version="'+ref.artifact_version+'" data-ref="'+encodeURIComponent(JSON.stringify(ref))+'"');}
 function guide(ctx){const r=get();if(!r)return '';const m=message(r),target=room(r),ref=m?.attachment_refs[0]?.snapshot_ref;
  let controls='',hint='';
  if(r.flow==='folder'){
-  hint=!m?'Choose a folder from your device, or load the labelled sample. Open the wand → Schedule Message.':'The schedule retains every selected member. Replace the sample source or disconnect one retained member, then evaluate the local clock.';
+  hint=!m?'Choose a folder from your device, or load the labelled sample. Open the wand, then Schedule Message.':'The schedule retains every selected member. Replace the sample source or disconnect one retained member, then evaluate the local clock.';
   if(!m)controls=button('att-upload-folder','Choose a folder')+button('b18c-sample-folder','Load sample folder (fixture)');
   else controls=button('b18c-replace-source','Replace sample source with V2',r.sourceId?'':'disabled title="Only the sample fixture can be replaced here"')+button('b18c-toggle-member',r.missing?'Restore retained member':'Disconnect retained member')+openRef(ref,'Open retained snapshot');
  }else{
-  hint=!target?'Finish the shared Chat Room configuration. Nothing is scheduled yet.':!m?'Message the room or a participant, then use the wand → Schedule Message.':'Deliver at the explicit local time. Open the discussion to see the same message identity; its recorded participants do not make provider calls.';
+  hint=!target?'Finish the shared Chat Room configuration. Nothing is scheduled yet.':!m?'Message the room or a participant, then open the wand and Schedule Message.':'Deliver at the explicit local time. Open the discussion to see the same message identity; its recorded participants do not make provider calls.';
   if(target)controls=button('b18c-target-room','Message this room')+button('b18c-target-participant','Message first participant')+button('collab-open-panel','Open discussion','data-run="'+ctx.esc(target.id)+'"');
  }
  if(m)controls+=button('b18c-message-due','Evaluate scheduled time')+button('b18c-message-repeat','Replay delivery');
- return '<section class="b18c-guide"><div class="b18-guide-title"><strong>Batch 18 · '+(r.flow==='folder'?'Selected folder snapshots':'Exact collaborative delivery')+'</strong><small>Session-local example · no background timer</small></div><p>'+ctx.esc(hint)+'</p><div class="b18c-controls">'+controls+'</div>'+(r.note?'<p class="b18-decision" role="status">'+ctx.esc(r.note)+'</p>':'')+'</section>';
+ /* the one pmx guide look (G-25) */
+ return PM56_SHELL.pmxGuide({key:'b18c-guide',cls:'b18c-guide',attrs:'data-b18c-flow="'+ctx.esc(r.flow)+'"',placement:'dock',caption:'Guided example · '+(r.flow==='folder'?'Selected folder snapshots':'Exact collaborative delivery')+' · no AI cost',step:ctx.esc(hint),
+  extra:'<div class="b18c-controls">'+controls+'</div>'+(r.note?'<p class="b18-decision" role="status">'+ctx.esc(r.note)+'</p>':'')});
 }
 E.slot('composerBelow',guide);
 function note(r,out){r.note=out.ok?out.duplicate?'Original message returned; nothing was delivered twice.':'Exact scheduled message delivered through its owner.':out.detail||out.error||'Unavailable';E.ctx().renderApp();}

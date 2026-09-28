@@ -1,3 +1,120 @@
-/* B11: dialog rebuilt on the PM56_SHELL grammar (module-shell.css); the module
-   only owns the choice-group container inside shell sections/disclosures. */
-.eli5-choices{display:grid;gap:7px}
+/* PREFS · ELI5 (DESIGN-SPEC 8.13, 7.11). The sheet is a compact pmx sheet; everything here is a kind-specific
+   part (pmx-eli5-*) around the foundation's primitives (the plate floor, pmxSwitch, pmxWords, the preserved
+   triggers, pmxFoot, pmxDivider, pmxTick). Motion reads tokens only (IMPACT A2-22); reduced motion is the
+   foundation's instant policy on every [class*="pmx-"] node. No pills, no side strips, no gradients. */
+
+/* ---- ELI5's own durations (FOUNDATION REQUEST: move them into pmx-system.css :root beside 5.1's table).
+   The re-set step is about 16 ms a character and the whole re-set is capped at 480 ms (8.13); the trace pulse
+   runs 600 ms. Retro scales them by 0.6 like every --pmx-t-* (IMPACT A1-13). */
+:root{--pmx-t-eli5-char:16ms;--pmx-t-eli5-reset:480ms;--pmx-t-eli5-pulse:600ms;}
+body[data-theme^="retro"]{--pmx-t-eli5-char:9.6ms;--pmx-t-eli5-reset:288ms;--pmx-t-eli5-pulse:360ms;}
+
+/* ---- the sheet body: the voices plate, then Follow my usual setting beside How it's decided */
+.pmx-eli5{display:flex;flex-direction:column;min-width:0;}
+/* the trace trigger and the summary sit flush with the body, whose overflow cut their focus ring: 4 px of inline
+   room given back by a negative margin, so nothing moves (FOUNDATION REQUEST: .pmx-body) */
+.pmx-sheet .pmx-body:has(> .pmx-eli5){padding-left:4px;margin-left:-4px;}
+@media (min-width:948px){.pmx-sheet .pmx-body:has(> .pmx-eli5){padding-right:4px;margin-right:-4px;}}
+.pmx-sheet .pmx-eli5-plate{--pmx-plate-h:auto;margin:0;padding:10px 16px;display:flex;flex-direction:column;min-width:0;}
+/* the two voices: the words are the pmxSwitch (the accent rule slides under the chosen one); each answer sits
+   under its word in the same two columns, and a click on it chooses it too */
+.pmx-eli5-plate .pmx-eli5-switch{flex:none;}
+.pmx-eli5-says{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:8px;min-width:0;}
+.pmx-eli5-say{min-width:0;padding-right:24px;font:var(--pmx-w-reg) 14px/20.5px var(--pmx-voice);color:var(--muted);cursor:pointer;
+  transition:color var(--pmx-t-row) var(--pmx-ease-linear);}
+.pmx-eli5-say + .pmx-eli5-say{padding-right:0;}
+.pmx-eli5-say[data-on="1"], .pmx-eli5-say:hover{color:var(--text);}
+.pmx-eli5-say code{font:var(--pmx-w-reg) 12.5px/20.5px var(--font-mono);color:inherit;background:none;padding:0;}
+body[data-theme^="retro"] .pmx-eli5-say{font-size:13px;line-height:19px;}
+body[data-theme^="retro"] .pmx-eli5-say code{font-size:12px;line-height:19px;}
+/* a choice re-sets the chosen answer once: its words fade in in reading order, the whole within the cap (the same
+   re-set plays in New chat defaults' voice specimen, .pmx-dflt-say, assistant-features.css) */
+:is(.pmx-eli5-say, .pmx-dflt-say)[data-reset="1"]{--pmx-eli5-step:min(calc(var(--pmx-t-eli5-char) * var(--cw, 6)), calc(var(--pmx-t-eli5-reset) / var(--nw, 1)));}
+:is(.pmx-eli5-say, .pmx-dflt-say)[data-reset="1"] .pmx-eli5-w{animation:pmx-fade-in var(--pmx-t-swap) var(--pmx-ease-out) backwards;animation-delay:calc(var(--i, 0) * var(--pmx-eli5-step));}
+/* the one shared code line under both voices: the same whichever voice is chosen, and it never moves (the answer
+   row is as tall as the longer answer in both states, so a choice changes no height). A hairline across both
+   columns sets what never changes apart from what does; the code sits on the floor itself (--code is the floor's
+   own tone in every theme, so a code box would not show) */
+.pmx-eli5-code{display:flex;align-items:center;gap:16px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);min-width:0;}
+.pmx-eli5-code > code{flex:0 1 auto;min-width:0;display:block;padding:0;background:none;
+  font:var(--pmx-w-reg) 12.5px/18.5px var(--font-mono);color:var(--text);white-space:pre;overflow:hidden;text-overflow:ellipsis;}
+.pmx-eli5-same{flex:none;margin-left:auto;display:inline-flex;align-items:center;gap:6px;font:var(--pmx-fs-fine);color:var(--muted);white-space:nowrap;}
+.pmx-eli5-same > svg{flex:none;}
+body[data-theme^="retro"] .pmx-eli5-code > code{font-size:12px;}
+
+/* Follow my usual setting (a pmxWords option) shares its row with the "How it's decided" summary; the trace
+   opens under both, full width. They overlap in one grid cell so the disclosure keeps its native details. */
+.pmx-eli5-under{display:grid;grid-template-columns:minmax(0,1fr);margin-top:12px;min-width:0;}
+/* M1 reading order: head, the plate (the foundation's fade at --pmx-t-at-plate), then this row, then the foot */
+.pmx-sheet .pmx-eli5-under{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) calc(var(--pmx-t-at-q) + 2 * var(--pmx-t-cascade)) backwards;}
+.pmx-eli5-under > *{grid-row:1;grid-column:1;min-width:0;}
+.pmx-eli5-follow{position:relative;z-index:1;align-self:start;justify-self:start;max-width:calc(100% - 188px);}
+.pmx-eli5-follow .pmx-word{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-eli5-usual{font-weight:var(--pmx-w-reg);color:var(--muted);}
+/* chosen, one rule under the phrase only (the words are flex items, so the button's own underline broke into two
+   links); the parenthetical stays plain and muted and gives way first when the row is narrow */
+.pmx-eli5-follow .pmx-word[aria-pressed="true"]{text-decoration:none;}
+.pmx-eli5-follow .pmx-word[aria-pressed="true"] .pmx-eli5-follow-say{text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:5px;text-decoration-color:var(--border-strong);}
+.pmx-eli5-follow .pmx-eli5-follow-say{flex:none;}
+.pmx-eli5-follow .pmx-eli5-usual{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pmx-eli5-how{margin:0;min-width:0;}
+.pmx-eli5-how > summary{display:flex;align-items:center;gap:8px;width:max-content;height:32px;margin-left:auto;padding:0 12px;
+  list-style:none;cursor:pointer;border-radius:var(--pmx-r-sm);font:600 12.5px/17px var(--font-ui);color:var(--muted);}
+.pmx-eli5-how > summary::-webkit-details-marker{display:none;}
+.pmx-eli5-how > summary:hover{color:var(--text);background:var(--pmx-soft-fill);}
+.pmx-eli5-how > summary:focus-visible{outline:2px solid var(--pmx-focus-outline);outline-offset:2px;}
+.pmx-eli5-how > summary > svg{flex:none;transition:transform var(--pmx-t-move) var(--pmx-ease-move);}
+.pmx-eli5-how[open] > summary > svg{transform:rotate(90deg);}
+body[data-theme^="retro"] .pmx-eli5-how > summary{font-size:12px;}
+
+/* How it's decided: All chats -> Project default -> This chat, joined by one hairline; the node that
+   decides is lit (its dot filled in the accent, its label in --text) */
+.pmx-eli5-trace{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;margin-top:6px;min-width:0;}
+.pmx-eli5-node{min-width:0;display:flex;flex-direction:column;gap:8px;}
+.pmx-eli5-node-head{margin:0;display:flex;align-items:center;gap:8px;min-width:0;font:600 12.5px/17px var(--font-ui);color:var(--muted);}
+.pmx-eli5-node-head > span{flex:0 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-eli5-dot{flex:none;width:8px;height:8px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--border-strong);
+  transition:background-color var(--pmx-t-row) var(--pmx-ease-linear),box-shadow var(--pmx-t-row) var(--pmx-ease-linear);}
+.pmx-eli5-link{flex:1 1 auto;min-width:12px;height:1px;margin-right:-20px;background:var(--border);}
+.pmx-eli5-node[data-on="1"] .pmx-eli5-node-head{color:var(--text);}
+.pmx-eli5-node[data-on="1"] .pmx-eli5-dot{background:var(--accent);box-shadow:none;}
+.pmx-eli5-node .shared-picker-button{width:100%;}
+.pmx-eli5-node-val{margin:0;min-height:40px;display:flex;flex-direction:column;justify-content:center;gap:0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-eli5-node-val b{font:var(--pmx-fs-ctl);color:var(--text);}
+body[data-theme^="retro"] .pmx-eli5-node-head{font-size:11.5px;}
+.pmx-eli5-link{position:relative;}
+/* Follow my usual setting sends one light pulse along the trace: each link from the node that now decides to This
+   chat lights in the accent, left to right, one after the other (a clip reveal on the link itself, never a
+   gradient and never across a label), then fades; the whole within --pmx-t-eli5-pulse */
+.pmx-eli5-flow{position:absolute;left:0;right:0;top:-0.5px;height:2px;border-radius:1px;background:var(--accent);opacity:0;pointer-events:none;
+  animation:pmx-eli5-flow calc(var(--pmx-t-eli5-pulse) * .6) var(--pmx-ease-move) backwards;animation-delay:calc(var(--pmx-t-eli5-pulse) * .4 * var(--pmx-eli5-step, 0));}
+@keyframes pmx-eli5-flow{
+  0%{opacity:1;clip-path:inset(0 100% 0 0);}
+  55%{opacity:1;clip-path:inset(0 0 0 0);}
+  100%{opacity:0;clip-path:inset(0 0 0 0);}
+}
+.pmx-eli5-fine{margin-top:8px;}
+.pmx-eli5-fine + .pmx-eli5-fine{margin-top:6px;}
+/* one line each: the technical line ellipsizes (its hover text has the whole sentence), never wraps */
+.pmx-eli5-tech{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* where the line runs wider than the sheet (retro's monospace), its second id gives way whole rather than being cut
+   in half; the hover has the full sentence */
+body[data-theme^="retro"] .pmx-eli5-tech-more{display:none;}
+
+/* the foot has one primary (Done): with no Cancel, the say column and the primary are the only two columns */
+.pmx-sheet .pmx-foot.pmx-eli5-foot{grid-template-columns:minmax(0,1fr) auto;}
+
+/* ---- in the chat (7.11). The change point: a hairline with its words across the top of the turn it starts,
+   visible at rest; it draws outward from the centre once (the foundation's pmx-divider motion). It lies out of
+   the turn's own flow (the turn keeps room for it above its content), so it spans the column in every transcript
+   variant and never takes a speaker column or a grid cell from the bubble. */
+.transcript-inner > .message:has(> .eli5-change){padding-top:34px;}
+.transcript-inner .message > .eli5-change{position:absolute;left:0;right:0;top:0;min-width:0;margin:0;}
+.transcript-inner .message > .eli5-change > .pmx-divider{min-width:0;}
+.transcript-inner .message > .eli5-change > .pmx-divider > span{flex:none;max-width:calc(100% - 48px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* reduced motion is the instant end state (IMPACT A1-03): the turn that carries the divider arrives at once too */
+@media (prefers-reduced-motion: reduce){ .transcript-inner > .message:has(> .eli5-change){animation:none !important;} }
+body.pm56-reduced .transcript-inner > .message:has(> .eli5-change){animation:none !important;}
+/* the reply's "Simple explanation" tick sits in the meta row (hover-gated with the rest of that row) */
+.message-chrome .pmx-eli5-tick{flex:none;padding:0 4px;}
+.message-chrome .pmx-eli5-tick > svg{color:var(--muted);}

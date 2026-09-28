@@ -1,7 +1,230 @@
-/* Memory surfaces render through the shared PM56_SHELL grammar (module-shell.css);
-   only the document wrapper and the evidence block inside disclosures remain here. */
-.memory-document{padding:22px;min-width:0;max-width:100%;color:var(--text);font:13px/1.6 var(--font-ui);display:grid;gap:12px;align-content:start}
-.mdl-body .memory-document{padding:0}
-.memory-document pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px}.memory-document li{overflow-wrap:anywhere}
-.memory-evidence{padding:12px;border:1px solid var(--border);border-radius:8px}
-@media(max-width:820px){.memory-document{padding:16px}}
+/* Memory (DESIGN-SPEC 8.10): the kind parts of the Memory sheet, the Gist Review document and the reply tick.
+   Every primitive (sheet, plate, tabs, switch, check, foot, decision, ledger line, tick, view, inline confirm) is
+   styled by module-shell.css; only pmx-mem-* parts live here. J-2: text >= 8 px from any line and >= 12 px from a
+   container's sides, rows >= 52 px, line height >= 1.45; when space runs short text ellipsizes or wraps. */
+
+/* module tokens (5.1 token discipline): the Verify check's clip reveal and the "Noted" tick's fresh window. Owner
+   answer E-22 (2026-09-27): motion follows each theme family's personality, written once in the foundation's tokens,
+   so the reveal aliases the foundation's flip (declared on body, where the theme blocks sit, so a family's own value
+   resolves here); a logic wait is never scaled. */
+:root{--pmx-wait-noted:3000ms;}
+body{--pmx-t-verify:var(--pmx-t-flip);}
+@keyframes pmx-mem-leave{to{opacity:0;transform:translateY(6px);}}
+@keyframes pmx-mem-seg-in{from{transform:translateX(calc(var(--x, 0) * 100%)) scaleX(0);}}
+/* the count rolls in from a faint copy, never from nothing (a hollow "Space for notes:  tokens" frame read as a gap) */
+@keyframes pmx-mem-cnt-in{from{opacity:.35;transform:translateY(3px);}}
+
+/* ---------------------------------------------------------------- the sheet body: ribbon, bar, two panes.
+   The body is exactly the sheet's free height (contain:size lets the grid row stretch to it) and the panes scroll
+   inside themselves, so the sheet never grows and never re-centres (6.3). */
+.pmx-sheet .pmx-mem-body{display:flex;flex-direction:column;min-width:0;min-height:0;contain:size;}
+
+/* the ribbon: the plate "what your next message brings" (a caption-mode pmxPlate holding HTML) */
+.pmx-sheet .pmx-mem-plate{display:block;flex:none;height:auto;min-height:138px;margin:0;padding:0;}
+.pmx-sheet .pmx-mem-plate .pmx-plate-cap{position:static;margin:0;font:inherit;color:var(--text);}
+.pmx-mem-ribbon{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:16px;row-gap:10px;padding:12px 18px 14px;min-width:0;}
+.pmx-mem-say{grid-column:1;margin:0;min-width:0;font:var(--pmx-fs-readback);color:var(--text);}
+.pmx-mem-say b{font-weight:var(--pmx-voice-w);}
+.pmx-mem-link{grid-column:2;grid-row:1;justify-self:end;white-space:nowrap;}
+.pmx-sheet .pmx-mem-link{color:var(--accent);font-weight:600;}
+.pmx-mem-cards{grid-column:1 / -1;display:flex;align-items:center;gap:10px;min-width:0;min-height:52px;overflow:hidden;}
+.pmx-mem-card{flex:0 1 auto;min-width:120px;max-width:280px;display:grid;grid-template-columns:14px minmax(0,1fr);column-gap:8px;row-gap:2px;align-items:center;
+  padding:7px 12px 7px 10px;box-sizing:border-box;border-radius:var(--pmx-r-sm);background:var(--surface-2);box-shadow:0 0 0 1px var(--border);color:var(--text);}
+.pmx-mem-card > svg{grid-row:1 / 3;color:var(--muted);}
+/* one or two cards have room: they grow to 420 px so a rule reads whole instead of stopping at 280 */
+.pmx-mem-cards:not(:has(> .pmx-mem-card ~ .pmx-mem-card ~ .pmx-mem-card)) > .pmx-mem-card{max-width:420px;}
+.pmx-mem-card[data-kind="note"] > svg{color:var(--positive);}
+.pmx-mem-card-t{min-width:0;font:var(--pmx-fs-ctl);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-mem-card small{grid-column:2;min-width:0;font:var(--pmx-fs-fine);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-mem-more{flex:none;padding:0 4px;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;}
+.pmx-mem-nocards{margin:0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-mem-meter{grid-column:1 / -1;display:flex;align-items:center;gap:12px;min-width:0;}
+.pmx-mem-track{flex:none;position:relative;width:140px;height:4px;border-radius:2px;background:var(--pmx-hatch);overflow:hidden;}
+/* one segment per note that rides along; each slides and grows through a transform (the meter ticks, 420 emph) */
+.pmx-mem-seg{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--positive);transform-origin:0 50%;
+  transform:translateX(calc(var(--x, 0) * 100%)) scaleX(var(--w, 0));transition:transform var(--pmx-t-room) var(--pmx-ease-emph);
+  animation:pmx-mem-seg-in var(--pmx-t-room) var(--pmx-ease-emph) backwards;}
+.pmx-mem-cap{min-width:0;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity var(--pmx-t-light) var(--pmx-ease-linear);}
+/* while a card flies up into the ribbon it crosses the meter's line: the caption steps back until it lands, then the
+   new count rolls in */
+.pmx-mem-ribbon:has(.pmx-mem-card[data-state="arriving"]) .pmx-mem-cap{opacity:.3;}
+.pmx-mem-cap b{color:var(--text);font-weight:600;}
+.pmx-mem-cnt{display:inline-block;animation:pmx-mem-cnt-in var(--pmx-t-swap) var(--pmx-ease-out) backwards;}
+/* the cards ride the plate's entrance; a card that just became eligible flies in from its row (a clone in the flight layer,
+   the card waits hidden); one that left slides out */
+.pmx-sheet .pmx-mem-card{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-at-marks) + var(--i, 0) * var(--pmx-t-cascade));}
+.pmx-sheet .pmx-mem-card[data-state="arriving"]{visibility:hidden;}
+.pmx-sheet .pmx-mem-card[data-state="leaving"]{animation:pmx-mem-leave var(--pmx-t-row) var(--pmx-ease-in) forwards;pointer-events:none;}
+
+/* tabs (with their helper) and the canonical filter; the tab hairline and the switch hairline meet in one line */
+.pmx-mem-bar{flex:none;display:flex;align-items:flex-end;min-width:0;margin-top:16px;}
+.pmx-mem-bar > .pmx-tabs{flex:1 1 auto;min-width:0;}
+.pmx-mem-filter{flex:none;width:264px;}
+.pmx-mem-helps{flex:none;display:flex;justify-content:space-between;gap:24px;min-width:0;margin-top:8px;}
+.pmx-mem-helps .pmx-help{flex:0 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-mem-fhelp{text-align:right;}
+
+/* the two panes: the grouped list and the detail (or the next-message list) */
+.pmx-sheet .pmx-mem-panes{flex:1 1 0;min-height:0;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:32px;
+  margin:12px 0 0;padding:0;border:0;border-radius:0;background:none;overflow:hidden;align-self:stretch;}
+.pmx-sheet .pmx-mem-panes[data-state="rules"], .pmx-sheet .pmx-mem-panes[data-state="empty"]{grid-template-columns:minmax(0,1fr);}
+.pmx-sheet :is(.pmx-mem-list, .pmx-mem-side, .pmx-mem-rules){min-height:0;min-width:0;overflow:hidden auto;scrollbar-width:thin;padding-bottom:14px;box-sizing:border-box;
+  -webkit-mask-image:linear-gradient(#000 calc(100% - 14px),transparent);mask-image:linear-gradient(#000 calc(100% - 14px),transparent);}
+.pmx-sheet .pmx-mem-list{padding-right:4px;}
+.pmx-sheet .pmx-mem-side{padding-right:6px;}
+
+/* list: groups and rows (rows >= 52 px, the group label 12 above and 8 below) */
+.pmx-mem-group + .pmx-mem-group{margin-top:12px;}
+.pmx-mem-glabel{margin:0 0 8px;font:600 11.5px/17px var(--font-ui);color:var(--muted);}
+.pmx-mem-row{display:grid;grid-template-columns:16px minmax(0,1fr) auto;column-gap:10px;align-items:center;width:100%;min-height:52px;margin:0;padding:8px 12px;box-sizing:border-box;
+  border:0;border-radius:10px;background:none;box-shadow:none;text-align:left;color:var(--text);cursor:pointer;}
+.pmx-mem-row + .pmx-mem-row{margin-top:4px;}
+.pmx-mem-row:hover{background:var(--pmx-soft-fill);}
+.pmx-mem-row[aria-pressed="true"]{background:var(--surface-2);}
+.pmx-mem-row[data-tone="warm"]{background:var(--pmx-card-warm);box-shadow:0 0 0 1px var(--pmx-edge-warm);}
+.pmx-mem-row:focus-visible{outline:2px solid var(--pmx-focus-outline);outline-offset:1px;}
+.pmx-mem-rglyph, .pmx-mem-sglyph{display:grid;place-items:center;color:var(--muted);}
+:is(.pmx-mem-row, .pmx-mem-sglyph)[data-state="verified"] :is(.pmx-mem-rglyph, svg){color:var(--positive);}
+:is(.pmx-mem-row, .pmx-mem-sglyph)[data-state="decide"] :is(.pmx-mem-rglyph, svg){color:var(--warning);}
+.pmx-mem-rcopy{display:block;min-width:0;}
+.pmx-mem-rcopy > b{display:block;font:var(--pmx-fs-ctl);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-mem-rcopy > small{display:block;margin-top:4px;font:var(--pmx-fs-help);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-mem-time{font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;}
+.pmx-mem-none{margin:0;font:var(--pmx-fs-help);color:var(--muted);}
+
+/* detail: state, the claim in the voice, proof, story, actions */
+.pmx-mem-detail{min-width:0;}
+.pmx-mem-state{margin:0;display:flex;align-items:flex-start;gap:8px;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-mem-state b{color:var(--text);font-weight:600;}
+.pmx-mem-sglyph{flex:none;margin-top:1px;}
+.pmx-mem-claim{margin:8px 0 0;font:var(--pmx-voice-w) 17px/23px var(--pmx-voice);letter-spacing:-.01em;color:var(--text);overflow-wrap:anywhere;}
+body[data-theme^="retro"] .pmx-mem-claim{font-size:15.5px;line-height:22.5px;letter-spacing:0;}
+.pmx-mem-prov{margin:6px 0 0;display:flex;align-items:center;gap:6px;font:var(--pmx-fs-fine);color:var(--subtle);}
+.pmx-mem-disc{margin-top:14px;min-width:0;}
+.pmx-mem-sum{display:flex;align-items:center;gap:6px;width:max-content;max-width:100%;min-height:24px;list-style:none;cursor:pointer;font:600 12px/17.5px var(--font-ui);color:var(--muted);}
+.pmx-mem-sum::-webkit-details-marker{display:none;}
+.pmx-mem-sum::marker{content:"";}
+.pmx-mem-sum:hover{color:var(--text);}
+.pmx-mem-sum > svg{flex:none;transition:transform var(--pmx-t-swap) var(--pmx-ease-out);}
+.pmx-mem-disc[open] > .pmx-mem-sum > svg{transform:rotate(90deg);}
+.pmx-mem-disc-body{margin-top:6px;padding-left:19px;min-width:0;}
+.pmx-mem-file{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font:var(--pmx-fs-ctl);color:var(--text);}
+.pmx-mem-file > svg{color:var(--muted);}
+.pmx-mem-file > span{font:var(--pmx-fs-meta);color:var(--muted);}
+.pmx-mem-cases{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:4px 16px;font:var(--pmx-fs-help);color:var(--text);}
+.pmx-mem-cases li{display:flex;align-items:center;gap:6px;}
+.pmx-mem-cases li > svg{flex:none;color:var(--positive);}
+.pmx-mem-cases li[data-state="fail"] > svg{color:var(--danger);}
+.pmx-mem-cap2{margin:10px 0 0;font:var(--pmx-fs-fine);color:var(--muted);}
+.pmx-mem-code{margin:6px 0 0;padding:8px 12px;box-sizing:border-box;max-width:100%;border-radius:var(--pmx-r-sm);background:var(--code);font:11.5px/17px var(--font-mono);color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere;}
+.pmx-mem-warn{margin:0 0 8px;display:flex;align-items:flex-start;gap:6px;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-mem-warn > svg{flex:none;margin-top:2px;color:var(--warning);}
+.pmx-mem-journey{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-mem-journey li{display:inline-flex;align-items:center;gap:8px;}
+.pmx-mem-journey li > svg{flex:none;color:var(--subtle);}
+.pmx-mem-checked{margin:14px 0 0;display:flex;align-items:flex-start;gap:6px;font:var(--pmx-fs-help);color:var(--text);animation:pmx-swap-in var(--pmx-t-swap) var(--pmx-ease-out) backwards;}
+.pmx-mem-checked > svg{flex:none;margin-top:2px;color:var(--muted);}
+.pmx-mem-acts{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:16px;}
+.pmx-mem-acts > .primary-button{height:32px;min-height:32px;padding:0 14px;}
+.pmx-mem-acts-help{margin:8px 0 0;font:var(--pmx-fs-fine);color:var(--subtle);}
+.pmx-mem-tech{margin:0;font:var(--pmx-fs-fine);color:var(--muted);overflow-wrap:anywhere;}
+.pmx-mem-tech + .pmx-mem-tech{margin-top:6px;}
+/* a suggested change to a locked rule: the one warm block (a whole-block wash, no edge) */
+.pmx-mem-decide{margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--pmx-card-warm);}
+.pmx-mem-decide > .pmx-mem-acts-help, .pmx-mem-decide > .pmx-mem-warn{padding-left:22px;}
+.pmx-mem-decide > .pmx-mem-acts-help{margin-top:10px;}
+.pmx-mem-decide > .pmx-mem-warn{margin:8px 0 0;}
+
+/* the next-message list */
+.pmx-mem-next{min-width:0;}
+.pmx-mem-h{margin:0;font:var(--pmx-fs-q);letter-spacing:var(--pmx-ls-q);color:var(--text);}
+.pmx-mem-next > .pmx-help{margin-top:4px;}
+.pmx-mem-next h4{margin:16px 0 6px;font:600 12px/17.5px var(--font-ui);color:var(--muted);}
+.pmx-mem-next ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;}
+.pmx-mem-next li{display:grid;grid-template-columns:14px minmax(0,1fr);column-gap:8px;align-items:start;font:var(--pmx-fs-help);color:var(--text);}
+.pmx-mem-next li > svg{margin-top:2px;color:var(--muted);}
+.pmx-mem-next li[data-state="in"] > svg{color:var(--positive);}
+.pmx-mem-next li > span{min-width:0;overflow-wrap:anywhere;}
+.pmx-mem-next li small{grid-column:2;margin-top:2px;font:var(--pmx-fs-fine);color:var(--muted);}
+
+/* first open or empty: the 3-step caption */
+.pmx-mem-empty{padding:6px 0 0;min-width:0;}
+.pmx-mem-steps{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;font:var(--pmx-fs-help);color:var(--text);}
+.pmx-mem-steps li{display:inline-flex;align-items:center;gap:8px;}
+.pmx-mem-steps li > svg{flex:none;color:var(--muted);}
+.pmx-mem-steps li > .pmx-mem-step-sep{color:var(--subtle);}
+.pmx-mem-empty > .pmx-help{margin-top:12px;}
+/* beside the list the steps read top to bottom */
+.pmx-mem-side .pmx-mem-steps{flex-direction:column;align-items:flex-start;gap:10px;}
+.pmx-mem-side .pmx-mem-steps li > .pmx-mem-step-sep{display:none;}
+.pmx-mem-nofit{display:flex;flex-direction:column;align-items:flex-start;gap:8px;}
+.pmx-mem-nofit > .text-button{margin-left:-10px;}
+
+/* Your rules (rows drawn by teach-protocol.js in the same grammar) */
+.pmx-mem-rule{display:grid;grid-template-columns:16px minmax(0,1fr) auto;column-gap:12px;row-gap:8px;align-items:center;min-height:56px;padding:9px 12px;box-sizing:border-box;}
+.pmx-mem-rule + .pmx-mem-rule{box-shadow:0 -1px 0 var(--border);}
+.pmx-mem-rule-text{margin:0;font:var(--pmx-fs-ctl);font-weight:560;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-mem-rule-text{font-weight:500;}
+.pmx-mem-rule .pmx-mem-rcopy small b{font-weight:600;color:var(--text);}
+.pmx-mem-rule[data-state="off"] .pmx-mem-rule-text{color:var(--muted);}
+.pmx-mem-rule-acts{display:flex;gap:10px;}
+.pmx-mem-rule > :is(.pmx-mem-confirm, .pmx-mem-rnote){grid-column:2 / -1;}
+.pmx-mem-rule > .pmx-mem-rnote{margin:0;}
+.pmx-mem-rules-foot{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 0;padding-left:2px;}
+
+/* M1: the sheet's own parts enter in reading order (head, ribbon, bar, rows, detail); late arrivals enter at once */
+.pmx-sheet :is(.pmx-mem-bar, .pmx-mem-helps){animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-q) backwards;}
+.pmx-sheet :is(.pmx-mem-glabel, .pmx-mem-row, .pmx-mem-rule){animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-at-rows) + var(--i, 0) * var(--pmx-t-cascade));}
+.pmx-sheet :is(.pmx-mem-detail, .pmx-mem-next, .pmx-mem-empty){animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-at-rows) + 2 * var(--pmx-t-cascade));}
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet :is(.pmx-mem-bar, .pmx-mem-helps, .pmx-mem-glabel, .pmx-mem-row, .pmx-mem-rule, .pmx-mem-detail, .pmx-mem-next, .pmx-mem-empty, .pmx-mem-card){animation-delay:0ms;}
+
+/* the foot: the keep-unverified check where the read-back sits, Export, Done */
+.pmx-mem-export{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
+
+/* short windows (<= 820 px tall): helper lines drop before anything tightens (J-2) */
+@media (max-height: 820px){
+  .pmx-sheet .pmx-mem-acts-help{display:none;}
+  .pmx-sheet .pmx-mem-plate{min-height:0;}
+}
+/* one column (sheet below 900 px): the body scrolls as a whole, the panes stack at their natural height */
+@media (max-width: 947.98px){
+  .pmx-sheet .pmx-mem-body{contain:none;}
+  .pmx-mem-fhelp{text-align:left;}
+  .pmx-sheet .pmx-mem-panes{flex:none;grid-template-columns:minmax(0,1fr);overflow:visible;}
+  .pmx-sheet :is(.pmx-mem-list, .pmx-mem-side, .pmx-mem-rules){overflow:visible;-webkit-mask-image:none;mask-image:none;padding-bottom:0;}
+  .pmx-mem-bar{flex-wrap:wrap;row-gap:8px;}
+  .pmx-mem-helps{flex-wrap:wrap;row-gap:4px;}
+  .pmx-mem-helps .pmx-help{white-space:normal;}
+  .pmx-mem-fhelp{max-width:none;}
+}
+
+/* ---------------------------------------------------------------- the Gist Review document (a pmxView) */
+.pmx-mem-docbar{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin-top:18px;}
+.pmx-mem-docbar > .pmx-switch{width:264px;}
+.pmx-mem-doc .pmx-guide + .pmx-mem-panes{margin-top:18px;}
+.pmx-mem-doc .pmx-mem-panes{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;min-width:0;}
+@container pmxview (min-width: 700px){ .pmx-mem-doc .pmx-mem-panes:not([data-state="empty"]){grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:32px;} }
+/* the head never squeezes (review cycle 1): the title keeps its own width and the actions take what is left of the
+   first two rows, wrapping whole buttons; the status sentence runs the full width under both. Below 900 px the head
+   stacks: title, mark, status, then the actions on their own row (10 px apart, the first one's ink under the title). */
+.pmx-view.pmx-mem-doc > .pmx-view-head.drawer-head{grid-template-columns:max-content minmax(0,1fr);}
+.pmx-view.pmx-mem-doc > .pmx-view-head > .pmx-view-status{grid-column:1 / -1;}
+.pmx-view.pmx-mem-doc > .pmx-view-head > .pmx-view-acts{grid-column:2;grid-row:1 / 3;gap:10px;}
+@container pmxview (max-width: 900px){
+  .pmx-view.pmx-mem-doc > .pmx-view-head.drawer-head{grid-template-columns:minmax(0,1fr);}
+  .pmx-view.pmx-mem-doc > .pmx-view-head > .pmx-view-acts{grid-column:1;grid-row:4;justify-content:flex-start;margin:12px 0 0 -10px;}
+}
+
+/* keyboard focus (FOUNDATION REQUEST in MEMTEACH notes): the app's global button:focus-visible ring is a runtime
+   color-mix (IMPACT A1-15 forbids it on pmx surfaces); inside Memory's own surfaces it takes the precomputed token */
+:is(.pmx-mem-sheet, .pmx-mem-doc, .pmx-mem-proposal, .memory-demo-guide) :is(button, input, textarea, summary, [tabindex]):focus-visible{outline-color:var(--pmx-focus-outline);}
+
+/* ---------------------------------------------------------------- in the chat */
+/* the reply meta tick relaxes to its glyph after the fresh window (the template drops the words) */
+.pmx-mem-tick > span:empty{display:none;}
+.pmx-mem-tick[data-state="verified"] > svg{color:var(--positive);}
+/* the suggested change to a locked rule: the ledger line's hand is warm; once decided it settles to quiet ink */
+.pmx-receipt .pmx-receipt-say > svg.pmx-mem-hand{color:var(--warning);}
+/* two wordings of its headline: the short one at the card's narrow tier (the receipt meta drops at the same width) */
+.pmx-mem-pshort{display:none;}
+@container pmxrun (max-width: 519.98px){ .pmx-mem-proposal .pmx-mem-plong{display:none;} .pmx-mem-proposal .pmx-mem-pshort{display:inline;} }

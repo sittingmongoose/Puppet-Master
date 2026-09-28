@@ -1,0 +1,105 @@
+/* review-view.css — REVIEW-B: PM56_REVIEW.viewParts + ReviewReportVM renderer + the Review run view (spec 8.5).
+   Only pmx-rview-* classes (the kind's own parts); no pmx primitive is restyled. The first block neutralises the
+   legacy .review-document / .review-source / .review-markdown / .collab-panel rules (review-protocol.css,
+   collaboration.css) on the new view until their owners delete them (REVIEW-B notes, requests). */
+.pmx-view.review-document{max-width:980px;padding:4px 4px 60px !important;}
+.pmx-view.pmx-rview.collab-panel{display:block;max-height:none;}
+.pmx-view.pmx-rview .text-button{white-space:nowrap;text-align:center;}
+.pmx-view.pmx-rview :is(pre.review-source, pre.review-markdown){border:0;max-width:none;}
+/* the legacy collaboration.css rules on the hook classes this view carries (boxes, 10.5 px type, dashed borders) */
+.pmx-view.pmx-rview li.collab-readonly-note, .pmx-view.pmx-rview li.collab-targetpack{display:block;margin:0;font:inherit;color:inherit;}
+.pmx-view.pmx-rview .collab-finding.collab-excluded{border:0;border-radius:0;padding:10px 0 12px;background:none;opacity:1;}
+
+/* the header: Formatted · Plain text, Export (the chosen word carries the underline indicator) */
+.pmx-rview-switch{display:inline-flex;gap:10px;align-items:center;}
+.pmx-rview-fmt[aria-current="true"]{display:inline-flex;align-items:center;min-height:32px;padding:0 10px;font:var(--pmx-w-560,560) 12.5px/17px var(--font-ui);color:var(--text);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:7px;}
+.pmx-rview-export, .pmx-rview-back{display:inline-flex;align-items:center;gap:6px;}
+.pmx-view .pmx-view-acts .pmx-rview-export{margin-left:6px;}
+
+/* What they found */
+.pmx-rview-find{padding:14px 0 18px;min-width:0;}
+.pmx-rview-find + .pmx-rview-find{box-shadow:0 -1px 0 var(--border);}
+.pmx-rview-n{display:inline-block;min-width:18px;margin-right:6px;color:var(--subtle);font-variant-numeric:tabular-nums;}
+.pmx-rview-dl{margin:10px 0 0 34px;display:grid;grid-template-columns:minmax(0,1fr);font:var(--pmx-fs-body);line-height:20px;color:var(--text);min-width:0;}
+.pmx-rview-dl dt{margin:0;font:600 12px/17px var(--font-ui);color:var(--muted);}
+.pmx-rview-dl dt:not(:first-child){margin-top:14px;}
+.pmx-rview-dl dd{margin:6px 0 0;min-width:0;overflow-wrap:anywhere;}
+.pmx-rview-refs{margin:8px 0 0;display:flex;flex-wrap:wrap;gap:8px 10px;}
+.pmx-rview-ref{display:inline-flex;align-items:center;gap:6px;max-width:100%;}
+.pmx-rview-ref > span{overflow:hidden;text-overflow:ellipsis;}
+.pmx-rview-single, .pmx-rview-none, .pmx-rview-made{display:flex;align-items:flex-start;gap:8px;margin:0 0 12px;font:var(--pmx-fs-body);line-height:20px;color:var(--muted);}
+.pmx-rview-single > svg, .pmx-rview-none > svg, .pmx-rview-made > svg{flex:none;margin-top:3px;}
+.pmx-rview-none > svg, .pmx-rview-made > svg{color:var(--positive);}
+.pmx-rview-single b, .pmx-rview-none b{color:var(--text);}
+
+/* code with line numbers (Proof and the evidence document): one row per line, long lines wrap inside their row */
+.pmx-rview-code{margin:8px 0 0;border-radius:var(--pmx-r-md);background:var(--code);min-width:0;}
+.pmx-view pre.pmx-rview-pre{margin:0;padding:10px 22px 10px 14px;border:0;border-radius:0;background:none;font:12px/1.6 var(--font-mono);color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;overflow:visible;max-width:none;}
+.pmx-rview-line{display:grid;grid-template-columns:max-content minmax(0,1fr);column-gap:14px;}
+.pmx-rview-no{min-width:2ch;text-align:right;color:var(--subtle);user-select:none;font-variant-numeric:tabular-nums;}
+.pmx-rview-lt{min-width:0;}
+/* the cited lines in the evidence document: one highlighter passage edge to edge, the gutter numbers in accent */
+.pmx-rview-cited{display:block;margin:8px -22px 8px -14px;padding:8px 22px 8px 14px;background:var(--pmx-wash);}
+.pmx-rview-cited:first-child{margin-top:-2px;}
+.pmx-rview-cited:last-child{margin-bottom:-2px;}
+.pmx-rview-line.is-cited .pmx-rview-no{color:var(--accent);font-weight:600;}
+.pmx-rview-code + .pmx-fine{margin-top:6px;}
+.pmx-rview-code--doc{margin-top:0;}
+.pmx-rview-note{margin:12px 0 0;}
+.pmx-rview-tech{display:block;margin-top:6px;}
+
+/* the one control set (G-13): ticks above, these buttons at the end of What they found */
+.pmx-rview-choose{margin-top:6px;padding-top:16px;box-shadow:0 -1px 0 var(--border);}
+.pmx-rview-choose > .pmx-help{margin:0 0 12px;}
+.pmx-rview-acts{display:flex;flex-wrap:wrap;align-items:center;gap:12px 10px;min-width:0;}
+.pmx-rview-choose > .pmx-reason, .pmx-rview-choose > .pmx-fine{margin:12px 0 0;}
+
+/* How they agreed: finding x reviewer */
+.pmx-rview-gridwrap{overflow-x:auto;min-width:0;}
+.pmx-rview-grid{border-collapse:collapse;width:100%;font:var(--pmx-fs-body);line-height:20px;}
+.pmx-rview-grid th{text-align:left;padding:0 14px 10px 0;font:600 11.5px/16px var(--font-ui);color:var(--muted);white-space:nowrap;vertical-align:bottom;}
+.pmx-rview-th{display:inline-flex;align-items:center;gap:6px;}
+.pmx-rview-grid td{padding:10px 14px 10px 0;box-shadow:0 -1px 0 var(--border);vertical-align:top;}
+.pmx-rview-grid td:first-child{display:flex;gap:6px;min-width:180px;}
+.pmx-rview-grid td:not(:first-child){width:1%;white-space:nowrap;}
+.pmx-rview-gn{color:var(--subtle);min-width:14px;font-variant-numeric:tabular-nums;}
+.pmx-rview-legend{margin:10px 0 0;}
+
+/* Set aside */
+.pmx-rview-set + .pmx-rview-set{box-shadow:0 -1px 0 var(--border);}
+.pmx-rview-set p{margin:0;font:var(--pmx-fs-body);line-height:20px;color:var(--muted);}
+.pmx-rview-set p b{color:var(--text);}
+.pmx-rview-set p.pmx-fine{margin-top:6px;font:var(--pmx-fs-fine);color:var(--subtle);}
+
+/* the aside: snapshot, cost, the read-only promise, provenance, Technical details */
+.pmx-rview-aside{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px;font:12px/18px var(--font-ui);color:var(--muted);}
+.pmx-rview-aside b{color:var(--text);}
+.pmx-rview-aside .pmx-fine{display:block;margin-top:6px;overflow-wrap:anywhere;}
+.pmx-rview-prov{display:flex;align-items:flex-start;gap:6px;}
+.pmx-rview-prov > svg{flex:none;margin-top:3px;color:var(--subtle);}
+.pmx-rview-costs{margin-bottom:12px;font-size:13px;line-height:20px;}
+
+/* Plain text: the export, byte for byte */
+.pmx-view.pmx-rview pre.pmx-rview-plain{margin:0;padding:16px 26px 16px 18px;border:0;border-radius:var(--pmx-r-md);background:var(--code);color:var(--text);font:12px/1.65 var(--font-mono);white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;max-width:100%;}
+
+/* before the report: who is reading, sealed notes */
+.pmx-rview-lede{margin:0 0 12px;font:var(--pmx-fs-body);line-height:20px;color:var(--muted);}
+.pmx-rview-whos{margin:0;padding:0;list-style:none;}
+.pmx-rview-who{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:12px;align-items:center;min-height:52px;padding:8px 0;}
+.pmx-rview-who + .pmx-rview-who{box-shadow:0 -1px 0 var(--border);}
+.pmx-rview-whotext{min-width:0;}
+.pmx-rview-whotext b{display:block;font:600 12.5px/18px var(--font-ui);color:var(--text);}
+.pmx-rview-whotext small{display:block;margin-top:2px;font:12px/18px var(--font-ui);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pmx-rview-pvmeta{margin:0 0 12px;}
+
+body[data-theme^="retro"] .pmx-rview-dl{font-size:12px;}
+body[data-theme^="retro"] .pmx-rview-grid td:first-child{min-width:150px;}
+
+/* M8: the report rises in place when its tab opens (head, then tabs +80, then the body +120; entrance once: these nodes
+   are keyed and survive re-renders). 5.5 Review: the new "To-Dos created" line materializes (row recipe). Reduced motion:
+   pmx-system.css stops every pmx- animation (the end state at once). */
+.pmx-view.pmx-rview{--pmx-rview-at-tabs:80ms;--pmx-rview-at-body:120ms;}
+.pmx-view.pmx-rview > .pmx-view-head{animation:pmx-row-in var(--pmx-t-page) var(--pmx-ease-out) backwards;}
+.pmx-view.pmx-rview > .pmx-tabs{animation:pmx-row-in var(--pmx-t-page) var(--pmx-ease-out) var(--pmx-rview-at-tabs) backwards;}
+.pmx-view.pmx-rview > .pmx-view-grid{animation:pmx-row-in var(--pmx-t-page) var(--pmx-ease-out) var(--pmx-rview-at-body) backwards;}
+.pmx-rview-made{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;}

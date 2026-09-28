@@ -1,15 +1,26 @@
-/* Narrow, neutral rows; no left-edge highlights and no working-style changes. */
-.plan-schedule-line{display:flex;gap:10px;align-items:center;padding:10px 0;margin-bottom:10px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted);min-width:0;}
-.plan-schedule-line>span{flex:1;min-width:0;}
-.plan-schedule-line strong{display:block;font-size:12px;font-weight:550;color:var(--text);}
-.plan-schedule-line small{display:block;margin-top:4px;font-size:11px;overflow-wrap:anywhere;}
-.plan-schedule-line>button{flex:none;}
-.sched-dialog>.schedule-demo-guide{margin:0 18px 12px;padding-top:10px;}
-.schedule-demo-guide .plan-demo-controls{flex-wrap:wrap;}
+/* The Plan card's schedule line (scheduling.js planSummary; DESIGN-SPEC 8.8 "In chat", IMPACT A1-30): one row of
+   the canon token and its sentence, the actions it allows, and under them the night ribbon and the steps built.
+   It sits beside the Plan's Build control and never takes its place. No strips, no boxes: a hairline under it. */
+.plan-schedule-line{display:grid;grid-template-columns:16px minmax(0,1fr) auto;align-items:start;gap:6px 10px;min-width:0;margin:0 0 10px;padding:8px 0 10px;border-bottom:1px solid var(--border);color:var(--muted);}
+.plan-sched-mark{display:flex;padding-top:2px;color:var(--muted);}
+.plan-sched-say{margin:0;min-width:0;padding-top:1px;font:450 12px/17.5px var(--font-ui);color:var(--muted);overflow-wrap:anywhere;}
+.plan-sched-say b{color:var(--text);font-weight:600;}
+.plan-schedule-line[data-tone="update"] .plan-sched-mark{color:var(--warning);}
+.plan-sched-acts{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:0 10px;margin:-6px -10px -6px 0;}
+.plan-sched-acts > :is(.text-button, .soft-button){height:32px;min-height:32px;padding:0 10px;font:600 12px/16px var(--font-ui);white-space:nowrap;}
+.plan-sched-acts > .text-button{color:var(--muted);}
+.plan-sched-foot{grid-column:2 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;min-width:0;font:500 11.5px/17px var(--font-ui);color:var(--muted);font-variant-numeric:tabular-nums;}
+.plan-sched-ribbon{display:block;flex:none;}
+.plan-sched-base{stroke:var(--border-strong);stroke-width:1;}
+.plan-sched-band{fill:var(--muted);opacity:.7;}
+.plan-sched-wind{fill:var(--border-strong);}
+.plan-schedule-line[data-tone="live"] .plan-sched-band{fill:var(--text);opacity:.85;}
+.plan-sched-now{stroke:var(--text);stroke-width:1.5;stroke-linecap:round;}
+/* the morning receipt under the line (8.8): what the night did, with Open */
+.plan-sched-overnight{grid-column:2 / -1;margin:2px 0 0;min-width:0;font:450 12px/17.5px var(--font-ui);color:var(--muted);overflow-wrap:anywhere;}
+.plan-sched-overnight b{color:var(--text);font-weight:600;}
+.plan-sched-overnight > .text-button{height:32px;min-height:32px;margin:-8px 0 -8px 0;padding:0 10px;color:var(--text);font:600 12px/16px var(--font-ui);vertical-align:baseline;}
+@container (max-width: 360px){ .plan-schedule-line{grid-template-columns:16px minmax(0,1fr);} .plan-sched-acts{grid-column:2;justify-content:flex-start;margin:0 0 -6px -10px;} }
 
-.sched-dialog--focused{height:auto;width:min(680px,calc(100vw - 24px));}
-.sched-dialog--focused>.schedule-overview,.sched-dialog--focused>.sched-tabs{display:none;}
-.sched-dialog--focused .schedule-list-section>h3{display:none;}
-.sched-dialog--focused>.dialog-body{padding-top:10px;}
-
-.editor-content>.schedule-demo-guide,.editor-body>.schedule-demo-guide{margin:12px 20px;padding:10px 0;}
+/* the guide is a pmx guide (G-25); beside the Plan it only needs the document's side margins */
+.editor-body>.schedule-demo-guide{margin:12px 20px;}

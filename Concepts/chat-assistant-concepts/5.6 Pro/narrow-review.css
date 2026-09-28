@@ -4,49 +4,22 @@
 .shared-choice-list .menu-copy strong {font-size:12px;line-height:1.4;}
 .shared-choice-list .menu-copy>span {font-size:11px;line-height:1.5;white-space:normal;}
 .choice-empty {margin:14px;color:var(--muted);font-size:12px;}
-.collab-configure .collab-configure-body {padding:20px 24px;}
-.collab-configure .collab-field-row {gap:16px;align-items:start;}
-.collab-configure label {font-size:12px;line-height:1.5;color:var(--muted);min-width:0;}
-.collab-configure h4 {font-size:12px;font-weight:650;letter-spacing:0;margin:22px 0 10px;color:var(--text);}
-.collab-configure .shared-picker-button {min-height:42px;margin-top:6px;}
-.collab-configure .collab-choice {background:var(--surface-2);}
-.collab-member-name {gap:9px;}
-.collab-configure .collab-member-pickers {gap:14px;padding-left:29px;}
-.collab-configure-foot,.collab-panel-foot {padding:16px 24px !important;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;border-top:1px solid var(--border);}
-.collab-configure-foot>.soft-button:first-child {margin-right:auto;}
-.collab-add-specialists {border:0;margin-top:18px;}
-.collab-add-specialists>summary {cursor:pointer;font-size:12px;color:var(--muted);padding:10px 0;}
-.collab-checkbox-row {padding:9px 0;}
-.collab-qmax {font-size:11px;color:var(--muted);margin:8px 0;}
-.collab-panel .collab-followon,.collab-panel .collab-more-row {gap:8px;flex-wrap:wrap;}
 .diff-added {color:var(--positive);font-variant-numeric:tabular-nums;white-space:nowrap;}
 .diff-removed {color:var(--danger);font-variant-numeric:tabular-nums;white-space:nowrap;}
 .work-output-diff {display:inline-flex;gap:5px;}
 .work-output-summary p {margin:6px 0;font-size:12px;}
-/* B06 selective rollback: native Activity, Goal, To-Do and Context layouts
-   are again owned by their pre-video styles. New BSD data remains available. */
-.bsd-overview {padding:12px 0;}
-.bsd-overview-head {display:flex;align-items:center;gap:10px;margin:0 0 12px;}
-.bsd-overview-head h3 {font-size:13px;margin:0;flex:1;}
-.bsd-summary-table,.bsd-session-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 12px;}
-.bsd-summary-table>div,.bsd-session-grid>div {min-width:0;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface-2);}
-.bsd-summary-table dt,.bsd-session-grid dt {font-size:10px;color:var(--muted);margin-bottom:5px;}
-.bsd-summary-table dd,.bsd-session-grid dd {margin:0;font-size:12px;line-height:1.45;overflow-wrap:anywhere;}
-.bsd-disclosure {margin-top:8px;}
-.bsd-disclosure>summary {cursor:pointer;padding:10px 0;display:flex;justify-content:space-between;font-size:12px;}
-.bsd-summary-actions {display:flex;flex-wrap:wrap;gap:8px;}
+/* COLLAB step 3: the centred panel's rules (.collab-panel-foot, its followon/more rows, .collab-qmax) went with it;
+   the docked run view's action bar keeps the collab-panel-foot hook (G-21) with the foundation's look. */
+/* COLLAB step 2: the B06 BSD overview rules (.bsd-overview*, .bsd-summary-table, .bsd-session-grid,
+   .bsd-disclosure, .bsd-summary-actions) had no emitter left; deleted here as 10.2 names them (BSD's request). */
 /* Separate earlier requests remain: no decorative left stripes, concise
    first views and single live BSD summary. */
 .ctx-drawer .bsd-section,.ctx-drawer .context-section {border-left:0;}
-.ctx-drawer .bsd-section::before,.ctx-drawer .context-section::before,.bsd-finding::before {display:none;}
+.ctx-drawer .bsd-section::before,.ctx-drawer .context-section::before {display:none;}
 /* Decorative card accents are not functional diff gutters or working rails. */
-:is(.sched-message-card,.collab-card,.bsd-advice-card,.collab-truth,.bsd-finding,.ctx-cap,.ctx-fallback) {border-left-width:0;}
-:is(.sched-message-card,.collab-card,.bsd-advice-card,.collab-truth)::before {display:none;}
+:is(.collab-card,.ctx-cap,.ctx-fallback) {border-left-width:0;}
+.collab-card::before {display:none;}
 @media(max-width:620px){
- .collab-configure .collab-configure-body {padding:18px;}
- .collab-configure .collab-field-row,.collab-configure .collab-member-pickers {grid-template-columns:1fr;}
- .collab-configure .collab-member-pickers {padding-left:0;}
- .collab-configure-foot,.collab-panel-foot {padding:14px 18px !important;}
  .ctx-drawer .drawer-scroll {padding:16px 18px;}
  .activity-panel .activity-scroll {padding:10px 8px;}
 }

@@ -1,588 +1,314 @@
-/* bsd.css — styles for bsd.js (Back Seat Driver: passive read-only advisor).
- * OWNER: ui-designer pass, Assistant-redesign wave (2026-09-03).
+/* bsd.css — Back Seat Driver (a passive, read-only second opinion). DESIGN-SPEC 8.6.
  *
- * Concatenated after styles.css/context.css/menus.css, so every rule here is
- * scoped under a class this module owns (`.bsd-*`) or, where bsd.js's markup
- * gives no class hook (`.bsd-quarantine`'s raw icon, `.bsd-hrow`'s trailing
- * span), qualified by a `.bsd-*` ancestor — nothing here is a bare element or
- * utility selector that could leak onto other modules' chrome.
+ * Kind layout only: every pmx primitive (the sheet, the margin note, the severity mark, the switch, the steppers)
+ * keeps its own look from module-shell.css / pmx-system.css; this file places them and styles the parts only BSD
+ * has, under `.pmx-bsd-*`. Hook classes stay on the pmx nodes for the permission-ceiling check (B.10):
+ * `.bsd-dialog` on every BSD sheet, `.bsd-card` on every margin note and line, `#ctx-bsd` on the Details section.
  *
- * TOKEN NOTE FOR THE INTEGRATOR: the brief's colour list includes
- * `--text-dim`, but only `--muted`/`--subtle` are defined in styles.css's
- * theme blocks (checked all 8). Every secondary-text rule below reads
- * `var(--text-dim, var(--muted))` so it renders correctly today and adopts
- * `--text-dim` for free if that token is ever added. Flagged again in the
- * handoff report.
- *
- * `.bsd-dialog` (stage-configuration + advisor-transcript dialogs) ships in
- * bsd.js WITHOUT the base `.dialog` class those two markups would otherwise
- * need for position/background/pointer-events — see bsd.js's own dialog slot.
- * Section 7 below supplies that chrome directly so the dialogs centre,
- * paint, and stay clickable through #pmOverlayRoot's `pointer-events:none`.
+ *   1. the eye by the composer (PM56_BSD.dot)      4. the lines: aside, earlier, catch-up, failure, safety
+ *   2. the Context popover row (.bsd-ctx-row)      5. Context More Details (#ctx-bsd)
+ *   3. the margin note in the chat                 6. the raw-data sheets (bsd-usage, bsd-transcript)
+ *   7. the Back Seat Driver sheet
  */
 
 /* =====================================================================
-   1. COMPACT CONTEXT ROW  (slot contextBsdRow — appended inside .ctx-pop)
-   Exactly two lines: "BSD  <mode> · <persona>" then the live status line,
-   each single-line and ellipsis-truncated so unpredictable copy length
-   never grows the row past two lines or forces the popover wider.
+   1. THE EYE BY THE COMPOSER. app.js draws .capability-dot.bsd from PM56_BSD.dot(). It watches quietly: a muted eye
+   on a neutral tile (the accent is for things you act on), the lid by mode. A check turns the iris once (WAAPI from
+   bsd.js, 900 ms, on a new check only).
    ===================================================================== */
-.bsd-ctx-row {
-  display: grid;
-  grid-template-columns: 23px minmax(0, 1fr);
-  column-gap: 8px;
-  row-gap: 2px;
-  height: auto;
-  min-height: 38px;
-  padding: 7px 8px;
-  align-items: start;
-}
-.bsd-ctx-row .menu-icon { grid-row: 1 / 3; align-self: center; }
-.bsd-ctx-row .menu-copy {
-  display: flex;
-  align-items: baseline;
-  gap: 5px;
-  min-width: 0;
-}
-.bsd-ctx-row .menu-copy strong { display: inline; flex: none; }
-.bsd-ctx-row .menu-copy span {
-  display: inline;
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* The live-status line. A generated dot (not colour alone) carries the tone:
-   hollow ring = idle, solid pulsing = working, solid haloed = attention /
-   changed, solid diamond = blocked. Positioned absolutely in a reserved
-   left gutter so it never fights the sibling text's own ellipsis math. */
-.bsd-live {
-  display: block;
-  position: relative;
-  min-width: 0;
-  padding-left: 12px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-size: 10px;
-  color: var(--text-dim, var(--muted));
-}
-.bsd-live::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--text-dim, var(--muted));
-}
-.bsd-live.bsd-tone-idle::before {
-  background: transparent;
-  border: 1.5px solid var(--text-dim, var(--muted));
-  width: 5px;
-  height: 5px;
-}
-.bsd-live.bsd-tone-working { color: var(--accent); }
-.bsd-live.bsd-tone-working::before {
-  background: var(--accent);
-  animation: bsd-pulse 1.6s ease-in-out infinite;
-}
-.bsd-live.bsd-tone-attention { color: var(--warning); }
-.bsd-live.bsd-tone-attention::before {
-  background: var(--warning);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--warning) 22%, transparent);
-}
-.bsd-live.bsd-tone-changed { color: var(--accent); }
-.bsd-live.bsd-tone-changed::before {
-  background: var(--accent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 22%, transparent);
-}
-.bsd-live.bsd-tone-blocked { color: var(--danger); }
-.bsd-live.bsd-tone-blocked::before {
-  background: var(--danger);
-  border-radius: 2px;
-  transform: translateY(-50%) rotate(45deg);
-}
-@keyframes bsd-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: .45; transform: scale(.78); }
-}
+.composer-infield .capability-dot.bsd{color:var(--muted);background:var(--surface-3);border-color:var(--border);}
+.capability-dot.bsd .pmx-bsd-iris{transform-box:fill-box;transform-origin:center;}
 
 /* =====================================================================
-   2. SEVERITY + STATUS  (nit | concern | critical — never colour alone)
-   Hierarchy reads through FILL STATE as much as hue: nit is an outline on
-   dim text, concern is a tinted fill, critical is a solid inverted fill.
-   That order is legible in greyscale, not just to full colour vision.
+   2. THE CONTEXT POPOVER ROW (slot contextBsdRow, inside .ctx-pop). Two lines: the canon name with its mode and
+   Persona, then the status line, canon word first (IMPACT A1-27). Each line keeps one line and ellipsizes.
    ===================================================================== */
-.bsd-sev {
-  display: inline-flex;
-  align-items: center;
-  flex: none;
-  height: 16px;
-  padding: 0 6px;
-  border-radius: var(--radius-sm);
-  font-size: 9px;
-  font-weight: 750;
-  letter-spacing: .05em;
-  text-transform: uppercase;
-  border: 1px solid var(--border-strong);
-  background: transparent;
-  color: var(--text-dim, var(--muted));
-}
-.bsd-sev-concern {
-  border-color: color-mix(in srgb, var(--warning) 55%, var(--border-strong));
-  background: color-mix(in srgb, var(--warning) 18%, transparent);
-  color: var(--warning);
-}
-.bsd-sev-critical {
-  border-color: transparent;
-  background: var(--danger);
-  color: var(--on-accent);
-}
-
-.bsd-status {
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .05em;
-  color: var(--text-dim, var(--muted));
-}
-.bsd-status-held { color: var(--warning); }
-.bsd-status-emitted { color: var(--accent); }
-.bsd-status-suppressed {
-  text-decoration: line-through;
-  color: var(--text-dim, var(--muted));
-}
-
-.bsd-gen { font-size: 10px; color: var(--text-dim, var(--muted)); }
+.bsd-ctx-row{display:grid;grid-template-columns:23px minmax(0,1fr);column-gap:8px;row-gap:3px;min-height:48px;padding:8px;align-items:start;}
+.bsd-ctx-row .menu-icon{grid-row:1 / 3;align-self:center;color:var(--muted);}
+.bsd-ctx-row .menu-copy{display:flex;align-items:baseline;gap:6px;min-width:0;}
+.bsd-ctx-row .menu-copy strong{display:inline;flex:none;}
+.bsd-ctx-row .menu-copy span{display:inline;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.45;}
+.bsd-live{display:block;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:11px;line-height:16px;color:var(--muted);}
+.bsd-live .pmx-bsd-lead{color:var(--text);}
 
 /* =====================================================================
-   3. CONTEXT DETAILS SECTION  (slot contextBsdSection — appended in the
-   Context drawer, .context-section is already fully chromed by styles.css;
-   this only spaces its diverse children — a metric grid, prose, chip rows,
-   finding cards, a usage grid — on one consistent rhythm).
+   3. THE MARGIN NOTE (pmxNote, C21; cls bsd-card). The note is its own size container, so its Dismiss helper can
+   leave the line on a narrow card (the hover card keeps it). The catch-up line unfolds into the note it converges
+   into: a clip reveal from the top (240 ms) instead of the note's slide from the gutter.
    ===================================================================== */
-.bsd-section .context-section-body {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.bsd-policy {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-}
-@media (max-width: 590px) {
-  .bsd-policy { grid-template-columns: repeat(2, 1fr); }
-}
-
-.bsd-identity, .bsd-isolation {
-  margin: 0;
-  font-size: 12px;
-  color: var(--text-dim, var(--muted));
-  line-height: 1.55;
-}
-.bsd-identity b { color: var(--text); font-weight: 650; }
-
-.bsd-sub {
-  margin: 0;
-  font-size: 11px;
-  color: var(--text-dim, var(--muted));
-  line-height: 1.5;
-}
-.bsd-watch {
-  padding-top: 8px;
-  border-top: 1px solid var(--border);
-}
-
-/* ---- Stage bindings ---------------------------------------------- */
-.bsd-stages-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.bsd-stages-head strong { font-size: 11.5px; }
-
-.bsd-stage-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 7px;
-}
-.bsd-stage {
-  display: inline-flex;
-  align-items: center;
-  height: 22px;
-  padding: 0 8px;
-  border-radius: var(--radius-sm);
-  font-size: 10.5px;
-  font-weight: 600;
-  background: var(--surface-3);
-  border: 1px solid var(--border);
-  color: var(--text-dim, var(--muted));
-}
-.bsd-stage.on {
-  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
-  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
-  color: var(--accent);
-  font-weight: 700;
-}
-/* The "N of M stages bound" note has no margin of its own (.bsd-sub is
-   margin:0 by default) and would otherwise sit flush against the chip row. */
-.bsd-stages .bsd-sub { margin-top: 7px; }
-
-/* ---- Findings ------------------------------------------------------
-   Severity is carried by the labeled badge and subtle whole-surface tint;
-   there are no decorative side strips. */
-.bsd-findings {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-.bsd-finding {
-  padding: 9px 10px;
-  border: 1px solid var(--border);
-  
-  border-radius: var(--radius-sm);
-  background: var(--surface-2);
-}
-.bsd-finding:has(.bsd-sev-concern) {  }
-.bsd-finding:has(.bsd-sev-critical) {
-  
-  
-  background: color-mix(in srgb, var(--danger) 5%, var(--surface-2));
-}
-.bsd-finding-head {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.bsd-finding-title {
-  display: block;
-  margin: 5px 0 3px;
-  font-size: 12.5px;
-  font-weight: 650;
-  color: var(--text);
-}
-.bsd-finding-detail {
-  margin: 0;
-  font-size: 12px;
-  color: var(--text-dim, var(--muted));
-  line-height: 1.5;
-}
-.bsd-stale {
-  margin: 7px 0 0;
-  padding: 6px 8px;
-  border-radius: var(--radius-sm);
-  border: 1px solid color-mix(in srgb, var(--warning) 32%, var(--border));
-  background: color-mix(in srgb, var(--warning) 10%, transparent);
-  color: var(--warning);
-  font-size: 10.5px;
-  line-height: 1.45;
-}
-
-/* Expanded per-finding history. Reuses styles.css's own `details-open`
-   keyframe (already exempt from the reduced-motion loop cap, being finite)
-   rather than declaring a duplicate. */
-.bsd-history {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid var(--border);
-  animation: details-open 280ms var(--spring-soft-ease) both;
-}
-.bsd-hrow {
-  display: flex;
-  gap: 7px;
-  align-items: baseline;
-  font-size: 11px;
-}
-.bsd-hrow > span:last-child {
-  color: var(--text-dim, var(--muted));
-  flex: 1;
-  min-width: 0;
-}
-.bsd-hgen {
-  flex: none;
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  padding: 1px 6px;
-  border-radius: 6px;
-  background: var(--surface-3);
-  border: 1px solid var(--border);
-  color: var(--text-dim, var(--muted));
-}
-
-/* ---- Usage (attributed to BSD only, never folded into the primary run) */
-.bsd-usage { display: flex; flex-direction: column; }
-.bsd-usage > strong { font-size: 11.5px; }
-.bsd-usage-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 5px 10px;
-  margin: 8px 0;
-}
-@media (max-width: 380px) {
-  .bsd-usage-grid { grid-template-columns: 1fr; }
-}
-.bsd-usage-grid > div {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 8px;
-  padding: 5px 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--surface-3);
-}
-.bsd-usage-grid label { font-size: 10px; color: var(--text-dim, var(--muted)); }
-.bsd-usage-grid b {
-  font-size: 11.5px;
-  color: var(--text);
-  font-variant-numeric: tabular-nums;
-}
-.bsd-usage .bsd-sub { margin-top: 2px; }
-/* bsd.js concatenates the two Usage buttons with no whitespace between
-   them in the source string, so browsers get no natural inline gap. */
-.bsd-usage .soft-button { margin-top: 8px; }
-.bsd-usage .soft-button + .soft-button { margin-left: 6px; }
-
-/* ---- Quarantine notice (advisor isolated after malformed output) ---- */
-.bsd-quarantine {
-  display: flex;
-  gap: 9px;
-  align-items: flex-start;
-  padding: 9px 10px;
-  border: 1px solid color-mix(in srgb, var(--warning) 40%, var(--border));
-  border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--warning) 9%, var(--surface-2));
-}
-.bsd-quarantine > svg { flex: none; color: var(--warning); margin-top: 2px; }
-.bsd-quarantine strong { display: block; font-size: 12px; color: var(--text); }
-.bsd-quarantine p {
-  margin: 3px 0 0;
-  font-size: 11.5px;
-  color: var(--text-dim, var(--muted));
-  line-height: 1.5;
-}
-
-/* ---- Demonstrate (drives the hold/reconfirm cycle and the isolated-
-   failure toggle for real — see bsd.js section 3 and tests/bsd-verify.mjs) */
-.bsd-demo {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  padding: 9px 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--surface-3);
-}
-.bsd-demo > strong { font-size: 11.5px; }
-.bsd-demo-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.pmx-note.bsd-card{container:pmxbsdnote / inline-size;}
+.pmx-note.bsd-card .pmx-note-acts{flex-wrap:wrap;row-gap:12px;}
+/* a long advisor answer never grows the chat: the title keeps two lines and the words four (the whole answer is in
+   Details, behind Why?) */
+.pmx-note.bsd-card .pmx-note-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;}
+/* J-1: no italic face; emphasis in an advisor's answer is weight and ink, as in pmx markdown */
+.pmx-note.bsd-card .pmx-note-body :is(em, i, cite){font-style:normal;font-weight:var(--pmx-w-560);color:var(--text);}
+.pmx-note.bsd-card .pmx-note-body{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;}
+.pmx-note.bsd-card .pmx-bsd-dhelp{margin-left:6px;font:var(--pmx-fs-fine);color:var(--subtle);white-space:nowrap;}
+@container pmxbsdnote (max-width: 339px){.pmx-note.bsd-card .pmx-bsd-dhelp{display:none;}}
+.pmx-note.pmx-bsd-unfold{animation:pmx-draw-down var(--pmx-t-page) var(--pmx-ease-out) backwards;}
+/* Dismiss: the note's words give way to its one line (the line fades in while app.js folds the height, M9) */
+.pmx-note.bsd-card[data-state="dismissed"] > .pmx-note-line{animation:pmx-fade-in var(--pmx-t-fade) var(--pmx-ease-out) backwards;}
 
 /* =====================================================================
-   4. TRANSCRIPT ADVICE CARD  (slot transcriptMessage, type bsd-advice-v2)
-   Only an EMITTED finding ever reaches this slot (bsd.js declines for held/
-   cleared/suppressed), so the card itself just needs the same severity read
-   as section 2, echoed onto the icon chip and a left accent bar.
+   4. THE LINES. One 32 px line beside the eye (the height of its text buttons): an aside ("Nit · title · Why?",
+   G-30), a note from an earlier advisor session, the catch-up wait, a failed check (×N), a safety pause. Built from
+   pmxNote's one-line form (bsd.js noteLine); .pmx-bsd-lrow is the row inside it. Words ellipsize or wrap to a
+   second line; nothing is compressed (J-2).
    ===================================================================== */
-.bsd-card {  }
-.bsd-card:has(.bsd-sev-concern) {  }
-.bsd-card:has(.bsd-sev-concern) .event-icon {
-  background: color-mix(in srgb, var(--warning) 16%, var(--surface-3));
-  color: var(--warning);
-}
-.bsd-card:has(.bsd-sev-critical) {
-  
-  
-}
-.bsd-card:has(.bsd-sev-critical) .event-icon {
-  background: color-mix(in srgb, var(--danger) 18%, var(--surface-3));
-  color: var(--danger);
-}
-.bsd-attr {
-  margin: 6px 0 0;
-  padding-top: 6px;
-  border-top: 1px solid var(--border);
-  font-size: 10.5px;
-  color: var(--text-dim, var(--muted));
-}
+.pmx-note.pmx-bsd-line > .pmx-note-eye{top:5px;}
+.pmx-note.pmx-bsd-line[data-state="aside"], .pmx-note.pmx-bsd-line[data-state="earlier"]{color:var(--muted);}
+.pmx-note .pmx-bsd-lrow{display:flex;flex-wrap:nowrap;align-items:center;column-gap:8px;row-gap:0;min-height:32px;margin:0;white-space:normal;overflow:visible;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
+.pmx-bsd-lrow .pmx-bsd-lk{color:var(--muted);}
+.pmx-bsd-lrow .pmx-bsd-lk .pmx-sev{color:var(--muted);font-weight:600;}
+.pmx-bsd-lrow .pmx-bsd-lt{flex:0 1000 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);}
+.pmx-note[data-state="aside"] .pmx-bsd-lrow .pmx-bsd-lt{color:var(--muted);}
+/* the aside's "Concern · title" wraps to a second line before it is ever cut; Why? stays beside it */
+.pmx-bsd-lrow .pmx-bsd-lt.pmx-bsd-lt2{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow-wrap:anywhere;margin:7px 0;}
+.pmx-bsd-lt .pmx-bsd-sep{margin:0 6px;}
+.pmx-note .pmx-bsd-lrow:has(.pmx-bsd-wrap){flex-wrap:wrap;}
+.pmx-bsd-lrow .pmx-bsd-lt.pmx-bsd-wrap{flex:1 1 200px;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin:7px 0;}
+.pmx-bsd-lrow .pmx-bsd-lm{flex:none;color:var(--muted);font-variant-numeric:tabular-nums;}
+/* a line's words keep 16 px to its first button (control-gap), and the buttons of one decision keep together: they
+   wrap as one group under the sentence (bsd.js fitLines marks data-fit="stack"), their words on the text column */
+.pmx-bsd-lrow > .pmx-bsd-lt + .text-button, .pmx-bsd-lrow > .pmx-bsd-lwait + .text-button, .pmx-bsd-lrow > .pmx-bsd-lacts{margin-left:8px;}
+.pmx-bsd-lacts{flex:none;display:flex;align-items:center;column-gap:10px;}
+.pmx-bsd-lacts > .pmx-bsd-lm + .text-button{margin-left:6px;}
+/* stacked, the group takes its own full row: without the forced break the 10 px it gains back would let it rejoin the
+   sentence's row (and sit on its words) */
+.pmx-note[data-fit="stack"] .pmx-bsd-lrow{flex-wrap:wrap;}
+.pmx-note[data-fit="stack"] .pmx-bsd-lrow > .pmx-bsd-lacts{flex-basis:100%;margin-left:0;}
+/* stacked, every button's word sits on the text column when it starts a row (-10 px, its own padding), 10 px apart
+   (a 20 px gap less the 10); a card too narrow even for the two side by side (204 px in Poppins) wraps the second
+   under the first, 8 px apart, never out of the card. "×3" keeps 16 px to Details. */
+.pmx-note[data-fit="stack"] .pmx-bsd-lacts{flex-wrap:wrap;column-gap:20px;row-gap:8px;min-width:0;}
+.pmx-note[data-fit="stack"] .pmx-bsd-lacts > .text-button{margin-left:-10px;}
+.pmx-note[data-fit="stack"] .pmx-bsd-lacts > .pmx-bsd-lm + .text-button{margin-left:-4px;}
+.pmx-note[data-fit="stack"] .pmx-bsd-lt.pmx-bsd-wrap{margin-bottom:0;}
+/* the catch-up line: "up to N s" drops first (the ring shows the budget), then the sentence says it shorter */
+.pmx-bsd-lwait{flex:none;display:flex;align-items:center;column-gap:8px;}
+.pmx-bsd-short{display:none;}
+.pmx-note:is([data-fit="nowait"], [data-fit~="short"]) .pmx-bsd-lwait, .pmx-note[data-fit~="short"] .pmx-bsd-long{display:none;}
+.pmx-note[data-fit~="short"] .pmx-bsd-short{display:inline;}
+/* the S tier (a card under about 230 px): even the short sentence would be cut beside Don't wait, so the sentence
+   takes the row (wrapping rather than cutting) and Don't wait goes under it, its word on the text column, as the
+   failure and safety lines stack their actions (bsd.js fitLine "short stack") */
+.pmx-note[data-state="catchup"][data-fit~="stack"] .pmx-bsd-lrow{flex-wrap:wrap;}
+.pmx-note[data-state="catchup"][data-fit~="stack"] .pmx-bsd-lt{flex:1 1 100%;white-space:normal;margin:7px 0 0;}
+.pmx-note[data-state="catchup"][data-fit~="stack"] .pmx-bsd-lrow > .text-button{margin-left:-10px;}
+.pmx-bsd-lrow .pmx-bsd-sep{flex:none;color:var(--subtle);}
+.pmx-bsd-lrow .text-button{flex:none;height:32px;min-height:32px;padding:0 10px;color:var(--muted);font:var(--pmx-w-560) 12px/16px var(--font-ui);}
+.pmx-bsd-lrow .text-button:hover{color:var(--text);}
+/* the catch-up line leaves by fading (then bsd.js removes it); its note, if any, unfolds in its place */
+.pmx-note.pmx-bsd-line[data-closing="1"]{animation:pmx-fade-in var(--pmx-t-fade) var(--pmx-ease-in) reverse forwards;}
+/* the catch-up ring round the eye: two half rings, each clipped to its side and turned 180 degrees by WAAPI; the
+   spent part leaves the faint track behind it */
+.pmx-bsd-ring{position:absolute;inset:0;color:var(--muted);}
+.pmx-bsd-ring::before{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 0 1.2px var(--border);}
+.pmx-bsd-half{position:absolute;inset:0;}
+.pmx-bsd-half[data-side="r"]{clip-path:inset(0 0 0 50%);}
+.pmx-bsd-half[data-side="l"]{clip-path:inset(0 50% 0 0);}
+.pmx-bsd-half > svg{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.5;}
+
+/* the example's guide above the composer (pmxGuide, cls bsd12-guide): in a narrow composer its action moves under the
+   step instead of squeezing the step into a column beside it (FOUNDATION REQUEST: pmxGuide narrow layout) */
+.pmx-guide.bsd12-guide{container:bsdguide / inline-size;}
+@container bsdguide (max-width: 380px){.bsd12-guide .pmx-guide-acts{grid-column:1;grid-row:3;margin:6px 0 0 -10px;}}
 
 /* =====================================================================
-   5. DIALOGS — stage configuration, advisor transcript
-   bsd.js's markup is `<div class="demo-dialog bsd-dialog">`: it opts into
-   `.demo-dialog`'s "not centred, has its own min-size" posture but never
-   carries the base `.dialog` class that would otherwise supply position,
-   background, border, blur, shadow and — critically — the `pointer-events:
-   auto` that #pmOverlayRoot's children need (the root itself is
-   `pointer-events:none`). `.bsd-dialog` below supplies that chrome directly
-   rather than fighting `.demo-dialog`'s conflicting left/top/transform: at
-   equal specificity this file's later source order wins property-by-
-   property, but leaving anything unset here would leave it unset, so every
-   property `.dialog` would have contributed is repeated explicitly.
+   5. CONTEXT MORE DETAILS (#ctx-bsd, slot contextBsdSection). Head + Configure, the plain facts, the status line,
+   then three native disclosures (Advisor notes, Session, Usage) as hairline rows: no metric cards, no pills, no
+   boxes inside the section (G-26). .bsd-section keeps the stripe-removal overrides applied (B.10).
    ===================================================================== */
-.bsd-dialog {
-  position: fixed;
-  z-index: var(--z-dialog);
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: min(440px, calc(100vw - 20px));
-  max-height: calc(100vh - 20px);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border: 1px solid var(--border-strong);
-  border-radius: 16px;
-  background: var(--glass);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow: var(--shadow-float);
-  pointer-events: auto;
-  animation: dialog-in var(--spring) both;
-}
-.bsd-dialog .demo-dialog-head {
-  flex: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 11px;
-  border-bottom: 1px solid var(--border);
-}
-.bsd-dialog .demo-dialog-head strong { font-size: 13px; }
-.bsd-dialog .demo-dialog-body {
-  flex: 1;
-  min-height: 0;
-  overflow: auto;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.bsd-dialog .demo-dialog-foot {
-  flex: none;
-  display: flex;
-  justify-content: flex-end;
-  gap: 6px;
-  padding: 9px 11px;
-  border-top: 1px solid var(--border);
-}
-
-.bsd-dialog .bsd-stage-row {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 7px 8px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-}
-.bsd-dialog .bsd-stage-row:hover { background: var(--surface-3); }
-.bsd-dialog .bsd-stage-row input[type="checkbox"] {
-  accent-color: var(--accent);
-  width: 14px;
-  height: 14px;
-  margin: 0;
-  flex: none;
-}
-.bsd-dialog .bsd-stage-row span { font-size: 12px; color: var(--text); }
-
-/* Advisor transcript lines. System notes (the hold/re-evaluate narration)
-   read as dim italic asides; advisor lines stay full-weight body text. */
-.bsd-tline {
-  display: flex;
-  gap: 8px;
-  padding: 7px 0;
-  border-top: 1px solid var(--border);
-}
-.bsd-tline:first-child { border-top: 0; padding-top: 0; }
-.bsd-tline .bsd-hgen { margin-top: 2px; }
-.bsd-tline p {
-  margin: 0;
-  flex: 1;
-  min-width: 0;
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--text);
-}
-.bsd-tline-system p {
-  color: var(--text-dim, var(--muted));
-  font-style: italic;
-}
+/* code and raw data in the theme's code face (J-1: IBM Plex Mono in retro), as inside every pmx surface */
+:is(.pmx-bsd-details, .pmx-bsd-rawbody) :is(code, pre){font-family:var(--font-mono);}
+.pmx-bsd-details{margin-top:12px;padding:4px 0 0;font:var(--pmx-fs-help);color:var(--text);}
+:where(.pmx-bsd-details, .pmx-bsd-rawbody) p{margin:0;}
+.pmx-bsd-dh{display:flex;align-items:center;gap:10px;min-height:32px;}
+.pmx-bsd-dh h3{margin:0;font:var(--pmx-fs-q);color:var(--text);}
+.pmx-bsd-dh .spacer{flex:1;}
+.pmx-bsd-dh-mark{display:grid;place-items:center;width:22px;height:22px;color:var(--muted);flex:none;}
+.pmx-bsd-facts{margin-top:6px; font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-bsd-status{margin-top:8px; font:var(--pmx-fs-sentence);color:var(--muted);}
+.pmx-bsd-status .pmx-bsd-lead{font-weight:500;color:var(--text);}
+.pmx-bsd-details .pmx-bsd-fine, .pmx-bsd-rawsheet .pmx-bsd-fine{margin-top:6px;font:var(--pmx-fs-fine);color:var(--subtle);}
+.pmx-bsd-details .pmx-reason{margin-top:6px;font:var(--pmx-fs-fine);color:var(--muted);}
+.pmx-bsd-details .pmx-reason + .pmx-bsd-fine{margin-top:12px;}
+.pmx-bsd-disc{margin-top:12px;border-top:1px solid var(--border);}
+.pmx-bsd-disc > summary{display:flex;align-items:center;gap:8px;min-height:40px;padding:0;cursor:pointer;list-style:none;font:var(--pmx-fs-ctl);color:var(--text);}
+.pmx-bsd-disc > summary::-webkit-details-marker{display:none;}
+.pmx-bsd-disc > summary .pmx-bsd-chev{flex:none;color:var(--muted);transition:transform var(--pmx-t-light) var(--pmx-ease-move);}
+.pmx-bsd-disc[open] > summary .pmx-bsd-chev{transform:rotate(90deg);}
+.pmx-bsd-disc-body{padding:0 0 12px 22px;}
+.pmx-bsd-say{font:var(--pmx-fs-help);color:var(--text);}
+.pmx-bsd-say + .pmx-bsd-say{margin-top:6px}
+.pmx-bsd-say b{font-weight:600;}
+.pmx-bsd-acts{display:flex;flex-wrap:wrap;align-items:center;gap:12px 10px;margin-top:10px;}
+.pmx-bsd-frow .pmx-bsd-acts{gap:0 10px;margin:4px 0 0 -10px;}
+.pmx-bsd-frow{padding:12px 0;border-top:1px solid var(--border);}
+.pmx-bsd-frow:first-child{border-top:0;padding-top:0;}
+.pmx-bsd-frow:last-child{padding-bottom:0;}
+.pmx-bsd-frow-head{display:flex;align-items:baseline;gap:8px;min-width:0;}
+.pmx-bsd-frow-head .pmx-sev{flex:none;}
+.pmx-bsd-frow-title{min-width:0;font:var(--pmx-fs-ctl);color:var(--text);overflow-wrap:anywhere;}
+.pmx-bsd-frow-state{margin-top:6px; font:var(--pmx-fs-fine);color:var(--muted);}
+.pmx-bsd-frow-state b{font-weight:600;color:var(--text);}
+.pmx-bsd-why{margin-top:10px;}
+.pmx-bsd-why-say{font:var(--pmx-fs-help);color:var(--text);overflow-wrap:anywhere;min-width:0;}
+.pmx-bsd-why-say p{margin:0;}
+.pmx-bsd-why-say p + p, .pmx-bsd-why-say :is(ul, ol, pre, .pmx-table-wrap){margin-top:8px;}
+.pmx-bsd-why-say :is(ul, ol){padding-left:18px;}
+.pmx-bsd-sub{margin-top:12px; font:var(--pmx-fs-meta);color:var(--muted);}
+.pmx-bsd-list{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:6px;font:var(--pmx-fs-help);color:var(--text);}
+.pmx-bsd-list li{min-width:0;overflow-wrap:anywhere;}
+.pmx-bsd-list b{font-weight:600;}
+.pmx-bsd-v{display:inline-block;min-width:30px;margin-right:8px;font:var(--pmx-fs-meta);color:var(--muted);font-variant-numeric:tabular-nums;}
+.pmx-bsd-raw{margin-top:10px;}
+.pmx-bsd-raw[open]{padding-bottom:12px;}
+.pmx-bsd-raw > summary{display:inline-flex;align-items:center;gap:8px;min-height:32px;cursor:pointer;list-style:none;font:var(--pmx-fs-meta);color:var(--muted);}
+.pmx-bsd-raw > summary::-webkit-details-marker{display:none;}
+.pmx-bsd-raw > summary .pmx-bsd-chev{flex:none;transition:transform var(--pmx-t-light) var(--pmx-ease-move);}
+.pmx-bsd-raw[open] > summary .pmx-bsd-chev{transform:rotate(90deg);}
+/* the raw JSON is never its own scroller: the drawer or the sheet body around it scrolls (one scroller, not two) */
+/* pre-wrap lets a line's last space hang into the right padding; 20 px keeps even that space 12 px off the edge (J-2) */
+.pmx-bsd-raw > pre{margin:6px 0 0;padding:10px 20px 10px 12px;border-radius:var(--pmx-r-sm);background:var(--code);font:11px/16px var(--font-mono);white-space:pre-wrap;overflow-wrap:anywhere;color:var(--text);}
+.pmx-bsd-acts .soft-button{min-height:32px;padding:0 12px;}
+.pmx-bsd-acts .soft-button:disabled{opacity:.45;cursor:default;}
+.pmx-bsd-tech{margin-top:12px}
+.pmx-bsd-tech b{font-weight:600;color:var(--muted);}
+.pmx-bsd-tech code{font:10.5px var(--font-mono);overflow-wrap:anywhere;}
 
 /* =====================================================================
-   6. REDUCED MOTION
-   The app-wide rule in motion.css already caps every `infinite` animation
-   at one pass (`animation-iteration-count:1 !important`), so bsd-pulse
-   already stops looping. This makes that explicit and documents why it
-   loses nothing: the working tone is already carried by accent colour and
-   a solid dot fill (vs. idle's hollow ring), not by the pulse alone.
-   Finite reveals (.bsd-history's details-open, the dialog's dialog-in) are
-   left untouched, matching this codebase's existing entrances.
+   6. THE RAW-DATA SHEETS (bsd-usage, bsd-transcript): compact pmx sheets as tall as what they hold, up to 560 (the
+   foot follows the content; no empty panel). The summary reads first; past 560 the body scrolls.
    ===================================================================== */
-@media (prefers-reduced-motion: reduce) {
-  .bsd-live.bsd-tone-working::before { animation-iteration-count: 1; }
+:is(#pmOverlayRoot, body) > .pmx-sheet.pmx-bsd-rawsheet{height:fit-content;max-height:min(var(--pmx-h),calc(100vh - 40px));}
+.pmx-bsd-rawsheet .pmx-body{overflow:auto;}
+.pmx-bsd-rawbody{padding:4px 0 12px;min-width:0;}
+.pmx-bsd-rawbody > .pmx-bsd-raw:first-child{margin-top:0;}
+.pmx-bsd-rawbody .pmx-bsd-tx{border-top:1px solid var(--border);margin-top:0;}
+.pmx-bsd-rawbody .pmx-bsd-tx:last-child{border-bottom:1px solid var(--border);}
+.pmx-bsd-rawbody .pmx-bsd-tx > summary{display:flex;min-height:40px;}
+.pmx-bsd-rawbody .pmx-bsd-tx > summary .pmx-bsd-v{margin-right:0;}
+/* the usage sheet's checks: what each one said, then what it read and took */
+.pmx-bsd-cycles{gap:12px;margin-top:8px;}
+.pmx-bsd-cycles li{display:flex;align-items:baseline;}
+.pmx-bsd-cy{display:flex;flex-direction:column;row-gap:6px;min-width:0;}
+.pmx-bsd-cyfine{font:var(--pmx-fs-fine);color:var(--subtle);}
+
+/* =====================================================================
+   7. THE BACK SEAT DRIVER SHEET (DESIGN-SPEC 8.6; a standard pmx sheet)
+   Kind layout only. Every primitive (pmx-q, pmx-switch, pmx-ctl, pmx-check,
+   pmx-stepper, pmx-plate, pmx-adv, pmx-set, pmx-foot, the preserved
+   shared-picker-button) keeps its own look from module-shell.css; this places
+   them: the cue sheet over the Off · Auto · On switch, Who advises and Memory
+   on the left, When it speaks up on the right, the Advanced entry across the
+   foot of the body. J-2 spacing (reference update: advisor pair gap 10,
+   helper +8, fine +5, Memory block +20).
+   ===================================================================== */
+/* the head's promise line (it never changes, runs or approves anything) under the lead's first sentence */
+.pmx-bsd-sheet .pmx-title .pmx-bsd-promise{display:flex;align-items:center;gap:6px;margin:0;font:inherit;color:inherit;}
+.pmx-bsd-sheet .pmx-title .pmx-bsd-promise > span{display:inline;margin:0;font:inherit;color:inherit;}
+.pmx-bsd-sheet .pmx-bsd-promise > svg{flex:none;}
+.pmx-bsd-sheet .pmx-bsd-body{display:flex;flex-direction:column;min-width:0;min-height:100%;}
+/* the cue sheet is 904 x 137 at scale 1; narrower sheets show its caption (pmxPlateFit) */
+.pmx-bsd-sheet .pmx-bsd-cue{flex:none;height:137px;min-height:0;max-height:none;margin-top:0;}
+.pmx-bsd-sheet .pmx-bsd-cue[data-fit="caption"]{height:auto;}
+/* R-16: the legend sits top-left, clear of the quiet-period and catch-up labels on the right */
+.pmx-bsd-sheet .pmx-bsd-plate .pmx-legend{justify-content:flex-start;}
+.pmx-bsd-sheet .pmx-bsd-plate .pmx-bsd-tick{fill:var(--pmx-line);}
+.pmx-bsd-sheet .pmx-bsd-plate .pmx-bsd-quiet{fill:var(--muted);}
+.pmx-bsd-sheet .pmx-bsd-plate .pmx-bsd-sev{fill:var(--warning);}
+/* M1: each cue lands (pop 150) as its stem finishes drawing, never floating before its stem; one arriving later
+   (a mode change after the sheet settled) pops at once while its stem draws. Reduced motion: the pmx policy removes it. */
+.pmx-bsd-sheet .pmx-bsd-plate :is(.pmx-p-cue, .pmx-bsd-quiet){transform-box:fill-box;transform-origin:center;animation:pmx-pop var(--pmx-t-pop) var(--pmx-ease-pop) calc(var(--pmx-t-at-lines) + var(--pmx-t-draw) * .8) backwards;}
+#pmOverlayRoot.pmx-sheet-settled .pmx-bsd-sheet .pmx-bsd-plate :is(.pmx-p-cue, .pmx-bsd-quiet){animation-delay:calc(var(--pmx-t-draw) * .6);}
+.pmx-bsd-sheet .pmx-bsd-top{flex:none;margin-top:10px;overflow:visible;}
+.pmx-bsd-sheet .pmx-bsd-cols{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 36px;margin-top:12px;}
+/* the reference's 176 px trigger column (FOUNDATION REQUEST: a pmxCtl width option), so the helpers keep two lines */
+.pmx-bsd-sheet .pmx-bsd-col .pmx-ctl[data-layout="row"]{grid-template-columns:minmax(0,1fr) 176px;}
+.pmx-bsd-sheet .pmx-bsd-col > .pmx-q + .pmx-q{margin-top:20px;}
+/* the Advanced entry's hairline sits 8 px under the columns (its own 12 px margin less 4): the last text keeps >= 8 px
+   of ink to the line and the stepper >= 12 px (J-2), and the columns keep a few px of slack in every theme */
+.pmx-bsd-sheet .pmx-bsd-end{flex:none;overflow:visible;margin-top:-4px;}
+/* Who advises: the model and Persona triggers side by side (R-16: 1.2fr / 1fr, 10 px apart) */
+.pmx-bsd-sheet .pmx-bsd-pair{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:10px;margin-top:10px;}
+.pmx-bsd-sheet .pmx-bsd-pair + .pmx-help{margin-top:8px;}
+.pmx-bsd-sheet .pmx-bsd-q .pmx-help + .pmx-fine{margin-top:5px;}
+/* the no-substitute sentence is the specific message: the general helper under the triggers gives way to it (the fine print stays) */
+.pmx-bsd-sheet .pmx-bsd-pair + .pmx-bsd-route{margin-top:6px;}
+.pmx-bsd-sheet .pmx-bsd-route + .pmx-help{display:none;}
+.pmx-bsd-sheet .pmx-bsd-route + .pmx-help + .pmx-fine{margin-top:0;}
+/* ...and the column keeps its height (review cycle 1: it scrolled 40-55 px and cut the Memory helper): the saving
+   line and the notes summary, which the Advanced entry repeats, give way while the no-substitute sentence shows */
+.pmx-bsd-sheet .pmx-bsd-col:has(.pmx-bsd-route) :is(.pmx-bsd-route + .pmx-help + .pmx-fine, .pmx-bsd-tidy){display:none;}
+.pmx-bsd-sheet .pmx-bsd-q .pmx-check{margin-top:10px;}
+/* the notes summary sits on the check's text column (the 15 px box + its 10 px gap) */
+.pmx-bsd-sheet .pmx-bsd-tidy{margin:4px 0 0 25px;}
+/* Off (G-37): nothing moves; the controls dim to 45 % under "Applies when Back Seat Driver is on" */
+.pmx-bsd-sheet .pmx-bsd-cols .pmx-bsd-q > :not(.pmx-q-head), .pmx-bsd-sheet .pmx-bsd-cols .pmx-q-title{transition:opacity var(--pmx-t-row) var(--pmx-ease-linear);}
+.pmx-bsd-sheet .pmx-bsd-cols[data-off="1"] .pmx-bsd-q > :not(.pmx-q-head), .pmx-bsd-sheet .pmx-bsd-cols[data-off="1"] .pmx-q-title{opacity:.45;}
+.pmx-bsd-sheet .pmx-bsd-offnote{color:var(--text);font-weight:600;}
+/* R-16: in retro and friendly the Who advises and Memory helper and fine lines keep one line (the full sentence is the
+   label's hover card); the When it speaks up helpers have the room for two lines there, so they wrap to two instead of
+   losing their second half ("Safety checks always run", "You can skip the wait") */
+body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-bsd-sheet .pmx-bsd-col :is(.pmx-bsd-q > .pmx-q-body > .pmx-help, .pmx-bsd-q > .pmx-q-body > .pmx-fine, .pmx-check-copy small){white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-bsd-sheet .pmx-bsd-col .pmx-ctl-copy .pmx-help{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:clip;}
+/* J-2 fitted copy (bsd.js fit()): exactly one of the full, shorter (retro and friendly) and shortest (windows under
+   800 px tall) sentences shows */
+.pmx-bsd-sheet :is(.pmx-bsd-mid, .pmx-bsd-tiny){display:none;}
+body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-bsd-sheet .pmx-bsd-mid{display:inline;}
+body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-bsd-sheet .pmx-bsd-full:has(+ .pmx-bsd-mid){display:none;}
+@media (max-height: 799.98px){
+  body .pmx-bsd-sheet :has(> .pmx-bsd-tiny) > :is(.pmx-bsd-full, .pmx-bsd-mid){display:none;}
+  body .pmx-bsd-sheet .pmx-bsd-tiny{display:inline;}
 }
-
-/* Severity is a small labeled badge; no directional accent borders. */
-.bsd-summary-head,.bsd-summary-metrics,.bsd-summary-actions { display:flex; align-items:center; justify-content:space-between; gap:8px; }
-.bsd-summary-identity { display:grid; gap:4px; margin:12px 0; font-size:12px; }
-.bsd-summary-identity span,.bsd-summary-metrics { color:var(--muted); font-size:10px; }
-.bsd-disclosure { margin-top:12px; border-top:1px solid var(--border); padding-top:10px; }
-.bsd-disclosure summary { cursor:pointer; font-size:11px; font-weight:600; display:flex; justify-content:space-between; padding:3px 0 7px; }
-.bsd-disclosure summary span { color:var(--muted); font-weight:400; }
-.bsd-findings { gap:0; }
-.bsd-finding { padding:11px 0; border:0; border-bottom:1px solid var(--border); border-radius:0; background:transparent; }
-.bsd-session-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; font-size:10px; }
-.bsd-session-grid dt { color:var(--muted); margin-bottom:3px; }
-.bsd-session-grid dd { margin:0; overflow-wrap:anywhere; }
-.bsd-configure { width:min(620px,calc(100vw - 24px)); }
-.bsd-configure .demo-dialog-body { padding:20px; display:block; }
-.bsd-config-mode { display:flex; gap:5px; margin-bottom:20px; }
-.bsd-config-mode .active { background:var(--surface-3); border-color:var(--accent); color:var(--accent); }
-.bsd-config-pickers { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px; }
-.bsd-config-pickers label,.bsd-config-grid label { display:grid; gap:7px; min-width:0; font-size:11px; color:var(--muted); }
-.bsd-config-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:17px; }
-.bsd-config-grid input,.bsd-config-grid select { width:100%; min-width:0; height:35px; padding:6px 9px; border:1px solid var(--border); border-radius:7px; color:var(--text); background:var(--surface-2); }
-.bsd-retain { display:flex; align-items:center; gap:8px; font-size:11px; }
-.bsd-stage-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px 10px; }
-.bsd-config-error { min-height:15px; color:var(--danger); font-size:11px; margin-top:10px; }
-@media(max-width:480px){ .bsd-config-pickers,.bsd-config-grid {grid-template-columns:1fr;} }
-
-/* Batch 12: scoped native cards, no decorative left-edge treatment. */
-.bsd12-dialog {width:min(610px,calc(100vw - 28px));max-height:calc(100vh - 32px);display:flex;flex-direction:column;overflow:hidden;}
-.bsd12-dialog .dialog-body {min-height:0;overflow:auto;padding:16px;}
-.bsd12-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
-.bsd12-grid label,.bsd12-disclosure label {display:flex;flex-direction:column;gap:7px;font-size:12px;min-width:0;}
-.bsd12-muted {color:var(--muted);font-size:11px;line-height:1.5;}
-.bsd12-error {color:var(--danger,var(--text));font-size:12px;min-height:1em;}
-.bsd12-actions {display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-.bsd12-actions .active {outline:1px solid var(--accent);}
-.bsd12-metrics {display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin:10px 0;}
-.bsd12-metric {background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:9px;min-width:0;}
-.bsd12-metric dt {font-size:10px;color:var(--muted);margin-bottom:5px;}
-.bsd12-metric dd {margin:0;font-size:12px;overflow-wrap:anywhere;}
-.bsd12-line {display:flex;gap:8px;align-items:center;min-width:0;}
-.bsd12-line h3 {margin:0;}
-.bsd12-overview {padding:12px;border:1px solid var(--border);border-radius:12px;}
-.bsd12-identity {font-size:12px;overflow-wrap:anywhere;}
-.bsd12-disclosure {margin:12px 0 0;border:1px solid var(--border);border-radius:9px;padding:10px;}
-.bsd12-disclosure summary {cursor:pointer;font-size:12px;font-weight:600;}
-.bsd12-disclosure summary span {color:var(--muted);font-size:10px;margin-left:6px;font-weight:400;}
-.bsd12-finding {margin-top:10px;border:1px solid var(--border);border-radius:8px;padding:10px;overflow-wrap:anywhere;}
-.bsd12-finding strong {display:block;font-size:12px;margin-top:7px;}
-.bsd12-finding p {font-size:11px;line-height:1.5;}
-.bsd12-badge {font-size:10px;background:var(--surface-2);border-radius:20px;border:1px solid var(--border);padding:2px 7px;}
-.bsd12-raw,.bsd12-evidence pre {font-size:11px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%;}
-.bsd12-advice {max-width:100%;}
-.bsd12-advice .event-copy {min-width:0;}
-.bsd12-advice small {color:var(--muted);display:block;line-height:1.5;}
-.bsd12-advice .bsd12-actions {margin-top:7px;}
-@media(max-width:740px){.bsd12-grid{grid-template-columns:1fr}.bsd12-dialog{width:calc(100vw - 20px)}.bsd12-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* the foot (review cycle 1): the read-back is the sheet's promise-last sentence and the estimate carries the honesty
+   line, so neither is ever clamped or cut. The foot grows past its 80 px (a third line) when they need it, its words
+   keep 7 px of padding (more with the half-leading) to the hairline, and in the Save and refresh advisor foot (the wider button) the wait clause drops its
+   tail "before the assistant finishes", as it does when Where it watches rows are read back too (bsd.js readbackParts). */
+.pmx-sheet .pmx-foot.pmx-bsd-foot{height:auto;min-height:80px;}
+.pmx-sheet .pmx-bsd-foot .pmx-foot-say{padding:7px 0;}
+.pmx-sheet .pmx-bsd-foot .pmx-readback{display:block;-webkit-line-clamp:none;overflow:visible;}
+.pmx-sheet .pmx-bsd-foot .pmx-estimate{white-space:normal;overflow:visible;}
+.pmx-bsd-foot:is([data-refresh="1"], [data-stages="1"]) .pmx-bsd-rbx{display:none;}
+/* A15 + J-2 (review cycle 1): the two Advanced sentences wrap to a second line in the page's spare height at every
+   window size (the foundation keeps them to one line under 820 px); the runtime's lean 2 still takes them to one */
+.pmx-bsd-sheet .pmx-bsd-adv .pmx-advgrid:not([data-pmx-lean="2"]) .pmx-set-say{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:clip;}
+/* The Advanced page: Where it watches across the page (two columns, read down), then the two settings, then Technical details */
+.pmx-bsd-sheet .pmx-bsd-watch{grid-column:1 / -1;min-width:0;}
+.pmx-bsd-sheet .pmx-bsd-watch-head{display:flex;align-items:center;gap:16px;min-height:32px;}
+.pmx-bsd-sheet .pmx-bsd-watch-sum{margin:0 0 0 auto;display:flex;align-items:center;gap:10px;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;}
+.pmx-bsd-sheet .pmx-bsd-watch-sum .text-button{margin-right:-10px;}
+.pmx-bsd-sheet .pmx-bsd-stages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(5,auto);grid-auto-flow:column;gap:0 36px;margin-top:6px;}
+.pmx-bsd-sheet .pmx-bsd-stage{display:grid;grid-template-columns:minmax(0,1fr) 176px;gap:0 16px;align-items:center;min-width:0;padding:8px 0;border-top:1px solid var(--border);}
+.pmx-bsd-sheet .pmx-bsd-stage-copy{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.pmx-bsd-sheet .pmx-bsd-stage-copy > span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* a row changed from the default says so after its canonical name ("Code Generation · changed from Auto"), in the ink
+   of the words it changed; its trigger value inks when it changes (bsd.js advanced) */
+.pmx-bsd-sheet .pmx-bsd-stage .pmx-bsd-changed{color:var(--text);}
+/* the two settings under the list share a top line: a two-line sentence in one never centres the other lower */
+.pmx-bsd-sheet .pmx-bsd-adv .pmx-set{align-items:start;}
+.pmx-bsd-sheet .pmx-bsd-adv .pmx-set{margin-top:20px;}
+.pmx-bsd-sheet .pmx-bsd-tech{grid-column:1 / -1;margin:16px 0 0;line-height:16px;}
+.pmx-bsd-sheet .pmx-bsd-tech b{font-weight:600;color:var(--muted);}
+.pmx-bsd-sheet .pmx-bsd-tech code{font-family:var(--font-mono);font-size:10.5px;}
+/* J-2 short windows: below an 800 px window the sheet is shorter than its 760 px (1024 x 768: 728). Nothing is
+   compressed; the secondary lines drop (the Who advises fine print, the notes summary that the Advanced entry repeats)
+   and the right column's helpers keep one line (their full sentences are the labels' hover cards). */
+@media (max-height: 799.98px){
+  .pmx-bsd-sheet .pmx-bsd-q .pmx-help + .pmx-fine, .pmx-bsd-sheet .pmx-bsd-tidy{display:none;}
+  .pmx-bsd-sheet .pmx-bsd-adv .pmx-set{margin-top:14px;}
+  body:is([data-theme]) .pmx-bsd-sheet .pmx-bsd-col .pmx-ctl-copy .pmx-help{display:block;-webkit-line-clamp:unset;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+}
+/* one column below a 700 px body (the 700 px window): the two control columns and the Where it watches list stack */
+@container (max-width: 700px){
+  .pmx-bsd-sheet .pmx-bsd-cols{grid-template-columns:minmax(0,1fr);gap:20px 0;}
+  .pmx-bsd-sheet .pmx-bsd-stages{grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-auto-flow:row;}
+}
+/* below a 948 px window the pmx body scrolls as one column: the sheet's body is its own height */
+@media (max-width: 947.98px){
+  .pmx-bsd-sheet .pmx-bsd-body{min-height:0;}
+  .pmx-bsd-sheet .pmx-bsd-cols{flex:none;}
+  .pmx-bsd-sheet .pmx-bsd-col{overflow:visible;}
+}

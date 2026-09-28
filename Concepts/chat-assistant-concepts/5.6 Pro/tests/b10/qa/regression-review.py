@@ -41,6 +41,12 @@ with sync_playwright() as pw:
    p.locator('[data-action="review-open-report"]').first.click();p.wait_for_timeout(450);p.screenshot(path=str(O/(kind+'-report.png')))
    check(kind+': stable editor identity',snap(p)['state']['activeEditor']=='review:'+rid)
    action(p,'review-open-report',{'run':rid});check(kind+': report tab reused',p.evaluate('(id)=>PM56_EXT.ctx().state.editorTabs.filter(x=>x==="review:"+id).length',rid)==1)
+   # The evidence document numbers the snapshot from its own first line: 'const q' carries the proof's number and its true line.
+   LINE_NO="(sel)=>{const l=[...document.querySelectorAll(sel)].find(x=>x.textContent.includes('const q ='));return l?l.querySelector('.pmx-rview-no').textContent.trim():null;}"
+   proof_no=p.evaluate(LINE_NO,'.review-document:not(.pmx-rview-ev) .pmx-rview-line');true_no=str(next(i+1 for i,l in enumerate(a['target']['source'].split('\n')) if 'const q =' in l))
+   p.locator('[data-action="review-open-evidence"][data-evidence="source"]').first.click();doc_no=p.evaluate(LINE_NO,'.pmx-rview-ev .pmx-rview-line')
+   check(kind+': evidence line numbers match the proof',proof_no==doc_no==true_no and p.locator('.pmx-rview-ev .pmx-rview-line.is-cited').count()>0,[proof_no,doc_no,true_no])
+   p.locator('[data-action="review-open-report"]').first.click()
    p.locator('[data-action="review-open-evidence"][data-evidence="tests"]').first.click();check(kind+': actual frozen fixture test visible','Actual IDs: []' in p.locator('.review-source').inner_text())
    p.locator('[data-action="review-open-report"]').first.click();p.locator('[data-action="review-report-view"][data-view="markdown"]').click();md=p.locator('.review-markdown').inner_text()
    check(kind+': Markdown same target',a['target']['targetHashes']['primary'] in md);check(kind+': Markdown retains every finding',all(f['claim'] in md for f in a['findings']))

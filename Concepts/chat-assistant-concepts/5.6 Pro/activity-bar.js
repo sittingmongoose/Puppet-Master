@@ -406,9 +406,6 @@
   }
 
   /* ------------------------------------------------------------- subagents */
-  function initials(name) {
-    return String(name || '?').split(/\s+/).map(function (w) { return w[0] || ''; }).join('').slice(0, 2).toUpperCase();
-  }
   function agentCard(ctx, def) {
     var agents = list(coll(ctx).subagents);
     var shown = byRank(agents).slice(0, ROWS);
@@ -434,11 +431,14 @@
     if(window.PM56_CREW?.activityRuns(ctx).length)return window.PM56_CREW.activityHover(ctx);
     var crew = list(coll(ctx).crew);
     var shown = byRank(crew).slice(0, ROWS);
-    var body = shown.length ? shown.map(function (a) {
+    var SH = window.PM56_SHELL;
+    var body = shown.length ? shown.map(function (a, i) {
       var s = st(a.status);
+      /* a member's face is its cast mark (silhouette x hue), never initials (7.13, B1) */
+      var mk = SH && SH.pmxMark ? SH.pmxMark({ role: a.effectivePersona || a.requestedPersona || a.persona || 'Implementer', seat: (i % 8) + 1, size: 18 }) : '';
       return row({
         k: 'crew:' + a.id, state: s.tone,
-        lead: '<span class="ab-avatar" data-tone="' + s.tone + '">' + esc(initials(a.name)) + '</span>',
+        lead: '<span class="ab-avatar" data-tone="' + s.tone + '">' + mk + '</span>',
         main: a.name,
         sub: a.current || '',
         right: '<span class="ab-row-right"><b data-tone="' + s.tone + '">' + esc(s.label) + '</b></span>',

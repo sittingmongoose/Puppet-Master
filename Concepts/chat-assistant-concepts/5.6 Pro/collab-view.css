@@ -1,0 +1,118 @@
+/* collab-view.css — COLLAB-VIEW (parallel build, then COLLAB lane): the docked run view in the editor pane (spec 4.4, 7.9, 8.0 view bullets).
+   The frame is PM56_SHELL.pmxView and the other run-view primitives (module-shell.css styles them); this sheet
+   lays out only the view's own parts (collab-view-*), its motion (M8 rise in place, tab changes, the M4 wash
+   and stream swap) and the spacing of the legacy hook elements it keeps (.collab-qmax, .collab-excluded ...).
+   COLLAB step 3 deleted the retired centred panel's rules, so no guard against them is needed any more.
+   J-2 everywhere: text >= 8 px from any line, >= 10 px between controls, secondary lines >= 6 px under
+   their row, line-height >= 1.45. Durations and eases are pmx tokens only (A2-22). */
+
+/* ---------------------------------------------------------------- the root */
+.collab-view{padding-top:24px;}
+.collab-view-pane{min-width:0;}
+.collab-view-pane > .pmx-vsec + .pmx-timeline{margin-top:28px;}
+.collab-view > .collab-view-more{margin-top:16px;}
+
+/* ---------------------------------------------------------------- the More row (G-12: real buttons, in place) */
+.collab-view-more-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;min-width:0;}
+.collab-view-item{display:inline-flex;align-items:center;gap:12px;min-width:0;}
+.collab-view-item > .pmx-reason{margin:0;}
+.collab-view-tech{margin:12px 0 0;overflow-wrap:anywhere;}
+
+/* ---------------------------------------------------------------- lines, figures, helper lines */
+.collab-view-line{display:flex;align-items:baseline;gap:8px;margin:0;font:var(--pmx-fs-body);color:var(--text);min-width:0;}
+.collab-view-line > svg{flex:none;align-self:center;color:var(--muted);}
+.collab-view-line > span{min-width:0;}
+.collab-view-line + .collab-view-line{margin-top:8px;}
+.collab-view-help{margin:8px 0 0;}
+.collab-view-figure{margin:0;font:var(--pmx-fs-body);color:var(--muted);}
+.collab-view-figure b{color:var(--text);}
+.collab-view-figures p{margin:0;font:var(--pmx-fs-body);color:var(--muted);}
+.collab-view-figures p b{color:var(--text);}
+.collab-view-figures p + p{margin-top:12px;}
+.collab-view-figures p.pmx-fine{font:var(--pmx-fs-fine);color:var(--subtle);}
+.collab-view-empty{margin:12px 0 0;font:var(--pmx-fs-sentence);color:var(--muted);}
+
+/* ---------------------------------------------------------------- the kind record has its own page */
+.collab-view-doc{display:flex;align-items:center;flex-wrap:wrap;gap:10px 12px;margin:0 0 26px;min-width:0;}
+.collab-view-doc > svg{flex:none;color:var(--muted);}
+.collab-view-doc > p{flex:1 1 220px;min-width:0;margin:0;font:var(--pmx-fs-body);color:var(--muted);}
+
+/* ---------------------------------------------------------------- action rows inside a section */
+.collab-view-acts{display:flex;flex-wrap:wrap;align-items:center;gap:12px 10px;margin-top:16px;min-width:0;}
+.collab-view-label{margin-right:6px;font:600 12.5px/18px var(--font-ui);color:var(--text);}
+.collab-view-promote{margin-top:4px;}
+
+/* ---------------------------------------------------------------- team lists */
+.collab-view-team{display:flex;flex-direction:column;min-width:0;}
+.collab-view-specs{margin-top:28px;}
+
+/* plain lists: a mark (or nothing), a name, a quiet second line; hairlines between rows, 8 px or more around text */
+.collab-view-lines{list-style:none;margin:0;padding:0;min-width:0;}
+.collab-view-lines > li{display:flex;align-items:flex-start;gap:10px;padding:10px 0;min-width:0;font:var(--pmx-fs-body);color:var(--text);}
+.collab-view-lines > li + li{box-shadow:0 -1px 0 var(--border);}
+.collab-view-lines > li > .pmx-mark{flex:none;margin-top:1px;}
+.collab-view-lines > li > span{min-width:0;}
+.collab-view-lines > li b{display:block;font-weight:600;}
+.collab-view-lines > li small{display:block;margin-top:6px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
+.collab-view-votes{margin-top:16px;}
+.collab-view-votes > li b{display:inline;}
+
+/* ---------------------------------------------------------------- the legacy Crew plan (one row per part; it wraps, never scrolls sideways) */
+.collab-view-parts{margin-top:12px;}
+.collab-view-part{display:block;min-width:0;}
+.collab-view-part > small b{display:inline;color:var(--text);font-weight:600;}
+.collab-view-part > .pmx-act{margin-top:10px;}
+.collab-view-state{color:var(--muted);}
+.collab-view-state[data-state="done"]{color:var(--positive);}
+.collab-view-state[data-state="blocked"]{color:var(--warning);}
+.collab-view-state[data-state="failed"]{color:var(--danger);}
+
+/* ---------------------------------------------------------------- Review (legacy) and BrainStorm (legacy) records */
+.collab-view-target{margin:0 0 16px;}
+.collab-view-target .pmx-fine{display:block;margin-top:6px;overflow-wrap:anywhere;}
+.collab-view-quote{margin:6px 0 0;font:var(--pmx-fs-body);color:var(--muted);}
+.collab-view-check{margin-top:16px;}
+.collab-view-ruled{display:flex;align-items:flex-start;gap:10px;margin-top:20px;min-width:0;}
+.collab-view-ruled > svg{flex:none;margin-top:3px;color:var(--danger);}
+.collab-view-ruled > p{margin:0;min-width:0;font:var(--pmx-fs-body);color:var(--text);}
+.collab-view-ruled small{display:block;margin-top:6px;}
+.collab-view .pmx-quote + .pmx-quote{margin-top:12px;}
+
+/* ---------------------------------------------------------------- the participant view (D5) */
+.collab-view-pstate{display:flex;align-items:center;gap:10px;margin:0;font:var(--pmx-fs-body);color:var(--muted);}
+.collab-view-pstate b{color:var(--text);}
+.collab-view-pmodel{margin:6px 0 0;}
+/* a helper waiting for your OK: the answer lives in the chat card (7.4); one quiet line with the warm glyph */
+.collab-view-answer{display:flex;gap:9px;align-items:flex-start;margin:12px 0 0;font:var(--pmx-fs-help);line-height:1.5;color:var(--muted);}
+.collab-view-answer > svg{flex:none;margin-top:2px;color:var(--warning);}
+.collab-view-answer b{color:var(--text);font-weight:600;}
+.collab-view .collab-participant-view > .pmx-timeline, .collab-view .collab-participant-view > .collab-empty{margin-top:24px;}
+.collab-view .collab-participant-view > .text-button{margin-top:20px;}
+.collab-view .collab-participant-view > .collab-empty{margin-bottom:0;font:var(--pmx-fs-sentence);color:var(--muted);}
+
+/* ---------------------------------------------------------------- the legacy hook elements (B.5 / G-15): their spacing in the view */
+.collab-view .collab-excluded + .collab-excluded{margin-top:16px;}
+.collab-view .collab-excluded > .pmx-fine{margin-top:8px;}
+.collab-view .collab-qmax{margin:0;font:600 13px/20px var(--font-ui);color:var(--text);}
+.collab-view .collab-readonly-note{margin:26px 0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
+
+/* ---------------------------------------------------------------- motion (5.5 M8, M4) */
+@keyframes collab-view-rise{from{opacity:0;transform:translateY(3px);}}
+@keyframes collab-view-fade{from{opacity:0;}}
+@keyframes collab-view-wash{from{background-color:var(--pmx-wash);}}
+/* M8: the view rises in place: head, then the plate, the tabs and the body */
+.collab-view > .pmx-view-head{animation:collab-view-rise var(--pmx-t-row) var(--pmx-ease-out) backwards;}
+.collab-view > .collab-view-plate{animation:collab-view-fade var(--pmx-t-row) var(--pmx-ease-out) calc(var(--pmx-t-cascade) * 1.5) backwards;}
+.collab-view > .collab-view-tabs{animation:collab-view-rise var(--pmx-t-row) var(--pmx-ease-out) calc(var(--pmx-t-cascade) * 2) backwards;}
+.collab-view > .pmx-view-grid{animation:collab-view-rise var(--pmx-t-row) var(--pmx-ease-out) calc(var(--pmx-t-cascade) * 3) backwards;}
+/* a tab change or a helper's own view: the new pane materializes (row recipe); the More row the same */
+.collab-view-pane, .collab-view-more{animation:collab-view-rise var(--pmx-t-row) var(--pmx-ease-out) backwards;}
+/* M4: a message that arrived while the view is open gets one highlight wash; a streamed entry swaps to its
+   full markdown with a short crossfade, in place */
+.collab-view .pmx-entry[data-cv-fresh]{animation:collab-view-wash var(--pmx-t-wash) var(--pmx-ease-out) backwards;border-radius:var(--pmx-r-xs);}
+.collab-view .pmx-entry[data-cv-swap] > .pmx-entry-body{animation:collab-view-fade var(--pmx-t-row) var(--pmx-ease-out) backwards;}
+/* 5.7: reduced motion is the end state at once */
+@media (prefers-reduced-motion: reduce){
+  .collab-view, .collab-view *{animation:none !important;transition:none !important;}
+}
+body.pm56-reduced .collab-view, body.pm56-reduced .collab-view *{animation:none !important;transition:none !important;}
