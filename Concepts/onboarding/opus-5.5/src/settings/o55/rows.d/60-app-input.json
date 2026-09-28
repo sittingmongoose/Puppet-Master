@@ -477,6 +477,17 @@
     "id": "general.visual.nier-mode",
     "is": true
    }
+  },
+  "general.visual.nier-background": {
+   "label": "NieR background",
+   "help": "A faint ink scene behind the app, or plain parchment.",
+   "options": {
+    "Follow the page": "A scene for each page"
+   },
+   "when": {
+    "id": "general.visual.nier-mode",
+    "is": true
+   }
   }
  }
 }
