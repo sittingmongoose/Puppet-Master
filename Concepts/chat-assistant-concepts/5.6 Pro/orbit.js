@@ -72,7 +72,8 @@
   /* ---- per-card choreography timers ----------------------------------- */
   var TIMERS = {};
   function killTimers(id) { (TIMERS[id] || []).forEach(clearTimeout); TIMERS[id] = []; }
-  function later(id, ms, fn) { (TIMERS[id] = TIMERS[id] || []).push(setTimeout(fn, ms)); }
+  /* choreography delays are motion time: a film that slows PM56_CLOCK slows them too */
+  function later(id, ms, fn) { var K = window.PM56_CLOCK; (TIMERS[id] = TIMERS[id] || []).push(setTimeout(fn, K && K.ms ? K.ms(ms) : ms)); }
   function clearAllTimers() { for (var k in TIMERS) killTimers(k); }
   function rerender() { if (lastRender) lastRender(); }
   function reduced() { var M = window.PM56_MOTION; return !!(M && M.reduced && M.reduced()); }
@@ -637,6 +638,8 @@
        narrate a run the same way */
     items: function (w, rec) { return displayItems(w, rec); },
     narration: function (c) { return narrState(c); },
+    /* true while a card's collapse choreography (C1, C2) is still running */
+    folding: function (cardId) { var ui = UI[cardId]; return !!(ui && (ui.anim === 'c1' || ui.anim === 'c2')); },
     compact: function (cardId) {
       var ui = uiFor(cardId);
       if (ui.compact === true || ui.shown === 'strip') { ui.compact = true; return false; }

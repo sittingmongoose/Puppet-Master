@@ -1,6 +1,8 @@
 /* turn-verify.mjs -- Chat WOW acceptance (2026-09-26).
  *
- *   node turn-verify.mjs [--file index.html] [--json out.json]
+ *   node turn-verify.mjs [--file index.html] [--json out.json] [--cpu-throttle 4]
+ *   (--cpu-throttle slows the page's CPU N times through CDP, so frames run long
+ *   the way they do on a loaded machine)
  *
  * Every check reads painted state or a measured quantity (rects, samples taken
  * every frame in the page, rendered audio), never a dispatch count. Scenarios run
@@ -15,6 +17,7 @@ const argv = process.argv.slice(2);
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
 const ROOT = decodeURIComponent(path.dirname(new URL(import.meta.url).pathname));
 const FILE = path.resolve(opt('file', path.join(ROOT, 'index.html')));
+const THROTTLE = Number(opt('cpu-throttle', 1));
 const OUT = opt('json', null);
 const results = [];
 let group = null;
@@ -25,6 +28,7 @@ const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-gpu', 
 async function fresh(opts = {}) {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   page.__errs = []; page.on('pageerror', e => page.__errs.push(e.message));
+  if (THROTTLE > 1) { const cdp = await page.context().newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: THROTTLE }); }
   await page.goto('file://' + FILE); await page.bringToFront();
   await page.waitForFunction(() => window.PM56_DEMO && window.PM56_STREAM, null, { timeout: 20000 });
   await sleep(900);
@@ -166,10 +170,11 @@ await safe('live agent turn', async () => {
   /* the follow is a glide (a critically damped approach), so a step of new
      content is closed over a few frames by design; what must never happen is the
      view staying away -- the longest stretch more than 24px off the bottom */
-  let run = 0, longest = 0, from = null;
-  late.forEach((s, i) => { if (s.g > 24) { if (from == null) from = s.t; longest = Math.max(longest, s.t - from); } else from = null; });
+  let run = 0, longest = 0, from = null, longestAt = null;
+  late.forEach((s, i) => { if (s.g > 24) { if (from == null) from = s.t; if (s.t - from >= longest) { longest = s.t - from; longestAt = from; } } else from = null; });
+  const stretch = late.filter(s => longestAt != null && s.t >= longestAt && s.t <= longestAt + longest).map(s => s.t + ':' + s.g);
   check('follow-along holds through the whole turn (never more than 24px away for longer than 300ms)',
-    longest <= 300, { samples: late.length, away: away.length, worst: Math.max(...late.map(s => s.g)), longestAwayMs: longest });
+    longest <= 300, { samples: late.length, away: away.length, worst: Math.max(...late.map(s => s.g)), longestAwayMs: longest, longestFrom: longestAt, stretch: stretch.slice(0, 12) });
   check('follow-along stays engaged', late.every(s => s.stick), late.filter(s => !s.stick).slice(0, 3));
   /* the view only ever moves up (following) or eases down (a released room):
      a drop faster than 0.4px/ms is a snap. Measured before the room holds: the

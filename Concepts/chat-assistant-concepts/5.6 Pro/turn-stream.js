@@ -344,6 +344,16 @@
     if (any && (streams.size || directors.size)) loop = requestAnimationFrame(frame);
   }
 
+  /* One step of a critically damped spring toward 0, solved exactly: x is the
+     offset, v its velocity, w the stiffness (1/s), dt seconds. Exact, so it is
+     stable at any frame time; the semi-implicit Euler step it replaces diverges
+     once w*dt passes 2*sqrt(2)-2 (~32ms a frame at w 26), and under load it did:
+     a streaming reply's height grew past a million pixels. */
+  function critStep(x, v, w, dt) {
+    var e = Math.exp(-w * dt), c = v + w * x;
+    return [(x + c * dt) * e, (v - w * c * dt) * e];
+  }
+
   /* Height follows the flow through a critically damped spring (omega ~ 26/s),
      so a new line opens over ~200ms instead of stepping by a line height. */
   function springHeight(st, ts) {
@@ -351,11 +361,10 @@
     var target = st.flow.offsetHeight;
     if (reduced()) { st.h = target; st.hv = 0; st.clip.style.height = target + 'px'; return; }
     var tnow = now();
-    var dt = st.lastFrame ? Math.min(0.05, Math.max(0.0005, (tnow - st.lastFrame) / 1000)) : 1 / 60;
+    var dt = st.lastFrame ? Math.min(0.1, Math.max(0.0005, (tnow - st.lastFrame) / 1000)) : 1 / 60;
     st.lastFrame = tnow;
-    var w = 26, x = st.h - target;
-    var a = -2 * w * st.hv - w * w * x;
-    st.hv += a * dt; st.h += st.hv * dt;
+    var s1 = critStep(st.h - target, st.hv || 0, 26, dt);
+    st.h = target + s1[0]; st.hv = s1[1];
     if (Math.abs(st.h - target) < 0.4 && Math.abs(st.hv) < 4) { st.h = target; st.hv = 0; }
     if (st.h < target - 40) st.h = target - 40;            // never lag more than ~2 lines
     st.clip.style.height = Math.max(0, st.h) + 'px';
@@ -456,15 +465,30 @@
      the answer's first line takes, so the reader's view stays put and the
      answer rises into it. (Chasing the answer's placeholder first scrolled the
      thread down 33px, which the fold's clamp then snapped back in one frame.) */
-  var FOLD_QUIET = 700;
-  function roomQuiet() { return room.on && !room.rel && now() < room.quietUntil; }
+  var FOLD_QUIET = 700, FOLD_QUIET_MAX = 2000;
+  /* The wait lasts until the fold has really finished, not a fixed time: under
+     load the fold's own steps run late, and a wait that ended first let the
+     follow chase the answer before the card had shrunk (measured 61px). */
+  function stillFolding() {
+    return (room.foldIds || []).some(function (id) {
+      if (window.PM56_ORBIT && window.PM56_ORBIT.folding && window.PM56_ORBIT.folding(id)) return true;
+      var card = document.querySelector('.working-card[data-card-ui="' + CSS.escape(id) + '"]');
+      var body = card && card.querySelector('.working-body');
+      return !!(body && body.getAnimations && body.getAnimations().some(function (a) { return a.playState === 'running' || a.playState === 'paused'; }));
+    });
+  }
+  function roomQuiet() {
+    if (!room.on || room.rel) return false;
+    var t = now();
+    return t < room.quietUntil || (t < room.quietUntil + FOLD_QUIET_MAX && stillFolding());
+  }
   function roomInner() { var tr = document.querySelector('.chat-stage .transcript'); return tr && tr.querySelector('.transcript-inner'); }
   function roomFloor(px) {
     if (px == null) document.documentElement.style.removeProperty('--tx-hold-min');
     else document.documentElement.style.setProperty('--tx-hold-min', px.toFixed(1) + 'px');
   }
   function naturalH(inner) { var l = inner.lastElementChild; return l ? l.getBoundingClientRect().bottom - inner.getBoundingClientRect().top : 0; }
-  function dropRoom() { room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.transient = false; roomFloor(null); }
+  function dropRoom() { room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; roomFloor(null); }
   /* the list's height as last laid out: the completion render (which drops
      the card's narration line and mounts the answer's placeholder) runs before
      the hold starts, so the hold takes the height from before that render */
@@ -517,10 +541,10 @@
       if (grown > room.h0 + 0.5) { room.h0 = grown; roomFloor(room.h0); }
     }
     if (room.rel) {
-      var nat = naturalH(inner), t = now(), dt = Math.min(0.05, Math.max(0, (t - room.last) / 1000)); room.last = t;
+      var nat = naturalH(inner), t = now(), dt = Math.min(0.1, Math.max(0, (t - room.last) / 1000)); room.last = t;
       if (room.x == null) room.x = Math.max(0, room.h0 - nat);
       /* critically damped to zero (omega 11/s: ~450ms; a shrink's leftover 8/s) */
-      var w = room.transient ? 8 : 11; room.v += (-2 * w * room.v - w * w * room.x) * dt; room.x += room.v * dt;
+      var s2 = critStep(room.x, room.v, room.transient ? 8 : 11, dt); room.x = s2[0]; room.v = s2[1];
       if (room.x < 0.5 || nat >= room.h0) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
       roomFloor(nat + room.x);
     }
@@ -671,14 +695,16 @@
       var def = rec.runId && D.workRuns && D.workRuns[rec.runId];
       if (!(def && def.next)) {
         holdRoom();
-        var folding = false;
+        var foldIds = [];
         t.messages.forEach(function (w) {
           if (w.type === 'working' && w.workId === id) {
-            if (window.PM56_ORBIT && window.PM56_ORBIT.compact(w.id)) folding = true;
-            if (window.PM56_RAIL8 && window.PM56_RAIL8.compact && window.PM56_RAIL8.compact(w.id)) folding = true;
+            var f = false;
+            if (window.PM56_ORBIT && window.PM56_ORBIT.compact(w.id)) f = true;
+            if (window.PM56_RAIL8 && window.PM56_RAIL8.compact && window.PM56_RAIL8.compact(w.id)) f = true;
+            if (f) foldIds.push(w.id);
           }
         });
-        if (folding && room.on) { room.quietUntil = now() + FOLD_QUIET; try { C().holdFollow(roomQuiet); } catch (e) { } }
+        if (foldIds.length && room.on) { room.quietUntil = now() + FOLD_QUIET; room.foldIds = foldIds; try { C().holdFollow(roomQuiet); } catch (e) { } }
         sound('answer');
       }
     }
