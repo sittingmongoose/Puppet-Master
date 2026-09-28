@@ -6,7 +6,7 @@
    - a page with tabs lists its tabs; each tab is an entry that opens that tab, and only the tab on show unfolds to list
      its groups. A page without tabs lists its groups as before;
    - a page that is on screen lists what is really drawn on it, in the order it is drawn (a group a manager draws
-     itself is found by its first row and named by the card it sits in; groups under a closed "More options" of a
+     itself is found by its first row and lands on the card it sits in; groups under a closed "More options" of a
      manager are left out). Pages further down, not drawn yet, list their groups from placement until they are;
    - the entry for what you are reading is highlighted (the open tab when you are above its first group) and the
      index scrolls itself to keep that entry in view;
@@ -51,8 +51,7 @@ function pm51IndexEntries(w) {
     const id = el.dataset.sectionId;
     if (pm51IsMain(w.id, id) || seen.has(id) || !pm51AnchorShown(el)) return;
     const head = el.querySelector(':scope > .pm51-section-head .pm51-section-title, :scope > .o55-group-head .o55-group-title, :scope > header h3, :scope h3');
-    const named = el.hasAttribute('data-o55-adopted') && head ? head.textContent.trim() : '';
-    const text = named || label.get(id) || (head ? head.textContent.trim() : '');
+    const text = label.get(id) || (head ? head.textContent.trim() : '');
     if (!text) return;
     seen.add(id); out.push({ id, label: text });
   });

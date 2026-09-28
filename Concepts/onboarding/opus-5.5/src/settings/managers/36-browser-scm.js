@@ -4,7 +4,11 @@
    - How long captures are kept is Testing's evidence retention and what is hidden before saving is Permissions'
      screenshot redaction; both are shown here with a way to change them, not kept a second time.
    - "Point at things to share with chat" (you sending) sits next to "Helpers may see screenshots" (agents seeing),
-     so the two sharing questions read as different ones. */
+     so the two sharing questions read as different ones.
+   - Reading order and the page index: the browser's own card, then its placed groups (signing in, capture tools; the
+     slot), then what it depends on. Each card carries a section id, so the index lists all four in page order and the
+     scroll spy lights the one you are reading (the placed groups used to follow "Depends on", and the first card had
+     no anchor, so the highlight stuck on the wrong entry while you scrolled through the page). */
 (function () {
   const ID = 'browser-scm';
   const KEY = 'browser-policy';
@@ -29,6 +33,7 @@
     const scSummary = `${gh ? `${gh.name} connected` : 'No code service connected'} · ${git && git.status === 'ready' ? 'Git ready' : 'Git not installed'}`;
     const body = [
       PM51.section({
+        id: 'section-browser-share', data: { 'section-id': 'browser-share' },
         title: 'Built-in browser', help: 'The assistant opens it to look at pages, try interfaces, and collect evidence of what it saw.',
         body: PM51.rows([
           { label: 'Status', pill: PM51.pill(ready ? 'Ready' : 'Unavailable'), help: ready ? `Opens on demand on ${host()}. Nothing is running right now.` : `The browser could not start on ${host()}.`, action: { label: 'Check browser', icon: 'test', action: 'pm51-browser-check' } },
@@ -39,7 +44,9 @@
           { label: 'Helpers may see screenshots', help: 'Ask means you approve each time a helper wants to see one.', control: PM51.segmented(x.share, ['Ask', 'Never'], { action: 'pm51-browser-share', label: 'Helpers may see screenshots' }) }
         ])
       }),
+      PM51.slot(),
       PM51.section({
+        id: 'section-browser-depends', data: { 'section-id': 'browser-depends' },
         title: 'Depends on', help: 'Other parts of Puppet Master the browser works with.',
         body: PM51.rows([
           { label: 'Source Control', help: 'Where the browser finds the code it is testing.', value: scSummary, action: { label: 'Open Source Control', icon: 'arrowRight', action: 'pm51-go', data: { domain: 'source', workspace: 'source-manager' } } },

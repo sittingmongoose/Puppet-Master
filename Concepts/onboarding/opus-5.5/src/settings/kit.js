@@ -1179,7 +1179,17 @@ renderDetailInspectorBody = function (setting, section, workspace) {
 };
 
 /* ---------- All Project Settings: virtualized, page-scrolled ----------- */
+/* 892 rows drawn one after another made a page over 100,000px tall: History & Artifacts, the page after it, could only
+   be reached by the index, and the list jumped while scrolling, because rows not measured yet were counted at 116px
+   and every redraw of the visible window moved the rows above it by the difference. Now:
+   - while nothing is searched or filtered, each category is one line (its name and how many settings it holds) that
+     opens in place; a search, a filter or "Changed only" shows every match, opened;
+   - rows not measured yet are counted at the average height of the rows measured so far;
+   - each redraw keeps the row at the top of the view exactly where it was (a clicked category heading stays under the
+     pointer), so nothing moves unless you scroll. */
 const CATEGORY_TITLES = () => new Map((window.PM12_REFERENCE && window.PM12_REFERENCE.categories || []).map(c => [c.id, c.title]));
+const pm51AllOpen = () => { const s = PM51.s(); if (!Array.isArray(s.allOpen)) s.allOpen = []; return s.allOpen; };
+const pm51AllFiltering = () => !!(String(allSettingsView.query || '').trim() || allSettingsView.changedOnly || ['category', 'exposure', 'control', 'applicability', 'ownerStatus', 'resultType'].some(k => allSettingsView[k] && allSettingsView[k] !== 'all'));
 function pm51AllRows() {
   const order = new Map((window.PM12_REFERENCE && window.PM12_REFERENCE.categories || []).map((c, i) => [c.id, i]));
   const entries = allSettingsFiltered().filter(e => !allSettingsView.changedOnly || state.changed[e.setting.id]);
@@ -1187,23 +1197,32 @@ function pm51AllRows() {
   else entries.sort((x, y) => ((order.has(x.category) ? order.get(x.category) : 99) - (order.has(y.category) ? order.get(y.category) : 99)));
   const rows = []; let current = null; const titles = CATEGORY_TITLES();
   const counts = new Map(); entries.forEach(e => counts.set(e.category, (counts.get(e.category) || 0) + 1));
+  const filtering = pm51AllFiltering(), open = new Set(pm51AllOpen());
   for (const e of entries) {
-    if (e.category !== current) { current = e.category; rows.push({ header: true, key: '#' + current, category: current, title: titles.get(current) || humanize(current), count: counts.get(current) }); }
-    rows.push(e);
+    const shown = filtering || open.has(e.category);
+    if (e.category !== current) { current = e.category; rows.push({ header: true, key: '#' + current, category: current, title: titles.get(current) || humanize(current), count: counts.get(current), open: shown, fixed: filtering }); }
+    if (shown) rows.push(e);
   }
   return rows;
 }
+let pm51AvgRow = { sum: 0, n: 0 };
 function pm51Height(row) {
-  if (row.header) return allSettingsView.heights.get(row.key) || 54;
-  return allSettingsEstimatedHeight(row);
+  if (row.header) return allSettingsView.heights.get(row.key) || (row.open ? 58 : 50);
+  const measured = allSettingsView.heights.get(row.setting.id); if (measured) return measured;
+  return pm51AvgRow.n >= 4 ? pm51AvgRow.sum / pm51AvgRow.n : allSettingsEstimatedHeight(row);
 }
 function pm51Prefix(rows) { const p = [0]; for (const r of rows) p.push(p[p.length - 1] + pm51Height(r)); return p; }
 function pm51RowHtml(row, index, workspace) {
-  if (row.header) return `<div class="pm51-cat-head" data-all-setting-key="${a(row.key)}" data-all-setting-index="${index}"><span class="pm51-cat-title">${h(row.title)}</span><span class="pm51-cat-count">${row.count} settings</span></div>`;
+  if (row.header) {
+    const inner = `${row.fixed ? '' : icon('chevron')}<span class="pm51-cat-title">${h(row.title)}</span><span class="pm51-cat-count">${row.count} ${row.count === 1 ? 'setting' : 'settings'}</span>`;
+    return row.fixed
+      ? `<div class="pm51-cat-head is-open is-fixed" data-all-setting-key="${a(row.key)}" data-all-setting-index="${index}">${inner}</div>`
+      : `<button type="button" class="pm51-cat-head${row.open ? ' is-open' : ''}" data-action="pm51-all-cat" data-cat="${a(row.category)}" aria-expanded="${row.open ? 'true' : 'false'}" data-all-setting-key="${a(row.key)}" data-all-setting-index="${index}">${inner}</button>`;
+  }
   return allSettingsRowHtml(row, index, workspace);
 }
 renderAllSettingsSection = function (workspace) {
-  const rows = pm51AllRows(), prefix = pm51Prefix(rows), end = Math.min(rows.length, 20);
+  const rows = pm51AllRows(), prefix = pm51Prefix(rows), end = Math.min(rows.length, 24);
   const catalog = allSettingsCatalog(), titles = CATEGORY_TITLES();
   const facet = (values, current, label, filter, aria, format = humanize) => PM51.dropdown(current || 'all', [{ value: 'all', label }].concat([...new Set(values)].sort().map(v => ({ value: v, label: format(v) }))), { action: 'all-settings-filter', data: { filter }, label: aria, width: 170 });
   const categories = facet(catalog.map(x => x.category), allSettingsView.category, 'All categories', 'category', 'Category', v => titles.get(v) || humanize(v));
@@ -1224,18 +1243,38 @@ renderAllSettingsSection = function (workspace) {
         <label class="pm51-facet-check"><input type="checkbox" data-action="pm51-all-changed" ${allSettingsView.changedOnly ? 'checked' : ''}/> Changed only</label>
         <button type="button" class="pm51-link" data-action="pm51-all-more">${allSettingsView.moreFilters ? 'Fewer filters' : 'More filters'}</button>
       </div>${more}
-      <div class="pm51-facets-count"><span data-all-settings-count aria-live="polite">${rows.filter(r => !r.header).length} of ${catalog.length} settings</span><span class="pm51-facets-current" data-pm51-current-group></span></div>
+      <div class="pm51-facets-count"><span data-all-settings-count aria-live="polite">${pm51AllCountText(rows)}</span><span class="pm51-facets-current" data-pm51-current-group></span><button type="button" class="pm51-link" data-action="pm51-all-cats" data-pm51-all-cats ${pm51AllFiltering() ? 'hidden' : ''}>${pm51AllOpen().length ? 'Close every category' : 'Open every category'}</button></div>
     </div>
     <div class="all-settings-viewport pm51-all-viewport" data-all-settings-viewport><div class="all-settings-spacer" data-all-settings-spacer><div class="all-settings-window" data-all-settings-window>${renderAllSettingsWindow(rows, 0, end, prefix, workspace)}</div></div></div>
     ${rows.length ? '' : '<div class="all-settings-empty">No settings match. Clear the filters to see everything.</div>'}
     <div class="pm51-quiet"><button type="button" class="pm51-link" data-action="clear-all-settings-filters">Clear filters</button><button type="button" class="pm51-link" data-action="pm51-all-reset">Reset all to defaults</button><button type="button" class="pm51-link" data-action="pm51-all-export">Export list</button></div>
   </section>`;
 };
+function pm51AllCountText(rows) {
+  const n = rows.filter(r => r.header).reduce((t, r) => t + (r.count || 0), 0), cats = rows.filter(r => r.header).length;
+  return pm51AllFiltering() ? `${n} of ${allSettingsCatalog().length} settings match` : `${n} settings in ${cats} categories`;
+}
 renderAllSettingsWindow = function (rows, start, end, prefix, workspace) {
   const top = Math.max(0, prefix[start] || 0), bottom = Math.max(0, (prefix[rows.length] || 0) - (prefix[end] || 0));
   return `<div class="all-settings-virtual-pad" aria-hidden="true" style="height:${top}px"></div>${rows.slice(start, end).map((row, i) => pm51RowHtml(row, start + i, workspace)).join('')}<div class="all-settings-virtual-pad" aria-hidden="true" style="height:${bottom}px"></div>`;
 };
-let pm51AllScroller = null, pm51AllScrollHandler = null, pm51AllFrame = 0;
+/* The row at the top of the view (or a given one) and where it sits, before a redraw; put back exactly after it. */
+const pm51AllKey = n => n.dataset.allSettingKey || n.dataset.allSettingId;
+function pm51AllAnchor(windowEl, scroller, key) {
+  const top = scroller.getBoundingClientRect().top;
+  const nodes = [...windowEl.querySelectorAll('.setting-row, .pm51-cat-head')];
+  const n = key ? nodes.find(x => pm51AllKey(x) === key) : nodes.find(x => x.getBoundingClientRect().bottom > top + 1);
+  return n ? { key: pm51AllKey(n), at: n.getBoundingClientRect().top } : null;
+}
+function pm51AllRestore(windowEl, scroller, anchor) {
+  if (!anchor) return;
+  const n = [...windowEl.querySelectorAll('.setting-row, .pm51-cat-head')].find(x => pm51AllKey(x) === anchor.key); if (!n) return;
+  const delta = n.getBoundingClientRect().top - anchor.at;
+  if (Math.abs(delta) < .5) return;
+  const prev = scroller.style.scrollBehavior; scroller.style.scrollBehavior = 'auto';
+  scroller.scrollTop += delta; scroller.style.scrollBehavior = prev;
+}
+let pm51AllScroller = null, pm51AllScrollHandler = null, pm51AllFrame = 0, pm51AllHold = null;
 refreshAllSettingsVirtual = function (resetScroll = false) {
   const viewport = root.querySelector('[data-all-settings-viewport]'), scroller = root.querySelector('#settings-document');
   if (!viewport || !scroller) return;
@@ -1243,25 +1282,34 @@ refreshAllSettingsVirtual = function (resetScroll = false) {
   const windowEl = viewport.querySelector('[data-all-settings-window]'), count = root.querySelector('[data-all-settings-count]'), current = root.querySelector('[data-pm51-current-group]');
   const rows = pm51AllRows(), prefix = pm51Prefix(rows);
   const viewportTop = viewport.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop;
-  if (resetScroll) { allSettingsView.start = -1; allSettingsView.end = -1; if (scroller.scrollTop > viewportTop) scroller.scrollTop = Math.max(0, viewportTop - 120); }
+  if (resetScroll) { allSettingsView.start = -1; allSettingsView.end = -1; pm51AllHold = null; if (scroller.scrollTop > viewportTop) scroller.scrollTop = Math.max(0, viewportTop - 120); }
   const offset = Math.max(0, scroller.scrollTop - viewportTop);
   const visibleStart = allSettingsIndexAt(prefix, offset), start = Math.max(0, visibleStart - 4), end = Math.min(rows.length, allSettingsIndexAt(prefix, offset + scroller.clientHeight) + 6);
   const workspace = getWorkspace(getDomain(), 'project-settings');
   if (windowEl && (start !== allSettingsView.start || end !== allSettingsView.end || resetScroll)) {
+    const anchor = resetScroll ? null : pm51AllAnchor(windowEl, scroller, pm51AllHold);
     allSettingsView.start = start; allSettingsView.end = end; windowEl.innerHTML = renderAllSettingsWindow(rows, start, end, prefix, workspace);
+    pm51AllRestore(windowEl, scroller, anchor);
     requestAnimationFrame(() => {
       if (generation !== allSettingsView.generation || !windowEl.isConnected) return;
       let changed = false;
       for (const node of windowEl.querySelectorAll('.setting-row, .pm51-cat-head')) {
         const style = getComputedStyle(node), height = node.getBoundingClientRect().height + (parseFloat(style.marginTop) || 0) + (parseFloat(style.marginBottom) || 0);
-        const key = node.dataset.allSettingKey || node.dataset.allSettingId;
-        if (key && Number.isFinite(height) && height > 0 && Math.abs((allSettingsView.heights.get(key) || 0) - height) > .5) { allSettingsView.heights.set(key, height); changed = true; }
+        const key = pm51AllKey(node);
+        if (!key || !Number.isFinite(height) || height <= 0) continue;
+        const was = allSettingsView.heights.get(key) || 0;
+        if (Math.abs(was - height) > .5) {
+          if (!node.classList.contains('pm51-cat-head')) { if (was) pm51AvgRow.sum -= was; else pm51AvgRow.n++; pm51AvgRow.sum += height; }
+          allSettingsView.heights.set(key, height); changed = true;
+        }
       }
       if (changed) { allSettingsView.start = -1; requestAnimationFrame(() => { if (generation === allSettingsView.generation) refreshAllSettingsVirtual(false); }); }
+      else pm51AllHold = null;
     });
   }
-  if (count) count.textContent = `${rows.filter(r => !r.header).length} of ${allSettingsCatalog().length} settings`;
-  if (current) { let title = ''; for (const r of rows.slice(0, visibleStart + 1)) if (r.header) title = r.title; current.textContent = title ? 'In: ' + title : ''; }
+  if (count) count.textContent = pm51AllCountText(rows);
+  const cats = root.querySelector('[data-pm51-all-cats]'); if (cats) { cats.hidden = pm51AllFiltering(); cats.textContent = pm51AllOpen().length ? 'Close every category' : 'Open every category'; }
+  if (current) { let title = ''; for (const r of rows.slice(0, visibleStart + 1)) if (r.header) title = r.title; current.textContent = title && offset > 0 ? 'In: ' + title : ''; }
 };
 setupAllSettingsVirtual = function () {
   const viewport = root.querySelector('[data-all-settings-viewport]'), scroller = root.querySelector('#settings-document');
@@ -1272,11 +1320,22 @@ setupAllSettingsVirtual = function () {
   if (allSettingsResizeObserver) allSettingsResizeObserver.disconnect();
   if (typeof ResizeObserver === 'function') {
     let priorWidth = viewport.clientWidth;
-    allSettingsResizeObserver = new ResizeObserver(() => { const next = viewport.clientWidth; if (next !== priorWidth) { priorWidth = next; allSettingsView.heights.clear(); allSettingsView.start = -1; requestAnimationFrame(() => refreshAllSettingsVirtual(false)); } });
+    allSettingsResizeObserver = new ResizeObserver(() => { const next = viewport.clientWidth; if (next !== priorWidth) { priorWidth = next; allSettingsView.heights.clear(); pm51AvgRow = { sum: 0, n: 0 }; allSettingsView.start = -1; requestAnimationFrame(() => refreshAllSettingsVirtual(false)); } });
     allSettingsResizeObserver.observe(viewport);
   }
   allSettingsView.start = -1; refreshAllSettingsVirtual(false);
 };
+/* A category heading opens or closes its rows in place and stays under the pointer. */
+PM51.on('all-cat', el => {
+  const cat = ds(el, 'cat'), list = pm51AllOpen(), i = list.indexOf(cat);
+  if (i >= 0) list.splice(i, 1); else list.push(cat);
+  saveState(); pm51AllHold = '#' + cat; allSettingsView.start = -1; refreshAllSettingsVirtual(false);
+  const again = root.querySelector(`.pm51-cat-head[data-cat="${cssEscape(cat)}"]`); if (again) { try { again.focus({ preventScroll: true }); } catch (e) { again.focus(); } }
+});
+PM51.on('all-cats', () => {
+  const s = PM51.s(); s.allOpen = pm51AllOpen().length ? [] : [...new Set(allSettingsCatalog().map(x => x.category))];
+  saveState(); refreshAllSettingsVirtual(true);
+});
 PM51.on('all-more', () => { allSettingsView.moreFilters = !allSettingsView.moreFilters; PM51.refresh('project-settings', { swap: false }); });
 PM51.on('all-changed', el => { allSettingsView.changedOnly = !!el.checked; refreshAllSettingsVirtual(true); });
 PM51.on('all-show-ids', el => { allSettingsView.showIds = !!el.checked; root.querySelector('.pm51-all')?.classList.toggle('pm51-show-ids', allSettingsView.showIds); });

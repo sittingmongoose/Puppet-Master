@@ -23559,9 +23559,19 @@ html[data-theme^="retro"] #panel-settings .pm51-panel-card { box-shadow: 2px 2px
 #panel-settings .pm51-facets-more { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 #panel-settings .pm51-facets-count { display: flex; justify-content: space-between; gap: 12px; margin-top: 8px; font-size: 11px; color: var(--k3-text-3); }
 #panel-settings .pm51-all-viewport, #panel-settings .all-settings-viewport.pm51-all-viewport { position: static; height: auto; min-height: 0; overflow: visible; border: 0; background: transparent; contain: none; overscroll-behavior: auto; }
-#panel-settings .pm51-cat-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 22px 6px 8px; margin-top: 6px; }
-#panel-settings .pm51-cat-title { font-size: 14px; font-weight: 720; color: var(--k3-text-1); letter-spacing: -.01em; }
-#panel-settings .pm51-cat-count { font-size: 11px; color: var(--k3-text-3); }
+/* A category heading is one line that opens in place (a plain heading while a search or filter shows every match). */
+#panel-settings .pm51-all-viewport { overflow-anchor: none; }
+#panel-settings .pm51-cat-head { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; margin: 6px 0 0; padding: 10px 14px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md, 10px);
+  background: var(--k3-surface-1); color: var(--k3-text-2); font: inherit; text-align: left; cursor: pointer; transition: background-color 160ms var(--k3-ease-out, ease), border-color 160ms var(--k3-ease-out, ease); }
+#panel-settings button.pm51-cat-head:hover { background: var(--k3-surface-2); border-color: var(--k3-line-strong, var(--k3-line)); }
+#panel-settings .pm51-cat-head > .icon { width: 13px; height: 13px; flex: 0 0 auto; display: grid; place-items: center; color: var(--k3-text-3); transition: transform 180ms var(--k3-ease-out, ease); }
+#panel-settings .pm51-cat-head > .icon svg { width: 13px; height: 13px; }
+#panel-settings .pm51-cat-head.is-open > .icon { transform: rotate(90deg); }
+#panel-settings .pm51-cat-head.is-open { margin-top: 14px; }
+#panel-settings .pm51-cat-head.is-fixed { min-height: 0; margin-top: 16px; padding: 6px 6px 4px; border: 0; background: none; cursor: default; }
+#panel-settings .pm51-cat-title { font-size: 13.5px; font-weight: 700; color: var(--k3-text-1); letter-spacing: -.01em; }
+#panel-settings .pm51-cat-count { margin-left: auto; font-size: 11.5px; color: var(--k3-text-3); white-space: nowrap; }
+#panel-settings .pm51-facets-count .pm51-link { margin-left: auto; font-size: 11.5px; }
 #panel-settings .pm51-all .all-settings-window .setting-row { min-height: 60px; margin: 4px 0; background: var(--k3-surface-1); }
 #panel-settings .pm51-all.pm51-show-ids .all-settings-window .setting-row .setting-label::after { content: attr(data-pm51-id); }
 #panel-settings .pm51-all.pm51-show-ids .all-settings-window .setting-row::after { content: attr(data-all-setting-id); position: absolute; left: 14px; bottom: 6px; font-family: var(--mono-font, ui-monospace, monospace); font-size: 10px; color: var(--k3-text-3); }
@@ -24031,8 +24041,9 @@ html[data-o55-accent] #panel-settings .setting-row.is-changed::before { backgrou
 #panel-settings .pm51-index-tab { font-weight: 600; color: var(--k3-text-2); }
 #panel-settings .pm51-index-tab::before { display: none; }
 #panel-settings .pm51-index-tab > span { flex: 1 1 auto; min-width: 0; }
-#panel-settings .pm51-index-tab > svg { width: 11px; height: 11px; flex: 0 0 auto; opacity: .55; transition: transform 180ms var(--k3-ease-out, ease); }
-#panel-settings .pm51-index-tab.is-open > svg { transform: rotate(90deg); opacity: .8; }
+#panel-settings .pm51-index-tab > .icon { width: 11px; height: 11px; flex: 0 0 auto; display: grid; place-items: center; opacity: .55; transition: transform 180ms var(--k3-ease-out, ease); }
+#panel-settings .pm51-index-tab > .icon svg { width: 11px; height: 11px; }
+#panel-settings .pm51-index-tab.is-open > .icon { transform: rotate(90deg); opacity: .8; }
 #panel-settings .pm51-index-tab.is-open, #panel-settings .pm51-index-tab.has-active { color: var(--k3-text-1); }
 #panel-settings .pm51-index-sub { display: flex; flex-direction: column; gap: 1px; margin: 1px 0 4px 9px; padding-left: 4px; border-left: 1px solid var(--k3-line); }
 #panel-settings .pm51-index-sub .index-link { min-height: 26px; }
@@ -24042,7 +24053,33 @@ html[data-o55-accent] #panel-settings .setting-row.is-changed::before { backgrou
 @keyframes pm51IndexOpen { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
 @container settings-host (max-width: 720px) {
   #panel-settings .page-index-card .pm51-index-group, #panel-settings .pm51-index-sub { display: contents; }
-  #panel-settings .pm51-index-tab > svg { display: none; }
+  #panel-settings .pm51-index-tab > .icon { display: none; }
+}
+
+/* Tighter frame (review, 2026-09-27): the chapter rail, the page index and the page each give back some width, so
+   the settings themselves keep their room at 1280 and 1440 and beside the chat. The rail is 192px up to a 1180px
+   Settings area (224px above), the index 148px, and the page's side margins 12px; the text sizes are unchanged. */
+@container settings-host (min-width: 961px) {
+  #panel-settings > #pm-settings-root { --k3-rail-w: 224px; }
+  #panel-settings .rail-head { padding: 14px 10px 8px; }
+  #panel-settings .rail-search-wrap { padding: 0 8px 10px; }
+  #panel-settings .rail-scroll { padding: 0 6px 12px; }
+  #panel-settings .rail-heading { padding: 10px 7px 5px; }
+  #panel-settings .side-link, #panel-settings .domain-link { gap: 8px; padding: 7px 7px; }
+  #panel-settings .side-card { padding: 6px; }
+}
+@container settings-host (min-width: 961px) and (max-width: 1180px) {
+  #panel-settings > #pm-settings-root { --k3-rail-w: 192px; }
+}
+@container settings-host (min-width: 721px) {
+  #panel-settings .document-layout { grid-template-columns: 148px minmax(0, 1fr); }
+  #panel-settings .page-index { padding: 8px 5px 10px; }
+  #panel-settings .page-index-card { padding: 4px; }
+  #panel-settings .index-link { gap: 5px; padding: 5px 5px; }
+  #panel-settings .page-index-title { padding-left: 5px; padding-right: 5px; }
+  #panel-settings .domain-document { padding-left: 12px; padding-right: 12px; }
+  #panel-settings .o55-group-head { padding-left: 16px; padding-right: 16px; }
+  #panel-settings .o55-group > .setting-list { padding-left: 16px; padding-right: 12px; }
 }
 
 /* ---- styles.d/20-managers.css ---- */
@@ -24428,8 +24465,15 @@ html[data-theme^="glass"] #panel-settings .o55g-head { background: color-mix(in 
 #panel-settings .o55g-brandicon { display: grid; place-items: center; color: var(--g-accent); }
 #panel-settings .o55g-brandicon svg { width: 19px; height: 19px; }
 html[data-theme^="retro"] #panel-settings .o55g-brand { font-family: var(--display-font); text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; }
-#panel-settings .o55g-railwrap { justify-self: center; min-width: 0; max-width: 100%; }
-#panel-settings .o55g-rail { display: flex; align-items: center; list-style: none; margin: 0; padding: 0; }
+/* The rail takes the room between the name and Close and never runs into Close: when not every step's name fits
+   (kit.d/60-wizard.js measures it), only the current step keeps its name. */
+#panel-settings .o55g-railwrap { justify-self: stretch; min-width: 0; max-width: 100%; overflow: hidden; }
+#panel-settings .o55g-rail { display: flex; align-items: center; justify-content: center; min-width: 0; list-style: none; margin: 0; padding: 0; }
+#panel-settings .o55g-rail > .o55g-railitem { flex: none; }
+#panel-settings .o55g-railwrap.is-tight .o55g-rail > .o55g-railitem[data-state="current"] { flex: 0 1 auto; min-width: 0; }
+#panel-settings .o55g-raillabel { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+#panel-settings .o55g-railwrap.is-tight .o55g-railitem:not([data-state="current"]) .o55g-raillabel { display: none; }
+#panel-settings .o55g-railwrap.is-tight .o55g-railitem { padding: 0 8px; }
 #panel-settings .o55g-railitem { position: relative; display: flex; align-items: center; gap: 7px; padding: 0 12px; height: 30px; font-size: 12.5px; color: var(--text-muted); white-space: nowrap; transition: color 240ms ease; }
 #panel-settings .o55g-railitem + .o55g-railitem::before { content: ''; position: absolute; left: -12px; width: 24px; top: 50%; height: 1.5px; background: var(--g-line); transition: background 320ms ease; }
 #panel-settings .o55g-railitem[data-state="done"] + .o55g-railitem::before { background: var(--g-accent); }
@@ -49032,7 +49076,17 @@ renderDetailInspectorBody = function (setting, section, workspace) {
 };
 
 /* ---------- All Project Settings: virtualized, page-scrolled ----------- */
+/* 892 rows drawn one after another made a page over 100,000px tall: History & Artifacts, the page after it, could only
+   be reached by the index, and the list jumped while scrolling, because rows not measured yet were counted at 116px
+   and every redraw of the visible window moved the rows above it by the difference. Now:
+   - while nothing is searched or filtered, each category is one line (its name and how many settings it holds) that
+     opens in place; a search, a filter or "Changed only" shows every match, opened;
+   - rows not measured yet are counted at the average height of the rows measured so far;
+   - each redraw keeps the row at the top of the view exactly where it was (a clicked category heading stays under the
+     pointer), so nothing moves unless you scroll. */
 const CATEGORY_TITLES = () => new Map((window.PM12_REFERENCE && window.PM12_REFERENCE.categories || []).map(c => [c.id, c.title]));
+const pm51AllOpen = () => { const s = PM51.s(); if (!Array.isArray(s.allOpen)) s.allOpen = []; return s.allOpen; };
+const pm51AllFiltering = () => !!(String(allSettingsView.query || '').trim() || allSettingsView.changedOnly || ['category', 'exposure', 'control', 'applicability', 'ownerStatus', 'resultType'].some(k => allSettingsView[k] && allSettingsView[k] !== 'all'));
 function pm51AllRows() {
   const order = new Map((window.PM12_REFERENCE && window.PM12_REFERENCE.categories || []).map((c, i) => [c.id, i]));
   const entries = allSettingsFiltered().filter(e => !allSettingsView.changedOnly || state.changed[e.setting.id]);
@@ -49040,23 +49094,32 @@ function pm51AllRows() {
   else entries.sort((x, y) => ((order.has(x.category) ? order.get(x.category) : 99) - (order.has(y.category) ? order.get(y.category) : 99)));
   const rows = []; let current = null; const titles = CATEGORY_TITLES();
   const counts = new Map(); entries.forEach(e => counts.set(e.category, (counts.get(e.category) || 0) + 1));
+  const filtering = pm51AllFiltering(), open = new Set(pm51AllOpen());
   for (const e of entries) {
-    if (e.category !== current) { current = e.category; rows.push({ header: true, key: '#' + current, category: current, title: titles.get(current) || humanize(current), count: counts.get(current) }); }
-    rows.push(e);
+    const shown = filtering || open.has(e.category);
+    if (e.category !== current) { current = e.category; rows.push({ header: true, key: '#' + current, category: current, title: titles.get(current) || humanize(current), count: counts.get(current), open: shown, fixed: filtering }); }
+    if (shown) rows.push(e);
   }
   return rows;
 }
+let pm51AvgRow = { sum: 0, n: 0 };
 function pm51Height(row) {
-  if (row.header) return allSettingsView.heights.get(row.key) || 54;
-  return allSettingsEstimatedHeight(row);
+  if (row.header) return allSettingsView.heights.get(row.key) || (row.open ? 58 : 50);
+  const measured = allSettingsView.heights.get(row.setting.id); if (measured) return measured;
+  return pm51AvgRow.n >= 4 ? pm51AvgRow.sum / pm51AvgRow.n : allSettingsEstimatedHeight(row);
 }
 function pm51Prefix(rows) { const p = [0]; for (const r of rows) p.push(p[p.length - 1] + pm51Height(r)); return p; }
 function pm51RowHtml(row, index, workspace) {
-  if (row.header) return `<div class="pm51-cat-head" data-all-setting-key="${a(row.key)}" data-all-setting-index="${index}"><span class="pm51-cat-title">${h(row.title)}</span><span class="pm51-cat-count">${row.count} settings</span></div>`;
+  if (row.header) {
+    const inner = `${row.fixed ? '' : icon('chevron')}<span class="pm51-cat-title">${h(row.title)}</span><span class="pm51-cat-count">${row.count} ${row.count === 1 ? 'setting' : 'settings'}</span>`;
+    return row.fixed
+      ? `<div class="pm51-cat-head is-open is-fixed" data-all-setting-key="${a(row.key)}" data-all-setting-index="${index}">${inner}</div>`
+      : `<button type="button" class="pm51-cat-head${row.open ? ' is-open' : ''}" data-action="pm51-all-cat" data-cat="${a(row.category)}" aria-expanded="${row.open ? 'true' : 'false'}" data-all-setting-key="${a(row.key)}" data-all-setting-index="${index}">${inner}</button>`;
+  }
   return allSettingsRowHtml(row, index, workspace);
 }
 renderAllSettingsSection = function (workspace) {
-  const rows = pm51AllRows(), prefix = pm51Prefix(rows), end = Math.min(rows.length, 20);
+  const rows = pm51AllRows(), prefix = pm51Prefix(rows), end = Math.min(rows.length, 24);
   const catalog = allSettingsCatalog(), titles = CATEGORY_TITLES();
   const facet = (values, current, label, filter, aria, format = humanize) => PM51.dropdown(current || 'all', [{ value: 'all', label }].concat([...new Set(values)].sort().map(v => ({ value: v, label: format(v) }))), { action: 'all-settings-filter', data: { filter }, label: aria, width: 170 });
   const categories = facet(catalog.map(x => x.category), allSettingsView.category, 'All categories', 'category', 'Category', v => titles.get(v) || humanize(v));
@@ -49077,18 +49140,38 @@ renderAllSettingsSection = function (workspace) {
         <label class="pm51-facet-check"><input type="checkbox" data-action="pm51-all-changed" ${allSettingsView.changedOnly ? 'checked' : ''}/> Changed only</label>
         <button type="button" class="pm51-link" data-action="pm51-all-more">${allSettingsView.moreFilters ? 'Fewer filters' : 'More filters'}</button>
       </div>${more}
-      <div class="pm51-facets-count"><span data-all-settings-count aria-live="polite">${rows.filter(r => !r.header).length} of ${catalog.length} settings</span><span class="pm51-facets-current" data-pm51-current-group></span></div>
+      <div class="pm51-facets-count"><span data-all-settings-count aria-live="polite">${pm51AllCountText(rows)}</span><span class="pm51-facets-current" data-pm51-current-group></span><button type="button" class="pm51-link" data-action="pm51-all-cats" data-pm51-all-cats ${pm51AllFiltering() ? 'hidden' : ''}>${pm51AllOpen().length ? 'Close every category' : 'Open every category'}</button></div>
     </div>
     <div class="all-settings-viewport pm51-all-viewport" data-all-settings-viewport><div class="all-settings-spacer" data-all-settings-spacer><div class="all-settings-window" data-all-settings-window>${renderAllSettingsWindow(rows, 0, end, prefix, workspace)}</div></div></div>
     ${rows.length ? '' : '<div class="all-settings-empty">No settings match. Clear the filters to see everything.</div>'}
     <div class="pm51-quiet"><button type="button" class="pm51-link" data-action="clear-all-settings-filters">Clear filters</button><button type="button" class="pm51-link" data-action="pm51-all-reset">Reset all to defaults</button><button type="button" class="pm51-link" data-action="pm51-all-export">Export list</button></div>
   </section>`;
 };
+function pm51AllCountText(rows) {
+  const n = rows.filter(r => r.header).reduce((t, r) => t + (r.count || 0), 0), cats = rows.filter(r => r.header).length;
+  return pm51AllFiltering() ? `${n} of ${allSettingsCatalog().length} settings match` : `${n} settings in ${cats} categories`;
+}
 renderAllSettingsWindow = function (rows, start, end, prefix, workspace) {
   const top = Math.max(0, prefix[start] || 0), bottom = Math.max(0, (prefix[rows.length] || 0) - (prefix[end] || 0));
   return `<div class="all-settings-virtual-pad" aria-hidden="true" style="height:${top}px"></div>${rows.slice(start, end).map((row, i) => pm51RowHtml(row, start + i, workspace)).join('')}<div class="all-settings-virtual-pad" aria-hidden="true" style="height:${bottom}px"></div>`;
 };
-let pm51AllScroller = null, pm51AllScrollHandler = null, pm51AllFrame = 0;
+/* The row at the top of the view (or a given one) and where it sits, before a redraw; put back exactly after it. */
+const pm51AllKey = n => n.dataset.allSettingKey || n.dataset.allSettingId;
+function pm51AllAnchor(windowEl, scroller, key) {
+  const top = scroller.getBoundingClientRect().top;
+  const nodes = [...windowEl.querySelectorAll('.setting-row, .pm51-cat-head')];
+  const n = key ? nodes.find(x => pm51AllKey(x) === key) : nodes.find(x => x.getBoundingClientRect().bottom > top + 1);
+  return n ? { key: pm51AllKey(n), at: n.getBoundingClientRect().top } : null;
+}
+function pm51AllRestore(windowEl, scroller, anchor) {
+  if (!anchor) return;
+  const n = [...windowEl.querySelectorAll('.setting-row, .pm51-cat-head')].find(x => pm51AllKey(x) === anchor.key); if (!n) return;
+  const delta = n.getBoundingClientRect().top - anchor.at;
+  if (Math.abs(delta) < .5) return;
+  const prev = scroller.style.scrollBehavior; scroller.style.scrollBehavior = 'auto';
+  scroller.scrollTop += delta; scroller.style.scrollBehavior = prev;
+}
+let pm51AllScroller = null, pm51AllScrollHandler = null, pm51AllFrame = 0, pm51AllHold = null;
 refreshAllSettingsVirtual = function (resetScroll = false) {
   const viewport = root.querySelector('[data-all-settings-viewport]'), scroller = root.querySelector('#settings-document');
   if (!viewport || !scroller) return;
@@ -49096,25 +49179,34 @@ refreshAllSettingsVirtual = function (resetScroll = false) {
   const windowEl = viewport.querySelector('[data-all-settings-window]'), count = root.querySelector('[data-all-settings-count]'), current = root.querySelector('[data-pm51-current-group]');
   const rows = pm51AllRows(), prefix = pm51Prefix(rows);
   const viewportTop = viewport.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop;
-  if (resetScroll) { allSettingsView.start = -1; allSettingsView.end = -1; if (scroller.scrollTop > viewportTop) scroller.scrollTop = Math.max(0, viewportTop - 120); }
+  if (resetScroll) { allSettingsView.start = -1; allSettingsView.end = -1; pm51AllHold = null; if (scroller.scrollTop > viewportTop) scroller.scrollTop = Math.max(0, viewportTop - 120); }
   const offset = Math.max(0, scroller.scrollTop - viewportTop);
   const visibleStart = allSettingsIndexAt(prefix, offset), start = Math.max(0, visibleStart - 4), end = Math.min(rows.length, allSettingsIndexAt(prefix, offset + scroller.clientHeight) + 6);
   const workspace = getWorkspace(getDomain(), 'project-settings');
   if (windowEl && (start !== allSettingsView.start || end !== allSettingsView.end || resetScroll)) {
+    const anchor = resetScroll ? null : pm51AllAnchor(windowEl, scroller, pm51AllHold);
     allSettingsView.start = start; allSettingsView.end = end; windowEl.innerHTML = renderAllSettingsWindow(rows, start, end, prefix, workspace);
+    pm51AllRestore(windowEl, scroller, anchor);
     requestAnimationFrame(() => {
       if (generation !== allSettingsView.generation || !windowEl.isConnected) return;
       let changed = false;
       for (const node of windowEl.querySelectorAll('.setting-row, .pm51-cat-head')) {
         const style = getComputedStyle(node), height = node.getBoundingClientRect().height + (parseFloat(style.marginTop) || 0) + (parseFloat(style.marginBottom) || 0);
-        const key = node.dataset.allSettingKey || node.dataset.allSettingId;
-        if (key && Number.isFinite(height) && height > 0 && Math.abs((allSettingsView.heights.get(key) || 0) - height) > .5) { allSettingsView.heights.set(key, height); changed = true; }
+        const key = pm51AllKey(node);
+        if (!key || !Number.isFinite(height) || height <= 0) continue;
+        const was = allSettingsView.heights.get(key) || 0;
+        if (Math.abs(was - height) > .5) {
+          if (!node.classList.contains('pm51-cat-head')) { if (was) pm51AvgRow.sum -= was; else pm51AvgRow.n++; pm51AvgRow.sum += height; }
+          allSettingsView.heights.set(key, height); changed = true;
+        }
       }
       if (changed) { allSettingsView.start = -1; requestAnimationFrame(() => { if (generation === allSettingsView.generation) refreshAllSettingsVirtual(false); }); }
+      else pm51AllHold = null;
     });
   }
-  if (count) count.textContent = `${rows.filter(r => !r.header).length} of ${allSettingsCatalog().length} settings`;
-  if (current) { let title = ''; for (const r of rows.slice(0, visibleStart + 1)) if (r.header) title = r.title; current.textContent = title ? 'In: ' + title : ''; }
+  if (count) count.textContent = pm51AllCountText(rows);
+  const cats = root.querySelector('[data-pm51-all-cats]'); if (cats) { cats.hidden = pm51AllFiltering(); cats.textContent = pm51AllOpen().length ? 'Close every category' : 'Open every category'; }
+  if (current) { let title = ''; for (const r of rows.slice(0, visibleStart + 1)) if (r.header) title = r.title; current.textContent = title && offset > 0 ? 'In: ' + title : ''; }
 };
 setupAllSettingsVirtual = function () {
   const viewport = root.querySelector('[data-all-settings-viewport]'), scroller = root.querySelector('#settings-document');
@@ -49125,11 +49217,22 @@ setupAllSettingsVirtual = function () {
   if (allSettingsResizeObserver) allSettingsResizeObserver.disconnect();
   if (typeof ResizeObserver === 'function') {
     let priorWidth = viewport.clientWidth;
-    allSettingsResizeObserver = new ResizeObserver(() => { const next = viewport.clientWidth; if (next !== priorWidth) { priorWidth = next; allSettingsView.heights.clear(); allSettingsView.start = -1; requestAnimationFrame(() => refreshAllSettingsVirtual(false)); } });
+    allSettingsResizeObserver = new ResizeObserver(() => { const next = viewport.clientWidth; if (next !== priorWidth) { priorWidth = next; allSettingsView.heights.clear(); pm51AvgRow = { sum: 0, n: 0 }; allSettingsView.start = -1; requestAnimationFrame(() => refreshAllSettingsVirtual(false)); } });
     allSettingsResizeObserver.observe(viewport);
   }
   allSettingsView.start = -1; refreshAllSettingsVirtual(false);
 };
+/* A category heading opens or closes its rows in place and stays under the pointer. */
+PM51.on('all-cat', el => {
+  const cat = ds(el, 'cat'), list = pm51AllOpen(), i = list.indexOf(cat);
+  if (i >= 0) list.splice(i, 1); else list.push(cat);
+  saveState(); pm51AllHold = '#' + cat; allSettingsView.start = -1; refreshAllSettingsVirtual(false);
+  const again = root.querySelector(`.pm51-cat-head[data-cat="${cssEscape(cat)}"]`); if (again) { try { again.focus({ preventScroll: true }); } catch (e) { again.focus(); } }
+});
+PM51.on('all-cats', () => {
+  const s = PM51.s(); s.allOpen = pm51AllOpen().length ? [] : [...new Set(allSettingsCatalog().map(x => x.category))];
+  saveState(); refreshAllSettingsVirtual(true);
+});
 PM51.on('all-more', () => { allSettingsView.moreFilters = !allSettingsView.moreFilters; PM51.refresh('project-settings', { swap: false }); });
 PM51.on('all-changed', el => { allSettingsView.changedOnly = !!el.checked; refreshAllSettingsVirtual(true); });
 PM51.on('all-show-ids', el => { allSettingsView.showIds = !!el.checked; root.querySelector('.pm51-all')?.classList.toggle('pm51-show-ids', allSettingsView.showIds); });
@@ -50529,7 +50632,7 @@ PM51.refresh = function (wsId, opts) {
    - a page with tabs lists its tabs; each tab is an entry that opens that tab, and only the tab on show unfolds to list
      its groups. A page without tabs lists its groups as before;
    - a page that is on screen lists what is really drawn on it, in the order it is drawn (a group a manager draws
-     itself is found by its first row and named by the card it sits in; groups under a closed "More options" of a
+     itself is found by its first row and lands on the card it sits in; groups under a closed "More options" of a
      manager are left out). Pages further down, not drawn yet, list their groups from placement until they are;
    - the entry for what you are reading is highlighted (the open tab when you are above its first group) and the
      index scrolls itself to keep that entry in view;
@@ -50574,8 +50677,7 @@ function pm51IndexEntries(w) {
     const id = el.dataset.sectionId;
     if (pm51IsMain(w.id, id) || seen.has(id) || !pm51AnchorShown(el)) return;
     const head = el.querySelector(':scope > .pm51-section-head .pm51-section-title, :scope > .o55-group-head .o55-group-title, :scope > header h3, :scope h3');
-    const named = el.hasAttribute('data-o55-adopted') && head ? head.textContent.trim() : '';
-    const text = named || label.get(id) || (head ? head.textContent.trim() : '');
+    const text = label.get(id) || (head ? head.textContent.trim() : '');
     if (!text) return;
     seen.add(id); out.push({ id, label: text });
   });
@@ -51390,6 +51492,7 @@ PM51.wizard = ({ title, subtitle = '', eyebrow = '', icon: ic = '', steps, draft
     const primary = win.querySelector('.o55g-primary'); if (primary) primary.innerHTML = `<span>${h(cur === n - 1 ? finishLabel : 'Continue')}</span>${icon(cur === n - 1 ? 'check' : 'arrowRight')}`;
     const back = win.querySelector('.o55g-back'); if (back) { back.style.visibility = cur === 0 ? 'hidden' : ''; back.setAttribute('aria-hidden', cur === 0 ? 'true' : 'false'); back.tabIndex = cur === 0 ? -1 : 0; }
     const note = win.querySelector('.o55g-footnote'); if (note) note.textContent = s.note || (n > 1 ? `Step ${cur + 1} of ${n}` : '');
+    fitRail();
     const heading = (typeof s.title === 'function' ? s.title(draft) : s.title) || s.label;
     const live = win.querySelector('.o55g-live'); if (live) live.textContent = n > 1 ? `Step ${cur + 1} of ${n}: ${heading}` : heading;
   }
@@ -51427,6 +51530,13 @@ PM51.wizard = ({ title, subtitle = '', eyebrow = '', icon: ic = '', steps, draft
       if (f) { try { f.focus({ preventScroll: true }); } catch (e) { f.focus(); } }
     });
   }
+  /* The step rail sits between the name and Close. When every step's name does not fit there (six steps at 900px),
+     only the current step keeps its name (.is-tight); the dots and lines stay, so it never runs into Close. */
+  function fitRail() {
+    const wrapEl = win && win.querySelector('.o55g-railwrap'), railEl = wrapEl && wrapEl.querySelector('.o55g-rail'); if (!railEl) return;
+    wrapEl.classList.remove('is-tight');
+    if (railEl.scrollWidth > wrapEl.clientWidth + 1) wrapEl.classList.add('is-tight');
+  }
   const opened = PM51.panel({ title, body: '' });
   wrap = opened; win = wrap.querySelector('.drawer');
   wrap.classList.add('o55g-wrap');
@@ -51461,6 +51571,7 @@ PM51.wizard = ({ title, subtitle = '', eyebrow = '', icon: ic = '', steps, draft
     const t = e.target; if (!t.matches || !t.matches('.o55g-layer input:not([type="checkbox"]):not([type="radio"]):not([type="search"])') || t.closest('[data-capture]') || t.classList.contains('pm51-commands-capture')) return;
     e.preventDefault(); move(1);
   });
+  if (typeof ResizeObserver === 'function') { const fit = new ResizeObserver(() => fitRail()); fit.observe(win.querySelector('.o55g-head')); }
   wrap._o55Wizard = api;
   o55Wizards.push(api);
   paint();
@@ -58960,7 +59071,11 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
    - How long captures are kept is Testing's evidence retention and what is hidden before saving is Permissions'
      screenshot redaction; both are shown here with a way to change them, not kept a second time.
    - "Point at things to share with chat" (you sending) sits next to "Helpers may see screenshots" (agents seeing),
-     so the two sharing questions read as different ones. */
+     so the two sharing questions read as different ones.
+   - Reading order and the page index: the browser's own card, then its placed groups (signing in, capture tools; the
+     slot), then what it depends on. Each card carries a section id, so the index lists all four in page order and the
+     scroll spy lights the one you are reading (the placed groups used to follow "Depends on", and the first card had
+     no anchor, so the highlight stuck on the wrong entry while you scrolled through the page). */
 (function () {
   const ID = 'browser-scm';
   const KEY = 'browser-policy';
@@ -58985,6 +59100,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     const scSummary = `${gh ? `${gh.name} connected` : 'No code service connected'} · ${git && git.status === 'ready' ? 'Git ready' : 'Git not installed'}`;
     const body = [
       PM51.section({
+        id: 'section-browser-share', data: { 'section-id': 'browser-share' },
         title: 'Built-in browser', help: 'The assistant opens it to look at pages, try interfaces, and collect evidence of what it saw.',
         body: PM51.rows([
           { label: 'Status', pill: PM51.pill(ready ? 'Ready' : 'Unavailable'), help: ready ? `Opens on demand on ${host()}. Nothing is running right now.` : `The browser could not start on ${host()}.`, action: { label: 'Check browser', icon: 'test', action: 'pm51-browser-check' } },
@@ -58995,7 +59111,9 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
           { label: 'Helpers may see screenshots', help: 'Ask means you approve each time a helper wants to see one.', control: PM51.segmented(x.share, ['Ask', 'Never'], { action: 'pm51-browser-share', label: 'Helpers may see screenshots' }) }
         ])
       }),
+      PM51.slot(),
       PM51.section({
+        id: 'section-browser-depends', data: { 'section-id': 'browser-depends' },
         title: 'Depends on', help: 'Other parts of Puppet Master the browser works with.',
         body: PM51.rows([
           { label: 'Source Control', help: 'Where the browser finds the code it is testing.', value: scSummary, action: { label: 'Open Source Control', icon: 'arrowRight', action: 'pm51-go', data: { domain: 'source', workspace: 'source-manager' } } },

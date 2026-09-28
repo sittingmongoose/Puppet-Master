@@ -88,6 +88,7 @@ PM51.wizard = ({ title, subtitle = '', eyebrow = '', icon: ic = '', steps, draft
     const primary = win.querySelector('.o55g-primary'); if (primary) primary.innerHTML = `<span>${h(cur === n - 1 ? finishLabel : 'Continue')}</span>${icon(cur === n - 1 ? 'check' : 'arrowRight')}`;
     const back = win.querySelector('.o55g-back'); if (back) { back.style.visibility = cur === 0 ? 'hidden' : ''; back.setAttribute('aria-hidden', cur === 0 ? 'true' : 'false'); back.tabIndex = cur === 0 ? -1 : 0; }
     const note = win.querySelector('.o55g-footnote'); if (note) note.textContent = s.note || (n > 1 ? `Step ${cur + 1} of ${n}` : '');
+    fitRail();
     const heading = (typeof s.title === 'function' ? s.title(draft) : s.title) || s.label;
     const live = win.querySelector('.o55g-live'); if (live) live.textContent = n > 1 ? `Step ${cur + 1} of ${n}: ${heading}` : heading;
   }
@@ -125,6 +126,13 @@ PM51.wizard = ({ title, subtitle = '', eyebrow = '', icon: ic = '', steps, draft
       if (f) { try { f.focus({ preventScroll: true }); } catch (e) { f.focus(); } }
     });
   }
+  /* The step rail sits between the name and Close. When every step's name does not fit there (six steps at 900px),
+     only the current step keeps its name (.is-tight); the dots and lines stay, so it never runs into Close. */
+  function fitRail() {
+    const wrapEl = win && win.querySelector('.o55g-railwrap'), railEl = wrapEl && wrapEl.querySelector('.o55g-rail'); if (!railEl) return;
+    wrapEl.classList.remove('is-tight');
+    if (railEl.scrollWidth > wrapEl.clientWidth + 1) wrapEl.classList.add('is-tight');
+  }
   const opened = PM51.panel({ title, body: '' });
   wrap = opened; win = wrap.querySelector('.drawer');
   wrap.classList.add('o55g-wrap');
@@ -159,6 +167,7 @@ PM51.wizard = ({ title, subtitle = '', eyebrow = '', icon: ic = '', steps, draft
     const t = e.target; if (!t.matches || !t.matches('.o55g-layer input:not([type="checkbox"]):not([type="radio"]):not([type="search"])') || t.closest('[data-capture]') || t.classList.contains('pm51-commands-capture')) return;
     e.preventDefault(); move(1);
   });
+  if (typeof ResizeObserver === 'function') { const fit = new ResizeObserver(() => fitRail()); fit.observe(win.querySelector('.o55g-head')); }
   wrap._o55Wizard = api;
   o55Wizards.push(api);
   paint();

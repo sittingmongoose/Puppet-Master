@@ -32,8 +32,9 @@
 #panel-settings .pm51-index-tab { font-weight: 600; color: var(--k3-text-2); }
 #panel-settings .pm51-index-tab::before { display: none; }
 #panel-settings .pm51-index-tab > span { flex: 1 1 auto; min-width: 0; }
-#panel-settings .pm51-index-tab > svg { width: 11px; height: 11px; flex: 0 0 auto; opacity: .55; transition: transform 180ms var(--k3-ease-out, ease); }
-#panel-settings .pm51-index-tab.is-open > svg { transform: rotate(90deg); opacity: .8; }
+#panel-settings .pm51-index-tab > .icon { width: 11px; height: 11px; flex: 0 0 auto; display: grid; place-items: center; opacity: .55; transition: transform 180ms var(--k3-ease-out, ease); }
+#panel-settings .pm51-index-tab > .icon svg { width: 11px; height: 11px; }
+#panel-settings .pm51-index-tab.is-open > .icon { transform: rotate(90deg); opacity: .8; }
 #panel-settings .pm51-index-tab.is-open, #panel-settings .pm51-index-tab.has-active { color: var(--k3-text-1); }
 #panel-settings .pm51-index-sub { display: flex; flex-direction: column; gap: 1px; margin: 1px 0 4px 9px; padding-left: 4px; border-left: 1px solid var(--k3-line); }
 #panel-settings .pm51-index-sub .index-link { min-height: 26px; }
@@ -43,5 +44,31 @@
 @keyframes pm51IndexOpen { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
 @container settings-host (max-width: 720px) {
   #panel-settings .page-index-card .pm51-index-group, #panel-settings .pm51-index-sub { display: contents; }
-  #panel-settings .pm51-index-tab > svg { display: none; }
+  #panel-settings .pm51-index-tab > .icon { display: none; }
+}
+
+/* Tighter frame (review, 2026-09-27): the chapter rail, the page index and the page each give back some width, so
+   the settings themselves keep their room at 1280 and 1440 and beside the chat. The rail is 192px up to a 1180px
+   Settings area (224px above), the index 148px, and the page's side margins 12px; the text sizes are unchanged. */
+@container settings-host (min-width: 961px) {
+  #panel-settings > #pm-settings-root { --k3-rail-w: 224px; }
+  #panel-settings .rail-head { padding: 14px 10px 8px; }
+  #panel-settings .rail-search-wrap { padding: 0 8px 10px; }
+  #panel-settings .rail-scroll { padding: 0 6px 12px; }
+  #panel-settings .rail-heading { padding: 10px 7px 5px; }
+  #panel-settings .side-link, #panel-settings .domain-link { gap: 8px; padding: 7px 7px; }
+  #panel-settings .side-card { padding: 6px; }
+}
+@container settings-host (min-width: 961px) and (max-width: 1180px) {
+  #panel-settings > #pm-settings-root { --k3-rail-w: 192px; }
+}
+@container settings-host (min-width: 721px) {
+  #panel-settings .document-layout { grid-template-columns: 148px minmax(0, 1fr); }
+  #panel-settings .page-index { padding: 8px 5px 10px; }
+  #panel-settings .page-index-card { padding: 4px; }
+  #panel-settings .index-link { gap: 5px; padding: 5px 5px; }
+  #panel-settings .page-index-title { padding-left: 5px; padding-right: 5px; }
+  #panel-settings .domain-document { padding-left: 12px; padding-right: 12px; }
+  #panel-settings .o55-group-head { padding-left: 16px; padding-right: 16px; }
+  #panel-settings .o55-group > .setting-list { padding-left: 16px; padding-right: 12px; }
 }
