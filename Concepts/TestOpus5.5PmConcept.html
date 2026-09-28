@@ -59977,7 +59977,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
           { label: 'Version', value: srv.version, pill: srv.updateReady ? PM51.status('Update ready') : '', action: srv.updateReady ? { label: 'App Updates', action: 'pm51-go', data: { domain: 'system', workspace: 'updates' }, icon: 'arrowRight' } : null },
           { label: 'Runs work', help: 'Allow Goals and tasks to run on this server.', control: PM51.toggle(!!srv.runsWork, { action: 'pm51-servers-runs', data: { id: srv.id }, label: 'Runs work' }) },
           { label: 'Default for new workspaces', control: PM51.toggle(!!srv.default, { action: 'pm51-servers-default', data: { id: srv.id }, label: 'Default for new workspaces' }) },
-          { label: 'Signs in with', help: srv.role === 'This computer' ? '' : 'An SSH key is also how Puppet Master reaches its files and repairs it.', value: signInText(srv), action: srv.role === 'This computer' ? null : { label: srv.signIn && srv.signIn.keyId ? 'Change key' : 'Attach a key', icon: 'key', action: 'pm51-servers-attach-key', data: { id: srv.id } } },
+          { label: 'Signs in with', value: signInText(srv), action: srv.role === 'This computer' ? null : { label: srv.signIn && srv.signIn.keyId ? 'Change key' : 'Attach a key', icon: 'key', action: 'pm51-servers-attach-key', data: { id: srv.id } } },
           { label: 'Connection', value: `Checked ${srv.lastCheck}`, action: { label: 'Test connection', icon: 'test', action: 'pm51-servers-test', data: { id: srv.id, 'command-id': 'cmd.execution_host.test' } } }
         ])
       });
