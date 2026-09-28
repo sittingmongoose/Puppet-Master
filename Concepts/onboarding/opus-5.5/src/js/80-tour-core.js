@@ -476,7 +476,7 @@
     /* the look, after setup: saved through Settings at once (the tour follows the change) */
     if (a === 'lookMenu') { st.lookOpen = !st.lookOpen; renderBar(); return; }
     if (a === 'lookFamily') { O55.lookMenu.save(arg, O55.theme().mode); return; }
-    if (a === 'lookMode') { O55.lookMenu.save(O55.theme().family, arg); return; }
+    if (a === 'lookMode') { O55.lookMenu.save(O55.theme().chosen, arg); return; }
     if (a === 'takeMe') { if (st.step.goTo) st.step.goTo(st); st.missing = false; st.missingSince = 0; renderCallout(false); return; }
     if (a === 'skipStep') return goStep(st.step.index + 1);
     if (a === 'finish') return finish(arg === 'keep');

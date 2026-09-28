@@ -27,7 +27,7 @@
     const th = theme || O55.theme();
     return {
       schema_id: 'pm.product_onboarding.setup_plan.v2', planned_only: true, applied: false,
-      journey: journey || 'new_or_local', theme_family: th.family, theme_mode: th.mode,
+      journey: journey || 'new_or_local', theme_family: th.chosen || th.family, theme_mode: th.mode,
       project_mode: journey === 'connect_existing' ? 'later' : 'new', project_name: '', project_source_ref: '', backup_source_ref: '',
       project_transport: 'local', backup_transport: 'local', local_location_mode: 'automatic', local_location: '',
       local_history: journey !== 'connect_existing', history_backend: 'git', filesafe: true,

@@ -19,9 +19,15 @@
   };
   O55.tx = function tx(key) { let node = O55.copy; for (const part of String(key).split('.')) { if (node == null) return null; node = node[part]; } return node; };
 
+  /* The look on screen. NieR Mode (src/settings/kit.d/18-nier.js) paints the Basic family over the one the person chose:
+     `family` is the painted family (art, sounds and the window's skin follow it), `chosen` the family the person picked
+     (drafts, the look pickers and saves use it). Both are the same while NieR Mode is off. */
   O55.theme = function theme() {
-    const raw = document.documentElement.getAttribute('data-theme') || 'basic-dark';
+    const root = document.documentElement, raw = root.getAttribute('data-theme') || 'basic-dark';
     const [family, mode] = raw.split('-');
-    return { family: O55.FAMILIES.includes(family) ? family : 'basic', mode: mode === 'light' ? 'light' : 'dark', slug: raw };
+    const painted = O55.FAMILIES.includes(family) ? family : 'basic';
+    let chosen = painted;
+    if (root.hasAttribute('data-o55-nier')) { try { const c = window.PM_THEME.getFamily(); if (O55.FAMILIES.includes(c)) chosen = c; } catch (_) {} }
+    return { family: painted, chosen, mode: mode === 'light' ? 'light' : 'dark', slug: raw };
   };
 })();

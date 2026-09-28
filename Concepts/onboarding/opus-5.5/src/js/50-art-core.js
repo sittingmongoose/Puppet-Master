@@ -12,15 +12,17 @@
   const A = O55.art = { families: {}, scenes: {}, W: 480, H: 600 };
 
   /* Read live theme tokens so light/dark re-light the same drawings from the app's real palette. They depend only on
-     the look that owns the element (html, or a look tile's own data-theme) and on the root's inline variables, so they
-     are read once per look: a getComputedStyle here forced a style pass of the whole page on every scene render. */
+     the look that owns the element (html, or a look tile's own data-theme), on NieR Mode (painted over Basic on html,
+     with its parts) and on the root's inline variables, so they are read once per look: a getComputedStyle here forced
+     a style pass of the whole page on every scene render. */
   const tokCache = new Map();
   A.tokens = function tokens(el) {
     const root = document.documentElement; el = el || root;
     const owner = (el.closest && el.closest('[data-theme]')) || root;
-    const key = (owner === root ? 'r|' : 'o|') + owner.getAttribute('data-theme') + '|' + (root.getAttribute('style') || '');
+    const nier = root.hasAttribute('data-o55-nier') ? 'nier:' + (root.getAttribute('data-o55-nier-parts') || '') + '|' : '';
+    const key = (owner === root ? 'r|' : 'o|') + nier + owner.getAttribute('data-theme') + '|' + (root.getAttribute('style') || '');
     const hit = tokCache.get(key); if (hit) return Object.assign({}, hit);
-    const t = readTokens(el);
+    const t = readTokens(el); t.nier = !!nier && owner === root;
     if (tokCache.size > 40) tokCache.clear();
     tokCache.set(key, t); return Object.assign({}, t);
   };
