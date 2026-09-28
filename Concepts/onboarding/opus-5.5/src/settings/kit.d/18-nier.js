@@ -29,7 +29,10 @@
      background()      -> the chosen background option label ("City Ruins", ..., "Follow the page")
      onChange(cb)      -> unsubscribe function; cb({ on, parts, background, mode, reason }) after every change:
                           reason 'on' | 'off' | 'parts' | 'background' | 'mode' (light/dark, only while on) | 'init'
-                          (NieR Mode was already on when the Settings state loaded)
+                          (NieR Mode was already on when the Settings state loaded; only listeners registered while
+                          the Settings script runs hear it, so read on() when you start). 'on' and 'off' fire right
+                          after the repaint, inside the transition and under its cover, so a part can swap its own
+                          scene there; the transition's promise settles after.
      setTransition(fn) -> registers async fn(repaint, { on, reason }) run when NieR Mode turns on or off; it must call
                           repaint() once (the theme changes inside it) and may animate before and after. The default
                           calls repaint() at once. A transition that throws or never calls repaint() still repaints
