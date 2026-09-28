@@ -1,0 +1,66 @@
+{
+  "status": "INCOMPLETE",
+  "complete": false,
+  "semantic_validation": "not_performed",
+  "current_states": {
+    "F0001": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 1
+    },
+    "F0002": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 2
+    },
+    "F0003": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 3
+    },
+    "F0004": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 13
+    },
+    "F0005": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 5
+    },
+    "F0006": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 14
+    },
+    "F0007": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 15
+    },
+    "F0008": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 16
+    },
+    "F0009": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 17
+    },
+    "F0010": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 10
+    },
+    "F0011": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 18
+    },
+    "F0012": {
+      "status": "VALID_UNVERIFIED",
+      "latest_attempt": 12
+    }
+  },
+  "unbound_invalid_attempts": [],
+  "missing_or_corrupt_snapshots": [],
+  "pending_inputs": [],
+  "protocol_errors": [
+    "acknowledged request/payload changed or removed: new--multiscales-discovery-selection",
+    "acknowledged request/payload changed or removed: new--plates-wells-acquisitions-hcs",
+    "acknowledged request/payload changed or removed: new--version-interop-04-05-policy",
+    "acknowledged request/payload changed or removed: new--failures-attributed-validator-recovery",
+    "acknowledged request/payload changed or removed: new--large-data-responsive-lazy-levels",
+    "acknowledged request/payload changed or removed: new--omero-rendering-defaults"
+  ]
+}

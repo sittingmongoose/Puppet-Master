@@ -1,0 +1,185 @@
+{
+  "native_process_seconds": 635.4282779693604,
+  "host_prepare_seconds": 0.12339329719543457,
+  "store_poll_seconds": 73.7124180488172,
+  "store_poll_calls": 11191,
+  "store_close_seconds": 0.038123122008983046,
+  "attempt_counts": {
+    "acknowledged": 18,
+    "initial_attempts": 12,
+    "revision_attempts": 6,
+    "unbound_invalid_attempts": 0,
+    "invalid_attempts": 6,
+    "observed_unique_attempt_paths": 18,
+    "unacknowledged_paths": [],
+    "native_failed_writes": "requires existing native trace; not inferred zero"
+  },
+  "structural_complete": false,
+  "lineage_pass": true,
+  "inputs_unchanged": true,
+  "report_kind": "host_current",
+  "current_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/current.md",
+  "current_sha256": "ec41fec7a4828a5ea19e623491d683d68a04763a4c9389b76b9232f6786542f2",
+  "native_boundary": "pass_mechanical",
+  "output_inventory_complete": true,
+  "frozen_output_manifest": {
+    "requests/F0004--failures-attributed-retry": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/F0006--large-data-responsive-retry": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/F0007--multiscales-discovery-retry": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/F0008--omero-rendering-retry": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/F0009--plates-wells-hcs-retry": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/F0011--version-interop-retry": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/new--axes-dimension-names-units": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/new--bioformats2raw-layout-collections": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/new--coordinate-transforms-scale-translate": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/new--failures-attributed-validator-recovery": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/new--labels-overlays-contract": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/new--large-data-responsive-lazy-levels": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/new--multiscales-discovery-selection": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/new--omero-rendering-defaults": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/new--plates-wells-acquisitions-hcs": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/new--storage-codecs-chunks-shards-dtypes": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/new--version-interop-04-05-policy": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "requests/new--zarr-v3-ome-namespace-version": {
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    "submissions/F0004--failures-attributed-retry.md": {
+      "sha256": "2fcaa4c60134b248390682af45ad48ae54e95afd4d4a25e3c57aad3a11281d4c",
+      "bytes": 5516
+    },
+    "submissions/F0006--large-data-responsive-retry.md": {
+      "sha256": "9cb9d3d35d2b2d5523315adfb1939a9eefd098d9f318d96076a9609102feff2d",
+      "bytes": 5384
+    },
+    "submissions/F0007--multiscales-discovery-retry.md": {
+      "sha256": "549f5b96590c72dded3a597851a8ef394958b5febbcefed5f0d233bdb6e83048",
+      "bytes": 5678
+    },
+    "submissions/F0008--omero-rendering-retry.md": {
+      "sha256": "51b5018c1c50a2a174d22bd284314b0f2042fe69a6906ff87dda5135dd0f1273",
+      "bytes": 5385
+    },
+    "submissions/F0009--plates-wells-hcs-retry.md": {
+      "sha256": "9b00238f50d04bf6a3902c1c4afcf1a8def956ba973df907ca7a0250cc91cc1c",
+      "bytes": 6264
+    },
+    "submissions/F0011--version-interop-retry.md": {
+      "sha256": "24c7168a3d7111d1f5aa660da8b44d4638708e2e07187c1551535a1fef113ece",
+      "bytes": 5424
+    },
+    "submissions/new--axes-dimension-names-units.md": {
+      "sha256": "96a93b1f418f98903590cbf62abfb051a40ad9f595d11310e42a7878a7dbe8a4",
+      "bytes": 4850
+    },
+    "submissions/new--bioformats2raw-layout-collections.md": {
+      "sha256": "f3c62a0e708ce9d9635bb5f80883f7b55f19c3cae510407ac56dbf480a3b447c",
+      "bytes": 5478
+    },
+    "submissions/new--coordinate-transforms-scale-translate.md": {
+      "sha256": "365babdd0d4124018e31f5e57a506d4ff529baf900564b08a8a7c2607c207492",
+      "bytes": 5937
+    },
+    "submissions/new--failures-attributed-validator-recovery.md": {
+      "sha256": "29eaa5ac3b77fbc3821809c136dab98445c2dcc2860d252e981527038109263e",
+      "bytes": 5083
+    },
+    "submissions/new--labels-overlays-contract.md": {
+      "sha256": "85bc716c4947b6d004ec2b8a1e83aef8b57982751a45c9c45001168f5ae91fd7",
+      "bytes": 5198
+    },
+    "submissions/new--large-data-responsive-lazy-levels.md": {
+      "sha256": "61902ac754cbd90d67d207f1690b2a4b1e2e562fe320d055d4e99288d3eb7ac8",
+      "bytes": 4951
+    },
+    "submissions/new--multiscales-discovery-selection.md": {
+      "sha256": "1f5a5d53ac77f1b3870f6aa6f9aff8cb8714d517467f6a2a6b89628ad570421e",
+      "bytes": 5245
+    },
+    "submissions/new--omero-rendering-defaults.md": {
+      "sha256": "fdbf7789d4c875c36cb9e94b5e391422ba9cdbf6532c003569d648ede14e5034",
+      "bytes": 4952
+    },
+    "submissions/new--plates-wells-acquisitions-hcs.md": {
+      "sha256": "5367894a9f712e678af2fba2489d1790d81816cb9086724b8df8386253d7eb1f",
+      "bytes": 5831
+    },
+    "submissions/new--storage-codecs-chunks-shards-dtypes.md": {
+      "sha256": "01e473c797fd3f7afbd6e3840eac18fc5088bf74a5cab5a1917de705bc7bd157",
+      "bytes": 5210
+    },
+    "submissions/new--version-interop-04-05-policy.md": {
+      "sha256": "75be1192fd0798c04ecfa802a6032162eeef8c23ebb00a7a17081c453cd9fd25",
+      "bytes": 4991
+    },
+    "submissions/new--zarr-v3-ome-namespace-version.md": {
+      "sha256": "62c3e04ae00cb36db062a125fd2f3342fa7b9d9f0620093b4389de800f99cba6",
+      "bytes": 4625
+    }
+  },
+  "slot": "I2-M-maintained",
+  "app": "muse",
+  "carrier": "maintained",
+  "native_outcome": "goal_complete",
+  "outcome_detail": "goal_complete",
+  "process_exit": 0,
+  "host_error": null,
+  "native_responses": 36,
+  "native_stop": "goal_complete",
+  "start_epoch": 1790596980.8718016,
+  "end_epoch": 1790597616.5643916,
+  "active_span_seconds": 635.6925899982452,
+  "host_terminal_seconds": 0.0999455451965332,
+  "semantic_grade": "not_performed_by_host"
+}

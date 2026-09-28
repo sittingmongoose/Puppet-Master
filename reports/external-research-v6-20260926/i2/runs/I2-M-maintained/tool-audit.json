@@ -1,0 +1,36 @@
+{
+  "log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/muse-session.jsonl",
+  "tool_calls": 101,
+  "tool_call_names": {
+    "read_file": 47,
+    "search": 16,
+    "write_file": 36,
+    "report_progress": 2
+  },
+  "responses_seen_in_log": 35,
+  "source_read_calls": 21,
+  "unique_sources_read": 17,
+  "repeat_source_reads": 4,
+  "reads_per_source": {
+    "S003": 2,
+    "S004": 1,
+    "S011": 1,
+    "S016": 1,
+    "S017": 1,
+    "S018": 2,
+    "S019": 1,
+    "S025": 1,
+    "S033": 1,
+    "S034": 1,
+    "S043": 2,
+    "S048": 2,
+    "S053": 1,
+    "S054": 1,
+    "S055": 1,
+    "S056": 1,
+    "S058": 1
+  },
+  "web_tool_calls": [],
+  "shell_calls": [],
+  "paths_outside_workspace": []
+}

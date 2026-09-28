@@ -1,0 +1,778 @@
+{
+  "raw_root": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained",
+  "raw_only_not_published": [
+    "native logs",
+    "model-authored observations/history/snapshots",
+    "Store raw payload/marker snapshots",
+    "case corpus"
+  ],
+  "artifacts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/arm-receipt.json",
+      "sha256": "de2dc4d7f5975ef4f08507b901969b19f6d2b0d4881fd763f55249b8e5e2a2b5",
+      "bytes": 7408
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/current-criterion.json",
+      "sha256": "49048e4da3da772195fd0cffa262336446dbe6a457164e279f5c2ea221a35c99",
+      "bytes": 5274
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/dispatch.json",
+      "sha256": "58dde78b1e70ae485d9afaa80eef97a733a7568a768a05b125a6635aa67271b3",
+      "bytes": 1276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/driver-output.log",
+      "sha256": "d0ac5880acf3ec329dddaab072ac00f4fb4a211b3bd3924ed3a3f810b9b9240d",
+      "bytes": 392
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/current.md",
+      "sha256": "ec41fec7a4828a5ea19e623491d683d68a04763a4c9389b76b9232f6786542f2",
+      "bytes": 65380
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/manifest.json",
+      "sha256": "0406249c2744c12a87715d3b8844acc33e0a375403d80b250c338b233144e7d8",
+      "bytes": 5941
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/F0004--failures-attributed-retry",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/F0006--large-data-responsive-retry",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/F0007--multiscales-discovery-retry",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/F0008--omero-rendering-retry",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/F0009--plates-wells-hcs-retry",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/F0011--version-interop-retry",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/new--axes-dimension-names-units",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/new--bioformats2raw-layout-collections",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/new--coordinate-transforms-scale-translate",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/new--failures-attributed-validator-recovery",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/new--labels-overlays-contract",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/new--large-data-responsive-lazy-levels",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/new--multiscales-discovery-selection",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/new--omero-rendering-defaults",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/new--plates-wells-acquisitions-hcs",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/new--storage-codecs-chunks-shards-dtypes",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/new--version-interop-04-05-policy",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/requests/new--zarr-v3-ome-namespace-version",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/F0004--failures-attributed-retry.md",
+      "sha256": "2fcaa4c60134b248390682af45ad48ae54e95afd4d4a25e3c57aad3a11281d4c",
+      "bytes": 5516
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/F0006--large-data-responsive-retry.md",
+      "sha256": "9cb9d3d35d2b2d5523315adfb1939a9eefd098d9f318d96076a9609102feff2d",
+      "bytes": 5384
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/F0007--multiscales-discovery-retry.md",
+      "sha256": "549f5b96590c72dded3a597851a8ef394958b5febbcefed5f0d233bdb6e83048",
+      "bytes": 5678
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/F0008--omero-rendering-retry.md",
+      "sha256": "51b5018c1c50a2a174d22bd284314b0f2042fe69a6906ff87dda5135dd0f1273",
+      "bytes": 5385
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/F0009--plates-wells-hcs-retry.md",
+      "sha256": "9b00238f50d04bf6a3902c1c4afcf1a8def956ba973df907ca7a0250cc91cc1c",
+      "bytes": 6264
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/F0011--version-interop-retry.md",
+      "sha256": "24c7168a3d7111d1f5aa660da8b44d4638708e2e07187c1551535a1fef113ece",
+      "bytes": 5424
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/new--axes-dimension-names-units.md",
+      "sha256": "96a93b1f418f98903590cbf62abfb051a40ad9f595d11310e42a7878a7dbe8a4",
+      "bytes": 4850
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/new--bioformats2raw-layout-collections.md",
+      "sha256": "f3c62a0e708ce9d9635bb5f80883f7b55f19c3cae510407ac56dbf480a3b447c",
+      "bytes": 5478
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/new--coordinate-transforms-scale-translate.md",
+      "sha256": "365babdd0d4124018e31f5e57a506d4ff529baf900564b08a8a7c2607c207492",
+      "bytes": 5937
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/new--failures-attributed-validator-recovery.md",
+      "sha256": "29eaa5ac3b77fbc3821809c136dab98445c2dcc2860d252e981527038109263e",
+      "bytes": 5083
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/new--labels-overlays-contract.md",
+      "sha256": "85bc716c4947b6d004ec2b8a1e83aef8b57982751a45c9c45001168f5ae91fd7",
+      "bytes": 5198
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/new--large-data-responsive-lazy-levels.md",
+      "sha256": "61902ac754cbd90d67d207f1690b2a4b1e2e562fe320d055d4e99288d3eb7ac8",
+      "bytes": 4951
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/new--multiscales-discovery-selection.md",
+      "sha256": "1f5a5d53ac77f1b3870f6aa6f9aff8cb8714d517467f6a2a6b89628ad570421e",
+      "bytes": 5245
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/new--omero-rendering-defaults.md",
+      "sha256": "fdbf7789d4c875c36cb9e94b5e391422ba9cdbf6532c003569d648ede14e5034",
+      "bytes": 4952
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/new--plates-wells-acquisitions-hcs.md",
+      "sha256": "5367894a9f712e678af2fba2489d1790d81816cb9086724b8df8386253d7eb1f",
+      "bytes": 5831
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/new--storage-codecs-chunks-shards-dtypes.md",
+      "sha256": "01e473c797fd3f7afbd6e3840eac18fc5088bf74a5cab5a1917de705bc7bd157",
+      "bytes": 5210
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/new--version-interop-04-05-policy.md",
+      "sha256": "75be1192fd0798c04ecfa802a6032162eeef8c23ebb00a7a17081c453cd9fd25",
+      "bytes": 4991
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/frozen/out/submissions/new--zarr-v3-ome-namespace-version.md",
+      "sha256": "62c3e04ae00cb36db062a125fd2f3342fa7b9d9f0620093b4389de800f99cba6",
+      "bytes": 4625
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/input-manifest.json",
+      "sha256": "b096dfc7efc8055c3dc4c2145935adb74e99a7572cf91e21b93fcbf69eef2f0d",
+      "bytes": 17788
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/muse-msp.jsonl",
+      "sha256": "3403222128284794c4573e16caa6176d0fd744ffa3a63486be38c547aa1b756c",
+      "bytes": 1064043
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/muse-session.jsonl",
+      "sha256": "b4dcde0ff3d5fb9281b4f79969a4d396cd7efa206ca758299a19ea7d085827ed",
+      "bytes": 2900405
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/muse-stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/progress.jsonl",
+      "sha256": "d0ac5880acf3ec329dddaab072ac00f4fb4a211b3bd3924ed3a3f810b9b9240d",
+      "bytes": 392
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/receipt.json",
+      "sha256": "940b14cdb607010f518507f7a96ad015261888287042f12354e4cc44c37e0979",
+      "bytes": 2405
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/usage-events.jsonl",
+      "sha256": "19bd842e68aafb005c726c4b6a7f1f526b15dc6f362c52e54fc2117b10cb43c3",
+      "bytes": 28134
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/output-inventory.json",
+      "sha256": "517af4519551d4bedb2b1666c126f9926941e3cee6b0cfad20ceb813c6d67e52",
+      "bytes": 2273
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/status.json",
+      "sha256": "547dca0b196311f3142f3f769b402e26fe4464224b1ad9873a1c9d28e5cc26e6",
+      "bytes": 187
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/current.json",
+      "sha256": "8bd68202f810e4bd87cd8079363b83ce93a15c22199cef91d22b2a0056b6e8e8",
+      "bytes": 72024
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/current.md",
+      "sha256": "ec41fec7a4828a5ea19e623491d683d68a04763a4c9389b76b9232f6786542f2",
+      "bytes": 65380
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/history.json",
+      "sha256": "245ce2ad354d8cffd76678cc3b286e18036df6b3cf7cf0eb541b0e2b9234dc14",
+      "bytes": 91261
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0001.md",
+      "sha256": "96a93b1f418f98903590cbf62abfb051a40ad9f595d11310e42a7878a7dbe8a4",
+      "bytes": 4850
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0001.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0002.md",
+      "sha256": "f3c62a0e708ce9d9635bb5f80883f7b55f19c3cae510407ac56dbf480a3b447c",
+      "bytes": 5478
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0002.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0003.md",
+      "sha256": "365babdd0d4124018e31f5e57a506d4ff529baf900564b08a8a7c2607c207492",
+      "bytes": 5937
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0003.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0004.md",
+      "sha256": "29eaa5ac3b77fbc3821809c136dab98445c2dcc2860d252e981527038109263e",
+      "bytes": 5083
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0004.request",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0005.md",
+      "sha256": "85bc716c4947b6d004ec2b8a1e83aef8b57982751a45c9c45001168f5ae91fd7",
+      "bytes": 5198
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0005.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0006.md",
+      "sha256": "61902ac754cbd90d67d207f1690b2a4b1e2e562fe320d055d4e99288d3eb7ac8",
+      "bytes": 4951
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0006.request",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0007.md",
+      "sha256": "1f5a5d53ac77f1b3870f6aa6f9aff8cb8714d517467f6a2a6b89628ad570421e",
+      "bytes": 5245
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0007.request",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0008.md",
+      "sha256": "fdbf7789d4c875c36cb9e94b5e391422ba9cdbf6532c003569d648ede14e5034",
+      "bytes": 4952
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0008.request",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0009.md",
+      "sha256": "5367894a9f712e678af2fba2489d1790d81816cb9086724b8df8386253d7eb1f",
+      "bytes": 5831
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0009.request",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0010.md",
+      "sha256": "01e473c797fd3f7afbd6e3840eac18fc5088bf74a5cab5a1917de705bc7bd157",
+      "bytes": 5210
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0010.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0011.md",
+      "sha256": "75be1192fd0798c04ecfa802a6032162eeef8c23ebb00a7a17081c453cd9fd25",
+      "bytes": 4991
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0011.request",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0012.md",
+      "sha256": "62c3e04ae00cb36db062a125fd2f3342fa7b9d9f0620093b4389de800f99cba6",
+      "bytes": 4625
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0012.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0013.md",
+      "sha256": "2fcaa4c60134b248390682af45ad48ae54e95afd4d4a25e3c57aad3a11281d4c",
+      "bytes": 5516
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0013.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0014.md",
+      "sha256": "9cb9d3d35d2b2d5523315adfb1939a9eefd098d9f318d96076a9609102feff2d",
+      "bytes": 5384
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0014.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0015.md",
+      "sha256": "549f5b96590c72dded3a597851a8ef394958b5febbcefed5f0d233bdb6e83048",
+      "bytes": 5678
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0015.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0016.md",
+      "sha256": "51b5018c1c50a2a174d22bd284314b0f2042fe69a6906ff87dda5135dd0f1273",
+      "bytes": 5385
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0016.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0017.md",
+      "sha256": "9b00238f50d04bf6a3902c1c4afcf1a8def956ba973df907ca7a0250cc91cc1c",
+      "bytes": 6264
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0017.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0018.md",
+      "sha256": "24c7168a3d7111d1f5aa660da8b44d4638708e2e07187c1551535a1fef113ece",
+      "bytes": 5424
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0018.request",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/state.json",
+      "sha256": "e0a71a09581664a64925c723a4dccf8baf3c20ebe658b3455a3b8e1783ff528d",
+      "bytes": 91891
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store-summary.json",
+      "sha256": "ae2d9c94dd15577a53df5ded764edbf10befea6e5fba32bc4a5468c10414fd37",
+      "bytes": 73647
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/tool-audit.json",
+      "sha256": "bcdbb8b7b7d749eb8359f3fc73121be4ca0e88797d834a26d9263eb015a2783a",
+      "bytes": 752
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/F0004--failures-attributed-retry.json",
+      "sha256": "f328f7ac91f8dfa0911900c1df08b0edc5cf941f9f2c3ae77f89060d18d73446",
+      "bytes": 2044
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/F0006--large-data-responsive-retry.json",
+      "sha256": "c2f7c76b5acf4830e6f8d1b359ff7dd9cb725be38553aaf7bdf537358c67f538",
+      "bytes": 2037
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/F0007--multiscales-discovery-retry.json",
+      "sha256": "48687c99619a9b24045ebf9e41358530ba6f9cc6f9c973ac84435cd39f26f1c5",
+      "bytes": 2028
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/F0008--omero-rendering-retry.json",
+      "sha256": "85e283ba5c62478fd54dfacc847fef0d98676c915e27b1161c63e9c1a20a14ec",
+      "bytes": 2013
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/F0009--plates-wells-hcs-retry.json",
+      "sha256": "c443e8b48b0bd4c0b39132efcda7606015b164a04ad9edd2aee8c2e3acc38fa3",
+      "bytes": 2005
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/F0011--version-interop-retry.json",
+      "sha256": "6724f4c3c7b6286a06fe528fa544ae4bac8b4ad19f3d95db285317973002a033",
+      "bytes": 1994
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/new--axes-dimension-names-units.json",
+      "sha256": "6afbefb5abf1d18016ee65a84a135249a812a4ef3b4486c9566954dd19b1e818",
+      "bytes": 507
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/new--bioformats2raw-layout-collections.json",
+      "sha256": "8b6b4491907cc6e12048128d2b90fe36e3faeef13704d50a5f02c0c5d31a84f4",
+      "bytes": 598
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/new--coordinate-transforms-scale-translate.json",
+      "sha256": "d61e3e7caeaf1536da4bfa8299ae24f866629ce0a167924ea793885ff324b6dd",
+      "bytes": 686
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/new--failures-attributed-validator-recovery.json",
+      "sha256": "4350d5ee83854b88eab4782ca473e3d95005f0f19658dabad52de391e7ce46fb",
+      "bytes": 820
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/new--labels-overlays-contract.json",
+      "sha256": "47c646ee0158d05b2b4cd3fc8824556f8a3c59274431c9bf57bd4e4d0ebccc25",
+      "bytes": 832
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/new--large-data-responsive-lazy-levels.json",
+      "sha256": "a8c4e9b045779a001203e558373cb6d0bac06a587b75e461285bc1035e7c27ce",
+      "bytes": 974
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/new--multiscales-discovery-selection.json",
+      "sha256": "dafcd402ea558b950a14d56656f3557f8aea1de0f1e04de0d7c9cc66d2aa4052",
+      "bytes": 1047
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/new--omero-rendering-defaults.json",
+      "sha256": "12cf98b3ced563d822f37ea1bf302bf886e9043c669464e9335c0a4a95c15d1b",
+      "bytes": 1115
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/new--plates-wells-acquisitions-hcs.json",
+      "sha256": "8ff7fb3ce8424bf8f942ad635aaf7716ecf42d70c8a824e0c1586d3430fcb10a",
+      "bytes": 1195
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/new--storage-codecs-chunks-shards-dtypes.json",
+      "sha256": "a59057c921d2a0b70e154d36b951dcb10b3779308a178ac2ca936e479ccb7df5",
+      "bytes": 1229
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/new--version-interop-04-05-policy.json",
+      "sha256": "acf14f15f6672368c324f0f98e19cf95268fff2b9ae98fbae07660151a217531",
+      "bytes": 1356
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/new--zarr-v3-ome-namespace-version.json",
+      "sha256": "06f3a453d72a6c6411d8db39c37d6fa0aee707486076712ba05848bb4df293bb",
+      "bytes": 1384
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/feedback/status.json",
+      "sha256": "906afc346b2ebf17936c57f18e8659b9209b93c7f1cbb4ed32ccd33e9df2fa4a",
+      "bytes": 1812
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/F0004--failures-attributed-retry",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/F0006--large-data-responsive-retry",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/F0007--multiscales-discovery-retry",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/F0008--omero-rendering-retry",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/F0009--plates-wells-hcs-retry",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/F0011--version-interop-retry",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--axes-dimension-names-units",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--bioformats2raw-layout-collections",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--coordinate-transforms-scale-translate",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--failures-attributed-validator-recovery",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--labels-overlays-contract",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--large-data-responsive-lazy-levels",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--multiscales-discovery-selection",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--omero-rendering-defaults",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--plates-wells-acquisitions-hcs",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--storage-codecs-chunks-shards-dtypes",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--version-interop-04-05-policy",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--zarr-v3-ome-namespace-version",
+      "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "bytes": 7
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/F0004--failures-attributed-retry.md",
+      "sha256": "2fcaa4c60134b248390682af45ad48ae54e95afd4d4a25e3c57aad3a11281d4c",
+      "bytes": 5516
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/F0006--large-data-responsive-retry.md",
+      "sha256": "9cb9d3d35d2b2d5523315adfb1939a9eefd098d9f318d96076a9609102feff2d",
+      "bytes": 5384
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/F0007--multiscales-discovery-retry.md",
+      "sha256": "549f5b96590c72dded3a597851a8ef394958b5febbcefed5f0d233bdb6e83048",
+      "bytes": 5678
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/F0008--omero-rendering-retry.md",
+      "sha256": "51b5018c1c50a2a174d22bd284314b0f2042fe69a6906ff87dda5135dd0f1273",
+      "bytes": 5385
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/F0009--plates-wells-hcs-retry.md",
+      "sha256": "9b00238f50d04bf6a3902c1c4afcf1a8def956ba973df907ca7a0250cc91cc1c",
+      "bytes": 6264
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/F0011--version-interop-retry.md",
+      "sha256": "24c7168a3d7111d1f5aa660da8b44d4638708e2e07187c1551535a1fef113ece",
+      "bytes": 5424
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/new--axes-dimension-names-units.md",
+      "sha256": "96a93b1f418f98903590cbf62abfb051a40ad9f595d11310e42a7878a7dbe8a4",
+      "bytes": 4850
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/new--bioformats2raw-layout-collections.md",
+      "sha256": "f3c62a0e708ce9d9635bb5f80883f7b55f19c3cae510407ac56dbf480a3b447c",
+      "bytes": 5478
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/new--coordinate-transforms-scale-translate.md",
+      "sha256": "365babdd0d4124018e31f5e57a506d4ff529baf900564b08a8a7c2607c207492",
+      "bytes": 5937
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/new--failures-attributed-validator-recovery.md",
+      "sha256": "29eaa5ac3b77fbc3821809c136dab98445c2dcc2860d252e981527038109263e",
+      "bytes": 5083
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/new--labels-overlays-contract.md",
+      "sha256": "85bc716c4947b6d004ec2b8a1e83aef8b57982751a45c9c45001168f5ae91fd7",
+      "bytes": 5198
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/new--large-data-responsive-lazy-levels.md",
+      "sha256": "61902ac754cbd90d67d207f1690b2a4b1e2e562fe320d055d4e99288d3eb7ac8",
+      "bytes": 4951
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/new--multiscales-discovery-selection.md",
+      "sha256": "1f5a5d53ac77f1b3870f6aa6f9aff8cb8714d517467f6a2a6b89628ad570421e",
+      "bytes": 5245
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/new--omero-rendering-defaults.md",
+      "sha256": "fdbf7789d4c875c36cb9e94b5e391422ba9cdbf6532c003569d648ede14e5034",
+      "bytes": 4952
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/new--plates-wells-acquisitions-hcs.md",
+      "sha256": "5367894a9f712e678af2fba2489d1790d81816cb9086724b8df8386253d7eb1f",
+      "bytes": 5831
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/new--storage-codecs-chunks-shards-dtypes.md",
+      "sha256": "01e473c797fd3f7afbd6e3840eac18fc5088bf74a5cab5a1917de705bc7bd157",
+      "bytes": 5210
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/new--version-interop-04-05-policy.md",
+      "sha256": "75be1192fd0798c04ecfa802a6032162eeef8c23ebb00a7a17081c453cd9fd25",
+      "bytes": 4991
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/submissions/new--zarr-v3-ome-namespace-version.md",
+      "sha256": "62c3e04ae00cb36db062a125fd2f3342fa7b9d9f0620093b4389de800f99cba6",
+      "bytes": 4625
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/boundary-check.json",
+      "bytes": 262,
+      "sha256": "9944458eeceb263c3430c9cbdcf6fe831f66547ba69aef3e29c466855572502c"
+    }
+  ],
+  "storage_inventory": {
+    "frozen/out": {
+      "files": 36,
+      "bytes": 96128
+    },
+    "store": {
+      "files": 40,
+      "bytes": 416642
+    },
+    "store/snapshots": {
+      "files": 36,
+      "bytes": 96086
+    },
+    "ws/feedback": {
+      "files": 19,
+      "bytes": 25676
+    },
+    "native": {
+      "files": 6,
+      "bytes": 3995379
+    }
+  }
+}

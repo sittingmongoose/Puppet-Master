@@ -1,0 +1,420 @@
+{
+  "schema": "er6.i2.marker_order_audit.v1",
+  "scope": "Marker arguments/results/timestamps only; no payload semantics, grading, repairs, native calls, or original/disposition changes.",
+  "conclusion": "All six empty snapshots were captured during one correctly authored successful native write per original path. No candidate-authored empty marker or later call to the same original marker path is observed. Evidence supports premature watcher capture of transient file creation.",
+  "native_original_outcome": "goal_complete",
+  "original_structural_complete": false,
+  "c2_passed": true,
+  "c2_structurally_complete": false,
+  "affected_count": 6,
+  "original_batch_line": 1049,
+  "successful_result_batch_line": 1196,
+  "rows": [
+    {
+      "sequence": 4,
+      "request": "new--failures-attributed-validator-recovery",
+      "original_marker_write_count": 1,
+      "later_observed_calls_to_same_original_marker": 0,
+      "write": {
+        "native_log_line": 1049,
+        "recorded_at_us": 1790597414611768,
+        "call_id": "call_01a0e7ec39a077ae85fe075d89dc65d6",
+        "tool": "write_file",
+        "content_bytes": 7,
+        "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "content_hex": "7375626d69740a"
+      },
+      "native_started": {
+        "native_log_line": 1135,
+        "recorded_at_us": 1790597414970747,
+        "kind": "started",
+        "outcome": null
+      },
+      "native_terminal": {
+        "native_log_line": 1172,
+        "recorded_at_us": 1790597415274984,
+        "kind": "terminal",
+        "outcome": {
+          "kind": "completed",
+          "output_ref_count": 1,
+          "task_completion": {
+            "kind": "complete"
+          }
+        }
+      },
+      "native_result": {
+        "native_log_line": 1196,
+        "recorded_at_us": 1790597415410544,
+        "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--failures-attributed-validator-recovery"
+      },
+      "empty_snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0004.request",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "mtime_ns": 1790597415034408091
+      },
+      "current_marker": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--failures-attributed-validator-recovery",
+        "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "bytes": 7,
+        "mtime_ns": 1790597415265312033
+      },
+      "snapshot_between_native_start_and_completion": true,
+      "snapshot_ms_before_native_completion": 240.575909,
+      "current_marker_mtime_ms_after_snapshot": 230.903942,
+      "latest_revision": {
+        "sequence": 13,
+        "request": "F0004--failures-attributed-retry",
+        "status": "VALID_UNVERIFIED"
+      },
+      "persistent_changed_protocol_error_present": true
+    },
+    {
+      "sequence": 6,
+      "request": "new--large-data-responsive-lazy-levels",
+      "original_marker_write_count": 1,
+      "later_observed_calls_to_same_original_marker": 0,
+      "write": {
+        "native_log_line": 1049,
+        "recorded_at_us": 1790597414611768,
+        "call_id": "call_01a0e7ec36c87399b33842408b225028",
+        "tool": "write_file",
+        "content_bytes": 7,
+        "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "content_hex": "7375626d69740a"
+      },
+      "native_started": {
+        "native_log_line": 1128,
+        "recorded_at_us": 1790597414941586,
+        "kind": "started",
+        "outcome": null
+      },
+      "native_terminal": {
+        "native_log_line": 1180,
+        "recorded_at_us": 1790597415330176,
+        "kind": "terminal",
+        "outcome": {
+          "kind": "completed",
+          "output_ref_count": 1,
+          "task_completion": {
+            "kind": "complete"
+          }
+        }
+      },
+      "native_result": {
+        "native_log_line": 1196,
+        "recorded_at_us": 1790597415410544,
+        "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--large-data-responsive-lazy-levels"
+      },
+      "empty_snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0006.request",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "mtime_ns": 1790597415062705914
+      },
+      "current_marker": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--large-data-responsive-lazy-levels",
+        "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "bytes": 7,
+        "mtime_ns": 1790597415290309192
+      },
+      "snapshot_between_native_start_and_completion": true,
+      "snapshot_ms_before_native_completion": 267.470086,
+      "current_marker_mtime_ms_after_snapshot": 227.603278,
+      "latest_revision": {
+        "sequence": 14,
+        "request": "F0006--large-data-responsive-retry",
+        "status": "VALID_UNVERIFIED"
+      },
+      "persistent_changed_protocol_error_present": true
+    },
+    {
+      "sequence": 7,
+      "request": "new--multiscales-discovery-selection",
+      "original_marker_write_count": 1,
+      "later_observed_calls_to_same_original_marker": 0,
+      "write": {
+        "native_log_line": 1049,
+        "recorded_at_us": 1790597414611768,
+        "call_id": "call_01a0e7ec1fa7734380611434706a48e6",
+        "tool": "write_file",
+        "content_bytes": 7,
+        "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "content_hex": "7375626d69740a"
+      },
+      "native_started": {
+        "native_log_line": 1065,
+        "recorded_at_us": 1790597414680036,
+        "kind": "started",
+        "outcome": null
+      },
+      "native_terminal": {
+        "native_log_line": 1164,
+        "recorded_at_us": 1790597415220636,
+        "kind": "terminal",
+        "outcome": {
+          "kind": "completed",
+          "output_ref_count": 1,
+          "task_completion": {
+            "kind": "complete"
+          }
+        }
+      },
+      "native_result": {
+        "native_log_line": 1196,
+        "recorded_at_us": 1790597415410544,
+        "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--multiscales-discovery-selection"
+      },
+      "empty_snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0007.request",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "mtime_ns": 1790597415076532726
+      },
+      "current_marker": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--multiscales-discovery-selection",
+        "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "bytes": 7,
+        "mtime_ns": 1790597415153324762
+      },
+      "snapshot_between_native_start_and_completion": true,
+      "snapshot_ms_before_native_completion": 144.103274,
+      "current_marker_mtime_ms_after_snapshot": 76.792036,
+      "latest_revision": {
+        "sequence": 15,
+        "request": "F0007--multiscales-discovery-retry",
+        "status": "VALID_UNVERIFIED"
+      },
+      "persistent_changed_protocol_error_present": true
+    },
+    {
+      "sequence": 8,
+      "request": "new--omero-rendering-defaults",
+      "original_marker_write_count": 1,
+      "later_observed_calls_to_same_original_marker": 0,
+      "write": {
+        "native_log_line": 1049,
+        "recorded_at_us": 1790597414611768,
+        "call_id": "call_01a0e7ec281977938e08fc9656b45550",
+        "tool": "write_file",
+        "content_bytes": 7,
+        "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "content_hex": "7375626d69740a"
+      },
+      "native_started": {
+        "native_log_line": 1086,
+        "recorded_at_us": 1790597414763285,
+        "kind": "started",
+        "outcome": null
+      },
+      "native_terminal": {
+        "native_log_line": 1176,
+        "recorded_at_us": 1790597415300470,
+        "kind": "terminal",
+        "outcome": {
+          "kind": "completed",
+          "output_ref_count": 1,
+          "task_completion": {
+            "kind": "complete"
+          }
+        }
+      },
+      "native_result": {
+        "native_log_line": 1196,
+        "recorded_at_us": 1790597415410544,
+        "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--omero-rendering-defaults"
+      },
+      "empty_snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0008.request",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "mtime_ns": 1790597415092019423
+      },
+      "current_marker": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--omero-rendering-defaults",
+        "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "bytes": 7,
+        "mtime_ns": 1790597415290309192
+      },
+      "snapshot_between_native_start_and_completion": true,
+      "snapshot_ms_before_native_completion": 208.450577,
+      "current_marker_mtime_ms_after_snapshot": 198.289769,
+      "latest_revision": {
+        "sequence": 16,
+        "request": "F0008--omero-rendering-retry",
+        "status": "VALID_UNVERIFIED"
+      },
+      "persistent_changed_protocol_error_present": true
+    },
+    {
+      "sequence": 9,
+      "request": "new--plates-wells-acquisitions-hcs",
+      "original_marker_write_count": 1,
+      "later_observed_calls_to_same_original_marker": 0,
+      "write": {
+        "native_log_line": 1049,
+        "recorded_at_us": 1790597414611768,
+        "call_id": "call_01a0e7ec2d547123a3cfad1cffd16b5f",
+        "tool": "write_file",
+        "content_bytes": 7,
+        "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "content_hex": "7375626d69740a"
+      },
+      "native_started": {
+        "native_log_line": 1100,
+        "recorded_at_us": 1790597414823143,
+        "kind": "started",
+        "outcome": null
+      },
+      "native_terminal": {
+        "native_log_line": 1168,
+        "recorded_at_us": 1790597415248341,
+        "kind": "terminal",
+        "outcome": {
+          "kind": "completed",
+          "output_ref_count": 1,
+          "task_completion": {
+            "kind": "complete"
+          }
+        }
+      },
+      "native_result": {
+        "native_log_line": 1196,
+        "recorded_at_us": 1790597415410544,
+        "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--plates-wells-acquisitions-hcs"
+      },
+      "empty_snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0009.request",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "mtime_ns": 1790597415105595467
+      },
+      "current_marker": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--plates-wells-acquisitions-hcs",
+        "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "bytes": 7,
+        "mtime_ns": 1790597415236315329
+      },
+      "snapshot_between_native_start_and_completion": true,
+      "snapshot_ms_before_native_completion": 142.745533,
+      "current_marker_mtime_ms_after_snapshot": 130.719862,
+      "latest_revision": {
+        "sequence": 17,
+        "request": "F0009--plates-wells-hcs-retry",
+        "status": "VALID_UNVERIFIED"
+      },
+      "persistent_changed_protocol_error_present": true
+    },
+    {
+      "sequence": 11,
+      "request": "new--version-interop-04-05-policy",
+      "original_marker_write_count": 1,
+      "later_observed_calls_to_same_original_marker": 0,
+      "write": {
+        "native_log_line": 1049,
+        "recorded_at_us": 1790597414611768,
+        "call_id": "call_01a0e7ec343d71f5a416af37b6ba53f0",
+        "tool": "write_file",
+        "content_bytes": 7,
+        "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "content_hex": "7375626d69740a"
+      },
+      "native_started": {
+        "native_log_line": 1121,
+        "recorded_at_us": 1790597414911469,
+        "kind": "started",
+        "outcome": null
+      },
+      "native_terminal": {
+        "native_log_line": 1160,
+        "recorded_at_us": 1790597415195617,
+        "kind": "terminal",
+        "outcome": {
+          "kind": "completed",
+          "output_ref_count": 1,
+          "task_completion": {
+            "kind": "complete"
+          }
+        }
+      },
+      "native_result": {
+        "native_log_line": 1196,
+        "recorded_at_us": 1790597415410544,
+        "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--version-interop-04-05-policy"
+      },
+      "empty_snapshot": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/snapshots/0011.request",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "mtime_ns": 1790597415137525189
+      },
+      "current_marker": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/out/requests/new--version-interop-04-05-policy",
+        "sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+        "bytes": 7,
+        "mtime_ns": 1790597415153324762
+      },
+      "snapshot_between_native_start_and_completion": true,
+      "snapshot_ms_before_native_completion": 58.091811,
+      "current_marker_mtime_ms_after_snapshot": 15.799573,
+      "latest_revision": {
+        "sequence": 18,
+        "request": "F0011--version-interop-retry",
+        "status": "VALID_UNVERIFIED"
+      },
+      "persistent_changed_protocol_error_present": true
+    }
+  ],
+  "sources": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/muse-session.jsonl",
+      "sha256": "b4dcde0ff3d5fb9281b4f79969a4d396cd7efa206ca758299a19ea7d085827ed",
+      "bytes": 2900405,
+      "mtime_ns": 1790597616255090629
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/store/state.json",
+      "sha256": "e0a71a09581664a64925c723a4dccf8baf3c20ebe658b3455a3b8e1783ff528d",
+      "bytes": 91891,
+      "mtime_ns": 1790597616455907912
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/arm-receipt.json",
+      "sha256": "de2dc4d7f5975ef4f08507b901969b19f6d2b0d4881fd763f55249b8e5e2a2b5",
+      "bytes": 7408,
+      "mtime_ns": 1790597616564558014
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/current-criterion.json",
+      "sha256": "49048e4da3da772195fd0cffa262336446dbe6a457164e279f5c2ea221a35c99",
+      "bytes": 5274,
+      "mtime_ns": 1790597616531569505
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/delivery-v2/tools/delivery_store.py",
+      "sha256": "81364fd1a4040ba457dd04779d096709c3524bee8704a2c8f453fb18264c85c7",
+      "bytes": 16313,
+      "mtime_ns": 1790560103191435158
+    }
+  ],
+  "store_code_lines": {
+    "snapshot_before_validation": [
+      192,
+      201
+    ],
+    "permanent_changed_error": [
+      143,
+      155
+    ],
+    "acknowledgement_after_snapshot": [
+      217,
+      219
+    ]
+  },
+  "limitations": [
+    "Native recorded_at is logged microseconds, not exact syscall start/end; filesystem mtime is nanoseconds, not full syscall tracing.",
+    "Observed same-path absence covers captured native tools and absolute/relative path forms; hidden external writes are not independently excluded.",
+    "All six later accepted revisions use fresh marker paths and do not erase original invalid snapshots or latched errors.",
+    "Host disposition is parent-owned; no originals, native/structural receipts, or phase state changed by this audit."
+  ]
+}

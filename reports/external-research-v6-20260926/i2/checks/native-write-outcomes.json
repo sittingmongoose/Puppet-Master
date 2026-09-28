@@ -1,0 +1,1273 @@
+{
+  "schema": "er6.i2.native-write-outcomes.v1",
+  "created_utc": "2026-09-28T12:25:17.332778+00:00",
+  "scope": "Mechanical direct native call/effect/result metadata correlation for two terminal Muse original session logs only; no text interpretation.",
+  "slots": {
+    "I2-M-control": {
+      "write_edit_counts": {
+        "completed": 9,
+        "failed": 0,
+        "unknown": 0
+      },
+      "write_edit_counts_by_tool": {
+        "write_file": {
+          "completed": 5,
+          "failed": 0,
+          "unknown": 0
+        },
+        "edit_file": {
+          "completed": 4,
+          "failed": 0,
+          "unknown": 0
+        }
+      },
+      "write_edit_calls": [
+        {
+          "call_id": "call_01a0e7de387575a4ae0c958156bba5cc",
+          "tool_name": "write_file",
+          "call_sequence": 1084,
+          "path": "out/observations.md",
+          "requested_payload_bytes": 19553,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7df-3e4b-78d2-89ff-7e8e24f84387",
+            "task_id": "01a0e7df-3e4b-78d2-89ff-7e8e24f84387",
+            "started_sequence": 1091,
+            "terminal_sequence": 1092,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1097,
+              "text_bytes": 140,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7df44e671fa9c14d3aa1845ff82",
+          "tool_name": "edit_file",
+          "call_sequence": 1124,
+          "path": "out/observations.md",
+          "requested_payload_bytes": 12113,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7df-f22d-7b92-909a-6b0379c00c28",
+            "task_id": "01a0e7df-f22d-7b92-909a-6b0379c00c28",
+            "started_sequence": 1131,
+            "terminal_sequence": 1132,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1137,
+              "text_bytes": 12425,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7e0d40574aa8e968ca63d58cd3f",
+          "tool_name": "edit_file",
+          "call_sequence": 1585,
+          "path": "out/observations.md",
+          "requested_payload_bytes": 13329,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7e1-98c7-79a3-9c6f-35ba8fb414ee",
+            "task_id": "01a0e7e1-98c7-79a3-9c6f-35ba8fb414ee",
+            "started_sequence": 1592,
+            "terminal_sequence": 1593,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1598,
+              "text_bytes": 13618,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7e1f935770b8d6bba4b050a6293",
+          "tool_name": "edit_file",
+          "call_sequence": 1775,
+          "path": "out/observations.md",
+          "requested_payload_bytes": 5418,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7e2-4404-78e0-b8d8-af554d6a0529",
+            "task_id": "01a0e7e2-4404-78e0-b8d8-af554d6a0529",
+            "started_sequence": 1782,
+            "terminal_sequence": 1783,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1788,
+              "text_bytes": 5709,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7e253de75fc967c7d3559b29d02",
+          "tool_name": "write_file",
+          "call_sequence": 1816,
+          "path": "out/draft.md",
+          "requested_payload_bytes": 19170,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7e3-8724-7991-b179-d35b84a6a6bd",
+            "task_id": "01a0e7e3-8724-7991-b179-d35b84a6a6bd",
+            "started_sequence": 1823,
+            "terminal_sequence": 1824,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1829,
+              "text_bytes": 133,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7e392b370c7a9d5ff77ed1b8356",
+          "tool_name": "write_file",
+          "call_sequence": 1856,
+          "path": "out/history.md",
+          "requested_payload_bytes": 687,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7e3-f327-7b60-b124-7353ecb83bb2",
+            "task_id": "01a0e7e3-f327-7b60-b124-7353ecb83bb2",
+            "started_sequence": 1865,
+            "terminal_sequence": 1873,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1883,
+              "text_bytes": 133,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7e3a0d37174b8aecafffc3f9f62",
+          "tool_name": "write_file",
+          "call_sequence": 1856,
+          "path": "out/snapshots/0001.md",
+          "requested_payload_bytes": 11133,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7e3-f340-70f2-aebd-0b9005f331ac",
+            "task_id": "01a0e7e3-f340-70f2-aebd-0b9005f331ac",
+            "started_sequence": 1872,
+            "terminal_sequence": 1877,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1883,
+              "text_bytes": 142,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7e4333d72518ed210b550a8a44f",
+          "tool_name": "write_file",
+          "call_sequence": 1976,
+          "path": "out/snapshots/0002.md",
+          "requested_payload_bytes": 8444,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7e4-80c9-77f0-958d-03b078169f8c",
+            "task_id": "01a0e7e4-80c9-77f0-958d-03b078169f8c",
+            "started_sequence": 1983,
+            "terminal_sequence": 1984,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1989,
+              "text_bytes": 241,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7e48a5b72ed8ee7cd4dadac3654",
+          "tool_name": "edit_file",
+          "call_sequence": 2016,
+          "path": "out/history.md",
+          "requested_payload_bytes": 939,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7e4-9bf3-7a71-8ce5-70fe5c299138",
+            "task_id": "01a0e7e4-9bf3-7a71-8ce5-70fe5c299138",
+            "started_sequence": 2023,
+            "terminal_sequence": 2024,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 2029,
+              "text_bytes": 1396,
+              "isError": "unknown"
+            }
+          ]
+        }
+      ],
+      "explicit_feedback_read_count": 0,
+      "explicit_feedback_reads": [],
+      "raw_sources": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/status.json",
+          "bytes": 184,
+          "sha256": "87f4b9948616ca80fb98ed1b323cf154288fb6b4608384f5c7c84cfda8ba99b2"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/native/muse-session.jsonl",
+          "bytes": 3441511,
+          "sha256": "ee807fd6d3a3614c078d5268d5a158754c368beaad26129bec1d5c2300cba30d"
+        }
+      ]
+    },
+    "I2-M-maintained": {
+      "write_edit_counts": {
+        "completed": 36,
+        "failed": 0,
+        "unknown": 0
+      },
+      "write_edit_counts_by_tool": {
+        "write_file": {
+          "completed": 36,
+          "failed": 0,
+          "unknown": 0
+        }
+      },
+      "write_edit_calls": [
+        {
+          "call_id": "call_01a0e7e7d89276f89acd96b570b6474b",
+          "tool_name": "write_file",
+          "call_sequence": 820,
+          "path": "out/submissions/new--zarr-v3-ome-namespace-version.md",
+          "requested_payload_bytes": 4625,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7e9-37c8-79a1-896c-4b8c7e21f8ad",
+            "task_id": "01a0e7e9-37c8-79a1-896c-4b8c7e21f8ad",
+            "started_sequence": 827,
+            "terminal_sequence": 849,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 869,
+              "text_bytes": 176,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7e81f3f70dbbd62a8eb336ce33f",
+          "tool_name": "write_file",
+          "call_sequence": 820,
+          "path": "out/submissions/new--multiscales-discovery-selection.md",
+          "requested_payload_bytes": 5245,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7e9-37e1-7fb2-8d4e-780698226c3b",
+            "task_id": "01a0e7e9-37e1-7fb2-8d4e-780698226c3b",
+            "started_sequence": 834,
+            "terminal_sequence": 853,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 869,
+              "text_bytes": 178,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7e87ab0705fbd6e4a82ff252a2c",
+          "tool_name": "write_file",
+          "call_sequence": 820,
+          "path": "out/submissions/new--axes-dimension-names-units.md",
+          "requested_payload_bytes": 4850,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7e9-37fc-7fe3-a000-f57bff825792",
+            "task_id": "01a0e7e9-37fc-7fe3-a000-f57bff825792",
+            "started_sequence": 841,
+            "terminal_sequence": 861,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 869,
+              "text_bytes": 173,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7e8d9637295812bc925b1ff267a",
+          "tool_name": "write_file",
+          "call_sequence": 820,
+          "path": "out/submissions/new--coordinate-transforms-scale-translate.md",
+          "requested_payload_bytes": 5937,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7e9-3815-77f3-9094-c3084e7d7abc",
+            "task_id": "01a0e7e9-3815-77f3-9094-c3084e7d7abc",
+            "started_sequence": 848,
+            "terminal_sequence": 857,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 869,
+              "text_bytes": 184,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7e9435c704eaf2ffde0a3aa2931",
+          "tool_name": "write_file",
+          "call_sequence": 896,
+          "path": "out/submissions/new--omero-rendering-defaults.md",
+          "requested_payload_bytes": 4952,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ea-8f82-7883-8d19-844eeaeb8154",
+            "task_id": "01a0e7ea-8f82-7883-8d19-844eeaeb8154",
+            "started_sequence": 903,
+            "terminal_sequence": 929,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 945,
+              "text_bytes": 171,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7e9928770c9a3ad402d9b42d3f8",
+          "tool_name": "write_file",
+          "call_sequence": 896,
+          "path": "out/submissions/new--labels-overlays-contract.md",
+          "requested_payload_bytes": 5198,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ea-8f9f-71d2-b2b2-5ff6c7453e6b",
+            "task_id": "01a0e7ea-8f9f-71d2-b2b2-5ff6c7453e6b",
+            "started_sequence": 910,
+            "terminal_sequence": 933,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 945,
+              "text_bytes": 171,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7e9e54a74a5818de9705fc78e80",
+          "tool_name": "write_file",
+          "call_sequence": 896,
+          "path": "out/submissions/new--plates-wells-acquisitions-hcs.md",
+          "requested_payload_bytes": 5831,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ea-8fbc-76e3-90ad-da433c90204f",
+            "task_id": "01a0e7ea-8fbc-76e3-90ad-da433c90204f",
+            "started_sequence": 917,
+            "terminal_sequence": 937,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 945,
+              "text_bytes": 176,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ea3b4673c88abd583dbdd31729",
+          "tool_name": "write_file",
+          "call_sequence": 896,
+          "path": "out/submissions/new--bioformats2raw-layout-collections.md",
+          "requested_payload_bytes": 5478,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ea-8fd6-79f1-ab32-b4c9b0714754",
+            "task_id": "01a0e7ea-8fd6-79f1-ab32-b4c9b0714754",
+            "started_sequence": 924,
+            "terminal_sequence": 925,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 945,
+              "text_bytes": 180,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7eaa88e777bac64d5f98c18e0af",
+          "tool_name": "write_file",
+          "call_sequence": 973,
+          "path": "out/submissions/new--storage-codecs-chunks-shards-dtypes.md",
+          "requested_payload_bytes": 5210,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-10f0-7553-8a7c-79faa1397fb8",
+            "task_id": "01a0e7ec-10f0-7553-8a7c-79faa1397fb8",
+            "started_sequence": 980,
+            "terminal_sequence": 1006,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1022,
+              "text_bytes": 182,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7eb01cf75f98e3bfe1348d7bc59",
+          "tool_name": "write_file",
+          "call_sequence": 973,
+          "path": "out/submissions/new--version-interop-04-05-policy.md",
+          "requested_payload_bytes": 4991,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-1109-7312-91c5-0f85e2e663cf",
+            "task_id": "01a0e7ec-1109-7312-91c5-0f85e2e663cf",
+            "started_sequence": 987,
+            "terminal_sequence": 1014,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1022,
+              "text_bytes": 175,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7eb60e472c48e688962c1342df3",
+          "tool_name": "write_file",
+          "call_sequence": 973,
+          "path": "out/submissions/new--large-data-responsive-lazy-levels.md",
+          "requested_payload_bytes": 4951,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-1124-7e73-8465-588b914ba58b",
+            "task_id": "01a0e7ec-1124-7e73-8465-588b914ba58b",
+            "started_sequence": 994,
+            "terminal_sequence": 1010,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1022,
+              "text_bytes": 180,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ebb91f753682e264833d1b8f01",
+          "tool_name": "write_file",
+          "call_sequence": 973,
+          "path": "out/submissions/new--failures-attributed-validator-recovery.md",
+          "requested_payload_bytes": 5083,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-1140-7e22-b324-d75c58a0ed74",
+            "task_id": "01a0e7ec-1140-7e22-b324-d75c58a0ed74",
+            "started_sequence": 1001,
+            "terminal_sequence": 1002,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1022,
+              "text_bytes": 185,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ec1ceb7461a04086c6a9128f13",
+          "tool_name": "write_file",
+          "call_sequence": 1050,
+          "path": "out/requests/new--zarr-v3-ome-namespace-version",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-3ee2-7ee3-8c32-62811430a986",
+            "task_id": "01a0e7ec-3ee2-7ee3-8c32-62811430a986",
+            "started_sequence": 1059,
+            "terminal_sequence": 1141,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1197,
+              "text_bytes": 167,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ec1fa7734380611434706a48e6",
+          "tool_name": "write_file",
+          "call_sequence": 1050,
+          "path": "out/requests/new--multiscales-discovery-selection",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-3eff-7271-ac56-e41ba6147cc0",
+            "task_id": "01a0e7ec-3eff-7271-ac56-e41ba6147cc0",
+            "started_sequence": 1066,
+            "terminal_sequence": 1165,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1197,
+              "text_bytes": 169,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ec224573ea9ec1d8c8af2aa5ba",
+          "tool_name": "write_file",
+          "call_sequence": 1050,
+          "path": "out/requests/new--axes-dimension-names-units",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-3f1b-7420-bd85-1a59ac0c3901",
+            "task_id": "01a0e7ec-3f1b-7420-bd85-1a59ac0c3901",
+            "started_sequence": 1073,
+            "terminal_sequence": 1153,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1197,
+              "text_bytes": 164,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ec251e7356a40eaedd43c10b6e",
+          "tool_name": "write_file",
+          "call_sequence": 1050,
+          "path": "out/requests/new--coordinate-transforms-scale-translate",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-3f37-7503-b332-3f567b18fe45",
+            "task_id": "01a0e7ec-3f37-7503-b332-3f567b18fe45",
+            "started_sequence": 1080,
+            "terminal_sequence": 1137,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1197,
+              "text_bytes": 175,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ec281977938e08fc9656b45550",
+          "tool_name": "write_file",
+          "call_sequence": 1050,
+          "path": "out/requests/new--omero-rendering-defaults",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-3f52-7c03-915c-4fc522d4dfc1",
+            "task_id": "01a0e7ec-3f52-7c03-915c-4fc522d4dfc1",
+            "started_sequence": 1087,
+            "terminal_sequence": 1177,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1197,
+              "text_bytes": 162,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ec2aa17519bd572bb12cfa75f6",
+          "tool_name": "write_file",
+          "call_sequence": 1050,
+          "path": "out/requests/new--labels-overlays-contract",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-3f6e-7cb2-9589-8aa0d4d896d1",
+            "task_id": "01a0e7ec-3f6e-7cb2-9589-8aa0d4d896d1",
+            "started_sequence": 1094,
+            "terminal_sequence": 1157,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1197,
+              "text_bytes": 162,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ec2d547123a3cfad1cffd16b5f",
+          "tool_name": "write_file",
+          "call_sequence": 1050,
+          "path": "out/requests/new--plates-wells-acquisitions-hcs",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-3f8c-7c71-9425-70dffe3a995e",
+            "task_id": "01a0e7ec-3f8c-7c71-9425-70dffe3a995e",
+            "started_sequence": 1101,
+            "terminal_sequence": 1169,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1197,
+              "text_bytes": 167,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ec2fa37063bd77e8e8021c23a2",
+          "tool_name": "write_file",
+          "call_sequence": 1050,
+          "path": "out/requests/new--bioformats2raw-layout-collections",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-3faa-7642-a713-3c8252e6b833",
+            "task_id": "01a0e7ec-3faa-7642-a713-3c8252e6b833",
+            "started_sequence": 1108,
+            "terminal_sequence": 1145,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1197,
+              "text_bytes": 171,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ec320b756a8f999b4e37939cfa",
+          "tool_name": "write_file",
+          "call_sequence": 1050,
+          "path": "out/requests/new--storage-codecs-chunks-shards-dtypes",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-3fc7-7c23-a514-900747f44e90",
+            "task_id": "01a0e7ec-3fc7-7c23-a514-900747f44e90",
+            "started_sequence": 1115,
+            "terminal_sequence": 1149,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1197,
+              "text_bytes": 173,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ec343d71f5a416af37b6ba53f0",
+          "tool_name": "write_file",
+          "call_sequence": 1050,
+          "path": "out/requests/new--version-interop-04-05-policy",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-3fe4-7110-a858-cf1997ed2f60",
+            "task_id": "01a0e7ec-3fe4-7110-a858-cf1997ed2f60",
+            "started_sequence": 1122,
+            "terminal_sequence": 1161,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1197,
+              "text_bytes": 166,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ec36c87399b33842408b225028",
+          "tool_name": "write_file",
+          "call_sequence": 1050,
+          "path": "out/requests/new--large-data-responsive-lazy-levels",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-4003-7f61-a509-e0cba3198c96",
+            "task_id": "01a0e7ec-4003-7f61-a509-e0cba3198c96",
+            "started_sequence": 1129,
+            "terminal_sequence": 1181,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1197,
+              "text_bytes": 171,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ec39a077ae85fe075d89dc65d6",
+          "tool_name": "write_file",
+          "call_sequence": 1050,
+          "path": "out/requests/new--failures-attributed-validator-recovery",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ec-4021-72d2-8224-0d31d9d0b367",
+            "task_id": "01a0e7ec-4021-72d2-8224-0d31d9d0b367",
+            "started_sequence": 1136,
+            "terminal_sequence": 1173,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1197,
+              "text_bytes": 176,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ed452977499758d71d03e3d979",
+          "tool_name": "write_file",
+          "call_sequence": 1443,
+          "path": "out/submissions/F0004--failures-attributed-retry.md",
+          "requested_payload_bytes": 5516,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ee-2ef1-7be3-b3c2-7cdeb5d3e4bb",
+            "task_id": "01a0e7ee-2ef1-7be3-b3c2-7cdeb5d3e4bb",
+            "started_sequence": 1461,
+            "terminal_sequence": 1497,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1528,
+              "text_bytes": 174,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ed6bc6723494f00bc523ac0abf",
+          "tool_name": "write_file",
+          "call_sequence": 1443,
+          "path": "out/submissions/F0006--large-data-responsive-retry.md",
+          "requested_payload_bytes": 5384,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ee-2f12-7252-b5d9-297535a5fd37",
+            "task_id": "01a0e7ee-2f12-7252-b5d9-297535a5fd37",
+            "started_sequence": 1468,
+            "terminal_sequence": 1505,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1528,
+              "text_bytes": 176,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ed920371f9ab7bf8bf1af596bb",
+          "tool_name": "write_file",
+          "call_sequence": 1443,
+          "path": "out/submissions/F0007--multiscales-discovery-retry.md",
+          "requested_payload_bytes": 5678,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ee-2f33-7293-aaa9-6b01bebd4143",
+            "task_id": "01a0e7ee-2f33-7293-aaa9-6b01bebd4143",
+            "started_sequence": 1475,
+            "terminal_sequence": 1517,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1528,
+              "text_bytes": 176,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7edb7d470bc9cf0ad9c6a5029d0",
+          "tool_name": "write_file",
+          "call_sequence": 1443,
+          "path": "out/submissions/F0008--omero-rendering-retry.md",
+          "requested_payload_bytes": 5385,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ee-2f54-79a1-b7a4-aaa9c145fa2c",
+            "task_id": "01a0e7ee-2f54-79a1-b7a4-aaa9c145fa2c",
+            "started_sequence": 1482,
+            "terminal_sequence": 1509,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1528,
+              "text_bytes": 170,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7eddb0e74cba8fed15a5a330e4d",
+          "tool_name": "write_file",
+          "call_sequence": 1443,
+          "path": "out/submissions/F0009--plates-wells-hcs-retry.md",
+          "requested_payload_bytes": 6264,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ee-2f75-71f2-9479-41ab0f0727b4",
+            "task_id": "01a0e7ee-2f75-71f2-9479-41ab0f0727b4",
+            "started_sequence": 1489,
+            "terminal_sequence": 1513,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1528,
+              "text_bytes": 171,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ee037877aa88a92847f14717f2",
+          "tool_name": "write_file",
+          "call_sequence": 1443,
+          "path": "out/submissions/F0011--version-interop-retry.md",
+          "requested_payload_bytes": 5424,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ee-2f97-7b72-bab2-390a363ec656",
+            "task_id": "01a0e7ee-2f97-7b72-bab2-390a363ec656",
+            "started_sequence": 1496,
+            "terminal_sequence": 1501,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1528,
+              "text_bytes": 170,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ee3ca677398b4434e391068d4b",
+          "tool_name": "write_file",
+          "call_sequence": 1556,
+          "path": "out/requests/F0004--failures-attributed-retry",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ee-3fc7-7e92-943f-93fed15479a7",
+            "task_id": "01a0e7ee-3fc7-7e92-943f-93fed15479a7",
+            "started_sequence": 1563,
+            "terminal_sequence": 1564,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1569,
+              "text_bytes": 165,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ee514f72da81b37208ed0b12e7",
+          "tool_name": "write_file",
+          "call_sequence": 1627,
+          "path": "out/requests/F0006--large-data-responsive-retry",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ee-545f-7222-a2f0-3ec928a366dd",
+            "task_id": "01a0e7ee-545f-7222-a2f0-3ec928a366dd",
+            "started_sequence": 1634,
+            "terminal_sequence": 1635,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1640,
+              "text_bytes": 167,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7ee71e9721c998fe939e381b403",
+          "tool_name": "write_file",
+          "call_sequence": 1704,
+          "path": "out/requests/F0007--multiscales-discovery-retry",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ee-74ba-7e63-b947-b3e2bd0ba20a",
+            "task_id": "01a0e7ee-74ba-7e63-b947-b3e2bd0ba20a",
+            "started_sequence": 1711,
+            "terminal_sequence": 1712,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1717,
+              "text_bytes": 167,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7eea96276bfa524b57a83c141d8",
+          "tool_name": "write_file",
+          "call_sequence": 1767,
+          "path": "out/requests/F0008--omero-rendering-retry",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ee-ae8a-79c3-80a2-aef998f40598",
+            "task_id": "01a0e7ee-ae8a-79c3-80a2-aef998f40598",
+            "started_sequence": 1774,
+            "terminal_sequence": 1775,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1780,
+              "text_bytes": 161,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7eebbf670aaa6825211f09143e9",
+          "tool_name": "write_file",
+          "call_sequence": 1837,
+          "path": "out/requests/F0009--plates-wells-hcs-retry",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ee-bf77-7560-897d-4ae67321cd20",
+            "task_id": "01a0e7ee-bf77-7560-897d-4ae67321cd20",
+            "started_sequence": 1844,
+            "terminal_sequence": 1845,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1850,
+              "text_bytes": 162,
+              "isError": "unknown"
+            }
+          ]
+        },
+        {
+          "call_id": "call_01a0e7eed903743ca9b1523a4b0d8894",
+          "tool_name": "write_file",
+          "call_sequence": 1907,
+          "path": "out/requests/F0011--version-interop-retry",
+          "requested_payload_bytes": 7,
+          "native_outcome": "completed",
+          "correlation": {
+            "direct_correlation": true,
+            "effect_id": "01a0e7ee-dc33-7db0-94dc-2dff156a964e",
+            "task_id": "01a0e7ee-dc33-7db0-94dc-2dff156a964e",
+            "started_sequence": 1914,
+            "terminal_sequence": 1915,
+            "terminal_outcome_kind": "completed",
+            "task_completion_kind": "complete"
+          },
+          "result_records": [
+            {
+              "sequence": 1920,
+              "text_bytes": 161,
+              "isError": "unknown"
+            }
+          ]
+        }
+      ],
+      "explicit_feedback_read_count": 19,
+      "explicit_feedback_reads": [
+        {
+          "call_id": "call_01a0e7ec4c337493bd3ff7b56f1bf2ca",
+          "tool_name": "read_file",
+          "sequence": 1226,
+          "path": "feedback/new--zarr-v3-ome-namespace-version.json"
+        },
+        {
+          "call_id": "call_01a0e7ec4eab71be9975bd1a1fb3b869",
+          "tool_name": "read_file",
+          "sequence": 1226,
+          "path": "feedback/new--multiscales-discovery-selection.json"
+        },
+        {
+          "call_id": "call_01a0e7ec50dd72eb88c591f604c9b395",
+          "tool_name": "read_file",
+          "sequence": 1226,
+          "path": "feedback/new--axes-dimension-names-units.json"
+        },
+        {
+          "call_id": "call_01a0e7ec530474048fad855be92e84ce",
+          "tool_name": "read_file",
+          "sequence": 1226,
+          "path": "feedback/new--coordinate-transforms-scale-translate.json"
+        },
+        {
+          "call_id": "call_01a0e7ec7699720c9efa294066e3fd4b",
+          "tool_name": "read_file",
+          "sequence": 1293,
+          "path": "feedback/new--omero-rendering-defaults.json"
+        },
+        {
+          "call_id": "call_01a0e7ec78c270c8b9191e0b22a8ac89",
+          "tool_name": "read_file",
+          "sequence": 1293,
+          "path": "feedback/new--labels-overlays-contract.json"
+        },
+        {
+          "call_id": "call_01a0e7ec7a74756996493cb6c9e93389",
+          "tool_name": "read_file",
+          "sequence": 1293,
+          "path": "feedback/new--plates-wells-acquisitions-hcs.json"
+        },
+        {
+          "call_id": "call_01a0e7ec7cbb75abae5f10ce2e14b8a8",
+          "tool_name": "read_file",
+          "sequence": 1293,
+          "path": "feedback/new--bioformats2raw-layout-collections.json"
+        },
+        {
+          "call_id": "call_01a0e7ecf7d171f6bd7f9423e1695d7d",
+          "tool_name": "read_file",
+          "sequence": 1368,
+          "path": "feedback/new--storage-codecs-chunks-shards-dtypes.json"
+        },
+        {
+          "call_id": "call_01a0e7ecf9f074919e8197e3f703ace1",
+          "tool_name": "read_file",
+          "sequence": 1368,
+          "path": "feedback/new--version-interop-04-05-policy.json"
+        },
+        {
+          "call_id": "call_01a0e7ecfba172c6ad2c933186a8d67f",
+          "tool_name": "read_file",
+          "sequence": 1368,
+          "path": "feedback/new--large-data-responsive-lazy-levels.json"
+        },
+        {
+          "call_id": "call_01a0e7ecfd5a753f91a57a8031738a90",
+          "tool_name": "read_file",
+          "sequence": 1368,
+          "path": "feedback/new--failures-attributed-validator-recovery.json"
+        },
+        {
+          "call_id": "call_01a0e7ee876e778598f3a76ba3587376",
+          "tool_name": "read_file",
+          "sequence": 1735,
+          "path": "feedback/F0004--failures-attributed-retry.json"
+        },
+        {
+          "call_id": "call_01a0e7eeb33f77c7a3be855a971582e9",
+          "tool_name": "read_file",
+          "sequence": 1806,
+          "path": "feedback/F0006--large-data-responsive-retry.json"
+        },
+        {
+          "call_id": "call_01a0e7eecf05761692cdc292bbb851a9",
+          "tool_name": "read_file",
+          "sequence": 1868,
+          "path": "feedback/F0007--multiscales-discovery-retry.json"
+        },
+        {
+          "call_id": "call_01a0e7eee0667281bb1964d497580a82",
+          "tool_name": "read_file",
+          "sequence": 1938,
+          "path": "feedback/F0008--omero-rendering-retry.json"
+        },
+        {
+          "call_id": "call_01a0e7eee8f277a39637338018acdebc",
+          "tool_name": "read_file",
+          "sequence": 1969,
+          "path": "feedback/F0009--plates-wells-hcs-retry.json"
+        },
+        {
+          "call_id": "call_01a0e7eeeb0f712bbf1ffd353595839a",
+          "tool_name": "read_file",
+          "sequence": 1969,
+          "path": "feedback/F0011--version-interop-retry.json"
+        },
+        {
+          "call_id": "call_01a0e7ef137f77f8b2d726012efb66b9",
+          "tool_name": "read_file",
+          "sequence": 2012,
+          "path": "feedback/status.json"
+        }
+      ],
+      "raw_sources": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/status.json",
+          "bytes": 187,
+          "sha256": "547dca0b196311f3142f3f769b402e26fe4464224b1ad9873a1c9d28e5cc26e6"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/muse-session.jsonl",
+          "bytes": 2900405,
+          "sha256": "b4dcde0ff3d5fb9281b4f79969a4d396cd7efa206ca758299a19ea7d085827ed"
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Completed means native tool-batch effect completed with task_completion.kind=complete. It does not prove Store acceptance, successful semantic repair, or final file contents.",
+    "No output text is inspected to classify errors. Unmatched, conflicting, or non-direct metadata correlation stays unknown.",
+    "Write/Edit requested payload byte counts and result text bytes are not cumulative successful filesystem-write volume; spill artifacts are not opened.",
+    "Feedback read counts describe explicit read_file path arguments in these parent-session logs; no inference about comprehension, nested children, shell reads, or unlogged access."
+  ]
+}

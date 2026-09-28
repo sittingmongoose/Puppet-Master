@@ -1,0 +1,64 @@
+{
+  "kind": "offline synthetic chronology checks only",
+  "no_native_model_provider_or_account_calls": true,
+  "audit_source_sha256": "6a0962f570e8f2aaae8909c24cd912ba4b16943e16bff207cbf4bc35a694ac0f",
+  "checks": {
+    "serial_success": {
+      "expected": "confirmed_mechanical",
+      "observed": "confirmed_mechanical",
+      "passed": true
+    },
+    "early_deferred": {
+      "expected": "violation",
+      "observed": "violation",
+      "passed": true
+    },
+    "root_aggregate": {
+      "expected": "violation",
+      "observed": "violation",
+      "passed": true
+    },
+    "failed_fixed_write": {
+      "expected": "unknown",
+      "observed": "unknown",
+      "passed": true
+    },
+    "post_edit": {
+      "expected": "violation",
+      "observed": "violation",
+      "passed": true
+    },
+    "failed_edit": {
+      "expected": "unknown",
+      "observed": "unknown",
+      "passed": true
+    },
+    "parallel": {
+      "expected": "unknown",
+      "observed": "unknown",
+      "passed": true
+    },
+    "native_metadata": {
+      "expected": "confirmed_mechanical",
+      "observed": "confirmed_mechanical",
+      "passed": true
+    },
+    "missing_result": {
+      "expected": "unknown",
+      "observed": "unknown",
+      "passed": true
+    },
+    "prefixed_glob": {
+      "expected": "confirmed_mechanical",
+      "observed": "confirmed_mechanical",
+      "passed": true
+    },
+    "bad_glob": {
+      "expected": "violation",
+      "observed": "violation",
+      "passed": true
+    }
+  },
+  "passed": true,
+  "limitations": "Not native stream qualification, semantic grading, or execution-order certification for parallel tools."
+}

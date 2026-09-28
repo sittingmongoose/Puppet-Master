@@ -1,0 +1,24 @@
+{
+  "schema": "er6.i2.postaudit-disposition.v1",
+  "epoch": 1790597851.6767066,
+  "effective_schedule_outcome": "harness_failure",
+  "affected_slot": "I2-M-maintained",
+  "original_native_outcome": "goal_complete",
+  "original_structural_complete": false,
+  "native_and_host_terminal_receipts_preserved": true,
+  "evidence": "evidence/marker-order/ (native events plus immutable snapshot hashes and filesystem times)",
+  "cause": "All six affected original marker paths have one observed correct submit-newline Write, no repeat Write/Edit; empty snapshots occurred inside Write start-to-completion, before final marker bytes were present.",
+  "remaining_candidates": {
+    "I2-Z-maintained": "NOT_RUN_HARNESS_STOP",
+    "I2-Z-control": "NOT_RUN_HARNESS_STOP"
+  },
+  "evaluators": {
+    "EVAL-001": "SKIPPED_INELIGIBLE_MUSE_STRUCTURAL_FAILURE",
+    "EVAL-002": "NOT_RUN_ORIGINAL_PAIR_UNSTARTED"
+  },
+  "candidate_dispatches": 2,
+  "formal_evaluator_dispatches": 0,
+  "candidate_semantic_grades": "UNASSESSED: frozen pair gate failed; no singleton/raw-output premium diagnosis or Sol substitute grading",
+  "no_repair_rescore_retry_or_replacement": true,
+  "V-FOLLOWON-1": "OPEN"
+}

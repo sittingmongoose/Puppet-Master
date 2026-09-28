@@ -1,0 +1,50 @@
+{
+  "native_process_seconds": 559.3482341766357,
+  "host_prepare_seconds": 0.11602139472961426,
+  "store_poll_seconds": 0.0,
+  "store_poll_calls": 0,
+  "structural_complete": true,
+  "lineage_pass": true,
+  "inputs_unchanged": true,
+  "report_kind": "authored_current",
+  "current_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/frozen/current.md",
+  "current_sha256": "97cc4cbc62568d8d8680ef2af514cfec238329b4e68184d8d1a459769f8239a3",
+  "native_boundary": "pass_mechanical",
+  "output_inventory_complete": true,
+  "frozen_output_manifest": {
+    "draft.md": {
+      "sha256": "97cc4cbc62568d8d8680ef2af514cfec238329b4e68184d8d1a459769f8239a3",
+      "bytes": 19170
+    },
+    "history.md": {
+      "sha256": "87a001a69d98e88cb74c5878d5c3c4b7d606c80d5a2ebb5003a09e9663cc19c1",
+      "bytes": 1236
+    },
+    "observations.md": {
+      "sha256": "fcbe658df49e48713a136ee10f9f6fde6757dca0370e60b455eec829eec96a85",
+      "bytes": 49982
+    },
+    "snapshots/0001.md": {
+      "sha256": "600c913d227db93e0607a3c900bcde460f54c5097bff432da9a67bcde61e404f",
+      "bytes": 11133
+    },
+    "snapshots/0002.md": {
+      "sha256": "0ebf0df34ffc5ac584eaae1d2aaff819e29bdd97805796cf742ff3866d124b02",
+      "bytes": 8444
+    }
+  },
+  "slot": "I2-M-control",
+  "app": "muse",
+  "carrier": "control",
+  "native_outcome": "goal_complete",
+  "outcome_detail": "goal_complete",
+  "process_exit": 0,
+  "host_error": null,
+  "native_responses": 38,
+  "native_stop": "goal_complete",
+  "start_epoch": 1790596376.7808092,
+  "end_epoch": 1790596936.3516905,
+  "active_span_seconds": 559.5708816051483,
+  "host_terminal_seconds": 0.10661506652832031,
+  "semantic_grade": "not_performed_by_host"
+}

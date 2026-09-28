@@ -1,0 +1,78 @@
+{
+  "I2-M-control": {
+    "events": 38,
+    "fields": {
+      "inputTokens": {
+        "nonnull_events": 38,
+        "sum": 6532778,
+        "receipt_counter": 6532778
+      },
+      "outputTokens": {
+        "nonnull_events": 38,
+        "sum": 36414,
+        "receipt_counter": 36414
+      },
+      "reasoningTokens": {
+        "nonnull_events": 38,
+        "sum": 5256,
+        "receipt_counter": 5256
+      },
+      "cacheReadTokens": {
+        "nonnull_events": 38,
+        "sum": 6277461,
+        "receipt_counter": 6277461
+      },
+      "cacheWriteTokens": {
+        "nonnull_events": 38,
+        "sum": 0,
+        "receipt_counter": 0
+      },
+      "cachedTokens": {
+        "nonnull_events": 38,
+        "sum": 6277461,
+        "receipt_counter": 6277461
+      }
+    },
+    "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/native/usage-events.jsonl",
+    "sha256": "3c798c20ef5258fad662a385a864b0d4344e2d298fbe593981cd0225931a9710",
+    "child_usage": "not exposed; no implied zero"
+  },
+  "I2-M-maintained": {
+    "events": 36,
+    "fields": {
+      "inputTokens": {
+        "nonnull_events": 36,
+        "sum": 5204724,
+        "receipt_counter": 5204724
+      },
+      "outputTokens": {
+        "nonnull_events": 36,
+        "sum": 38105,
+        "receipt_counter": 38105
+      },
+      "reasoningTokens": {
+        "nonnull_events": 36,
+        "sum": 7741,
+        "receipt_counter": 7741
+      },
+      "cacheReadTokens": {
+        "nonnull_events": 36,
+        "sum": 5018483,
+        "receipt_counter": 5018483
+      },
+      "cacheWriteTokens": {
+        "nonnull_events": 36,
+        "sum": 0,
+        "receipt_counter": 0
+      },
+      "cachedTokens": {
+        "nonnull_events": 36,
+        "sum": 5018483,
+        "receipt_counter": 5018483
+      }
+    },
+    "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/usage-events.jsonl",
+    "sha256": "19bd842e68aafb005c726c4b6a7f1f526b15dc6f362c52e54fc2117b10cb43c3",
+    "child_usage": "not exposed; no implied zero"
+  }
+}

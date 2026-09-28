@@ -1,0 +1,31 @@
+{
+  "schema": "er6.i2.phase.v1",
+  "phase_started_epoch": 1790596275.7476056,
+  "phase_wall_seconds": 14400,
+  "freeze_sha256": "994cc7974acd438fc3b74b06197ee0de9007a252db6c432cc63e17c4424e17e4",
+  "authorized_commit": "f4e9d5855ee5ca5b84b2166dca27db12cd209634",
+  "candidate_dispatched": [
+    "I2-M-control",
+    "I2-M-maintained"
+  ],
+  "candidate_terminal": [
+    "I2-M-control",
+    "I2-M-maintained"
+  ],
+  "stopped": true,
+  "closed": true,
+  "authorization_source": "User chat: Go. Run I2 only from f4e9d5855ee5ca5b84b2166dca27db12cd209634 under the frozen proposal; four original investigators plus at most two conditionally admitted paired Opus evaluations. No retries.",
+  "active_slot": null,
+  "state": "stopped_harness",
+  "stop_epoch": 1790597851.6767066,
+  "stop_reason": "Post-terminal native-order audit: host acknowledged six transient empty request files during single correct successful native Writes. Frozen Store then records permanent mutation errors. No more dispatch under harness-stop rule.",
+  "unstarted_originals": [
+    "I2-Z-maintained",
+    "I2-Z-control"
+  ],
+  "evaluator_dispatches": [],
+  "phase_closed_epoch": 1790598407.5098858,
+  "phase_elapsed_seconds": 2131.762280225754,
+  "phase_remaining_seconds": 12268.237719774246,
+  "close_scope": "Through terminal result-bundle freeze, including operator/evidence/reporting overhead. Subsequent Git publication tracked separately; no model dispatch remains."
+}

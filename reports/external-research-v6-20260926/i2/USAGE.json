@@ -1,0 +1,582 @@
+{
+  "schema": "er6.i2.usage-summary.v1",
+  "candidate_slots": {
+    "I2-M-control": {
+      "schema": "er6.i2.original-meter.v2",
+      "slot": "I2-M-control",
+      "app": "muse",
+      "semantic_interpretation": false,
+      "time": {
+        "start_epoch": 1790596376.7808092,
+        "end_epoch": 1790596936.3516905,
+        "active_span_seconds": 559.5708816051483,
+        "native_process_seconds": 559.3482341766357,
+        "host_prepare_seconds": 0.11602139472961426,
+        "host_terminal_seconds": 0.10661506652832031,
+        "store_poll_seconds": 0.0,
+        "store_close_seconds": "unknown (not exposed or not established)"
+      },
+      "native": {
+        "session_id": "01a0e7dc-6b9d-7630-a75d-5f73003e77dc",
+        "model_id": "muse-spark-1.3-contributor",
+        "provider_id": "meta",
+        "effort_effective": "max",
+        "native_goal_entry": "/goal via MSP goal/set",
+        "fresh_session": true,
+        "goal_submitted_utc": "2026-09-28T11:52:57.695795+00:00",
+        "end_utc": "2026-09-28T12:02:16.027747+00:00",
+        "elapsed_seconds": 558.3,
+        "native_responses": 38,
+        "stop_reason": "goal_complete",
+        "goal_status_final": "complete",
+        "caps": {
+          "seconds": 1800.0,
+          "responses": 160
+        },
+        "usage_requests_with_delta": "unknown (not exposed or not established)",
+        "request_status_counts": "unknown (not exposed or not established)"
+      },
+      "requested_settings_argv": [
+        "/usr/bin/python3",
+        "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/r1b/run_goal_r1b.py",
+        "--app",
+        "muse",
+        "--workspace",
+        "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/ws",
+        "--prompt-file",
+        "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/ws/task.txt",
+        "--out",
+        "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/native",
+        "--label",
+        "I2-M-control",
+        "--max-seconds",
+        "1800",
+        "--max-responses",
+        "160"
+      ],
+      "requested_driver_settings": {
+        "MODEL": "muse-spark-1.3-contributor",
+        "EFFORT": "max"
+      },
+      "observed_settings": {
+        "model_id": "muse-spark-1.3-contributor",
+        "provider_id": "meta",
+        "effort_ack": "accepted",
+        "effort_effective": "max",
+        "tool_allowlist": "unknown (not exposed or not established)"
+      },
+      "host_outcome": {
+        "native_outcome": "goal_complete",
+        "process_exit": 0,
+        "native_stop": "goal_complete"
+      },
+      "store_attempts": "not applicable (control)",
+      "children": {
+        "tokens": "unknown (not exposed or not established)",
+        "physical_attempts": 29,
+        "trace_logs": [
+          "/home/sittingmongoose/.local/share/muse/local-tracing/bootstrap/cli-24b2adc0-04d3-4b50-b2ed-2212ed83d006.log"
+        ],
+        "reminder_child_sessions": 29,
+        "parent_run_ids": 1,
+        "attempts_terminal_parent": 38,
+        "attempts_terminal_children": 29,
+        "attempts_terminal_other": 0,
+        "terminal_outcomes": {
+          "tool_calls": 66,
+          "completed": 1
+        },
+        "child_models": {
+          "muse-spark-1.3-contributor": 29
+        }
+      },
+      "parent_tokens": {
+        "inputTokens": 6532778,
+        "outputTokens": 36414,
+        "reasoningTokens": 5256,
+        "cacheReadTokens": 6277461,
+        "cacheWriteTokens": 0,
+        "cachedTokens": 6277461,
+        "totalTokens": "unknown (not exposed or not established)",
+        "uncached_input": 255317
+      },
+      "parent_token_usage_event_count": 38,
+      "tool_audit": {
+        "tool_calls": 99,
+        "tool_call_names": {
+          "read_file": 74,
+          "write_todos": 4,
+          "search": 10,
+          "report_progress": 1,
+          "write_file": 5,
+          "edit_file": 4,
+          "update_goal": 1
+        },
+        "responses_seen_in_log": 37,
+        "source_read_calls": 66,
+        "unique_sources_read": 57,
+        "repeat_source_reads": 9,
+        "reads_per_source": {
+          "S001": 1,
+          "S003": 3,
+          "S004": 1,
+          "S005": 1,
+          "S006": 1,
+          "S007": 1,
+          "S008": 1,
+          "S009": 1,
+          "S010": 1,
+          "S011": 1,
+          "S012": 1,
+          "S013": 1,
+          "S014": 1,
+          "S016": 1,
+          "S017": 1,
+          "S018": 2,
+          "S019": 1,
+          "S020": 1,
+          "S021": 1,
+          "S022": 1,
+          "S023": 1,
+          "S025": 1,
+          "S027": 1,
+          "S028": 1,
+          "S029": 1,
+          "S030": 1,
+          "S031": 1,
+          "S032": 1,
+          "S033": 1,
+          "S034": 1,
+          "S035": 3,
+          "S038": 1,
+          "S041": 1,
+          "S043": 2,
+          "S044": 1,
+          "S048": 2,
+          "S051": 1,
+          "S052": 1,
+          "S053": 1,
+          "S054": 1,
+          "S055": 1,
+          "S056": 1,
+          "S058": 3,
+          "S059": 1,
+          "S061": 1,
+          "S062": 1,
+          "S065": 1,
+          "S066": 1,
+          "S067": 1,
+          "S068": 1,
+          "S070": 1,
+          "S072": 1,
+          "S074": 1,
+          "S098": 1,
+          "S104": 1,
+          "S108": 1,
+          "S117": 1
+        },
+        "web_call_records": 0,
+        "shell_call_records": 0,
+        "outside_path_records": 0
+      },
+      "tool_metadata": {
+        "deduplicated_tool_calls": 99,
+        "raw_tool_call_rows": 99,
+        "tool_results_observed": 99,
+        "returned_tool_text_bytes": 626474,
+        "tool_result_byte_basis": "UTF-8 returned text; structured content serialized; spill artifact contents excluded",
+        "zcode_offsets": null,
+        "write_edit": {
+          "calls": {
+            "Write": 5,
+            "Edit": 4
+          },
+          "explicit_error_results": {},
+          "result_success_unknown_calls": {
+            "Write": 5,
+            "Edit": 4
+          },
+          "attempted_content_or_new_string_bytes": {
+            "Write": 58987,
+            "Edit": 31799
+          },
+          "payload_bytes_unknown_calls": {},
+          "actual_cumulative_written_bytes": "unknown (not exposed or not established)",
+          "actual_overwrites": "unknown (not exposed or not established)",
+          "repeated_write_or_edit_path_calls": 4,
+          "note": "Attempted payload bytes are not successful file-write volume; Edit new_string/replace excludes unchanged content. Repeated path calls do not prove an overwrite."
+        }
+      },
+      "limitations": [
+        "Missing values remain unknown. No account snapshot is treated as per-slot cost; zero-valued synthesized receipt totals may reflect absent telemetry.",
+        "Muse receipt counters cover exposed parent events; child tokens are not exposed. Physical terminal attempts are not successful response counts; matched trace files can include unrelated attempts in other.",
+        "Zcode usage receipt keeps the latest usage.delta per requestId; multiple incremental events per request could lose prior deltas.",
+        "Zcode full/delta/tail absolute indexes require one stable conversation; offset checks and collision detection cannot establish missing history completeness.",
+        "Source reads classify explicit tool/path arguments, not shell reads, nested paths, fulfilled content, or all child tools. Audit tool rows are not independently deduplicated.",
+        "Tool result bytes are retained returned text, not billed bytes or physical artifact sizes. Muse result is a session-log measure, not proven provider-input coverage.",
+        "Failure classification uses explicit isError only; absent structured error flags remain unknown. Native filesystem overwrite and cumulative successful write volume are not exposed by these logs.",
+        "No chronology or semantic grade is inferred; Store attempt counts describe host observations and cannot recover vanished/unsubmitted writes."
+      ],
+      "raw_sources": [
+        {
+          "path": "/home/sittingmongoose/.local/share/muse/local-tracing/bootstrap/cli-24b2adc0-04d3-4b50-b2ed-2212ed83d006.log",
+          "bytes": 634572,
+          "sha256": "be8e39090196fd68e4ed21095e24eff82311c980ce1c9f6ce954bcf3880f0168"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/operator/meter_originals.py",
+          "bytes": 13980,
+          "sha256": "7bedff181f25b63c7293cf75eb98286c6a3e71e1fe702a8215e56205b4b171fc"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/arm-receipt.json",
+          "bytes": 1734,
+          "sha256": "f0dca7055e2cc9ba0ef2da887f110e4730127ac26cc32c2b8114e62b2c2d7ea4"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/dispatch.json",
+          "bytes": 1264,
+          "sha256": "bb753a644e34821ea25483111c0e1d3b93852261d82fe980e044e2d7b50d3c4c"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/native/muse-msp.jsonl",
+          "bytes": 1259556,
+          "sha256": "41b19dfe7ff3ff875d350774a32c705adcef9a0e7cf6b65ba074cad686ac79ee"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/native/muse-session.jsonl",
+          "bytes": 3441511,
+          "sha256": "ee807fd6d3a3614c078d5268d5a158754c368beaad26129bec1d5c2300cba30d"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/native/progress.jsonl",
+          "bytes": 392,
+          "sha256": "40c2d03155fbed08c19f01ab228789cbf765287e82edc344edf5df25377dbe89"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/native/receipt.json",
+          "bytes": 2396,
+          "sha256": "54e47a36ba3e8f8ce728bc7b4d1448aaf2afe733e282118481950497a964f794"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/native/usage-events.jsonl",
+          "bytes": 29697,
+          "sha256": "3c798c20ef5258fad662a385a864b0d4344e2d298fbe593981cd0225931a9710"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/status.json",
+          "bytes": 184,
+          "sha256": "87f4b9948616ca80fb98ed1b323cf154288fb6b4608384f5c7c84cfda8ba99b2"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/audit_tools.py",
+          "bytes": 3741,
+          "sha256": "8a0a874988f5954937a3175d6d98997081620ecb27880832daf87e3ac72cbf8f"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/meter.py",
+          "bytes": 5643,
+          "sha256": "a427b0acbf0e7631d200a227ffefdebd2c3c78be219dd828820dc5d4f9c1f162"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/muse_goal_driver.py",
+          "bytes": 23422,
+          "sha256": "f5af9ef6ef420fbd6452677b11fb31341f17e57a6a0b90b4727dbe3e71adf218"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/r1b/meter_r1b.py",
+          "bytes": 4592,
+          "sha256": "b633f99580a44100859a157153e9c5610ab04b69c78867aaac6fdb9322dd9e50"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/run_goal.py",
+          "bytes": 18003,
+          "sha256": "7325ed95a89767b377de49dbe27bf2f1af989ee04521ff8f7e92a560fb367d5b"
+        }
+      ]
+    },
+    "I2-M-maintained": {
+      "schema": "er6.i2.original-meter.v2",
+      "slot": "I2-M-maintained",
+      "app": "muse",
+      "semantic_interpretation": false,
+      "time": {
+        "start_epoch": 1790596980.8718016,
+        "end_epoch": 1790597616.5643916,
+        "active_span_seconds": 635.6925899982452,
+        "native_process_seconds": 635.4282779693604,
+        "host_prepare_seconds": 0.12339329719543457,
+        "host_terminal_seconds": 0.0999455451965332,
+        "store_poll_seconds": 73.7124180488172,
+        "store_close_seconds": 0.038123122008983046
+      },
+      "native": {
+        "session_id": "01a0e7e5-a3a4-7a01-932a-715c99aca81b",
+        "model_id": "muse-spark-1.3-contributor",
+        "provider_id": "meta",
+        "effort_effective": "max",
+        "native_goal_entry": "/goal via MSP goal/set",
+        "fresh_session": true,
+        "goal_submitted_utc": "2026-09-28T12:03:01.918696+00:00",
+        "end_utc": "2026-09-28T12:13:36.234641+00:00",
+        "elapsed_seconds": 634.3,
+        "native_responses": 36,
+        "stop_reason": "goal_complete",
+        "goal_status_final": "complete",
+        "caps": {
+          "seconds": 1800.0,
+          "responses": 160
+        },
+        "usage_requests_with_delta": "unknown (not exposed or not established)",
+        "request_status_counts": "unknown (not exposed or not established)"
+      },
+      "requested_settings_argv": [
+        "/usr/bin/python3",
+        "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/r1b/run_goal_r1b.py",
+        "--app",
+        "muse",
+        "--workspace",
+        "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws",
+        "--prompt-file",
+        "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/task.txt",
+        "--out",
+        "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native",
+        "--label",
+        "I2-M-maintained",
+        "--max-seconds",
+        "1800",
+        "--max-responses",
+        "160"
+      ],
+      "requested_driver_settings": {
+        "MODEL": "muse-spark-1.3-contributor",
+        "EFFORT": "max"
+      },
+      "observed_settings": {
+        "model_id": "muse-spark-1.3-contributor",
+        "provider_id": "meta",
+        "effort_ack": "accepted",
+        "effort_effective": "max",
+        "tool_allowlist": "unknown (not exposed or not established)"
+      },
+      "host_outcome": {
+        "native_outcome": "goal_complete",
+        "process_exit": 0,
+        "native_stop": "goal_complete"
+      },
+      "store_attempts": {
+        "acknowledged": 18,
+        "initial_attempts": 12,
+        "revision_attempts": 6,
+        "unbound_invalid_attempts": 0,
+        "invalid_attempts": 6,
+        "observed_unique_attempt_paths": 18,
+        "unacknowledged_paths": [],
+        "native_failed_writes": "requires existing native trace; not inferred zero"
+      },
+      "children": {
+        "tokens": "unknown (not exposed or not established)",
+        "physical_attempts": 21,
+        "trace_logs": [
+          "/home/sittingmongoose/.local/share/muse/local-tracing/bootstrap/cli-223d1488-6103-4cd9-a4d5-4893a58fc192.log"
+        ],
+        "reminder_child_sessions": 21,
+        "parent_run_ids": 1,
+        "attempts_terminal_parent": 36,
+        "attempts_terminal_children": 21,
+        "attempts_terminal_other": 0,
+        "terminal_outcomes": {
+          "tool_calls": 56,
+          "completed": 1
+        },
+        "child_models": {
+          "muse-spark-1.3-contributor": 21
+        }
+      },
+      "parent_tokens": {
+        "inputTokens": 5204724,
+        "outputTokens": 38105,
+        "reasoningTokens": 7741,
+        "cacheReadTokens": 5018483,
+        "cacheWriteTokens": 0,
+        "cachedTokens": 5018483,
+        "totalTokens": "unknown (not exposed or not established)",
+        "uncached_input": 186241
+      },
+      "parent_token_usage_event_count": 36,
+      "tool_audit": {
+        "tool_calls": 101,
+        "tool_call_names": {
+          "read_file": 47,
+          "search": 16,
+          "write_file": 36,
+          "report_progress": 2
+        },
+        "responses_seen_in_log": 35,
+        "source_read_calls": 21,
+        "unique_sources_read": 17,
+        "repeat_source_reads": 4,
+        "reads_per_source": {
+          "S003": 2,
+          "S004": 1,
+          "S011": 1,
+          "S016": 1,
+          "S017": 1,
+          "S018": 2,
+          "S019": 1,
+          "S025": 1,
+          "S033": 1,
+          "S034": 1,
+          "S043": 2,
+          "S048": 2,
+          "S053": 1,
+          "S054": 1,
+          "S055": 1,
+          "S056": 1,
+          "S058": 1
+        },
+        "web_call_records": 0,
+        "shell_call_records": 0,
+        "outside_path_records": 0
+      },
+      "tool_metadata": {
+        "deduplicated_tool_calls": 101,
+        "raw_tool_call_rows": 101,
+        "tool_results_observed": 101,
+        "returned_tool_text_bytes": 376956,
+        "tool_result_byte_basis": "UTF-8 returned text; structured content serialized; spill artifact contents excluded",
+        "zcode_offsets": null,
+        "write_edit": {
+          "calls": {
+            "Write": 36
+          },
+          "explicit_error_results": {},
+          "result_success_unknown_calls": {
+            "Write": 36
+          },
+          "attempted_content_or_new_string_bytes": {
+            "Write": 96128
+          },
+          "payload_bytes_unknown_calls": {},
+          "actual_cumulative_written_bytes": "unknown (not exposed or not established)",
+          "actual_overwrites": "unknown (not exposed or not established)",
+          "repeated_write_or_edit_path_calls": 0,
+          "note": "Attempted payload bytes are not successful file-write volume; Edit new_string/replace excludes unchanged content. Repeated path calls do not prove an overwrite."
+        }
+      },
+      "limitations": [
+        "Missing values remain unknown. No account snapshot is treated as per-slot cost; zero-valued synthesized receipt totals may reflect absent telemetry.",
+        "Muse receipt counters cover exposed parent events; child tokens are not exposed. Physical terminal attempts are not successful response counts; matched trace files can include unrelated attempts in other.",
+        "Zcode usage receipt keeps the latest usage.delta per requestId; multiple incremental events per request could lose prior deltas.",
+        "Zcode full/delta/tail absolute indexes require one stable conversation; offset checks and collision detection cannot establish missing history completeness.",
+        "Source reads classify explicit tool/path arguments, not shell reads, nested paths, fulfilled content, or all child tools. Audit tool rows are not independently deduplicated.",
+        "Tool result bytes are retained returned text, not billed bytes or physical artifact sizes. Muse result is a session-log measure, not proven provider-input coverage.",
+        "Failure classification uses explicit isError only; absent structured error flags remain unknown. Native filesystem overwrite and cumulative successful write volume are not exposed by these logs.",
+        "No chronology or semantic grade is inferred; Store attempt counts describe host observations and cannot recover vanished/unsubmitted writes."
+      ],
+      "raw_sources": [
+        {
+          "path": "/home/sittingmongoose/.local/share/muse/local-tracing/bootstrap/cli-223d1488-6103-4cd9-a4d5-4893a58fc192.log",
+          "bytes": 571398,
+          "sha256": "3c70d8571d860c40d1026712c5013bb99322f17ceddbdc0e496bb555dfe19bf1"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/operator/meter_originals.py",
+          "bytes": 13980,
+          "sha256": "7bedff181f25b63c7293cf75eb98286c6a3e71e1fe702a8215e56205b4b171fc"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/arm-receipt.json",
+          "bytes": 7408,
+          "sha256": "de2dc4d7f5975ef4f08507b901969b19f6d2b0d4881fd763f55249b8e5e2a2b5"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/dispatch.json",
+          "bytes": 1276,
+          "sha256": "58dde78b1e70ae485d9afaa80eef97a733a7568a768a05b125a6635aa67271b3"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/muse-msp.jsonl",
+          "bytes": 1064043,
+          "sha256": "3403222128284794c4573e16caa6176d0fd744ffa3a63486be38c547aa1b756c"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/muse-session.jsonl",
+          "bytes": 2900405,
+          "sha256": "b4dcde0ff3d5fb9281b4f79969a4d396cd7efa206ca758299a19ea7d085827ed"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/progress.jsonl",
+          "bytes": 392,
+          "sha256": "d0ac5880acf3ec329dddaab072ac00f4fb4a211b3bd3924ed3a3f810b9b9240d"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/receipt.json",
+          "bytes": 2405,
+          "sha256": "940b14cdb607010f518507f7a96ad015261888287042f12354e4cc44c37e0979"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/native/usage-events.jsonl",
+          "bytes": 28134,
+          "sha256": "19bd842e68aafb005c726c4b6a7f1f526b15dc6f362c52e54fc2117b10cb43c3"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/status.json",
+          "bytes": 187,
+          "sha256": "547dca0b196311f3142f3f769b402e26fe4464224b1ad9873a1c9d28e5cc26e6"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/audit_tools.py",
+          "bytes": 3741,
+          "sha256": "8a0a874988f5954937a3175d6d98997081620ecb27880832daf87e3ac72cbf8f"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/meter.py",
+          "bytes": 5643,
+          "sha256": "a427b0acbf0e7631d200a227ffefdebd2c3c78be219dd828820dc5d4f9c1f162"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/muse_goal_driver.py",
+          "bytes": 23422,
+          "sha256": "f5af9ef6ef420fbd6452677b11fb31341f17e57a6a0b90b4727dbe3e71adf218"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/r1b/meter_r1b.py",
+          "bytes": 4592,
+          "sha256": "b633f99580a44100859a157153e9c5610ab04b69c78867aaac6fdb9322dd9e50"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/run_goal.py",
+          "bytes": 18003,
+          "sha256": "7325ed95a89767b377de49dbe27bf2f1af989ee04521ff8f7e92a560fb367d5b"
+        }
+      ]
+    }
+  },
+  "evaluation": {
+    "calls": 0,
+    "tokens": 0,
+    "reason": "no eligible authorized pair dispatched"
+  },
+  "development": {
+    "orchestrator": "Codex/Astra requested xhigh",
+    "helpers": [
+      {
+        "model": "GPT-6 Sol",
+        "effort": "medium",
+        "scope": "pin checks/mechanical metering"
+      },
+      {
+        "model": "GPT-6 Sol",
+        "effort": "high",
+        "scope": "operator binding/chronology/marker evidence"
+      }
+    ],
+    "tokens": "unknown; Codex developer-agent usage not exposed by experiment native logs",
+    "not_in_candidate_or_evaluator_totals": true
+  },
+  "planned_unstarted_slots": [
+    "I2-Z-maintained",
+    "I2-Z-control"
+  ]
+}

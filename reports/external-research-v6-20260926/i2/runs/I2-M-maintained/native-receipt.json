@@ -1,0 +1,68 @@
+{
+  "schema": "er6.goal_receipt.v1",
+  "label": "I2-M-maintained",
+  "app": "muse",
+  "native_goal_entry": "/goal via MSP goal/set",
+  "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws",
+  "prompt_file": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-maintained/ws/task.txt",
+  "prompt_bytes": 7175,
+  "prompt_sha256": "b193f19c919f0b9e71a41f96fc8955d24cfa453a3b3175418121fa94f5aee69b",
+  "objective_sha256": "3bfaf3c7f90f19640d7457cecf0f31f7536b24feba15ed662bcf2c543c0ff7cd",
+  "caps": {
+    "seconds": 1800.0,
+    "responses": 160
+  },
+  "start_utc": "2026-09-28T12:03:01.089606+00:00",
+  "fresh_session": true,
+  "session_id": "01a0e7e5-a3a4-7a01-932a-715c99aca81b",
+  "session_log": "/home/sittingmongoose/.local/share/muse/sessions/2026/09/28/01a0e7e5-a3a4-7a01-932a-715c99aca81b/session.jsonl",
+  "model_id": "muse-spark-1.3-contributor",
+  "provider_id": "meta",
+  "catalog_variants": [
+    "minimal",
+    "low",
+    "medium",
+    "high",
+    "xhigh",
+    "max"
+  ],
+  "effort_ack": "accepted",
+  "effort_effective": "max",
+  "goal_submitted_utc": "2026-09-28T12:03:01.918696+00:00",
+  "goal_ack": {
+    "commandId": "01a0e7e5-a49e-79df-9f89-3311c0eafa0f",
+    "status": "accepted",
+    "turnId": "01a0e7e5-a49e-79df-9f89-3311c0eafa0f"
+  },
+  "stop_reason": "goal_complete",
+  "goal_status_final": "complete",
+  "end_utc": "2026-09-28T12:13:36.234641+00:00",
+  "elapsed_seconds": 634.3,
+  "native_responses": 36,
+  "counters": {
+    "token_usage_events": 36,
+    "prompt_tokens": 5204724,
+    "last_cumulative": {
+      "outputTokens": 38105,
+      "promptTokens": 5204724,
+      "totalTokens": 5242829
+    },
+    "turns_started": 1,
+    "turns_completed": [
+      {
+        "turnId": "01a0e7e5-a49e-79df-9f89-3311c0eafa0f",
+        "terminal": "completed",
+        "reason": null,
+        "durationMs": 632381,
+        "usage": null
+      }
+    ],
+    "inputTokens": 5204724,
+    "outputTokens": 38105,
+    "reasoningTokens": 7741,
+    "cacheReadTokens": 5018483,
+    "cacheWriteTokens": 0,
+    "cachedTokens": 5018483
+  },
+  "receipt_written_utc": "2026-09-28T12:13:36.401298+00:00"
+}

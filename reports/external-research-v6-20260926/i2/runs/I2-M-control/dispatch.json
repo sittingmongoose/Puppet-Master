@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/r1b/run_goal_r1b.py",
+    "--app",
+    "muse",
+    "--workspace",
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/ws",
+    "--prompt-file",
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/ws/task.txt",
+    "--out",
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/runs/I2-M-control/native",
+    "--label",
+    "I2-M-control",
+    "--max-seconds",
+    "1800",
+    "--max-responses",
+    "160"
+  ],
+  "freeze_sha256": "994cc7974acd438fc3b74b06197ee0de9007a252db6c432cc63e17c4424e17e4",
+  "task_sha256": "7d13fed2bc8b23a200e71b5464b92963ce7c0c60f8735e0a6cee853f0f2406c3",
+  "operator_sha256": "46ecee37506022acb9c3391377c37c3222d172f5b49b46fc867a1db5536d6094",
+  "authorization_source": "User chat: Go. Run I2 only from f4e9d5855ee5ca5b84b2166dca27db12cd209634 under the frozen proposal; four original investigators plus at most two conditionally admitted paired Opus evaluations. No retries.",
+  "slot_started_epoch": 1790596376.7808092,
+  "outer_deadline_epoch": 1790598476.7808092,
+  "no_retries": true
+}

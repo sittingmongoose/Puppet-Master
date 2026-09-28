@@ -1,0 +1,24 @@
+{
+  "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-20260928/evidence/launch-pin-check.json",
+  "source_sha256": "a427eaa8aace2ecd3b1b2c4a2245327b7b135c60bb99a52c803ea2c13fdb50e5",
+  "valid": true,
+  "issues": [],
+  "freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i2-prep/FREEZE.json",
+    "expected_sha256": "994cc7974acd438fc3b74b06197ee0de9007a252db6c432cc63e17c4424e17e4",
+    "exists": true,
+    "bytes": 6295,
+    "sha256": "994cc7974acd438fc3b74b06197ee0de9007a252db6c432cc63e17c4424e17e4",
+    "valid": true
+  },
+  "group_counts": {
+    "i2_prepared_files": 16,
+    "reused_files": 24,
+    "runtime_pins": 3
+  },
+  "case_files": 129,
+  "reused_files": 24,
+  "prep_files": 16,
+  "scope": "Opaque-byte identity and file-membership launch gate; no candidate/evaluator/native/account/network calls or semantic content reads. Repository HEAD and cleanliness checked separately by parent.",
+  "runtime_pinned_files": 3
+}

@@ -1,0 +1,170 @@
+{
+  "CHECKPOINT.md": {
+    "bytes": 1214,
+    "sha256": "a9b6e300cca47050faac30dceacda6fbb4604575409fc421d47f8dac9d9684a8"
+  },
+  "PHASE_STATE.json": {
+    "bytes": 1445,
+    "sha256": "375441e483847f468e301ee2c437fb2993648d6a5b32a32dfe7ba97079f3e7d3"
+  },
+  "POST_AUDIT_DISPOSITION.json": {
+    "bytes": 1180,
+    "sha256": "7b15cf443178e266476e04d85d2901c43bd48eae9f994f2cc26e18952596cb79"
+  },
+  "README.md": {
+    "bytes": 899,
+    "sha256": "da6c2aacd45d02323c6cab01450f0f941b35523f77e9132466e82ac6e6fa777a"
+  },
+  "RESULTS.md": {
+    "bytes": 11448,
+    "sha256": "7626ed7bdf8480d66c3a3d72fc194ab444feea097eb63a31dc08eccbdbf4e24c"
+  },
+  "TECHNICAL_SIGNOFF.md": {
+    "bytes": 10477,
+    "sha256": "70783ad20424905236d3048e8d9301f59186806eb7aa1a3a23b5356f5e2f81c1"
+  },
+  "USAGE.json": {
+    "bytes": 24142,
+    "sha256": "a80ed672e64d24b797c4751e71c2e35abfa96ff9e8ce11385150993ba7180e09"
+  },
+  "checks/account-headroom.json": {
+    "bytes": 915,
+    "sha256": "9bd68a37d0bdc63f38408ffc54c86cf70d7c724f4735f0a9f804747dcdd3b585"
+  },
+  "checks/chronology-selfcheck.json": {
+    "bytes": 1651,
+    "sha256": "0895371b5cdc8aace6684cd26836bc27bdfdb0f4cb69f97270180740577fd655"
+  },
+  "checks/launch-pins.json": {
+    "bytes": 1005,
+    "sha256": "58bc962a59db3b29dd98233f87d34ac382af80d33ed38b82a55ea90db035957e"
+  },
+  "checks/marker-order.json": {
+    "bytes": 17278,
+    "sha256": "81efd51f825a3049bb7eab9aa6c45a0a073e7fd22e9891ece8ccf1bc2d8d71a6"
+  },
+  "checks/marker-order.md": {
+    "bytes": 3391,
+    "sha256": "7cefae49089c80e3ba434ec175e4fca0874245237d72d71aa36287ab2a643867"
+  },
+  "checks/native-write-outcomes.json": {
+    "bytes": 45456,
+    "sha256": "ac564b31c86bdc73b6ca65a0e0d42f4390dac0de72d018b739909af3c196f553"
+  },
+  "checks/publication-check.json": {
+    "bytes": 364,
+    "sha256": "72255478161876362bb9d7610e0317ede7027cab44531da9bf91a2054e88a36e"
+  },
+  "checks/token-coverage.json": {
+    "bytes": 2131,
+    "sha256": "24be4e9dc7f78a0f1f1485aaaab146dfe2b62fc3d89d4b75767874eaaeb5619b"
+  },
+  "operator/audit_review_order.py": {
+    "bytes": 12317,
+    "sha256": "6a0962f570e8f2aaae8909c24cd912ba4b16943e16bff207cbf4bc35a694ac0f"
+  },
+  "operator/evaluate_admitted.py": {
+    "bytes": 6913,
+    "sha256": "22bb29a4b707ed0c671ccc0f9819611a7c85cbafcb0d4283719a7f5f3e16230d"
+  },
+  "operator/meter_originals.py": {
+    "bytes": 13980,
+    "sha256": "7bedff181f25b63c7293cf75eb98286c6a3e71e1fe702a8215e56205b4b171fc"
+  },
+  "operator/run_original.first-dispatch.py": {
+    "bytes": 9587,
+    "sha256": "46ecee37506022acb9c3391377c37c3222d172f5b49b46fc867a1db5536d6094"
+  },
+  "operator/run_original.py": {
+    "bytes": 9786,
+    "sha256": "5278de20a5d5e35475094cf131677b4f5b4e4909e83775eaf03f30a63984b159"
+  },
+  "runs/I2-M-control/EVIDENCE.json": {
+    "bytes": 7027,
+    "sha256": "604a8b059edfeea52c172661e4cf329b9e49f206fb050295821a94170577faa0"
+  },
+  "runs/I2-M-control/arm-receipt.json": {
+    "bytes": 1734,
+    "sha256": "f0dca7055e2cc9ba0ef2da887f110e4730127ac26cc32c2b8114e62b2c2d7ea4"
+  },
+  "runs/I2-M-control/boundary-check.json": {
+    "bytes": 262,
+    "sha256": "47e08ed847e1a5279d9c8341d8aa15e93f3fe77c6f5313f3b7dcf1d0e7193cf4"
+  },
+  "runs/I2-M-control/current.md": {
+    "bytes": 19170,
+    "sha256": "97cc4cbc62568d8d8680ef2af514cfec238329b4e68184d8d1a459769f8239a3"
+  },
+  "runs/I2-M-control/dispatch.json": {
+    "bytes": 1264,
+    "sha256": "bb753a644e34821ea25483111c0e1d3b93852261d82fe980e044e2d7b50d3c4c"
+  },
+  "runs/I2-M-control/input-manifest.json": {
+    "bytes": 17788,
+    "sha256": "6192602cf5a4b118230dcd7d2f9a428fac4f1eae451ffd92b09ca9372bc6c2d1"
+  },
+  "runs/I2-M-control/native-receipt.json": {
+    "bytes": 2195,
+    "sha256": "04fc67afd1ee3bed59a1d9f75754bb6941d43f779e0f1638d3a8eb75457ccd2e"
+  },
+  "runs/I2-M-control/output-inventory.json": {
+    "bytes": 307,
+    "sha256": "e24f45c2c4577528d184592a3af203a9b036c7330dabbbe68aedc8dd66280d48"
+  },
+  "runs/I2-M-control/status.json": {
+    "bytes": 184,
+    "sha256": "87f4b9948616ca80fb98ed1b323cf154288fb6b4608384f5c7c84cfda8ba99b2"
+  },
+  "runs/I2-M-control/tool-audit.json": {
+    "bytes": 1411,
+    "sha256": "223b8b05d8f55b46beef049fc8b0f610df5ca87c4615939a46a0a75bea7c2cb5"
+  },
+  "runs/I2-M-maintained/EVIDENCE.json": {
+    "bytes": 41752,
+    "sha256": "54f550f5ae2d89405857ff84d88edcf4c049382aeb5e05a56705e46f84d821ae"
+  },
+  "runs/I2-M-maintained/arm-receipt.json": {
+    "bytes": 7408,
+    "sha256": "de2dc4d7f5975ef4f08507b901969b19f6d2b0d4881fd763f55249b8e5e2a2b5"
+  },
+  "runs/I2-M-maintained/boundary-check.json": {
+    "bytes": 262,
+    "sha256": "9944458eeceb263c3430c9cbdcf6fe831f66547ba69aef3e29c466855572502c"
+  },
+  "runs/I2-M-maintained/current-criterion.json": {
+    "bytes": 5274,
+    "sha256": "49048e4da3da772195fd0cffa262336446dbe6a457164e279f5c2ea221a35c99"
+  },
+  "runs/I2-M-maintained/current.md": {
+    "bytes": 65380,
+    "sha256": "ec41fec7a4828a5ea19e623491d683d68a04763a4c9389b76b9232f6786542f2"
+  },
+  "runs/I2-M-maintained/dispatch.json": {
+    "bytes": 1276,
+    "sha256": "58dde78b1e70ae485d9afaa80eef97a733a7568a768a05b125a6635aa67271b3"
+  },
+  "runs/I2-M-maintained/input-manifest.json": {
+    "bytes": 17788,
+    "sha256": "b096dfc7efc8055c3dc4c2145935adb74e99a7572cf91e21b93fcbf69eef2f0d"
+  },
+  "runs/I2-M-maintained/native-receipt.json": {
+    "bytes": 2204,
+    "sha256": "5c21dffacc31db4d6fa626c65e8af9638ef366a3cbda71b8600294d3f5e93897"
+  },
+  "runs/I2-M-maintained/output-inventory.json": {
+    "bytes": 2273,
+    "sha256": "517af4519551d4bedb2b1666c126f9926941e3cee6b0cfad20ceb813c6d67e52"
+  },
+  "runs/I2-M-maintained/status.json": {
+    "bytes": 187,
+    "sha256": "547dca0b196311f3142f3f769b402e26fe4464224b1ad9873a1c9d28e5cc26e6"
+  },
+  "runs/I2-M-maintained/store-structural-summary.json": {
+    "bytes": 1812,
+    "sha256": "906afc346b2ebf17936c57f18e8659b9209b93c7f1cbb4ed32ccd33e9df2fa4a"
+  },
+  "runs/I2-M-maintained/tool-audit.json": {
+    "bytes": 752,
+    "sha256": "bcdbb8b7b7d749eb8359f3fc73121be4ca0e88797d834a26d9263eb015a2783a"
+  }
+}
