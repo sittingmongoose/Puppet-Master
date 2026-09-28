@@ -1,0 +1,18 @@
+{
+  "error": "RuntimeError: structural/protocol failure; no correction slot",
+  "process_exit": -15,
+  "native_stop": null,
+  "driver_and_receiver_seconds": 39.94531059265137,
+  "host_poll_calls": 781,
+  "receiver_core_poll_seconds": 0.7451236211927608,
+  "projection_publications": 19,
+  "idle_publication": {
+    "polls": 0,
+    "publication_delta": 0,
+    "projection_bytes_unchanged": true
+  },
+  "complete_check_seconds_before_audit": 41.19468283653259,
+  "inputs_unchanged": true,
+  "structurally_complete": false,
+  "closed": true
+}

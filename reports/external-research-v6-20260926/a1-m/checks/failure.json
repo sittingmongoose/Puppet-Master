@@ -1,0 +1,227 @@
+{
+  "schema": "a1-m-failure-diagnostic/v1",
+  "scope": "read-only explanation; no receiver or original-result repair",
+  "status": "FAIL_INCOMPLETE",
+  "cause": "Native successful Write results include a near-duplicate sibling note; frozen reader requires exact equality with the bare success sentence. Paths and UTF-8 byte counts match, but added suffix fails the completion parser.",
+  "trace": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-session.jsonl",
+    "sha256": "a36eece85612559f6a30b8676b77c37d83330c7fae3d6fc59a27fbc6a4aa3bfa"
+  },
+  "rows": [
+    {
+      "call_id": "call_01a0e9963a16774cab12b84e388d9cc5",
+      "call_sequence": 175,
+      "call_line": 174,
+      "result_sequence": 248,
+      "result_line": 247,
+      "request": "new--batch-01",
+      "payload_bytes": 1194,
+      "native_result": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-01.md; note: near-duplicate sibling new--batch-02.md exists in this directory \u2014 verify this new file is intended",
+      "frozen_reader_expected_result": "wrote 1194 bytes to a1-m-20260928/ws/out/submissions/new--batch-01.md",
+      "exact_result_match": false,
+      "result_has_matching_prefix": false,
+      "arguments_template_and_live_bytes_match": true,
+      "payload_sha256": "b18578814c7ba4b04e28f4d0f140e4d36327ce89ee62450a408836fcea622349",
+      "lifecycle": {
+        "started": {
+          "sequence": 182,
+          "line": 181,
+          "recorded_at": 1790625350051879
+        },
+        "terminal": {
+          "sequence": 218,
+          "line": 217,
+          "recorded_at": 1790625350203662
+        },
+        "outcome": {
+          "kind": "completed",
+          "output_ref_count": 1,
+          "task_completion": {
+            "kind": "complete"
+          }
+        }
+      }
+    },
+    {
+      "call_id": "call_01a0e99646487096952f2d479c53a21c",
+      "call_sequence": 175,
+      "call_line": 174,
+      "result_sequence": 248,
+      "result_line": 247,
+      "request": "new--batch-02",
+      "payload_bytes": 1194,
+      "native_result": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-02.md; note: near-duplicate sibling new--batch-01.md exists in this directory \u2014 verify this new file is intended",
+      "frozen_reader_expected_result": "wrote 1194 bytes to a1-m-20260928/ws/out/submissions/new--batch-02.md",
+      "exact_result_match": false,
+      "result_has_matching_prefix": false,
+      "arguments_template_and_live_bytes_match": true,
+      "payload_sha256": "fec3a849f7d54e32902268f950d3ff51ff91e1f480be9836fd62b4ccf7334f63",
+      "lifecycle": {
+        "started": {
+          "sequence": 189,
+          "line": 188,
+          "recorded_at": 1790625350075921
+        },
+        "terminal": {
+          "sequence": 222,
+          "line": 221,
+          "recorded_at": 1790625350222627
+        },
+        "outcome": {
+          "kind": "completed",
+          "output_ref_count": 1,
+          "task_completion": {
+            "kind": "complete"
+          }
+        }
+      }
+    },
+    {
+      "call_id": "call_01a0e996522176c48d14b6c558fd809b",
+      "call_sequence": 175,
+      "call_line": 174,
+      "result_sequence": 248,
+      "result_line": 247,
+      "request": "new--batch-03",
+      "payload_bytes": 1194,
+      "native_result": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-03.md; note: near-duplicate sibling new--batch-01.md exists in this directory \u2014 verify this new file is intended",
+      "frozen_reader_expected_result": "wrote 1194 bytes to a1-m-20260928/ws/out/submissions/new--batch-03.md",
+      "exact_result_match": false,
+      "result_has_matching_prefix": false,
+      "arguments_template_and_live_bytes_match": true,
+      "payload_sha256": "930b6d21e10253a85ee96cd678a61254a8ae588a1ce201ff8f3870028f648edf",
+      "lifecycle": {
+        "started": {
+          "sequence": 196,
+          "line": 195,
+          "recorded_at": 1790625350102074
+        },
+        "terminal": {
+          "sequence": 230,
+          "line": 229,
+          "recorded_at": 1790625350266605
+        },
+        "outcome": {
+          "kind": "completed",
+          "output_ref_count": 1,
+          "task_completion": {
+            "kind": "complete"
+          }
+        }
+      }
+    },
+    {
+      "call_id": "call_01a0e9965eb071729f737c876c0dbab5",
+      "call_sequence": 175,
+      "call_line": 174,
+      "result_sequence": 248,
+      "result_line": 247,
+      "request": "new--batch-04",
+      "payload_bytes": 1194,
+      "native_result": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-04.md; note: near-duplicate sibling new--batch-01.md exists in this directory \u2014 verify this new file is intended",
+      "frozen_reader_expected_result": "wrote 1194 bytes to a1-m-20260928/ws/out/submissions/new--batch-04.md",
+      "exact_result_match": false,
+      "result_has_matching_prefix": false,
+      "arguments_template_and_live_bytes_match": true,
+      "payload_sha256": "245027d190f940a570818ebed0812d5ba161b343dd68eb7a5bc37fd38501c594",
+      "lifecycle": {
+        "started": {
+          "sequence": 203,
+          "line": 202,
+          "recorded_at": 1790625350128424
+        },
+        "terminal": {
+          "sequence": 234,
+          "line": 233,
+          "recorded_at": 1790625350291398
+        },
+        "outcome": {
+          "kind": "completed",
+          "output_ref_count": 1,
+          "task_completion": {
+            "kind": "complete"
+          }
+        }
+      }
+    },
+    {
+      "call_id": "call_01a0e9966b577365adfb0f70927af09d",
+      "call_sequence": 175,
+      "call_line": 174,
+      "result_sequence": 248,
+      "result_line": 247,
+      "request": "new--batch-05",
+      "payload_bytes": 1194,
+      "native_result": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-05.md; note: near-duplicate sibling new--batch-01.md exists in this directory \u2014 verify this new file is intended",
+      "frozen_reader_expected_result": "wrote 1194 bytes to a1-m-20260928/ws/out/submissions/new--batch-05.md",
+      "exact_result_match": false,
+      "result_has_matching_prefix": false,
+      "arguments_template_and_live_bytes_match": true,
+      "payload_sha256": "04253ecfb1bf83e1f658ad7a4c9e32b91a524fb7b31308969ef66a4d86045ea8",
+      "lifecycle": {
+        "started": {
+          "sequence": 210,
+          "line": 209,
+          "recorded_at": 1790625350153193
+        },
+        "terminal": {
+          "sequence": 226,
+          "line": 225,
+          "recorded_at": 1790625350245690
+        },
+        "outcome": {
+          "kind": "completed",
+          "output_ref_count": 1,
+          "task_completion": {
+            "kind": "complete"
+          }
+        }
+      }
+    },
+    {
+      "call_id": "call_01a0e9967671766a82142689dc93161c",
+      "call_sequence": 175,
+      "call_line": 174,
+      "result_sequence": 248,
+      "result_line": 247,
+      "request": "new--batch-06",
+      "payload_bytes": 1194,
+      "native_result": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/ws/out/submissions/new--batch-06.md; note: near-duplicate sibling new--batch-01.md exists in this directory \u2014 verify this new file is intended",
+      "frozen_reader_expected_result": "wrote 1194 bytes to a1-m-20260928/ws/out/submissions/new--batch-06.md",
+      "exact_result_match": false,
+      "result_has_matching_prefix": false,
+      "arguments_template_and_live_bytes_match": true,
+      "payload_sha256": "cfb640b238f3951074666b233875632e6d5569a9652a890deb5ef317bc56e07f",
+      "lifecycle": {
+        "started": {
+          "sequence": 217,
+          "line": 216,
+          "recorded_at": 1790625350178827
+        },
+        "terminal": {
+          "sequence": 238,
+          "line": 237,
+          "recorded_at": 1790625350311755
+        },
+        "outcome": {
+          "kind": "completed",
+          "output_ref_count": 1,
+          "task_completion": {
+            "kind": "complete"
+          }
+        }
+      }
+    }
+  ],
+  "native_calls": 15,
+  "write_calls": 6,
+  "marker_calls": 0,
+  "acknowledgements": 0,
+  "accepted_snapshots": 0,
+  "pending_payload_captures": 6,
+  "preserved_original_files": 464,
+  "preservation_mismatches": [],
+  "idle_after_acknowledgement": "not reached; measured host idle eligible-poll count is 0, not a passed idle test",
+  "marker_overlap": "not reached, no marker operations",
+  "native_receipt": "missing after bounded SIGTERM; native final status/usage must not be invented"
+}

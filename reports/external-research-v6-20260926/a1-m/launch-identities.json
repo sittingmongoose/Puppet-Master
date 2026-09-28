@@ -1,0 +1,90 @@
+{
+  "authorized_commit": "655fa669c71fa9832df479a16efd3b54f425dd08",
+  "published_source_pins_sha256": "f5844a44719f14db1dcb696eede03696e4b57456dabc56703f709ac18e1b0f2e",
+  "published_pins": {
+    "schema": "ack-boundary-source-pins/v1",
+    "base_commit": "8418b01038c083eaf00537192fb86b3e2bdac99a",
+    "files": {
+      "README.md": {
+        "sha256": "9aabc133ea8e83f66c1284fe7cc4889b7c263064441a953c7d9454900ad4d41e",
+        "bytes": 7045
+      },
+      "NEXT_CHECK.md": {
+        "sha256": "34bf437fe236b4fbea5d0cc856630a46a91361c365491d6cf011211a5dfdd928",
+        "bytes": 4656
+      },
+      "I2_RESULTS_REVIEW_AND_NEXT_STEP.md": {
+        "sha256": "073c69ee6e855dd2e17ae2bf578d0135c034e1ea120e5be54293bd1fd945be08",
+        "bytes": 14302
+      },
+      "tools/completion_store.py": {
+        "sha256": "a1e460bd38afa2fab09d28442a7b59d2ac295aaee8921f9c127b57946c20f909",
+        "bytes": 17948
+      },
+      "tools/native_completion.py": {
+        "sha256": "83dac66a29bc0778ed0edfa134fd04db03eda34602e5c80d5938c17c4dc2fd38",
+        "bytes": 23815
+      },
+      "tools/host_receiver.py": {
+        "sha256": "3edefb29c495a642dc70748dd0a07b43cccc1493a74caee3ab7c4a855347d283",
+        "bytes": 2874
+      },
+      "tools/test_ack_boundary.py": {
+        "sha256": "bac64cc0f47cfde8c30245d47f9fa5325fd1ecf98ffd0997daf8faa6a4f2db06",
+        "bytes": 45964
+      },
+      "fixtures/native_events.py": {
+        "sha256": "8423ffabb9b2ded62d6b1b60933e8606b2957339cfe5102c7f2e21f856823328",
+        "bytes": 5145
+      },
+      "evidence/native-route.md": {
+        "sha256": "4b82ae864b6401fdaccfe1e07635578ae93c72ae11b426340650d7a246935d5a",
+        "bytes": 7541
+      },
+      "evidence/test-notes.md": {
+        "sha256": "4acc42203a57edbcf0dfc8608d2443347bf23910461558f130abc15b6154f3cd",
+        "bytes": 6577
+      },
+      "evidence/test-receipt.json": {
+        "sha256": "ef950a28b3d9d67fdfc0fdb9a2092b030474d96d1f0b04acb09714abbeee94b3",
+        "bytes": 2160
+      },
+      "evidence/verification.json": {
+        "sha256": "610729170d324b441beddba1de6bbd8abf6a3425f30a4761143fc5799ee4dcda",
+        "bytes": 3188
+      }
+    },
+    "unchanged_lab_dependencies": {
+      "i2-prep/tools/research_store.py": "8cba600b240cddb6951aa600146e3b0ccc8d4d1ffcd7e90bedc5f99378b05762",
+      "delivery-v2/tools/delivery_store.py": "81364fd1a4040ba457dd04779d096709c3524bee8704a2c8f453fb18264c85c7",
+      "offline-repair-v1/tools/delivery.py": "e1c7ea2e32bd00ef2606b5974b690a4537b6b200fd3c4e620880ae430b9ebe59",
+      "delivery-v2/fixtures/valid.md": "9d8f35727b840877d37bd2dc774e81455a0319206e41f40e109ce4d2ea40758a",
+      "delivery-v2/fixtures/revision.md": "2a0a251c8c560c2eedd798fff94763390c19b67ff3cfcb9309aa1f0045ae4412",
+      "delivery-v2/fixtures/unknown-field.md": "149191f20e9e6b629cbf872ec08899666b3127e1a6195fa977a49bb4e7c3a2fb",
+      "delivery-v2/fixtures/malformed.md": "a31a465a3cd85c91c65089a5f132684df92db446748d8f4d1219ec80d5b91a03",
+      "tools/muse_goal_driver.py": "f5af9ef6ef420fbd6452677b11fb31341f17e57a6a0b90b4727dbe3e71adf218",
+      "tools/r1b/run_goal_r1b.py": "4cfd7aee946cd8db9ef70a0adf2cfe8279a5cdc13cb3c8b7cd299775dee97ae7",
+      "tools/run_goal.py": "7325ed95a89767b377de49dbe27bf2f1af989ee04521ff8f7e92a560fb367d5b"
+    },
+    "raw_evidence": "See evidence/verification.json and evidence/test-receipt.json for VM-only paths plus hashes. No raw traces or research corpus included."
+  },
+  "additional_sources": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-tools/run_a1.py": "8c4b325a8bf329c05d7d04d84fd9fdfa3c473b269b752041220f5aad5dec1ecf",
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-tools/audit_a1.py": "8126e1dabbaa5a397ea773d999a2e548e29af16fe6224d682cb894f13080bdf5",
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/ack-boundary-v1/SOURCE_PINS.json": "f5844a44719f14db1dcb696eede03696e4b57456dabc56703f709ac18e1b0f2e",
+    "/home/sittingmongoose/.local/bin/muse-bin-1.4.0-R4161.1": "1b68bd4518d53a2aaff063915df4d141b0a205e6d79038299d04e3a14e85a5b9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/r1b/muse-serve-noshell.sh": "fecdb795d96fcdbf8895349dc81435dbf28b8e07ecbdbdaee2cff61c3f790586",
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/run_arm.py": "330ae90097254192bf95fd52ebee4cdda0a9d19325bc3c4c88bde6ad4b4d4520"
+  },
+  "requested_app": "Muse Code",
+  "requested_model": "muse-spark-1.3-contributor",
+  "requested_effort": "max",
+  "limits": {
+    "native_seconds": 300,
+    "parent_responses": 48,
+    "whole_seconds": 390,
+    "submission_attempts": 9,
+    "payload_bytes": 4096
+  },
+  "authorization": "User explicit Go for A1-M only in current Codex thread; no other slots or calls authorized."
+}

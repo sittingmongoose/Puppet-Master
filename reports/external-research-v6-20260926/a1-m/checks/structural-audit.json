@@ -1,0 +1,84 @@
+{
+  "schema": "a1-m-mechanical-audit/v1",
+  "scope": "structural_only",
+  "semantic_validation": "not_performed",
+  "root": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928",
+  "status": "fail",
+  "checks": {
+    "source_pins": {
+      "status": "pass",
+      "errors": [],
+      "source_commit": "655fa669c71fa9832df479a16efd3b54f425dd08",
+      "checked_sha256": {
+        "ack-boundary-v1/tools/completion_store.py": "a1e460bd38afa2fab09d28442a7b59d2ac295aaee8921f9c127b57946c20f909",
+        "ack-boundary-v1/tools/native_completion.py": "83dac66a29bc0778ed0edfa134fd04db03eda34602e5c80d5938c17c4dc2fd38",
+        "i2-prep/tools/research_store.py": "8cba600b240cddb6951aa600146e3b0ccc8d4d1ffcd7e90bedc5f99378b05762",
+        "delivery-v2/tools/delivery_store.py": "81364fd1a4040ba457dd04779d096709c3524bee8704a2c8f453fb18264c85c7",
+        "offline-repair-v1/tools/delivery.py": "e1c7ea2e32bd00ef2606b5974b690a4537b6b200fd3c4e620880ae430b9ebe59"
+      }
+    },
+    "allocation_and_acknowledgements": {
+      "status": "fail",
+      "errors": [
+        "KeyError: 'new--batch-01'"
+      ]
+    },
+    "template_snapshots_receipts": {
+      "status": "fail",
+      "errors": [
+        "AttributeError: 'Audit' object has no attribute 'expected'"
+      ]
+    },
+    "current_and_history": {
+      "status": "fail",
+      "errors": [
+        "CarrierError: draft.findings must be nonempty array"
+      ]
+    },
+    "native_completion_proofs": {
+      "status": "fail",
+      "errors": [
+        "AttributeError: 'Audit' object has no attribute 'expected'"
+      ]
+    },
+    "native_batches": {
+      "status": "fail",
+      "errors": [
+        "AttributeError: 'Audit' object has no attribute 'by_request'"
+      ]
+    },
+    "marker_overlap": {
+      "status": "fail",
+      "errors": [
+        "AttributeError: 'Audit' object has no attribute 'by_request'"
+      ]
+    },
+    "receipt_read_order": {
+      "status": "inconclusive",
+      "reason": "Host receipt publication evidence unavailable."
+    },
+    "prescribed_native_order": {
+      "status": "fail",
+      "errors": [
+        "AttributeError: 'Audit' object has no attribute 'by_request'"
+      ]
+    },
+    "same_session_goal_scope": {
+      "status": "fail",
+      "errors": [
+        "ValueError: missing/nonregular file: /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/receipt.json"
+      ]
+    },
+    "unchanged_idle_polls": {
+      "status": "fail",
+      "errors": [
+        "unchanged idle polls did not preserve publication count and projection bytes"
+      ],
+      "host_observation": {
+        "polls": 0,
+        "publication_delta": 0,
+        "projection_bytes_unchanged": true
+      }
+    }
+  }
+}
