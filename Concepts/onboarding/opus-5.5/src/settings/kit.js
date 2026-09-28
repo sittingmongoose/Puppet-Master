@@ -315,7 +315,7 @@ openMenu = function (anchor, items, title = '') {
     if (!it) return '';
     if (it.separator) return '<div class="pm51-popout-sep" role="separator"></div>';
     const off = !!(it.disabled || it.ariaDisabled);
-    return `<button type="button" class="pm51-popout-item pm51-menu-item${it.danger ? ' is-danger' : ''}" role="menuitem" data-index="${i}" ${off ? `aria-disabled="true" data-disabled-reason="${a(it.meta || 'Unavailable')}" data-pm-hover-label="${a(it.label + ' unavailable')}" data-pm-hover-detail="${a(it.meta || 'Unavailable')}"` : ''}>${icon(it.icon || 'settings')}<span class="pm51-popout-label">${h(it.label)}</span>${it.meta ? `<span class="pm51-popout-meta">${h(it.meta)}</span>` : ''}</button>`;
+    return `<button type="button" class="pm51-popout-item pm51-menu-item${it.danger ? ' is-danger' : ''}" role="menuitem" data-index="${i}" ${off ? `aria-disabled="true" data-disabled-reason="${a(it.meta || 'Unavailable')}" data-pm-hover-label="${a(it.label + ' unavailable')}" data-pm-hover-detail="${a(it.meta || 'Unavailable')}"` : 'data-pm-hover-exempt="menu-item"'}>${icon(it.icon || 'settings')}<span class="pm51-popout-label">${h(it.label)}</span>${it.meta ? `<span class="pm51-popout-meta">${h(it.meta)}</span>` : ''}</button>`;
   }).join('');
   document.body.appendChild(pop);
   const entry = { kind: 'menu', el: pop, trigger: anchor, anchor, items, returnFocus: captureTransientFocus(anchor) || anchor, align: 'right', width: 0 };

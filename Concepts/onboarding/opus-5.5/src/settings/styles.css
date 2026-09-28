@@ -356,6 +356,9 @@ html[data-theme^="retro"] #panel-settings .pm51-panel-card { box-shadow: 2px 2px
 .pm51-popout-item:hover, .pm51-popout-item.is-active, .pm51-popout-item:focus-visible { background: color-mix(in srgb, var(--text-primary, #f4f2ff) 8%, transparent); color: var(--text-primary, #f4f2ff); outline: 0; }
 .pm51-popout-item[aria-selected="true"] { background: var(--accent-soft, rgba(124,108,255,.18)); color: var(--text-primary, #f4f2ff); }
 .pm51-popout-item[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+/* Menus are placed outside the Settings panel, so the panel's icon rule never reaches them: draw their icons here. */
+.pm51-popout .icon { width: 14px; height: 14px; flex: 0 0 auto; display: inline-grid; place-items: center; }
+.pm51-popout .icon svg { display: block; stroke: currentColor; }
 .pm51-popout-item svg { width: 14px; height: 14px; flex: 0 0 auto; }
 .pm51-popout-icon { width: 22px; height: 22px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 6px; background: color-mix(in srgb, var(--text-primary, #f4f2ff) 6%, transparent); }
 .pm51-popout-icon svg { width: 13px; height: 13px; }

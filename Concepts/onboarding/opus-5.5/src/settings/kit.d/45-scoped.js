@@ -207,7 +207,7 @@ renderSettingRow = function (setting) {
   if (!row.per) return html;
   const tpl = document.createElement('template'); tpl.innerHTML = html;
   const ctl = tpl.content.querySelector('.setting-control');
-  if (ctl) ctl.innerHTML = `<button type="button" class="btn small o55-routebtn" data-action="o55-reveal" data-setting="${a(setting.id)}"><span>${h(row.per === 'account' ? 'Set in each account' : row.per === 'service' ? 'Set in each service' : 'Set in each one')}</span>${icon('arrowRight')}</button>`;
+  if (ctl) ctl.innerHTML = `<button type="button" class="btn small o55-routebtn" data-action="o55-reveal" data-setting="${a(setting.id)}"><span>${h(({ account: 'Set in each account', service: 'Set in each service', persona: 'Set in each persona', template: 'Set in each template' })[row.per] || 'Set in each one')}</span>${icon('arrowRight')}</button>`;
   tpl.content.querySelector('.setting-row')?.classList.remove('is-changed');
   tpl.content.querySelector('.o55-changed')?.remove();
   return tpl.innerHTML;
