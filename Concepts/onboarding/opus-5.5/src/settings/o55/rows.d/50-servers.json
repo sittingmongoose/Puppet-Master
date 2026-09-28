@@ -15,6 +15,16 @@
     "Auto": "When the safety checks pass",
     "On": "Always make them available"
    }
+  },
+  "code.execution.ssh-keys": {
+   "label": "SSH keys",
+   "help": "Keys Puppet Master signs in with: a name, the type, and where the private half is kept. Only the public half is ever read.",
+   "emptyList": "No keys yet"
+  },
+  "code.execution.server-sign-in": {
+   "label": "How each server signs in",
+   "help": "Paired with a setup code, or an SSH key from your list. A password used once to place a key is never kept.",
+   "per": "server"
   }
  }
 }

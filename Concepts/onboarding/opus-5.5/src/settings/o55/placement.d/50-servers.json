@@ -16,6 +16,22 @@
    "help": "Whether Puppet Master may install the tools work needs on a server.",
    "order": 102,
    "tab": "servers"
+  },
+  "servers-list": {
+   "to": "servers",
+   "title": "Servers",
+   "help": "Computers that keep your workspace and do the work.",
+   "order": 100,
+   "tab": "servers",
+   "composed": true
+  },
+  "servers-keys": {
+   "to": "servers",
+   "title": "SSH keys",
+   "help": "Keys Puppet Master signs in with. Only the public half is ever read.",
+   "order": 103,
+   "tab": "servers",
+   "composed": true
   }
  },
  "overrides": [
@@ -29,6 +45,18 @@
    "section": "servers-provisioning",
    "ids": [
     "system.health.capability-provisioning"
+   ]
+  },
+  {
+   "section": "servers-list",
+   "ids": [
+    "code.execution.server-sign-in"
+   ]
+  },
+  {
+   "section": "servers-keys",
+   "ids": [
+    "code.execution.ssh-keys"
    ]
   }
  ]

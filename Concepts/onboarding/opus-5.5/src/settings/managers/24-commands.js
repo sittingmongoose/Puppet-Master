@@ -43,8 +43,8 @@
     'commands-export:shortcuts': { via: 'settings_transaction', setting: 'extensions.commands.keyboard-shortcuts' },
     'commands-backup': { via: 'settings_transaction', setting: 'extensions.commands.backup-shortcuts' },
     'extensions.commands.shortcut-hints': { via: 'settings_transaction', setting: 'extensions.commands.shortcut-hints' },
-    'commands-layout': { via: 'settings_transaction', setting: 'extensions.commands.keyboard-layout' },
-    'commands-pref:palette': { via: 'settings_transaction', setting: 'extensions.commands.command-palette-visibility' },
+    'extensions.commands.keyboard-layout': { via: 'settings_transaction', setting: 'extensions.commands.keyboard-layout' },
+    'extensions.commands.command-palette-visibility': { via: 'settings_transaction', setting: 'extensions.commands.command-palette-visibility' },
     'extensions.commands.search-shortcuts': { via: 'view_only' },
     'commands-sheet': { via: 'view_only' },
     'commands-help': { via: 'view_only' },
@@ -364,7 +364,7 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
       }),
       PM51.advanced([
         PM51.rows([
-          { label: 'Keyboard layout', help: 'Auto-detect follows your system. Pick one if keys land in the wrong place.', control: PM51.select(p.layout, ['Auto-detect', 'US (QWERTY)', 'UK', 'German (QWERTZ)', 'French (AZERTY)'], { action: 'pm51-commands-layout', label: 'Keyboard layout' }) }
+          { label: 'Keyboard layout', help: 'Auto-detect follows your system. Pick one if keys land in the wrong place.', data: { 'setting-id': 'extensions.commands.keyboard-layout' }, control: PM51.bound.select('extensions.commands.keyboard-layout', { label: 'Keyboard layout', width: 190 }) }
         ]),
         PM51.section({ title: 'Reserved shortcuts', help: 'These belong to the system and cannot be changed.', body: `<div class="pm51-commands-sheet">${PM51.kv(RESERVED_KEYS)}</div>` }),
         actionRow(PM51.bound.action(SID.reset, { label: 'Reset all shortcuts', icon: 'restore' }), PM51.bound.action(SID.backup, { label: 'Save or load shortcuts', icon: 'download' }))
@@ -399,7 +399,7 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
         PM51.section({ title: 'Defaults for new commands', help: 'A new command starts with these. Each command can change them in its own panel.', body: PM51.bound.rows([SID.scope, SID.mode, SID.model, SID.persona, SID.perms]) }),
         PM51.section({ title: 'Built-in names', body: PM51.bound.rows([SID.builtinName, SID.git]) }),
         PM51.rows([
-          { label: 'Show your commands in the command palette', help: 'The palette opens with Ctrl+K and lists everything you can run.', control: PM51.toggle(!!p.palette, { action: 'pm51-commands-pref', data: { pref: 'palette' }, label: 'Show your commands in the command palette' }) }
+          { label: 'Show your commands in the command palette', help: 'The palette opens with Ctrl+K and lists everything you can run.', data: { 'setting-id': 'extensions.commands.command-palette-visibility' }, control: PM51.bound.toggle('extensions.commands.command-palette-visibility', { label: 'Show your commands in the command palette' }) }
         ]),
         PM51.section({
           title: 'Where command files live', help: 'Each command is a small Markdown file. You can edit it by hand too.',

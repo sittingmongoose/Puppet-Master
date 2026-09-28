@@ -106,7 +106,7 @@ PM51.onInput('scoped-input', el => {
 });
 
 /* ---------- Details: "each account has its own" --------------------------------------------------------------- */
-const O55_PER = { account: 'Each account has its own', service: 'Each AI service has its own', server: 'Each server has its own' };
+const O55_PER = { account: 'Each account has its own', service: 'Each AI service has its own', 'code-service': 'Each code service has its own', server: 'Each server has its own', persona: 'Each persona has its own', template: 'Each Goal template has its own' };
 const o55ScopedInspector = renderDetailInspectorBody;
 renderDetailInspectorBody = function (setting) {
   const html = o55ScopedInspector.apply(this, arguments);
@@ -207,7 +207,7 @@ renderSettingRow = function (setting) {
   if (!row.per) return html;
   const tpl = document.createElement('template'); tpl.innerHTML = html;
   const ctl = tpl.content.querySelector('.setting-control');
-  if (ctl) ctl.innerHTML = `<button type="button" class="btn small o55-routebtn" data-action="o55-reveal" data-setting="${a(setting.id)}"><span>${h(({ account: 'Set in each account', service: 'Set in each service', persona: 'Set in each persona', template: 'Set in each template' })[row.per] || 'Set in each one')}</span>${icon('arrowRight')}</button>`;
+  if (ctl) ctl.innerHTML = `<button type="button" class="btn small o55-routebtn" data-action="o55-reveal" data-setting="${a(setting.id)}"><span>${h(({ account: 'Set in each account', service: 'Set in each service', persona: 'Set in each persona', template: 'Set in each template', server: 'Set in each server', 'code-service': 'Set in each code service' })[row.per] || 'Set in each one')}</span>${icon('arrowRight')}</button>`;
   tpl.content.querySelector('.setting-row')?.classList.remove('is-changed');
   tpl.content.querySelector('.o55-changed')?.remove();
   return tpl.innerHTML;

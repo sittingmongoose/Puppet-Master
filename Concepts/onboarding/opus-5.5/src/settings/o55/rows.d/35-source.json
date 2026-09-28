@@ -373,6 +373,87 @@
   "planning.testing.github-actions-template": {
    "label": "Add a starter test workflow",
    "help": "Writes a ready-made test workflow file to the repository."
+  },
+  "branching.worktrees.git-author-name": {
+   "label": "Name on your changes",
+   "help": "Recorded on every change saved to history; anyone who can see the history sees it.",
+   "empty": "Not set yet"
+  },
+  "branching.worktrees.git-author-email": {
+   "label": "Email on your changes",
+   "help": "Code services use it to link changes to your account. Their private no-reply address keeps yours out of public history.",
+   "empty": "Not set yet"
+  },
+  "branching.worktrees.git-push-method": {
+   "label": "How Git signs in",
+   "help": "For each code service: a token from signing in, or one of your SSH keys. Separate from the website sign-in.",
+   "per": "code-service",
+   "options": {
+    "https-token": "A token from signing in",
+    "ssh-key": "An SSH key"
+   }
+  },
+  "branching.worktrees.git-push-key": {
+   "label": "SSH key Git uses",
+   "help": "For each code service that signs in with an SSH key: which key from your SSH key list.",
+   "per": "code-service",
+   "empty": "None chosen"
+  },
+  "branching.worktrees.commit-signing": {
+   "label": "Sign your changes",
+   "help": "Some projects only accept signed changes.",
+   "options": {
+    "off": "Off",
+    "ssh-key": "With an SSH key",
+    "gpg-key": "With a GPG key"
+   }
+  },
+  "branching.worktrees.commit-signing-key": {
+   "label": "Signing key",
+   "help": "The key that signs your changes while signing is on.",
+   "empty": "None chosen",
+   "when": {
+    "id": "branching.worktrees.commit-signing",
+    "in": [
+     "ssh-key",
+     "gpg-key"
+    ]
+   }
+  },
+  "branching.worktrees.large-file-storage": {
+   "label": "Store big files separately",
+   "help": "Keeps big files out of the normal history with Git LFS, so the project stays small and fast."
+  },
+  "branching.worktrees.large-file-threshold": {
+   "label": "Big file size",
+   "help": "Files larger than this are stored separately.",
+   "unit": "MB",
+   "min": 1,
+   "max": 2000,
+   "when": {
+    "id": "branching.worktrees.large-file-storage",
+    "in": [
+     true
+    ]
+   }
+  },
+  "branching.worktrees.large-file-types": {
+   "label": "Always store these separately",
+   "help": "File patterns such as *.psd or *.mp4, whatever their size.",
+   "when": {
+    "id": "branching.worktrees.large-file-storage",
+    "in": [
+     true
+    ]
+   }
+  },
+  "branching.worktrees.default-ignore-patterns": {
+   "label": "Never saved in history",
+   "help": "Written to the ignore list of every new repository: secrets, dependencies and build output."
+  },
+  "branching.worktrees.protected-branches": {
+   "label": "Protected branches",
+   "help": "Never overwritten; changes go through a review. * matches anything, so release/* covers every release branch."
   }
  }
 }

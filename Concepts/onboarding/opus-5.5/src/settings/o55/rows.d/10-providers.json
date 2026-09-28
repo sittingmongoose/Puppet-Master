@@ -473,7 +473,9 @@
    "empty": "The everyday model’s service"
   },
   "ai.models.per-lane-model": {
-   "label": "Model for each lane"
+   "label": "Model for each lane",
+   "help": "An exact model name for one kind of work, written the way its service writes it. Blank uses the lane's service default.",
+   "placeholder": "Same as the lane's service"
   },
   "ai.models.execution-role": {
    "label": "Role for one run",
@@ -731,7 +733,12 @@
    "label": "Keep usage history for"
   },
   "ai.usage.pricing-version": {
-   "label": "Price list"
+   "label": "Price list",
+   "options": {
+    "current provider pricing": "Each service's current prices",
+    "pinned version": "A saved price list that does not change",
+    "custom override": "My own prices"
+   }
   },
   "ai.usage.quota-management": {
    "label": "Quota and budget console",

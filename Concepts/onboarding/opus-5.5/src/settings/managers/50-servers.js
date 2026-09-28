@@ -14,6 +14,7 @@
 (function () {
   const ID = 'servers';
   const KEY = 'servers-hosts-environments';
+  const KEYS = 'code.execution.ssh-keys';
   const TAB_UI = 'ui.settings.server_tab.select';
   const TABS = [
     { id: 'home', label: 'Home & Location', ui: TAB_UI },
@@ -192,7 +193,7 @@
   function keysSection() {
     const K = keys();
     return PM51.section({ title: 'SSH keys', help: 'Keys Puppet Master signs in with. Only the public half is ever read.', cls: 'o55-srv-keys', action: { label: 'Add a key', icon: 'plus', small: true, action: 'pm51-servers-key-add' },
-      body: K.length ? PM51.list(K.map(k => {
+      body: `<span class="o55-alias" data-setting-id="${KEYS}"></span>` + (K.length ? PM51.list(K.map(k => {
         const uses = keyUses(k.id);
         return {
           title: k.name, meta: `${k.type} · ${k.where} on ${k.on}`, sub: uses.length ? `Used by ${uses.join(', ')}` : 'Not attached anywhere yet', note: k.old ? 'Older key type. A new Ed25519 key is safer; attach it where this one is used.' : '', avatar: icon('key'),
@@ -204,7 +205,7 @@
               { label: 'Remove', icon: 'trash', danger: true, onClick: () => PM51.confirm(`Remove ${k.name}?`, `${uses.length ? `${uses.join(', ')} will need another key. ` : ''}The key itself stays on ${k.on}; only Puppet Master forgets it.`, 'Remove', () => removeKey(k.id), true) }
             ], k.name) })
         };
-      })) : PM51.empty('No SSH keys yet', 'Add one to sign in to other computers without a password.', { label: 'Add a key', action: 'pm51-servers-key-add' }) });
+      })) : PM51.empty('No SSH keys yet', 'Add one to sign in to other computers without a password.', { label: 'Add a key', action: 'pm51-servers-key-add' })) });
   }
   function keyPanel(id) {
     const k = keyById(id); if (!k) return;
@@ -213,7 +214,7 @@
         + PM51.panelSection('Details', PM51.kv([['Kept on', k.on], ['File', k.path || 'Not a file'], ['Fingerprint', k.fingerprint || keyFp(k.public)], ['Added', k.added || 'Today'], ['Used by', keyUses(k.id).join(', ') || 'Nothing yet']])) });
   }
   function removeKey(id) {
-    const S = sp(); S.sshKeys = keys().filter(k => k.id !== id);
+    const left = keys().filter(k => k.id !== id); if (commitSettingValue(KEYS, left)) o55Notify(KEYS, left);
     const list = sshRemotes().map(f => f.keyId === id ? Object.assign({}, f, { keyId: '' }) : f);
     if (commitSettingValue(SSH, list)) o55Notify(SSH, list);
     S.servers.forEach(s => { if (s.signIn && s.signIn.keyId === id) { delete s.signIn.keyId; if (s.signIn.method === 'ssh') s.state = 'Needs attention'; } });
@@ -224,7 +225,14 @@
 
   /* ---------- SSH keys: one list, attachable wherever an SSH connection is shown ---------------------------------- */
   /* A key is { id, name, type, where, on, path, public, fingerprint, added }. Only the public half is ever held here. */
-  function keys() { const S = sp(); if (!Array.isArray(S.sshKeys)) S.sshKeys = clone((PM51_DATA.serverProject || {}).sshKeys || []); return S.sshKeys; }
+  /* The key list is the inventory row code.execution.ssh-keys (admitted 2026-09-28): the manager edits the stored list,
+     so search, Details, All Settings and transfer see the same keys. The example keys seed it once on this device; a
+     key entry holds its name, type, where the private half is kept and the public half, never the private half. */
+  function keys() {
+    let v = state.settings[KEYS];
+    if (!Array.isArray(v) || (!v.length && !state.changed[KEYS])) { const S = sp(); v = state.settings[KEYS] = clone(Array.isArray(S.sshKeys) ? S.sshKeys : (PM51_DATA.serverProject || {}).sshKeys || []); delete S.sshKeys; }
+    return v;
+  }
   const keyById = id => keys().find(k => k.id === id);
   const thisComputer = () => { const S = sp(); const d = S.devices.find(x => x.current || x.thisDevice) || S.devices.find(x => x.name === 'Windows Workstation') || S.devices[0]; return d ? d.name : 'this computer'; };
   const slugHost = n => String(n || 'server').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'server';
@@ -643,7 +651,7 @@
           { label: 'Version', value: srv.version, pill: srv.updateReady ? PM51.status('Update ready') : '', action: srv.updateReady ? { label: 'App Updates', action: 'pm51-go', data: { domain: 'system', workspace: 'updates' }, icon: 'arrowRight' } : null },
           { label: 'Runs work', help: 'Allow Goals and tasks to run on this server.', control: PM51.toggle(!!srv.runsWork, { action: 'pm51-servers-runs', data: { id: srv.id }, label: 'Runs work' }) },
           { label: 'Default for new workspaces', control: PM51.toggle(!!srv.default, { action: 'pm51-servers-default', data: { id: srv.id }, label: 'Default for new workspaces' }) },
-          { label: 'Signs in with', value: signInText(srv), action: srv.role === 'This computer' ? null : { label: srv.signIn && srv.signIn.keyId ? 'Change key' : 'Attach a key', icon: 'key', action: 'pm51-servers-attach-key', data: { id: srv.id } } },
+          { label: 'Signs in with', data: { 'setting-id': 'code.execution.server-sign-in' }, value: signInText(srv), action: srv.role === 'This computer' ? null : { label: srv.signIn && srv.signIn.keyId ? 'Change key' : 'Attach a key', icon: 'key', action: 'pm51-servers-attach-key', data: { id: srv.id } } },
           { label: 'Connection', value: `Checked ${srv.lastCheck}`, action: { label: 'Test connection', icon: 'test', action: 'pm51-servers-test', data: { id: srv.id, 'command-id': 'cmd.execution_host.test' } } }
         ])
       });
@@ -1241,4 +1249,8 @@
       closeOverlay(); refresh(); PM51.toast(`${r.name} removed`, 'Set it up again any time.', 'info');
     }, true);
   }
+  /* The key list and each server's sign-in are inventory rows drawn here: search and Details land on the Servers tab,
+     and Details lists how each server signs in. */
+  PM51.owner(ID, id => { if (id === KEYS || id === 'code.execution.server-sign-in') PM51.setTab(ID, 'servers'); });
+  PM51.perValues('code.execution.server-sign-in', () => (sp().servers || []).map(srv => ({ name: srv.name, value: signInText(srv) })));
 })();

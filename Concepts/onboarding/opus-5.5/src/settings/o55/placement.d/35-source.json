@@ -93,9 +93,51 @@
    "help": "Refreshing check results, and a starter test workflow.",
    "order": 412,
    "tab": "actions"
+  },
+  "source-git-you": {
+   "to": "source-manager",
+   "tab": "defaults",
+   "title": "You and sign-in",
+   "help": "Who your changes say they are from, and how Git proves it is you.",
+   "order": 305,
+   "composed": true
+  },
+  "source-git-files": {
+   "to": "source-manager",
+   "tab": "defaults",
+   "title": "Files that need care",
+   "help": "Big files, and files that must never be saved in history.",
+   "order": 306,
+   "composed": true
   }
  },
  "overrides": [
+  {
+   "section": "source-git-you",
+   "ids": [
+    "branching.worktrees.git-author-name",
+    "branching.worktrees.git-author-email",
+    "branching.worktrees.git-push-method",
+    "branching.worktrees.git-push-key",
+    "branching.worktrees.commit-signing",
+    "branching.worktrees.commit-signing-key"
+   ]
+  },
+  {
+   "section": "source-git-files",
+   "ids": [
+    "branching.worktrees.large-file-storage",
+    "branching.worktrees.large-file-threshold",
+    "branching.worktrees.large-file-types",
+    "branching.worktrees.default-ignore-patterns"
+   ]
+  },
+  {
+   "section": "source-safety",
+   "ids": [
+    "branching.worktrees.protected-branches"
+   ]
+  },
   {
    "section": "source-github-auth",
    "ids": [

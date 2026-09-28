@@ -193,11 +193,89 @@ def _band(text: str, start: str, end: str, replacement: str, need, label: str) -
     return text[:i] + replacement + text[j:]
 
 
+def _canon_defaults(doc: str, need) -> tuple[str, list]:
+    """The pinned base page carries the inventory as it stood when it was pinned, twice (the page's settings data and
+    the Settings engine's reference). Rows whose default Plans/settings_inventory.json has since changed by decision
+    (DL-107 turned chat sounds on, DL-108 made Queue the busy-send default) take the canon default, recommendation and
+    description, so the concept never shows a superseded default. Theme-owned defaults ("theme") are handled by the
+    look layer, and empty and missing secrets mean the same, so neither is patched."""
+    inventory = PKG.parents[2] / 'Plans' / 'settings_inventory.json'
+    if not inventory.exists():
+        return doc, []
+    canon = {r['id']: r for r in json.loads(inventory.read_text(encoding='utf-8'))['settings']}
+    empty = (None, '', {}, [])
+    changed = set()
+    for rid, row in canon.items():
+        needle = '{"id":' + json.dumps(rid) + ','
+        at = doc.find(needle)
+        while at != -1:
+            depth, end, quoted, esc = 0, at, False, False
+            for end in range(at, len(doc)):
+                ch = doc[end]
+                if quoted:
+                    esc, quoted = (False, quoted) if esc else (ch == '\\', ch != '"')
+                elif ch == '"':
+                    quoted = True
+                elif ch == '{':
+                    depth += 1
+                elif ch == '}':
+                    depth -= 1
+                    if depth == 0:
+                        break
+            old = json.loads(doc[at:end + 1])
+            new_default = row.get('default')
+            if (new_default not in empty and new_default != 'theme' and old.get('default') not in empty
+                    and old.get('default') != new_default):
+                old.update({k: row[k] for k in ('default', 'recommended', 'desc') if k in row})
+                text = json.dumps(old, ensure_ascii=False, separators=(',', ':'))
+                doc = doc[:at] + text + doc[end + 1:]
+                end = at + len(text) - 1
+                changed.add(rid)
+            at = doc.find(needle, end + 1)
+    return doc, sorted(changed)
+
+
+def _canon_rows(doc: str, merged: dict, need) -> tuple[str, list]:
+    """Rows admitted to Plans/settings_inventory.json after the base page was pinned join both embedded copies, so a
+    manager can bind them (PM51.bound, composed placement sections) and search, Details, All Settings and transfer know
+    them. Rows the hand-written pages already draw under an admitted id (placement `hand_ids`) are left to those pages."""
+    inventory = PKG.parents[2] / 'Plans' / 'settings_inventory.json'
+    if not inventory.exists():
+        return doc, []
+    canon = json.loads(inventory.read_text(encoding='utf-8'))['settings']
+    hand = set((merged.get('hand_ids') or {}).values())
+    key = 'window.PM12_REFERENCE = '
+    need(doc.count(key) == 1, 'O55 settings: PM12_REFERENCE anchor drift')
+    s = doc.index(key) + len(key)
+    e = doc.index('\n', s)
+    ref = json.loads(doc[s:e].rstrip(';'))
+    have = {r['id'] for c in ref['byCat'].values() for r in c.get('settings', [])}
+    added = [r for r in canon if r['id'] not in have and r['id'] not in hand]
+    for r in added:
+        cat, sub, _ = r['id'].split('.', 2)
+        need(cat in ref['byCat'] and any(g['id'] == sub for g in ref['byCat'][cat].get('subgroups', [])),
+             f'O55 settings: admitted row {r["id"]} has no reference subgroup')
+        ref['byCat'][cat]['settings'].append(dict(r, cat=cat, sub=sub))
+    if not added:
+        return doc, []
+    ref['total'] = sum(len(c.get('settings', [])) for c in ref['byCat'].values())
+    doc = doc[:s] + json.dumps(ref, ensure_ascii=False, separators=(',', ':')) + ';' + doc[e:]
+    m = re.search(r'(<script type="application/json" id="pm7-settings-data">)(.*?)(</script>)', doc, re.S)
+    need(m is not None, 'O55 settings: pm7-settings-data missing')
+    data = json.loads(m.group(2))
+    known = {r['id'] for r in data['settings']}
+    data['settings'].extend(r for r in added if r['id'] not in known)
+    doc = doc[:m.start(2)] + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + doc[m.end(2):]
+    return doc, [r['id'] for r in added]
+
+
 def apply(doc: str, need) -> tuple[str, dict]:
     t50 = _t50()
+    doc, canon_defaults = _canon_defaults(doc, need)
     data = _load_data()
     t50.load_placement()  # duplicate-key guard on the base file
     merged = placement()
+    doc, canon_rows = _canon_rows(doc, merged, need)
     css = styles()
     for bad in ['backdrop-filter', 'url(#']:
         need(bad not in css, 'O55 settings: unsupported paint primitive in CSS: ' + bad)
@@ -231,4 +309,4 @@ def apply(doc: str, need) -> tuple[str, dict]:
     s = doc.index(STYLE_OPEN) + len(STYLE_OPEN)
     e = doc.index('\n</style>', s)
     doc = doc[:s] + css + doc[e:]
-    return doc, dict(census, providers=[p['id'] for p in data['providers']])
+    return doc, dict(census, providers=[p['id'] for p in data['providers']], canon_defaults=canon_defaults, canon_rows=canon_rows)

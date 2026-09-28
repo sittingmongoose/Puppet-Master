@@ -319,24 +319,24 @@
         title: 'You and sign-in', help: 'Who your changes say they are from, and how Git proves it is you.', cls: 'o55-src-you',
         action: { label: 'Set up Git', icon: 'branch', small: true, action: 'pm51-source-git-setup' },
         body: PM51.rows([
-          { label: 'Name on your changes', help: g.name ? '' : 'Not set yet. Saving changes fails until it is.', value: g.name || 'Not set yet', muted: !g.name, action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 0 } } },
-          { label: 'Email on your changes', help: g.email ? (g.scope === 'all' ? 'Every project on this server' : 'Only this project') : 'Code services use it to link changes to your account.', value: g.email || 'Not set yet', muted: !g.email, action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 0 } } },
-          { label: 'How Git signs in', help: pf ? `For ${pf.name}. Separate from the website sign-in.` : 'Connect a code service first.', value: pf ? accessText(pf) : 'Nothing connected', muted: !pf || pf.pushAccess !== 'Ready', action: pf ? { label: pf.pushAccess === 'Ready' ? 'Change key' : 'Set up', icon: 'key', action: 'pm51-source-git-access' } : { label: 'Code Services', icon: 'arrowRight', action: 'pm51-tab', data: { manager: ID, tab: 'services' } } },
-          { label: 'Sign your changes', help: 'Some projects only accept signed changes.', value: signText(g), action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 1 } } }
+          { label: 'Name on your changes', data: { 'setting-id': W + 'git-author-name' }, help: g.name ? '' : 'Not set yet. Saving changes fails until it is.', value: g.name || 'Not set yet', muted: !g.name, action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 0 } } },
+          { label: 'Email on your changes', data: { 'setting-id': W + 'git-author-email' }, help: g.email ? (g.scope === 'all' ? 'Every project on this server' : 'Only this project') : 'Code services use it to link changes to your account.', value: g.email || 'Not set yet', muted: !g.email, action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 0 } } },
+          { label: 'How Git signs in', data: { 'setting-id': W + 'git-push-method' }, pill: ids('git-push-key'), help: pf ? `For ${pf.name}. Separate from the website sign-in.` : 'Connect a code service first.', value: pf ? accessText(pf) : 'Nothing connected', muted: !pf || pf.pushAccess !== 'Ready', action: pf ? { label: pf.pushAccess === 'Ready' ? 'Change key' : 'Set up', icon: 'key', action: 'pm51-source-git-access' } : { label: 'Code Services', icon: 'arrowRight', action: 'pm51-tab', data: { manager: ID, tab: 'services' } } },
+          { label: 'Sign your changes', data: { 'setting-id': W + 'commit-signing' }, pill: ids('commit-signing-key'), help: 'Some projects only accept signed changes.', value: signText(g), action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 1 } } }
         ])
       }),
       PM51.section({
         title: 'Files that need care', help: 'Big files, and files that must never be saved in history.',
         body: PM51.rows([
-          { label: 'Big files', help: g.lfs ? `Kept out of the normal history with Git LFS${tools().some(t => t.id === 'git-lfs' && t.status === 'ready') ? '' : ' (install Git LFS under Local Tools)'}.` : 'Stored like any other file.', value: g.lfs ? `Over ${g.lfsMb} MB, and ${g.lfsTypes || 'no extra kinds'}` : 'No special handling', action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 2 } } },
-          { label: 'Never saved in history', help: 'Written to .gitignore in new repositories.', value: `${String(g.ignore || '').split('\n').filter(Boolean).slice(0, 3).join(', ')}${String(g.ignore || '').split('\n').filter(Boolean).length > 3 ? ' and more' : ''}` || 'Nothing', action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 2 } } }
+          { label: 'Big files', data: { 'setting-id': W + 'large-file-storage' }, pill: ids('large-file-threshold', 'large-file-types'), help: g.lfs ? `Kept out of the normal history with Git LFS${tools().some(t => t.id === 'git-lfs' && t.status === 'ready') ? '' : ' (install Git LFS under Local Tools)'}.` : 'Stored like any other file.', value: g.lfs ? `Over ${g.lfsMb} MB, and ${g.lfsTypes || 'no extra kinds'}` : 'No special handling', action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 2 } } },
+          { label: 'Never saved in history', data: { 'setting-id': W + 'default-ignore-patterns' }, help: 'Written to .gitignore in new repositories.', value: `${String(g.ignore || '').split('\n').filter(Boolean).slice(0, 3).join(', ')}${String(g.ignore || '').split('\n').filter(Boolean).length > 3 ? ' and more' : ''}` || 'Nothing', action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 2 } } }
         ])
       }),
       PM51.slot(),
       PM51.section({
         title: 'Safety', help: 'Guard rails for the assistant and for you.',
         body: PM51.bound.rows([PRESET, FORCE]) + PM51.rows([
-          { label: 'Protected branches', help: e.protectMain ? 'Changes go through a review; never overwritten.' : 'Not protected at this safety level.', value: protectedList().join(', '), muted: !e.protectMain, action: { label: 'Change', action: 'pm51-source-protected' } },
+          { label: 'Protected branches', data: { 'setting-id': W + 'protected-branches' }, help: e.protectMain ? 'Changes go through a review; never overwritten.' : 'Not protected at this safety level.', value: protectedList().join(', '), muted: !e.protectMain, action: { label: 'Change', action: 'pm51-source-protected' } },
           { label: 'Publishing and releases', help: 'Whether the assistant asks before publishing is set in Permissions.', value: publishText(), action: { label: 'Permissions', icon: 'arrowRight', action: 'pm51-source-open-publish' } }
         ]) + (custom ? PM51.rows([
           { label: 'Protect the main branch', help: 'Changes to it go through a review first.', control: PM51.toggle(!!c.protectMain, { action: 'pm51-source-cfg-toggle', data: { key: 'protectMain' }, label: 'Protect the main branch' }) },
@@ -543,7 +543,32 @@
   PM51.on('source-cw-via', el => { const w = PM51.wizardOf(el); if (!w) return; if (sys()) sys().keyCollect(el.closest('.drawer-wrap'), w.draft); w.draft.via = ds(el, 'via'); w.draft.checked = false; const at = w.step(); window.setTimeout(() => { if (w.step() === at) w.go(at); }, 0); });
 
   /* ---------- guided: who you are in history, signing, large files, ignored files ---------------------------------- */
-  const git = () => { const s = PM51.s(); if (!s.sourceGit) s.sourceGit = { name: '', email: '', scope: 'all', sign: 'none', signKey: '', gpgKey: '', lfs: true, lfsMb: 50, lfsTypes: '*.psd, *.zip, *.mp4, *.mov', ignore: '.env\n.env.*\nnode_modules/\ntarget/\ndist/\n.DS_Store', protected: [] }; return s.sourceGit; };
+  /* The guide's answers are inventory rows (branching.worktrees.git-author-name and the rest, admitted 2026-09-28), so
+     search, Details, All Settings and transfer read the same values; only `scope` (every project or this one) stays
+     the guide's own. The guide keeps its familiar shapes: text for the lists, none/ssh/gpg for signing. */
+  const GIT_ROWS = { name: 'git-author-name', email: 'git-author-email', sign: 'commit-signing', lfs: 'large-file-storage', lfsMb: 'large-file-threshold', lfsTypes: 'large-file-types', ignore: 'default-ignore-patterns', protected: 'protected-branches' };
+  const SIGNING = [['none', 'off'], ['ssh', 'ssh-key'], ['gpg', 'gpg-key']];
+  const lines = (v, sep) => String(v || '').split(sep).map(x => x.trim()).filter(Boolean);
+  const gitRead = { sign: v => (SIGNING.find(p => p[1] === v) || SIGNING[0])[0], lfsTypes: v => (Array.isArray(v) ? v : []).join(', '), ignore: v => (Array.isArray(v) ? v : []).join('\n'), protected: v => (Array.isArray(v) ? v : []) };
+  const gitWrite = { sign: v => (SIGNING.find(p => p[0] === v) || SIGNING[0])[1], lfs: v => !!v, lfsMb: v => Math.min(2000, Math.max(1, Number(v) || 50)), lfsTypes: v => Array.isArray(v) ? v : lines(v, ','), ignore: v => Array.isArray(v) ? v : lines(v, '\n') };
+  const gitSet = (id, v) => { if (commitSettingValue(id, v)) o55Notify(id, v); };
+  let gitView = null;
+  const git = () => {
+    if (gitView) return gitView;
+    const own = () => { const s = PM51.s(); if (!s.sourceGit) s.sourceGit = { scope: 'all' }; return s.sourceGit; };
+    const keyFor = k => k === 'signKey' ? 'ssh' : 'gpg';
+    gitView = {};
+    Object.entries(GIT_ROWS).forEach(([k, id]) => Object.defineProperty(gitView, k, { enumerable: true,
+      get: () => { const v = PM51.value(W + id); return gitRead[k] ? gitRead[k](v) : v; },
+      set: v => gitSet(W + id, gitWrite[k] ? gitWrite[k](v) : v) }));
+    Object.defineProperty(gitView, 'scope', { enumerable: true, get: () => own().scope || 'all', set: v => { own().scope = v; } });
+    ['signKey', 'gpgKey'].forEach(k => Object.defineProperty(gitView, k, { enumerable: true,
+      get: () => gitView.sign === keyFor(k) ? PM51.value(W + 'commit-signing-key') || '' : '',
+      set: v => { if (gitView.sign === keyFor(k)) gitSet(W + 'commit-signing-key', v || ''); } }));
+    return gitView;
+  };
+  /* search and Details land on the row that shows a setting; a row showing several carries each id */
+  const ids = (...list) => list.map(id => `<span class="o55-alias" data-setting-id="${a(W + id)}"></span>`).join('');
   const protectedList = () => { const g = git(); return g.protected && g.protected.length ? g.protected : [mainBranch(), 'release/*']; };
   const signText = g => g.sign === 'ssh' ? `With SSH key ${(sys() && sys().keyById(g.signKey) || {}).name || 'your key'}` : g.sign === 'gpg' ? `With GPG key ${g.gpgKey || ''}`.trim() : 'Not signed';
   function gitSetupWizard(start) {
@@ -589,6 +614,9 @@
   PM51.on('source-w-service', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.service = ds(el, 'service'); w.next(); });
   PM51.on('source-w-vis', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.visibility = ds(el, 'vis'); });
   PM51.on('source-w-fork', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.fork = ds(el, 'fork') === 'true'; w.next(); });
+  /* How Git signs in is kept on each code service (its push access); Details lists what each connected one uses. */
+  PM51.perValues(W + 'git-push-method', () => forges().filter(connected).map(f => ({ name: f.name, value: f.pushAccess !== 'Ready' ? 'Not set up yet' : f.pushVia === 'https' ? 'https-token' : 'ssh-key' })));
+  PM51.perValues(W + 'git-push-key', () => forges().filter(f => connected(f) && f.pushAccess === 'Ready' && f.pushVia !== 'https').map(f => ({ name: f.name, value: (pushKey(f) || {}).name || 'None chosen' })));
   PM51.owner(ID, id => { if (GH.includes(id)) { PM51.setTab(ID, 'services'); if (byId('github')) PM51.setSel(ID, 'github'); return; } const e = PM51.placement.byId[id]; if (e && e.tab) PM51.setTab(ID, e.tab); });
   [PRESET, FORCE, W + 'default-branch', W + 'worktree-base-dir', 'ai.accounts.github-host-policy', W + 'pre-merge-tests'].forEach(id => PM51.watch(id, () => refresh()));
   /* the pins that lived on each workflow move into the Pinned workflows row once */

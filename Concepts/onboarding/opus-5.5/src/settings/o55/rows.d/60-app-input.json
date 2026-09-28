@@ -285,10 +285,10 @@
   },
   "general.interaction.queue-behavior": {
    "label": "If I send while it is busy",
-   "help": "Steer changes course now; Wait holds your message.",
+   "help": "Wait holds your message until the current step is done; Steer sends it into the running reply at once.",
    "options": {
     "Steer": "Steer it now",
-    "Queue": "Wait for the current step"
+    "Queue": "Wait for the current step (recommended)"
    }
   },
   "general.interaction.queue-size": {
