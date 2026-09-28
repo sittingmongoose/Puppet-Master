@@ -88,10 +88,14 @@ def copy_json() -> dict:
     return json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
 
 
+# Embedded font files (src/settings/nier/fonts) are inlined by settings_layer.py, never read as text.
+BINARY_SUFFIXES = {'.woff2', '.woff', '.ttf', '.otf'}
+
+
 def lint_sources() -> list[str]:
     problems = []
     for p in sorted(SRC.rglob('*')):
-        if not p.is_file():
+        if not p.is_file() or p.suffix in BINARY_SUFFIXES:
             continue
         text = p.read_text(encoding='utf-8')
         if EMOJI.search(text):

@@ -465,6 +465,18 @@
    "message": "Home panels, docks, the terminal position and floating windows go back to the default. Open files, terminal sessions, the browser, dashboard widgets and chats are kept.",
    "label": "Reset the layout",
    "help": "Puts panels back; open files, terminals and chats stay."
+  },
+  "general.visual.nier-mode": {
+   "label": "NieR Mode",
+   "help": "Paints the whole app in NieR: Automata's ink and parchment, in light or dark. Your theme comes back when you turn it off."
+  },
+  "general.visual.nier-parts": {
+   "label": "Customize NieR Mode",
+   "help": "Choose which pieces of the look, motion, sound and world are installed.",
+   "when": {
+    "id": "general.visual.nier-mode",
+    "is": true
+   }
   }
  }
 }
