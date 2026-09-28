@@ -76,10 +76,27 @@ function o55ScnLayerEl() {
   document.body.insertBefore(el, shell || document.body.firstChild);
   return (o55ScnLayer = el);
 }
+/* The art: the scene's SVG, and each of its moving parts (a <g data-box="x y w h"> group) lifted into a small SVG of
+   its own laid exactly over the same spot (16-nier-scenes.css repeats the xMidYMax-slice arithmetic with container
+   units), so an ambient loop is a compositor transform or opacity on a small layer and never repaints the scene. */
 function o55ScnArt(key) {
   const art = document.createElement('div');
   art.className = 'o55-nier-scene-art'; art.dataset.scene = key;
   art.innerHTML = O55_SCN_SVG[key];
+  const base = art.firstElementChild;
+  if (base) base.querySelectorAll(':scope > g[data-box]').forEach(g => {
+    const box = g.getAttribute('data-box').trim().split(/\s+/).map(Number);
+    if (box.length !== 4 || box.some(v => !Number.isFinite(v))) return;
+    const sv = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    ['fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin'].forEach(at => { if (base.hasAttribute(at)) sv.setAttribute(at, base.getAttribute(at)); });
+    sv.setAttribute('viewBox', box.join(' '));
+    sv.setAttribute('class', `o55-nier-art o55-nier-part ${g.getAttribute('class') || ''}`.trim());
+    sv.setAttribute('aria-hidden', 'true');
+    sv.style.cssText = `--bx:${box[0]};--by:${box[1]};--bw:${box[2]};--bh:${box[3]}`;
+    g.removeAttribute('class'); g.removeAttribute('data-box');
+    sv.appendChild(g);
+    art.appendChild(sv);
+  });
   return art;
 }
 /* Put the wanted scene up (or take the layer down). A change between two scenes cross-fades by opacity. */

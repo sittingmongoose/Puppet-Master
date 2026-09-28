@@ -1232,8 +1232,209 @@ def forest() -> Scene:
     sc.s(crown_marks(nb, rng, .85, 4), w=.65, op=.85)
     return sc
 
+# =====================================================================================================================
+# Amusement Park: a Ferris wheel over the empty park, a roller coaster that ends in the air, a circus tent strung
+# with pennants, faint fireworks nobody is watching.
+# =====================================================================================================================
+def offset_line(ps, d):
+    """A polyline moved sideways by d (left of the direction of travel)."""
+    out = []
+    for i, (x, y) in enumerate(ps):
+        a = ps[max(i - 1, 0)]
+        b = ps[min(i + 1, len(ps) - 1)]
+        dx, dy = b[0] - a[0], b[1] - a[1]
+        L = math.hypot(dx, dy) or 1
+        out.append((x - dy / L * d, y + dx / L * d))
+    return out
 
-SCENES = {'city': city, 'bunker': bunker, 'desert': desert, 'forest': forest}
+
+def resample(ps, step):
+    """Points every `step` along a polyline."""
+    out = [ps[0]]
+    acc = 0.0
+    for (x0, y0), (x1, y1) in zip(ps, ps[1:]):
+        seg = math.hypot(x1 - x0, y1 - y0)
+        t = step - acc
+        while t <= seg:
+            out.append((x0 + (x1 - x0) * t / seg, y0 + (y1 - y0) * t / seg))
+            t += step
+        acc = (acc + seg) % step
+    return out
+
+
+def bezier_pts(p0, p1, p2, p3, steps=24):
+    out = []
+    for i in range(steps + 1):
+        t = i / steps
+        u = 1 - t
+        out.append((u ** 3 * p0[0] + 3 * u * u * t * p1[0] + 3 * u * t * t * p2[0] + t ** 3 * p3[0],
+                    u ** 3 * p0[1] + 3 * u * u * t * p1[1] + 3 * u * t * t * p2[1] + t ** 3 * p3[1]))
+    return out
+
+
+def burst(cx, cy, r, rng, rays=16):
+    out = ''
+    for i in range(rays):
+        a = 2 * math.pi * i / rays + rng.uniform(-.08, .08)
+        r0, r1 = r * .3, r * rng.uniform(.8, 1.05)
+        # each ray drawn in two dashes, drooping a little at its end
+        m = (r0 + r1) / 2
+        out += line(cx + math.cos(a) * r0, cy + math.sin(a) * r0, cx + math.cos(a) * (m - 3), cy + math.sin(a) * (m - 3))
+        out += f'M{n(cx + math.cos(a) * (m + 2))} {n(cy + math.sin(a) * (m + 2))}Q{n(cx + math.cos(a) * r1)} {n(cy + math.sin(a) * r1)} {n(cx + math.cos(a) * r1 * 1.02)} {n(cy + math.sin(a) * r1 + 4)}'
+    return out
+
+
+def park() -> Scene:
+    sc = Scene('park', 'Amusement Park')
+    rng = random.Random(6060)
+    G = 540
+    # fireworks, faint and far, in their own group (they may fade in and out)
+    sc.open('class="a-fireworks" data-box="700 40 700 200"')
+    sc.s(burst(770, 132, 42, rng) + burst(922, 86, 30, rng, 12) + burst(1330, 150, 36, rng, 14), w=.7, op=.6)
+    sc.close()
+    # a drop tower far off, faint
+    sc.k(poly([(1452, 470), (1458, 112), (1470, 112), (1476, 470)]), w=.75, op=.5)
+    sc.s(rect(1446, 300, 36, 16) + ''.join(line(1458, 130 + i * 24, 1470, 142 + i * 24) for i in range(14)), w=.6, op=.45)
+    sc.k(poly([(1440, 112), (1464, 88), (1488, 112)]), w=.75, op=.5)
+
+    # the roller coaster: a lift hill, a drop, a loop, and a span that ends in the air
+    track = bezier_pts((600, 520), (660, 470), (760, 250), (812, 240), 20)
+    track += bezier_pts((812, 240), (850, 232), (866, 300), (900, 470), 16)[1:]
+    track += bezier_pts((900, 470), (924, 520), (1010, 520), (1060, 430), 14)[1:]
+    track += arc_pts(1010, 400, 58, 62, 30, -300, 40)[1:]
+    track += bezier_pts(track[-1], (1080, 470), (1180, 300), (1262, 292), 20)[1:]
+    track += bezier_pts((1262, 292), (1300, 290), (1320, 300), (1334, 318), 8)[1:]
+    # supports under the track (not under the loop), braced in pairs
+    sup = ''
+    posts = [p for p in resample(track, 34) if p[1] < 500 and not (950 < p[0] < 1075 and p[1] < 470)]
+    for i, (x, y) in enumerate(posts):
+        sup += line(x, y + 4, x, G)
+        if i % 2 and abs(posts[i - 1][0] - x) < 60:
+            px_, py_ = posts[i - 1]
+            yy = max(y, py_) + 14
+            while yy < G - 10:
+                sup += line(px_, yy, x, min(yy + 30, G)) + line(px_, min(yy + 30, G), x, yy)
+                yy += 58
+    sc.s(sup, w=.7, op=.85)
+    rail_a, rail_b = offset_line(track, 3.5), offset_line(track, -3.5)
+    sc.k(poly(rail_a + list(reversed(rail_b))), w=.9)
+    ties = ''
+    for (x0, y0), (x1, y1) in zip(resample(rail_a, 11), resample(rail_b, 11)):
+        ties += line(x0, y0, x1, y1)
+    sc.s(ties, w=.55, op=.8)
+    sc.s(rebar(1334, 318, rng, 3, 14), w=.7)
+    hang_vines(sc, rng, [track[k_] for k_ in (6, 17, 30, 44, 96, 104)], (18, 64), sway=(2, 4))
+    # one car stranded on the lift hill
+    cx_, cy_ = track[12]
+    sc.k(poly([(cx_ - 12, cy_ - 4), (cx_ + 10, cy_ - 14), (cx_ + 14, cy_ - 6), (cx_ - 8, cy_ + 4)]), w=.9)
+
+    # the circus tent, strung with pennants
+    tent_c, tent_top, tent_eave, tw = 1188, 372, 470, 132
+    pen = ''
+    tri = ''
+    for ex, ey in ((968, 468), (1410, 470)):
+        pts_ = bezier_pts((tent_c, tent_top + 4), ((tent_c + ex) / 2, tent_top + 70), ((tent_c + ex) / 2, ey - 10), (ex, ey - 2), 20)
+        pen += smooth(pts_)
+        for (x, y) in resample(pts_, 16)[1:-1]:
+            tri += poly([(x - 4, y), (x + 4, y), (x, y + 9)])
+        pen += line(ex, ey - 4, ex, G)
+    sc.s(pen, w=.7, op=.85)
+    sc.s(tri, w=.6, op=.8)
+    roof = [(tent_c - tw, tent_eave), (tent_c - 20, tent_top + 18), (tent_c, tent_top), (tent_c + 20, tent_top + 18), (tent_c + tw, tent_eave)]
+    walls = [(tent_c - tw + 10, tent_eave), (tent_c - tw + 10, G), (tent_c + tw - 10, G), (tent_c + tw - 10, tent_eave)]
+    sc.k(poly(walls))
+    sc.k(smooth(roof) + f'L{n(tent_c + tw)} {n(tent_eave)}Z')
+    stripes = ''
+    for i in range(-3, 4):
+        x_e = tent_c + i * tw / 3.5
+        stripes += line(tent_c + i * 3, tent_top + 6, x_e, tent_eave)
+    sc.s(stripes, w=.7, op=.85)
+    for i in range(-3, 3, 2):
+        x0_, x1_ = tent_c + i * tw / 3.5, tent_c + (i + 1) * tw / 3.5
+        sc.s(hatch([(tent_c + i * 3, tent_top + 8), (tent_c + (i + 1) * 3, tent_top + 8), (x1_, tent_eave), (x0_, tent_eave)], 90, 4, rng, inset=2), w=.55, op=.7)
+    val = ''
+    x = tent_c - tw
+    while x < tent_c + tw - 1:
+        val += f'M{n(x)} {n(tent_eave)}q{n(tw / 14)} 12 {n(tw / 7)} 0'
+        x += tw / 7
+    sc.s(val, w=.8)
+    sc.s(''.join(vline(tent_c - tw + 10 + i * (2 * tw - 20) / 8, tent_eave + 12, G - tent_eave - 12) for i in range(1, 8)), w=.55, op=.6)
+    sc.f(f'M{n(tent_c - 18)} {G}v-30q18 -22 36 0v30Z')
+    sc.s(f'M{tent_c} {tent_top}v-34', w=.9)
+    sc.f(poly([(tent_c, tent_top - 34), (tent_c + 16, tent_top - 29), (tent_c, tent_top - 24)]))
+
+    # a ticket booth with a striped awning, balloons still tied to it
+    sc.k(rect(566, 470, 54, 70))
+    sc.k(poly([(558, 470), (628, 470), (620, 456), (566, 456)]), w=.9)
+    sc.s(''.join(line(566 + i * 9, 456, 562 + i * 10.5, 470) for i in range(1, 7)) + rect(576, 482, 34, 22), w=.6, op=.85)
+    sc.f(rect(580, 486, 26, 14), op=.7)
+    bl = ''
+    for bx, by, br_ in ((600, 392, 11), (618, 380, 9), (586, 404, 8)):
+        bl += circle_path(bx, by, br_) + f'M{n(bx)} {n(by + br_)}q{n(rng.uniform(-6, 6))} 24 {n(606 - bx)} {n(456 - by - br_)}'
+    sc.k(bl, w=.8)
+
+    # the park's gate on the left: two pillars, an arch of bulbs, a blank sign hanging askew
+    gate = rect(40, 404, 26, 136) + rect(170, 404, 26, 136)
+    sc.k(gate)
+    sc.k(poly([(34, 404), (72, 404), (72, 396), (34, 396)]) + poly([(164, 404), (202, 404), (202, 396), (164, 396)]), w=.9)
+    sc.s('M66 420Q118 350 170 420M66 432Q118 364 170 432' + ''.join(circle_path(66 + t * 104, 420 - math.sin(t * math.pi) * 36, 2.2) for t in (.1, .25, .4, .55, .7, .85)), w=.8)
+    sc.k('M92 388l-2 -18M144 386l2 -18M84 370h68l-4 26h-60Z', w=.9)
+    sc.s(hatch([(56, 406), (66, 406), (66, 540), (56, 540)], 90, 3.4, rng, inset=1) + hatch([(186, 406), (196, 406), (196, 540), (186, 540)], 90, 3.4, rng, inset=1), w=.55, op=.7)
+    hang_vines(sc, rng, [(70, 424), (96, 396), (140, 398), (168, 426), (44, 406), (192, 406)], (20, 70), sway=(2, 4))
+    # the Ferris wheel: its legs and platform are fixed; the wheel itself is one group, round capsules on its rim,
+    # so it can turn without tilting anything
+    WX, WY, WR = 380, 292, 168
+    legs = poly([(WX - 6, WY), (WX - 86, G), (WX - 72, G), (WX, WY + 18)]) + poly([(WX + 6, WY), (WX + 86, G), (WX + 72, G), (WX, WY + 18)])
+    sc.k(legs)
+    br = ''
+    for t in (.35, .6, .82):
+        y = WY + (G - WY) * t
+        br += line(WX - 80 * t, y, WX + 80 * t, y)
+    sc.s(br + line(WX - 50, WY + 150, WX + 30, WY + 222) + line(WX + 50, WY + 150, WX - 30, WY + 222), w=.7, op=.85)
+    sc.k(rect(WX - 110, G - 26, 220, 10))
+    sc.s(''.join(line(WX - 110 + i * 22, G - 16, WX - 110 + i * 22, G) for i in range(11)), w=.6, op=.8)
+    hang_vines(sc, rng, [(WX - 40, WY + 120), (WX + 52, WY + 160), (WX - 64, WY + 200)], (20, 70), sway=(2, 4))
+    # the capsule that fell, lying in the grass
+    sc.k(circle_path(WX + 128, G - 11, 11), w=.9)
+    sc.s(circle_path(WX + 128, G - 11, 6.5) + tuft(WX + 118, G, rng, 8, 4) + tuft(WX + 138, G, rng, 7, 3), w=.6)
+
+    # a lamp post with a sagging string of bulbs; the ground, grass pushing through
+    sc.s(f'M{880} {G}v-96M872 {G - 96}h16M{880} {G - 94}Q{930} {G - 60} {968} {G - 66}', w=.85)
+    sc.s(''.join(circle_path(880 + t * 88, G - 94 + (math.sin(t * math.pi) * 24) + t * 28, 2.2) for t in (.2, .4, .6, .8)), w=.6)
+    for bx, bw, bh in ((250, 60, 20), (520, 46, 16), (720, 70, 22), (1040, 50, 16), (1470, 80, 24), (1580, 60, 18)):
+        bush(sc, rng, bx, G, bw, bh)
+    sc.s(line(0, G, W, G), w=.9)
+    sc.s(grass_run(0, W, G, rng, density=.3, h=9) + grass_run(0, W, G + 12, rng, density=.12, h=6), w=.7)
+    ln, so = rubble(0, W, G, rng, count=16, size=(3, 6))
+    sc.s(ln, w=.7)
+    # the wheel last: it is lifted into its own layer when it turns, so it sits on top either way
+    sc.open(f'class="a-wheel" data-box="{WX - WR - 16} {WY - WR - 16} {2 * WR + 32} {2 * WR + 32}"')
+    rim = circle_path(WX, WY, WR) + circle_path(WX, WY, WR - 7) + circle_path(WX, WY, WR * .42)
+    spokes = ''
+    for i in range(18):
+        a = 2 * math.pi * i / 18
+        spokes += line(WX + math.cos(a) * 10, WY + math.sin(a) * 10, WX + math.cos(a) * (WR - 7), WY + math.sin(a) * (WR - 7))
+        b = 2 * math.pi * (i + .5) / 18
+        spokes += line(WX + math.cos(a) * (WR - 7), WY + math.sin(a) * (WR - 7), WX + math.cos(b) * WR * .42, WY + math.sin(b) * WR * .42)
+    sc.s(rim, w=.95)
+    sc.s(spokes, w=.6, op=.85)
+    caps, capw = '', ''
+    for i in range(12):
+        if i == 7:
+            continue  # one capsule gone
+        a = 2 * math.pi * i / 12 + .13
+        x, y = WX + math.cos(a) * (WR + 2), WY + math.sin(a) * (WR + 2)
+        caps += circle_path(x, y, 12)
+        capw += circle_path(x, y, 7)
+    sc.k(caps, w=.9)
+    sc.s(capw, w=.6, op=.8)
+    sc.k(circle_path(WX, WY, 12), w=.9)
+    sc.f(circle_path(WX, WY, 4))
+    sc.close()
+    return sc
+
+
+SCENES = {'city': city, 'bunker': bunker, 'desert': desert, 'forest': forest, 'park': park}
 
 
 def main(argv=None) -> int:

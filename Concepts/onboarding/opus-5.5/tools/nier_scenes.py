@@ -9,7 +9,9 @@ with every other kit.d file (tools/settings_layer.py). Never edit the output; ed
 
 Each SVG is checked for what the layer and Slint 1.18.1 can carry: one ink (currentColor) plus the ground knockout
 class, plain shapes and groups only (no filter, mask, clip path, gradient, pattern, image, text, style or script), no
-blend modes, the shared viewBox, and at most MAX_KB. The embedded copy drops the <title> and line breaks.
+blend modes, the shared viewBox, and at most MAX_KB. A moving part is a top-level <g class="a-<name>" data-box="x y w h">
+(its bounds in the scene's units); the layer lifts it into its own small SVG at runtime. The embedded copy drops the
+<title> and line breaks.
 """
 from __future__ import annotations
 
@@ -50,6 +52,10 @@ def problems(key: str, text: str) -> list[str]:
         out.append(f'{key}.svg uses class {sorted(cls - anim)} (only o55-nier-art, k and a-* motion hooks)')
     if f'viewBox="{VIEWBOX}"' not in text:
         out.append(f'{key}.svg must use viewBox="{VIEWBOX}"')
+    groups = re.findall(r'<g [^>]*class="(a-[a-z0-9-]+)"[^>]*>', text)
+    for g in groups:
+        if not re.search(r'<g class="%s" data-box="-?[\d.]+ -?[\d.]+ [\d.]+ [\d.]+">' % re.escape(g), text):
+            out.append(f'{key}.svg motion group {g} needs data-box="x y w h" right after its class')
     if f'data-scene="{key}"' not in text:
         out.append(f'{key}.svg must carry data-scene="{key}"')
     return out
