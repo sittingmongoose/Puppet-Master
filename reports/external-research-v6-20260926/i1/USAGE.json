@@ -1,0 +1,143 @@
+{
+  "schema": "i1.usage-lanes.v1",
+  "development": {
+    "models_requested": "Astra xhigh orchestration; native Sol high/medium bounded helpers",
+    "tokens": null,
+    "cost_usd": null,
+    "note": "Development usage is unmetered in this report, not zero; never attributed to candidate economics."
+  },
+  "candidates": [
+    {
+      "slot": "I1-M-control",
+      "lane": "candidate",
+      "native_seconds": 760.3,
+      "responses": 38,
+      "input_tokens_reported": 5205027,
+      "cache_read_tokens_reported": 5001813,
+      "output_tokens_reported": 31425,
+      "reasoning_tokens_reported": 2168,
+      "source_read_calls": 36,
+      "unique_sources_read": 29,
+      "repeat_source_reads": 7,
+      "cost_usd": null,
+      "reminder_child_attempts": 33,
+      "reminder_child_tokens": null
+    },
+    {
+      "slot": "I1-M-maintained",
+      "lane": "candidate",
+      "native_seconds": 1122.3,
+      "responses": 45,
+      "input_tokens_reported": 7676114,
+      "cache_read_tokens_reported": 7397100,
+      "output_tokens_reported": 43717,
+      "reasoning_tokens_reported": 9994,
+      "source_read_calls": 59,
+      "unique_sources_read": 52,
+      "repeat_source_reads": 7,
+      "cost_usd": null,
+      "reminder_child_attempts": 43,
+      "reminder_child_tokens": null
+    },
+    {
+      "slot": "I1-Z-maintained",
+      "lane": "candidate",
+      "native_seconds": 1817.1,
+      "responses": 32,
+      "input_tokens_reported": 4637079,
+      "cache_read_tokens_reported": 4404416,
+      "output_tokens_reported": 77524,
+      "reasoning_tokens_reported": 0,
+      "source_read_calls": 50,
+      "unique_sources_read": 44,
+      "repeat_source_reads": 6,
+      "cost_usd": null,
+      "usage_requests_with_delta": 31
+    },
+    {
+      "slot": "I1-Z-control",
+      "lane": "candidate",
+      "native_seconds": 1416.5,
+      "responses": 42,
+      "input_tokens_reported": 6097149,
+      "cache_read_tokens_reported": 5864064,
+      "output_tokens_reported": 64239,
+      "reasoning_tokens_reported": 0,
+      "source_read_calls": 51,
+      "unique_sources_read": 50,
+      "repeat_source_reads": 1,
+      "cost_usd": null,
+      "usage_requests_with_delta": 41
+    }
+  ],
+  "formal_evaluations": [
+    {
+      "slot": "I1-REV-M",
+      "lane": "formal_evaluation",
+      "native_seconds": 690.1,
+      "distinct_responses": 38,
+      "status": "COMPLETED",
+      "model_usage_reported": {
+        "claude-opus-5-5": {
+          "inputTokens": 76,
+          "outputTokens": 73917,
+          "cacheReadInputTokens": 4293227,
+          "cacheCreationInputTokens": 215926,
+          "webSearchRequests": 0,
+          "costUSD": 4.0646974,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 34740,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "native_cost_usd_list_basis": 4.0646974
+    },
+    {
+      "slot": "I1-REV-Z",
+      "lane": "formal_evaluation",
+      "native_seconds": 34.7,
+      "distinct_responses": 1,
+      "status": "FAILED_INCOMPLETE",
+      "model_usage_reported": {
+        "claude-opus-5-5": {
+          "inputTokens": 2,
+          "outputTokens": 3243,
+          "cacheReadInputTokens": 4432,
+          "cacheCreationInputTokens": 2402,
+          "webSearchRequests": 0,
+          "costUSD": 0.08497039999999999,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 2803,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "native_cost_usd_list_basis": 0.08497039999999999
+    }
+  ],
+  "totals": {
+    "candidate_assignments": 4,
+    "candidate_native_seconds": 5116.2,
+    "candidate_parent_responses_including_interrupted": 157,
+    "muse_reminder_child_attempts": 76,
+    "evaluation_assignments": 2,
+    "evaluation_native_seconds": 724.8,
+    "evaluation_distinct_responses": 39,
+    "reported_opus_list_basis_usd": 4.1496678
+  },
+  "limits": [
+    "No candidate dollar cost or subscription debit is derived from tokens or shared-account percentages.",
+    "Cache-heavy cumulative input is not unique input. Field semantics differ across providers.",
+    "Muse reminder-child token totals are unexposed; parent counters cannot establish total child-inclusive cost.",
+    "Z-control exposes usage deltas for 41 of 42 requests; missing delta is not inferred as zero.",
+    "Zcode reports reasoningTokens=0; this does not establish absence of reasoning.",
+    "Opus cost has native costBasis=list, not a measured subscription charge.",
+    "Read counts alone establish neither acquired findings nor savings.",
+    "One familiar fixed-source pair per app cannot establish production cost or reliability."
+  ]
+}

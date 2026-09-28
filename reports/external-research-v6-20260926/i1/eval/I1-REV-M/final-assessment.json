@@ -1,0 +1,225 @@
+{
+ "schema": "i1_rev_m.final_assessment.v1",
+ "fixed_before_deferred_access": true,
+ "label": "TEST_ONLY_NEVER_PROMOTE investigator-only comparison; first-view (pre-deferred) fixed judgments",
+ "evaluator": {
+  "assigned_model": "claude-opus-5-5",
+  "requested_effort": "xhigh",
+  "observed_model": "claude-opus-5-5 (self-reported by runtime environment)",
+  "observed_effort": "not observable from inside the session; recorded as unknown",
+  "tools_used": "Read/Glob/Grep/Write only; no shell, no web/network, no other models"
+ },
+ "chronology_and_exposure_disclosures": [
+  "My first tool call was a root-level Glob('*') issued before scoping. It returned 145 matches, listing was truncated to the first 100, all of which were first_view/case paths. The pattern necessarily covered deferred/ paths, so this is a technical breach of the 'do not glob deferred/ before fixing judgments' rule. No deferred path names or contents were displayed; the only information implied is that roughly 12 files exist outside first_view. All later globs were scoped to first_view/ and out/.",
+  "Treatment exposure from current reports: X1/current.md says 'CARRIER INVALID ... Invalid draft carrier; inspect deferred audit artifacts', which reveals a draft-carrier arm whose delivery failed. X2/current.md lines 3 and 265 name out/observations.md, out/history.md, out/snapshots/0001.md, which reveals an observations-plus-draft carrier. So both current-report formats reveal treatment. Blinding to the carrier was not maintained at first view.",
+  "X2/current.md contains no superseded/history substance. It cites observation IDs (O-001..O-045) only, not their content. Its '(correction)' tags are Plan-disposition labels, not supersession records. So I found no first-view contamination by upstream content, and upstream substance was unseen by me at the time these judgments were fixed.",
+  "No economics or operational-treatment files were read."
+ ],
+ "inputs_read_before_fixing": {
+  "case": ["first_view/case/README.md", "first_view/case/brief.md", "first_view/case/plan/Viewer.md", "first_view/case/catalog.json (lines 1-1080 fully; remainder via handle/uri grep)"],
+  "key": ["first_view/key/SCORING.md", "first_view/key/ome-reference.json"],
+  "results": ["first_view/results/X1/current.md", "first_view/results/X2/current.md"],
+  "sources_checked_by_evaluator": {
+   "S003": "full, lines 1-896 (OME-Zarr 0.5 spec capture)",
+   "S054": "full, lines 1-119",
+   "S055": "full, lines 1-74",
+   "S056": "grep field_count/acquisitions/well paths",
+   "S043": "lines 276-470 (tools feature matrix)",
+   "S033": "lines 155-164 plus grep of codec lines",
+   "S034": "lines 205-239 plus grep GB/TB (L70-83)",
+   "S025": "lines 80-89",
+   "S008": "grep line 479",
+   "S013": "grep lines 166-186, 323-345, 450-451",
+   "S016": "lines 78-157, 355-387",
+   "S018": "grep 'version'; lines 268-289",
+   "S019": "lines 70-99",
+   "S048": "grep lines 121, 219-262, 296-336, 654, 716",
+   "S085": "grep file names (tensorstore zarr3 codec dir listing)",
+   "S109/S123/others": "-o grep for transpose/endian/fill_value context only (eligibility check)"
+  },
+  "sources_not_checked_by_evaluator": "S004 (U-02 lines 405-430), S011, S014, S027, S036, S051, S053, S058 (except L360-389 grep hits), S059, S072, S017, S041, S070, S010 and all other handles. Claims that rest only on these are graded 'not evaluator-verified', not as supported or unsupported."
+ },
+ "input_eligibility": {
+  "summary": "The corpus contains the OME-Zarr 0.5 spec (S003), real 0.5 metadata captures (S054-S056), reader implementations (ome-zarr-py S016-S019, napari-ome-zarr S048), and tool/issue corpora. It contains NO Zarr v3 core/codec/store specification text: grep of all 125 sources finds no zarr-specs page content for the decoding procedure, bytes-codec endian semantics, transpose codec, fill_value semantics, or the store interface. S033 only links to it.",
+  "OME05-C01": {"eligible": true, "decisive": "S003 L68-72, L152-156, L180, L833"},
+  "OME05-C02": {"eligible": true, "decisive": "S003 L81, L168, L173-174, L299-303, L827"},
+  "OME05-C03": {"eligible": true, "decisive": "S003 L91-94, L304-312"},
+  "OME05-C04": {"eligible": true, "decisive": "S003 L170, L293, L308-316; the reference's numeric probe is derivable from these rules"},
+  "OME05-C05": {"eligible": true, "decisive": "S003 L102-117, L437-442, L454-455, L472-474"},
+  "OME05-C06": {"eligible": true, "decisive": "S003 L434-439, L456-471; the uint64/binary64 precision facet is an inference from the uint64 dtype allowance (L439), not stated in the source"},
+  "OME05-C07": {"eligible": "partial", "status_basis": "unassessable_missing_input for the reverse-order decoding procedure, bytes endian semantics and transpose layout facets. Their decisive Zarr v3 spec sources are absent. S109 L553/L600 has only issue-level transpose discussion, and S085 is a file listing, not implementation. The eligible subset (explicit codec support boundary, no guessing, metadata-driven codec chain) is supported by S003 L70-72 and S055 L2-57."},
+  "OME05-C08": {"eligible": "partial", "status_basis": "unassessable_missing_input for the fill_value / store-absence semantics. Their decisive Zarr v3 core/store sources are absent, and S055 L65 shows a fill_value field without semantics. The eligible subset (truthful failure, read-only source, cancellation distinct from failure) comes from brief L3-5 and Viewer.md L7, L9, L11."}
+ },
+ "results": {
+  "X1": {
+   "delivery_state": "invalid_carrier_no_claims",
+   "delivered_text": "first_view/results/X1/current.md L1-5: '# Offline finding delivery' / '**CARRIER INVALID — no claims asserted.**' / 'Invalid draft carrier; inspect deferred audit artifacts.'",
+   "scoring_note": "SCORING.md L5: if no coherent delivered artifact exists, do not synthesize one from drafts. The delivery is effectively unscorable. Under the required status vocabulary, every eligible reference is 'lost' from delivery. The cause is a delivery/render failure, not a checked false dismissal and not unvisited scope. Any upstream acquisition is reported separately after deferred access, without arm credit.",
+   "reference_statuses": {
+    "OME05-C01": {"status": "lost", "reason": "no claims delivered (invalid carrier)"},
+    "OME05-C02": {"status": "lost", "reason": "no claims delivered (invalid carrier)"},
+    "OME05-C03": {"status": "lost", "reason": "no claims delivered (invalid carrier)"},
+    "OME05-C04": {"status": "lost", "reason": "no claims delivered (invalid carrier)"},
+    "OME05-C05": {"status": "lost", "reason": "no claims delivered (invalid carrier)"},
+    "OME05-C06": {"status": "lost", "reason": "no claims delivered (invalid carrier)"},
+    "OME05-C07": {"status": "unassessable_missing_input", "eligible_subset_status": "lost", "reason": "decisive Zarr v3 codec material absent from corpus; eligible subset not delivered"},
+    "OME05-C08": {"status": "unassessable_missing_input", "eligible_subset_status": "lost", "reason": "decisive Zarr v3 fill/store material absent from corpus; eligible subset not delivered"}
+   },
+   "unsupported_assertions": [],
+   "false_dismissals": [],
+   "novel_findings": [],
+   "correct_non_findings": [],
+   "coherence": "Internally consistent: it truthfully says no claims are asserted. It has no research content.",
+   "decision_burden": {"blocking_product_decisions": 0, "nonblocking_choices": 0, "clarification_questions": 0, "note": "No usable output. The user must inspect audit artifacts or rerun, so the effective burden is the whole research task."},
+   "coverage": "none delivered"
+  },
+  "X2": {
+   "delivery_state": "coherent_report_delivered_unverified",
+   "delivered_text": "first_view/results/X2/current.md L1-265 (R-01..R-20, D-01..D-04, U-01..U-02, Coverage)",
+   "verification_note": "The report declares no independent verification (L3), and no flash verifier ran. Grades below reflect source support checked by the evaluator. Validation proposals are unexecuted proposals, not passing tests.",
+   "reference_statuses": {
+    "OME05-C01": {
+     "status": "retained",
+     "candidate_locations": ["R-01 L7-15", "R-03 L29-39", "R-18 L209-219", "U-01 L254"],
+     "decisive_sources": ["S003 L68-69", "S003 L152-156", "S003 L180", "S054 L3-7"],
+     "facets": {
+      "zarr_v3_plus_attributes_ome_namespace": "retained (R-01 L7, R-03 L31, L35)",
+      "version_string_hierarchy_consistent_MUST": "retained (R-03 L31, L35)",
+      "explicit_validation_or_truthful_unsupported": "retained (R-03 L37: missing/foreign namespace or inconsistent version = malformed-input feedback)",
+      "no_implicit_legacy_reinterpretation": "retained (R-01 L7 v2 paths not reused; R-18 L215 0.4 never half-parsed, dual support only as explicit decision)",
+      "distinguishing_validation": "retained (R-03 L39 missing-ome / mixed-version / extra _creator; R-18 L219)"
+     },
+     "notes": "The reader-side inconsistency behavior is honestly left unresolved (L39). 'Mixed across levels' (L39) is loosely worded because version lives in group attributes, but this is not load-bearing. U-01 correctly reads S018 L280-282 (multiscales[0].get('version','0.1')) as a pinned-reader data point, keeps S003 authoritative, and does not claim implementation behavior beyond the literal line."
+    },
+    "OME05-C02": {
+     "status": "narrowed",
+     "candidate_locations": ["R-04 L41-51", "R-05 L53-63", "R-08 L89-99"],
+     "decisive_sources": ["S003 L173-174", "S003 L299-303", "S003 L827", "S055 L59-64"],
+     "retained_facets": ["dimension_names MUST match axes names, checked per level array (R-04 L43, L47)", "mismatch refused with named explanation, no transposed render (R-04 L47, L51)", "roles derived from axes type+order matching array order, never fixed TCZYX positions (R-05 L55-61)", "controls only for present roles on 2D/4D/custom fixtures, so no invented sliders for absent dims (R-05 L63)"],
+     "missing_facets": ["absent vs length-one dimension distinction is not stated anywhere", "axis-name uniqueness (S003 L168) is not stated", "role binding when 'type' is absent is undefined: R-05 binds by type, while R-08 L91 says type may be missing/custom"],
+     "reason": "Core identity and validation survive. The reference's explicit absent-vs-length-one condition is missing."
+    },
+    "OME05-C03": {
+     "status": "narrowed",
+     "candidate_locations": ["R-16 L185-195", "R-06 L65-75"],
+     "decisive_sources": ["S003 L304-312", "S054 L31-74"],
+     "retained_facets": ["declared datasets order largest-to-smallest governs levels (R-16 L191)", "zoom-to-level mapping from actual per-level scale vectors and shapes including Z; no 2x or XY-only assumption (R-16 L189-191)", "non-dyadic/anisotropic distinguishing fixture (R-16 L195)", "each level has its own transform (R-06 L67)"],
+     "missing_facets": ["explicit handling of a declared-but-missing level", "group-relative path resolution and arbitrary level names (no folder-numbering authority) are not stated explicitly, only implied by 'per datasets order'"],
+     "reason": "Level-specific geometry and declared ordering survive. The missing-level handling that the reference 'full' requires is absent."
+    },
+    "OME05-C04": {
+     "status": "retained",
+     "candidate_locations": ["R-06 L65-75", "R-07 L77-87", "R-08 L89-99"],
+     "decisive_sources": ["S003 L170", "S003 L293", "S003 L308-316"],
+     "facets": {
+      "dataset_then_multiscales_order": "retained (R-06 L67, L71)",
+      "scale_precedes_translation": "retained (R-06 L71)",
+      "length_equals_ndim": "retained (R-06 L67, L71)",
+      "units_recommended_not_invented": "retained (R-07 L83 never label relative factors micrometers; R-08 L91-95 tolerate missing units)",
+      "distinguishing_check": "retained with qualification. R-06 L75 combines distinct per-level translation with a distinct multiscales-level scale, which exposes omitted per-level offsets and reversed dataset/multiscale order. It gives no numeric expectation and has no multiscales-level translation in the fixture."
+     },
+     "notes": "The relative-factor fallback (S003 L310) is a supported refinement. The R-07 L83 rule 'unit absent means relative factor' is a heuristic beyond S003 L310 and conflicts with L79/L87, which call the distinguishing rule unresolved (listed as UA-5)."
+    },
+    "OME05-C05": {
+     "status": "narrowed",
+     "candidate_locations": ["R-11 L125-135", "U-02 L255"],
+     "decisive_sources": ["S003 L102-117", "S003 L437-442", "S003 L454-455", "S003 L472-474"],
+     "retained_facets": ["discovery through labels-group list (R-11 L127)", "label image is multiscales with same level count (R-11 L127, L131)", "intermediate groups allowed and metadata-free (R-11 L127)", "per-level geometry verified before overlay; mismatch explained, not overlaid (R-11 L131, L135)", "labels-registration redesign proposal scoped out; S003 authoritative (U-02)"],
+     "missing_facets": ["source.image relative reference as the declared association identity (only 'properties/source MAY' at L127; not used to resolve which image a label belongs to)", "S003 L106-108 allows label dims equal to the image or 1. R-11 L135 calls same-shape 'unresolved' although the report claims S003 was read fully, and the L131 geometry check lacks the singleton allowance, which risks falsely refusing conforming labels"],
+     "reason": "Registration checks survive, but the source-identity association and the singleton-dimension condition are missing."
+    },
+    "OME05-C06": {
+     "status": "narrowed",
+     "candidate_locations": ["R-11 L127-135", "R-14 L161-171"],
+     "decisive_sources": ["S003 L434-439", "S003 L456-471"],
+     "retained_facets": ["label pixels are integer dtypes uint8..int64 (R-11 L127)", "no silent truncation of 64-bit labels; explicit dtype verdicts including uint64 fixture (R-14 L167-171)", "colors are SHOULD-honored display, not a format mandate; fallback palette when image-label absent (R-11 L127, L131, L135)"],
+     "missing_facets": ["color/property lookup keyed by label-value rather than array position is not stated", "categorical resampling (no interpolation-created IDs at boundaries) is absent", "properties keyed per label-value are absent"],
+     "reason": "Integer and precision facets survive. The label-value-keyed identity and categorical resampling facets are lost."
+    },
+    "OME05-C07": {
+     "status": "unassessable_missing_input",
+     "eligible_subset_status": "retained",
+     "candidate_locations": ["R-01 L5-15", "R-02 L17-27", "R-15 L173-183", "R-14 L161-171"],
+     "decisive_sources": ["S003 L70-72", "S055 L2-57", "S033 L155-169"],
+     "eligible_subset_facets": ["any Zarr v3 codec/chunk grid/key encoding may appear, so no fixed subset is assumed (R-01 L7, L11)", "unknown codecs/grids produce a named explanation, never a silent misrender (R-01 L13, R-15 L179)", "codec chain and chunk shapes read from array metadata, including nested sharding chains (R-02 L23)"],
+     "unassessable_facets": ["reverse-order decoding", "bytes endian semantics (X2 only notes little-endian captures, R-14 L163)", "transpose layout"],
+     "reason": "Decisive Zarr v3 spec material is absent from the corpus. X2 deferred the S109 issue corpus (D-02), so its silence on transpose/big-endian is unvisited scope, not a checked miss."
+    },
+    "OME05-C08": {
+     "status": "unassessable_missing_input",
+     "eligible_subset_status": "narrowed",
+     "candidate_locations": ["R-17 L197-207", "R-01 L13", "R-02 L25", "R-10 L123"],
+     "decisive_sources": ["brief.md L3-5", "Viewer.md L7, L9, L11"],
+     "eligible_subset_facets_retained": ["view change cancels in-flight work and cancelled reads release (R-17 L203, L207)", "decode/open failures explained per Plan L7 (R-01 L13, R-02 L25, R-15 L179)", "source files untouched in validation (R-10 L123)"],
+     "eligible_subset_facets_missing": ["cancellation is not distinguished from failure in displayed state", "reader-side writes (e.g. repair or metadata writes while opening) are not considered", "absent-chunk/fill_value vs failed-read distinction is absent (decisive semantics not in corpus)"],
+     "reason": "Fill/store semantics are unavailable. The eligible read-only/truthful-failure material is only partially carried."
+    }
+   },
+   "unsupported_assertions": [
+    {"id": "X2-UA-1", "location": "R-02 L21", "type": "overgeneralized source fact / unjustified requirement strength", "text": "without sharding_indexed + bytes-to-bytes codec chains, real 0.5 filesets do not open at all", "counterevidence": "S034 L43 'optionally sharding the data'; S058 L362, L388 sharding is an option", "severity": "low-moderate: the requirement itself is well motivated (S055 real IDR sample, Plan L9); only its universality is unsupported"},
+    {"id": "X2-UA-2", "location": "R-15 L175 (also R-02 L19)", "type": "misattributed source fact", "text": "v3 requires bytes-to-bytes codecs (O-035)", "counterevidence": "S013 L184 is a zarr-python writer-API error about the 'compressor' argument, not a Zarr v3 format requirement", "severity": "low"},
+    {"id": "X2-UA-3", "location": "R-19 L221-231", "type": "silently approved product choice presented as correction / spec override", "text": "unknown transform types and 0.6-style keys are warn-and-continue, not errors (Exact constraint: skip-with-warning)", "counterevidence": "S003 L309 says dataset transforms MUST only be translation or scale, so such 0.5 metadata is non-conforming. S048 L121 is one reader's behavior, not an obligation, and Viewer.md L9 says additional capability choices require explicit review", "severity": "moderate: leniency affects calibrated-coordinate truthfulness. It is mitigated by the required visible caveat (L227)"},
+    {"id": "X2-UA-4", "location": "R-11 L131", "type": "silently approved product choice", "text": "default hidden with explicit toggle", "counterevidence": "Derived from napari behavior (S048 L654). No format or Plan basis for default visibility", "severity": "low"},
+    {"id": "X2-UA-5", "location": "R-07 L83 vs L79/L87", "type": "contradictory delivery / unsupported inference", "text": "when unit is absent for an axis, present its scale as relative factor", "counterevidence": "S003 L310 ties relative factors to unavailable scaling information, not to a missing unit (unit is SHOULD, L170). The report itself calls the rule unresolved", "severity": "low"},
+    {"id": "X2-UA-6", "location": "R-06 L67, R-09 L103", "type": "unqualified evidence scope", "text": "reader-matrix support claims cited as general reader behavior", "counterevidence": "S043 L279, L318, L352, L394, L430: matrix rows test v0.4 samples", "severity": "low"}
+   ],
+   "dropped_material_parts": [
+    "S003 L106-108 label-dimension rule (equal or 1) omitted while calling it unresolved (C05)",
+    "label-value keyed lookup (S003 L461-469) not carried (C06)"
+   ],
+   "false_dismissals": [],
+   "false_dismissal_note": "X2 rejects nothing (L256). D-01..D-04 are budget/unvisited deferrals, labelled unknown rather than absent, which is correct scoping.",
+   "unscoped_absence_claims": [],
+   "unscoped_absence_note": "Absence statements are line-scoped (e.g. R-01 L7 'S003 lines 1-400'; R-07 L79 'S003 lines 308-316'; U-01 'specified search').",
+   "novel_findings": [
+    {"id": "X2-NV-1", "location": "R-02, R-15", "proposition": "Real 0.5 data uses sharding_indexed with bytes+blosc(zstd) inner chain and crc32c index; bioformats2raw 0.5 writes null/blosc/gzip/zstd (not zlib), default blosc lz4 clevel 5; a named codec floor plus explain-on-unknown is needed for Plan L9 interop", "sources": ["S055 L16-57", "S033 L155-169", "S058 L360, L388"], "support": "supported (with UA-1/UA-2 overstatements)", "plan_fit": "Viewer.md L9 interop; L7 failure path"},
+    {"id": "X2-NV-2", "location": "R-13", "proposition": "bioformats2raw.layout collections: enumerate series list or 0..N fallback, plate takes precedence, series order = OME-XML Image order; readers SHOULD NOT default to first image only", "sources": ["S003 L175-275"], "support": "supported", "plan_fit": "Viewer.md L5 discovery; brief L3"},
+    {"id": "X2-NV-3", "location": "R-12", "proposition": "HCS plate/well/field navigation: sort by rowIndex/columnIndex, sparse plates, optional acquisitions, field_count is a maximum; real plate S056 has unsorted wells, no acquisitions, field_count 32; navigation model is a product decision", "sources": ["S003 L118-148, L515-808", "S056 L46, L71-161"], "support": "supported", "plan_fit": "correctly surfaced as blocking product choice"},
+    {"id": "X2-NV-4", "location": "R-09", "proposition": "multiscales may hold >1 entry; informative name/first fallback; tools matrix shows no viewer supports beyond-first and BigDataViewer/MoBIE/WEBKNOSSOS fail to open", "sources": ["S003 L298, L388-397", "S043 L277-316"], "support": "supported (matrix is v0.4, UA-6)", "plan_fit": "Viewer.md L5"},
+    {"id": "X2-NV-5", "location": "R-10", "proposition": "transitional omero metadata is optional but constrained when present; rdefs/channels provide initial display defaults (S054 defaultZ 118); session changes stay local", "sources": ["S003 L398-430", "S054 L77-114"], "support": "supported", "plan_fit": "optional capability; Viewer.md L5, L9"},
+    {"id": "X2-NV-6", "location": "R-14", "proposition": "publish supported dtype list; Viv set int8/16/32, uint8/16/32, float32/64; labels include 64-bit ints", "sources": ["S025 L84-86", "S003 L438-439", "S003 L70-72"], "support": "supported", "plan_fit": "blocking product choice"},
+    {"id": "X2-NV-7", "location": "R-19", "proposition": "post-0.5 RFC-5 metadata may appear; one reader warns and skips unknown transform types", "sources": ["S048 L121", "S051 (not evaluator-verified)"], "support": "partially verified; disposition disputed (UA-3)", "plan_fit": "should be a product decision, not a correction"},
+    {"id": "X2-NV-8", "location": "R-20", "proposition": "implementation-strategy alternatives (direct Zarr v3 dependency, per-channel layers, read-only-first)", "sources": ["O-019/O-020/O-034/O-036 lines not evaluator-verified"], "support": "not evaluator-verified; optional", "plan_fit": "optional"}
+   ],
+   "correct_non_findings": [
+    {"location": "R-17 L197-207", "finding": "background reads/cancel/no-freeze already specified by Viewer.md L7, L11 (covered); TB-scale evidence S034 L70-83, S008 L479"},
+    {"location": "R-08 L89-99", "finding": "axis type/unit vocabularies are SHOULD-level (S003 L169-170); strict rejection would be a compat failure"},
+    {"location": "R-18 L211", "finding": "AGAVE dual 0.4/0.5 support creates no obligation (S072 not evaluator-verified)"},
+    {"location": "U-02 L255", "finding": "PR #206 labels-registration redesign not adopted; S003 labels-group list authoritative (S004 L405-430 not evaluator-verified)"}
+   ],
+   "coherence": "High. Every item follows proposition / Plan fit / constraint / consequence / unexecuted validation, with uncertainty inline. There are internal tensions at R-07 (constraint vs unresolved rule) and R-19 ('correction' label vs product-choice nature). Disposition vocabulary (correction/covered/optional_capability/product_choice) is used consistently.",
+   "decision_burden": {
+    "blocking_product_decisions": 3,
+    "blocking_list": ["R-12 HCS navigation model", "R-14 supported dtype list", "R-18 0.4 input boundary"],
+    "nonblocking_choices": 6,
+    "nonblocking_list": ["R-05 custom-axis treatment", "R-09 multiscale selection (default recommended)", "R-10 omero honoring", "R-17 latency budgets", "R-19 warning wording", "R-20 alternatives bundle"],
+    "clarification_questions": 3,
+    "clarification_list": ["OME-XML parsing depth", "omero min/max vs start/end semantics", "defaultZ indexing basis (D-04)"],
+    "silently_decided_choices": ["R-11 labels default hidden (UA-4)", "R-19 lenient acceptance of non-0.5 transforms (UA-3)"],
+    "redundant_questions": 0
+   },
+   "coverage": {
+    "self_reported_read_fully": ["S001", "S003", "S005", "S007", "S016", "S017", "S018", "S019", "S025", "S030", "S033", "S043", "S048", "S053", "S054", "S055", "S056", "S072"],
+    "self_reported_partial": ["S004", "S008", "S011", "S013", "S014", "S027", "S051", "S058", "S059", "S010 L1-120", "S034 L1-280", "S041", "S070 L1-100", "S009", "S020 L1-100"],
+    "self_reported_unvisited": "S006, S021-S024, S026, S028-S029, S031-S032, S035-S042, S044-S050 (except S043/S048), S052, S057, S060-S071, S073-S125",
+    "evaluator_note": "Self-reported coverage is not investigated-coverage proof. The evaluator spot-checked the sources listed under inputs_read_before_fixing. The AGAVE/TensorStore corpora (S073-S125) are unvisited by X2 (D-02), and X2 grounds no claims on them."
+   }
+  }
+ },
+ "comparison_first_view": {
+  "summary": "X2 delivers a coherent, largely source-grounded report: 2 references retained (C01, C04), 4 narrowed (C02, C03, C05, C06), 2 unassessable (C07 eligible subset retained; C08 eligible subset narrowed), 0 lost, 0 contradicted, 6 unsupported/overstated assertions (1 moderate), 0 false dismissals. X1 delivers nothing: 6 eligible references lost and 2 unassessable with eligible subsets lost, caused by an invalid carrier, not by research quality evidence.",
+  "per_reference": {
+   "OME05-C01": {"X1": "lost", "X2": "retained"},
+   "OME05-C02": {"X1": "lost", "X2": "narrowed"},
+   "OME05-C03": {"X1": "lost", "X2": "narrowed"},
+   "OME05-C04": {"X1": "lost", "X2": "retained"},
+   "OME05-C05": {"X1": "lost", "X2": "narrowed"},
+   "OME05-C06": {"X1": "lost", "X2": "narrowed"},
+   "OME05-C07": {"X1": "unassessable_missing_input (subset lost)", "X2": "unassessable_missing_input (subset retained)"},
+   "OME05-C08": {"X1": "unassessable_missing_input (subset lost)", "X2": "unassessable_missing_input (subset narrowed)"}
+  },
+  "caveat": "Two arms and one case establish nothing general. X1's outcome is a delivery failure whose upstream content is assessed separately (post-deferred) without arm credit. New X2 positives do not offset its narrowed facets or UA-3."
+ },
+ "unassessed_scope_at_fixing": "Claims resting only on S004, S011, S014, S027, S036, S051, S053, S059, S072, S017, S041, S070, S010 were not evaluator-verified. O-IDs were not traceable at first view because upstream records are deferred.",
+ "completeness": "first-view judgments complete for both current reports within the stated verification scope"
+}

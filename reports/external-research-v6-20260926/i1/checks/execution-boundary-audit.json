@@ -1,0 +1,628 @@
+{
+  "schema": "er6.i1_execution_boundary_audit.v1",
+  "observed_utc": "2026-09-28T00:17:24.589142+00:00",
+  "scope": "first three terminal investigators and running Z-control configuration only; no research semantic grading",
+  "reviewed_commit": "4a664731f46b2480de899b6b950d20350101fe16",
+  "read_only_audit": true,
+  "models_or_accounts_called": 0,
+  "key_contents_read": false,
+  "provider_payloads_or_cap_actions_printed": false,
+  "deviations": [],
+  "pending_final_slot_checks": [
+    "Z-control terminal receipt and failure/quota precedence",
+    "Z-control final response and cap observations",
+    "Z-control frozen output manifest and output integrity",
+    "Z-control exact current control copy and host render record",
+    "post-final schedule/evaluator staging integrity (outside this bounded three-terminal audit)"
+  ],
+  "evidence": [
+    {
+      "path": "i1-20260927/APPROVAL.json",
+      "sha256": "4b5d550d95017ecb38ffddc340a9e5e4def5c0f808c2d29bead442c3cd3122f4",
+      "bytes": 3284
+    },
+    {
+      "path": "offline-repair-v1/proposal.json",
+      "sha256": "c8543110ae9048c176189d584d7490eeb2f66a61f80790c5699402e6f5b8512c",
+      "bytes": 9240
+    },
+    {
+      "path": "offline-repair-v1/I1_AMENDMENT_MANIFEST.json",
+      "sha256": "5e1fd908b0291af4d22bd8668465d518b75ad84c4aa9c10635fda1cd9ef75fb4",
+      "bytes": 3812
+    },
+    {
+      "path": "i1-20260927/evidence/preparation-at-launch.json",
+      "sha256": "efcdfa8f420fe9dd9d1865e6dd83a34773b4e6e8da5ce9006f72b6ed2f9607c8",
+      "bytes": 367
+    }
+  ],
+  "checks": {
+    "authority": {
+      "proposal_hash_matches": true,
+      "amendment_manifest_hash_matches": true,
+      "signoff_hash_matches": true,
+      "schedule_matches": true,
+      "limits_match": true,
+      "proposal_preapproval_status_left_unchanged": true
+    },
+    "frozen_runtime_pins": {
+      "all_match": true,
+      "files": {
+        "tools/run_goal.py": {
+          "exists": true,
+          "sha256_matches": true
+        },
+        "tools/muse_goal_driver.py": {
+          "exists": true,
+          "sha256_matches": true
+        },
+        "tools/zcode_goal_driver.py": {
+          "exists": true,
+          "sha256_matches": true
+        },
+        "tools/run_arm.py": {
+          "exists": true,
+          "sha256_matches": true
+        },
+        "tools/r1b/run_goal_r1b.py": {
+          "exists": true,
+          "sha256_matches": true
+        },
+        "tools/r1b/muse-serve-noshell.sh": {
+          "exists": true,
+          "sha256_matches": true
+        },
+        "tools/r1b/run_r1b.py": {
+          "exists": true,
+          "sha256_matches": true
+        },
+        "tools/r1b/run_reviewer_v2.py": {
+          "exists": true,
+          "sha256_matches": true
+        },
+        "tools/r1b/build_review_workspaces_r1b.py": {
+          "exists": true,
+          "sha256_matches": true
+        },
+        "tools/r1b/test_r1b.py": {
+          "exists": true,
+          "sha256_matches": true
+        },
+        "/home/sittingmongoose/.local/bin/muse-bin-1.4.0-R4161.1": {
+          "exists": true,
+          "sha256_matches": true
+        },
+        "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": {
+          "exists": true,
+          "sha256_matches": true
+        },
+        "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/adapters/zcode_native.py": {
+          "exists": true,
+          "sha256_matches": true
+        }
+      }
+    },
+    "corpus_manifest": {
+      "files": 129,
+      "sha256": "01e8109f6fa2cc387c05b2116e0d8339ae83e797b1db36d50443c52743b20218",
+      "matches_proposal": true
+    },
+    "slots": {
+      "I1-M-control": {
+        "variant": "control",
+        "app": "muse",
+        "status_at_snapshot": "terminal",
+        "input": {
+          "case_file_count": 129,
+          "case_equals_129_manifest": true,
+          "actual_case_equals_manifest": true,
+          "actual_input_record_matches": true,
+          "input_record_errors": [],
+          "only_recorded_input_categories": true,
+          "task_sha256": "f19a85552269a069d70c38f1104ef6cb65c5952fbbb291f2abf6f6673d4cf305",
+          "task_matches_approved_variant": true,
+          "task_exactly_equals_frozen_investigator_prompt": true,
+          "frozen_prompt_sha256": "f19a85552269a069d70c38f1104ef6cb65c5952fbbb291f2abf6f6673d4cf305"
+        },
+        "evidence": [
+          {
+            "path": "i1-20260927/runs/I1-M-control/input-manifest.json",
+            "sha256": "9d7ce4663eeddce87b2de3a46d83cd411ecad76c177a84420dd6d80552dc5fc9",
+            "bytes": 17421
+          },
+          {
+            "path": "i1-20260927/runs/I1-M-control/status.json",
+            "sha256": "868d0660940021306b655301b6eec76a1098a5c0d4bef349d21db7226faa6e37",
+            "bytes": 652
+          },
+          {
+            "path": "i1-20260927/runs/I1-M-control/native/receipt.json",
+            "sha256": "ea0dad8a28ba5fd2c97143c7773372f32bbcb9a814ff7f8bfa093213f8f70292",
+            "bytes": 2397
+          },
+          {
+            "path": "i1-20260927/runs/I1-M-control/arm-receipt.json",
+            "sha256": "ebdf8642422d32b40c449def05723a823e29d5e5a6fa483955f3993b8187b959",
+            "bytes": 595
+          },
+          {
+            "path": "i1-20260927/runs/I1-M-control/frozen-manifest.json",
+            "sha256": "fbd186fe4c0935c5e6f6eb7ec717d57539694944587539e6b31e25edc1d4d17f",
+            "bytes": 559
+          },
+          {
+            "path": "i1-20260927/runs/I1-M-control/host-render-record.json",
+            "sha256": "b045b43f2c94d07e961ec2e92f4f0b77839b5cb134422b4f3280cafbb78b6f79",
+            "bytes": 409
+          },
+          {
+            "path": "i1-20260927/runs/I1-M-control/native/progress.jsonl",
+            "sha256": "f7cf88d0ab860183a7ef46e329867860c1eb4a1b2edf84e928a564446b79662f",
+            "bytes": 392
+          }
+        ],
+        "native": {
+          "model_id": "muse-spark-1.3-contributor",
+          "provider_id": "meta",
+          "effort_effective": "max",
+          "fresh_session": true,
+          "prompt_sha256": "f19a85552269a069d70c38f1104ef6cb65c5952fbbb291f2abf6f6673d4cf305",
+          "caps": {
+            "seconds": 1800.0,
+            "responses": 160
+          },
+          "native_responses": 38,
+          "stop_reason": "goal_complete",
+          "goal_status_final": "complete",
+          "elapsed_seconds": 760.3,
+          "driver_error": null,
+          "model_matches_proposal": true,
+          "max_observed": true,
+          "prompt_matches_input": true,
+          "caps_match_approval": true,
+          "responses_within_cap": true
+        },
+        "classification": {
+          "recorded": "goal_complete",
+          "reused_classifier": "goal_complete",
+          "matches": true,
+          "process_exit": 0,
+          "host_error": null,
+          "priority": "missing receipt > driver_error > nonzero/signal exit > all requests failed > usage gate > native stop mapping"
+        },
+        "frozen_integrity": {
+          "file_count": 4,
+          "exact_frozen_manifest_matches": true,
+          "exact_ws_output_equals_frozen": true,
+          "frozen_files_nonwritable": true
+        },
+        "host_render": {
+          "mode": "exact_control_copy",
+          "returncode": 0,
+          "carrier_valid": null,
+          "recorded_files_exactly_match": true,
+          "semantic_host_edits": false,
+          "review_assembly_or_absence_matcher_invoked": false,
+          "current_equals_exact_frozen_draft": true
+        },
+        "cap_observation": {
+          "cap_events": [],
+          "receipt_elapsed_seconds": 760.3,
+          "note": null
+        }
+      },
+      "I1-M-maintained": {
+        "variant": "maintained",
+        "app": "muse",
+        "status_at_snapshot": "terminal",
+        "input": {
+          "case_file_count": 129,
+          "case_equals_129_manifest": true,
+          "actual_case_equals_manifest": true,
+          "actual_input_record_matches": true,
+          "input_record_errors": [],
+          "only_recorded_input_categories": true,
+          "task_sha256": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f",
+          "task_matches_approved_variant": true,
+          "task_exactly_equals_frozen_investigator_prompt": true,
+          "frozen_prompt_sha256": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f"
+        },
+        "evidence": [
+          {
+            "path": "i1-20260927/runs/I1-M-maintained/input-manifest.json",
+            "sha256": "4854dab4a69b2b9ba407f337f512631137a0e52466e49e11d5ea960ca05e045e",
+            "bytes": 17421
+          },
+          {
+            "path": "i1-20260927/runs/I1-M-maintained/status.json",
+            "sha256": "743955fc1b3af94b8ad064c62456bd82a439b0a8ee92cfe46fa7c1713639c23d",
+            "bytes": 661
+          },
+          {
+            "path": "i1-20260927/runs/I1-M-maintained/native/receipt.json",
+            "sha256": "d90138845d0397903ba6fd3294b97aec17169c252c49c02cffdb4534a25c4035",
+            "bytes": 2408
+          },
+          {
+            "path": "i1-20260927/runs/I1-M-maintained/arm-receipt.json",
+            "sha256": "af836f2a36a40342f2568d30c8656d12fa77e4eb5ecf11261d45f4c8b9d0397d",
+            "bytes": 604
+          },
+          {
+            "path": "i1-20260927/runs/I1-M-maintained/frozen-manifest.json",
+            "sha256": "e7f17846e9c137d4705e1b338058e7e8300b8f093124370005ca391e8db0cce0",
+            "bytes": 140
+          },
+          {
+            "path": "i1-20260927/runs/I1-M-maintained/host-render-record.json",
+            "sha256": "7d3e2c360437e9d925e70cd647e1b329f284adf891d7740367747209b44d61b1",
+            "bytes": 942
+          },
+          {
+            "path": "i1-20260927/runs/I1-M-maintained/native/progress.jsonl",
+            "sha256": "432db63b28626a7d672e7b910bb54b78bf1860d70667e078d638cb4fe4375c43",
+            "bytes": 393
+          }
+        ],
+        "native": {
+          "model_id": "muse-spark-1.3-contributor",
+          "provider_id": "meta",
+          "effort_effective": "max",
+          "fresh_session": true,
+          "prompt_sha256": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f",
+          "caps": {
+            "seconds": 1800.0,
+            "responses": 160
+          },
+          "native_responses": 45,
+          "stop_reason": "goal_complete",
+          "goal_status_final": "complete",
+          "elapsed_seconds": 1122.3,
+          "driver_error": null,
+          "model_matches_proposal": true,
+          "max_observed": true,
+          "prompt_matches_input": true,
+          "caps_match_approval": true,
+          "responses_within_cap": true
+        },
+        "classification": {
+          "recorded": "goal_complete",
+          "reused_classifier": "goal_complete",
+          "matches": true,
+          "process_exit": 0,
+          "host_error": null,
+          "priority": "missing receipt > driver_error > nonzero/signal exit > all requests failed > usage gate > native stop mapping"
+        },
+        "frozen_integrity": {
+          "file_count": 1,
+          "exact_frozen_manifest_matches": true,
+          "exact_ws_output_equals_frozen": true,
+          "frozen_files_nonwritable": true
+        },
+        "host_render": {
+          "mode": "render-current",
+          "returncode": 2,
+          "carrier_valid": false,
+          "recorded_files_exactly_match": true,
+          "semantic_host_edits": false,
+          "review_assembly_or_absence_matcher_invoked": false,
+          "raw_copy_equals_frozen": true,
+          "current_status": "CARRIER_INVALID",
+          "current_has_no_raw_history_keys": true,
+          "current_asserted_claims": 0,
+          "history_retains_exact_raw_draft": true,
+          "invalid_current_is_diagnostic_only": true,
+          "invalid_current_markdown_exact_generic_diagnostic": true,
+          "invalid_current_json_exact_generic_diagnostic": true
+        },
+        "cap_observation": {
+          "cap_events": [],
+          "receipt_elapsed_seconds": 1122.3,
+          "note": null
+        }
+      },
+      "I1-Z-maintained": {
+        "variant": "maintained",
+        "app": "zcode",
+        "status_at_snapshot": "terminal",
+        "input": {
+          "case_file_count": 129,
+          "case_equals_129_manifest": true,
+          "actual_case_equals_manifest": true,
+          "actual_input_record_matches": true,
+          "input_record_errors": [],
+          "only_recorded_input_categories": true,
+          "task_sha256": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f",
+          "task_matches_approved_variant": true,
+          "task_exactly_equals_frozen_investigator_prompt": true,
+          "frozen_prompt_sha256": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f"
+        },
+        "evidence": [
+          {
+            "path": "i1-20260927/runs/I1-Z-maintained/input-manifest.json",
+            "sha256": "4854dab4a69b2b9ba407f337f512631137a0e52466e49e11d5ea960ca05e045e",
+            "bytes": 17421
+          },
+          {
+            "path": "i1-20260927/runs/I1-Z-maintained/status.json",
+            "sha256": "7b9b8ee05048834e86b7efeae7508584d5ca61059b0758cc47851ba637466ad7",
+            "bytes": 640
+          },
+          {
+            "path": "i1-20260927/runs/I1-Z-maintained/native/receipt.json",
+            "sha256": "c22f6210a2eaa94f66f2307bc104930f3c049e5c7c6654241efb53c16953c5a2",
+            "bytes": 1048961
+          },
+          {
+            "path": "i1-20260927/runs/I1-Z-maintained/arm-receipt.json",
+            "sha256": "dc7ed42e9eade19fa83d787fdb56e9a3a3b3acb89fa10311054a76f8765f9547",
+            "bytes": 583
+          },
+          {
+            "path": "i1-20260927/runs/I1-Z-maintained/frozen-manifest.json",
+            "sha256": "c557f982054872b627e86ef411789ca613a5e51f5b85a6899fc0e1fa9e81c58f",
+            "bytes": 286
+          },
+          {
+            "path": "i1-20260927/runs/I1-Z-maintained/host-render-record.json",
+            "sha256": "66b2e002cf78b9afd9cf1b9d30663f0962ccb6d29a6aada7d0576eb67d44badd",
+            "bytes": 944
+          },
+          {
+            "path": "i1-20260927/runs/I1-Z-maintained/native/progress.jsonl",
+            "sha256": "cb14b063fe60b543bdfbb0b5ff95b0c6d3db2ab3626c982b91ba1eb249b435d5",
+            "bytes": 390
+          }
+        ],
+        "native": {
+          "model_id": "GLM-5.3-Flash",
+          "provider_id": "builtin:zai-coding-plan",
+          "effort_effective": "max",
+          "fresh_session": true,
+          "prompt_sha256": "3c91c24f3ad7f6ab3d330b35dd71e29e95771be71a77b10a7050a60d9f12123f",
+          "caps": {
+            "seconds": 1800.0,
+            "responses": 160
+          },
+          "native_responses": 32,
+          "stop_reason": "cap_seconds",
+          "goal_status_final": "active",
+          "elapsed_seconds": 1817.1,
+          "driver_error": null,
+          "model_matches_proposal": true,
+          "max_observed": true,
+          "prompt_matches_input": true,
+          "caps_match_approval": true,
+          "responses_within_cap": true
+        },
+        "classification": {
+          "recorded": "cap_stop",
+          "reused_classifier": "cap_stop",
+          "matches": true,
+          "process_exit": 0,
+          "host_error": null,
+          "priority": "missing receipt > driver_error > nonzero/signal exit > all requests failed > usage gate > native stop mapping"
+        },
+        "frozen_integrity": {
+          "file_count": 2,
+          "exact_frozen_manifest_matches": true,
+          "exact_ws_output_equals_frozen": true,
+          "frozen_files_nonwritable": true
+        },
+        "host_render": {
+          "mode": "render-current",
+          "returncode": 2,
+          "carrier_valid": false,
+          "recorded_files_exactly_match": true,
+          "semantic_host_edits": false,
+          "review_assembly_or_absence_matcher_invoked": false,
+          "raw_copy_equals_frozen": true,
+          "current_status": "CARRIER_INVALID",
+          "current_has_no_raw_history_keys": true,
+          "current_asserted_claims": 0,
+          "history_retains_exact_raw_draft": true,
+          "invalid_current_is_diagnostic_only": true,
+          "invalid_current_markdown_exact_generic_diagnostic": true,
+          "invalid_current_json_exact_generic_diagnostic": true
+        },
+        "cap_observation": {
+          "cap_events": [
+            {
+              "t": "2026-09-27T23:54:55.080152+00:00",
+              "cap": "cap_seconds",
+              "elapsed": 1805.0,
+              "responses": 31
+            }
+          ],
+          "receipt_elapsed_seconds": 1817.1,
+          "note": "Nominal cap is 1800s; the frozen zcode driver polls every 5s then performs stop/cleanup. Observed 1805.0s cap event and 1817.1s receipt are recorded as cap realization/cleanup overhead, not a larger configured cap or retry."
+        }
+      },
+      "I1-Z-control": {
+        "variant": "control",
+        "app": "zcode",
+        "status_at_snapshot": "dispatched",
+        "input": {
+          "case_file_count": 129,
+          "case_equals_129_manifest": true,
+          "actual_case_equals_manifest": true,
+          "actual_input_record_matches": true,
+          "input_record_errors": [],
+          "only_recorded_input_categories": true,
+          "task_sha256": "f19a85552269a069d70c38f1104ef6cb65c5952fbbb291f2abf6f6673d4cf305",
+          "task_matches_approved_variant": true,
+          "task_exactly_equals_frozen_investigator_prompt": true,
+          "frozen_prompt_sha256": "f19a85552269a069d70c38f1104ef6cb65c5952fbbb291f2abf6f6673d4cf305"
+        },
+        "evidence": [
+          {
+            "path": "i1-20260927/runs/I1-Z-control/input-manifest.json",
+            "sha256": "9d7ce4663eeddce87b2de3a46d83cd411ecad76c177a84420dd6d80552dc5fc9",
+            "bytes": 17421
+          },
+          {
+            "path": "i1-20260927/runs/I1-Z-control/status.json",
+            "sha256": "983ffd4738fe09b6aac6ab61245e9270ce79875c3381b985c044cae97f955a27",
+            "bytes": 144
+          }
+        ],
+        "running_config": {
+          "selected_session_settings": [
+            {
+              "provider_id": "builtin:zai-coding-plan",
+              "model_id": "GLM-5.3-Flash",
+              "effort_effective": "max"
+            }
+          ],
+          "observed_model_max_match": true,
+          "active_driver_commands": [
+            {
+              "pid": 3342620,
+              "argv": [
+                "/usr/bin/python3",
+                "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/r1b/run_goal_r1b.py",
+                "--app",
+                "zcode",
+                "--workspace",
+                "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-control/ws",
+                "--prompt-file",
+                "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-control/ws/task.txt",
+                "--out",
+                "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/runs/I1-Z-control/native",
+                "--label",
+                "I1-Z-control",
+                "--max-seconds",
+                "1800",
+                "--max-responses",
+                "160"
+              ]
+            }
+          ],
+          "has_native_receipt": false,
+          "mutable_config_log_snapshot": {
+            "path": "i1-20260927/runs/I1-Z-control/native/zcode-stdout.jsonl",
+            "sha256": "421928cdd38da85b1373a5581a3c6ee48a98ddc74063438dd66c01f09000622a",
+            "bytes": 140591438,
+            "content_not_printed": true
+          }
+        }
+      }
+    },
+    "serial_terminal_order": {
+      "first_three_order_matches": true,
+      "fourth_dispatch_after_third_terminal": true
+    },
+    "amendment_files": {
+      "all_match": true,
+      "files": {
+        "FOLLOW_ON_VERIFIER_STATUS.md": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "I1_AMENDMENT.diff": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "I1_AMENDMENT.md": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "I1_AMENDMENT_VALIDATION.json": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "I1_REVIEW_REQUEST.md": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "NEXT_TRIAL.md": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "check_preparation.py": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "evidence/i1-amendment-independent-review.md": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "evidence/i1-amendment-preparation.json": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "evidence/i1-amendment-published-tests.log": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "evidence/i1-amendment-tests.log": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "prompts/control-carrier.txt": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "prompts/evaluator-i1.txt": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "prompts/investigator-control.txt": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "prompts/investigator-maintained.txt": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "prompts/maintained-carrier.txt": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "proposal.json": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "tools/SCHEMA.md": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "tools/delivery.py": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "tools/stage_i1.py": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        },
+        "tools/test_i1_projection.py": {
+          "exists": true,
+          "sha256_matches": true,
+          "bytes_match": true
+        }
+      }
+    }
+  },
+  "result": "NO_CONCRETE_EXECUTION_BOUNDARY_DEVIATIONS_OBSERVED; FINAL_SLOT_PENDING"
+}

@@ -1,0 +1,204 @@
+{
+  "schema": "i1-reviewer-protocol-audit/v1",
+  "slot": "I1-REV-Z",
+  "created_utc": "2026-09-28T00:41:24.349731+00:00",
+  "role": {
+    "scope": "bounded development protocol/evidence audit; not formal grading",
+    "requested_model": "gpt-6-sol",
+    "requested_effort": "high",
+    "effective_role_identity": "unconfirmed by independent native metadata"
+  },
+  "scope": {
+    "examined": "Z terminal receipts, stream event metadata and public text, frozen prompt and launcher source, staged input hashes and file metadata only",
+    "excluded": [
+      "encrypted/private thinking and signatures",
+      "source/key semantics",
+      "M reviewer outputs or grading",
+      "new model/account calls",
+      "retry, repair or runner changes"
+    ]
+  },
+  "artifacts": {
+    "native_receipt": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/eval/I1-REV-Z-receipt.json",
+      "sha256": "a2279d88fa07b4ac970e030bb09a5c4c9ee3dbd517c5df13aebdc346d8356c27"
+    },
+    "operator_receipt": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/eval/I1-REV-Z-operator-receipt.json",
+      "sha256": "84c059b4f4643eba0c680c370f48c07717b020d27e8f9599c4185473c057093b"
+    },
+    "native_stream": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/eval/I1-REV-Z-stream.jsonl",
+      "sha256": "a81b2ec73070c728e29bbabe71e867158205509ff9f25e159c91c2279bb42d4b"
+    },
+    "input_manifest": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/eval/I1-REV-Z-input-manifest.json",
+      "sha256": "8f23d5ec33b7062207a690ff4f5b4dbccc6dc0c359ee18b1643ef9e3cf44c87e"
+    },
+    "frozen_prompt": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/offline-repair-v1/prompts/evaluator-i1.txt",
+      "sha256": "ca0778fc7fc55a50c557901d906f89bee53e96d3bbc37316a9eafbf39abb71da"
+    },
+    "launcher": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/r1b/run_reviewer_v2.py",
+      "sha256": "7d2c410f16b96230e3b57448ee21e462009843f4dff6e461a04ce168d31a0189"
+    },
+    "approval": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/APPROVAL.json",
+      "sha256": "4b5d550d95017ecb38ffddc340a9e5e4def5c0f808c2d29bead442c3cd3122f4"
+    },
+    "frozen_proposal": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/offline-repair-v1/proposal.json",
+      "sha256": "c8543110ae9048c176189d584d7490eeb2f66a61f80790c5699402e6f5b8512c"
+    }
+  },
+  "input_integrity": {
+    "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/eval/I1-REV-Z",
+    "manifest_entries": 146,
+    "first_view_files": 133,
+    "deferred_files": 13,
+    "hash_or_size_mismatches": [],
+    "missing_paths": [],
+    "unexpected_paths": [],
+    "source_and_key_contents": "hashed as bytes only; no semantic inspection"
+  },
+  "native_configuration": {
+    "argv_without_prompt": [
+      "claude",
+      "-p",
+      "--model",
+      "claude-opus-5-5",
+      "--effort",
+      "xhigh",
+      "--restricted",
+      "--tools",
+      "Read,Grep,Glob,Write,Edit",
+      "--strict-mcp-config",
+      "--output-format",
+      "stream-json",
+      "--verbose",
+      "--permission-mode",
+      "acceptEdits",
+      "--no-session-persistence"
+    ],
+    "model_requested": "claude-opus-5-5",
+    "model_observed": "claude-opus-5-5",
+    "tools_observed": [
+      "Edit",
+      "Glob",
+      "Grep",
+      "Read",
+      "Write"
+    ],
+    "permission_mode_observed": "acceptEdits",
+    "effort_requested": "xhigh",
+    "effective_effort_observed": null,
+    "stream_init_line": 1,
+    "caps": {
+      "seconds": 2700,
+      "responses": 160,
+      "launcher_lines": [
+        22,
+        57,
+        60
+      ]
+    },
+    "model_matches_approval": true
+  },
+  "prompt_delivery": {
+    "frozen_source_line": 1,
+    "authorization_sentence": "This prompt is prepared for a future separately authorized evaluation, not permission to dispatch now.",
+    "sentence_present_exact_in_frozen_source": true,
+    "frozen_source_sha256": "ca0778fc7fc55a50c557901d906f89bee53e96d3bbc37316a9eafbf39abb71da",
+    "source_hash_matches_pin": true,
+    "launcher_reads_prompt_verbatim": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/r1b/run_reviewer_v2.py",
+      "line": 42,
+      "argv_insertion_lines": [
+        25,
+        26
+      ],
+      "behavior": "prompt_file.read_text() is inserted unchanged as the -p argument"
+    },
+    "public_response_line": 27,
+    "public_response_quotes_exact_clause": true,
+    "verification_boundary": "The native receipt deliberately omits prompt argv element 2 (launcher line 118), and stream has no full input-prompt echo/hash. Exact dispatch is source/launcher-bound evidence plus verbatim public clause uptake, not an independent native full-payload echo.",
+    "operator_attestation": {
+      "prompt_file_argument": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/offline-repair-v1/prompts/evaluator-i1.txt",
+      "source": "parent operator message; not a captured provider payload hash",
+      "additional_immutable_dispatch_payload_record": false
+    }
+  },
+  "non_execution": {
+    "stream_lines": 29,
+    "event_type_counts": {
+      "system": 25,
+      "assistant": 2,
+      "rate_limit_event": 1,
+      "result": 1
+    },
+    "distinct_responses": 1,
+    "assistant_events_share_one_message_id": true,
+    "tool_use_events": [],
+    "tool_result_events": [],
+    "read_grep_glob_write_edit_calls": 0,
+    "output_file_count": 0,
+    "output_files": [],
+    "public_response_line": 27,
+    "public_terminal_reason": "Declined to begin because frozen prompt describes a future separately authorized evaluation and native message contained no further perceived authorization. Explicitly stated no workspace open/list/glob and no out writes.",
+    "evidence_limit": "No tool calls are recorded; empty out and unchanged staged inputs corroborate no recorded tool-based execution. This is not an OS-level access trace."
+  },
+  "terminal_precedence": {
+    "elapsed_seconds": 34.7,
+    "native_duration_ms": 33548,
+    "response_count": 1,
+    "native_subtype": "success",
+    "native_is_error": false,
+    "native_exit": 0,
+    "operator_launcher_exit": 0,
+    "stop": null,
+    "error": null,
+    "native_terminal_failure": false,
+    "required_output_validation": {
+      "grades.json": {
+        "exists": false
+      },
+      "review.md": {
+        "exists": false
+      }
+    },
+    "review_status": "FAILED_INCOMPLETE",
+    "operator_review_status": "FAILED_INCOMPLETE",
+    "stream_result_line": 29,
+    "launcher_validation_lines": [
+      101,
+      102,
+      114,
+      116,
+      117
+    ],
+    "finding": "Native success/exit 0 only records completed response delivery. Missing required grades.json and review.md makes this evaluator assignment FAILED_INCOMPLETE; it does not count as completed grading."
+  },
+  "quota_distinction": {
+    "stream_line": 28,
+    "status": "allowed_warning",
+    "five_hour_utilization": 0.9,
+    "weekly_utilization": 0.74,
+    "is_using_overage": false,
+    "quota_stop_observed": false,
+    "finding": "allowed_warning is not a denied request or quota stop. The public authorization refusal and missing outputs explain semantic non-execution. No new account check was made."
+  },
+  "concrete_deviations": [
+    {
+      "boundary": "required evaluator work/output completion",
+      "finding": "Authorized assignment terminated without starting the review or creating any required output, because the exact frozen prompt retained the future/separately-authorized wording.",
+      "classification": "semantic non-execution / FAILED_INCOMPLETE; no native model/tool/cap/input-integrity deviation observed"
+    }
+  ],
+  "limitations": [
+    "No research semantics or formal quality grade assessed.",
+    "Effective xhigh is requested but not observed; native init effort is null.",
+    "First-view/deferred chronology is prompt-only in the same readable workspace; no filesystem-level isolation claim.",
+    "No retry, fix, repair, extra model session, or account inquiry performed."
+  ]
+}

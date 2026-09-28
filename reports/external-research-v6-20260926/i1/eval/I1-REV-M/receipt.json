@@ -1,0 +1,79 @@
+{
+ "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/eval/I1-REV-M",
+ "argv_without_prompt": [
+  "claude",
+  "-p",
+  "--model",
+  "claude-opus-5-5",
+  "--effort",
+  "xhigh",
+  "--restricted",
+  "--tools",
+  "Read,Grep,Glob,Write,Edit",
+  "--strict-mcp-config",
+  "--output-format",
+  "stream-json",
+  "--verbose",
+  "--permission-mode",
+  "acceptEdits",
+  "--no-session-persistence"
+ ],
+ "effort_requested": "xhigh",
+ "init_reported": {
+  "model": "claude-opus-5-5",
+  "effort": null,
+  "tools": [
+   "Edit",
+   "Glob",
+   "Grep",
+   "Read",
+   "Write"
+  ],
+  "permissionMode": "acceptEdits"
+ },
+ "effective_effort_observed": null,
+ "elapsed_seconds": 690.1,
+ "distinct_responses": 38,
+ "assistant_events_without_id": 0,
+ "non_json_lines": 0,
+ "stop": null,
+ "returncode": 0,
+ "error": null,
+ "result": {
+  "subtype": "success",
+  "is_error": false,
+  "duration_ms": 688513,
+  "num_turns": 64,
+  "total_cost_usd": 4.0646974,
+  "modelUsage": {
+   "claude-opus-5-5": {
+    "inputTokens": 76,
+    "outputTokens": 73917,
+    "cacheReadInputTokens": 4293227,
+    "cacheCreationInputTokens": 215926,
+    "webSearchRequests": 0,
+    "costUSD": 4.0646974,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 34740,
+    "canonicalModel": "claude-opus-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  }
+ },
+ "native_terminal_failure": false,
+ "host_validation": {
+  "grades.json": {
+   "exists": true,
+   "sha256": "ffaabf21e23d18f58ac33fc167fc79a60f45103cf621221c2a4f65fc56f291c4",
+   "json_valid": true
+  },
+  "review.md": {
+   "exists": true,
+   "sha256": "6c928554bf1214b1834f3834b558e86f11bff995bcb345ef10c49dbdd86704af"
+  }
+ },
+ "review_status": "COMPLETED",
+ "stream_log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/eval/I1-REV-M-stream.jsonl"
+}

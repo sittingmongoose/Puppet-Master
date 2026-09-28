@@ -1,0 +1,122 @@
+{
+ "schema": "i1_rev_m.acquisition_preservation.v1",
+ "label": "TEST_ONLY_NEVER_PROMOTE; written AFTER deferred access; final-assessment.{json,md} were fixed before deferred access and have not been edited since",
+ "deferred_access_disclosure": "deferred/ was first globbed and read only after out/final-assessment.json and .md were saved. The earlier root Glob('*') breach is disclosed in final-assessment.json. It displayed no deferred names or contents.",
+ "treatment_exposure": "The native-writes traces name source logs runs/I1-M-control (X2) and runs/I1-M-maintained (X1), so the X2=control (observations+draft) and X1=maintained-record mapping is now explicit. Current-report formats had already revealed the carriers at first view.",
+ "hash_note": "The equal-hash relations below (X2 draft.md == first_view current.md; X1 draft.json == raw-draft.json) come from deferred/INVENTORY.json. The evaluator had no shell and did not recompute SHA-256. For X2 the heading sequence and text sampled were identical; X1 identity was not independently checked.",
+ "X1": {
+  "carrier": "maintained-record (draft.json)",
+  "inventory": {
+   "snapshots_json": "none saved (the raw draft's own P-102 says 'No out/snapshots/*.json files were written')",
+   "raw_draft": "deferred/X1/draft.json == deferred/X1/host-audit/raw-draft.json (per INVENTORY): 15 findings F-001..F-015, 106 parts P-001..P-106, revision_history with 2 entries",
+   "current_finding_records": "deferred/X1/host-audit/current.json: status CARRIER_INVALID, findings [], asserted_claims 0",
+   "host_audit_history": "history.md/.json: parse diagnostic 'Expecting ',' delimiter: line 1 column 12283 (char 12282)' plus the raw draft retained for repair",
+   "native_writes": "10 writes to out/draft.json: W1 write_file (recorded_at 1790550462.09) F-001..F-003; W2 edit (+440 s) F-004..F-007; W3 edit (+507 s) touching F-004..F-007/revision_history tail; W4 (+597 s) F-008..F-010; W5 (+755 s) and W6 (+875 s) F-011..F-015; W7-W10 (+901 to +939 s) F-013/F-003/P-102 revisions with previous_text. These corroborate chronology only; they are not source support."
+  },
+  "mechanical_render_fidelity": {
+   "numerator": 0,
+   "denominator": 15,
+   "unit": "findings (106 parts) in raw draft.json rendered into current.md",
+   "result": "total render failure",
+   "cause": "The investigator serialized draft.json as invalid JSON. The raw draft shows an extra closing brace after F-003 ('\"title\": \"Units, scale semantics and omero rendering defaults\"}}, {\"id\": \"F-004\"') and after F-007 ('...never default to /0\"}}, {\"id\": \"F-008\"'). This matches the parser's failure near char 12282. P-105 admits that no JSON validation was run. The renderer correctly refused to assert claims. This is a drafting/serialization defect, not a renderer fidelity defect.",
+   "stage": "drafting (carrier serialization); no verifier stage exists in this trial"
+  },
+  "temporal_semantic_preservation": {
+   "temporal_denominator": "not_recoverable",
+   "reason": "No chronological snapshots/*.json were saved. Native write traces show the append sequence (F-001..F-003 first, then F-004..F-007, F-008..F-010, F-011..F-015) but are not preserved record snapshots.",
+   "observable_subset": "15 findings in the raw draft.json plus 2 revision_history entries (P-016 previous_text; P-102 previous_text). Earliest observable save for each finding comes from the native-writes batch listed above.",
+   "caution": "The raw draft.json is used only as the observable acquisition subset. It is NOT treated as the rendered result; the rendered result is the empty CARRIER_INVALID delivery.",
+   "dispositions_to_final_report": {
+    "retained": {"n": 0, "of": 15},
+    "narrowed": {"n": 0, "of": 15},
+    "lost": {"n": 15, "of": 15, "reason": "delivery carrier invalid; every finding lost at serialization/render, not through research judgment"},
+    "contradicted": {"n": 0, "of": 15},
+    "visibly_unresolved_in_final": "N/A (no final content)",
+    "legitimately_corrected_or_superseded_during_investigation": {"n": 2, "items": ["P-016: overstated S053 omero schema requirement corrected to 'only omero.channels required' (supported by the F-013 dispute record; S053 not evaluator-verified)", "P-102: stale 'revision_history empty' sentence updated (bookkeeping)"], "note": "Both corrections are recorded in revision_history with previous_text, but they were lost at delivery along with everything else."}
+   }
+  },
+  "upstream_only_substance_no_arm_credit": {
+   "note": "Assessed from raw draft.json against the fixed reference for handoff diagnosis only. None of this enters X1's arm score, which remains all-lost. Evaluator verification was limited to the sources already checked at first view; claims resting on S035, S050, S052, S082, S103, S125 were not evaluator-verified.",
+   "reference_trace": {
+    "OME05-C01": {"upstream": "complete supported acquisition", "where": "F-001 (P-001..P-007), F-009 (P-057..P-063)", "facets": "Zarr v3 + attributes.ome version, hierarchy consistency, refusal-or-scoped-0.4 with named layout/version, mismatch surfaced, validation fixtures"},
+    "OME05-C02": {"upstream": "partial (same gap as X2)", "where": "F-002 P-008, P-011, P-012, P-013", "facets_present": "axes length == ndim, dimension_names match, order, controls derived from names/types incl. 2D and missing t/c", "facets_missing": "absent vs length-one"},
+    "OME05-C03": {"upstream": "partial", "where": "F-002 P-012 ('follow datasets[] order, not numeric path order'), F-008", "facets_present": "declared order, no numeric-folder ordering, no factor-2/XY-only, translations", "facets_missing": "declared-but-missing level handling"},
+    "OME05-C04": {"upstream": "partial-to-complete", "where": "F-002 P-011, F-003, F-008 P-055", "facets_present": "per-level scale then translation, then top-level transforms; unit SHOULD with explicit unknown-unit state; 1.0 fallback", "facets_weak": "P-013 check uses the S003 example, which has no translations, so it would not expose reversed composition; P-055 adds a translated-level fixture without a numeric expectation"},
+    "OME05-C05": {"upstream": "complete supported acquisition", "where": "F-004 P-022..P-027, F-005", "facets_present": "labels-group listing (not path guessing), same level count, source.image default ../../, label dims equal or 1 (P-024, S003 L106-108), decouple from omero (S050 #265), image vs label ambiguity recorded as dispute"},
+    "OME05-C06": {"upstream": "partial", "where": "F-004 P-022, P-025", "facets_present": "integer dtypes incl. 64-bit; colors with label-value + rgba", "facets_missing": "keyed-lookup semantics made explicit; categorical resampling; 64-bit precision"},
+    "OME05-C07": {"upstream": "eligible subset complete; remainder unassessable", "where": "F-010 P-064..P-070", "facets_present": "declared support set incl. sharding/codecs/dtypes/endianness; name unsupported feature; no wrong pixels; big-endian >u1 counterexample (S043); explicit 'no spec-wide endianness rule located' bounded absence"},
+    "OME05-C08": {"upstream": "eligible subset partial", "where": "F-012 P-078..P-084, F-006 P-039, F-011", "facets_present": "per-item named failures by cause class; distinguish empty grid positions from load failures; no silent zero-substitution without visible missing-data state; cancellable reads", "caution": "P-083's 'no silent zeros' for missing chunks is not checked against fill_value semantics, which are absent from the corpus"}
+   },
+   "novel_upstream_items_not_in_X2": ["F-005 dispute: image vs label-image indistinguishable in 0.5 (S035 issue #339; not evaluator-verified)", "F-013 dispute: omero prose MUSTs vs schema-optional fields (S035 #430 + S053; not evaluator-verified)", "F-011 AGAVE async/cancel/incremental loading and memory-estimate opportunities (S103/S104/S125; not evaluator-verified)", "F-012 reader failure behavior (S019 parse_url returns None; validator-first diagnostics)"],
+   "upstream_disposition_concerns": ["F-014 P-095 labels warn-and-continue for non-0.5 transforms 'covered' with MUST-notice constraints. This is the same product-choice issue as X2 UA-3, but X1 records adoption of richer transforms as optional (P-096)."]
+  }
+ },
+ "X2": {
+  "carrier": "observations-plus-draft (control)",
+  "inventory": {
+   "observations_md": "O-001..O-045. Every block has source+lines, quote, claim, conditions, implication and open question, so all are qualifying blocks.",
+   "history_md": "one entry stating that no superseded/removed/replaced material exists; created in the same session",
+   "snapshots": "snapshots/0001.md = copy of draft.md revision 1 (header says identical body; headings R-01..R-20, D, U and Coverage match)",
+   "draft_md": "deferred/X2/draft.md, which has the same SHA-256 as first_view/results/X2/current.md per INVENTORY",
+   "native_writes": "6 writes: W1 write observations.md O-001..O-015 (recorded_at 1790549553.99); W2 edit append O-016..O-030 (+120 s); W3 edit append O-031..O-045 (+323 s); W4 write draft.md R-01..R-20 (+510 s); W5 write history.md; W6 write snapshots/0001.md. No later draft edits."
+  },
+  "chronology": "Acquisition was saved in three batches of 15 observations before any draft existed. The draft was written once and never revised. Earliest saved occurrence for O-001..O-015 is W1, O-016..O-030 is W2 and O-031..O-045 is W3. Finer-grained (per-read) chronology inside a batch is not recoverable.",
+  "mechanical_render_fidelity": {
+   "numerator": 20,
+   "denominator": 20,
+   "unit": "R-items (plus D-01..D-04, U-01..U-02, Coverage) from frozen draft.md to current.md",
+   "result": "identical (same SHA-256 per INVENTORY; not recomputed by evaluator)"
+  },
+  "temporal_semantic_preservation": {
+   "denominator": 45,
+   "unit": "source-grounded observation blocks saved during investigation",
+   "retained": {"n": 31, "ids": ["O-001", "O-002", "O-003", "O-004", "O-005", "O-006", "O-007", "O-008", "O-009", "O-010", "O-011", "O-012", "O-013", "O-017", "O-019", "O-022", "O-023", "O-028", "O-030", "O-032", "O-033", "O-035", "O-036", "O-037", "O-038", "O-039", "O-041", "O-042", "O-043", "O-044", "O-045"], "notes": "O-006 is retained, but drafting added the unsupported unit-absent heuristic (UA-5). O-022 and O-035 are retained together with copied errors (UA-4, UA-2). O-043's forward-tolerance posture was copied into R-19 as a 'correction' (UA-3)."},
+   "narrowed": {"n": 11, "items": [
+    {"id": "O-010", "lost_part": "condition 'source default ../../ (S003 L472-474)'. R-11 keeps only 'properties/source MAY', so the declared-association facet of C05 was acquired and then dropped in drafting", "reclassify_note": "counted here rather than in retained; see count correction below"},
+    {"id": "O-018", "lost_part": "implication 'must explain missing/invalid omero instead of silent fallback'"},
+    {"id": "O-020", "lost_part": "implication 'missing per-dataset transforms are malformed input deserving explicit feedback, not silent identity'"},
+    {"id": "O-021", "lost_part": "open question 'whether to block calibrated display when skipping transforms ... unresolved product choice'. It was silently resolved as warn-and-continue under a 'correction' label"},
+    {"id": "O-024", "lost_part": "condition 'matrix scope v0.4 samples; issue titles are allegations'"},
+    {"id": "O-025", "lost_part": "conditions 'matrix scope v0.4; display-vs-parse support conflated'"},
+    {"id": "O-026", "lost_part": "implication 'ideally tolerate zlib-from-0.4 conversions'"},
+    {"id": "O-027", "lost_part": "implication 'endianness/dtype handling must be explicit' and zarr-java little-endian-since-0.12.0 condition"},
+    {"id": "O-029", "lost_part": "condition 'challenge development-version scope (not final 0.5 authority)'; the quoted 'optionally sharding' was overgeneralized to 'do not open at all' (UA-1, introduced in drafting)"},
+    {"id": "O-031", "lost_part": "implication 'pin/test a single Zarr v3-capable stack' (dependency split-brain)"},
+    {"id": "O-034", "lost_part": "implication 'emit version-mismatch warnings without refusing legacy-versioned content it can still parse'. It was silently dropped, with no recorded reason, in tension with O-037/R-18"},
+    {"id": "O-040", "lost_part": "condition 'vendor-doc scope, not NGFF authority'"}
+   ]},
+   "count_correction": "The narrowed list above has 12 entries because O-010 was moved from retained to narrowed during tracing. Final counts: retained 30 (the retained list minus O-010), narrowed 12, lost 3, contradicted 0; total 45.",
+   "lost": {"n": 3, "items": [
+    {"id": "O-014", "substance": "S053 image.schema gates discovery with precise missing-field feedback, and schema pass is not full spec compliance (schema-vs-prose gaps)", "reason": "absent from draft; no history entry; accidental loss"},
+    {"id": "O-015", "substance": "ome-zarr-py FormatV05 at pin: writing unsupported, inherits 0.4 validation (S016 L368-387, evaluator-verified)", "reason": "absent from draft; accidental loss (low consequence)"},
+    {"id": "O-016", "substance": "pinned reader opens read-only and unwraps the ome namespace before matching (S019 L83-100, evaluator-verified). This is relevant to U-01 because, after unwrapping, a 0.5 multiscales[0] lacks 'version' and falls to the 0.1 default", "reason": "absent from draft; accidental loss. It weakens U-01's analysis, which omits the unwrap context"}
+   ]},
+   "contradicted": {"n": 0},
+   "legitimately_corrected_or_superseded": {"n": 0, "note": "N/A: history.md records no supersession, and none is observable"},
+   "visibly_unresolved_in_final": {"n": 6, "items": ["U-01 (O-002/O-017 version location)", "U-02 (O-033 labels registration)", "D-04 OME-XML depth (O-013)", "D-04 min/max vs start/end (O-018/O-038)", "D-04 defaultZ indexing (O-038)", "R-03 reader behavior on inconsistency (O-002)"]},
+   "copied_errors_from_acquisition": ["UA-2 from O-035 claim ('bytes-to-bytes codecs required')", "UA-4 from O-022 implication ('should default hidden')", "UA-3 disposition from O-043 implication ('correct posture is forward-tolerant')"],
+   "errors_introduced_in_drafting": ["UA-1 R-02 'do not open at all' (O-029/O-039 did not say this)", "UA-5 R-07 unit-absent heuristic (not in O-006)", "UA-6 v0.4 scope conditions dropped (O-024/O-025 had them)"],
+   "reference_facets_never_acquired": ["C02 absent vs length-one", "C03 declared-but-missing level", "C05 S003 L106-108 label dims equal or 1 (O-010's bounded absence covered only L431-456, so the acquisition was honest, but the draft later claimed the full S003 read without re-checking)", "C06 label-value keyed lookup and categorical resampling (O-011 recorded only 'label-value MUST be integer')", "C08 fill/absent vs failure distinction and reader-side writes"],
+   "stage_attribution": "Acquisition carried most reference substance. The main losses happened at derivation/drafting (O-010 source, O-014..O-016, dropped conditions); rendering was faithful. There is no verifier stage."
+  },
+  "novel_supported_items_traced": {
+   "NV-1 sharding/codec floor": "first saved O-026 (W2), O-039/O-040 (W3); retained in R-02/R-15, with narrowing (O-029/O-040 conditions)",
+   "NV-2 bioformats2raw collections": "first saved O-013 (W1); retained R-13",
+   "NV-3 HCS": "first saved O-012 (W1), O-030/O-042 (W2/W3); retained R-12",
+   "NV-4 multiple multiscales": "first saved O-008 (W1), O-017/O-024 (W2); retained R-09 (v0.4 condition dropped)",
+   "NV-5 omero defaults": "first saved O-009 (W1), O-018 (W2), O-038 (W3); retained R-10 (explain-missing narrowed)",
+   "NV-6 dtype list": "first saved O-028 (W2); retained R-14",
+   "NV-7 RFC-5 forward tolerance": "first saved O-021 (W2), O-043 (W3); retained R-19 with a disposition hardened from open product choice to 'correction'",
+   "NV-8 alternatives": "first saved O-019/O-020 (W2), O-034/O-036 (W3); retained R-20",
+   "lost_novel": "O-014 schema-gating opportunity (lost)"
+  }
+ },
+ "comparison": {
+  "acquisition": "Both arms acquired substantial source-grounded material. X1's raw draft (upstream only) covers C05 more completely (source.image, 'equal or 1', omero decoupling) and adds two S035 disputes that X2 never visited. X2's 45 observations are well scoped and batch-saved.",
+  "derivation_and_drafting": "X2 lost 3 of 45 and narrowed 12 of 45 during drafting. X1 lost 15 of 15 at serialization because of invalid JSON with no validation step.",
+  "rendering": "X2 render is identical (20/20). X1's renderer correctly refused an invalid carrier (0/15).",
+  "temporal_recoverability": "X2: 3 batch checkpoints recoverable from saved files. X1: not_recoverable from saved records (no snapshots); only native traces show order.",
+  "caveat": "One case and one run per arm. Carrier-type conclusions cannot be generalized. New positives do not offset losses."
+ },
+ "completeness": "Complete within the stated scope. Source claims unique to X1's raw draft (S035, S050, S052, S082, S103-S125) were not evaluator-verified."
+}

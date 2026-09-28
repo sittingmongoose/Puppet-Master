@@ -1,0 +1,21 @@
+{
+  "schema": "i1.evaluation-evidence.v1",
+  "pair": "I1-REV-Z",
+  "vm_only": {
+    "stream.jsonl": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/eval/I1-REV-Z-stream.jsonl",
+      "sha256": "a81b2ec73070c728e29bbabe71e867158205509ff9f25e159c91c2279bb42d4b",
+      "bytes": 25365
+    },
+    "input-manifest.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/eval/I1-REV-Z-input-manifest.json",
+      "sha256": "8f23d5ec33b7062207a690ff4f5b4dbccc6dc0c359ee18b1643ef9e3cf44c87e",
+      "bytes": 20275
+    },
+    "output-manifest.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/eval/I1-REV-Z-output-manifest.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    }
+  }
+}

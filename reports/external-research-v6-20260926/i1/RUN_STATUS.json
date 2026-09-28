@@ -1,0 +1,26 @@
+{
+  "schema": "i1.final-run-status.v1",
+  "state": "closed_partial_evaluation_no_quality_pass",
+  "candidate_assignments_dispatched": 4,
+  "formal_evaluator_assignments_dispatched": 2,
+  "retries": 0,
+  "replacement_slots": 0,
+  "phase_started_utc": "2026-09-27T22:50:00.537319+00:00",
+  "last_assignment_ended_utc": "2026-09-28T00:35:46.746830+00:00",
+  "phase_wall_seconds_at_last_assignment": 6346.21,
+  "phase_wall_ceiling_seconds": 14400,
+  "candidate_results": {
+    "I1-M-control": "goal_complete",
+    "I1-M-maintained": "goal_complete",
+    "I1-Z-control": "goal_complete",
+    "I1-Z-maintained": "cap_stop"
+  },
+  "evaluation_results": {
+    "I1-REV-M": "native_completed; required_files_present; early_broad_glob; explicit_unassessed_scope",
+    "I1-REV-Z": "FAILED_INCOMPLETE; requested_authorization; no_tools_or_grades"
+  },
+  "research_quality_pass": false,
+  "new_calls_authorized_by_this_result": false,
+  "follow_on_verifier": "V-FOLLOWON-1 OPEN / NOT QUALIFIED",
+  "publication_scope": "compact results and evidence pointers only; raw logs/corpus/keys/runtime retained on VM"
+}

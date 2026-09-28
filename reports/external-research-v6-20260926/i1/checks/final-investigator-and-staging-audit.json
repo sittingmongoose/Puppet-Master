@@ -1,0 +1,407 @@
+{
+  "schema": "er6.i1_final_investigator_and_staging_audit.v1",
+  "observed_utc": "2026-09-28T00:27:12.970158+00:00",
+  "role": "bounded development integrity audit; not formal grading",
+  "scope": "final Z-control native/freeze/exactcopy and both immutable evaluator input packages",
+  "excluded": "No evaluator out or live stream inspection, no research/key semantic grading, no model/account calls, no repairs/tests",
+  "approval": {
+    "path": "i1-20260927/APPROVAL.json",
+    "sha256": "4b5d550d95017ecb38ffddc340a9e5e4def5c0f808c2d29bead442c3cd3122f4",
+    "bytes": 3284
+  },
+  "deviations": [],
+  "prompt_only_gate": {
+    "same_readable_workspace": true,
+    "filesystem_isolation_claimed": false,
+    "chronology_enforcement": "reviewer prompt only; deferred is readable from start"
+  },
+  "checks": {
+    "final_Z_control": {
+      "native": {
+        "model_id": "GLM-5.3-Flash",
+        "provider_id": "builtin:zai-coding-plan",
+        "effort_effective": "max",
+        "fresh_session": true,
+        "caps": {
+          "seconds": 1800.0,
+          "responses": 160
+        },
+        "native_responses": 42,
+        "stop_reason": "goal_complete",
+        "goal_status_final": "complete",
+        "elapsed_seconds": 1416.5,
+        "driver_error": null,
+        "prompt_sha256": "f19a85552269a069d70c38f1104ef6cb65c5952fbbb291f2abf6f6673d4cf305"
+      },
+      "outcome": {
+        "recorded": "goal_complete",
+        "classifier": "goal_complete",
+        "matches": true,
+        "process_exit": 0,
+        "terminal": true,
+        "host_error": null
+      },
+      "checks": {
+        "model_max_matches": true,
+        "caps_match": true,
+        "responses_within_cap": true,
+        "prompt_exact_frozen_control": true,
+        "frozen_manifest_exact": true,
+        "ws_output_equals_frozen": true,
+        "frozen_nonwritable": true,
+        "host_files_match_record": true,
+        "current_exact_frozen_draft": true,
+        "host_exactcopy_mode": true,
+        "no_semantic_host_edits": true,
+        "no_review_assembly_or_absence_matcher": true
+      },
+      "frozen_file_count": 4,
+      "evidence": [
+        {
+          "path": "i1-20260927/runs/I1-Z-control/native/receipt.json",
+          "sha256": "dbfdac4422eea016b0743e7b14f36caffd0a82795c75e8a28afe10bed3469ca0",
+          "bytes": 2530
+        },
+        {
+          "path": "i1-20260927/runs/I1-Z-control/arm-receipt.json",
+          "sha256": "4add269abfb91aef7d583bd48b44c171cd31db9e011f926e7783f74b698dc4b1",
+          "bytes": 586
+        },
+        {
+          "path": "i1-20260927/runs/I1-Z-control/status.json",
+          "sha256": "619301197b11ee2d3e3e3233bf8294d453018afc130f51a2c728e5615fa76715",
+          "bytes": 643
+        },
+        {
+          "path": "i1-20260927/runs/I1-Z-control/frozen-manifest.json",
+          "sha256": "2e3728f353189109da379a2e75e6ff2f0c2b1beac1757427105c074a8aa25cd0",
+          "bytes": 560
+        },
+        {
+          "path": "i1-20260927/runs/I1-Z-control/host-render-record.json",
+          "sha256": "9d2c269b9c0c9f0861efc0705821a52eb428b72e35e0e1c5e4fffd8259c2031f",
+          "bytes": 409
+        }
+      ]
+    },
+    "frozen_evaluator_prompt": {
+      "source": {
+        "path": "offline-repair-v1/prompts/evaluator-i1.txt",
+        "sha256": "ca0778fc7fc55a50c557901d906f89bee53e96d3bbc37316a9eafbf39abb71da",
+        "bytes": 6180
+      },
+      "matches_amendment_pin": true,
+      "outside_both_workspaces": true,
+      "live_dispatch_prompt_or_stream_not_inspected": true
+    },
+    "key_identity": {
+      "fixed_reference": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/reference/fixed-reference.json",
+        "sha256": "54fdca6a4aa9a6356da545a0c195c835557c2a8b1fe16feb9356d0d09a83fbde",
+        "bytes": 84756
+      },
+      "reference_matches_proposal_pin": true,
+      "projection_sha256": "9c68ae900c71eb7784819236663a10d30b70c1e0c0cd2233d9b8d74bb2f3897d",
+      "projection_field_names": [
+        "schema",
+        "exhaustive",
+        "historical_reference_requires_pinned_source_revalidation",
+        "ome"
+      ],
+      "scoring_source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/SCORING.md",
+        "sha256": "aa1e2c7aab9128bd1b9e4b2f5c62f7325cc3ff39b6fcdd5d68818742169806bd",
+        "bytes": 9226
+      },
+      "scoring_matches_proposal_pin": true,
+      "semantic_contents_not_output_or_assessed": true
+    },
+    "evaluator_packages": {
+      "I1-REV-M": {
+        "counts": {
+          "case": 129,
+          "first_view_all_files": 133,
+          "current_reports": 2,
+          "deferred_all_files_including_inventory": 12,
+          "deferred_inventory_rows": 11,
+          "manifest_files": 145
+        },
+        "checks": {
+          "manifest_equals_immutable_inputs": true,
+          "first_view_top_level_exact": true,
+          "first_view_exact_files": true,
+          "first_view_case_129_exact": true,
+          "key_exact_original_projection": true,
+          "scoring_exact_original": true,
+          "deferred_exact_saved_records_and_trace": true,
+          "all_current_and_deferred_source_bytes_match": true,
+          "inventory_list_matches_files": true,
+          "input_files_and_directories_nonwritable": true,
+          "no_input_symlinks": true,
+          "blind_map_outside_workspace": true,
+          "no_blindmap_input_file": true,
+          "prompt_only_gate_recorded": true,
+          "stage_no_semantic_host_edits": true
+        },
+        "permissions": {
+          "workspace": "0o775",
+          "first_view": "0o555",
+          "deferred": "0o555",
+          "out_directory_metadata_only": "0o775",
+          "blind_map_outside_ws": "0o664",
+          "note": "Inputs are read-only; map is outside ws but same-user readable. No filesystem isolation or unreadability claim."
+        },
+        "source_comparisons": [
+          {
+            "destination": "first_view/results/X1/current.md",
+            "source": "i1-20260927/runs/I1-M-maintained/host-rendered/current.md",
+            "sha256": "088c0d914c9e990dd0c0fda1152c009004d5d786a01cbca0c902d9a64ee229f1",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X1/draft.json",
+            "source": "i1-20260927/runs/I1-M-maintained/frozen/investigator/draft.json",
+            "sha256": "348793f39ebb6781a46f34228aadf4718f9eab2ebcbb79ea487f81374441b4a7",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X1/host-audit/current.json",
+            "source": "i1-20260927/runs/I1-M-maintained/host-rendered/current.json",
+            "sha256": "1d3ae59a7ca54fed14549274bd4ad50725190e11e279c91d5935fd9a1a99f600",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X1/host-audit/history.md",
+            "source": "i1-20260927/runs/I1-M-maintained/host-rendered/history.md",
+            "sha256": "6e99cbbfdd08c2384976031d64046bb4ab79aa9488fdf8a05536d72a1d8ef8a9",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X1/host-audit/history.json",
+            "source": "i1-20260927/runs/I1-M-maintained/host-rendered/history.json",
+            "sha256": "56356d93854e82802e62737392e8907bb48fa69f5944b7868db93be6d3d326b8",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X1/host-audit/raw-draft.json",
+            "source": "i1-20260927/runs/I1-M-maintained/host-rendered/raw-draft.json",
+            "sha256": "348793f39ebb6781a46f34228aadf4718f9eab2ebcbb79ea487f81374441b4a7",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X1/native-writes.jsonl",
+            "source": "i1-20260927/evidence/I1-M-maintained/acquisition-write-trace.jsonl",
+            "sha256": "16a03006ed5f3e4e13d9c3154ef62eb6e6d4402d20614ea629f15204d7bcf357",
+            "matches": true
+          },
+          {
+            "destination": "first_view/results/X2/current.md",
+            "source": "i1-20260927/runs/I1-M-control/host-rendered/current.md",
+            "sha256": "22e6cb75b21ae6b2a1e3efc23c26c35e2031e1b1043fb4adbe74a249be8bf480",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X2/observations.md",
+            "source": "i1-20260927/runs/I1-M-control/frozen/investigator/observations.md",
+            "sha256": "1e29805d3371ce4138d26015f58b61d3f78ca30221f11877afabecb67f6b5700",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X2/draft.md",
+            "source": "i1-20260927/runs/I1-M-control/frozen/investigator/draft.md",
+            "sha256": "22e6cb75b21ae6b2a1e3efc23c26c35e2031e1b1043fb4adbe74a249be8bf480",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X2/history.md",
+            "source": "i1-20260927/runs/I1-M-control/frozen/investigator/history.md",
+            "sha256": "fa6748111655193b14c067b628a3a3c3ce3e77cf3efe6d82a17e5295c788e5b8",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X2/snapshots/0001.md",
+            "source": "i1-20260927/runs/I1-M-control/frozen/investigator/snapshots/0001.md",
+            "sha256": "ccb27f1ac6601e9285f33f8df5b0a80d34b905090f74032cac21981d748eacc0",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X2/native-writes.jsonl",
+            "source": "i1-20260927/evidence/I1-M-control/acquisition-write-trace.jsonl",
+            "sha256": "480d181bac7184da48ba8f366b4776bdf6063f8591dc23ae0314e3911e94e748",
+            "matches": true
+          }
+        ],
+        "evidence": [
+          {
+            "path": "i1-20260927/eval/I1-REV-M-input-manifest.json",
+            "sha256": "a1d3701d92d1af9cca31c3ffb5b6d30d2fcb798369e80bef30e0a2c0a0d7c30c",
+            "bytes": 20133
+          },
+          {
+            "path": "i1-20260927/eval/I1-REV-M-stage-record.json",
+            "sha256": "76a0923b97ce988957c9bc997462174145154c0d00df12080fd9cfe195ff96fc",
+            "bytes": 245
+          },
+          {
+            "path": "i1-20260927/eval/I1-REV-M-blind-map.PRIVATE.json",
+            "sha256": "3ba931f9fa7d378ee3bb8cc9d2dda49be03c7a45f3f14613b40dac93d39ce96c",
+            "bytes": 52
+          },
+          {
+            "path": "i1-20260927/eval/I1-REV-M/deferred/INVENTORY.json",
+            "sha256": "a4baf58dd37ff0cc8e11d5baea637b9c03d3e7fa3a4be946c9f518826cbe1273",
+            "bytes": 2078
+          }
+        ],
+        "randomization_note": "Final external mapping verified for package identity; random draw not inferable from stored map alone.",
+        "inventory_scope": "Stage acquisition inventory covers current reports and deferred records; the full input manifest separately covers case/key."
+      },
+      "I1-REV-Z": {
+        "counts": {
+          "case": 129,
+          "first_view_all_files": 133,
+          "current_reports": 2,
+          "deferred_all_files_including_inventory": 13,
+          "deferred_inventory_rows": 12,
+          "manifest_files": 146
+        },
+        "checks": {
+          "manifest_equals_immutable_inputs": true,
+          "first_view_top_level_exact": true,
+          "first_view_exact_files": true,
+          "first_view_case_129_exact": true,
+          "key_exact_original_projection": true,
+          "scoring_exact_original": true,
+          "deferred_exact_saved_records_and_trace": true,
+          "all_current_and_deferred_source_bytes_match": true,
+          "inventory_list_matches_files": true,
+          "input_files_and_directories_nonwritable": true,
+          "no_input_symlinks": true,
+          "blind_map_outside_workspace": true,
+          "no_blindmap_input_file": true,
+          "prompt_only_gate_recorded": true,
+          "stage_no_semantic_host_edits": true
+        },
+        "permissions": {
+          "workspace": "0o775",
+          "first_view": "0o555",
+          "deferred": "0o555",
+          "out_directory_metadata_only": "0o775",
+          "blind_map_outside_ws": "0o664",
+          "note": "Inputs are read-only; map is outside ws but same-user readable. No filesystem isolation or unreadability claim."
+        },
+        "source_comparisons": [
+          {
+            "destination": "first_view/results/X1/current.md",
+            "source": "i1-20260927/runs/I1-Z-maintained/host-rendered/current.md",
+            "sha256": "088c0d914c9e990dd0c0fda1152c009004d5d786a01cbca0c902d9a64ee229f1",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X1/draft.json",
+            "source": "i1-20260927/runs/I1-Z-maintained/frozen/investigator/draft.json",
+            "sha256": "4e4b50c2bd015ac99803e9cccdc363c39fcad7153139e350fbfeb3bfed550ec4",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X1/snapshots/0001.json",
+            "source": "i1-20260927/runs/I1-Z-maintained/frozen/investigator/snapshots/0001.json",
+            "sha256": "51e434cedb183fc93844900c167a7b0743f9a14cb376b36904a901c5d92708fe",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X1/host-audit/current.json",
+            "source": "i1-20260927/runs/I1-Z-maintained/host-rendered/current.json",
+            "sha256": "1d3ae59a7ca54fed14549274bd4ad50725190e11e279c91d5935fd9a1a99f600",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X1/host-audit/history.md",
+            "source": "i1-20260927/runs/I1-Z-maintained/host-rendered/history.md",
+            "sha256": "5cb56056cf9a2735e68b933a1e64937021c223a75090dd59cb1ff2e1098b935e",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X1/host-audit/history.json",
+            "source": "i1-20260927/runs/I1-Z-maintained/host-rendered/history.json",
+            "sha256": "07a09f514d92c22d3343c414a79eaa99f5d1f96d0fcbb75df69370692c180de6",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X1/host-audit/raw-draft.json",
+            "source": "i1-20260927/runs/I1-Z-maintained/host-rendered/raw-draft.json",
+            "sha256": "4e4b50c2bd015ac99803e9cccdc363c39fcad7153139e350fbfeb3bfed550ec4",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X1/native-writes.jsonl",
+            "source": "i1-20260927/evidence/I1-Z-maintained/acquisition-write-trace.jsonl",
+            "sha256": "9bdd765fdbf1160ad40491c913236536c90d2f3ec94db8376762bdc4be882611",
+            "matches": true
+          },
+          {
+            "destination": "first_view/results/X2/current.md",
+            "source": "i1-20260927/runs/I1-Z-control/host-rendered/current.md",
+            "sha256": "acc0db280d0b20ff320c5dff2119da54565d74989e204f43d5572dfda2fcb2f7",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X2/observations.md",
+            "source": "i1-20260927/runs/I1-Z-control/frozen/investigator/observations.md",
+            "sha256": "7ce39e817fe2794926aebd3c573f5a3d2c4b0e9b50d3c897b39a096a5f497b1e",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X2/draft.md",
+            "source": "i1-20260927/runs/I1-Z-control/frozen/investigator/draft.md",
+            "sha256": "acc0db280d0b20ff320c5dff2119da54565d74989e204f43d5572dfda2fcb2f7",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X2/history.md",
+            "source": "i1-20260927/runs/I1-Z-control/frozen/investigator/history.md",
+            "sha256": "6377b5a4211f5d0022e080c00ee12795144d07986fbda983091525c9248d818e",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X2/snapshots/0001.md",
+            "source": "i1-20260927/runs/I1-Z-control/frozen/investigator/snapshots/0001.md",
+            "sha256": "631f35094b8666af7deb31cdff7c456ccf5d96e0e2edefd328aec183ec422608",
+            "matches": true
+          },
+          {
+            "destination": "deferred/X2/native-writes.jsonl",
+            "source": "i1-20260927/evidence/I1-Z-control/acquisition-write-trace.jsonl",
+            "sha256": "783376d41e54aa4539bc7a98ab7c838c0a5502ed6b04403bfc151140d2094287",
+            "matches": true
+          }
+        ],
+        "evidence": [
+          {
+            "path": "i1-20260927/eval/I1-REV-Z-input-manifest.json",
+            "sha256": "8f23d5ec33b7062207a690ff4f5b4dbccc6dc0c359ee18b1643ef9e3cf44c87e",
+            "bytes": 20275
+          },
+          {
+            "path": "i1-20260927/eval/I1-REV-Z-stage-record.json",
+            "sha256": "46f0c9effcfe2851ce4cc6842e01cd8c64b6f1bc1daf38dad7685f86a2ffbe10",
+            "bytes": 246
+          },
+          {
+            "path": "i1-20260927/eval/I1-REV-Z-blind-map.PRIVATE.json",
+            "sha256": "e1cab524e64993499236588c87d680d0c726dead0f436d50827753303d570b6d",
+            "bytes": 52
+          },
+          {
+            "path": "i1-20260927/eval/I1-REV-Z/deferred/INVENTORY.json",
+            "sha256": "59135709965eb3c5d5a685f1cbfcf42ea671b58f6df6cb380c4d681a93b6606e",
+            "bytes": 2223
+          }
+        ],
+        "randomization_note": "Final external mapping verified for package identity; random draw not inferable from stored map alone.",
+        "inventory_scope": "Stage acquisition inventory covers current reports and deferred records; the full input manifest separately covers case/key."
+      }
+    }
+  },
+  "result": "NO_CONCRETE_FINAL_INVESTIGATOR_OR_STAGING_DEVIATIONS_OBSERVED"
+}

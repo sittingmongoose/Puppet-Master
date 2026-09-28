@@ -1,0 +1,76 @@
+{
+ "schema": "i1_rev_m.grades.v1",
+ "label": "TEST_ONLY_NEVER_PROMOTE",
+ "status_vocabulary": ["retained", "narrowed", "lost", "contradicted", "inapplicable", "unassessable_missing_input"],
+ "provenance": "Reference statuses are copied from out/final-assessment.json, fixed before deferred access. Acquisition, render and preservation fields come from out/acquisition-and-preservation.json, written after deferred access.",
+ "evaluator": {"model": "claude-opus-5-5", "requested_effort": "xhigh", "observed_effort": "unknown (not observable)"},
+ "disclosures": ["An early root Glob('*') technically covered deferred/ before judgments were fixed; no deferred names or contents were displayed", "Both current-report formats revealed the carrier treatment at first view; native-writes later named control/maintained explicitly", "SHA-256 identities are taken from INVENTORY and were not recomputed (no shell)", "No flash verifier ran; grades reflect source support checked by the evaluator"],
+ "results": {
+  "X1": {
+   "delivery": "CARRIER_INVALID, no claims (first_view/results/X1/current.md L3-5)",
+   "reference_statuses": {
+    "OME05-C01": "lost", "OME05-C02": "lost", "OME05-C03": "lost", "OME05-C04": "lost", "OME05-C05": "lost", "OME05-C06": "lost",
+    "OME05-C07": "unassessable_missing_input (eligible subset: lost)",
+    "OME05-C08": "unassessable_missing_input (eligible subset: lost)"
+   },
+   "loss_cause": "invalid draft.json serialization (extra '}' after F-003 and F-007 in raw draft); not a checked false dismissal and not unvisited scope",
+   "unsupported_claims": [],
+   "false_dismissals": [],
+   "novel_findings": [],
+   "non_findings": [],
+   "acquisition_inventory": {"snapshots_json": 0, "raw_draft_findings": 15, "raw_draft_parts": 106, "revision_history_entries": 2, "native_writes": 10},
+   "mechanical_render_fidelity": {"numerator": 0, "denominator": 15, "note": "renderer correctly refused an invalid carrier"},
+   "temporal_semantic_preservation": {"temporal_denominator": "not_recoverable", "observable_subset": "15 raw-draft findings (native-write batches W1 F-001..F-003, W2 F-004..F-007, W4 F-008..F-010, W5/W6 F-011..F-015)", "retained": 0, "narrowed": 0, "lost": 15, "contradicted": 0, "legitimately_corrected": 2, "visibly_unresolved": "N/A"},
+   "upstream_only_no_credit": "Strong raw substance: C01 and C05 complete, C02/C03/C04/C06 partial, C07 subset complete, C08 subset partial. It also holds disputes F-005 and F-013 (not evaluator-verified). See acquisition-and-preservation.json.",
+   "coherence": "The delivered artifact is truthful but empty",
+   "burden": {"blocking": 0, "nonblocking": 0, "clarifications": 0, "effective": "whole task unanswered"},
+   "coverage": "none delivered; the raw draft's P-099..P-101 self-report broad coverage (upstream only)"
+  },
+  "X2": {
+   "delivery": "coherent unverified report R-01..R-20 (first_view/results/X2/current.md)",
+   "reference_statuses": {
+    "OME05-C01": {"status": "retained", "evidence": "R-01 L7-15, R-03 L29-39, R-18 L209-219; S003 L68-69, L152-156"},
+    "OME05-C02": {"status": "narrowed", "evidence": "R-04, R-05; S003 L173-174, L299-303", "missing": ["absent vs length-one", "name uniqueness", "binding when type absent"]},
+    "OME05-C03": {"status": "narrowed", "evidence": "R-16 L185-195; S003 L304-306", "missing": ["declared-but-missing level handling", "explicit relative path / arbitrary names"]},
+    "OME05-C04": {"status": "retained", "evidence": "R-06 L65-75, R-07, R-08; S003 L308-316", "caveat": "no numeric expectation; UA-5"},
+    "OME05-C05": {"status": "narrowed", "evidence": "R-11 L125-135; S003 L437-455", "missing": ["source.image association (acquired in O-010, dropped in drafting)", "label dims equal or 1 (S003 L106-108)"]},
+    "OME05-C06": {"status": "narrowed", "evidence": "R-11, R-14; S003 L438-439, L461-469", "missing": ["label-value keyed lookup", "categorical resampling", "keyed properties"]},
+    "OME05-C07": {"status": "unassessable_missing_input", "eligible_subset": "retained", "evidence": "R-01, R-02, R-15; S003 L70-72; S055"},
+    "OME05-C08": {"status": "unassessable_missing_input", "eligible_subset": "narrowed", "evidence": "R-17, R-01/R-02/R-15, R-10 L123"}
+   },
+   "unsupported_claims": [
+    {"id": "UA-1", "loc": "R-02 L21", "severity": "low-moderate", "origin": "drafting"},
+    {"id": "UA-2", "loc": "R-15 L175", "severity": "low", "origin": "copied from O-035"},
+    {"id": "UA-3", "loc": "R-19", "severity": "moderate", "origin": "copied disposition from O-043, open question from O-021 dropped", "kind": "silently approved product choice / spec override (S003 L309)"},
+    {"id": "UA-4", "loc": "R-11 L131", "severity": "low", "origin": "copied from O-022", "kind": "silently approved product choice"},
+    {"id": "UA-5", "loc": "R-07 L83", "severity": "low", "origin": "drafting", "kind": "contradictory delivery"},
+    {"id": "UA-6", "loc": "R-06 L67, R-09 L103", "severity": "low", "origin": "drafting dropped v0.4 condition from O-024/O-025"}
+   ],
+   "false_dismissals": [],
+   "unscoped_absence": [],
+   "dropped_material_parts": ["O-010 source.image default", "O-014 schema gating", "O-015 FormatV05 writing unsupported", "O-016 ome-namespace unwrap (weakens U-01)", "O-018/O-020/O-021/O-024/O-025/O-026/O-027/O-029/O-031/O-034/O-040 conditions or implications"],
+   "novel_findings": ["NV-1 sharding/codec floor", "NV-2 bioformats2raw collections", "NV-3 HCS navigation decision", "NV-4 multiple multiscales", "NV-5 omero defaults (optional)", "NV-6 dtype list decision", "NV-7 RFC-5 tolerance (disposition disputed)", "NV-8 alternatives (not evaluator-verified)"],
+   "non_findings": ["R-17 covered by Plan L7/L11", "R-08 SHOULD-level vocabularies", "R-18 AGAVE creates no obligation", "U-02 PR #206 not adopted"],
+   "acquisition_inventory": {"observations": 45, "observation_batches": 3, "history_entries": 1, "snapshots": 1, "draft_revisions": 1, "native_writes": 6},
+   "mechanical_render_fidelity": {"numerator": 20, "denominator": 20, "result": "identical per INVENTORY hash"},
+   "temporal_semantic_preservation": {"denominator": 45, "retained": 30, "narrowed": 12, "lost": 3, "contradicted": 0, "legitimately_corrected_or_superseded": "N/A (0)", "visibly_unresolved": 6, "copied_errors": 3, "drafting_introduced_errors": 3},
+   "coherence": "high; tensions at R-07 and R-19",
+   "burden": {"blocking": 3, "nonblocking": 6, "clarifications": 3, "silently_decided": 2, "redundant": 0},
+   "coverage": {"self_reported_full": 18, "self_reported_partial": 15, "unvisited": "S006, S021-S024, S026, S028-S029, S031-S032, S035-S042, S044-S047, S049-S050, S052, S057, S060-S071, S073-S125 (S043 and S048 were read)", "evaluator_verified_subset": "S003, S054, S055 full; spot checks of S056, S043, S033, S034, S025, S008, S013, S016, S018, S019, S048"}
+  }
+ },
+ "comparison": {
+  "delivered_quality": "X2 > X1. X2 has 2 retained, 4 narrowed, 0 lost, 0 contradicted, plus 2 unassessable (subsets retained/narrowed). X1 has 6 lost plus 2 unassessable (subsets lost).",
+  "matrix": {
+   "OME05-C01": ["lost", "retained"], "OME05-C02": ["lost", "narrowed"], "OME05-C03": ["lost", "narrowed"], "OME05-C04": ["lost", "retained"],
+   "OME05-C05": ["lost", "narrowed"], "OME05-C06": ["lost", "narrowed"], "OME05-C07": ["unassessable (subset lost)", "unassessable (subset retained)"], "OME05-C08": ["unassessable (subset lost)", "unassessable (subset narrowed)"]
+  },
+  "matrix_order": ["X1", "X2"],
+  "handoff": "X1's upstream acquisition was at least comparable to X2's (better on C05 and on disputes), but 100% was lost at serialization. X2 lost or narrowed about a third of its observations at drafting, with faithful rendering.",
+  "consequential_issues": ["X1: total delivery loss from unvalidated JSON (P-105 admits no validation)", "X2: UA-3 silently approved leniency for non-conforming transforms", "X2: C05 source.image acquired then dropped", "X2: O-016 lost, weakening U-01"],
+  "limits": "One case, one run per arm, unverified. No economics read. This does not establish a carrier-level effect."
+ },
+ "unassessed_scope": ["claims resting only on S004, S011, S014, S027, S036, S051, S053, S059, S072, S017, S041, S070, S010 (X2)", "X1 raw-draft claims resting on S035, S050, S052, S082, S103-S125", "SHA-256 recomputation"],
+ "complete": true,
+ "complete_note": "All required files written within scope. The unassessed items above are explicit."
+}
