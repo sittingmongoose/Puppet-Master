@@ -27,9 +27,13 @@
      set(on)           -> commits general.visual.nier-mode through the real settings path; returns false if refused
      setParts(keys)    -> commits general.visual.nier-parts (labels, in PARTS order); unknown keys are ignored
      background()      -> the chosen background option label ("City Ruins", ..., "Follow the page")
-     onChange(cb)      -> unsubscribe function; cb({ on, parts, background, mode, reason }) after every change:
-                          reason 'on' | 'off' | 'parts' | 'background' | 'mode' (light/dark, only while on) | 'init'
-                          (NieR Mode was already on when the Settings state loaded)
+     onChange(cb)      -> unsubscribe function; cb({ on, parts, background, mode, reason, changed }) after every
+                          change: reason 'on' | 'off' | 'parts' | 'background' | 'mode' (light/dark, only while on) |
+                          'init'; changes made together are reported once, reason the first and `changed` all of them
+                          (NieR Mode was already on when the Settings state loaded; only listeners registered while
+                          the Settings script runs hear it, so read on() when you start). 'on' and 'off' fire right
+                          after the repaint, inside the transition and under its cover, so a part can swap its own
+                          scene there; the transition's promise settles after.
      setTransition(fn) -> registers async fn(repaint, { on, reason }) run when NieR Mode turns on or off; it must call
                           repaint() once (the theme changes inside it) and may animate before and after. The default
                           calls repaint() at once. A transition that throws or never calls repaint() still repaints
@@ -108,16 +112,17 @@ function o55NierSnapshot() {
 }
 function o55NierEmit(forced) {
   const snap = o55NierSnapshot(), last = o55NierLast;
-  let reason = forced || null;
-  if (!reason && last) {
-    if (snap.on !== last.on) reason = snap.on ? 'on' : 'off';
-    else if (snap.parts.join(' ') !== last.parts.join(' ')) reason = 'parts';
-    else if (snap.background !== last.background) reason = 'background';
-    else if (snap.mode !== last.mode) reason = 'mode';
+  const changed = [];
+  if (last) {
+    if (snap.on !== last.on) changed.push(snap.on ? 'on' : 'off');
+    if (snap.parts.join(' ') !== last.parts.join(' ')) changed.push('parts');
+    if (snap.background !== last.background) changed.push('background');
+    if (snap.mode !== last.mode && snap.on === last.on) changed.push('mode');
   }
+  const reason = forced || changed[0] || null;
   o55NierLast = snap;
   if (!reason || (!last && !forced)) return;
-  o55NierListeners.forEach(cb => { try { cb(Object.assign({ reason }, snap, { parts: snap.parts.slice() })); } catch (e) { /* a listener never blocks the look */ } });
+  o55NierListeners.forEach(cb => { try { cb(Object.assign({ reason, changed: forced ? [forced] : changed.slice() }, snap, { parts: snap.parts.slice() })); } catch (e) { /* a listener never blocks the look */ } });
 }
 
 /* ---------- turning it on and off ------------------------------------------------------------------------------ */

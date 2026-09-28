@@ -37,6 +37,13 @@ const VIEWS = {
   'settings-look': async (p) => { await p.evaluate(() => window.PM_PAGES.go('settings')); await sleep(500); await p.evaluate(() => window.PM51.go('general', 'app-input')); },
   'settings-providers': async (p) => { await p.evaluate(() => window.PM_PAGES.go('settings')); await sleep(500); await p.evaluate(() => window.PM51.go('ai', 'providers')); },
   'settings-sounds': async (p) => { await p.evaluate(() => window.PM_PAGES.go('settings')); await sleep(500); await p.evaluate(() => window.PM51.go('general', 'notifications')); },
+  'settings-code': async (p) => { await p.evaluate(() => window.PM_PAGES.go('settings')); await sleep(500); await p.evaluate(() => window.PM51.go('code', 'toolchain')); },
+  'settings-source': async (p) => { await p.evaluate(() => window.PM_PAGES.go('settings')); await sleep(500); await p.evaluate(() => window.PM51.go('source', 'source-manager')); },
+  'settings-goals': async (p) => { await p.evaluate(() => window.PM_PAGES.go('settings')); await sleep(500); await p.evaluate(() => window.PM51.go('memory', 'goals')); },
+  'settings-safety': async (p) => { await p.evaluate(() => window.PM_PAGES.go('settings')); await sleep(500); await p.evaluate(() => window.PM51.go('safety', 'permissions')); },
+  'settings-doctor': async (p) => { await p.evaluate(() => window.PM_PAGES.go('settings')); await sleep(500); await p.evaluate(() => window.PM51.go('system', 'doctor')); },
+  'settings-all': async (p) => { await p.evaluate(() => window.PM_PAGES.go('settings')); await sleep(500); await p.evaluate(() => window.PM51.go('projects', 'project-settings')); },
+  'theme-menu': async (p) => { await p.evaluate(() => { window.PM_PAGES.go('dashboard'); const b = document.getElementById('themeSelect'); if (b) b.click(); }); },
   onboarding: async (p) => { await p.evaluate(() => { window.PM_PAGES.go('dashboard'); localStorage.removeItem('pm.o55.onboarding.v1'); window.O55.ui.open({ fresh: true }); }); await sleep(2200); await p.evaluate(() => window.O55.ui.go('look', { silent: true })); },
   tour: async (p) => { await p.evaluate(() => { if (window.O55.S && window.O55.S.open) window.O55.ui.close('done'); localStorage.removeItem('pm.o55.tour.v1'); window.PM_PAGES.go('dashboard'); window.O55.tour.start({ fresh: true }); }); await sleep(2600); }
 };
