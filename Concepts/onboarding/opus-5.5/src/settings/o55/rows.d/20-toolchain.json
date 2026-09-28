@@ -1,12 +1,13 @@
 {
  "rows": {
   "code.editing.lsp-server-catalog": {
-   "why": "Is the language server list.",
+   "why": "Is the language server list; opening it from anywhere goes to that list (status, program, files per server), not a bare list of names.",
    "label": "Language servers",
-   "noun": "server"
+   "noun": "server",
+   "editor": "pm51-toolchain-open-list"
   },
   "code.editing.lsp-custom-servers": {
-   "why": "The list's add button.",
+   "why": "The list's add button: the step-by-step helper (language, server, where the program comes from, files, start options, recap).",
    "actionLabel": "Add a language server",
    "pm51": "pm51-toolchain-add-lsp"
   },
@@ -49,12 +50,13 @@
    "control": "status"
   },
   "code.editing.formatter-catalog": {
-   "why": "Is the formatter list.",
+   "why": "Is the formatter list; opening it from anywhere goes to that list, not a bare list of names.",
    "label": "Formatters",
-   "noun": "formatter"
+   "noun": "formatter",
+   "editor": "pm51-toolchain-open-list"
   },
   "code.editing.formatter-custom": {
-   "why": "The list's add button.",
+   "why": "The list's add button: the step-by-step helper (language, formatter, where the program comes from, files and when it tidies, options, recap).",
    "actionLabel": "Add a formatter",
    "pm51": "pm51-toolchain-add-fmt"
   },

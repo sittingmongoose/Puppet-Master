@@ -281,7 +281,9 @@
   "code.execution.debug-configurations": {
    "label": "Debug profiles",
    "help": "Saved ways to start your program under a debugger. Kept in step with the Debug list.",
-   "noun": "profile"
+   "noun": "profile",
+   "editor": "pm51-testing-open-debug-list",
+   "why": "Kept in step with the Debug list; opening it goes to that list, where New debug profile is the step-by-step helper."
   },
   "safety.approvals.debug-grant-scope": {
    "label": "Debugging may, without asking",

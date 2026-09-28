@@ -342,6 +342,95 @@
     PM51.wizard({ title: target ? `Attach a key to ${target.name}` : 'Add an SSH key', subtitle: 'An SSH key is a pair: a private half that stays where it is made, and a public half you give to the computers and services that should let you in.', eyebrow: 'SSH key', icon: 'key', steps, draft, finishLabel: target ? 'Use this key' : 'Add key',
       onFinish: d => { const id = commitKey(d); if (onDone) onDone(id, d); saveState(); (refreshWith || refresh)(); const k = keyById(id) || { name: 'The key' }; PM51.toast(target ? `${target.name} signs in with ${k.name}` : `${k.name} added`, target ? 'Example only: nothing was changed on the other side.' : 'Copy its public half from SSH keys whenever you need it.', target ? 'info' : 'success'); } });
   }
+  /* ---------- Add a server, step by step ------------------------------------------------------------------------- */
+  const SERVER_KINDS = [
+    { id: 'this', title: 'This computer', text: 'Puppet Master runs as a server right here. It works while this computer is on.', icon: 'system', role: 'This computer' },
+    { id: 'network', title: 'A computer on my network', text: 'A Windows, Mac or Linux computer at home or in the office that stays on.', icon: 'network', role: 'Computer on your network' },
+    { id: 'nas', title: 'A NAS or home server', text: 'Synology, TrueNAS, Unraid or QNAP.', icon: 'database', role: 'NAS' },
+    { id: 'cloud', title: 'A cloud computer', text: 'A server you rent online.', icon: 'cloud', role: 'Cloud computer' }
+  ];
+  const SUGGEST = { nas: ['Home NAS', 'Home server', 'Studio NAS'], cloud: ['Cloud server', 'Rented server', 'Studio cloud'], network: ['Studio PC', 'Office computer', 'Home server'] };
+  function nearby() { const S = sp(); if (!Array.isArray(S.nearby)) S.nearby = clone((PM51_DATA.serverProject || {}).nearby || []); return S.nearby; }
+  const whoName = d => d.name || d.found || d.address || 'the new server';
+  const serverTarget = d => ({ kind: 'server', method: d.kind === 'this' ? 'local' : d.method, name: whoName(d), address: d.kind === 'this' ? 'localhost' : d.address, user: d.user, port: d.port, brand: d.brand });
+  function reachStep(d) {
+    const list = nearby().filter(n => n.kind === d.kind), hit = nearby().find(n => n.id === d.foundId);
+    const found = d.kind === 'cloud' || !list.length ? '' : `<p class="o55-quiet-line">Found on your network</p>` + PM51.tiles(list.map(n => ({ title: n.name, text: `${n.address} · ${n.detail}`, icon: d.kind === 'nas' ? 'database' : 'system', selected: d.foundId === n.id, data: { found: n.id } })), { action: 'pm51-servers-w-found' });
+    const tip = hit && hit.sshOff ? PM51.note(`SSH is off on ${hit.name}. Turn it on in ${hit.brand}’s settings: ${NAS_SSH[hit.brand] || 'look for SSH'}. Or pick “It already runs Puppet Master” next if it does.`, 'attention') : '';
+    return found + tip + `<div class="o55-setup-fields">${d.kind === 'cloud' ? '' : '<p class="o55-quiet-line">Or type its address</p>'}${PM51.field('Address', `<input class="text-control o55-srv-addr o55-setup-mono" value="${a(d.address)}" placeholder="${d.kind === 'cloud' ? '203.0.113.10 or my-server.example.com' : 'For example 192.168.1.20 or nas.local'}" autocomplete="off" spellcheck="false"/>`)}<div class="o55-srv-pair">${PM51.field('Username on it', `<input class="text-control o55-srv-user o55-setup-mono" value="${a(d.user)}" placeholder="${d.kind === 'cloud' ? 'root or ubuntu' : 'you'}" autocomplete="off" spellcheck="false"/>`, 'Needed when it signs in with a key.')}${PM51.field('Port', `<input class="text-control o55-srv-port o55-setup-mono" value="${a(d.port)}" inputmode="numeric" autocomplete="off"/>`, 'Usually 22.')}</div>${d.kind === 'nas' ? PM51.field('Which NAS', PM51.select(d.brand || 'Synology', ['Synology', 'TrueNAS', 'Unraid', 'QNAP'], { cls: 'o55-srv-brand', label: 'Which NAS' })) : ''}</div>`;
+  }
+  function reachCollect(w, d) {
+    const v = s => { const el = w.querySelector(s); return el ? String(el.value || '').trim() : null; };
+    const ad = v('.o55-srv-addr'), us = v('.o55-srv-user'), po = v('.o55-srv-port'), br = v('.o55-srv-brand');
+    if (ad != null) { d.address = ad; const hit = nearby().find(n => n.id === d.foundId); if (hit && hit.address !== ad && hit.name !== ad) { d.foundId = ''; d.found = ''; } }
+    if (us != null) d.user = us; if (po != null) d.port = po || '22'; if (br) d.brand = br;
+  }
+  const reachCheck = d => !d.address ? (d.kind === 'cloud' ? 'Enter its address.' : 'Pick one that was found, or type its address.') : /\s/.test(d.address) ? 'Addresses have no spaces.' : !(Number(d.port) >= 1 && Number(d.port) <= 65535) ? 'The port is a number from 1 to 65535.' : '';
+  function signStep(d) {
+    const tiles = PM51.tiles([
+      { title: 'It already runs Puppet Master', text: 'Approve it once with the setup code it shows. No key or password.', icon: 'link', key: 'pair' },
+      { title: 'Sign in with an SSH key', text: 'Puppet Master signs in over SSH and installs itself there.', icon: 'key', key: 'ssh', meta: 'For a computer without Puppet Master yet' }
+    ].map(t => ({ title: t.title, text: t.text, icon: t.icon, meta: t.meta, selected: d.method === t.key, data: { method: t.key } })), { action: 'pm51-servers-w-method' });
+    if (d.method === 'pair') return tiles + `<div class="o55-setup-fields">${PM51.field('Setup code', `<input class="text-control o55-srv-code o55-setup-mono" value="${a(d.setupCode)}" placeholder="482 913" inputmode="numeric" autocomplete="off"/>`, `Shown on ${whoName(d)}’s setup page.`)}</div>`;
+    if (d.method === 'ssh') return tiles + `<p class="o55-quiet-line o55-key-which">Which key should it use?</p>` + keyPick(d);
+    return tiles;
+  }
+  const signCheck = d => !d.method ? 'Choose how it signs in.' : d.method === 'pair' ? (/^\d{3}\s?\d{3}$/.test(d.setupCode || '') ? '' : 'Enter the six-digit setup code.') : !d.user ? 'Go back and enter the username on it.' : keyCheck(d);
+  function nameStep(d) {
+    if (!d.name) d.name = d.kind === 'this' ? thisComputer() : (d.foundId && (nearby().find(n => n.id === d.foundId) || {}).brand ? `Home ${(nearby().find(n => n.id === d.foundId) || {}).brand}` : (SUGGEST[d.kind] || ['New server'])[0]);
+    return `<div class="o55-setup-fields">${PM51.field('Name', `<input class="text-control o55-srv-name" value="${a(d.name)}" autocomplete="off"/>`)}${(SUGGEST[d.kind] || []).length ? `<div class="pm51-perm-actions o55-srv-suggest">${SUGGEST[d.kind].map(s => PM51.btn({ label: s, small: true, action: 'pm51-servers-w-suggest', data: { name: s } })).join('')}</div>` : ''}</div>`
+      + PM51.rows([
+        { label: 'Let it run work', help: 'Goals and tasks can run on it.', control: PM51.toggle(!!d.runsWork, { action: 'pm51-servers-w-flag', data: { key: 'runsWork' }, label: 'Let it run work' }) },
+        { label: 'Default for new workspaces', help: 'New workspaces live on it unless you pick another.', control: PM51.toggle(!!d.makeDefault, { action: 'pm51-servers-w-flag', data: { key: 'makeDefault' }, label: 'Default for new workspaces' }) }
+      ]);
+  }
+  function serverRecap(d) {
+    const K = SERVER_KINDS.find(k => k.id === d.kind) || {};
+    return PM51.panelSection(d.name, PM51.kv([
+      ['Kind', K.title || '—'],
+      ['Address', d.kind === 'this' ? 'This computer (localhost)' : `${d.address}${d.port && d.port !== '22' ? ':' + d.port : ''}`],
+      ['Signs in', d.kind === 'this' ? 'Nothing needed' : d.method === 'pair' ? 'Approved with its setup code; no key' : `SSH key ${keyLabel(d)}, as ${d.user}`],
+      ['Runs work', d.runsWork ? 'Yes' : 'No'],
+      ['Default for new workspaces', d.makeDefault ? 'Yes' : 'No'],
+      ['Next', d.kind !== 'this' && d.method === 'ssh' ? 'Puppet Master installs itself there, then pairs this device' : 'This device is paired with it']
+    ]), '', { icon: 'server' }) + PM51.note('Only devices you approve can use it.', 'info');
+  }
+  function serverWizard() {
+    const draft = { kind: '', foundId: '', found: '', address: '', user: '', port: '22', brand: '', method: '', setupCode: '', keyMode: '', keyId: '', newName: '', newType: 'Ed25519', filePath: '~/.ssh/id_ed25519', pasted: '', place: '', checked: false, name: '', runsWork: true, makeDefault: false };
+    const steps = [
+      { label: 'Kind', icon: 'server', title: 'What kind of computer will it be?', lead: 'Puppet Master runs on it and does the work, even when this device sleeps.', onShow: track,
+        render: d => PM51.tiles(SERVER_KINDS.map(k => ({ title: k.title, text: k.text, icon: k.icon, selected: d.kind === k.id, done: k.id === 'this' && sp().servers.some(s => s.role === 'This computer'), doneMeta: 'Already one of your servers', doneReason: 'This computer is already on your list.', data: { kind: k.id } })), { action: 'pm51-servers-w-kind' }),
+        check: d => d.kind ? '' : 'Pick what kind of computer it is.' },
+      { label: 'Reach', icon: 'network', title: d => d.kind === 'cloud' ? 'What is its address?' : 'Which one is it?', lead: d => d.kind === 'cloud' ? 'A cloud computer doesn’t show up on your home network. Enter the address its provider shows.' : 'Puppet Master looks on your network. Nothing is changed.',
+        render: reachStep, collect: reachCollect, check: d => d.kind === 'this' ? '' : reachCheck(d), onShow: skipFor(d => d.kind === 'this'), recap: d => d.kind === 'this' ? '' : d.found || d.address },
+      { label: 'Sign in', icon: 'key', title: d => `How should Puppet Master sign in to ${whoName(d)}?`, lead: 'Only once. After that it connects on its own.',
+        render: signStep, collect: (w, d) => { keyCollect(w, d); const c = w.querySelector('.o55-srv-code'); if (c) d.setupCode = String(c.value || '').trim(); }, check: d => d.kind === 'this' ? '' : signCheck(d), onShow: skipFor(d => d.kind === 'this'), recap: d => d.kind === 'this' ? '' : d.method === 'pair' ? 'Setup code' : `Key ${keyLabel(d)}` },
+      { label: 'Key', icon: 'copy', title: d => `Put the key on ${whoName(d)}`, lead: 'It needs the public half once. After that, no password is needed.',
+        render: d => { d.target = serverTarget(d); return placeStep(d); }, collect: placeCollect, check: d => d.kind === 'this' || d.method !== 'ssh' ? '' : placeCheck(d), onShow: skipFor(d => d.kind === 'this' || d.method !== 'ssh'), recap: d => d.kind !== 'this' && d.method === 'ssh' ? (d.place === 'password' ? 'With my password' : 'Added myself') : '' },
+      { label: 'Check', icon: 'test', title: 'Check the connection', lead: 'Puppet Master makes sure it can reach it and sign in. Nothing is installed yet.',
+        render: d => { d.target = serverTarget(d); return checkStep(d); }, check: d => d.checked ? '' : 'Run Check connection first.', onShow: track, recap: () => 'Works' },
+      { label: 'Name', icon: 'edit', title: 'What should we call it?', lead: 'A name you’ll recognise on every device.', onShow: track,
+        render: nameStep, collect: (w, d) => { const n = w.querySelector('.o55-srv-name'); if (n) d.name = String(n.value || '').trim(); },
+        check: d => !d.name ? 'Give it a name.' : sp().servers.some(s => s.name.toLowerCase() === d.name.toLowerCase()) ? `There is already a server called ${d.name}.` : '', recap: d => d.name },
+      { label: 'Recap', icon: 'check', title: d => `Add ${d.name}?`, lead: 'Check it over, then add it.', render: serverRecap, onShow: track }
+    ];
+    PM51.wizard({ title: 'Add a server', subtitle: 'A server keeps your workspace and does the work. Your devices connect to it.', eyebrow: 'New server', icon: 'server', steps, draft, finishLabel: 'Add server', onFinish: d => {
+      const S = sp(), K = SERVER_KINDS.find(k => k.id === d.kind) || SERVER_KINDS[1], id = uid('server', d.name);
+      const keyId = d.kind !== 'this' && d.method === 'ssh' ? commitKey(d) : '';
+      S.servers.push({ id, name: d.name, role: K.role, address: d.kind === 'this' ? 'localhost' : d.address, state: 'Connected', version: '0.8.0', updateReady: false, runsWork: !!d.runsWork, default: false, lastCheck: 'Just now',
+        deployment: d.kind === 'this' ? 'Native app' : d.method === 'ssh' ? (d.kind === 'nas' ? 'Container (installed over SSH)' : 'Installed over SSH') : 'Already running Puppet Master', environments: d.kind === 'nas' ? ['Linux container · server'] : d.kind === 'cloud' ? ['Linux · server'] : [],
+        claimed: true, claimSteps: { identity: true, claim: true }, signIn: d.kind === 'this' ? { method: 'local' } : d.method === 'ssh' ? { method: 'ssh', keyId, user: d.user, port: d.port } : { method: 'pair', user: d.user, port: d.port } });
+      if (d.makeDefault) S.servers.forEach(x => { x.default = x.id === id; });
+      PM51.setSel(ID, id); PM51.setTab(ID, 'servers'); refresh();
+      PM51.toast(`${d.name} added`, 'Example only: nothing was installed or paired in this preview.', 'info');
+    } });
+  }
+  const signInText = s => { const si = s.signIn || { method: s.role === 'This computer' ? 'local' : 'pair' }, k = keyById(si.keyId); if (si.method === 'local') return 'Nothing needed: it is this computer'; if (si.method === 'ssh') return k ? `SSH key ${k.name}, as ${si.user || 'you'}` : 'SSH, but no key is attached'; return `Paired with Puppet Master${k ? ` · SSH key ${k.name} for files and repairs` : '; no key needed'}`; };
+  function attachServerKey(srv) {
+    const si = srv.signIn || {};
+    keyWizard({ target: { kind: 'ssh', name: srv.name, user: si.user || (/nas/i.test(srv.role) ? 'admin' : 'you'), address: srv.address, port: si.port || '22' }, keyId: si.keyId, onDone: id => { srv.signIn = Object.assign({ method: srv.role === 'This computer' ? 'local' : 'pair' }, si, { keyId: id }); if (srv.signIn.method === 'ssh' && srv.state === 'Needs attention') srv.state = 'Connected'; } });
+  }
+
   /* Source Control's Git sign-in uses the same keys and steps. */
   PM51.sysSsh = { keys, keyById, keyUses, keyPick, keyCollect, keyCheck, pubOf, keyLabel, commitKey, placeStep, placeCollect, placeCheck, checkStep, keyWizard, copyBox, keyFp };
 
@@ -407,6 +496,7 @@
           { label: 'Version', value: srv.version, pill: srv.updateReady ? PM51.status('Update ready') : '', action: srv.updateReady ? { label: 'App Updates', action: 'pm51-go', data: { domain: 'system', workspace: 'updates' }, icon: 'arrowRight' } : null },
           { label: 'Runs work', help: 'Allow Goals and tasks to run on this server.', control: PM51.toggle(!!srv.runsWork, { action: 'pm51-servers-runs', data: { id: srv.id }, label: 'Runs work' }) },
           { label: 'Default for new workspaces', control: PM51.toggle(!!srv.default, { action: 'pm51-servers-default', data: { id: srv.id }, label: 'Default for new workspaces' }) },
+          { label: 'Signs in with', help: srv.role === 'This computer' ? '' : 'An SSH key is also how Puppet Master reaches its files and repairs it.', value: signInText(srv), action: srv.role === 'This computer' ? null : { label: srv.signIn && srv.signIn.keyId ? 'Change key' : 'Attach a key', icon: 'key', action: 'pm51-servers-attach-key', data: { id: srv.id } } },
           { label: 'Connection', value: `Checked ${srv.lastCheck}`, action: { label: 'Test connection', icon: 'test', action: 'pm51-servers-test', data: { id: srv.id, 'command-id': 'cmd.execution_host.test' } } }
         ])
       });
@@ -577,7 +667,7 @@
 
   function render() {
     const tab = PM51.tab(ID, 'home');
-    const body = tab === 'servers' ? renderServers() + sshSection() : tab === 'devices' ? renderDevices() : tab === 'away' ? renderAway() : tab === 'move' ? renderMove() : renderHome();
+    const body = tab === 'servers' ? renderServers() + sshSection() + keysSection() : tab === 'devices' ? renderDevices() : tab === 'away' ? renderAway() : tab === 'move' ? renderMove() : renderHome();
     return PM51.page({ id: ID, key: KEY, tabs: TABS, active: tab, body, quiet: [
       { label: 'Check server and devices', action: 'pm51-servers-diagnostics', data: { scope: tab } },
       { label: 'Open Readiness & Doctor', action: 'pm51-go', data: { domain: 'system', workspace: 'doctor' } },
@@ -614,18 +704,41 @@
   function renameServer(srv) {
     openDialog({ title: `Rename ${srv.name}`, body: PM51.form([{ label: 'Name', name: 'name', value: srv.name, autofocus: true }]), saveLabel: 'Save', onSave: data => { const name = String(data.name || '').trim(); if (!name) return false; srv.name = name; refresh(); } });
   }
+  /* Adding an SSH computer is guided (where it is, its key, putting the key there, a check); editing is one form. */
+  function sshWizard() {
+    const draft = { name: '', address: '', user: '', port: '22', folder: '', keyMode: '', keyId: '', newName: '', newType: 'Ed25519', filePath: '~/.ssh/id_ed25519', pasted: '', place: '', checked: false };
+    const tgt = d => ({ kind: 'ssh', name: d.name || d.address, user: d.user, address: d.address, port: d.port, folder: d.folder });
+    PM51.wizard({ title: 'Add an SSH computer', subtitle: 'Another computer you reach over SSH, for files or for running work.', eyebrow: 'SSH computer', icon: 'terminal', draft, finishLabel: 'Add computer', steps: [
+      { label: 'Computer', icon: 'system', title: 'Which computer?', lead: 'Its address, the user you sign in as, and the folder to use.',
+        render: d => `<div class="o55-setup-fields">${PM51.field('Nickname', `<input class="text-control o55-ssh-name" value="${a(d.name)}" placeholder="Ubuntu VM" autocomplete="off"/>`)}${PM51.field('Address', `<input class="text-control o55-ssh-addr o55-setup-mono" value="${a(d.address)}" placeholder="192.168.50.200 or host.example.com" autocomplete="off" spellcheck="false"/>`)}<div class="o55-srv-pair">${PM51.field('User', `<input class="text-control o55-ssh-user o55-setup-mono" value="${a(d.user)}" placeholder="ubuntu" autocomplete="off" spellcheck="false"/>`)}${PM51.field('Port', `<input class="text-control o55-ssh-port o55-setup-mono" value="${a(d.port)}" inputmode="numeric" autocomplete="off"/>`, 'Usually 22.')}</div>${PM51.field('Folder (optional)', `<input class="text-control o55-ssh-folder o55-setup-mono" value="${a(d.folder)}" placeholder="/home/ubuntu/projects" autocomplete="off" spellcheck="false"/>`)}</div>`,
+        collect: (w, d) => { const v = s => String((w.querySelector(s) || {}).value || '').trim(); d.name = v('.o55-ssh-name'); d.address = v('.o55-ssh-addr'); d.user = v('.o55-ssh-user'); d.port = v('.o55-ssh-port') || '22'; d.folder = v('.o55-ssh-folder'); d.target = tgt(d); if (!d.newName) d.newName = `puppet-master-${slugHost(d.name || d.address)}`; },
+        check: d => !d.name ? 'Give it a nickname.' : !d.address || /\s/.test(d.address) ? 'Enter its address.' : !d.user ? 'Enter the user you sign in as.' : sshRemotes().some(x => x.name.toLowerCase() === d.name.toLowerCase()) ? `There is already an SSH computer called ${d.name}.` : '', recap: d => d.name },
+      { label: 'Key', icon: 'key', title: d => `Which key should sign in to ${d.name}?`, lead: 'A key lets Puppet Master connect without a password.', render: keyPick, collect: keyCollect, check: keyCheck, recap: keyLabel },
+      { label: 'Put it there', icon: 'copy', title: d => `Put the key on ${d.name}`, lead: d => `${d.name} needs the public half once. After that, no password is needed.`, render: d => { d.target = tgt(d); return placeStep(d); }, collect: placeCollect, check: placeCheck, recap: d => d.place === 'password' ? 'With my password' : 'Added myself' },
+      { label: 'Check', icon: 'test', title: 'Does it work?', lead: 'A quick sign-in with the key, and a look at the folder.', render: d => { d.target = tgt(d); return checkStep(d); }, check: d => d.checked ? '' : 'Run Check connection first.', recap: () => 'Works' }
+    ], onFinish: d => {
+      const keyId = commitKey(d);
+      saveSsh(sshRemotes().concat([{ name: d.name, address: d.address, user: d.user, port: d.port, folder: d.folder, auth: 'SSH key', keyId }]));
+      PM51.toast(`${d.name} added`, `Signs in with ${(keyById(keyId) || {}).name || 'your key'}. Example only: nothing was changed on ${d.name}.`, 'info');
+    } });
+  }
   function sshDialog(index) {
-    const list = sshRemotes(), f = index != null && index >= 0 ? list[index] : null, creating = !f;
-    openDialog({ title: creating ? 'Add SSH computer' : `Edit ${f.name}`, subtitle: 'Puppet Master uses your SSH keys from the system keychain. Passwords are never stored here.', body: PM51.form([
-      { label: 'Nickname', name: 'name', value: f ? f.name : '', autofocus: true, placeholder: 'Ubuntu VM' },
-      { label: 'Address', name: 'address', value: f ? f.address : '', placeholder: '192.168.50.200 or host.example.com' },
-      { label: 'User', name: 'user', value: f ? f.user : '', placeholder: 'ubuntu' },
-      { label: 'Folder', name: 'folder', value: f ? f.folder : '', placeholder: '/home/ubuntu/projects' },
-      { label: 'Signs in with', name: 'auth', value: f ? f.auth || 'SSH key' : 'SSH key', type: 'select', choices: ['SSH key', 'SSH agent', 'Security key'] }
-    ]), saveLabel: creating ? 'Add computer' : 'Save', onSave: data => {
+    const list = sshRemotes(), f = index != null && index >= 0 ? list[index] : null;
+    if (!f) { sshWizard(); return; }
+    const keyChoices = keys().map(k => ({ value: k.id, label: `SSH key ${k.name}`, meta: `${k.type} · ${k.where}` })).concat([{ value: 'agent', label: 'Any key in my SSH agent' }, { value: 'security', label: 'A security key (touch to sign in)' }]);
+    const cur = f.keyId || (/agent/i.test(f.auth || '') ? 'agent' : /security/i.test(f.auth || '') ? 'security' : (keyChoices[0] || {}).value);
+    openDialog({ title: `Edit ${f.name}`, subtitle: 'Only the public half of a key is used here. Passwords are never stored.', body: PM51.form([
+      { label: 'Nickname', name: 'name', value: f.name, autofocus: true, placeholder: 'Ubuntu VM' },
+      { label: 'Address', name: 'address', value: f.address, placeholder: '192.168.50.200 or host.example.com' },
+      { label: 'User', name: 'user', value: f.user, placeholder: 'ubuntu' },
+      { label: 'Port', name: 'port', value: f.port || '22' },
+      { label: 'Folder', name: 'folder', value: f.folder, placeholder: '/home/ubuntu/projects' },
+      { label: 'Signs in with', name: 'key', value: cur, type: 'select', choices: keyChoices, help: 'To add a new key, use Attach a key on the computer.' }
+    ]), saveLabel: 'Save', onSave: data => {
       const name = String(data.name || '').trim(), address = String(data.address || '').trim(); if (!name || !address) { PM51.toast('Nickname and address are needed', 'Fill in both to continue.', 'warning'); return false; }
-      const entry = { name, address, user: String(data.user || '').trim(), folder: String(data.folder || '').trim(), auth: String(data.auth || 'SSH key') };
-      const next = list.slice(); if (creating) next.push(entry); else next[index] = entry; saveSsh(next);
+      const k = String(data.key || ''), isKey = !!keyById(k);
+      const entry = { name, address, user: String(data.user || '').trim(), port: String(data.port || '22').trim() || '22', folder: String(data.folder || '').trim(), auth: isKey ? 'SSH key' : k === 'agent' ? 'SSH agent' : 'Security key', keyId: isKey ? k : '' };
+      const next = list.slice(); next[index] = entry; saveSsh(next);
     } });
   }
   function conflictPolicyDialog() {
@@ -807,21 +920,32 @@
   }));
 
   /* servers roster */
-  PM51.on('servers-add', () => {
-    const S = sp();
-    openDialog({ title: 'Add a server', subtitle: 'Find one on your network, enter an address, or turn this computer into a server.', body: PM51.form([
-      { label: 'How', name: 'how', value: 'Find nearby', type: 'select', choices: ADD_HOW, full: true },
-      { label: 'Name', name: 'name', value: '', placeholder: 'Office NAS', autofocus: true },
-      { label: 'Address', name: 'address', value: '', placeholder: 'nas.local or 192.168.1.20', help: 'Leave empty when finding nearby.' }
-    ]), saveLabel: 'Add server', onSave: data => {
-      const how = String(data.how), name = String(data.name || '').trim() || (how === 'Use this computer as a server' ? 'This computer' : 'New server');
-      const address = String(data.address || '').trim() || (how === 'Use this computer as a server' ? 'localhost' : how === 'Find nearby' ? 'Searching…' : '');
-      if (!address) { PM51.toast('Address needed', 'Enter the server’s address to continue.', 'warning'); return false; }
-      const id = uid('server', name);
-      S.servers.push({ id, name, role: how === 'Use this computer as a server' ? 'This computer' : 'Server', address, state: 'Waiting for host', version: '—', updateReady: false, runsWork: false, default: false, lastCheck: 'Not checked yet', deployment: how === 'Claim a new server' ? 'Not installed yet' : 'Unknown', environments: [], claimed: false, claimSteps: {} });
-      PM51.setSel(ID, id); refresh();
-    } });
+  PM51.on('servers-add', () => serverWizard());
+  PM51.on('servers-attach-key', el => { const s = serverById(ds(el, 'id')); if (s) attachServerKey(s); });
+  PM51.on('servers-ssh-key', el => attachSshKey(Number(ds(el, 'index'))));
+  PM51.on('servers-key-add', () => keyWizard({}));
+  PM51.on('servers-copy-text', el => copyText(ds(el, 'text'), ds(el, 'what') || 'Text'));
+  /* wizard answers: a card picks and moves on, or redraws its step when it reveals more to fill in */
+  const redraw = w => { const at = w.step(); window.setTimeout(() => { if (w.step() === at) w.go(at); }, 0); };
+  PM51.on('servers-key-mode', el => {
+    const w = PM51.wizardOf(el); if (!w) return; const d = w.draft; keyCollect(el.closest('.drawer-wrap'), d);
+    d.keyMode = ds(el, 'mode'); d.checked = false;
+    if (d.keyMode === 'existing') { d.keyId = ds(el, 'key'); if (!el.closest('.o55g-main').querySelector('[data-action="pm51-servers-w-method"]')) { w.next(); return; } }
+    redraw(w);
   });
+  PM51.on('servers-key-place', el => { const w = PM51.wizardOf(el); if (!w) return; placeCollect(el.closest('.drawer-wrap'), w.draft); w.draft.place = ds(el, 'place'); w.draft.checked = false; if (w.draft.place === 'auto') { w.next(); return; } redraw(w); });
+  PM51.on('servers-key-check', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.checked = true; w.go(w.step()); });
+  PM51.on('servers-w-kind', el => { const w = PM51.wizardOf(el); if (!w) return; const d = w.draft; if (d.kind !== ds(el, 'kind')) { d.foundId = ''; d.found = ''; d.address = ''; d.brand = ''; d.name = ''; d.checked = false; } d.kind = ds(el, 'kind'); w.next(); });
+  PM51.on('servers-w-found', el => {
+    const w = PM51.wizardOf(el); if (!w) return; const d = w.draft, n = nearby().find(x => x.id === ds(el, 'found')); if (!n) return;
+    Object.assign(d, { foundId: n.id, found: n.name, address: n.address, user: d.user || n.user || '', brand: n.brand || d.brand, checked: false });
+    const main = el.closest('.o55g-main'), put = (s, v) => { const x = main && main.querySelector(s); if (x) x.value = v; };
+    put('.o55-srv-addr', d.address); put('.o55-srv-user', d.user); if (d.brand) put('.o55-srv-brand', d.brand);
+    if (n.sshOff) redraw(w); else w.next();
+  });
+  PM51.on('servers-w-method', el => { const w = PM51.wizardOf(el); if (!w) return; keyCollect(el.closest('.drawer-wrap'), w.draft); w.draft.method = ds(el, 'method'); w.draft.checked = false; if (w.draft.method === 'ssh' && !w.draft.newName) w.draft.newName = `puppet-master-${slugHost(whoName(w.draft))}`; redraw(w); });
+  PM51.on('servers-w-suggest', el => { const w = PM51.wizardOf(el); if (!w) return; const inp = el.closest('.o55g-main').querySelector('.o55-srv-name'); if (inp) inp.value = ds(el, 'name'); w.draft.name = ds(el, 'name'); });
+  PM51.on('servers-w-flag', el => { const w = PM51.wizardOf(el); if (!w) return; const k = ds(el, 'key'); w.draft[k] = !w.draft[k]; el.classList.toggle('on', !!w.draft[k]); el.setAttribute('aria-checked', String(!!w.draft[k])); });
   PM51.on('servers-webui', el => { const s = serverById(ds(el, 'id')); if (s) PM51.toast('Opens in your browser', `Example data only. The real app opens https://${s.address} in a new window.`, 'info'); });
   PM51.on('servers-runs', el => { const s = serverById(ds(el, 'id')); if (s) { s.runsWork = !s.runsWork; refresh(); } });
   PM51.on('servers-default', el => {

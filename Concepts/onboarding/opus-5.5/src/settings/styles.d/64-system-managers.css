@@ -1,0 +1,22 @@
+/* System managers (Permissions, Settings Transfer, Server & Project Location, Source Control): the pieces their guided
+   set-ups add. A public key or a command to copy sits in one quiet mono box with its Copy button beside it; two short
+   fields (user and port) share a line; the line that says how profiles and rules relate sits above the profile list.
+   Colours come from the live theme; nothing here is a capsule or a coloured stripe. */
+#panel-settings .o55-key-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 8px; margin: 6px 0 8px; }
+#panel-settings .o55-key-code { display: block; min-width: 0; padding: 9px 11px; border: 1px solid var(--k3-line, var(--border)); border-radius: 8px; background: var(--k3-bg-2, var(--background)); font-family: var(--k3-mono, ui-monospace, monospace); font-size: 11.5px; line-height: 1.5; color: var(--k3-text-2, var(--text-secondary)); white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-all; user-select: all; }
+#panel-settings .o55-key-or { margin-top: 10px; }
+#panel-settings .o55-key-which { margin: 6px 0 -2px; }
+#panel-settings .o55-key-extra { margin-top: 2px; }
+#panel-settings .o55-srv-pair { display: grid; grid-template-columns: minmax(0, 1fr) 96px; gap: 12px; }
+#panel-settings .o55-srv-suggest { margin-top: -4px; }
+#panel-settings .o55-perm-relation { margin: 0 0 10px; font-size: 12.5px; color: var(--k3-text-2, var(--text-secondary)); }
+#panel-settings .o55-perm-attach { margin-top: 10px; }
+#panel-settings .o55-perm-addrule { display: grid; grid-template-columns: minmax(0, 1fr) minmax(120px, 170px) auto; align-items: end; gap: 10px; margin-top: 12px; }
+#panel-settings .o55-perm-addrule .pm51-field { margin: 0; }
+#panel-settings .o55-xfer-all { display: flex; align-items: center; gap: 10px; margin-bottom: 2px; }
+#panel-settings .o55-xfer-all .o55-quiet-line { padding: 0; }
+#panel-settings .o55-move-hist .pm51-item-sub { color: var(--k3-text-3, var(--text-muted)); }
+@container o55g (max-width: 760px) {
+  #panel-settings .o55-perm-addrule { grid-template-columns: minmax(0, 1fr); }
+  #panel-settings .o55-srv-pair { grid-template-columns: minmax(0, 1fr); }
+}

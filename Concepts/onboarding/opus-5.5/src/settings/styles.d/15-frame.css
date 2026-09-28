@@ -23,3 +23,25 @@
 #panel-settings .form-help,
 #panel-settings .empty-copy,
 #panel-settings .capture-fixture-kicker { font-size: 11.5px; }
+
+/* Page index (kit.d/22-index.js): one group per page; a page with tabs lists its tabs, and the open tab unfolds to
+   list its groups under a thin guide line. The entry being read is filled; the open tab that holds it reads bright. */
+#panel-settings .page-index-card .pm51-index-group { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+#panel-settings .page-index-card .pm51-index-group + .pm51-index-group { margin-top: 8px; }
+#panel-settings .page-index-card .pm51-index-group > .page-index-title { margin-top: 0; padding-top: 4px; }
+#panel-settings .pm51-index-tab { font-weight: 600; color: var(--k3-text-2); }
+#panel-settings .pm51-index-tab::before { display: none; }
+#panel-settings .pm51-index-tab > span { flex: 1 1 auto; min-width: 0; }
+#panel-settings .pm51-index-tab > svg { width: 11px; height: 11px; flex: 0 0 auto; opacity: .55; transition: transform 180ms var(--k3-ease-out, ease); }
+#panel-settings .pm51-index-tab.is-open > svg { transform: rotate(90deg); opacity: .8; }
+#panel-settings .pm51-index-tab.is-open, #panel-settings .pm51-index-tab.has-active { color: var(--k3-text-1); }
+#panel-settings .pm51-index-sub { display: flex; flex-direction: column; gap: 1px; margin: 1px 0 4px 9px; padding-left: 4px; border-left: 1px solid var(--k3-line); }
+#panel-settings .pm51-index-sub .index-link { min-height: 26px; }
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion="reduced"]) #panel-settings .pm51-index-sub { animation: pm51IndexOpen 200ms var(--k3-ease-out, ease) both; }
+}
+@keyframes pm51IndexOpen { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+@container settings-host (max-width: 720px) {
+  #panel-settings .page-index-card .pm51-index-group, #panel-settings .pm51-index-sub { display: contents; }
+  #panel-settings .pm51-index-tab > svg { display: none; }
+}
