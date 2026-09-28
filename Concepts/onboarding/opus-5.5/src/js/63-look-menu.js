@@ -17,7 +17,7 @@
     },
     panel(attr) {
       const th = O55.theme();
-      const opt = (f) => `<button type="button" class="o55-lookopt${f === th.family ? ' o55-on' : ''}" ${attr}="lookFamily" data-arg="${f}" role="menuitemradio" aria-checked="${f === th.family}" data-pm-hover-exempt="true">`
+      const opt = (f) => `<button type="button" class="o55-lookopt${f === th.chosen ? ' o55-on' : ''}" ${attr}="lookFamily" data-arg="${f}" role="menuitemradio" aria-checked="${f === th.chosen}" data-pm-hover-exempt="true">`
         + `<span class="o55-lookswatch" data-theme="${f}-${th.mode}" aria-hidden="true"><i></i><i></i><i></i></span><span class="o55-lookname">${U.esc(T('look.families.' + f + '.name'))}</span></button>`;
       const mode = (m) => `<button type="button" class="${m === th.mode ? 'o55-on' : ''}" ${attr}="lookMode" data-arg="${m}" role="menuitemradio" aria-checked="${m === th.mode}" data-pm-hover-exempt="true">${U.esc(T('look.' + m))}</button>`;
       return `<div class="o55-lookmenu" role="menu" aria-label="${U.esc(T('chrome.look'))}"><div class="o55-lookopts">${FAMILIES.map(opt).join('')}</div>`

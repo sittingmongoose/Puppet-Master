@@ -551,6 +551,36 @@
    ]
   },
   {
+   "id": "general.visual.nier-background",
+   "label": "NieR Mode Background",
+   "desc": "The scene drawn in faint ink behind the app while NieR Mode is on: plain parchment, or an ink landscape from the game's world (city ruins, the Bunker, the desert, the forest castle, the amusement park, the flooded city). Follow the page gives each page its own scene. Panels stay solid; the scene shows around and between them.",
+   "type": "select",
+   "options": [
+    "Parchment",
+    "City Ruins",
+    "The Bunker",
+    "Desert",
+    "Forest Castle",
+    "Amusement Park",
+    "Flooded City",
+    "Follow the page"
+   ],
+   "default": "City Ruins",
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "recommended": "City Ruins",
+   "search": [
+    "nier",
+    "background",
+    "wallpaper",
+    "scene",
+    "city ruins",
+    "bunker"
+   ]
+  },
+  {
    "id": "general.visual.glass-background-mode",
    "label": "Glass Background",
    "desc": "What shows behind the glass panels in Glass themes: Mesh is a slowly drifting color gradient, Depth adds floating soft shapes with gentle parallax, Minimal keeps a calm flat backdrop. Applies instantly.",

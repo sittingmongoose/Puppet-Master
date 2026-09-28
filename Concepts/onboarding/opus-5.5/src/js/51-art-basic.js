@@ -10,7 +10,8 @@
     const ink = tok.blue;
     return {
       dark,
-      paper: dark ? A.mix(tok.bg, '#0c2238', 0.42) : A.mix(tok.bg, '#dde7f2', 0.55),
+      /* NieR Mode (painted over Basic) keeps the drafting table on its parchment, not blueprint blue */
+      paper: tok.nier ? A.mix(tok.bg, tok.surface, 0.5) : dark ? A.mix(tok.bg, '#0c2238', 0.42) : A.mix(tok.bg, '#dde7f2', 0.55),
       ink, ink2: A.rgba(ink, dark ? 0.5 : 0.55), faint: A.rgba(ink, dark ? 0.16 : 0.2),
       grid: A.rgba(ink, dark ? 0.06 : 0.08), gridMajor: A.rgba(ink, dark ? 0.12 : 0.15),
       fill: A.rgba(ink, dark ? 0.07 : 0.06), fill2: A.rgba(ink, dark ? 0.14 : 0.12),

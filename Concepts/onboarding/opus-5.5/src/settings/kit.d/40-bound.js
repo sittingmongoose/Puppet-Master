@@ -76,11 +76,12 @@ handleInputAction = function (action, el) {
 const o55DepsOf = {}; /* parent id -> [child id] */
 for (const [id, meta] of Object.entries(O55R)) if (meta && meta.when && meta.when.id) (o55DepsOf[meta.when.id] = o55DepsOf[meta.when.id] || []).push(id);
 /* Relevance follows the chain: a row that waits on a row which is itself hidden is hidden too (Retro scanline
-   strength waits on Retro textures, which only shows while a Retro theme is chosen). */
+   strength waits on Retro textures, which only shows while a Retro theme is chosen). A condition's value comes from
+   PM51.whenValue: while NieR Mode is painted the theme reads as Basic (kit.d/18-nier.js). */
 PM51.relevant = (id, depth = 0) => {
   const w = (O55R[id] || {}).when; if (!w || !w.id) return true;
   if (depth < 4 && w.id !== id && !PM51.relevant(w.id, depth + 1)) return false;
-  const v = PM51.value(w.id);
+  const v = typeof PM51.whenValue === 'function' ? PM51.whenValue(w.id) : PM51.value(w.id);
   if (Array.isArray(w.in)) return w.in.map(String).includes(String(v));
   if (w.not !== undefined) return String(v) !== String(w.not);
   if (w.truthy) return !!v && v !== 'off' && v !== 'none';

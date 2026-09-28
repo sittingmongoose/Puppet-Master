@@ -65,6 +65,8 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `tools/tour_shots.mjs <out> [--themes] [--width --height]` | Every tour step settled, in each theme (parallel browsers), plus after-states and the dock step mid-drag. |
 | `tools/tour_film.mjs <out> [--scenes] [--themes] [--rate]` | Slow-motion films of the handoff, the tour opening, every Show Me, the ELI5 rewrite, the plan read part by part and the finish. |
 | `tools/tour_census.mjs <out> [--wpm]` | Meaningful actions and dwell time per chapter, measured on the real tour. |
+| `tools/nier_palette.py --write \| --check` | NieR Mode's token tables in `src/settings/styles.d/13-nier.css`, generated from `src/settings/nier/nier-automata.json`; `build.py --check` runs `--check` (stale tables, or a colour literal elsewhere in that file). |
+| `tools/nier_hue_audit.mjs <out> [--modes] [--views] [--shots]` | Photographs the main views with NieR Mode on, light and dark, and names the element and property behind every pixel outside ink and parchment (swatches that show a real choice are counted apart). |
 | `tools/perf/perf.py <page> <out.json> [--themes] [--quick] [--headful] [--tracefps]` | Performance walk per theme (opening, screens at rest and changing, typing, tour steps, Show Me, look picker). Python stdlib only, so it runs on the Windows PC over SSH as well as on the VM (`xvfb-run … --headful`). See "Performance rules". |
 | `tools/perf/film.py <page> <outdir> [--themes] [--scenes] [--rate 0.1] [--solid 0\|1]` | Slow-motion 60 fps films of the opening, a screen change with the rig, typing, the tour's ring and Show Me, on the Windows GPU. |
 
@@ -97,6 +99,13 @@ it for someone who has never configured a developer tool. Rules the pages follow
   generated sheet that exists only while one of them is changed.
 - **No side colour bars, no pills, no emoji** in Settings; icons are SVG. Styles avoid `:has()` (lint enforces it;
   a page-wide `:has()` made every DOM insertion restyle the whole document).
+
+**NieR Mode** (Settings › App & Input › Theme & colors, off by default) is a hidden theme painted over the Basic family
+in light or dark, not a ninth theme: the chosen family stays in `PM_THEME`'s state and comes back when it is turned off.
+`build.py` routes every writer of `<html data-theme>` through `window.PM_THEME_PAINT_FAMILY`; `kit.d/18-nier.js` is the
+engine and documents the contract the parts code against (`html[data-o55-nier="on"]`, `data-o55-nier-parts`,
+`window.PM_NIER`); `styles.d/13-nier.css` holds the palette and the embedded faces (M PLUS 1 and JetBrains Mono,
+inlined by `tools/settings_layer.py`; sources and licences in `src/settings/nier/`).
 
 Verifying a change: `build.py --check`, then open the page with `?o55=off` (skips onboarding, which freezes headless
 Chrome) and drive `PM51.go(domain, workspace)`; check all eight themes and 760 / 900 / 1280 / 1700 px widths.

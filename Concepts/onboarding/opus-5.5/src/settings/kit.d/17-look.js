@@ -10,7 +10,8 @@
 const O55_LOOK_IDS = ['general.visual.accent-color', 'general.visual.animation-speed', 'general.interaction.activity-bar-labels', 'general.visual.ui-scale', 'general.visual.font-size', 'general.visual.interface-density',
   'general.visual.line-height', 'general.visual.high-contrast', 'general.visual.focus-indicator', 'general.visual.app-font', 'general.visual.border-width',
   'general.visual.border-radius', 'general.visual.padding-scale', 'general.visual.scrollbar-width', 'general.visual.retro-effects',
-  'general.visual.pixel-grid-opacity', 'general.visual.scanline-opacity', 'general.visual.theme', 'general.visual.theme-mode'];
+  'general.visual.pixel-grid-opacity', 'general.visual.scanline-opacity', 'general.visual.theme', 'general.visual.theme-mode',
+  'general.visual.nier-mode', 'general.visual.nier-parts', 'general.visual.nier-background'];
 /* Accent colors: a brighter shade for dark themes, a deeper one for light themes so text on it stays readable. */
 const O55_ACCENTS = {
   Violet: { dark: ['#8b5cf6', '139,92,246'], light: ['#6d28d9', '109,40,217'] },
@@ -134,15 +135,19 @@ function o55AccentTokens(html, chosen, light) {
 let o55LookKey = '';
 function o55ApplyLook() {
   if (!document.documentElement || !state || !state.settings) return;
+  /* NieR Mode first (kit.d/18-nier.js): a changed switch starts its transition, and while it is painted it decides the
+     accent and the font below */
+  o55NierApply();
+  const nier = o55NierIsPainted();
   const V = id => o55LookChosen(id), html = document.documentElement, st = html.style;
-  const key = O55_LOOK_IDS.map(id => JSON.stringify(state.settings[id] ?? null)).join('|') + '|' + (html.getAttribute('data-theme') || '') + '|' + window.innerWidth;
+  const key = O55_LOOK_IDS.map(id => JSON.stringify(state.settings[id] ?? null)).join('|') + '|' + (html.getAttribute('data-theme') || '') + '|' + window.innerWidth + '|' + nier;
   if (key === o55LookKey) return; o55LookKey = key;
   const set = (name, val) => { if (val == null) st.removeProperty(name); else if (st.getPropertyValue(name) !== String(val)) st.setProperty(name, String(val)); };
   const attr = (name, val) => { if (val == null) html.removeAttribute(name); else if (html.getAttribute(name) !== val) html.setAttribute(name, val); };
   const light = /-light$/.test(html.getAttribute('data-theme') || '');
   /* Accent color. The theme's own accent is read with no override in place (for the first swatch); a chosen one
      replaces it in --accent-primary and in every theme token derived from it (o55AccentTokens). */
-  o55AccentTokens(html, V('general.visual.accent-color'), light);
+  o55AccentTokens(html, nier ? null : V('general.visual.accent-color'), light);
   /* Size of everything: the whole app, like the browser zoom */
   const ui = o55Px(V('general.visual.ui-scale'));
   if (document.body) document.body.style.zoom = ui && ui !== 100 ? String(ui / 100) : '';
@@ -160,7 +165,7 @@ function o55ApplyLook() {
     .forEach(([t, f]) => set(t, rad == null ? null : `${Math.round(rad * f)}px`));
   const sb = o55Px(V('general.visual.scrollbar-width')); set('--pm6-sb-size', sb == null ? null : `${sb}px`);
   /* App font: your computer's fonts in place of the theme's display fonts */
-  const sys = V('general.visual.app-font') === 'System Fonts';
+  const sys = !nier && V('general.visual.app-font') === 'System Fonts';
   set('--body-font', sys ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : null); set('--display-font', sys ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : null);
   attr('data-app-font', sys ? 'system' : null);
   /* High contrast (Basic themes) and the keyboard focus outline */
@@ -235,7 +240,8 @@ function o55PreviewEnd(keep) {
 const o55PreviewChange = handleChangeAction;
 handleChangeAction = function (action, el) {
   const id = el && el.dataset ? el.dataset.setting : '';
-  const watch = action === 'change-setting' && (id === 'general.visual.theme' || id === 'general.visual.theme-mode') && o55On(PM51.value('general.visual.theme-preview'));
+  /* while NieR Mode is painted a picked theme cannot be seen; it is saved and noted instead (kit.d/18-nier.js) */
+  const watch = action === 'change-setting' && (id === 'general.visual.theme' || id === 'general.visual.theme-mode') && o55On(PM51.value('general.visual.theme-preview')) && !o55NierIsPainted();
   const before = watch && !o55Preview ? { 'general.visual.theme': state.settings['general.visual.theme'], 'general.visual.theme-mode': state.settings['general.visual.theme-mode'] } : null;
   const r = o55PreviewChange.apply(this, arguments);
   if (!watch) return r;

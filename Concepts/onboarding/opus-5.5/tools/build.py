@@ -20,6 +20,7 @@ import re
 import sys
 from pathlib import Path
 
+import nier_palette
 import settings_layer
 
 TOOLS = Path(__file__).resolve().parent
@@ -125,6 +126,8 @@ def lint_sources() -> list[str]:
                 problems.append(f'banned word in copy.json{path}: {node[:80]}')
     walk(copy_json(), '')
     problems.extend(duplicate_keys())
+    # NieR Mode's token tables are generated from the theme JSON; stale tables or a stray colour literal fail here.
+    problems.extend(nier_palette.check())
     return problems
 
 
@@ -226,6 +229,51 @@ PATCHES = [
      'teacher persona'),
 ]
 
+
+def nier_paint(var: str) -> str:
+    """The family to paint for a chosen `var`: window.PM_THEME_PAINT_FAMILY(var) when the hook is present and answers a
+    real family, else `var` itself (the hook never decides alone: a throw or an unknown answer paints the choice)."""
+    return ("(function(f){try{var p=typeof window.PM_THEME_PAINT_FAMILY==='function'?window.PM_THEME_PAINT_FAMILY(f):f;"
+            "return /^(friendly|glass|retro|basic)$/.test(p)?p:f;}catch(e){return f;}})(" + var + ")")
+
+
+# NieR Mode (src/settings/kit.d/18-nier.js) is a hidden theme painted over the Basic family. The paint hook
+# window.PM_THEME_PAINT_FAMILY(family) answers the family to paint: 'basic' while NieR Mode is on, the family itself
+# while it is off. PM_THEME's themeState keeps the chosen family and mode, so turning NieR Mode off paints exactly what
+# was chosen. Every writer of <html data-theme> that can run while NieR Mode is on goes through the hook:
+#   - PM_THEME.themeApply (setFamily / setMode / set, the Auto scheme listener, the boot adoption in wireTheme);
+#   - the legacy #themeSelect change bridge, which copies the menu's chosen slug back onto <html>;
+#   - PM7_SETTINGS_TOME.applyPaint (its slug and its no-PM_THEME fallback). Its repaint test compared <html> with the
+#     chosen slug, which under NieR Mode differs on every save, and never noticed a themeState left behind by the
+#     boot adoption; it now compares the painted slug and the chosen family.
+# The head boot script only ever writes basic-<scheme> (its family is the literal 'basic'), so it needs no hook.
+# PM_THEME_PAINT_LABEL() names the painted look in the title-bar menu ('' while NieR Mode is off).
+NIER_PATCHES = [
+    ("    var slug = family + '-' + themeResolveScheme(mode);\n    var prev = document.documentElement.getAttribute('data-theme');",
+     "    var slug = " + nier_paint('family') + " + '-' + themeResolveScheme(mode);\n"
+     "    var prev = document.documentElement.getAttribute('data-theme');",
+     'nier paint hook: themeApply'),
+    ("      var title = 'Theme: ' + PM_THEME_FAMILIES[family] +\n        (mode === 'auto' ? ' (Auto)' : ' (' + PM_THEME_SLUGS[slug] + ')');",
+     "      var paintLabel = typeof window.PM_THEME_PAINT_LABEL === 'function' ? window.PM_THEME_PAINT_LABEL() : '';\n"
+     "      var title = paintLabel ? 'Theme: ' + paintLabel + (mode === 'auto' ? ' (Auto)' : ' (' + (scheme === 'light' ? 'Light' : 'Dark') + ')') :\n"
+     "        'Theme: ' + PM_THEME_FAMILIES[family] +\n        (mode === 'auto' ? ' (Auto)' : ' (' + PM_THEME_SLUGS[slug] + ')');",
+     'nier paint hook: theme menu title'),
+    ("    if (label) label.textContent = PM_THEME_FAMILIES[family] || family;",
+     "    if (label) label.textContent = (typeof window.PM_THEME_PAINT_LABEL === 'function' && window.PM_THEME_PAINT_LABEL()) || PM_THEME_FAMILIES[family] || family;",
+     'nier paint hook: theme menu label'),
+    ("              if (v) document.documentElement.setAttribute('data-theme', v);",
+     "              var pm = /^([a-z]+)-(light|dark)$/.exec(v || '');\n"
+     "              if (pm) v = " + nier_paint('pm[1]') + " + '-' + pm[2];\n"
+     "              if (v) document.documentElement.setAttribute('data-theme', v);",
+     'nier paint hook: legacy themeSelect bridge'),
+    ("var slug=family+'-'+(mode==='auto'?(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):mode);",
+     "var slug=" + nier_paint('family') + "+'-'+(mode==='auto'?(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):mode);",
+     'nier paint hook: applyPaint slug'),
+    ("if(themeKey!==lastPaintThemeKey||currentSlug!==slug){",
+     "if(themeKey!==lastPaintThemeKey||currentSlug!==slug||(window.PM_THEME&&typeof window.PM_THEME.getFamily==='function'&&window.PM_THEME.getFamily()!==family)){",
+     'nier paint hook: applyPaint repaint test'),
+]
+
 # Owner exposures (Astra precedent): hand the real owners to onboarding/tour without a second implementation.
 SETTINGS_ANCHOR = "closeTransientUi:()=>{settingsSoundPreview.stop('settings-surface-close');"
 SETTINGS_EXPOSE = r"""o55SettingsTransfer:(()=>{const pending=new Map();return {sources:()=>settingsCopySources(),categoryFor:(id)=>transferCategoryForId(id),categories:()=>{const s=new Set();const snap=Object.values(window.PM12_REFERENCE?.byCat||{}).flatMap(c=>c.settings||[]);for(const r of snap){if(!r||!r.id||TRANSFER_CREDENTIAL_IDS.has(r.id)||r.credential_ref_only)continue;const c=transferCategoryForId(r.id);if(c)s.add(c);}return [...s];},draftPreview:(sourceId,categories)=>{const snapshot=window.PM7_SETTINGS_TOME.projectSnapshot(sourceId);if(!snapshot?.settings)return {ok:false,reason:'This Project has no readable settings yet.'};const rows=Object.values(window.PM12_REFERENCE?.byCat||{}).flatMap(c=>c.settings||[]),canon=new Map(rows.map(r=>[r.id,r]));const pick=Array.isArray(categories)&&categories.length?new Set(categories):null,groups={},excluded=[];for(const [id,value] of Object.entries(snapshot.settings)){const row=canon.get(id);if(!row)continue;if(TRANSFER_CREDENTIAL_IDS.has(id)||row.credential_ref_only){excluded.push(id);continue;}const cat=transferCategoryForId(id);if(!cat||(pick&&!pick.has(cat)))continue;(groups[cat]=groups[cat]||[]).push({id,label:row.label||id,value});}return {ok:true,sourceId,groups,excludedCount:excluded.length,applied:false};},apply:(sourceId,categories,options)=>applyDetachedSettingsCopy(sourceId,categories,options||{}),applyPending:(sourceId,reservation,categories,options={})=>{
@@ -296,7 +344,7 @@ def build_text() -> str:
         text = text.replace(tour_comment, '', 1)
 
     # 2. Guarded patches.
-    for old, new, label in PATCHES:
+    for old, new, label in PATCHES + NIER_PATCHES:
         text = replace_once(text, old, new, label)
     text = replace_once(text, SETTINGS_ANCHOR, SETTINGS_EXPOSE + SETTINGS_ANCHOR, 'settings transfer exposure')
     text = replace_once(text, LAYOUT_ANCHOR, LAYOUT_EXPOSE + LAYOUT_ANCHOR, 'layout restore exposure')
