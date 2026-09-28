@@ -21,6 +21,8 @@ import sys
 from pathlib import Path
 
 import nier_palette
+import nier_scene_art
+import nier_scenes
 import settings_layer
 
 TOOLS = Path(__file__).resolve().parent
@@ -128,6 +130,11 @@ def lint_sources() -> list[str]:
     problems.extend(duplicate_keys())
     # NieR Mode's token tables are generated from the theme JSON; stale tables or a stray colour literal fail here.
     problems.extend(nier_palette.check())
+    # The scene SVGs are drawn by nier_scene_art.py and composed into kit.d/21-nier-scenes.js by nier_scenes.py.
+    if nier_scene_art.main(['--check']) != 0:
+        problems.append('NieR scene SVGs are stale; run tools/nier_scene_art.py --write')
+    if nier_scenes.main(['--check']) != 0:
+        problems.append('kit.d/21-nier-scenes.js is stale; run tools/nier_scenes.py --write')
     return problems
 
 
