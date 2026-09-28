@@ -291,7 +291,11 @@ def('t6', 'Back rewinds a step, so it can be done again or watched with Show Me'
   A.ok(await showMeOffered(t), 'Back: Show Me is offered on Open Chat');
   await t.callout('showMe'); await t.untilStep('select_teacher', 12000);
   /* choose Teacher by hand, then Back: the guide is what it was, and Show Me chooses Teacher */
-  await t.click('.pm6-chat-personabtn', 'persona picker'); await t.click('.pm6-chat-personaitem[data-persona="Teacher"]', 'Teacher');
+  /* the same waits as t1: the step's entrance and the picker's list take a moment after Show Me hands back */
+  await t.until(() => !window.O55.tour.st.entering && !!window.O55.tour.chat.personaBtn(), 'Teacher picker ready');
+  await t.click('.pm6-chat-personabtn', 'persona picker');
+  await t.until(() => !!window.O55.tour.chat.personaItem('Teacher'), 'Teacher choice ready');
+  await t.click('.pm6-chat-personaitem[data-persona="Teacher"]', 'Teacher');
   await t.untilStep('send_question'); await t.callout('back'); await t.untilStep('select_teacher'); await sleep(500);
   A.eq(await t.ev(() => window.O55.tour.chat.persona()), persona0, 'Back: the guide is ' + persona0 + ' again');
   A.ok(await showMeOffered(t), 'Back: Show Me is offered on Choose Teacher');
