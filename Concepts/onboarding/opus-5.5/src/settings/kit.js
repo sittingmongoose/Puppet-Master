@@ -1036,6 +1036,24 @@ PM51.revealSetting = (id, { detail = false } = {}) => {
 const pm51OriginalApplySearchSelection = applySearchSelection;
 applySearchSelection = function (p) {
   if (p && p.kind === 'setting' && p.id && PM51.revealSetting(p.id)) return;
+  if (p && p.kind === 'provider-model' && p.providerId && p.id) {
+    PM51.s().searchExactTarget = { kind: p.kind, providerId: p.providerId, id: p.id };
+    if (PM51.revealProviderModel && PM51.revealProviderModel(p.providerId, p.id)) return;
+    infoDrawer('Model unavailable', 'The exact model is no longer in the current service list.', [['Service ID', p.providerId], ['Model ID', p.id]]);
+    return;
+  }
+  if (p && (p.kind === 'history-session' || p.kind === 'artifact') && p.id) {
+    PM51.s().searchExactTarget = { kind: p.kind, id: p.id };
+    if (PM51.revealHistoryObject && PM51.revealHistoryObject(p.kind, p.id)) return;
+    infoDrawer('History item unavailable', 'The exact item is no longer in the current workspace history.', [['Kind', p.kind], ['Stable ID', p.id]]);
+    return;
+  }
+  if (p && (p.kind === 'sync-client' || p.kind === 'sync-location') && p.id) {
+    PM51.s().searchExactTarget = { kind: p.kind, id: p.id };
+    infoDrawer('Project Sync item unavailable', 'This search record has no verified identity in the current Servers & Project view. Refresh the owner list before opening it.',
+      [['Stable ID', p.id], ['Kind', p.kind], ['Status', 'Unavailable']]);
+    return;
+  }
   return pm51OriginalApplySearchSelection(p);
 };
 

@@ -1,6 +1,6 @@
 /* Chapter 3 (continued) — Keep your work safe [source_control_setup] and Use it away from home [remote_access_setup].
    Three separate ideas on one calm page: every version saved on this computer (Safe History), an optional online copy
-   (a source service such as GitHub; sign-in or account creation happens right here, the online copy itself is only
+   (a source service such as GitHub; sign-in and account creation use the provider's official page, the online copy itself is only
    made after the reviewed commit), and an optional backup destination (recorded now, signed in after commit).
    Also the shared sign-in screen (browser handoff, device code, create account, access token) and O55.official. */
 (function () {
@@ -9,17 +9,29 @@
   const md = (S) => S.sess.drafts.main;
   const OL = (S) => (S.sess.online = S.sess.online || { purpose: 'copy' });
   const forgeName = (id, variant) => (id === 'github' && variant === 'self_managed' ? T('online.service.github_enterprise') : (O55.fixtures.forge(id) || {}).name || id);
+  const instanceKey = (d) => [d.forge || '', d.forge_provider_variant || '', (() => { try { const u = new URL(d.forge_instance_url || ''); return u.protocol + '//' + u.host.toLowerCase() + u.pathname.replace(/\/+$/, ''); } catch (_) { return ''; } })()].join('|');
+  const accountFor = (S, service) => {
+    const d = md(S), key = instanceKey(d);
+    if (d.forge !== service) return null;
+    const saved = S.sess.forgeAccounts[key]; if (saved) return saved;
+    /* Built-in account fixtures represent only the default hosted product, never an arbitrary host. */
+    if (needsAddress(service, d.forge_provider_variant)) return null;
+    const acc = (S.env.forges[service] || { accounts: [] }).accounts;
+    return acc[0] && acc[0].login || null;
+  };
 
   /* ================================================================== sign-in (selected-source auth only) */
   /* official.signIn(S, {service, name, kind, then, done}) opens the sign-in screen for one service. `done` names a
      completion handler in O55.official.handlers (sessions store names, not functions). */
   O55.official = {
     handlers: {},
-    signIn(S, o) { S.sess.signin = { service: o.service, name: o.name || o.service, kind: o.kind || 'cloud', then: o.then, done: o.done || null, state: 'idle' }; S.save(); O55.ui.go('online-signin'); },
+    signIn(S, o) { S.sess.signin = { service: o.service, name: o.name || o.service, kind: o.kind || 'cloud', then: o.then, done: o.done || null, state: 'idle', instance_key: o.kind === 'forge' ? instanceKey(md(S)) : o.service }; S.save(); O55.ui.go('online-signin'); },
+    accountFor,
     /* kind: signin (default) | signup | guide | page. The notice says which kind of page opened, and shows the address
        only when the concept knows the real one. */
     open(S, o) {
-      O55.owners.dispatch('cmd.auth_profile.open_official_page', { url: o.url || null, kind: o.kind || 'signin' }, S.ctx(), () => ({ ok: true }));
+      O55.owners.dispatch('cmd.auth_profile.open_official_page', { url: o.url || null, kind: o.kind || 'signin',
+        official_route_ref: o.official_route_ref || null, typed_handoff: o.typed_handoff || null }, S.ctx(), () => ({ ok: true }));
       const what = T('official.' + (o.kind || 'signin'), { name: o.name });
       toast(S, o.url ? what + ' — ' + o.url.replace(/^https:\/\//, '').replace(/\/$/, '') : what);
     },
@@ -47,29 +59,27 @@
     const d = md(S), f = O55.fixtures.forge(si.service) || {};
     return f.device && !(d.forge === si.service && needsAddress(si.service, d.forge_provider_variant)) ? f.device : null;
   }
-  function accountFor(S, service) {
-    const acc = (S.env.forges[service] || { accounts: [] }).accounts;
-    return (S.sess.forgeAccounts[service]) || (acc[0] && acc[0].login) || null;
-  }
   function completeSignIn(S, login, action) {
     const si = SI(S);
+    if (!login || (si.kind === 'forge' && si.instance_key !== instanceKey(md(S)))) return false;
     si.state = 'done'; si.account = login;
     if (si.kind === 'forge') {
-      S.sess.forgeAccounts[si.service] = login;
+      S.sess.forgeAccounts[si.instance_key] = login;
       const d = md(S);
-      O55.draft.set(d, { forge_account_action: action, forge_account_ref: 'account:' + si.service + ':' + login });
-      if (OL(S).purpose === 'source') O55.draft.set(d, { source_access_authorization_refs: Array.from(new Set(d.source_access_authorization_refs.concat(['auth:' + si.service + ':' + U.slug(login)]))).slice(0, 16) });
+      O55.draft.set(d, { forge_account_action: action, forge_account_ref: 'account:' + U.slug(si.instance_key) + ':' + U.slug(login) });
+      if (OL(S).purpose === 'source') O55.draft.set(d, { source_access_authorization_refs: Array.from(new Set(d.source_access_authorization_refs.concat(['auth:' + U.slug(si.instance_key) + ':' + U.slug(login)]))).slice(0, 16) });
     }
     if (si.done && O55.official.handlers[si.done]) O55.official.handlers[si.done](S, login);
-    S.save(); O55.sound.play('success'); O55.ui.refresh();
+    S.save(); O55.sound.play('success'); O55.ui.refresh(); return true;
   }
   /* The person finishes in their browser; the fixture completes after a while. A newer attempt (device code, a new
      code) supersedes an older wait, so a stale wait never completes the sign-in. */
   function waitForBrowser(S, ms) {
-    const si = SI(S), attempt = si.attempt || 0, key = 'signin:' + si.service + ':' + attempt;
+    const si = SI(S), attempt = si.attempt || 0, identity = si.instance_key, key = 'signin:' + U.slug(identity) + ':' + attempt;
     F.op(S, key, 'cmd.auth_profile.sign_in', [{ key: 'browser', ms: ms || 2700 }], { quiet: true, onDone: () => {
       const cur = SI(S);
-      if (cur.service === si.service && (cur.attempt || 0) === attempt && cur.state !== 'done') completeSignIn(S, si.kind === 'forge' ? 'jared-p' : 'jared@example.com', 'sign_in_during_setup');
+      if (cur.service === si.service && cur.instance_key === identity && (si.kind !== 'forge' || instanceKey(md(S)) === identity) &&
+          (cur.attempt || 0) === attempt && ['waiting', 'code'].includes(cur.state)) completeSignIn(S, si.kind === 'forge' ? 'jared-p' : 'jared@example.com', 'sign_in_during_setup');
     } });
   }
   def('online-signin', {
@@ -111,15 +121,8 @@
         }
       }
       if (si.state === 'create') {
-        out += `<div class="o55-official" data-key="official" role="group" aria-label="${U.esc(T('online.signin.simTitle', { name: si.name }))}"><div class="o55-officialbar"><span class="o55-dot"></span><span class="o55-dot"></span><span class="o55-dot"></span><span class="o55-officialurl">${U.esc((f && f.signup) || si.service)}</span></div>`
-          + `<div class="o55-officialbody"><p class="o55-officialtitle">${U.esc(T('online.signin.simTitle', { name: si.name }))}</p>`
-          + C.field({ bind: 'simUser', label: T('online.signin.simUser'), value: si.simUser || '', placeholder: 'jared-p' }) + C.field({ bind: 'simEmail', label: T('online.signin.simEmail'), value: si.simEmail || '', placeholder: 'jared@example.com' })
-          + O55.ui.btn({ label: T('online.signin.simButton'), do: 'simCreate', disabled: !F.nonEmpty(si.simUser) || !/@/.test(si.simEmail || ''), reason: T('online.signin.simEmail') }, 'o55-primary')
-          + `<p class="o55-hint">${U.esc(T('online.signin.simNote', { name: si.name }))}</p></div></div>`;
-      }
-      if (si.state === 'email') {
-        out += `<div class="o55-banner" data-key="email">${C.small('spark', 18)}<span>${U.esc(T('online.signin.email'))}</span></div>`;
-        out += `<div class="o55-actions" data-key="conf">${O55.ui.btn({ label: T('online.signin.confirmed'), do: 'confirmed' }, 'o55-primary')}</div>`;
+        out += `<div class="o55-banner" data-key="external-signup">${C.small('globe', 18)}<span>Finish creating your account on the official ${U.esc(si.name)} page. This window does not collect provider signup details.</span></div>`
+          + `<div class="o55-actions" data-key="return-signin">${O55.ui.btn({ label: 'I returned · sign in', do: 'signupBack' }, 'o55-primary')}</div>`;
       }
       return out;
     },
@@ -137,8 +140,7 @@
       code(S) { const si = SI(S); si.state = 'code'; si.code = 'WDJB-MJHT'; si.codeUntil = Date.now() + 900000; si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); F.ticker(S, 'online-signin', 1000, () => SI(S).state !== 'code'); waitForBrowser(S, 7000); },
       newCode(S) { const si = SI(S); si.code = ['WDJB', 'K3PX', 'R7QM', 'T2LN'][Math.floor(Math.random() * 4)] + '-' + ['MJHT', 'V9CZ', 'H4WE', 'B8KD'][Math.floor(Math.random() * 4)]; si.codeUntil = Date.now() + 900000; si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); waitForBrowser(S, 7000); },
       create(S) { const si = SI(S); si.state = 'create'; S.save(); O55.official.open(S, { kind: 'signup', name: si.name, url: si.kind === 'forge' ? O55.official.forgeUrl(S, si.service, 'signup') : null }); O55.ui.refresh(); },
-      simCreate(S) { const si = SI(S); si.state = 'email'; si.newLogin = si.simUser.trim(); S.save(); O55.ui.refresh(); },
-      confirmed(S) { const si = SI(S); completeSignIn(S, si.newLogin || 'jared-p', 'create_account_during_setup'); },
+      signupBack(S) { const si = SI(S); si.state = 'idle'; si.another = true; S.save(); O55.ui.refresh(); },
       tokenOn(S) { SI(S).state = 'token'; S.save(); O55.ui.refresh(); },
       tokenCheck(S) {
         const si = SI(S), i = S.root.querySelector('#o55f-token'), v = i ? i.value.trim() : ''; if (i) i.value = '';
@@ -150,14 +152,13 @@
       },
       next(S) {
         const si = SI(S);
-        if (si.state !== 'done' && si.kind === 'forge') { const k = accountFor(S, si.service); completeSignIn(S, k, 'already_connected'); }
+        if (si.state !== 'done' && si.kind === 'forge') { const k = accountFor(S, si.service); if (!completeSignIn(S, k, 'already_connected')) return; }
+        if (si.state !== 'done') return;
         O55.ui.go(si.then || 'safe');
       }
     },
     bind: {
-      token(S, v) { const had = !!SI(S).tokenTyped; SI(S).tokenTyped = v.length > 0; if (had !== SI(S).tokenTyped) { S.save(); O55.ui.refresh(); } },
-      simUser(S, v) { SI(S).simUser = v; S.save(); O55.ui.refresh(); },
-      simEmail(S, v) { SI(S).simEmail = v; S.save(); O55.ui.refresh(); }
+      token(S, v) { const had = !!SI(S).tokenTyped; SI(S).tokenTyped = v.length > 0; if (had !== SI(S).tokenTyped) { S.save(); O55.ui.refresh(); } }
     },
     skipOnBack: (S) => SI(S).state === 'done'
   });
@@ -207,7 +208,9 @@
         if (sel === 'github_enterprise') { forge = 'github'; variant = 'self_managed'; }
         if (sel === 'bitbucket_cloud' && variant === 'data_center') { forge = 'bitbucket_data_center'; variant = 'data_center'; }
         if (!variant) variant = (VARIANTS[forge] || [['hosted']])[0][0];
-        const patch = { online_mode: ol.purpose === 'source' ? 'existing' : 'new', forge, forge_provider_variant: variant, forge_instance_profile: null };
+        const patch = { online_mode: ol.purpose === 'source' ? 'existing' : 'new', forge, forge_provider_variant: variant,
+          forge_instance_profile: null, forge_account_action: null, forge_account_ref: '', repository_ref: '',
+          repository_project: '', repository_container: '', source_access_authorization_refs: [] };
         if (needsAddress(forge, variant)) patch.forge_instance_url = ol.address.trim();
         else patch.forge_instance_url = '';
         O55.draft.set(d, patch);
@@ -220,6 +223,21 @@
 
   /* ================================================================== name, privacy, owner, advanced (a new online copy) */
   function nameTaken(S, name) { const f = S.env.forges[md(S).forge] || { taken: [] }; return f.taken.includes(String(name || '').trim().toLowerCase()); }
+  const azureGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  function azureProjects(S) {
+    const d = md(S), feed = S.sess.azureProjects;
+    return feed && feed.instance_key === instanceKey(d) && feed.container === d.repository_container &&
+      feed.account_ref === d.forge_account_ref && !!feed.account_ref && feed.fresh === true ? feed.rows : [];
+  }
+  function azureProjectRoute(S) {
+    const d = md(S), container = d.repository_container;
+    if (!container || !/^[A-Za-z0-9][A-Za-z0-9._-]{0,80}$/.test(container) || !d.forge_account_ref || !accountFor(S, 'azure_devops')) return null;
+    if (d.forge_provider_variant !== 'cloud') return null; /* Server host/collection needs owner verification; never invent it. */
+    return { url: 'https://dev.azure.com/' + encodeURIComponent(container) + '/_projects',
+      official_route_ref: 'azure-devops-services:' + container + ':team-projects',
+      typed_handoff: { provider: 'azure_devops', product: 'services', organization: container,
+        instance_key: instanceKey(d), operation: 'human_create_team_project', owner_verified: true } };
+  }
   def('online-details', {
     chapter: 'project', stage: 'source_control_setup',
     scene: () => ({ id: 'online', beat: 'signed' }),
@@ -227,7 +245,7 @@
     title: (S) => T('online.details.title', { name: forgeName(md(S).forge, md(S).forge_provider_variant) }),
     lead: (S) => T('online.details.lead', { name: forgeName(md(S).forge, md(S).forge_provider_variant) }),
     body(S) {
-      const d = md(S), svc = forgeName(d.forge, d.forge_provider_variant), env = S.env.forges[d.forge] || { orgs: [] }, account = S.sess.forgeAccounts[d.forge] || 'jared-p';
+      const d = md(S), svc = forgeName(d.forge, d.forge_provider_variant), env = S.env.forges[d.forge] || { orgs: [] }, account = accountFor(S, d.forge) || '';
       const taken = nameTaken(S, d.repository_name);
       let out = C.field({ bind: 'repo', label: T('online.details.nameLabel', { name: svc }), value: d.repository_name, prefix: (d.repository_owner_scope === 'organization' && d.repository_container ? d.repository_container : account) + ' / ', hint: taken ? '' : T('online.details.available'), valid: !taken && F.nonEmpty(d.repository_name), error: taken ? T('online.details.taken', { owner: account }) : '', invalid: taken });
       if (env.orgs.length && d.forge !== 'azure_devops') {
@@ -235,7 +253,14 @@
       }
       if (d.forge === 'azure_devops') {
         out += C.segmented({ do: 'azOrg', value: d.repository_container || env.orgs[0], label: T('online.details.container'), options: env.orgs.map((o) => ({ v: o, label: o })) });
-        out += C.group(T('online.details.project'), C.cards('azProject', (env.projects || []).map((p) => ({ v: p, glyph: 'stack', title: p, quiet: true })), d.repository_project, { cls: 'o55-choices-quiet' }));
+        const projects = azureProjects(S), route = azureProjectRoute(S);
+        out += C.group(T('online.details.project'), C.cards('azProject', projects.map((p) => ({ v: p.id, glyph: 'stack', title: p.name, sub: 'Git · ' + p.id, quiet: true })), d.repository_project, { cls: 'o55-choices-quiet' }));
+        out += `<div class="o55-actions" data-key="azure-refresh">${O55.ui.btn({ label: 'Refresh projects', do: 'azRefresh' }, 'o55-secondary')}</div>`;
+        out += F.more(!!S.sess.ui.azureTeamProjectAdvanced, 'Advanced · Azure team project', 'azAdvanced',
+          (route ? O55.ui.btn({ label: 'Create a team project on Azure DevOps', do: 'azCreateTeamProject' }, 'o55-secondary')
+            .replace('data-o55-do="azCreateTeamProject"', 'data-o55-do="azCreateTeamProject" data-ui-action-id="ui.onboarding.open_owner_flow" data-command-id="cmd.auth_profile.open_official_page"')
+            : C.note('Official team-project route unavailable for this Server host and collection. You can select an existing Git project after refresh, or skip the online copy.', 'info'))
+          + C.note('Creation happens on Azure DevOps. Return here and Refresh projects; only a fresh Git project with an owner GUID can be selected.', 'info'), 'azAdvanced');
         out += C.note(T('online.details.azurePrivacy'), 'info', 'lock');
       } else {
         const allowed = O55.draft.allowedVisibility(d).filter((v) => v !== 'internal' || d.repository_owner_scope === 'organization' || d.forge === 'cursor_origin');
@@ -249,17 +274,26 @@
       out += F.more(!!S.sess.ui.onlineAdv, T('online.details.advanced'), 'adv', adv, 'adv');
       return out;
     },
-    mounted(S) { const d = md(S); if (!d.repository_name) { O55.draft.set(d, { repository_name: U.slug(d.project_name) || 'new-project' }); S.save(); } },
+    mounted(S) { const d = md(S), patch = {}; if (!d.repository_name) patch.repository_name = U.slug(d.project_name) || 'new-project';
+      if (d.forge === 'azure_devops' && !d.repository_container) patch.repository_container = ((S.env.forges.azure_devops || {}).orgs || [])[0] || '';
+      if (Object.keys(patch).length) { O55.draft.set(d, patch); S.save(); } },
     foot(S) {
       const d = md(S), taken = nameTaken(S, d.repository_name);
-      const reason = !F.nonEmpty(d.repository_name) ? T('online.details.nameLabel', { name: forgeName(d.forge) }) : taken ? T('online.details.taken', { owner: S.sess.forgeAccounts[d.forge] || '' }) : d.forge === 'azure_devops' && !d.repository_project ? T('missing.azureProject') : '';
+      const reason = !F.nonEmpty(d.repository_name) ? T('online.details.nameLabel', { name: forgeName(d.forge) }) : taken ? T('online.details.taken', { owner: accountFor(S, d.forge) || '' }) : d.forge === 'azure_devops' && !azureProjects(S).some((p) => p.id === d.repository_project) ? T('missing.azureProject') : '';
       return { primary: { label: T('chrome.continue'), do: 'next', disabled: !!reason, reason } };
     },
     do: {
       owner(S, v) { const d = md(S); if (v === 'personal') O55.draft.set(d, { repository_owner_scope: 'personal', repository_container: '' }); else O55.draft.set(d, { repository_owner_scope: 'organization', repository_container: v.slice(4) }); S.save(); O55.ui.refresh(); },
       vis(S, v) { O55.draft.set(md(S), { repository_visibility: v }); S.save(); O55.ui.refresh(); },
-      azOrg(S, v) { O55.draft.set(md(S), { repository_container: v }); S.save(); O55.ui.refresh(); },
-      azProject(S, v) { O55.draft.set(md(S), { repository_project: v }); S.save(); O55.ui.refresh(); },
+      azOrg(S, v) { O55.draft.set(md(S), { repository_container: v, repository_project: '' }); S.sess.azureProjects = null; S.save(); O55.ui.refresh(); },
+      azProject(S, v) { if (!azureProjects(S).some((p) => p.id === v)) return; O55.draft.set(md(S), { repository_project: v }); S.save(); O55.ui.refresh(); },
+      azRefresh(S) { const d = md(S), env = S.env.forges.azure_devops || {}; if (!d.forge_account_ref || !accountFor(S, 'azure_devops')) { O55.ui.toast('Sign in to this Azure DevOps instance before refreshing projects.'); return; }
+        S.sess.azureProjects = { instance_key: instanceKey(d), container: d.repository_container, account_ref: d.forge_account_ref,
+        fresh: true, rows: (env.projects || []).filter((p) => p && typeof p === 'object' && azureGuid.test(p.id || '') && p.kind === 'Git' && p.container === d.repository_container).map((p) => ({ id: p.id, name: p.name, kind: p.kind })) };
+        if (!azureProjects(S).some((p) => p.id === d.repository_project)) O55.draft.set(d, { repository_project: '' });
+        S.save(); O55.ui.refresh(); },
+      azAdvanced(S) { S.sess.ui.azureTeamProjectAdvanced = !S.sess.ui.azureTeamProjectAdvanced; S.save(); O55.ui.refresh(); },
+      azCreateTeamProject(S) { const route = azureProjectRoute(S); if (!route) return; O55.official.open(S, { kind: 'page', name: 'Azure DevOps team projects', ...route }); },
       adv(S) { S.sess.ui.onlineAdv = !S.sess.ui.onlineAdv; S.save(); O55.ui.refresh(); },
       readme(S) { O55.draft.set(md(S), { repository_initialize_readme: !md(S).repository_initialize_readme }); S.save(); O55.ui.refresh(); },
       gitignore(S, v) { O55.draft.set(md(S), { repository_gitignore: v }); S.save(); O55.ui.refresh(); },
@@ -282,7 +316,7 @@
     scene: () => ({ id: 'online', beat: 'signed' }),
     eyebrow: () => T('online.repos.eyebrow'),
     title: () => T('online.repos.title'),
-    lead: (S) => T('online.repos.lead', { account: S.sess.forgeAccounts[md(S).forge] || '', name: forgeName(md(S).forge, md(S).forge_provider_variant) }),
+    lead: (S) => T('online.repos.lead', { account: accountFor(S, md(S).forge) || '', name: forgeName(md(S).forge, md(S).forge_provider_variant) }),
     body(S) {
       const d = md(S), env = S.env.forges[d.forge] || { repos: [] }, q = String(S.sess.ui.repoQ || '').toLowerCase();
       const list = env.repos.filter((r) => !q || r.name.includes(q));

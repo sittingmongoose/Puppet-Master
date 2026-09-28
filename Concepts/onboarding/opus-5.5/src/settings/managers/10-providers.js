@@ -355,6 +355,7 @@
     catalog.forEach(m => {
       const am = accModel(acc, m.id);
       rows.push({
+        id: m.id, data: { provider: p.id, account: acc.id, model: m.id },
         label: m.name, help: `${planText(m)}${m.context && m.context !== 'N/A' && m.context !== 'Unknown' ? ' · ' + m.context + ' context' : ''}`,
         control: am ? PM51.toggle(!!am.enabled, { action: 'pm51-providers-account-model', data: { provider: p.id, account: acc.id, model: m.id }, label: m.name }) : muted('Not on this account')
       });
@@ -568,6 +569,51 @@
   };
 
   PM51.manager('providers', { render });
+  PM51.revealProviderModel = function (providerId, modelId, accountId) {
+    const provider = all().find(p => p.id === providerId);
+    if (!provider || !(provider.models || []).some(m => m.id === modelId)) return false;
+    const accounts = orderedAccounts(provider).filter(acc => accountReady(provider, acc) && accModel(acc, modelId));
+    state.selectedProvider = provider.id;
+    PM51.setTab(ID, 'services');
+    if (accountId && !accounts.some(acc => acc.id === accountId)) {
+      infoDrawer('Model account unavailable', 'This exact account no longer offers the selected model. Search again after refreshing the service list.',
+        [['Service ID', providerId], ['Model ID', modelId], ['Account ID', accountId]]);
+      return true;
+    }
+    if (!accountId && accounts.length > 1) {
+      navigate('ai', 'providers'); PM51.refresh(ID, { swap: false });
+      PM51.panel({ title: 'Choose a model account', subtitle: `${provider.name} · ${modelName(provider, modelId)}`,
+        body: PM51.panelSection('Ready accounts', accounts.map(acc => PM51.btn({
+          label: acc.nickname || acc.name || acc.id, action: 'pm51-providers-search-model-account',
+          data: { provider: providerId, model: modelId, account: acc.id }
+        })).join('')) + PM51.note('Choose the account that should supply this model. The selection is checked again when opened.', 'info') });
+      return true;
+    }
+    if (!accountId && accounts.length !== 1) {
+      navigate('ai', 'providers'); PM51.refresh(ID, { swap: false });
+      infoDrawer('Model unavailable on a connected account', 'The exact search target has no current ready account binding.',
+        [['Service', provider.name], ['Model ID', modelId], ['Ready accounts', accounts.map(acc => acc.nickname || acc.name || acc.id).join(', ') || 'None']]);
+      return true;
+    }
+    const account = accountId ? accounts.find(acc => acc.id === accountId) : accounts[0];
+    PM51.s().searchExactTarget = { kind: 'provider-model', providerId, id: modelId, accountId: account.id };
+    const s = PM51.s(); s.open = s.open || {}; s.open[accKey(provider, account)] = true;
+    navigate('ai', 'providers'); PM51.refresh(ID, { swap: false });
+    const reveal = () => {
+      const row = [...root.querySelectorAll('#panel-settings .pm51-row[data-model]')].find(node =>
+        node.dataset.provider === providerId && node.dataset.account === account.id && node.dataset.model === modelId);
+      if (!row) return false;
+      row.scrollIntoView({ block: 'center' }); row.tabIndex = -1; row.focus({ preventScroll: true });
+      row.setAttribute('data-search-exact-target', modelId); return true;
+    };
+    if (!reveal()) requestAnimationFrame(reveal);
+    return true;
+  };
+  PM51.on('providers-search-model-account', el => {
+    const provider = ds(el, 'provider'), model = ds(el, 'model'), account = ds(el, 'account');
+    closeOverlay();
+    PM51.revealProviderModel(provider, model, account);
+  });
   /* The engine's select-provider handler swaps .resource-detail from a fresh renderProviders() call. */
   renderProviders = function () { return render(); };
 

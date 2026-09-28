@@ -968,6 +968,20 @@ PM51.revealSetting = (id, { detail = false } = {}) => {
 const pm51OriginalApplySearchSelection = applySearchSelection;
 applySearchSelection = function (p) {
   if (p && p.kind === 'setting' && p.id && PM51.revealSetting(p.id)) return;
+  if (p && p.kind === 'provider-model' && p.providerId && p.id && PM51.revealProviderModel && PM51.revealProviderModel(p.providerId, p.id)) return;
+  if (p && (p.kind === 'history-session' || p.kind === 'artifact') && p.id && PM51.revealHistoryObject && PM51.revealHistoryObject(p.kind, p.id)) return;
+  if (p && (p.kind === 'sync-client' || p.kind === 'sync-location') && p.id) {
+    const list = p.kind === 'sync-client' ? state.projectSync?.clients : state.projectSync?.remotes;
+    const exact = Array.isArray(list) && list.find(row => row.id === p.id);
+    if (exact) {
+      PM51.s().searchExactTarget = { kind: p.kind, id: p.id };
+      navigate('projects', 'project-sync');
+      infoDrawer(p.kind === 'sync-client' ? `Client · ${exact.name}` : `Remote project · ${exact.name}`,
+        'Exact Project Sync concept object. Owner state and freshness must be checked before any change.',
+        [['Stable ID', exact.id], ['Kind', p.kind], ['Status', exact.status || 'Unknown'], ['Owner', 'Project Sync']]);
+      return;
+    }
+  }
   return pm51OriginalApplySearchSelection(p);
 };
 

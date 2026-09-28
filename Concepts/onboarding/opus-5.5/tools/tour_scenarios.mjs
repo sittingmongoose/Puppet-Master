@@ -1,7 +1,7 @@
 /* Guided Tour acceptance, driven by real CDP input against the built concept.
  * node tools/tour_scenarios.mjs <out-dir> [--only t1,t2] [--theme basic-dark] [--snaps]
  * t1 every step by hand (real clicks, a real mouse drag) then Restore; t2 every action through Show Me then Keep;
- * t3 Skip restores everything; t4 resume after reload; t5 a missing target offers Take me there; t6 Back rewinds a
+ * t3 Skip restores everything; t4 fails closed after reload without owner basis; t5 a missing target offers Take me there; t6 Back rewinds a
  * step so it can be done again or watched with Show Me; t7 Run Onboarding Again (and a replay) start the tour over.
  * Each run asserts zero network requests and unchanged usage counters, and writes report.json + screenshots. */
 import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
@@ -25,11 +25,12 @@ const only = opt('only', '') ? opt('only', '').split(',') : null;
 const theme = opt('theme', 'basic-dark');
 const snaps = argv.includes('--snaps');
 mkdirSync(out, { recursive: true });
-/* one Chrome profile for this run's browsers (they run one after another), removed at the end: each is ~150 MB */
-const PROFILE = `${tmpdir()}/pm-cdp-profile-${process.pid}-tour`;
+/* Each scenario starts with an independent owner layout and Chat state. A Keep result from an earlier
+ * scenario must not change a later scenario's restoration basis. Profiles are removed after each case. */
+const PROFILE_BASE = `${tmpdir()}/pm-cdp-profile-${process.pid}-tour`;
 
-async function openPage() {
-  const { page, close, chrome } = await launch({ width: 1600, height: 1000, profile: PROFILE });
+async function openPage(profile) {
+  const { page, close, chrome } = await launch({ width: 1600, height: 1000, profile });
   const [fam, mode] = theme.split('-');
   await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: mode }] });
   await page.goto(pathToFileURL(PAGE).href + '?o55=off');
@@ -123,7 +124,10 @@ async function byHandChapter1(t, A) {
   A.ok(!(await t.ev(() => window.O55.tour.chat.chatVisible())), 'Chat tucked away so opening it is a real action');
   await t.click('#activityBar .icon[data-ab-id="chat"]', 'Chat icon');
   await t.untilStep('select_teacher'); await t.snap('select_teacher');
-  await t.click('.pm6-chat-personabtn', 'persona picker'); await t.click('.pm6-chat-personaitem[data-persona="Teacher"]', 'Teacher');
+  await t.until(() => !window.O55.tour.st.entering && !!window.O55.tour.chat.personaBtn(), 'Teacher picker ready');
+  await t.click('.pm6-chat-personabtn', 'persona picker');
+  await t.until(() => !!window.O55.tour.chat.personaItem('Teacher'), 'Teacher choice ready');
+  await t.click('.pm6-chat-personaitem[data-persona="Teacher"]', 'Teacher');
   await t.untilStep('send_question'); await t.snap('send_question');
   await t.callout('fillQuestion'); await t.click('#chatPanel .pm6-chat-send', 'Send');
   await t.untilStep('answer_stream');
@@ -223,7 +227,7 @@ def('t2', 'Every action through Show Me, then Keep this layout', async (t, A) =>
     A.ok(true, 'Show Me completed ' + id);
     if (id === 'send_question') { await t.untilStep('answer_stream', 8000); await t.until(() => window.O55.tour.chat.answered('a1'), 'answer'); await t.callout('next'); }
     if (id === 'same_answer_eli5') { await sleep(1400); await t.callout('next'); await t.untilStep('workspace_orientation'); await t.until(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="next"]'), 'orientation ready', 9000); await t.callout('next'); }
-    if (id === 'review') { await t.untilStep('review_parts', 8000); await t.until(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="next"]'), 'plan read part by part', 20000); await t.callout('next'); }
+    if (id === 'review') { await t.untilStep('review_parts', 8000); await t.until(() => window.O55.tour.st.partsDone === true && !!document.querySelector('#pm-o55-tour .o55t-callout[data-step="review_parts"] [data-o55t="next"]'), 'plan read part by part', 20000); await t.callout('next'); }
     if (id === 'answer_edit') { await t.untilStep('consequence_changed', 6000); await t.callout('next'); }
   }
   await t.untilStep('completion_boundary'); await t.callout('finish', 'keep'); await sleep(1200);
@@ -246,14 +250,19 @@ def('t3', 'Skip Tour restores everything', async (t, A) => {
   A.ok(await t.ev(() => !document.querySelector('.o55-guided-thread')), 'Guided example thread removed');
   A.eq(await t.ev(() => window.O55.store.get('tour', {}).status), 'skipped', 'recorded as skipped');
 });
-def('t4', 'Resume after a reload at the last safe step', async (t, A) => {
+def('t4', 'Reload without owner snapshot shows safe recovery', async (t, A) => {
   await t.ev(() => window.PM7_GUIDED_TOUR.start({})); await sleep(900);
   await byHandChapter1(t, A); await t.untilStep('workspace_orientation');
   await t.page.goto(pathToFileURL(PAGE).href + '?o55=off'); await sleep(1600);
   await t.ev(() => window.O55.boot.tourChip()); await sleep(200);
   A.ok(await t.ev(() => !!document.getElementById('o55-tourchip')), 'resume chip offered');
   await t.click('#o55-tourchip [data-o55-chip="resume"]', 'Resume'); await sleep(900);
-  A.eq(await t.step(), 'workspace_orientation', 'resumes at the saved step');
+  A.eq(await t.ev(() => window.O55.store.get('tour', {}).status), 'resume-unavailable', 'missing owner basis cannot resume');
+  A.ok(await t.ev(() => !!document.getElementById('o55-tour-recovery')), 'recovery panel offered');
+  A.ok(await t.ev(() => !window.O55.tour.running), 'tour does not claim resumed progress');
+  A.ok(await t.ev(() => { const s = JSON.stringify(window.O55.store.get('tour', {})); return !s.includes('draft') && !s.includes('layout') && s.includes('snapshot_ref'); }), 'bounded checkpoint retained');
+  await t.ev(() => window.O55.tour.finish(false));
+  A.eq(await t.ev(() => window.O55.store.get('tour', {}).status), 'resume-unavailable', 'missing restoration basis cannot complete');
 });
 def('t5', 'A missing target offers Take me there', async (t, A) => {
   await t.ev(() => window.PM7_GUIDED_TOUR.start({})); await sleep(700);
@@ -339,22 +348,23 @@ def('t7', 'Run Onboarding Again, and a replay, start the tour over', async (t, A
   await t.untilStep('select_teacher', 12000); await t.callout('showMe');
   await t.untilStep('send_question', 12000); await sleep(1500);
   A.eq(await t.step(), 'send_question', 'the question sent in the last run does not count in this one');
-  /* leave the tour part-way (reload); Home ... > Run Onboarding Again clears it; the next tour starts at the first step */
+  /* A reload cannot silently discard a Tour restoration basis through Run Onboarding Again. */
   await t.page.goto(pathToFileURL(PAGE).href + '?o55=off'); await sleep(1600);
   A.eq(await t.ev(() => (window.O55.store.get('tour', {}) || {}).status), 'running', 'the unfinished tour is saved');
   await t.click('#pm-home-more-btn', 'Home more options'); await t.click('#pm-home-more-menu [data-pm-home-action="run-onboarding"]', 'Run Onboarding Again'); await sleep(1500);
-  A.eq(await t.ev(() => window.O55.store.get('tour', null)), null, 'Run Onboarding Again clears the saved tour');
-  A.eq(await t.ev(() => window.O55.S.sess.screen), 'welcome', 'onboarding starts over at Welcome');
-  await t.ev(() => window.O55.finish(window.O55.S, { tour: true, project: 'tastebook' })); await sleep(1400);
-  A.eq(await t.step(), 'comfort_intro', 'the tour taken at the end of onboarding starts at the first step');
+  A.eq(await t.ev(() => window.O55.store.get('tour', {}).status), 'resume-unavailable', 'unresolved Tour checkpoint stays available');
+  A.ok(await t.ev(() => !!document.getElementById('o55-tour-recovery')), 'review and restart are explicit');
+  await t.click('#o55-tour-recovery [data-o55-recovery="restart"]', 'Acknowledge recovery and restart'); await sleep(1400);
+  A.eq(await t.step(), 'comfort_intro', 'explicit recovery starts at the first step');
   A.eq(await t.ev(() => window.O55.tour.state().done.length), 0, 'nothing counts as done');
 });
 
 /* ------------------------------------------------------------------------------------------ runner */
-const report = []; let lastChrome = null;
+const report = [];
 for (const sc of SC) {
   if (only && !only.includes(sc.id)) continue;
-  const t = await openPage(); const asserts = []; let error = null, inv = null; const t0 = Date.now();
+  const profile = `${PROFILE_BASE}-${sc.id}`;
+  const t = await openPage(profile); const asserts = []; let error = null, inv = null; const t0 = Date.now();
   const A = { ok: (c, m) => asserts.push({ ok: !!c, m }), eq: (a, b, m) => asserts.push({ ok: a === b, m: m + (a === b ? '' : ` (got ${JSON.stringify(a)}, want ${JSON.stringify(b)})`) }) };
   try { await sc.fn(t, A); } catch (e) { error = String(e.message || e).slice(0, 400); }
   try {
@@ -367,10 +377,8 @@ for (const sc of SC) {
   const r = { id: sc.id, title: sc.title, ms: Date.now() - t0, pass: !error && asserts.every((x) => x.ok) && !t.page.errors.length, error, asserts, errors: t.page.errors.slice(0, 8), inv, state: await t.ev(() => window.O55.tour.state()).catch(() => null) };
   report.push(r);
   console.log((r.pass ? 'PASS ' : 'FAIL ') + sc.id + '  ' + sc.title + (error ? '  !! ' + error : '') + asserts.filter((x) => !x.ok).map((x) => '\n      x ' + x.m).join('') + (t.page.errors.length ? '\n      errors: ' + t.page.errors.slice(0, 3).join(' | ') : ''));
-  await t.close(); lastChrome = t.chrome;
-  /* the next scenario reuses this profile: let this Chrome finish exiting first */
-  if (t.chrome.exitCode === null && t.chrome.signalCode === null) await new Promise((r) => { t.chrome.once('exit', r); setTimeout(r, 3000); });
+  await t.close();
+  await dropProfile(profile, t.chrome);
 }
 writeFileSync(join(out, 'report.json'), JSON.stringify(report, null, 1));
-await dropProfile(PROFILE, lastChrome);
 console.log(JSON.stringify({ scenarios: report.length, pass: report.filter((r) => r.pass).length, fail: report.filter((r) => !r.pass).map((r) => r.id) }));

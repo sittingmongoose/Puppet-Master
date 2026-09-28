@@ -2107,10 +2107,23 @@ def _adapt_js(source, need):
     source = _replace_once(
         source,
         "      case 'provider-model':\n        state.selectedProvider = p.providerId || 'claude-code';\n        state.providerTab = 'models';\n        navigate('ai', 'providers');\n        return;",
-        "      case 'provider-model':\n        selectProviderView(p.providerId || 'claude-code','models',true);\n        return;",
+        "      case 'provider-model':\n        state.searchExactTarget={kind:p.kind,providerId:p.providerId,id:p.id};\n        if(window.PM51&&window.PM51.revealProviderModel&&window.PM51.revealProviderModel(p.providerId,p.id))return;\n        selectProviderView(p.providerId || 'claude-code','overview',true);\n        return;",
         need,
         "provider-model search-result selection refresh",
     )
+    for kind, tab, domain, workspace in (
+        ('sync-client', 'clients', 'projects', 'project-sync'),
+        ('sync-location', 'remote', 'projects', 'project-sync'),
+        ('history-session', 'sessions', 'projects', 'project-history'),
+        ('artifact', 'artifacts', 'projects', 'project-history'),
+    ):
+        old = ("      case '%s':\n        state.%sTab = '%s';\n        navigate('%s', '%s');\n        return;" %
+               (kind, 'projectSync' if kind.startswith('sync-') else 'projectHistory', tab, domain, workspace))
+        reveal = ("        if(window.PM51&&window.PM51.revealHistoryObject&&window.PM51.revealHistoryObject(p.kind,p.id))return;\n"
+                  if kind in ('history-session', 'artifact') else "")
+        new = ("      case '%s':\n        state.searchExactTarget={kind:p.kind,id:p.id};\n%s        state.%sTab = '%s';\n        navigate('%s', '%s');\n        return;" %
+               (kind, reveal, 'projectSync' if kind.startswith('sync-') else 'projectHistory', tab, domain, workspace))
+        source = _replace_once(source, old, new, need, kind + " exact search identity")
     source = _replace_once(
         source,
         "        if (id && state.providers.some(provider => provider.id === id)) {\n          state.selectedProvider = id;\n          state.providerTab = 'overview';\n          navigate(p.domain, p.workspace);\n          return;\n        }",

@@ -434,6 +434,7 @@
 
   function open(opts) {
     opts = opts || {};
+    if (opts.fresh && O55.tour && O55.tour.hasUnresolved && O55.tour.hasUnresolved()) { O55.tour.start({}); return false; }
     O55.motion.quiet(2200); /* building the window is expected to be heavy; it never counts as a slow computer */
     const wasShown = !!(S.open && S.root && !S.root.hidden); /* Start over reopens a window already on screen */
     build();

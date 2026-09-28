@@ -843,7 +843,10 @@ try {
       progress,
       observable_work_rows: [...(host?.querySelectorAll('[data-observable-work-fixture]') || [])].map(node => ({
         id: node.getAttribute('data-observable-work-id'),
+        fixture_id: node.getAttribute('data-fixture-id'),
         state: node.getAttribute('data-work-state'),
+        command_outcome: node.getAttribute('data-command-outcome'),
+        phase: node.querySelector('span')?.textContent || '',
         wait_reason: node.getAttribute('data-wait-reason'),
         reevaluation: node.getAttribute('data-reevaluation-condition'),
         can_cancel: node.getAttribute('data-can-cancel'),
@@ -886,11 +889,15 @@ try {
   await record('actions.performance_control_typed', performanceSurface.ui_action_ids.length === 1 && performanceSurface.ui_action_ids[0] === 'ui.performance.evidence.inspect', performanceSurface.ui_action_ids, {
     summary: 'The performance evidence action is absent, duplicated, or untyped.'
   });
-  const requiredWorkFixtureStates = ['queued', 'running', 'waiting', 'cancel-requested', 'terminal-unknown', 'recovery-required', 'completed'].sort();
-  const actualWorkFixtureStates = [...new Set(performanceSurface.observable_work_rows.map(row => row.state).filter(Boolean))].sort();
+  const requiredWorkFixtureIds = ['queued', 'running', 'waiting', 'cancel-requested', 'terminal-unknown', 'recovery-required', 'completed'].sort();
+  const actualWorkFixtureIds = performanceSurface.observable_work_rows.map(row => row.fixture_id).sort();
+  const validWorkStates = performanceSurface.observable_work_rows.every(row => WORK_STATES.includes(row.state));
+  const cancel = performanceSurface.observable_work_rows.find(row => row.fixture_id === 'cancel-requested');
+  const unknown = performanceSurface.observable_work_rows.find(row => row.fixture_id === 'terminal-unknown');
+  const separateAxes = cancel?.state === 'running' && /Cancelling/.test(cancel.phase) && unknown?.state === 'recovery-required' && unknown.command_outcome === 'terminal-unknown';
   const truthfulWaitingRows = performanceSurface.observable_work_rows.filter(row => row.state === 'waiting').every(row => row.wait_reason && row.reevaluation && ['true', 'false'].includes(row.can_cancel) && ['true', 'false'].includes(row.can_retry));
-  await record('truth.observable_work_fixture_rows', JSON.stringify(actualWorkFixtureStates) === JSON.stringify(requiredWorkFixtureStates) && truthfulWaitingRows, { expected: requiredWorkFixtureStates, actual: actualWorkFixtureStates, rows: performanceSurface.observable_work_rows }, {
-    summary: 'The performance surface lacks the exact truthful ObservableWork fixture rows, wait reasons, reevaluation, or control availability.'
+  await record('truth.observable_work_fixture_rows', JSON.stringify(actualWorkFixtureIds) === JSON.stringify(requiredWorkFixtureIds) && validWorkStates && separateAxes && truthfulWaitingRows, { expected: requiredWorkFixtureIds, actual: actualWorkFixtureIds, valid_work_states: validWorkStates, separate_axes: separateAxes, rows: performanceSurface.observable_work_rows }, {
+    summary: 'The performance surface conflates scenario, work state, phase or command outcome, or lacks truthful waiting controls.'
   });
   const requiredGovernorOutcomes = [...GOVERNOR_STATES].sort();
   const actualGovernorOutcomes = [...new Set(performanceSurface.governor_outcome_rows.map(row => row.outcome).filter(Boolean))].sort();

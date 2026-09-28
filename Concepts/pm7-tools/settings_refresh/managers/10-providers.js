@@ -269,6 +269,7 @@
     catalog.forEach(m => {
       const am = accModel(acc, m.id);
       rows.push({
+        id: m.id, data: { provider: p.id, account: acc.id, model: m.id },
         label: m.name, help: `${planText(m)}${m.context && m.context !== 'N/A' && m.context !== 'Unknown' ? ' · ' + m.context + ' context' : ''}`,
         control: am ? PM51.toggle(!!am.enabled, { action: 'pm51-providers-account-model', data: { provider: p.id, account: acc.id, model: m.id }, label: m.name }) : muted('Not available on this account')
       });
@@ -406,6 +407,28 @@
   }
 
   PM51.manager('providers', { render });
+  PM51.revealProviderModel = function (providerId, modelId) {
+    const provider = all().find(p => p.id === providerId);
+    if (!provider || !(provider.models || []).some(m => m.id === modelId)) return false;
+    const acc = orderedAccounts(provider).find(a => accModel(a, modelId));
+    state.selectedProvider = provider.id;
+    if (!acc) {
+      navigate('ai', 'providers'); PM51.refresh(ID, { swap: false });
+      infoDrawer('Model unavailable on a connected account', 'The exact search target has no current account binding.',
+        [['Provider', provider.name], ['Model ID', modelId]], { intro: 'Connect or select an account, then search again.' });
+      return true;
+    }
+    if (acc) { const s = PM51.s(); s.open = s.open || {}; s.open[accKey(provider, acc)] = true; }
+    navigate('ai', 'providers'); PM51.refresh(ID, { swap: false });
+    const reveal = () => {
+      const row = [...root.querySelectorAll('.pm51-providers-acc .pm51-row[data-model]')].find(node => node.dataset.provider === providerId && node.dataset.model === modelId && (!acc || node.dataset.account === acc.id));
+      if (!row) return false;
+      row.scrollIntoView({ block: 'center' }); row.tabIndex = -1; row.focus({ preventScroll: true });
+      row.setAttribute('data-search-exact-target', modelId); return true;
+    };
+    if (!reveal()) requestAnimationFrame(reveal);
+    return true;
+  };
   /* The engine's select-provider handler swaps .resource-detail from a fresh renderProviders() call. */
   renderProviders = function () { return render(); };
 

@@ -8,6 +8,10 @@
   const O55 = window.O55, U = O55.util, T = (k, v) => O55.t(k, v), M = O55.motion;
   const TR = O55.tour = { defs: [], byId: {}, running: false };
   const KEY = 'tour', ROOT = 'pm-o55-tour';
+  /* Concept-only restoration basis lives in memory. The durable checkpoint contains a bounded reference and
+     owner identities, never composer text, inline layout or per-step DOM snapshots. A reload without the basis
+     stays unavailable until the person explicitly acknowledges recovery. */
+  const recovery = new Map();
   const st = TR.st = { sess: null, root: null, step: null, advancing: false, show: null, hole: null, spring: null, poll: null, raf: 0, snap: null, missingSince: 0, tips: 'normal', paused: false, entries: {}, rewinding: false, entering: false, pendingBack: false, seq: 0 };
   const CHAPTERS = ['ask', 'workspace', 'plan'];
   TR.CHAPTERS = CHAPTERS;
@@ -31,7 +35,7 @@
       widgets: dashSnapshot()
     };
   }
-  /* The Home dashboard's cards by host, in order, with their sizes (keys only, so the snapshot survives a reload) */
+  /* The Home dashboard's cards by host, in order, with their sizes. This in-memory basis does not survive a reload. */
   const DASH_HOSTS = ['dashGridMain', 'dashGridMetrics', 'dashGridMonitoring'];
   const dashKey = (c) => c.getAttribute('data-widget-id') || c.getAttribute('data-widget-kind');
   const dashCardsIn = (h) => [...h.children].filter((c) => c.classList.contains('pm6-dash-card') && !/placeholder/.test(c.className));
@@ -61,15 +65,18 @@
   }
   async function restore(snap, keep) {
     const out = { layout: null, widgets: null, chat: null };
-    if (!snap) return out;
+    if (!snap) return { layout: 'failed', widgets: 'failed', chat: { status: 'failed', reason: 'snapshot_unavailable' } };
     const api = window.PM_HOME_WORKSPACE;
-    if (!keep && api && api.o55RestoreSnapshot && snap.layout) {
-      const r = api.o55RestoreSnapshot(snap.layout);
-      out.layout = r && r.ok ? (r.result && r.result.command ? r.result.command.command_id : 'ok') : 'failed';
+    if (!keep && snap.layout) {
+      if (!api || !api.o55RestoreSnapshot) out.layout = 'failed';
+      else {
+        try { const r = api.o55RestoreSnapshot(snap.layout); out.layout = r && r.ok ? (r.result && r.result.command ? r.result.command.command_id : 'ok') : 'failed'; }
+        catch (_) { out.layout = 'failed'; }
+      }
     }
-    if (!keep && snap.widgets) out.widgets = await dashRestore(snap.widgets);
-    out.chat = TR.chat ? await TR.chat.restore(snap, keep) : null;
-    if (TR.practice) TR.practice.remove();
+    if (!keep && snap.widgets) { try { out.widgets = await dashRestore(snap.widgets); } catch (_) { out.widgets = 'failed'; } }
+    out.chat = TR.chat ? await TR.chat.restore(snap, keep) : { status: 'failed', reason: 'chat_owner_unavailable' };
+    if (out.layout !== 'failed' && out.widgets !== 'failed' && out.chat.status === 'restored' && TR.practice) TR.practice.remove();
     return out;
   }
   TR.snapshot = snapshot;
@@ -522,21 +529,68 @@
     if (st.paused) interruptShow();
     renderBar(); O55.sound.play(st.paused ? 'toggleOff' : 'toggleOn');
   }
-  function save() { O55.store.set(KEY, { v: 1, status: st.sess.status, index: st.sess.index, done: st.sess.done, tips: st.tips, started: st.sess.started, project: st.sess.project, chatTucked: !!st.sess.chatTucked, snap: st.snap, entries: st.entries }); }
+  function save() {
+    O55.store.set(KEY, { v: 2, status: st.sess.status, index: st.sess.index, done: st.sess.done.slice(0, TR.defs.length),
+      tips: st.tips, started: st.sess.started, project: st.sess.project, chatTucked: !!st.sess.chatTucked,
+      snapshot_ref: st.snapshotRef, thread_ref: st.snap && st.snap.thread, page_ref: st.snap && st.snap.page });
+  }
+  function showRecovery(saved) {
+    let box = document.getElementById('o55-tour-recovery');
+    if (!box) { box = document.createElement('div'); box.id = 'o55-tour-recovery'; box.setAttribute('role', 'alert');
+      box.style.cssText = 'position:fixed;z-index:99999;left:16px;right:16px;bottom:16px;max-width:680px;margin:auto;padding:16px;border:2px solid currentColor;border-radius:12px;background:var(--surface,#222);color:inherit;box-shadow:0 8px 35px #0008'; document.body.appendChild(box); }
+    const canRetry = recovery.has(saved.snapshot_ref);
+    box.innerHTML = `<strong>${U.esc(T('tour.recoveryTitle'))}</strong><p>${U.esc(T(canRetry ? 'tour.recoveryRetry' : 'tour.recoveryUnavailable'))}</p>`
+      + (canRetry ? `<button type="button" data-o55-recovery="retry">${U.esc(T('tour.recoveryRetryButton'))}</button>` : '')
+      + `<button type="button" data-o55-recovery="restart">${U.esc(T('tour.recoveryRestartButton'))}</button>`;
+    box.onclick = (event) => { const action = event.target && event.target.getAttribute('data-o55-recovery');
+      if (action === 'retry') TR.retryRestore();
+      if (action === 'restart') TR.acknowledgeRecovery({ acknowledged: true, ownerReconciled: true }); };
+  }
+  function validResume(saved, requestedProject) {
+    if (!saved || saved.v !== 2 || saved.status !== 'running' || !recovery.has(saved.snapshot_ref) ||
+        !Number.isInteger(saved.index) || saved.index < 0 || saved.index >= TR.defs.length || !Array.isArray(saved.done) ||
+        saved.done.some((id) => !TR.byId[id]) || (requestedProject && saved.project !== requestedProject)) return false;
+    const basis = recovery.get(saved.snapshot_ref);
+    const demo = window.PM_DEMO;
+    if (saved.thread_ref !== basis.thread || saved.page_ref !== basis.page ||
+        (basis.thread && !(demo && demo.state && demo.state.chat && demo.state.chat.threads[basis.thread]))) return false;
+    /* A completed action is only trusted while its current owner predicate still holds. A changed Project,
+       missing thread or invalidated step result restarts guidance from the current owner state. */
+    const projected = Object.assign({}, st, { sess: saved, snap: basis });
+    return saved.done.every((id) => { const step = TR.byId[id]; if (step.index >= saved.index || step.kind !== 'action' || !step.done) return true;
+      try { return !!step.done(projected); } catch (_) { return false; } });
+  }
 
   /* ------------------------------------------------------------------ lifecycle */
   TR.start = async function start(o) {
     o = o || {};
+    if (o.fresh && TR.running) { const result = await end('skipped', false, { silent: true }); if (result.status === 'restore-pending') return false; }
     if (O55.S && O55.S.open) O55.ui.close('done');
     const saved = O55.store.get(KEY, null);
-    const resume = !o.fresh && saved && saved.status === 'running' && typeof saved.index === 'number';
+    if (TR.hasUnresolved() && saved.status !== 'running') {
+      showRecovery(saved);
+      return false;
+    }
+    if (saved && saved.status === 'running' && saved.v !== 2) {
+      const bounded = { v: 2, status: 'resume-unavailable', index: Number.isInteger(saved.index) ? saved.index : 0,
+        done: Array.isArray(saved.done) ? saved.done.filter((id) => !!TR.byId[id]) : [], project: saved.project || null,
+        snapshot_ref: 'legacy-snapshot-unavailable', thread_ref: saved.snap && saved.snap.thread || null };
+      O55.store.set(KEY, bounded); showRecovery(bounded); return false;
+    }
+    if (saved && saved.v === 2 && saved.status === 'running' && (o.fresh || !recovery.has(saved.snapshot_ref) || !validResume(saved, o.project || null))) {
+      saved.status = 'resume-unavailable'; O55.store.set(KEY, saved); showRecovery(saved);
+      return false; /* a reload cannot infer or silently replace the original owner restoration basis */
+    }
+    const resume = !o.fresh && validResume(saved, o.project || null);
     build(); syncTheme();
     st.sess = resume ? { status: 'running', index: saved.index, done: saved.done || [], started: saved.started, project: saved.project || o.project || null, chatTucked: !!saved.chatTucked } : { status: 'running', index: 0, done: [], started: new Date().toISOString(), project: o.project || null };
     st.tips = (resume && saved.tips) || 'normal';
     /* a new run starts clean: nothing the last run sent, answered or planned counts as done */
     if (!resume) { if (TR.chat && TR.chat.reset) TR.chat.reset(); if (TR.practice && TR.practice.reset) TR.practice.reset(); }
-    st.entries = resume && saved.entries ? saved.entries : {};
-    st.snap = resume && saved.snap ? saved.snap : snapshot();
+    st.entries = {};
+    st.snap = resume ? recovery.get(saved.snapshot_ref) : snapshot();
+    st.snapshotRef = resume ? saved.snapshot_ref : 'tour-snapshot:' + (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+    recovery.set(st.snapshotRef, st.snap);
     st.counters = TR.counters();
     TR.running = true; st.paused = false;
     document.documentElement.setAttribute('data-o55-tour', 'true');
@@ -571,13 +625,27 @@
     }).catch(() => { c.classList.remove('o55t-morphing'); g.remove(); });
   }
   async function end(status, keep, o) {
-    TR.running = false; if (st.poll) st.poll.cancel(); interruptShow();
+    if (st.poll) st.poll.cancel(); interruptShow();
     if (st.step && st.step.leave) { try { st.step.leave(st); } catch (_) {} }
     const res = await restore(st.snap, keep);
+    if (res.layout === 'failed' || res.widgets === 'failed' || !res.chat || res.chat.status !== 'restored') {
+      st.sess.restored = res; st.sess.status = 'restore-pending';
+      st.sess.requestedStatus = status;
+      st.sess.requestedKeep = !!keep;
+      O55.store.set(KEY, { v: 2, status: 'restore-pending', requested_status: status, index: st.sess.index,
+        done: st.sess.done.slice(0, TR.defs.length), project: st.sess.project, snapshot_ref: st.snapshotRef,
+        thread_ref: st.snap && st.snap.thread, page_ref: st.snap && st.snap.page, restored: res });
+      O55.pageToast(T('tour.restoreFailed'));
+      showRecovery(O55.store.get(KEY, null));
+      return { ...res, status: 'restore-pending' };
+    }
+    TR.running = false;
     /* Chat tucked away by the tour on a phone-width window comes back either way; the learner never hid it */
     if (keep && st.sess.chatTucked && window.PM_HOME_WORKSPACE) { try { window.PM_HOME_WORKSPACE.setSurfaceVisible('chat', true, 'cmd.panel.switch'); } catch (_) {} }
     TR.chat && TR.chat.uninstall();
-    st.sess.status = status; st.sess.restored = res; O55.store.set(KEY, { v: 1, status, done: st.sess.done, finished: new Date().toISOString(), keep: !!keep, restored: res });
+    st.sess.status = status; st.sess.restored = res; O55.store.set(KEY, { v: 2, status, done: st.sess.done, finished: new Date().toISOString(), keep: !!keep, restored: res });
+    recovery.delete(st.snapshotRef);
+    const recoveryBox = document.getElementById('o55-tour-recovery'); if (recoveryBox) recoveryBox.remove();
     document.documentElement.removeAttribute('data-o55-tour');
     if (st.pausedClock && window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.resume) { try { window.PM_DEMO.clock.resume(); } catch (_) {} }
     st.root.classList.add('o55t-closing'); if (!(o && o.silent)) O55.sound.play(status === 'done' ? 'finish' : 'close');
@@ -592,23 +660,31 @@
     M.after(ms || 4200, () => el.classList.remove('o55-on'));
   };
   async function skip() {
-    await end('skipped', false);
+    if (!TR.running) { const saved = O55.store.get(KEY, null); if (saved && TR.hasUnresolved()) showRecovery(saved); return { status: saved && saved.status || 'not-running' }; }
+    const result = await end('skipped', false);
+    if (result.status === 'restore-pending') return result;
     O55.pageToast(T('tour.skipped'));
     window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: 'skipped' } }));
   }
   async function finish(keep) {
+    if (!TR.running) { const saved = O55.store.get(KEY, null); if (saved && TR.hasUnresolved()) showRecovery(saved); return { status: saved && saved.status || 'not-running' }; }
     const res = await end('done', keep);
+    if (res.status === 'restore-pending') return res;
     /* land on the real Planning Wizard with the Project selected; nothing starts */
     if (st.sess.project && O55.shell) O55.shell.selectProject(st.sess.project, null);
     O55.shell && O55.shell.openWizard();
-    if (res && (res.layout === 'failed' || res.widgets === 'failed')) O55.pageToast(T('tour.restoreFailed'));
     TR.landing && TR.landing();
     window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: 'finished', keep: !!keep, restored: res } }));
   }
   /* Run Onboarding Again: the tour starts over too. A running tour ends (the layout comes back); its saved progress,
      its resume chip and what it remembers of the last run go. */
   TR.reset = async function reset(o) {
-    if (TR.running) await end('skipped', false, o);
+    const saved = O55.store.get(KEY, null);
+    if (TR.hasUnresolved()) {
+      if (saved.status === 'running') { saved.status = 'resume-unavailable'; O55.store.set(KEY, saved); }
+      if (!o || !o.acknowledged || !o.ownerReconciled) { showRecovery(saved); return false; }
+    }
+    if (TR.running) { const result = await end('skipped', false, o); if (result.status === 'restore-pending') return result; }
     O55.store.clear(KEY);
     st.entries = {};
     if (TR.chat && TR.chat.reset) TR.chat.reset();
@@ -616,6 +692,17 @@
     const chip = document.getElementById('o55-tourchip'); if (chip) chip.remove();
   };
   TR.skip = skip; TR.finish = finish; TR.go = (id) => goStep(TR.byId[id].index);
+  TR.hasUnresolved = () => { const saved = O55.store.get(KEY, null); return !!(saved &&
+    (['restore-pending', 'resume-unavailable'].includes(saved.status) ||
+      (saved.status === 'running' && (saved.v !== 2 || !validResume(saved, null))))); };
+  TR.retryRestore = () => st.sess && st.sess.status === 'restore-pending' ? (st.sess.requestedStatus === 'done' ? finish(!!st.sess.requestedKeep) : skip()) : null;
+  TR.acknowledgeRecovery = function (o) {
+    const saved = O55.store.get(KEY, null), home = window.PM_HOME_WORKSPACE, chat = window.PM_DEMO && window.PM_DEMO.state && window.PM_DEMO.state.chat;
+    if (!saved || !['restore-pending', 'resume-unavailable'].includes(saved.status) || !o || o.acknowledged !== true || o.ownerReconciled !== true || !home || !home.layout || !chat) return false;
+    O55.store.clear(KEY); recovery.delete(saved.snapshot_ref);
+    const box = document.getElementById('o55-tour-recovery'); if (box) box.remove();
+    return TR.start({ fresh: true, project: saved.project });
+  };
   TR.state = () => ({ running: TR.running, step: st.step && st.step.id, done: st.sess ? st.sess.done.slice() : [], paused: st.paused, tips: st.tips });
 
   /* zero-usage proof: the counters a provider call or usage write would move */

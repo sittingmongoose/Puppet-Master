@@ -82,7 +82,7 @@
       out += C.group(T('review.groups.computer'), row('where', whereWork(S), 'where') + row('files', filesAt(S), d.project_mode === 'existing_local' ? 'begin' : 'name'));
       const fi = d.project_mode === 'existing_local' ? S.sess.folderInfo : null, kind = d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git';
       let safe = row('history', (fi && fi.history ? T('review.savedExisting', { kind: fi.history === 'jujutsu' ? 'Jujutsu' : 'Git' }) : T('review.saved', { kind })) + (d.filesafe ? ' · FileSafe' : ''), 'safe');
-      if (d.online_mode !== 'none') safe += row('online', d.project_mode === 'existing_online' ? forgeName(d) + ' · ' + d.repository_ref.replace(/^[a-z_]+:/, '') : forgeName(d) + ' · ' + (d.repository_container || S.sess.forgeAccounts[d.forge] || '') + '/' + d.repository_name, 'safe');
+      if (d.online_mode !== 'none') safe += row('online', d.project_mode === 'existing_online' ? forgeName(d) + ' · ' + d.repository_ref.replace(/^[a-z_]+:/, '') : forgeName(d) + ' · ' + (d.repository_container || O55.official.accountFor(S, d.forge) || '') + '/' + d.repository_name, 'safe');
       else if (fi && fi.online) safe += row('online', O55.safe.forgeName(fi.online.forge) + ' · ' + fi.online.repo + ' · ' + T('safe.online.linked'), 'begin');
       else notSet.push(T('safe.online.title').toLowerCase());
       if (S.sess.backup.dest) safe += row('backup', O55.backup.label(S, S.sess.backup.dest), 'safe'); else notSet.push(T('safe.backup.title').toLowerCase());
@@ -238,7 +238,7 @@
     O55.ui.refresh();
   }
   function repoDisplay(S) {
-    const d = md(S), owner = d.repository_container || S.sess.forgeAccounts[d.forge] || '';
+    const d = md(S), owner = d.repository_container || O55.official.accountFor(S, d.forge) || '';
     return (owner ? owner + '/' : '') + (d.repository_name || d.project_name);
   }
   function runCommit(S) {

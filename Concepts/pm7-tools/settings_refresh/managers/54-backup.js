@@ -20,10 +20,34 @@
   const bk = () => PM51.s().backup;
   const eng = () => { if (!state.backup || !state.backup.schedules) state.backup = clone(D.backupState); return state.backup; };
   const refresh = () => { saveState(); PM51.refresh(ID, { swap: false }); };
-  const rs = () => { const s = PM51.s(); if (!s.backupRestore) s.backupRestore = { what: 'Whole workspace', which: 0, where: 'In place' }; return s.backupRestore; };
+  const rs = () => {
+    const s = PM51.s();
+    if (!s.backupRestore) s.backupRestore = { what: 'Whole workspace', whichId: '', where: 'In place' };
+    const R = s.backupRestore;
+    if (!R.whichId && Number.isInteger(R.which)) { // migrate a saved offset only if its record has a stable owner identity
+      R.whichId = snapId(eng().history[R.which]) || 'unavailable:legacy-index:' + R.which;
+      delete R.which;
+    }
+    if (!R.whichId) R.whichId = snapId(latest());
+    return R;
+  };
+  /* Resolve the chosen recovery point after any list refresh. `gone` keeps the vanished selection visible as
+     unavailable instead of falling back to latest; an empty selection just means "no backups yet". */
+  const chosenSnapshot = () => {
+    const R = rs(), E = eng();
+    if (!E.history.length) return { rec: null, gone: false };
+    if (!R.whichId) { R.whichId = snapId(E.history[0]); return R.whichId ? { rec: E.history[0], gone: false } : { rec: null, gone: true }; }
+    const rec = bySnapId(R.whichId);
+    return rec ? { rec, gone: false } : { rec: null, gone: true };
+  };
+  const notListedNote = 'The selected backup is no longer in the list.';
   const destById = id => bk().destinations.find(d => d.id === id);
   const defaultDest = () => bk().destinations.find(d => d.default) || bk().destinations[0];
   const latest = () => eng().history[0];
+  /* Recovery points require an owner-issued stable ID or receipt. Presentation fields can repeat or change,
+     so an unidentified or duplicate entry is unavailable for snapshot-specific actions. */
+  const snapId = x => (x && (x.snapshot_id || x.receipt || x.backup_id)) || '';
+  const bySnapId = id => { const rows = id ? eng().history.filter(x => snapId(x) === id) : []; return rows.length === 1 ? rows[0] : null; };
   const kitStatus = () => { const k = bk().recoveryKit; return !k.saved ? 'Not saved' : k.tested ? 'Saved · Tested' : 'Saved · Not tested'; };
 
   /* ---------- Backup ------------------------------------------------------ */
@@ -113,18 +137,20 @@
   /* ---------- Restore ------------------------------------------------------ */
   function renderRestore() {
     const R = rs(), E = eng();
-    const which = E.history.map((x, i) => [String(i), `${x.time} · ${x.type} · ${x.size}`]);
-    const chosen = E.history[R.which] || E.history[0];
+    const picked = chosenSnapshot();
+    const chosen = picked.rec, gone = picked.gone;
+    const which = E.history.filter(x => snapId(x) && bySnapId(snapId(x))).map(x => [snapId(x), `${x.time} · ${x.type} · ${x.size}`]);
+    if (gone) which.unshift([R.whichId, 'Selected backup no longer listed']);
     const steps = PM51.section({ title: 'Restore', help: 'Nothing changes until you confirm at the end.', body: PM51.steps([
       { title: 'What', desc: R.what === 'Some files' ? 'Pick files and folders from the backup.' : R.what === 'Whole server' ? 'Everything on the server, from a full server backup.' : 'Settings, history, Goals, chats, and files for this workspace.', action: PM51.segmented(R.what, RESTORE_WHAT, { action: 'pm51-backup-restore-what', label: 'What to restore' }) },
-      { title: 'Which backup', desc: chosen ? `${chosen.destination} · ${chosen.result}` : 'No backups yet.', action: which.length ? PM51.select(String(R.which), which, { action: 'pm51-backup-restore-which', label: 'Which backup', cls: 'pm51-backup-step-select' }) : '' },
+      { title: 'Which backup', desc: chosen ? `${chosen.destination} · ${chosen.result}` : gone ? notListedNote : 'No backups yet.', action: which.length ? PM51.select(R.whichId, which, { action: 'pm51-backup-restore-which', label: 'Which backup', cls: 'pm51-backup-step-select' }) : '' },
       { title: 'Where', desc: R.where === 'In place' ? 'Replaces the current workspace. A safety copy is made first.' : 'Keeps the current workspace and creates a new one beside it.', action: PM51.segmented(R.where, RESTORE_WHERE, { action: 'pm51-backup-restore-where', label: 'Where to restore' }) },
-      { title: 'Review', desc: chosen ? `${R.what} from ${chosen.time}, ${R.where.toLowerCase()}.` : 'Nothing to restore yet.', action: { label: 'Start restore', primary: true, icon: 'restore', action: 'pm51-backup-restore-start', disabled: !chosen, reason: 'There is no backup to restore from yet.' } }
+      { title: 'Review', desc: chosen ? `${R.what} from ${chosen.time}, ${R.where.toLowerCase()}.` : gone ? `${notListedNote} Choose another backup to restore.` : 'Nothing to restore yet.', action: { label: 'Start restore', primary: true, icon: 'restore', action: 'pm51-backup-restore-start', disabled: !chosen, reason: gone ? 'The selected backup is no longer listed. Choose another backup.' : 'There is no backup to restore from yet.' } }
     ]) });
     const advanced = PM51.advanced([
-      PM51.section({ title: 'Browse without restoring', help: 'Look inside a backup and pull out single files.', body: PM51.rows([{ label: chosen ? `${chosen.type} backup · ${chosen.time}` : 'No backup', action: { label: 'Browse', icon: 'folder', action: 'pm51-backup-browse', disabled: !chosen, reason: 'No backup to browse yet.' } }]) }),
+      PM51.section({ title: 'Browse without restoring', help: 'Look inside a backup and pull out single files.', body: PM51.rows([{ label: chosen ? `${chosen.type} backup · ${chosen.time}` : gone ? 'Selected backup no longer listed' : 'No backup', action: { label: 'Browse', icon: 'folder', action: 'pm51-backup-browse', disabled: !chosen, reason: gone ? 'The selected backup is no longer listed.' : 'No backup to browse yet.' } }]) }),
       PM51.section({ title: 'Compatibility', body: PM51.kv([['Backup made by', 'Puppet Master 0.8.0'], ['This version', state.updates ? state.updates.currentVersion : '0.8.0-dev'], ['Result', 'Compatible · no conversion needed']]) }),
-      PM51.section({ title: 'Verify recovery point', help: 'Checks that the chosen backup can really be read back.', body: `<div>${PM51.btn({ label: 'Verify recovery point', small: true, icon: 'test', action: 'pm51-backup-verify', disabled: !chosen, reason: 'No backup to verify yet.' })}</div>` })
+      PM51.section({ title: 'Verify recovery point', help: 'Checks that the chosen backup can really be read back.', body: `<div>${PM51.btn({ label: 'Verify recovery point', small: true, icon: 'test', action: 'pm51-backup-verify-selected', disabled: !chosen, reason: gone ? 'The selected backup is no longer listed.' : 'No backup to verify yet.' })}</div>` })
     ].join(''));
     return steps + advanced;
   }
@@ -132,9 +158,9 @@
   /* ---------- History ------------------------------------------------------ */
   function renderHistory() {
     const E = eng();
-    const list = E.history.length ? PM51.list(E.history.map((x, i) => ({
+    const list = E.history.length ? PM51.list(E.history.map(x => ({
       title: `${x.type} backup`, meta: `${x.time} · ${x.destination} · ${x.size}`, pill: PM51.pill(x.result), avatar: icon('archive'), end: icon('chevron'),
-      action: 'pm51-backup-history-item', data: { index: i }
+      action: 'pm51-backup-history-item', data: { id: snapId(x) }
     }))) : PM51.empty('No backups yet', 'Backups show up here once the first one runs.');
     const section = PM51.section({ title: 'Backups', help: 'Every backup that ran, newest first.', body: list });
     const advanced = PM51.advanced(PM51.section({ title: 'Export', body: PM51.rows([{ label: 'Export backup history', help: 'A list of backups, results, and sizes. No backup data is included.', action: { label: 'Export…', icon: 'download', action: 'pm51-backup-history-export' } }]) }));
@@ -204,9 +230,10 @@
       }
     });
   }
-  function historyPanel(index) {
-    const x = eng().history[index]; if (!x) return;
-    PM51.panel({ title: `${x.type} backup`, subtitle: x.time, pill: PM51.pill(x.result), body: PM51.panelSection('Backup', PM51.kv([['When', x.time], ['Type', x.type], ['Destination', x.destination], ['Size', x.size], ['Result', x.result], ['Receipt', x.receipt || '—']])) + PM51.panelSection('Actions', `<div class="pm51-backup-actions">${PM51.btn({ label: 'Restore from this backup', small: true, icon: 'restore', action: 'pm51-backup-restore-from', data: { index } })}${PM51.btn({ label: 'Verify', small: true, icon: 'test', action: 'pm51-backup-verify' })}</div>`) });
+  function historyPanel(id) {
+    const x = bySnapId(id);
+    if (!x) { PM51.toast('Backup not available', 'That backup is no longer in the list.', 'warning'); return; }
+    PM51.panel({ title: `${x.type} backup`, subtitle: x.time, pill: PM51.pill(x.result), body: PM51.panelSection('Backup', PM51.kv([['When', x.time], ['Type', x.type], ['Destination', x.destination], ['Size', x.size], ['Result', x.result], ['Receipt', x.receipt || '—']])) + PM51.panelSection('Actions', `<div class="pm51-backup-actions">${PM51.btn({ label: 'Restore from this backup', small: true, icon: 'restore', action: 'pm51-backup-restore-from', data: { id: snapId(x) } })}${PM51.btn({ label: 'Verify', small: true, icon: 'test', action: 'pm51-backup-verify-selected', data: { id: snapId(x) } })}</div>`) });
   }
   /* ---------- protected handoff -------------------------------------------- */
   /* Recovery Key/Kit custody (BRS-012/BRS-017, F3-528): Save, Copy, Print, Test, Rotate, and Re-encrypt run through
@@ -352,6 +379,21 @@
     { title: 'Contents match the manifest', desc: last ? last.size : '—' },
     { title: 'Can be read back', desc: 'A few files restored to a scratch folder and compared' }
   ] }); });
+  /* Snapshot-specific verify (BRS-019): verifies exactly the chosen recovery point by identity. The
+     'Verify latest backup' action above stays the only deliberately latest-targeted verify. */
+  function verifySnapshot(rec) {
+    PM51.check({ title: `Verify backup · ${rec.time}`, steps: [
+      { title: 'Backup found', desc: [rec.time, rec.destination, rec.receipt].filter(Boolean).join(' · '), tone: 'ready', status: 'Checked' },
+      { title: 'Contents match the manifest', desc: rec.size },
+      { title: 'Can be read back', desc: 'A few files restored to a scratch folder and compared' }
+    ] });
+  }
+  PM51.on('backup-verify-selected', el => {
+    const id = ds(el, 'id') || rs().whichId;
+    const rec = id ? bySnapId(id) : null;
+    if (!rec) { PM51.toast('Selected backup not available', `${notListedNote} Pick another recovery point to verify.`, 'warning'); return; }
+    verifySnapshot(rec);
+  });
   PM51.onChange('backup-bandwidth', el => { bk().bandwidth = el.value; saveState(); });
   PM51.on('backup-diagnostics', () => PM51.check({ title: 'Backup & Restore diagnostics', steps: [
     { title: 'Automatic backups', desc: bk().automatic ? 'On' : 'Off', tone: bk().automatic ? 'ready' : 'attention', status: bk().automatic ? 'Checked' : 'Off' },
@@ -368,23 +410,33 @@
     { title: 'Can write and read back', desc: d.path },
     { title: 'Free space', desc: 'Enough for the next full backup' }
   ] }); });
-  PM51.onChange('backup-restore-which', el => { rs().which = Number(el.value) || 0; refresh(); });
+  PM51.onChange('backup-restore-which', el => { rs().whichId = el.value; refresh(); });
   PM51.on('backup-restore-what', el => { rs().what = ds(el, 'value'); refresh(); });
   PM51.on('backup-restore-where', el => { rs().where = ds(el, 'value'); refresh(); });
-  PM51.on('backup-restore-from', el => { rs().which = Number(ds(el, 'index')) || 0; PM51.setTab(ID, 'restore'); closeOverlay(); PM51.refresh(ID); });
+  PM51.on('backup-restore-from', el => { const id = ds(el, 'id'); if (id) rs().whichId = id; PM51.setTab(ID, 'restore'); closeOverlay(); PM51.refresh(ID); });
   PM51.on('backup-restore-start', () => {
-    const R = rs(), chosen = eng().history[R.which]; if (!chosen) return;
+    const R = rs(), picked = chosenSnapshot();
+    if (picked.gone) { PM51.toast('Selected backup not available', `${notListedNote} Choose another backup to restore.`, 'warning'); return; }
+    const chosen = picked.rec; if (!chosen) return;
+    const selectedId = snapId(chosen);
     PM51.confirm('Start restore?', `${R.what} from ${chosen.time}, ${R.where.toLowerCase()}. A safety copy of the current state is made first, the backup is verified before anything is switched over, and you can go back afterwards.`, 'Start restore', () => {
+      const current = bySnapId(selectedId);
+      if (!current) { PM51.toast('Selected backup not available', `${notListedNote} Review the recovery point again.`, 'warning'); return; }
       PM51.panel({ title: 'Restore', subtitle: 'Concept preview. Nothing was restored.', pill: PM51.pill('Preview', 'info'), body: PM51.panelSection('What would happen', PM51.steps([
         { title: 'Safety copy of the current state', desc: 'So you can go back', status: 'Example', tone: 'info' },
-        { title: 'Verify the backup', desc: `${chosen.type} · ${chosen.time}`, status: 'Example', tone: 'info' },
+        { title: 'Verify the backup', desc: `${current.type} · ${current.time}`, status: 'Example', tone: 'info' },
         { title: `Restore ${R.what.toLowerCase()}`, desc: R.where === 'In place' ? 'Into this workspace' : 'Into a new workspace beside this one', status: 'Example', tone: 'info' },
         { title: 'Check and switch over', desc: 'Only after everything reads back correctly', status: 'Example', tone: 'info' }
       ])) + PM51.note('This is a concept preview. Nothing was restored or changed.', 'info') });
     }, true);
   });
-  PM51.on('backup-browse', () => { const chosen = eng().history[rs().which]; if (!chosen) return; PM51.panel({ title: 'Browse backup', subtitle: `${chosen.type} · ${chosen.time} · ${chosen.size}`, body: PM51.panelSection('Contents', `<ul class="pm51-backup-tree">${[['folder', 'Puppet Master project data', '38 MB'], ['folder', 'Project files', '96 MB'], ['folder', 'Version history', '41 MB'], ['file', 'settings.json', '18 KB'], ['file', 'history.db', '7 MB']].map(([ic, name, size]) => `<li>${icon(ic)}<span>${h(name)}</span><span>${h(size)}</span></li>`).join('')}</ul>`) + PM51.note('Pick a file to pull it out on its own. Example data only in this preview.', 'info') }); });
-  PM51.on('backup-history-item', el => historyPanel(Number(ds(el, 'index'))));
+  PM51.on('backup-browse', () => {
+    const picked = chosenSnapshot();
+    if (picked.gone) { PM51.toast('Selected backup not available', `${notListedNote} Pick another backup to browse.`, 'warning'); return; }
+    const chosen = picked.rec; if (!chosen) return;
+    PM51.panel({ title: 'Browse backup', subtitle: `${chosen.type} · ${chosen.time} · ${chosen.size}`, body: PM51.panelSection('Contents', `<ul class="pm51-backup-tree">${[['folder', 'Puppet Master project data', '38 MB'], ['folder', 'Project files', '96 MB'], ['folder', 'Version history', '41 MB'], ['file', 'settings.json', '18 KB'], ['file', 'history.db', '7 MB']].map(([ic, name, size]) => `<li>${icon(ic)}<span>${h(name)}</span><span>${h(size)}</span></li>`).join('')}</ul>`) + PM51.note('Pick a file to pull it out on its own. Example data only in this preview.', 'info') });
+  });
+  PM51.on('backup-history-item', el => historyPanel(ds(el, 'id')));
   PM51.on('backup-history-export', () => PM51.toast('Export prepared', 'Example data only. A list of backups and results would be saved.', 'info'));
   PM51.on('backup-reset', () => PM51.confirm('Reset backup defaults?', 'Automatic backups turn on, everything is protected again, and the default schedule is restored. Destinations and history are kept.', 'Reset', () => { const B = bk(); B.automatic = true; B.protected = { pmData: true, files: true, history: true }; B.bandwidth = 'Night schedule · 40 MB/s'; eng().schedules = clone(D.backupState.schedules); refresh(); PM51.toast('Backup defaults restored'); }));
   PM51.on('backup-help', () => PM51.panel({

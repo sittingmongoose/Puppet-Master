@@ -43685,7 +43685,9 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
         selectProviderView('free-models','routes',true);
         return;
       case 'provider-model':
-        selectProviderView(p.providerId || 'claude-code','models',true);
+        state.searchExactTarget={kind:p.kind,providerId:p.providerId,id:p.id};
+        if(window.PM51&&window.PM51.revealProviderModel&&window.PM51.revealProviderModel(p.providerId,p.id))return;
+        selectProviderView(p.providerId || 'claude-code','overview',true);
         return;
       case 'web-route':
         state.selectedWebRoute = p.id;
@@ -43806,18 +43808,24 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
         navigate('general', 'notifications');
         return;
       case 'sync-client':
+        state.searchExactTarget={kind:p.kind,id:p.id};
         state.projectSyncTab = 'clients';
         navigate('projects', 'project-sync');
         return;
       case 'sync-location':
+        state.searchExactTarget={kind:p.kind,id:p.id};
         state.projectSyncTab = 'remote';
         navigate('projects', 'project-sync');
         return;
       case 'history-session':
+        state.searchExactTarget={kind:p.kind,id:p.id};
+        if(window.PM51&&window.PM51.revealHistoryObject&&window.PM51.revealHistoryObject(p.kind,p.id))return;
         state.projectHistoryTab = 'sessions';
         navigate('projects', 'project-history');
         return;
       case 'artifact':
+        state.searchExactTarget={kind:p.kind,id:p.id};
+        if(window.PM51&&window.PM51.revealHistoryObject&&window.PM51.revealHistoryObject(p.kind,p.id))return;
         state.projectHistoryTab = 'artifacts';
         navigate('projects', 'project-history');
         return;
@@ -44660,8 +44668,8 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     {fixture_id:'queued',state:'queued',wait_reason:'admission-capacity',reevaluation:'governor-capacity-change',can_cancel:true,can_retry:false,phase:'queued'},
     {fixture_id:'running',state:'running',wait_reason:'not-waiting',reevaluation:'owner-phase-change',can_cancel:true,can_retry:false,phase:'executing'},
     {fixture_id:'waiting',state:'waiting',wait_reason:'provider-rate-window',reevaluation:'provider-window-reopens',can_cancel:true,can_retry:false,phase:'waiting'},
-    {fixture_id:'cancel-requested',state:'cancel-requested',wait_reason:'owner-cancellation-pending',reevaluation:'owner-terminal-receipt',can_cancel:false,can_retry:false,phase:'cancelling'},
-    {fixture_id:'terminal-unknown',state:'terminal-unknown',wait_reason:'terminal-receipt-unavailable',reevaluation:'owner-currentness-refresh',can_cancel:false,can_retry:true,phase:'terminal-unknown'},
+    {fixture_id:'cancel-requested',state:'running',command_outcome:'executing',wait_reason:'owner-cancellation-pending',reevaluation:'owner-terminal-receipt',can_cancel:false,can_retry:false,phase:'Cancelling'},
+    {fixture_id:'terminal-unknown',state:'recovery-required',command_outcome:'terminal-unknown',wait_reason:'terminal-receipt-unavailable',reevaluation:'owner-currentness-refresh',can_cancel:false,can_retry:true,phase:'reconcile receipt'},
     {fixture_id:'recovery-required',state:'recovery-required',wait_reason:'owner-recovery-required',reevaluation:'explicit-owner-retry',can_cancel:false,can_retry:true,phase:'recovery'},
     {fixture_id:'completed',state:'completed',wait_reason:'not-waiting',reevaluation:'terminal',can_cancel:false,can_retry:false,phase:'completed'}
   ];
@@ -44689,7 +44697,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
   const PM7_PERFORMANCE_WORK_ID='concept-work:full-thread-performance:001';
   function performanceVocabulary(values){return `<div class="pm7-perf-vocab">${values.map(value=>`<code>${value}</code>`).join('')}</div>`;}
   function renderPerformanceTruthFixtures(){
-    const work=PM7_PERFORMANCE_WORK_FIXTURES.map(row=>`<div class="pm7-perf-fixture-row" data-observable-work-fixture="true" data-observable-work-id="${PM7_PERFORMANCE_WORK_ID}:${row.fixture_id}" data-work-state="${row.state}" data-wait-reason="${row.wait_reason}" data-reevaluation-condition="${row.reevaluation}" data-can-cancel="${row.can_cancel}" data-can-retry="${row.can_retry}" data-progress-denominator="phase-only"><strong>${row.state}</strong><span>${row.phase}</span></div>`).join('');
+    const work=PM7_PERFORMANCE_WORK_FIXTURES.map(row=>`<div class="pm7-perf-fixture-row" data-observable-work-fixture="true" data-fixture-id="${row.fixture_id}" data-observable-work-id="${PM7_PERFORMANCE_WORK_ID}:${row.fixture_id}" data-work-state="${row.state}" data-command-outcome="${row.command_outcome||''}" data-wait-reason="${row.wait_reason}" data-reevaluation-condition="${row.reevaluation}" data-can-cancel="${row.can_cancel}" data-can-retry="${row.can_retry}" data-progress-denominator="phase-only"><strong>${row.fixture_id}</strong><span>${row.state} · ${row.phase}</span></div>`).join('');
     const governor=PM7_PERFORMANCE_GOVERNOR_FIXTURES.map(row=>`<div class="pm7-perf-fixture-row" data-governor-outcome="${row.outcome}" data-observable-work-id="${PM7_PERFORMANCE_WORK_ID}:governor:${row.outcome}" data-outcome-reason="${row.reason}" data-reevaluation-condition="${row.reevaluation}"><strong>${row.outcome}</strong><span>${row.reason}</span></div>`).join('');
     const lists=PM7_PERFORMANCE_BOUNDED_LIST_FIXTURES.map(row=>`<div class="pm7-perf-fixture-row" data-bounded-list-family="${row.family}" data-row-limit="${row.row_limit}" data-byte-limit="${row.byte_limit}" data-load-trigger="explicit-inspection" data-runtime-availability="browser-fixture-only"><strong>${row.family}</strong><span>${row.row_limit} rows · ${row.byte_limit} bytes</span></div>`).join('');
     return `<details class="pm7-perf-fixtures"><summary>Deterministic browser truth fixtures</summary><div class="pm7-perf-fixture-groups"><section class="pm7-perf-fixture-group"><h5>ObservableWork rows</h5>${work}</section><section class="pm7-perf-fixture-group"><h5>Governor affected work</h5>${governor}</section><section class="pm7-perf-fixture-group"><h5>Bounded evidence families</h5>${lists}</section></div><p class="pm7-perf-boundary" style="padding:0 7px 7px">Fixture rows prove browser-concept contracts only. Native/runtime/provider/network execution remains unavailable here.</p></details>`;
@@ -48045,6 +48053,20 @@ PM51.revealSetting = (id, { detail = false } = {}) => {
 const pm51OriginalApplySearchSelection = applySearchSelection;
 applySearchSelection = function (p) {
   if (p && p.kind === 'setting' && p.id && PM51.revealSetting(p.id)) return;
+  if (p && p.kind === 'provider-model' && p.providerId && p.id && PM51.revealProviderModel && PM51.revealProviderModel(p.providerId, p.id)) return;
+  if (p && (p.kind === 'history-session' || p.kind === 'artifact') && p.id && PM51.revealHistoryObject && PM51.revealHistoryObject(p.kind, p.id)) return;
+  if (p && (p.kind === 'sync-client' || p.kind === 'sync-location') && p.id) {
+    const list = p.kind === 'sync-client' ? state.projectSync?.clients : state.projectSync?.remotes;
+    const exact = Array.isArray(list) && list.find(row => row.id === p.id);
+    if (exact) {
+      PM51.s().searchExactTarget = { kind: p.kind, id: p.id };
+      navigate('projects', 'project-sync');
+      infoDrawer(p.kind === 'sync-client' ? `Client · ${exact.name}` : `Remote project · ${exact.name}`,
+        'Exact Project Sync concept object. Owner state and freshness must be checked before any change.',
+        [['Stable ID', exact.id], ['Kind', p.kind], ['Status', exact.status || 'Unknown'], ['Owner', 'Project Sync']]);
+      return;
+    }
+  }
   return pm51OriginalApplySearchSelection(p);
 };
 
@@ -49223,6 +49245,7 @@ window.PM51 = PM51;
     catalog.forEach(m => {
       const am = accModel(acc, m.id);
       rows.push({
+        id: m.id, data: { provider: p.id, account: acc.id, model: m.id },
         label: m.name, help: `${planText(m)}${m.context && m.context !== 'N/A' && m.context !== 'Unknown' ? ' · ' + m.context + ' context' : ''}`,
         control: am ? PM51.toggle(!!am.enabled, { action: 'pm51-providers-account-model', data: { provider: p.id, account: acc.id, model: m.id }, label: m.name }) : muted('Not available on this account')
       });
@@ -49360,6 +49383,28 @@ window.PM51 = PM51;
   }
 
   PM51.manager('providers', { render });
+  PM51.revealProviderModel = function (providerId, modelId) {
+    const provider = all().find(p => p.id === providerId);
+    if (!provider || !(provider.models || []).some(m => m.id === modelId)) return false;
+    const acc = orderedAccounts(provider).find(a => accModel(a, modelId));
+    state.selectedProvider = provider.id;
+    if (!acc) {
+      navigate('ai', 'providers'); PM51.refresh(ID, { swap: false });
+      infoDrawer('Model unavailable on a connected account', 'The exact search target has no current account binding.',
+        [['Provider', provider.name], ['Model ID', modelId]], { intro: 'Connect or select an account, then search again.' });
+      return true;
+    }
+    if (acc) { const s = PM51.s(); s.open = s.open || {}; s.open[accKey(provider, acc)] = true; }
+    navigate('ai', 'providers'); PM51.refresh(ID, { swap: false });
+    const reveal = () => {
+      const row = [...root.querySelectorAll('.pm51-providers-acc .pm51-row[data-model]')].find(node => node.dataset.provider === providerId && node.dataset.model === modelId && (!acc || node.dataset.account === acc.id));
+      if (!row) return false;
+      row.scrollIntoView({ block: 'center' }); row.tabIndex = -1; row.focus({ preventScroll: true });
+      row.setAttribute('data-search-exact-target', modelId); return true;
+    };
+    if (!reveal()) requestAnimationFrame(reveal);
+    return true;
+  };
   /* The engine's select-provider handler swaps .resource-detail from a fresh renderProviders() call. */
   renderProviders = function () { return render(); };
 
@@ -54629,6 +54674,23 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
     ] });
   }
   PM51.manager('projectHistory', { render });
+  PM51.revealHistoryObject = function (kind, id) {
+    const P = ph();
+    if (kind === 'history-session') {
+      if (!P.sessions.some(x => x.id === id)) return false;
+      PM51.setTab(ID, 'sessions'); PM51.setSel(ID, id);
+      navigate('projects', ID); PM51.refresh(ID, { swap: false });
+      const row = [...root.querySelectorAll('#panel-settings [data-id]')].find(n => n.dataset.id === id);
+      if (row) { row.scrollIntoView({ block: 'center' }); row.setAttribute('data-search-exact-target', id); }
+      return true;
+    }
+    if (kind === 'artifact') {
+      if (!P.artifacts.some(x => x.id === id)) return false;
+      PM51.setTab(ID, 'artifacts'); navigate('projects', ID); PM51.refresh(ID, { swap: false });
+      artifactPanel(id); return true;
+    }
+    return false;
+  };
 
   /* ---------- panels & dialogs -------------------------------------------- */
   function renameSession(s) {
@@ -55181,10 +55243,34 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
   const bk = () => PM51.s().backup;
   const eng = () => { if (!state.backup || !state.backup.schedules) state.backup = clone(D.backupState); return state.backup; };
   const refresh = () => { saveState(); PM51.refresh(ID, { swap: false }); };
-  const rs = () => { const s = PM51.s(); if (!s.backupRestore) s.backupRestore = { what: 'Whole workspace', which: 0, where: 'In place' }; return s.backupRestore; };
+  const rs = () => {
+    const s = PM51.s();
+    if (!s.backupRestore) s.backupRestore = { what: 'Whole workspace', whichId: '', where: 'In place' };
+    const R = s.backupRestore;
+    if (!R.whichId && Number.isInteger(R.which)) { // migrate a saved offset only if its record has a stable owner identity
+      R.whichId = snapId(eng().history[R.which]) || 'unavailable:legacy-index:' + R.which;
+      delete R.which;
+    }
+    if (!R.whichId) R.whichId = snapId(latest());
+    return R;
+  };
+  /* Resolve the chosen recovery point after any list refresh. `gone` keeps the vanished selection visible as
+     unavailable instead of falling back to latest; an empty selection just means "no backups yet". */
+  const chosenSnapshot = () => {
+    const R = rs(), E = eng();
+    if (!E.history.length) return { rec: null, gone: false };
+    if (!R.whichId) { R.whichId = snapId(E.history[0]); return R.whichId ? { rec: E.history[0], gone: false } : { rec: null, gone: true }; }
+    const rec = bySnapId(R.whichId);
+    return rec ? { rec, gone: false } : { rec: null, gone: true };
+  };
+  const notListedNote = 'The selected backup is no longer in the list.';
   const destById = id => bk().destinations.find(d => d.id === id);
   const defaultDest = () => bk().destinations.find(d => d.default) || bk().destinations[0];
   const latest = () => eng().history[0];
+  /* Recovery points require an owner-issued stable ID or receipt. Presentation fields can repeat or change,
+     so an unidentified or duplicate entry is unavailable for snapshot-specific actions. */
+  const snapId = x => (x && (x.snapshot_id || x.receipt || x.backup_id)) || '';
+  const bySnapId = id => { const rows = id ? eng().history.filter(x => snapId(x) === id) : []; return rows.length === 1 ? rows[0] : null; };
   const kitStatus = () => { const k = bk().recoveryKit; return !k.saved ? 'Not saved' : k.tested ? 'Saved · Tested' : 'Saved · Not tested'; };
 
   /* ---------- Backup ------------------------------------------------------ */
@@ -55274,18 +55360,20 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
   /* ---------- Restore ------------------------------------------------------ */
   function renderRestore() {
     const R = rs(), E = eng();
-    const which = E.history.map((x, i) => [String(i), `${x.time} · ${x.type} · ${x.size}`]);
-    const chosen = E.history[R.which] || E.history[0];
+    const picked = chosenSnapshot();
+    const chosen = picked.rec, gone = picked.gone;
+    const which = E.history.filter(x => snapId(x) && bySnapId(snapId(x))).map(x => [snapId(x), `${x.time} · ${x.type} · ${x.size}`]);
+    if (gone) which.unshift([R.whichId, 'Selected backup no longer listed']);
     const steps = PM51.section({ title: 'Restore', help: 'Nothing changes until you confirm at the end.', body: PM51.steps([
       { title: 'What', desc: R.what === 'Some files' ? 'Pick files and folders from the backup.' : R.what === 'Whole server' ? 'Everything on the server, from a full server backup.' : 'Settings, history, Goals, chats, and files for this workspace.', action: PM51.segmented(R.what, RESTORE_WHAT, { action: 'pm51-backup-restore-what', label: 'What to restore' }) },
-      { title: 'Which backup', desc: chosen ? `${chosen.destination} · ${chosen.result}` : 'No backups yet.', action: which.length ? PM51.select(String(R.which), which, { action: 'pm51-backup-restore-which', label: 'Which backup', cls: 'pm51-backup-step-select' }) : '' },
+      { title: 'Which backup', desc: chosen ? `${chosen.destination} · ${chosen.result}` : gone ? notListedNote : 'No backups yet.', action: which.length ? PM51.select(R.whichId, which, { action: 'pm51-backup-restore-which', label: 'Which backup', cls: 'pm51-backup-step-select' }) : '' },
       { title: 'Where', desc: R.where === 'In place' ? 'Replaces the current workspace. A safety copy is made first.' : 'Keeps the current workspace and creates a new one beside it.', action: PM51.segmented(R.where, RESTORE_WHERE, { action: 'pm51-backup-restore-where', label: 'Where to restore' }) },
-      { title: 'Review', desc: chosen ? `${R.what} from ${chosen.time}, ${R.where.toLowerCase()}.` : 'Nothing to restore yet.', action: { label: 'Start restore', primary: true, icon: 'restore', action: 'pm51-backup-restore-start', disabled: !chosen, reason: 'There is no backup to restore from yet.' } }
+      { title: 'Review', desc: chosen ? `${R.what} from ${chosen.time}, ${R.where.toLowerCase()}.` : gone ? `${notListedNote} Choose another backup to restore.` : 'Nothing to restore yet.', action: { label: 'Start restore', primary: true, icon: 'restore', action: 'pm51-backup-restore-start', disabled: !chosen, reason: gone ? 'The selected backup is no longer listed. Choose another backup.' : 'There is no backup to restore from yet.' } }
     ]) });
     const advanced = PM51.advanced([
-      PM51.section({ title: 'Browse without restoring', help: 'Look inside a backup and pull out single files.', body: PM51.rows([{ label: chosen ? `${chosen.type} backup · ${chosen.time}` : 'No backup', action: { label: 'Browse', icon: 'folder', action: 'pm51-backup-browse', disabled: !chosen, reason: 'No backup to browse yet.' } }]) }),
+      PM51.section({ title: 'Browse without restoring', help: 'Look inside a backup and pull out single files.', body: PM51.rows([{ label: chosen ? `${chosen.type} backup · ${chosen.time}` : gone ? 'Selected backup no longer listed' : 'No backup', action: { label: 'Browse', icon: 'folder', action: 'pm51-backup-browse', disabled: !chosen, reason: gone ? 'The selected backup is no longer listed.' : 'No backup to browse yet.' } }]) }),
       PM51.section({ title: 'Compatibility', body: PM51.kv([['Backup made by', 'Puppet Master 0.8.0'], ['This version', state.updates ? state.updates.currentVersion : '0.8.0-dev'], ['Result', 'Compatible · no conversion needed']]) }),
-      PM51.section({ title: 'Verify recovery point', help: 'Checks that the chosen backup can really be read back.', body: `<div>${PM51.btn({ label: 'Verify recovery point', small: true, icon: 'test', action: 'pm51-backup-verify', disabled: !chosen, reason: 'No backup to verify yet.' })}</div>` })
+      PM51.section({ title: 'Verify recovery point', help: 'Checks that the chosen backup can really be read back.', body: `<div>${PM51.btn({ label: 'Verify recovery point', small: true, icon: 'test', action: 'pm51-backup-verify-selected', disabled: !chosen, reason: gone ? 'The selected backup is no longer listed.' : 'No backup to verify yet.' })}</div>` })
     ].join(''));
     return steps + advanced;
   }
@@ -55293,9 +55381,9 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
   /* ---------- History ------------------------------------------------------ */
   function renderHistory() {
     const E = eng();
-    const list = E.history.length ? PM51.list(E.history.map((x, i) => ({
+    const list = E.history.length ? PM51.list(E.history.map(x => ({
       title: `${x.type} backup`, meta: `${x.time} · ${x.destination} · ${x.size}`, pill: PM51.pill(x.result), avatar: icon('archive'), end: icon('chevron'),
-      action: 'pm51-backup-history-item', data: { index: i }
+      action: 'pm51-backup-history-item', data: { id: snapId(x) }
     }))) : PM51.empty('No backups yet', 'Backups show up here once the first one runs.');
     const section = PM51.section({ title: 'Backups', help: 'Every backup that ran, newest first.', body: list });
     const advanced = PM51.advanced(PM51.section({ title: 'Export', body: PM51.rows([{ label: 'Export backup history', help: 'A list of backups, results, and sizes. No backup data is included.', action: { label: 'Export…', icon: 'download', action: 'pm51-backup-history-export' } }]) }));
@@ -55365,9 +55453,10 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
       }
     });
   }
-  function historyPanel(index) {
-    const x = eng().history[index]; if (!x) return;
-    PM51.panel({ title: `${x.type} backup`, subtitle: x.time, pill: PM51.pill(x.result), body: PM51.panelSection('Backup', PM51.kv([['When', x.time], ['Type', x.type], ['Destination', x.destination], ['Size', x.size], ['Result', x.result], ['Receipt', x.receipt || '—']])) + PM51.panelSection('Actions', `<div class="pm51-backup-actions">${PM51.btn({ label: 'Restore from this backup', small: true, icon: 'restore', action: 'pm51-backup-restore-from', data: { index } })}${PM51.btn({ label: 'Verify', small: true, icon: 'test', action: 'pm51-backup-verify' })}</div>`) });
+  function historyPanel(id) {
+    const x = bySnapId(id);
+    if (!x) { PM51.toast('Backup not available', 'That backup is no longer in the list.', 'warning'); return; }
+    PM51.panel({ title: `${x.type} backup`, subtitle: x.time, pill: PM51.pill(x.result), body: PM51.panelSection('Backup', PM51.kv([['When', x.time], ['Type', x.type], ['Destination', x.destination], ['Size', x.size], ['Result', x.result], ['Receipt', x.receipt || '—']])) + PM51.panelSection('Actions', `<div class="pm51-backup-actions">${PM51.btn({ label: 'Restore from this backup', small: true, icon: 'restore', action: 'pm51-backup-restore-from', data: { id: snapId(x) } })}${PM51.btn({ label: 'Verify', small: true, icon: 'test', action: 'pm51-backup-verify-selected', data: { id: snapId(x) } })}</div>`) });
   }
   /* ---------- protected handoff -------------------------------------------- */
   /* Recovery Key/Kit custody (BRS-012/BRS-017, F3-528): Save, Copy, Print, Test, Rotate, and Re-encrypt run through
@@ -55513,6 +55602,21 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
     { title: 'Contents match the manifest', desc: last ? last.size : '—' },
     { title: 'Can be read back', desc: 'A few files restored to a scratch folder and compared' }
   ] }); });
+  /* Snapshot-specific verify (BRS-019): verifies exactly the chosen recovery point by identity. The
+     'Verify latest backup' action above stays the only deliberately latest-targeted verify. */
+  function verifySnapshot(rec) {
+    PM51.check({ title: `Verify backup · ${rec.time}`, steps: [
+      { title: 'Backup found', desc: [rec.time, rec.destination, rec.receipt].filter(Boolean).join(' · '), tone: 'ready', status: 'Checked' },
+      { title: 'Contents match the manifest', desc: rec.size },
+      { title: 'Can be read back', desc: 'A few files restored to a scratch folder and compared' }
+    ] });
+  }
+  PM51.on('backup-verify-selected', el => {
+    const id = ds(el, 'id') || rs().whichId;
+    const rec = id ? bySnapId(id) : null;
+    if (!rec) { PM51.toast('Selected backup not available', `${notListedNote} Pick another recovery point to verify.`, 'warning'); return; }
+    verifySnapshot(rec);
+  });
   PM51.onChange('backup-bandwidth', el => { bk().bandwidth = el.value; saveState(); });
   PM51.on('backup-diagnostics', () => PM51.check({ title: 'Backup & Restore diagnostics', steps: [
     { title: 'Automatic backups', desc: bk().automatic ? 'On' : 'Off', tone: bk().automatic ? 'ready' : 'attention', status: bk().automatic ? 'Checked' : 'Off' },
@@ -55529,23 +55633,33 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
     { title: 'Can write and read back', desc: d.path },
     { title: 'Free space', desc: 'Enough for the next full backup' }
   ] }); });
-  PM51.onChange('backup-restore-which', el => { rs().which = Number(el.value) || 0; refresh(); });
+  PM51.onChange('backup-restore-which', el => { rs().whichId = el.value; refresh(); });
   PM51.on('backup-restore-what', el => { rs().what = ds(el, 'value'); refresh(); });
   PM51.on('backup-restore-where', el => { rs().where = ds(el, 'value'); refresh(); });
-  PM51.on('backup-restore-from', el => { rs().which = Number(ds(el, 'index')) || 0; PM51.setTab(ID, 'restore'); closeOverlay(); PM51.refresh(ID); });
+  PM51.on('backup-restore-from', el => { const id = ds(el, 'id'); if (id) rs().whichId = id; PM51.setTab(ID, 'restore'); closeOverlay(); PM51.refresh(ID); });
   PM51.on('backup-restore-start', () => {
-    const R = rs(), chosen = eng().history[R.which]; if (!chosen) return;
+    const R = rs(), picked = chosenSnapshot();
+    if (picked.gone) { PM51.toast('Selected backup not available', `${notListedNote} Choose another backup to restore.`, 'warning'); return; }
+    const chosen = picked.rec; if (!chosen) return;
+    const selectedId = snapId(chosen);
     PM51.confirm('Start restore?', `${R.what} from ${chosen.time}, ${R.where.toLowerCase()}. A safety copy of the current state is made first, the backup is verified before anything is switched over, and you can go back afterwards.`, 'Start restore', () => {
+      const current = bySnapId(selectedId);
+      if (!current) { PM51.toast('Selected backup not available', `${notListedNote} Review the recovery point again.`, 'warning'); return; }
       PM51.panel({ title: 'Restore', subtitle: 'Concept preview. Nothing was restored.', pill: PM51.pill('Preview', 'info'), body: PM51.panelSection('What would happen', PM51.steps([
         { title: 'Safety copy of the current state', desc: 'So you can go back', status: 'Example', tone: 'info' },
-        { title: 'Verify the backup', desc: `${chosen.type} · ${chosen.time}`, status: 'Example', tone: 'info' },
+        { title: 'Verify the backup', desc: `${current.type} · ${current.time}`, status: 'Example', tone: 'info' },
         { title: `Restore ${R.what.toLowerCase()}`, desc: R.where === 'In place' ? 'Into this workspace' : 'Into a new workspace beside this one', status: 'Example', tone: 'info' },
         { title: 'Check and switch over', desc: 'Only after everything reads back correctly', status: 'Example', tone: 'info' }
       ])) + PM51.note('This is a concept preview. Nothing was restored or changed.', 'info') });
     }, true);
   });
-  PM51.on('backup-browse', () => { const chosen = eng().history[rs().which]; if (!chosen) return; PM51.panel({ title: 'Browse backup', subtitle: `${chosen.type} · ${chosen.time} · ${chosen.size}`, body: PM51.panelSection('Contents', `<ul class="pm51-backup-tree">${[['folder', 'Puppet Master project data', '38 MB'], ['folder', 'Project files', '96 MB'], ['folder', 'Version history', '41 MB'], ['file', 'settings.json', '18 KB'], ['file', 'history.db', '7 MB']].map(([ic, name, size]) => `<li>${icon(ic)}<span>${h(name)}</span><span>${h(size)}</span></li>`).join('')}</ul>`) + PM51.note('Pick a file to pull it out on its own. Example data only in this preview.', 'info') }); });
-  PM51.on('backup-history-item', el => historyPanel(Number(ds(el, 'index'))));
+  PM51.on('backup-browse', () => {
+    const picked = chosenSnapshot();
+    if (picked.gone) { PM51.toast('Selected backup not available', `${notListedNote} Pick another backup to browse.`, 'warning'); return; }
+    const chosen = picked.rec; if (!chosen) return;
+    PM51.panel({ title: 'Browse backup', subtitle: `${chosen.type} · ${chosen.time} · ${chosen.size}`, body: PM51.panelSection('Contents', `<ul class="pm51-backup-tree">${[['folder', 'Puppet Master project data', '38 MB'], ['folder', 'Project files', '96 MB'], ['folder', 'Version history', '41 MB'], ['file', 'settings.json', '18 KB'], ['file', 'history.db', '7 MB']].map(([ic, name, size]) => `<li>${icon(ic)}<span>${h(name)}</span><span>${h(size)}</span></li>`).join('')}</ul>`) + PM51.note('Pick a file to pull it out on its own. Example data only in this preview.', 'info') });
+  });
+  PM51.on('backup-history-item', el => historyPanel(ds(el, 'id')));
   PM51.on('backup-history-export', () => PM51.toast('Export prepared', 'Example data only. A list of backups and results would be saved.', 'info'));
   PM51.on('backup-reset', () => PM51.confirm('Reset backup defaults?', 'Automatic backups turn on, everything is protected again, and the default schedule is restored. Destinations and history are kept.', 'Reset', () => { const B = bk(); B.automatic = true; B.protected = { pmData: true, files: true, history: true }; B.bandwidth = 'Night schedule · 40 MB/s'; eng().schedules = clone(D.backupState.schedules); refresh(); PM51.toast('Backup defaults restored'); }));
   PM51.on('backup-help', () => PM51.panel({
@@ -83423,6 +83537,35 @@ policies for tenant isolation, and add migration script.</textarea>
   });
   Object.defineProperty(window,'PM7_BROWSER_PROGRAM',{value:browserProgramDescriptor,writable:false,configurable:false,enumerable:true});
   window.PM7_SYSTEMS_INTEGRATION={schema_id:'pm.pmconcept7.systems_projection.v1',simulation_only:true,production_runtime_state:'unavailable',native_runtime_state:'unavailable',sync_host:syncHost,host_projection:hostProjection,settings_commands:window.PM7_SETTINGS_COMMANDS,server_gap_consumers:window.PM7_SERVER_GAP_CONSUMERS,doctor_fixture_model:function(){return JSON.parse(JSON.stringify(window.PM7_DOCTOR_CLOSURE_MODEL));},doctor_status_catalog:function(){return window.PM7_DOCTOR_STATUS_CATALOG.slice();},doctor_domain_catalog:function(){return window.PM7_DOCTOR_DOMAIN_IDS.slice();},doctor_work_projection:function(){return JSON.parse(JSON.stringify(window.PM7_DOCTOR_WORK_PROJECTION()));},return_to_doctor:function(result){if(!window.PM12_KIMI)return {mode:'blocked_owner_bridge'};var payload=result||{};window.PM12_KIMI.dispatchAction('doctor-return',{checkId:payload.checkId,findingId:payload.findingId,findingRevision:payload.findingRevision,targetId:payload.targetId,ownerActionId:payload.ownerActionId,typedOwnerRouteId:payload.typedOwnerRouteId,idempotencyKey:payload.idempotencyKey,ownerResultRef:payload.ownerResultRef,normalizedStatus:payload.normalizedStatus,outcome:payload.outcome,baseOwnerGeneration:payload.baseOwnerGeneration,baseCacheGeneration:payload.baseCacheGeneration,ownerGeneration:payload.ownerGeneration,cacheGeneration:payload.cacheGeneration,freshnessState:payload.freshnessState});return {mode:'browser_concept_return_requested',browser_projection_only:true,production_runtime_state:'unavailable'};}};
+  /* The browser fixture keeps stable Named Plan and Project identities across scope changes. Its existing
+     run panels belong to named-plan:alpha only; other selected plans cannot inherit that focused run. */
+  var orch=document.getElementById('panel-orchestrator');
+  var planFixtures=[{id:'named-plan:alpha',project:'project:atlas',name:'Atlas launch',phase:'Planning',run:'pcr-47'},
+    {id:'named-plan:beta',project:'project:atlas',name:'Atlas launch',phase:'PRD draft',run:null},
+    {id:'named-plan:gamma',project:'project:harbor',name:'Harbor migration',phase:'Planning',run:null}];
+  var scopeState={scope:'plan',project:'project:atlas',plan:'named-plan:alpha'};
+  function paintPlanScope(){
+    if(!orch)return;var bar=orch.querySelector('#pm7-named-plan-scope'),cards=orch.querySelector('#pm7-named-plan-cards');if(!bar||!cards)return;
+    var selected=planFixtures.find(function(p){return p.id===scopeState.plan;});
+    var showRun=scopeState.scope==='plan'&&selected&&selected.run==='pcr-47';
+    orch.dataset.namedPlanScope=scopeState.scope;
+    ['scope','project','plan'].forEach(function(field){bar.querySelector('[data-plan-field="'+field+'"]').value=scopeState[field];});
+    [...orch.children].forEach(function(child){if(child===bar||child===cards||child.classList.contains('orch-header'))return;child.hidden=!showRun;});
+    [...orch.querySelectorAll('.orch-header > :not(.orch-title)')].forEach(function(child){child.hidden=!showRun;});
+    var shown=scopeState.scope==='all'?planFixtures:scopeState.scope==='project'?planFixtures.filter(function(p){return p.project===scopeState.project;}):showRun?[]:selected?[selected]:[];
+    cards.hidden=!!showRun;
+    cards.innerHTML=shown.map(function(p){return '<button type="button" class="pm7-nplan-card" data-plan-select="'+p.id+'" data-project-id="'+p.project+'" data-named-plan-id="'+p.id+'"><strong>'+p.name+'</strong><span>'+p.project+' · '+p.phase+'</span><small>'+p.id+' · '+(p.run?'Focused run '+p.run:'No owner run projection attached')+'</small></button>';}).join('')+(shown.length?'':'<p class="pm7-nplan-empty">No current owner run projection for this Plan.</p>');
+    bar.querySelector('[data-plan-selected-label]').textContent=selected?selected.name:'';
+  }
+  if(orch&&orch.querySelector('.orch-header')){
+    var planStyle=document.createElement('style');planStyle.id='pm7-named-plan-scope-css';planStyle.textContent='#pm7-named-plan-scope{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border,rgba(150,150,150,.3))}#pm7-named-plan-scope label{display:flex;align-items:center;gap:6px;font-size:12px}#pm7-named-plan-scope select,#pm7-named-plan-scope button{font:inherit;padding:5px 8px;border:1px solid var(--border,rgba(150,150,150,.4));border-radius:7px;background:var(--surface,#222);color:inherit}#pm7-named-plan-cards{padding:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;overflow:auto}#pm7-named-plan-cards[hidden]{display:none}.pm7-nplan-card{text-align:left;padding:14px;border:1px solid var(--border,rgba(150,150,150,.4));border-radius:10px;background:var(--surface,#222);color:inherit;cursor:pointer;display:flex;flex-direction:column;gap:5px}.pm7-nplan-card span,.pm7-nplan-card small,.pm7-nplan-empty{opacity:.75}';document.head.appendChild(planStyle);
+    var scopeBar=document.createElement('div');scopeBar.id='pm7-named-plan-scope';scopeBar.setAttribute('data-concept-simulation-only','true');scopeBar.innerHTML='<label>Scope <select data-plan-field="scope" aria-label="Named Plan scope"><option value="all">All Active</option><option value="project">Current Project</option><option value="plan">Selected Plan</option></select></label><label>Project <select data-plan-field="project" aria-label="Current Project"><option value="project:atlas">Atlas</option><option value="project:harbor">Harbor</option></select></label><label>Plan <select data-plan-field="plan" aria-label="Selected Plan"><option value="named-plan:alpha">Atlas launch · pcr-47</option><option value="named-plan:beta">Atlas launch · PRD draft</option><option value="named-plan:gamma">Harbor migration</option></select></label><button type="button" data-plan-action="new" data-ui-action-id="ui.named_plan.create" data-command-id="cmd.named_plan.create" data-availability="handler_unavailable">New Plan · preview only</button><button type="button" data-plan-action="wizard" data-ui-action-id="ui.planning_wizard.open">PRD / Planning Wizard</button><span data-plan-selected-label></span>';
+    var planCards=document.createElement('div');planCards.id='pm7-named-plan-cards';planCards.setAttribute('aria-label','Named Plans in selected scope');orch.querySelector('.orch-header').after(scopeBar,planCards);
+    scopeBar.addEventListener('change',function(e){var field=e.target.dataset.planField;if(!field)return;scopeState[field]=e.target.value;if(field==='plan'){var p=planFixtures.find(function(row){return row.id===scopeState.plan;});if(p)scopeState.project=p.project;}paintPlanScope();});
+    scopeBar.addEventListener('click',function(e){var action=e.target.dataset.planAction;if(action==='wizard'){var tab=document.getElementById('tab-wizard');if(tab)tab.click();}else if(action==='new'){scopeBar.querySelector('[data-plan-selected-label]').textContent='Fixture preview only · native Plan creation unavailable';}});
+    planCards.addEventListener('click',function(e){var card=e.target.closest('[data-plan-select]');if(!card)return;scopeState.plan=card.dataset.planSelect;scopeState.project=card.dataset.projectId;scopeState.scope='plan';paintPlanScope();});
+    paintPlanScope();window.PM7_NAMED_PLAN_SCOPE={state:function(){return Object.assign({},scopeState);},fixtures:function(){return planFixtures.map(function(p){return Object.assign({},p);});},select:function(scope,project,plan){scopeState={scope:scope,project:project,plan:plan};paintPlanScope();}};
+  }
   shellWidth=shell?shell.clientWidth:0;panelWidth=panel?panel.clientWidth:0;chatWidth=chat?chat.clientWidth:0;resizerWidth=resizer?(resizer.clientWidth||5):5;
   observeWidth(shell,function(width){shellWidth=width;});
   observeWidth(panel,function(width){panelWidth=width;});
@@ -83448,7 +83591,7 @@ policies for tenant isolation, and add migration script.</textarea>
     {"id":"SCM-005","label":"Included Source Control baseline","detail":"Git and Jujutsu are PM Tool Store baselines with exact Host and Environment evidence"},
     {"id":"SCM-019","label":"Workspace conflict plan","detail":"Files, migrations, ports, devices, and deployments resolve before admission"},
     {"id":"ORI-002","label":"Origin Preview visibility","detail":"Internal and Private are capability-gated; Public is unavailable until capability-proven","self_hosted":false},
-    {"id":"ORI-020","label":"Origin typed fallback","detail":"Content, compare, push, thread, and reviewer gaps use Git data/transport or typed CLI; 1 MiB and complete-commit cases never truncate"},
+    {"id":"ORI-020","label":"Origin typed fallback","detail":"Git content, compare, and push gaps use admitted Git data/transport or typed CLI. Hosting thread and reviewer mutations require hosting authority; 1 MiB and complete-commit cases never truncate"},
     {"id":"IRT-008","label":"External installation ownership","detail":"External and package-manager installs default to check-and-notify"},
     {"id":"IRT-009","label":"Shared installation work","detail":"Identical provisioning/update fingerprints coalesce once; conflicts remain separate"},
     {"id":"IRT-010","label":"Persistent Tool Store profiles","detail":"Tool Store and isolated profiles survive image and pod replacement without raw secrets"},

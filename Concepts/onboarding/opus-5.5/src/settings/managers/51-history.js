@@ -143,6 +143,27 @@
     ] });
   }
   PM51.manager('projectHistory', { render });
+  PM51.revealHistoryObject = function (kind, id) {
+    const P = ph();
+    if (kind === 'history-session') {
+      if (!P.sessions.some(row => row.id === id)) return false;
+      PM51.setTab(ID, 'sessions'); PM51.setSel(ID, id);
+      navigate('projects', ID); PM51.refresh(ID, { swap: false });
+      const reveal = () => {
+        const row = [...root.querySelectorAll('#panel-settings [data-id]')].find(node => node.dataset.id === id);
+        if (!row) return false;
+        row.scrollIntoView({ block: 'center' }); row.setAttribute('data-search-exact-target', id); return true;
+      };
+      if (!reveal()) requestAnimationFrame(reveal);
+      return true;
+    }
+    if (kind === 'artifact') {
+      if (!P.artifacts.some(row => row.id === id)) return false;
+      PM51.setTab(ID, 'artifacts'); navigate('projects', ID); PM51.refresh(ID, { swap: false });
+      artifactPanel(id); return true;
+    }
+    return false;
+  };
 
   /* ---------- panels & dialogs -------------------------------------------- */
   function renameSession(s) {
