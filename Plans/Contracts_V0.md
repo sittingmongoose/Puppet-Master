@@ -949,10 +949,10 @@ Contracts registers persisted event names, producer/consumer boundaries, and cro
 | `bundle.annotation_state_changed` | document bundle / review owner | builder, chat, audit, targeted revision | `bundle_id`, `doc_id`, `annotation_id`, `previous_state?`, `state`, `operation?`, `anchor_ref?`, `ts` |
 | `bundle.selection_sent_to_chat` | document bundle / review owner | chat, prompt assembly, audit | `bundle_id`, `doc_id`, `selection_id`, requested/effective chat target, bounded selection excerpt ref, provenance refs, `ts` |
 | `bundle.revision_requested` | document bundle / review owner | targeted revision, audit, validation | `bundle_id`, `revision_id`, ordered `annotation_ids[]`, requested/effective revision capability, `safe_point_id?`, `ts` |
-| `approval.requested` | HITL / blocked-state owner | UI, orchestrator, permissions, recovery | `run_id`, `node_id`, `blocked_sequence`, `approval_scope_key`, ordered `allowed_action_ids[]`, `detail_ref?`, `ts` |
-| `approval.granted` | HITL / approval resolver | UI, orchestrator, permissions, recovery | `run_id`, `node_id`, `blocked_sequence`, `approval_scope_key`, `approver_identity`, selected `allowed_action_id`, rationale ref or bounded rationale, `ts` |
-| `approval.denied` | HITL / approval resolver | UI, orchestrator, permissions, recovery | `run_id`, `node_id`, `blocked_sequence`, `approval_scope_key`, `approver_identity?`, denial reason, `ts` |
-| `approval.timeout` | HITL / approval resolver | UI, orchestrator, permissions, recovery | `run_id`, `node_id`, `blocked_sequence`, `approval_scope_key`, `timeout_class?`, `ts` |
+| `approval.requested` | HITL / blocked-state owner | UI, orchestrator, permissions, recovery | `run_id`, `node_id`, `blocked_sequence`, `approval_scope_key`, ordered `allowed_action_ids[]`, `detail_ref?`, `tool_use_id?` (CV-355), `ts` |
+| `approval.granted` | HITL / approval resolver | UI, orchestrator, permissions, recovery | `run_id`, `node_id`, `blocked_sequence`, `approval_scope_key`, `approver_identity`, selected `allowed_action_id`, rationale ref or bounded rationale, `tool_use_id?` (CV-355), `ts` |
+| `approval.denied` | HITL / approval resolver | UI, orchestrator, permissions, recovery | `run_id`, `node_id`, `blocked_sequence`, `approval_scope_key`, `approver_identity?`, denial reason, `tool_use_id?` (CV-355), `ts` |
+| `approval.timeout` | HITL / approval resolver | UI, orchestrator, permissions, recovery | `run_id`, `node_id`, `blocked_sequence`, `approval_scope_key`, `timeout_class?`, `tool_use_id?` (CV-355), `ts` |
 
 Legacy `lsp.server_started` and `lsp.server_crashed` event names normalize to `lsp.server.lifecycle_changed` with `state` and `state_reason?`; producers must not fork a second LSP lifecycle family when the normalized event can carry the transition.
 
@@ -23484,3 +23484,52 @@ gui_classification_reason: Original source, native authority/custody, schema, st
 ```
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-352, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
+
+## Approval binding to its tool call — 2026-09-27
+
+### CV-355 - Approval Requested Carries Its Tool Use Id
+
+```yaml
+plan_unit_id: CV-355
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  approval.requested carries an optional tool_use_id naming the tool call that waits for the
+  decision, so a presenter can bind the wait to its subject (EP-128); it is present whenever the
+  waiting action is a tool call and absent otherwise. approval.granted, approval.denied and
+  approval.timeout echo the same tool_use_id when the request carried one. No other field of these
+  events changes.
+gui_related: false
+gui_classification_reason: "A data-contract field used by the chat's waiting subject."
+split_recommended: false
+depends_on: []
+unblocks: [EP-128]
+acceptance_criteria:
+  - "approval.requested includes tool_use_id whenever the waiting action is a tool call."
+  - "The resolving approval events echo it."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: event_payload_gap
+reasoning_tier: standard
+context_scope: approval_events
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: event_payload_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-105"
+preserved_exact_tokens:
+  - "approval.requested"
+  - "tool_use_id"
+negative_constraints:
+  - "Do not require tool_use_id for approvals that are not tool calls."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-128

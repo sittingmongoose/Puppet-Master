@@ -451,7 +451,7 @@ dispatch the same `cmd.workspace_layout.reset` and no new command ID is minted.
 Amended 2026-09-27: the Settings copy (`general.startup.reset-home-layout`) now sits
 in App & Input -> Window & panels as Reset the layout, asks one plain question
 naming what moves back and what is kept, and dispatches the same command
-(`Plans/Settings_System.md#SSYS-039`).
+(`Plans/Settings_System.md#SSYS-040`).
 In the concept demo the top-bar row additionally closes any legacy chat overlay
 state and reloads the page so the demo flow restarts pristine; that reload
 semantic is concept-demo behavior only and is NOT promoted into the typed command
@@ -30013,7 +30013,7 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-Settings appearance overrides (2026-09-27): the per-variant tables below are what every variant renders while no appearance setting has been changed. Settings appearance rows (size, text size, line spacing, animation speed, spacing, padding, border width, corner roundness, scrollbar width, app font, high contrast, focus outline, Retro textures, accent) apply as overrides over the active variant's table, write nothing while unchanged, remove exactly what they wrote on reset, and use precomputed per-mode accent values; `Plans/Settings_System.md#SSYS-040` owns that model and this unit's no-runtime-colour-derivation rule still applies.
+Settings appearance overrides (2026-09-27): the per-variant tables below are what every variant renders while no appearance setting has been changed. Settings appearance rows (size, text size, line spacing, animation speed, spacing, padding, border width, corner roundness, scrollbar width, app font, high contrast, focus outline, Retro textures, accent) apply as overrides over the active variant's table, write nothing while unchanged, remove exactly what they wrote on reset, and use precomputed per-mode accent values; `Plans/Settings_System.md#SSYS-041` owns that model and this unit's no-runtime-colour-derivation rule still applies.
 
 ### Theme Token Tables (F3-426 spec data)
 
@@ -31229,7 +31229,7 @@ owner_hints:
 - "Plans/settings_inventory.schema.json"
 ```
 
-Amended 2026-09-27 (user-approved inventory wave, `Plans/Settings_System.md#SSYS-039` section 9): the registry
+Amended 2026-09-27 (user-approved inventory wave, `Plans/Settings_System.md#SSYS-040` section 9): the registry
 admits eleven rows that the Settings surface drew by hand without inventory ids, bringing it to 900 rows:
 `general.visual.accent-color`, `general.visual.animation-speed`, `general.interaction.activity-bar-labels`,
 `general.startup.first-screen`, `general.interaction.spellcheck`, `general.interaction.spellcheck-languages`,
@@ -36584,11 +36584,11 @@ invariants.
   6. *One Quiet Action Row:* Secondary actions, resets, and documentation links cluster into a single subtle bottom action strip.
   7. *No Top Action Bar:* No header-level action strip; actions live in rows, section title rows, or the single quiet bottom row.
   8. *Bounded Tabs:* At most six tabs per manager.
-  9. *Exactly One Advanced Disclosure:* One labeled keyboard-operable Advanced disclosure per manager view holds advanced, dangerous, rarely used, and diagnostic items. From 2026-09-27 it reads More options in every manager view and on every plain page, follows the view's short everyday groups, and opens itself when search, the page index or Details lands inside it (`Plans/Settings_System.md#SSYS-039`).
+  9. *Exactly One Advanced Disclosure:* One labeled keyboard-operable Advanced disclosure per manager view holds advanced, dangerous, rarely used, and diagnostic items. From 2026-09-27 it reads More options in every manager view and on every plain page, follows the view's short everyday groups, and opens itself when search, the page index or Details lands inside it (`Plans/Settings_System.md#SSYS-040`).
   10. *Side Panel Anatomy:* Manager drawers and the setting Details inspector share one anatomy (identity header, sectioned body, quiet footer) and the same spring motion, without decorative accent bars; inspector width tokens are unchanged.
   11. *Status Tokens, Not Pills:* A small coloured dot with text for state; quiet text for category labels; capsules only for keyboard keys. From 2026-09-27 Details' Default and Recommended marks, engine badges and drawer status are words (a dot only where they carry a tone), pick-several choices are squared tiles with a checkbox, related settings are text links, and Settings has no coloured side or top stripe and no emoji.
   12. *Themed Listboxes:* Concept-drawn listboxes over hidden native selects with the chat assistant's popout motion; no native option list is visible; menus share the popout.
-  13. *Manager-Topic Settings Live Inside Their Manager:* Manager-topic canonical settings render inline inside their manager before its Advanced disclosure; core settings stay on plain pages; every inventory id renders exactly once. From 2026-09-27 a manager's own bound control (a list's search or Show menu, a per-item switch, a field inside one account) is a row's one home, no manager keeps its own copy of an inventory choice, and the plain pages are App & Input, Editor & Terminal, Containers, Planning & Interviews and Advanced Settings (`Plans/Settings_System.md#SSYS-039`).
+  13. *Manager-Topic Settings Live Inside Their Manager:* Manager-topic canonical settings render inline inside their manager before its Advanced disclosure; core settings stay on plain pages; every inventory id renders exactly once. From 2026-09-27 a manager's own bound control (a list's search or Show menu, a per-item switch, a field inside one account) is a row's one home, no manager keeps its own copy of an inventory choice, and the plain pages are App & Input, Editor & Terminal, Containers, Planning & Interviews and Advanced Settings (`Plans/Settings_System.md#SSYS-040`).
 - **Exhaustive Application Across 38 Settings Managers (APR-062):** The restored native presentation
   grammar applies across all thirty-eight registered Settings managers:
   1. `all-settings` (Search-first catalog)
@@ -38274,3 +38274,226 @@ preserved_exact_tokens: [current checks, gate list, source, enforcement, require
 negative_constraints: [Do not add a second policies region., Do not show an underscore enum or a raw provider identifier as an enforcement value., Do not present an informational group as a gate., Do not present a truncated gate list as complete.]
 owner_hints: [Plans/FinalGUISpec.md, Plans/Source_Control_System.md]
 ```
+
+## Chat WOW Concept Promotion Addendum - 2026-09-27
+
+This addendum promotes the rebuilt 5.6 Pro chat transcript into the GUI contract under Jared's decisions DL-104 through DL-108. `Plans/assistant-chat-design.md` ACD-469 through ACD-475 own the behaviour; the units below place it in the GUI and name what it supersedes. The concept is source lineage only.
+
+### F3-562 - Chat Transcript Turn Stage Presentation And Working Activity Promotion
+
+```yaml
+plan_unit_id: F3-562
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The assistant chat transcript renders in the Turn Stage presentation owned by ACD-469 (DL-104): a
+  turn mark and a paint-only spine per assistant turn, seven item families by message type with
+  distinct silhouettes, prose without a container, a neutral right-aligned user bubble, and the
+  accent budget. The working activity keeps Orbit as the default and Step Rail as the simple style,
+  with the behaviour owned by ACD-473 (DL-105): concurrent, failed and waiting subjects, clustering
+  to at most 30 nodes, narration that tucks into the card's caption, and the fold into the strip
+  when the final answer starts. For the transcript and the working activity this supersedes the
+  2026-09-03 redesign section's binding-by-reference list where it conflicts and Additive Correction
+  v4's statements that Orbit and Step Rail stay exactly as specified and that nothing authorises a
+  broad restyle. That binding-by-reference never includes the concept's lab tools (ACD-474). The
+  narration tuck is a projection of the turn's own progress summary into its card and does not
+  violate the rule that cards do not float out of narrative position. The eight themes keep their
+  tokens; family hues and the accent budget are theme-token roles defined for all eight.
+gui_related: true
+gui_classification_reason: "Promotes the rebuilt chat transcript and working activity presentation."
+split_recommended: false
+depends_on: [DL-104, DL-105, ACD-469, ACD-473, ACD-474]
+unblocks: []
+acceptance_criteria:
+  - "The chat transcript renders families, turn marks and the spine per ACD-469 in all eight themes."
+  - "The working activity behaves per ACD-473 in both styles."
+  - "No lab tool listed in ACD-474 appears in a product surface."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_transcript_presentation_drift
+reasoning_tier: high
+context_scope: chat_transcript_presentation
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-104"
+  - "Plans/Decision_Log.md#DL-105"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "Turn Stage"
+  - "Orbit"
+  - "Step Rail"
+negative_constraints:
+  - "Do not treat the concept's lab tools as bound by reference."
+  - "Do not restate the family map or the accent rule here; ACD-469 owns them."
+stale_retired_dispositions:
+  - "Additive Correction v4 wording that Orbit and Step Rail stay exactly as specified and that nothing authorises a broad restyle is superseded for the chat transcript and working activity by DL-104 and DL-105."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/assistant-chat-design.md#ACD-473, ContractName:Plans/assistant-chat-design.md#ACD-474
+
+### F3-563 - Composer Busy Send Steer Queue Switch Default And Send Now
+
+```yaml
+plan_unit_id: F3-563
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The composer's Steer/Queue switch stays, and its default follows general.interaction.queue-
+  behavior, which is Queue (DL-108). While a reply streams or work runs, Send becomes Stop when the
+  composer is empty; a send while busy is queued (Queue) or goes to the running turn (Steer); the
+  follow-up queue shows at most two entries, each with Edit, Remove and Send now; Send now steers
+  without stopping the answer; and after a Stop or an error queued entries stay until the user acts.
+  ACD-471 owns the behaviour; UCC-168 owns the command identities.
+gui_related: true
+gui_classification_reason: "Defines the composer's busy-send controls."
+split_recommended: false
+depends_on: [DL-108, ACD-471, UCC-168]
+unblocks: []
+acceptance_criteria:
+  - "The switch defaults to Queue and still offers Steer."
+  - "Each queued entry offers Edit, Remove and Send now."
+  - "Send now leaves the partial answer unmarked."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: busy_send_semantics_drift
+reasoning_tier: high
+context_scope: chat_queue
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-108"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "Steer"
+  - "Queue"
+  - "Send now"
+negative_constraints:
+  - "Do not remove the Steer/Queue switch."
+  - "Do not make Send now a Stop."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-471, ContractName:Plans/UI_Command_Catalog.md#UCC-168
+
+### F3-564 - Chat Sound Cues In Notifications And Sounds With A Header Mute
+
+```yaml
+plan_unit_id: F3-564
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The chat's sound cues (ACD-475: send, first word, work started, step finished, failure, needs you,
+  answer arriving, turn complete, stop) form a chat cue category in the Notifications & Sounds
+  routing matrix (F3-405), mapped through general.interaction.sound-mapping and switched by
+  general.interaction.sound-effects, which is on by default (DL-107). The chat header carries a
+  speaker button with a hover card that toggles general.interaction.sound-effects through
+  cmd.settings.transaction.apply; it is a shared chrome control like the onboarding and Tour sound
+  controls, not a per-view setting. A kit per theme family provides the default cues; built-in cues
+  carry the same source, licence and hash metadata as other built-in sounds. Sound is optional and
+  never the only signal (section 10.13).
+gui_related: true
+gui_classification_reason: "Places chat sound cues and the header mute in the sound settings model."
+split_recommended: false
+depends_on: [DL-107, ACD-475, UCC-103]
+unblocks: []
+acceptance_criteria:
+  - "Chat cues appear as one category in the Notifications & Sounds mapping."
+  - "The header mute and the Settings switch always show the same state."
+  - "Built-in chat cues carry source, licence and hash metadata."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: sound_default_drift
+reasoning_tier: high
+context_scope: chat_sound
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-107"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "general.interaction.sound-effects"
+  - "general.interaction.sound-mapping"
+  - "cmd.settings.transaction.apply"
+negative_constraints:
+  - "Do not add a chat-only sound setting."
+  - "Do not let a cue be the only signal."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-039
+
+### F3-565 - Narrow Chat Pane Transcript Resilience
+
+```yaml
+plan_unit_id: F3-565
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  At every chat pane width down to the narrowest the app produces (about 234px, a 900px window with
+  a side panel open) the transcript never overflows sideways: a needs-you item's action row wraps to
+  its own line rather than pushing past the edge, a ledger line's title ellipsizes and shows in full
+  on hover or focus, text inside cards breaks long unbroken tokens, and the turn spine is paint-only
+  (ACD-469). Send and Stop remain reachable at every width (section 16).
+gui_related: true
+gui_classification_reason: "Keeps the transcript intact in narrow chat panes."
+split_recommended: false
+depends_on: [ACD-469]
+unblocks: []
+acceptance_criteria:
+  - "No demo thread overflows the transcript sideways at a 234px pane or at full width."
+  - "Needs-you actions wrap; ledger titles ellipsize; long tokens break."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: narrow_pane_overflow
+reasoning_tier: high
+context_scope: chat_transcript_presentation
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "234px"
+negative_constraints:
+  - "Do not let any transcript item widen the transcript's scrollable area."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-469

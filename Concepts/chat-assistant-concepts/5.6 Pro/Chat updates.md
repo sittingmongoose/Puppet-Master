@@ -167,6 +167,22 @@ Build with `python3 build.py` then `--check`.
   stable key and its turn position, so an item revealed mid-list animates in
   place and a thread switch arrives as one short crossfade instead of every
   card fading in.
+- **Entrances by family.** Only an item that arrives live animates; a thread's
+  existing items never do. Each family enters in its own way, for the same length
+  in every voice (the voice changes only path and easing: Friendly overshoots with
+  a slight tilt, Glass floats out of a blur, Retro steps and never scales):
+  - **Deliverable**: the sheet rises 12px and unfolds top-down, its shadow
+    arriving last (460ms).
+  - **Needs you**: the item rises, then one accent ring swells out and fades
+    (700ms).
+  - **People**: the roster rises, then the live subagent rows arrive one by one,
+    50ms apart.
+  - **Time**: the ticket slides in 16px from the gutter side.
+  - **Ledger**: a 4px slide and fade (220ms); receipts do not make a scene.
+- **Thread switch.** The new thread's list fades up from 40% opacity with a 4px
+  rise in 180ms, and the turn spine fades with it, so there is no blink between
+  threads (Glass clears a blur, Retro steps, Friendly settles with a slight
+  overshoot).
 
 ## Live replies (streaming)
 
@@ -188,7 +204,15 @@ Build with `python3 build.py` then `--check`.
   reflow). A stopped reply keeps what was written with a **Stopped** marker;
   an error keeps it with the error's note.
 - While a reply is being written the composer shows **Stop** and a send joins
-  the follow-up queue. **Send now** on a queued message stops the reply first.
+  the follow-up queue. **Queue** is the default for sends made while the
+  assistant is busy (DL-108); the product composer also keeps the **Steer /
+  Queue** switch, where Steer sends straight into the running turn. The concept
+  demonstrates Queue only; the switch comes with the port.
+- **Send now** on a queued message **steers**: the reply written so far stays,
+  with no Stopped marker, and that message is sent at once; any other queued
+  message keeps waiting. The queue advances on its own only when a turn
+  **completes**, never after **Stop** or an error (then it waits for Send, Send
+  now, Edit or Remove).
   Leaving the thread lets the reply finish (it is complete when you return).
 - Messages revealed after a work burst (the Multi Orbit demo's interim and
   summary text) stream in the same way, and the next burst waits until the
@@ -219,8 +243,9 @@ Build with `python3 build.py` then `--check`.
     mid-flight and carries it in; words hop into replies.
   - **Glass**: the text floats up; the bubble condenses out of blur; words
     surface from depth.
-  - **Retro**: the text blinks out; the bubble prints in line by line; replies
-    type in with a block cursor and phosphor bloom.
+  - **Retro**: the text blinks out; the bubble prints in line by line and lands
+    with a brief phosphor flare (never a dim); replies type in with a block
+    cursor and phosphor bloom.
   PMConcept7 adopts voices by theme family (same eight theme ids).
 
 ## Sound
@@ -774,8 +799,9 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
 - **A subject can fail or wait for the reader.** A failed node shakes once and turns
   danger-red with an x flag, and its panel chip reads **Failed**; a subject waiting for
   approval turns warning-amber with a pause flag, the core reads **Waiting for you**,
-  and an **Approval needed** item (Approve once / Deny) appears in the transcript right
-  under the card. Approving resumes the run; denying stops it with nothing applied.
+  and an **Approval needed** item appears in the transcript right under the card. The
+  product item offers the full approval ladder (deny, once, for this session, always;
+  ACD-011); the concept demonstrates Approve once and Deny. Approving resumes the run; denying stops it with nothing applied.
 - **Long runs stay legible.** Past 16 started subjects, adjacent subjects of the same
   kind merge into one **cluster node** with a count ("Read ×12"); past 30 nodes the
   oldest fold into one **Earlier** node. A cluster's panel lists every member (the
@@ -791,6 +817,11 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   button** in the card head that opens them as a drawer inside the head. They are
   concept-lab controls only (the product's Stop lives in the composer) and are
   **removed in the PMConcept7 port**.
+- **Lab only, never product** (ACD-474): Demo Studio and its variant indices, the
+  **Motion voice** picker (production follows the theme family), the **Live turns**
+  demos and thread, the Multi Orbit demo, the card's demo drawer, the instant/stream
+  reply switch, the scripted replies, the film clock (`PM56_CLOCK`) and every measured
+  timing in this file.
 - Collapsed activities show **receipt chips WITHOUT a "Worked for" chip** (elapsed
   already lives in the card head). Play/complete respect the user's pin and collapse;
   only Reset clears them.
@@ -798,6 +829,11 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   stat; second line: verb + status) — never native `title` tooltips.
 - While a card is running at the bottom of the thread, its detail region keeps a height
   floor so per-subject content changes do not push the page up and down.
+- **A card that shrinks mid-turn never pulls the thread down.** When a live card gets
+  shorter under a reader at the bottom (a narration line tucking into the caption, a
+  subject's rows folding), the list keeps its height for 700ms (the next subject
+  usually fills it), then eases the rest away gently. Before, a tuck dropped the whole
+  thread 36px in four frames.
 
 ## Orbit (default) — behavior spec
 
@@ -814,8 +850,11 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
 - **The fold never moves the thread.** When a turn's card folds as its answer starts,
   the room the card gives up is **held** (a floor on the list's height at its pre-fold
   size) and the answer grows into it; what the answer does not use is let go once it
-  has settled, easing shut like a drawer. Measured on the live agent turn: the thread
-  above moved 550px down and back before, 5px now. The answer that follows visible
+  has settled, easing shut like a drawer. While the card folds, follow-along waits:
+  the answer's first line mounts under a card that is about to free several times its
+  height, so chasing it would scroll the thread down only for the fold to clamp it
+  back. Measured on the live agent turn: the thread above moved 550px down and back
+  at first, then 33px down and back in one frame, and 0px now. The answer that follows visible
   work starts writing without an "is thinking" label. Expanding is the exact reverse: the dial **drops down from
   the strip line to the center** (visible travel), then slides left as the panel opens.
 - **Compact strip:** one row of kind-colored subject discs + "N subjects" + a

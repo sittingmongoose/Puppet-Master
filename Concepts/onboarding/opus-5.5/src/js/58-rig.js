@@ -38,6 +38,9 @@
     return { x: m ? +m[1] : 0, y: m ? +m[2] : 0, s: s ? +s[1] : 1 };
   };
   const hookLocal = (h) => [+h.getAttribute('cx'), +h.getAttribute('cy')];
+  /* the DOM is written only when a value really changes: an unchanged attribute still costs a style and layout pass on
+     this very large page, and Retro's stepped rig holds each pose for a third of a second */
+  const put = (el, name, v) => { if (el.getAttribute(name) !== v) el.setAttribute(name, v); };
   /* a point given in el's user space, in the user space of `space` (el inside it), whatever lies between */
   function inSpace(space, el, local) {
     const a = space.getScreenCTM(), b = el.getScreenCTM(); if (!a || !b) return local;
@@ -129,36 +132,69 @@
     running: () => rigs.size
   };
 
+  /* the loop stops when nothing moves (ambient off: the page hidden, low-resource mode, Reduced Motion); when motion
+     comes back it has to be woken, or the troupe stood frozen until the next scene */
+  const wake = () => { if (!raf && rigs.size) raf = requestAnimationFrame(frame); };
+  A.rig.wake = wake;
+  document.addEventListener('visibilitychange', wake);
+  window.addEventListener('o55:lowresource', wake);
+
   const ambientOn = (svg) => {
     if (M.reduced() || M.lowResource || document.hidden) return false;
     const host = svg.closest('[data-o55-ambient]');
     return !host || host.getAttribute('data-o55-ambient') === 'on';
   };
 
+  /* One frame for every rig on the page, in three passes: the rig transforms that decide where things are, then every
+     measurement, then every string. Several scenes can be live at once (the look page has five), and a measurement
+     taken after another scene's writes forced a fresh style and layout of this very large page each time. */
+  /* The idle sway is slow (periods of seconds, a few pixels or degrees), so it is redrawn at 30 Hz: every rig write
+     costs a style, layout, paint and layerize pass of this very large page on a computer without a GPU, and at this
+     speed no one can tell 30 from 60. Arrivals, cheers and plucks run at the full frame rate. */
+  const IDLE_MS = 1000 / 30 - 4;
+  let lastIdle = 0;
   function frame() {
     raf = 0;
+    const real = performance.now();
+    let busy = false, live = false;
+    for (const [svg, st] of rigs) {
+      if (!svg.isConnected) continue;
+      const n = M.now();
+      if (n < st.settleAt || (st.until && n < st.until)) busy = true;
+      if (ambientOn(svg)) live = true;
+    }
+    /* between idle redraws a timer waits, not a frame callback: a callback alone makes the browser run a whole
+       rendering pass of the page */
+    if (!busy && live && real - lastIdle < IDLE_MS) { raf = -1; M.real.setTimeout(() => { raf = requestAnimationFrame(frame); }, IDLE_MS - (real - lastIdle)); return; }
+    lastIdle = real;
     let any = false;
+    const now = M.now(), measuring = [], settled = [];
     for (const [svg, st] of rigs) {
       if (!svg.isConnected) { rigs.delete(svg); continue; }
-      const now = M.now();
+      const moving = ambientOn(svg);
       /* props still arriving: measure the strings; after a re-render the troupe keeps moving meanwhile */
-      if (now < st.settleAt) { if (st.morph && (ambientOn(svg) || (st.until && now < st.until))) drive(st, now, ambientOn(svg)); measured(st); any = true; continue; }
-      if (!st.cached) cache(st);
-      const moving = ambientOn(svg), cheering = st.until && now < st.until;
+      if (now < st.settleAt) { if (st.morph && (moving || (st.until && now < st.until))) drive(st, now, moving); measuring.push(st); any = true; continue; }
+      settled.push([st, moving]);
+    }
+    const measuredEnds = measuring.map(measure);
+    for (const [st] of settled) if (!st.cached) cache(st);
+    measuring.forEach((st, i) => st.ties.forEach((t, k) => write(st, t, measuredEnds[i][k][0], measuredEnds[i][k][1])));
+    for (const [st, moving] of settled) {
+      const cheering = st.until && now < st.until;
       if (!moving && !cheering && st.drawnStill) continue;
       drive(st, now, moving);
       computed(st);
       st.drawnStill = !moving && !cheering;
       any = true;
     }
-    if (any) raf = requestAnimationFrame(frame);
+    if (!any) return;
+    /* idle: the next redraw is a timer away (see above); arrivals, cheers and plucks ask for the very next frame */
+    if (busy || !live) raf = requestAnimationFrame(frame);
+    else { raf = -1; M.real.setTimeout(() => { raf = requestAnimationFrame(frame); }, IDLE_MS); }
   }
 
   /* ---------------------------------------------------------------- while props arrive: measured, reads first */
-  function measured(st) {
-    const ends = st.ties.map((t) => [inSpace(st.svg, t.from, hookLocal(t.from)), inSpace(st.svg, t.to, hookLocal(t.to))]);
-    st.ties.forEach((t, i) => write(st, t, ends[i][0], ends[i][1]));
-  }
+  function measure(st) { return st.ties.map((t) => [inSpace(st.svg, t.from, hookLocal(t.from)), inSpace(st.svg, t.to, hookLocal(t.to))]); }
   /* once settled: where each hook sits inside the group the rig moves (bar, helper, arm), measured one time */
   function cache(st) {
     for (const t of st.ties) {
@@ -222,7 +258,7 @@
     const B = st.bar;
     B.tilt = moving ? f.tilt * Math.sin(w(f.period)) + f.tilt * 0.25 * Math.sin(w(f.period * 0.41)) : B.tilt;
     B.lift = moving ? f.bob * Math.sin(w(f.period * 1.7)) : B.lift;
-    if (B.am) B.am.setAttribute('transform', `translate(0 ${(-B.lift).toFixed(2)}) rotate(${B.tilt.toFixed(3)})`);
+    if (B.am) put(B.am, 'transform', `translate(0 ${(-B.lift).toFixed(2)}) rotate(${B.tilt.toFixed(3)})`);
     for (const h of st.helpers.values()) {
       if (!h.head || !h.am || h.heads.some((t) => !t.fromLocal)) continue; /* a string not measured yet */
       /* a prop hung by two strings (the name sign) tilts with the bar and rises by the mean of its two points */
@@ -236,11 +272,11 @@
       h.up = Math.max(0, -dy) * f.lift + (ch ? ch.up : 0) - (pk ? pk.dip : 0);
       h.lean = h.heads.length > 1 ? B.tilt + (ch ? ch.lean * 0.4 : 0) + (pk ? pk.rot : 0) : Math.max(-8, Math.min(8, (dx - h.x) * f.lean + h.v * 0.02 + (ch ? ch.lean : 0) + (pk ? pk.rot : 0)));
       const s = h.pos.s || 1;
-      h.am.setAttribute('transform', `translate(${(h.x / s).toFixed(2)} ${(-h.up / s).toFixed(2)}) rotate(${h.lean.toFixed(2)})`);
+      put(h.am, 'transform', `translate(${(h.x / s).toFixed(2)} ${(-h.up / s).toFixed(2)}) rotate(${h.lean.toFixed(2)})`);
       if (h.arm) {
         const hy = h.handTie && h.handTie.fromLocal ? (() => { const l = h.handTie.fromLocal, rr = rot(l, B.tilt); return rr[1] - l[1] - B.lift; })() : 0;
         h.ang = Math.max(-28, Math.min(22, hy * f.arm)) + (moving ? f.wave * Math.sin(2 * Math.PI * f.waveHz * t) : 0) + (ch ? ch.arm : 0);
-        h.arm.setAttribute('transform', `rotate(${h.ang.toFixed(2)} ${h.pivot[0]} ${h.pivot[1]})`);
+        put(h.arm, 'transform', `rotate(${h.ang.toFixed(2)} ${h.pivot[0]} ${h.pivot[1]})`);
       }
     }
   }
@@ -248,7 +284,7 @@
     const f = st.feel, n = moving ? Math.floor((now - st.amb0) / f.step) : 0;
     const up = n % 4 === 1 || n % 4 === 2 ? f.hop : 0;
     st.bar.lift = up; st.bar.tilt = 0;
-    if (st.bar.am) st.bar.am.setAttribute('transform', `translate(0 ${-up})`);
+    if (st.bar.am) put(st.bar.am, 'transform', `translate(0 ${-up})`);
     for (const h of st.helpers.values()) {
       if (!h.am) continue;
       const late = (n + h.i) % 4 === 2 || (n + h.i) % 4 === 3 ? f.hop : 0; /* each helper hops a step after the one before */
@@ -256,9 +292,9 @@
       const dropped = h.pl && now - h.pl.t0 < 140 ? 4 : 0; /* a pluck: one pixel step down, for one beat */
       if (h.pl && now - h.pl.t0 >= 140) h.pl = null;
       h.up = Math.min(up, late) + jump - dropped; h.lean = 0; h.x = 0;
-      h.am.setAttribute('transform', `translate(0 ${-h.up})`);
+      put(h.am, 'transform', `translate(0 ${-h.up})`);
       const frame = ch && c0 != null ? Math.floor(Math.max(0, now - c0) / 120) : n; /* a cheering helper waves fast */
-      if (h.frames.length > 1) h.frames.forEach((fr, i) => { fr.style.display = i === frame % 2 ? '' : 'none'; });
+      if (h.frames.length > 1) h.frames.forEach((fr, i) => { const d = i === frame % 2 ? '' : 'none'; if (fr.style.display !== d) fr.style.display = d; });
     }
   }
 })();

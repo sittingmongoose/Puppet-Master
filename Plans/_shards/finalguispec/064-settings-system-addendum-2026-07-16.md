@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L30573-L31422
 
-Source SHA256: `80d9e08375e325354ec1414fa09f0d288afdb0daec472debf24835eb349a24fb`
+Source SHA256: `67e8c2d006ed8b1b989f81c22e6e8902e0ff45aa2b43f1c4ac96c8ecf40327d3`
 
 ---
 
@@ -667,7 +667,7 @@ owner_hints:
 - "Plans/settings_inventory.schema.json"
 ```
 
-Amended 2026-09-27 (user-approved inventory wave, `Plans/Settings_System.md#SSYS-039` section 9): the registry
+Amended 2026-09-27 (user-approved inventory wave, `Plans/Settings_System.md#SSYS-040` section 9): the registry
 admits eleven rows that the Settings surface drew by hand without inventory ids, bringing it to 900 rows:
 `general.visual.accent-color`, `general.visual.animation-speed`, `general.interaction.activity-bar-labels`,
 `general.startup.first-screen`, `general.interaction.spellcheck`, `general.interaction.spellcheck-languages`,

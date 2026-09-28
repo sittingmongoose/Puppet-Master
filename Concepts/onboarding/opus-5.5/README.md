@@ -65,6 +65,8 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `tools/tour_shots.mjs <out> [--themes] [--width --height]` | Every tour step settled, in each theme (parallel browsers), plus after-states and the dock step mid-drag. |
 | `tools/tour_film.mjs <out> [--scenes] [--themes] [--rate]` | Slow-motion films of the handoff, the tour opening, every Show Me, the ELI5 rewrite, the plan read part by part and the finish. |
 | `tools/tour_census.mjs <out> [--wpm]` | Meaningful actions and dwell time per chapter, measured on the real tour. |
+| `tools/perf/perf.py <page> <out.json> [--themes] [--quick] [--headful] [--tracefps]` | Performance walk per theme (opening, screens at rest and changing, typing, tour steps, Show Me, look picker). Python stdlib only, so it runs on the Windows PC over SSH as well as on the VM (`xvfb-run … --headful`). See "Performance rules". |
+| `tools/perf/film.py <page> <outdir> [--themes] [--scenes] [--rate 0.1] [--solid 0\|1]` | Slow-motion 60 fps films of the opening, a screen change with the rig, typing, the tour's ring and Show Me, on the Windows GPU. |
 
 Recorded media (screenshots, contact sheets, film frames, videos, audio renders) is scratch: it goes to `/tmp` or
 `~/pm-scratch`, is reviewed, and is deleted when the work is finished (Jared, 2026-09-24). Results are written down
@@ -138,6 +140,74 @@ Canon check: the onboarding carries F3-520's exact eleven-stage main graph and s
 - The glass skin turns every big Wizard button into tinted glass but keeps its pale label (unreadable); the practice
   button carries its own fill.
 - Dashboard widget receipts report `outcome: "applied"`, the workspace's `"accepted"`: one vocabulary would help.
+
+## Performance rules (2026-09-27)
+
+The onboarding and the tour have to hold 60 fps on a computer without a GPU, not only on a fast one. They run over
+a page of about 15,000 elements, and on that page every frame the main thread renders costs a full layerize pass
+(about 4–8 ms on the VM) before anything is drawn. So the rules are about keeping the main thread out of frames:
+
+1. **No `:has()` on `html` or `body`.** Such a rule made every DOM change anywhere in the app restyle the whole page
+   (the demo pill's narrow-window rules, the tour's drop-zone rules). Mirror the state onto the element that needs it
+   with an attribute (`data-o55-narrow`, the drop zone's `data-hot`).
+2. **Continuous motion is transform or opacity only**, as CSS animations or Web Animations, so the compositor runs it.
+   An endless animation of `stroke-dashoffset`, `clip-path`, `background`, `left`/`top`, `box-shadow`, a filter or
+   `offset-distance` is serviced by the main thread every frame. Marching dashes are phases shown one at a time by a
+   stepped opacity animation (the tour ring); a light travelling along a curve is a transform through points sampled
+   from the curve (Glass filaments); a pixel running round a box is a square turning in whole quarter turns (Retro).
+3. **JavaScript-driven motion is rare and throttled.** The marionette rig redraws its slow idle sway at 30 Hz and waits
+   between redraws on a timer: a `requestAnimationFrame` callback alone makes the browser render a whole frame. It runs
+   at full rate only while props arrive and for cheers and plucks. It reads every hook before it writes any string (the
+   look page has five live scenes), and it writes an attribute only when the value changes.
+4. **A new screen is built held and released a frame later** (`O55.motion.release`): its entrances are paused and
+   unseen while the frame that styles and lays out the new DOM runs, so motion never starts inside a long frame.
+5. **Read theme tokens once per look** (`O55.art.tokens` caches by the owning `data-theme` and the root's inline
+   variables); a `getComputedStyle` in every scene render forced a style pass of the page.
+6. **The app beneath the window holds still.** It is inert and dimmed, so its own loops are paused while the window is
+   open. On a computer that composites in software (WebGL reports SwiftShader or llvmpipe, or the first opening draws
+   slower than about 48 fps) the app is not drawn at all while the window is open: the scrim lies over the page's own
+   ground (`data-o55-solid`, `O55.solid`). A fast computer keeps the dimmed live app.
+7. **An owner operation the gate refused is not dispatched again until the gate's context changes.** A screen whose
+   `mounted()` started a post-commit command before the commit refreshed, mounted and re-dispatched in an endless
+   promise chain that froze the page.
+
+What the app itself costs, and the onboarding cannot change: its status pulses (`@keyframes pulse`, `pm6-chat-pulse`,
+`pmTabGlow`) animate `box-shadow` and keep the main thread rendering every frame on every page; without a GPU the
+Friendly skin composites at about 17 fps and the Glass skin at about 3 fps (a full-window live backdrop blur over a
+wallpaper), before any onboarding or tour motion. The tour runs in the app, so on such a computer it inherits those
+limits; the onboarding does not, because of rule 6.
+
+## Slint 1.18.1 portability (checked 2026-09-27 against the v1.18.1 sources)
+
+The onboarding and the tour use no effect that Slint 1.18.1 lacks outright. There are no CSS or SVG filters (hover
+and disabled states are colour mixes, glows are wide faint strokes or radial gradients, the glove's paper shadow is an
+offset copy of its outline). There is also no backdrop blur, blend mode, mask, canvas or WebGL. What each technique
+becomes in Slint:
+
+| In the concept | In Slint 1.18.1 |
+|---|---|
+| Inline SVG art: paths, circles, rects, text | `Path` (`commands`, `fill`, `fill-rule`, `stroke`, `stroke-width`, `stroke-line-cap`, `stroke-line-join`), `Rectangle` (per-corner `border-radius`, border), `Text` |
+| SVG linear and radial gradients | `@linear-gradient` / `@radial-gradient` brushes on `Path` fill and stroke and on `Rectangle` background |
+| SVG `<pattern>` grounds (Basic grid, Friendly dots, Retro scanlines) | a small tile `Image` with `horizontal-tiling: repeat; vertical-tiling: repeat` |
+| `shape-rendering: crispEdges` (Retro) | `Path { anti-alias: false; }` on whole-pixel positions |
+| Group transforms, `transform-box: fill-box` | `x`/`y`, `transform-rotation`, `transform-scale-x/-y`, `transform-origin` |
+| Opacity | `opacity` (layered, as in CSS) |
+| CSS transitions (props gliding between beats) | `animate x, y, transform-rotation { duration: …; easing: cubic-bezier(…); }` |
+| Two-stop keyframe entrances with a delay | `animate` with `delay`, or `states` with transitions |
+| Multi-stop keyframes and endless ambient loops | pure functions of `animation-tick()` (for example `y: sin(animation-tick() / 2.6s * 360deg) * 4px`), or `animate { iteration-count: -1; direction: alternate; }` for two-stop loops |
+| `steps(n)` timing (Retro) | `floor(t * n) / n` on `animation-tick()`, or a `Timer` stepping a property (Slint easings have no steps) |
+| Springy overshoot | `easing: spring(bounce)` or an overshooting `cubic-bezier` |
+| `stroke-dasharray` / `stroke-dashoffset` (Basic lines that draw themselves on, dashed connectors, marching dashes on Retro connectors and on the Basic and Retro tour ring) | Slint's `Path` has no dash properties: dashes are segments emitted into the path's `commands`, or small elements placed with `point-at()` / `angle-at()` (new in 1.18) and shifted by `animation-tick()`; a draw-on builds the path up to a fraction of its length |
+| `clip-path: inset()` wipes (Retro title typing, the window's CRT open, scene wipes) | a clipping `Rectangle { clip: true; }` whose width or height animates |
+| Static `clip-path: polygon()` shapes (Friendly's pennant rail nodes, the QR viewfinder's corner brackets) | `Path` shapes |
+| The circular look reveal (a View Transition from the chosen tile) | `Window::take_snapshot()` of the old and the new look shown as `Image`s; the new one grows inside a `Rectangle { clip: true; border-radius: self.width / 2; }` centred on the tile, then the overlay goes |
+| The tour's scrim with a spotlight hole, and its ring | a `Path` with `fill-rule: evenodd` and a rounded-rectangle hole; the ring is a stroked `Path` or a bordered `Rectangle`, its glow two wider faint strokes |
+| The click shield around the hole | input routing, not drawing: four `TouchArea`s around the hole |
+| `box-shadow` (window, callout, cards) | `drop-shadow-*` on `Rectangle` (one per rectangle; a second shadow is a second rectangle); inset shadows `inner-shadow-*` (Skia renderer) |
+| `text-shadow` on the Glass primary label | a second, offset `Text` beneath |
+| `color-mix()` | `.mix()`, `.transparentize()`, `.brighter()`, `.darker()` |
+| Confetti (Web Animations) | per-particle properties computed from `animation-tick()` since the spawn time |
+| Synthesised sound (Web Audio) | not a Slint feature: played from Rust; nothing visual depends on it |
 
 ## Status
 

@@ -1854,6 +1854,10 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # 2026-09-27 packet repair: seven Git adapter primaries and one Forge review
     # edit primary; seven Git rows use TCP-GIT-ADAPTER and one Forge row uses
     # TCP-FORGE. Five new production-intent entries plus three reused entries.
+    # 2026-09-27 chat busy sends (DL-108, UCC-168): +1 production-intent entry,
+    # catalog.chat_queue_send_now for cmd.chat.queue.send_now (1154 -> 1155).
+    # Like cmd.chat.queue.remove it has no Touch row; no row, profile, alias,
+    # exclusion, native handler or proof is added.
     exact_resolved_denominators = {
         "row_count": 674,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
@@ -1861,7 +1865,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         "profile_count": 135,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1154,
+        "production_wiring_entry_count": 1155,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

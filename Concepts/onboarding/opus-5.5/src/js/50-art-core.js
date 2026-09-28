@@ -11,9 +11,21 @@
      pane crops the sides slightly); narrow windows show each scene's landscape `band` instead. */
   const A = O55.art = { families: {}, scenes: {}, W: 480, H: 600 };
 
-  /* Read live theme tokens so light/dark re-light the same drawings from the app's real palette. */
+  /* Read live theme tokens so light/dark re-light the same drawings from the app's real palette. They depend only on
+     the look that owns the element (html, or a look tile's own data-theme) and on the root's inline variables, so they
+     are read once per look: a getComputedStyle here forced a style pass of the whole page on every scene render. */
+  const tokCache = new Map();
   A.tokens = function tokens(el) {
-    const cs = getComputedStyle(el || document.documentElement);
+    const root = document.documentElement; el = el || root;
+    const owner = (el.closest && el.closest('[data-theme]')) || root;
+    const key = (owner === root ? 'r|' : 'o|') + owner.getAttribute('data-theme') + '|' + (root.getAttribute('style') || '');
+    const hit = tokCache.get(key); if (hit) return Object.assign({}, hit);
+    const t = readTokens(el);
+    if (tokCache.size > 40) tokCache.clear();
+    tokCache.set(key, t); return Object.assign({}, t);
+  };
+  function readTokens(el) {
+    const cs = getComputedStyle(el);
     const get = (n, fb) => (cs.getPropertyValue(n) || '').trim() || fb;
     return {
       bg: get('--background', '#121212'), surface: get('--surface', '#1e1e1e'), text: get('--text-primary', '#e8e8e8'),
@@ -22,7 +34,7 @@
       orange: get('--accent-orange', '#ffa347'), warn: get('--accent-warning', '#f5c542'), error: get('--accent-error', '#ef5350'),
       primary: get('--accent-primary', get('--accent-blue', '#64b5f6'))
     };
-  };
+  }
 
   /* Colour helpers (tokens are hex in every theme; anything else passes through). */
   A.hex = function hex(c) {
@@ -204,10 +216,15 @@
       const t = O55.motion.after(900, done);
       current.addEventListener('animationend', (e) => { if (e.target === current) { t.cancel(); done(); } });
     }
+    /* held (a screen change): the new scene waits unseen and the old one waits in place until O55.art.release */
+    if (ctx && ctx.hold) { wrap.classList.add('o55-hold'); if (current) current.classList.add('o55-wait'); }
     host.appendChild(wrap);
     O55.motion.after(40, () => wrap.classList.remove('o55-enter'));
     if (A.rig) A.rig.watch(wrap.querySelector('svg'));
     return wrap;
+  };
+  A.release = function release(host) {
+    if (host) host.querySelectorAll(':scope > .o55-scene-wrap.o55-hold, :scope > .o55-scene-wrap.o55-wait').forEach((w) => w.classList.remove('o55-hold', 'o55-wait'));
   };
 
   /* Shared parametric helpers used by several families. */

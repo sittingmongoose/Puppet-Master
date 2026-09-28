@@ -46,6 +46,29 @@
       + `<circle cx="-3.6" cy="-57" r="1.4" fill="${p.core}"/><circle cx="3.6" cy="-57" r="1.4" fill="${p.core}"/>${orb}${knot}</g>`;
   };
 
+  /* The light that travels along a filament: a short bright streak carried along the curve by transform keyframes
+     sampled from the curve itself (position and heading), so the compositor runs it. A dash offset (the first version)
+     is repainted by the main thread every frame, which cost a full layerize pass of this very large page each frame on
+     a computer without a GPU. In Slint: point-at() and angle-at() on the Path, driven by animation-tick(). */
+  function travelling(pts, color) {
+    const seg = [];
+    for (let i = 1; i < pts.length; i++) {
+      const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], mx = (x0 + x1) / 2;
+      for (let k = i === 1 ? 0 : 1; k <= 24; k++) { const t = k / 24, u = 1 - t;
+        seg.push([u * u * u * x0 + 3 * u * u * t * mx + 3 * u * t * t * mx + t * t * t * x1, u * u * u * y0 + 3 * u * u * t * y0 + 3 * u * t * t * y1 + t * t * t * y1]); }
+    }
+    const acc = [0]; for (let i = 1; i < seg.length; i++) acc.push(acc[i - 1] + Math.hypot(seg[i][0] - seg[i - 1][0], seg[i][1] - seg[i - 1][1]));
+    const L = acc[acc.length - 1] || 1, at = (s) => { const d = s * L; let i = 1; while (i < acc.length - 1 && acc[i] < d) i++; const f = (d - acc[i - 1]) / ((acc[i] - acc[i - 1]) || 1); return [seg[i - 1][0] + (seg[i][0] - seg[i - 1][0]) * f, seg[i - 1][1] + (seg[i][1] - seg[i - 1][1]) * f, Math.atan2(seg[i][1] - seg[i - 1][1], seg[i][0] - seg[i - 1][0]) * 180 / Math.PI]; };
+    const N = 40, frames = [];
+    for (let k = 0; k <= N; k++) {
+      const s = 0.02 + 0.96 * (k / N), [x, y, a] = at(s), op = k === 0 || k === N ? 0 : 1;
+      frames.push(`${(100 * k / N).toFixed(2)}%{transform:translate(${x.toFixed(1)}px,${y.toFixed(1)}px) rotate(${a.toFixed(1)}deg);opacity:${op}}`);
+    }
+    const name = 'o55-trav-' + U.hash(pts.map((q) => q.join(',')).join(';')).toString(36), h = (0.02 * L).toFixed(1);
+    return `<style>@keyframes ${name}{${frames.join('')}}</style>`
+      + `<path d="M-${h} 0H${h}" fill="none" stroke="${color}" stroke-width="2.6" stroke-linecap="round" class="o55-pulse o55-trav" style="animation-name:${name}"/>`;
+  }
+
   const props = {
     bar(ctx) {
       const p = ctx.pal;
@@ -102,7 +125,7 @@
       let d = `M${pts[0][0]} ${pts[0][1]}`;
       for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; const mx = (x0 + x1) / 2; d += ` C${mx} ${y0} ${mx} ${y1} ${x1} ${y1}`; }
       return `<g><path d="${d}" fill="none" stroke="${p.lav}" stroke-width="7" opacity="0.13" stroke-linecap="round"/><path d="${d}" fill="none" stroke="${ctx.url('fil')}" stroke-width="1.6" stroke-linecap="round"/>`
-        + `<path d="${d}" fill="none" stroke="${p.core}" stroke-width="2.6" stroke-linecap="round" pathLength="1" stroke-dasharray="0.04 0.96" class="o55-pulse"/></g>`;
+        + travelling(pts, p.core) + '</g>';
     },
     cloud(ctx) {
       const d = 'M-38 16 a16 16 0 0 1 -2 -31 a22 22 0 0 1 40 -9 a18 18 0 0 1 36 12 a14 14 0 0 1 -2 28Z';

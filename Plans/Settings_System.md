@@ -1231,7 +1231,7 @@ Project theme and layout changes update the active Project shell only after atom
 
 The theme family/mode pair yields exactly eight built-in variants. Glass background mode is `Mesh`, `Depth`, or `Minimal`; Glass alpha is bounded to 0.35..1.0 for Dark and 0.45..1.0 for Light, and the Glass controls show only while a Glass family is active (decided 2026-09-27; they were previously kept visible but disabled with `not_applicable`), as do the Retro texture rows under a Retro family and High contrast under a Basic family. `general.interaction.show-tooltips=false` suppresses hover hints only; focus descriptions and Help/Details remain. Effective reduced motion is the logical OR of Project request and platform preference and calms nonessential movement without suppressing progress, focus, error, or state-change feedback.
 
-Appearance application model (decided 2026-09-27, SSYS-040). Every appearance row changes what the app shows; none is stored without effect. Beyond the theme pair, Glass rows, reduced motion and chat layout, the rows apply through the per-variant token contract of `Plans/FinalGUISpec.md#F3-426` as overrides layered over the active variant's table: `general.visual.ui-scale` scales the whole app; `general.visual.font-size`, `general.visual.line-height` and the animation-speed choice scale the variant's type sizes, line heights and motion durations (scripted motion included) and exist only while one of them differs from its default; `general.visual.interface-density` and `general.visual.padding-scale` set the spacing steps; `general.visual.border-width`, `general.visual.border-radius` and `general.visual.scrollbar-width` set the border-width, radius and scrollbar-size tokens; `general.visual.app-font` swaps the display and body fonts for the system fonts; `general.visual.high-contrast` (Basic families) and `general.visual.focus-indicator` set contrast and the keyboard focus outline; `general.visual.retro-effects`, `general.visual.pixel-grid-opacity` and `general.visual.scanline-opacity` set the Retro textures. An accent choice sets the primary accent, its RGB triple and the accent tokens derived from it from precomputed per-mode values (a brighter shade in Dark, a deeper one in Light), never by runtime colour derivation. Unchanged means the theme's own: a row whose value was never changed writes no override, so each variant keeps its own accent, corners, borders, fonts, spacing and scrollbar; the first accent choice and a "use the theme's" action on the theme-owned fine-tuning rows (border width, corner roundness, scrollbar width) mean exactly that, and those rows present the active variant's value rather than an inventory literal until a value is chosen. Reset removes exactly the override the row wrote and nothing else. Overrides follow the same atomic acceptance, preview and Project scope as the theme pair. Corner roundness, Border width and Scrollbar width store the default `theme` until a number is set, so the theme's own corners, borders and scrollbar width apply.
+Appearance application model (decided 2026-09-27, SSYS-041). Every appearance row changes what the app shows; none is stored without effect. Beyond the theme pair, Glass rows, reduced motion and chat layout, the rows apply through the per-variant token contract of `Plans/FinalGUISpec.md#F3-426` as overrides layered over the active variant's table: `general.visual.ui-scale` scales the whole app; `general.visual.font-size`, `general.visual.line-height` and the animation-speed choice scale the variant's type sizes, line heights and motion durations (scripted motion included) and exist only while one of them differs from its default; `general.visual.interface-density` and `general.visual.padding-scale` set the spacing steps; `general.visual.border-width`, `general.visual.border-radius` and `general.visual.scrollbar-width` set the border-width, radius and scrollbar-size tokens; `general.visual.app-font` swaps the display and body fonts for the system fonts; `general.visual.high-contrast` (Basic families) and `general.visual.focus-indicator` set contrast and the keyboard focus outline; `general.visual.retro-effects`, `general.visual.pixel-grid-opacity` and `general.visual.scanline-opacity` set the Retro textures. An accent choice sets the primary accent, its RGB triple and the accent tokens derived from it from precomputed per-mode values (a brighter shade in Dark, a deeper one in Light), never by runtime colour derivation. Unchanged means the theme's own: a row whose value was never changed writes no override, so each variant keeps its own accent, corners, borders, fonts, spacing and scrollbar; the first accent choice and a "use the theme's" action on the theme-owned fine-tuning rows (border width, corner roundness, scrollbar width) mean exactly that, and those rows present the active variant's value rather than an inventory literal until a value is chosen. Reset removes exactly the override the row wrote and nothing else. Overrides follow the same atomic acceptance, preview and Project scope as the theme pair. Corner roundness, Border width and Scrollbar width store the default `theme` until a number is set, so the theme's own corners, borders and scrollbar width apply.
 
 ### 4.5 Exact provider action availability projection
 
@@ -1700,8 +1700,8 @@ Settings manager refresh under USER-SETTINGS-MANAGER-REFRESH-20260908 (§22, SSY
 - **Canonical Key Identity:** The working activity presentation preference is canonically registered
   under `general.interaction.working-activity-style`. The short key `working-activity-style` is retained
   exclusively as a query and migration alias; the curated duplicate short-key row is retired.
-- **Supported Selections:** The setting offers exactly `Orbit` (family/variant 2/1) and `Step Rail Simple`
-  (family/variant 2/8). The legacy value token `Step Rail` maps directly to `Step Rail Simple` as an
+- **Supported Selections:** The setting offers exactly `Orbit` and `Step Rail Simple` (the concept's
+  Demo Studio family/variant indices are lab-only, ACD-474). The legacy value token `Step Rail` maps directly to `Step Rail Simple` as an
   input alias.
 - **Concept-Candidate Roster and Stage Rows (APR-048):** The five concept-candidate inventory keys:
   1. `branching.crew.crew-auto-roster`
@@ -1758,7 +1758,7 @@ Settings manager refresh under USER-SETTINGS-MANAGER-REFRESH-20260908 (§22, SSY
      one labeled keyboard-operable disclosure per manager view, never scattered per-section toggles. From
      2026-09-27 that disclosure reads **More options** in every manager view and on every plain page, sits
      after the view's everyday groups, and opens itself when search, the page index or a Details link lands on
-     a row inside it (SSYS-039).
+     a row inside it (SSYS-040).
   10. *Side Panel Anatomy:* Manager drawers and the setting Details inspector share one anatomy (identity
      header, sectioned body, quiet footer), the same spring motion, and no decorative accent bars; the
      inspector keeps its width tokens.
@@ -1774,7 +1774,7 @@ Settings manager refresh under USER-SETTINGS-MANAGER-REFRESH-20260908 (§22, SSY
      settings stay on plain pages; every inventory id renders exactly once. From 2026-09-27 a manager may draw
      an inventory row as its own control (a list's search, Show or Sort menu, a per-item switch, a field inside
      one account or server) bound to the same setting id; that bound control is the row's one home, and no
-     manager keeps its own copy of a choice an inventory row already makes (SSYS-039).
+     manager keeps its own copy of a choice an inventory row already makes (SSYS-040).
 - **Universal Application Across 38 Managers:** These principles govern all thirty-eight registered
   managers:
   `all-settings`, `general-appearance-input`, `providers-accounts-models`, `web-routes`, `media-routes`,
@@ -2349,6 +2349,64 @@ owner_hints: [Plans/Settings_System.md, Plans/Commands_System.md]
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Commands_System.md#CS-081
 
+## Chat sound and busy-send defaults — 2026-09-27
+
+Jared's decisions DL-107 and DL-108 change two defaults in `Plans/settings_inventory.json`. This owner records them; the Settings GUI concept adopts them in its own later pass.
+
+### SSYS-039 - Chat Sound On By Default And Queue As The Busy Send Default
+
+```yaml
+plan_unit_id: SSYS-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  general.interaction.sound-effects defaults to on and is recommended on (DL-107); its description
+  names the chat header's speaker button as a quick mute for the same setting.
+  general.interaction.queue-behavior defaults to Queue and is recommended Queue, with Steer still
+  offered (DL-108). No other key, scope or tier changes; the chat header mute is a shared chrome
+  control over general.interaction.sound-effects, not a new setting, which keeps sound effects a
+  grouped setting rather than a per-view toggle. Production motion honours general.visual.reduce-
+  animations as well as the operating system's reduced-motion preference (ACD-475).
+gui_related: true
+gui_classification_reason: "Changes two user-visible setting defaults."
+split_recommended: false
+depends_on: [DL-107, DL-108]
+unblocks: []
+acceptance_criteria:
+  - "The inventory defaults general.interaction.sound-effects to true and general.interaction.queue-behavior to Queue."
+  - "No new sound or queue setting key exists."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: settings_default_drift
+reasoning_tier: standard
+context_scope: settings_defaults
+implementation_surfaces:
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+node_compile_hint:
+  mode: settings_default_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-107"
+  - "Plans/Decision_Log.md#DL-108"
+preserved_exact_tokens:
+  - "general.interaction.sound-effects"
+  - "general.interaction.queue-behavior"
+  - "Queue"
+  - "Steer"
+negative_constraints:
+  - "Do not add a chat-only sound or queue setting."
+  - "Do not change scopes or tiers of these keys."
+owner_hints:
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-107, ContractName:Plans/Decision_Log.md#DL-108, ContractName:Plans/settings_inventory.json
+
 ## Settings information architecture and plain-language rework — 2026-09-27
 
 Every decision in this section is dated 2026-09-27. It records the product decisions demonstrated by the Settings rework in `Concepts/onboarding/opus-5.5/src/settings` (placement in `o55/placement.d/*.json`, row wording, conditions, units, routes, flows and editors in `o55/rows.d/*.json`, behaviour in `kit.d/*.js` and `managers/*.js`). The concept remains `concept_fixture_only` (§4.6): its fixture values, simulated flows, counts and screenshots are not runtime, persistence, handler or readiness evidence. The 38-key manager registry, every `manager_id`, route, detail id and command id, and every inventory id are unchanged; page names, groups and moves are presentation over the same registry (SSYS-015, SSYS-035). Where an existing unit already governs a topic (SSYS-010 Glass control disclosure, SSYS-013 container and SCM operation boundaries, `Plans/Commands_System.md#CS-081` Commands & Shortcuts controls, `Plans/Personas.md` §4 persona editing), that unit still governs and this section does not change it.
@@ -2523,7 +2581,7 @@ that would reach an outside computer or service says so and, in the concept, is 
   without inventory ids until admitted, in the sense of section 19.
 
 ```yaml
-plan_unit_id: SSYS-039
+plan_unit_id: SSYS-040
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
@@ -2595,7 +2653,7 @@ owner_hints:
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-035, ContractName:Plans/Settings_System.md#SSYS-013, ContractName:Plans/Settings_System.md#SSYS-020, ContractName:Plans/FinalGUISpec.md#F3-551
 
 ```yaml
-plan_unit_id: SSYS-040
+plan_unit_id: SSYS-041
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
@@ -2653,7 +2711,7 @@ owner_hints:
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/FinalGUISpec.md#F3-426
 
 ```yaml
-plan_unit_id: SSYS-041
+plan_unit_id: SSYS-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
@@ -2670,7 +2728,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Governs which Settings views may act on live work and how every guided set-up, permission profile, SSH key and transfer is presented.
 split_recommended: false
-depends_on: [SSYS-013, SSYS-039]
+depends_on: [SSYS-013, SSYS-040]
 unblocks: []
 acceptance_criteria:
   - No Settings view lists, starts, pauses or stops a live chat or Goal, and no Settings row reads "this thread" or "this chat".
@@ -2711,4 +2769,4 @@ owner_hints:
   - Plans/Permissions_System.md
 ```
 
-ContractRef: ContractName:Plans/Settings_System.md#SSYS-039, ContractName:Plans/Permissions_System.md#PRECEDENCE-LAYERS
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-040, ContractName:Plans/Permissions_System.md#PRECEDENCE-LAYERS

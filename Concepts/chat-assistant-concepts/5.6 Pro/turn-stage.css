@@ -215,7 +215,7 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
   -webkit-mask: radial-gradient(circle 7px at var(--stub) 0, #0000 97%, #000) top / 100% 51% no-repeat, radial-gradient(circle 7px at var(--stub) 100%, #0000 97%, #000) bottom / 100% 51% no-repeat;
   mask: radial-gradient(circle 7px at var(--stub) 0, #0000 97%, #000) top / 100% 51% no-repeat, radial-gradient(circle 7px at var(--stub) 100%, #0000 97%, #000) bottom / 100% 51% no-repeat;
 }
-.transcript-inner > [data-family="time"].sched-card > :not(.sched-stub) { grid-column: 2; padding-left: 15px; padding-right: 14px; }
+.transcript-inner > [data-family="time"].sched-card > :not(.sched-stub) { grid-column: 2; padding-left: 15px; padding-right: 14px; min-width: 0; overflow-wrap: anywhere; }
 .transcript-inner > [data-family="time"].sched-card > .sched-card-head { padding-top: 12px; }
 .transcript-inner > [data-family="time"].sched-card > :last-child { padding-bottom: 11px; }
 .sched-stub {
@@ -244,12 +244,13 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
 .transcript-inner > [data-family="ledger"].positive > .event-icon { color: var(--positive); }
 .transcript-inner > [data-family="ledger"] .event-copy { display: flex; align-items: baseline; gap: 7px; min-width: 0; flex: 1 1 auto; }
 .transcript-inner > [data-family="ledger"] .event-kind { display: none; }
-.transcript-inner > [data-family="ledger"] .event-copy strong { flex: 0 0 auto; font-size: 12px; font-weight: 620; color: color-mix(in srgb, var(--text) 84%, transparent); white-space: nowrap; }
+.transcript-inner > [data-family="ledger"] .event-copy strong { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 12px; font-weight: 620; color: color-mix(in srgb, var(--text) 84%, transparent); white-space: nowrap; }
 .transcript-inner > [data-family="ledger"] .event-copy p { margin: 0; font-size: 12px; color: var(--subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .transcript-inner > [data-family="ledger"] .event-copy p:empty { display: none; }
 .transcript-inner > [data-family="ledger"] .event-copy p:not(:empty) ~ p:not(:empty) { display: none; }
 .transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) .event-copy { flex-wrap: wrap; row-gap: 2px; }
 .transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) .event-copy p { white-space: normal; flex-basis: 100%; }
+.transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) .event-copy strong { white-space: normal; }
 .transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) .event-copy p:not(:empty) ~ p:not(:empty) { display: block; }
 .transcript-inner > [data-family="ledger"] .plan-actions { margin: 0; flex: 0 0 auto; }
 .transcript-inner > [data-family="ledger"] .plan-actions > .soft-button {
@@ -263,10 +264,12 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
 .transcript-inner > [data-family="people"] .system-card-head > .event-icon,
 .transcript-inner > [data-family="people"] > .event-icon { background: color-mix(in srgb, var(--tx-fam, var(--fam-people)) 14%, transparent); }
 
-/* needs-you: the action sits at the far edge, the copy takes the room */
-.transcript-inner > [data-family="needs"].event-card { align-items: center; }
-.transcript-inner > [data-family="needs"] .event-copy { flex: 1 1 auto; }
-.transcript-inner > [data-family="needs"] > .plan-actions { margin: 0 0 0 auto; flex: 0 0 auto; }
+/* needs-you: the action sits at the far edge, the copy takes the room. In a
+   narrow chat pane the actions wrap to their own row rather than push past
+   the transcript's edge (a rigid action row overflowed it at 234px). */
+.transcript-inner > [data-family="needs"].event-card { align-items: center; flex-wrap: wrap; }
+.transcript-inner > [data-family="needs"] .event-copy { flex: 1 1 12em; min-width: 0; }
+.transcript-inner > [data-family="needs"] > .plan-actions { margin: 0 0 0 auto; flex: 0 1 auto; flex-wrap: wrap; max-width: 100%; }
 /* people: live agent rows read as a roster, left-aligned, warm avatars */
 .transcript-inner > [data-family="people"] .live-agent-row { text-align: left; background: color-mix(in srgb, var(--text) 4%, transparent); border-color: var(--tx-sheet-edge); }
 .transcript-inner > [data-family="people"] .agent-avatar { background: color-mix(in srgb, var(--fam-people) 30%, var(--surface-3)); color: var(--text); box-shadow: none; }
@@ -311,3 +314,51 @@ body[data-theme] { --tx-gutter: 24px; }
 .transcript-inner > [data-family="deliverable"] .artifact-preview { color: var(--fam-deliverable); }
 .transcript-inner > [data-family="deliverable"] .artifact-preview svg { color: var(--fam-deliverable); border-color: transparent; }
 
+/* ---- family entrances: live arrivals only -----------------------------
+   finishEntrances() ends every entrance on a thread switch or boot, so only an
+   item that arrives while the reader watches plays one. One beat per family,
+   the same length in every voice; a voice changes only path and easing.
+   `backwards`, never `both`: a held final frame would keep a clip-path on the
+   card and cut off anything that pops out of it. Work (born from the turn
+   mark), the user bubble (the send flight) and streamed prose have their own. */
+.transcript[data-variant="16"] .transcript-inner > [data-family] {
+  --fam-ease: cubic-bezier(.17, .84, .29, .99); --fam-blur: blur(0); --fam-tilt: 0deg; --fam-scale: 1;
+}
+.transcript[data-variant="16"][data-voice="friendly"] .transcript-inner > [data-family] { --fam-ease: cubic-bezier(.34, 1.56, .64, 1); --fam-tilt: -.8deg; --fam-scale: .97; }
+.transcript[data-variant="16"][data-voice="glass"] .transcript-inner > [data-family] { --fam-ease: cubic-bezier(.05, .7, .1, 1); --fam-blur: blur(7px); --fam-scale: 1.02; }
+/* jump-start: the first step shows at once and the last lands at 75%, so a
+   stepped entrance is never a blank quarter followed by a late pop */
+.transcript[data-variant="16"][data-voice="retro"] .transcript-inner > [data-family] { --fam-ease: steps(4, jump-start); }
+
+/* deliverable: the sheet rises and unfolds top-down, its shadow arriving last */
+.transcript[data-variant="16"] .transcript-inner > [data-family="deliverable"] { animation: fam-sheet 460ms var(--fam-ease) backwards; }
+@keyframes fam-sheet {
+  from { opacity: 0; transform: translateY(12px) rotate(var(--fam-tilt)) scale(var(--fam-scale)); filter: var(--fam-blur); clip-path: inset(0 0 58% 0 round 14px); box-shadow: none; }
+  50% { opacity: 1; }
+  to { opacity: 1; transform: none; filter: blur(0); clip-path: inset(0 0 0 0 round 14px); }
+}
+/* needs you: rises, then (on the accent-tinted event item) one ring swells out and fades */
+.transcript[data-variant="16"] .transcript-inner > [data-family="needs"] { animation: fam-rise 380ms var(--fam-ease) backwards; }
+.transcript[data-variant="16"] .transcript-inner > [data-family="needs"].event-card { animation: fam-rise 380ms var(--fam-ease) backwards, fam-ring 700ms cubic-bezier(.2, .6, .3, 1) 140ms backwards; }
+@keyframes fam-ring {
+  from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--needs, var(--accent)) 42%, transparent), 0 0 0 4px color-mix(in srgb, var(--needs, var(--accent)) 6%, transparent); }
+  to { box-shadow: 0 0 0 14px color-mix(in srgb, var(--needs, var(--accent)) 0%, transparent), 0 0 0 4px color-mix(in srgb, var(--needs, var(--accent)) 6%, transparent); }
+}
+/* people: the roster rises into place, then the live subagent rows arrive one
+   by one, 50ms apart (the last done inside ~520ms). Collaboration run cards
+   (pmx surfaces) carry their own choreography and get no family motion here. */
+.transcript[data-variant="16"] .transcript-inner > [data-family="people"] { animation: fam-rise 380ms var(--fam-ease) backwards; }
+.transcript[data-variant="16"] .transcript-inner > [data-family="people"] .live-agent-row { animation: fam-member 260ms var(--fam-ease) 60ms backwards; }
+.transcript[data-variant="16"] .transcript-inner > [data-family="people"] .live-agent-row:nth-child(2) { animation-delay: 110ms; }
+.transcript[data-variant="16"] .transcript-inner > [data-family="people"] .live-agent-row:nth-child(3) { animation-delay: 160ms; }
+.transcript[data-variant="16"] .transcript-inner > [data-family="people"] .live-agent-row:nth-child(4) { animation-delay: 210ms; }
+.transcript[data-variant="16"] .transcript-inner > [data-family="people"] .live-agent-row:nth-child(n+5) { animation-delay: 260ms; }
+@keyframes fam-member { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+/* time: the ticket slides in from the gutter side */
+.transcript[data-variant="16"] .transcript-inner > [data-family="time"] { animation: fam-ticket 380ms var(--fam-ease) backwards; }
+@keyframes fam-ticket { from { opacity: 0; transform: translateX(-16px) rotate(var(--fam-tilt)) scale(var(--fam-scale)); filter: var(--fam-blur); } to { opacity: 1; transform: none; filter: blur(0); } }
+/* ledger: a quick, small slide -- receipts should not make a scene */
+.transcript[data-variant="16"] .transcript-inner > [data-family="ledger"] { animation: fam-ledger 220ms var(--fam-ease) backwards; }
+@keyframes fam-ledger { from { opacity: 0; transform: translateX(-4px); } to { opacity: 1; transform: none; } }
+@keyframes fam-rise { from { opacity: 0; transform: translateY(8px) rotate(var(--fam-tilt)) scale(var(--fam-scale)); filter: var(--fam-blur); } to { opacity: 1; transform: none; filter: blur(0); } }
+@media (prefers-reduced-motion: reduce) { .transcript[data-variant="16"] .transcript-inner > [data-family], .transcript[data-variant="16"] .transcript-inner > [data-family] .live-agent-row { animation: none !important; } }

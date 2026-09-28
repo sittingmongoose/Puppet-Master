@@ -68857,6 +68857,68 @@
       "ui_command_id": "cmd.forge.review.edit",
       "ui_element_id": "catalog.forge_review_edit",
       "ui_location": "Source Control reviews, command palette, authorized automation"
+    },
+    "catalog.chat_queue_send_now": {
+      "ui_element_id": "catalog.chat_queue_send_now",
+      "ui_location": "Assistant Chat > Composer queue chip > Send now",
+      "ui_command_id": "cmd.chat.queue.send_now",
+      "handler_location": "handlers::chat::queue_send_now",
+      "expected_event_types": [
+        "chat.message.submitted"
+      ],
+      "acceptance_checks": [
+        "Send now steers only its own queued, not-yet-dispatched message into the running turn; the answer being written is not stopped",
+        "The other queued messages keep their order and do not advance",
+        "The steered message passes the same send handler, holds and validations as an ordinary send",
+        "cmd.chat.queue.send_now must have a typed payload/result contract",
+        "cmd.chat.queue.send_now must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.queue.send_now; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_queue_send_now.availability",
+      "disabled_reason_projection": "state.commands.chat_queue_send_now.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.chat.queue.send_now emits chat.message.submitted for the steered message with delivery_mode steer and records dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "chat.message.submitted"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_queue_send_now exposes a stable role/name/description matching cmd.chat.queue.send_now.",
+        "keyboard_access": "catalog.chat_queue_send_now is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_queue_send_now preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_queue_send_now surfaces state.commands.chat_queue_send_now.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_queue_send_now.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.queue.send_now reaches handlers::chat::queue_send_now with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_queue_send_now.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_queue_send_now.availability and disabled copy reads state.commands.chat_queue_send_now.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_queue_send_now.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.chat.queue.send_now emits chat.message.submitted for the steered message with delivery_mode steer and records dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.chat_queue_send_now.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.chat_queue_send_now.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.chat.queue.send_now emits chat.message.submitted with delivery_mode steer, command_id, origin, correlation_id, and handler target, and emits no stop event."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.queue.send_now emits chat.message.submitted with delivery_mode steer, command_id, origin, correlation_id, and handler target, and emits no stop event."
+      ]
     }
   }
 }

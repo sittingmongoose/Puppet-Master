@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L29568-L30571
 
-Source SHA256: `80d9e08375e325354ec1414fa09f0d288afdb0daec472debf24835eb349a24fb`
+Source SHA256: `67e8c2d006ed8b1b989f81c22e6e8902e0ff45aa2b43f1c4ac96c8ecf40327d3`
 
 ---
 
@@ -456,7 +456,7 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-Settings appearance overrides (2026-09-27): the per-variant tables below are what every variant renders while no appearance setting has been changed. Settings appearance rows (size, text size, line spacing, animation speed, spacing, padding, border width, corner roundness, scrollbar width, app font, high contrast, focus outline, Retro textures, accent) apply as overrides over the active variant's table, write nothing while unchanged, remove exactly what they wrote on reset, and use precomputed per-mode accent values; `Plans/Settings_System.md#SSYS-040` owns that model and this unit's no-runtime-colour-derivation rule still applies.
+Settings appearance overrides (2026-09-27): the per-variant tables below are what every variant renders while no appearance setting has been changed. Settings appearance rows (size, text size, line spacing, animation speed, spacing, padding, border width, corner roundness, scrollbar width, app font, high contrast, focus outline, Retro textures, accent) apply as overrides over the active variant's table, write nothing while unchanged, remove exactly what they wrote on reset, and use precomputed per-mode accent values; `Plans/Settings_System.md#SSYS-041` owns that model and this unit's no-runtime-colour-derivation rule still applies.
 
 ### Theme Token Tables (F3-426 spec data)
 

@@ -73,6 +73,7 @@
 .o55-amb-sweep { animation: o55-sweep 11s ease-in-out infinite; transform-box: view-box; }
 .o55-amb-pulse .o55-ring, .o55-ring { animation: o55-ring 1.9s ease-out infinite; animation-delay: calc(var(--ri, 0) * 320ms); transform-box: fill-box; transform-origin: center; }
 .o55-pulse { animation: o55-pulse 2.6s linear infinite; }
+.o55-trav { opacity: 0; } /* a travelling light (53-art-glass.js) is seen only while it travels */
 .o55-core { animation: o55-glow 2.8s ease-in-out infinite alternate; }
 .o55-ripple { animation: o55-glow 3.4s ease-in-out infinite alternate; animation-delay: calc(var(--ri, 0) * 500ms); }
 .o55-led { animation: o55-led 1.8s steps(1, end) infinite; }

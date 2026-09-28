@@ -398,13 +398,15 @@
     if (t && terminal === 'complete' && window.PM56_AUTO_MEMORY) window.PM56_AUTO_MEMORY.boundary(t, m);
     if (terminal === 'complete' && st.spec.followUp && t) followUp(c, t, st.spec.followUp);
     if (terminal === 'error' && st.spec.followUp && t) followUp(c, t, st.spec.followUp);
-    sound(terminal === 'complete' ? 'complete' : 'stop');
+    if (terminal === 'complete') sound('complete'); else if (terminal !== 'steered') sound('stop');
     if (st.revealRec) {
       var others = false; streams.forEach(function (o) { if (o.revealRec === st.revealRec) others = true; });
       if (!others) { c.releaseNextRun(st.revealRec); setTimeout(releaseRoom, K() ? K().ms(260) : 260); }
     }
     c.followIfSticky();
-    if (st.tid === c.state.selectedThread) c.maybeFlushQueue();
+    /* the queue advances on its own only when a turn completes; after a Stop
+       or an error it waits for the user (Send, Send now, Edit or Remove) */
+    if (st.tid === c.state.selectedThread && terminal === 'complete') c.maybeFlushQueue();
   }
 
   function followUp(c, t, f) {
@@ -426,6 +428,10 @@
   var owner = {
     busy: function (tid) { var b = false; streams.forEach(function (st) { if (st.tid === tid) b = true; }); directors.forEach(function (d) { if (d.tid === tid) b = true; }); return b; },
     stop: function (tid) { directors.forEach(function (d, k) { if (d.tid === tid) directors.delete(k); }); streams.forEach(function (st) { if (st.tid === tid) finalize(st, 'stopped'); }); },
+    /* Send now steers (DL-108): the reply written so far stays, unmarked, and
+       the steered message takes the turn from here; a live agent turn's work
+       keeps running. Not a Stop: no marker, no stop cue, no queue advance. */
+    steer: function (tid) { streams.forEach(function (st) { if (st.tid === tid && !st.hold) finalize(st, 'steered'); }); },
     cancel: function (tid) {
       /* leaving the thread: the turn finishes in the background -- it is
          complete, answer and all, when the reader comes back */
@@ -445,44 +451,76 @@
      DOM steps and a frame callback. The answer grows into the room; whatever it
      does not use is let go once it has settled, the floor easing down to the
      content like a drawer closing. */
-  var room = { h0: 0, inner: null, on: false, rel: false, x: null, v: 0, raf: 0, last: 0, lastH: 0 };
+  var room = { h0: 0, inner: null, on: false, rel: false, x: null, v: 0, raf: 0, last: 0, lastH: 0, quietUntil: 0, transient: false, relAt: 0 };
+  /* While the card folds, the follow waits: the fold frees far more room than
+     the answer's first line takes, so the reader's view stays put and the
+     answer rises into it. (Chasing the answer's placeholder first scrolled the
+     thread down 33px, which the fold's clamp then snapped back in one frame.) */
+  var FOLD_QUIET = 700;
+  function roomQuiet() { return room.on && !room.rel && now() < room.quietUntil; }
   function roomInner() { var tr = document.querySelector('.chat-stage .transcript'); return tr && tr.querySelector('.transcript-inner'); }
   function roomFloor(px) {
     if (px == null) document.documentElement.style.removeProperty('--tx-hold-min');
     else document.documentElement.style.setProperty('--tx-hold-min', px.toFixed(1) + 'px');
   }
   function naturalH(inner) { var l = inner.lastElementChild; return l ? l.getBoundingClientRect().bottom - inner.getBoundingClientRect().top : 0; }
-  function dropRoom() { room.on = false; room.rel = false; room.x = null; roomFloor(null); }
+  function dropRoom() { room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.transient = false; roomFloor(null); }
   /* the list's height as last laid out: the completion render (which drops
-     the card's narration line) runs before the hold starts, so the hold takes
-     the height from before that render */
+     the card's narration line and mounts the answer's placeholder) runs before
+     the hold starts, so the hold takes the height from before that render */
   var roomRO = null, roomSeen = null;
   function watchRoom() {
     var inner = roomInner(); if (!inner || inner === roomSeen || !window.ResizeObserver) return;
     if (roomRO) roomRO.disconnect();
     roomSeen = inner; room.lastH = inner.offsetHeight;
-    roomRO = new ResizeObserver(function () { if (roomSeen && roomSeen.isConnected && !room.on) room.lastH = roomSeen.offsetHeight; });
+    /* while held this is the floored height, which is what the reader sees */
+    roomRO = new ResizeObserver(function () { if (roomSeen && roomSeen.isConnected) room.lastH = roomSeen.offsetHeight; });
     roomRO.observe(inner);
   }
   function holdRoom() {
     if (reduced()) return;
     var inner = roomInner(); if (!inner) return;
     var before = inner === roomSeen && room.lastH ? room.lastH : 0;
-    room.inner = inner; room.h0 = Math.max(inner.offsetHeight, before);
-    room.on = true; room.rel = false; room.x = null; room.v = 0; room.last = now();
+    room.inner = inner; room.h0 = before || inner.offsetHeight;
+    room.on = true; room.rel = false; room.transient = false; room.x = null; room.v = 0; room.last = now();
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
   }
   function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); } }
+  /* A working card shrinking under a reader at the bottom (the narration line
+     tucking into the caption, a subject's rows folding) would pull the whole
+     thread down with its height FLIP: 36px in four frames, measured. The same
+     floor holds the room instead; the next subject's rows usually fill it, and
+     what is left eases away more gently than the fold's room. */
+  var SHRINK_HOLD = 700;
+  function holdShrink() {
+    if (reduced()) return;
+    if (room.on) { if (room.transient && !room.rel) room.relAt = now() + SHRINK_HOLD; return; }
+    var c = C(); if (!c || (c.isSticky && !c.isSticky())) return;
+    var inner = roomInner(); if (!inner) return;
+    var before = inner === roomSeen && room.lastH ? room.lastH : 0;
+    room.inner = inner; room.h0 = Math.max(before, inner.offsetHeight);
+    room.on = true; room.rel = false; room.transient = true; room.relAt = now() + SHRINK_HOLD;
+    room.x = null; room.v = 0; room.last = now();
+    roomFloor(room.h0);
+    if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
+  }
   function roomFrame() {
     room.raf = 0;
     var inner = roomInner();
     if (!room.on || !inner || inner !== room.inner) { dropRoom(); return; }
+    if (room.transient && !room.rel && now() >= room.relAt) releaseRoom();
+    if (!room.rel && !roomQuiet()) {
+      /* after the fold the floor only ratchets up: a follow into content past
+         it can then never be clamped back when something above shrinks */
+      var grown = naturalH(inner);
+      if (grown > room.h0 + 0.5) { room.h0 = grown; roomFloor(room.h0); }
+    }
     if (room.rel) {
       var nat = naturalH(inner), t = now(), dt = Math.min(0.05, Math.max(0, (t - room.last) / 1000)); room.last = t;
       if (room.x == null) room.x = Math.max(0, room.h0 - nat);
-      /* critically damped to zero (omega 11/s: ~450ms) */
-      var w = 11; room.v += (-2 * w * room.v - w * w * room.x) * dt; room.x += room.v * dt;
+      /* critically damped to zero (omega 11/s: ~450ms; a shrink's leftover 8/s) */
+      var w = room.transient ? 8 : 11; room.v += (-2 * w * room.v - w * w * room.x) * dt; room.x += room.v * dt;
       if (room.x < 0.5 || nat >= room.h0) { dropRoom(); try { C().followIfSticky(); } catch (e) { } return; }
       roomFloor(nat + room.x);
     }
@@ -633,12 +671,14 @@
       var def = rec.runId && D.workRuns && D.workRuns[rec.runId];
       if (!(def && def.next)) {
         holdRoom();
+        var folding = false;
         t.messages.forEach(function (w) {
           if (w.type === 'working' && w.workId === id) {
-            if (window.PM56_ORBIT) window.PM56_ORBIT.compact(w.id);
-            if (window.PM56_RAIL8 && window.PM56_RAIL8.compact) window.PM56_RAIL8.compact(w.id);
+            if (window.PM56_ORBIT && window.PM56_ORBIT.compact(w.id)) folding = true;
+            if (window.PM56_RAIL8 && window.PM56_RAIL8.compact && window.PM56_RAIL8.compact(w.id)) folding = true;
           }
         });
+        if (folding && room.on) { room.quietUntil = now() + FOLD_QUIET; try { C().holdFollow(roomQuiet); } catch (e) { } }
         sound('answer');
       }
     }
@@ -832,7 +872,9 @@
     if (surf && surf.animate && !reduced()) {
       var v = voice();
       var kf = v === 'friendly' ? [{ transform: 'scale(.97)' }, { transform: 'scale(1.015)', offset: .6 }, { transform: 'none' }]
-        : v === 'retro' ? [{ opacity: .6 }, { opacity: 1 }]
+        /* retro settles like a phosphor: a brief flare, stepped down, never a
+           dip (an opacity dip read as the bubble fading out after it printed) */
+        : v === 'retro' ? [{ filter: 'brightness(1.45)' }, { filter: 'brightness(1)' }]
           : [{ transform: 'scale(.99)' }, { transform: 'none' }];
       surf.animate(kf, { duration: v === 'friendly' ? 240 : 150, easing: v === 'retro' ? 'steps(2,end)' : 'cubic-bezier(.17,.84,.29,.99)' });
     }
@@ -848,6 +890,7 @@
     setInterval(watchRoom, 700);
     c.registerTurnOwner(owner);
     c.onWorkComplete(onComplete);
+    if (c.onWorkShrink) c.onWorkShrink(holdShrink);
   }
   setTimeout(wire, 0);
   document.addEventListener('DOMContentLoaded', wire);

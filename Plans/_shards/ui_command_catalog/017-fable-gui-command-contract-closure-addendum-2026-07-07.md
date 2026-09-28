@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L8066-L8221
 
-Source SHA256: `9edd6a2872acb22c9bfce15cb5971bd12a50ff32676587054706478f940c7df3`
+Source SHA256: `6419332fe203f8b33f2510b91536598098285012266a0e29b5c2bde2744d2c75`
 
 ---
 
@@ -46,7 +46,7 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 | `cmd.concern.promote` | `project_id`, `concern_id`, `promotion_target`, `expected_concern_revision`, `idempotency_key` | `promotion_id`, `concern_id` | `permission_denied`, `blocked_state_required`, `stale_projection` | `concern.promoted` |
 | `cmd.model.refresh` | `project_id?`, `provider_id?`, `account_id?`, `refresh_reason`, `idempotency_key` | `model_catalog_revision`, `provider_status_refs[]` | `permission_denied`, `handler_unavailable`, `stale_projection` | `model.catalog_refreshed` |
 | `cmd.model.list` | `project_id?`, `provider_filter?`, `capability_filter?`, `cache_policy` | `model_catalog_revision`, `model_ids[]`, `degraded_reason?` | `handler_unavailable`, `invalid_args` | explicit dispatch receipt |
-| `cmd.chat.send` | `thread_id`, `project_id?`, `message_id`, `content_ref`, `attachment_refs[]`, `model_request_ref?`, `idempotency_key` | `assistant_turn_id?`, `message_id`, `run_or_goal_ref?` | `permission_denied`, `stale_projection`, `handler_unavailable` | `chat.message.submitted` |
+| `cmd.chat.send` | `thread_id`, `project_id?`, `message_id`, `content_ref`, `attachment_refs[]`, `model_request_ref?`, `delivery_mode?` (`queue` or `steer`; UCC-168), `idempotency_key` | `assistant_turn_id?`, `message_id`, `run_or_goal_ref?` | `permission_denied`, `stale_projection`, `handler_unavailable` | `chat.message.submitted` |
 | `cmd.chat.stop` | `thread_id`, `run_id?`, `assistant_turn_id?`, `stop_reason_code`, `idempotency_key` | `thread_id`, `stopped_ref?`, `resumable` | `blocked_state_required`, `stale_projection`, `handler_unavailable` | `chat.response_stop_requested` |
 | `cmd.panel.undock` | `project_id?`, `panel_id`, `current_host`, `target_window?`, `expected_layout_revision`, `idempotency_key` | `panel_id`, `layout_revision`, `window_id?` | `invalid_args`, `stale_projection` | `panel.undocked` |
 | `cmd.panel.redock` | `project_id?`, `panel_id`, `window_id?`, `target_host`, `expected_layout_revision`, `idempotency_key` | `panel_id`, `layout_revision` | `invalid_args`, `stale_projection` | `panel.redocked` |

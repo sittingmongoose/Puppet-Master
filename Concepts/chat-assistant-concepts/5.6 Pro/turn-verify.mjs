@@ -105,6 +105,39 @@ await safe('stop mid-stream', async () => {
   await p.close();
 });
 
+/* -------------------------------------------------------- busy sends */
+/* DL-108: sends while a reply is written queue by default; Stop never advances
+   the queue; Send now steers (the reply so far stays, unmarked) and sends only
+   that message. */
+await safe('busy sends', async () => {
+  const p = await fresh();
+  await p.evaluate(() => PM56_DEMO.selectThread('live-turn')); await sleep(300);
+  const users = () => p.evaluate(() => document.querySelectorAll('.transcript-inner > .message-user').length);
+  const queued = () => p.evaluate(() => document.querySelectorAll('.send-queue-row').length);
+  const writing = () => p.waitForFunction(() => { const a = [...document.querySelectorAll('.transcript-inner > .message-assistant')].pop(); return a && a.querySelectorAll('.tx-w').length > 3; }, null, { timeout: 6000 });
+  const u0 = await users();
+  await typeSend(p, 'Walk me through the steps for the rollout.'); await writing();
+  await typeSend(p, 'Also list the risks.'); await sleep(200);
+  check('a send while the reply is written joins the queue', (await queued()) === 1 && (await users()) === u0 + 1, { queued: await queued(), users: (await users()) - u0 });
+  await p.click('[data-action="stop-run"]'); await sleep(1500);
+  check('Stop does not advance the queue', (await queued()) === 1 && (await users()) === u0 + 1, { queued: await queued(), users: (await users()) - u0 });
+  /* Send now on a queued message while a new reply is written: it steers */
+  await p.click('.send-queue-row [data-action="queue-send-now"]'); await writing();
+  await typeSend(p, 'First queued.'); await sleep(150);
+  await typeSend(p, 'Second queued.'); await sleep(150);
+  const before = await p.evaluate(() => ({ users: document.querySelectorAll('.transcript-inner > .message-user').length, q: document.querySelectorAll('.send-queue-row').length }));
+  await p.click('.send-queue-row [data-action="queue-send-now"]'); await sleep(600);
+  const r = await p.evaluate(() => {
+    const as = [...document.querySelectorAll('.transcript-inner > .message-assistant')];
+    const steered = as[as.length - 2];
+    return { users: document.querySelectorAll('.transcript-inner > .message-user').length, q: document.querySelectorAll('.send-queue-row').length,
+      steeredMarked: !!(steered && steered.querySelector('.tx-terminal')), steeredText: steered ? steered.textContent.trim().length : 0, writing: !!document.querySelector('[data-streaming]') };
+  });
+  check('Send now steers: the reply so far stays unmarked and only that message is sent', r.users === before.users + 1 && r.q === before.q - 1 && !r.steeredMarked && r.steeredText > 5 && r.writing, { before, after: r });
+  check('no page errors during busy sends', p.__errs.length === 0, p.__errs.slice(0, 2));
+  await p.close();
+});
+
 /* ------------------------------------------------------------ live turn */
 await safe('live agent turn', async () => {
   const p = await fresh();
@@ -114,7 +147,8 @@ await safe('live agent turn', async () => {
     const t0 = performance.now();
     const tick = () => {
       const t = document.querySelector('.transcript');
-      window.__lt.gaps.push({ t: Math.round(performance.now() - t0), g: Math.round(t.scrollHeight - t.clientHeight - t.scrollTop), stick: PM56_EXT.ctx().isSticky() });
+      const us = document.querySelectorAll('.transcript-inner > [data-role="user"]'), u = us[us.length - 1];
+      window.__lt.gaps.push({ t: Math.round(performance.now() - t0), g: Math.round(t.scrollHeight - t.clientHeight - t.scrollTop), stick: PM56_EXT.ctx().isSticky(), u: u ? Math.round(u.getBoundingClientRect().top * 10) / 10 : null, strip: !!document.querySelector('.transcript-inner > .working-card .orbit-strip') });
       window.__lt.liveMax = Math.max(window.__lt.liveMax, document.querySelectorAll('.working-card .orbit-node.live').length);
       if (document.querySelector('.working-card .orbit-narration')) window.__lt.narrLeading = true;
       if (document.querySelector('.working-card .orbit-narr-cap')) window.__lt.narrCap = true;
@@ -137,6 +171,20 @@ await safe('live agent turn', async () => {
   check('follow-along holds through the whole turn (never more than 24px away for longer than 300ms)',
     longest <= 300, { samples: late.length, away: away.length, worst: Math.max(...late.map(s => s.g)), longestAwayMs: longest });
   check('follow-along stays engaged', late.every(s => s.stick), late.filter(s => !s.stick).slice(0, 3));
+  /* the view only ever moves up (following) or eases down (a released room):
+     a drop faster than 0.4px/ms is a snap. Measured before the room holds: the
+     fold's clamp snapped back 33px in one frame (~2px/ms) and a narration tuck
+     pulled the thread down 36px in four frames (~0.7px/ms); a released room
+     eases at ~0.2px/ms. Speed, not pixels per sample: frames here are 12-40ms. */
+  const drops = [];
+  late.forEach((s, i) => { const q = late[i - 1]; if (q && s.u != null && q.u != null && s.u - q.u > 2 && (s.u - q.u) / Math.max(1, s.t - q.t) > 0.4) drops.push({ t: s.t, by: +(s.u - q.u).toFixed(1), ms: s.t - q.t }); });
+  check('the thread never jumps down mid-turn (no clamp snaps back)', drops.length === 0, drops.slice(0, 4));
+  /* while the card folds and the answer starts, the reader's view stays put:
+     the fold runs ~690ms before its strip mounts, the answer mounting with it */
+  const i0 = late.findIndex(s => s.strip);
+  const win = i0 < 0 ? [] : late.filter(s => s.t >= late[i0].t - 750 && s.t <= late[i0].t + 300 && s.u != null);
+  const span = win.length ? Math.max(...win.map(s => s.u)) - Math.min(...win.map(s => s.u)) : null;
+  check('the view holds still while the card folds and the answer starts', win.length > 5 && span <= 1, { samples: win.length, movedPx: span });
   check('the working card is born from the turn mark (clip-path unfold)', lt.birth);
   check('parallel reads are live at the same time', lt.liveMax >= 3, lt.liveMax);
   check('narration streams at the card foot, then tucks into the caption', lt.narrLeading && lt.narrCap, { leading: lt.narrLeading, caption: lt.narrCap });
@@ -214,6 +262,18 @@ await safe('item families', async () => {
   }
   check('every transcript item in every thread names its family', missing.length === 0, { total, missing: missing.slice(0, 3) });
   check('no thread overflows the transcript sideways (scrollWidth == clientWidth)', sideways.length === 0, sideways.slice(0, 4));
+  /* the same at the narrowest chat pane the app produces (~234px: a 900px
+     window with the browser-capture panel open), where a rigid action row, a
+     no-wrap ledger title and a long token in a ticket column once overflowed */
+  await p.addStyleTag({ content: '.chat-stage{width:240px!important;max-width:240px!important;flex:none!important}' });
+  await sleep(300);
+  const narrow = [];
+  for (const id of ids) {
+    await p.evaluate(id => PM56_DEMO.selectThread(id), id); await sleep(120);
+    const o = await p.evaluate(() => { const t = document.querySelector('.transcript'); return { cw: t.clientWidth, over: t.scrollWidth - t.clientWidth }; });
+    if (o.over > 1) narrow.push({ id, ...o });
+  }
+  check('no thread overflows sideways in a ~234px chat pane', narrow.length === 0, narrow.slice(0, 4));
   /* accent budget (Basic Dark): who paints with the accent */
   const scan = await p.evaluate(() => {
     const acc = getComputedStyle(document.body).getPropertyValue('--accent').trim();

@@ -79,7 +79,13 @@
     if (st.root) return st.root;
     const r = document.createElement('div');
     r.id = ROOT; r.className = 'o55t-root'; r.hidden = true; r.setAttribute('data-pm-hover-exempt', 'true');
-    r.innerHTML = `<svg class="o55t-scrim" aria-hidden="true"><path class="o55t-scrimpath" fill-rule="evenodd"/><rect class="o55t-ring" rx="12" ry="12"/></svg>`
+    r.innerHTML = `<svg class="o55t-scrim" aria-hidden="true"><path class="o55t-scrimpath" fill-rule="evenodd"/></svg>`
+      /* the spotlight's ring: a glow of two wide faint strokes under the line (no filter, so it ports to Slint as three
+         strokes) in a small box of its own that rides with the hole */
+      + `<div class="o55t-ringbox" aria-hidden="true" hidden><svg class="o55t-ringsvg" width="100%" height="100%"><rect class="o55t-halo o55t-halo2" rx="12" ry="12"/><rect class="o55t-halo" rx="12" ry="12"/><rect class="o55t-ring" rx="12" ry="12"/>`
+      /* Basic and Retro march their dashes: the same dashed outline at successive offsets, shown one after another by
+         a stepped opacity animation (the compositor runs it; an animated dash offset repaints on the main thread) */
+      + Array.from({ length: 15 }, (_, k) => `<rect class="o55t-ph${k < 4 ? ' o55t-ph4' : ''}${k === 0 ? ' o55t-ph0' : ''}" rx="12" ry="12" style="--k:${k}"/>`).join('') + `</svg></div>`
       + `<div class="o55t-shield" aria-hidden="true"></div>`
       + `<div class="o55t-zone" aria-hidden="true"><span class="o55t-zonelabel"><svg viewBox="0 0 20 20" width="16" height="16"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`
       + `<span class="o55t-zl-idle">${U.esc(T('tour.steps.move_or_dock_chat.zone'))}</span><span class="o55t-zl-hot">${U.esc(T('tour.steps.move_or_dock_chat.zoneHot'))}</span></span></div>`
@@ -88,10 +94,11 @@
       /* one pointer per family, every glyph drawn with its hotspot at (6, 3): a drafting crosshair (Basic), a cartoon
          glove (Friendly), a glowing orb with a trail (Glass), a pixel hand (Retro) */
       + `<div class="o55t-pointer" aria-hidden="true"><svg viewBox="0 0 32 32" width="30" height="30" overflow="visible">`
-      + `<defs><radialGradient id="o55t-orb" cx="40%" cy="35%" r="65%"><stop offset="0" stop-color="#fff"/><stop offset="0.45" class="o55t-orb-mid"/><stop offset="1" class="o55t-orb-edge"/></radialGradient></defs>`
+      + `<defs><radialGradient id="o55t-orb" cx="40%" cy="35%" r="65%"><stop offset="0" stop-color="#fff"/><stop offset="0.45" class="o55t-orb-mid"/><stop offset="1" class="o55t-orb-edge"/></radialGradient>`
+      + `<radialGradient id="o55t-orbglow"><stop offset="0.35" class="o55t-orb-halo0"/><stop offset="1" class="o55t-orb-halo1"/></radialGradient></defs>`
       + `<g class="o55t-ptr o55t-pg-basic"><circle cx="6" cy="3" r="6.5" class="o55t-pg-ring"/><path class="o55t-pg-line" d="M6 -8.5V-2M6 8v6.5M-5.5 3h6.5M11 3h6.5"/><circle cx="6" cy="3" r="1.5" class="o55t-pg-dot"/></g>`
-      + `<g class="o55t-ptr o55t-pg-friendly"><path class="o55t-pg-glove" d="M3.5 15V6a2.5 2.5 0 0 1 5 0v6.2a1.8 1.8 0 0 1 3.6.3a1.8 1.8 0 0 1 3.5.5a1.7 1.7 0 0 1 3.3.8V20c0 2.6-2.2 4.2-5 4.2H8.6c-2.4 0-3.6-1.4-4.4-3L1.2 17.4c-.8-1.3.8-2.8 2.3-1.6z"/><path class="o55t-pg-crease" d="M8.5 12.6v2.9M12.1 12.8v2.4M15.6 13.2v2.2"/><rect class="o55t-pg-cuff" x="6.2" y="24" width="11.6" height="4.6" rx="1.6"/></g>`
-      + `<g class="o55t-ptr o55t-pg-glass"><circle cx="6" cy="3" r="7" fill="url(#o55t-orb)"/><circle cx="3.8" cy="0.6" r="2" fill="#fff" opacity="0.85"/></g>`
+      + `<g class="o55t-ptr o55t-pg-friendly"><path class="o55t-pg-gloveshade" transform="translate(2 3)" d="M3.5 15V6a2.5 2.5 0 0 1 5 0v6.2a1.8 1.8 0 0 1 3.6.3a1.8 1.8 0 0 1 3.5.5a1.7 1.7 0 0 1 3.3.8V20c0 2.6-2.2 4.2-5 4.2H8.6c-2.4 0-3.6-1.4-4.4-3L1.2 17.4c-.8-1.3.8-2.8 2.3-1.6z"/><path class="o55t-pg-glove" d="M3.5 15V6a2.5 2.5 0 0 1 5 0v6.2a1.8 1.8 0 0 1 3.6.3a1.8 1.8 0 0 1 3.5.5a1.7 1.7 0 0 1 3.3.8V20c0 2.6-2.2 4.2-5 4.2H8.6c-2.4 0-3.6-1.4-4.4-3L1.2 17.4c-.8-1.3.8-2.8 2.3-1.6z"/><path class="o55t-pg-crease" d="M8.5 12.6v2.9M12.1 12.8v2.4M15.6 13.2v2.2"/><rect class="o55t-pg-cuff" x="6.2" y="24" width="11.6" height="4.6" rx="1.6"/></g>`
+      + `<g class="o55t-ptr o55t-pg-glass"><circle cx="6" cy="3" r="16" fill="url(#o55t-orbglow)"/><circle cx="6" cy="3" r="7" fill="url(#o55t-orb)"/><circle cx="3.8" cy="0.6" r="2" fill="#fff" opacity="0.85"/></g>`
       + `<g class="o55t-ptr o55t-pg-retro" shape-rendering="crispEdges"><rect x="5" y="3" width="2" height="2"/><rect x="5" y="5" width="2" height="2"/><rect x="5" y="7" width="2" height="2"/><rect x="5" y="9" width="2" height="2"/><rect x="7" y="9" width="2" height="2"/><rect x="9" y="9" width="2" height="2"/><rect x="11" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/><rect x="15" y="9" width="2" height="2"/><rect x="3" y="11" width="2" height="2"/><rect x="5" y="11" width="2" height="2"/><rect x="7" y="11" width="2" height="2"/><rect x="9" y="11" width="2" height="2"/><rect x="11" y="11" width="2" height="2"/><rect x="13" y="11" width="2" height="2"/><rect x="15" y="11" width="2" height="2"/><rect x="17" y="11" width="2" height="2"/><rect x="3" y="13" width="2" height="2"/><rect x="5" y="13" width="2" height="2"/><rect x="7" y="13" width="2" height="2"/><rect x="9" y="13" width="2" height="2"/><rect x="11" y="13" width="2" height="2"/><rect x="13" y="13" width="2" height="2"/><rect x="15" y="13" width="2" height="2"/><rect x="17" y="13" width="2" height="2"/><rect x="5" y="15" width="2" height="2"/><rect x="7" y="15" width="2" height="2"/><rect x="9" y="15" width="2" height="2"/><rect x="11" y="15" width="2" height="2"/><rect x="13" y="15" width="2" height="2"/><rect x="15" y="15" width="2" height="2"/><rect x="17" y="15" width="2" height="2"/><rect x="5" y="17" width="2" height="2"/><rect x="7" y="17" width="2" height="2"/><rect x="9" y="17" width="2" height="2"/><rect x="11" y="17" width="2" height="2"/><rect x="13" y="17" width="2" height="2"/><rect x="15" y="17" width="2" height="2"/><rect x="5" y="19" width="2" height="2" class="o55t-pg-cuff"/><rect x="7" y="19" width="2" height="2" class="o55t-pg-cuff"/><rect x="9" y="19" width="2" height="2" class="o55t-pg-cuff"/><rect x="11" y="19" width="2" height="2" class="o55t-pg-cuff"/><rect x="13" y="19" width="2" height="2" class="o55t-pg-cuff"/><rect x="15" y="19" width="2" height="2" class="o55t-pg-cuff"/><rect x="5" y="21" width="2" height="2" class="o55t-pg-cuff"/><rect x="7" y="21" width="2" height="2" class="o55t-pg-cuff"/><rect x="9" y="21" width="2" height="2" class="o55t-pg-cuff"/><rect x="11" y="21" width="2" height="2" class="o55t-pg-cuff"/><rect x="13" y="21" width="2" height="2" class="o55t-pg-cuff"/><rect x="15" y="21" width="2" height="2" class="o55t-pg-cuff"/></g>`
       + `</svg><span class="o55t-trail"></span></div>`
       + `<div class="o55-live" aria-live="polite" role="status"></div>`;
@@ -165,24 +172,35 @@
     const r = el.getBoundingClientRect(), pad = (st.step && st.step.pad) != null ? st.step.pad : 8;
     return { x: r.left - pad, y: r.top - pad, w: r.width + pad * 2, h: r.height + pad * 2 };
   }
+  /* attributes and styles are written only when they change: the watch loop places the spotlight every 140 ms, and an
+     unchanged write still restyles and repaints on this very large page */
+  const put = (el, name, v) => { v = String(v); if (el.getAttribute(name) !== v) el.setAttribute(name, v); };
+  const putStyle = (el, name, v) => { if (el.style[name] !== v) el.style[name] = v; };
+  const RING_ROOM = 8; /* the ring's box reaches this far past the hole, for its halo strokes */
   function drawHole(h) {
-    const W = innerWidth, H = innerHeight, svg = st.root.querySelector('.o55t-scrim');
-    svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('width', W); svg.setAttribute('height', H);
-    const outer = `M0 0H${W}V${H}H0Z`;
-    if (!h || h.w <= 0) { svg.querySelector('.o55t-scrimpath').setAttribute('d', outer); svg.querySelector('.o55t-ring').setAttribute('width', 0); return; }
-    const r = Math.min(14, h.w / 2, h.h / 2), x = h.x, y = h.y, w = h.w, hh = h.h;
+    const W = innerWidth, H = innerHeight, svg = st.root.querySelector('.o55t-scrim'), box = st.root.querySelector('.o55t-ringbox');
+    put(svg, 'viewBox', `0 0 ${W} ${H}`); put(svg, 'width', W); put(svg, 'height', H);
+    const outer = `M0 0H${W}V${H}H0Z`, sh = st.root.querySelector('.o55t-shield');
+    if (!h || h.w <= 0) { put(svg.querySelector('.o55t-scrimpath'), 'd', outer); box.hidden = true; putStyle(sh, 'clipPath', 'inset(50%)'); return; }
+    const f = (n) => Math.round(n * 10) / 10, x = f(h.x), y = f(h.y), w = f(h.w), hh = f(h.h), r = Math.min(14, w / 2, hh / 2);
     const hole = `M${x + r} ${y}H${x + w - r}Q${x + w} ${y} ${x + w} ${y + r}V${y + hh - r}Q${x + w} ${y + hh} ${x + w - r} ${y + hh}H${x + r}Q${x} ${y + hh} ${x} ${y + hh - r}V${y + r}Q${x} ${y} ${x + r} ${y}Z`;
-    svg.querySelector('.o55t-scrimpath').setAttribute('d', outer + hole);
-    const ring = svg.querySelector('.o55t-ring');
-    ring.setAttribute('x', x); ring.setAttribute('y', y); ring.setAttribute('width', w); ring.setAttribute('height', hh);
+    put(svg.querySelector('.o55t-scrimpath'), 'd', outer + hole);
+    /* the ring is a small layer of its own that glides with the hole: its pulse and its marching dashes repaint only
+       the ring, never the full-window scrim (in Slint: a Path stroke, or a Rectangle border, over the evenodd scrim) */
+    const R = RING_ROOM;
+    box.hidden = false;
+    putStyle(box, 'transform', `translate(${f(x - R)}px, ${f(y - R)}px)`); putStyle(box, 'width', `${f(w + 2 * R)}px`); putStyle(box, 'height', `${f(hh + 2 * R)}px`);
+    box.querySelectorAll('rect').forEach((rc) => { put(rc, 'x', R); put(rc, 'y', R); put(rc, 'width', w); put(rc, 'height', hh); });
     /* the click shield covers everything but the hole on steps that must not be interrupted */
-    const sh = st.root.querySelector('.o55t-shield');
-    sh.style.clipPath = st.step && st.step.block ? `polygon(evenodd, 0 0, ${W}px 0, ${W}px ${H}px, 0 ${H}px, 0 0, ${x}px ${y}px, ${x}px ${y + hh}px, ${x + w}px ${y + hh}px, ${x + w}px ${y}px, ${x}px ${y}px)` : 'inset(50%)';
+    putStyle(sh, 'clipPath', st.step && st.step.block ? `polygon(evenodd, 0 0, ${W}px 0, ${W}px ${H}px, 0 ${H}px, 0 0, ${x}px ${y}px, ${x}px ${y + hh}px, ${x + w}px ${y + hh}px, ${x + w}px ${y}px, ${x}px ${y}px)` : 'inset(50%)');
   }
   /* the hole glides to each new target on a critically damped spring (no overshoot), retargeting mid-flight */
   function moveHole(to) {
     if (!st.hole || !to) { st.hole = to; drawHole(to); return; }
     if (st.spring) { st.spring.retarget(to); return; }
+    /* already there (the watch loop re-places every 140 ms): no spring; the redraw still applies this step's click
+       shield, and writes nothing that has not changed */
+    if (['x', 'y', 'w', 'h'].every((k) => Math.abs(st.hole[k] - to[k]) < 0.5)) { drawHole(st.hole); return; }
     const from = Object.assign({}, st.hole);
     st.spring = M.spring({ from, to, stiffness: 190, onUpdate: (v) => { st.hole = v; drawHole(v); } });
     st.spring.finished.then(() => { st.spring = null; });
@@ -273,13 +291,17 @@
       /* like a hand: time grows with distance (Fitts), speed up then settle into the target, in the family's manner */
       const fam = family(), d = dur || Math.round(Math.min(760, Math.max(420, 360 + dist * 0.32)));
       const ease = fam === 'retro' ? M.ease.steps(8) : fam === 'friendly' ? M.ease.handSpring : fam === 'glass' ? M.ease.handGlide : M.ease.hand;
-      await new Promise((res) => {
-        M.tween({ from: 0, to: 1, duration: fam === 'glass' ? Math.round(d * 1.12) : d, ease, ignoreReduced: false, onUpdate: (t) => {
-          if (st.show && st.show.cancelled) return;
-          const px = (1 - t) * (1 - t) * from.x + 2 * (1 - t) * t * mx + t * t * x, py = (1 - t) * (1 - t) * from.y + 2 * (1 - t) * t * my + t * t * y;
-          P.pos = { x: px, y: py }; P.el().style.transform = `translate(${px}px, ${py}px)`;
-        } }).finished.then(res);
-      });
+      const at = (t) => [(1 - t) * (1 - t) * from.x + 2 * (1 - t) * t * mx + t * t * x, (1 - t) * (1 - t) * from.y + 2 * (1 - t) * t * my + t * t * y];
+      const el = P.el(), end = () => { P.pos = { x, y }; el.style.transform = `translate(${x}px, ${y}px)`; };
+      if (M.reduced()) { end(); return; }
+      /* the travel is one Web Animation through points sampled from the same arc and easing (Retro: eight held steps),
+         so the compositor carries the hand: the tour cannot hide the app beneath it, and a frame drawn by the main
+         thread repaints that whole page on a computer without a GPU */
+      const n = fam === 'retro' ? 8 : 28, frames = [];
+      for (let k = 0; k <= n; k++) { const [px, py] = at(ease(k / n)); frames.push({ transform: `translate(${px.toFixed(1)}px, ${py.toFixed(1)}px)`, easing: fam === 'retro' ? 'steps(1, end)' : 'linear' }); }
+      const a = el.animate(frames, { duration: fam === 'glass' ? Math.round(d * 1.12) : d, fill: 'forwards' });
+      await a.finished.catch(() => null);
+      end(); a.cancel();
     },
     async press(on) { P.el().classList.toggle('o55t-press', on !== false); await M.delay(on === false ? 60 : 140); }
   };

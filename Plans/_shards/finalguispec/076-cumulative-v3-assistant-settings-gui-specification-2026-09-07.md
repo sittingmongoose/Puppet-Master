@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L36413-L37101
 
-Source SHA256: `80d9e08375e325354ec1414fa09f0d288afdb0daec472debf24835eb349a24fb`
+Source SHA256: `67e8c2d006ed8b1b989f81c22e6e8902e0ff45aa2b43f1c4ac96c8ecf40327d3`
 
 ---
 
@@ -182,11 +182,11 @@ invariants.
   6. *One Quiet Action Row:* Secondary actions, resets, and documentation links cluster into a single subtle bottom action strip.
   7. *No Top Action Bar:* No header-level action strip; actions live in rows, section title rows, or the single quiet bottom row.
   8. *Bounded Tabs:* At most six tabs per manager.
-  9. *Exactly One Advanced Disclosure:* One labeled keyboard-operable Advanced disclosure per manager view holds advanced, dangerous, rarely used, and diagnostic items. From 2026-09-27 it reads More options in every manager view and on every plain page, follows the view's short everyday groups, and opens itself when search, the page index or Details lands inside it (`Plans/Settings_System.md#SSYS-039`).
+  9. *Exactly One Advanced Disclosure:* One labeled keyboard-operable Advanced disclosure per manager view holds advanced, dangerous, rarely used, and diagnostic items. From 2026-09-27 it reads More options in every manager view and on every plain page, follows the view's short everyday groups, and opens itself when search, the page index or Details lands inside it (`Plans/Settings_System.md#SSYS-040`).
   10. *Side Panel Anatomy:* Manager drawers and the setting Details inspector share one anatomy (identity header, sectioned body, quiet footer) and the same spring motion, without decorative accent bars; inspector width tokens are unchanged.
   11. *Status Tokens, Not Pills:* A small coloured dot with text for state; quiet text for category labels; capsules only for keyboard keys. From 2026-09-27 Details' Default and Recommended marks, engine badges and drawer status are words (a dot only where they carry a tone), pick-several choices are squared tiles with a checkbox, related settings are text links, and Settings has no coloured side or top stripe and no emoji.
   12. *Themed Listboxes:* Concept-drawn listboxes over hidden native selects with the chat assistant's popout motion; no native option list is visible; menus share the popout.
-  13. *Manager-Topic Settings Live Inside Their Manager:* Manager-topic canonical settings render inline inside their manager before its Advanced disclosure; core settings stay on plain pages; every inventory id renders exactly once. From 2026-09-27 a manager's own bound control (a list's search or Show menu, a per-item switch, a field inside one account) is a row's one home, no manager keeps its own copy of an inventory choice, and the plain pages are App & Input, Editor & Terminal, Containers, Planning & Interviews and Advanced Settings (`Plans/Settings_System.md#SSYS-039`).
+  13. *Manager-Topic Settings Live Inside Their Manager:* Manager-topic canonical settings render inline inside their manager before its Advanced disclosure; core settings stay on plain pages; every inventory id renders exactly once. From 2026-09-27 a manager's own bound control (a list's search or Show menu, a per-item switch, a field inside one account) is a row's one home, no manager keeps its own copy of an inventory choice, and the plain pages are App & Input, Editor & Terminal, Containers, Planning & Interviews and Advanced Settings (`Plans/Settings_System.md#SSYS-040`).
 - **Exhaustive Application Across 38 Settings Managers (APR-062):** The restored native presentation
   grammar applies across all thirty-eight registered Settings managers:
   1. `all-settings` (Search-first catalog)

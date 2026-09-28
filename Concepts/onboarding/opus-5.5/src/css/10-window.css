@@ -7,6 +7,13 @@
   --o55-win-bg: var(--surface); --o55-card-bg: color-mix(in srgb, var(--surface) 88%, var(--text-primary) 3%); --o55-line: var(--border); }
 #pm-o55-onboarding[hidden] { display: none !important; }
 html[data-o55-open] #pm-hover-tag-root { display: none !important; }
+/* the app beneath the window is inert and dimmed (its demo clock is paused too): its own loops (working pulses, status
+   dots) hold still until the window closes, so every frame's work is the window's own. Restyled in the same frame that
+   makes the app inert, which the window's first held frame already pays for. */
+html[data-o55-open] body > [inert], html[data-o55-open] body > [inert] * { animation-play-state: paused !important; }
+/* the solid backdrop (60-ui-core.js): on a computer that cannot composite the app beneath at full rate, the app is
+   not drawn at all while the window is open; the scrim then lies over the page's own ground */
+html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !important; }
 .o55-scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--background) 74%, transparent); }
 .o55-win { position: relative; z-index: 1; width: min(1080px, calc(100vw - 48px)); height: min(720px, calc(100vh - 48px)); display: grid; grid-template-rows: auto minmax(0, 1fr);
   border-radius: var(--o55-r); background: var(--o55-win-bg); border: 1px solid var(--o55-line); box-shadow: 0 40px 90px -24px rgba(0, 0, 0, 0.55); overflow: hidden; isolation: isolate; }
@@ -47,22 +54,28 @@ html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 .o55-railitem[data-state="current"] { color: var(--text-primary); font-weight: 650; }
 .o55-railitem[data-state="current"] .o55-railnode { border-color: var(--o55-accent); background: var(--o55-win-bg); box-shadow: 0 0 0 4px color-mix(in srgb, var(--o55-accent) 24%, transparent); }
 .o55-railstring { display: none; }
-.o55-charms { display: inline-flex; gap: 2px; }
-.o55-charm { display: grid; place-items: center; width: 17px; height: 17px; border-radius: 50%; color: var(--o55-accent); background: color-mix(in srgb, var(--o55-accent) 15%, transparent); }
 /* rail per family */
+#pm-o55-onboarding[data-family="basic"] .o55-railitem { --o55-node-w: 9px; }
 #pm-o55-onboarding[data-family="basic"] .o55-railnode { border-radius: 2px; width: 9px; height: 9px; }
 #pm-o55-onboarding[data-family="basic"] .o55-railitem + .o55-railitem::before { height: 1px; box-shadow: -1px -3px 0 -0.5px var(--o55-line), 23px -3px 0 -0.5px var(--o55-line); }
-#pm-o55-onboarding[data-family="friendly"] .o55-railnode { width: 13px; height: 12px; border-radius: 2px 2px 7px 7px; clip-path: polygon(0 0, 100% 0, 50% 100%); border: 0; background: color-mix(in srgb, currentColor 45%, transparent); }
-#pm-o55-onboarding[data-family="friendly"] .o55-railitem[data-state="done"] .o55-railnode { background: var(--accent-lime); }
-#pm-o55-onboarding[data-family="friendly"] .o55-railitem[data-state="current"] .o55-railnode { background: var(--o55-accent); box-shadow: none; }
+/* Friendly: round paper counters in the family's one accent: filled = done, a ring = where you are, empty = still to come */
+#pm-o55-onboarding[data-family="friendly"] .o55-railitem { --o55-node-w: 14px; }
+#pm-o55-onboarding[data-family="friendly"] .o55-railnode { width: 14px; height: 14px; border-radius: 50%; border: 2px solid color-mix(in srgb, var(--text-primary) 28%, transparent); background: var(--o55-win-bg);
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--text-primary) 14%, transparent); }
+#pm-o55-onboarding[data-family="friendly"] .o55-railitem[data-state="done"] .o55-railnode { background: var(--o55-accent); border-color: color-mix(in srgb, var(--o55-accent) 72%, var(--text-primary)); }
+#pm-o55-onboarding[data-family="friendly"] .o55-railitem[data-state="current"] .o55-railnode { background: var(--o55-win-bg); border: 3.5px solid var(--o55-accent);
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--text-primary) 14%, transparent), 0 0 0 4px color-mix(in srgb, var(--o55-accent) 22%, transparent); }
 #pm-o55-onboarding[data-family="friendly"] .o55-railitem + .o55-railitem::before { height: 7px; top: calc(50% - 6px); background: none; border-bottom: 1.5px solid color-mix(in srgb, var(--text-primary) 35%, transparent); border-radius: 0 0 50% 50%; }
 #pm-o55-onboarding[data-family="glass"] .o55-railitem + .o55-railitem::before { background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--o55-accent) 70%, transparent), transparent); }
 #pm-o55-onboarding[data-family="glass"] .o55-railitem[data-state="current"] .o55-railnode, #pm-o55-onboarding[data-family="glass"] .o55-railitem[data-state="done"] .o55-railnode { box-shadow: 0 0 10px 2px color-mix(in srgb, var(--o55-accent) 60%, transparent); }
 #pm-o55-onboarding[data-family="retro"] .o55-railnode { border-radius: 0; width: 10px; height: 10px; border-width: 2px; }
 #pm-o55-onboarding[data-family="retro"] .o55-railitem { font-family: var(--display-font); text-transform: uppercase; font-size: 11px; letter-spacing: 0.06em; }
 #pm-o55-onboarding[data-family="retro"] .o55-railitem + .o55-railitem::before { height: 2px; background: repeating-linear-gradient(90deg, var(--text-muted) 0 3px, transparent 3px 6px); }
-#pm-o55-onboarding[data-family="retro"] .o55-railitem[data-state="current"] .o55-railnode { box-shadow: none; background: var(--o55-accent); animation: o55-pixblink 1s steps(1) infinite; }
-@keyframes o55-pixblink { 50% { background: transparent; } }
+/* the current node's pixel fill blinks as an opacity step on an overlay (the compositor runs it; a blinking background
+   is restyled by the main thread every frame) */
+#pm-o55-onboarding[data-family="retro"] .o55-railitem[data-state="current"] .o55-railnode { box-shadow: none; background: transparent; position: relative; }
+#pm-o55-onboarding[data-family="retro"] .o55-railitem[data-state="current"] .o55-railnode::after { content: ''; position: absolute; inset: 0; background: var(--o55-accent); animation: o55-pixblink 1s steps(1, end) infinite; }
+@keyframes o55-pixblink { 50% { opacity: 0; } }
 .o55-headctl { display: flex; align-items: center; gap: 4px; }
 .o55-iconbtn, .o55-sound { display: inline-flex; align-items: center; gap: 6px; height: 34px; min-width: 34px; justify-content: center; padding: 0 10px; border-radius: var(--o55-btn-r); border: 1px solid transparent;
   background: transparent; color: var(--text-secondary); cursor: pointer; font: 600 13px/1 var(--body-font); }
@@ -98,20 +111,24 @@ html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 .o55-footgrow { flex: 1; }
 .o55-footnote { font-size: 12.5px; color: var(--text-muted); }
 .o55-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 18px; border-radius: var(--o55-btn-r); font: 650 14px/1 var(--body-font);
-  cursor: pointer; border: 1px solid transparent; background: transparent; color: var(--text-primary); transition: transform 140ms ease, background 160ms ease, box-shadow 160ms ease, filter 160ms ease; white-space: nowrap; }
+  cursor: pointer; border: 1px solid transparent; background: transparent; color: var(--text-primary); transition: transform 140ms ease, background 160ms ease, box-shadow 160ms ease; white-space: nowrap; }
 .o55-btn:active { transform: translateY(1px) scale(0.985); }
 .o55-btn.o55-small { min-height: 32px; padding: 0 12px; font-size: 13px; }
 .o55-primary { background: var(--o55-accent); color: var(--o55-on-accent); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 8px 18px -8px color-mix(in srgb, var(--o55-accent) 80%, transparent); }
-.o55-primary:hover { filter: brightness(1.07); }
+/* hover and disabled states are colour mixes, not filters (Slint has no filters; its colours have mix()) */
+.o55-primary:hover { background-color: color-mix(in srgb, var(--o55-accent) 91%, #fff); }
 .o55-secondary { border-color: var(--o55-line); background: color-mix(in srgb, var(--surface) 70%, transparent); }
 .o55-secondary:hover { background: color-mix(in srgb, var(--text-primary) 7%, transparent); }
 .o55-ghost, .o55-secondary.o55-ghost { color: var(--text-secondary); border-color: transparent; background: transparent; box-shadow: none; }
 .o55-ghost:hover { color: var(--text-primary); background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
-.o55-btn[aria-disabled="true"] { opacity: 0.46; cursor: not-allowed; filter: saturate(0.55); box-shadow: none; }
+.o55-btn[aria-disabled="true"] { opacity: 0.46; cursor: not-allowed; box-shadow: none; }
+.o55-primary[aria-disabled="true"] { background-color: color-mix(in srgb, var(--o55-accent) 58%, var(--text-muted)); }
 #pm-o55-onboarding[data-family="friendly"] .o55-btn { border: 2px solid var(--o55-ink); box-shadow: 3px 4px 0 color-mix(in srgb, var(--text-primary) 20%, transparent); }
 #pm-o55-onboarding[data-family="friendly"] .o55-btn.o55-ghost { border-color: transparent; box-shadow: none; }
 #pm-o55-onboarding[data-family="friendly"] .o55-btn:active { transform: translate(2px, 3px); box-shadow: 1px 1px 0 color-mix(in srgb, var(--text-primary) 20%, transparent); }
 #pm-o55-onboarding[data-family="glass"] .o55-primary { background: linear-gradient(135deg, var(--accent-blue), var(--accent-magenta)); color: #fff; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25); }
+#pm-o55-onboarding[data-family="glass"] .o55-primary:hover { background: linear-gradient(135deg, color-mix(in srgb, var(--accent-blue) 91%, #fff), color-mix(in srgb, var(--accent-magenta) 91%, #fff)); }
+#pm-o55-onboarding[data-family="glass"] .o55-primary[aria-disabled="true"] { background: linear-gradient(135deg, color-mix(in srgb, var(--accent-blue) 58%, var(--text-muted)), color-mix(in srgb, var(--accent-magenta) 58%, var(--text-muted))); }
 #pm-o55-onboarding[data-family="glass"] .o55-secondary { background: color-mix(in srgb, #fff 8%, transparent); border-color: rgba(255, 255, 255, 0.28); }
 #pm-o55-onboarding[data-family="retro"] .o55-btn { border: 2px solid var(--text-primary); text-transform: uppercase; font-family: var(--display-font); font-size: 12.5px; letter-spacing: 0.05em; box-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); }
 #pm-o55-onboarding[data-family="retro"] .o55-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); }
@@ -197,11 +214,13 @@ html[data-o55-open] #pm-hover-tag-root { display: none !important; }
    square spun with one side open read as a box with a side cut off) */
 #pm-o55-onboarding[data-family="retro"] .o55-spin { width: 12px; height: 12px; border-radius: 0; border-right-color: currentColor; animation: none; position: relative; --b: 3px; --g: 1px; }
 #pm-o55-onboarding[data-family="retro"] .o55-ph-active .o55-phmark { border-right-color: var(--o55-accent); animation: none; position: relative; --b: 4px; --g: 3px; }
+/* the pixel sits in the corner of the square it runs round, and the square turns in whole quarter turns: a square pixel
+   turned 90 degrees is the same pixel one corner on, so nothing is ever seen turning, and the compositor runs it (the
+   first version stepped left/top, which the main thread restyles every frame) */
 #pm-o55-onboarding[data-family="retro"] .o55-spin::after, #pm-o55-onboarding[data-family="retro"] .o55-ph-active .o55-phmark::after {
-  content: ''; position: absolute; width: var(--b); height: var(--b); background: currentColor; left: var(--g); top: var(--g); animation: o55-px-chase 0.8s steps(1, end) infinite; }
-#pm-o55-onboarding[data-family="retro"] .o55-ph-active .o55-phmark::after { background: var(--o55-accent); }
-@keyframes o55-px-chase { 0% { left: var(--g); top: var(--g); } 25% { left: calc(100% - var(--g) - var(--b)); top: var(--g); }
-  50% { left: calc(100% - var(--g) - var(--b)); top: calc(100% - var(--g) - var(--b)); } 75% { left: var(--g); top: calc(100% - var(--g) - var(--b)); } }
+  content: ''; position: absolute; inset: var(--g); background: linear-gradient(currentColor, currentColor) 0 0 / var(--b) var(--b) no-repeat; animation: o55-px-chase 0.8s steps(4, end) infinite; }
+#pm-o55-onboarding[data-family="retro"] .o55-ph-active .o55-phmark::after { background-image: linear-gradient(var(--o55-accent), var(--o55-accent)); }
+@keyframes o55-px-chase { to { transform: rotate(360deg); } }
 html[data-motion="reduced"] #pm-o55-onboarding[data-family="retro"] .o55-spin::after, html[data-motion="reduced"] #pm-o55-onboarding[data-family="retro"] .o55-ph-active .o55-phmark::after { animation: none; }
 @keyframes o55-spin { to { transform: rotate(360deg); } }
 .o55-field { display: grid; gap: 6px; }
@@ -245,10 +264,7 @@ html[data-motion="reduced"] #pm-o55-onboarding[data-family="retro"] .o55-spin::a
 .o55-sheethead { display: flex; align-items: center; justify-content: space-between; } .o55-sheethead h2 { margin: 0; font: 700 15px/1.3 var(--body-font); }
 .o55-sheetbody { display: grid; gap: 10px; } .o55-sheetfoot { display: flex; gap: 10px; justify-content: flex-end; }
 
-/* charm flight + resume chip */
-.o55-flycharm { position: fixed; left: 0; top: 0; z-index: 5; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; pointer-events: none;
-  background: var(--o55-accent); color: var(--o55-on-accent); font: 700 12px/1 var(--body-font); box-shadow: 0 8px 18px -6px rgba(0, 0, 0, 0.4); white-space: nowrap; }
-#pm-o55-onboarding[data-family="retro"] .o55-flycharm { border-radius: 0; }
+/* resume chip */
 .o55-resume { position: fixed; z-index: 2147481000; top: 46px; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; border-radius: 999px; background: var(--accent-blue); color: #0b1a2b; box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.5); font: 650 13px/1 var(--body-font, system-ui); }
 .o55-resume button { display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 14px; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
 .o55-resume .o55-resume-x { padding: 0 12px 0 6px; font-size: 16px; opacity: 0.7; }
@@ -276,10 +292,12 @@ html[data-motion="reduced"] #pm-o55-onboarding[data-family="retro"] .o55-spin::a
 .o55-railitem { height: 100%; }
 .o55-railitem + .o55-railitem::before { display: none; }
 .o55-railbar { position: absolute; top: 9px; left: 10px; right: 10px; height: 2px; border-radius: 2px; background: color-mix(in srgb, var(--text-primary) 26%, transparent); pointer-events: none; }
-.o55-railstring { display: block; position: absolute; left: 16.5px; top: 11px; width: 1px; height: 13px; background: color-mix(in srgb, var(--text-primary) 30%, transparent); transform-origin: 50% 0; }
+/* each string hangs from the middle of its own marker: the item's 12px padding plus half the family's marker, whatever
+   the string's width (a fixed 16.5px fit only one marker size, and a swaying string's end slid off the marker) */
+.o55-railstring { display: block; position: absolute; left: calc(12px + var(--o55-node-w, 10px) / 2); margin-left: calc(var(--o55-str-w, 1px) / -2); top: 11px; width: var(--o55-str-w, 1px); height: 13px;
+  background: color-mix(in srgb, var(--text-primary) 30%, transparent); }
 .o55-railitem[data-state="done"] .o55-railstring, .o55-railitem[data-state="current"] .o55-railstring { background: var(--o55-accent); }
-.o55-railitem[data-state="current"] .o55-railstring { width: 1.5px; animation: o55-string-sway 3.2s ease-in-out infinite alternate; }
-@keyframes o55-string-sway { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
+.o55-railitem[data-state="current"] { --o55-str-w: 1.5px; }
 .o55-railbar-basic { height: 1px; background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--accent-blue) 55%, transparent) 0 1px, transparent 1px 12px), color-mix(in srgb, var(--accent-blue) 45%, transparent);
   box-shadow: 0 -3px 0 -1px transparent; }
 .o55-railbar-basic::before, .o55-railbar-basic::after { content: ''; position: absolute; top: -3px; width: 1px; height: 7px; background: color-mix(in srgb, var(--accent-blue) 70%, transparent); }
@@ -289,9 +307,8 @@ html[data-motion="reduced"] #pm-o55-onboarding[data-family="retro"] .o55-spin::a
 .o55-railbar-glass { height: 2px; background: linear-gradient(90deg, transparent, var(--accent-blue) 20%, var(--accent-magenta) 80%, transparent); box-shadow: 0 0 10px 1px color-mix(in srgb, var(--accent-magenta) 45%, transparent); }
 #pm-o55-onboarding[data-family="glass"] .o55-railitem[data-state="done"] .o55-railstring, #pm-o55-onboarding[data-family="glass"] .o55-railitem[data-state="current"] .o55-railstring { box-shadow: 0 0 6px color-mix(in srgb, var(--o55-accent) 70%, transparent); }
 .o55-railbar-retro { height: 4px; border-radius: 0; background: repeating-linear-gradient(90deg, var(--text-primary) 0 4px, transparent 4px 8px); opacity: 0.55; }
-#pm-o55-onboarding[data-family="retro"] .o55-railstring { width: 2px; top: 13px; height: 11px; left: 16px; animation: none !important; }
-html[data-motion="reduced"] .o55-railstring { animation: none !important; }
-@media (prefers-reduced-motion: reduce) { .o55-railstring { animation: none !important; } }
+#pm-o55-onboarding[data-family="retro"] .o55-railitem { --o55-str-w: 2px; }
+#pm-o55-onboarding[data-family="retro"] .o55-railstring { top: 13px; height: 11px; }
 
 /* the screen heading takes programmatic focus for screen readers; it is not a control, so no focus ring */
 #pm-o55-onboarding .o55-title:focus, #pm-o55-onboarding .o55-title:focus-visible { outline: none !important; box-shadow: none !important; }

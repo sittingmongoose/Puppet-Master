@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L262-L1229
 
-Source SHA256: `80d9e08375e325354ec1414fa09f0d288afdb0daec472debf24835eb349a24fb`
+Source SHA256: `67e8c2d006ed8b1b989f81c22e6e8902e0ff45aa2b43f1c4ac96c8ecf40327d3`
 
 ---
 
@@ -200,7 +200,7 @@ dispatch the same `cmd.workspace_layout.reset` and no new command ID is minted.
 Amended 2026-09-27: the Settings copy (`general.startup.reset-home-layout`) now sits
 in App & Input -> Window & panels as Reset the layout, asks one plain question
 naming what moves back and what is kept, and dispatches the same command
-(`Plans/Settings_System.md#SSYS-039`).
+(`Plans/Settings_System.md#SSYS-040`).
 In the concept demo the top-bar row additionally closes any legacy chat overlay
 state and reloads the page so the demo flow restarts pristine; that reload
 semantic is concept-demo behavior only and is NOT promoted into the typed command

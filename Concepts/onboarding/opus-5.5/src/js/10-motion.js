@@ -47,6 +47,38 @@
     });
   };
 
+  /* release(fn): runs fn at the start of the frame after next. A screen is built held (hidden, its entrances paused);
+     the next frame does the heavy style and layout of the new DOM while the old screen still shows, and the
+     choreography is released only after it, so the first frame of motion is never a long one (a long first frame made
+     every entrance start with a visible jump). */
+  M.release = function release(fn) { real.raf(() => real.raf(fn)); };
+
+  /* softwareRendered(): true when this browser draws without a GPU (no WebGL, or WebGL on a software rasteriser such as
+     SwiftShader or llvmpipe); then the page is composited on the CPU too. Read once. */
+  let sw = null;
+  M.softwareRendered = function softwareRendered() {
+    if (sw !== null) return sw;
+    try {
+      const c = document.createElement('canvas'), gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+      if (!gl) return (sw = true);
+      const ext = gl.getExtension('WEBGL_debug_renderer_info');
+      sw = /swiftshader|llvmpipe|softpipe|software|basic render/i.test(String(ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER)));
+      const lose = gl.getExtension('WEBGL_lose_context'); if (lose) lose.loseContext();
+    } catch (_) { sw = true; }
+    return sw;
+  };
+
+  /* sampleFrames(ms) -> Promise<{median, p90, n}>: the intervals between painted frames over a short window (it asks
+     for a frame each time, so it is used once, briefly). A computer that cannot draw this page at 60 fps without a GPU
+     shows it here long before the person notices a stutter. */
+  M.sampleFrames = function sampleFrames(ms) {
+    return new Promise((res) => {
+      const ts = [], t0 = performance.now();
+      const tick = (t) => { ts.push(t); if (t - t0 < ms) real.raf(tick); else { const d = ts.slice(1).map((x, i) => x - ts[i]).sort((a, b) => a - b); res({ median: d[Math.floor(d.length / 2)] || 0, p90: d[Math.floor(d.length * 0.9)] || 0, n: d.length }); } };
+      real.raf(tick);
+    });
+  };
+
   /* Durations (ms) — canon budgets; families differ in easing, not in waiting time. */
   M.T = { micro: 160, step: 500, stepOut: 350, stagger: 70, success: 700, hero: 1350, charm: 620, travel: 900 };
 

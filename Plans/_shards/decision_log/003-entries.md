@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L2180
+Source lines: L13-L2256
 
-Source SHA256: `a8c5e8023f5d58b7cb9ce1ae7607576e094df26f77663f6304e28656d4f74163`
+Source SHA256: `0f8412b513ed7fe803eca860e035adba94f999dcb21880b679088069b0f2149a`
 
 ---
 
@@ -2176,3 +2176,79 @@ This entry admits only `coordination.agent_registered`. The six other coordinati
 SourceRef: depth assessment `reports/event-authority-20260911/step-09-depth-coordination.agent_registered.json`, SHA-256 `54346d8b231b7080b487ed5a8e7332cc0d6202a8177309a10d772b796266509c`; admission record `reports/event-authority-20260911/admission-records/coordination.agent_registered.json`; Step 9 procedure record `reports/event-authority-20260911/step-09-procedure-20260924.md`; preparation report `reports/event-authority-20260911/step-09-coordination-prep-20260925.md`; preparation review `/mnt/Cursor/PM-Experiments/review-ea-s09-coordination-prep-20260925/RECHECK.md`.
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-078, ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Decision_Log.md#DL-093, ContractName:Plans/event_family_registry.json, ContractName:Plans/coordination_event_admission.json
+
+### DL-104: The chat transcript uses the Turn Stage layout, distinct item families and an accent budget
+
+Answered on 2026-09-26 by Jared, in the Claude Code session that rebuilt the 5.6 Pro chat transcript.
+
+**Question:** The transcript read as "a sea of blue/purple", and every kind of item (plans, agent delegation, scheduled messages, artifacts) looked the same, so it was easy to get lost. Should the rebuilt layout become the default, should each kind of item get its own look, and should the accent colour be kept for the few things that need attention?
+
+**Answer:** Yes to all three. On the default: "Make it the default (Recommended)". On the items: "all the different types of items in the transcript all look the same" was named as a problem to fix. On the accent: "we can apply the rule now".
+
+Each assistant turn opens with a small mark in a gutter, and a hairline spine runs through the turn's items to an end dot. Every transcript item renders as one of seven families chosen by its message type (prose, work, deliverable, needs you, people, time, ledger), each with its own silhouette. The accent is spent only on live work, on items that need the user, on the one primary action of a card, and on Send and Stop. The owner text is ACD-469 and F3-562; DR-043 names the single owners of the family map and the accent rule.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/chat-wow-20260926/jared-decisions-20260926-27.md`, SHA-256 `f907de7341f052cb8c2e0b870d614bc4490c11984194729bdcbafdcebab929b9`; concept lineage `Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md`.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md
+
+### DL-105: The working card folds when the answer starts, and short narration folds into it
+
+Answered on 2026-09-26 by Jared, in the same session.
+
+**Question:** A live turn interleaves tool calls with short lines of narration and ends with an answer. Should the short lines fold into the working card instead of splitting the turn into a stack of cards, and should the card fold into its compact strip when the final answer starts streaming, instead of the last activity staying expanded?
+
+**Answer:** "1. Without seeing what it would look like, folding short lines likely makes sense. 2. We can do your reccommendation." (the recommendation was to fold the card when the answer starts).
+
+A live working card stays expanded while it runs. When the final answer starts streaming, the card folds into its strip and the answer rises into the room it gave up; this supersedes "the last activity stays expanded". A short narration line streams at the foot of the card and tucks into its head caption when the next subject starts; longer prose and the final answer stay transcript text. Carried by the plan Jared approved in the same session: several subjects may be live at once, a subject can fail or wait for the user, and long runs cluster (past 16 nodes into counted clusters, past 30 into an Earlier node). The owner text is ACD-473.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/chat-wow-20260926/jared-decisions-20260926-27.md`, SHA-256 `f907de7341f052cb8c2e0b870d614bc4490c11984194729bdcbafdcebab929b9`.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+### DL-106: Replies stream, Stop lives in the composer, and motion follows the theme family
+
+Answered on 2026-09-26 by Jared, in the same session.
+
+**Question:** Should replies stream in as a model writes them, where does Stop live, should the motion of sending and streaming change with the theme, and what happens to the concept's demo controls?
+
+**Answer:** On Stop: "Stop would be at the bottom in the compose section right? Not in the working animation." On motion: "Be sure to improve/update/polish/redesign the streaming animations, and way text pops in/goes from compose to the transcript", and, asked whether animations should change with the theme given PMConcept7's themes, the per-family answer was approved with the plan. On demo controls: "they could be collapsed to a single button that shows the options for now and removed when ported over to PMConcept7."
+
+Replies stream: a thinking placeholder, a paced word release, and a settle, ending complete, stopped (the partial text stays with a Stopped marker) or with an error. Stop is the composer's Send/Stop morph, never a control inside the working activity. Motion has one voice per theme family (Basic, Friendly, Glass, Retro; dark and light share it): path, easing and texture differ, never timing or order. The concept's demo controls, Demo Studio and its Motion voice picker are lab tools and never product. The owner text is ACD-470, ACD-474 and ACD-475.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/chat-wow-20260926/jared-decisions-20260926-27.md`, SHA-256 `f907de7341f052cb8c2e0b870d614bc4490c11984194729bdcbafdcebab929b9`.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+### DL-107: Chat sound is on by default, with a one-click mute
+
+Answered on 2026-09-26 by Jared, in the same session: "Subtle, on by default".
+
+**Question:** Should the chat play subtle sounds for its moments (sending, the answer arriving, approvals, completion, errors), and should they be on by default?
+
+**Answer:** On by default, subtle, with a one-click mute.
+
+`general.interaction.sound-effects` defaults to on; this supersedes its "Off by default" description. The speaker button in the chat header is a shared chrome control bound to that same key, as the onboarding and Tour sound controls already are, not a separate per-view setting. The chat's cues are events of the Notifications & Sounds owner, and sound is never the only signal. The owner text is SSYS-039, F3-564 and ACD-475.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/chat-wow-20260926/jared-decisions-20260926-27.md`, SHA-256 `f907de7341f052cb8c2e0b870d614bc4490c11984194729bdcbafdcebab929b9`.
+
+ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+### DL-108: Sends made while the assistant is busy queue by default, and Send now steers
+
+Answered on 2026-09-27 by Jared, in the same session, choosing **"Keep both, default Queue"**.
+
+**Question:** When you send a message while the assistant is still answering or working, what should happen? The plans made Steer the default (the message goes to the running turn at once) with a Steer/Queue switch in the composer; the concept only queued, and its Send now stopped the answer before sending.
+
+**Options:**
+
+1. **Keep the plans.** Steer stays the default and the switch stays; Send now steers without stopping.
+2. **Queue only.** Remove Steer and the switch; Send now stops the answer, then sends.
+3. **Keep both, default Queue.** Keep the switch, make Queue the default; Send now steers without stopping.
+
+**Answer:** Option 3, "Keep both, default Queue".
+
+`general.interaction.queue-behavior` defaults to Queue (it was Steer) and the Steer/Queue switch stays. Send now on a queued message steers without stopping the answer, as ACD-219 already says: the answer written so far stays, with no Stopped marker. Recorded with it, restating the existing section 4 rule that Stop does not clear the queue: the queue advances on its own only when a turn completes, and after a Stop or an error it waits for the user. The owner text is ACD-471, F3-563, SSYS-039 and UCC-168.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/chat-wow-20260926/jared-decisions-20260926-27.md`, SHA-256 `f907de7341f052cb8c2e0b870d614bc4490c11984194729bdcbafdcebab929b9`.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Settings_System.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/UI_Command_Catalog.md

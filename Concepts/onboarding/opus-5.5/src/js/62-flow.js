@@ -16,6 +16,11 @@
     /* in flight or finished: nothing to do (a refresh re-running mounted() never starts a second copy); a saved
        'running' op from before a reload is not in flight, so it resumes */
     if (inflight.has(key) || (cur && cur.state === 'done')) return Promise.resolve(cur);
+    /* refused, and nothing the owner gate reads (the command and the context) has changed: asking again gets the same
+       answer. Without this, a screen whose mounted() starts an op the owner refuses (a post-commit command before the
+       commit) refreshed, mounted again and re-dispatched in an endless promise chain that froze the page. */
+    const gateKey = JSON.stringify([cmdId, Object.assign(S.ctx(), opts.ctx || {})]);
+    if (cur && cur.state === 'refused' && cur.gateKey === gateKey) return Promise.resolve(cur);
     inflight.add(key);
     /* an operation belongs to the run that started it: after Run Onboarding Again its late reports are dropped */
     const epoch = S.epoch || 0, stale = () => (S.epoch || 0) !== epoch;
@@ -32,7 +37,7 @@
     })).then((res) => {
       if (stale()) return null;
       inflight.delete(key);
-      if (res && res.refused) { S.sess.ops[key] = { state: 'refused', phases: [], code: res.reason }; S.save(); O55.ui.refresh(); }
+      if (res && res.refused) { S.sess.ops[key] = { state: 'refused', phases: [], code: res.reason, gateKey }; S.save(); O55.ui.refresh(); }
       return S.sess.ops[key];
     }, (err) => { inflight.delete(key); throw err; });
   };

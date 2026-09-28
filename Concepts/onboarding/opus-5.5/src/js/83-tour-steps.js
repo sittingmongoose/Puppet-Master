@@ -75,20 +75,23 @@
   /* the left dock's entry band: 28 px inside the workspace's left edge (the engine's frozen dock latch) */
   function leftBand() { const ws = document.getElementById('pm-home-workspace'); if (!ws) return null; const r = ws.getBoundingClientRect(); return { x: r.left, y: r.top, w: 28, h: r.height }; }
   TR.dockBand = () => { const b = leftBand(); return b ? Object.assign({ stacked: stacked(), drop: { x: b.x + 12, y: b.y + b.h * 0.45 } }, b) : null; };
-  /* the zone lights up while the left dock reports a drop; watched only while the zone shows */
-  let dropWatch = null;
-  function watchDrop(on) {
-    const z = document.querySelector('#pm-o55-tour .o55t-zone'), ws = document.getElementById('pm-home-workspace');
-    const sync = () => { if (z) z.classList.toggle('o55t-drop-hot', !!(ws && ws.querySelector('[data-pm-home-host="dock_left"].pm-home-drop-active'))); };
-    if (!on || !z || !ws || typeof MutationObserver !== 'function') { if (dropWatch) { dropWatch.disconnect(); dropWatch = null; } if (z) z.classList.remove('o55t-drop-hot'); return; }
-    if (!dropWatch) { dropWatch = new MutationObserver(sync); dropWatch.observe(ws, { subtree: true, attributes: true, attributeFilter: ['class'] }); }
+  /* the zone says "Let go" the moment the workspace adopts the left dock as the drop target: one observer on that host's
+     class list, attached while the zone shows */
+  let hot = null;
+  function watchHot(z, on) {
+    const host = on ? hostEl('dock_left') : null;
+    if (hot && hot.host !== host) { hot.obs.disconnect(); hot = null; }
+    if (!host) { z.removeAttribute('data-hot'); return; }
+    const sync = () => { const h = host.classList.contains('pm-home-drop-active'); if (z.hasAttribute('data-hot') !== h) z.toggleAttribute('data-hot', h); };
+    if (!hot) { hot = { host, obs: new MutationObserver(sync) }; hot.obs.observe(host, { attributes: true, attributeFilter: ['class'] }); }
     sync();
   }
   function showZone(on) {
     const z = document.querySelector('#pm-o55-tour .o55t-zone'); if (!z) return;
-    const b = leftBand(); if (!on || !b) { z.classList.remove('o55t-on'); watchDrop(false); return; }
-    z.style.transform = `translate(${b.x}px, ${b.y}px)`; z.style.width = b.w + 'px'; z.style.height = b.h + 'px'; z.classList.add('o55t-on');
-    watchDrop(true);
+    const b = leftBand(); if (!on || !b) { z.classList.remove('o55t-on'); watchHot(z, false); return; }
+    const tf = `translate(${b.x}px, ${b.y}px)`, w = b.w + 'px', h = b.h + 'px';
+    if (z.style.transform !== tf) z.style.transform = tf; if (z.style.width !== w) z.style.width = w; if (z.style.height !== h) z.style.height = h;
+    z.classList.add('o55t-on'); watchHot(z, true);
   }
   const dockDone = () => TR.st.sess.done.includes('move_or_dock_chat');
   S({ id: 'move_or_dock_chat', chapter: 'workspace', kind: 'action', after: true,

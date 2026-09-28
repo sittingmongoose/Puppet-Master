@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L2188-L7777
+Source lines: L2264-L8111
 
-Source SHA256: `a8c5e8023f5d58b7cb9ce1ae7607576e094df26f77663f6304e28656d4f74163`
+Source SHA256: `0f8412b513ed7fe803eca860e035adba94f999dcb21880b679088069b0f2149a`
 
 ---
 
@@ -5597,4 +5597,262 @@ owner_boundary_notes:
 owner_hints:
 - Plans/Decision_Log.md
 split_recommendation_reason: The bridge has been retired after safe atomization and structural coverage dispositions.
+```
+
+### DL-104 - The Chat Transcript Uses The Turn Stage Layout Distinct Item Families And An Accent Budget
+
+```yaml
+plan_unit_id: DL-104
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-26 that the rebuilt Turn Stage transcript is the default chat
+  transcript, that every transcript item renders as one of seven families chosen by its message
+  type (prose, work, deliverable, needs you, people, time, ledger) with its own silhouette, and
+  that the accent is spent only on live work, items that need the user, the one primary action of
+  a card, and Send and Stop. Each assistant turn opens with a mark in a gutter and a hairline spine
+  through its items to an end dot. ACD-469 and F3-562 carry the owner text; DR-043 names the
+  single owners of the family map and the accent rule.
+gui_related: true
+gui_classification_reason: Sets the default chat transcript layout, item silhouettes and accent use.
+split_recommended: false
+depends_on: [ACD-072, ACD-073]
+unblocks: [ACD-469, F3-562, DR-043]
+acceptance_criteria:
+  - Turn Stage is the default transcript presentation; other takes remain concept lab options only.
+  - Every persisted message type maps to exactly one of the seven families through one owner map.
+  - The accent is used only for live work, needs-you items, a card's one primary action, and Send and Stop.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_transcript_presentation_drift
+reasoning_tier: high
+context_scope: chat_transcript_presentation
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/chat-wow-20260926/jared-decisions-20260926-27.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md
+preserved_exact_tokens:
+  - "Make it the default (Recommended)"
+  - "we can apply the rule now"
+  - "Turn Stage"
+negative_constraints:
+  - Do not render every item kind in one shared card shell.
+  - Do not spend the accent on decoration, event icons, the user bubble, or chips.
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-105 - The Working Card Folds When The Answer Starts And Short Narration Folds Into It
+
+```yaml
+plan_unit_id: DL-105
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-26 that short narration lines between tool calls fold into the
+  working card, streaming at its foot and tucking into its head caption when the next subject
+  starts, and that a live working card folds into its compact strip when the turn's final answer
+  starts streaming, superseding the rule that the last working activity stays expanded. The
+  approved plan also carries concurrent live subjects, failed and waiting subjects, and
+  clustering past 16 and 30 nodes. ACD-473 carries the owner text.
+gui_related: true
+gui_classification_reason: Changes how the working activity card behaves in the transcript.
+split_recommended: false
+depends_on: [ACD-104]
+unblocks: [ACD-473]
+acceptance_criteria:
+  - A live card stays expanded; it folds into its strip when the final answer starts streaming.
+  - A short narration line never becomes a separate transcript card while its turn's work continues.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: working_activity_behaviour_drift
+reasoning_tier: high
+context_scope: chat_working_activity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/chat-wow-20260926/jared-decisions-20260926-27.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md
+preserved_exact_tokens:
+  - "folding short lines likely makes sense"
+  - "We can do your reccommendation"
+negative_constraints:
+  - Do not keep the last working activity expanded after its turn's answer starts.
+  - Do not split one turn into a stack of working cards around each narration line.
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### DL-106 - Replies Stream Stop Lives In The Composer And Motion Follows The Theme Family
+
+```yaml
+plan_unit_id: DL-106
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-26 that replies stream (a thinking placeholder, a paced word release
+  and a settle, ending complete, stopped with the partial text kept, or with an error), that Stop
+  is the composer's Send/Stop morph and never a control inside the working activity, that motion
+  has one voice per theme family (Basic, Friendly, Glass, Retro; dark and light share it) whose
+  path, easing and texture differ but never timing or order, and that the concept's demo
+  controls, Demo Studio and its Motion voice picker are lab tools and never product. ACD-470,
+  ACD-474 and ACD-475 carry the owner text.
+gui_related: true
+gui_classification_reason: Sets reply streaming, the Stop location and per-theme motion.
+split_recommended: false
+depends_on: [ACD-238, ACD-240]
+unblocks: [ACD-470, ACD-474, ACD-475]
+acceptance_criteria:
+  - Replies stream in place and end in one of complete, stopped or error.
+  - Stop is available only from the composer morph.
+  - Voices differ only in path, easing and texture; beat timing and order are the same in every family.
+  - Demo controls, Demo Studio and the Motion voice picker are absent from product surfaces.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_motion_and_streaming_drift
+reasoning_tier: high
+context_scope: chat_streaming_motion
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/chat-wow-20260926/jared-decisions-20260926-27.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md
+preserved_exact_tokens:
+  - "Not in the working animation"
+  - "removed when ported over to PMConcept7"
+negative_constraints:
+  - Do not place Stop inside the working activity.
+  - Do not let a theme voice change beat timing or order.
+  - Do not ship demo controls or a per-theme voice override as product settings.
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-107 - Chat Sound Is On By Default With A One Click Mute
+
+```yaml
+plan_unit_id: DL-107
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-26 ("Subtle, on by default") that the chat plays subtle sound cues,
+  on by default, with a one-click mute. general.interaction.sound-effects defaults to on,
+  superseding its "Off by default" description; the chat header speaker button is a shared
+  chrome control bound to that same key, as the onboarding and Tour sound controls are; the
+  chat's cues are events of the Notifications & Sounds owner; and sound is never the only
+  signal. SSYS-039, F3-564 and ACD-475 carry the owner text.
+gui_related: true
+gui_classification_reason: Changes a user-visible setting default and adds a header mute control.
+split_recommended: false
+depends_on: [UCC-103]
+unblocks: [SSYS-039, F3-564, ACD-475]
+acceptance_criteria:
+  - general.interaction.sound-effects defaults to on.
+  - The chat header mute reads and writes general.interaction.sound-effects through the Settings owner and adds no second sound setting.
+  - Every chat cue is paired with a visible change.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: sound_default_drift
+reasoning_tier: standard
+context_scope: chat_sound
+implementation_surfaces:
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/chat-wow-20260926/jared-decisions-20260926-27.md
+preserved_exact_tokens:
+  - "Subtle, on by default"
+  - "general.interaction.sound-effects"
+negative_constraints:
+  - Do not add a chat-only sound setting or volume.
+  - Do not let a sound carry information alone.
+owner_hints:
+  - Plans/Settings_System.md
+  - Plans/assistant-chat-design.md
+```
+
+### DL-108 - Sends Made While The Assistant Is Busy Queue By Default And Send Now Steers
+
+```yaml
+plan_unit_id: DL-108
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 ("Keep both, default Queue") that general.interaction.queue-behavior
+  defaults to Queue instead of Steer while the Steer/Queue switch stays, and that Send now on a
+  queued message steers without stopping the answer, as ACD-219 says: the answer written so far
+  stays with no Stopped marker. Recorded with it, restating section 4's rule that Stop does not
+  clear the queue: the queue advances on its own only when a turn completes, and after a Stop or
+  an error it waits for the user. ACD-471, F3-563, SSYS-039 and UCC-168 carry the owner text.
+gui_related: true
+gui_classification_reason: Changes the default busy-send behaviour and the Send now control.
+split_recommended: false
+depends_on: [ACD-219, ACD-228]
+unblocks: [ACD-471, F3-563, SSYS-039, UCC-168]
+acceptance_criteria:
+  - general.interaction.queue-behavior defaults to Queue and still offers Steer.
+  - Send now steers the queued message into the running turn without a Stop.
+  - The queue advances automatically only on turn completion, never after Stop or an error.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: busy_send_semantics_drift
+reasoning_tier: high
+context_scope: chat_queue
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/chat-wow-20260926/jared-decisions-20260926-27.md
+preserved_exact_tokens:
+  - "Keep both, default Queue"
+  - "general.interaction.queue-behavior"
+  - "Send now"
+negative_constraints:
+  - Do not remove Steer or the Steer/Queue switch.
+  - Do not make Send now stop the running answer.
+  - Do not advance the queue after a Stop or an error.
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Settings_System.md
 ```

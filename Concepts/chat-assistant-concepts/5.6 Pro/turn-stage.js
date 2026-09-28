@@ -97,10 +97,11 @@
        for that frame it held the scroll height up, then let it drop at once. */
     layer.style.height = '';
     if (svg.hasAttribute('viewBox')) svg.removeAttribute('viewBox');
-    /* clientWidth, not the bounding width: the transcript keeps a stable
-       scrollbar gutter, and an SVG as wide as the border box overflowed it
-       sideways by the gutter (scrollWidth > clientWidth in every thread) */
-    set(svg, { width: tr.clientWidth, height: 1 });
+    /* 1x1 in both axes: everything is drawn as paint overflow. Any width it
+       took from the transcript was one frame stale whenever the pane narrowed
+       (a panel opening beside the chat), and in that frame it overflowed the
+       transcript sideways by the difference (measured 37-120px). */
+    set(svg, { width: 1, height: 1 });
     nodes.forEach(function (n) { n.__seen = false; });
     var turns = {}, order = [];
     var kids = inner.children;

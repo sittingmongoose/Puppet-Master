@@ -206,7 +206,12 @@
   W[8].ownsAgents = true;
   /* Chat WOW M4: the turn's answer has started -- fold the rows region away
      (turn-stream.js calls this for the turn's last burst). */
-  window.PM56_RAIL8 = { compact: (cardId) => { const ui = rail8Ui(cardId); ui.expanded = false; } };
+  /* true when this card is on screen as a Step Rail with its rows open, so it is about to fold */
+  window.PM56_RAIL8 = { compact: (cardId) => {
+    const ui = rail8Ui(cardId); ui.expanded = false;
+    const card = document.querySelector(`.working-card[data-card-ui="${CSS.escape(cardId)}"]`);
+    return !!(card && card.querySelector('.rail8-chev.open'));
+  } };
 
   /* =====================================================================
      9 — WORD STREAM
