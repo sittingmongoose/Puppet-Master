@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30573-L31422
+Source lines: L30573-L31432
 
-Source SHA256: `67e8c2d006ed8b1b989f81c22e6e8902e0ff45aa2b43f1c4ac96c8ecf40327d3`
+Source SHA256: `6c05eadcfcf31549a409dd6931b79229ff3c43b599074248ff5a3222de15216d`
 
 ---
 
@@ -676,6 +676,16 @@ admits eleven rows that the Settings surface drew by hand without inventory ids,
 `general.visual.border-radius`, `general.visual.border-width` and `general.visual.scrollbar-width` from the Retro
 theme's literal values to `theme`: an unchanged row uses the active theme's own token, a number overrides it on every
 theme, and resetting hands it back to the theme.
+
+Amended 2026-09-28 (user-approved inventory wave, `Plans/Settings_System.md#SSYS-042` section 10): the registry
+admits thirteen rows that the Settings guided set-ups for Git and SSH write, bringing it to 913 rows:
+`branching.worktrees.git-author-name`, `branching.worktrees.git-author-email`, `branching.worktrees.git-push-method`
+and `branching.worktrees.git-push-key` (scope `provider`, set per code service), `branching.worktrees.commit-signing`,
+`branching.worktrees.commit-signing-key`, `branching.worktrees.large-file-storage`,
+`branching.worktrees.large-file-threshold`, `branching.worktrees.large-file-types`,
+`branching.worktrees.default-ignore-patterns`, `branching.worktrees.protected-branches`, `code.execution.ssh-keys` and
+`code.execution.server-sign-in`. Key rows name keys from the SSH key list; no row holds a private key half or a
+password.
 
 ### F3-442 - Project Settings Modal Reconciliation
 

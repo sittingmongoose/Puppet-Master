@@ -8858,6 +8858,49 @@
    ]
   },
   {
+   "id": "code.execution.ssh-keys",
+   "label": "SSH Keys",
+   "desc": "The SSH keys Puppet Master knows: a name, the key type, where the private half is kept and what uses it. Private halves stay where they are kept and are never stored in app files.",
+   "type": "list",
+   "default": [],
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "ssh keys",
+    "ed25519",
+    "authorized_keys",
+    "public key",
+    "key list"
+   ],
+   "related_features": [
+    "editor",
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.execution.server-sign-in",
+   "label": "How Each Server Signs In",
+   "desc": "For each server: paired with a setup code, or an SSH key from your key list with the user and port. A password used once to place a key is never stored.",
+   "type": "keyvalue",
+   "default": {},
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "server sign-in",
+    "ssh auth",
+    "pairing",
+    "server key"
+   ],
+   "related_features": [
+    "editor",
+    "terminal"
+   ]
+  },
+  {
    "id": "code.execution.debug-configurations",
    "label": "Debug Setups",
    "desc": "Saved run-and-debug launch profiles for stepping through your app with the standard debug protocol; profile fields per the launch profile schema (FinalGUISpec F3-489).",
@@ -13326,6 +13369,271 @@
     "branch template",
     "placeholders",
     "naming pattern"
+   ],
+   "related_features": [
+    "worktrees",
+    "source_control"
+   ]
+  },
+  {
+   "id": "branching.worktrees.git-author-name",
+   "label": "Name on Your Changes",
+   "desc": "The name recorded on every change you and the assistant save to version history. Anyone who can see the history sees it.",
+   "type": "text",
+   "default": "",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "git user.name",
+    "author name",
+    "commit author",
+    "identity"
+   ],
+   "related_features": [
+    "worktrees",
+    "source_control"
+   ]
+  },
+  {
+   "id": "branching.worktrees.git-author-email",
+   "label": "Email on Your Changes",
+   "desc": "The email recorded on every saved change. Code services link it to your account; their private no-reply address keeps your own address out of public history.",
+   "type": "text",
+   "default": "",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "git user.email",
+    "author email",
+    "noreply",
+    "commit author",
+    "identity"
+   ],
+   "related_features": [
+    "worktrees",
+    "source_control"
+   ]
+  },
+  {
+   "id": "branching.worktrees.git-push-method",
+   "label": "How Git Signs In",
+   "desc": "How Git proves who you are when it sends and fetches changes for one code service: a token from signing in to that service, or one of your SSH keys. Separate from signing in to the service's website.",
+   "type": "select",
+   "options": [
+    "https-token",
+    "ssh-key"
+   ],
+   "default": "https-token",
+   "scope": [
+    "provider"
+   ],
+   "tier": "advanced",
+   "recommended": "https-token",
+   "search": [
+    "push access",
+    "git credentials",
+    "ssh push",
+    "https token",
+    "credential helper"
+   ],
+   "related_features": [
+    "worktrees",
+    "source_control"
+   ]
+  },
+  {
+   "id": "branching.worktrees.git-push-key",
+   "label": "SSH Key Git Uses",
+   "desc": "Which key from your SSH key list Git uses for one code service when it signs in with an SSH key. The private half never leaves where it is kept.",
+   "type": "text",
+   "default": "",
+   "scope": [
+    "provider"
+   ],
+   "tier": "advanced",
+   "search": [
+    "ssh key",
+    "push key",
+    "deploy key",
+    "git ssh"
+   ],
+   "related_features": [
+    "worktrees",
+    "source_control"
+   ]
+  },
+  {
+   "id": "branching.worktrees.commit-signing",
+   "label": "Sign Your Changes",
+   "desc": "Adds a signature to each saved change so code services can show it really came from you. Some projects only accept signed changes. Off by default.",
+   "type": "select",
+   "options": [
+    "off",
+    "ssh-key",
+    "gpg-key"
+   ],
+   "default": "off",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "recommended": "off",
+   "search": [
+    "commit signing",
+    "signed commits",
+    "verified",
+    "gpg",
+    "ssh signing"
+   ],
+   "related_features": [
+    "worktrees",
+    "source_control"
+   ]
+  },
+  {
+   "id": "branching.worktrees.commit-signing-key",
+   "label": "Signing Key",
+   "desc": "The SSH key from your key list, or the GPG key, that signs your changes while signing is on.",
+   "type": "text",
+   "default": "",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "signing key",
+    "gpg key id",
+    "ssh signing key"
+   ],
+   "related_features": [
+    "worktrees",
+    "source_control"
+   ]
+  },
+  {
+   "id": "branching.worktrees.large-file-storage",
+   "label": "Store Big Files Separately",
+   "desc": "Keeps big files out of the normal history with Git LFS, so the project stays small and fast to copy. Needs Git LFS on the computer doing the work.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "project",
+    "global"
+   ],
+   "tier": "advanced",
+   "recommended": true,
+   "search": [
+    "git lfs",
+    "large files",
+    "big files",
+    "binary files"
+   ],
+   "related_features": [
+    "worktrees",
+    "source_control"
+   ]
+  },
+  {
+   "id": "branching.worktrees.large-file-threshold",
+   "label": "Big File Size (MB)",
+   "desc": "Files larger than this are stored separately while big-file storage is on (1–2000 MB).",
+   "type": "number",
+   "default": 50,
+   "scope": [
+    "project",
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "lfs threshold",
+    "file size limit",
+    "large file size"
+   ],
+   "related_features": [
+    "worktrees",
+    "source_control"
+   ]
+  },
+  {
+   "id": "branching.worktrees.large-file-types",
+   "label": "Always Store These Separately",
+   "desc": "File patterns, such as *.psd or *.mp4, that are stored separately whatever their size while big-file storage is on.",
+   "type": "list",
+   "default": [
+    "*.psd",
+    "*.zip",
+    "*.mp4",
+    "*.mov"
+   ],
+   "scope": [
+    "project",
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "lfs track",
+    "lfs patterns",
+    "binary types"
+   ],
+   "related_features": [
+    "worktrees",
+    "source_control"
+   ]
+  },
+  {
+   "id": "branching.worktrees.default-ignore-patterns",
+   "label": "Never Saved in History",
+   "desc": "Files and folders written to the ignore list of every new repository, so secrets, dependencies and build output never enter history.",
+   "type": "list",
+   "default": [
+    ".env",
+    ".env.*",
+    "node_modules/",
+    "target/",
+    "dist/",
+    ".DS_Store"
+   ],
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    ".gitignore",
+    "ignore patterns",
+    "exclude files",
+    "secrets"
+   ],
+   "related_features": [
+    "worktrees",
+    "source_control"
+   ]
+  },
+  {
+   "id": "branching.worktrees.protected-branches",
+   "label": "Protected Branches",
+   "desc": "Branch names or patterns, such as main or release/*, that are never overwritten and only change through a review, while the Git safety level protects branches.",
+   "type": "list",
+   "default": [
+    "main",
+    "release/*"
+   ],
+   "scope": [
+    "project",
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "branch protection",
+    "protected branch patterns",
+    "release branches"
    ],
    "related_features": [
     "worktrees",

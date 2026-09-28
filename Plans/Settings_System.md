@@ -2576,9 +2576,13 @@ that would reach an outside computer or service says so and, in the concept, is 
 - A persona's tuning rows (Creativity, Word choice range, Spending cap) read Same as the project until the persona
   sets its own value, which is then set with a slider or amount that can go back to the project's; a persona-only row
   drawn outside its persona is a way to the personas (section 8), reading Set in each persona.
-- The Git name and email, commit signing, Git's sign-in method and key, the big-file threshold and file types, default
-  ignore patterns, protected-branch patterns, the SSH key list and each server's sign-in are concept-stage proposals
-  without inventory ids until admitted, in the sense of section 19.
+- The Git and SSH rows these set-ups write are admitted to `Plans/settings_inventory.json` (user-approved inventory
+  wave 2026-09-28, 913 rows): `branching.worktrees.git-author-name`, `git-author-email`, `git-push-method` and
+  `git-push-key` (set per code service), `commit-signing`, `commit-signing-key`, `large-file-storage`,
+  `large-file-threshold`, `large-file-types`, `default-ignore-patterns` and `protected-branches`, and
+  `code.execution.ssh-keys` and `code.execution.server-sign-in`. The managers draw them in their own controls; the
+  stored value is the inventory row's, so search, Details, All Settings and Settings Transfer reach them. A key row
+  names a key in the SSH key list and never holds a private half.
 
 ```yaml
 plan_unit_id: SSYS-040
