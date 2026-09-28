@@ -1,0 +1,36 @@
+/* O55 · NieR Mode scenes (kit.d/21-nier-scenes.js). An ink panorama in a fixed layer behind the shell, placed like the
+   Glass wallpaper (#glass-bg): fixed, contained, inert, first among the shell's siblings, the shell lifted above it.
+   The art is one ink (currentColor = the NieR text colour) at low opacity; shapes of class k are filled with the
+   canvas colour so nearer things hide farther ones. A canvas-coloured gradient (no mask) thins the scene toward the
+   top. Present only while html[data-o55-nier-scene] is set; every rule below is scoped by it or by the layer. */
+#o55-nier-scene {
+  position: fixed; inset: 0; z-index: 0; contain: strict; overflow: hidden; pointer-events: none; display: none;
+  --o55-nier-scene-a: .15;
+}
+html[data-o55-nier-scene] #o55-nier-scene { display: block; }
+html[data-o55-nier-scene] .app-shell { position: relative; z-index: 1; }
+/* Grounds the scene shows through: the dashboard, Projects and Orchestrator grounds are already the body's; the Usage
+   board and Settings Home are made clear here. Panels, cards and docks keep their own fill, and pages whose text sits
+   on the ground where the scene is (the Planning Wizard, every other Settings page) keep theirs. */
+html[data-o55-nier-scene] #pm7UsageApp.pm7u-shell,
+html[data-o55-nier-scene] #panel-settings[data-o55-home] { background: transparent; }
+/* Text never sits on the scene: see-through fills on those grounds become opaque (the Usage rail's 88 % surface is
+   drawn as the surface itself; the current project's tint keeps its gradient over the canvas). */
+html[data-o55-nier-scene] #pm7UsageApp .pm7u-rail { background-color: var(--surface); }
+html[data-o55-nier-scene] .page-projects .project-card-bento { background-color: var(--background); }
+html[data-o55-nier-scene][data-theme$="-dark"] #o55-nier-scene { --o55-nier-scene-a: .19; }
+.o55-nier-scene-art {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 60%;
+  color: var(--text-primary); opacity: var(--o55-nier-scene-a);
+  transform: translateZ(0);
+}
+.o55-nier-scene-art.is-leaving { z-index: 0; }
+.o55-nier-scene-art > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: hidden; }
+.o55-nier-art path, .o55-nier-art rect, .o55-nier-art circle, .o55-nier-art ellipse, .o55-nier-art line,
+.o55-nier-art polyline, .o55-nier-art polygon { vector-effect: non-scaling-stroke; }
+.o55-nier-art .k { fill: var(--background); }
+/* the soft thinning toward the top: the canvas colour, opaque above the art, clear over its lower half */
+.o55-nier-scene-fade {
+  position: absolute; left: 0; right: 0; top: 0; height: 74%; z-index: 1;
+  background: linear-gradient(to bottom, var(--background) 0%, var(--background) 54%, transparent 100%);
+}
