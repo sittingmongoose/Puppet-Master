@@ -3,7 +3,7 @@
   "$id": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json",
   "x-schema-id": "pm.collaborative_workflows.contracts.v1",
   "title": "Collaborative Workflows static contract schemas",
-  "description": "Closed record, projection, request and result shapes for Plans/Collaborative_Workflows.md sections 10 to 12, PART-001..020 and the Wand Modules Redesign Addendum (CWR-018..CWR-039). Static schema and fixture consistency only: no writer, storage key, EventRecord, native handler or production wiring is admitted, and every command stays handler_unavailable. Fields that wait on an owner answer recorded as an open ledger question are not admitted.",
+  "description": "Closed record, projection, request and result shapes for Plans/Collaborative_Workflows.md sections 10 to 12, PART-001..020, the Wand Modules Redesign Addendum (CWR-018..CWR-040) and the helper message in progress of Plans/Executor_Protocol.md EP-129..EP-131. Static schema and fixture consistency only: no writer, storage key, EventRecord, native handler or production wiring is admitted, and every command stays handler_unavailable. Fields that wait on an owner answer recorded as an open ledger question are not admitted.",
   "oneOf": [
     {
       "$ref": "#/$defs/ParticipantSpec"
@@ -40,6 +40,9 @@
     },
     {
       "$ref": "#/$defs/ParticipantActivity"
+    },
+    {
+      "$ref": "#/$defs/CollaborationMessageInProgress"
     },
     {
       "$ref": "#/$defs/TeamPreset"
@@ -234,6 +237,22 @@
         "scheduled_build"
       ]
     },
+    "stop_reason": {
+      "description": "Closed run stop_reason of CWR-029 and section 12 (DL-131): set on every cancelled run and on no other; a run that reaches its own time, cost or token limit settles cancelled, never failed.",
+      "enum": [
+        "user_cancel",
+        "limit_time",
+        "limit_cost",
+        "limit_tokens"
+      ]
+    },
+    "crew_auto_scope": {
+      "description": "Closed CrewAutoSetRequest scope of CWR-038 (DL-120): project from the Crew Auto sheet's primary, thread from a chat's Crew Auto check.",
+      "enum": [
+        "project",
+        "thread"
+      ]
+    },
     "additive_role_kind": {
       "description": "Closed additive_role_kind of sections 2.2, 9.1 and 12.",
       "enum": [
@@ -346,7 +365,7 @@
       ]
     },
     "attention_reason": {
-      "description": "Closed attention_reason of CWR-029. The limit_reached member waits on an owner decision (ledger question q-007/q-018) and is not admitted here.",
+      "description": "Closed attention_reason of CWR-029. Reaching a run's own limit is a stop reason (run stop_reason, DL-131), not an attention reason, so attention_reason keeps its six values and admits no limit_reached.",
       "enum": [
         "coordinator_failed",
         "required_participants_unresolved",
@@ -979,7 +998,7 @@
     },
     "CollaborativeRun": {
       "type": "object",
-      "description": "CollaborativeRun of section 12. A run admitted by Crew Auto records the crew_auto_revision that admitted it (CWR-021); a Build With Crew run binds the exact Plan (CWR-023).",
+      "description": "CollaborativeRun of section 12. A run admitted by Crew Auto records the crew_auto_revision that admitted it (CWR-021); a Build With Crew run binds the exact Plan (CWR-023). stop_reason is set on every cancelled run and on no other; a run stopped at its own limit settles cancelled with a limit stop_reason and never failed, with no new run state (CWR-029, DL-131).",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -1001,6 +1020,7 @@
         "requested_effective_snapshot_ref",
         "admission_source",
         "crew_auto_revision",
+        "stop_reason",
         "created_at",
         "completed_at"
       ],
@@ -1112,6 +1132,16 @@
             }
           ]
         },
+        "stop_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/stop_reason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "created_at": {
           "$ref": "#/$defs/utc_timestamp"
         },
@@ -1180,6 +1210,32 @@
               },
               "plan_version": {
                 "$ref": "#/$defs/revision"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "cancelled"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "stop_reason": {
+                "type": "string"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "stop_reason": {
+                "type": "null"
               }
             }
           }
@@ -2080,7 +2136,7 @@
     },
     "ParticipantActivity": {
       "type": "object",
-      "description": "The participant activity projection of CWR-030: derived on read, never persisted, emitted or replayed. It references the EP-128 stream vocabulary and never redefines it. The schema_id names the projection shape only.",
+      "description": "The participant activity projection of CWR-030: derived on read, never persisted, emitted or replayed. It references the EP-128 stream vocabulary and never redefines it. live_message_id points at a message in progress and never carries its text; streamed words never change the verb (DL-137). The schema_id names the projection shape only.",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -2113,6 +2169,10 @@
           "description": "A lane quote comes only from the participant's own complete, durable message, referenced here; raw tool output is never quoted (CWR-030).",
           "$ref": "#/$defs/non_empty_string"
         },
+        "live_message_id": {
+          "description": "The collaboration_message_id allocated to the participant's message in progress (EP-129), present only while that message streams and absent once it is written or discarded (EP-130, EP-131). It is a reference only: the projection never holds the streamed text, and live text is never a quote (CWR-030, CWR-040, DL-137).",
+          "$ref": "#/$defs/non_empty_string"
+        },
         "decision_ref": {
           "$ref": "#/$defs/non_empty_string"
         },
@@ -2141,6 +2201,96 @@
             "properties": {
               "decision_ref": false
             }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "done",
+                  "failed"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "live_message_id": false
+            }
+          }
+        }
+      ]
+    },
+    "helper_stream_sender_kind": {
+      "description": "The sender_kind values that can stream: participant and coordinator only, because user and system messages never stream (EP-129).",
+      "enum": [
+        "participant",
+        "coordinator"
+      ]
+    },
+    "CollaborationMessageInProgress": {
+      "type": "object",
+      "description": "The presentation binding of a collaboration helper message in progress (Plans/Executor_Protocol.md EP-129..EP-131, CWR-040, DL-137): who is writing, in which run and lane, under which allocated id. It is presentation only, never persisted, never an EventRecord, never replayed and never delivered to a participant or the coordinator. It carries no text (the streamed text is the EP-128 phase stream presented in the writer's own lane), no sequence (assigned at the write, EP-130) and no recipients (participants receive only the written message). The schema_id names the projection shape only.",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "collaboration_message_id",
+        "collaboration_run_id",
+        "sender_kind",
+        "sender_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.collaboration.message_in_progress_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "collaboration_message_id": {
+          "description": "Allocated when the writer's turn starts streaming; the one CollaborationMessage is written under it on EP-128 complete (EP-130), and an id that is never written is never reused.",
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "collaboration_run_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "sender_kind": {
+          "$ref": "#/$defs/helper_stream_sender_kind"
+        },
+        "sender_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "participant_slot_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "attempt_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "x-primary-identity-fields": [
+        "collaboration_message_id"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "sender_kind": {
+                "const": "participant"
+              }
+            },
+            "required": [
+              "sender_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "participant_slot_id",
+              "attempt_id"
+            ]
           }
         }
       ]
@@ -8681,7 +8831,7 @@
     },
     "CrewAutoSetRequest": {
       "type": "object",
-      "description": "One click, one command: enabling carries the rules and the team together, committed through the project Settings transaction (CWR-038, MODAL-006..008).",
+      "description": "Sets Crew Auto at the scope the request names (CWR-038, DL-120). project, from the Crew Auto sheet's primary, is one click and one command: it carries the rules and the team together, committed through the project Settings transaction (MODAL-006..008), and turns Crew Auto on for the project. thread, from a chat's Crew Auto check, sets only that chat's override of the project value and carries no rules or team.",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -8697,6 +8847,7 @@
         "permission_snapshot_id",
         "idempotency_key",
         "causation_id",
+        "scope",
         "enabled",
         "expected_crew_auto_revision"
       ],
@@ -8723,8 +8874,11 @@
           "$ref": "#/$defs/non_empty_string"
         },
         "source_surface": {
-          "description": "A registered source surface of the command's catalog row; the surface census is owned by Plans/UI_Command_Catalog.md.",
-          "$ref": "#/$defs/non_empty_string"
+          "description": "The cmd.chat.crew_auto.set surfaces of section 10: multi_agent_menu (a chat's Crew Auto check) and crew_auto_modal (the Crew Auto sheet).",
+          "enum": [
+            "multi_agent_menu",
+            "crew_auto_modal"
+          ]
         },
         "correlation_id": {
           "$ref": "#/$defs/non_empty_string"
@@ -8747,6 +8901,9 @@
               "type": "null"
             }
           ]
+        },
+        "scope": {
+          "$ref": "#/$defs/crew_auto_scope"
         },
         "enabled": {
           "type": "boolean"
@@ -8791,26 +8948,52 @@
         {
           "if": {
             "properties": {
-              "enabled": {
-                "const": true
+              "scope": {
+                "const": "project"
               }
             },
             "required": [
-              "enabled"
+              "scope"
             ]
           },
           "then": {
             "required": [
               "rules",
               "team"
+            ],
+            "properties": {
+              "source_surface": {
+                "const": "crew_auto_modal"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "thread"
+              }
+            },
+            "required": [
+              "scope"
             ]
+          },
+          "then": {
+            "properties": {
+              "source_surface": {
+                "const": "multi_agent_menu"
+              },
+              "rules": false,
+              "team": false
+            }
           }
         }
       ]
     },
     "CrewAutoSetResult": {
       "type": "object",
-      "description": "The check reflects effective stored state: it is on only after a committed configuration and a successful project Settings commit; without a configuration the result is configuration_required (MODAL-006..008, section 10).",
+      "description": "The check reflects effective stored state. Turning Crew Auto on for the project (scope project) succeeds only after a committed configuration and a successful project Settings commit; a chat's check (scope thread) sets only that chat's override and is not a project Settings transaction. An enable that finds no stored configuration returns configuration_required (MODAL-006..008, section 10, CWR-038).",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -8825,6 +9008,7 @@
         "observable_work_ref",
         "error",
         "replay_of",
+        "scope",
         "enabled_after",
         "crew_auto_revision",
         "settings_transaction_ref"
@@ -8904,6 +9088,10 @@
               "type": "null"
             }
           ]
+        },
+        "scope": {
+          "description": "The scope the request named (CWR-038).",
+          "$ref": "#/$defs/crew_auto_scope"
         },
         "enabled_after": {
           "type": "boolean"
@@ -8988,11 +9176,15 @@
               },
               "enabled_after": {
                 "const": true
+              },
+              "scope": {
+                "const": "project"
               }
             },
             "required": [
               "committed",
-              "enabled_after"
+              "enabled_after",
+              "scope"
             ]
           },
           "then": {
@@ -9024,12 +9216,31 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "thread"
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "settings_transaction_ref": {
+                "type": "null"
+              }
+            }
+          }
         }
       ]
     },
     "CrewAutoConfigRoute": {
       "type": "object",
-      "description": "Opens the Crew Auto sheet from the Crew Auto settings… row or the Crew sheet (CWR-038).",
+      "description": "Opens the Crew Auto sheet from the Crew Auto settings… row, the Crew sheet or the Crew Auto note's Change control (CWR-038).",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -9066,8 +9277,12 @@
           "$ref": "#/$defs/non_empty_string"
         },
         "source_surface": {
-          "description": "A registered source surface of the command's catalog row; the surface census is owned by Plans/UI_Command_Catalog.md.",
-          "$ref": "#/$defs/non_empty_string"
+          "description": "The cmd.chat.crew_auto.open_config surfaces of section 10: the multi-agent menu's Crew Auto settings… row, the Crew sheet's link (workflow_modal) and the Change control of the Crew Auto is on for this project note (crew_auto_receipt, DL-135).",
+          "enum": [
+            "multi_agent_menu",
+            "workflow_modal",
+            "crew_auto_receipt"
+          ]
         },
         "correlation_id": {
           "$ref": "#/$defs/non_empty_string"

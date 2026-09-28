@@ -1,19 +1,22 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-006-wand-command-census",
-  "updated_at_utc": "2026-09-27T22:45:00+00:00",
-  "last_event_id": "evt-008",
+  "updated_at_utc": "2026-09-28T00:30:00+00:00",
+  "last_event_id": "evt-015",
   "canonical_plan_targets": [
+    "Plans/Automated_Testing_System.md",
     "Plans/Commands_System.md",
     "Plans/UI_Command_Catalog.md",
     "Plans/Wiring_Matrix.md"
   ],
   "compiled_owner_docs": [
+    "Plans/Automated_Testing_System.md",
     "Plans/Commands_System.md",
     "Plans/UI_Command_Catalog.md",
     "Plans/Wiring_Matrix.md"
   ],
   "compiled_plan_outputs": [
+    "Plans/Automated_Testing_System.md",
     "Plans/Commands_System.md",
     "Plans/UI_Command_Catalog.md",
     "Plans/Wiring_Matrix.md"
@@ -28,7 +31,8 @@
   "planned_owner_docs": [
     "Plans/UI_Command_Catalog.md",
     "Plans/Commands_System.md",
-    "Plans/Wiring_Matrix.md"
+    "Plans/Wiring_Matrix.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "reserved_id_ranges": {
     "UCC": "UCC-169..UCC-178",
@@ -39,29 +43,36 @@
     "ATS (companion task only)": "ATS-062..ATS-066"
   },
   "phase": "prose_compile_open",
-  "accepted_decisions_count": 14,
-  "design_atoms_total": 13,
+  "accepted_decisions_count": 26,
+  "design_atoms_total": 25,
   "ready_for_plan_compile_atoms": 0,
   "candidate_atoms_count": 0,
-  "open_questions_count": 7,
+  "open_questions_count": 6,
   "deferred_questions_count": 0,
   "open_blockers_count": 0,
   "compiled_plan_unit_ids": [
     "UCC-169",
+    "WM-062",
     "CDRY-021",
     "CS-086",
-    "WM-062",
     "UCC-170",
     "UCC-171",
     "UCC-172",
+    "WM-063",
     "UCC-173",
     "CS-085",
     "CDRY-022",
-    "WM-063"
+    "UCC-174",
+    "UCC-175",
+    "CS-087",
+    "CDRY-023",
+    "WM-064",
+    "ATS-066",
+    "WM-041"
   ],
   "cursor": {
-    "last_event_id": "evt-008",
-    "next_action": "NOW and WAIT prose compiled and witnessed; wiring companions written (evt-007); WM-063 prose aligned with the exclusions JSON (evt-008). Next: blind form-driven review (cap two cycles); the integrator regenerates shards and the plan index. Open: q-008 (DL-126 ask), q-009 (card p11), q-010 (card p12), q-011 (DL-120 follow-up), q-012 (DL-112 follow-up), q-013 (no card), q-014 (request and result schemas, owner-document companions)."
+    "last_event_id": "evt-015",
+    "next_action": "NOW, WAIT and closure prose compiled; wiring companions evt-007 and evt-012; tour ELI5 re-pointed evt-013; blind review G6 cycle 1 repairs compiled evt-014 (DL-135, DL-120, DL-112 now compiled; q-009, q-011, q-012 answered). Next: blind review cycle 2 (the last); the companion task for q-017 (three Wiring_Matrix.production.json entries); the integrator regenerates shards and the plan index. Open: q-013, q-014, q-015, q-017, q-018, q-019; none blocks landing."
   },
   "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md."
 }

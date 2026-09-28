@@ -38,3 +38,23 @@ Reserved ID ranges (re-check the live maximum of each family on `origin/main` ri
 
 Only lines triaged NOW in the canon plan are compiled in this pass. A line triaged WAIT is recorded as an open
 question naming its decision card; a line triaged OUT is not compiled.
+
+## Closure wave (E-11/E-19)
+
+Jared's closure answers of 2026-09-27, relayed by the lead in the closure-wave task and recorded in
+`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json`, SHA-256 `33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5`:
+card `p08` (E-11, card SHA-256 `dab0b89fb497bbad7b64c1ec6b564036c1b2cfcf6b97344cd6184e034f557791`), whose ELI5 answer Jared confirmed in chat, recorded as the owner's resolution in
+DL-126; and card `p12` (E-19, option A, card SHA-256 `c7eaa3c2d9fd5ab08c974f68ec0fb9be955f5b66a7ebd73ad5cacf22e437b856`), approved in chat and recorded as DL-136. Card
+hashes are in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`.
+Card `p14` (E-31, DL-137) is cited only to record that it mints no command. Settings stay out of scope: the ELI5 project scope
+is recorded as an open ledger question. The closure wave may also edit `Plans/Automated_Testing_System.md` for ATS-066, the ATS id
+the lead pre-assigned to this group. Agent-relayed; not verifiable from inside this repository.
+
+## Blind review cycle 1 repairs (2026-09-28)
+
+The G6 repair author compiled the blind reviewer's findings in the canon worktree. The authority is the lead rulings that live canon
+already records: DL-135 (card p11, E-15, option A); the DL-120 and DL-112 "Lead ruling applied (2026-09-27)" paragraphs in
+Plans/Decision_Log.md, which the owner compiled in Collaborative_Workflows CWR-038, CWR-024 and section 10, and in FinalGUISpec F3-578;
+and the lead's follow-up note that the catalog and WM-063 must cite DL-135 and state crew_auto_receipt as decided. Every other repair is
+mechanical, and the live text proves it. No new behaviour was invented. Settings stay out of scope, and the production wiring JSON
+follow-ups are recorded as q-017. Agent-relayed; not verifiable from inside this repository.

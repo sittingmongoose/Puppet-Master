@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L7111-L7232
 
-Source SHA256: `90db8c97ee777df74e9b0b9a88b8664f96d10bbf8a01a500ddae276bf1f1eaaf`
+Source SHA256: `8c47fbd2fd8365a5967effeebcc416a4179d4352ecb7c8906e23648f76ff487d`
 
 ---
 
@@ -99,7 +99,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  A run's live cost (UF-105) is shown against the run's effective limit, which Usage reads from the run's limit contract (Plans/Collaborative_Workflows.md and executionLimits) and never resolves itself. By the owner's decision DL-131 (card p16, E-33), when a run's definition sets its own time or cost limit (DL-131 names a Crew's own limit, for example 45 minutes or $6), that limit overrides the general run limit rather than the tighter of the two winning. So a run whose own limit overrides the general one is never shown against the general limit, and a run with no limit of its own is shown against the general run limit. How a run that reaches its effective limit ends, and whether its own limit may exceed a hard ceiling such as a token or plan budget, stay open in this compile's ledger and are not settled here.
+  A run's live cost (UF-105) is shown against the run's effective limit, which Usage reads from the run's limit contract (Plans/Collaborative_Workflows.md and executionLimits) and never resolves itself. By the owner's decision DL-131 (card p16, E-33), when a run's definition sets its own time or cost limit (DL-131 names a Crew's own limit, for example 45 minutes or $6), that limit overrides the general run limit rather than the tighter of the two winning. So a run whose own limit overrides the general one is never shown against the general limit, and a run with no limit of its own is shown against the general run limit. How a run that reaches its effective limit ends is the run owner's, not Usage's: per the lead's DL-131 follow-up it settles cancelled with a limit stop_reason and reads Stopped at your limit (Plans/Collaborative_Workflows.md, CWR-029), and its live cost stays the sum of its UsageRecords. Whether a run's own limit may exceed a hard ceiling such as a token or plan budget stays open in this compile's ledger and is not settled here.
 gui_related: true
 gui_classification_reason: The limit shown beside a run's live cost is user-visible.
 depends_on: [UF-105]
@@ -129,4 +129,4 @@ negative_constraints:
 owner_hints: [Plans/usage-feature.md, Plans/Collaborative_Workflows.md]
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/usage-feature.md#UF-105, ContractName:Plans/Decision_Log.md#DL-131
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Collaborative_Workflows.md#CWR-029, ContractName:Plans/usage-feature.md#UF-105, ContractName:Plans/Decision_Log.md#DL-131

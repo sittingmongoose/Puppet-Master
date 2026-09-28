@@ -8,6 +8,8 @@ The capsule preview ("What's in capsule now") is labelled "See what your next me
 
 Repairs AMS-047.
 
+Superseded in part: the display name is answered (DL-134), see Record 9.
+
 ## Record 2 — AMS-03 (capsule preview counts notes only): Capsule preview counts notes only
 
 The preview meter counts notes only against the 350-token capsule budget; rules never count against it.
@@ -26,11 +28,15 @@ Repairs AMS-014 and AMS-047.
 
 Repairs AMS-047.
 
+Superseded in part: the locked-rule decision line is answered (DL-130), see Records 10 and 16.
+
 ## Record 5 — AMS-07 (gist edit and half-life link): Gist Edit and half-life link
 
 Edit is a versioned claim edit resetting to Unverified; half-life links to Settings through cmd.settings.open; cmd.chat.memory.edit has no GUI producer this wave. N-7 export waits on p15 E-32.
 
 Repairs AMS-048.
+
+Superseded in part: N-7 export is answered (DL-130), see Record 12.
 
 ## Record 6 — APR-01 (schedule line tokens and crew modes): Schedule line tokens and Crew modes
 
@@ -49,6 +55,8 @@ Repairs UF-104.
 Live cost from usage_group_ref with per-participant attribution; BSD usage separate. The effective limit waits on p16 E-33.
 
 Repairs UF-105.
+
+Superseded in part: the effective limit is answered (DL-131), see Record 14.
 
 <!-- WAIT wave, 2026-09-27: register lines compiled from the owner's card answers recorded in Plans/Decision_Log.md. -->
 
@@ -70,6 +78,8 @@ included_teaching_ids on the reply's context record; inclusion is never shown as
 
 Repairs AMS-051.
 
+Superseded in part: the definition of following is compiled in AMS-053, see Record 15.
+
 ## Record 12 — AMS-07 (memory export command): Memory export command
 
 N-7 is registered as cmd.chat.memory.export {scope} through the artifact owner (DL-130).
@@ -88,8 +98,26 @@ A run's own time or cost limit overrides the general run limit and the live cost
 
 Repairs UF-106.
 
+Superseded in part: the ending at the limit points to CWR-029, see Record 16; only the hard ceiling stays open (q-006).
+
 ## Record 15 — AMS-06 (definition of following): What counts as following a taught rule
 
 A rule is followed only when it was included for the reply and the finished reply passed the rule's check; a failed check shows "Missed 1 of your rules"; no check, no tick (DL-116, design lead ruling 2026-09-27).
 
 Repairs AMS-051 and AMS-053.
+
+<!-- Blind review cycle 1, 2026-09-27: repairs of the should_fix findings. -->
+
+## Record 16 — BRG4-01, BRG4-02, BRG4-03 (blind review cycle 1 R-01..R-03): Limit ending, decision line, schedule-line token owner
+
+UF-106 points a run's ending at its limit to CWR-029 and keeps only the hard ceiling open; AMS-050 is the one memory event that earns a decision line; APR-071 attributes Schedule needs update to the Build At notice, not PFAIL-002.
+
+Repairs AMS-050, APR-071 and UF-106.
+
+<!-- Blind review cycle 1, lead pass, 2026-09-27. -->
+
+## Record 17 — BRG4-04, BRG4-06, BRG4-08, BRG4-09 (blind review cycle 1 lead pass): State labels, supersession, normalization, intro attribution
+
+AMS-049 cites card p19's scope and DESIGN-SPEC §8.10 for keeping the verification_state words as labels; P-057 records that it supersedes P-048's product-manager exclusion only; Personas §6 lists the critical_advisor normalization; the AMS addendum intro attributes AMS-053 to the lead's ruling.
+
+Repairs AMS-049 and P-057.

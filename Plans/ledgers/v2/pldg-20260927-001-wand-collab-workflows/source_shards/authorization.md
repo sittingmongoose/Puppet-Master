@@ -53,3 +53,42 @@ ledger compiles those rulings into `Plans/Collaborative_Workflows.md` only, as d
 in-place section edits, plus the section 18 leftover of register line B-CW-04. The ELI5 answer (DL-126) is recorded as the
 lead's proposed answer and is not compiled. Settings consequences (the `auto_enabled` default, where a chat's Crew Auto
 override is stored, Crew Auto's at-once count) are recorded as follow-ups and not written here.
+
+(Updated after blind review cycle 1: p11 has since been recorded as DL-135 in `Plans/Decision_Log.md`, and its answer is
+frozen in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json`, SHA-256
+`33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5`, record p11. CWR-038, section 5.3 and dec-037 cite them.)
+
+## Closure wave (E-11/E-19/E-31) (2026-09-27)
+
+Jared settled the last three wand-modules cards in chat on 2026-09-27. The answers are recorded in the lead's answer file,
+evidence copy `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json`, SHA-256
+`33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5`, and in `Plans/Decision_Log.md`: DL-126 amended with the
+owner's resolution of card p08 (E-11), DL-136 for card p12 (E-19) and DL-137 for card p14 (E-31). This ledger compiles DL-137
+(register lines B-CW-22 and B-CW-21) and the ELI5 disclosure of B-CW-25 (DL-126). DL-136 has no G1 register line. The closure
+wave may edit `Plans/Collaborative_Workflows.md`, and its own new units in `Plans/Executor_Protocol.md` (EP-129..EP-131, after
+EP-128, which stays untouched) and `Plans/Automated_Testing_System.md` (ATS-063). Pre-assigned ranges: EP-129..EP-131,
+CWR-040..CWR-044, ATS-063. Settings stay out of scope: the project scope the ELI5 project default needs on
+`general.interaction.eli5-default` is recorded as an open question, not written. Schema, fixture, wiring and gate companions
+are task 2.
+
+## Companion task and ATS-062 (recorded 2026-09-27, after blind review cycle 1)
+
+Register line B-CW-29 assigns this group the collaborative schema and fixture companions as task 2, which `.claude/CLAUDE.md`
+("How to compile a ledger") keeps separate from the prose. The companion was written after each wave's prose was final:
+`Plans/collaborative_workflows_contracts.schema.json`, `Plans/collaborative_workflows_contract_fixtures.json`, the
+`CONTRACT_PAIRS` entry in `scripts/pm-new-contracts-verify.py`, the section 12 pointer to the pair, and the registration unit
+ATS-062 in `Plans/Automated_Testing_System.md` (events evt-010 and evt-019). ATS-062 is reserved to this ledger; it was the
+live maximum plus one when written. The blind review found it had no authorizing record (R-01), so atom
+`atom-g1-cw-29-companion`, correction cor-046, queue item queue-046 and decision dec-048 now record it. The pair still owes three
+additions from the lead-rulings wave, which ATS-062 now says it does not yet prove: the `CrewAutoSetRequest` scope
+(`project | thread`), the run's `stop_reason` (required exactly when the run is cancelled) and the `crew_auto_receipt` source
+surface of `cmd.chat.crew_auto.open_config`. They are task 2 work, not owner questions.
+
+## Blind review cycle 1 (2026-09-27)
+
+One blind form-driven review read the compiled units (findings R-01..R-18, verdict fix_then_land). The repairs edit only this
+ledger's units and sections in `Plans/Collaborative_Workflows.md` and `Plans/Automated_Testing_System.md`. Where the owner's
+answers left a design choice, the design lead's approved spec decides it and the ruling is recorded as a decision quoting the
+spec (dec-049 from DESIGN-SPEC section 7.6, dec-050 from sections 8.0 G-29 and 8.1). Mechanical and reference repairs are
+recorded in dec-051. What still needs the owner or new facts is recorded as open questions q-030..q-034, none blocking landing.
+This is cycle one of at most two.

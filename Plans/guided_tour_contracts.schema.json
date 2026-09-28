@@ -177,7 +177,8 @@
       "required": [
         "chat_host", "guide_picker_opened", "selected_guide", "composer_placeholder_id", "send_surface",
         "question_id", "guided_thread_ref", "thread_label", "user_message_ref", "answer_ref", "normal_render_ref",
-        "eli5_render_ref", "message_sent", "deterministic_reply", "same_conversation", "same_answer", "facts_preserved"
+        "eli5_render_ref", "message_sent", "deterministic_reply", "same_conversation", "same_answer", "facts_preserved",
+        "original_reply_rewritten"
       ],
       "properties": {
         "chat_host": {"enum": ["docked", "undocked"]},
@@ -191,12 +192,13 @@
         "user_message_ref": {"$ref": "#/$defs/safe_ref"},
         "answer_ref": {"$ref": "#/$defs/safe_ref"},
         "normal_render_ref": {"$ref": "#/$defs/safe_ref"},
-        "eli5_render_ref": {"$ref": "#/$defs/safe_ref"},
+        "eli5_render_ref": {"$ref": "#/$defs/safe_ref", "description": "The one extra, simpler reply written by Explain this reply simply (cmd.chat.eli5.explain_reply) after the example answer (DL-126)."},
         "message_sent": {"const": true},
         "deterministic_reply": {"const": true},
         "same_conversation": {"const": true},
-        "same_answer": {"const": true},
-        "facts_preserved": {"const": true}
+        "same_answer": {"const": true, "description": "The simpler reply explains the same example answer; it is one extra reply, not a rewrite (DL-126)."},
+        "facts_preserved": {"const": true},
+        "original_reply_rewritten": {"const": false, "description": "No ELI5 switch or tour step re-sends, regenerates or rewrites the example answer (DL-126)."}
       }
     },
     "guided_tour_storyboard": {
@@ -239,7 +241,7 @@
         "scenes": {
           "type": "array",
           "prefixItems": [
-            {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "chat_teacher"}, "purpose": {"const": "Open real Assistant Chat, select Teacher, send the supplied local question, and apply ELI5 to the same answer."}}},
+            {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "chat_teacher"}, "purpose": {"const": "Open real Assistant Chat, select Teacher, send the supplied local question, and see the same answer in simple words as one extra, simpler reply."}}},
             {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "workspace"}, "purpose": {"const": "Learn page and panel navigation, move or dock Chat, and perform a real widget action through its mounted owner."}}},
             {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "planning_wizard"}, "purpose": {"const": "Turn the book-club goal into three outcomes, edit a meaningful answer, and stop before approval with no work started."}}}
           ],
@@ -666,7 +668,7 @@
       "properties": {
         "schema_id": {"const": "pm.guided_tour.presentation.v3"}, "schema_version": {"const": "3.0.0"}, "opening_scene": {"const": "chat_teacher"},
         "top_action_ids": {"type": "array", "prefixItems": [{"const": "ui.guided_tour.toggle_eli5"}, {"const": "ui.guided_tour.pause"}, {"const": "ui.guided_tour.skip"}], "items": false, "minItems": 3, "maxItems": 3},
-        "eli5": {"type": "object", "additionalProperties": false, "required": ["control_id", "placement", "persistent", "called_out_in_opening", "changes"], "properties": {"control_id": {"const": "ui.guided_tour.toggle_eli5"}, "placement": {"const": "top_beside_pause_and_skip"}, "persistent": {"const": true}, "called_out_in_opening": {"const": true}, "changes": {"const": "same_visible_teacher_answer"}}},
+        "eli5": {"type": "object", "additionalProperties": false, "required": ["control_id", "placement", "persistent", "called_out_in_opening", "changes"], "properties": {"control_id": {"const": "ui.guided_tour.toggle_eli5"}, "placement": {"const": "top_beside_pause_and_skip"}, "persistent": {"const": true}, "called_out_in_opening": {"const": true}, "changes": {"const": "tour_narration_only", "description": "The tour top-bar ELI5 changes tour narration only; it never rewrites the Teacher example answer (DL-126)."}}},
         "reduced_motion": {"type": "object", "additionalProperties": false, "required": ["introduced_in", "setting_id", "owner", "tour_write", "separate_scene", "effective", "long_travel_removed", "focus_preserved", "hierarchy_preserved", "announcements_preserved", "action_parity_preserved"], "properties": {"introduced_in": {"const": "chat_opening_eli5_moment"}, "setting_id": {"const": "general.visual.reduce-animations"}, "owner": {"const": "Settings"}, "tour_write": {"const": false}, "separate_scene": {"const": false}, "effective": {"type": "boolean"}, "long_travel_removed": {"const": true}, "focus_preserved": {"const": true}, "hierarchy_preserved": {"const": true}, "announcements_preserved": {"const": true}, "action_parity_preserved": {"const": true}}},
         "scene_entry": {"$ref": "#/$defs/heading_focus"},
         "callout_policy": {"type": "object", "additionalProperties": false, "required": ["measurement_source", "measured_after_layout", "clamped_to_usable_viewport", "target_kept_usable", "remeasure_triggers", "missing_target_disposition", "transient_geometry_persisted", "protected_auth_content_excluded"], "properties": {"measurement_source": {"const": "live_mounted_target"}, "measured_after_layout": {"const": true}, "clamped_to_usable_viewport": {"const": true}, "target_kept_usable": {"const": true}, "remeasure_triggers": {"type": "array", "prefixItems": [{"const": "page_change"}, {"const": "resize"}, {"const": "scale"}, {"const": "localization"}, {"const": "panel_movement"}, {"const": "target_geometry_change"}], "items": false, "minItems": 6, "maxItems": 6}, "missing_target_disposition": {"const": "pause_with_recovery"}, "transient_geometry_persisted": {"const": false}, "protected_auth_content_excluded": {"const": true}}},

@@ -1654,14 +1654,15 @@ canonical_text: >-
   Review, while genuinely committed rows require owner-revalidated per-row phase continuation. Guided Tour acceptance
   consumes PWIZ-023 and F3-521's September 3 newbie-first revision: optional local practice in exact
   `chat_teacher`/`workspace`/`planning_wizard` chapter order, shared manual/Show Me handlers and observed predicates,
-  same-answer ELI5, at least half of meaningful actions and dwell in Planning, safe checkpoint recovery, and no work
+  same-answer ELI5 as one extra, simpler reply from Explain this reply simply with the original reply unchanged (DL-126),
+  at least half of meaningful actions and dwell in Planning, safe checkpoint recovery, and no work
   started. Its eleven typed tour actions include Show Me but exclude the separate retired restore/keep-layout and
   tour-owned Reduced Motion actions. Heading focus, clamped callouts, Skip restoration, default-restore/explicit-Keep Finish
   layout, Doctor/Health no-false-green, MCP/server degraded visibility, and FileSafe fail-closed readiness remain
   required. Static, browser-concept, native runtime, accessibility, motion-quality, and visual evidence remain distinct.
 gui_related: true
 gui_classification_reason: Validates modal onboarding, optional three-chapter tour, owner-return states, accessibility, errors, and truthful Doctor/Health presentation.
-depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, F3-521, SRV-001, SRV-003, SRV-004, RAS-001, RAS-007, BRS-001, BRS-003, BRS-006, PJCT-001, ACD-431, T-088, T-089, MI-028, MI-029, F2-155]
+depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, F3-521, SRV-001, SRV-003, SRV-004, RAS-001, RAS-007, BRS-001, BRS-003, BRS-006, PJCT-001, ACD-431, ACD-484, T-088, T-089, MI-028, MI-029, F2-155]
 unblocks: []
 acceptance_criteria:
   - Tests consume the exact PWIZ-021 main_stage_order, connect_existing_stage_order and deferred_project_stage_order definitions, not a testing-owned roster. Main includes eleven semantic stages; explicit Project Later skips provider work without a fake Project and connect-existing retains its six-stage shortcut.
@@ -1697,9 +1698,9 @@ acceptance_criteria:
   - Every important manual and Show Me path reaches the same mounted owner action and success predicate; tests include unrelated clicks, timers, generic Next, look-alikes, missing targets, state changes, repeated Show Me, and interruption during pre-cue/travel/arrival/settle. None may fabricate an action result.
   - Workspace tests verify real Chat movement with shared docked/undocked state and a real widget add/move/resize/focus result, reversible layout capture, exact Skip restoration, default Finish restoration, and explicit Keep.
   - Planning tests bind meaningful action and dwell shares to a declared step census and require both shares to be at least one half. The book-club goal, three outcomes, who-can-edit decision, why, assumptions/unresolved choices, review, genuine changed answer, specific shared-access consequence, final real-page landing with committed Project, and no-work-start boundary all require observed results. An unsure answer stays unresolved; clicking Edit alone cannot choose an answer or complete the edit.
-  - Assistant Chat opens first; the real guide selector selects Teacher, the real composer sends the supplied question, a local answer streams in the same labeled conversation, and ELI5 changes that same answer. Tests measure zero provider requests and zero usage increment, not merely a hard-coded declaration.
+  - Assistant Chat opens first; the real guide selector selects Teacher, the real composer sends the supplied question, a local answer streams in the same labeled conversation, and Explain this reply simply (`cmd.chat.eli5.explain_reply`) shows that same answer in simple words as one extra, simpler reply while the original reply stays unchanged; no ELI5 switch re-sends, regenerates or rewrites it (DL-126). Tests measure zero provider requests and zero usage increment, not merely a hard-coded declaration.
   - Guided-example ownership survives Pause, later chapters, Finish, and Replay. Actual composer Enter/send and slash-command text remain on the deterministic local path; unrelated threads retain their existing handler. Interrupted or replaced local streams cannot append late chunks, clear another stream's busy state, replace the current lesson answer, or advance a different session/thread/step. Missing telemetry remains unavailable, never an inferred zero-use pass.
-  - Tests enforce the eleven-action tour census owned by PWIZ-023, including ui.guided_tour.show_me. Separate ui.guided_tour.restore_layout, ui.guided_tour.keep_layout, and ui.guided_tour.toggle_reduced_motion actions remain rejected. Chat selection/send/ELI5 reuse cmd.persona.select, cmd.chat.send, and cmd.chat.eli5.set; local fixture adapters do not establish native handler registration or production receipts.
+  - Tests enforce the eleven-action tour census owned by PWIZ-023, including ui.guided_tour.show_me. Separate ui.guided_tour.restore_layout, ui.guided_tour.keep_layout, and ui.guided_tour.toggle_reduced_motion actions remain rejected. Chat selection/send/ELI5 reuse cmd.persona.select, cmd.chat.send, cmd.chat.eli5.set (the quick dot, later replies only), and cmd.chat.eli5.explain_reply (DL-126); local fixture adapters do not establish native handler registration or production receipts.
   - The top controls place ELI5 beside Pause and Skip Tour. The brief opening explains ELI5 and Reduced Motion; the Tour reads the effective Settings-owned general.visual.reduce-animations preference without writing it or adding a motion-toggle screen. Reduced Motion retains sequence/cause-and-effect and action parity.
   - Each scene heading receives programmatic focus. Callouts measure, clamp, and remeasure the mounted target across resize, scale, localization, movement, and route changes; stale or missing target geometry cannot advance the film.
   - Skip restores exact captured layout, Chat thread/selection/placeholder/draft, and focus. Finish requires current prerequisite predicates, restores temporary layout by default or honors explicit Keep, removes practice content, and lands on the real Planning Wizard without work. Restoration failure remains recoverable, never completed. Safe checkpoint tests revalidate owner state on Close/reload/resume, reject stale/secret-bearing records, return to the earliest unsatisfied prerequisite, and never replay domain work.
@@ -1859,6 +1860,8 @@ preserved_exact_tokens:
   - "Needs attention"
   - "hide if server fails"
   - "fail-closed"
+  - "Explain this reply simply"
+  - "cmd.chat.eli5.explain_reply"
 negative_constraints:
   - Do not call this feature acceptance-covered without owner-current Onboarding path/denominator/fence tests, independent local-backend/optional-forge coverage, one-dispatch proof, optional provider setup, typed choice help, path-correct migration, current newbie-first Guided Tour manual/Show Me/checkpoint/terminal coverage, owner-security, and Doctor no-false-green tests.
   - Do not restore predecessor four-screen/provider-first, five-stage, seven-stage or nine-stage producers. Paid-provider then Free Models is now the accepted post-Project-commit order, including Free Models after paid Skip; it does not restore provider-first setup.
@@ -1874,7 +1877,8 @@ negative_constraints:
   - Do not retain either predecessor tour controller or accept chapter order other than `chat_teacher`, `workspace`, `planning_wizard`.
   - Do not replace real workspace practice with narration or treat a generic Options click as proof of a widget mutation.
   - Do not satisfy a required Planning action from narration, a timer, generic Next, a look-alike, or an Edit button that silently picks an answer.
-  - Do not complete Chat/Teacher without its real selection/composer, deterministic same-conversation reply, same-answer ELI5, measured zero provider requests, and zero usage increment.
+  - Do not complete Chat/Teacher without its real selection/composer, deterministic same-conversation reply, same-answer ELI5 as one extra, simpler reply, measured zero provider requests, and zero usage increment.
+  - Do not accept a Chat/Teacher ELI5 step that re-sends, regenerates or rewrites the example answer; its simpler version is one extra reply from Explain this reply simply (DL-126).
   - Do not restore `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, or `ui.guided_tour.toggle_reduced_motion` as current requests, aliases, handlers, or compatibility actions.
   - Do not add a Guided Tour-specific Reduced Motion toggle or separate motion scene; the Tour only explains and honors the Settings-owned preference.
   - Do not let callouts escape the viewport, point at stale geometry, or bypass scene-heading focus.
@@ -5434,21 +5438,33 @@ canonical_text: >-
   already names for every collaborative command: the section 12 records (CollaborativeDefinition,
   ParticipantSpec, CollaborativeRun, CollaborationMessage, QuestionBank, BrainstormProposal,
   BrainstormVote, ReviewTargetPack, ReviewFinding), the participant disposition of PART-001..006, the
-  completion projection of CWR-029, the participant activity projection of CWR-030, the team preset
-  of CWR-039, and the request and result of every collaborative command, including cmd.chat_room.end
-  and cmd.brainstorm.research_lead (CWR-031, DL-130) and ComposerBufferResult. It ships 85 positive
-  fixtures and 95 negative fixtures, each negative mutating one named positive so that it fails for
+  completion projection of CWR-029, the participant activity projection of CWR-030 with its
+  live_message_id, the helper message in progress of Plans/Executor_Protocol.md EP-129 (DL-137), the
+  team preset of CWR-039, and the request and result of every collaborative command, including
+  cmd.chat_room.end and cmd.brainstorm.research_lead (CWR-031, DL-130) and ComposerBufferResult. It
+  ships 95 positive fixtures and 116 negative fixtures, each negative mutating one named positive so
+  that it fails for
   one named constraint. The negatives prove that a definition cannot store a substitution policy,
   carry another kind's fields, give Review a specialist or give Grill Me a Persona; that a Crew
   Auto admission cannot omit its crew_auto_revision and cmd.collaboration.start cannot admit Build
-  With Crew; that a Review start cannot omit or silently swap its target; that configure cannot
+  With Crew; that a run carries stop_reason exactly when it is cancelled, from the closed set of
+  CWR-029, and a run stopped at its limit cannot settle failed; that a Review start cannot omit or silently swap its target; that configure cannot
   return a run and a refused start cannot return one; that a refusal cannot omit its typed error or
   claim work; that reconfigure cannot leave a run completed and End discussion cannot settle
   cancelled; that a completion projection cannot be clean with an attention reason, cannot use
   limit_reached, and maps accept_partial, finish_stale and restart_on_current only to their
-  commands; that only needs_you carries a decision; that Send Findings cannot send; that a
-  substantiated lead cannot lack evidence; and that the Crew Auto check cannot turn on without a
-  Settings transaction or through its settings route. Fields that still wait on an owner answer recorded as an open
+  commands; that only needs_you carries a decision; that an activity projection cannot hold
+  streamed text or keep live_message_id once done or failed; that a message in progress cannot be a
+  user or system message, cannot lack a participant's slot and attempt, and cannot carry text, a
+  sequence or recipients; that Send Findings cannot send; that a
+  substantiated lead cannot lack evidence; that CrewAutoSetRequest cannot omit its scope or name one
+  outside project | thread (Plans/Collaborative_Workflows.md CWR-038), that scope project comes only from the
+  Crew Auto sheet and carries the rules and the team, and that scope thread comes only from a chat's
+  check and carries neither; that turning Crew Auto on for the project, from the Crew Auto sheet,
+  cannot succeed without its project Settings transaction, while a chat's own Crew Auto check sets
+  only that chat's override and cannot claim a project Settings transaction; and that the Crew Auto
+  settings route, opened from the multi-agent menu, the Crew sheet or the crew_auto_receipt note,
+  comes from no other surface and never turns Crew Auto on. Fields that still wait on an owner answer recorded as an open
   ledger question are not admitted. The pair is registered in the closed CONTRACT_PAIRS manifest of
   scripts/pm-new-contracts-verify.py, which owns that manifest's cardinality, and runs as the named
   subcheck validate-new-contracts in pm-plans-verify.py run-gates and audit-governance. This is
@@ -5458,7 +5474,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: The retained shapes are what the collaboration sheets, run cards, run view and Crew Auto menu dispatch and read, which is a GUI obligation even though the surface contract is owned by Collaborative_Workflows.md.
 split_recommended: false
-depends_on: [ATS-046, CWR-029, CWR-030, CWR-031]
+depends_on: [ATS-046, CWR-029, CWR-030, CWR-031, CWR-038, EP-129]
 unblocks: []
 acceptance_criteria:
   - Every positive fixture validates against its named definition; every negative fixture is rejected.
@@ -5479,8 +5495,15 @@ node_compile_hint: {mode: static_contract_fixture_gate_only, create_worknodes: f
 source_lineage:
   - Plans/Collaborative_Workflows.md#CWR-018
   - Plans/Commands_System.md#CS-085
+  - Plans/Executor_Protocol.md#EP-129
+  - Plans/Decision_Log.md#DL-137
+  - Plans/Collaborative_Workflows.md#CWR-038
+  - Plans/Decision_Log.md#DL-120
+  - Plans/Decision_Log.md#DL-131
+  - Plans/Decision_Log.md#DL-135
   - Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/events.jsonl
-preserved_exact_tokens: ["validate-new-contracts", "CONTRACT_PAIRS", "NOT_RUN", "95 negative fixtures", "static schema and fixture evidence only"]
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-29 (the companion task of ledger pldg-20260927-001-wand-collab-workflows, events evt-010, evt-019 and evt-023)"
+preserved_exact_tokens: ["validate-new-contracts", "CONTRACT_PAIRS", "NOT_RUN", "116 negative fixtures", "static schema and fixture evidence only", "project Settings transaction"]
 negative_constraints:
   - Do not infer runtime, provider, recovery, security, visual or performance results from fixture validation.
   - Do not add schemas or fixture pairs to the gate through an ambient glob.
@@ -5491,3 +5514,283 @@ owner_hints: [Plans/Automated_Testing_System.md]
 ```
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Commands_System.md#CS-085
+
+## Live helper text acceptance checks — 2026-09-27
+
+### ATS-063 - Live Helper Text Acceptance Checks
+
+```yaml
+plan_unit_id: ATS-063
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  The collaboration acceptance suite covers live helper text (Plans/Collaborative_Workflows.md
+  CWR-040, Plans/Executor_Protocol.md EP-129..EP-131, DL-137) by reading painted pixels, stored
+  records and what each participant received, never dispatch counts. It checks that a helper's lane
+  text grows word by word while its message is in progress and its word count only grows; that three
+  helpers streaming at once each stay in their own lane; that a lane's verb changes at most about
+  once every 1.2 seconds while words stream; that while a message is in progress no
+  CollaborationMessage, partial record or collaboration event exists for it and no other participant
+  or the coordinator has received it; that when the turn completes exactly one CollaborationMessage
+  exists under the allocated id, its text equals the last streamed frame, and each recipient
+  received it once; that a replayed completion writes nothing; that a cancelled, failed or
+  timed-out attempt, an attempt that loses a permission, and an attempt superseded by a retry or a
+  replacement each write no message, its unfinished text leaves the lane, the lane shows the
+  participant's outcome and its last complete quote, and a retry streams under a new id; that a
+  writer whose tool call waits on an approval keeps the text streamed so far and shows needs_you;
+  that an abstention written as a vote lands once and a default abstention writes nothing; that
+  lanes folded into the +N more row stream nothing on the card; that Pause lets a message in progress finish
+  and be written first; that after a restart in the middle of a message no text in progress is shown
+  and the message appears once or not at all; and that a provider tier without streaming events
+  shows the message whole, with no pseudo-streaming.
+gui_related: true
+gui_classification_reason: "Defines the tests that gate the live text in collaboration lanes."
+split_recommended: false
+depends_on: [CWR-040, EP-129, EP-130, EP-131, ATS-061]
+unblocks: []
+acceptance_criteria:
+  - "Each listed behaviour has at least one automated check that reads pixels, stored records or received inputs."
+  - "No check counts dispatches in place of painted or stored state."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: live_helper_text_regression
+reasoning_tier: high
+context_scope: collaboration_presentation_tests
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/Collaborative_Workflows.md
+  - Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: test_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-137"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-22"
+preserved_exact_tokens:
+  - "word by word"
+  - "1.2 seconds"
+  - "last streamed frame"
+  - "pseudo-streaming"
+negative_constraints:
+  - "Do not assert dispatch counts in place of painted or stored state."
+  - "Do not treat a streamed frame as a written message in any check."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-040, ContractName:Plans/Executor_Protocol.md#EP-130, ContractName:Plans/Automated_Testing_System.md#ATS-061
+
+## Project-wide automation pause acceptance checks — 2026-09-27
+
+### ATS-064 - Pause All Automations Acceptance Checks
+
+The project-wide "Pause all automations" switch of `Plans/Scheduling_and_Quota_Resume.md` SQR-018 (DL-136) is a
+user manual stop at project scope, so its checks are precedence checks and run against server-owned state, never
+against a client timer or a page-local flag.
+
+```yaml
+plan_unit_id: ATS-064
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  The scheduling suite proves the project-wide Pause all automations switch of SQR-018 (DL-136) against
+  server-owned records. With the switch on, no scheduled message, scheduled build, window resume or quota resume in
+  the project dispatches, each refusal records the failed clause project_automation_paused, and a scheduled message
+  whose send time arrives is held with that clause. A dispatch decided before cmd.runtime.automation_pause.set
+  turned the switch on and delivered after it is discarded because the project's user_stop_epoch advanced. A quota
+  reset, a window opening, a schedule time, a Goal, Plan or Crew automatic continuation, a restart and a newly
+  created schedule each leave the switch on. A request with paused false from an actor that is not the user is
+  refused with permission_denied, and a request that sets the value the switch already has leaves the epoch
+  unchanged and emits no runtime.automation_pause_changed. A scheduled build running when the switch is turned on
+  pauses at a safe point, never mid-atomic-operation, and a dispatch already started completes. Turning the switch
+  on cancels no schedule, invalidates no schedule, disables no quota consent and changes no per-run latch. Work the
+  user starts directly acts while the switch is on and leaves it on: a Send now dispatches that one held message
+  without the project_automation_paused clause, and a Build the user starts is admitted. Turning the switch off
+  releases no per-run manual Pause, Stop or Cancel, fires no backlog burst, and each occurrence that came due
+  while it was on follows its recorded missed policy: a message it held stays held naming its missed time under
+  hold, dispatches once under next_available or within the grace of cancel_after_grace, and expires past that
+  grace. Every item the switch holds shows the reason Pause all automations is on in painted output, a build it
+  holds has a Plan card schedule line that begins with Paused, no item keeps that reason once the switch is off,
+  and no Settings value stores the switch. These are acceptance obligations only; every command row stays
+  handler_unavailable in the catalog, and its controls render disabled with command_not_registered, until its
+  catalog, event and wiring rows close.
+gui_related: true
+gui_classification_reason: The held reason and the switch's own line are visible outcomes the checks read from painted output.
+split_recommended: false
+depends_on: [SQR-001, SQR-006, SQR-018]
+unblocks: []
+acceptance_criteria:
+  - "Each listed behaviour has at least one automated check against server-owned records or painted output."
+  - "No check passes on a client timer, a page-local flag or a dispatch count."
+  - "A check proves that turning the switch on leaves every schedule, quota consent and per-run latch unchanged."
+  - "A check proves that a user's Send now and Build act while the switch is on and leave it on."
+validation_surfaces:
+  - node tests/scheduling-verify.mjs
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: automatic_resume_overrides_user_stop
+reasoning_tier: high
+context_scope: scheduling_precedence_tests
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/Scheduling_and_Quota_Resume.md
+node_compile_hint:
+  mode: test_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Scheduling_and_Quota_Resume.md#SQR-018"
+  - "Plans/Decision_Log.md#DL-136"
+preserved_exact_tokens:
+  - "project_automation_paused"
+  - "cmd.runtime.automation_pause.set"
+  - "runtime.automation_pause_changed"
+  - "Pause all automations is on"
+negative_constraints:
+  - "Do not assert a client timer or a page-local pause flag in place of the server-owned record."
+  - "Do not treat fixture validation as proof that the pause holds real dispatches."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-018
+
+## ELI5 in chat acceptance checks — 2026-09-27
+
+### ATS-065 - ELI5 Resolution Forward-Only Switching And Explain This Reply Simply Checks
+
+```yaml
+plan_unit_id: ATS-065
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  The chat's ELI5 acceptance checks (DL-126; assistant-chat-design ACD-484, FinalGUISpec F3-581)
+  read painted pixels or measured state, never dispatch counts, and cover: the resolution order in
+  all three cases (a chat override wins; without one the project default applies; without either
+  the app default applies) and inherit, which deletes the override so the chat follows the project
+  default; a switch that leaves every earlier reply's recorded text and style unchanged, starts no
+  provider request and adds no reply, so the thread's reply count after a switch equals the count before it; a reply streaming during a switch finishing in the style it started with; the
+  divider painted between the last reply in the old style and the first in the new; the Simple
+  explanation tick on every reply written in Simple and on no other; Explain this reply simply
+  adding exactly one reply at the end of the thread, leaving the explained reply and every ELI5
+  setting unchanged, and cmd.chat.eli5.explain_reply refused for a reply that is still streaming; the ELI5 sheet at 720 x 560 with an unchanged height when its disclosure opens; the quick dot
+  painted lit or muted to match the resolved state and switching the chat in one click without
+  opening the sheet; generated documents, code, plans and files unchanged by any ELI5 state; and
+  the dual-copy checklist listing no helper line under a control. The guided tour's own ELI5
+  acceptance items belong to the tour owner and are re-pointed under ACD-484's obligation; this
+  unit does not restate them.
+gui_related: true
+gui_classification_reason: "Defines the tests that gate ELI5 in the chat, its sheet and its quick dot."
+split_recommended: false
+depends_on: [ACD-484, F3-581, F3-572, DL-126]
+unblocks: []
+acceptance_criteria:
+  - "Each listed behaviour has at least one automated check that reads painted pixels or measured state."
+  - "The switch check measures the reply count, every earlier reply's text and the provider request count before and after the switch."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: eli5_second_response_or_rewrite
+reasoning_tier: standard
+context_scope: chat_eli5_tests
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: test_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.13"
+  - "IMPACT-REGISTER B-ACD-01, B-FGS-08 (ELI5); card p08, E-11"
+  - "Plans/Decision_Log.md#DL-126 (Owner resolution, Jared, 2026-09-27, confirmed in chat)"
+preserved_exact_tokens:
+  - "the thread's reply count after a switch equals the count before it"
+  - "cmd.chat.eli5.explain_reply refused for a reply that is still streaming"
+  - "720 x 560"
+  - "Explain this reply simply"
+negative_constraints:
+  - "Do not assert dispatch counts in place of painted or measured state."
+  - "Do not pass a switch check that measures only the newest reply."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-484, ContractName:Plans/FinalGUISpec.md#F3-581, ContractName:Plans/Decision_Log.md#DL-126
+
+## Wand module closure command checks — 2026-09-27
+
+This section holds ATS-066, the static command-layer checks for the two command identities and the ELI5 wiring that the wand-module closure wave added (UI_Command_Catalog UCC-174 and UCC-175, Commands_System CS-087 and CDRY-023, Wiring_Matrix WM-064).
+
+### ATS-066 - Closure-Wave Command Identity And Wiring Checks
+
+These are static checks at the command layer for the closure-wave rows (UCC-174, UCC-175, CS-087, CDRY-023, WM-064). They read the catalog, the production wiring, its exclusions and the contract schemas. The runtime behaviour belongs to the owners' own acceptance units: ATS-064 for the pause, and the ELI5 owner's unit for switching and the extra reply. These checks prove neither behaviour.
+
+```yaml
+plan_unit_id: ATS-066
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  The static command checks prove the closure-wave identities against the catalog, the production
+  wiring, its exclusions and the contract schemas. cmd.chat.eli5.explain_reply and
+  cmd.runtime.automation_pause.set are each registered exactly once, name one sole handler and one
+  request and result pair, and have exactly one candidate exclusion and no production wiring entry
+  until admission. assistant.redesign.w_051.chat_eli5_set is raised by exactly eli5_sheet and
+  composer, never by the wand row, and ELI5ThreadOverrideRequest admits exactly on, off and inherit.
+  No wiring entry names an automatic producer for cmd.runtime.automation_pause.set, and
+  AutomationPauseSetRequest carries paused. No identity exists for cmd.runtime.automation_stop.set, an
+  ELI5 inherit command, a project-level ELI5 command or live helper text. Every census control marked
+  New resolves to a registered UCC-171 or UCC-174 row. These are static checks only; every command
+  stays handler_unavailable, and the runtime proof that a switch never writes a second reply, that
+  Explain this reply simply writes one, and that only the user clears the pause is NOT_RUN here.
+gui_related: true
+gui_classification_reason: "Checks the command identities and producer surfaces behind the visible ELI5 sheet, ELI5 dot, Explain this reply simply action and Pause all automations switch."
+split_recommended: false
+depends_on: [UCC-174, UCC-175, CS-087, CDRY-023, WM-064]
+unblocks: []
+acceptance_criteria:
+  - "Each listed identity, surface and value check fails when its row, exclusion, surface list or enum is changed."
+  - "No check is reported as handler, runtime or readiness evidence."
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: static_fixture_or_false_execution_claim
+reasoning_tier: medium
+context_scope: assistant_wand_module_commands
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/Wiring_Matrix.production.exclusions.json
+node_compile_hint:
+  mode: static_contract_fixture_gate_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/UI_Command_Catalog.md#UCC-174"
+  - "Plans/Commands_System.md#CS-087"
+  - "Plans/Decision_Log.md#DL-126, #DL-136"
+  - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
+preserved_exact_tokens:
+  - "cmd.chat.eli5.explain_reply"
+  - "cmd.runtime.automation_pause.set"
+  - "assistant.redesign.w_051.chat_eli5_set"
+  - "ELI5ThreadOverrideRequest"
+  - "AutomationPauseSetRequest"
+  - "cmd.runtime.automation_stop.set"
+  - "NOT_RUN"
+negative_constraints:
+  - "Do not report these static checks as proof of the pause, the ELI5 switch or the extra reply at runtime."
+  - "Do not add an automatic producer or a second ELI5 wiring entry to make a check pass."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-174, ContractName:Plans/Commands_System.md#CS-087, ContractName:Plans/Wiring_Matrix.md#WM-064, ContractName:Plans/Automated_Testing_System.md#ATS-064

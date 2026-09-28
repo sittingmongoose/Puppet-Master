@@ -33,3 +33,34 @@ Reserved ID ranges (re-check the live maximum of each family on `origin/main` ri
 
 Only lines triaged NOW in the canon plan are compiled in this pass. A line triaged WAIT is recorded as an open
 question naming its decision card; a line triaged OUT is not compiled.
+
+## Closure wave (E-11/E-19/E-31), 2026-09-27
+
+Jared answered decision card p12 (register E-19, "A \"Pause all automations\" switch") in chat on 2026-09-27,
+approving option A, "Build a project-wide pause": one switch that stops every scheduled send and build until the
+user turns it back on. The answer is recorded in
+`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json`, SHA-256
+`33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5`, and in `Plans/Decision_Log.md` as DL-136.
+Agent-relayed, not verifiable from inside this repository.
+
+The answer releases the WAIT line B-SQR-05 and lifts the earlier fences on SQR-001, the section 1 `user_stop_epoch`
+paragraph and the section 3 eligibility predicate only as far as E-19 needs. For this wave the lead also admitted,
+for this group's own units only:
+
+- `Plans/Assistant_Plan_Runtime.md`, a few sentences in section 3, "Build With Crew and Build At", so that Plan builds honour the project pause;
+- `Plans/Automated_Testing_System.md`, one unit, `ATS-064`.
+
+The fixed names used are the command `cmd.runtime.automation_pause.set` (project-scoped, payload `paused` true or
+false) and the new SQR unit `SQR-018` from this ledger's reserved range.
+
+## Blind review cycle 1, 2026-09-28
+
+The blind form-driven review of this ledger (cycle 1 of at most 2) returned eleven findings, R-01..R-11. The canon
+author repaired them inside the units and sections this ledger already edits: `Plans/Scheduling_and_Quota_Resume.md`
+(section 1 precedence paragraph and Settings boundary, SQR-001, SQR-006, section 3 Build At and eligibility list,
+section 5 negative tests, SMSG-012..018, v3 APR-027, SQR-012, SQR-014, SQR-015, SQR-018), the one
+`Plans/Assistant_Plan_Runtime.md` section 3 paragraph admitted in the closure wave, and ATS-064. Lead rulings
+from the design spec are `dec-009` (section 8.9) and `dec-010` (section 8.7, G-33), quoted from
+`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md` (SHA-256
+`dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`). Nothing in `Plans/UI_Command_Catalog.md` or
+`Plans/Wiring_Matrix.md` was edited.

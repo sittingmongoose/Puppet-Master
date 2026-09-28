@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L12429-L12723
 
-Source SHA256: `0bb6d381f4906b306c9c0fbbd8a1f960ca7f16485f1b8470dfd5b430ec6fa504`
+Source SHA256: `e6236495f37921bf880f218081f73a050e3052c4b095f0e9540d344ab4f5b7a8`
 
 ---
 
@@ -152,7 +152,7 @@ Composer destination rows change visible composer chrome and name the destinatio
 | Command ID | Label | Description | Preconditions | command_kind | Owner | Request → Result | Sole future target |
 |---|---|---|---|---|---|---|---|
 | `cmd.chat.goal.open_editor` | Open Goal Editor | Navigates to Goal Activity Detail in edit mode from the Goal hover menu. | `goal_present && activity_detail_available` | `navigation_wrapper` | `Plans/assistant-chat-design.md` | `GoalEditorRoute` → `RouteResult` | `handlers::assistant_chat::goal_open_editor` |
-| `cmd.chat.composer.destination.set` | Set Composer Destination | Points the ordinary composer at a workflow run, a participant, a Plan revision, or a component capture list, and changes composer chrome to name it. | `composer_available && destination_target_present` | `domain_action` | `Plans/assistant-chat-design.md` | `ComposerDestinationSetRequest` → `ComposerDestinationSetResult` | `handlers::assistant_chat::composer_destination_set` |
+| `cmd.chat.composer.destination.set` | Set Composer Destination | Points the ordinary composer at a workflow run, a participant or a Plan revision (the destination kinds `Plans/Collaborative_Workflows.md` §4.5 closes), and changes composer chrome to name it. The numbered component list built by `cmd.browser.component.add_to_composer` is message content, never a destination. | `composer_available && destination_target_present` | `domain_action` | `Plans/assistant-chat-design.md` | `ComposerDestinationSetRequest` → `ComposerDestinationSetResult` | `handlers::assistant_chat::composer_destination_set` |
 | `cmd.chat.composer.destination.clear` | Clear Composer Destination | Returns the composer to the ordinary thread destination. | `composer_destination_set` | `domain_action` | `Plans/assistant-chat-design.md` | `ComposerDestinationClearRequest` → `ComposerDestinationClearResult` | `handlers::assistant_chat::composer_destination_clear` |
 | `cmd.chat.thread.regenerate_title` | Regenerate Title | Explicitly regenerates the thread title, clearing the lock that a manual rename set. | `thread_present && title_policy != none && title_model_available` | `domain_action` | `Plans/assistant-chat-design.md` | `ThreadTitleRegenerateRequest` → `ThreadTitleGenerationResult` | `handlers::assistant_chat::thread_regenerate_title` |
 | `cmd.chat.eli5.set` | Set ELI5 | Sets the ELI5 conversation override for the active thread independently of the application default. | `assistant_chat_available` | `domain_action` | `Plans/assistant-chat-design.md` | `ELI5ThreadOverrideRequest` → `ELI5ThreadOverrideResult` | `handlers::assistant_chat::eli5_set` |

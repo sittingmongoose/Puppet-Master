@@ -6,7 +6,7 @@ compiled from the design spec snapshot `/mnt/Cursor/PuppetMaster-Evidence/scratc
 (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`). It says what canon said, what the redesign needs,
 and the unit the prose compile created. Records 1 to 5 are the NOW wave; their WAIT parts were open questions q-001 to
 q-003. Records 6 to 10 are the WAIT wave, compiled after Jared answered cards n01, p04 and p15 on 2026-09-27 (DL-110,
-DL-122 and DL-130 in `Plans/Decision_Log.md`); q-001 to q-003 are answered, and q-004 and q-005 stay open. The record-only line B-BSD-09 is a decision with no owner edit, and B-BSD-06 is out of scope (Settings), so
+DL-122 and DL-130 in `Plans/Decision_Log.md`); q-001 to q-003 are answered; q-005 was closed by the lead pass (the design's status table confirms the pairing), and q-004 stays open for the assignment state only. The record-only line B-BSD-09 is a decision with no owner edit, and B-BSD-06 is out of scope (Settings), so
 neither has a record here.
 
 ## Record 1 — BSD-03 (margin note): The advisor note, its aside weight and its attribution

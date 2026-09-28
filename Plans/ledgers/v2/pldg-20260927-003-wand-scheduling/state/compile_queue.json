@@ -1,16 +1,20 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-003-wand-scheduling",
-  "updated_at_utc": "2026-09-27T22:10:00+00:00",
-  "last_event_id": "evt-007",
+  "updated_at_utc": "2026-09-28T00:15:00+00:00",
+  "last_event_id": "evt-013",
   "canonical_plan_targets": [
     "Plans/Scheduling_and_Quota_Resume.md"
   ],
   "compiled_owner_docs": [
-    "Plans/Scheduling_and_Quota_Resume.md"
+    "Plans/Scheduling_and_Quota_Resume.md",
+    "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "compiled_plan_outputs": [
-    "Plans/Scheduling_and_Quota_Resume.md"
+    "Plans/Scheduling_and_Quota_Resume.md",
+    "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "governance_status": "not_requested",
   "latest_audit_ref": null,
@@ -20,12 +24,15 @@
     "compile_witness": "pass"
   },
   "planned_owner_docs": [
-    "Plans/Scheduling_and_Quota_Resume.md"
+    "Plans/Scheduling_and_Quota_Resume.md",
+    "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "reserved_id_ranges": {
     "SQR": "SQR-012..SQR-024",
     "SMSG": "SMSG-019..SMSG-024",
-    "PSCHED": "PSCHED-015..PSCHED-018"
+    "PSCHED": "PSCHED-015..PSCHED-018",
+    "ATS": "ATS-064"
   },
   "status": "prose_compiled_pending_review",
   "items": [
@@ -145,8 +152,35 @@
       ],
       "companion_outputs": [],
       "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-007",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-sqr-05"
+      ],
+      "target_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "target_docs": [
+        "Plans/Scheduling_and_Quota_Resume.md",
+        "Plans/Assistant_Plan_Runtime.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "SQR-018",
+        "SQR-001",
+        "SQR-006",
+        "ATS-064"
+      ],
+      "compiled_plan_unit_ids": [
+        "SQR-018",
+        "SQR-001",
+        "SQR-006",
+        "ATS-064"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-008"
     }
   ],
   "terminal_ledger_event_id": null,
-  "notes": "Each item names the owner PlanUnits the line compiled into (compiled_plan_unit_ids, fenced units only) and, in target_plan_unit_ids, any heading-only unit it amended in place (CDRY-008). In-place prose amendments outside PlanUnits are listed in source_shards/findings.md. No companion outputs in this pass."
+  "notes": "Each item names the owner PlanUnits the line compiled into (compiled_plan_unit_ids, fenced units only) and, in target_plan_unit_ids, any heading-only unit it amended in place (CDRY-008). In-place prose amendments outside PlanUnits are listed in source_shards/findings.md. queue-007 is the closure wave (B-SQR-05, DL-136): SQR-018 and ATS-064 are new, SQR-001 and SQR-006 are amended in place, and the Assistant_Plan_Runtime.md section 3 sentences sits outside any PlanUnit. Companion outputs of the B-SQR-09 task are named in q-002; the closure wave wrote none."
 }

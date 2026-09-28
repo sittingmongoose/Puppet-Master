@@ -306,6 +306,8 @@ DL-114's entry still said the check had not been recorded while its next paragra
 
 Repairs DL-114 and DL-126.
 
+Superseded in part on 2026-09-27: the DL-126 half of this record is superseded by the closure wave (Records 41-43, dec-044). Jared confirmed the answer, DL-126 now carries the Owner resolution, and ELI5 compiles from it.
+
 ## Record 38 — CO-07: Per-family motion principle in the wand modules GUI contract
 
 Line: COORD DL-113 principle into the GUI contract (the token values stay OUT with B-FGS-19).
@@ -333,3 +335,158 @@ Line: B-ACD-02 (disclosure wording) and B-FGS-04 (the rule tick); ledger questio
 ACD-477 and F3-579 said the wording of the reply tick for taught rules was not set because DL-116 was open, and F3-570 showed a tick whenever taught rules were included in the reply's context, which the ruling forbids: inclusion alone is not following. The lead ruled on DL-116 (recorded in both Decision Log sections) and assistant-memory-subsystem AMS-053 defines following. ACD-477 now states the rule note and its three cases, F3-570 replaces the inclusion tick with the rule note and keeps the 40 px budget, F3-579 points to F3-570, and section 5 of the 2026-09-03 contract names both notes.
 
 Repairs ACD-477, F3-570 and F3-579. The section 5 sentence is prose outside any PlanUnit.
+
+# Closure wave: ELI5 compiled after Jared's confirmation (DL-126)
+
+Each record below compiles the ELI5 lines of group G5, which waited on card p08 until Jared confirmed the design lead's answer in chat on 2026-09-27 (DL-126; ANSWERS-20260927-final.json SHA-256 `33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5`). DL-136 and DL-137 were answered at the same time; no G5 line waits on them, so they are decision records only (see authorization.md).
+
+## Record 41 — ACD-01: ELI5 resolution order and forward-only switching
+
+Line: B-ACD-01 (card p08, E-11); ledger question q-001.
+
+Section 2 described chat ELI5 as a bare toggle with an OFF default and no project level, and did not say what a switch does to replies already written, while Settings and the chat section disagreed on the default because the tooltip Interaction Mode and the chat ELI5 default were not told apart. ACD-484 now states the three levels and their order (the chat override, the project default, the app default `general.interaction.eli5-default`), that a switch changes only later replies and never produces a second response, the per-reply Explain this reply simply action with `cmd.chat.eli5.explain_reply`, the popup and the quick dot, dual copy only for tooltips and help, and the guided tour re-point as an obligation on the tour owner. Section 2 and ACD-010's amendment line say the same in place. The project scope of the default is a Settings follow-up (q-015).
+
+Repairs ACD-484 and ACD-010. The section 2 sentences are prose outside any PlanUnit.
+
+## Record 42 — FGS-02 + FGS-03 + FGS-08: ELI5 sheet, quick dot, reply tick and the per-reply action
+
+Line: B-FGS-02 (the ELI5 mark), B-FGS-03 (the ELI5 mark) and B-FGS-08 (ELI5) (card p08, E-11); ledger question q-001.
+
+The GUI contract left out the ELI5 sheet and its size, the composer mark and the reply tick, and section 14 still called ELI5 a wand check. F3-581 now defines the compact 720 x 560 sheet (two voices, Follow my usual setting, the How it's decided trace with its Settings-owned nodes, the forward-only foot), the quick dot lit or muted with one click on or off, the Simple explanation tick and the style divider, and Explain this reply simply in a finished reply's message actions. F3-566 lists ELI5 among the compact sheets, F3-567 places the quick dot among the capability glyphs, F3-570 adds the tick, F3-572 keeps helper lines out of the dual-copy checklist, F3-531's and F3-532's amendment lines point to F3-581, and sections 3, 4, 5 and 14 say the same in place.
+
+Repairs F3-581, F3-566, F3-567, F3-570, F3-572, F3-531 and F3-532. The section 3, 4, 5 and 14 sentences are prose outside any PlanUnit.
+
+## Record 43 — CO-10: ELI5 acceptance checks
+
+Line: COORD ATS-065 (tests for B-ACD-01 and B-FGS-08, card p08, E-11).
+
+No test gated the ELI5 invariants, the most important being that a switch never adds or rewrites a reply. ATS-065 lists checks that read painted pixels or measured state: the three-level resolution and inherit, the reply count and earlier reply text before and after a switch, a streaming reply keeping its style, Explain this reply simply adding exactly one reply and refused while streaming, the sheet height, the quick dot, the tick, the divider and the dual-copy checklist. The tour's own ELI5 checks stay with the tour owner (q-016).
+
+Repairs ATS-065.
+
+# Tour ELI5 re-point (q-016, DL-126)
+
+## Record 44 — TOUR-01: the Guided Tour's ELI5 step no longer changes the example answer
+
+Line: C-21 (guided tour, card p08, E-11); ledger question q-016.
+
+The tour's Teacher step applied ELI5 to the already-visible answer, which DL-126 now forbids: a switch never re-sends, regenerates or rewrites a reply. The Planning_Wizard tour section (chapter description, reused-command list and evidence list), PWIZ-023 and F3-521 now show the example answer in simple words only through Explain this reply simply (`cmd.chat.eli5.explain_reply`), one extra, simpler reply after the example answer with the original unchanged, and point the callout to the quick dot, which makes later replies simple. The tour's own top-bar ELI5 is unchanged. Tour canon outside this compile is q-018. Three F3-521 acceptance items also gain the registered tokens `ELI5: Off`, `Skip Tour`, `ui.guided_tour.show_me` and `Finish tour`, which the unit's preserved_exact_tokens already listed but its text had lost before this compile (a pre-existing registry gap; wording only, no behaviour change).
+
+Repairs PWIZ-023 and F3-521. The Planning_Wizard section sentences are prose outside any PlanUnit.
+
+# Tour residual and contract-pair pointers (q-018, q-017 follow-ups, DL-126)
+
+## Record 45 — TOUR-02: tour acceptance still expected ELI5 to change the example answer
+
+Line: C-21 (guided tour, card p08, E-11); ledger question q-018.
+
+ATS-020 still accepted a Chat/Teacher step in which ELI5 changes the same answer, and F3-521's validation surface described the guided tour contract pair the same way, which DL-126 forbids. ATS-020 now requires Explain this reply simply (`cmd.chat.eli5.explain_reply`) to show that same answer in simple words as one extra, simpler reply with the original reply unchanged, lists that command beside the quick dot among the reused commands, and rejects a step that re-sends, regenerates or rewrites the example answer; F3-521's validation surface says the same of the contract pair.
+
+Repairs ATS-020 and F3-521. The Wiring_Matrix tour rows are recorded in ledger pldg-20260927-006.
+
+## Record 46 — ACC-01: the owners still said the assistant chat contract pair did not exist
+
+Line: B-ACD-14 (schemas, task 2); q-017 follow-ups.
+
+CS-087, a unit that ledger pldg-20260927-006-wand-command-census introduces on this branch (it is not on origin/main), said that until the schemas exist a named contract is a name only, although `Plans/assistant_chat_contracts.schema.json` and `Plans/assistant_chat_contract_fixtures.json` now exist, and neither the ELI5 owner nor the plans index pointed to them. CS-087 now says the file exists and defines the ELI5 pairs and the inherit member, keeps the name-only rule for any other name, and a line after ACD-484 points to the pair.
+
+Repairs ACD-484 and CS-087. The Plans/00-plans-index.md Change Summary entry is prose outside any PlanUnit. This record amends CS-087 as ledger pldg-20260927-006 introduces it, so it lands only together with that ledger.
+
+# Blind review, cycle 1 (findings R-01..R-20, 2026-09-27)
+
+A blind form-driven review read this ledger's units against origin/main and the authority files and reported 20 findings. The repairs below are prose only; the ledger-only corrections follow them. Findings the review left open for the owner or the lead are questions q-020 and q-021.
+
+## Record 47 — RV-01 + RV-02: the footer chips and their fan-out were still required
+
+Line: B-ACD-10/11 (footer pill, card p13, E-27); review findings R-01, R-02.
+
+ACD-435's canonical text and acceptance criteria still required the subagent chip, the files chip and the separator above the composer, and ACD-436 still required their fan-out, while ACD-482 and DL-129 remove them; only a stale_retired_dispositions line said so. ACD-435 now says the chips and separator no longer render and keeps the problems row and the rewind rule; ACD-436 is superseded by ACD-482 and kept as lineage. Both list ACD-482 in unblocks, reciprocal to its depends_on.
+
+Repairs ACD-435 and ACD-436.
+
+## Record 48 — RV-03 + RV-04: sheets whose changes apply at once
+
+Line: COORD UIW-025, B-FGS-01; review findings R-03, R-04.
+
+UIW-025 said every sheet control writes a draft that one primary commits and every close discards the draft, while F3-566 and F3-581 define sheets whose changes apply at once with only Done, and F3-566's anatomy acceptance required a hero and questions the ELI5 sheet does not have. UIW-025 now names the apply-at-once exception, and F3-566's acceptance item scopes the full anatomy to sheets with a committing primary (lead ruling from DESIGN-SPEC section 8.13).
+
+Repairs UIW-025 and F3-566.
+
+## Record 49 — RV-05: a stand-in sentence DL-121 does not carry
+
+Line: B-FGS-12/13 with card p03 (E-03); review finding R-05.
+
+F3-580's short team list kept a stand-in sentence under a helper row, and DR-044 named stand-in phrases among the shared formatters, although DL-121 says no model stands in for a chosen helper and the design's stand-in sentence is not carried. Both now leave it out.
+
+Repairs F3-580 and DR-044.
+
+## Record 50 — RV-06: the Crew Auto note was not scoped to the project
+
+Line: COORD DL-135 (card p11, E-15); review finding R-06.
+
+DL-135 required the note whenever Crew Auto is turned on, although a chat's own check also turns it on for that chat and Collaborative_Workflows CWR-038 adds no note for it. DL-135 now scopes the note to turning Crew Auto on for the project, in both sections.
+
+Repairs DL-135.
+
+## Record 51 — RV-07 + RV-08 + RV-14: stale sentences in three Decision Log entries
+
+Line: COORD DL-110, DL-111, DL-134; review findings R-07, R-08, R-14.
+
+DL-110 and DL-134 still said they needed lead follow-up before their waiting lines compile, although this ledger compiled from both, and DL-111 repeated a sentence and said no register line waits on it while B-FGS-05 compiled its colour into F3-569. DL-134 now states the lead's follow-up (only the Save as default label compiles; its storage stays with Settings); DL-110 says the pairing confirmation was asked, is not recorded and is open (q-020); DL-111 names B-FGS-05 and F3-569.
+
+Repairs DL-110, DL-111 and DL-134.
+
+## Record 52 — RV-17: where a finished run's Message sits
+
+Line: COORD DL-123 (card p05, E-05); review finding R-17.
+
+DL-123's entry said a finished run's Message button stays visible where shown, while F3-569 moves it into More as a disabled item on a result face or receipt. DL-123 now follows DESIGN-SPEC section 7.9, as F3-569 does (lead ruling from DESIGN-SPEC section 7.9).
+
+Repairs DL-123.
+
+## Record 53 — RV-19: the terminal state of a run that reaches its limit
+
+Line: COORD DL-131 (card p16, E-33); review finding R-19.
+
+DL-131 called a limit-reached run the terminal stopped run, although the Collaborative Workflows compile settles it in the existing terminal state cancelled with a limit stop_reason. DL-131 now names that state and stop reason in both sections.
+
+Repairs DL-131.
+
+## Record 54 — RV-16: what Jared's ELI5 confirmation contains
+
+Line: COORD DL-126 (card p08, E-11); review finding R-16.
+
+DL-126's Owner resolution attributed to Jared details the recorded resolution does not contain. Both sections now keep the recorded resolution under Owner resolution and attribute the resolution order's app default, the refusal while a reply streams, the tour re-point and the command ids to a separate compile-details paragraph.
+
+Repairs DL-126.
+
+## Record 55 — RV-09 + RV-10: the tour callout and the obligation's status
+
+Line: C-21 (guided tour, card p08, E-11); review findings R-09, R-10.
+
+PWIZ-023 did not point the callout to the quick dot, which Record 44 said it did, neither tour unit named the ELI5 popup DL-126 re-points the tour to, and ACD-484 still presented the re-point as outstanding. PWIZ-023 and F3-521 now point the callout to the quick dot and name the ELI5 popup behind the wand's ELI5 row; ACD-484 says which units carry the re-point and what remains (q-018).
+
+Repairs PWIZ-023, F3-521 and ACD-484.
+
+## Record 56 — RV-12: the component list correction had no record
+
+Line: ledger question q-019 (lead ruling 2026-09-27); review finding R-12.
+
+The lead's q-019 ruling corrected ACD-462 (the component list is message content, never a destination, with no destination_kind), but no record covered it and q-019 was still open. q-019 is answered by that ruling, and ACD-462 now registers its two tokens and cites the ruling in its lineage.
+
+Repairs ACD-462.
+
+## Record 57 — RV-20: which ELI5 setting is the app default
+
+Line: B-ACD-01 (card p08, E-11); review finding R-20.
+
+ACD-010 spoke of two separate ELI5 toggles while its amendment introduced an app default easy to confuse with the app-level toggle. The amendment now names the chat override and the app default settings and says the app default is a level of chat ELI5's resolution, not the Interaction Mode toggle.
+
+Repairs ACD-010.
+
+## Ledger-only corrections from the review (no owner text)
+
+- Finding R-11: authorization.md now lists the owner documents and the ATS reservation later waves added, with their basis; atom-g5-t-tour-01's negative constraint is scoped to its own wave, so it no longer contradicts atom-g5-t-tour-02.
+- Finding R-13: Record 46 and cor-046 now say CS-087 is a unit ledger pldg-20260927-006 introduces and that this ledger's amendment lands with it.
+- Finding R-15: atom-g5-f-co-06, Record 37 and the authorization's E-11 sentence are marked superseded by the closure wave (Records 41-43, dec-044).
+- Finding R-18: open question q-021 (motion scoping of F3-566 against ACD-475).

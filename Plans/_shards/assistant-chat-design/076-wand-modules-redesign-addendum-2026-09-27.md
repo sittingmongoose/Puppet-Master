@@ -2,15 +2,15 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26306-L26871
+Source lines: L26316-L26988
 
-Source SHA256: `237cebfbbbf9d667e88e2df927335d28e9273018bc7b1e209c31b12359719c2e`
+Source SHA256: `c0598b7cd330cb81288c38ca4b6a84c5c384b981cceeb49af40429a0507db3ff`
 
 ---
 
 ## Wand Modules Redesign Addendum (2026-09-27)
 
-This addendum carries the chat-behaviour parts of the redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room, BrainStorm, Review, Crew Auto, Back Seat Driver, Schedule Message, Build At, the Scheduled and Automations manager, Memory, Teach, Revert Last Agent Edit, ELI5, New chat defaults and chat titles) into this owner. The source is the frozen design specification `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md` (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`) under Jared's instruction of 2026-09-27 and his amendments J-1 and J-2 (DL-109); the 5.6 Pro concept is source lineage only. The family each record takes in the transcript is ACD-469's map and is never restated here, and the assistant-turn stream vocabulary is EP-128's. The run cards, notes, schedule cards and memory traces themselves belong to their owners (Collaborative_Workflows, Back_Seat_Driver, Scheduling_and_Quota_Resume, assistant-memory-subsystem); the GUI contract is FinalGUISpec F3-566 through F3-577. Where a unit below settles only part of a question it says which part; the rest waits for Jared's answer and is not implied. ACD-481 to ACD-483 and the later amendments to ACD-476, ACD-477 and ACD-479 compile the answers Jared gave on the decision cards (DL-125, DL-127, DL-129, DL-130 and DL-134). The design lead's rulings of 2026-09-27 on two of those answers are compiled as well: ACD-477 carries the reply's rule note of DL-116, with following defined by assistant-memory-subsystem AMS-053, and the v4 wand-contents paragraph carries the Crew Auto permission of DL-120, which Collaborative_Workflows CWR-004 and CWR-021 own. The ELI5 questions (DL-126) are still open.
+This addendum carries the chat-behaviour parts of the redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room, BrainStorm, Review, Crew Auto, Back Seat Driver, Schedule Message, Build At, the Scheduled and Automations manager, Memory, Teach, Revert Last Agent Edit, ELI5, New chat defaults and chat titles) into this owner. The source is the frozen design specification `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md` (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`) under Jared's instruction of 2026-09-27 and his amendments J-1 and J-2 (DL-109); the 5.6 Pro concept is source lineage only. The family each record takes in the transcript is ACD-469's map and is never restated here, and the assistant-turn stream vocabulary is EP-128's. The run cards, notes, schedule cards and memory traces themselves belong to their owners (Collaborative_Workflows, Back_Seat_Driver, Scheduling_and_Quota_Resume, assistant-memory-subsystem); the GUI contract is FinalGUISpec F3-566 through F3-577. Where a unit below settles only part of a question it says which part; the rest waits for Jared's answer and is not implied. ACD-481 to ACD-483 and the later amendments to ACD-476, ACD-477 and ACD-479 compile the answers Jared gave on the decision cards (DL-125, DL-127, DL-129, DL-130 and DL-134). The design lead's rulings of 2026-09-27 on two of those answers are compiled as well: ACD-477 carries the reply's rule note of DL-116, with following defined by assistant-memory-subsystem AMS-053, and the v4 wand-contents paragraph carries the Crew Auto permission of DL-120, which Collaborative_Workflows CWR-004 and CWR-021 own. ACD-484 and section 2 compile ELI5 as Jared confirmed it on 2026-09-27 (DL-126): a project default that a chat's own override replaces for that chat, switching that changes only later replies, and "Explain this reply simply", which writes one extra reply only when asked.
 
 ### ACD-476 - Composer Dock And Per-Owner Attention Items
 
@@ -574,3 +574,110 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-125, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/assistant-chat-design.md#ACD-462
+
+### ACD-484 - ELI5 Chat Override Project Default And App Default With Forward-Only Switching
+
+```yaml
+plan_unit_id: ACD-484
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  ELI5 in a chat, as Jared confirmed it on 2026-09-27 (DL-126). A chat's ELI5 state is resolved in
+  this order: the chat override, otherwise the project default, otherwise the app default. The chat
+  override is the per-conversation setting `general.interaction.chat-eli5`, written only by
+  cmd.chat.eli5.set with on, off or inherit; inherit deletes the override, so the chat follows the
+  project default again. The app default is `general.interaction.eli5-default` (Explain Terms Everywhere), whose value Settings owns and registers as off. The project default is that same
+  setting at project scope and applies to every chat in the project that has no override of its
+  own; adding the project scope is a Settings follow-up, out of scope for the wand-modules compile,
+  and this unit states only the resolution order. Each assistant reply resolves the style once, when it starts, and records the style it was written in, Standard or Simple; a retry the user
+  asks for resolves the style again when the retry starts. Switching ELI5 changes only the replies
+  that start after the switch. It never re-sends, regenerates or rewrites an earlier reply, and a
+  reply still streaming at the moment of the switch finishes in the style it started with, so a switch never produces a second response. Each finished assistant reply may offer
+  Explain this reply simply. It dispatches cmd.chat.eli5.explain_reply with that reply's message id
+  and writes one extra reply, a simpler explanation of that reply, only when the user asks; the
+  command is refused while that reply is still streaming. The extra reply is an ordinary assistant
+  reply at the end of the thread that names the reply it explains and is written in Simple; it
+  never rewrites or replaces the reply it explains and changes no ELI5 setting. ELI5 is its own
+  small popup, the ELI5 sheet, opened from the wand's ELI5 row, and the quick dot by the message
+  box is the one-click on and off for the chat; FinalGUISpec F3-581 is their GUI contract. ELI5
+  changes only how answers are worded: code, plans, files and generated documents never change,
+  and Crew, Review and BrainStorm results stay technical. Dual copy: the Expert and ELI5 pair exists only for tooltips and help (section 2.2, FinalGUISpec F3-572), and the plain helper lines
+  under controls are single copy. The app-level Interaction Mode of section 2.2 is a separate
+  setting with its own default and is not one of the three levels. Obligation on the guided tour
+  owner: the guided tour teaches the retired one-click toggle and applies ELI5 to the same answer.
+  It must be re-pointed to the ELI5 popup and the quick dot, and because a switch never rewrites a
+  reply, a tour step that shows an answer explained simply may do so only through Explain this
+  reply simply, which adds one reply. The obligation covers the Planning_Wizard guided tour
+  chapter, FinalGUISpec F3-521, the Wiring_Matrix tour consumer rows, the Automated_Testing_System
+  tour acceptance items and the guided tour contract schema and fixtures; this unit edits none of
+  them. They carry the re-point as of 2026-09-27: Planning_Wizard PWIZ-023 and its tour chapter,
+  FinalGUISpec F3-521, Automated_Testing_System ATS-020, Wiring_Matrix WM-041 and the guided tour
+  contract pair. What still teaches the old behaviour is the touch closure tour action pin and the
+  concept tour source, which the tour owner changes together.
+gui_related: true
+gui_classification_reason: "Defines what a person's ELI5 choice changes in a chat, and the per-reply simpler explanation they can ask for."
+split_recommended: false
+depends_on: [ACD-010, DL-126, F3-572]
+unblocks: [F3-581, ATS-065]
+acceptance_criteria:
+  - "A chat with an override uses it; a chat without one uses the project default; a project without one uses the app default."
+  - "After a switch, every earlier reply keeps its text and no reply is re-sent, regenerated or rewritten."
+  - "A reply streaming during a switch finishes in the style it started with."
+  - "Explain this reply simply adds exactly one reply, leaves the explained reply unchanged and changes no ELI5 setting."
+  - "cmd.chat.eli5.explain_reply is refused for a reply that is still streaming."
+  - "No helper line under a control has an Expert and an ELI5 variant."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: eli5_second_response_or_rewrite
+reasoning_tier: high
+context_scope: chat_eli5
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Settings_System.md
+node_compile_hint:
+  mode: owner_behavior_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.13 and its amendments G-21 and G-34, section 10.1 item f"
+  - "IMPACT-REGISTER B-ACD-01 (card p08, E-11), C-21 (the guided tour), D-30 (retry re-resolves the style)"
+  - "Plans/Decision_Log.md#DL-126 (Owner resolution, Jared, 2026-09-27, confirmed in chat)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5) answer record p08"
+preserved_exact_tokens:
+  - "the chat override, otherwise the project default, otherwise the app default"
+  - "general.interaction.chat-eli5"
+  - "general.interaction.eli5-default"
+  - "Explain Terms Everywhere"
+  - "cmd.chat.eli5.set"
+  - "inherit"
+  - "cmd.chat.eli5.explain_reply"
+  - "Explain this reply simply"
+  - "a switch never produces a second response"
+  - "refused while that reply is still streaming"
+  - "resolves the style once, when it starts"
+  - "exists only for tooltips and help"
+  - "DL-126"
+  - "Plans/assistant_chat_contracts.schema.json"
+negative_constraints:
+  - "Do not re-send, regenerate or rewrite any reply because ELI5 was switched."
+  - "Do not produce a second response from a switch."
+  - "Do not let Explain this reply simply replace or edit the reply it explains."
+  - "Do not give helper lines under controls an Expert and an ELI5 variant."
+  - "Do not let ELI5 change code, plans, files or generated documents."
+  - "Do not define the Settings project scope here; Settings owns it."
+stale_retired_dispositions:
+  - "Section 2.1's 'A toggle in the chat UI', its bare 'Default: OFF' and 'a per-chat or per-session flag' are superseded by the three-level resolution in this unit (DL-126)."
+  - "FinalGUISpec 2026-09-03 section 14's 'ELI5 is a wand check' is superseded by the ELI5 sheet and the quick dot (FinalGUISpec F3-581)."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-126, ContractName:Plans/FinalGUISpec.md#F3-572, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Settings_System.md
+
+ELI5 contracts: `cmd.chat.eli5.set` (`ELI5ThreadOverrideRequest`, on, off or inherit) and `cmd.chat.eli5.explain_reply` (`ELI5ExplainReplyRequest`, `ELI5ExplainReplyResult`) validate against `Plans/assistant_chat_contracts.schema.json`, with fixtures in `Plans/assistant_chat_contract_fixtures.json`.

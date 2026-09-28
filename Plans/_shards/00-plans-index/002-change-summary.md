@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L12-L103
+Source lines: L12-L106
 
-Source SHA256: `82a304be29083a59453754406bc080e8ba645da86518408aa3f4ecd6d63dc8bd`
+Source SHA256: `4decb1ace12fef0a847a8a610cca09466d362fc78113282158d6a8b24f941ee2`
 
 ---
 
@@ -16,6 +16,9 @@ Source SHA256: `82a304be29083a59453754406bc080e8ba645da86518408aa3f4ecd6d63dc8bd
 
 - 2026-09-27: Registered `Plans/collaborative_workflows_contracts.schema.json` and `Plans/collaborative_workflows_contract_fixtures.json`, the owner schema that `Plans/Commands_System.md` names for every collaborative command, as the static contract family of `Plans/Collaborative_Workflows.md` §12 and the Wand Modules Redesign Addendum (`CWR-018`..`CWR-039`): the section 12 records, the participant disposition, the completion and participant activity projections, the team preset, and the request and result of every collaborative command including `cmd.chat_room.end` and `cmd.brainstorm.research_lead`. The pair joins the closed `CONTRACT_PAIRS` manifest of `scripts/pm-new-contracts-verify.py` and is registered as `ATS-062`. Fields that wait on an open owner question are not admitted. Static contract validation only: no writer, storage key, EventRecord, native handler or production wiring, every command stays `handler_unavailable`, and no readiness unlock or governance seal. Planning lineage is `Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/`.
   ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Automated_Testing_System.md#ATS-062, ContractName:Plans/Commands_System.md#CS-085
+
+- 2026-09-27: Registered `Plans/assistant_chat_contracts.schema.json` and `Plans/assistant_chat_contract_fixtures.json`, the owner schema that `Plans/Commands_System.md` (central table and `CS-087`) and `Plans/UI_Command_Catalog.md` (`UCC-156`, `UCC-174`, `UCC-175`) name for the assistant chat commands: the goal editor route, the composer destination set and clear, thread title regeneration, `cmd.chat.eli5.set` (`ELI5ThreadOverrideRequest`: on, off or inherit) and `cmd.chat.eli5.explain_reply` (`ELI5ExplainReplyRequest`/`ELI5ExplainReplyResult`: one extra reply, refused while the reply streams), owned by `Plans/assistant-chat-design.md` (`ACD-462`, `ACD-479`, `ACD-484`, DL-126). The pair joins the closed `CONTRACT_PAIRS` manifest of `scripts/pm-new-contracts-verify.py`. Static contract validation only: no writer, storage key, EventRecord, native handler or production wiring, no handler availability change, and no readiness unlock or governance seal. Planning lineage is `Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/`.
+  ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-484, ContractName:Plans/Commands_System.md#CS-087, ContractName:Plans/UI_Command_Catalog.md#UCC-174
 
 - 2026-09-23: Registered `Plans/back_seat_driver_contracts.schema.json` as the typed machine companion for the six `pm.bsd.*` record families declared by `Plans/Back_Seat_Driver.md` §16, with the central storage disposition row `scd.back_seat_driver.durable.v1` under new storage-plan unit `SP-318`. Routing/contract-materialization only: no physical family, no storage key, no EventRecord registration, no writer, and no handler availability or readiness change; the CS-078 `cmd.bsd.*` rows keep `handler_unavailable` and the command request/result definitions remain future owner-authored artifacts. The legacy `pm.shared_runtime.bsd_runtime_record.v1` completed-review summary is not extended.
   ContractRef: ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/storage-plan.md#SP-318, ContractName:Plans/Commands_System.md#CS-078

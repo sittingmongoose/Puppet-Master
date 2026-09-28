@@ -5712,31 +5712,34 @@
     },
     "assistant.redesign.w_051.chat_eli5_set": {
       "ui_element_id": "assistant.redesign.w_051.chat_eli5_set",
-      "ui_location": "Puppet Master Assistant > wand.eli5",
+      "ui_location": "Puppet Master Assistant > eli5_sheet",
       "ui_command_id": "cmd.chat.eli5.set",
       "handler_location": "handlers::assistant_chat::eli5_set",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.eli5.set names exactly one owner-adjudicated future target handlers::assistant_chat::eli5_set in Plans/Assistant Chat.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.chat.eli5.set names exactly one owner-adjudicated future target handlers::assistant_chat::eli5_set in Plans/assistant-chat-design.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_eli5_set.availability and state.assistant_redesign.chat_eli5_set.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: thread override. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: wand/chip/responses.",
         "Negative path is enforced: artifact content unchanged.",
+        "cmd.chat.eli5.set dispatches the typed request ELI5ThreadOverrideRequest and returns ELI5ThreadOverrideResult; the surfaces that may raise it are exactly: eli5_sheet, composer.",
+        "Producer rebind and value set (2026-09-27 wand-module closure, DL-126, UCC-175, WM-064): eli5_sheet (Standard or Simple, Follow my usual setting, and the This chat level of How it's decided) and composer (the ELI5 dot, the one-click on and off for this chat) are the only producers. The wand's ELI5 row only opens the ELI5 sheet and dispatches nothing, and the guided tour's ELI5 step consumes this same entry; no second ELI5 entry exists. ELI5ThreadOverrideRequest carries exactly one of on, off and inherit; inherit deletes this chat's override so the chat resolves chat override, else the project default, else the app default (general.interaction.chat-eli5, then the project scope of general.interaction.eli5-default, which is a Settings follow-up, then general.interaction.eli5-default). The sheet's All chats and project levels are Settings transactions, never this command. Each surface reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them.",
+        "Negative path (2026-09-27 wand-module closure, DL-126, UCC-175, WM-064): an ELI5 switch changes only replies that start after it. It never re-sends, regenerates or rewrites an earlier reply, a reply still streaming finishes in the style it started with, and a switch never produces a second response. A simpler version of a finished reply is only cmd.chat.eli5.explain_reply (UCC-174), a separate command, and only when the user asks.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.eli5.set: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Assistant Chat.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-051. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.chat.eli5.set: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/assistant-chat-design.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-051. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_eli5_set.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_eli5_set.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "thread override under Plans/Assistant Chat.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "thread override under Plans/assistant-chat-design.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/Assistant Chat.md",
+          "Plans/assistant-chat-design.md",
           "thread override"
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "Expose a stable role, name, description, and current state for cmd.chat.eli5.set in wand.eli5.",
+        "role_or_semantics": "Expose a stable role, name, description, and current state for cmd.chat.eli5.set in eli5_sheet and the composer ELI5 dot.",
         "keyboard_access": "Keyboard and pointer dispatch the identical typed request for cmd.chat.eli5.set only when available.",
         "focus_management": "Retain invoking focus while pending and settle to the exact initiating route, focus, and continuation.",
         "disabled_announcement": "Announce state.assistant_redesign.chat_eli5_set.disabled_reason, including handler_unavailable and command_not_registered, without secrets or raw output."
@@ -5763,6 +5766,11 @@
           "requirement": "Negative path. Prove the negative path holds: artifact content unchanged."
         },
         {
+          "test_id": "wiring.assistant_redesign.chat_eli5_set.no_rewrite",
+          "evidence_kind": "state_projection",
+          "requirement": "Negative path (DL-126, UCC-175). Prove on, off and inherit each change only replies that start after the switch: no earlier reply is re-sent, regenerated or rewritten, a streaming reply finishes in its starting style, and no second response is produced; inherit deletes the chat override and the chat then resolves to the project default, else the app default."
+        },
+        {
           "test_id": "wiring.assistant_redesign.chat_eli5_set.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role and name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement."
@@ -5770,7 +5778,8 @@
       ],
       "event_test_requirements": [
         "Assert cmd.chat.eli5.set records only its typed result, receipt, or projection and emits no unregistered persisted domain event.",
-        "Assert a refusal, a stale target, or an idempotent replay produces no duplicate durable effect."
+        "Assert a refusal, a stale target, or an idempotent replay produces no duplicate durable effect.",
+        "Assert cmd.chat.eli5.set with on, off or inherit writes only the chat override and emits no reply, regenerate, re-send or rewrite effect on any earlier message (DL-126)."
       ]
     },
     "assistant.redesign.w_052.chat_revert": {

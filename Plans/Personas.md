@@ -354,7 +354,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Personas.md#PE
 
 ContractRef: ContractName:Plans/Personas.md#PERSONA-VALIDATION, ContractName:Plans/orchestrator-subagent-integration.md
 
-Team Personas (2026-09-27, DL-133): `product-manager`, `architect`, `implementer`, `reviewer`, `critical-advisor` and `wonderer` are reserved first-party team Personas for collaboration teams and their presets (P-057). They are not protected core built-ins of the table above. Grill Me is a methodology Skill, not a Persona (P-058).
+Team Personas (2026-09-27, DL-133): `product-manager`, `architect`, `implementer`, `reviewer`, `critical-advisor` and `wonderer` are reserved first-party team Personas for collaboration teams and their presets (P-057). They are not protected core built-ins of the table above. Back Seat Driver's spelling `critical_advisor` normalizes to `critical-advisor` (P-057). Grill Me is a methodology Skill, not a Persona (P-058).
 
 ## 7. Relationship to the Persona registry and delegated-subagent registry
 
@@ -3554,6 +3554,8 @@ gui_related: true
 gui_classification_reason: The team Personas are offered in collaboration setup and presets, and their IDs key participant presentation.
 depends_on: [P-021, P-048, P-056]
 unblocks: []
+supersedes:
+  - P-048 product-manager exclusion only (DL-133); P-048's technical-writer, document-writer, project-manager and context-manager rules stay in force, which is why P-048 stays in depends_on
 acceptance_criteria:
   - The six IDs resolve in the Persona registry and can be selected for a collaboration participant slot and in team presets.
   - No user, project-local, global or imported Persona can take or shadow one of the six IDs.

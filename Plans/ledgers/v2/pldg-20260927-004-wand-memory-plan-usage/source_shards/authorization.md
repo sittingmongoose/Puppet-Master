@@ -52,3 +52,11 @@ part compiles and the rest stays an open question. Of the held range `P-057..P-0
 ## Lead ruling authority (2026-09-27)
 
 DL-116 left the definition of following to the Plans. The design lead ruled on it on the owner's behalf, citing his answer to card n07 (option B): a rule counts as followed when it was given to the assistant AND the finished reply passed that rule's check (the rule's testable statement compared with the reply); a failed check shows "Missed 1 of your rules" with a way to see which and ask for a fix; if no check could run, no tick. Author G46 compiled that ruling into AMS-053 (event evt-005, decision dec-008). The ruling reached the author in its task text and is not frozen as a file; the DL-116 entry in `Plans/Decision_Log.md` is G5's to annotate. AMS-053 uses the next free id of the reserved range `AMS-047..AMS-056`.
+
+## Blind review cycle 1 (2026-09-27)
+
+Blind form-driven review of ledger 004, cycle 1 of 2, findings R-01..R-10 (reviewer output findings.jsonl, SHA-256 b963f2283d0461f23aa30dd9506974e29623b688a91f9622a9be81d66f68e1e9; not frozen as evidence). Three should_fix findings were repaired in this ledger's own units (event evt-006, decision dec-009); seven note findings are open questions q-008..q-014. The UF-106 repair relies on canon already in Plans/Collaborative_Workflows.md (CWR-029 and the run states paragraph), compiled from the lead's DL-131 follow-up by ledger 001.
+
+## Blind review cycle 1, lead pass (2026-09-27)
+
+Canon lead's pass over the blind review cycle 1 open items of ledger 004 (2026-09-27). One lead ruling from the approved design spec (DESIGN-SPEC §8.10, /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.10 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)) compiled into AMS-049; record and reference hygiene in P-057, Personas §6 and the AMS addendum intro (event evt-007, decision dec-010, corrections corr-019..022). Nothing the spec or an owner answer does not state was compiled.

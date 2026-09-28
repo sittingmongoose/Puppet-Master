@@ -1,14 +1,17 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-003-wand-scheduling",
-  "updated_at_utc": "2026-09-27T22:10:00+00:00",
+  "updated_at_utc": "2026-09-27T23:40:00+00:00",
   "open_questions": [
-    "q-001",
     "q-003",
     "q-004",
-    "q-005"
+    "q-005",
+    "q-006"
   ],
-  "answered_questions": [],
+  "answered_questions": [
+    "q-001",
+    "q-002"
+  ],
   "open_blockers": [],
   "deferred_questions": [],
   "deferred_items": [],
@@ -18,6 +21,10 @@
     "SQR-014",
     "SQR-015",
     "SQR-016",
-    "SQR-017"
+    "SQR-017",
+    "SQR-018",
+    "SQR-001",
+    "SQR-006",
+    "ATS-064"
   ]
 }

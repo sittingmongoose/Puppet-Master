@@ -19,6 +19,7 @@ and where "Save as my default" is stored). The plans canon compile is inside tha
 - Coordination with the Chat WOW thread (binding): `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/COORDINATION.md`, SHA-256 `0bbcd8a1649f0e90dd93a5a18966c7a344442a8a99d1bb714afe91f8d168f076`.
 - Owner decision cards: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`.
 - Owner answers (2026-09-27, WAIT wave): `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`, recorded in `Plans/Decision_Log.md` as DL-110 (card n01, E-10), DL-122 (card p04, E-04) and DL-130 (card p15, E-32) for this ledger. Agent-relayed; not verifiable from inside this repository.
+- Command reconciliation (rows N-2 and N-3, D-09, D-11, source of BSD-037's request names, errors and handler targets; added by the lead pass after blind review note R-12): `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md`, SHA-256 `1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f`.
 
 ## Scope of this ledger
 

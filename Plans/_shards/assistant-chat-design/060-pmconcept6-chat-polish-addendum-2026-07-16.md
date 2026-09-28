@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L23962-L24183
+Source lines: L23965-L24189
 
-Source SHA256: `237cebfbbbf9d667e88e2df927335d28e9273018bc7b1e209c31b12359719c2e`
+Source SHA256: `c0598b7cd330cb81288c38ca4b6a84c5c384b981cceeb49af40429a0507db3ff`
 
 ---
 
@@ -20,21 +20,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The collapsed chat stream footer pill shows a subagent chip (status dot plus label) that
-  opens the footer fan-out, and a files chip summarizing the thread's touched files: a single
-  file renders as its path with +N added and -N removed line totals, and multiple files render
-  as "N file changes" with aggregate totals. A middle-dot separator renders between the chips
-  when both are visible, and chips shrink with label ellipsis on long content. Threads with
-  diagnostics also render a problems row that links to the Problems bottom tab. Rewind
+  Amended 2026-09-27 (DL-129, ACD-482): the collapsed chat stream footer pill no longer shows
+  the subagent chip (status dot plus label) that opened the footer fan-out, the files chip that
+  summarized the thread's touched files (one file as its path with +N added and -N removed line
+  totals, several as "N file changes" with aggregate totals), or the middle-dot separator between
+  them. Live runs are dock lines (ACD-476), each reply that changed files has its own files row
+  (ACD-478), and the thread's total file count is in Activity's Changes domain. Threads with
+  diagnostics render a problems row that links to the Problems bottom tab. Rewind
   actions live in the composer rewind FAB and never render in the stream footer.
 gui_related: true
-gui_classification_reason: Defines visible chat footer chip content and routing behavior.
+gui_classification_reason: Defines visible chat footer content and routing behavior.
 depends_on: [ACD-013, ACD-058, ACD-059, ACD-216, ACD-217]
-unblocks: []
+unblocks: [ACD-482]
 acceptance_criteria:
-  - "The subagent chip renders a status dot plus label, shrinks with ellipsis, and opens the footer fan-out on activation."
-  - "The files chip renders one file as path with +N and -N totals and multiple files as N file changes with aggregate totals, with added totals styled distinctly from removed totals."
-  - "A middle-dot separator renders only when both chips are visible."
+  - "No subagent chip, files chip or middle-dot separator renders in the footer pill or above the composer (DL-129, ACD-482)."
   - "Threads with diagnostics render a problems row that opens the Problems bottom tab scoped to the thread's diagnostics."
   - "No rewind affordance renders in the footer."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
@@ -76,9 +75,13 @@ owner_hints:
 ```yaml
 plan_unit_id: ACD-436
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/assistant-chat-design.md
+superseded_by: ACD-482
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Superseded
+  2026-09-27 by ACD-482 (DL-129): the footer chips are gone, so their fan-out is retired, and none
+  of the acceptance criteria below binds a build. The text below is retained for lineage only.
   Activating a footer chip expands an upward fan-out menu anchored to the footer pill. File
   items open the corresponding editor diff tabs. Subagent items scroll the stream to the
   matching subagent card and flash-highlight it. Only one fan-out is open at a time, and the
@@ -86,7 +89,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines visible footer fan-out menu behavior.
 depends_on: [ACD-435, ACD-151, ACD-152, ACD-155]
-unblocks: []
+unblocks: [ACD-482]
 acceptance_criteria:
   - "Footer chips expand an upward fan-out menu anchored to the pill."
   - "File items open editor diff tabs for the selected file."

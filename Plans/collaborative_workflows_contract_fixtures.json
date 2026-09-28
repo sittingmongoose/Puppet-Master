@@ -301,6 +301,7 @@
         "requested_effective_snapshot_ref": "snap-crew-0001",
         "admission_source": "user",
         "crew_auto_revision": null,
+        "stop_reason": null,
         "created_at": "2026-09-27T12:00:00Z",
         "completed_at": null
       }
@@ -330,6 +331,7 @@
         "requested_effective_snapshot_ref": "snap-crew-0002",
         "admission_source": "crew_auto",
         "crew_auto_revision": 4,
+        "stop_reason": null,
         "created_at": "2026-09-27T12:00:00Z",
         "completed_at": null
       }
@@ -359,8 +361,73 @@
         "requested_effective_snapshot_ref": "snap-crew-0003",
         "admission_source": "build_with_crew",
         "crew_auto_revision": null,
+        "stop_reason": null,
         "created_at": "2026-09-27T12:00:00Z",
         "completed_at": null
+      }
+    },
+    {
+      "name": "run_cancelled_by_user",
+      "definition": "CollaborativeRun",
+      "value": {
+        "schema_id": "pm.collaboration.run.v1",
+        "schema_version": "1.0.0",
+        "collaboration_run_id": "crun-crew-0004",
+        "collaboration_id": "collab-crew-0001",
+        "definition_revision": 2,
+        "kind": "crew",
+        "parent_run_id": null,
+        "assistant_plan_id": null,
+        "plan_version": null,
+        "goal_id": null,
+        "state": "cancelled",
+        "participant_run_refs": [
+          "prun-5",
+          "prun-6"
+        ],
+        "coordinator_run_ref": "prun-coord-2",
+        "transcript_ref": "ctx-crew-0004",
+        "artifact_refs": [],
+        "usage_group_ref": "usage-crew-0004",
+        "requested_effective_snapshot_ref": "snap-crew-0004",
+        "admission_source": "user",
+        "crew_auto_revision": null,
+        "stop_reason": "user_cancel",
+        "created_at": "2026-09-27T12:00:00Z",
+        "completed_at": "2026-09-27T12:10:00Z"
+      }
+    },
+    {
+      "name": "run_stopped_at_cost_limit",
+      "definition": "CollaborativeRun",
+      "value": {
+        "schema_id": "pm.collaboration.run.v1",
+        "schema_version": "1.0.0",
+        "collaboration_run_id": "crun-crew-0005",
+        "collaboration_id": "collab-crew-0001",
+        "definition_revision": 2,
+        "kind": "crew",
+        "parent_run_id": null,
+        "assistant_plan_id": null,
+        "plan_version": null,
+        "goal_id": null,
+        "state": "cancelled",
+        "participant_run_refs": [
+          "prun-7",
+          "prun-8"
+        ],
+        "coordinator_run_ref": "prun-coord-3",
+        "transcript_ref": "ctx-crew-0005",
+        "artifact_refs": [
+          "artifact-crew-0005"
+        ],
+        "usage_group_ref": "usage-crew-0005",
+        "requested_effective_snapshot_ref": "snap-crew-0005",
+        "admission_source": "user",
+        "crew_auto_revision": null,
+        "stop_reason": "limit_cost",
+        "created_at": "2026-09-27T12:00:00Z",
+        "completed_at": "2026-09-27T12:30:00Z"
       }
     },
     {
@@ -691,6 +758,60 @@
         "verb": "Finished",
         "quote_source_id": "cmsg-0042",
         "since": "2026-09-27T12:00:00Z"
+      }
+    },
+    {
+      "name": "activity_writing_live",
+      "definition": "ParticipantActivity",
+      "value": {
+        "schema_id": "pm.collaboration.participant_activity_projection.v1",
+        "schema_version": "1.0.0",
+        "participant_id": "prun-4",
+        "state": "working",
+        "verb": "Writing",
+        "live_message_id": "cmsg-0101",
+        "since": "2026-09-27T12:00:00Z"
+      }
+    },
+    {
+      "name": "activity_needs_you_keeps_live",
+      "definition": "ParticipantActivity",
+      "value": {
+        "schema_id": "pm.collaboration.participant_activity_projection.v1",
+        "schema_version": "1.0.0",
+        "participant_id": "prun-5",
+        "state": "needs_you",
+        "verb": "Waiting for your approval",
+        "decision_ref": "approval:79",
+        "live_message_id": "cmsg-0102",
+        "quote_source_id": "cmsg-0040",
+        "since": "2026-09-27T12:00:00Z"
+      }
+    },
+    {
+      "name": "in_progress_participant",
+      "definition": "CollaborationMessageInProgress",
+      "value": {
+        "schema_id": "pm.collaboration.message_in_progress_projection.v1",
+        "schema_version": "1.0.0",
+        "collaboration_message_id": "cmsg-0101",
+        "collaboration_run_id": "crun-crew-0001",
+        "sender_kind": "participant",
+        "sender_id": "prun-1",
+        "participant_slot_id": "collab-crew-0001-slot-1",
+        "attempt_id": "attempt-prun-1-1"
+      }
+    },
+    {
+      "name": "in_progress_coordinator",
+      "definition": "CollaborationMessageInProgress",
+      "value": {
+        "schema_id": "pm.collaboration.message_in_progress_projection.v1",
+        "schema_version": "1.0.0",
+        "collaboration_message_id": "cmsg-0103",
+        "collaboration_run_id": "crun-crew-0001",
+        "sender_kind": "coordinator",
+        "sender_id": "prun-coord"
       }
     },
     {
@@ -2090,6 +2211,7 @@
         "permission_snapshot_id": "perm-snap-01",
         "idempotency_key": "idem-0034",
         "causation_id": null,
+        "scope": "project",
         "enabled": true,
         "expected_crew_auto_revision": 3,
         "rules": {
@@ -2145,6 +2267,7 @@
         "observable_work_ref": null,
         "error": null,
         "replay_of": null,
+        "scope": "project",
         "enabled_after": true,
         "crew_auto_revision": 4,
         "settings_transaction_ref": "settings-tx-0001"
@@ -2167,6 +2290,7 @@
         "permission_snapshot_id": "perm-snap-01",
         "idempotency_key": "idem-0035",
         "causation_id": null,
+        "scope": "thread",
         "enabled": false,
         "expected_crew_auto_revision": 4
       }
@@ -2187,6 +2311,75 @@
         "observable_work_ref": null,
         "error": "configuration_required",
         "replay_of": null,
+        "scope": "thread",
+        "enabled_after": false,
+        "crew_auto_revision": null,
+        "settings_transaction_ref": null
+      }
+    },
+    {
+      "name": "crew_auto_set_thread_on",
+      "definition": "CrewAutoSetRequest",
+      "value": {
+        "schema_id": "pm.collaboration.crew_auto_set_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.crew_auto.set",
+        "command_instance_id": "ci-0037",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "multi_agent_menu",
+        "correlation_id": "corr-0037",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0037",
+        "causation_id": null,
+        "scope": "thread",
+        "enabled": true,
+        "expected_crew_auto_revision": 4
+      }
+    },
+    {
+      "name": "crew_auto_set_result_thread_on",
+      "definition": "CrewAutoSetResult",
+      "value": {
+        "schema_id": "pm.collaboration.crew_auto_set_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.crew_auto.set",
+        "command_instance_id": "ci-0037",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0037"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "scope": "thread",
+        "enabled_after": true,
+        "crew_auto_revision": null,
+        "settings_transaction_ref": null
+      }
+    },
+    {
+      "name": "crew_auto_set_result_project_refused",
+      "definition": "CrewAutoSetResult",
+      "value": {
+        "schema_id": "pm.collaboration.crew_auto_set_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.crew_auto.set",
+        "command_instance_id": "ci-0038",
+        "committed": false,
+        "status": "refused",
+        "revision_after": null,
+        "currentness_hash_after": null,
+        "receipt_refs": [],
+        "observable_work_ref": null,
+        "error": "permission_denied",
+        "replay_of": null,
+        "scope": "project",
         "enabled_after": false,
         "crew_auto_revision": null,
         "settings_transaction_ref": null
@@ -2199,12 +2392,12 @@
         "schema_id": "pm.collaboration.crew_auto_config_route.v1",
         "schema_version": "1.0.0",
         "command_id": "cmd.chat.crew_auto.open_config",
-        "command_instance_id": "ci-0037",
+        "command_instance_id": "ci-0039",
         "project_id": "project:01",
         "thread_id": "thread:01",
         "actor_identity": "user:jared",
         "source_surface": "multi_agent_menu",
-        "correlation_id": "corr-0037",
+        "correlation_id": "corr-0039",
         "created_at": "2026-09-27T12:00:00Z"
       }
     },
@@ -2215,9 +2408,25 @@
         "schema_id": "pm.collaboration.route_result.v1",
         "schema_version": "1.0.0",
         "command_id": "cmd.chat.crew_auto.open_config",
-        "command_instance_id": "ci-0037",
+        "command_instance_id": "ci-0039",
         "route_ok": true,
         "error": null
+      }
+    },
+    {
+      "name": "crew_auto_config_route_from_note",
+      "definition": "CrewAutoConfigRoute",
+      "value": {
+        "schema_id": "pm.collaboration.crew_auto_config_route.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.crew_auto.open_config",
+        "command_instance_id": "ci-0040",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "crew_auto_receipt",
+        "correlation_id": "corr-0040",
+        "created_at": "2026-09-27T12:00:00Z"
       }
     }
   ],
@@ -2385,6 +2594,42 @@
       }
     },
     {
+      "name": "run_cancelled_without_stop_reason",
+      "base_valid": "run_cancelled_by_user",
+      "rejects_for": "stop_reason required on a cancelled run",
+      "reason": "stop_reason is set on every cancelled run (CWR-029, DL-131).",
+      "patch": {
+        "stop_reason": null
+      }
+    },
+    {
+      "name": "run_running_with_stop_reason",
+      "base_valid": "run_user_crew",
+      "rejects_for": "stop_reason only on a cancelled run",
+      "reason": "stop_reason is set on a cancelled run and on no other (CWR-029, section 12).",
+      "patch": {
+        "stop_reason": "user_cancel"
+      }
+    },
+    {
+      "name": "run_limit_stop_settles_failed",
+      "base_valid": "run_stopped_at_cost_limit",
+      "rejects_for": "stop_reason only on a cancelled run (a limit stop never settles failed)",
+      "reason": "A run that reaches its own limit settles cancelled, never failed, and gets no new run state (CWR-029, DL-131).",
+      "patch": {
+        "state": "failed"
+      }
+    },
+    {
+      "name": "run_stop_reason_open",
+      "base_valid": "run_stopped_at_cost_limit",
+      "rejects_for": "stop_reason closed enum",
+      "reason": "stop_reason is closed to user_cancel, limit_time, limit_cost and limit_tokens; reaching a limit is a stop reason, not an attention reason (CWR-029).",
+      "patch": {
+        "stop_reason": "limit_budget"
+      }
+    },
+    {
       "name": "message_sender_kind_open",
       "base_valid": "message_system_entry",
       "rejects_for": "sender_kind closed enum",
@@ -2493,7 +2738,7 @@
       "name": "completion_limit_reached_reason",
       "base_valid": "completion_coordinator_failed",
       "rejects_for": "attention_reason closed to six values",
-      "reason": "attention_reason is closed to six values; limit_reached waits on an owner decision and is not admitted (CWR-029, ledger q-007).",
+      "reason": "attention_reason is closed to six values; reaching a limit is a stop reason, not an attention reason (CWR-029, DL-131).",
       "patch": {
         "attention_reason": "limit_reached"
       }
@@ -2569,6 +2814,98 @@
       "reason": "Verbs change at state boundaries and tool events, never per token; streaming is not a presentation state (CWR-030).",
       "patch": {
         "state": "streaming"
+      }
+    },
+    {
+      "name": "activity_carries_streamed_text",
+      "base_valid": "activity_writing_live",
+      "rejects_for": "additionalProperties false (the projection never holds streamed text)",
+      "reason": "live_message_id only points at the message in progress; the projection never holds the streamed text (CWR-030, DL-137).",
+      "patch": {
+        "live_text": "Streaming the rows to a CSV"
+      }
+    },
+    {
+      "name": "activity_done_keeps_live_message",
+      "base_valid": "activity_done_with_quote",
+      "rejects_for": "live_message_id absent on done",
+      "reason": "live_message_id is absent once the message is written; the settled lane quotes it through quote_source_id (CWR-030, EP-130).",
+      "patch": {
+        "live_message_id": "cmsg-0042"
+      }
+    },
+    {
+      "name": "activity_failed_keeps_live_message",
+      "base_valid": "activity_writing_live",
+      "rejects_for": "live_message_id absent on failed",
+      "reason": "A message in progress whose attempt fails is discarded and leaves the lane, so live_message_id is absent (CWR-030, EP-131).",
+      "patch": {
+        "state": "failed"
+      }
+    },
+    {
+      "name": "in_progress_user_sender",
+      "base_valid": "in_progress_coordinator",
+      "rejects_for": "helper stream sender_kind closed to participant and coordinator",
+      "reason": "User messages never stream; only a participant or the coordinator writes a message in progress (EP-129).",
+      "patch": {
+        "sender_kind": "user"
+      }
+    },
+    {
+      "name": "in_progress_system_sender",
+      "base_valid": "in_progress_coordinator",
+      "rejects_for": "helper stream sender_kind closed to participant and coordinator",
+      "reason": "System messages never stream; only a participant or the coordinator writes a message in progress (EP-129).",
+      "patch": {
+        "sender_kind": "system"
+      }
+    },
+    {
+      "name": "in_progress_participant_without_attempt",
+      "base_valid": "in_progress_participant",
+      "rejects_for": "participant message in progress requires attempt_id",
+      "reason": "A participant's message in progress is bound to the attempt that is writing it, so a retry streams under a new id (EP-129, EP-131).",
+      "remove": [
+        "attempt_id"
+      ]
+    },
+    {
+      "name": "in_progress_participant_without_slot",
+      "base_valid": "in_progress_participant",
+      "rejects_for": "participant message in progress requires participant_slot_id",
+      "reason": "A participant's message in progress is shown only in its own slot's lane (EP-129, CWR-040).",
+      "remove": [
+        "participant_slot_id"
+      ]
+    },
+    {
+      "name": "in_progress_carries_text",
+      "base_valid": "in_progress_participant",
+      "rejects_for": "additionalProperties false (no partial text becomes a record)",
+      "reason": "The streamed text is presentation of a message in progress, never a second record; no partial text is persisted (EP-130, DL-137).",
+      "patch": {
+        "partial_text": "Streaming the rows to a CSV"
+      }
+    },
+    {
+      "name": "in_progress_carries_sequence",
+      "base_valid": "in_progress_participant",
+      "rejects_for": "additionalProperties false (sequence is assigned at the write)",
+      "reason": "A message in progress has no sequence; the sequence is assigned when the one CollaborationMessage is written (EP-130).",
+      "patch": {
+        "sequence": 7
+      }
+    },
+    {
+      "name": "in_progress_carries_recipients",
+      "base_valid": "in_progress_participant",
+      "rejects_for": "additionalProperties false (no participant receives a message in progress)",
+      "reason": "Only the user sees a message in progress; participants receive the message only once it is written (EP-129, EP-130).",
+      "patch": {
+        "recipient_ids": [
+          "prun-2"
+        ]
       }
     },
     {
@@ -3040,8 +3377,8 @@
     {
       "name": "crew_auto_enable_without_team",
       "base_valid": "crew_auto_set_enable",
-      "rejects_for": "enabling requires rules and team in the same request",
-      "reason": "One click, one command: the rules and the team are committed together (CWR-038).",
+      "rejects_for": "scope project requires rules and team in the same request",
+      "reason": "One click, one command: the Crew Auto sheet's primary commits the rules and the team together (CWR-038).",
       "remove": [
         "team"
       ]
@@ -3056,6 +3393,63 @@
       }
     },
     {
+      "name": "crew_auto_set_without_scope",
+      "base_valid": "crew_auto_set_enable",
+      "rejects_for": "CrewAutoSetRequest requires scope",
+      "reason": "CrewAutoSetRequest names its scope (CWR-038, DL-120).",
+      "remove": [
+        "scope"
+      ]
+    },
+    {
+      "name": "crew_auto_scope_open",
+      "base_valid": "crew_auto_set_enable",
+      "rejects_for": "scope closed to project and thread",
+      "reason": "CrewAutoSetRequest scope is closed as project | thread (CWR-038).",
+      "patch": {
+        "scope": "app"
+      }
+    },
+    {
+      "name": "crew_auto_thread_carries_rules",
+      "base_valid": "crew_auto_set_thread_on",
+      "rejects_for": "scope thread carries no rules or team",
+      "reason": "A chat's check sets only that chat's override of the project value; the rules and the team are committed only from the Crew Auto sheet (CWR-038).",
+      "patch": {
+        "rules": {
+          "complexity_threshold": "high",
+          "min_parallel_parts": 2
+        }
+      }
+    },
+    {
+      "name": "crew_auto_thread_from_sheet",
+      "base_valid": "crew_auto_set_thread_on",
+      "rejects_for": "scope thread is sent from a chat's check (multi_agent_menu)",
+      "reason": "The Crew Auto sheet's primary sends project; a chat's Crew Auto check sends thread (CWR-038).",
+      "patch": {
+        "source_surface": "crew_auto_modal"
+      }
+    },
+    {
+      "name": "crew_auto_project_from_check",
+      "base_valid": "crew_auto_set_enable",
+      "rejects_for": "scope project is sent from the Crew Auto sheet (crew_auto_modal)",
+      "reason": "A chat's check never changes the project value; only the Crew Auto sheet's primary sends project (CWR-038).",
+      "patch": {
+        "source_surface": "multi_agent_menu"
+      }
+    },
+    {
+      "name": "crew_auto_thread_claims_settings_transaction",
+      "base_valid": "crew_auto_set_result_thread_on",
+      "rejects_for": "scope thread is not a project Settings transaction",
+      "reason": "A chat's Crew Auto check sets only that chat's override and is not a project Settings transaction (CWR-038, MODAL-006..008).",
+      "patch": {
+        "settings_transaction_ref": "settings-tx-0003"
+      }
+    },
+    {
       "name": "crew_auto_parts_four",
       "base_valid": "crew_auto_set_enable",
       "rejects_for": "min_parallel_parts is 2 or 3",
@@ -3067,19 +3461,28 @@
     {
       "name": "crew_auto_on_without_settings_commit",
       "base_valid": "crew_auto_set_result_on",
-      "rejects_for": "enabled_after true requires a Settings transaction",
-      "reason": "The check appears only after a committed configuration and a successful project Settings commit (MODAL-006..008).",
+      "rejects_for": "scope project enabled_after true requires a Settings transaction",
+      "reason": "Turning Crew Auto on for the project succeeds only after a committed configuration and a successful project Settings commit (MODAL-006..008, CWR-038).",
       "patch": {
         "settings_transaction_ref": null
       }
     },
     {
       "name": "crew_auto_refused_with_transaction",
-      "base_valid": "crew_auto_set_result_configuration_required",
+      "base_valid": "crew_auto_set_result_project_refused",
       "rejects_for": "refusal commits no Settings transaction",
       "reason": "Cancel or refusal preserves the prior state; optimistic enabling is prohibited (MODAL-006..008).",
       "patch": {
         "settings_transaction_ref": "settings-tx-0002"
+      }
+    },
+    {
+      "name": "crew_auto_route_surface_open",
+      "base_valid": "crew_auto_config_route",
+      "rejects_for": "open_config surfaces closed to multi_agent_menu, workflow_modal and crew_auto_receipt",
+      "reason": "cmd.chat.crew_auto.open_config is dispatched from the multi-agent menu, the Crew sheet and the Crew Auto note's Change control (section 10, CWR-038).",
+      "patch": {
+        "source_surface": "composer"
       }
     },
     {

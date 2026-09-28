@@ -60,7 +60,8 @@ reached this ledger through the canon follow-up task (agent-relayed, not verifia
 are recorded as "Lead ruling applied" paragraphs in both Decision Log sections: E-18 (DL-112), E-22 (DL-113), E-36
 (DL-116), E-37 (DL-117), E-02 (DL-120) and E-33 (DL-131). E-24 is resolved as solid popups over a flat scrim (DL-114).
 E-11 stays open: the lead's answer to Jared's question is recorded in DL-126 as a proposal awaiting his confirmation,
-and nothing compiles from it. Card p11 (E-15) was answered option A at 2026-09-27T21:37:48Z, after the first Decision
+and nothing compiles from it. (Superseded by the closure wave below: Jared confirmed the answer, DL-126 carries the Owner
+resolution, and ELI5 compiles from it; dec-044, findings Records 41-43.) Card p11 (E-15) was answered option A at 2026-09-27T21:37:48Z, after the first Decision
 Log pass; its answer is in the lead's updated ANSWERS.json, SHA-256
 `d08c3551305290fafe43acaffd78d43f9f8d9cdb00a87e4d21bb34603a61969d`, and is recorded as DL-135. The Evidence copy
 cited above (SHA-256 `4f8d3b25…`) predates that answer.
@@ -77,3 +78,49 @@ check shows "Missed 1 of your rules" with a way to see which and ask for a fix; 
 tick. The behaviour stays with its owners (Collaborative_Workflows CWR-004, CWR-021 and CWR-038; AMS-053), and this
 ledger's units point to them. Questions q-013 and q-014 are closed by this compile. The project default of Crew Auto
 being on is a Settings change and is not made here.
+
+## Closure wave: owner answers E-11, E-19 and E-31 (2026-09-27)
+
+Jared settled the last three cards in chat on 2026-09-27. The answers are recorded in
+`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json`, SHA-256
+`33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5` (agent-relayed, not verifiable from inside this
+repository), and in `Plans/Decision_Log.md` by the closure wave's Decision Log author, not by this ledger.
+
+- DL-126 (card p08, E-11, card SHA-256 `dab0b89fb497bbad7b64c1ec6b564036c1b2cfcf6b97344cd6184e034f557791`): Jared confirmed the
+  design lead's answer to his question. ELI5 keeps a project-level default; a chat's own override replaces it for that chat;
+  switching changes only later replies and never produces a second response; "Explain this reply simply" writes one extra reply
+  only when asked; the popup with the quick dot; dual copy only for tooltips and help; the tour is re-pointed. Compiled here as
+  ACD-484, F3-581 and ATS-065 with in-place amendments; q-001 is closed.
+- DL-136 (card p12, E-19, option A, card SHA-256 `c7eaa3c2d9fd5ab08c974f68ec0fb9be955f5b66a7ebd73ad5cacf22e437b856`): a
+  project-wide pause of scheduled sends and builds that only the user clears, through `cmd.runtime.automation_pause.set`.
+  Record-only in this ledger; groups G3 and G6 compile it.
+- DL-137 (card p14, E-31, option A, card SHA-256 `57721ff4987cf0671822f08ca373077083ba39fc7f8310a951b23b3cd630efca`): live
+  helper text in running collaboration cards, reusing the reply streaming of EP-128; the finished message still lands once.
+  Record-only in this ledger; group G1 compiles it.
+
+Settings documents stay excluded by the owner. The project scope of `general.interaction.eli5-default` is recorded as q-015,
+"Settings follow-up (out of scope for the wand-modules compile)". The guided tour re-point is the tour owner's obligation,
+named in ACD-484 and recorded as q-016.
+
+## Tour ELI5 re-point and the assistant chat contract pair (2026-09-27)
+
+No new owner answer. The guided tour re-point is the obligation DL-126 (card p08, cost line "The tour needs re-pointing to the new
+popup.") and ACD-484 name, recorded as q-016 in the closure wave; it is compiled here under the same approval. The assistant chat
+contract pair is the companion that Commands_System and UI_Command_Catalog already route to (q-017). Remaining tour canon outside this
+compile is q-018; the component capture list destination kind is q-019.
+
+## Scope extensions after the first pass (recorded 2026-09-27, blind review cycle 1)
+
+The scope section above lists the five owner documents of the first pass. Later waves of this ledger, each assigned by the design lead
+in its task (agent-relayed, not verifiable from inside this repository), also edited these, and nothing else:
+
+- `Plans/Automated_Testing_System.md`: new ATS-065 (the ELI5 acceptance checks of DL-126, closure wave, evt-011) and ATS-020 (the tour
+  acceptance re-point, evt-014). Reserved ID range `ATS-065` (closure wave), recorded in `state/compile_queue.json`.
+- `Plans/Planning_Wizard.md`: PWIZ-023 and its guided tour section prose (the tour re-point DL-126 and ACD-484 name, evt-012, evt-016).
+- `Plans/Commands_System.md`: CS-087's companion sentence and registry (evt-014). CS-087 is a unit that ledger
+  `pldg-20260927-006-wand-command-census` introduces on this branch; this ledger's amendment of it lands only together with that ledger.
+- `Plans/00-plans-index.md`: one Change Summary entry registering the assistant chat contract pair (evt-014), prose outside any PlanUnit.
+
+Basis: DL-126 (card p08, Jared's confirmed resolution) and the card's cost line ("The tour needs re-pointing to the new popup.") for the tour and ELI5 checks,
+and the companion obligation q-017 for the contract pair pointers. atom-g5-t-tour-01's constraint against editing tour canon outside its
+wave applied to that wave only; atom-g5-t-tour-02 re-pointed the Automated_Testing_System tour checks afterwards.

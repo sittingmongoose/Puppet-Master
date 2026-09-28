@@ -1,16 +1,20 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-003-wand-scheduling",
-  "updated_at_utc": "2026-09-27T22:10:00+00:00",
-  "last_event_id": "evt-007",
+  "updated_at_utc": "2026-09-28T00:15:00+00:00",
+  "last_event_id": "evt-013",
   "canonical_plan_targets": [
     "Plans/Scheduling_and_Quota_Resume.md"
   ],
   "compiled_owner_docs": [
-    "Plans/Scheduling_and_Quota_Resume.md"
+    "Plans/Scheduling_and_Quota_Resume.md",
+    "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "compiled_plan_outputs": [
-    "Plans/Scheduling_and_Quota_Resume.md"
+    "Plans/Scheduling_and_Quota_Resume.md",
+    "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "governance_status": "not_requested",
   "latest_audit_ref": null,
@@ -20,17 +24,20 @@
     "compile_witness": "pass"
   },
   "planned_owner_docs": [
-    "Plans/Scheduling_and_Quota_Resume.md"
+    "Plans/Scheduling_and_Quota_Resume.md",
+    "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "reserved_id_ranges": {
     "SQR": "SQR-012..SQR-024",
     "SMSG": "SMSG-019..SMSG-024",
-    "PSCHED": "PSCHED-015..PSCHED-018"
+    "PSCHED": "PSCHED-015..PSCHED-018",
+    "ATS": "ATS-064"
   },
   "current_phase": "prose_compiled_pending_review",
   "cursor": {
-    "last_event_id": "evt-007",
-    "next_action": "Lead: regenerate shards and index once for all groups, run the blind form-driven review (cap two cycles). Open: q-001 (card p12, E-19, unanswered), q-003 (R-1 to Chat WOW), q-004 (stored grace_seconds and the occurrence summary shape), q-005 (plan_card on cmd.execution_window.cancel, for the command census)."
+    "last_event_id": "evt-013",
+    "next_action": "Lead: regenerate shards and index once for all groups; blind review cycle 1 repaired (R-01..R-11, evt-012), cycle 2 at most. Open: q-003 (R-1 to Chat WOW), q-004 (stored grace_seconds and the occurrence summary shape), q-005 (plan_card on cmd.execution_window.cancel, for the command census), q-006 (pause record storage registration, runtime.automation_pause_changed EventRecord, the command census's exclusion/wiring entry, tests/scheduling-verify.mjs)."
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/authorization.md",

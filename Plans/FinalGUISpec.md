@@ -35227,7 +35227,11 @@ canonical_text: >-
   Guided Tour teaches through successful actions over the mounted Puppet Master application in one stable chapter
   order: Assistant Chat with Teacher, workspace practice, then Planning Wizard. Chat opens through its real control;
   the learner sends the supplied local question, sees Teacher's answer stream in the same labeled guided-example
-  conversation, and applies ELI5 to that same answer. Workspace practice explains navigation and panels, asks the
+  conversation, and then sees that same answer in simple words through Explain this reply simply
+  (`cmd.chat.eli5.explain_reply`), which adds one extra, simpler reply after the example answer and never rewrites or
+  regenerates the original; the callout then points to the quick dot by the message box, which makes later replies
+  simple, and names the ELI5 popup behind the wand's ELI5 row (the ELI5 sheet, F3-581), where the chat's choice is set
+  (DL-126, ACD-484). Workspace practice explains navigation and panels, asks the
   learner to move/dock Chat and use a real widget, and shares state across docked/undocked views. Every important
   action offers Try it and Show Me; both invoke the same mounted owner handler and satisfy the same observed success
   predicate. Show Me uses interruptible pre-cue, visible travel, destination reaction, and settle, never teleportation
@@ -35258,29 +35262,29 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit owns the directed tour story, focus, overlay, choreography, and accessible presentation.
 split_recommended: false
-depends_on: [F3-520, PWIZ-023, ACD-431]
+depends_on: [F3-520, PWIZ-023, ACD-431, ACD-484, F3-581]
 unblocks: [F3-524]
 acceptance_criteria:
   - "The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current story."
   - "Every enabled Back or forward control moves exactly one valid story beat, remains reachable and visibly button-shaped, and preserves the scene's mounted state; a coached beat with a required real target advances only from that target's observed action rather than from unrelated clicks, elapsed time, or a generic forward control."
-  - "The brief opening introduces `ui.guided_tour.toggle_eli5` beside Pause and Skip and explains Reduced Motion; it reads `general.visual.reduce-animations` and directs changes to Settings without inventing a separate toggle or detour."
+  - "The brief opening introduces `ui.guided_tour.toggle_eli5` (labelled `ELI5: Off` until turned on) beside Pause and Skip Tour and explains Reduced Motion; it reads `general.visual.reduce-animations` and directs changes to Settings without inventing a separate toggle or detour."
   - "The Tour bar keeps the persistent Look menu (`Change the look`: four families plus Light/Dark) and sound control reachable by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`) at once with presentation-only effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference toggle beside `ui.guided_tour.toggle_eli5`."
   - "Workspace practice explains page navigation and panel purpose, asks the learner to move/dock Chat and add, move, resize, or focus a real widget, and makes the destination and persisted owner result readable. The temporary layout is reversible."
-  - "Every important action offers visible Try it and Show Me using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
+  - "Every important action offers visible Try it and Show Me (`ui.guided_tour.show_me`) using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
   - "Planning receives at least half of meaningful action count and meaningful dwell time, measured against a declared step census. The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
   - "The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved."
   - "Assistant Chat opens first through its real shell action and retains the same conversation when moved; successful Finish lands on the real Planning Wizard, not Chat, without starting work."
   - "Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution."
-  - "Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner detail; ELI5 uses clearer words, shorter structure, and less assumed knowledge without baby talk, forced metaphors, or inaccurate simplification. The same already-visible answer updates."
+  - "Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner detail; ELI5 uses clearer words, shorter structure, and less assumed knowledge without baby talk, forced metaphors, or inaccurate simplification. The already-visible answer never changes; the ELI5 version is one extra reply written by Explain this reply simply (`cmd.chat.eli5.explain_reply`, DL-126)."
   - "Every one of the current 47 supported Teacher topics is discoverable through compact categories, search, or grouped sample questions in the real Chat surface; the initial suggestions stay calm, but the full corpus is not hidden behind knowledge of an exact phrase. Unsupported questions offer relevant categories and examples rather than one tiny hard-coded list or an unrelated fallback answer."
   - "Teacher starts with the supplied question `What happens before Puppet Master changes my files?`; optional grouped questions remain discoverable without a checklist wall. An expanded library yields the callout where needed, stays keyboard-reachable, and restores the same beat on close without clipping or losing the target."
   - "Teacher says Safe History is local, Git or Jujutsu organizes that local timeline without a Git/Jujutsu account, FileSafe is complementary, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin can hold a separate optional online copy; it never calls Git or Jujutsu a shared home, account, website, or hosted copy."
-  - "The opening Teacher practice uses the real guide selector, Teacher selection, supplied prompt sent through the real composer, a streamed local same-conversation answer, and same-answer ELI5 before workspace practice; the thread is subtly labeled Guided example."
+  - "The opening Teacher practice uses the real guide selector, Teacher selection, supplied prompt sent through the real composer, a streamed local same-conversation answer, and same-answer ELI5 (Explain this reply simply adds one extra, simpler reply; the original reply is not rewritten, DL-126) before workspace practice; the thread is subtly labeled Guided example."
   - "The Guided example label is visible on the mounted conversation, not only its backing record. Guided text remains local when paused, in another chapter, or retained after completion/replay; composer shortcuts cannot dispatch web/tool/provider work. Late local-stream callbacks are fenced to their original session and conversation, and missing usage telemetry is not zero-use proof. Ordinary conversations keep their normal behavior."
   - "Every automatic non-interaction scene transition puts programmatic focus on the current h2 scene heading with tabindex=-1 and the documented programmatic-focus-landmark exemption; it never auto-focuses an action or opens a visual PMHoverTag, while exact coached interactions wait for the person to focus or activate the real target."
   - "Teacher practice uses the exact novice composer placeholder `Ask Teacher anything about Puppet Master…`; Skip reinstates the exact pre-tour placeholder and pre-tour layout rather than leaving Teacher copy or a partial tour arrangement behind."
   - "Visible headings, instructions, results, unavailable reasons, and buttons use novice-friendly outcome language; the internal term `shell`, raw command/route/schema IDs, receipt labels, and owner/provider/model/token jargon never appear in product copy."
-  - "Pause, Back, valid forward navigation, and Skip remain reachable and operational. Close/reload resumes the last safe step after owner-state revalidation. Skip restores captured layout/Chat state/focus; Finish restores by default and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard. Failed restoration exposes recovery, never false completion."
+  - "Pause, Back, valid forward navigation, and Skip remain reachable and operational. Close/reload resumes the last safe step after owner-state revalidation. Skip restores captured layout/Chat state/focus; Finish tour restores by default and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard. Failed restoration exposes recovery, never false completion."
   - "Effective Reduced Motion uses restrained transitions that preserve sequence and cause/effect, focus, hierarchy, announcements, and action parity. Settings changes are honored without discarding the step; hidden/collapsed surfaces stop decorative work and duplicate subscriptions."
   - "Callout and halo geometry is measured against the live target and viewport, remeasures after real layout changes, clamps to every edge, and never covers the target whenever any safe above/below/side placement or bounded callout shrink can avoid it; short/narrow fallback keeps both target and callout usable instead of accepting a misleading offset highlight."
   - "Guided Tour uses no left-edge color-rail callouts. Basic uses an exact instructional/blueprint director, Friendly an organic illustrated guide, Glass a spatial layered lens, and Retro a terminal/pixel director; these systems differ in silhouette, typography, target treatment, and choreography rather than just color."
@@ -35289,7 +35293,7 @@ acceptance_criteria:
   - "PMConcept7 browser behavior, effect receipts, and observed mounted-owner results remain concept_fixture_only evidence; they are not production command receipts, native Slint wiring, runtime certification, or product-readiness proof."
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first static presentation consumer; story/actions reference the v3 owner definitions)"
-  - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning, eleven-action, shared Show Me, same-answer ELI5, safe checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery or runtime acceptance)"
+  - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning, eleven-action, shared Show Me, same-answer ELI5 as one extra, simpler reply with the original reply unchanged, safe checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery or runtime acceptance)"
   - Concepts/pm7-tools/guided_tour_source.py authored guards
   - Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs scoped concept lifecycle checks, not native or final visual acceptance
   - future mounted-owner handler observation, focus, Skip restoration, completion disposition, and film review
@@ -35307,9 +35311,10 @@ source_lineage:
   - Concepts/pm7-tools/guided_tour_source.py
   - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/04_GUIDED_TOUR_REBUILD.md"
   - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md"
-preserved_exact_tokens: [Planning Wizard, Assistant Chat, Teacher, Guided example, "What happens before Puppet Master changes my files?", "Ask Teacher anything about Puppet Master…", ELI5, "ELI5: Off", Reduced Motion, general.visual.reduce-animations, ui.guided_tour.toggle_eli5, ui.guided_tour.show_me, programmatic-focus-landmark, Pause, Skip Tour, Back, Try it, Show Me, Finish tour, "Change the look", "Sound off — click to turn on", general.visual.theme, general.visual.theme-mode, general.interaction.sound-effects]
+preserved_exact_tokens: [Planning Wizard, Assistant Chat, Teacher, Guided example, "What happens before Puppet Master changes my files?", "Ask Teacher anything about Puppet Master…", ELI5, "ELI5: Off", Reduced Motion, general.visual.reduce-animations, ui.guided_tour.toggle_eli5, ui.guided_tour.show_me, programmatic-focus-landmark, Pause, Skip Tour, Back, Try it, Show Me, Finish tour, "Change the look", "Sound off — click to turn on", general.visual.theme, general.visual.theme-mode, general.interaction.sound-effects, Explain this reply simply, cmd.chat.eli5.explain_reply]
 negative_constraints:
   - "Do not build a tooltip carousel, parallel demo application, or five-chapter tour."
+  - "Do not rewrite, regenerate or replace the Teacher example answer for ELI5; its simpler version is one extra reply from Explain this reply simply (DL-126)."
   - "Do not clone live controls, fabricate success, or cancel owner work when a view closes."
   - "Do not use a provider, model, token budget, or protected AuthBrowserSession content for the deterministic lesson."
   - "Do not retain the superseded Usage-first/Chat-final film or revive the old five-chapter controller."
@@ -35970,7 +35975,7 @@ Selecting BrainStorm or either Review choice opens that workflow's configuration
 
 ### 3. Wand menu
 
-The wand keeps its existing capability entries and adds `Goal`, `BSD ▶`, `ELI5`, `Schedule Message…`, `Teach…` where discoverability helps, and `Revert Last Agent Edit` when eligible. A `Multi-Agent ▶` entry sidecars to `Crew…`, `Chat Room…`, a divider, `✓ Crew Auto`, `Crew Auto settings…`, and `Manage Defaults…` (F3-578, DL-119). `✓ Crew Auto` shows the Crew Auto permission in force for the chat and sets only that chat's override of the project value, which is on by default; there is no separate `Allow Crews in this chat` row (F3-578, DL-120). The BSD sidecar offers `Off`, `Auto · Default`, `On`, a divider, and `Configure…`, and its check state comes from the owner projection rather than a local-only checkbox. The BSD row itself shows the committed mode in title case (`Off`, `Auto`, `On`) beside a chevron, because it opens a sidecar, and the `Revert Last Agent Edit` row's helper line states its eligibility in words, for example `Nothing to revert yet` (F3-577).
+The wand keeps its existing capability entries and adds `Goal`, `BSD ▶`, `ELI5`, `Schedule Message…`, `Teach…` where discoverability helps, and `Revert Last Agent Edit` when eligible. A `Multi-Agent ▶` entry sidecars to `Crew…`, `Chat Room…`, a divider, `✓ Crew Auto`, `Crew Auto settings…`, and `Manage Defaults…` (F3-578, DL-119). `✓ Crew Auto` shows the Crew Auto permission in force for the chat and sets only that chat's override of the project value, which is on by default; there is no separate `Allow Crews in this chat` row (F3-578, DL-120). The BSD sidecar offers `Off`, `Auto · Default`, `On`, a divider, and `Configure…`, and its check state comes from the owner projection rather than a local-only checkbox. The BSD row itself shows the committed mode in title case (`Off`, `Auto`, `On`) beside a chevron, because it opens a sidecar, and the `Revert Last Agent Edit` row's helper line states its eligibility in words, for example `Nothing to revert yet` (F3-577). The `ELI5` row opens the ELI5 sheet and carries the ELI5 kind mark as its icon; it is not a check (F3-581, DL-126).
 
 Review stays in the primary mode selector and BrainStorm stays under Deep Plan; neither is duplicated as a first-class wand entry, though context actions may route to them. Schedule Message belongs in the wand, not in an Assistant overflow menu outside it.
 
@@ -35984,13 +35989,13 @@ A targeted composer adds a narrow ribbon inside the composer's top edge and tint
 
 When a provider quota wait is active, a compact in-flow strip sits below the activity and follow-up queue and above the composer, reading the paused reason, the reset time and its source, and an opt-in `Resume automatically` checkbox. It is in flow, not a full-width overlay, and must not collide with the activity bar or the decision host.
 
-Directly after the quota-wait strip sits the dock (ACD-476): at most three one-line items for runs, scheduled messages and advice whose own transcript item is off-screen, needs-you first. It is transient, reserves its own height in this stack, never floats over the transcript, and never collides with the floating Activity bar pill or the decision host; the transcript's bottom padding is measured with the dock present (F3-567). The dock's live-run lines and the files row under each reply replace the old summary above the composer of a helpers count and `N file changes` (ACD-482, DL-129); the thread's total file count is in Activity's Changes domain. Among the active capability glyphs, Back Seat Driver shows an ambient eye that reads the owner projection, and the Crew glyph is the Crew kind mark (F3-567).
+Directly after the quota-wait strip sits the dock (ACD-476): at most three one-line items for runs, scheduled messages and advice whose own transcript item is off-screen, needs-you first. It is transient, reserves its own height in this stack, never floats over the transcript, and never collides with the floating Activity bar pill or the decision host; the transcript's bottom padding is measured with the dock present (F3-567). The dock's live-run lines and the files row under each reply replace the old summary above the composer of a helpers count and `N file changes` (ACD-482, DL-129); the thread's total file count is in Activity's Changes domain. Among the active capability glyphs, Back Seat Driver shows an ambient eye that reads the owner projection, and the Crew glyph is the Crew kind mark (F3-567). The ELI5 quick dot sits with the capability glyphs in both of its states, lit while Simple explanations are in effect for the chat and muted while they are not, and one click turns this chat's ELI5 on or off (F3-581, DL-126).
 
 ### 5. Transcript attachments
 
 Attachments render inside their associated turn as compact visual objects and participate in the existing message-hover chrome: metadata and actions are hidden at rest on pointer-capable widths and always available at phone widths under the existing rule. There is no permanent `PNG · 2.8 MB` clutter. A project reference that changed since the message shows a compact stale badge on the object rather than a warning paragraph, with the historical revision explained on hover and both live and materialized versions in Details. Generated artifacts use the same card grammar and disclose version and producing workflow in Details.
 
-What a wand module attaches to an ordinary reply is one line each (F3-570): the files row under a reply that changed files (`Changed 3 files +5 −3 · Revert`), which is visible at rest, and the quiet ticks in the reply's meta row (a memory note taken; the rule note, `Followed 1 of your rules` for rules whose check the reply passed or `Missed 1 of your rules` when a check failed (DL-116); `Sent on schedule` on a message that a schedule sent), which follow that row's existing message-chrome visibility.
+What a wand module attaches to an ordinary reply is one line each (F3-570): the files row under a reply that changed files (`Changed 3 files +5 −3 · Revert`), which is visible at rest, and the quiet ticks in the reply's meta row (a memory note taken; the rule note, `Followed 1 of your rules` for rules whose check the reply passed or `Missed 1 of your rules` when a check failed (DL-116); `Sent on schedule` on a message that a schedule sent; `Simple explanation` on a reply written in Simple), which follow that row's existing message-chrome visibility. Each finished reply's message actions may offer `Explain this reply simply`, which adds one simpler reply at the end of the thread and never rewrites the reply it explains (F3-581, DL-126).
 
 ### 6. Plan card
 
@@ -36044,7 +36049,7 @@ The quota wait strip described in section 4 links to Usage detail from its reset
 
 `/teach`, natural language, the wand's `Teach…` and `Save as a rule…` all open the Teach sheet, prefilled with the proposed knowledge and its scope; the explicit capture card this sentence used to name is superseded and not planned (DL-127, F3-579). **It never changes the Persona to Teacher.** Teacher remains in the Persona picker as the Puppet-Master-explanation Persona. Ordinary automatic memory produces no constant pop-up; memory detail and history show source and verification under the existing owner behavior. Its only chat traces are a quiet tick in the reply's meta row when a note is taken and one verified tick when a check later proves it; a note going out of date makes no chat noise. These satisfy this rule (F3-574).
 
-ELI5 is a wand check with a conversation override while Settings owns the application default; it is not a one-shot "simplify this output" action. Selecting Debug mode must open and demonstrate the full Investigation Context and its eight-phase progression rather than merely changing the selected mode, with fixtures for target binding, evidence, repair, verification, cleanup, attention required and failed cleanup recovery. `Revert Last Agent Edit` appears in the wand, Changes, the message overflow and the files row under the reply that changed files when eligible, previews the exact files in one compact confirm sheet before dispatching the canonical whole-turn revert, reports each outcome as one receipt line, and stays distinct from Rewind in the thread and message overflow (ACD-478, F3-574).
+ELI5 is its own small sheet, opened from the wand's `ELI5` row, with the quick dot by the message box as the one-click on and off; a chat's own override replaces the project default, which replaces the app default that Settings owns (ACD-484, F3-581, DL-126). Switching ELI5 is not a one-shot "simplify this output" action and never rewrites a reply; the separate `Explain this reply simply` action on a finished reply writes one extra, simpler reply only when the user asks. The wand check this paragraph used to name is superseded. Selecting Debug mode must open and demonstrate the full Investigation Context and its eight-phase progression rather than merely changing the selected mode, with fixtures for target binding, evidence, repair, verification, cleanup, attention required and failed cleanup recovery. `Revert Last Agent Edit` appears in the wand, Changes, the message overflow and the files row under the reply that changed files when eligible, previews the exact files in one compact confirm sheet before dispatching the canonical whole-turn revert, reports each outcome as one receipt line, and stays distinct from Rewind in the thread and message overflow (ACD-478, F3-574).
 
 ### 15. Thread history and status
 
@@ -36108,7 +36113,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-Amended 2026-09-27: the BSD row's committed-mode shortcut and the Revert Last Agent Edit row's eligibility helper are specified in F3-577, and the Multi-Agent sidecar gains `Crew Auto settings…` beside an unchanged `Manage Defaults…` (F3-578, DL-119). The checkable Crew Auto is the assistant's permission to start a Crew by itself, on by default for a project; in a chat it shows and sets only that chat's override of the project value, and it is the chat's only Crew permission control, so the wand has no separate `Allow Crews in this chat` row (F3-578, DL-120, 2026-09-27). The wand's contents above are otherwise unchanged by the wand modules redesign; Review and BrainStorm keep the entry points stated above.
+Amended 2026-09-27: the BSD row's committed-mode shortcut and the Revert Last Agent Edit row's eligibility helper are specified in F3-577, and the Multi-Agent sidecar gains `Crew Auto settings…` beside an unchanged `Manage Defaults…` (F3-578, DL-119). The checkable Crew Auto is the assistant's permission to start a Crew by itself, on by default for a project; in a chat it shows and sets only that chat's override of the project value, and it is the chat's only Crew permission control, so the wand has no separate `Allow Crews in this chat` row (F3-578, DL-120, 2026-09-27). The wand's `ELI5` entry opens the ELI5 sheet rather than acting as a check (F3-581, DL-126, 2026-09-27). The wand's contents above are otherwise unchanged by the wand modules redesign; Review and BrainStorm keep the entry points stated above.
 
 ### F3-532 - Assistant Composer Tray, Destination Ribbon, And Quota Strip
 
@@ -36157,7 +36162,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-Amended 2026-09-27: F3-567 adds the dock (ACD-476) to this composer stack directly after the quota strip, with the same no-collision rule against the activity bar and the decision host, and the Back Seat Driver ambient eye and the Crew kind mark among the active capability glyphs.
+Amended 2026-09-27: F3-567 adds the dock (ACD-476) to this composer stack directly after the quota strip, with the same no-collision rule against the activity bar and the decision host, and the Back Seat Driver ambient eye and the Crew kind mark among the active capability glyphs. The ELI5 quick dot is among those glyphs in both of its states, lit or muted (F3-581, DL-126, 2026-09-27).
 
 ### F3-533 - Plan Card, Goal And To-Do Activity Surfaces, And Activity Domains
 
@@ -38548,7 +38553,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-469
 
 ## Wand Modules Redesign Addendum (2026-09-27)
 
-This addendum is the GUI contract for the redesigned Assistant wand popups and their in-chat presence, under Jared's instruction of 2026-09-27 and his amendments J-1 and J-2 (DL-109). Its source is the frozen design specification `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md` (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`); the 5.6 Pro concept is source lineage only, and its class names, keys and harness hooks are not canon. Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-476 through ACD-480, `Plans/Collaborative_Workflows.md`, `Plans/Back_Seat_Driver.md`, `Plans/Scheduling_and_Quota_Resume.md` and `Plans/assistant-memory-subsystem.md`. The transcript family map and the accent budget stay with ACD-469 and F3-562 (DR-043), and DR-044 names this addendum as the single owner of the wand modules' presentation grammar. Anything the units below leave unstated waits for Jared's answer and is not implied. F3-578 to F3-580 and the later amendments to F3-566, F3-567, F3-569, F3-571 and F3-575 compile the answers Jared gave on the decision cards (DL-110, DL-111, DL-114, DL-119, DL-122, DL-123, DL-127, DL-129 and DL-134), and F3-566 also states the per-family motion principle of DL-113 as the lead's ruling applied it. The lead's rulings on DL-120 and DL-116 are compiled too: F3-578, F3-531's amendment line, section 3 and the v4 MODAL paragraph make a chat's Crew Auto check the only per-chat Crew permission control, and F3-570 and F3-579 carry the reply's rule note (Followed, or Missed when a check failed). ELI5 (DL-126), the canon theme typography and the minimum chat width are still open.
+This addendum is the GUI contract for the redesigned Assistant wand popups and their in-chat presence, under Jared's instruction of 2026-09-27 and his amendments J-1 and J-2 (DL-109). Its source is the frozen design specification `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md` (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`); the 5.6 Pro concept is source lineage only, and its class names, keys and harness hooks are not canon. Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-476 through ACD-480, `Plans/Collaborative_Workflows.md`, `Plans/Back_Seat_Driver.md`, `Plans/Scheduling_and_Quota_Resume.md` and `Plans/assistant-memory-subsystem.md`. The transcript family map and the accent budget stay with ACD-469 and F3-562 (DR-043), and DR-044 names this addendum as the single owner of the wand modules' presentation grammar. Anything the units below leave unstated waits for Jared's answer and is not implied. F3-578 to F3-580 and the later amendments to F3-566, F3-567, F3-569, F3-571 and F3-575 compile the answers Jared gave on the decision cards (DL-110, DL-111, DL-114, DL-119, DL-122, DL-123, DL-127, DL-129 and DL-134), and F3-566 also states the per-family motion principle of DL-113 as the lead's ruling applied it. The lead's rulings on DL-120 and DL-116 are compiled too: F3-578, F3-531's amendment line, section 3 and the v4 MODAL paragraph make a chat's Crew Auto check the only per-chat Crew permission control, and F3-570 and F3-579 carry the reply's rule note (Followed, or Missed when a check failed). ELI5 is compiled as Jared confirmed it on 2026-09-27 (DL-126): F3-581 is its sheet, quick dot, reply tick and per-reply "Explain this reply simply" action, and F3-566, F3-570, F3-572, F3-531's and F3-532's amendment lines and sections 3, 4, 5 and 14 say the same in place. The canon theme typography and the minimum chat width are still open.
 
 ### F3-566 - Wand Modules Redesign GUI Contract And Sheet Grammar
 
@@ -38590,7 +38595,7 @@ canonical_text: >-
   Sizes are fixed per sheet: wide 1120 x 780
   (the collaboration kinds, the Scheduled and Automations manager, Memory), standard 900 x 720 (Back
   Seat Driver, Schedule Message, Build At, Teach) and compact 720 wide at a fixed height per sheet
-  (Revert and the small raw-data and evidence dialogs), always clamped inside the window (at most
+  (Revert, ELI5 and the small raw-data and evidence dialogs; F3-581 gives ELI5's), always clamped inside the window (at most
   its width less 48 px and its height less 40 px). A sheet never resizes or re-centres while open.
   The common case never scrolls at 1440 x 900 or 1280 x 800: the plate yields first as the roster
   grows (full at 1 to 3 rows, compact at 4, a strip at 5 or 6, one sentence at 7 or 8) and grows
@@ -38621,7 +38626,7 @@ split_recommended: false
 depends_on: [DL-109, DL-113, DL-114, DL-115, ACD-475, F3-431, F3-531, F3-534]
 unblocks: [F3-567, F3-568, F3-569, F3-570, F3-573, F3-574, F3-576, F3-579, DR-044]
 acceptance_criteria:
-  - "Every wand configuration popup renders the head, hero, plate, questions and foot anatomy with one primary."
+  - "Every wand configuration popup with a committing primary renders the head, hero, plate, questions and foot anatomy with one primary; a sheet whose changes apply at once (the ELI5 sheet, F3-581) keeps the head, plate and foot, may have no hero or questions, and its foot shows only Done."
   - "No sheet scrolls in its common case at 1440 x 900 or 1280 x 800, and no sheet changes size while open."
   - "No kind or participant is drawn with initials or letters."
   - "Every wand-module surface uses the theme's own font and no separate display face."
@@ -38700,6 +38705,7 @@ canonical_text: >-
   sentence and keeps its action; the F3-534 priority order is unchanged. Among the active capability
   glyphs inside the text field, Back Seat Driver shows an ambient eye that reads the owner
   projection and is absent when Back Seat Driver is off, and the Crew glyph is the Crew kind mark.
+  The ELI5 quick dot is the ELI5 kind mark among these glyphs, present lit or muted (F3-581, DL-126).
   The dock and the per-reply files row replace the stream footer pill's helpers and files chips
   (ACD-482, DL-129); no summary of helpers or file changes stacks above the composer beside the dock.
 gui_related: true
@@ -38902,8 +38908,8 @@ canonical_text: >-
   under a reply whose turn changed files ("Changed 3 files +5 −3 · Revert") is visible at rest and
   offers Revert per ACD-478. The quiet ticks live in the reply's meta row and follow that row's
   existing message-chrome visibility: a memory note taken (relaxing to its glyph alone after a few
-  seconds) and verified once a check proves it; the rule note for taught rules; and Sent on schedule
-  on the user message a schedule sent. The rule note follows DL-116 as the design lead's ruling of
+  seconds) and verified once a check proves it; the rule note for taught rules; Sent on schedule
+  on the user message a schedule sent; and Simple explanation on a reply written in Simple (F3-581, DL-126). The rule note follows DL-116 as the design lead's ruling of
   2026-09-27 applied it and assistant-memory-subsystem AMS-053 defines following. It reads
   "Followed 1 of your rules" for the included rules whose check the finished reply passed (the
   number is how many); inclusion alone never earns it, and a rule whose check could not run earns
@@ -38950,6 +38956,7 @@ preserved_exact_tokens:
   - "Followed 1 of your rules"
   - "Missed 1 of your rules"
   - "AMS-053"
+  - "Simple explanation"
 negative_constraints:
   - "Do not render a reply trace as a card."
   - "Do not hide the files row behind hover."
@@ -39043,7 +39050,8 @@ canonical_text: >-
   language and ELI5 uses plain language plus one concrete example. The app-level Interaction Mode
   (Expert/ELI5) selects the variant; chat-level ELI5 is separate. Dynamic external payloads, such as
   live LSP hover text or provider output, are not authored copy. An in-scope item missing either
-  variant fails the checklist. This unit does not widen the in-scope set.
+  variant fails the checklist. This unit does not widen the in-scope set. The plain helper lines
+  under and beside controls are outside the checklist: among the copy of controls, only tooltips and help carry the Expert and ELI5 pair (DL-126).
 gui_related: true
 gui_classification_reason: "Gives the dual-copy rule its checklist home."
 split_recommended: false
@@ -39052,6 +39060,7 @@ unblocks: []
 acceptance_criteria:
   - "Every in-scope authored copy item has a key, an Expert variant and an ELI5 variant."
   - "References to FinalGUISpec section 7.4.0 resolve to this unit."
+  - "No helper line under or beside a control is listed with an Expert and an ELI5 variant."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -39068,13 +39077,16 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/canon-plans.md item C19 (hashes in SHA256SUMS beside it)"
   - "IMPACT-REGISTER B-ACD-13"
+  - "Plans/Decision_Log.md#DL-126 (card p08, E-11, part 3: dual copy only for tooltips and help; Jared's confirmation of 2026-09-27)"
 preserved_exact_tokens:
   - "dual-copy checklist"
   - "7.4.0"
   - "Expert"
   - "ELI5"
+  - "only tooltips and help carry the Expert and ELI5 pair"
 negative_constraints:
   - "Do not widen the dual-copy rule's scope through this checklist."
+  - "Do not give helper lines under controls an Expert and an ELI5 variant."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
@@ -39542,8 +39554,8 @@ canonical_text: >-
   (DL-122), because each run's full detail lives in its run view (ACD-480). For Crew, BrainStorm,
   Review and Chat Room, the Activity Detail body is a short team list: the run title, the run's one
   true sentence, where the run is now, one 36 px row per helper (its cast mark, name and one state
-  word, with the stand-in sentence under the row only when the requested and effective route
-  differ), then Open Panel and Message. It never repeats the run card or the kind's board. A click on
+  word, and no stand-in sentence, because no model stands in for a chosen helper, DL-121), then Open
+  Panel and Message. It never repeats the run card or the kind's board. A click on
   one of these four domains' chip in the Activity bar reveals the newest card of that kind in the
   thread and marks it once; the rows of those domains' hover cards keep APR-006's routing into
   Activity Detail, pinned per APR-001, so Activity Detail stays reachable. Back Seat Driver's section
@@ -39556,10 +39568,11 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Defines the compact Activity Detail and Back Seat Driver Context Details surfaces."
 split_recommended: false
-depends_on: [ACD-480, F3-569, DL-122]
+depends_on: [ACD-480, F3-569, DL-121, DL-122]
 unblocks: []
 acceptance_criteria:
   - "The four collaboration kinds' Activity Detail shows the short team list and never the kind's board."
+  - "No helper row in the short team list carries a stand-in sentence (DL-121)."
   - "A collaboration domain chip click reveals the newest card; its hover rows still open Activity Detail."
   - "Back Seat Driver's Context Details section has no metric-card grid and no pills."
   - "Goal, To-Dos, Subagents, Changes and Artifacts keep the native card and grid presentation."
@@ -39582,6 +39595,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 7.13 (G-24), 8.6 (G-26)"
   - "IMPACT-REGISTER B-FGS-13 (APR-060), B-FGS-12 (chip click), B-ACD-05 (item 20); card p04, E-04"
   - "Plans/Decision_Log.md#DL-122"
+  - "Plans/Decision_Log.md#DL-121 (no stand-in for a chosen helper; the design's stand-in sentence is not carried)"
 preserved_exact_tokens:
   - "USER-REFERENCE-LAYOUT-ROLLBACK-20260908"
   - "APR-060"
@@ -39596,3 +39610,99 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-122, ContractName:Plans/assistant-chat-design.md#ACD-480, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Back_Seat_Driver.md
+
+### F3-581 - ELI5 Sheet Quick Dot Reply Tick And Explain This Reply Simply
+
+```yaml
+plan_unit_id: F3-581
+unit_type: gui_requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  ELI5's GUI, as Jared confirmed it on 2026-09-27 (DL-126); the behaviour is assistant-chat-design
+  ACD-484. The wand's ELI5 row opens the ELI5 sheet and is not a check. The sheet is a compact sheet of F3-566 at 720 x 560 and never changes height while open (opening its disclosure fits
+  inside the 560). Its choices apply at once, so its foot shows only Done. Head: the ELI5 kind mark
+  (a speech bubble holding one short line), the title Explain things simply in this chat? and the
+  lead sentence "Answers use everyday words and explain terms as they go. Your code, plans and files
+  never change." The plate shows two voices side by side, Standard and Simple, each a short specimen
+  of the same answer, over one shared code line that spans both and never moves; choosing a voice
+  dispatches cmd.chat.eli5.set with off or on for this chat. Under the plate, Follow my usual setting dispatches cmd.chat.eli5.set with inherit, which deletes this chat's override. The one
+  disclosure, How it's decided, draws the resolution order as a trace, All chats, then Chats in this
+  project, then This chat, with the level that decides lit. The All chats node is the Explain Terms Everywhere setting and the Chats in this project node is that setting at project scope;
+  both commit through Settings, never through a chat command, and the This chat node is the same
+  cmd.chat.eli5.set as the plate. The foot reads "Takes effect from your next message. Answers already here keep their wording." and, while a reply streams, says that reply keeps its current
+  style. If the active chat changes while the sheet is open, the sheet changes nothing and reads
+  "You switched chats. Open this again from the chat you want to change." Closing it returns focus
+  to the wand trigger (UIW-025). The quick dot is the ELI5 kind mark among the composer's capability
+  glyphs inside the text field, present in both of its states: lit while Simple explanations are in
+  effect for the chat and muted while they are not. One click on it dispatches cmd.chat.eli5.set
+  with on or off for this chat and never opens the sheet, and its app hover card says whether
+  Simple explanations are on in this chat. In the transcript, a reply written in Simple carries the quiet Simple explanation tick in its meta row (F3-570), and a change-point divider reads
+  Simple explanations from here or Back to standard explanations between the last reply in the old
+  style and the first reply in the new one; no earlier reply changes. Each finished assistant reply's message actions may offer Explain this reply simply, which dispatches
+  cmd.chat.eli5.explain_reply with that reply's message id; while the reply is still streaming the
+  action is disabled and prints its reason. The one extra reply it writes lands at the end of the
+  thread as an ordinary assistant reply, carries the Simple explanation tick, names and links the
+  reply it explains, and adds no divider. The concept's fine print calling project defaults a
+  preview feature is not canon. The command catalog's surface id for the sheet is eli5_sheet.
+gui_related: true
+gui_classification_reason: "Defines the ELI5 sheet, the quick dot and ELI5's traces in the chat."
+split_recommended: false
+depends_on: [F3-566, F3-567, F3-570, F3-572, ACD-484, DL-126, UIW-025]
+unblocks: [ATS-065]
+acceptance_criteria:
+  - "The wand's ELI5 row opens a 720 x 560 compact sheet whose height never changes while open."
+  - "Standard, Simple and Follow my usual setting dispatch cmd.chat.eli5.set with off, on and inherit for the active chat."
+  - "The All chats and Chats in this project nodes commit through Settings and never through a chat command."
+  - "The quick dot is present lit or muted, and one click switches this chat's ELI5 without opening the sheet."
+  - "After any switch, every earlier reply's text is unchanged; only the divider and later replies show the new style."
+  - "Explain this reply simply is disabled while the reply streams, and on a finished reply adds exactly one reply at the end of the thread."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: eli5_surface_drift
+reasoning_tier: standard
+context_scope: wand_modules_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: gui_surface_spec
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 3.2 (the ELI5 compact height), 4.3 C23, 7.10, 8.13 and its amendments G-21 and G-34, 10.1 item f"
+  - "IMPACT-REGISTER B-FGS-02 (the ELI5 mark), B-FGS-03 (the ELI5 mark), B-FGS-08 (ELI5); card p08, E-11"
+  - "Plans/Decision_Log.md#DL-126 (Owner resolution, Jared, 2026-09-27, confirmed in chat)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5) answer record p08"
+preserved_exact_tokens:
+  - "720 x 560"
+  - "Explain things simply in this chat?"
+  - "Follow my usual setting"
+  - "How it's decided"
+  - "Explain Terms Everywhere"
+  - "Takes effect from your next message. Answers already here keep their wording."
+  - "quick dot"
+  - "Simple explanation"
+  - "Simple explanations from here"
+  - "Back to standard explanations"
+  - "Explain this reply simply"
+  - "cmd.chat.eli5.set"
+  - "cmd.chat.eli5.explain_reply"
+  - "eli5_sheet"
+negative_constraints:
+  - "Do not render ELI5 as a wand check."
+  - "Do not change the ELI5 sheet's height while it is open."
+  - "Do not let the quick dot open the sheet or hide while ELI5 is off."
+  - "Do not restyle, re-send or rewrite an earlier reply when the style changes."
+  - "Do not offer Explain this reply simply as enabled on a reply that is still streaming."
+  - "Do not commit the All chats or project level through a chat command."
+stale_retired_dispositions:
+  - "2026-09-03 redesign section 14's 'ELI5 is a wand check' is superseded by this unit and ACD-484."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-484, ContractName:Plans/Decision_Log.md#DL-126, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md#UIW-025

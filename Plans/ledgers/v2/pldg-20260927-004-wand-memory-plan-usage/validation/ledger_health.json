@@ -1,17 +1,17 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-004-wand-memory-plan-usage",
-  "updated_at_utc": "2026-09-27T22:45:00+00:00",
+  "updated_at_utc": "2026-09-27T23:40:00+00:00",
   "status": "pass",
   "summary": {
-    "events": 5,
+    "events": 7,
     "design_atoms": 13,
-    "decisions": 8,
-    "open_questions": 2,
+    "decisions": 10,
+    "open_questions": 5,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "compile_queue_items": 13
+    "compile_queue_items": 15
   },
-  "notes": "G4 NOW and WAIT prose compiled; companions written; AMS-053 (definition of following, lead ruling) compiled by G46; q-006 and q-007 open.",
+  "notes": "G4 NOW and WAIT prose compiled; companions written; AMS-053 compiled by G46; blind review cycle 1: R-01..R-03 repaired; lead pass: q-010 ruled (DESIGN-SPEC §8.10), q-011..q-013 fixed, q-008 fixed in part; open: q-006, q-007, q-008, q-009, q-014.",
   "errors": []
 }

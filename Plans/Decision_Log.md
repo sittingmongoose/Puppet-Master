@@ -2282,7 +2282,7 @@ Answered on 2026-09-27 by Jared on wand-modules decision card `n01` (register E-
 
 **Answer:** Option B, "Plain words only, and change the Plans to match".
 
-Back Seat Driver shows the plain status words the design wrote in place of the official ones: "Up to date" for "Caught up", "Double-checking" for "Finding held" and "Paused: usage limit reached" for "Quota paused" (the card pairs them in that order). The recommended interim form, the official word first with its plain meaning after it, is not used. The Plans' exact status words are amended to match when the waiting lines compile; because those words are preserved exact tokens, the compile supersedes them rather than deleting them. The register lines waiting on this card, B-BSD-01, B-BSD-08, B-FGS-06, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. It needs lead follow-up before the waiting lines compile (see the lead's notes).
+Back Seat Driver shows the plain status words the design wrote in place of the official ones: "Up to date" for "Caught up", "Double-checking" for "Finding held" and "Paused: usage limit reached" for "Quota paused" (the card pairs them in that order). The recommended interim form, the official word first with its plain meaning after it, is not used. The Plans' exact status words are amended to match when the waiting lines compile; because those words are preserved exact tokens, the compile supersedes them rather than deleting them. The register lines waiting on this card, B-BSD-01, B-BSD-08, B-FGS-06, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. The lead's notes asked for the order-wise pairing of the three plain words with the three official words to be confirmed before the waiting lines compile. No ruling on it is recorded: the waiting lines compiled the pairing in the card's order, as stated above (Back_Seat_Driver BSD-035, FinalGUISpec F3-571), and the confirmation is still open.
 
 SourceRef: decision card `n01` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `a34dbbea35a474b9c6ec875872ce231919bc4536e1e5385cd75a49bbbd6df031` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `n01` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
 
@@ -2301,7 +2301,7 @@ Answered on 2026-09-27 by Jared on wand-modules decision card `n02` (register E-
 
 **Answer:** Option A, "Text or seat colour".
 
-The Coordinator's small mark in a running Crew card uses the text colour or its seat colour, never the accent. The transcript's accent budget keeps the accent for live work, anything that needs the user, the one main button and Send/Stop, so the accent keeps meaning "look here". No named exception to the accent budget is recorded. No group-B register line waits on this card; it settles the concept items A4-04 and A5-04. No group-B register line waits on this card; this entry changes no owner text itself.
+The Coordinator's small mark in a running Crew card uses the text colour or its seat colour, never the accent. The transcript's accent budget keeps the accent for live work, anything that needs the user, the one main button and Send/Stop, so the accent keeps meaning "look here". No named exception to the accent budget is recorded. It settles the concept items A4-04 and A5-04, and the register line B-FGS-05 compiles the Coordinator colour into FinalGUISpec F3-569 together with DL-123; this entry changes no owner text itself.
 
 SourceRef: decision card `n02` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `2a2ccf09263d6b0e9a113f0c6a4873674a5f1e1c1ccb2d396e242673daa93617` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `n02` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
 
@@ -2542,7 +2542,7 @@ Answered on 2026-09-27 by Jared on wand-modules decision card `p05` (register E-
 
 **Answer:** Option A, "Allow it".
 
-When a run card is collapsed or the chat is narrow, Open Panel, Message and More may move behind Expand, and the helper count may move into the hover card (below 520 px, per the register). A finished run's Message button stays visible where shown and says why it is disabled. The Plans' list of facts and actions every card always shows is amended accordingly. The register lines waiting on this card, B-CW-03, B-FGS-05, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+When a run card is collapsed or the chat is narrow, Open Panel, Message and More may move behind Expand, and the helper count may move into the hover card (below 520 px, per the register). A finished run's Message button says why it is disabled; on a result face or a receipt it sits in More as a disabled item with its reason printed, as the design spec's section 7.9 places it (FinalGUISpec F3-569). The Plans' list of facts and actions every card always shows is amended accordingly. The register lines waiting on this card, B-CW-03, B-FGS-05, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
 
 SourceRef: decision card `p05` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `7509e2c87521d28200471ef8620602a3b2bcc6d68548596571206eb063469928` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p05` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
 
@@ -2586,7 +2586,7 @@ SourceRef: decision card `p07` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm5
 
 ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
 
-### DL-126: ELI5's scope and per-chat toggle are open on the owner's question (E-11)
+### DL-126: ELI5 has a project default that a chat can override, and switching it never rewrites a reply (E-11)
 
 Answered on 2026-09-27 by Jared on wand-modules decision card `p08` (register E-11), asking a question back instead of choosing an option.
 
@@ -2602,7 +2602,9 @@ Answered on 2026-09-27 by Jared on wand-modules decision card `p08` (register E-
 
 Jared did not choose an option; he answered with his original intent and a question. As he wrote it, ELI5 was meant to be project-level, a setting that defaults everywhere, with the toggle in a chat changing it just for that chat. He then asked whether that would require the agent to send two responses, or to resend an updated response when the toggle changes. No part of the card (popup or toggle, project level, which helper text gets two versions) is decided; the question has to be answered for him first. The register lines waiting on this card, B-CW-25, B-ACD-01, B-FGS-02, B-FGS-03, B-FGS-08, B-CMD-01, B-CMD-03, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. It needs lead follow-up before the waiting lines compile (see the lead's notes).
 
-**Proposed answer (lead, 2026-09-27), awaiting Jared's confirmation:** switching ELI5 affects only the replies written after the switch. The assistant never sends two versions of a reply and never re-sends a past reply when the switch changes. An optional on-demand action, "Explain this reply simply", may re-explain one past reply when the user asks. ELI5 has a project default with a per-chat override. This is a proposal, not a decision. The card stays open, and no ELI5 behaviour compiles from it until Jared confirms it. The project default is Settings scope. Agent-relayed: the design lead's rulings of 2026-09-27, made on Jared's behalf and citing his answer on this card; not verifiable from inside this repository.
+**Owner resolution (Jared, 2026-09-27, confirmed in chat):** the design lead answered Jared's question, and Jared confirmed that answer in chat on 2026-09-27. This settles the question and the follow-up above, and the waiting lines may now compile. ELI5 keeps a project-level default that applies everywhere in the project. The ELI5 control in a chat overrides that default for that chat only. Switching ELI5 changes only the replies written after the switch. It never re-sends, regenerates or rewrites an earlier reply, so a switch never produces a second response. Each finished assistant reply may offer "Explain this reply simply". That action writes one extra reply, a simpler explanation of that reply, and only when the user asks for it. Parts 1 and 3 of the card follow the recommendation: ELI5 is its own small popup (sheet), and the quick dot by the message box is the one-click on and off; the Expert and ELI5 dual copy exists only for tooltips and help, not for every helper line. Agent-relayed: Jared's confirmation in chat on 2026-09-27, recorded in the lead's answer file ANSWERS.json (answer record `p08`, `ask_resolved`), SHA-256 `33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5`, evidence copy `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json`; not verifiable from inside this repository.
+
+**Compile details (the design lead and the canon compile, 2026-09-27; not part of the recorded confirmation):** a chat's ELI5 state is resolved in this order: the chat's own override if it has one, otherwise the project default, otherwise the app default. "Explain this reply simply" is refused while that reply is still streaming. The guided tour, which teaches the old toggle, is re-pointed to the popup and the dot (the card's cost line, "The tour needs re-pointing to the new popup."). The commands are `cmd.chat.eli5.set`, which takes on, off or inherit (inherit deletes the chat's override, so the chat follows the project default), and the new `cmd.chat.eli5.explain_reply`, which targets one finished assistant reply by message id. The app default is the existing setting `general.interaction.eli5-default` and the per-chat override is the existing `general.interaction.chat-eli5`; the project level needs a project scope on the existing ELI5 default setting, which is a Settings follow-up, out of scope for the wand-modules compile.
 
 SourceRef: decision card `p08` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `dab0b89fb497bbad7b64c1ec6b564036c1b2cfcf6b97344cd6184e034f557791` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p08` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
 
@@ -2699,7 +2701,7 @@ Answered on 2026-09-27 by Jared on wand-modules decision card `p16` (register E-
 
 When a Crew sets its own limit (for example 45 minutes or $6) and the app's general run limit is different (for example 20 minutes), the Crew's own limit wins. The recommended rule, the tighter limit wins, is not taken. The card's option B does not say how a run that reaches its limit ends; the recommended ending (stopped, with the reason) was part of option A only. The register lines waiting on this card, B-CW-15, B-CW-19, B-CW-20, B-USE-02, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. It needs lead follow-up before the waiting lines compile (see the lead's notes).
 
-**Lead ruling applied (2026-09-27):** this is the applied reading and settles the follow-up above. Because the collaboration kinds share one limit row, the kind's own limit applies to every collaboration kind, not only to Crew; that reading is accepted. A run that reaches its own limit ends as stopped, with the reason "Stopped at your limit". That is a stop reason on the terminal stopped run, not a new run state. Agent-relayed: the design lead's rulings of 2026-09-27, made on Jared's behalf and citing his answer on this card; not verifiable from inside this repository.
+**Lead ruling applied (2026-09-27):** this is the applied reading and settles the follow-up above. Because the collaboration kinds share one limit row, the kind's own limit applies to every collaboration kind, not only to Crew; that reading is accepted. A run that reaches its own limit ends as stopped, with the reason "Stopped at your limit". That is a stop reason, not a new run state: the run settles in the existing terminal state `cancelled`, never `failed`, with `stop_reason` `limit_time`, `limit_cost` or `limit_tokens` (Collaborative_Workflows CWR-029). Agent-relayed: the design lead's rulings of 2026-09-27, made on Jared's behalf and citing his answer on this card; not verifiable from inside this repository.
 
 SourceRef: decision card `p16` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `bbf6f6e5c22e8db457e2b253da222b220695cbfedce5327ad87e65656f607b15` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p16` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
 
@@ -2757,7 +2759,7 @@ Answered on 2026-09-27 by Jared on wand-modules decision card `p19` (register E-
 
 **Answer:** Option A, "Yes to all of it".
 
-The Plans change three official labels: "Name it for me" replaces Regenerate Title, "Write the plan" replaces Synthesize, and "Save as default" replaces Save as Default (without "my"). "Gist Review" and "frozen target pack" keep their official words in the data, and the screen shows "Notes it took" and "snapshot". Because the old labels are preserved exact tokens, the compile supersedes them rather than deleting them. "Retry" and "Recover" are unchanged (DL-118). The register lines waiting on this card, B-CW-11, B-CW-13, B-ACD-06, B-AMS-01, B-FGS-09, B-CMD-01, B-CMD-04, B-CMD-05, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. It needs lead follow-up before the waiting lines compile (see the lead's notes).
+The Plans change three official labels: "Name it for me" replaces Regenerate Title, "Write the plan" replaces Synthesize, and "Save as default" replaces Save as Default (without "my"). "Gist Review" and "frozen target pack" keep their official words in the data, and the screen shows "Notes it took" and "snapshot". Because the old labels are preserved exact tokens, the compile supersedes them rather than deleting them. "Retry" and "Recover" are unchanged (DL-118). The register lines waiting on this card, B-CW-11, B-CW-13, B-ACD-06, B-AMS-01, B-FGS-09, B-CMD-01, B-CMD-04, B-CMD-05, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself. The lead's follow-up limits what compiles here to the labels: "Save as default" belongs to the Save as Default control, whose storage and scope are Settings' (E-08, out of this compile), so only its label changes; the other labels compile as stated.
 
 SourceRef: decision card `p19` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `da6eddd13fe1911b9414658b1e9bcf9188a3d3184fbe5ba4ca266712dfc43cfb` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p19` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
 
@@ -2778,11 +2780,51 @@ Answered on 2026-09-27 by Jared on wand-modules decision card `p11` (register E-
 
 When Crew Auto is turned on, the chat keeps a one-line note worded for the project, such as "Crew Auto is on for this project", so the user can see when it changed. The Plans had no chat record for a project setting; the cost is one more line in the chat. The card was answered at 2026-09-27T21:37:48Z, after DL-110 to DL-134 were written, so it takes the next free id. The register lines waiting on this card, B-CW-08 (the receipt), B-CW-24 (REV-10 and REV-11, with DL-119), B-CMD-03 (`crew_auto_receipt`) and B-CMD-04 (REV-10 and REV-11), compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
 
-**Lead ruling applied (2026-09-27):** the note is kept and worded for the project ("Crew Auto is on for this project"). Collaborative Workflows owns it, beside the Crew Auto evaluator (CWR-021) and the Crew Auto permission of DL-120. Agent-relayed: the design lead's rulings of 2026-09-27, made on Jared's behalf and citing his answer on this card; not verifiable from inside this repository.
+**Lead ruling applied (2026-09-27):** the note is kept and worded for the project ("Crew Auto is on for this project"). Collaborative Workflows owns it, beside the Crew Auto evaluator (CWR-021) and the Crew Auto permission of DL-120. The note is for turning Crew Auto on for the project, the setting the card asked about; a chat's own Crew Auto check (the per-chat override of DL-120) and saving rules while Crew Auto is already on for the project add no note (Collaborative_Workflows CWR-038). Agent-relayed: the design lead's rulings of 2026-09-27, made on Jared's behalf and citing his answer on this card; not verifiable from inside this repository.
 
 SourceRef: decision card `p11` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `01923d0690bca21a5ccdf725fcae190a0897420bb68f0e696c568b6c209d3604` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p11` in the lead's updated answer file ANSWERS.json, SHA-256 `d08c3551305290fafe43acaffd78d43f9f8d9cdb00a87e4d21bb34603a61969d`. The copy at `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json` (SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`) predates this answer and still records `p11` as unanswered. Agent-relayed; not verifiable from inside this repository.
 
 ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/UI_Command_Catalog.md
+
+### DL-136: A project-wide "Pause all automations" switch stops every scheduled send and build until the user turns it back on (E-19)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p12` (register E-19), approving **"Build a project-wide pause"**, the recommended option. The approval was given in chat on 2026-09-27.
+
+**Question:** Should there be a real, project-wide "Pause all automations" control?
+
+**Options:**
+
+1. **A. Build a project-wide pause** (recommended)
+2. **B. Keep per-run pauses and reword the promise**
+
+**Answer:** Option A, "Build a project-wide pause".
+
+There is one project-wide switch: "One switch that stops every scheduled send and build until you turn it back on." The design promised that the user's manual pause always wins but showed the switch read-only, and the Plans only paused one run at a time. The switch is a manual stop: turning it on latches a stop at project scope by advancing the `user_stop_epoch` the way Manual Stop does, so every scheduled send and scheduled build in the project fails its dispatch check while it is on. Only the user clears it, by turning it off. No automatic mechanism clears or bypasses it: not a quota reset, a window opening, a schedule time, or a Goal, Plan or Crew continuation, and creating a new schedule while it is on does not clear it either. The command is `cmd.runtime.automation_pause.set`, project-scoped, with the payload `paused` true or false. The card's cost is "A new command and a little runtime work." The card was answered after DL-110 to DL-135 were written, so it takes the next free id. The register lines waiting on this card, B-SQR-05, B-CMD-01 and B-CMD-02, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+
+**New schedules while the switch is on (settled 2026-09-27):** the lead read "until you turn it back on" to mean that creating a new schedule while the switch is on does not clear it; the new schedule is recorded and waits like the others, with the switch named as its reason. Jared left this reading to the lead on 2026-09-27, and it stands. It differs on purpose from a single run's manual stop, which an explicit user resume or a new schedule the user creates does clear (`Plans/Scheduling_and_Quota_Resume.md`, manual-stop precedence): the project switch is lifted only by turning it off.
+
+SourceRef: decision card `p12` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `c7eaa3c2d9fd5ab08c974f68ec0fb9be955f5b66a7ebd73ad5cacf22e437b856` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p12` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json`, SHA-256 `33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5`, which records the approval given in chat on 2026-09-27. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md
+
+### DL-137: Each helper's line in a running card streams what the helper is writing, reusing the reply streaming (E-31)
+
+Answered on 2026-09-27 by Jared on wand-modules decision card `p14` (register E-31), approving **"Add live streaming for helpers (reuse the reply streaming)"**, the recommended option. The approval was given in chat on 2026-09-27.
+
+**Question:** Should each helper's line in a running card show what it is writing, live, word by word?
+
+**Options:**
+
+1. **A. Add live streaming for helpers (reuse the reply streaming)** (recommended)
+2. **B. Show only each helper's last finished sentence; stream only in recorded examples**
+
+**Answer:** Option A, "Add live streaming for helpers (reuse the reply streaming)".
+
+Each helper's line in a running collaboration card shows what the helper is writing, live, word by word, so the user watches helpers work as the design shows. The Plans had no message in progress; messages appeared once, finished. Helper streaming reuses the assistant reply streaming that the Chat WOW canon defined (EP-128 "Assistant turn presentation stream", DL-104 to DL-108, ACD-469 to ACD-475) rather than defining a second streaming model. The finished message still lands once, as a whole message; the streamed text is presentation of a message in progress, never a second record. The card's cost is "A streaming model for helpers in the Plans and the runtime." The card was answered after DL-110 to DL-135 were written, so it takes the next free id after DL-136. The register line waiting on this card, B-CW-22, compiles it into the owner documents in the WAIT wave, and B-CW-21 keeps quotes to complete helper text; this entry changes no owner text itself.
+
+SourceRef: decision card `p14` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `57721ff4987cf0671822f08ca373077083ba39fc7f8310a951b23b3cd630efca` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p14` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json`, SHA-256 `33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5`, which records the approval given in chat on 2026-09-27. Agent-relayed; not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md
 
 ## Owner / Consumer Map
 
@@ -9493,7 +9535,7 @@ owner_hints:
   - Plans/UI_Command_Catalog.md
 ```
 
-### DL-126 - ELI5's Scope And Per Chat Toggle Are Open On The Owner's Question
+### DL-126 - ELI5 Has A Project Default That A Chat Can Override And Switching It Never Rewrites A Reply
 
 ```yaml
 plan_unit_id: DL-126
@@ -9501,24 +9543,39 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Jared answered card p08 (E-11) on 2026-09-27 by asking a question back, that ELI5 is not yet
-  decided: Jared stated his original intent (a project-level default with a per-chat toggle that
-  changes only that chat) and asked whether that would require two responses or a resent response
-  when toggled; the popup-or-toggle, project level and dual-copy parts remain open. Proposed answer
-  (lead, 2026-09-27), awaiting Jared's confirmation and not decided: switching affects only replies
-  written after the switch, the assistant never re-sends, an optional on-demand "Explain this reply
-  simply" re-explains one reply, and ELI5 has a project default with a per-chat override.
+  Jared answered card p08 (E-11) on 2026-09-27 by asking a question back: he stated his original
+  intent (a project-level default with a per-chat toggle that changes only that chat) and asked
+  whether that would require two responses or a resent response when toggled. Owner resolution
+  (Jared, 2026-09-27, confirmed in chat): ELI5 keeps a project-level default that applies everywhere
+  in the project, and the ELI5 control in a chat overrides it for that chat only. Switching ELI5
+  changes only replies written after the switch; it never re-sends, regenerates or rewrites an
+  earlier reply, so a switch never produces a second response. Each finished assistant reply may
+  offer "Explain this reply simply", which writes one extra reply, a simpler explanation of that
+  reply, only when the user asks. Following the recommendation for parts 1 and 3, ELI5 is its own
+  small popup (sheet) with the quick dot by the message box as the one-click on and off, and Expert
+  and ELI5 dual copy exists only for tooltips and help. Compile details written by the design lead
+  and the canon compile on 2026-09-27, not part of the recorded confirmation: the resolution order
+  is the chat override, else the project default, else the app default; Explain this reply simply is
+  refused while that reply is still streaming; the guided tour is re-pointed from the old toggle to
+  the popup and the dot (the card's cost line); the commands are cmd.chat.eli5.set (on|off|inherit,
+  inherit deleting the chat override) and cmd.chat.eli5.explain_reply. The project scope on the
+  existing ELI5 default setting (general.interaction.eli5-default; per-chat override
+  general.interaction.chat-eli5) is a Settings follow-up, out of scope for the wand-modules compile.
 gui_related: true
 gui_classification_reason: Records an owner decision about eli5 presentation or behaviour.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - "No owner document changes ELI5's form, scope or dual copy on the strength of this entry."
+  - "A chat's ELI5 state resolves as the chat override, else the project default, else the app default."
+  - "Switching ELI5 never re-sends, regenerates or rewrites a reply written before the switch."
+  - "Explain this reply simply writes exactly one extra reply, only when the user asks, and is refused while the target reply is streaming."
+  - "ELI5 is a popup (sheet) with the quick dot by the message box as the one-click on and off, and the guided tour points to them."
+  - "Expert and ELI5 dual copy appears only in tooltips and help."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-risk_class: eli5_scope_undecided
+risk_class: eli5_scope_and_rewrite
 reasoning_tier: high
 context_scope: eli5
 implementation_surfaces:
@@ -9535,13 +9592,19 @@ source_lineage:
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+  - "ANSWERS-20260927-final.json answer record p08, ask_resolved (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5, /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json; Jared confirmed the lead's answer in chat on 2026-09-27)"
 preserved_exact_tokens:
   - "E-11"
   - "project-level"
   - "two responses"
+  - "Explain this reply simply"
+  - "cmd.chat.eli5.set"
+  - "cmd.chat.eli5.explain_reply"
 negative_constraints:
-  - Do not compile any ELI5 waiting line from this entry alone.
-  - "Do not compile ELI5 behaviour from the lead's proposed answer before Jared confirms it."
+  - "Do not re-send, regenerate or rewrite an earlier reply when ELI5 is switched."
+  - "Do not write more than one extra reply for one Explain this reply simply request."
+  - "Do not give every helper line an Expert and an ELI5 version; dual copy is for tooltips and help only."
+  - "Do not edit Settings documents from this entry; the project scope on the ELI5 default is a Settings follow-up."
 owner_hints:
   - Plans/Collaborative_Workflows.md
   - Plans/assistant-chat-design.md
@@ -9758,8 +9821,9 @@ canonical_text: >-
   "The Crew's own limit overrides the general one", that a Crew's own time and cost limit overrides
   the app's general run limit rather than the tighter limit winning. Lead ruling applied 2026-09-27:
   the kind's own limit applies to every collaboration kind (they share one limit row), and a run
-  that reaches its own limit ends as stopped with the reason "Stopped at your limit", a stop reason
-  on the terminal run, not a new state.
+  that reaches its own limit ends as stopped with the reason "Stopped at your limit", a stop reason,
+  not a new state: it settles in the existing terminal state cancelled, never failed, with
+  stop_reason limit_time, limit_cost or limit_tokens (Collaborative_Workflows CWR-029).
 gui_related: true
 gui_classification_reason: Records an owner decision about run limits presentation or behaviour.
 split_recommended: false
@@ -9769,6 +9833,7 @@ acceptance_criteria:
   - "A Crew run's effective time and cost limit is the Crew's own limit when one is set."
   - "Every collaboration kind applies its own limit from the shared limit row."
   - "A run that reaches its own limit ends as stopped with the reason Stopped at your limit."
+  - "That run settles in the terminal state cancelled with stop_reason limit_time, limit_cost or limit_tokens, never failed and never a new state."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -9959,14 +10024,18 @@ canonical_text: >-
   that turning Crew Auto on leaves a one-line note in the chat worded for the project,
   "Crew Auto is on for this project", so the user can see when it changed, even though Crew Auto is
   a project-wide setting. Lead ruling applied 2026-09-27: Collaborative Workflows owns the note,
-  beside the Crew Auto evaluator (CWR-021) and the Crew Auto permission of DL-120.
+  beside the Crew Auto evaluator (CWR-021) and the Crew Auto permission of DL-120. The note is for
+  turning Crew Auto on for the project, the setting the card asked about; a chat's own Crew Auto
+  check (the per-chat override of DL-120) and saving rules while Crew Auto is already on for the
+  project add no note (Collaborative_Workflows CWR-038).
 gui_related: true
 gui_classification_reason: Records an owner decision about crew auto presentation or behaviour.
 split_recommended: false
 depends_on: [DL-120]
 unblocks: []
 acceptance_criteria:
-  - "Turning Crew Auto on leaves one line in the chat worded for the project."
+  - "Turning Crew Auto on for the project leaves one line in the chat worded for the project."
+  - "Changing one chat's Crew Auto check, or saving rules while Crew Auto is already on for the project, adds no note."
   - "The note's owner is Plans/Collaborative_Workflows.md."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -9990,11 +10059,124 @@ preserved_exact_tokens:
   - "Keep the note, worded for the project"
   - "Crew Auto is on for this project"
 negative_constraints:
-  - "Do not drop the note when Crew Auto is turned on."
+  - "Do not drop the note when Crew Auto is turned on for the project."
   - "Do not add more than one line to the chat for a Crew Auto change."
 owner_hints:
   - Plans/Collaborative_Workflows.md
   - Plans/UI_Command_Catalog.md
+```
+
+### DL-136 - A Project Wide Pause All Automations Switch Stops Every Scheduled Send And Build Until The User Turns It Back On
+
+```yaml
+plan_unit_id: DL-136
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p12 (E-19), approving "Build a project-wide pause" in chat,
+  that there is one project-wide switch: "One switch that stops every scheduled send and build until
+  you turn it back on." It is a manual stop: turning it on latches a stop at project scope by
+  advancing the user_stop_epoch the way Manual Stop does, so every scheduled send and scheduled build
+  in the project fails its dispatch check while it is on. Only the user clears it, by turning it off;
+  no automatic mechanism (quota reset, window opening, schedule time, Goal, Plan or Crew continuation)
+  clears or bypasses it, and creating a new schedule while it is on does not clear it. The command is
+  cmd.runtime.automation_pause.set, project-scoped, payload paused true or false. Cost: "A new command
+  and a little runtime work."
+gui_related: true
+gui_classification_reason: Records an owner decision about automation pause presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "Turning the switch on stops every scheduled send and scheduled build in the project at dispatch."
+  - "Only a user turning the switch off clears it; no automatic mechanism clears or bypasses it."
+  - "The switch is set by cmd.runtime.automation_pause.set with paused true or false."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: automation_manual_stop_precedence
+reasoning_tier: high
+context_scope: automation_pause
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - "ANSWERS-20260927-final.json answer record p12 (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5, /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json; approved in chat on 2026-09-27)"
+preserved_exact_tokens:
+  - "E-19"
+  - "Build a project-wide pause"
+  - "One switch that stops every scheduled send and build until you turn it back on."
+  - "cmd.runtime.automation_pause.set"
+  - "user_stop_epoch"
+negative_constraints:
+  - "Do not let a quota reset, window opening, schedule time or Goal, Plan or Crew continuation clear or bypass the project-wide pause."
+  - "Do not clear the project-wide pause except by a user turning it off."
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+```
+
+### DL-137 - Each Helper's Line In A Running Card Streams What The Helper Is Writing Reusing The Reply Streaming
+
+```yaml
+plan_unit_id: DL-137
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p14 (E-31), approving "Add live streaming for helpers (reuse
+  the reply streaming)" in chat, that each helper's line in a running collaboration card shows what
+  the helper is writing, live, word by word, reusing the assistant reply streaming that the Chat WOW
+  canon defined (EP-128 "Assistant turn presentation stream", DL-104 to DL-108, ACD-469 to ACD-475)
+  rather than a second streaming model. The finished message still lands once, as a whole message;
+  the streamed text is presentation of a message in progress, never a second record.
+gui_related: true
+gui_classification_reason: Records an owner decision about helper streaming presentation or behaviour.
+split_recommended: false
+depends_on: [DL-104, DL-105, DL-106, DL-107, DL-108]
+unblocks: []
+acceptance_criteria:
+  - "A running helper's line shows its text live, word by word."
+  - "Helper streaming reuses EP-128 and defines no second streaming model."
+  - "The finished helper message is recorded once, as a whole message; streamed text is never a second record."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: helper_stream_record_duplication
+reasoning_tier: high
+context_scope: helper_streaming
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Executor_Protocol.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - "ANSWERS-20260927-final.json answer record p14 (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5, /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json; approved in chat on 2026-09-27)"
+preserved_exact_tokens:
+  - "E-31"
+  - "Add live streaming for helpers (reuse the reply streaming)"
+  - "EP-128"
+negative_constraints:
+  - "Do not record streamed helper text as a second message or record."
+  - "Do not define a helper streaming model separate from EP-128."
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Executor_Protocol.md
+  - Plans/assistant-chat-design.md
 ```
 
 ## Migration Coverage

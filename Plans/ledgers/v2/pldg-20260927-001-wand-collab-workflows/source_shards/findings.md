@@ -244,4 +244,76 @@ Repairs CWR-029. A run at its time, cost or token limit settles cancelled with a
 
 Section 18 still tested that a card pops out to a full panel after section 4.2 became the run view.
 
-Repairs CWR-020. Section 18 now tests that a card opens the same run in the run view docked in the editor pane, as CWR-020 specifies.
+Repairs section 18 of Plans/Collaborative_Workflows.md, the only text this record changed. Section 18 now tests that a card opens the same run in the run view docked in the editor pane, as the unit CWR-020 (compiled by Record 3) specifies; CWR-020 itself is unchanged by this record.
+
+## Record 41 — CW-22 (closure wave, DL-137): Live text in helper lanes
+
+Canon had no message in progress: a collaboration message appeared once, finished, and a lane could only quote complete text. Jared approved option A of card p14 (E-31): each helper's line shows what the helper is writing, live, word by word, reusing the assistant reply streaming, and the finished message still lands once.
+
+Repairs CWR-040, EP-129, EP-130, EP-131 and ATS-063. A lane streams its writer's message in progress over the EP-128 vocabulary and the ACD-470 pacing; the message in progress is bound to its run, sender, slot, attempt and a pre-allocated collaboration_message_id and is seen only by the user; it is written once on completion with the text of the last streamed frame, and nothing else is persisted, emitted or delivered; an unfinished message is never written; the suite checks all of this against pixels and stored records.
+
+## Record 42 — CW-21 (closure wave, DL-137): The activity projection and live text
+
+The activity projection said quotes are complete helper text only and left live partial text to E-31.
+
+Repairs CWR-030. The projection carries live_message_id while a message is in progress and never holds its text; lane quotes still come only from complete, durable messages through quote_source_id.
+
+## Record 43 — CW-25 (closure wave, DL-126): The ELI5 disclosure in the view-state census
+
+The census left the ELI5 disclosure out until the ELI5 card was settled. Jared confirmed the lead's answer to his question: a project default, a per-chat override, and a switch that never rewrites a reply.
+
+Repairs CWR-033. Opening or closing the ELI5 sheet's disclosure mints no command; it traces the chat override, the project default and the app default; choosing this chat's value dispatches cmd.chat.eli5.set, and the project and app levels are Settings transactions.
+
+## Record 44 — CW-29 (companion, task 2; blind review R-01, R-02): The collaborative contract family registration
+
+ATS-062 registers the collaborative schema and fixture pair (B-CW-29, written after the prose as evt-010 and extended as evt-019), but no ledger record named it, and its Crew Auto negatives still read as though a chat's check needed a Settings transaction, which the lead ruling on DL-120 (CWR-038, scope thread) no longer says.
+
+Repairs ATS-062. The unit is this ledger's companion output (atom-g1-cw-29-companion, dec-048). Its Crew Auto negatives now cover turning Crew Auto on for the project from the Crew Auto sheet, a chat's check is stated as not a project Settings transaction, and it says the pair does not yet carry the request scope, the run's stop_reason or the crew_auto_receipt surface.
+
+## Record 45 — CW-03 (blind review R-03, R-15): The failed face and a finished run's Message
+
+CWR-019 mapped every run that ended without a clean completion to a failure presentation, so a cancelled run and a run stopped at its own limit read as failed, against DL-131 as compiled in CWR-029; CWR-035 disabled Message only on the result face and the receipt.
+
+Repairs CWR-019 and CWR-035. The failed density's face follows how the run ended: a failed run shows its failure sentence, a cancelled run the cancelled face, and a limit stop reads Stopped at your limit in the warm tone, never as a failure (lead ruling from DESIGN-SPEC section 7.6, dec-049). Message is disabled with its reason on every face of a completed, cancelled or failed run.
+
+## Record 46 — CW-08 (blind review R-04): The Crew Auto note cites DL-135
+
+CWR-038 cited card p11 with a Decision_Log entry pending, though DL-135 records it and the answer is frozen in the final answer file.
+
+Repairs CWR-038. It cites DL-135 and ANSWERS-20260927-final.json for p11; section 5.3 cites DL-135 beside CWR-038.
+
+## Record 47 — CW-18 (blind review R-06): Crew Auto starts from the stored configuration
+
+With Crew Auto on by default, CWR-004 still said Crew Auto cannot start from a configuration that was never committed, and CWR-021 read the committed criteria, while section 5.3 makes the project's stored configuration start from the Settings defaults.
+
+Repairs CWR-004 and CWR-021. Crew Auto starts only from the project's stored Crew Auto configuration of section 5.3 and never from an uncommitted sheet draft; the evaluator reads that configuration's criteria for admission, and crew_auto_revision names the stored configuration that admitted the run. What revision the untouched Settings-default configuration carries is open question q-030.
+
+## Record 48 — CW-23 (blind review R-05): The Wonderer workspace surface
+
+Section 10 gave cmd.brainstorm.research_lead a wonderer_workspace surface that no CWR unit named.
+
+Repairs CWR-031. It names brainstorm_panel and wonderer_workspace as the command's source surfaces and cites the catalog that registers the surface, UCC-169 and UCC-171; section 10 cites the same.
+
+## Record 49 — CW-25 (blind review R-09): Where the ELI5 keys and the inherit value come from
+
+CWR-033 named general.interaction.chat-eli5 and the inherit value of cmd.chat.eli5.set without citing where they are settled.
+
+Repairs CWR-033. It cites Plans/Settings_System.md for the existing per-conversation override and the app default, ACD-484 for the resolution order, and UCC-175 for the command and its on, off and inherit values; it states no new key or value.
+
+## Record 50 — CW-01 (blind review R-13): The Advanced page and concurrency
+
+CWR-018 said the Advanced page's shared rows map one to one to the whole section 3 field list, though its own row list leaves out concurrency and the fields the sheet already shows.
+
+Repairs CWR-018. The shared rows map to the section 3 fields the sheet does not already show; the others are on the sheet, and concurrency is the Crew sheet's Working at the same time control, never an Advanced row (lead ruling from DESIGN-SPEC sections 8.0 G-29 and 8.1, dec-050).
+
+## Record 51 — CW-22 (blind review R-12): Live helper text checks cover every unfinished case
+
+ATS-063 checked cancelled, failed, timed-out and retried attempts only, though EP-131 and CWR-040 also cover permission loss, replacement, the approval wait, abstention and the +N more lanes.
+
+Repairs ATS-063. It adds checks for an attempt that loses a permission or is replaced, a retry streaming under a new id, a writer waiting on an approval keeping its text while needs_you, a written and a default abstention, and lanes folded into the +N more row streaming nothing.
+
+## Record 52 — blind review R-08, R-14, R-17: Section 12 and the MODAL-006..008 amendment
+
+Section 12 attributed the companion name CollaborationMessageInProgress to EP-129, and its closed-enumeration census omitted the closed sets this compile introduced; the dated amendment to MODAL-006..008 scoped "the first sentence", which is the Save as Default rule, not the Crew Auto checkmark sentence.
+
+Repairs section 12 and the Crew Auto checkmark amendment of Additive Correction v4 in Plans/Collaborative_Workflows.md, neither of which is a PlanUnit. Section 12 now says EP-129 defines the binding and the pair names it, adds the coordinator_spec kind to the census and says where the payload, projection and density value sets are closed; the amendment quotes the sentence it scopes.

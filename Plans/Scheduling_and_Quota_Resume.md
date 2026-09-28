@@ -43,7 +43,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-featur
 From highest to lowest:
 
 1. user Cancel or Stop;
-2. user manual Pause;
+2. user manual Pause, including the project-wide "Pause all automations" switch (SQR-018, DL-136), which is a user manual stop at project scope;
 3. owner safety, permission, or recovery block;
 4. inactive execution window;
 5. quota unavailable;
@@ -54,6 +54,8 @@ An automatic mechanism may never clear a higher-priority state. Concretely: a qu
 
 Manual Stop, Pause, and Cancel latch a monotonically increasing `user_stop_epoch`. Every eligibility evaluation captures the epoch it was computed against and compares it again at dispatch. A dispatch decided before a manual stop and delivered after it is discarded rather than executed. Only an explicit user resume, or a new schedule the user creates, clears the latch.
 
+"Pause all automations" (SQR-018, DL-136) latches the same way at project scope. Turning it on with `cmd.runtime.automation_pause.set` advances the project's `user_stop_epoch` the way Manual Stop advances a run's, every eligibility evaluation for a target in the project captures that epoch beside the target's own and compares both again at dispatch, and while it is on every scheduled send and scheduled build in the project is held. Only the user clears it, by turning it off. No automatic mechanism clears or bypasses it (a quota reset, a window opening, a schedule time, or a Goal, Plan or Crew automatic continuation), and a new schedule created while it is on does not clear it. Work the user starts directly, such as Send now on a held message, is not an automation and is not held by it (SQR-018).
+
 This precedence is normative for every consumer. Where any other document appears to permit automatic resume over a manual stop, this document wins.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Executor_Protocol.md
@@ -62,7 +64,7 @@ ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Execu
 
 Settings stores the defaults; this owner stores the operational records. The defaults are `assistant.scheduling.wind_down_minutes` (10), `assistant.scheduling.missed_dispatch_policy` (`hold`), `assistant.scheduling.default_grace_minutes` (30), `assistant.scheduling.resume_next_window` (true), `assistant.usage.auto_resume_default` (false), and `assistant.scheduling.dst_policy` (`preserve_local_wall_clock`).
 
-A default is read at creation time and copied into the record. Changing a default afterwards never retroactively alters an existing schedule or consent. The surfaces that show these values use the display labels fixed in SQR-017 ("Ask me first", "Keep going next time", "Wrap-up time" and the rest); a label never renames a key or a stored value. These keys require Settings inventory census and registration through `Plans/Settings_System.md` and `Plans/settings_inventory.json`; naming them here fixes ownership and does not claim registration.
+A default is read at creation time and copied into the record. Changing a default afterwards never retroactively alters an existing schedule or consent. The scheduling sheets, the scheduled-message cards and the Schedule Manager show these values with the display labels fixed in SQR-017 ("Ask me first", "Keep going next time", "Wrap-up time" and the rest); a label never renames a key or a stored value, and how the Settings rows label these defaults belongs to the Settings owner, not to this document. These keys require Settings inventory census and registration through `Plans/Settings_System.md` and `Plans/settings_inventory.json`; naming them here fixes ownership and does not claim registration.
 
 ContractRef: ContractName:Plans/Settings_System.md
 
@@ -76,15 +78,16 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Scheduling_and_Quota_Resume.md
 canonical_text: >-
-  Automation precedence from highest to lowest is user Cancel or Stop, user manual Pause, owner safety/permission/recovery block, inactive execution window, quota unavailable, scheduled eligibility, and Goal/Plan/Crew automatic continuation. An automatic mechanism may never clear a higher-priority state. Manual Stop, Pause, and Cancel latch a monotonically increasing user_stop_epoch; every eligibility evaluation captures the epoch it was computed against and compares it again at dispatch, and a dispatch decided before a manual stop and delivered after it is discarded. Only an explicit user resume or a new user-created schedule clears the latch. This precedence is normative for every consumer and wins over any other document that appears to permit automatic resume over a manual stop.
+  Automation precedence from highest to lowest is user Cancel or Stop, user manual Pause, owner safety/permission/recovery block, inactive execution window, quota unavailable, scheduled eligibility, and Goal/Plan/Crew automatic continuation. An automatic mechanism may never clear a higher-priority state. Manual Stop, Pause, and Cancel latch a monotonically increasing user_stop_epoch; every eligibility evaluation captures the epoch it was computed against and compares it again at dispatch, and a dispatch decided before a manual stop and delivered after it is discarded. Only an explicit user resume or a new user-created schedule clears the latch. The project-wide Pause all automations switch (SQR-018, DL-136) is a user manual stop at project scope and ranks with user manual Pause: cmd.runtime.automation_pause.set with paused true advances the project's user_stop_epoch the way Manual Stop does, every evaluation compares the project's epoch as well as the target's, and only the same command with paused false, sent by the user, clears it; a new schedule created while it is on does not. A command refused because a per-run manual stop is latched on its target fails with manual_stop_latched, while a dispatch the project switch holds records the failed clause project_automation_paused instead (SQR-006, SQR-018). This precedence is normative for every consumer and wins over any other document that appears to permit automatic resume over a manual stop.
 gui_related: true
 gui_classification_reason: Resume controls must render disabled with the latched-stop reason rather than appearing available.
 depends_on: []
-unblocks: [SQR-005, SQR-006]
+unblocks: [SQR-005, SQR-006, SQR-018]
 acceptance_criteria:
   - A quota reset, window opening, cleared dependency, schedule firing, or provider retry does not resume manually stopped work.
   - A dispatch decided before a stop and delivered after it is discarded.
   - Only an explicit user action clears the latch.
+  - With Pause all automations on, no scheduled send or scheduled build in the project dispatches, and only the user turning it off clears it.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - node tests/scheduling-verify.mjs
@@ -105,9 +108,11 @@ source_lineage:
 preserved_exact_tokens:
   - "user_stop_epoch"
   - "manual_stop_latched"
+  - "cmd.runtime.automation_pause.set"
 negative_constraints:
   - Do not let any automatic mechanism clear a manual stop.
   - Do not evaluate eligibility once and dispatch without re-checking the stop epoch.
+  - Do not let a new schedule, a quota reset, a window opening or an automatic continuation clear the project-wide automation pause.
 owner_hints:
   - Plans/Scheduling_and_Quota_Resume.md
 ```
@@ -296,15 +301,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Scheduling_and_Quota_Resume.md
 canonical_text: >-
-  One eligibility predicate governs scheduled messages, scheduled builds, window resume, and quota resume. Every clause must hold: consent or schedule active, target run existing and unfinished, no latched manual pause or cancel with a matching user_stop_epoch, an open execution window or none applicable, healthy provider and account as recorded, a current target by exact Plan version and hash or exact message snapshot and thread currentness, no permission/safety/recovery block, required tools/MCP/skills available as recorded, and a resolvable project and worktree. Evaluation happens twice -- once to decide and once immediately before dispatch -- and any clause failing at the second check aborts the dispatch and records the exact failed clause. Resume applies to unfinished work only and never replays a completed side effect. An aborted dispatch is visible, never silent.
+  One eligibility predicate governs scheduled messages, scheduled builds, window resume, and quota resume. Every clause must hold: consent or schedule active, target run existing and unfinished, no latched manual pause or cancel with a matching user_stop_epoch, Pause all automations off for the target's project with the project's user_stop_epoch matching (SQR-018, DL-136), an open execution window or none applicable, healthy provider and account as recorded, a current target by exact Plan version and hash or exact message snapshot and thread currentness, no permission/safety/recovery block, required tools/MCP/skills available as recorded, and a resolvable project and worktree. Evaluation happens twice -- once to decide and once immediately before dispatch -- and any clause failing at the second check aborts the dispatch and records the exact failed clause. Resume applies to unfinished work only and never replays a completed side effect. An aborted dispatch is visible, never silent. While Pause all automations is on, the second check that would revalidate any scheduled message, scheduled build, window resume or quota resume in the project fails with the exact failed clause project_automation_paused, and no automatic mechanism satisfies that clause; only the user turning the switch off does. The clause does not apply to the one dispatch of a Send now: the accepted cmd.chat.schedule_message.update with reschedule_to now records the user as its actor, so that dispatch is user-started work, every other clause still holds, and the switch stays on (SQR-018).
 gui_related: true
 gui_classification_reason: The exact failed clause must be surfaced to the user so the blocked automation is actionable.
 depends_on: [SQR-001, SQR-005]
-unblocks: []
+unblocks: [SQR-016, SQR-018]
 acceptance_criteria:
   - Eligibility is evaluated twice and re-checked immediately before dispatch.
   - A resume never replays work committed before the pause.
   - An aborted dispatch names the exact failed clause and is visible.
+  - With Pause all automations on, every automatic dispatch in the project fails with project_automation_paused, and the one dispatch of a user's Send now does not.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - node tests/scheduling-verify.mjs
@@ -324,6 +330,7 @@ source_lineage:
 preserved_exact_tokens:
   - "revalidate"
   - "unfinished work only"
+  - "project_automation_paused"
 negative_constraints:
   - Do not dispatch on a stale eligibility decision.
   - Do not replay a completed side effect on resume.
@@ -417,7 +424,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Fil
 
 A scheduled Plan build binds the exact `plan_id`, `plan_version`, and content hash through `exact_target_version` and `exact_target_hash`. It does not bind "the current Plan".
 
-A Build At commit is one command. The window specification (one time or a recurring slot, days, start, stop, wind-down, missed policy, grace and timezone) rides inside the `AssistantPlanScheduleRequest` of `cmd.chat.plan.schedule_build`, and the owner creates the exact-version binding and its `ExecutionSchedule` in one transaction. The surface never dispatches `cmd.execution_window.create` beside it, so no half-created schedule can exist.
+A Build At commit is one command. The window specification (one time or a recurring slot, days, start, stop, wind-down, next-window resume, missed policy, grace and timezone) rides inside the `AssistantPlanScheduleRequest` of `cmd.chat.plan.schedule_build`, and the owner creates the exact-version binding and its `ExecutionSchedule` in one transaction. The surface never dispatches `cmd.execution_window.create` beside it, so no half-created schedule can exist.
 
 A revision **invalidates** the pending schedule. The schedule moves to `invalidated` with `invalidated_reason` naming the version change, and it requires an explicit update or reschedule. The Plan card's "Schedule needs update" line offers that explicit step: "Use V<n>" (for example "Use V3") is `cmd.chat.plan.schedule_build` against the new version's exact hash, the user's click is the explicit reschedule, and the invalidated schedule stays as its audit record; Cancel schedule is `cmd.execution_window.cancel` by the `schedule_id` that `cmd.chat.plan.schedule_build` returned. Building a newer Plan than the user scheduled is a defect, and silently rebinding to the newest version is the same defect with better manners.
 
@@ -509,6 +516,7 @@ One predicate governs every automatic dispatch — scheduled message, scheduled 
 - consent or schedule is `enabled`/`active`;
 - the target run still exists and is unfinished;
 - no manual pause or cancel is latched, and `user_stop_epoch` matches the epoch the decision was computed against;
+- "Pause all automations" is off for the target's project, and the project's `user_stop_epoch` matches the epoch the decision was computed against (SQR-018, DL-136); when this clause fails the recorded failed clause is `project_automation_paused`. The clause does not apply to the one dispatch of a Send now, the accepted `cmd.chat.schedule_message.update` with `reschedule_to: "now"` that records the user as its actor; that dispatch is user-started, every other clause still holds, and the switch stays on;
 - the execution window is currently open, or none applies;
 - provider and account are healthy and selected as recorded;
 - the target is current — exact Plan version and hash, or exact message snapshot and thread currentness;
@@ -534,6 +542,7 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.
 | `cmd.execution_window.update` | Update an execution window | Never silently changes an in-flight run's admission; a narrowed window takes effect at the next wind-down boundary. |
 | `cmd.execution_window.cancel` | Cancel an execution window, including Cancel schedule on a Plan card or in the Schedule Manager | Targets the `schedule_id` that `cmd.chat.plan.schedule_build` returned; there is no `schedule_build.cancel`. Work already admitted continues under its own owner; cancelling a window is not a Stop. |
 | `cmd.runtime.quota_resume.set` | Record opt-in consent to resume when quota resets | Requires a known `reset_truth` value; consent is scoped to run, provider, and account and is defeated by a latched manual stop. |
+| `cmd.runtime.automation_pause.set` | Turn the project-wide "Pause all automations" switch on or off (SQR-018, DL-136); project-scoped, payload `paused` true or false, from the Schedule Manager's Resume & Safety Policy tab | Target identity is the `project_id`. `paused: true` latches a manual stop at project scope by advancing the project's `user_stop_epoch` the way Manual Stop does; `paused: false` is the only way to clear it, and only a user actor may send it (any other actor is refused with `permission_denied`). Returns the project's pause record: `paused`, the project's `user_stop_epoch`, who changed it, when, and its revision. Setting the value it already has returns the record unchanged and does not advance the epoch again. It cancels nothing, invalidates no schedule, disables no quota consent, releases no per-run latch and dispatches nothing by itself. It is never a Settings value. |
 
 Every request carries `schema_id`, `schema_version`, command ID, command instance ID, `project_id`, target identity, expected revision, expected target hash where applicable, actor, permission snapshot, idempotency key, source surface, and return route. The source surfaces are `schedule_sheet` (the Schedule Message sheet), `plan_schedule` (the Build At sheet), `scheduled_message_card`, `schedule_manager` and `plan_card`. The wand row and the Plan card's `Build At…` button only open their sheets and are not source surfaces of these commands. Typed errors are `invalid_request`, `schedule_not_found`, `stale_schedule_revision`, `target_not_found`, `target_version_changed`, `dispatch_already_started`, `manual_stop_latched`, `window_inactive`, `quota_unavailable`, `reset_truth_unknown`, `route_unavailable`, `command_not_registered`, `permission_denied`, `owner_unavailable`, or `cancelled`.
 
@@ -543,7 +552,9 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Comman
 
 ### Events
 
-The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, and `runtime.quota_resume_attempted`. All twelve require central EventRecord registration and payload schemas before emission.
+The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.
+
+`runtime.automation_pause_changed` is emitted once for each change of the project-wide "Pause all automations" switch made by `cmd.runtime.automation_pause.set` (SQR-018, DL-136), never for a request that sets the value the switch already has, and carries `project_id`, `paused`, the project's `user_stop_epoch`, the actor and the time. A scheduled message whose send time arrives while the switch is on emits `scheduled_dispatch.held` with the failed clause `project_automation_paused`, and a refused quota resume emits `runtime.quota_resume_attempted` with that clause; the switch adds no other event.
 
 `scheduled_dispatch.dispatched` carries the idempotency key and the revalidation result so a duplicate is provably a duplicate. `runtime.quota_resume_attempted` carries the eligibility outcome including the exact failed clause when the attempt was refused, because a refused resume is the case an operator most needs to see. `execution_window.invalidated` carries `invalidated_reason`.
 
@@ -573,7 +584,7 @@ Structural tests validate all three schemas and fixtures, the enum values, the I
 
 Behavioral tests must prove that a scheduled message sends the exact frozen text, attachments, destination, and route, and holds rather than substituting when the route is unavailable; that a Plan revision invalidates a pending build schedule instead of building the newer version; that a recurring nightly window produces one run resumed across occurrences rather than duplicate builds; that wind-down reaches a safe point and persists To-Do work bindings before pausing; that a spring-forward gap and a fall-back repetition each resolve to exactly one dispatch; that a restart recomputes occurrences and applies the missed policy without firing a backlog burst; and that a duplicate timer fire returns the original result.
 
-Negative tests must prove that a manual Stop, Pause, or Cancel defeats quota resume, window resume, scheduled dispatch, and Crew Auto; that a dispatch decided before a stop and delivered after it is discarded; that an unknown reset time is never rendered as a confident countdown; that auto-resume is off by default and scoped to run, provider, and account; that a resume never replays a completed side effect; and that an aborted dispatch names the exact eligibility clause that failed.
+Negative tests must prove that a manual Stop, Pause, or Cancel defeats quota resume, window resume, scheduled dispatch, and Crew Auto; that a dispatch decided before a stop and delivered after it is discarded; that an unknown reset time is never rendered as a confident countdown; that auto-resume is off by default and scoped to run, provider, and account; that a resume never replays a completed side effect; and that an aborted dispatch names the exact eligibility clause that failed. They must also prove, for the project-wide "Pause all automations" switch (SQR-018), that while it is on no scheduled send or scheduled build in the project dispatches, except the one message of a Send now the user sends, which leaves the switch on; that a quota reset, a window opening, a schedule time, an automatic continuation or a newly created schedule does not clear it; that a dispatch decided before it was turned on and delivered after is discarded; and that turning it off releases no per-run latch and fires no backlog burst (ATS-064).
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Progression_Gates.md
 
@@ -793,7 +804,8 @@ server-owned time; a client tick may repaint it, never decide it.
 
 `Schedule Message` stays in the Assistant wand menu, which opens the exact scheduling modal. The
 thread card is the later lifecycle projection, not a second creation entry point, and scheduling
-is not moved into extra non-wand chrome.
+is not moved into extra non-wand chrome. The dock lines of SQR-012 are attention items whose Show
+only reveals the card; they are not a scheduling entry point.
 
 ## Continuation Revalidation Addendum (2026-09-05)
 
@@ -848,9 +860,10 @@ APR-028, and APR-043.
   4. *Events & Automation:* System event listeners, webhook dispatches, and periodic cron routines.
 - **Filtering and Scope:** Scheduled Messages, Execution & Build Windows, and Events & Automation
   each provide independent status filtering, execution time sorting, and search filtering without
-  cross-category state confusion. The status filter's stored values are unchanged; its display
-  labels are Waiting, Paused, Needs you, Done or sent, Didn't send, Skipped, and Canceled, mapped in
-  SQR-014. Resume & Safety Policy is a policy tab, not a list, and has nothing to filter.
+  cross-category state confusion. The status filter keeps the stored values Active, Paused,
+  Completed, Failed and Expired, adds the values Held and Canceled, and offers All for no filter;
+  its display labels are Waiting, Paused, Needs you, Done or sent, Didn't send, Skipped, and
+  Canceled, one per stored value, mapped in SQR-014. Resume & Safety Policy is a policy tab, not a list, and has nothing to filter.
 
 ### 12. Scheduled-Message Card Grammar and State Separation (APR-028)
 
@@ -1048,13 +1061,14 @@ This addendum compiles the scheduling lines of the wand-modules redesign (ledger
 `pldg-20260927-003-wand-scheduling`) from the design spec frozen at
 `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md`
 (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`), sections 8.7 to 8.9 and 8.15,
-and register lines B-SQR-01 to B-SQR-04, B-SQR-06 and B-SQR-07 of
+and register lines B-SQR-01 to B-SQR-07 of
 `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md`
 (SHA-256 `71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493`). It carries the contract, not the
 concept: no concept class, key, harness hook or browser-storage rule becomes canon. The transcript families and
 the accent budget are ACD-469's and the shared dock is `Plans/assistant-chat-design.md`'s; this owner supplies
-content to them and redefines neither. The scheduling defaults stay Settings-owned (section 1), and nothing here
-decides a project-wide automation pause.
+content to them and redefines neither. The scheduling defaults stay Settings-owned (section 1). The project-wide
+"Pause all automations" switch (B-SQR-05) is compiled in SQR-018 from the owner's answer on decision card p12,
+recorded as DL-136.
 
 ### SQR-012 - Scheduled-Message Card Grammar And Scheduling Dock Lines
 
@@ -1101,7 +1115,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the in-chat forms of a scheduled message and the dock lines scheduling supplies.
 depends_on: [SQR-002, SQR-007, SQR-009, ACD-469]
-unblocks: [SQR-013]
+unblocks: [SQR-013, SQR-018]
 acceptance_criteria:
   - "Each of the six owner states renders in its form, and every form's visible sentence begins with its state word."
   - "A message missed under the hold policy renders as Held with its missed reason, never as a seventh state."
@@ -1238,10 +1252,12 @@ draws scheduled messages and build slots from the same projection. Scheduled Mes
 and Events & Automation each have a search field, a status filter and a sort; Resume & Safety Policy is a policy
 tab, not a list, and has nothing to filter.
 
-The status filter's stored values are unchanged, and its labels map onto owner states: Everything (all), Waiting
-(`scheduled` messages and `active` windows), Paused (`paused` windows), Needs you (`held` messages and
-`invalidated` build schedules), Done or sent (`dispatched` messages and `completed` windows), Didn't send
-(`failed`), Skipped (`expired`), and Canceled (`cancelled`). Selecting a record opens its focused view in the same
+The status filter keeps the stored values Active, Paused, Completed, Failed and Expired that APR-027 named, adds
+two values, Held and Canceled, and keeps All for no filter. Each label names one stored value and maps onto owner
+states: All (every record), Waiting (Active: `scheduled` messages and `active` windows), Paused (Paused: `paused`
+windows), Needs you (Held: `held` messages and `invalidated` build schedules), Done or sent (Completed:
+`dispatched` messages and `completed` windows), Didn't send (Failed: `failed`), Skipped (Expired: `expired`), and
+Canceled (Canceled: `cancelled`). A label never renames a stored value. Selecting a record opens its focused view in the same
 sheet: the record's full sentence, its time track and its actions, with a way back to the full list.
 
 ```yaml
@@ -1254,15 +1270,16 @@ canonical_text: >-
   Tomorrow, Later and Past by owner scheduled time in the viewer's timezone, with Held in Needs you, terminal
   records in Past, and exactly one row per schedule identity. Scheduled Messages, Execution & Build Windows and
   Events & Automation each have search, status filter and sort; Resume & Safety Policy is a policy tab, not a
-  list. The status filter keeps its stored values and labels them Waiting, Paused, Needs you (held messages and
-  invalidated build schedules), Done or sent, Didn't send, Skipped and Canceled, mapped onto owner states.
-  Selecting a record opens a focused view in the same sheet with its full sentence, time track and actions.
+  list. The status filter keeps the stored values Active, Paused, Completed, Failed and Expired, adds Held and
+  Canceled, and keeps All for no filter; its labels Waiting, Paused, Needs you (held messages and invalidated
+  build schedules), Done or sent, Didn't send, Skipped and Canceled each name one stored value and map onto owner
+  states. Selecting a record opens a focused view in the same sheet with its full sentence, time track and actions.
 gui_related: true
 gui_classification_reason: Defines the Schedule Manager's grouping, filter labels and focused view.
 depends_on: [SQR-009]
-unblocks: []
+unblocks: [SQR-018]
 acceptance_criteria:
-  - "Every filter label maps to owner states as listed, and the stored filter values are unchanged."
+  - "Every filter label names one stored value and maps to owner states as listed; Active, Paused, Completed, Failed and Expired keep their stored values, and Held and Canceled are the only values added."
   - "Each schedule identity appears in exactly one row under any filter and query."
   - "Resume & Safety Policy shows no search, status filter or sort."
 validation_surfaces:
@@ -1338,7 +1355,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the Build At sheet's recorded values and the Plan card schedule line's states.
 depends_on: [SQR-003, SQR-004, SQR-005, SQR-013]
-unblocks: [SQR-016]
+unblocks: [SQR-016, SQR-018]
 acceptance_criteria:
   - "Every value shown on the Build At sheet, including the grace minutes, equals the value recorded on the schedule."
   - "Each secondary state of the schedule line begins with Outside execution window, Paused, Waiting for Usage or Schedule needs update."
@@ -1516,3 +1533,138 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Settings_System.md
+
+### SQR-018 - Project-Wide Pause All Automations
+
+"Pause all automations" is one project-wide switch that stops every scheduled send and scheduled build in the
+project until the user turns it back on (DL-136, decision card p12, register line B-SQR-05). One command sets and
+clears it: `cmd.runtime.automation_pause.set`, project-scoped, whose payload `paused` is true or false. The switch
+lives in the Schedule Manager's Resume & Safety Policy tab, which is where the Build At sheet's promise "Pause all
+automations always wins." points. Its state is a project-scoped operational record owned here, holding the
+`project_id`, `paused`, the project's `user_stop_epoch`, who changed it, when, and a revision. It is never a
+Settings value, and no Settings default seeds it.
+
+The switch is a user manual stop at project scope and ranks with user manual Pause in the section 1 precedence.
+Turning it on advances the project's `user_stop_epoch` the way Manual Stop advances a run's. Every eligibility
+evaluation for a target in the project captures that epoch beside the target's own and compares both again at
+dispatch, so a dispatch decided before the switch was turned on and delivered after it is discarded. While it is
+on, the one eligibility predicate (SQR-006) fails for every scheduled message, scheduled build, window resume and
+quota resume in the project, with the failed clause `project_automation_paused`. A scheduled build that is already
+running when the switch is turned on stops admitting new work and pauses at its next safe point, the boundary that
+wind-down uses (SQR-004), never in the middle of an atomic operation. A message whose dispatch had already started
+completes. Turning the switch on cancels nothing, invalidates no schedule, disables no quota consent and changes no
+per-run latch; it only holds them.
+
+Only the user clears the switch, by sending the command with `paused` false; a request from any other actor is
+refused with `permission_denied`. No automatic mechanism clears or bypasses it: not a quota reset, a window
+opening, a schedule time, a cleared dependency, a provider retry, or a Goal, Plan or Crew automatic continuation.
+Creating a new schedule while the switch is on does not clear it; the new schedule is recorded and waits like the
+others. Work the user starts directly is not an automation and is not blocked: Send, Build, an explicit user
+resume of one run, and Send now on a held message still act, and each acts on that one item and leaves the switch
+on. The dispatch of a Send now is exempt from the `project_automation_paused` clause because the accepted
+`cmd.chat.schedule_message.update` with `reschedule_to: "now"` records the user as its actor (SQR-006); every other
+clause still holds. A request that sets the
+value the switch already has returns the record unchanged and does not advance the epoch again.
+
+Turning the switch off clears only the project latch. It releases no per-run manual Pause, Stop or Cancel, and it
+dispatches nothing by itself. Every item it held is evaluated again by the one predicate. An occurrence that came
+due while the switch was on is a missed occurrence and follows its recorded missed policy once, as after a
+restart (section 4), so no backlog burst fires. A message whose send time arrived while the switch was on is
+stored `held` whatever its missed policy, and at switch-off the owner applies that policy to it: under `hold` it
+stays `held` for the user and its sentence names the missed time instead of the switch; under `next_available`,
+and under `cancel_after_grace` while it is still within its grace, it returns to `scheduled` for immediate
+dispatch and dispatches once through both eligibility checks; under `cancel_after_grace` past its grace it moves
+to `expired`. Once the switch is off no item keeps the reason "Pause all automations is on". A scheduled build
+that the switch paused is resumed by the scheduler only when the predicate passes again after switch-off, and
+never replays work it had already committed.
+
+The reason is visible on every item the switch holds. On the Resume & Safety Policy tab the switch reads "Pause
+all automations" with "Off: scheduled things start on time." when it is off, and "Paused by you at <time>" with
+"Turn back on" when it is on; "Turn back on" sends the command with `paused` false. While it is on, every
+scheduled-message card, Schedule Manager row and Plan card schedule line in the project that it holds names the
+reason "Pause all automations is on". A message held at its send time is `Held` and its sentence begins with Held
+and names that reason (SQR-012); a build it holds has a schedule line that begins with `Paused` (SQR-015); and the
+manager rows keep the labels of SQR-014. No stored state value is added: a message held at its send time is
+`held`, a run the switch pauses is `paused`, and stored schedule states are unchanged. Each change of the switch
+emits `runtime.automation_pause_changed` (section 3, Events).
+
+```yaml
+plan_unit_id: SQR-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  Pause all automations is one project-wide switch that stops every scheduled send and scheduled build in the
+  project until the user turns it back on (DL-136). cmd.runtime.automation_pause.set, project-scoped with payload
+  paused true or false, sets and clears it from the Schedule Manager's Resume & Safety Policy tab; its state is a
+  project-scoped operational record owned here and never a Settings value. It is a user manual stop at project
+  scope that ranks with user manual Pause: turning it on advances the project's user_stop_epoch the way Manual
+  Stop does, every evaluation compares the project's epoch as well as the target's, and while it is on the one
+  eligibility predicate fails for every scheduled message, scheduled build, window resume and quota resume in the
+  project with the failed clause project_automation_paused. A running scheduled build pauses at its next safe
+  point, never mid-atomic-operation, and a dispatch already started completes. It cancels, invalidates and
+  disables nothing and changes no per-run latch. Only the user clears it, by sending paused false; no quota
+  reset, window opening, schedule time, cleared dependency, provider retry, Goal, Plan or Crew continuation, or
+  newly created schedule clears or bypasses it. Work the user starts directly is not blocked and leaves the switch
+  on: Send, Build, an explicit user resume of one run, and Send now, whose single dispatch is exempt from
+  project_automation_paused because its accepted update records the user as actor. Turning it off releases no
+  per-run latch and dispatches nothing by itself; each occurrence that came due while it was on follows its
+  recorded missed policy once, with no backlog burst: a message it held stays held naming its missed time under
+  hold, returns to scheduled and dispatches once under next_available or within the grace of cancel_after_grace,
+  and expires past that grace, and no item keeps the switch's reason once it is off. Every item it holds names the reason Pause all
+  automations is on, the switch reads Paused by you at a time with Turn back on, or Off: scheduled things start on
+  time., and each change emits runtime.automation_pause_changed.
+gui_related: true
+gui_classification_reason: Defines the Resume & Safety Policy switch and the reason every held scheduled item shows.
+depends_on: [SQR-001, SQR-004, SQR-006, SQR-012, SQR-014, SQR-015]
+unblocks: [ATS-064]
+acceptance_criteria:
+  - "While Pause all automations is on, no scheduled send, scheduled build, window resume or quota resume in the project dispatches, and each refusal records project_automation_paused."
+  - "A Send now the user sends while the switch is on dispatches that one message, and the switch stays on."
+  - "A dispatch decided before the switch was turned on and delivered after it is discarded."
+  - "A quota reset, window opening, schedule time, automatic continuation or newly created schedule leaves the switch on."
+  - "Only a user request with paused false clears it; any other actor is refused with permission_denied."
+  - "Turning it off releases no per-run latch, and each occurrence that came due while it was on follows its recorded missed policy with no backlog burst."
+  - "At switch-off a message it held stays held naming its missed time under hold, dispatches once under next_available or within its grace, and expires past its grace."
+  - "Every item the switch holds shows the reason Pause all automations is on."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - node tests/scheduling-verify.mjs
+risk_class: automatic_resume_overrides_user_stop
+reasoning_tier: high
+context_scope: scheduling_precedence
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: scheduling_precedence_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-136"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json p12 (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-05 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.8 and #8.9 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+preserved_exact_tokens:
+  - "Pause all automations"
+  - "cmd.runtime.automation_pause.set"
+  - "project_automation_paused"
+  - "runtime.automation_pause_changed"
+  - "user_stop_epoch"
+  - "Pause all automations is on"
+  - "Paused by you at"
+  - "Turn back on"
+  - "Off: scheduled things start on time."
+negative_constraints:
+  - Do not let any automatic mechanism, or a newly created schedule, clear or bypass the project pause.
+  - Do not store the project pause as a Settings value.
+  - Do not cancel, invalidate or disable a schedule or consent because the project pause was turned on.
+  - Do not fire a backlog of occurrences when the project pause is turned off.
+  - Do not interrupt an atomic operation to honour the project pause.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Decision_Log.md#DL-136, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Assistant_Plan_Runtime.md, UICommand:cmd.runtime.automation_pause.set

@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3464-L3798
+Source lines: L3464-L3806
 
-Source SHA256: `38f3602203cf7abd51870b4c39fc63d60d1065e34d3e7ce30ba2d1e321c6a48a`
+Source SHA256: `f93f2e4f0e5dfa418ede8656000d7a2df98c04d2c67b65ad7cddb96e97cf637e`
 
 ---
 
@@ -56,11 +56,16 @@ canonical_text: >-
   `ui.guided_tour.skip`, `ui.guided_tour.focus_route`, `ui.guided_tour.toggle_eli5`, `ui.guided_tour.finish`, and
   `ui.guided_tour.replay`, and `ui.guided_tour.show_me`; they are not UICommands, owner mutations, EventRecords, or a
   new persistence authority. Chat opens first and uses the existing Persona/Chat commands for Teacher selection, the
-  supplied local question, a streamed same-conversation answer, and ELI5 on that same answer. Workspace practice routes
+  supplied local question, a streamed same-conversation answer, and that same answer in simple words as one extra,
+  simpler reply from Explain this reply simply (`cmd.chat.eli5.explain_reply`), the original reply unchanged (DL-126). Workspace practice routes
   actual panel docking and widget actions through their existing owners. Planning receives at least half of meaningful
   actions and dwell, including a genuine answer edit and its affected consequence. Try it and Show Me share each exact
   mounted owner handler and observed success predicate; generic Next, narration, timers, or look-alike controls cannot
-  fabricate a checkpoint. ELI5 stays beside Pause and Skip; Reduced Motion remains Settings-owned. Skip reverse-routes
+  fabricate a checkpoint. ELI5 stays beside Pause and Skip; that tour control, `ui.guided_tour.toggle_eli5`, changes
+  the tour's narration only (`tour_narration_only`, Plans/guided_tour_contracts.schema.json) and never rewrites the
+  Teacher example answer. The same-answer ELI5 checkpoint depends on the admission of `cmd.chat.eli5.explain_reply`:
+  until then its control renders disabled with `command_not_registered` (WM-064) and the checkpoint is never
+  synthesized. Reduced Motion remains Settings-owned. Skip reverse-routes
   restoration of the captured layout, Chat state, composer placeholder, and focus. Finish restores by default or keeps
   layout only after explicit selection through the existing finish action, removes practice content, and lands on the
   real Planning Wizard with the committed Project selected and no work auto-started. Close/reload requires a safe owner-
@@ -76,7 +81,7 @@ canonical_text: >-
   PlanUnit records wiring obligations only and does not generate wiring JSON.
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
-depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520]
+depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484]
 unblocks: []
 acceptance_criteria:
   - Main, connect-existing and Project Later consume the three exact PWIZ-021 stage-order definitions; wiring does not re-own their roster. Provider/Free Models phases require a real committed Project and never appear in connect-existing or Project Later as fake completed work.
@@ -100,11 +105,11 @@ acceptance_criteria:
   - Skip and Close preserve truthful incomplete state, and arrival at `ready` never marks skipped Server, provider, Project, restore, Doctor, or other owner work Ready.
   - Guided Tour consumes the v3 owner schema's exact `chat_teacher`, `workspace`, `planning_wizard` order and eleven `ui.guided_tour.*` actions; local transport creates no command, owner handler, EventRecord, or parallel persistence owner.
   - The `ui.guided_tour.focus_route` action changes only the mounted application's visible route and focus; it cannot satisfy an owner-observed performed checkpoint.
-  - Tour Next and Back follow valid story beats with exact scene-heading focus but cannot satisfy Teacher selection, composer send, same-answer ELI5, panel/widget practice, Planning answer edit, or any other required observed checkpoint.
+  - Tour Next and Back follow valid story beats with exact scene-heading focus but cannot satisfy Teacher selection, composer send, same-answer ELI5 (the one extra, simpler reply from Explain this reply simply), panel/widget practice, Planning answer edit, or any other required observed checkpoint.
   - Every important practice action offers Try it and Show Me through the same mounted owner handler and success predicate; stale, unrelated, narrated, or timer-only observations never advance the story.
-  - Chat opens first; `cmd.persona.select`, `cmd.chat.send`, and `cmd.chat.eli5.set` retain their sole Persona/Chat owners and gain exact tour consumers. The guided conversation is locally isolated, retains its identity across docking, and modifies the same answer for ELI5.
+  - Chat opens first; `cmd.persona.select`, `cmd.chat.send`, `cmd.chat.eli5.set` (the quick dot, later replies only), and `cmd.chat.eli5.explain_reply` retain their sole Persona/Chat owners and gain exact tour consumers. The guided conversation is locally isolated, retains its identity across docking, and shows the same answer for ELI5 only as one extra, simpler reply from Explain this reply simply; the original reply is never re-sent, regenerated or rewritten (DL-126).
   - Workspace practice consumes existing panel, workspace-layout, and widget commands according to the chosen action. Planning retains at least half of meaningful actions and dwell, accepts a genuine edited answer, changes only the dependent consequence, and leaves unsure choices unresolved.
-  - ELI5 is at the top beside Pause and Skip. Effective Reduced Motion is a Settings-owned projection/change route; Guided Tour has no Reduced Motion setting or action.
+  - ELI5 is at the top beside Pause and Skip; `ui.guided_tour.toggle_eli5` changes the tour's narration only and never rewrites the Teacher example answer. The same-answer ELI5 checkpoint is never satisfied while `cmd.chat.eli5.explain_reply` is not admitted. Effective Reduced Motion is a Settings-owned projection/change route; Guided Tour has no Reduced Motion setting or action.
   - Skip restores captured layout, Chat state, placeholder, and focus through existing owners; Finish restores by default or keeps layout only on explicit selection through `ui.guided_tour.finish`, then removes practice content and focuses the real Planning Wizard with the committed Project and no auto-started work. No `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, or generic owner mutation is introduced.
   - Close/reload revalidates the last safe checkpoint and original restoration references against current owners before resume; missing, stale, or failed restoration state exposes recovery and never reports completion or captures the temporary arrangement as the original.
   - Retired five-chapter ordering and `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, and `ui.guided_tour.toggle_reduced_motion` have no current Tour control, request, alias, handler, or production row; similarly named canonical layout or Settings commands remain available to unrelated non-Tour consumers under their existing owners.
@@ -197,6 +202,7 @@ preserved_exact_tokens:
   - "ui.guided_tour.skip"
   - "ui.guided_tour.focus_route"
   - "ui.guided_tour.toggle_eli5"
+  - "tour_narration_only"
   - "ui.guided_tour.finish"
   - "ui.guided_tour.replay"
   - "local_context"
@@ -227,6 +233,8 @@ preserved_exact_tokens:
   - "cmd.onboarding.open_details"
   - "cmd.onboarding.resume"
   - "cmd.onboarding.skip"
+  - "Explain this reply simply"
+  - "cmd.chat.eli5.explain_reply"
 stale_retired_dispositions:
   - "server_setup is superseded seven-stage source lineage only; current wiring uses server_storage_client."
   - "The five-chapter chat_teacher, shell_navigation, panel_layout, widget_workspace, planning_wizard order is retired source lineage and never a current Tour route."

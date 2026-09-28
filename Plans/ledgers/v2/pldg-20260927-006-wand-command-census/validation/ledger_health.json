@@ -1,17 +1,17 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-006-wand-command-census",
-  "updated_at_utc": "2026-09-27T22:45:00+00:00",
+  "updated_at_utc": "2026-09-28T00:30:00+00:00",
   "status": "pass",
   "summary": {
-    "events": 8,
-    "design_atoms": 13,
-    "decisions": 14,
-    "open_questions": 7,
+    "events": 15,
+    "design_atoms": 25,
+    "decisions": 26,
+    "open_questions": 6,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "compile_queue_items": 13
+    "compile_queue_items": 25
   },
-  "notes": "Prose compile of the NOW parts and the WAIT wave; witness and validator run by the author.",
+  "notes": "Prose compile of the NOW, WAIT and closure waves and the blind-review cycle 1 repairs; witness and validator run by the author.",
   "errors": []
 }

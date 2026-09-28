@@ -7,7 +7,8 @@ frozen at `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927
 (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`). Every `Repairs` sentence names only
 PlanUnits this branch changed, and each is a compile target of the record's own queue item. In-place prose
 amendments that sit outside any PlanUnit are named after the sentence. B-SQR-08 is record-only (decision
-`dec-007`), B-SQR-05 waits on card p12 (question `q-001`), and B-SQR-09 is the companion task (question `q-002`).
+`dec-007`), B-SQR-05 waited on card p12 (question `q-001`) and is compiled in the closure wave as Record 7 now that
+the owner has answered it (DL-136), and B-SQR-09 is the companion task (question `q-002`).
 
 ## Record 1 — SQR-01 (card grammar): The scheduled-message card had one flat form and a status badge
 
@@ -51,7 +52,8 @@ label onto owner states, groups Scheduled Messages as an agenda, adds a focused 
 that Resume & Safety Policy is not a list.
 
 Repairs SQR-014. In place, the v3 APR-027 filtering bullet names the three filterable tabs, the new labels and the
-policy tab's exclusion.
+policy tab's exclusion. After blind review R-03 both name the stored values: Active, Paused, Completed, Failed and
+Expired kept, Held and Canceled added, All for no filter (lead ruling `dec-009`).
 
 ## Record 5 — SQR-06 (Build At): The Plan-card schedule line, the shown grace and the overnight receipt had no owner text
 
@@ -70,4 +72,30 @@ build, "Keep going next time", "Wrap-up time") without renaming a value or a Set
 out of scope.
 
 Repairs SQR-017. In place, the section 1 Settings boundary and the section 3 missed-time paragraph name the labels
-and point to the unit.
+and point to the unit. SQR-017 also lists timezone choices with the device zone first and as the default, UTC never
+the default (DESIGN-SPEC 8.7, G-33: "The device zone comes first, and is the default."; lead ruling
+`dec-010`, blind review R-09). After R-07 the Settings boundary sentence binds only the scheduling sheets,
+cards and Schedule Manager.
+
+## Record 7 — SQR-05 (automation pause): The promised Pause all automations control had no canon
+
+The redesign promised that "Pause all automations" always wins and showed the switch read-only in the Schedule
+Manager's Resume & Safety Policy tab, while canon latched `user_stop_epoch` per run only, so no project-wide pause
+existed and the promise could not be kept. The owner answered card p12 (E-19) with option A, recorded as DL-136: one
+project-wide switch that stops every scheduled send and scheduled build until the user turns it back on. It is a
+user manual stop at project scope that ranks with user manual Pause, is set and cleared only by
+`cmd.runtime.automation_pause.set`, is cleared only by the user, and is never cleared or bypassed by an automatic
+mechanism or a new schedule.
+
+Repairs SQR-018, SQR-001, SQR-006 and ATS-064. In place, outside any PlanUnit: section 1 precedence item 2 and a new
+paragraph after the `user_stop_epoch` paragraph; the section 3 shared eligibility list (the
+`project_automation_paused` clause); the section 3 exact commands table (the `cmd.runtime.automation_pause.set` row);
+the section 3 Events section (`runtime.automation_pause_changed`, now thirteen events); the section 5 negative tests;
+the Wand Modules Redesign Addendum intro; and three sentences in `Plans/Assistant_Plan_Runtime.md` section 3, "Build
+With Crew and Build At", that pauses a scheduled `PlanRun` at its next safe boundary while the switch is on.
+
+After blind review cycle 1 (R-01, R-02, R-04, R-05, R-06, R-10): the one dispatch of a user's Send now is
+exempt from `project_automation_paused` and leaves the switch on; work the user starts directly, including
+an explicit user resume of one run, acts; a message the switch held follows its missed policy once at
+switch-off; a per-run latch refuses with `manual_stop_latched` while the switch records
+`project_automation_paused`; and ATS-064 checks each of these.

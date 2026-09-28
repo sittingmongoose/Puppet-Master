@@ -79,3 +79,75 @@ Repairs CS-085 and CDRY-022. The first records each sole handler, request and re
 A handlerless command needs an explicit candidate exclusion until admission, and the surfaces the answers add must reach the existing wiring entries.
 
 Repairs WM-063. The exclusions and entries themselves are the companion task.
+
+## Record 14 — CMD-01 (closure census): The census leaves the ELI5 controls and Turn back on open
+
+After the WAIT wave, every ELI5 control and the Scheduled manager's Turn back on were still Open, because card p08 had been answered with a question and card p12 had not been answered. The owner has now confirmed the resolution of the first and approved the second.
+
+Repairs UCC-170. The ELI5 rows now name their command, surface or Settings level; the switch and Turn back on name the pause command; the three controls the answers add are counted.
+
+## Record 15 — CMD-02 (closure rows): The explain-reply and automation-pause commands have no catalog row
+
+"Explain this reply simply" and the "Pause all automations" switch had no command behind them, and the audit's draft name for the pause was held as unregistered.
+
+Repairs UCC-174 and UCC-171. The first registers both rows in the 2026-09-03 format; the second retires the draft name.
+
+## Record 16 — CMD-03 (ELI5 surface): The ELI5 sheet has no catalog surface and the ELI5 command has no inherit value
+
+The redesign's ELI5 sheet and the dot by the message box produce the ELI5 command, and "Follow my usual setting" needs a value that deletes the chat override.
+
+Repairs UCC-175 and UCC-172. The first adds the surface, the value set and the resolution order; the second moves the ELI5 sheet from its open list.
+
+## Record 17 — CMD-07 (closure contracts): The two closure commands have no central contract records and no census line
+
+A catalog row alone does not fix the dispatch identity for the commands owner, and the earlier census line said exactly seven identities were minted.
+
+Repairs CS-087, CDRY-023 and CDRY-022. The first records the two contracts and the revised ELI5 value set; the second records the two added identities; the third points to it.
+
+## Record 18 — CMP-02 (closure wiring): The closure commands and the ELI5 sheet have no wiring disposition
+
+The two handlerless rows need candidate exclusions, and the existing ELI5 wiring entry still names the wand row as its producer.
+
+Repairs WM-064 and WM-063. The exclusions and the entry revision themselves are the companion task.
+
+## Record 19 — CMD-02 (closure checks): The closure command identities and wiring have no static check
+
+Nothing checks that the two rows stay single, excluded until admission and free of automatic producers.
+
+Repairs ATS-066. The runtime proof belongs to the owners' acceptance units.
+
+## Record 20 — WMT-01 (tour wiring, DL-126): Guided Tour wiring rows still route same-answer ELI5 as a change to the example answer
+
+The tour wiring said the guided conversation modifies the same answer for ELI5 and routed same-answer ELI5 through `cmd.chat.eli5.set` alone, which DL-126 forbids. WM-041 and the 2026-08-31 addendum paragraph now route it as one extra, simpler reply from Explain this reply simply (`cmd.chat.eli5.explain_reply`), the original reply unchanged, with `cmd.chat.eli5.set` as the quick dot for later replies only.
+
+Repairs WM-041. The 2026-08-31 addendum paragraph is prose outside any PlanUnit.
+
+## Record 21 — BRV-01 (blind review, Crew Auto): The Crew Auto receipt and the Crew Auto set payload stayed Open after DL-135 and the DL-120 ruling
+
+Card p11 is answered as DL-135, and the lead ruled DL-120's follow-up: a chat's Crew Auto check is that chat's override, and Allow Crews in this chat is retired. Collaborative_Workflows CWR-038 already states both, but the catalog and the wiring still held them Open.
+
+Repairs UCC-172, UCC-170, WM-063 and WM-064. crew_auto_receipt now produces cmd.chat.crew_auto.open_config, and cmd.chat.crew_auto.set carries scope project or thread. The wiring JSON follow-up is q-017.
+
+## Record 22 — BRV-02 (blind review, census): The census broke its own disposition set and left stale Open rows
+
+The census defined New as a UCC-171 row only and limited producer surfaces to three units. It used dispositions outside its closed set, held the Chat Room mid-round message Open after the DL-112 ruling, and never named two registered tokens.
+
+Repairs UCC-170 and UCC-169. The census adds a No producer disposition and a per-control reading of mixed rows. The Chat Room row is cmd.collaboration.message with delivery_mode, and no control stays Open.
+
+## Record 23 — BRV-03 (blind review, identities): Identity counts and the pause schema location contradicted CDRY-023
+
+Several texts still said the redesign mints only seven identities, or none. CS-087 placed the pause pair in the assistant-chat schema.
+
+Repairs UCC-169, CDRY-021, CDRY-022 and CS-087. The count is nine in all, the pause pair is in the scheduling schema, and the automatic-producer acceptance covers both values of paused.
+
+## Record 24 — BRV-04 (blind review, tour ELI5): The catalog and WM-064 still routed the tour's same-answer ELI5 through the ELI5 switch
+
+WM-041 routes the tour's same-answer ELI5 through cmd.chat.eli5.explain_reply (DL-126), but UCC-175 and WM-064 still said the tour dispatches cmd.chat.eli5.set.
+
+Repairs UCC-175, WM-064 and WM-041. The 2026-08-31 addendum paragraph is prose outside any PlanUnit and is repaired too.
+
+## Record 25 — BRV-05 (blind review, mechanics): Non-reciprocal dependencies among the ledger's units
+
+Several depends_on entries had no matching unblocks entry, and two addendum sections had no preamble.
+
+Repairs UCC-169, UCC-171, UCC-172, UCC-174, UCC-175, CDRY-021, CS-085, CDRY-022, CDRY-023, WM-062, WM-063 and WM-064. No meaning changes.

@@ -2,15 +2,15 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38549-L39598
+Source lines: L38554-L39708
 
-Source SHA256: `82311978bcae7304ae7583f93c9d2f06905292c3162b96ec40677061f97270cf`
+Source SHA256: `27e035c6c191080105a5bec7c13662bc462d6675be0fe083349079e5ff6da584`
 
 ---
 
 ## Wand Modules Redesign Addendum (2026-09-27)
 
-This addendum is the GUI contract for the redesigned Assistant wand popups and their in-chat presence, under Jared's instruction of 2026-09-27 and his amendments J-1 and J-2 (DL-109). Its source is the frozen design specification `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md` (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`); the 5.6 Pro concept is source lineage only, and its class names, keys and harness hooks are not canon. Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-476 through ACD-480, `Plans/Collaborative_Workflows.md`, `Plans/Back_Seat_Driver.md`, `Plans/Scheduling_and_Quota_Resume.md` and `Plans/assistant-memory-subsystem.md`. The transcript family map and the accent budget stay with ACD-469 and F3-562 (DR-043), and DR-044 names this addendum as the single owner of the wand modules' presentation grammar. Anything the units below leave unstated waits for Jared's answer and is not implied. F3-578 to F3-580 and the later amendments to F3-566, F3-567, F3-569, F3-571 and F3-575 compile the answers Jared gave on the decision cards (DL-110, DL-111, DL-114, DL-119, DL-122, DL-123, DL-127, DL-129 and DL-134), and F3-566 also states the per-family motion principle of DL-113 as the lead's ruling applied it. The lead's rulings on DL-120 and DL-116 are compiled too: F3-578, F3-531's amendment line, section 3 and the v4 MODAL paragraph make a chat's Crew Auto check the only per-chat Crew permission control, and F3-570 and F3-579 carry the reply's rule note (Followed, or Missed when a check failed). ELI5 (DL-126), the canon theme typography and the minimum chat width are still open.
+This addendum is the GUI contract for the redesigned Assistant wand popups and their in-chat presence, under Jared's instruction of 2026-09-27 and his amendments J-1 and J-2 (DL-109). Its source is the frozen design specification `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md` (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`); the 5.6 Pro concept is source lineage only, and its class names, keys and harness hooks are not canon. Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-476 through ACD-480, `Plans/Collaborative_Workflows.md`, `Plans/Back_Seat_Driver.md`, `Plans/Scheduling_and_Quota_Resume.md` and `Plans/assistant-memory-subsystem.md`. The transcript family map and the accent budget stay with ACD-469 and F3-562 (DR-043), and DR-044 names this addendum as the single owner of the wand modules' presentation grammar. Anything the units below leave unstated waits for Jared's answer and is not implied. F3-578 to F3-580 and the later amendments to F3-566, F3-567, F3-569, F3-571 and F3-575 compile the answers Jared gave on the decision cards (DL-110, DL-111, DL-114, DL-119, DL-122, DL-123, DL-127, DL-129 and DL-134), and F3-566 also states the per-family motion principle of DL-113 as the lead's ruling applied it. The lead's rulings on DL-120 and DL-116 are compiled too: F3-578, F3-531's amendment line, section 3 and the v4 MODAL paragraph make a chat's Crew Auto check the only per-chat Crew permission control, and F3-570 and F3-579 carry the reply's rule note (Followed, or Missed when a check failed). ELI5 is compiled as Jared confirmed it on 2026-09-27 (DL-126): F3-581 is its sheet, quick dot, reply tick and per-reply "Explain this reply simply" action, and F3-566, F3-570, F3-572, F3-531's and F3-532's amendment lines and sections 3, 4, 5 and 14 say the same in place. The canon theme typography and the minimum chat width are still open.
 
 ### F3-566 - Wand Modules Redesign GUI Contract And Sheet Grammar
 
@@ -52,7 +52,7 @@ canonical_text: >-
   Sizes are fixed per sheet: wide 1120 x 780
   (the collaboration kinds, the Scheduled and Automations manager, Memory), standard 900 x 720 (Back
   Seat Driver, Schedule Message, Build At, Teach) and compact 720 wide at a fixed height per sheet
-  (Revert and the small raw-data and evidence dialogs), always clamped inside the window (at most
+  (Revert, ELI5 and the small raw-data and evidence dialogs; F3-581 gives ELI5's), always clamped inside the window (at most
   its width less 48 px and its height less 40 px). A sheet never resizes or re-centres while open.
   The common case never scrolls at 1440 x 900 or 1280 x 800: the plate yields first as the roster
   grows (full at 1 to 3 rows, compact at 4, a strip at 5 or 6, one sentence at 7 or 8) and grows
@@ -83,7 +83,7 @@ split_recommended: false
 depends_on: [DL-109, DL-113, DL-114, DL-115, ACD-475, F3-431, F3-531, F3-534]
 unblocks: [F3-567, F3-568, F3-569, F3-570, F3-573, F3-574, F3-576, F3-579, DR-044]
 acceptance_criteria:
-  - "Every wand configuration popup renders the head, hero, plate, questions and foot anatomy with one primary."
+  - "Every wand configuration popup with a committing primary renders the head, hero, plate, questions and foot anatomy with one primary; a sheet whose changes apply at once (the ELI5 sheet, F3-581) keeps the head, plate and foot, may have no hero or questions, and its foot shows only Done."
   - "No sheet scrolls in its common case at 1440 x 900 or 1280 x 800, and no sheet changes size while open."
   - "No kind or participant is drawn with initials or letters."
   - "Every wand-module surface uses the theme's own font and no separate display face."
@@ -162,6 +162,7 @@ canonical_text: >-
   sentence and keeps its action; the F3-534 priority order is unchanged. Among the active capability
   glyphs inside the text field, Back Seat Driver shows an ambient eye that reads the owner
   projection and is absent when Back Seat Driver is off, and the Crew glyph is the Crew kind mark.
+  The ELI5 quick dot is the ELI5 kind mark among these glyphs, present lit or muted (F3-581, DL-126).
   The dock and the per-reply files row replace the stream footer pill's helpers and files chips
   (ACD-482, DL-129); no summary of helpers or file changes stacks above the composer beside the dock.
 gui_related: true
@@ -364,8 +365,8 @@ canonical_text: >-
   under a reply whose turn changed files ("Changed 3 files +5 −3 · Revert") is visible at rest and
   offers Revert per ACD-478. The quiet ticks live in the reply's meta row and follow that row's
   existing message-chrome visibility: a memory note taken (relaxing to its glyph alone after a few
-  seconds) and verified once a check proves it; the rule note for taught rules; and Sent on schedule
-  on the user message a schedule sent. The rule note follows DL-116 as the design lead's ruling of
+  seconds) and verified once a check proves it; the rule note for taught rules; Sent on schedule
+  on the user message a schedule sent; and Simple explanation on a reply written in Simple (F3-581, DL-126). The rule note follows DL-116 as the design lead's ruling of
   2026-09-27 applied it and assistant-memory-subsystem AMS-053 defines following. It reads
   "Followed 1 of your rules" for the included rules whose check the finished reply passed (the
   number is how many); inclusion alone never earns it, and a rule whose check could not run earns
@@ -412,6 +413,7 @@ preserved_exact_tokens:
   - "Followed 1 of your rules"
   - "Missed 1 of your rules"
   - "AMS-053"
+  - "Simple explanation"
 negative_constraints:
   - "Do not render a reply trace as a card."
   - "Do not hide the files row behind hover."
@@ -505,7 +507,8 @@ canonical_text: >-
   language and ELI5 uses plain language plus one concrete example. The app-level Interaction Mode
   (Expert/ELI5) selects the variant; chat-level ELI5 is separate. Dynamic external payloads, such as
   live LSP hover text or provider output, are not authored copy. An in-scope item missing either
-  variant fails the checklist. This unit does not widen the in-scope set.
+  variant fails the checklist. This unit does not widen the in-scope set. The plain helper lines
+  under and beside controls are outside the checklist: among the copy of controls, only tooltips and help carry the Expert and ELI5 pair (DL-126).
 gui_related: true
 gui_classification_reason: "Gives the dual-copy rule its checklist home."
 split_recommended: false
@@ -514,6 +517,7 @@ unblocks: []
 acceptance_criteria:
   - "Every in-scope authored copy item has a key, an Expert variant and an ELI5 variant."
   - "References to FinalGUISpec section 7.4.0 resolve to this unit."
+  - "No helper line under or beside a control is listed with an Expert and an ELI5 variant."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -530,13 +534,16 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/canon-plans.md item C19 (hashes in SHA256SUMS beside it)"
   - "IMPACT-REGISTER B-ACD-13"
+  - "Plans/Decision_Log.md#DL-126 (card p08, E-11, part 3: dual copy only for tooltips and help; Jared's confirmation of 2026-09-27)"
 preserved_exact_tokens:
   - "dual-copy checklist"
   - "7.4.0"
   - "Expert"
   - "ELI5"
+  - "only tooltips and help carry the Expert and ELI5 pair"
 negative_constraints:
   - "Do not widen the dual-copy rule's scope through this checklist."
+  - "Do not give helper lines under controls an Expert and an ELI5 variant."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
@@ -1004,8 +1011,8 @@ canonical_text: >-
   (DL-122), because each run's full detail lives in its run view (ACD-480). For Crew, BrainStorm,
   Review and Chat Room, the Activity Detail body is a short team list: the run title, the run's one
   true sentence, where the run is now, one 36 px row per helper (its cast mark, name and one state
-  word, with the stand-in sentence under the row only when the requested and effective route
-  differ), then Open Panel and Message. It never repeats the run card or the kind's board. A click on
+  word, and no stand-in sentence, because no model stands in for a chosen helper, DL-121), then Open
+  Panel and Message. It never repeats the run card or the kind's board. A click on
   one of these four domains' chip in the Activity bar reveals the newest card of that kind in the
   thread and marks it once; the rows of those domains' hover cards keep APR-006's routing into
   Activity Detail, pinned per APR-001, so Activity Detail stays reachable. Back Seat Driver's section
@@ -1018,10 +1025,11 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Defines the compact Activity Detail and Back Seat Driver Context Details surfaces."
 split_recommended: false
-depends_on: [ACD-480, F3-569, DL-122]
+depends_on: [ACD-480, F3-569, DL-121, DL-122]
 unblocks: []
 acceptance_criteria:
   - "The four collaboration kinds' Activity Detail shows the short team list and never the kind's board."
+  - "No helper row in the short team list carries a stand-in sentence (DL-121)."
   - "A collaboration domain chip click reveals the newest card; its hover rows still open Activity Detail."
   - "Back Seat Driver's Context Details section has no metric-card grid and no pills."
   - "Goal, To-Dos, Subagents, Changes and Artifacts keep the native card and grid presentation."
@@ -1044,6 +1052,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 7.13 (G-24), 8.6 (G-26)"
   - "IMPACT-REGISTER B-FGS-13 (APR-060), B-FGS-12 (chip click), B-ACD-05 (item 20); card p04, E-04"
   - "Plans/Decision_Log.md#DL-122"
+  - "Plans/Decision_Log.md#DL-121 (no stand-in for a chosen helper; the design's stand-in sentence is not carried)"
 preserved_exact_tokens:
   - "USER-REFERENCE-LAYOUT-ROLLBACK-20260908"
   - "APR-060"
@@ -1058,3 +1067,99 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-122, ContractName:Plans/assistant-chat-design.md#ACD-480, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Back_Seat_Driver.md
+
+### F3-581 - ELI5 Sheet Quick Dot Reply Tick And Explain This Reply Simply
+
+```yaml
+plan_unit_id: F3-581
+unit_type: gui_requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  ELI5's GUI, as Jared confirmed it on 2026-09-27 (DL-126); the behaviour is assistant-chat-design
+  ACD-484. The wand's ELI5 row opens the ELI5 sheet and is not a check. The sheet is a compact sheet of F3-566 at 720 x 560 and never changes height while open (opening its disclosure fits
+  inside the 560). Its choices apply at once, so its foot shows only Done. Head: the ELI5 kind mark
+  (a speech bubble holding one short line), the title Explain things simply in this chat? and the
+  lead sentence "Answers use everyday words and explain terms as they go. Your code, plans and files
+  never change." The plate shows two voices side by side, Standard and Simple, each a short specimen
+  of the same answer, over one shared code line that spans both and never moves; choosing a voice
+  dispatches cmd.chat.eli5.set with off or on for this chat. Under the plate, Follow my usual setting dispatches cmd.chat.eli5.set with inherit, which deletes this chat's override. The one
+  disclosure, How it's decided, draws the resolution order as a trace, All chats, then Chats in this
+  project, then This chat, with the level that decides lit. The All chats node is the Explain Terms Everywhere setting and the Chats in this project node is that setting at project scope;
+  both commit through Settings, never through a chat command, and the This chat node is the same
+  cmd.chat.eli5.set as the plate. The foot reads "Takes effect from your next message. Answers already here keep their wording." and, while a reply streams, says that reply keeps its current
+  style. If the active chat changes while the sheet is open, the sheet changes nothing and reads
+  "You switched chats. Open this again from the chat you want to change." Closing it returns focus
+  to the wand trigger (UIW-025). The quick dot is the ELI5 kind mark among the composer's capability
+  glyphs inside the text field, present in both of its states: lit while Simple explanations are in
+  effect for the chat and muted while they are not. One click on it dispatches cmd.chat.eli5.set
+  with on or off for this chat and never opens the sheet, and its app hover card says whether
+  Simple explanations are on in this chat. In the transcript, a reply written in Simple carries the quiet Simple explanation tick in its meta row (F3-570), and a change-point divider reads
+  Simple explanations from here or Back to standard explanations between the last reply in the old
+  style and the first reply in the new one; no earlier reply changes. Each finished assistant reply's message actions may offer Explain this reply simply, which dispatches
+  cmd.chat.eli5.explain_reply with that reply's message id; while the reply is still streaming the
+  action is disabled and prints its reason. The one extra reply it writes lands at the end of the
+  thread as an ordinary assistant reply, carries the Simple explanation tick, names and links the
+  reply it explains, and adds no divider. The concept's fine print calling project defaults a
+  preview feature is not canon. The command catalog's surface id for the sheet is eli5_sheet.
+gui_related: true
+gui_classification_reason: "Defines the ELI5 sheet, the quick dot and ELI5's traces in the chat."
+split_recommended: false
+depends_on: [F3-566, F3-567, F3-570, F3-572, ACD-484, DL-126, UIW-025]
+unblocks: [ATS-065]
+acceptance_criteria:
+  - "The wand's ELI5 row opens a 720 x 560 compact sheet whose height never changes while open."
+  - "Standard, Simple and Follow my usual setting dispatch cmd.chat.eli5.set with off, on and inherit for the active chat."
+  - "The All chats and Chats in this project nodes commit through Settings and never through a chat command."
+  - "The quick dot is present lit or muted, and one click switches this chat's ELI5 without opening the sheet."
+  - "After any switch, every earlier reply's text is unchanged; only the divider and later replies show the new style."
+  - "Explain this reply simply is disabled while the reply streams, and on a finished reply adds exactly one reply at the end of the thread."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: eli5_surface_drift
+reasoning_tier: standard
+context_scope: wand_modules_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: gui_surface_spec
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 3.2 (the ELI5 compact height), 4.3 C23, 7.10, 8.13 and its amendments G-21 and G-34, 10.1 item f"
+  - "IMPACT-REGISTER B-FGS-02 (the ELI5 mark), B-FGS-03 (the ELI5 mark), B-FGS-08 (ELI5); card p08, E-11"
+  - "Plans/Decision_Log.md#DL-126 (Owner resolution, Jared, 2026-09-27, confirmed in chat)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5) answer record p08"
+preserved_exact_tokens:
+  - "720 x 560"
+  - "Explain things simply in this chat?"
+  - "Follow my usual setting"
+  - "How it's decided"
+  - "Explain Terms Everywhere"
+  - "Takes effect from your next message. Answers already here keep their wording."
+  - "quick dot"
+  - "Simple explanation"
+  - "Simple explanations from here"
+  - "Back to standard explanations"
+  - "Explain this reply simply"
+  - "cmd.chat.eli5.set"
+  - "cmd.chat.eli5.explain_reply"
+  - "eli5_sheet"
+negative_constraints:
+  - "Do not render ELI5 as a wand check."
+  - "Do not change the ELI5 sheet's height while it is open."
+  - "Do not let the quick dot open the sheet or hide while ELI5 is off."
+  - "Do not restyle, re-send or rewrite an earlier reply when the style changes."
+  - "Do not offer Explain this reply simply as enabled on a reply that is still streaming."
+  - "Do not commit the All chats or project level through a chat command."
+stale_retired_dispositions:
+  - "2026-09-03 redesign section 14's 'ELI5 is a wand check' is superseded by this unit and ACD-484."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-484, ContractName:Plans/Decision_Log.md#DL-126, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md#UIW-025

@@ -3,7 +3,7 @@
   "schema_version": "1.0.0",
   "owner_schema": "Plans/scheduling_and_quota_resume_contracts.schema.json",
   "revision": "wand-modules-redesign-2026-09-27",
-  "scope": "Static contract-shape cases for the six command request/result pairs this file defines (ledger pldg-20260927-003-wand-scheduling, B-SQR-09; SQR-013, SQR-015, SQR-017). A passing case proves a shape only: no handler, catalogue admission, storage, event, timer or native dispatch.",
+  "scope": "Static contract-shape cases for the command request/result pairs this file defines (ledger pldg-20260927-003-wand-scheduling: B-SQR-09 for the six scheduling commands, SQR-013, SQR-015, SQR-017; closure wave B-SQR-05 for cmd.runtime.automation_pause.set and the project pause record, SQR-018, DL-136). A passing case proves a shape only: no handler, catalogue admission, storage, event, timer or native dispatch, and not that the pause holds real dispatches (ATS-064).",
   "valid": [
     {
       "name": "schedule_message_text_from_composer",
@@ -643,6 +643,283 @@
         "schedule_state": "cancelled",
         "admitted_work_stopped": false
       }
+    },
+    {
+      "name": "automation_pause_turn_on_from_policy_tab",
+      "definition": "AutomationPauseSetRequest",
+      "value": {
+        "schema_id": "pm.runtime.automation_pause_set_request.v1",
+        "request_type": "AutomationPauseSetRequest",
+        "command_id": "cmd.runtime.automation_pause.set",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:automation-pause:1",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:automation-pause:1",
+        "source_surface": "schedule_manager",
+        "return_route": "route:assistant:thread:fixture",
+        "actor_kind": "user",
+        "paused": true
+      }
+    },
+    {
+      "name": "automation_pause_turn_back_on_from_policy_tab",
+      "definition": "AutomationPauseSetRequest",
+      "value": {
+        "schema_id": "pm.runtime.automation_pause_set_request.v1",
+        "request_type": "AutomationPauseSetRequest",
+        "command_id": "cmd.runtime.automation_pause.set",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:automation-pause:2",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:automation-pause:2",
+        "source_surface": "schedule_manager",
+        "return_route": "route:assistant:thread:fixture",
+        "actor_kind": "user",
+        "paused": false
+      }
+    },
+    {
+      "name": "automation_pause_clear_from_automatic_actor_reaches_owner_for_refusal",
+      "definition": "AutomationPauseSetRequest",
+      "value": {
+        "schema_id": "pm.runtime.automation_pause_set_request.v1",
+        "request_type": "AutomationPauseSetRequest",
+        "command_id": "cmd.runtime.automation_pause.set",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:automation-pause:3",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:automation:quota-resume:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:automation-pause:3",
+        "source_surface": "schedule_manager",
+        "return_route": "route:assistant:thread:fixture",
+        "actor_kind": "automation",
+        "paused": false
+      }
+    },
+    {
+      "name": "automation_pause_on_accepted_advances_project_epoch",
+      "definition": "AutomationPauseSetResult",
+      "value": {
+        "schema_id": "pm.runtime.automation_pause_set_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "AutomationPauseSetResult",
+        "command_id": "cmd.runtime.automation_pause.set",
+        "command_instance_id": "cmdi:automation-pause:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:schedule-manager:fixture:policy",
+        "project_id": "project:fixture:atlas",
+        "requested_paused": true,
+        "changed": true,
+        "epoch_advanced": true,
+        "pause": {
+          "schema_id": "pm.runtime.project_automation_pause.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:fixture:atlas",
+          "paused": true,
+          "user_stop_epoch": 8,
+          "changed_by_actor_ref": "actor:user:fixture",
+          "changed_by_actor_kind": "user",
+          "changed_at": "2026-09-27T21:40:00Z",
+          "revision": 3
+        },
+        "side_effects": {
+          "schedules_cancelled_or_invalidated": false,
+          "quota_consents_disabled": false,
+          "per_run_latches_changed": false,
+          "work_dispatched": false
+        }
+      }
+    },
+    {
+      "name": "automation_pause_reset_same_value_unchanged_no_epoch",
+      "definition": "AutomationPauseSetResult",
+      "value": {
+        "schema_id": "pm.runtime.automation_pause_set_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "AutomationPauseSetResult",
+        "command_id": "cmd.runtime.automation_pause.set",
+        "command_instance_id": "cmdi:automation-pause:4",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:schedule-manager:fixture:policy",
+        "project_id": "project:fixture:atlas",
+        "requested_paused": true,
+        "changed": false,
+        "epoch_advanced": false,
+        "pause": {
+          "schema_id": "pm.runtime.project_automation_pause.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:fixture:atlas",
+          "paused": true,
+          "user_stop_epoch": 8,
+          "changed_by_actor_ref": "actor:user:fixture",
+          "changed_by_actor_kind": "user",
+          "changed_at": "2026-09-27T21:40:00Z",
+          "revision": 3
+        },
+        "side_effects": {
+          "schedules_cancelled_or_invalidated": false,
+          "quota_consents_disabled": false,
+          "per_run_latches_changed": false,
+          "work_dispatched": false
+        }
+      }
+    },
+    {
+      "name": "automation_pause_turned_off_by_user_no_epoch_advance",
+      "definition": "AutomationPauseSetResult",
+      "value": {
+        "schema_id": "pm.runtime.automation_pause_set_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "AutomationPauseSetResult",
+        "command_id": "cmd.runtime.automation_pause.set",
+        "command_instance_id": "cmdi:automation-pause:2",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:schedule-manager:fixture:policy",
+        "project_id": "project:fixture:atlas",
+        "requested_paused": false,
+        "changed": true,
+        "epoch_advanced": false,
+        "pause": {
+          "schema_id": "pm.runtime.project_automation_pause.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:fixture:atlas",
+          "paused": false,
+          "user_stop_epoch": 8,
+          "changed_by_actor_ref": "actor:user:fixture",
+          "changed_by_actor_kind": "user",
+          "changed_at": "2026-09-28T06:05:00Z",
+          "revision": 4
+        },
+        "side_effects": {
+          "schedules_cancelled_or_invalidated": false,
+          "quota_consents_disabled": false,
+          "per_run_latches_changed": false,
+          "work_dispatched": false
+        }
+      }
+    },
+    {
+      "name": "automation_pause_clear_by_non_user_refused_permission_denied",
+      "definition": "AutomationPauseSetResult",
+      "value": {
+        "schema_id": "pm.runtime.automation_pause_set_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "AutomationPauseSetResult",
+        "command_id": "cmd.runtime.automation_pause.set",
+        "command_instance_id": "cmdi:automation-pause:3",
+        "outcome": "rejected",
+        "error_code": "permission_denied",
+        "projection_ref": "projection:schedule-manager:fixture:policy",
+        "project_id": "project:fixture:atlas",
+        "requested_paused": false,
+        "changed": false,
+        "epoch_advanced": false,
+        "pause": {
+          "schema_id": "pm.runtime.project_automation_pause.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:fixture:atlas",
+          "paused": true,
+          "user_stop_epoch": 8,
+          "changed_by_actor_ref": "actor:user:fixture",
+          "changed_by_actor_kind": "user",
+          "changed_at": "2026-09-27T21:40:00Z",
+          "revision": 3
+        },
+        "side_effects": {
+          "schedules_cancelled_or_invalidated": false,
+          "quota_consents_disabled": false,
+          "per_run_latches_changed": false,
+          "work_dispatched": false
+        }
+      }
+    },
+    {
+      "name": "automation_pause_off_on_never_changed_record_is_idempotent",
+      "definition": "AutomationPauseSetResult",
+      "value": {
+        "schema_id": "pm.runtime.automation_pause_set_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "AutomationPauseSetResult",
+        "command_id": "cmd.runtime.automation_pause.set",
+        "command_instance_id": "cmdi:automation-pause:5",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:schedule-manager:fixture:policy",
+        "project_id": "project:fixture:atlas",
+        "requested_paused": false,
+        "changed": false,
+        "epoch_advanced": false,
+        "pause": {
+          "schema_id": "pm.runtime.project_automation_pause.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:fixture:atlas",
+          "paused": false,
+          "user_stop_epoch": 0,
+          "changed_by_actor_ref": null,
+          "changed_by_actor_kind": null,
+          "changed_at": null,
+          "revision": 0
+        },
+        "side_effects": {
+          "schedules_cancelled_or_invalidated": false,
+          "quota_consents_disabled": false,
+          "per_run_latches_changed": false,
+          "work_dispatched": false
+        }
+      }
+    },
+    {
+      "name": "project_pause_record_initial_off_never_changed",
+      "definition": "ProjectAutomationPauseRecord",
+      "value": {
+        "schema_id": "pm.runtime.project_automation_pause.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project:fixture:borealis",
+        "paused": false,
+        "user_stop_epoch": 0,
+        "changed_by_actor_ref": null,
+        "changed_by_actor_kind": null,
+        "changed_at": null,
+        "revision": 0
+      }
+    },
+    {
+      "name": "project_pause_record_paused_by_user",
+      "definition": "ProjectAutomationPauseRecord",
+      "value": {
+        "schema_id": "pm.runtime.project_automation_pause.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project:fixture:cygnus",
+        "paused": true,
+        "user_stop_epoch": 3,
+        "changed_by_actor_ref": "actor:user:fixture",
+        "changed_by_actor_kind": "user",
+        "changed_at": "2026-09-27T21:40:00Z",
+        "revision": 1
+      }
+    },
+    {
+      "name": "project_pause_record_turned_back_on",
+      "definition": "ProjectAutomationPauseRecord",
+      "value": {
+        "schema_id": "pm.runtime.project_automation_pause.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project:fixture:draco",
+        "paused": false,
+        "user_stop_epoch": 5,
+        "changed_by_actor_ref": "actor:user:fixture",
+        "changed_by_actor_kind": "user",
+        "changed_at": "2026-09-26T08:00:00Z",
+        "revision": 6
+      }
     }
   ],
   "invalid": [
@@ -1017,6 +1294,231 @@
       "expected_error": "plan_card produces no scheduled-message command",
       "patch": {
         "source_surface": "plan_card"
+      }
+    },
+    {
+      "name": "automation_pause_from_settings",
+      "definition": "AutomationPauseSetRequest",
+      "base_valid": "automation_pause_turn_on_from_policy_tab",
+      "expected_error": "the switch is never a Settings value; schedule_manager is the only source surface (SQR-018, UCC-174)",
+      "patch": {
+        "source_surface": "settings"
+      }
+    },
+    {
+      "name": "automation_pause_from_plan_card",
+      "definition": "AutomationPauseSetRequest",
+      "base_valid": "automation_pause_turn_on_from_policy_tab",
+      "expected_error": "schedule_manager is the only producer (UCC-174, WM-064)",
+      "patch": {
+        "source_surface": "plan_card"
+      }
+    },
+    {
+      "name": "automation_pause_without_paused",
+      "definition": "AutomationPauseSetRequest",
+      "base_valid": "automation_pause_turn_on_from_policy_tab",
+      "expected_error": "the payload is paused true or false",
+      "remove": [
+        "paused"
+      ]
+    },
+    {
+      "name": "automation_pause_toggle_value",
+      "definition": "AutomationPauseSetRequest",
+      "base_valid": "automation_pause_turn_on_from_policy_tab",
+      "expected_error": "paused is a boolean; there is no toggle or inherit value",
+      "patch": {
+        "paused": "toggle"
+      }
+    },
+    {
+      "name": "automation_pause_without_actor_kind",
+      "definition": "AutomationPauseSetRequest",
+      "base_valid": "automation_pause_turn_back_on_from_policy_tab",
+      "expected_error": "the owner needs the originating actor kind to accept only a user clear (SQR-018)",
+      "remove": [
+        "actor_kind"
+      ]
+    },
+    {
+      "name": "automation_pause_as_automation_stop",
+      "definition": "AutomationPauseSetRequest",
+      "base_valid": "automation_pause_turn_on_from_policy_tab",
+      "expected_error": "cmd.runtime.automation_stop.set is not an identity (CDRY-023, UCC-174)",
+      "patch": {
+        "command_id": "cmd.runtime.automation_stop.set"
+      }
+    },
+    {
+      "name": "automation_pause_scoped_to_a_run",
+      "definition": "AutomationPauseSetRequest",
+      "base_valid": "automation_pause_turn_on_from_policy_tab",
+      "expected_error": "the pause is project-scoped; the target is the project only",
+      "patch": {
+        "run_id": "plan-run:fixture:1"
+      }
+    },
+    {
+      "name": "automation_pause_refused_clear_changes_record",
+      "definition": "AutomationPauseSetResult",
+      "base_valid": "automation_pause_clear_by_non_user_refused_permission_denied",
+      "expected_error": "a refused request changes nothing",
+      "patch": {
+        "changed": true
+      }
+    },
+    {
+      "name": "automation_pause_refused_without_error",
+      "definition": "AutomationPauseSetResult",
+      "base_valid": "automation_pause_clear_by_non_user_refused_permission_denied",
+      "expected_error": "a rejection names its typed reason",
+      "patch": {
+        "error_code": null
+      }
+    },
+    {
+      "name": "automation_pause_accepted_with_error",
+      "definition": "AutomationPauseSetResult",
+      "base_valid": "automation_pause_on_accepted_advances_project_epoch",
+      "expected_error": "an accepted result carries no error",
+      "patch": {
+        "error_code": "permission_denied"
+      }
+    },
+    {
+      "name": "automation_pause_same_value_advances_epoch",
+      "definition": "AutomationPauseSetResult",
+      "base_valid": "automation_pause_reset_same_value_unchanged_no_epoch",
+      "expected_error": "setting the value the switch already has does not advance the epoch again",
+      "patch": {
+        "epoch_advanced": true
+      }
+    },
+    {
+      "name": "automation_pause_turn_off_advances_epoch",
+      "definition": "AutomationPauseSetResult",
+      "base_valid": "automation_pause_turned_off_by_user_no_epoch_advance",
+      "expected_error": "turning the switch off clears the latch and never advances the epoch",
+      "patch": {
+        "epoch_advanced": true
+      }
+    },
+    {
+      "name": "automation_pause_turn_on_without_epoch_advance",
+      "definition": "AutomationPauseSetResult",
+      "base_valid": "automation_pause_on_accepted_advances_project_epoch",
+      "expected_error": "turning it on advances the project's user_stop_epoch the way Manual Stop does",
+      "patch": {
+        "epoch_advanced": false
+      }
+    },
+    {
+      "name": "automation_pause_accepted_on_record_not_paused",
+      "definition": "AutomationPauseSetResult",
+      "base_valid": "automation_pause_on_accepted_advances_project_epoch",
+      "expected_error": "an accepted result's record holds the requested value",
+      "patch": {
+        "pause.paused": false
+      }
+    },
+    {
+      "name": "automation_pause_accepted_off_record_still_paused",
+      "definition": "AutomationPauseSetResult",
+      "base_valid": "automation_pause_turned_off_by_user_no_epoch_advance",
+      "expected_error": "an accepted clear leaves the record off",
+      "patch": {
+        "pause.paused": true
+      }
+    },
+    {
+      "name": "automation_pause_cancels_schedules",
+      "definition": "AutomationPauseSetResult",
+      "base_valid": "automation_pause_on_accepted_advances_project_epoch",
+      "expected_error": "turning it on cancels and invalidates nothing (SQR-018)",
+      "patch": {
+        "side_effects.schedules_cancelled_or_invalidated": true
+      }
+    },
+    {
+      "name": "automation_pause_disables_quota_consent",
+      "definition": "AutomationPauseSetResult",
+      "base_valid": "automation_pause_on_accepted_advances_project_epoch",
+      "expected_error": "turning it on disables no quota consent",
+      "patch": {
+        "side_effects.quota_consents_disabled": true
+      }
+    },
+    {
+      "name": "automation_pause_off_releases_run_latch",
+      "definition": "AutomationPauseSetResult",
+      "base_valid": "automation_pause_turned_off_by_user_no_epoch_advance",
+      "expected_error": "turning it off releases no per-run manual Pause, Stop or Cancel",
+      "patch": {
+        "side_effects.per_run_latches_changed": true
+      }
+    },
+    {
+      "name": "automation_pause_off_dispatches_backlog",
+      "definition": "AutomationPauseSetResult",
+      "base_valid": "automation_pause_turned_off_by_user_no_epoch_advance",
+      "expected_error": "turning it off dispatches nothing by itself; no backlog burst",
+      "patch": {
+        "side_effects.work_dispatched": true
+      }
+    },
+    {
+      "name": "project_pause_changed_by_automation",
+      "definition": "ProjectAutomationPauseRecord",
+      "base_valid": "project_pause_record_paused_by_user",
+      "expected_error": "only a user ever changes the pause record",
+      "patch": {
+        "changed_by_actor_kind": "automation"
+      }
+    },
+    {
+      "name": "project_pause_paused_without_who",
+      "definition": "ProjectAutomationPauseRecord",
+      "base_valid": "project_pause_record_paused_by_user",
+      "expected_error": "a paused record names who paused it (Paused by you at <time>)",
+      "patch": {
+        "changed_by_actor_ref": null
+      }
+    },
+    {
+      "name": "project_pause_paused_without_time",
+      "definition": "ProjectAutomationPauseRecord",
+      "base_valid": "project_pause_record_paused_by_user",
+      "expected_error": "a paused record names when it was paused",
+      "patch": {
+        "changed_at": null
+      }
+    },
+    {
+      "name": "project_pause_paused_at_epoch_zero",
+      "definition": "ProjectAutomationPauseRecord",
+      "base_valid": "project_pause_record_paused_by_user",
+      "expected_error": "turning it on advanced the epoch at least once",
+      "patch": {
+        "user_stop_epoch": 0
+      }
+    },
+    {
+      "name": "project_pause_initial_record_paused",
+      "definition": "ProjectAutomationPauseRecord",
+      "base_valid": "project_pause_record_initial_off_never_changed",
+      "expected_error": "the never-changed record is off; no Settings default seeds it on",
+      "patch": {
+        "paused": true
+      }
+    },
+    {
+      "name": "project_pause_as_settings_value",
+      "definition": "ProjectAutomationPauseRecord",
+      "base_valid": "project_pause_record_paused_by_user",
+      "expected_error": "the pause is an operational record, never a Settings value",
+      "patch": {
+        "setting_key": "scheduling.automation_pause"
       }
     }
   ]

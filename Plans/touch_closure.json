@@ -3860,7 +3860,7 @@
       "gui_triggers": [
         "Assistant Chat/Teacher -> workspace -> Planning Wizard; the comfort introduction is not an extra chapter.",
         "Try it and Show Me share one mounted owner action and observed success predicate.",
-        "Same-answer Teacher ELI5 and book-club planning practice with a real changed answer and stable outcomes."
+        "Same-answer Teacher ELI5 as one extra, simpler reply from Explain this reply simply, the original reply unchanged (DL-126), and book-club planning practice with a real changed answer and stable outcomes."
       ],
       "return_route": "Skip restores captured layout/Chat selection, placeholder, unsent state and focus. Finish restores by default or keeps only by explicit selection, removes practice, and lands on the real Planning Wizard with the committed Project selected. Failed restoration remains unfinished.",
       "reverse_consumers": [
@@ -4992,7 +4992,7 @@
       "wiring_status": "concept_simulated",
       "production_or_simulation": "Existing catalog/wiring candidate identity and scoped concept adapter only, not native execution.",
       "gui_triggers": [
-        "Existing Chat composer send and same-answer ELI5 during Guided Tour"
+        "Existing Chat composer send and same-answer ELI5 during Guided Tour; the simpler version is one extra reply from Explain this reply simply and no switch rewrites the example answer (DL-126)"
       ],
       "return_route": "Same conversation and initiating control; no cross-thread or cross-Project retargeting.",
       "reverse_consumers": [
@@ -10337,7 +10337,7 @@
       "ui_action",
       "ui.guided_tour.toggle_eli5",
       "partial",
-      "Tour explanation mode and the same local Teacher answer change through existing owner identities. Scoped concept behavior is not native isolation, accessibility or final visual evidence."
+      "Tour explanation mode changes tour narration only; the local Teacher answer is never rewritten, and its simpler version is one extra reply from Explain this reply simply (DL-126). Scoped concept behavior is not native isolation, accessibility or final visual evidence."
     ],
     [
       "TOUCH-TOUR-008",
@@ -10385,7 +10385,7 @@
       "command",
       "cmd.chat.eli5.set",
       "partial",
-      "Existing thread ELI5 owner reused independently of the global default and Tour narration toggle. Same-answer concept behavior is not dedicated machine payload or native isolation evidence."
+      "Existing thread ELI5 owner reused independently of the global default and Tour narration toggle; in the tour it is the quick dot for later replies and never rewrites the example answer (DL-126). Same-answer concept behavior is not dedicated machine payload or native isolation evidence."
     ],
     [
       "TOUCH-DOC-001",

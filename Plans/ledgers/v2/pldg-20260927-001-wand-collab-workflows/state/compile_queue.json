@@ -1,16 +1,22 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-001-wand-collab-workflows",
-  "updated_at_utc": "2026-09-27T23:30:00+00:00",
-  "last_event_id": "evt-014",
+  "updated_at_utc": "2026-09-27T23:59:30+00:00",
+  "last_event_id": "evt-023",
   "canonical_plan_targets": [
-    "Plans/Collaborative_Workflows.md"
+    "Plans/Collaborative_Workflows.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "compiled_owner_docs": [
-    "Plans/Collaborative_Workflows.md"
+    "Plans/Collaborative_Workflows.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "compiled_plan_outputs": [
-    "Plans/Collaborative_Workflows.md"
+    "Plans/Collaborative_Workflows.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "governance_status": "not_requested",
   "latest_audit_ref": null,
@@ -18,14 +24,18 @@
   "validation_state": {
     "ledger_health": "pass_prose_compiled",
     "compile_witness": "pass",
-    "claim_boundary": "Owner prose only. No schema, fixture, gate, shard or index work; no governance seal."
+    "claim_boundary": "Owner prose plus the static contract companion (ATS-062, extended in the closure wave with live_message_id and CollaborationMessageInProgress, and after blind review cycle 1 with the CrewAutoSetRequest scope, the run's stop_reason and the crew_auto_receipt surface): schema and fixtures validated by pm-new-contracts-verify.py only. ATS-063 stays NOT_RUN until a runtime exists. No shard or index regeneration by this ledger's authors; no governance seal."
   },
   "planned_owner_docs": [
-    "Plans/Collaborative_Workflows.md"
+    "Plans/Collaborative_Workflows.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "reserved_id_ranges": {
-    "CWR": "CWR-018..CWR-039",
-    "EP (later wave, E-31 only)": "EP-129..EP-131"
+    "CWR": "CWR-018..CWR-039 (earlier waves); CWR-040..CWR-044 (closure wave, CWR-040 used)",
+    "EP (closure wave, E-31)": "EP-129..EP-131 (all used)",
+    "ATS (companion, B-CW-29)": "ATS-062 (used; the collaborative contract family registration, task 2)",
+    "ATS (closure wave)": "ATS-063 (used)"
   },
   "status": "prose_compiled_pending_review",
   "items": [
@@ -804,6 +814,128 @@
       ],
       "companion_outputs": [],
       "compile_event_id": "evt-012"
+    },
+    {
+      "queue_id": "queue-041",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-22-live"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-040"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-040"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-016"
+    },
+    {
+      "queue_id": "queue-042",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-22-stream"
+      ],
+      "target_doc": "Plans/Executor_Protocol.md",
+      "target_docs": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "target_plan_unit_ids": [
+        "EP-129",
+        "EP-130",
+        "EP-131"
+      ],
+      "compiled_plan_unit_ids": [
+        "EP-129",
+        "EP-130",
+        "EP-131"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-016"
+    },
+    {
+      "queue_id": "queue-043",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-21-live"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-030"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-030"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-016"
+    },
+    {
+      "queue_id": "queue-044",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-22-test"
+      ],
+      "target_doc": "Plans/Automated_Testing_System.md",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "ATS-063"
+      ],
+      "compiled_plan_unit_ids": [
+        "ATS-063"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-016"
+    },
+    {
+      "queue_id": "queue-045",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-25-eli5"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-033"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-033"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-016"
+    },
+    {
+      "queue_id": "queue-046",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g1-cw-29-companion"
+      ],
+      "target_doc": "Plans/Automated_Testing_System.md",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "ATS-062"
+      ],
+      "compiled_plan_unit_ids": [
+        "ATS-062"
+      ],
+      "companion_outputs": [
+        "Plans/collaborative_workflows_contracts.schema.json",
+        "Plans/collaborative_workflows_contract_fixtures.json",
+        "scripts/pm-new-contracts-verify.py"
+      ],
+      "compile_event_id": "evt-010"
     }
   ],
   "notes": "One item per register line or answered WAIT part; each compiles only the part named in the canon plan or settled by its Decision_Log entry.",

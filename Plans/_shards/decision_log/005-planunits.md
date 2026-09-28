@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L2793-L9998
+Source lines: L2835-L10180
 
-Source SHA256: `de5c970810a44af17252148ef157b5f5baf1cef3a69d692499a1e6556f6f7941`
+Source SHA256: `69d9a5a44b7cf3b42af5b75b0ac955ee500048049e3083dd050f82db5d71667b`
 
 ---
 
@@ -6711,7 +6711,7 @@ owner_hints:
   - Plans/UI_Command_Catalog.md
 ```
 
-### DL-126 - ELI5's Scope And Per Chat Toggle Are Open On The Owner's Question
+### DL-126 - ELI5 Has A Project Default That A Chat Can Override And Switching It Never Rewrites A Reply
 
 ```yaml
 plan_unit_id: DL-126
@@ -6719,24 +6719,39 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Jared answered card p08 (E-11) on 2026-09-27 by asking a question back, that ELI5 is not yet
-  decided: Jared stated his original intent (a project-level default with a per-chat toggle that
-  changes only that chat) and asked whether that would require two responses or a resent response
-  when toggled; the popup-or-toggle, project level and dual-copy parts remain open. Proposed answer
-  (lead, 2026-09-27), awaiting Jared's confirmation and not decided: switching affects only replies
-  written after the switch, the assistant never re-sends, an optional on-demand "Explain this reply
-  simply" re-explains one reply, and ELI5 has a project default with a per-chat override.
+  Jared answered card p08 (E-11) on 2026-09-27 by asking a question back: he stated his original
+  intent (a project-level default with a per-chat toggle that changes only that chat) and asked
+  whether that would require two responses or a resent response when toggled. Owner resolution
+  (Jared, 2026-09-27, confirmed in chat): ELI5 keeps a project-level default that applies everywhere
+  in the project, and the ELI5 control in a chat overrides it for that chat only. Switching ELI5
+  changes only replies written after the switch; it never re-sends, regenerates or rewrites an
+  earlier reply, so a switch never produces a second response. Each finished assistant reply may
+  offer "Explain this reply simply", which writes one extra reply, a simpler explanation of that
+  reply, only when the user asks. Following the recommendation for parts 1 and 3, ELI5 is its own
+  small popup (sheet) with the quick dot by the message box as the one-click on and off, and Expert
+  and ELI5 dual copy exists only for tooltips and help. Compile details written by the design lead
+  and the canon compile on 2026-09-27, not part of the recorded confirmation: the resolution order
+  is the chat override, else the project default, else the app default; Explain this reply simply is
+  refused while that reply is still streaming; the guided tour is re-pointed from the old toggle to
+  the popup and the dot (the card's cost line); the commands are cmd.chat.eli5.set (on|off|inherit,
+  inherit deleting the chat override) and cmd.chat.eli5.explain_reply. The project scope on the
+  existing ELI5 default setting (general.interaction.eli5-default; per-chat override
+  general.interaction.chat-eli5) is a Settings follow-up, out of scope for the wand-modules compile.
 gui_related: true
 gui_classification_reason: Records an owner decision about eli5 presentation or behaviour.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - "No owner document changes ELI5's form, scope or dual copy on the strength of this entry."
+  - "A chat's ELI5 state resolves as the chat override, else the project default, else the app default."
+  - "Switching ELI5 never re-sends, regenerates or rewrites a reply written before the switch."
+  - "Explain this reply simply writes exactly one extra reply, only when the user asks, and is refused while the target reply is streaming."
+  - "ELI5 is a popup (sheet) with the quick dot by the message box as the one-click on and off, and the guided tour points to them."
+  - "Expert and ELI5 dual copy appears only in tooltips and help."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-risk_class: eli5_scope_undecided
+risk_class: eli5_scope_and_rewrite
 reasoning_tier: high
 context_scope: eli5
 implementation_surfaces:
@@ -6753,13 +6768,19 @@ source_lineage:
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json
+  - "ANSWERS-20260927-final.json answer record p08, ask_resolved (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5, /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json; Jared confirmed the lead's answer in chat on 2026-09-27)"
 preserved_exact_tokens:
   - "E-11"
   - "project-level"
   - "two responses"
+  - "Explain this reply simply"
+  - "cmd.chat.eli5.set"
+  - "cmd.chat.eli5.explain_reply"
 negative_constraints:
-  - Do not compile any ELI5 waiting line from this entry alone.
-  - "Do not compile ELI5 behaviour from the lead's proposed answer before Jared confirms it."
+  - "Do not re-send, regenerate or rewrite an earlier reply when ELI5 is switched."
+  - "Do not write more than one extra reply for one Explain this reply simply request."
+  - "Do not give every helper line an Expert and an ELI5 version; dual copy is for tooltips and help only."
+  - "Do not edit Settings documents from this entry; the project scope on the ELI5 default is a Settings follow-up."
 owner_hints:
   - Plans/Collaborative_Workflows.md
   - Plans/assistant-chat-design.md
@@ -6976,8 +6997,9 @@ canonical_text: >-
   "The Crew's own limit overrides the general one", that a Crew's own time and cost limit overrides
   the app's general run limit rather than the tighter limit winning. Lead ruling applied 2026-09-27:
   the kind's own limit applies to every collaboration kind (they share one limit row), and a run
-  that reaches its own limit ends as stopped with the reason "Stopped at your limit", a stop reason
-  on the terminal run, not a new state.
+  that reaches its own limit ends as stopped with the reason "Stopped at your limit", a stop reason,
+  not a new state: it settles in the existing terminal state cancelled, never failed, with
+  stop_reason limit_time, limit_cost or limit_tokens (Collaborative_Workflows CWR-029).
 gui_related: true
 gui_classification_reason: Records an owner decision about run limits presentation or behaviour.
 split_recommended: false
@@ -6987,6 +7009,7 @@ acceptance_criteria:
   - "A Crew run's effective time and cost limit is the Crew's own limit when one is set."
   - "Every collaboration kind applies its own limit from the shared limit row."
   - "A run that reaches its own limit ends as stopped with the reason Stopped at your limit."
+  - "That run settles in the terminal state cancelled with stop_reason limit_time, limit_cost or limit_tokens, never failed and never a new state."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -7177,14 +7200,18 @@ canonical_text: >-
   that turning Crew Auto on leaves a one-line note in the chat worded for the project,
   "Crew Auto is on for this project", so the user can see when it changed, even though Crew Auto is
   a project-wide setting. Lead ruling applied 2026-09-27: Collaborative Workflows owns the note,
-  beside the Crew Auto evaluator (CWR-021) and the Crew Auto permission of DL-120.
+  beside the Crew Auto evaluator (CWR-021) and the Crew Auto permission of DL-120. The note is for
+  turning Crew Auto on for the project, the setting the card asked about; a chat's own Crew Auto
+  check (the per-chat override of DL-120) and saving rules while Crew Auto is already on for the
+  project add no note (Collaborative_Workflows CWR-038).
 gui_related: true
 gui_classification_reason: Records an owner decision about crew auto presentation or behaviour.
 split_recommended: false
 depends_on: [DL-120]
 unblocks: []
 acceptance_criteria:
-  - "Turning Crew Auto on leaves one line in the chat worded for the project."
+  - "Turning Crew Auto on for the project leaves one line in the chat worded for the project."
+  - "Changing one chat's Crew Auto check, or saving rules while Crew Auto is already on for the project, adds no note."
   - "The note's owner is Plans/Collaborative_Workflows.md."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -7208,9 +7235,122 @@ preserved_exact_tokens:
   - "Keep the note, worded for the project"
   - "Crew Auto is on for this project"
 negative_constraints:
-  - "Do not drop the note when Crew Auto is turned on."
+  - "Do not drop the note when Crew Auto is turned on for the project."
   - "Do not add more than one line to the chat for a Crew Auto change."
 owner_hints:
   - Plans/Collaborative_Workflows.md
   - Plans/UI_Command_Catalog.md
+```
+
+### DL-136 - A Project Wide Pause All Automations Switch Stops Every Scheduled Send And Build Until The User Turns It Back On
+
+```yaml
+plan_unit_id: DL-136
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p12 (E-19), approving "Build a project-wide pause" in chat,
+  that there is one project-wide switch: "One switch that stops every scheduled send and build until
+  you turn it back on." It is a manual stop: turning it on latches a stop at project scope by
+  advancing the user_stop_epoch the way Manual Stop does, so every scheduled send and scheduled build
+  in the project fails its dispatch check while it is on. Only the user clears it, by turning it off;
+  no automatic mechanism (quota reset, window opening, schedule time, Goal, Plan or Crew continuation)
+  clears or bypasses it, and creating a new schedule while it is on does not clear it. The command is
+  cmd.runtime.automation_pause.set, project-scoped, payload paused true or false. Cost: "A new command
+  and a little runtime work."
+gui_related: true
+gui_classification_reason: Records an owner decision about automation pause presentation or behaviour.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "Turning the switch on stops every scheduled send and scheduled build in the project at dispatch."
+  - "Only a user turning the switch off clears it; no automatic mechanism clears or bypasses it."
+  - "The switch is set by cmd.runtime.automation_pause.set with paused true or false."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: automation_manual_stop_precedence
+reasoning_tier: high
+context_scope: automation_pause
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - "ANSWERS-20260927-final.json answer record p12 (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5, /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json; approved in chat on 2026-09-27)"
+preserved_exact_tokens:
+  - "E-19"
+  - "Build a project-wide pause"
+  - "One switch that stops every scheduled send and build until you turn it back on."
+  - "cmd.runtime.automation_pause.set"
+  - "user_stop_epoch"
+negative_constraints:
+  - "Do not let a quota reset, window opening, schedule time or Goal, Plan or Crew continuation clear or bypass the project-wide pause."
+  - "Do not clear the project-wide pause except by a user turning it off."
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+```
+
+### DL-137 - Each Helper's Line In A Running Card Streams What The Helper Is Writing Reusing The Reply Streaming
+
+```yaml
+plan_unit_id: DL-137
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-27 on card p14 (E-31), approving "Add live streaming for helpers (reuse
+  the reply streaming)" in chat, that each helper's line in a running collaboration card shows what
+  the helper is writing, live, word by word, reusing the assistant reply streaming that the Chat WOW
+  canon defined (EP-128 "Assistant turn presentation stream", DL-104 to DL-108, ACD-469 to ACD-475)
+  rather than a second streaming model. The finished message still lands once, as a whole message;
+  the streamed text is presentation of a message in progress, never a second record.
+gui_related: true
+gui_classification_reason: Records an owner decision about helper streaming presentation or behaviour.
+split_recommended: false
+depends_on: [DL-104, DL-105, DL-106, DL-107, DL-108]
+unblocks: []
+acceptance_criteria:
+  - "A running helper's line shows its text live, word by word."
+  - "Helper streaming reuses EP-128 and defines no second streaming model."
+  - "The finished helper message is recorded once, as a whole message; streamed text is never a second record."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: helper_stream_record_duplication
+reasoning_tier: high
+context_scope: helper_streaming
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Executor_Protocol.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json
+  - "ANSWERS-20260927-final.json answer record p14 (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5, /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json; approved in chat on 2026-09-27)"
+preserved_exact_tokens:
+  - "E-31"
+  - "Add live streaming for helpers (reuse the reply streaming)"
+  - "EP-128"
+negative_constraints:
+  - "Do not record streamed helper text as a second message or record."
+  - "Do not define a helper streaming model separate from EP-128."
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Executor_Protocol.md
+  - Plans/assistant-chat-design.md
 ```

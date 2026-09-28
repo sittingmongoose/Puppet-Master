@@ -1808,7 +1808,11 @@ canonical_text: >-
   draft and leaves no transcript trace; where the owner defines a cancel command (Teach's
   cmd.chat.teach.cancel) that one handler dispatches it, and elsewhere closing is view state. The
   one exception is a Crew Auto sheet opened from a Crew sheet, where Cancel and Escape go back one
-  step to the Crew sheet with its draft while the close button and the scrim close both. A closing
+  step to the Crew sheet with its draft while the close button and the scrim close both. The other
+  exception is a sheet whose changes apply at once (F3-566), for example the ELI5 sheet (F3-581):
+  each of its controls dispatches its owner's command when chosen, so it holds no draft and has no
+  primary that commits, and Done, the close button, Escape and the scrim all run its one close
+  handler, which has nothing to discard. A closing
   sheet stops taking input at once, so a second activation cannot commit twice. Focus after a sheet
   closes: after a committed Start or Schedule Message, the composer's message box; after a Revert,
   the files row under that reply; after a settings-style sheet saves or closes (for example Back
@@ -1823,6 +1827,7 @@ unblocks: [F3-568]
 acceptance_criteria:
   - "Opening a sheet from any producer creates no card, Activity entry, run, schedule or saved setting."
   - "Cancel, close, Escape and the scrim run one handler per sheet."
+  - "In a sheet whose changes apply at once, each control dispatches its own owner command when chosen, and Done, close, Escape and the scrim only close it."
   - "A double activation of a primary commits at most once."
   - "Focus after close follows the listed targets and never lands on the page body."
 validation_surfaces:
@@ -1850,6 +1855,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not start, schedule or save on opening a sheet."
   - "Do not give Cancel, close, Escape and the scrim different effects, except the one named Crew Auto step back."
+  - "Do not give a sheet whose changes apply at once a draft or a committing primary."
   - "Do not leave focus on the page body."
 owner_hints:
   - Plans/UI_Wiring_Rules.md

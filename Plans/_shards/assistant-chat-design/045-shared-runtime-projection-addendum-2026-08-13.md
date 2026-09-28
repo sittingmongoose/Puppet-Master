@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3605-L22240
+Source lines: L3606-L22243
 
-Source SHA256: `237cebfbbbf9d667e88e2df927335d28e9273018bc7b1e209c31b12359719c2e`
+Source SHA256: `c0598b7cd330cb81288c38ca4b6a84c5c384b981cceeb49af40429a0507db3ff`
 
 ---
 
@@ -561,6 +561,8 @@ owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
 ```
+
+Amended 2026-09-27: chat ELI5 is resolved from the chat's own override (`general.interaction.chat-eli5`), then the project default, then the app default, which is the Explain Terms Everywhere setting `general.interaction.eli5-default`; a switch changes only later replies; and the plain helper lines under controls are single copy, the Expert and ELI5 pair staying on tooltips and help (ACD-484, DL-126). The two toggles above stay separate: chat ELI5 and the app-level Interaction Mode (Expert/ELI5). The chat ELI5 app default is a level of chat ELI5's resolution, not the Interaction Mode toggle, which keeps its own default (section 2.2).
 
 ### ACD-011 - Permission Posture And Approval Ladder
 

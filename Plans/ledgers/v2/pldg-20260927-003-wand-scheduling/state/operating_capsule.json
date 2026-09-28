@@ -1,9 +1,9 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-003-wand-scheduling",
-  "updated_at_utc": "2026-09-27T22:10:00+00:00",
+  "updated_at_utc": "2026-09-28T00:15:00+00:00",
   "authority": "Live Plans are canon; this ledger is source lineage only.",
-  "scope": "Group G3 of the wand-modules canon compile: register lines B-SQR-01..B-SQR-09 of the impact register snapshot, NOW lines only in this pass.",
+  "scope": "Group G3 of the wand-modules canon compile: register lines B-SQR-01..B-SQR-09 of the impact register snapshot. The closure wave (2026-09-27) compiled B-SQR-05 from DL-136 into Scheduling_and_Quota_Resume.md, three sentences of Assistant_Plan_Runtime.md section 3, and ATS-064 in Automated_Testing_System.md.",
   "negative_constraints": [
     "Do not edit Settings_System.md, settings_inventory.json, or state where Save as my default is stored (owner exclusion, 2026-09-27).",
     "Do not carry PMConcept7-port, Slint-production or Demo Studio work into canon (owner exclusion, 2026-09-27).",
@@ -17,5 +17,5 @@
     "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/authorization.md",
     "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/findings.md"
   ],
-  "next_action": "Lead: regenerate shards and index once for all groups, run the blind form-driven review (cap two cycles). Open: q-001 (card p12, E-19, unanswered), q-003 (R-1 to Chat WOW), q-004 (stored grace_seconds and the occurrence summary shape), q-005 (plan_card on cmd.execution_window.cancel, for the command census)."
+  "next_action": "Lead: regenerate shards and index once for all groups; blind review cycle 1 repaired (R-01..R-11, evt-012), cycle 2 at most. Open: q-003 (R-1 to Chat WOW), q-004 (stored grace_seconds and the occurrence summary shape), q-005 (plan_card on cmd.execution_window.cancel, for the command census), q-006 (pause record storage registration, runtime.automation_pause_changed EventRecord, the command census's exclusion/wiring entry, tests/scheduling-verify.mjs)."
 }

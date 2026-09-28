@@ -4,7 +4,7 @@ Source: `Plans/DRY_Rules.md`
 
 Source lines: L2653-L2717
 
-Source SHA256: `6807b5fd4bb741b7dbd8b2d702835ed1b2e055b9be35fc9f67c4c1f9575300fc`
+Source SHA256: `7950bdd9cd213a5f7d105ca91e9dd905c13615e70db3f0b5c2eff7c88440641b`
 
 ---
 
@@ -26,7 +26,7 @@ canonical_text: >-
   reply traces and the run view as an editor document (ACD-480). Every implementation builds these
   from one shared set of primitives; a module owner supplies content only and never forks or
   restyles a primitive. Every module's finished trace uses the one receipt grammar, and time,
-  cost, token and stand-in phrases each come from one shared formatter, with one time-zone
+  cost and token phrases each come from one shared formatter (there is no stand-in phrase, DL-121), with one time-zone
   implementation for the app. Behaviour stays with the module owners (Collaborative_Workflows,
   Back_Seat_Driver, Scheduling_and_Quota_Resume, assistant-memory-subsystem, assistant-chat-design).
   DR-043's owners stand: the transcript family map is ACD-469's and the accent budget is a

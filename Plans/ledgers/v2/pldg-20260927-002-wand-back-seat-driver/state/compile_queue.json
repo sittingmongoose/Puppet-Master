@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-002-wand-back-seat-driver",
-  "updated_at_utc": "2026-09-27T22:00:00+00:00",
-  "last_event_id": "evt-005",
+  "updated_at_utc": "2026-09-27T23:40:00+00:00",
+  "last_event_id": "evt-008",
   "canonical_plan_targets": [
     "Plans/Back_Seat_Driver.md"
   ],
@@ -25,7 +25,7 @@
   "reserved_id_ranges": {
     "BSD": "BSD-030..BSD-044"
   },
-  "status": "prose_compiled_companions_pending",
+  "status": "prose_and_companions_compiled",
   "items": [
     {
       "queue_id": "queue-001",
@@ -218,6 +218,6 @@
       "compile_event_id": "evt-005"
     }
   ],
-  "notes": "One item per compiled register line or WAIT part; each names the owner PlanUnit it created. Prose only; companion outputs come later.",
+  "notes": "One item per compiled register line or WAIT part; each names the owner PlanUnit it created. Companions recorded in evt-006; blind review cycle 1 repairs in evt-007; lead pass in evt-008.",
   "terminal_ledger_event_id": null
 }

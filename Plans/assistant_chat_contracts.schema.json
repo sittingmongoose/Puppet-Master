@@ -1,0 +1,1597 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/assistant_chat_contracts/1.0.0/schema.json",
+  "title": "Assistant chat command contracts",
+  "$comment": "Owner contract schema named by Plans/Commands_System.md (Puppet Master Assistant Redesign Central Registration Addendum - 2026-09-03, \"Naming them here does not create them\"; CS-078, and CS-087 for the closure wave) for Plans/assistant-chat-design.md. Written 2026-09-27 as the companion of the wand-modules compile (ledgers pldg-20260927-005 and pldg-20260927-006; DL-126): the request/result pairs of every command whose contracts the central table points at this file, cmd.chat.goal.open_editor (GoalEditorRoute -> RouteResult), cmd.chat.composer.destination.set and cmd.chat.composer.destination.clear (ACD-462), cmd.chat.thread.regenerate_title (ACD-462, ACD-479), cmd.chat.eli5.set (ELI5ThreadOverrideRequest with the value on, off or inherit; UCC-175, ACD-484) and cmd.chat.eli5.explain_reply (ELI5ExplainReplyRequest/Result; UCC-174, CS-087, ACD-484). Where canon states only a command's meaning the shape is the minimal command envelope plus the target identity. ComposerDestination and ThreadTitleAttempt restate the fields Plans/Collaborative_Workflows.md section 4.5 and ACD-479 give them and are not new records: the record families pm.chat.composer_destination.v1 and pm.chat.thread_title_generation.v1 stay requires_central_adjudication. A definition here is a contract shape, not a handler, a catalogue registration or an admission: every command stays handler_unavailable, and cmd.chat.eli5.explain_reply stays a DL-035 candidate exclusion (WM-064). Requests and results are not records and add no storage key, EventRecord, writer, Settings key or physical family.",
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?(?:Z|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "non_negative_integer": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "assistant_chat_command_error_code": {
+      "description": "The shared typed owner error kinds of the Puppet Master Assistant Redesign Central Registration Addendum (Plans/Commands_System.md, 'Typed error vocabulary', CS-078). A failure stays a failure and never returns a success-shaped result.",
+      "enum": [
+        "invalid_request",
+        "owner_unavailable",
+        "command_not_registered",
+        "permission_denied",
+        "stale_revision",
+        "stale_currentness",
+        "target_not_found",
+        "precondition_failed",
+        "idempotency_conflict",
+        "quota_exhausted",
+        "manual_stop_latched",
+        "cancelled"
+      ]
+    },
+    "GoalEditorRoute": {
+      "description": "GoalEditorRoute for cmd.chat.goal.open_editor, a navigation_wrapper (UI_Command_Catalog.md, Assistant chat composer, title and ELI5 rows; Commands_System.md central contract records). It navigates to Goal Activity Detail in edit mode from the Goal hover menu for the thread's present Goal; it is a route, not a Goal mutation (a Goal revision is cmd.chat.goal.update, owned by Plans/Goal_Runtime_System.md). The catalog states the command's meaning only, so the shape is the minimal envelope plus the thread and Goal identity. Contract shape only: handler_unavailable until admission.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "thread_id",
+        "goal_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.goal_editor_route.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "GoalEditorRoute"
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.open_editor"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "const": "goal_hover"
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "goal_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      }
+    },
+    "RouteResult": {
+      "description": "RouteResult for cmd.chat.goal.open_editor. Accepted means the route to Goal Activity Detail in edit mode was opened; route success changes no Goal state. Rejected carries a typed error and opens nothing.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "route_target",
+        "edit_mode",
+        "goal_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.route_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "RouteResult"
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.open_editor"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/assistant_chat_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "route_target": {
+          "const": "goal_activity_detail"
+        },
+        "edit_mode": {
+          "const": true
+        },
+        "goal_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/assistant_chat_command_error_code"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "composer_destination_kind": {
+      "description": "ComposerDestination.destination_kind, closed by Plans/Collaborative_Workflows.md section 4.5 (Composer destination targeting), which owns the collaborative values.",
+      "enum": [
+        "assistant",
+        "crew",
+        "brainstorm",
+        "review",
+        "chat_room",
+        "plan_revision"
+      ]
+    },
+    "ComposerDestination": {
+      "description": "The composer destination persisted with the composer buffer (record family pm.chat.composer_destination.v1, payload-semantics owner Plans/assistant-chat-design.md; fields as Plans/Collaborative_Workflows.md section 4.5 states them: destination_kind, destination_id, optional participant_id, display_label, state_generation). The stored label alone is never sufficient: dispatch revalidates the target and state_generation.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "destination_kind",
+        "destination_id",
+        "display_label",
+        "state_generation"
+      ],
+      "properties": {
+        "destination_kind": {
+          "$ref": "#/$defs/composer_destination_kind"
+        },
+        "destination_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "participant_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "display_label": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "state_generation": {
+          "$ref": "#/$defs/non_negative_integer"
+        }
+      }
+    },
+    "composer_destination_side_effects": {
+      "description": "What a destination change never does (ACD-462; Collaborative_Workflows.md section 4.5): it never creates or starts the workflow it names, never sends unsent composer input, and never clears composer text or attachments. Every member is false on every path.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workflow_started",
+        "unsent_input_sent",
+        "composer_buffer_cleared"
+      ],
+      "properties": {
+        "workflow_started": {
+          "const": false
+        },
+        "unsent_input_sent": {
+          "const": false
+        },
+        "composer_buffer_cleared": {
+          "const": false
+        }
+      }
+    },
+    "ComposerDestinationSetRequest": {
+      "description": "ComposerDestinationSetRequest for cmd.chat.composer.destination.set (ACD-462; UCC-156 row). Binds the exact originating thread and an existing workflow, participant or Plan-revision target, which the composer chrome then names. The target is revalidated at dispatch, so changing the active tab never redirects a pending request. Contract shape only: handler_unavailable until admission.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "thread_id",
+        "destination"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.composer_destination_set_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ComposerDestinationSetRequest"
+        },
+        "command_id": {
+          "const": "cmd.chat.composer.destination.set"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "description": "A registered source surface of the command's catalog row; the surface census is owned by Plans/UI_Command_Catalog.md (Assistant chat composer, title and ELI5 family).",
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "destination": {
+          "$ref": "#/$defs/ComposerDestination"
+        }
+      }
+    },
+    "ComposerDestinationSetResult": {
+      "description": "ComposerDestinationSetResult. Accepted returns the bound destination; rejected (for example a target that can no longer accept input, stale_currentness) binds nothing and returns destination null. On every path the side_effects members are false: the workflow is not started and unsent input is neither sent nor cleared.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "thread_id",
+        "destination",
+        "side_effects"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.composer_destination_set_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ComposerDestinationSetResult"
+        },
+        "command_id": {
+          "const": "cmd.chat.composer.destination.set"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/assistant_chat_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "destination": {
+          "description": "The bound ComposerDestination when accepted, null when rejected (pinned by the outcome rules below).",
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "side_effects": {
+          "$ref": "#/$defs/composer_destination_side_effects"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/assistant_chat_command_error_code"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "destination": {
+                "$ref": "#/$defs/ComposerDestination"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "destination": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ComposerDestinationClearRequest": {
+      "description": "ComposerDestinationClearRequest for cmd.chat.composer.destination.clear (UCC-156 row): returns the composer of the exact originating thread to the ordinary thread destination. Contract shape only: handler_unavailable until admission.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "thread_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.composer_destination_clear_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ComposerDestinationClearRequest"
+        },
+        "command_id": {
+          "const": "cmd.chat.composer.destination.clear"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "description": "A registered source surface of the command's catalog row; the surface census is owned by Plans/UI_Command_Catalog.md (Assistant chat composer, title and ELI5 family).",
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      }
+    },
+    "ComposerDestinationClearResult": {
+      "description": "ComposerDestinationClearResult. Accepted means the composer is back on the ordinary thread destination (destination_cleared true); rejected clears nothing. Unsent composer text and attachments are kept on every path.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "thread_id",
+        "destination_cleared",
+        "side_effects"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.composer_destination_clear_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ComposerDestinationClearResult"
+        },
+        "command_id": {
+          "const": "cmd.chat.composer.destination.clear"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/assistant_chat_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "destination_cleared": {
+          "type": "boolean"
+        },
+        "side_effects": {
+          "$ref": "#/$defs/composer_destination_side_effects"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/assistant_chat_command_error_code"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "destination_cleared": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "destination_cleared": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "thread_title_attempt_outcome": {
+      "description": "ThreadTitleAttempt.outcome, closed by ACD-479.",
+      "enum": [
+        "pending",
+        "named",
+        "policy_off",
+        "route_unavailable",
+        "awaiting_first_message",
+        "user_locked"
+      ]
+    },
+    "ThreadTitleAttempt": {
+      "description": "ThreadTitleAttempt {thread_id, attempt_id, requested_route, effective_route?, outcome, title?, at} (ACD-479): one record per automatic or explicit naming of a thread. An unavailable title model records route_unavailable and is never silently replaced by another model, so route_unavailable carries no effective_route; named carries the title.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "thread_id",
+        "attempt_id",
+        "requested_route",
+        "outcome",
+        "at"
+      ],
+      "properties": {
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "attempt_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "requested_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "effective_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "$ref": "#/$defs/thread_title_attempt_outcome"
+        },
+        "title": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "named"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "title"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "route_unavailable"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "effective_route"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "ThreadTitleRegenerateRequest": {
+      "description": "ThreadTitleRegenerateRequest for cmd.chat.thread.regenerate_title (ACD-462, ACD-479; visible label Name it for me, DL-134). An explicit regeneration of the exact thread's title through the title owner, honouring the title policy and title-model availability; it is the only operation that clears thread.title_locked. Its source surfaces are the thread menu (directly under Rename) and the chat header (ACD-479). Contract shape only: handler_unavailable until admission.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "thread_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.thread_title_regenerate_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ThreadTitleRegenerateRequest"
+        },
+        "command_id": {
+          "const": "cmd.chat.thread.regenerate_title"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "enum": [
+            "thread_menu",
+            "chat_header"
+          ]
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      }
+    },
+    "ThreadTitleGenerationResult": {
+      "description": "ThreadTitleGenerationResult. Accepted returns the one ThreadTitleAttempt the explicit naming produced and title_locked false, because explicit regeneration clears the manual-rename lock; an explicit attempt is never user_locked. Rejected (for example precondition_failed with the policy off or the model unavailable, the states in which the control renders disabled) produces no attempt and returns attempt null.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "thread_id",
+        "attempt",
+        "title_locked"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.thread_title_generation_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ThreadTitleGenerationResult"
+        },
+        "command_id": {
+          "const": "cmd.chat.thread.regenerate_title"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/assistant_chat_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "attempt": {
+          "description": "The ThreadTitleAttempt when accepted, null when rejected (pinned by the outcome rules below).",
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "title_locked": {
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/assistant_chat_command_error_code"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "attempt": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/ThreadTitleAttempt"
+                  },
+                  {
+                    "properties": {
+                      "outcome": {
+                        "not": {
+                          "const": "user_locked"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "title_locked": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "attempt": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "eli5_override_value": {
+      "description": "The value ELI5ThreadOverrideRequest carries: exactly one of on, off and inherit (UCC-175, CS-087, ACD-484, DL-126). on and off set this chat's override; inherit deletes it, so the chat follows the project default, otherwise the app default. There is no toggle and no project-level value.",
+      "enum": [
+        "on",
+        "off",
+        "inherit"
+      ]
+    },
+    "eli5_reply_side_effects": {
+      "description": "What an ELI5 switch never does (ACD-484, UCC-175, DL-126): it never re-sends, regenerates or rewrites an earlier reply, so a switch never produces a second response; a reply still streaming finishes in the style it started with. Every member is false on every path.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "earlier_reply_rewritten",
+        "reply_resent",
+        "reply_regenerated",
+        "second_response_produced"
+      ],
+      "properties": {
+        "earlier_reply_rewritten": {
+          "const": false
+        },
+        "reply_resent": {
+          "const": false
+        },
+        "reply_regenerated": {
+          "const": false
+        },
+        "second_response_produced": {
+          "const": false
+        }
+      }
+    },
+    "ELI5ThreadOverrideRequest": {
+      "description": "ELI5ThreadOverrideRequest for cmd.chat.eli5.set (UCC-175, CS-087, ACD-484, DL-126). It writes only this chat's override, the per-conversation setting general.interaction.chat-eli5: value on or off sets it and inherit deletes it. Its only source surfaces are eli5_sheet (Standard or Simple, Follow my usual setting, and the This chat level) and composer (the quick dot, on or off); the wand's ELI5 row only opens the sheet and never dispatches it. The project default and the app default (general.interaction.eli5-default) are Settings writes, never this command. Contract shape only: handler_unavailable until admission.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "thread_id",
+        "value"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.eli5_thread_override_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ELI5ThreadOverrideRequest"
+        },
+        "command_id": {
+          "const": "cmd.chat.eli5.set"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "enum": [
+            "eli5_sheet",
+            "composer"
+          ]
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "value": {
+          "$ref": "#/$defs/eli5_override_value"
+        }
+      }
+    },
+    "ELI5ThreadOverrideResult": {
+      "description": "ELI5ThreadOverrideResult. Accepted: chat_override is the chat's override after the write, on or off, or null after inherit deleted it. The change applies from the next reply that starts (applies_from next_reply); every reply keeps the style it was written in, so side_effects are false on every path. Rejected changes nothing.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "thread_id",
+        "requested_value",
+        "chat_override",
+        "applies_from",
+        "side_effects"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.eli5_thread_override_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ELI5ThreadOverrideResult"
+        },
+        "command_id": {
+          "const": "cmd.chat.eli5.set"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/assistant_chat_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "requested_value": {
+          "$ref": "#/$defs/eli5_override_value"
+        },
+        "chat_override": {
+          "enum": [
+            "on",
+            "off",
+            null
+          ]
+        },
+        "applies_from": {
+          "const": "next_reply"
+        },
+        "side_effects": {
+          "$ref": "#/$defs/eli5_reply_side_effects"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/assistant_chat_command_error_code"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              },
+              "requested_value": {
+                "const": "on"
+              }
+            },
+            "required": [
+              "outcome",
+              "requested_value"
+            ]
+          },
+          "then": {
+            "properties": {
+              "chat_override": {
+                "const": "on"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              },
+              "requested_value": {
+                "const": "off"
+              }
+            },
+            "required": [
+              "outcome",
+              "requested_value"
+            ]
+          },
+          "then": {
+            "properties": {
+              "chat_override": {
+                "const": "off"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              },
+              "requested_value": {
+                "const": "inherit"
+              }
+            },
+            "required": [
+              "outcome",
+              "requested_value"
+            ]
+          },
+          "then": {
+            "properties": {
+              "chat_override": {
+                "const": null
+              }
+            }
+          }
+        }
+      ]
+    },
+    "explain_reply_side_effects": {
+      "description": "What Explain this reply simply never does (ACD-484, UCC-174, CS-087): it never changes, re-sends, regenerates or replaces the reply it explains and never changes the chat's ELI5 state. It is not an alias of cmd.chat.retry_message. Every member is false on every path.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_reply_changed",
+        "target_reply_resent",
+        "target_reply_regenerated",
+        "target_reply_replaced",
+        "eli5_setting_changed"
+      ],
+      "properties": {
+        "target_reply_changed": {
+          "const": false
+        },
+        "target_reply_resent": {
+          "const": false
+        },
+        "target_reply_regenerated": {
+          "const": false
+        },
+        "target_reply_replaced": {
+          "const": false
+        },
+        "eli5_setting_changed": {
+          "const": false
+        }
+      }
+    },
+    "ELI5ExplainReplyRequest": {
+      "description": "ELI5ExplainReplyRequest for cmd.chat.eli5.explain_reply (ACD-484, UCC-174, CS-087, DL-126). It targets one finished assistant reply by message_id and is dispatched only when the user asks, from that reply's message actions (message_chrome). One request writes at most one extra reply; a repeated request with the same idempotency key returns the first result and writes nothing more. Contract shape only: handler_unavailable until admission.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "thread_id",
+        "message_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.eli5_explain_reply_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ELI5ExplainReplyRequest"
+        },
+        "command_id": {
+          "const": "cmd.chat.eli5.explain_reply"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "const": "message_chrome"
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "message_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      }
+    },
+    "ELI5ExplainReplyResult": {
+      "description": "ELI5ExplainReplyResult. Accepted: the target was a finished assistant reply, and exactly one new reply was written (replies_written 1): an ordinary assistant reply at the end of the thread, written in Simple, that names and links the reply it explains (ACD-484). Refused while the target reply is still streaming: target_reply_state streaming is always rejected with precondition_failed and writes nothing. Every rejection writes no reply. side_effects are false on every path.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "thread_id",
+        "message_id",
+        "target_reply_state",
+        "replies_written",
+        "new_reply_message_id",
+        "new_reply_style",
+        "side_effects"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.eli5_explain_reply_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ELI5ExplainReplyResult"
+        },
+        "command_id": {
+          "const": "cmd.chat.eli5.explain_reply"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/assistant_chat_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "message_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "target_reply_state": {
+          "description": "The state of the targeted assistant reply at dispatch; null when no assistant reply with that message_id exists in the thread.",
+          "enum": [
+            "finished",
+            "streaming",
+            null
+          ]
+        },
+        "replies_written": {
+          "description": "Replies this request wrote: 1 when accepted, 0 when rejected (pinned by the outcome rules below), never more.",
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "new_reply_message_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "new_reply_style": {
+          "enum": [
+            "simple",
+            null
+          ]
+        },
+        "side_effects": {
+          "$ref": "#/$defs/explain_reply_side_effects"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/assistant_chat_command_error_code"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_reply_state": {
+                "const": "finished"
+              },
+              "replies_written": {
+                "const": 1
+              },
+              "new_reply_message_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "new_reply_style": {
+                "const": "simple"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "replies_written": {
+                "const": 0
+              },
+              "new_reply_message_id": {
+                "type": "null"
+              },
+              "new_reply_style": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_reply_state": {
+                "const": "streaming"
+              }
+            },
+            "required": [
+              "target_reply_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              },
+              "error_code": {
+                "const": "precondition_failed"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-004-wand-memory-plan-usage",
-  "updated_at_utc": "2026-09-27T22:45:00+00:00",
-  "last_event_id": "evt-005",
+  "updated_at_utc": "2026-09-27T23:40:00+00:00",
+  "last_event_id": "evt-007",
   "canonical_plan_targets": [
     "Plans/Assistant_Plan_Runtime.md",
     "Plans/Personas.md",
@@ -50,11 +50,11 @@
     "MS": "MS-140..MS-143"
   },
   "phase": "prose_and_companions_compiled",
-  "accepted_decisions_count": 8,
+  "accepted_decisions_count": 10,
   "design_atoms_total": 13,
   "ready_for_plan_compile_atoms": 0,
   "candidate_atoms_count": 0,
-  "open_questions_count": 2,
+  "open_questions_count": 5,
   "deferred_questions_count": 0,
   "open_blockers_count": 0,
   "compiled_plan_unit_ids": [
@@ -76,8 +76,8 @@
     "AMS-053"
   ],
   "cursor": {
-    "last_event_id": "evt-005",
-    "next_action": "Integrator: regenerate shards and index once for all groups, run the blind form-driven review, then land. Open: q-006 (ending at the effective limit and hard ceilings, DL-131) and q-007 (AMS-053 companion outcome field and the fix action's command binding); q-003 answered by AMS-053."
+    "last_event_id": "evt-007",
+    "next_action": "Integrator: regenerate shards and index once for all groups, run blind review cycle 2 if wanted (cap two), then land. Open, none blocking: q-006 (hard ceiling only, DL-131), q-007 (AMS-053 companion outcome field and fix command), q-008 (Back_Seat_Driver.md spelling, that owner), q-009 (mixed Followed and Missed display), q-014 (UF-104 per-figure basis)."
   },
   "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md."
 }

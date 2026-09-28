@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L3540-L3622
+Source lines: L3540-L3624
 
-Source SHA256: `3d9974d4746956f2f1e1b814f1c86bcb061e04c26721a5db1c2e50d836b911f5`
+Source SHA256: `a6ac418af5f65fae3ae0c76c0b75d474cc31db20f396a117284b93e34c6fec0c`
 
 ---
 
@@ -25,6 +25,8 @@ gui_related: true
 gui_classification_reason: The team Personas are offered in collaboration setup and presets, and their IDs key participant presentation.
 depends_on: [P-021, P-048, P-056]
 unblocks: []
+supersedes:
+  - P-048 product-manager exclusion only (DL-133); P-048's technical-writer, document-writer, project-manager and context-manager rules stay in force, which is why P-048 stays in depends_on
 acceptance_criteria:
   - The six IDs resolve in the Persona registry and can be selected for a collaboration participant slot and in team presets.
   - No user, project-local, global or imported Persona can take or shadow one of the six IDs.

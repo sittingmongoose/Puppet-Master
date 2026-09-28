@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json",
   "title": "Scheduling and Quota Resume command contracts",
-  "$comment": "Owner contract schema named by Plans/Commands_System.md (Puppet Master Assistant Redesign Central Registration Addendum - 2026-09-03: \"Naming them here does not create them\") for Plans/Scheduling_and_Quota_Resume.md. Written 2026-09-27 as the companion of ledger pldg-20260927-003-wand-scheduling (register line B-SQR-09; SQR-013, SQR-015, SQR-017): the request/result pairs of the six commands the wand-module scheduling surfaces dispatch, cmd.chat.schedule_message, cmd.chat.schedule_message.update, cmd.chat.schedule_message.cancel, cmd.chat.plan.schedule_build, cmd.execution_window.update and cmd.execution_window.cancel. ExecutionWindowCreateRequest/Result (cmd.execution_window.create) and QuotaResumeConsentRequest/Result (cmd.runtime.quota_resume.set) are intentionally absent and remain future owner-authored additions to this file, so those rows keep handler_unavailable truthfully. The project-wide automation pause (register N-6, card p12, E-19) is unanswered and has no definition here. The stored records pm.chat.scheduled_message_snapshot.v1 and pm.execution.schedule.v1 are not redefined: the latter lives in Plans/assistant_plan_cancel_custody.schema.json, which does not yet carry grace_seconds (recorded as open question q-002 of the ledger). A definition here is a contract shape, not a handler, a catalogue registration or an admission: every command stays handler_unavailable. Requests and results are not records and add no storage key, EventRecord, writer or physical family.",
+  "$comment": "Owner contract schema named by Plans/Commands_System.md (Puppet Master Assistant Redesign Central Registration Addendum - 2026-09-03: \"Naming them here does not create them\") for Plans/Scheduling_and_Quota_Resume.md. Written 2026-09-27 as the companion of ledger pldg-20260927-003-wand-scheduling (register line B-SQR-09; SQR-013, SQR-015, SQR-017): the request/result pairs of the six commands the wand-module scheduling surfaces dispatch, cmd.chat.schedule_message, cmd.chat.schedule_message.update, cmd.chat.schedule_message.cancel, cmd.chat.plan.schedule_build, cmd.execution_window.update and cmd.execution_window.cancel. Closure wave 2026-09-27 (register line B-SQR-05, card p12, DL-136; SQR-018, CS-087, UCC-174): AutomationPauseSetRequest/Result for cmd.runtime.automation_pause.set, with ProjectAutomationPauseRecord, the shape of the project-scoped pause record SQR-018 owns (its storage key and storage-registry entry are not made here). cmd.runtime.automation_stop.set is not an identity and has no definition. ExecutionWindowCreateRequest/Result (cmd.execution_window.create) and QuotaResumeConsentRequest/Result (cmd.runtime.quota_resume.set) are intentionally absent and remain future owner-authored additions to this file, so those rows keep handler_unavailable truthfully. The payload of runtime.automation_pause_changed and the failed clause project_automation_paused on scheduled_dispatch.held and runtime.quota_resume_attempted wait on central EventRecord registration with the other twelve scheduling events and are not defined here. The stored records pm.chat.scheduled_message_snapshot.v1 and pm.execution.schedule.v1 are not redefined: the latter lives in Plans/assistant_plan_cancel_custody.schema.json, which does not yet carry grace_seconds (ledger question q-004). A definition here is a contract shape, not a handler, a catalogue registration or an admission: every command stays handler_unavailable. Requests and results are not records and add no storage key, EventRecord, writer or physical family.",
   "$defs": {
     "non_empty_string": {
       "type": "string",
@@ -1799,6 +1799,509 @@
             "properties": {
               "error_code": {
                 "$ref": "#/$defs/schedule_command_error_code"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "automation_pause_actor_kind": {
+      "description": "Who originated the dispatch. Only user is ever accepted (SQR-018, DL-136; CS-087): an assistant or agent tool call, the scheduler, an execution window, a quota resume, Crew Auto, Goal or Plan continuation (automation) and system are all refused with permission_denied. Every non-user kind is listed so that a refused dispatch has a well-formed request to refuse.",
+      "enum": [
+        "user",
+        "assistant",
+        "agent",
+        "scheduler",
+        "automation",
+        "system"
+      ]
+    },
+    "ProjectAutomationPauseRecord": {
+      "description": "The project-scoped operational record behind \"Pause all automations\" (SQR-018): owned by Plans/Scheduling_and_Quota_Resume.md and never a Settings value; no Settings default seeds it. One record per project. user_stop_epoch is the project's monotonically increasing epoch that every eligibility evaluation for a target in the project captures beside the target's own (section 1; SQR-006, clause project_automation_paused). Only a user ever changes the record, so changed_by_actor_kind is user or, while the record is still at its initial revision 0 (switch off, never changed), null. A paused record always names the user who paused it and when (\"Paused by you at <time>\"). Contract shape only: its storage key and storage-registry entry are not made here (ledger question q-006).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "project_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "paused",
+        "user_stop_epoch",
+        "changed_by_actor_ref",
+        "changed_by_actor_kind",
+        "changed_at",
+        "revision"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.runtime.project_automation_pause.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "user_stop_epoch": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "changed_by_actor_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "changed_by_actor_kind": {
+          "oneOf": [
+            {
+              "const": "user"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "changed_at": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revision": {
+          "$ref": "#/$defs/non_negative_integer"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "revision": {
+                "const": 0
+              }
+            },
+            "required": [
+              "revision"
+            ]
+          },
+          "then": {
+            "properties": {
+              "paused": {
+                "const": false
+              },
+              "changed_by_actor_ref": {
+                "type": "null"
+              },
+              "changed_by_actor_kind": {
+                "type": "null"
+              },
+              "changed_at": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "changed_by_actor_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "changed_by_actor_kind": {
+                "const": "user"
+              },
+              "changed_at": {
+                "$ref": "#/$defs/timestamp"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "paused": {
+                "const": true
+              }
+            },
+            "required": [
+              "paused"
+            ]
+          },
+          "then": {
+            "properties": {
+              "revision": {
+                "$ref": "#/$defs/positive_integer"
+              },
+              "user_stop_epoch": {
+                "$ref": "#/$defs/positive_integer"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "automation_pause_side_effects": {
+      "description": "What the switch never does (SQR-018): turning it on cancels nothing, invalidates no schedule and disables no quota consent; neither direction changes a per-run manual Pause, Stop or Cancel latch; and the command dispatches nothing by itself (turning it off only lets the one predicate evaluate held items again). Every member is false on every path.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schedules_cancelled_or_invalidated",
+        "quota_consents_disabled",
+        "per_run_latches_changed",
+        "work_dispatched"
+      ],
+      "properties": {
+        "schedules_cancelled_or_invalidated": {
+          "const": false
+        },
+        "quota_consents_disabled": {
+          "const": false
+        },
+        "per_run_latches_changed": {
+          "const": false
+        },
+        "work_dispatched": {
+          "const": false
+        }
+      }
+    },
+    "AutomationPauseSetRequest": {
+      "description": "AutomationPauseSetRequest for cmd.runtime.automation_pause.set (SQR-018, DL-136; CS-087, UCC-174). Project-scoped: the target identity is the envelope's project_id and there is no other target. paused true turns \"Pause all automations\" on and latches a manual stop at project scope by advancing the project's user_stop_epoch the way Manual Stop does; paused false (\"Turn back on\", or the switch itself) is the only clear. The only source surface is schedule_manager (the Resume & Safety Policy tab), never settings: the switch is not a Settings value. The command sets an absolute value and is idempotent by value (a request that sets the value the switch already has returns the record unchanged and does not advance the epoch again), so it carries no expected_revision. actor_kind records who originated the dispatch; the owner accepts only user and refuses every other kind with permission_denied, and no automatic producer dispatches it. There is no toggle, inherit or automation_stop spelling. Contract shape only: handler_unavailable until admission.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "actor_kind",
+        "paused"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.runtime.automation_pause_set_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "AutomationPauseSetRequest"
+        },
+        "command_id": {
+          "const": "cmd.runtime.automation_pause.set"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "const": "schedule_manager"
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "actor_kind": {
+          "$ref": "#/$defs/automation_pause_actor_kind"
+        },
+        "paused": {
+          "type": "boolean"
+        }
+      }
+    },
+    "AutomationPauseSetResult": {
+      "description": "AutomationPauseSetResult. Every path returns the project's pause record (paused, the project's user_stop_epoch, who changed it, when, and its revision). Accepted: the record holds the requested value; changed is true only when the value moved, and then the owner emits runtime.automation_pause_changed once (section 3, Events; its EventRecord is not registered yet, so no event type is claimed here). Only a change to paused true advances the epoch; an idempotent re-set (changed false) and turning the switch off never do. Rejected (for example permission_denied for a non-user actor, which is how an automatic clear is refused) changes nothing and echoes the unchanged record. The side_effects members are false on every path.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "project_id",
+        "requested_paused",
+        "changed",
+        "epoch_advanced",
+        "pause",
+        "side_effects"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.runtime.automation_pause_set_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "AutomationPauseSetResult"
+        },
+        "command_id": {
+          "const": "cmd.runtime.automation_pause.set"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/schedule_command_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "requested_paused": {
+          "type": "boolean"
+        },
+        "changed": {
+          "type": "boolean"
+        },
+        "epoch_advanced": {
+          "type": "boolean"
+        },
+        "pause": {
+          "$ref": "#/$defs/ProjectAutomationPauseRecord"
+        },
+        "side_effects": {
+          "$ref": "#/$defs/automation_pause_side_effects"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              },
+              "changed": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/schedule_command_error_code"
+              },
+              "changed": {
+                "const": false
+              },
+              "epoch_advanced": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              },
+              "requested_paused": {
+                "const": true
+              }
+            },
+            "required": [
+              "outcome",
+              "requested_paused"
+            ]
+          },
+          "then": {
+            "properties": {
+              "pause": {
+                "properties": {
+                  "paused": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              },
+              "requested_paused": {
+                "const": false
+              }
+            },
+            "required": [
+              "outcome",
+              "requested_paused"
+            ]
+          },
+          "then": {
+            "properties": {
+              "pause": {
+                "properties": {
+                  "paused": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "requested_paused": {
+                "const": false
+              }
+            },
+            "required": [
+              "requested_paused"
+            ]
+          },
+          "then": {
+            "properties": {
+              "epoch_advanced": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "changed": {
+                "const": false
+              }
+            },
+            "required": [
+              "changed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "epoch_advanced": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              },
+              "requested_paused": {
+                "const": true
+              },
+              "changed": {
+                "const": true
+              }
+            },
+            "required": [
+              "outcome",
+              "requested_paused",
+              "changed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "epoch_advanced": {
+                "const": true
+              },
+              "pause": {
+                "properties": {
+                  "revision": {
+                    "$ref": "#/$defs/positive_integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "changed": {
+                "const": true
+              }
+            },
+            "required": [
+              "changed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "pause": {
+                "properties": {
+                  "revision": {
+                    "$ref": "#/$defs/positive_integer"
+                  }
+                }
               }
             }
           }

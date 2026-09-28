@@ -1,16 +1,22 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-001-wand-collab-workflows",
-  "updated_at_utc": "2026-09-27T23:30:00+00:00",
-  "last_event_id": "evt-014",
+  "updated_at_utc": "2026-09-27T23:59:30+00:00",
+  "last_event_id": "evt-023",
   "canonical_plan_targets": [
-    "Plans/Collaborative_Workflows.md"
+    "Plans/Collaborative_Workflows.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "compiled_owner_docs": [
-    "Plans/Collaborative_Workflows.md"
+    "Plans/Collaborative_Workflows.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "compiled_plan_outputs": [
-    "Plans/Collaborative_Workflows.md"
+    "Plans/Collaborative_Workflows.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "governance_status": "not_requested",
   "latest_audit_ref": null,
@@ -18,19 +24,23 @@
   "validation_state": {
     "ledger_health": "pass_prose_compiled",
     "compile_witness": "pass",
-    "claim_boundary": "Owner prose only. No schema, fixture, gate, shard or index work; no governance seal."
+    "claim_boundary": "Owner prose plus the static contract companion (ATS-062, extended in the closure wave with live_message_id and CollaborationMessageInProgress, and after blind review cycle 1 with the CrewAutoSetRequest scope, the run's stop_reason and the crew_auto_receipt surface): schema and fixtures validated by pm-new-contracts-verify.py only. ATS-063 stays NOT_RUN until a runtime exists. No shard or index regeneration by this ledger's authors; no governance seal."
   },
   "planned_owner_docs": [
-    "Plans/Collaborative_Workflows.md"
+    "Plans/Collaborative_Workflows.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Automated_Testing_System.md"
   ],
   "reserved_id_ranges": {
-    "CWR": "CWR-018..CWR-039",
-    "EP (later wave, E-31 only)": "EP-129..EP-131"
+    "CWR": "CWR-018..CWR-039 (earlier waves); CWR-040..CWR-044 (closure wave, CWR-040 used)",
+    "EP (closure wave, E-31)": "EP-129..EP-131 (all used)",
+    "ATS (companion, B-CW-29)": "ATS-062 (used; the collaborative contract family registration, task 2)",
+    "ATS (closure wave)": "ATS-063 (used)"
   },
   "current_phase": "prose_compiled_pending_review",
   "cursor": {
-    "last_event_id": "evt-014",
-    "next_action": "Run one blind form-driven review of CWR-018..CWR-039, the CWR-004 amendment and the 2026-09-27 lead-ruling additions (cap two cycles); the integrator regenerates shards and the plan index and commits. Companion follow-ups: stop_reason on CollaborativeRun, scope on CrewAutoSetRequest, crew_auto_receipt on open_config, the steer delivery. Open questions q-008, q-021, q-026, q-027, q-028 wait on an unanswered card (p14), a new card (Grill Me outside BrainStorm), Jared's confirmation of the ELI5 answer, or the Settings owner."
+    "last_event_id": "evt-023",
+    "next_action": "Blind review cycle 2 (the last) of the cycle-1 repairs, including the ATS-062 companion update of evt-023; then the integrator regenerates shards and the plan index and commits. Open questions q-026..q-034 wait on a new card, the owner or the Settings owner; none blocks landing."
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/source_shards/authorization.md",
