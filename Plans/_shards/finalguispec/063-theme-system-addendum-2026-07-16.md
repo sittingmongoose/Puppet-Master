@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29568-L30571
+Source lines: L29568-L30576
 
-Source SHA256: `6c05eadcfcf31549a409dd6931b79229ff3c43b599074248ff5a3222de15216d`
+Source SHA256: `3043fc6bf2f03cd94009cfe985b764e37e4caeb80dc3da571998bcad5100aa94`
 
 ---
 
@@ -149,6 +149,11 @@ owner_boundary_notes:
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
+
+Amended 2026-09-28 (user-approved inventory wave, see F3-441): NieR Mode adds no table to the eight. Its light and dark
+tables are literal precomputed constants, transcribed from the NieR: Automata theme file named in
+`Plans/Settings_System.md` section 4.4, and are painted over the Basic variant while the switch is on; the eight
+built-in variants of F3-425 and their tables are unchanged, and no NieR value is derived at runtime.
 
 ### F3-427 - Glass Composition Single-Blur Contract
 

@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6022,
+      "line_count": 6023,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "d2bd870fd21d544dccf4d69be7f0948559a28e28fdad80a8c0894897c07a8b25",
+      "sha256": "b3b7e303574457bd2d81014660b143b58d42a69a42c1a02e4935e2657e8ce5c6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -7277,7 +7277,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 38509,
+      "line_count": 38522,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 565,
       "plan_unit_ids": [
@@ -7949,7 +7949,7 @@
         "visualizer_script_policy_drift",
         "wand_overflow_or_demo_command_pollution"
       ],
-      "sha256": "6c05eadcfcf31549a409dd6931b79229ff3c43b599074248ff5a3222de15216d",
+      "sha256": "3043fc6bf2f03cd94009cfe985b764e37e4caeb80dc3da571998bcad5100aa94",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 564,
@@ -16676,7 +16676,7 @@
         "future native Slint Plugins manager projection",
         "future typed Settings owner projections"
       ],
-      "line_count": 2776,
+      "line_count": 2789,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 42,
       "plan_unit_ids": [
@@ -16772,7 +16772,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "ae3d354e8afeb879082179d563bb87266498a0e95cc67d5d2b3f220ef29a67ea",
+      "sha256": "07fe231081d7d3390ec1ed9c54b3815d0cb841d8529b80631c8fcdce2f4a263e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 42
@@ -20230,7 +20230,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-28T21:20:05Z",
+  "generated_at_utc": "2026-09-28T21:26:47Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

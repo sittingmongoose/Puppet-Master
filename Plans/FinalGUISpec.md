@@ -29707,6 +29707,11 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
+Amended 2026-09-28 (user-approved inventory wave, see F3-441): NieR Mode adds no table to the eight. Its light and dark
+tables are literal precomputed constants, transcribed from the NieR: Automata theme file named in
+`Plans/Settings_System.md` section 4.4, and are painted over the Basic variant while the switch is on; the eight
+built-in variants of F3-425 and their tables are unchanged, and no NieR value is derived at runtime.
+
 ### F3-427 - Glass Composition Single-Blur Contract
 
 ```yaml
@@ -31248,6 +31253,14 @@ and `branching.worktrees.git-push-key` (scope `provider`, set per code service),
 `branching.worktrees.default-ignore-patterns`, `branching.worktrees.protected-branches`, `code.execution.ssh-keys` and
 `code.execution.server-sign-in`. Key rows name keys from the SSH key list; no row holds a private key half or a
 password.
+
+Amended 2026-09-28 (user-approved inventory wave, `Plans/Settings_System.md#SSYS-041` section 4.4 and
+`Plans/Settings_System.md#SSYS-042` section 10): the registry admits three rows for NieR Mode, bringing it to 916
+rows, all scope `global` and tier `simple`: `general.visual.nier-mode` (toggle, off by default),
+`general.visual.nier-parts` (multiselect of the 29 parts, all installed by default) and
+`general.visual.nier-background` (select of eight scenes, default City Ruins). NieR Mode is a hidden theme painted over
+the Basic family, not a ninth theme: the eight built-in variants of F3-425 are unchanged, and while it is on NieR
+decides the accent color and the app font. Its parts and background rows show only while it is on.
 
 ### F3-442 - Project Settings Modal Reconciliation
 
