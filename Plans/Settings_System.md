@@ -2380,12 +2380,12 @@ The former 20-row Plan depth & questions group and 26-row Terminal & shell group
 | Goals | Templates (kind of job set per template); Active Goals (Progress view; Receipt earned); Defaults (New Goals start with; Keeping an eye on progress; Scheduled runs); Recovery (If something interrupts; Changing the plan; When a check fails); Checks (Before a Goal is called done; Goal evidence; More options: Stricter proof) |
 | Personas | Personas (Your personas; inside the selected persona: About this persona, How it answers, Model and cost, Tools and instructions; More options: Skipped settings); Crews (Crews; New crews start with; Crew Auto); Group work (BrainStorm: who takes part; BrainStorm: debate and vote; Review; Chat Room); Helpers (Helper agents; Which helpers; Keeping helpers safe; More options: Limits for all agents, Helper contracts); Defaults (Choosing a persona; In a chat) |
 | Back Seat Driver | Overview (one Advisor group; More options: Expert options); Stages (Where the advisor watches); Findings |
-| Source Control | Code Services (GitHub sign-in inside GitHub); Repositories (Create a new repository; Contribute to another project; Workspaces for chats; Before and after each run; More options: Workspace storage); Defaults & Safety (How runs use version history; Safety; Recovery; More options: Source Control panel); Actions & Pipelines (Pinned workflows; Keeping checks current) |
+| Source Control | Code Services (each service connected through a guided set-up; GitHub sign-in inside GitHub; push access by SSH key or HTTPS token); Local Tools; Repositories (Create a new repository; Contribute to another project; Workspaces for chats; Before and after each run; More options: Workspace storage); Defaults & Safety (Git on this server: the name and email on changes, how Git signs in and signing changes, set up by Set up Git; Files that need care: big files and files never saved in history; How runs use version history; Safety, with protected branches as an editable list; Recovery; More options: Source Control panel); Actions & Pipelines (Pinned workflows; Keeping checks current) |
 | Built-in browser | Built-in browser; Signing in to websites; Screenshots and developer tools |
 | Notifications & Sounds | The master switch at the top of every tab; Destinations; Events (with Which alerts reach you under the event list); Sounds (play sounds, volume and also-while-using-the-app first); Quiet hours; History |
-| Permissions | Profiles (Profiles; New runs and chats; More options: Who runs the tools); Rules (View and scope; Rules, in order; Answers for each tool; More options: Rule details); Protected Files (File protection; Dangerous commands; Folders outside the project; Hide secrets; More options: Exceptions during checks); Approvals (When a run stops to ask; Always ask first; When you're asked; More options: Strictness and records); Limits (Stop runaway work; Limits for one run; More options: Finer limits) |
+| Permissions | Profiles (Profiles, and inside the selected profile What it may do without asking, as one answer each for changing files, running commands, using the internet and publishing, then Rules in that profile; New runs and chats; More options: Who runs the tools); Rules (View and scope; Rules for this project, in order, with the rules the profile in use brings shown beside them; Answers for each tool; More options: Rule details); Protected Files (File protection; Dangerous commands; Folders outside the project; Hide secrets; More options: Exceptions during checks); Approvals (When a run stops to ask; Always ask first; When you're asked; More options: Strictness and records); Limits (Stop runaway work; Limits for one run; More options: Finer limits) |
 | History | Timeline (What the timeline shows, in the filter bar; More options: Export and import); Sessions; Artifacts; Cleanup (Chats; Run records and logs; More options: Index and storage tools) |
-| Server & Project Location; Settings Transfer; Readiness & Doctor; Updates | Servers tab: SSH computers, Setting up tools on servers. Settings Transfer: Save or load a file (More options: File format and older versions). Readiness & Doctor: Last checkup; Automatic checkups; What you see around the app; Setup and tour (More options: For support). Updates: Puppet Master; Content and catalogs (More options: How often and which releases) |
+| Server & Project Location; Settings Transfer; Readiness & Doctor; Updates | Servers tab: Servers (each server's details, including how it signs in); SSH computers; SSH keys (every key Puppet Master knows, where it is kept and what uses it); Setting up tools on servers. Away From Home: how you reach the server now, and the ways in, in the order they are tried. Move & Copy: moving, copying or importing a workspace, and what was moved. Settings Transfer: Copy, load or save, one guided set-up, and the transfer history (More options: File format and older versions). Readiness & Doctor: Last checkup; Automatic checkups; What you see around the app; Setup and tour (More options: For support). Updates: Puppet Master; Content and catalogs (More options: How often and which releases) |
 
 ### 2. Canonical-id moves between pages
 
@@ -2454,7 +2454,7 @@ A row whose meaning depends on another switch or choice shows only while that sw
 
 No Settings action opens the generic "What this does" preview panel whose button only reported that the action was requested. An inventory action row does one of two things. It routes to the owner surface that does the job and lands on the exact control: `ai.accounts.github-connect` to Source Control; `ai.usage.quota-management` to Providers & Accounts › Usage & budgets; `personas.library.persona-manager` to Personas; `general.interaction.settings-search` (Search all settings) to the Settings search box (`settings.search.focus`); `general.interaction.dashboard-widgets` (Choose widgets) to the Home dashboard's own widget picker, since a typed list of widget names could never be valid; `general.startup.reset-home-layout` (Reset the layout) to Home's own Reset Layout (`cmd.workspace_layout.reset`) after one plain question naming what moves back and what is kept; a per-account or per-service row, including every API key row, to its account or service. Or it runs one small flow bound to the owner's command and availability: a form (fields to fill in; non-secret answers are kept, secrets are only marked as saved in the keychain), a check (steps run in order with an outcome and the time of the last run), a confirm (a plain question with the consequence, marked dangerous when it removes something), a list (things to read or act on, each with its own action or Remove) or an order (an ordered list). A flow performs no owner operation itself: it dispatches the owner's registered command or shows the owner's unavailable reason (SSYS-015, SSYS-020), and where SSYS-013 requires a route (container, registry, publish and SCM operations) the row routes to the owner surface instead.
 
-Adding an MCP server, a plugin, a skill, a command, a shortcut, a persona, a crew or a Goal template, creating a repository and contributing to another project are guided set-ups in one window over the dimmed page, in the onboarding wizard's form: the steps as a rail, one plain question per step, Back and Continue, and a click on the dimmed page never closes it. Each commits through its owner's command; the answers a row remembers are its inventory values.
+Adding an MCP server, a plugin, a skill, a command, a shortcut, a persona, a crew, a Goal template, a language server, a formatter, a test profile, a debug profile, a permission profile, a server, an SSH computer or an SSH key, setting up a way in from away, moving or copying a workspace, copying, loading or saving settings, connecting a code service, setting up Git, creating a repository and contributing to another project are guided set-ups in one window over the dimmed page, in the onboarding wizard's form: the steps as a rail, one plain question per step, Back and Continue, and a click on the dimmed page never closes it. Each commits through its owner's command; the answers a row remembers are its inventory values.
 
 ### 7. Structured editors
 
@@ -2477,6 +2477,42 @@ Terminal Save files automatically `code.editing.autosave`, Text encoding for new
 Check before pasting several lines `code.terminal.paste-protection` and How much to index `web.index.mode`. The same wave
 sets the defaults of Corner roundness, Border width and Scrollbar width to `theme` (the active theme's own value) in
 place of the Retro theme's literal values, as the appearance model in section 4.4 already reads them.
+
+### 10. Guided set-ups, profiles, keys and transfer (2026-09-28)
+
+Every guided set-up listed in section 6 walks a newcomer from nothing to a working result in the onboarding wizard's
+form, and ends by showing the result on the page it was started from, where it can be changed or removed again; a step
+that would reach an outside computer or service says so and, in the concept, is marked Example only.
+
+- A permission profile is what the assistant may do without asking, as one answer each (without asking, ask me first,
+  never) for changing files in the project, running commands, using the internet and saving, pushing and publishing,
+  plus the rules that come with it. Its rules live in its own profile file (`Plans/Permissions_System.md` section 9)
+  and form the profile layer of `Plans/Permissions_System.md#PRECEDENCE-LAYERS` (section 2.4), above the project's rules:
+  the Rules tab's rules belong to the project and apply under every profile, and where both cover the same action the
+  profile's rule wins, rule by rule. A rule can be added to a profile, attached from the project, or moved to the
+  project. The built-in profiles keep their answers; changing one starts from Make a copy. New permission profile
+  starts from Careful, Balanced, Hands-off, a copy of a profile or nothing, then asks for the four answers, protection,
+  rules and a name.
+- SSH keys are one list on Server & Project Location, each with where its private half is kept, its type and what uses
+  it; an older key type says a newer one is safer. A server, an SSH computer and Git's own sign-in each attach a key
+  from that list, a new one, a key file or a pasted key; the private half is never shown or moved, and putting the
+  public half on the other computer is either done once with a password that is not kept, or shown as the exact line
+  to copy.
+- Add a server asks, in order, what kind of computer it is, how to reach it, how to sign in (a setup code or an SSH
+  key), puts the key on it, checks the connection and names it. Away from home sets up one way in (Tailscale or a
+  self-hosted Headscale, an existing VPN, your own web address with its port-forwarding step, or Remote Link); the ways
+  in are tried in the listed order, the local network first. Move & Copy moves, copies or imports a workspace after
+  choosing what goes, where to and how much history, and checks the result.
+- Settings Transfer is one guided set-up for copying from another project, loading a file or saving one: what kinds of
+  settings, a preview of every change in plain labels and values, which side wins where a setting differs, and a
+  recap; it keeps the exact-id prepare and apply, the restore point and the rule that passwords, keys, sign-ins and
+  device pairings never move. Transfer history entries show their details and can be removed.
+- Source Control connects each code service through a guided set-up, sets up push access with a shared SSH key or an
+  HTTPS token, and sets up Git on this server (the name and email on changes, signing, big files and files never
+  saved in history); protected branches are an editable list.
+- The Git name and email, commit signing, Git's sign-in method and key, the big-file threshold and file types, default
+  ignore patterns, protected-branch patterns, the SSH key list and each server's sign-in are concept-stage proposals
+  without inventory ids until admitted, in the sense of section 19.
 
 ```yaml
 plan_unit_id: SSYS-039
