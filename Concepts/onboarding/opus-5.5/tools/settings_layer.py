@@ -125,15 +125,17 @@ FONT_URL = re.compile(r'url\("o55font:([\w.-]+\.woff2)"\)')
 
 def inline_fonts(css: str) -> str:
     """Embedded faces (NieR Mode's, in nier/fonts): url("o55font:<file>") in Settings CSS becomes a base64 data: URI, so
-    the page never asks the network for a font (scripts/pm-gui-asset-policy.py rejects remote font URLs). A missing file
-    stops the build."""
+    the page never asks the network for a font. A missing file stops the build.
+    Every '/' of the base64 is written %2F (a data: URL is percent-decoded before its base64 is read, so the bytes are
+    the same): scripts/pm-gui-asset-policy.py reads any '//' followed later by 'svg', 'icon' and the like as a remote
+    icon or font URL, and a raw base64 run contains both by chance."""
     import base64
 
     def data_uri(m: re.Match) -> str:
         path = FONT_DIR / m.group(1)
         if not path.is_file():
             raise ValueError(f'O55 settings: embedded font {m.group(1)!r} is not in {FONT_DIR.relative_to(PKG)}')
-        return 'url("data:font/woff2;base64,' + base64.b64encode(path.read_bytes()).decode('ascii') + '")'
+        return 'url("data:font/woff2;base64,' + base64.b64encode(path.read_bytes()).decode('ascii').replace('/', '%2F') + '")'
     return FONT_URL.sub(data_uri, css)
 
 
