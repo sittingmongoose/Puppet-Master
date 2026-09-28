@@ -116,7 +116,25 @@ def module_source() -> str:
 def styles() -> str:
     parts = [(FORK / 'styles.css').read_text(encoding='utf-8')]
     parts += [f'/* ---- styles.d/{p.name} ---- */\n' + p.read_text(encoding='utf-8') for p in sorted((FORK / 'styles.d').glob('*.css'))]
-    return '\n'.join(parts)
+    return inline_fonts('\n'.join(parts))
+
+
+FONT_DIR = FORK / 'nier' / 'fonts'
+FONT_URL = re.compile(r'url\("o55font:([\w.-]+\.woff2)"\)')
+
+
+def inline_fonts(css: str) -> str:
+    """Embedded faces (NieR Mode's, in nier/fonts): url("o55font:<file>") in Settings CSS becomes a base64 data: URI, so
+    the page never asks the network for a font (scripts/pm-gui-asset-policy.py rejects remote font URLs). A missing file
+    stops the build."""
+    import base64
+
+    def data_uri(m: re.Match) -> str:
+        path = FONT_DIR / m.group(1)
+        if not path.is_file():
+            raise ValueError(f'O55 settings: embedded font {m.group(1)!r} is not in {FONT_DIR.relative_to(PKG)}')
+        return 'url("data:font/woff2;base64,' + base64.b64encode(path.read_bytes()).decode('ascii') + '")'
+    return FONT_URL.sub(data_uri, css)
 
 
 def validate(merged: dict, engine: str, t50, need) -> dict:

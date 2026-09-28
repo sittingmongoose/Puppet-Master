@@ -20,6 +20,7 @@ import re
 import sys
 from pathlib import Path
 
+import nier_palette
 import settings_layer
 
 TOOLS = Path(__file__).resolve().parent
@@ -125,6 +126,8 @@ def lint_sources() -> list[str]:
                 problems.append(f'banned word in copy.json{path}: {node[:80]}')
     walk(copy_json(), '')
     problems.extend(duplicate_keys())
+    # NieR Mode's token tables are generated from the theme JSON; stale tables or a stray colour literal fail here.
+    problems.extend(nier_palette.check())
     return problems
 
 
