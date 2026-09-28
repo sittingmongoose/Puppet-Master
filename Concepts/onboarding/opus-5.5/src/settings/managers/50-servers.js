@@ -431,6 +431,153 @@
     keyWizard({ target: { kind: 'ssh', name: srv.name, user: si.user || (/nas/i.test(srv.role) ? 'admin' : 'you'), address: srv.address, port: si.port || '22' }, keyId: si.keyId, onDone: id => { srv.signIn = Object.assign({ method: srv.role === 'This computer' ? 'local' : 'pair' }, si, { keyId: id }); if (srv.signIn.method === 'ssh' && srv.state === 'Needs attention') srv.state = 'Connected'; } });
   }
 
+  /* ---------- Away from home, step by step ------------------------------------------------------------------------ */
+  const WAYS = [
+    { kind: 'tailscale', title: 'Tailscale', text: 'A private network between your devices. Sign in once; nothing is opened to the internet.', meta: 'Recommended', icon: 'network' },
+    { kind: 'vpn', title: 'A VPN I already use', text: 'WireGuard, OpenVPN or another VPN you run. Puppet Master only uses it.', icon: 'shield' },
+    { kind: 'domain', title: 'My own web address', text: 'An address like pm.example.com through a reverse proxy. Needs port forwarding on your router.', icon: 'browser' },
+    { kind: 'remote-link', title: 'Puppet Master Remote Link', text: 'No account, domain or router change. Direct when possible, relayed otherwise.', icon: 'link' }
+  ];
+  const PROXIES = [['Caddy', 'Caddy (free certificate, simplest)'], ['NGINX', 'NGINX'], ['Traefik', 'Traefik'], ['Nginx Proxy Manager', 'Nginx Proxy Manager']];
+  const wayName = d => (WAYS.find(w => w.kind === d.kind) || {}).title || 'this way in';
+  const tailName = () => `${slugHost(homeServer().name)}.example-tailnet.ts.net`;
+  function awayConfig(d) {
+    const up = `${homeServer().address}:8443`;
+    if (d.proxy === 'Traefik' || d.proxy === 'NGINX') return proxyConfig(d.domain, d.proxy);
+    if (d.proxy === 'Nginx Proxy Manager') return `# Nginx Proxy Manager › Proxy Hosts › Add (example)\nDomain names: ${d.domain}\nScheme: http   Forward host: ${homeServer().address}   Port: 8443\nWebsockets support: on\nSSL: Request a new certificate, Force SSL`;
+    return `# Caddyfile (example)\n${d.domain} {\n  reverse_proxy ${up}\n}`;
+  }
+  function awayDetails(d) {
+    const home = homeServer();
+    if (d.kind === 'tailscale') return PM51.field('Which Tailscale', PM51.segmented(d.flavor, [['hosted', 'A Tailscale account'], ['headscale', 'My own Headscale server']], { action: 'pm51-servers-w-flavor', label: 'Which Tailscale' }))
+      + (d.flavor === 'headscale' ? `<div class="o55-setup-fields">${PM51.field('Headscale address', `<input class="text-control o55-aw-hs o55-setup-mono" value="${a(d.hsAddress)}" placeholder="https://headscale.example.net" autocomplete="off" spellcheck="false"/>`)}${PM51.field('How devices join', PM51.select(d.hsReg, [['Automatic', 'Automatically'], ['Ask administrator', 'An administrator approves each one'], ['One-time key', 'With a one-time key']], { cls: 'o55-aw-hsreg', label: 'How devices join' }))}${d.hsReg === 'One-time key' ? PM51.field('One-time key', '<input class="text-control o55-aw-hskey" type="password" autocomplete="off" placeholder="' + (d.hsKey ? 'Saved. Paste a new one to replace it' : 'Paste it here') + '"/>', 'From your Headscale server. Kept in the keychain, never shown again.') : ''}</div>` : PM51.note('On the next step you sign in with Google, Microsoft, GitHub or Apple. Nothing extra to install.', 'info'));
+    if (d.kind === 'vpn') return `<div class="o55-setup-fields">${PM51.field('Which VPN', PM51.select(d.vpnKind, ['WireGuard', 'OpenVPN', 'Other'], { cls: 'o55-aw-vpnkind', label: 'Which VPN' }))}${PM51.field(`${home.name}’s address on the VPN`, `<input class="text-control o55-aw-vpnaddr o55-setup-mono" value="${a(d.vpnAddress)}" placeholder="10.8.0.2 or truenas.vpn" autocomplete="off" spellcheck="false"/>`, 'Ask whoever set up the VPN if you are not sure.')}</div>` + PM51.note('Puppet Master never changes your VPN. It only uses the address you give it.', 'info');
+    if (d.kind === 'domain') return `<div class="o55-setup-fields">${PM51.field('Web address', `<input class="text-control o55-aw-dom o55-setup-mono" value="${a(d.domain)}" placeholder="pm.example.com" autocomplete="off" spellcheck="false"/>`)}${PM51.field('Who runs the proxy', PM51.select(d.hosting, [['pm', 'Puppet Master sets it up (Caddy)'], ['file', 'Only make the settings file'], ['existing', 'I already have one']], { cls: 'o55-aw-host', label: 'Who runs the proxy' }))}${d.hosting === 'pm' ? '' : PM51.field('Which proxy', PM51.select(d.proxy, PROXIES, { cls: 'o55-aw-proxy', label: 'Which proxy' }))}</div>`
+      + PM51.panelSection('Port forwarding on your router', `<p class="pm51-ps-text">${h(`Your router has to send web traffic (port 443) to ${home.name} at ${home.address}. This is called port forwarding; look for it in your router’s settings. Puppet Master can’t change your router.`)}</p>` + PM51.rows([{ label: `My router forwards port 443 to ${home.name}`, control: PM51.toggle(!!d.forwarded, { action: 'pm51-servers-w-aflag', data: { key: 'forwarded' }, label: 'My router forwards port 443' }) }]), '', { icon: 'route' })
+      + PM51.note('This is a public address, so sign-in is still required. Tailscale or Remote Link keep the server private.', 'attention');
+    return PM51.note('Nothing to fill in: no account, domain or router change. The server dials out, and traffic stays encrypted end to end.', 'info') + PM51.rows([{ label: 'Use the relay when a direct connection isn’t possible', help: 'Slower, still encrypted. Off means some networks cannot reach it.', control: PM51.toggle(!!d.relay, { action: 'pm51-servers-w-aflag', data: { key: 'relay' }, label: 'Use the relay' }) }]);
+  }
+  function awayCollect(w, d) {
+    const v = s => { const el = w.querySelector(s); return el ? String(el.value || '').trim() : null; };
+    const hs = v('.o55-aw-hs'), reg = v('.o55-aw-hsreg'), key = v('.o55-aw-hskey'), vk = v('.o55-aw-vpnkind'), va = v('.o55-aw-vpnaddr'), dom = v('.o55-aw-dom'), host = v('.o55-aw-host'), px = v('.o55-aw-proxy');
+    if (hs != null) d.hsAddress = hs; if (reg) d.hsReg = reg; if (key) d.hsKey = true; if (vk) d.vpnKind = vk; if (va != null) d.vpnAddress = va;
+    if (dom != null) d.domain = dom.replace(/^https?:\/\//, '').replace(/\/.*$/, ''); if (host) { d.hosting = host; if (host === 'pm') d.proxy = 'Caddy'; } if (px) d.proxy = px;
+  }
+  function awayDetailsCheck(d) {
+    if (d.kind === 'tailscale' && d.flavor === 'headscale') return !/^https:\/\/\S+\.\S+/.test(d.hsAddress) ? 'Enter the Headscale address, starting with https://.' : d.hsReg === 'One-time key' && !d.hsKey ? 'Paste the one-time key.' : '';
+    if (d.kind === 'vpn') return d.vpnAddress && !/\s/.test(d.vpnAddress) ? '' : 'Enter the server’s address on the VPN.';
+    if (d.kind === 'domain') return !/^[a-z0-9-]+(\.[a-z0-9-]+)+$/i.test(d.domain) ? 'Enter a web address like pm.example.com.' : !d.forwarded ? 'Set up port forwarding on your router first, then switch it on here.' : '';
+    return '';
+  }
+  function awayConnect(d) {
+    const home = homeServer(), btn = (label, act, ic) => `<div class="pm51-perm-actions">${PM51.btn({ label, primary: true, icon: ic, action: act })}</div>`;
+    if (d.kind === 'tailscale' && d.flavor === 'headscale') return d.signedIn ? PM51.panelSection('Registered', PM51.kv([['Headscale', d.hsAddress], ['Private name', `${slugHost(home.name)}.headscale.internal · example`], ['Who can connect', 'Only devices your Headscale knows']]), '', { icon: 'network' }) : PM51.note(`${home.name} joins your Headscale network${d.hsReg === 'Ask administrator' ? ' once an administrator approves it' : ''}.`, 'info') + btn('Register with Headscale', 'pm51-servers-w-signin', 'network');
+    if (d.kind === 'tailscale') return d.signedIn ? PM51.panelSection('Signed in', PM51.kv([['Signed in as', 'you@example.com · example'], ['Private name', `${tailName()} · example`], ['Who can connect', 'Only your signed-in devices']]), '', { icon: 'network' }) : PM51.steps([{ title: 'Sign in', desc: 'Google, Microsoft, GitHub or Apple, in your browser.' }, { title: 'Approve this device', desc: 'If your Tailscale asks for it, in its admin page.' }, { title: 'A private name', desc: `${home.name} gets a name that works from anywhere, only for your devices.` }]) + btn('Sign in to Tailscale', 'pm51-servers-w-signin', 'link');
+    if (d.kind === 'vpn') return PM51.note(`Connect this device to your ${d.vpnKind} VPN the way you usually do, then switch this on.`, 'info') + PM51.rows([{ label: 'This device is on the VPN now', control: PM51.toggle(!!d.vpnOn, { action: 'pm51-servers-w-aflag', data: { key: 'vpnOn' }, label: 'This device is on the VPN now' }) }]);
+    if (d.kind === 'domain') return PM51.panelSection('1. Point the address home', `<p class="pm51-ps-text">${h(`At the company where you bought ${d.domain}, add an A record that points it at your home’s public address (203.0.113.24 here, as an example).`)}</p>`, '', { icon: 'globe' })
+      + PM51.panelSection(d.hosting === 'pm' ? '2. Puppet Master sets up Caddy' : d.hosting === 'file' ? '2. The settings file for your proxy' : '2. Add this to your proxy', (d.hosting === 'pm' ? `<p class="pm51-ps-text">${h(`Caddy runs next to Puppet Master on ${home.name} and gets a free certificate by itself. This is what it uses:`)}</p>` : '') + copyBox(awayConfig(d), 'Proxy settings'), '', { icon: 'file' });
+    return d.link ? PM51.panelSection('Your link', copyBox(d.link, 'Remote Link') + PM51.kv([['Relay', d.relay ? 'Only when a direct connection is not possible' : 'Off'], ['Pairing', 'Your other devices use the same pairing code as at home']]), 'On another device choose Connect this device, then paste this link.', { icon: 'link' }) : PM51.note(`${home.name} gets a link only your devices know. Nothing is opened on your router.`, 'info') + btn('Create link', 'pm51-servers-w-link', 'link');
+  }
+  const awayConnectCheck = d => (d.kind === 'tailscale' && !d.signedIn) ? (d.flavor === 'headscale' ? 'Register with Headscale first.' : 'Sign in to Tailscale first.') : d.kind === 'remote-link' && !d.link ? 'Create the link first.' : d.kind === 'vpn' && !d.vpnOn ? 'Connect this device to the VPN first, then switch it on.' : '';
+  const awayVia = d => d.kind === 'tailscale' ? (d.flavor === 'headscale' ? `Headscale at ${d.hsAddress}` : 'Private Tailscale name') : d.kind === 'vpn' ? `${d.vpnKind} at ${d.vpnAddress}` : d.kind === 'domain' ? `${d.hosting === 'pm' ? 'Caddy' : d.proxy} at ${d.domain}` : 'Remote Link, direct or relayed';
+  function awayCheck(d) {
+    if (!d.checked) return PM51.note('Puppet Master tries to reach your server through the new way in, from this device.', 'info') + `<div class="pm51-perm-actions">${PM51.btn({ label: 'Check route', primary: true, icon: 'test', action: 'pm51-servers-key-check' })}</div>`;
+    return PM51.steps([{ title: 'Route is set up', desc: awayVia(d) }, { title: 'Server reachable through it', desc: 'From this device' }, { title: 'It is your server', desc: fingerprint(homeServer()) }, { title: 'Sign-in page answers', desc: 'Only paired devices get further' }].map(s => Object.assign({ status: 'Example', tone: 'info', done: true }, s)))
+      + PM51.note('Example data only. In the app the live connector proves this.', 'info') + `<div class="pm51-perm-actions">${PM51.btn({ label: 'Check again', small: true, icon: 'refresh', action: 'pm51-servers-key-check' })}</div>`;
+  }
+  function awayWizard(kind) {
+    const R = ra(), hs = R.headscale || {}, v = R.vpn || {}, dom = R.domain || {};
+    const draft = { kind: kind || '', flavor: hs.address ? 'headscale' : 'hosted', hsAddress: hs.address || '', hsReg: hs.registration || 'Automatic', hsKey: !!hs.keySaved, vpnKind: v.kind || 'WireGuard', vpnAddress: v.address || '', domain: dom.name || '', proxy: dom.proxy || 'Caddy', hosting: dom.hosting || 'pm', forwarded: !!dom.forwarded, relay: true, signedIn: false, link: (R.remoteLink || {}).link || '', vpnOn: false, checked: false, useIt: true };
+    const steps = [];
+    if (!kind) steps.push({ label: 'Way', icon: 'route', title: `How should your devices reach ${homeServer().name} away from home?`, lead: 'At home everything already works. Pick one way in for when you are out; you can add more later.',
+      render: d => PM51.tiles(WAYS.map(w => { const r = routeById(w.kind); return { title: w.title, text: w.text, meta: r && routeConfigured(r) ? 'Already set up; this sets it up again' : w.meta, icon: w.icon, selected: d.kind === w.kind, data: { kind: w.kind } }; }), { action: 'pm51-servers-w-way' }), check: d => d.kind ? '' : 'Pick one way in.' });
+    steps.push({ label: 'Details', icon: 'sliders', title: d => ({ tailscale: 'Which Tailscale?', vpn: 'Which VPN, and where is the server on it?', domain: 'Which address, and who runs the proxy?', 'remote-link': 'Nothing to fill in' })[d.kind] || 'Details', lead: d => d.kind === 'domain' ? 'Your own address goes through a reverse proxy in front of Puppet Master.' : d.kind === 'remote-link' ? 'Remote Link needs no account, domain or router change.' : 'Only what Puppet Master needs to find your server.',
+      render: awayDetails, collect: awayCollect, check: awayDetailsCheck, recap: d => d.kind === 'tailscale' ? (d.flavor === 'headscale' ? 'Headscale' : 'Tailscale account') : d.kind === 'vpn' ? d.vpnKind : d.kind === 'domain' ? d.domain : 'Nothing needed' });
+    steps.push({ label: 'Connect', icon: 'link', title: d => d.kind === 'tailscale' ? (d.flavor === 'headscale' ? 'Register with your Headscale' : 'Sign in to Tailscale once') : d.kind === 'vpn' ? 'Connect this device to the VPN' : d.kind === 'domain' ? 'Point the address and set up the proxy' : 'Create your link', lead: d => d.kind === 'domain' ? 'Two things outside Puppet Master, done once.' : 'Done once; after that it connects on its own.',
+      render: awayConnect, check: awayConnectCheck, recap: d => d.kind === 'tailscale' ? 'Signed in' : d.kind === 'remote-link' ? 'Link made' : d.kind === 'domain' ? 'Proxy ready' : 'On the VPN' });
+    steps.push({ label: 'Check', icon: 'test', title: 'Does it work from here?', lead: 'Puppet Master tries the new way in from this device.', render: awayCheck, check: d => d.checked ? '' : 'Run Check route first.', recap: () => 'Works' });
+    steps.push({ label: 'Recap', icon: 'check', title: d => `Save ${wayName(d)}?`, lead: 'Check it over. You can turn it off or remove it later.',
+      render: d => { const r = routeById(d.kind); return PM51.panelSection(wayName(d), PM51.kv([['Goes through', awayVia(d)], ['Private', d.kind === 'domain' ? 'No: a public address with sign-in' : 'Yes: only your devices'], ['Tried', r ? `${ordinal(routePosition(r))}, after the routes above it` : '—']]), '', { icon: 'route' }) + PM51.rows([{ label: 'Use it when away', help: 'Off keeps the setup but skips it.', control: PM51.toggle(!!d.useIt, { action: 'pm51-servers-w-aflag', data: { key: 'useIt' }, label: 'Use it when away' }) }]); } });
+    PM51.wizard({ title: kind ? `Set up ${(routeById(kind) || {}).name || 'a way in'}` : 'Set up a way in from anywhere', subtitle: 'How your devices reach your server when you are not at home.', eyebrow: 'Away from home', icon: 'route', steps, draft, finishLabel: 'Save', onFinish: d => {
+      const R2 = ra(), r = routeById(d.kind); if (!r) return;
+      if (d.kind === 'tailscale') R2.headscale = d.flavor === 'headscale' ? { address: d.hsAddress, registration: d.hsReg, keySaved: !!d.hsKey } : null;
+      if (d.kind === 'vpn') R2.vpn = { kind: d.vpnKind, address: d.vpnAddress };
+      if (d.kind === 'domain') R2.domain = { name: d.domain, proxy: d.hosting === 'pm' ? 'Caddy' : d.proxy, hosting: d.hosting, forwarded: true, generated: true };
+      if (d.kind === 'remote-link') R2.remoteLink = { link: d.link, created: `Today · ${nowLabel()}`, relay: !!d.relay };
+      r.status = d.useIt ? 'ready' : 'off'; r.enabled = !!d.useIt; r.lastCheck = 'Just now';
+      PM51.setTab(ID, 'away'); refresh();
+      PM51.toast(`${r.name} is set up`, `${d.useIt ? `Tried ${ordinal(routePosition(r))} when you are away. ` : 'Turned off for now. '}Example only: nothing outside this preview changed.`, 'info');
+    } });
+  }
+
+  /* ---------- Move & Copy, step by step ---------------------------------------------------------------------------- */
+  const MOVE_TASKS = [
+    { id: 'move', title: 'Move this workspace', text: 'It lives on another server from now on. Work pauses while it moves.', icon: 'arrowRight' },
+    { id: 'copy', title: 'Make a copy', text: 'An independent copy on a server you pick. The original stays.', icon: 'copy' },
+    { id: 'import', title: 'Bring in a project from an SSH computer', text: 'A folder on another computer becomes a new workspace here.', icon: 'download' }
+  ];
+  const moveItems = () => (PM51_DATA.serverProject || {}).moveItems || [];
+  const HISTORY_CHOICES = {
+    move: [['keep30', 'Keep the old copy for 30 days', 'Read-only, so you can go back. Then it is removed.', 'history'], ['remove', 'Remove the old copy once it has moved', 'Frees the space right away.', 'trash']],
+    copy: [['with', 'Bring the history so far', 'Every saved change comes along. From now on the two grow apart.', 'history'], ['fresh', 'Start with a clean history', 'The copy begins with one saved change of today’s files.', 'spark']],
+    import: [['with', 'Bring its version history', 'Every saved change on that computer comes along.', 'history'], ['fresh', 'Start with a clean history', 'Only today’s files; its old history stays on that computer.', 'spark']]
+  };
+  const taskOf = d => MOVE_TASKS.find(t => t.id === d.task) || MOVE_TASKS[0];
+  const destLabel = d => d.task === 'import' ? homeServer().name : d.dest === 'other' ? (d.destAddress || 'another server') : (serverById(d.dest) || {}).name || '';
+  function moveWhat(d) {
+    if (d.task === 'import') {
+      const list = sshRemotes();
+      return list.length ? PM51.tiles(list.map((f, i) => ({ title: f.name, text: `${f.user ? f.user + '@' : ''}${f.address}`, meta: keyById(f.keyId) ? `Signs in with ${keyById(f.keyId).name}` : 'No key attached yet', icon: 'terminal', selected: d.from === String(i), data: { from: String(i) } })), { action: 'pm51-servers-w-from' })
+        + `<div class="o55-setup-fields">${PM51.field('Folder on it', `<input class="text-control o55-mv-folder o55-setup-mono" value="${a(d.folder)}" placeholder="/home/ubuntu/projects/my-app" autocomplete="off" spellcheck="false"/>`)}</div>`
+        : PM51.note('Add an SSH computer on the Servers tab first; then it shows up here.', 'attention');
+    }
+    return PM51.tiles(moveItems().map(it => ({ title: it.title, text: it.text, icon: it.icon, selected: it.locked || d.items.includes(it.id), done: !!it.locked, doneMeta: 'Always goes', doneReason: 'The files always go.', data: { item: it.id } })), { action: 'pm51-servers-w-item', multi: true })
+      + PM51.note('Secrets and device pairings stay behind; you sign in again where needed.', 'info');
+  }
+  function moveTo(d) {
+    if (d.task === 'import') return `<div class="o55-setup-fields">${PM51.field('Name of the new workspace', `<input class="text-control o55-mv-name" value="${a(d.newName)}" autocomplete="off"/>`)}</div>` + PM51.panelSection('It will live on', PM51.kv([['Server', homeServer().name], ['Folder', `/mnt/data/projects/${slugHost(d.newName || 'imported')}`]]), '', { icon: 'server' });
+    const S = sp(), list = S.servers.filter(s => isClaimed(s) && (d.task === 'copy' || s.id !== S.homeServer));
+    return PM51.tiles(list.map(s => ({ title: s.name, text: `${s.role} · ${s.address}`, meta: s.id === S.homeServer ? 'Where it lives now' : '', icon: 'server', selected: d.dest === s.id, data: { dest: s.id } })).concat([{ title: 'Another server', text: 'Type its address.', icon: 'plus', selected: d.dest === 'other', data: { dest: 'other' } }]), { action: 'pm51-servers-w-dest' })
+      + `<div class="o55-setup-fields">${d.dest === 'other' ? PM51.field('Its address', `<input class="text-control o55-mv-addr o55-setup-mono" value="${a(d.destAddress)}" placeholder="nas.local" autocomplete="off" spellcheck="false"/>`) : ''}${d.task === 'copy' ? PM51.field('Name of the copy', `<input class="text-control o55-mv-name" value="${a(d.newName)}" autocomplete="off"/>`) : ''}${PM51.field('Folder there', `<input class="text-control o55-mv-dfolder o55-setup-mono" value="${a(d.destFolder)}" autocomplete="off" spellcheck="false"/>`)}</div>`;
+  }
+  function moveCollect(w, d) {
+    const v = s => { const el = w.querySelector(s); return el ? String(el.value || '').trim() : null; };
+    const f = v('.o55-mv-folder'), n = v('.o55-mv-name'), ad = v('.o55-mv-addr'), df = v('.o55-mv-dfolder');
+    if (f != null) d.folder = f; if (n != null) d.newName = n; if (ad != null) d.destAddress = ad; if (df != null) d.destFolder = df;
+  }
+  const moveHistoryStep = d => PM51.tiles(HISTORY_CHOICES[d.task].map(([k, t, x, ic]) => ({ title: t, text: x, icon: ic, selected: d.hist === k, data: { hist: k } })), { action: 'pm51-servers-w-hist' });
+  function moveCheck(d) {
+    if (!d.checked) return PM51.note(d.task === 'import' ? 'Puppet Master reads the folder and its history. Nothing is copied yet.' : `Puppet Master checks ${destLabel(d)} and this workspace. Nothing moves yet.`, 'info') + `<div class="pm51-perm-actions">${PM51.btn({ label: d.task === 'move' ? 'Check before moving' : 'Check first', primary: true, icon: 'test', action: 'pm51-servers-key-check' })}</div>`;
+    const S = sp(), f = sshRemotes()[Number(d.from)] || {};
+    const rows = d.task === 'import' ? [{ title: `${f.name || 'The computer'} answers`, desc: f.address }, { title: 'Folder can be read', desc: d.folder }, { title: 'Version history found', desc: d.hist === 'with' ? '1,204 saved changes · example' : 'Not brought along' }, { title: 'Enough space here', desc: homeServer().name }]
+      : [{ title: 'Destination reachable', desc: destLabel(d) }, { title: 'Enough free space', desc: 'Files, history and what you chose' }, { title: 'No open conflicts', desc: `${S.conflicts.open || 0} open` }, { title: 'Unsaved work parked', desc: d.task === 'move' ? 'Editors, terminals and running Goals pause safely' : 'Nothing pauses for a copy' }];
+    return PM51.steps(rows.map(s => Object.assign({ status: 'Example', tone: 'info', done: true }, s))) + PM51.note('Example data only; nothing moved.', 'info');
+  }
+  function moveWizard(task) {
+    const home = homeServer(), proj = (typeof projectDisplayName === 'function' ? projectDisplayName() : '') || 'workspace';
+    const draft = { task: task || '', items: moveItems().filter(i => i.id !== 'artifacts').map(i => i.id), from: '', folder: '', dest: '', destAddress: '', destFolder: `/mnt/data/projects/${slugHost(proj)}`, newName: task === 'import' ? 'Imported workspace' : `${proj} (copy)`, hist: task === 'move' ? 'keep30' : 'with', checked: false };
+    const steps = [];
+    if (!task) steps.push({ label: 'Task', icon: 'layers', title: 'What would you like to do?', lead: 'Each one checks first and asks before anything moves.', render: d => PM51.tiles(MOVE_TASKS.map(t => ({ title: t.title, text: t.text, icon: t.icon, selected: d.task === t.id, data: { task: t.id } })), { action: 'pm51-servers-w-task' }), check: d => d.task ? '' : 'Pick one to go on.' });
+    steps.push({ label: 'What', icon: 'folder', title: d => d.task === 'import' ? 'Which computer, and which folder?' : 'What goes with it?', lead: d => d.task === 'import' ? 'The project is read from there. Nothing on that computer changes.' : 'The files always go. Pick what else should come along.',
+      render: moveWhat, collect: moveCollect, check: d => d.task === 'import' ? (!sshRemotes().length ? 'Add an SSH computer first.' : d.from === '' ? 'Pick the computer.' : !/^(~|\/)/.test(d.folder) ? 'Enter the folder, starting with / or ~.' : '') : '',
+      recap: d => d.task === 'import' ? `${(sshRemotes()[Number(d.from)] || {}).name || ''}` : `${d.items.length + 1} kinds` });
+    steps.push({ label: 'Where to', icon: 'server', title: d => d.task === 'import' ? 'What should the new workspace be called?' : d.task === 'copy' ? 'Where should the copy go?' : 'Where should it move to?', lead: d => d.task === 'move' ? `It lives on ${home.name} now.` : d.task === 'copy' ? 'Any of your servers, including this one.' : `It lives on ${home.name}, your home server.`,
+      render: moveTo, collect: moveCollect, check: d => d.task === 'import' ? (d.newName ? '' : 'Give it a name.') : !d.dest ? 'Pick where it goes.' : d.dest === 'other' && !d.destAddress ? 'Type the other server’s address.' : !/^(~|\/)/.test(d.destFolder || '') ? 'Enter the folder there, starting with / or ~.' : d.task === 'copy' && !d.newName ? 'Give the copy a name.' : '',
+      recap: d => d.task === 'import' ? d.newName : destLabel(d) });
+    steps.push({ label: 'History', icon: 'history', title: d => d.task === 'move' ? 'What happens to the old copy?' : 'What about its version history?', lead: d => d.task === 'move' ? 'Version history always moves with the workspace.' : 'Saved changes can come along, or it can start fresh.', render: moveHistoryStep, check: d => d.hist ? '' : 'Pick one.' });
+    steps.push({ label: 'Check', icon: 'test', title: 'Check first', lead: 'Space, reachability, open conflicts and unsaved work.', render: moveCheck, check: d => d.checked ? '' : 'Run the check first.', recap: () => 'Ready' });
+    steps.push({ label: 'Recap', icon: 'check', title: d => d.task === 'move' ? `Move to ${destLabel(d)}?` : d.task === 'copy' ? `Copy to ${destLabel(d)}?` : `Bring in ${d.newName}?`, lead: d => d.task === 'move' ? 'Work pauses while it moves and resumes afterwards. You can move it back.' : 'Check it over, then go ahead.',
+      render: d => { const it = moveItems().filter(i => i.locked || d.items.includes(i.id)).map(i => i.title); const hc = (HISTORY_CHOICES[d.task].find(x => x[0] === d.hist) || [])[1]; return PM51.panelSection(taskOf(d).title, PM51.kv([['From', d.task === 'import' ? `${(sshRemotes()[Number(d.from)] || {}).name} · ${d.folder}` : home.name], ['To', d.task === 'import' ? `${home.name} · ${d.newName}` : `${destLabel(d)} · ${d.destFolder}`], ['Takes along', d.task === 'import' ? 'The folder' : it.join(', ')], ['History', hc || '—']]), '', { icon: taskOf(d).icon }); } });
+    PM51.wizard({ title: task ? taskOf({ task }).title : 'Move or copy', subtitle: 'Move this workspace, copy it, or bring one in from another computer.', eyebrow: 'Move & Copy', icon: 'copy', steps, draft, finishLabel: 'Go ahead', onFinish: d => {
+      const S = sp(), it = moveItems().filter(i => i.locked || d.items.includes(i.id)).map(i => i.title), hc = (HISTORY_CHOICES[d.task].find(x => x[0] === d.hist) || [])[1];
+      const kind = d.task === 'import' ? 'Import' : d.task === 'copy' ? 'Copy' : 'Move';
+      S.move.history.unshift({ time: `Today · ${nowLabel()}`, kind, from: d.task === 'import' ? `${(sshRemotes()[Number(d.from)] || {}).name} · ${d.folder}` : home.name, destination: d.task === 'import' ? `${home.name} · ${d.newName}` : d.task === 'copy' ? `${destLabel(d)} · ${d.newName}` : destLabel(d), items: d.task === 'import' ? 'The folder' : it.join(', '), historyNote: hc, result: 'Preview only · example data' });
+      if (d.task === 'move') { S.move.destination = destLabel(d); S.move.preflight = { at: nowLabel(), outcome: 'Checked · example data' }; }
+      PM51.setTab(ID, 'move'); refresh();
+      PM51.toast(`${kind} recorded`, 'Example only: nothing moved or was copied in this preview.', 'info');
+    } });
+  }
+
   /* Source Control's Git sign-in uses the same keys and steps. */
   PM51.sysSsh = { keys, keyById, keyUses, keyPick, keyCollect, keyCheck, pubOf, keyLabel, commitKey, placeStep, placeCollect, placeCheck, checkStep, keyWizard, copyBox, keyFp };
 
@@ -491,7 +638,7 @@
       body = PM51.section({
         title: 'Details',
         body: PM51.rows([
-          { label: 'Role', value: srv.role, pill: srv.id === S.homeServer ? PM51.tag('Home server') : '' },
+          { label: 'Role', value: srv.id === S.homeServer && srv.role !== 'Home server' ? `${srv.role} · Home server` : srv.role },
           { label: 'Address', value: srv.address },
           { label: 'Version', value: srv.version, pill: srv.updateReady ? PM51.status('Update ready') : '', action: srv.updateReady ? { label: 'App Updates', action: 'pm51-go', data: { domain: 'system', workspace: 'updates' }, icon: 'arrowRight' } : null },
           { label: 'Runs work', help: 'Allow Goals and tasks to run on this server.', control: PM51.toggle(!!srv.runsWork, { action: 'pm51-servers-runs', data: { id: srv.id }, label: 'Runs work' }) },
@@ -579,6 +726,12 @@
       if (routeConfigured(r)) parts.push(PM51.toggle(!!r.enabled, { action: 'pm51-servers-route-toggle', data: { id: r.id }, label: `Use ${r.name} when away` }));
     }
     parts.push(routePrimary(r));
+    if (!r.locked && routeConfigured(r)) parts.push(PM51.iconBtn({ icon: 'more', label: `More for ${r.name}`, callback: el => PM51.menu(el, [
+      { label: 'Details', icon: 'info', onClick: () => remotePanel(r.id) },
+      { label: 'Set it up again', icon: 'refresh', onClick: () => awayWizard(r.kind) },
+      { separator: true },
+      { label: 'Remove this way in', icon: 'trash', danger: true, onClick: () => removeRoute(r) }
+    ], r.name) }));
     return parts.join('');
   }
   function routeItems(sorted) {
@@ -602,6 +755,7 @@
     const R = ra(), sorted = routesSorted(), actual = actualRoute(), preferred = preferredRoute();
     const overview = PM51.section({
       title: 'Away from home', help: 'Puppet Master tries these in order, private and local first. You can change the order.',
+      action: { label: 'Set up a way in', icon: 'plus', small: true, action: 'pm51-servers-away-new' },
       body: PM51.rows([
         { label: 'Right now', help: 'The route your devices are using at this moment.', control: `<span class="pm51-row-value">${h(actual.status === 'active' ? `Connected · ${actual.name}` : actual.name)}</span>${routeToken(actual)}` },
         { label: 'Preferred when away', help: 'The first route that is set up and turned on.', control: preferred ? `<span class="pm51-row-value">${h(preferred.name)}</span>${routeToken(preferred)}` : `<span class="pm51-row-value is-muted">None set up yet — set one up below</span>` }
@@ -638,19 +792,24 @@
   /* ---------- Move & Copy ------------------------------------------------- */
   function renderMove() {
     const S = sp(), M = S.move;
-    const dest = M.destination;
-    const move = PM51.section({
-      title: 'Move this workspace to another server', help: 'Nothing moves until you confirm. Work pauses safely while it happens.',
-      body: PM51.steps([
-        { title: 'Choose destination', desc: dest ? dest : 'No destination chosen yet.', done: !!dest, action: { label: dest ? 'Change' : 'Choose…', action: 'pm51-servers-move-dest' } },
-        { title: 'Check before moving', desc: M.preflight ? `Checked ${M.preflight.at} · example data` : 'Space, reachability, open conflicts, and unsaved work.', done: !!M.preflight, action: { label: 'Check before moving', icon: 'test', action: 'pm51-servers-move-check', disabled: !dest, reason: 'Choose a destination first.', data: { 'command-id': 'cmd.project.move.preflight' } } },
-        { title: 'Move workspace', desc: 'Asks for confirmation. Never automatic.', action: { label: 'Move workspace', primary: true, action: 'pm51-servers-move-start', disabled: !M.preflight, reason: 'Run the check first.', data: { 'command-id': 'cmd.project.move.start' } } }
+    const start = PM51.section({
+      title: 'Move or copy this workspace', help: `It lives on ${homeServer().name} now. Each one checks first and asks before anything moves.`,
+      body: PM51.rows([
+        { label: 'Move to another server', help: 'It lives there from now on. Work pauses safely while it moves.', action: { label: 'Move…', icon: 'arrowRight', action: 'pm51-servers-move-start', data: { 'command-id': 'cmd.project.move.start' } } },
+        { label: 'Make a copy', help: 'An independent copy. The original stays where it is.', action: { label: 'Copy…', icon: 'copy', action: 'pm51-servers-copy', data: { 'command-id': 'cmd.project.duplicate_with_history' } } },
+        { label: 'Bring in a project from an SSH computer', help: 'A folder on another computer becomes a new workspace here.', action: { label: 'Import…', icon: 'download', action: 'pm51-servers-ssh-import', ui: 'ui.settings.project_sync.remote.preview_import' } }
       ])
     });
-    const copy = PM51.section({
-      title: 'Copy',
-      body: PM51.rows([{ label: 'Copy workspace to…', help: 'Makes an independent copy. The original stays where it is.', action: { label: 'Copy…', icon: 'copy', action: 'pm51-servers-copy', data: { 'command-id': 'cmd.project.duplicate_with_history' } } }, { label: 'Import from an SSH computer', help: 'Brings a project from one of your SSH computers into a new workspace.', action: { label: 'Import…', icon: 'download', action: 'pm51-servers-ssh-import', ui: 'ui.settings.project_sync.remote.preview_import' } }])
-    });
+    const hist = PM51.section({ title: 'Moves and copies', help: M.history.length ? 'What you started here. Nothing moves in this preview.' : '', cls: 'o55-move-hist',
+      body: M.history.length ? PM51.list(M.history.map((x, i) => ({
+        title: `${x.kind || 'Move'} · ${x.destination}`, meta: `${x.time} · ${x.result}`, sub: x.items ? `Took: ${x.items}` : '', avatar: icon(x.kind === 'Copy' ? 'copy' : x.kind === 'Import' ? 'download' : 'arrowRight'),
+        end: PM51.iconBtn({ icon: 'more', label: `More for ${x.kind || 'Move'}`, callback: el => PM51.menu(el, [
+          { label: 'Details', icon: 'info', onClick: () => PM51.panel({ title: `${x.kind || 'Move'} · ${x.destination}`, subtitle: x.time, icon: 'history', body: PM51.panelSection('What was asked for', PM51.kv([['From', x.from || homeServer().name], ['To', x.destination], ['Took along', x.items || 'Files'], ['History', x.historyNote || '—'], ['Result', x.result]])) }) },
+          { label: 'Do it again…', icon: 'refresh', onClick: () => moveWizard((x.kind || 'Move').toLowerCase()) },
+          { separator: true },
+          { label: 'Remove from list', icon: 'trash', danger: true, onClick: () => PM51.confirm('Remove this entry?', 'Only the entry is removed. Nothing on any server changes.', 'Remove', () => { M.history.splice(i, 1); refresh(); }, true) }
+        ], x.kind || 'Move') })
+      }))) : PM51.empty('No moves or copies yet', 'Moves, copies and imports you start show up here.') });
     const conflicts = PM51.section({
       title: 'Conflicts',
       body: PM51.rows([
@@ -659,10 +818,9 @@
       ])
     });
     const advanced = PM51.advanced([
-      PM51.section({ title: 'Move history', body: M.history.length ? PM51.kv(M.history.map(x => [`${x.time} · ${x.kind || 'Move'}`, `${x.destination} · ${x.result}`])) : PM51.empty('No moves yet', 'Moves and copies you start show up here.') }),
-      PM51.section({ title: 'Technical details', body: `<div class="pm51-servers-actions">${PM51.btn({ label: 'Check a move first', small: true, icon: 'test', action: 'pm51-servers-move-check' })}${PM51.btn({ label: 'Copy with history…', small: true, icon: 'copy', action: 'pm51-servers-copy' })}</div>` })
+      PM51.section({ title: 'Technical details', body: PM51.kv([['Last check before moving', M.preflight ? `${M.preflight.at} · ${M.preflight.outcome}` : 'Not run yet'], ['Last destination', M.destination || 'None'], ['Commands', 'cmd.project.move.preflight · cmd.project.move.start · cmd.project.duplicate_with_history']]) })
     ].join(''));
-    return move + copy + conflicts + advanced;
+    return start + hist + conflicts + advanced;
   }
 
   function render() {
@@ -840,7 +998,7 @@
       title: r.name, eyebrow: r.recommended ? 'Recommended route' : r.locked ? 'Always first' : 'Route', icon: K.icon || 'network',
       summary: spec.summary, status: { label: routeLabel(r), tone: info.tone }, tone: info.tone === 'ready' || info.tone === 'attention' || info.tone === 'blocked' ? info.tone : '',
       facts: [{ label: 'Order', value: `Tried ${ordinal(routePosition(r))}` }, { label: 'Privacy', value: r.private ? 'Private' : 'Public address' }, { label: 'Last check', value: r.lastCheck || 'Never' }],
-      body: spec.body,
+      body: spec.body + (r.locked || !routeConfigured(r) ? '' : PM51.panelSection('Change or remove', `<div class="pm51-servers-actions">${PM51.btn({ label: 'Set it up again', small: true, icon: 'refresh', action: 'pm51-servers-route-redo', data: { id: r.id } })}${PM51.btn({ label: 'Remove this way in', small: true, danger: true, icon: 'trash', action: 'pm51-servers-route-remove', data: { id: r.id } })}</div>`, 'Setting it up again walks through the same steps with your answers filled in.', { icon: 'sliders' })),
       primaryLabel: primary ? primary.label : '', onPrimary: primary ? wrap => primary.run(wrap) : null
     });
   }
@@ -1003,7 +1161,7 @@
   PM51.on('servers-cont', el => { const S = sp(), key = ds(el, 'key'); if (key in S.continuity) { S.continuity[key] = !S.continuity[key]; refresh(); } });
 
   /* away from home */
-  PM51.on('servers-remote', el => remotePanel(ds(el, 'id')));
+  PM51.on('servers-remote', el => { const r = routeById(ds(el, 'id')); if (!r) return; if (r.kind !== 'lan' && (r.status === 'not-set-up' || r.status === 'needs-sign-in')) awayWizard(r.kind); else remotePanel(r.id); });
   PM51.on('servers-route-check', el => { const r = routeById(ds(el, 'id')); if (r) runRouteCheck(r); });
   /* Reorder swaps priorities between two unlocked neighbours; Local network never moves. */
   PM51.on('servers-route-move', el => {
@@ -1044,53 +1202,10 @@
   });
 
   /* move & copy */
-  PM51.on('servers-move-dest', () => {
-    const S = sp();
-    const choices = S.servers.filter(s => s.id !== S.homeServer && isClaimed(s)).map(s => s.name).concat(['Another server (enter address)']);
-    openDialog({ title: 'Choose destination', subtitle: 'Where the workspace should live next.', body: PM51.form([
-      { label: 'Destination', name: 'dest', value: S.move.destination && choices.includes(S.move.destination) ? S.move.destination : choices[0], type: 'select', choices, full: true },
-      { label: 'Address (if another server)', name: 'address', value: '', placeholder: 'nas.local' }
-    ]), saveLabel: 'Use this destination', onSave: data => {
-      let dest = String(data.dest);
-      if (dest === 'Another server (enter address)') { const address = String(data.address || '').trim(); if (!address) { PM51.toast('Address needed', 'Enter the other server’s address.', 'warning'); return false; } dest = address; }
-      S.move.destination = dest; S.move.preflight = null; refresh();
-    } });
-  });
-  PM51.on('servers-move-check', () => {
-    const S = sp(); if (!S.move.destination) return;
-    S.move.preflight = { at: nowLabel(), outcome: 'Checked · example data' }; refresh();
-    PM51.check({ title: 'Check before moving', subtitle: `To ${S.move.destination}. Example data only; nothing moved.`, steps: [
-      { title: 'Destination reachable', desc: S.move.destination },
-      { title: 'Enough free space', desc: 'Files, history, and artifacts' },
-      { title: 'No open conflicts', desc: `${S.conflicts.open || 0} open` },
-      { title: 'Unsaved work parked', desc: 'Editors, terminals, and running Goals pause safely' }
-    ] });
-  });
-  PM51.on('servers-move-start', () => {
-    const S = sp(); if (!S.move.preflight || !S.move.destination) return;
-    PM51.confirm('Move workspace?', `The workspace moves from ${homeServer().name} to ${S.move.destination}. Work pauses while it moves and resumes afterwards. You can move it back.`, 'Move workspace', () => {
-      S.move.history.unshift({ time: `Today · ${nowLabel()}`, kind: 'Move', destination: S.move.destination, result: 'Preview only · example data' });
-      S.move.preflight = null; refresh();
-      PM51.panel({ title: 'Move workspace', subtitle: 'Concept preview. Nothing moved.', status: { label: 'Preview', tone: 'info' }, body: PM51.panelSection('What would happen', PM51.steps([
-        { title: 'Pause work', desc: 'Goals, chats, and terminals park safely', status: 'Example', tone: 'info' },
-        { title: 'Copy files and history', desc: `To ${S.move.destination}`, status: 'Example', tone: 'info' },
-        { title: 'Switch the home server', desc: 'Devices reconnect on their own', status: 'Example', tone: 'info' },
-        { title: 'Resume work', desc: 'Right where you left off', status: 'Example', tone: 'info' }
-      ])) + PM51.note('This is a concept preview. Nothing was moved or changed.', 'info') });
-    });
-  });
-  PM51.on('servers-copy', () => {
-    const S = sp();
-    const choices = S.servers.filter(isClaimed).map(s => s.name);
-    openDialog({ title: 'Copy workspace', subtitle: 'The copy is independent. Settings and history go with it; the original stays where it is.', body: PM51.form([
-      { label: 'New name', name: 'name', value: 'Puppet Master (copy)', autofocus: true },
-      { label: 'Destination', name: 'dest', value: choices[0], type: 'select', choices },
-      { label: 'Include history and artifacts', name: 'history', value: true, type: 'checkbox', full: true }
-    ]), saveLabel: 'Copy workspace', onSave: data => {
-      S.move.history.unshift({ time: `Today · ${nowLabel()}`, kind: 'Copy', destination: `${data.dest} · ${data.name}`, result: 'Preview only · example data' });
-      refresh(); PM51.toast('Copy previewed', 'Example data only. No workspace was copied in this preview.', 'info');
-    } });
-  });
+  PM51.on('servers-move-dest', () => moveWizard('move'));
+  PM51.on('servers-move-check', () => moveWizard('move'));
+  PM51.on('servers-move-start', () => moveWizard('move'));
+  PM51.on('servers-copy', () => moveWizard('copy'));
   PM51.on('servers-conflicts-view', () => {
     const S = sp();
     PM51.panel({ title: 'Open conflicts', subtitle: 'Files changed on two sides at once.', status: { label: String(S.conflicts.open || 0) + ' open', tone: S.conflicts.open ? 'attention' : 'ready' }, body: S.conflicts.open ? PM51.panelSection('Conflicts', PM51.kv([['Waiting for you', String(S.conflicts.open)]])) : PM51.empty('No open conflicts', 'When both sides change the same file, it shows up here with a three-way comparison.') });
@@ -1103,9 +1218,27 @@
       primaryLabel: 'Save key', onPrimary: w => { if (!w.querySelector('.o55-keyinput')?.value.trim()) { PM51.toast('Paste the key first', 'Your Headscale administrator gives you one.', 'info'); return false; } R.headscale.keySaved = true; refresh(); PM51.toast('Key saved', 'Example only: nothing was stored or sent in this preview.', 'info'); } });
   });
   PM51.onChange('servers-conflict-set', el => { const S = sp(); S.conflicts.policy = el.value; if (state.projectSync) state.projectSync.conflictPolicy = el.value; saveState(); PM51.toast('Saved', `When both sides changed: ${el.value}.`); });
-  PM51.on('servers-ssh-import', () => {
-    const choices = sshRemotes().map(f => `${f.name} · ${f.folder || f.address}`);
-    if (!choices.length) { PM51.toast('Add an SSH computer first', 'Import needs a computer to read from. Add one on the Servers tab.', 'info'); return; }
-    openDialog({ title: 'Import from an SSH computer', subtitle: 'Brings a project from another computer into a new workspace.', body: PM51.form([{ label: 'Folder', name: 'folder', value: choices[0], type: 'select', choices, full: true }, { label: 'Workspace name', name: 'name', value: 'Imported workspace', autofocus: true }]), saveLabel: 'Import', onSave: data => { PM51.toast('Import previewed', `Example data only. ${data.name} was not created in this preview.`, 'info'); } });
-  });
+  PM51.on('servers-ssh-import', () => moveWizard('import'));
+  PM51.on('servers-w-task', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.task = ds(el, 'task'); w.draft.hist = w.draft.task === 'move' ? 'keep30' : 'with'; w.draft.checked = false; w.next(); });
+  PM51.on('servers-w-item', el => { const w = PM51.wizardOf(el); if (!w) return; const k = ds(el, 'item'), S = new Set(w.draft.items); S.has(k) ? S.delete(k) : S.add(k); w.draft.items = [...S]; const on = S.has(k); el.classList.toggle('is-on', on); el.setAttribute('aria-checked', String(on)); w.draft.checked = false; });
+  PM51.on('servers-w-from', el => { const w = PM51.wizardOf(el); if (!w) return; moveCollect(el.closest('.drawer-wrap'), w.draft); w.draft.from = ds(el, 'from'); const f = sshRemotes()[Number(w.draft.from)]; if (f && !w.draft.folder) { w.draft.folder = f.folder || ''; const x = el.closest('.o55g-main').querySelector('.o55-mv-folder'); if (x) x.value = w.draft.folder; } w.draft.checked = false; });
+  PM51.on('servers-w-dest', el => { const w = PM51.wizardOf(el); if (!w) return; moveCollect(el.closest('.drawer-wrap'), w.draft); const was = w.draft.dest; w.draft.dest = ds(el, 'dest'); w.draft.checked = false; if (w.draft.dest === 'other' || was === 'other') redraw(w); });
+  PM51.on('servers-w-hist', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.hist = ds(el, 'hist'); w.next(); });
+  PM51.on('servers-away-new', () => awayWizard());
+  PM51.on('servers-w-way', el => { const w = PM51.wizardOf(el); if (!w) return; if (w.draft.kind !== ds(el, 'kind')) { w.draft.checked = false; w.draft.signedIn = false; } w.draft.kind = ds(el, 'kind'); w.next(); });
+  PM51.on('servers-w-flavor', el => { const w = PM51.wizardOf(el); if (!w) return; awayCollect(el.closest('.drawer-wrap'), w.draft); w.draft.flavor = ds(el, 'value'); w.draft.signedIn = false; w.draft.checked = false; redraw(w); });
+  PM51.on('servers-w-aflag', el => { const w = PM51.wizardOf(el); if (!w) return; const k = ds(el, 'key'); w.draft[k] = !w.draft[k]; el.classList.toggle('on', !!w.draft[k]); el.setAttribute('aria-checked', String(!!w.draft[k])); });
+  PM51.on('servers-w-signin', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.signedIn = true; w.go(w.step()); PM51.toast(w.draft.flavor === 'headscale' ? 'Registered' : 'Signed in', 'Example only: no sign-in window opened in this preview.', 'info'); });
+  PM51.on('servers-w-link', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.link = `pm-link://${homeServer().id}-${newCode().toLowerCase()}`; w.go(w.step()); });
+  PM51.on('servers-route-redo', el => { const r = routeById(ds(el, 'id')); if (!r) return; closeOverlay(); awayWizard(r.kind); });
+  PM51.on('servers-route-remove', el => { const r = routeById(ds(el, 'id')); if (r) removeRoute(r); });
+  function removeRoute(r) {
+    const R = ra(); if (!r || r.locked) return;
+    PM51.confirm(`Remove ${r.name}?`, 'Your devices stop using it away from home. Nothing on your router, VPN or accounts is changed.', 'Remove', () => {
+      r.status = 'not-set-up'; r.enabled = false; r.lastCheck = 'Never';
+      if (r.kind === 'vpn') R.vpn = null; if (r.kind === 'domain') { R.domain = null; if (R.funnel) R.funnel.enabled = false; } if (r.kind === 'remote-link') R.remoteLink = null; if (r.kind === 'tailscale') R.headscale = null;
+      if (R.actual === r.id) R.actual = 'lan';
+      closeOverlay(); refresh(); PM51.toast(`${r.name} removed`, 'Set it up again any time.', 'info');
+    }, true);
+  }
 })();

@@ -53,7 +53,12 @@
     return r.replace(/canonical\s*/gi, '').replace(/Settings owner/g, 'settings service');
   };
   const previewValue = v => { try { return transferPreviewValue(v); } catch (_e) { return typeof v === 'string' ? v : JSON.stringify(v); } };
-  const rowLabel = id => { const f = findSettingGlobal(id); return f ? PM51.rowLabel(f.setting) : id; };
+  /* A setting a manager draws is not in any page's rows, so the inventory reference answers for it; either way the
+     preview reads like the rest of Settings: the row's plain label, and its value in words (On, Ask me first, 5 MB). */
+  let refRows = null;
+  const settingOf = id => { const f = findSettingGlobal(id); if (f) return f.setting; if (!refRows) refRows = new Map(Object.values(window.PM12_REFERENCE?.byCat || {}).flatMap(c => c.settings || []).map(r => [r.id, r])); return refRows.get(id) || null; };
+  const rowLabel = id => { const s = settingOf(id); return s ? PM51.rowLabel(s) : id; };
+  const plainValue = (id, v) => { const s = settingOf(id); try { return s ? PM51.valueText(s, v) : previewValue(v); } catch (_e) { return previewValue(v); } };
   const credentialIn = engineCats => [...new Set(engineCats.flatMap(c => (typeof TRANSFER_CATEGORY_SETTING_IDS === 'undefined' ? [] : TRANSFER_CATEGORY_SETTING_IDS[c] || [])))].filter(id => typeof TRANSFER_CREDENTIAL_IDS !== 'undefined' && TRANSFER_CREDENTIAL_IDS.has(id));
 
   /* Example source projects and files: a readable settings snapshot with real setting IDs and valid values, so preview
@@ -192,7 +197,7 @@
     const creds = credentialIn(engineCatsOf(d.cats));
     const sameCount = Object.keys(snap.settings || {}).filter(id => p.selection.ids.has(id) && !creds.includes(id)).length - p.changes.length;
     return PM51.note(`${plural(p.changes.length, 'setting')} would change in ${projectDisplayName()}. Nothing has changed yet.`, 'info')
-      + Object.entries(byCat).map(([cat, list]) => PM51.panelSection(cat, PM51.kv(list.map(c => [c.label, `${previewValue(c.destinationValue)}  →  ${previewValue(c.sourceValue)}`])), '', { icon: (CATS.find(x => x[0] === cat) || [, , 'sliders'])[2] })).join('')
+      + Object.entries(byCat).map(([cat, list]) => PM51.panelSection(cat, PM51.kv(list.map(c => [rowLabel(c.id) || c.label, `${plainValue(c.id, c.destinationValue)}  →  ${plainValue(c.id, c.sourceValue)}`])), '', { icon: (CATS.find(x => x[0] === cat) || [, , 'sliders'])[2] })).join('')
       + PM51.panelSection('Skipped', PM51.kv([['Passwords, keys and sign-ins', creds.length ? `Never copied (${plural(creds.length, 'setting')})` : 'Never copied'], ['Already the same', plural(Math.max(0, sameCount), 'setting')], ['Kinds you did not pick', String(CATS.length - d.cats.length)], ['Device pairings and server choice', 'Never copied']]), '', { icon: 'lock' });
   }
   function conflictStep(d) {
@@ -203,7 +208,7 @@
       { title: 'Keep what I changed here', text: mineN ? `${plural(mineN, 'setting')} you changed yourself stay as they are; the rest take their value.` : 'You have not changed any of these here, so this is the same as Use theirs.', icon: 'lock', key: 'mine' },
       { title: 'Choose each one', text: 'Pick for every setting that differs.', icon: 'list', key: 'each' }
     ].map(t => ({ title: t.title, text: t.text, icon: t.icon, selected: d.conflict === t.key, data: { conflict: t.key } })), { action: 'pm51-transfer-w-conflict' });
-    const each = d.conflict === 'each' ? PM51.panelSection('For each setting', PM51.rows(p.changes.map(c => ({ label: c.label, help: `Here: ${previewValue(c.destinationValue)} · Theirs: ${previewValue(c.sourceValue)}`, control: PM51.segmented((d.keep || []).includes(c.id) ? 'mine' : 'theirs', [['mine', 'Keep mine'], ['theirs', 'Use theirs']], { action: 'pm51-transfer-w-each', data: { id: c.id }, label: c.label }) }))), '', { icon: 'list' }) : '';
+    const each = d.conflict === 'each' ? PM51.panelSection('For each setting', PM51.rows(p.changes.map(c => ({ label: rowLabel(c.id) || c.label, help: `Here: ${plainValue(c.id, c.destinationValue)} · Theirs: ${plainValue(c.id, c.sourceValue)}`, control: PM51.segmented((d.keep || []).includes(c.id) ? 'mine' : 'theirs', [['mine', 'Keep mine'], ['theirs', 'Use theirs']], { action: 'pm51-transfer-w-each', data: { id: c.id }, label: c.label }) }))), '', { icon: 'list' }) : '';
     return tiles + each;
   }
   function recapStep(d) {

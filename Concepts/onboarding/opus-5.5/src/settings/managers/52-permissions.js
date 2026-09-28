@@ -162,7 +162,7 @@
     const answers = PM51.section({ title: 'What it may do without asking', help: fixed ? 'Built-in profiles keep these answers. Make a copy to change them.' : 'One answer for each kind of action.', cls: 'o55-perm-answers',
       body: PM51.rows(ABILITIES.map(([k, label, help]) => fixed
         ? { label, help, value: ansWord(ab[k]) }
-        : { label, help, control: PM51.segmented(ab[k], ANS, { action: 'pm51-permissions-ability', data: { id: p.id, key: k }, label }) })) });
+        : { label, help, cls: 'o55-perm-stack', control: PM51.segmented(ab[k], ANS, { action: 'pm51-permissions-ability', data: { id: p.id, key: k }, label }) })) });
     const ownRules = PM51.section({ title: `Rules in ${p.name}`, help: 'They come with this profile. Checked first, top to bottom; the last match wins.',
       action: { label: 'Add rule', icon: 'plus', small: true, action: 'pm51-permissions-rule-add', data: { profile: p.id } },
       body: (own.length ? ruleList(own, { profileId: p.id }) : PM51.note('No rules of its own yet. Its four answers above decide.', 'info'))

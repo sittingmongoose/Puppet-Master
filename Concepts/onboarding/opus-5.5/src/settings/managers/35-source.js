@@ -7,7 +7,15 @@
      answers they remember.
    - The safety level decides the three safety switches unless it is Custom; the policy summary is written from the
      real values, including Testing's tests-before-merge.
-   - Workflow pins are the Pinned workflows row. Links and folders are copied, not opened, in this preview. */
+   - Workflow pins are the Pinned workflows row. Links and folders are copied, not opened, in this preview.
+   Newcomer review (2026-09-28): connecting a code service is a guided set-up that ends connected (sign in with the
+   browser or a token, then how Git itself signs in, then a check); Git sign-in for pushing and pulling is separate
+   from the service's sign-in (Plans/GitHub_API_Auth_and_Flows.md: API tokens never become Git credentials) and uses
+   the one SSH key list from Server & Project Location (PM51.sysSsh), or HTTPS with a token. Who you are in history
+   (name and email), signing your changes, large files and the files kept out of history are one "Set up Git"
+   guide whose answers show as rows under Defaults & Safety; protected branches are a list you can edit, and
+   publishing points at the Permissions row that owns it. These have no inventory rows yet; they are kept in the
+   concept's own state (PM51.s().sourceGit) until canon admits them. */
 (function () {
   const ID = 'source-manager';
   const KEY = 'source-control';
@@ -164,20 +172,7 @@
       });
       return;
     }
-    const signIn = hasSignIn(f);
-    const title = reauth ? `Reauthorize ${f.name}` : on ? `Add another ${f.name} account` : (VERB[f.id] || `Connect ${f.name}`);
-    const body = (f.kind === 'instance' && !f.instanceUrl ? PM51.note(`Enter the ${(f.addressLabel || 'service address').toLowerCase()} first so sign-in knows where to go.`, 'attention') : '')
-      + PM51.panelSection('What happens next', PM51.steps(signIn ? [
-        { title: 'Your browser opens the sign-in page', desc: `${f.name} asks you to approve Puppet Master.` },
-        { title: 'You approve', desc: 'Only the permissions listed under Technical details are requested.' },
-        { title: 'The account appears here', desc: 'You can add more accounts later.' }
-      ] : [
-        { title: `Create a token on ${f.name}`, desc: 'In your account settings, with repository and review permissions.' },
-        { title: 'Enter it below', desc: 'It is kept in the system keychain, never in a file.' },
-        { title: 'The account appears here', desc: 'You can add more accounts later.' }
-      ]))
-      + PM51.panelSection(signIn ? 'No browser sign-in available?' : 'Token', PM51.field('Token', PM51.input('', { type: 'password', placeholder: signIn ? 'Enter a token instead' : 'Enter your token', label: 'Token' }), 'Kept in the system keychain.'));
-    PM51.panel({ title, subtitle: f.help || '', body, primaryLabel: signIn ? 'Open sign-in' : 'Save token', onPrimary: () => PM51.toast(signIn ? 'Sign-in opens in the app' : 'Nothing saved', signIn ? 'Example data only. Your browser is not opened in this preview.' : 'Example data only. Tokens are stored by the desktop app.', 'info') });
+    connectWizard(f, reauth);
   }
   function disconnect(f) {
     PM51.confirm(`Disconnect ${f.name}?`, `Puppet Master forgets the ${f.defaultAccount} account. Your repositories on ${f.name} are not touched.`, 'Disconnect', () => {
@@ -252,7 +247,7 @@
       }),
       PM51.slot(),
       PM51.advanced([
-        PM51.section({ title: 'Repository defaults', help: 'Read from your settings.', body: PM51.kv([['New repositories go to', cfg().service], ['Main branch', mainBranch()], ['Large files', 'Git LFS when a file is over 50 MB'], ['Worktree folder', wtBase() || 'Inside the project folder (.worktrees)']]) }),
+        PM51.section({ title: 'Repository defaults', help: 'Read from your settings.', body: PM51.kv([['New repositories go to', cfg().service], ['Main branch', mainBranch()], ['Large files', git().lfs ? `Git LFS when a file is over ${git().lfsMb} MB` : 'No special handling'], ['Worktree folder', wtBase() || 'Inside the project folder (.worktrees)']]) }),
         PM51.section({ title: 'Find repositories on GitHub', help: 'Lists repositories on your account that are not here yet.', action: { label: 'Find repositories', small: true, icon: 'search', action: 'pm51-source-find' } }),
         PM51.section({ title: 'Clean up stale worktrees', help: 'Removes worktrees nobody has used for a while.', action: { label: 'Clean up', small: true, icon: 'trash', action: 'pm51-source-cleanup' } })
       ].join(''))
@@ -310,6 +305,7 @@
     const c = cfg(); const services = forges().filter(connected).map(f => f.name);
     const preset = String(PM51.value(PRESET) || 'strict'); const custom = preset === 'custom'; const e = safety();
     const tests = PM51.setting(W + 'pre-merge-tests');
+    const g = git(), pf = forges().find(x => x.name === c.service && connected(x)) || forges().find(connected);
     const said = [`${mainBranch()} is ${e.protectMain ? 'protected, so changes to it go through a review' : 'not protected'}`, e.askDelete ? 'you are asked before a branch is deleted' : 'branches are deleted without asking', e.backupRisky ? 'a recovery point is saved before anything risky' : 'no recovery point is saved first'];
     return [
       PM51.section({
@@ -319,10 +315,30 @@
           { label: 'Default code service', help: 'Where new repositories are created.', control: PM51.select(c.service, withCurrent(['None', ...services], c.service), { action: 'pm51-source-cfg', data: { key: 'service' }, label: 'Default code service' }) }
         ])
       }),
+      PM51.section({
+        title: 'You and sign-in', help: 'Who your changes say they are from, and how Git proves it is you.', cls: 'o55-src-you',
+        action: { label: 'Set up Git', icon: 'branch', small: true, action: 'pm51-source-git-setup' },
+        body: PM51.rows([
+          { label: 'Name on your changes', help: g.name ? '' : 'Not set yet. Saving changes fails until it is.', value: g.name || 'Not set yet', muted: !g.name, action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 0 } } },
+          { label: 'Email on your changes', help: g.email ? (g.scope === 'all' ? 'Every project on this server' : 'Only this project') : 'Code services use it to link changes to your account.', value: g.email || 'Not set yet', muted: !g.email, action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 0 } } },
+          { label: 'How Git signs in', help: pf ? `For ${pf.name}. Separate from the website sign-in.` : 'Connect a code service first.', value: pf ? accessText(pf) : 'Nothing connected', muted: !pf || pf.pushAccess !== 'Ready', action: pf ? { label: pf.pushAccess === 'Ready' ? 'Change key' : 'Set up', icon: 'key', action: 'pm51-source-git-access' } : { label: 'Code Services', icon: 'arrowRight', action: 'pm51-tab', data: { manager: ID, tab: 'services' } } },
+          { label: 'Sign your changes', help: 'Some projects only accept signed changes.', value: signText(g), action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 1 } } }
+        ])
+      }),
+      PM51.section({
+        title: 'Files that need care', help: 'Big files, and files that must never be saved in history.',
+        body: PM51.rows([
+          { label: 'Big files', help: g.lfs ? `Kept out of the normal history with Git LFS${tools().some(t => t.id === 'git-lfs' && t.status === 'ready') ? '' : ' (install Git LFS under Local Tools)'}.` : 'Stored like any other file.', value: g.lfs ? `Over ${g.lfsMb} MB, and ${g.lfsTypes || 'no extra kinds'}` : 'No special handling', action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 2 } } },
+          { label: 'Never saved in history', help: 'Written to .gitignore in new repositories.', value: `${String(g.ignore || '').split('\n').filter(Boolean).slice(0, 3).join(', ')}${String(g.ignore || '').split('\n').filter(Boolean).length > 3 ? ' and more' : ''}` || 'Nothing', action: { label: 'Change', action: 'pm51-source-git-setup', data: { step: 2 } } }
+        ])
+      }),
       PM51.slot(),
       PM51.section({
         title: 'Safety', help: 'Guard rails for the assistant and for you.',
-        body: PM51.bound.rows([PRESET, FORCE]) + (custom ? PM51.rows([
+        body: PM51.bound.rows([PRESET, FORCE]) + PM51.rows([
+          { label: 'Protected branches', help: e.protectMain ? 'Changes go through a review; never overwritten.' : 'Not protected at this safety level.', value: protectedList().join(', '), muted: !e.protectMain, action: { label: 'Change', action: 'pm51-source-protected' } },
+          { label: 'Publishing and releases', help: 'Whether the assistant asks before publishing is set in Permissions.', value: publishText(), action: { label: 'Permissions', icon: 'arrowRight', action: 'pm51-source-open-publish' } }
+        ]) + (custom ? PM51.rows([
           { label: 'Protect the main branch', help: 'Changes to it go through a review first.', control: PM51.toggle(!!c.protectMain, { action: 'pm51-source-cfg-toggle', data: { key: 'protectMain' }, label: 'Protect the main branch' }) },
           { label: 'Ask before deleting branches', control: PM51.toggle(!!c.askDelete, { action: 'pm51-source-cfg-toggle', data: { key: 'askDelete' }, label: 'Ask before deleting branches' }) },
           { label: 'Back up before risky operations', help: 'A recovery point is saved first.', control: PM51.toggle(!!c.backupRisky, { action: 'pm51-source-cfg-toggle', data: { key: 'backupRisky' }, label: 'Back up before risky operations' }) }
@@ -336,7 +352,7 @@
         ]) + PM51.bound.rows([W + 'recovery-tools'])
       }),
       PM51.advanced([
-        PM51.section({ title: 'Policy in effect', help: 'Written from the settings above and from Testing.', body: PM51.kv([['Protected branches', e.protectMain ? `${mainBranch()}, release/*` : 'None'], ['Tests before merge', tests ? PM51.valueText(tests, PM51.value(W + 'pre-merge-tests')) : 'Set in Testing & Debug'], ['Force push', PM51.valueLabel(FORCE, PM51.value(FORCE))], ['Push credentials', 'The account that owns the code service'], ['Uncommitted changes', e.backupRisky ? 'Preserved before destructive operations' : 'Not preserved first']]) }),
+        PM51.section({ title: 'Policy in effect', help: 'Written from the settings above and from Testing.', body: PM51.kv([['Protected branches', e.protectMain ? protectedList().join(', ') : 'None'], ['Tests before merge', tests ? PM51.valueText(tests, PM51.value(W + 'pre-merge-tests')) : 'Set in Testing & Debug'], ['Force push', PM51.valueLabel(FORCE, PM51.value(FORCE))], ['Push credentials', 'The account that owns the code service'], ['Uncommitted changes', e.backupRisky ? 'Preserved before destructive operations' : 'Not preserved first']]) }),
         PM51.section({ title: 'Recent operations', body: PM51.kv([['Push', 'main to GitHub · 8 minutes ago · succeeded'], ['Force push', 'main · 2 days ago · denied by policy'], ['Branch deleted', 'audit/settings · yesterday · you confirmed']]) })
       ].join(''))
     ].join('');
@@ -395,15 +411,7 @@
       }
     });
   });
-  PM51.on('source-push', el => {
-    const f = byId(ds(el, 'id')); if (!f) return;
-    PM51.panel({
-      title: 'Set up push access', subtitle: f.name,
-      body: PM51.panelSection('How changes are sent', PM51.field('Use', PM51.select('SSH key', ['SSH key', 'HTTPS with token'], { label: 'Push access method' }), `An SSH key made on ${host()} is the most reliable choice.`))
-        + PM51.panelSection('What happens next', PM51.steps([{ title: `A key is created on ${host()}`, desc: 'The private half never leaves the server.' }, { title: 'The public half is added to your account', desc: `Puppet Master does this for you on ${f.name}.` }, { title: 'A test push confirms it', desc: 'Nothing in your history changes.' }])),
-      primaryLabel: 'Continue', onPrimary: () => PM51.toast('Key setup runs in the app', 'Example data only. Nothing was created in this preview.', 'info')
-    });
-  });
+  PM51.on('source-push', el => { const f = byId(ds(el, 'id')); if (f) gitAccess(f); });
   PM51.on('source-check', el => {
     const f = byId(ds(el, 'id')); if (!f) return;
     const on = connected(f) || (f.kind === 'generic' && !!f.instanceUrl);
@@ -487,6 +495,95 @@
       }
     });
   }
+  /* ---------- guided: connecting a code service, and how Git signs in -------------------------------------------- */
+  const TOKEN_WHERE = { github: 'Settings › Developer settings › Personal access tokens', 'github-enterprise': 'Settings › Developer settings › Personal access tokens', gitlab: 'Preferences › Access tokens', 'gitlab-self': 'Preferences › Access tokens', azure: 'User settings › Personal access tokens', 'azure-server': 'User settings › Personal access tokens', bitbucket: 'Personal settings › API tokens', 'bitbucket-dc': 'Profile › Manage account › HTTP access tokens', forgejo: 'Settings › Applications', gitea: 'Settings › Applications', 'cursor-origin': 'Settings › Access tokens' };
+  const hostOf = f => f.instanceUrl ? String(f.instanceUrl).replace(/^https?:\/\//, '').replace(/\/.*$/, '') : f.id === 'github' ? 'github.com' : f.id === 'gitlab' ? 'gitlab.com' : f.id === 'bitbucket' ? 'bitbucket.org' : f.id === 'azure' ? 'ssh.dev.azure.com' : (API[f.id] || f.name);
+  const sys = () => PM51.sysSsh;
+  /* the one-time default: a service that already pushes over SSH names the key it uses */
+  const pushKey = f => { if (f.pushKeyId === undefined && f.pushAccess === 'Ready' && sys() && sys().keys().length) f.pushKeyId = (sys().keys().find(k => !k.old) || sys().keys()[0]).id; return sys() && f.pushKeyId ? sys().keyById(f.pushKeyId) : null; };
+  const gitTarget = (f, account) => ({ kind: 'git', name: f.name, host: hostOf(f), account: account || f.defaultAccount, canAdd: connected(f) || !!account });
+  const accessText = f => f.pushAccess !== 'Ready' ? 'Not set up yet' : f.pushVia === 'https' ? 'HTTPS with a token in the keychain' : pushKey(f) ? `SSH key ${pushKey(f).name}` : 'SSH key';
+  function gitAccess(f) {
+    if (!sys()) { PM51.toast('SSH keys are not available', 'Open Server & Project Location once, then try again.', 'info'); return; }
+    sys().keyWizard({ target: gitTarget(f), keyId: pushKey(f) ? pushKey(f).id : '', refreshWith: () => { saveState(); refresh(); },
+      onDone: id => { Object.assign(f, { pushAccess: 'Ready', pushKeyId: id, pushVia: 'ssh', ssh: 'Healthy', lastTest: 'Passed' }); } });
+  }
+  function connectWizard(f, reauth) {
+    const S = sys(), on = connected(f), browser = hasSignIn(f);
+    const draft = { how: browser ? 'browser' : 'token', account: on && !reauth ? '' : (on ? f.defaultAccount : ''), tokenGiven: false, signedIn: false, address: f.instanceUrl || '', via: 'ssh', keyMode: '', keyId: '', newName: `puppet-master-${f.id}`, newType: 'Ed25519', filePath: '~/.ssh/id_ed25519', pasted: '', place: 'auto', checked: false };
+    const steps = [];
+    if (f.kind === 'instance') steps.push({ label: 'Address', icon: 'globe', title: `Where does your ${f.name} live?`, lead: 'The address your organization uses, starting with https://.',
+      render: d => `<div class="o55-setup-fields">${PM51.field(f.addressLabel || 'Service address', `<input class="text-control o55-cw-addr o55-setup-mono" value="${a(d.address)}" placeholder="https://code.example.com" autocomplete="off" spellcheck="false"/>`)}</div>`,
+      collect: (w, d) => { const x = w.querySelector('.o55-cw-addr'); if (x) d.address = String(x.value || '').trim(); }, check: d => /^https?:\/\/\S+\.\S+/.test(d.address) ? '' : 'Enter the full address, starting with https://.', recap: d => d.address.replace(/^https?:\/\//, '') });
+    steps.push({ label: 'Sign in', icon: 'user', title: `Sign in to ${f.name}`, lead: 'This lets Puppet Master list repositories, open reviews and read automation.',
+      render: d => (browser ? PM51.tiles([{ title: 'Sign in with my browser', text: `${f.name} asks you to approve Puppet Master. Only the permissions below are asked for.`, icon: 'browser', key: 'browser', meta: 'Easiest' }, { title: 'Use a token instead', text: `Make one on ${f.name} and paste it here.`, icon: 'key', key: 'token' }].map(t => ({ title: t.title, text: t.text, icon: t.icon, meta: t.meta, selected: d.how === t.key, data: { how: t.key } })), { action: 'pm51-source-cw-how' }) : '')
+        + (d.how === 'browser' ? (d.signedIn ? PM51.panelSection('Signed in', PM51.kv([['Account', d.account], ['Permissions', 'Repositories · Reviews · Automation']]), '', { icon: 'user' }) : `<div class="pm51-perm-actions">${PM51.btn({ label: 'Open sign-in', primary: true, icon: 'external', action: 'pm51-source-cw-signin' })}</div>`)
+          : `<div class="o55-setup-fields">${PM51.field('Account name', `<input class="text-control o55-cw-acct" value="${a(d.account)}" placeholder="your-name" autocomplete="off" spellcheck="false"/>`)}${PM51.field('Token', '<input class="text-control o55-cw-token" type="password" autocomplete="off" placeholder="' + (d.tokenGiven ? 'Saved. Paste a new one to replace it' : 'Paste it here') + '"/>', `Make it on ${f.name}: ${TOKEN_WHERE[f.id] || 'your account settings › tokens'}, with repository and review permissions. Kept in the system keychain, never in a file.`)}</div>`),
+      collect: (w, d) => { const ac = w.querySelector('.o55-cw-acct'), tk = w.querySelector('.o55-cw-token'); if (ac) d.account = String(ac.value || '').trim(); if (tk && String(tk.value || '').trim()) d.tokenGiven = true; },
+      check: d => d.how === 'browser' ? (d.signedIn ? '' : 'Open sign-in first.') : !d.account ? 'Enter your account name.' : !d.tokenGiven ? 'Paste the token.' : '', recap: d => d.account });
+    steps.push({ label: 'Git access', icon: 'key', title: 'How should Git send and fetch changes?', lead: 'Git signs in separately from the website. A key is the most reliable choice.',
+      render: d => PM51.tiles([{ title: 'With an SSH key', text: 'No password prompts; works for every repository on the account.', icon: 'key', key: 'ssh', meta: 'Recommended' }, { title: 'With HTTPS and a token', text: d.how === 'token' ? 'Uses the token you just pasted, from the keychain.' : 'Uses a token kept in the keychain.', icon: 'lock', key: 'https' }].map(t => ({ title: t.title, text: t.text, icon: t.icon, meta: t.meta, selected: d.via === t.key, data: { via: t.key } })), { action: 'pm51-source-cw-via' })
+        + (d.via === 'ssh' && S ? `<p class="o55-quiet-line o55-key-which">Which key?</p>` + S.keyPick(d) : ''),
+      collect: (w, d) => { if (S) S.keyCollect(w, d); }, check: d => d.via === 'https' ? '' : S ? S.keyCheck(d) : '', recap: d => d.via === 'https' ? 'HTTPS' : `Key ${S ? S.keyLabel(d) : ''}` });
+    steps.push({ label: 'Check', icon: 'test', title: 'Check the connection', lead: 'Puppet Master reaches the service, then fetches and tries a harmless push.',
+      render: d => { d.target = gitTarget(f, d.account); if (d.via === 'ssh' && S && !d.checked) return (d.place === 'auto' ? PM51.note(`The key is added to your ${f.name} account for you when you check.`, 'info') : '') + S.checkStep(d); if (S && d.via === 'ssh') return S.checkStep(d); return d.checked ? PM51.steps([{ title: `Reached ${hostOf(f)}`, desc: 'Over HTTPS' }, { title: `Signed in as ${d.account}`, desc: 'With the token from the keychain' }, { title: 'Can fetch and push', desc: 'A test push was refused on purpose, so nothing changed' }].map(x => Object.assign({ status: 'Example', tone: 'info', done: true }, x))) + PM51.note('Example data only.', 'info') : `<div class="pm51-perm-actions">${PM51.btn({ label: 'Check connection', primary: true, icon: 'test', action: 'pm51-servers-key-check' })}</div>`; },
+      check: d => d.checked ? '' : 'Run Check connection first.', recap: () => 'Works' });
+    PM51.wizard({ title: reauth ? `Reauthorize ${f.name}` : on ? `Add another ${f.name} account` : (VERB[f.id] || `Connect ${f.name}`), subtitle: f.help || 'Keep code online, review changes and run automation.', eyebrow: 'Code service', icon: 'cloud', steps, draft, finishLabel: on && !reauth ? 'Add account' : 'Connect',
+      onFinish: d => {
+        const keyId = d.via === 'ssh' && S ? S.commitKey(d) : '';
+        if (d.address) f.instanceUrl = d.address;
+        Object.assign(f, { status: 'active', accounts: on && !reauth ? (f.accounts || 1) + 1 : Math.max(1, f.accounts || 0), defaultAccount: on && !reauth ? f.defaultAccount : d.account, scopes: ['Repository', 'Reviews', 'Automation'], ssh: d.via === 'ssh' ? 'Healthy' : 'Not used', lastTest: 'Passed', pushAccess: 'Ready', pushVia: d.via, pushKeyId: keyId, lastCheck: 'Just now' });
+        if (!cfg().service || cfg().service === 'None') cfg().service = f.name;
+        PM51.setSel(ID, f.id); saveState(); refresh();
+        PM51.toast(`${f.name} connected`, `Signed in as ${d.account}. Example only: nothing was sent to ${f.name}.`, 'info');
+      } });
+  }
+  PM51.on('source-cw-how', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.how = ds(el, 'how'); const at = w.step(); window.setTimeout(() => { if (w.step() === at) w.go(at); }, 0); });
+  PM51.on('source-cw-signin', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.signedIn = true; w.draft.account = w.draft.account || 'you'; w.go(w.step()); PM51.toast('Signed in', 'Example only: no browser window opened in this preview.', 'info'); });
+  PM51.on('source-cw-via', el => { const w = PM51.wizardOf(el); if (!w) return; if (sys()) sys().keyCollect(el.closest('.drawer-wrap'), w.draft); w.draft.via = ds(el, 'via'); w.draft.checked = false; const at = w.step(); window.setTimeout(() => { if (w.step() === at) w.go(at); }, 0); });
+
+  /* ---------- guided: who you are in history, signing, large files, ignored files ---------------------------------- */
+  const git = () => { const s = PM51.s(); if (!s.sourceGit) s.sourceGit = { name: '', email: '', scope: 'all', sign: 'none', signKey: '', gpgKey: '', lfs: true, lfsMb: 50, lfsTypes: '*.psd, *.zip, *.mp4, *.mov', ignore: '.env\n.env.*\nnode_modules/\ntarget/\ndist/\n.DS_Store', protected: [] }; return s.sourceGit; };
+  const protectedList = () => { const g = git(); return g.protected && g.protected.length ? g.protected : [mainBranch(), 'release/*']; };
+  const signText = g => g.sign === 'ssh' ? `With SSH key ${(sys() && sys().keyById(g.signKey) || {}).name || 'your key'}` : g.sign === 'gpg' ? `With GPG key ${g.gpgKey || ''}`.trim() : 'Not signed';
+  function gitSetupWizard(start) {
+    const g = git(), gh = byId('github'), ghOn = gh && connected(gh);
+    const draft = Object.assign(clone(g), { useNoreply: false });
+    const keysList = sys() ? sys().keys() : [];
+    PM51.wizard({ title: 'Set up Git', subtitle: 'Who you are in history, whether your changes are signed, and which files Git treats specially.', eyebrow: 'Version history', icon: 'branch', start: start || 0, draft, finishLabel: 'Save', steps: [
+      { label: 'You', icon: 'user', title: 'Who are you in the history?', lead: 'Every saved change carries a name and an email. Code services use the email to link changes to your account.',
+        render: d => `<div class="o55-setup-fields">${PM51.field('Name', `<input class="text-control o55-gs-name" value="${a(d.name)}" placeholder="Your name" autocomplete="off"/>`)}${PM51.field('Email', `<input class="text-control o55-gs-email" value="${a(d.email)}" placeholder="you@example.com" autocomplete="off" spellcheck="false"/>`, ghOn ? `Or keep your address private with GitHub's: ${gh.defaultAccount}@users.noreply.github.com.` : 'It is visible to anyone who can see the history.')}${ghOn ? `<div class="pm51-perm-actions">${PM51.btn({ label: 'Use my private GitHub address', small: true, icon: 'lock', action: 'pm51-source-gs-noreply', data: { email: `${gh.defaultAccount}@users.noreply.github.com` } })}</div>` : ''}${PM51.field('Use it for', PM51.select(d.scope, [['all', 'Every project on this server'], ['project', 'Only this project']], { cls: 'o55-gs-scope', label: 'Use it for' }))}</div>`,
+        collect: (w, d) => { const v = s => String((w.querySelector(s) || {}).value || '').trim(); d.name = v('.o55-gs-name'); d.email = v('.o55-gs-email'); const sc = w.querySelector('.o55-gs-scope'); if (sc) d.scope = sc.value; },
+        check: d => !d.name ? 'Enter the name to show on your changes.' : !/^\S+@\S+\.\S+$/.test(d.email) ? 'Enter an email address.' : '', recap: d => d.name },
+      { label: 'Signing', icon: 'lock', title: 'Sign your changes?', lead: 'A signature proves a change really came from you. Some projects only accept signed changes.',
+        render: d => PM51.tiles([['none', 'Don’t sign', 'Fine for most projects.', 'minus'], ['ssh', 'Sign with my SSH key', 'The simplest way; the same kind of key Git signs in with.', 'key'], ['gpg', 'Sign with a GPG key', 'For projects that ask for GPG.', 'shield']].map(([k, t, x, ic]) => ({ title: t, text: x, icon: ic, selected: d.sign === k, data: { sign: k } })), { action: 'pm51-source-gs-sign' })
+          + (d.sign === 'ssh' ? `<div class="o55-setup-fields">${PM51.field('Key', keysList.length ? PM51.select(d.signKey || (keysList.find(k => !k.old) || keysList[0]).id, keysList.map(k => ({ value: k.id, label: k.name, meta: `${k.type} · ${k.where}` })), { cls: 'o55-gs-key', label: 'Key' }) : PM51.note('No SSH keys yet. Add one under Server & Project Location › Servers › SSH keys.', 'attention'), 'Add the same key on your code service as a signing key, so it shows your changes as verified.')}</div>` : d.sign === 'gpg' ? `<div class="o55-setup-fields">${PM51.field('GPG key ID', `<input class="text-control o55-gs-gpg o55-setup-mono" value="${a(d.gpgKey)}" placeholder="3AA5C34371567BD2" autocomplete="off" spellcheck="false"/>`, 'The private key stays in your GPG keychain.')}</div>` : ''),
+        collect: (w, d) => { const k = w.querySelector('.o55-gs-key'), gp = w.querySelector('.o55-gs-gpg'); if (k) d.signKey = k.value; if (gp) d.gpgKey = String(gp.value || '').trim(); },
+        check: d => d.sign === 'ssh' && !keysList.length ? 'Add an SSH key first, or pick another choice.' : d.sign === 'gpg' && !/^[0-9A-Fa-f]{8,40}$/.test(d.gpgKey || '') ? 'Enter the GPG key ID (8 to 40 letters and digits).' : '', recap: d => signText(d) },
+      { label: 'Files', icon: 'file', title: 'Which files need special care?', lead: 'Big files slow history down; some files should never be saved in it.',
+        render: d => PM51.rows([{ label: 'Store big files separately (Git LFS)', help: 'Keeps the history small and fast.', control: PM51.toggle(!!d.lfs, { action: 'pm51-source-gs-lfs', label: 'Store big files separately' }) }])
+          + `<div class="o55-setup-fields">${PM51.field('Files over this size, in MB', `<input class="text-control o55-gs-mb" type="number" min="1" max="2000" value="${a(d.lfsMb)}"/>`)}${PM51.field('And always these kinds', `<input class="text-control o55-gs-types o55-setup-mono" value="${a(d.lfsTypes)}" autocomplete="off" spellcheck="false"/>`)}${PM51.field('Never save these in history (.gitignore)', `<textarea class="form-textarea o55-gs-ignore o55-setup-mono" rows="6" spellcheck="false">${h(d.ignore)}</textarea>`, 'One per line. Added to new repositories; secrets like .env belong here.')}</div>`,
+        collect: (w, d) => { const v = s => (w.querySelector(s) || {}).value; d.lfsMb = Math.max(1, Math.min(2000, Math.round(Number(v('.o55-gs-mb')) || 50))); d.lfsTypes = String(v('.o55-gs-types') || '').trim(); d.ignore = String(v('.o55-gs-ignore') || '').replace(/\r/g, '').trim(); },
+        recap: d => d.lfs ? `LFS over ${d.lfsMb} MB` : 'No LFS' },
+      { label: 'Recap', icon: 'check', title: 'Save these for Git?', lead: 'You can change each one later under Defaults & Safety.',
+        render: d => PM51.panelSection('Git', PM51.kv([['Name on changes', d.name], ['Email on changes', d.email], ['Used for', d.scope === 'all' ? 'Every project on this server' : 'Only this project'], ['Signing', signText(d)], ['Big files', d.lfs ? `Git LFS for files over ${d.lfsMb} MB and ${d.lfsTypes || 'no extra kinds'}` : 'Kept in the normal history'], ['Never in history', `${d.ignore.split('\n').filter(Boolean).length} patterns`]]), '', { icon: 'branch' }) }
+    ], onFinish: d => { Object.assign(git(), { name: d.name, email: d.email, scope: d.scope, sign: d.sign, signKey: d.signKey || (keysList[0] || {}).id || '', gpgKey: d.gpgKey, lfs: d.lfs, lfsMb: d.lfsMb, lfsTypes: d.lfsTypes, ignore: d.ignore }); saveState(); refresh(); PM51.toast('Git is set up', `Changes are saved as ${d.name} <${d.email}>. Example only: nothing was written to git config.`, 'info'); } });
+  }
+  PM51.on('source-git-setup', el => gitSetupWizard(Number(ds(el, 'step')) || 0));
+  PM51.on('source-git-access', () => { const f = forges().find(x => x.name === cfg().service && connected(x)) || forges().find(connected); if (f) gitAccess(f); else PM51.toast('Connect a code service first', 'Git sign-in is set up per code service, under Code Services.', 'info'); });
+  PM51.on('source-gs-noreply', el => { const inp = el.closest('.o55g-main').querySelector('.o55-gs-email'); if (inp) inp.value = ds(el, 'email'); });
+  PM51.on('source-gs-sign', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.sign = ds(el, 'sign'); const at = w.step(); window.setTimeout(() => { if (w.step() === at) w.go(at); }, 0); });
+  PM51.on('source-gs-lfs', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.lfs = !w.draft.lfs; el.classList.toggle('on', w.draft.lfs); el.setAttribute('aria-checked', String(w.draft.lfs)); });
+  PM51.on('source-protected', () => {
+    PM51.panel({ title: 'Protected branches', subtitle: 'Changes to these go through a review; they are never overwritten.', icon: 'lock',
+      body: PM51.panelSection('Branches', `<textarea class="form-textarea o55-sc-prot o55-setup-mono" rows="5" spellcheck="false" aria-label="Protected branches">${h(protectedList().join('\n'))}</textarea>`, 'One per line. * matches anything, so release/* covers every release branch.')
+        + PM51.note(safety().protectMain ? 'Protection is on at this safety level.' : 'Protection is off at this safety level; pick Strict, Standard or Custom to turn it on.', safety().protectMain ? 'info' : 'attention'),
+      primaryLabel: 'Save', onPrimary: w => { const list = String((w.querySelector('.o55-sc-prot') || {}).value || '').split('\n').map(x => x.trim()).filter(Boolean); if (!list.length) { PM51.toast('Keep at least one branch', `For example ${mainBranch()}.`, 'info'); return false; } git().protected = list; saveState(); refresh(); PM51.toast('Protected branches saved', list.join(', ')); } });
+  });
+
+  const PUBLISH = 'safety.approvals.external-publish-ask';
+  function publishText() { const st = PM51.setting(PUBLISH); if (!st) return 'Set in Permissions'; try { return PM51.valueText(st, PM51.value(PUBLISH)); } catch (_e) { return 'Set in Permissions'; } }
+  PM51.on('source-open-publish', () => { PM51.setTab('permissions', 'approvals'); PM51.go('safety', 'permissions'); });
   PM51.on('source-new-repo', () => newRepoWizard());
   PM51.on('source-contribute', () => contributeWizard());
   PM51.on('source-w-service', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.service = ds(el, 'service'); w.next(); });

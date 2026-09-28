@@ -20,3 +20,6 @@
   #panel-settings .o55-perm-addrule { grid-template-columns: minmax(0, 1fr); }
   #panel-settings .o55-srv-pair { grid-template-columns: minmax(0, 1fr); }
 }
+/* a profile's four answers: the question on one line, its three answers under it, so the narrow detail pane keeps its words */
+#panel-settings .pm51-mgr .pm51-rows > .pm51-row.o55-perm-stack { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+#panel-settings .pm51-mgr .pm51-rows > .pm51-row.o55-perm-stack > .pm51-row-control { justify-content: flex-start; padding-right: 0; }
