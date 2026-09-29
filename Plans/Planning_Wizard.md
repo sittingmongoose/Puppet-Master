@@ -2086,7 +2086,7 @@ canonical_text: >-
   Planning Wizard with the committed Project selected. Both predecessor controllers remain source lineage only.
 gui_related: true
 gui_classification_reason: Defines the three-chapter practice flow, real-application interactions, motion, controls, callouts, focus, and exit state.
-depends_on: [PWIZ-021, ACD-431, ACD-484, F3-581]
+depends_on: [PWIZ-021, ACD-431, ACD-484]
 unblocks: []
 acceptance_criteria:
   - The exact chapter order is `chat_teacher`, `workspace`, `planning_wizard`; neither the five-chapter controller nor Usage-first/Chat-final v2 is current.

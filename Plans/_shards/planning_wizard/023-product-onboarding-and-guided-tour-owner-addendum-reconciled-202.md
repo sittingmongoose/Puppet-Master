@@ -4,7 +4,7 @@ Source: `Plans/Planning_Wizard.md`
 
 Source lines: L1781-L2118
 
-Source SHA256: `8dfcdbd59ef836da4de41ea32d64fbcc6f5a86ff7a0f93d4e996533fc6acef55`
+Source SHA256: `d10deb7581c056efce19507ae53f053b6b7c0dcb2ae73c867a8fb72fe11477b0`
 
 ---
 
@@ -316,7 +316,7 @@ canonical_text: >-
   Planning Wizard with the committed Project selected. Both predecessor controllers remain source lineage only.
 gui_related: true
 gui_classification_reason: Defines the three-chapter practice flow, real-application interactions, motion, controls, callouts, focus, and exit state.
-depends_on: [PWIZ-021, ACD-431, ACD-484, F3-581]
+depends_on: [PWIZ-021, ACD-431, ACD-484]
 unblocks: []
 acceptance_criteria:
   - The exact chapter order is `chat_teacher`, `workspace`, `planning_wizard`; neither the five-chapter controller nor Usage-first/Chat-final v2 is current.
