@@ -43,7 +43,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `src/js/50–57` | Art: scene system, four family prop libraries (Basic blueprint, Friendly paper theatre, Glass light lab, Retro arcade), scene compositions. |
 | `src/js/60–62` | The window, components, flow helpers (phased owner operations, countdowns, QR drawing). |
 | `src/js/65–74` | Screens by chapter: Welcome, Computer (Connect, Server, Restore), Project (begin, folder, NAS/SSH, name, start-like, keep safe, online copy, away, review, creating, protect), AI (providers, Free Models), Ready. |
-| `src/js/80–83` | The Guided Tour: engine (spotlight, callout, bar, Show Me pointer, snapshot/restore, checkpoints), the Teacher chat adapter (local answers, ELI5 rewrite), the Planning Wizard practice run, and the 18 steps. |
+| `src/js/80–84` | The Guided Tour: engine (spotlight, callout, bar, Show Me pointer, snapshot/restore, checkpoints), the Teacher chat adapter (local answers, ELI5 rewrite), the Planning Wizard practice run, and the 18 steps; then NieR Mode's Pod 042 chat adapter. |
 | `src/js/90–95` | Concept demo pill; boot, shims for the shell's existing callers, driver switches (`?o55=fresh|off|screen=<id>`, `?o55scenario=<id>`). |
 | `src/css/` | Window, components, motion, art. Colours come from the live theme tokens. |
 | `src/coverage.map.json` → `src/coverage.json` | Every setup-plan field (63) and conditional (26) mapped to the screen or control that sets it, plus screens → scenes and scenarios → drivers. |
@@ -66,6 +66,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `tools/tour_film.mjs <out> [--scenes] [--themes] [--rate]` | Slow-motion films of the handoff, the tour opening, every Show Me, the ELI5 rewrite, the plan read part by part and the finish. |
 | `tools/tour_census.mjs <out> [--wpm]` | Meaningful actions and dwell time per chapter, measured on the real tour. |
 | `tools/nier_palette.py --write \| --check` | NieR Mode's token tables in `src/settings/styles.d/13-nier.css`, generated from `src/settings/nier/nier-automata.json`; `build.py --check` runs `--check` (stale tables, or a colour literal elsewhere in that file). |
+| `tools/nier_scene_art.py --write \| --check` / `tools/nier_scenes.py --write \| --check` | NieR Mode's background scenes: the drawn SVGs in `src/settings/nier/scenes/`, then their composition into `kit.d/21-nier-scenes.js`; `build.py --check` runs both checks. |
 | `tools/nier_hue_audit.mjs <out> [--modes] [--views] [--shots]` | Photographs the main views with NieR Mode on, light and dark, and names the element and property behind every pixel outside ink and parchment (swatches that show a real choice are counted apart). |
 | `tools/perf/perf.py <page> <out.json> [--themes] [--quick] [--headful] [--tracefps]` | Performance walk per theme (opening, screens at rest and changing, typing, tour steps, Show Me, look picker). Python stdlib only, so it runs on the Windows PC over SSH as well as on the VM (`xvfb-run … --headful`). See "Performance rules". |
 | `tools/perf/film.py <page> <outdir> [--themes] [--scenes] [--rate 0.1] [--solid 0\|1]` | Slow-motion 60 fps films of the opening, a screen change with the rig, typing, the tour's ring and Show Me, on the Windows GPU. |
@@ -106,6 +107,19 @@ in light or dark, not a ninth theme: the chosen family stays in `PM_THEME`'s sta
 engine and documents the contract the parts code against (`html[data-o55-nier="on"]`, `data-o55-nier-parts`,
 `window.PM_NIER`); `styles.d/13-nier.css` holds the palette and the embedded faces (M PLUS 1 and JetBrains Mono,
 inlined by `tools/settings_layer.py`; sources and licences in `src/settings/nier/`).
+
+Its 29 parts (general.visual.nier-parts, all installed by default) are each a switch that does nothing while NieR Mode is
+off: Look, Motion, Sound & voice and Pointer in `kit.d/19-nier-parts.js` + `styles.d/14-nier-parts.css`, the 12 World
+parts (boot log, status readouts, block progress, ink charts, map ticks, machine glyphs, intel tooltips, square icon
+strokes, quest banners, ink empty states, save signal) in `kit.d/20-nier-world.js` + `styles.d/15-nier-world.css`, and
+Pod 042, a Chat persona that answers locally in Pod voice (`src/js/84-pod042-chat.js`, added to `PERSONA_CATALOG` by
+`build.py`). The background scenes (general.visual.nier-background) are original line art in
+`src/settings/nier/scenes/*.svg`, drawn by `tools/nier_scene_art.py` and composed into `kit.d/21-nier-scenes.js` by
+`tools/nier_scenes.py` (`--write`, and `--check` in `build.py --check`). The row Customize NieR Mode opens the parts
+editor, drawn as the game's Plug-in Chips screen (`kit.d/22-nier-chips.js` + `styles.d/17-nier-chips.css`): a chip per
+part, a storage meter, the presets Full install, Quiet, Still and Colors only, a preview tile, the background picker and
+Play reboot moment. It is a row editor, not a manager. The palette tables come from `tools/nier_palette.py`, and
+`tools/nier_hue_audit.mjs` finds any pixel outside ink and parchment.
 
 Verifying a change: `build.py --check`, then open the page with `?o55=off` (skips onboarding, which freezes headless
 Chrome) and drive `PM51.go(domain, workspace)`; check all eight themes and 760 / 900 / 1280 / 1700 px widths.
