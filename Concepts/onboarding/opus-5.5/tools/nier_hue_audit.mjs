@@ -28,7 +28,8 @@ mkdirSync(out, { recursive: true });
 /* each view: how to get there from the dashboard, and how long to let it settle */
 const VIEWS = {
   dashboard: async (p) => { await p.evaluate(() => window.PM_PAGES.go('dashboard')); },
-  chat: async (p) => { await p.evaluate(() => window.PM_PAGES.go('chat')); },
+  /* Chat is a workspace surface, not a page: show it on the dashboard the way the activity-bar icon does */
+  chat: async (p) => { await p.evaluate(() => { window.PM_PAGES.go('dashboard'); const w = window.PM_HOME_WORKSPACE; if (w && typeof w.setSurfaceVisible === 'function') w.setSurfaceVisible('chat', true, 'cmd.panel.switch'); }); },
   wizard: async (p) => { await p.evaluate(() => window.PM_PAGES.go('wizard')); },
   usage: async (p) => { await p.evaluate(() => window.PM_PAGES.go('usage')); },
   projects: async (p) => { await p.evaluate(() => window.PM_PAGES.go('projects')); },
