@@ -1,12 +1,14 @@
 /* O55.tour.chat — the Teacher fixture inside the real Assistant Chat. A "Guided example" thread is created through the
    chat facade; sends in that thread (and only that thread) are answered locally through the real stream path, so the
    finished Chat UI shows the answer with no provider call, no usage and no context growth. Guided messages are labelled
-   honestly ("Guided example · Teacher") instead of the chat's model/token/cost line. ELI5 rewrites the same bubble:
-   kept words stay, removed words fold away, new words type in. */
+   honestly ("Guided example · Teacher") instead of the chat's model/token/cost line. A finished guided answer that has
+   simpler wording offers Explain this reply simply (cmd.chat.eli5.explain_reply, DL-126): one click writes ONE extra,
+   simpler reply directly under it through the same local stream path, and the answer it explains is never rewritten.
+   The quick ELI5 switch by the message box (cmd.chat.eli5.set) changes only the replies written after it. */
 (function () {
   'use strict';
   const O55 = window.O55, U = O55.util, T = (k, v) => O55.t(k, v), M = O55.motion, TR = O55.tour;
-  const C = TR.chat = { threadId: null, answers: {}, sent: [], lastMid: null };
+  const C = TR.chat = { threadId: null, answers: {}, sent: [], lastMid: null, explained: {} };
   let origSend = null, obs = null, seq = 0;
   const d = () => window.PM_DEMO;
   const eli5On = () => !!TR.q('span.chat-toggle-btn.toggle-eli5.active');
@@ -45,7 +47,7 @@
     /* both halves of an exchange carry its id, so Back in the tour can take the exchange back out */
     th.messages.push({ role: 'user', text, guided_example: true, mid: msgId });
     dm.emit('chat.stream', { threadId, type: 'user', text });
-    C.lastMid = msgId; C.answers[msgId] = { key: a.key, question: text };
+    C.lastMid = msgId; C.answers[msgId] = { key: a.key, question: text, simple: eli5On() };
     /* a short, honest pause before the guided answer streams through the real renderer (an exchange taken back by
        Back before its answer arrives never answers) */
     M.after(450, () => {
@@ -71,6 +73,7 @@
       const pop = m.querySelector('.msg-runtime-popover'); if (pop) pop.innerHTML = `<div class="popover-row"><span class="popover-value">${U.esc(T('tour.teacher.popover'))}</span></div>`;
       m.querySelectorAll('.msg-hover-row .msg-meta, .msg-meta-model').forEach((n) => { n.textContent = T('tour.teacher.label'); });
     });
+    syncExplain(root);
   }
   C.relabel = () => relabelWithin(document.getElementById('chatPanel'));
 
@@ -82,6 +85,9 @@
     const th = dm.state.chat.threads[id]; th.title = T('tour.teacher.thread'); th.guided_example = true;
     if (window.PM6_CHAT_THREADS && window.PM6_CHAT_THREADS[id]) window.PM6_CHAT_THREADS[id].title = T('tour.teacher.thread');
     C.threadId = id;
+    /* the example chat starts with ELI5 off, so its first answer is the ordinary one the tour explains simply (Skip and
+       Finish put the learner's ELI5 back) */
+    if (eli5On() && C.eli5Btn()) C.eli5Btn().click();
     await M.delay(160);
     const row = document.querySelector(`.chat-thread-item[data-thread="${id}"]`);
     if (row) { const t = row.querySelector('.thread-title'); if (t) t.textContent = T('tour.teacher.thread'); row.classList.add('o55-guided-thread'); row.click(); }
@@ -100,34 +106,82 @@
   C.lastAnswerEl = () => { const mid = C.lastMid; return mid ? document.querySelector(`#chatPanel [data-pm6-mid="${mid}"]`) : null; };
   C.answered = (key) => Object.values(C.answers).some((a) => a.key === key && a.done);
 
-  /* ---------------------------------------------------------------- ELI5: rewrite the same bubble */
-  function words(s) { return String(s).split(/\s+/).filter(Boolean); }
-  function diff(a, b) {
-    const n = a.length, m = b.length, L = Array.from({ length: n + 1 }, () => new Int16Array(m + 1));
-    const norm = (w) => w.toLowerCase().replace(/[^a-z0-9’']/g, '');
-    for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--) L[i][j] = norm(a[i]) === norm(b[j]) ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
-    const ops = []; let i = 0, j = 0;
-    while (i < n && j < m) { if (norm(a[i]) === norm(b[j])) { ops.push(['keep', b[j]]); i++; j++; } else if (L[i + 1][j] >= L[i][j + 1]) ops.push(['del', a[i++]]); else ops.push(['ins', b[j++]]); }
-    while (i < n) ops.push(['del', a[i++]]); while (j < m) ops.push(['ins', b[j++]]);
-    return ops;
-  }
-  C.rewrite = function rewrite(toEli5) {
-    const el = C.lastAnswerEl(); if (!el) return false;
-    const info = C.answers[C.lastMid]; if (!info || !/^a[12]$/.test(info.key)) return false;
-    const from = T('tour.teacher.' + info.key + (toEli5 ? '' : 'eli5')), to = T('tour.teacher.' + info.key + (toEli5 ? 'eli5' : ''));
-    const sink = el.querySelector('.pm6-chat-sink') || el.querySelector('.msg-body'); if (!sink) return false;
-    if (M.reduced()) { sink.innerHTML = `<p>${U.esc(to)}</p>`; return true; }
-    let k = 0;
-    sink.innerHTML = '<p class="o55e">' + diff(words(from), words(to)).map(([op, w]) => {
-      if (op === 'keep') return `<span class="o55e-w">${U.esc(w)} </span>`;
-      if (op === 'del') return `<span class="o55e-w o55e-del">${U.esc(w)} </span>`;
-      return `<span class="o55e-w o55e-ins" style="--k:${k++}">${U.esc(w)} </span>`;
-    }).join('') + '</p>';
-    O55.sound.play('select');
-    M.after(700 + k * 45 + 400, () => { if (sink.isConnected) sink.innerHTML = `<p>${U.esc(to)}</p>`; });
-    return true;
+  /* ---------------------------------------------------------------- Explain this reply simply (DL-126) */
+  /* The control sits under a guided answer that has simpler wording and was not written simple already. It renders
+     disabled while that answer streams, and it leaves once its simpler reply exists. */
+  const explainable = (mid) => { const a = C.answers[mid]; return !!(a && !a.explains && !a.simple && /^a[12]$/.test(a.key) && !C.explained[mid]); };
+  C.midFor = (key) => Object.keys(C.answers).filter((m) => C.answers[m].key === key && !C.answers[m].explains).pop() || null;
+  C.simplerFor = (mid) => { const x = mid && C.explained[mid]; return x && C.answers[x] ? x : null; };
+  C.explainBtn = (mid) => (mid ? TR.q(`#chatPanel [data-pm6-mid="${mid}"] [data-o55-explain]`) : null);
+  const sinkText = (mid) => ((document.querySelector(`#chatPanel [data-pm6-mid="${mid}"] .pm6-chat-sink`) || {}).textContent || '').trim();
+  /* the example answer reads exactly as it was written, and exactly one finished simpler reply sits under it */
+  C.explainedSame = (key) => {
+    const mid = C.midFor(key), x = C.simplerFor(mid); if (!x || !C.answers[x].done) return false;
+    const under = document.querySelector(`#chatPanel [data-pm6-mid="${mid}"]`), next = under && under.nextElementSibling;
+    return sinkText(mid) === T('tour.teacher.' + key) && sinkText(x) === T('tour.teacher.' + key + 'eli5') && !!next && next.getAttribute('data-pm6-mid') === x;
   };
-  C.eli5Shown = () => { const el = C.lastAnswerEl(); if (!el) return false; const info = C.answers[C.lastMid]; return !!(info && el.textContent.includes(T('tour.teacher.' + info.key + 'eli5').slice(0, 24))); };
+  function syncExplain(root) {
+    if (!root || !C.threadId || d().state.chat.activeThread !== C.threadId) return;
+    const msgs = root.matches && root.matches('.pm6-chat-msg') ? [root] : [...root.querySelectorAll('.pm6-chat-msg[data-pm6-mid]')];
+    msgs.forEach((m) => {
+      const mid = m.getAttribute('data-pm6-mid'), a = C.answers[mid]; if (!a) return;
+      if (a.explains && !m.querySelector('.o55-explains')) {
+        const body = m.querySelector('.msg-body');
+        if (body) body.insertAdjacentHTML('afterbegin', `<div class="o55-explains">${O55.c.small('spark', 12)}<span>${U.esc(T('tour.teacher.explains'))}</span></div>`);
+      }
+      let row = m.querySelector('.o55-explain-row');
+      if (!explainable(mid)) { if (row) row.remove(); return; }
+      if (!row) {
+        const body = m.querySelector('.msg-body'); if (!body) return;
+        body.insertAdjacentHTML('afterend', `<div class="o55-explain-row"><button type="button" class="o55-explain" data-o55-explain="${U.esc(mid)}" data-pm-hover-label="${U.esc(T('tour.teacher.explain'))}">${O55.c.small('spark', 13)}<span>${U.esc(T('tour.teacher.explain'))}</span></button></div>`);
+        row = m.querySelector('.o55-explain-row');
+      }
+      const b = row.querySelector('[data-o55-explain]'), wait = !a.done;
+      if (b.getAttribute('aria-disabled') !== String(wait)) b.setAttribute('aria-disabled', String(wait));
+      const detail = T(wait ? 'tour.teacher.explainWait' : 'tour.teacher.explainDetail');
+      if (b.getAttribute('data-pm-hover-detail') !== detail) b.setAttribute('data-pm-hover-detail', detail);
+    });
+  }
+  C.syncExplain = () => syncExplain(document.getElementById('chatPanel'));
+  /* the simpler reply lands directly under the reply it explains, in every stream that shows the thread */
+  function placeUnder(newMid, mid) {
+    document.querySelectorAll(`[data-pm6-mid="${newMid}"]`).forEach((node) => {
+      const st = node.parentElement, orig = st && [...st.querySelectorAll(`:scope > [data-pm6-mid="${mid}"]`)].pop();
+      if (orig && orig.nextElementSibling !== node) orig.after(node);
+    });
+  }
+  /* cmd.chat.eli5.explain_reply: one extra reply, on request, for one finished answer; the answer, the chat's ELI5 and
+     the composer are left as they are */
+  C.explain = function explain(mid) {
+    const dm = d(), th = dm && C.threadId && dm.state.chat.threads[C.threadId], a = C.answers[mid];
+    if (!th || !a) return { ok: false, error: 'not_explainable' };
+    if (!a.done) return { ok: false, error: 'still_streaming' };
+    if (C.explained[mid]) return { ok: false, error: 'already_explained' };
+    if (!explainable(mid)) return { ok: false, error: 'not_explainable' };
+    const x = 'o55-simpler-' + Date.now().toString(36) + '-' + (++seq), html = `<p>${U.esc(T('tour.teacher.' + a.key + 'eli5'))}</p>`;
+    C.answers[x] = { key: a.key + 'eli5', explains: mid, question: a.question, simple: true };
+    C.explained[mid] = x;
+    dm.emit('chat.stream', { threadId: C.threadId, msgId: x, type: 'start', intent: 'guided_teacher' });
+    placeUnder(x, mid); C.syncExplain();
+    O55.sound.play('select');
+    dm.stream.start((chunk) => dm.emit('chat.stream', { threadId: C.threadId, msgId: x, type: 'chunk', html: chunk }), html, {
+      onDone: () => {
+        if (!C.answers[x]) return;
+        const at = th.messages.map((m) => m.role === 'assistant' && m.mid).lastIndexOf(mid);
+        th.messages.splice(at < 0 ? th.messages.length : at + 1, 0, { role: 'assistant', html, guided_example: true, mid: x, explains: mid, command: 'cmd.chat.eli5.explain_reply' });
+        dm.emit('chat.stream', { threadId: C.threadId, msgId: x, type: 'done' }); C.answers[x].done = true;
+        relabelWithin(document.getElementById('chatPanel'));
+      }
+    });
+    return { ok: true, messageId: x, explains: mid };
+  };
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest && e.target.closest('[data-o55-explain]'); if (!b || !b.closest('#chatPanel, #floatingChat')) return;
+    e.preventDefault();
+    if (b.getAttribute('aria-disabled') === 'true') return;
+    const mid = b.getAttribute('data-o55-explain');
+    O55.owners.dispatch('cmd.chat.eli5.explain_reply', { message_id: mid }, {}, () => C.explain(mid));
+  });
 
   /* ---------------------------------------------------------------- persona, the guided thread's removal */
   const personaNow = () => ((document.querySelector('#chatPanel .persona-label') || {}).textContent || '').trim();
@@ -159,7 +213,9 @@
     if (!m) return;
     const dm = d(); if (!dm) return;
     const keep = new Set(m.answers), th = C.threadId && dm.state.chat.threads[C.threadId];
-    Object.keys(C.answers).filter((k) => !keep.has(k)).forEach((k) => { delete C.answers[k]; });
+    const gone = Object.keys(C.answers).filter((k) => !keep.has(k));
+    gone.forEach((k) => { delete C.answers[k]; document.querySelectorAll(`[data-pm6-mid="${k}"]`).forEach((n) => n.remove()); });
+    Object.keys(C.explained).forEach((k) => { if (!C.answers[C.explained[k]]) delete C.explained[k]; });
     C.sent.length = Math.min(C.sent.length, m.sent); C.lastMid = m.lastMid;
     if (th && !m.guided) dropGuided(m.thread); /* before the guided example existed: the learner's own thread again */
     else if (th) {
@@ -170,7 +226,8 @@
         else document.querySelectorAll(`[data-pm6-mid="${m.lastMid}"]`).forEach((node) => { let n = node.nextElementSibling; while (n) { const nx = n.nextElementSibling; if (n.classList.contains('pm6-chat-msg')) n.remove(); n = nx; } });
       }
     }
-    if (m.eli5 !== eli5On() && C.eli5Btn()) { const showing = !m.eli5 && C.eli5Shown(); C.eli5Btn().click(); if (showing) C.rewrite(false); }
+    if (m.eli5 !== eli5On() && C.eli5Btn()) C.eli5Btn().click();
+    C.syncExplain();
     if (m.persona && personaNow() !== m.persona) {
       const api = window.PM_HOME_WORKSPACE;
       if (!C.chatVisible() && api) { api.setSurfaceVisible('chat', true, 'cmd.panel.switch'); await M.delay(220); }
@@ -179,7 +236,7 @@
     const ta = C.composer(); if (ta && ta.value !== m.draft) { ta.value = m.draft; ta.dispatchEvent(new Event('input', { bubbles: true })); }
   };
   /* a new run of the tour remembers nothing of the last one */
-  C.reset = () => { C.sent = []; C.answers = {}; C.lastMid = null; };
+  C.reset = () => { C.sent = []; C.answers = {}; C.explained = {}; C.lastMid = null; };
 
   /* ---------------------------------------------------------------- restore */
   C.restore = async function restore(snap, keep) {

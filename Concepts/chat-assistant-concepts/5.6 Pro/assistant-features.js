@@ -72,8 +72,9 @@
  *    falls back to the built-in when EVERY registered slot fn returns ''. This file
  *    therefore declines `threadRowStatus` unconditionally (verified by reading
  *    history.js's registration in full) and surfaces per-thread title state through
- *    `threadMenu` (append, no such conflict) and the active thread's `headerExtras`
- *    chip instead. A judgment call, documented rather than silently made.
+ *    `threadMenu` (its "Name it for me" row, under Rename) and the active thread's
+ *    `headerExtras` mark (a lock or a warning glyph beside the title; PREFS, DESIGN-SPEC
+ *    8.14) instead. A judgment call, documented rather than silently made.
  * 5. A brand-new thread's title starts as the built-in `new-thread` action's literal
  *    'Untitled thread', not the packet's 'New chat' (§2.1.1). `new-thread` is a
  *    native if-chain branch in app.js's click handler, not an EXT action, and
@@ -94,8 +95,8 @@
  * RT.features IS OWNED HERE (never replaced wholesale — restored in place so
  * `window.PM56_FEATURES.state()` never goes stale). Actions are namespaced `af-`.
  * Slots used: dialog, wandRows, threadMenu, headerExtras, systemCardActions,
- * transcriptMessage (types af-investigation, af-revert-result, af-eli5-preview; every
- * other message type declines with ''), plus the message-overflow registry
+ * transcriptMessage (types af-investigation, af-revert-result; every other message
+ * type declines with ''), plus the message-overflow registry
  * transcript.js exposes at window.PM56_MSG_OVERFLOW.register(fn) (documented in
  * transcript.js's own header — this is the sanctioned way to add a per-message
  * operation without re-registering a second overflow button).
@@ -201,7 +202,7 @@
       memory:{
         auto:[
           { id:'af-auto-seed-1', trigger:'run_boundary', threadId:'query',
-            summary:'Run boundary on Query Performance: index rewrite landed; benchmark evidence still pending.',
+            summary:'The query-performance index rewrite landed; the benchmark proof is still pending.',
             verification:'verified', blocked:false, blockedByRecordId:null, at:'2026-08-27T11:44:00Z' }
         ],
         nextSeq:2,
@@ -573,10 +574,16 @@
      Independent conversation override + an application default. NOT a
      Persona, NOT a mode — nothing below reads or writes state.persona or
      state.mode. Presentation only: no action in this section ever mutates
-     D.artifacts, a message body, a Plan, evidence, or an identifier — the
-     one thing it does write to a transcript is the paired preview card
-     (af-eli5-demo), and that card renders the SAME fact twice to make
-     "presentation only" a visible, checkable claim rather than a promise.
+     D.artifacts, a message body, a Plan, evidence, or an identifier. The
+     sheet, its in-chat marks and the guided example belong to
+     eli5-preferences.js and eli5-demo-batch11.js (PREFS, DESIGN-SPEC 8.13);
+     what stays here is the fallback when those modules are not in the build.
+     There is one answer, simple or standard, never two side by side (the old
+     paired preview card and its CSS are gone).
+     Owner answer E-11 (DL-126): ELI5 is the popup plus the quick dot, never a
+     one-click toggle; the toggle row below is only the fallback for a build
+     without eli5-preferences.js. Project default + per-chat override stay, and
+     Explain this reply simply lives in eli5-preferences.js.
      ===================================================================== */
   function eli5Effective(threadId){
     if(window.PM56_ELI5) return window.PM56_ELI5.resolve(threadId).effective;
@@ -604,18 +611,14 @@
     delete F.eli5.perThread[tid];
     ctx.state.capabilities.eli5 = F.eli5.appDefault;
     ctx.renderApp();
-    ctx.toast('Reverted to app default','This thread no longer carries its own ELI5 override.');
+    ctx.toast('Following your usual setting','This chat now uses your usual ELI5 setting.');
     return true;
   });
+  /* Demo only (Demo Studio): the guided example; without it, the ELI5 sheet. */
   EXT.action('af-eli5-demo', function(ctx){
     if(window.PM56_ELI5_DEMOS){window.PM56_ELI5_DEMOS.start('override');return true;}
-    var th=ctx.thread;
-    ctx.appendMessage({ id:afUid('eli5prev'), role:'system', type:'af-eli5-preview',
-      code:'CREATE INDEX CONCURRENTLY ix_events_tenant_created\n  ON events (tenant_id, created_at DESC);',
-      standard:'Adding a composite index on (tenant_id, created_at DESC) lets the planner satisfy the tenant-scoped recency scan with an index-only range read instead of a filtered sequential scan.',
-      simple:'In simple terms: this creates a shortcut that lets the database jump straight to one tenant’s newest rows instead of checking almost every row.',
-      time:nowIso() }, th);
-    ctx.toast('ELI5 preview added','Same code, same fact — two explanations. The code block is byte-identical in both.');
+    if(window.PM56_ELI5){window.PM56_ELI5.open(ctx);return true;}
+    ctx.toast('ELI5 example not in this build','Use the ELI5 row in the wand to change how this chat explains things.');
     return true;
   });
   /* Captures writes made through app.js's own pre-existing "ELI5" wand row
@@ -634,18 +637,18 @@
     var icon=ctx.icon;
     var tid=ctx.thread.id;
     var eff=eli5Effective(tid), override=eli5HasOverride(tid);
+    /* the ELI5 kind mark (a speech bubble with one short line), never sparkles */
+    var mark=window.PM56_SHELL&&window.PM56_SHELL.pmxKindMark?window.PM56_SHELL.pmxKindMark('eli5',13):icon('chat',13);
     var out='<button class="menu-item af-wand-row" data-action="af-eli5-toggle" role="checkbox" aria-checked="'+eff+'">'+
-      '<span class="menu-icon">'+icon('sparkles',13)+'</span>'+
-      '<span class="menu-copy"><strong>ELI5 (this conversation)</strong>'+
-      '<span>Explain simply, presentation only · independent of Persona and mode'+(override?'':' · app default')+'</span></span>'+
+      '<span class="menu-icon">'+mark+'</span>'+
+      '<span class="menu-copy"><strong>ELI5 · Explain simply in this chat</strong>'+
+      '<span>Answers use everyday words. Your code and files never change.'+(override?'':' Follows your usual setting.')+'</span></span>'+
       '<span class="af-checkbox'+(eff?' checked':'')+'">'+(eff?icon('check',11):'')+'</span>'+
       '</button>';
     if(override){
       out+='<button class="menu-item af-wand-subrow" data-action="af-eli5-reset">'+
-        '<span class="menu-icon"></span><span class="menu-copy"><span>Reset to app default ('+(F.eli5.appDefault?'On':'Off')+')</span></span></button>';
+        '<span class="menu-icon"></span><span class="menu-copy"><span>Follow my usual setting ('+(F.eli5.appDefault?'On':'Off')+')</span></span></button>';
     }
-    out+='<button class="menu-item af-wand-subrow" data-action="af-eli5-demo">'+
-      '<span class="menu-icon"></span><span class="menu-copy"><span>Preview ELI5 phrasing (same fact, two explanations)</span></span></button>';
     return out;
   }
 
@@ -1037,18 +1040,39 @@
   }
 
   /* =====================================================================
-     8. THREAD TITLE POLICY — packet §2.1 (TITLE-001..006)
+     8. NEW CHAT DEFAULTS, CHAT NAMES AND THOUGHT STREAM
+        (PREFS, DESIGN-SPEC 8.14, 7.11, 8.15; packet §2.1, TITLE-001..006)
      ---------------------------------------------------------------------
-     Default resolver / None / explicit available model. Manual rename locks
-     auto-title until an explicit Regenerate. No silent fallback when an
-     explicit model is unavailable — route eligibility reads the SAME
-     D.models[].status the Model picker itself reads (see honesty note 2).
+     How chats get their names: Automatic (the default resolver), Don't name
+     chats, or one explicit model. A manual rename locks the name until an
+     explicit "Name it for me". No silent fallback: an explicit model that is
+     not ready is disclosed and never swapped (TITLE-003); route eligibility
+     reads the SAME D.models[].status the Model picker itself reads (see
+     honesty note 2).
+     The New chat defaults sheet (af-settings) shows the three things a new
+     chat starts with, each a preserved dropdown with a live specimen on one
+     plate floor. The chat header shows the naming state without pills, on
+     F0b's hooks: .chat-title[data-pmx-title-state] and its keyed word spans.
+     Commands (8.15): Name it for me = cmd.chat.thread.regenerate_title,
+     Rename = cmd.chat.rename; Explain simply in new chats and Name new chats
+     are Settings transactions; Thought Stream is a UI preference with no
+     command (E-13). The concept dispatches none of them; the sheet's
+     Technical details line names them.
      ===================================================================== */
   function readyModels(){ return (D.models||[]).filter(function(m){ return m.status==='ready'; }); }
   function modelById(id){
     for(var i=0;i<(D.models||[]).length;i++){ if(D.models[i].id===id) return D.models[i]; }
     return null;
   }
+  /* "Work · anthropic-work" -> "Work account": the account's own word, never its key */
+  function accountWord(m){
+    var a=String((m && (m.account||m.provider))||'').split(' · ')[0].trim();
+    return a ? a+' account' : '';
+  }
+  /* why a model is not ready, in a few plain words (the full status detail stays in the attempt's reason) */
+  var SHORT_REASON={ 'quota-exhausted':'usage limit reached', 'expired':'sign-in expired', 'api-key-required':'needs an API key',
+    'update-available':'an update is waiting', 'sign-in-required':'needs you to sign in again', 'cli-not-found':'its app isn’t installed here' };
+  function shortReason(m){ return SHORT_REASON[m.status] || String(m.statusLabel||m.status||'not ready').toLowerCase(); }
   /* Deterministic scorer approximating "eligible local/included, low Usage
      pressure, low latency" (§2.1 default-resolver bullets) from the fields
      this fixture actually carries: ready status is required; `fast:true` is
@@ -1067,7 +1091,7 @@
     return pool[0];
   }
   function resolveTitleRoute(){
-    if(F.title.policy==='none') return { ok:false, skip:true, reason:'Title policy is None.' };
+    if(F.title.policy==='none') return { ok:false, skip:true, reason:'Automatic naming is off.' };
     if(F.title.policy==='default'){
       var m=resolveDefaultTitleModel();
       return m ? { ok:true, model:m } : { ok:false, reason:'No configured route is currently ready.' };
@@ -1075,7 +1099,7 @@
     var id=F.title.policy.indexOf('model:')===0 ? F.title.policy.slice(6) : '';
     var m2=modelById(id);
     if(!m2) return { ok:false, reason:'The configured model ('+id+') is no longer in the roster.' };
-    if(m2.status!=='ready') return { ok:false, reason:(m2.name||id)+' · '+(m2.account||m2.provider||'')+' — '+(m2.statusDetail||m2.statusLabel||m2.status) };
+    if(m2.status!=='ready') return { ok:false, model:m2, reason:(m2.name||id)+' · '+(m2.account||m2.provider||'')+' — '+(m2.statusDetail||m2.statusLabel||m2.status) };
     return { ok:true, model:m2 };
   }
   function firstUserMessageWithText(thread){
@@ -1100,10 +1124,20 @@
     return { excerpt: m?safeExcerpt(m.body,100):'', attachmentLabels:labels };
   }
   /* A deterministic, local, non-random text transform — NOT a real provider
-     call. See honesty note 2: this is disclosed in the Settings dialog and
-     in the title attempt log rather than presented as a live generation. */
+     call (honesty note 2; the sheet says "Demo"). It reads like what a naming
+     model returns, a short noun phrase, rather than the request's first words:
+     the first sentence, without the asking words ("help me", "can you") and
+     the small words, at most five words, never ending on "to"/"of"/"and". */
+  var TITLE_ASK=/^(?:(?:please|hey|hi|ok|okay)[\s,]+)*(?:(?:can|could|would|will)\s+you\s+(?:please\s+)?|help\s+me\s+(?:to\s+)?|i\s+(?:want|need|would\s+like|'d\s+like)\s+(?:you\s+)?to\s+|let'?s\s+|please\s+)/i;
+  var TITLE_SMALL={ a:1, an:1, the:1, my:1, our:1, this:1, that:1, these:1, some:1, just:1, please:1 };
+  var TITLE_TAIL={ to:1, of:1, for:1, and:1, with:1, in:1, on:1, at:1, by:1, from:1, so:1, or:1 };
   function simulateTitleText(inputText){
-    var t=truncateWords(inputText,6).replace(/[.,;:!?…]+$/,'');
+    var s=String(inputText||'').replace(/[`"“”‘’]/g,'').split(/[.?!\n]/)[0].trim(), was;
+    do { was=s; s=s.replace(TITLE_ASK,''); } while(s!==was);
+    var words=s.split(/\s+/).map(function(w){ return w.replace(/^[^\w]+|[^\w]+$/g,''); })
+      .filter(function(w){ return w && !TITLE_SMALL[w.toLowerCase()]; }).slice(0,5);
+    while(words.length>1 && TITLE_TAIL[words[words.length-1].toLowerCase()]) words.pop();
+    var t=words.join(' ');
     if(!t) return '';
     return t.charAt(0).toUpperCase()+t.slice(1);
   }
@@ -1126,14 +1160,14 @@
     if(route.skip){ logAttempt(thread.id, { at:nowIso(), policy:F.title.policy, outcome:'skipped_none' }); return; }
     if(!route.ok){
       /* TITLE-003: no silent fallback. Title stays exactly what it was. */
-      logAttempt(thread.id, { at:nowIso(), policy:F.title.policy, outcome:'unavailable', reason:route.reason });
+      logAttempt(thread.id, { at:nowIso(), policy:F.title.policy, outcome:'unavailable', reason:route.reason, model:route.model?route.model.name:'' });
       /* DEFERRED, not synchronous. This runs from a commitHook, and that hook
          is invoked by composer-state.js's reconcile() during the composerBelow
          slot -- i.e. from inside a render that has not finished. A nested
          renderApp() here is overwritten by the outer pass as it completes, so
-         the state was right and the "Title unavailable" chip never survived to
-         the screen. One turn of the event loop puts the repaint after the
-         render that is already running. */
+         the state was right and the header's warning never survived to the
+         screen. One turn of the event loop puts the repaint after the render
+         that is already running. */
       deferRender();
       return;
     }
@@ -1145,7 +1179,7 @@
     }
     var routeLabel=route.model.name+' · '+(route.model.account||route.model.provider||'');
     F.title.pending[thread.id]=true;
-    logAttempt(thread.id, { at:nowIso(), policy:F.title.policy, outcome:'pending', route:routeLabel, titleText:titleText });
+    logAttempt(thread.id, { at:nowIso(), policy:F.title.policy, outcome:'pending', route:routeLabel, model:route.model.name, titleText:titleText });
     var delay = opts.delayMs!=null ? opts.delayMs : (380+Math.floor(Math.random()*260));
     setTimeout(function(){
       var c=ctxNow(); if(!c) return;
@@ -1158,9 +1192,12 @@
         c.renderApp();
         return;
       }
+      var before=titleBefore(c, thread.id), same=th.title===titleText;
       th.title=titleText;
-      logAttempt(thread.id, { at:nowIso(), policy:F.title.policy, outcome:'generated', titleText:titleText, route:routeLabel });
+      logAttempt(thread.id, { at:nowIso(), policy:F.title.policy, outcome:'generated', titleText:titleText, route:routeLabel, model:route.model.name });
       c.renderApp();
+      /* the same name again still arrives (its words re-enter), so "Name it for me" is visibly answered */
+      morphTitle(thread.id, before, same);
     }, delay);
   }
   var titleRenderScheduled=false;
@@ -1179,135 +1216,386 @@
       }
     }
   }
-  function policyDescription(p){
-    if(p==='default') return 'New threads will title using the deterministic default resolver.';
-    if(p==='none') return 'New threads stay "New chat" until manually renamed.';
-    var id=p.indexOf('model:')===0?p.slice(6):''; var m=modelById(id);
-    if(!m) return 'That model is not in the current roster.';
-    return m.status==='ready' ? 'New threads will title using '+m.name+' · '+(m.account||m.provider)+'.'
-      : m.name+' · '+(m.account||m.provider)+' is currently unavailable: '+(m.statusDetail||m.statusLabel||m.status)+'. No silent fallback — titles stay "New chat" until this changes.';
-  }
 
-  EXT.chainAction('save-thread-name', function(ctx){
-    var tid=ctx.state.dialog && ctx.state.dialog.threadId;
-    if(tid) F.title.locks[tid]=true;
-    return false;
-  });
-  EXT.action('af-title-regenerate', function(ctx, btn){
-    var t=findThread(ctx, btn.dataset.value); if(!t) return true;
-    if(F.title.policy==='none'){ ctx.toast('Nothing to generate','Title policy is set to None.'); return true; }
-    delete F.title.locks[t.id];
-    attemptTitleGeneration(ctx, t, { delayMs:260 });
-    ctx.renderApp();
-    ctx.toast('Regenerating title','Using the configured title policy. This clears the manual-rename lock.');
-    return true;
-  });
-  EXT.action('af-settings-open', function(ctx){
-    if(ctx.closeMenu) ctx.closeMenu();
-    ctx.openDialog({ type:'af-settings' });
-    return true;
-  });
-  /* Single setter path for the thread-title policy. The old inline policy-row
-     buttons are gone (the settings dialog now uses one picker button); this
-     function is exactly what that row handler ran, and it is what the picker's
-     onChange calls. */
-  function applyTitlePolicy(ctx, value){
-    F.title.policy=value;
-    ctx.renderOverlays();
-    ctx.toast('Title policy updated', policyDescription(F.title.policy));
-  }
-  function titlePolicyLabel(p){
-    if(p==='default') return 'Default resolver';
-    if(p==='none') return 'None';
-    var m=modelById(p.indexOf('model:')===0?p.slice(6):'');
-    return m?m.name:p;
-  }
-  function titlePolicySmall(p){
-    if(p==='default') return 'Deterministic resolver';
-    if(p==='none') return 'No automatic titles';
-    var m=modelById(p.indexOf('model:')===0?p.slice(6):'');
-    return m?(m.account||m.provider):'Not in the current roster';
-  }
+  /* ---- one title-policy option table (IMPACT A3-01): the picker, its trigger, the specimen and the thread
+     menu all read it. Every model is listed; one that is not ready says so and can still be chosen (an
+     explicit choice is kept, never swapped: TITLE-003). */
   function titlePolicyOptions(){
     var opts=[
-      {value:'default',label:'Default resolver',description:'Deterministic: ready + fast route, smallest context, then id'},
-      {value:'none',label:'None',description:'Stays "New chat" until you rename it'}
+      {value:'default', label:'Automatic (recommended)', description:'Picks a fast, low-cost model that’s ready now.'},
+      {value:'none', label:'Don’t name chats', description:'Chats stay ‘New chat’.'}
     ];
     (D.models||[]).forEach(function(m){
-      var ready=m.status==='ready';
-      opts.push({value:'model:'+m.id,label:m.name,description:(m.account||m.provider)+(ready?'':' — Unavailable: '+(m.statusDetail||m.statusLabel||m.status))});
+      opts.push({value:'model:'+m.id, label:m.name,
+        description:accountWord(m)+(m.status==='ready'?'':' · Not available now · '+shortReason(m))});
     });
     return opts;
   }
-  EXT.action('af-title-pick-policy', function(ctx, btn){
-    if(!window.PM56_PICKERS) return true;
-    window.PM56_PICKERS.openChoice(btn, 'Thread title policy', F.title.policy, titlePolicyOptions(), function(value){
-      var c=ctxNow();
-      if(!c || !c.state.dialog || c.state.dialog.type!=='af-settings') return;
-      applyTitlePolicy(c, value);
+  function titleOption(p){
+    var opts=titlePolicyOptions();
+    for(var i=0;i<opts.length;i++){ if(opts[i].value===p) return opts[i]; }
+    return {value:p, label:'A model no longer listed', description:'Not available now'};
+  }
+  function policyModel(){ return F.title.policy.indexOf('model:')===0 ? modelById(F.title.policy.slice(6)) : null; }
+
+  /* ---- naming outcomes (G-33): the sheet's "Recent:" line and the header's hover read these */
+  function namingOutcome(a){
+    switch(a && a.outcome){
+      case 'pending': return 'Naming…';
+      case 'generated': return 'Named ‘'+(a.titleText||'')+'’';
+      case 'skipped_none': return 'Not named: automatic naming is off';
+      case 'unavailable': return 'Couldn’t name: '+(a.model||'the chosen model')+' isn’t available';
+      case 'no_input': return 'Waiting for your first message';
+      case 'skipped_locked': case 'manual_rename_race': return 'Kept your name: you renamed this chat';
+    }
+    return '';
+  }
+  function lastAttempt(tid){ var a=F.title.attempts[tid]; return a&&a.length?a[a.length-1]:null; }
+  function latestAttempt(){
+    var best=null;
+    for(var tid in F.title.attempts){
+      var a=lastAttempt(tid);
+      if(a && (!best || String(a.at)>String(best.at))) best=a;
+    }
+    return best;
+  }
+  function recentLine(){
+    var a=latestAttempt(), say=namingOutcome(a);
+    if(!say) return 'Recent: nothing named yet';
+    var parts=['Recent: '+say.charAt(0).toLowerCase()+say.slice(1)];
+    if(a.outcome==='generated' && a.model) parts.push(a.model);
+    if(clockOf(a.at)) parts.push(clockOf(a.at));
+    return parts.join(' · ');
+  }
+  /* the header's state, read exactly as app.js's titleState does (F0b g) */
+  function titleStateOf(tid){
+    if(F.title.pending[tid]) return 'naming';
+    if(F.title.locks[tid]) return 'locked';
+    var last=lastAttempt(tid);
+    return last && last.outcome==='unavailable' ? 'unavailable' : 'idle';
+  }
+  /* why "Name it for me" can't run now (canon precondition: title_policy != none && title_model_available),
+     or '' when it can */
+  function regenBlock(t){
+    if(F.title.policy==='none') return 'Automatic naming is off';
+    var r=resolveTitleRoute();
+    if(!r.ok) return r.model ? r.model.name+' isn’t available: '+shortReason(r.model) : 'No model is ready to name chats';
+    var input=buildTitleInput(t);
+    if(!input.excerpt && !input.attachmentLabels.length) return 'Waiting for your first message';
+    return '';
+  }
+
+  /* ---- the generated name arrives word by word (opacity and a 3 px rise per word in --pmx-t-cascade steps; no
+     blur, IMPACT A1-04) while the status beside it slides from where it stood (a width FLIP, --pmx-t-title-flip).
+     Only a real generation in the chat on screen plays it: a thread switch, a rename or a reload never does. */
+  function titleBefore(c, tid){
+    if(!c || !c.thread || c.thread.id!==tid) return null;
+    var host=document.querySelector('.chat-header .chat-title'); if(!host) return null;
+    var st=host.querySelector('.chat-state'), tt=host.querySelector('.pmx-chat-title');
+    return { words:[].slice.call(host.querySelectorAll('.pmx-chat-title-word')), x:st?st.getBoundingClientRect().left:null, w:tt?tt.getBoundingClientRect().width:null };
+  }
+  function morphTitle(tid, before, replay){
+    var P=window.PM56_PMX, c=ctxNow();
+    if(!before || !P || !P.animate || !c || !c.thread || c.thread.id!==tid) return;
+    var host=document.querySelector('.chat-header .chat-title'); if(!host) return;
+    var step=P.t('cascade'), dur=P.t('row'), n=0, last=null, fresh=[];
+    [].forEach.call(host.querySelectorAll('.pmx-chat-title-word'), function(w){ if(replay || before.words.indexOf(w)<0) fresh.push(w); });
+    /* the words become boxes (so they can rise) before the first frame of their entrance */
+    if(fresh.length && !P.reduced()) document.body.classList.add('pmx-title-morphing');
+    fresh.forEach(function(w){
+      last=P.animate(w, [{opacity:0, transform:'translateY(3px)'}, {opacity:1, transform:'none'}],
+        {duration:dur, delay:Math.min(n++, 6)*step, easing:P.ease('out'), fill:'backwards'}) || last;
     });
+    /* no ellipsis after words that have not arrived yet: the title clips until the last word is in (transient state
+       on <body>, DON'T 24) */
+    var done=function(){ document.body.classList.remove('pmx-title-morphing'); };
+    if(last) last.finished.then(done, done); else done();
+    /* the width FLIP: the title's box opens from its old width to its new one (a clip reveal, never a width animation)
+       and the status beside it rides the box's edge, so a word is never painted under the status */
+    var st=host.querySelector('.chat-state'), tt=host.querySelector('.pmx-chat-title'), flip=P.t('title-flip'), move=P.ease('move');
+    if(st && before.x!=null){
+      var dx=before.x-st.getBoundingClientRect().left;
+      if(Math.abs(dx)>=1) P.animate(st, [{transform:'translateX('+dx+'px)'}, {transform:'none'}], {duration:flip, easing:move});
+    }
+    if(tt && before.w!=null){
+      var dw=tt.getBoundingClientRect().width-before.w;
+      if(dw>=1) P.animate(tt, [{clipPath:'inset(0 '+dw+'px 0 0)'}, {clipPath:'inset(0 0 0 0)'}], {duration:flip, easing:move});
+    }
+  }
+
+  /* ---- the header mark (headerExtras): a lock when you named the chat, a warning when naming is unavailable;
+     while a name is on its way the title itself shimmers (assistant-features.css), and under reduced motion,
+     where nothing shimmers, a quiet "Naming…" says so instead. No pills. The stylesheet orders the mark right
+     after the title. */
+  /* a warning whose cause has gone (another way of naming was picked, or the model is back) leads to "Name it for
+     me" instead of back to New chat defaults */
+  function warnCanRetry(t){ return titleStateOf(t.id)==='unavailable' && !regenBlock(t); }
+  function titleMark(ctx){
+    var t=ctx.thread, S=window.PM56_SHELL, e=ctx.esc; if(!t || !S) return '';
+    var st=titleStateOf(t.id);
+    if(st==='naming') return '<span class="pmx-chat-title-naming" data-k="pmx-title-naming">Naming…</span>';
+    if(st!=='locked' && st!=='unavailable') return '';
+    var last=lastAttempt(t.id);
+    var retry=st==='unavailable' && warnCanRetry(t);
+    var tip=st==='locked' ? 'You named this chat · Name it for me'
+      : 'Couldn’t name this chat: '+((last && last.model) || 'the chosen model')+(retry ? ' wasn’t available · Name it for me' : ' isn’t available · Choose another way');
+    return '<button type="button" class="pmx-chat-title-mark" data-k="pmx-title-mark" data-state="'+st+'" data-action="af-title-mark" data-value="'+e(t.id)+'"'+
+      ' data-menu-anchor="pmx-chat-title-mark" data-hover-key="pmx-title-mark-'+e(t.id)+'-'+st+(retry?'-retry':'')+'" data-hover-tip="'+e(tip)+'" aria-label="'+e(tip)+'">'+
+      S.pmxGlyph(st==='locked'?'lock':'warn', 14)+'</button>';
+  }
+  /* the lock opens the thread menu at the mark (Rename, then Name it for me); the warning opens New chat
+     defaults with Name new chats focused ("Choose another way"), or, once naming can work again, the thread
+     menu like the lock */
+  EXT.action('af-title-mark', function(ctx, btn){
+    var t=findThread(ctx, btn.dataset.value) || ctx.thread; if(!t) return true;
+    var st=titleStateOf(t.id);
+    if(st==='locked' || (st==='unavailable' && warnCanRetry(t))){
+      if(ctx.state.menu && ctx.state.menu.type==='thread' && ctx.state.menu.anchor==='pmx-chat-title-mark'){ ctx.closeMenu(); return true; }
+      ctx.openMenu('thread', 'pmx-chat-title-mark', { threadId:t.id });
+      return true;
+    }
+    if(st==='unavailable') openDefaults(ctx, 'title');
     return true;
   });
-  EXT.action('af-title-race-demo', function(ctx){
-    var t=ctx.thread;
+
+  EXT.chainAction('save-thread-name', function(ctx){
+    var tid=ctx.state.dialog && ctx.state.dialog.threadId;
+    /* your name wins at once: the header stops shimmering now, and a late generation is still discarded
+       (its timeout finds the lock and logs skipped_locked) */
+    if(tid){ F.title.locks[tid]=true; delete F.title.pending[tid]; }
+    return false;
+  });
+  /* "Name it for me" (thread menu, directly under Rename): clears your lock and names the chat again. The header
+     shimmers while it works and the new name morphs in; nothing else announces it. */
+  EXT.action('af-title-regenerate', function(ctx, btn){
+    var t=findThread(ctx, btn.dataset.value); if(!t) return true;
+    if(ctx.state.menu && ctx.closeMenu) ctx.closeMenu();
+    if(regenBlock(t)) return true;
     delete F.title.locks[t.id];
-    t.title='New chat';
+    attemptTitleGeneration(ctx, t, { delayMs:namingHold() });
+    ctx.renderApp();
+    return true;
+  });
+  /* a name on request takes at least one shimmer cycle (--pmx-shimmer), so the answer is seen even when it is quick */
+  function namingHold(){
+    var v='', n;
+    try{ v=getComputedStyle(document.body).getPropertyValue('--pmx-shimmer').trim(); }catch(err){}
+    n=parseFloat(v);
+    if(!isFinite(n) || n<=0) return 1370;
+    return /ms$/.test(v) ? n : /s$/.test(v) ? n*1000 : n;
+  }
+  EXT.slot('threadMenu', function(ctx){
+    var t=ctx.thread, e=ctx.esc; if(!t || ctx.position!=='after-rename') return '';
+    var why=regenBlock(t);
+    return '<button class="menu-item'+(why?' af-title-regen-off':'')+'" data-action="af-title-regenerate" data-value="'+e(t.id)+'"'+(why?' disabled aria-disabled="true"':'')+'>'+
+      '<span class="menu-icon">'+ctx.icon('refresh',13)+'</span><span class="menu-copy"><strong>Name it for me</strong><span>'+
+      e(why || (F.title.locks[t.id] ? 'Replaces the name you gave it' : 'Names it from your first message'))+'</span></span></button>';
+  });
+
+  /* ---- New chat defaults (the af-settings sheet) */
+  var dfltSeq=0;
+  function openDefaults(ctx, focus){
+    if(ctx.closeMenu) ctx.closeMenu();
+    ctx.openDialog({ type:'af-settings', focus:focus||null });
+  }
+  EXT.action('af-settings-open', function(ctx){ openDefaults(ctx, null); return true; });
+  /* one option table each (A3-01): Thought Stream's values stay Auto | Expanded (set-thought-cap); its words are the
+     sidecar's (F0b applied the same copy in app.js) */
+  var THOUGHT_OPTIONS=[
+    {value:'Auto', label:'While it thinks', description:'Opens while the AI is thinking, then folds away.'},
+    {value:'Expanded', label:'Always open', description:'Keeps the thinking visible next to the answer.'}
+  ];
+  /* Explain simply in new chats is the ELI5 sheet's All chats level (Explain Terms Everywhere): the same catalog */
+  function eli5Catalog(){
+    var E5=window.PM56_ELI5, list=E5 && E5.catalog ? E5.catalog('application') : null;
+    return list && list.length ? list : [
+      {value:'off', label:'Off', description:'Chats use the usual technical wording, unless a chat picks its own.'},
+      {value:'on', label:'On', description:'Chats explain things simply, unless a chat picks its own.'}];
+  }
+  function optionOf(list, v){ for(var i=0;i<list.length;i++){ if(list[i].value===v) return list[i]; } return list[0]; }
+  function thoughtValue(ctx){ return ctx.state.capabilities.thought==='Expanded' ? 'Expanded' : 'Auto'; }
+  function pickFrom(btn, title, current, options, apply){
+    var P=window.PM56_PMX, onChange=function(v){
+      var c=ctxNow(); if(!c || !c.state.dialog || c.state.dialog.type!=='af-settings') return;
+      apply(c, c.state.dialog, v);
+    };
+    if(P && P.pick) P.pick(btn, { title:title, current:current, options:options, onChange:onChange });
+    else if(window.PM56_PICKERS) window.PM56_PICKERS.openChoice(btn, title, current, options, onChange);
+  }
+  /* each change re-plays that row's specimen once (a counter in state.dialog, so a reopened sheet never replays) */
+  function applyEli5Default(c, d, v){
+    if(v!=='on' && v!=='off') return;
+    var on=v==='on'; if(on===!!F.eli5.appDefault) return;
+    if(window.PM56_ELI5) window.PM56_ELI5.setApplication(on); else F.eli5.appDefault=on;
+    d.dfltVoice=++dfltSeq;
+    eli5Reconcile(c);
+    c.renderApp();
+  }
+  function applyThought(c, d, v){
+    if(v!=='Auto' && v!=='Expanded') return;
+    if(thoughtValue(c)===v) return;
+    c.state.capabilities.thought=v;
+    d.dfltThink=++dfltSeq;
+    c.renderApp();
+  }
+  /* Single setter path for the thread-title policy: the picker's onChange calls it, guarded on af-settings. */
+  function applyTitlePolicy(c, d, value){
+    if(value===F.title.policy || !titlePolicyOptions().some(function(o){ return o.value===value; })) return;
+    F.title.policy=value;
+    d.dfltName=++dfltSeq;
+    c.renderApp();
+  }
+  EXT.action('af-title-pick-policy', function(ctx, btn){
+    var d=ctx.state.dialog; if(!d || d.type!=='af-settings') return true;
+    pickFrom(btn, 'Name new chats', F.title.policy, titlePolicyOptions(), applyTitlePolicy);
+    return true;
+  });
+  /* Explain simply in new chats (Settings transaction) and Thought Stream (no command): one action, registered once */
+  EXT.action('af-defaults-pick', function(ctx, btn){
+    var d=ctx.state.dialog; if(!d || d.type!=='af-settings') return true;
+    if(btn.dataset.field==='eli5') pickFrom(btn, 'Explain simply in new chats', F.eli5.appDefault?'on':'off', eli5Catalog(), applyEli5Default);
+    else if(btn.dataset.field==='thought') pickFrom(btn, 'Thought Stream', thoughtValue(ctx), THOUGHT_OPTIONS, applyThought);
+    return true;
+  });
+  /* The race (Demo Studio, demo only): it names a chat of its own, never the one you are in. A new example
+     chat asks its first question; while its name is on the way you rename it, and your name wins. */
+  EXT.action('af-title-race-demo', function(ctx){
+    var id=afUid('race');
+    var t={ id:id, title:'New chat', status:'idle', pinned:false, archived:false, updated:'now', unread:0, demo:true,
+      model:ctx.model && ctx.model.name, summary:'Example: your rename wins', messages:[
+        { id:afUid('user'), role:'user', type:'text', body:'Help me speed up the tenant analytics dashboard.', time:nowIso() }] };
+    ctx.state.threads.unshift(t);
+    if(window.PM56_CTX && window.PM56_CTX.seedThread) window.PM56_CTX.seedThread(id);
+    ctx.switchThread(id);
+    delete F.title.locks[id];
     attemptTitleGeneration(ctx, t, { delayMs:900 });
     setTimeout(function(){
       var c=ctxNow(); if(!c) return;
-      var th=findThread(c, t.id); if(!th) return;
-      th.title='Renamed while generating';
-      F.title.locks[th.id]=true;
-      logAttempt(th.id, { at:nowIso(), policy:F.title.policy, outcome:'manual_rename_race', reason:'Renamed by the user while a generation was in flight.' });
+      var th=findThread(c, id); if(!th) return;
+      th.title='Dashboard speed notes';
+      F.title.locks[id]=true; delete F.title.pending[id];
+      logAttempt(id, { at:nowIso(), policy:F.title.policy, outcome:'manual_rename_race', reason:'Renamed by the user while a generation was in flight.' });
       c.renderApp();
     }, 250);
     ctx.renderApp();
-    ctx.toast('Race demo started','A generation is in flight (~900ms). In ~250ms this thread is manually renamed while it runs — watch the late generation get discarded instead of overwriting your rename.');
     return true;
   });
 
-  EXT.slot('threadMenu', function(ctx){
-    var icon=ctx.icon, e=ctx.esc;
-    var t=ctx.thread; if(!t) return '';
-    var canRegen=F.title.policy!=='none';
-    return '<div class="af-menu-divider"></div>'+
-      '<button class="menu-item" data-action="af-title-regenerate" data-value="'+e(t.id)+'"'+(canRegen?'':' disabled')+'>'+
-      '<span class="menu-icon">'+icon('refresh',13)+'</span><span class="menu-copy"><strong>Regenerate title</strong><span>'+(canRegen?'Clears the manual-rename lock':'Title policy is set to None')+'</span></span></button>';
-  });
-
-  function renderSettingsDialog(ctx){
-    var icon=ctx.icon, e=ctx.esc, S=window.PM56_SHELL;
-    var tid=ctx.thread.id;
-    var attempts=(F.title.attempts[tid]||[]).slice(-3).reverse();
-    var body=
-      S.section({iconHtml:icon('info',12),label:'What lives here',body:
-        S.note(e('These are application-level defaults, not per-conversation settings. They apply when a new thread starts and never rewrite an existing conversation.'))+
-        S.note(e('Each conversation can still override ELI5 from the wand (ELI5 explanations) and its title from the thread menu (Regenerate title). Choosing a title model here only selects the route used for future auto-titles; nothing contacts a provider by itself.'))})+
-      S.section({iconHtml:icon('sparkles',12),label:'ELI5 default',body:
-        S.check(e('Explain simply in conversations that inherit this default'),F.eli5.appDefault,' data-af-input="eli5-default"')+
-        S.note(e('Any thread can still set its own override from the wand.'))})+
-      S.section({iconHtml:icon('edit',12),label:'Thread titles',body:
-        S.field(e('How new threads are titled'),S.pickerButton({action:'af-title-pick-policy',anchor:'af-title-policy',strong:e(titlePolicyLabel(F.title.policy)),small:e(titlePolicySmall(F.title.policy)),iconHtml:icon('down',11)}))+
-        S.note(e(policyDescription(F.title.policy)))})+
-      S.section({iconHtml:icon('warning',12),label:'Demonstrations · this thread',body:
-        '<div class="mdl-card-actions">'+
-        '<button class="soft-button" data-action="af-title-regenerate" data-value="'+e(tid)+'">'+icon('refresh',12)+' Regenerate this title</button>'+
-        '<button class="soft-button" data-action="af-title-race-demo">'+icon('warning',12)+' Late-generation race</button></div>'+
-        (attempts.length?S.rows(attempts.map(function(a){
-          return [e(a.outcome),e(a.reason||a.titleText||'')+(clockOf(a.at)?' · '+e(clockOf(a.at)):'')];
-        })):'')});
-    return S.dialog({iconHtml:icon('settings',15),title:e('Assistant defaults'),
-      sub:e('The two choices every new conversation inherits before you override anything: whether ELI5 explanations start on, and how threads get their title.'),
-      width:620,body:body,
-      foot:S.foot('','<button class="soft-button" data-action="close-dialog">Close</button>')});
+  /* A1-53: the one Technical details line (fine print: the words "Technical details"; the whole sentence is its hover text) */
+  var THOUGHT_PREVIEW='Preview: Thought Stream is shown here but doesn’t change replies yet.';
+  var DFLT_TECH_TIP='In the chat, Name it for me sends cmd.chat.thread.regenerate_title and Rename sends cmd.chat.rename. Explain simply in new chats (Explain Terms Everywhere) and Name new chats are Settings changes. Thought Stream is a display preference with no command. Done sends nothing. This demo names chats locally from your first message: no AI is contacted.';
+  /* The name the naming specimen shows: what the concept would name a chat that asks this */
+  var DFLT_EXAMPLE_NAME='Speed up tenant dashboard';
+  /* a question's label carries its whole explanation in the app hover card (VIS-06): retro clamps helper lines to
+     one line (3.6), and the card says a little more everywhere */
+  function hoverLabel(e, key, text, tip){
+    return '<span data-hover-key="dflt-label-'+key+'" data-hover-tip="'+e(tip)+'">'+e(text)+'</span>';
   }
-
-  document.addEventListener('change', function(e){
-    var t=e.target; if(!t || !t.getAttribute) return;
-    if(t.getAttribute('data-af-input')==='eli5-default'){
-      if(window.PM56_ELI5)window.PM56_ELI5.setApplication(!!t.checked);else F.eli5.appDefault=!!t.checked;
-      var c=ctxNow(); if(c){ eli5Reconcile(c); c.renderApp(); }
+  function specimenWords(e, text){
+    return String(text).split(' ').map(function(w, i){ return '<span class="pmx-dflt-w" style="--i:'+i+'">'+e(w)+'</span>'; }).join(' ');
+  }
+  function defaultsSheet(ctx){
+    var S=window.PM56_SHELL, e=ctx.esc, d=ctx.state.dialog; if(!S || !S.pmxSheet) return '';
+    var E5=window.PM56_ELI5;
+    /* 1 · Explain simply in new chats */
+    var eliOn=!!F.eli5.appDefault, eliOpt=optionOf(eli5Catalog(), eliOn?'on':'off');
+    var sp=E5 && E5.specimen ? E5.specimen(ctx, eliOn) : { word:eliOn?'Simple answer':'Standard answer', html:'', reset:'' };
+    var vn=d.dfltVoice||0;
+    var q1=S.pmxCtl({ key:'dflt-q:eli5', cls:'pmx-dflt-ctl', layout:'stack', affects:'voice',
+      label:hoverLabel(e, 'eli5', 'Explain simply in new chats', 'New chats answer in everyday words. A project default, or a chat’s own choice, overrides it for those chats only. Switching changes only later replies. This is the Explain Terms Everywhere setting.'),
+      helper:'New chats answer in everyday words. You can change it per chat.',
+      control:S.pickerButton({ action:'af-defaults-pick', anchor:'af-defaults-eli5', strong:e(eliOpt.label), small:'Explain Terms Everywhere',
+        extra:'data-field="eli5"'+(d.focus==='title'?'':' data-pmx-autofocus') }) });
+    var s1='<div class="pmx-dflt-spec" data-k="dflt-spec:voice" data-pmx-part="voice"><p class="pmx-dflt-cap">'+e(sp.word)+'</p>'+
+      '<p class="pmx-dflt-say" data-k="dflt-say:'+(eliOn?'on':'off')+(vn?':'+vn:'')+'"'+(vn?' data-reset="1" style="'+sp.reset+'"':'')+'>'+sp.html+'</p></div>';
+    /* 2 · Thought Stream */
+    var tv=thoughtValue(ctx), tOpt=optionOf(THOUGHT_OPTIONS, tv), open=tv==='Expanded';
+    var q2=S.pmxCtl({ key:'dflt-q:thought', cls:'pmx-dflt-ctl', layout:'stack', affects:'watch',
+      label:hoverLabel(e, 'thought', 'Thought Stream', 'See the AI’s reasoning while it works, when the model shares it. Some models share nothing, so there is nothing to show.'),
+      helper:'See the AI’s reasoning while it works, when the model shares it.',
+      control:S.pickerButton({ action:'af-defaults-pick', anchor:'af-defaults-thought', strong:e(tOpt.label), small:e(tOpt.description.replace(/\.$/,'')), extra:'data-field="thought"' }) });
+    var s2='<div class="pmx-dflt-spec pmx-dflt-think" data-k="dflt-spec:think" data-pmx-part="watch" data-open="'+(open?1:0)+'">'+
+      '<p class="pmx-dflt-fold">'+S.pmxGlyph('chevron-right',12)+'<span>Thought for 14s</span></p>'+
+      '<div class="pmx-dflt-thought" data-k="dflt-thought"><p>It never trims the query.</p></div>'+
+      '<p class="pmx-dflt-answer">Trim the query first.</p>'+
+      /* the fine print sits with the specimen it is about ("shown here") */
+      '<p class="pmx-fine pmx-dflt-preview">'+e(THOUGHT_PREVIEW)+'</p></div>';
+    /* 3 · Name new chats */
+    var tp=F.title.policy, pOpt=titleOption(tp), route=resolveTitleRoute(), pm=policyModel();
+    var waiting=tp!=='none' && !route.ok, nn=d.dfltName||0;
+    var q3=S.pmxCtl({ key:'dflt-q:title', cls:'pmx-dflt-ctl', layout:'stack', affects:'policy',
+      label:hoverLabel(e, 'title', 'Name new chats', 'A short name appears after your first message. It is made from that message only, and your own name always wins.'),
+      helper:'A short name appears after your first message.',
+      control:S.pickerButton({ action:'af-title-pick-policy', anchor:'af-title-policy', strong:e(pOpt.label), small:e(pOpt.description.replace(/\.$/,'')),
+        extra:d.focus==='title'?'data-pmx-autofocus':'' }) })+
+      (waiting && pm ? '<p class="pmx-dflt-warn-note">'+S.pmxGlyph('warn',14)+'<span>Chats won’t be named until this account is available again. Puppet Master won’t switch models on its own.</span></p>' : '')+
+      '<p class="pmx-fine pmx-dflt-note pmx-dflt-recent" data-hover-key="dflt-recent" data-hover-tip="'+e(recentLine())+'">'+e(recentLine())+'</p>';
+    var nameState=tp==='none' ? 'off' : waiting ? 'waiting' : 'named';
+    var nameHtml, nameSub;
+    if(nameState==='named'){
+      nameHtml=(nn?'<span class="pmx-dflt-nc" data-k="dflt-nc:'+nn+'" aria-hidden="true">New chat</span>':'')+
+        '<span class="pmx-dflt-name" data-k="dflt-name:named:'+nn+'"'+(nn?' data-replay="1"':'')+'>'+specimenWords(e, DFLT_EXAMPLE_NAME)+'</span>';
+      nameSub='After the first message · '+(route.model ? route.model.name : '');
+    } else if(nameState==='off'){
+      nameHtml='<span class="pmx-dflt-name" data-k="dflt-name:off">New chat</span>';
+      nameSub='Stays ‘New chat’ until you rename it';
+    } else {
+      nameHtml='<span class="pmx-dflt-name" data-k="dflt-name:waiting">New chat</span><span class="pmx-dflt-flag" data-k="dflt-flag:'+nn+'">'+S.pmxGlyph('warn',13)+'</span>';
+      nameSub='Won’t be named: '+(pm ? pm.name : 'the chosen model')+' isn’t available';
     }
+    var s3='<div class="pmx-dflt-spec pmx-dflt-naming" data-k="dflt-spec:name" data-pmx-part="policy" data-state="'+nameState+'">'+
+      '<p class="pmx-dflt-title">'+nameHtml+'</p><p class="pmx-dflt-sub">'+e(nameSub)+'</p></div>';
+    var body='<div class="pmx-dflt" data-k="dflt-body"'+(waiting && pm ? ' data-tall="1"' : '')+'>'+
+      '<div class="pmx-dflt-q" data-k="dflt-row:eli5">'+q1+'</div>'+
+      '<div class="pmx-dflt-q" data-k="dflt-row:thought">'+q2+'</div>'+
+      '<div class="pmx-dflt-q" data-k="dflt-row:title">'+q3+'</div>'+
+      '<figure class="pmx-plate pmx-dflt-plate" data-k="dflt-plate" aria-label="How a new chat looks">'+s1+s2+s3+'</figure></div>';
+    var foot=S.pmxFoot({ cls:'pmx-dflt-foot',
+      readback:S.pmxReadback({ key:'pmx-readback', parts:[{ html:'<b>Changes apply as you pick them.</b> ' }, { html:'Your chats keep their names and answers.' }] }),
+      /* the fine line under it: the demo note, then "Technical details", whose hover names every command id (a
+         command id is never shown cut in half) */
+      estimate:S.pmxEstimate({ text:'Demo: resets when you reload.<span class="pmx-dflt-tech" data-hover-key="dflt-tech" data-hover-tip="'+e(DFLT_TECH_TIP)+'"> · Technical details</span>' }),
+      primary:{ action:'close-dialog', label:'Done' } });
+    /* choices apply at once, so a Cancel would undo nothing: one primary, Done (FOUNDATION REQUEST, as in ELI5:
+       pmxFoot({cancel:false})) */
+    foot=foot.replace(/<button type="button" class="soft-button pmx-cancel"[^>]*>[\s\S]*?<\/button>/, '');
+    return S.pmxSheet({ type:'af-settings', kind:'defaults', size:'compact', height:600, cls:'pmx-dflt-sheet',
+      title:'New chat defaults', lead:'How new chats start: explain simply, show thinking, and how chats get named.',
+      closeAction:'close-dialog', ariaLabel:'New chat defaults', body:body, foot:foot });
+  }
+  /* 6.7 / IMPACT A1-36: Done leaves with the save exit (focus to the wand trigger); the x, Escape and the scrim with
+     the cancel exit (focus back to what opened the sheet: the wand trigger, or the header's warning) */
+  EXT.chainAction('close-dialog', function(ctx, btn){
+    var d=ctx.state.dialog, P=window.PM56_PMX;
+    if(d && d.type==='af-settings' && P && P.exitHint) P.exitHint(btn && btn.classList && btn.classList.contains('pmx-primary') ? 'save' : 'cancel');
+    if(d && d.type==='af-settings') retryAfterPolicyChange(ctx);
+    return false;
+  });
+  /* "Choose another way" ends in a name: when the chat on screen couldn't be named and you picked another way of
+     naming, closing the sheet tries once more with your choice (your explicit change is the retry, never a silent
+     fallback: TITLE-003). The header shimmers, then the name arrives; "Don't name chats" clears the warning. */
+  function retryAfterPolicyChange(ctx){
+    var t=ctx.thread; if(!t || titleStateOf(t.id)!=='unavailable') return;
+    var last=lastAttempt(t.id); if(!last || last.policy===F.title.policy) return;
+    attemptTitleGeneration(ctx, t, { delayMs:namingHold() });
+    /* close-dialog repaints only the overlays: the header needs its own pass to start shimmering */
+    deferRender();
+  }
+  /* the thinking specimen opens or folds once when Thought Stream changes: WAAPI height after the overlay patch,
+     through PM56_PMX.animate (instant under reduced motion) */
+  var foldSeen=0;
+  if(window.PM56_PMX && window.PM56_PMX.after) window.PM56_PMX.after(function(c, phase){
+    if(phase!=='overlay') return;
+    var d=c && c.state && c.state.dialog;
+    if(!d || d.type!=='af-settings'){ foldSeen=0; return; }
+    var n=d.dfltThink||0; if(n===foldSeen) return; foldSeen=n; if(!n) return;
+    var P=window.PM56_PMX, el=document.querySelector('#pmOverlayRoot .pmx-dflt-thought'), spec=el && el.closest('[data-open]');
+    if(!el || !spec) return;
+    var h=el.scrollHeight, open=spec.getAttribute('data-open')==='1';
+    /* visible for the whole fold: a folded line is hidden (not only 0 px tall) once it is away */
+    P.animate(el, open ? [{height:'0px', opacity:0, visibility:'visible'}, {height:h+'px', opacity:1, visibility:'visible'}]
+      : [{height:h+'px', opacity:1, visibility:'visible'}, {height:'0px', opacity:0, visibility:'visible'}],
+      {duration:P.t('fold'), easing:P.ease('emph')});
   });
 
   /* =====================================================================
@@ -1340,23 +1628,10 @@
     });
   }
 
-  function renderEli5PreviewCard(ctx, m){
-    var icon=ctx.icon, e=ctx.esc;
-    return '<article class="system-card af-eli5-card"><div class="system-card-head">'+
-      '<span class="event-icon">'+icon('sparkles',14)+'</span><div><span class="title">ELI5 preview</span><span class="sub"> · same fact, two explanations</span></div></div>'+
-      '<div class="system-card-body">'+
-      '<div class="af-eli5-pair"><div class="af-eli5-col"><label>Standard</label><p>'+e(m.standard)+'</p></div>'+
-      '<div class="af-eli5-col af-eli5-simple"><label>'+icon('sparkles',11)+' ELI5</label><p>'+e(m.simple)+'</p></div></div>'+
-      '<label class="af-field-label">Code (byte-identical either way)</label>'+
-      '<pre class="af-code-block"><code>'+e(m.code)+'</code></pre>'+
-      '<p class="af-note">ELI5 changes explanation style only. Nothing here — including this code block — differs between the two columns.</p>'+
-      '</div></article>';
-  }
-
   EXT.slot('dialog', function(ctx){
     var dlg=ctx.state.dialog; if(!dlg) return '';
     if(dlg.type==='af-revert') return renderRevertDialog(ctx);
-    if(dlg.type==='af-settings') return renderSettingsDialog(ctx);
+    if(dlg.type==='af-settings') return defaultsSheet(ctx);
     return '';
   });
 
@@ -1367,8 +1642,9 @@
       '<span class="menu-copy"><strong>Memory</strong><span>Taught (lock-aware) and automatic — two owners, one panel</span></span></button>'+
       '<button class="menu-item af-wand-row" data-action="af-teach-open"><span class="menu-icon">'+icon('sparkles',13)+'</span>'+
       '<span class="menu-copy"><strong>Teach Puppet Master…</strong><span>Durable memory capture · /teach or natural language. Not the Teacher Persona.</span></span></button>'+
-      '<button class="menu-item af-wand-row" data-action="af-settings-open"><span class="menu-icon">'+icon('settings',13)+'</span>'+
-      '<span class="menu-copy"><strong>Assistant defaults…</strong><span>ELI5 default and thread-title policy</span></span></button>';
+      /* New chat defaults (8.14): the defaults kind mark (a speech bubble with a small plus), never sparkles */
+      '<button class="menu-item af-wand-row" data-action="af-settings-open"><span class="menu-icon">'+(window.PM56_SHELL&&window.PM56_SHELL.pmxKindMark?window.PM56_SHELL.pmxKindMark('defaults',13):icon('settings',13))+'</span>'+
+      '<span class="menu-copy"><strong>New chat defaults…</strong><span>How new chats start: explain simply, show thinking, and how chats get named.</span></span></button>';
   });
 
   /* transcriptMessage extra is {m,t} — NOT {message:m} like messageOverflow /
@@ -1377,7 +1653,6 @@
     var m=ctx.m; if(!m) return '';
     if(m.type==='af-investigation') return renderInvestigationCard(ctx, m);
     if(m.type==='af-revert-result') return renderRevertResultCard(ctx, m);
-    if(m.type==='af-eli5-preview') return renderEli5PreviewCard(ctx, m);
     return '';
   });
 
@@ -1399,16 +1674,8 @@
   }
 
   reconcileImpl = function(ctx){ eli5Reconcile(ctx); titleReconcile(ctx); };
-  titleChipImpl = function(ctx){
-    var icon=ctx.icon, e=ctx.esc, th=ctx.thread; if(!th) return '';
-    var locked=!!F.title.locks[th.id], pending=!!F.title.pending[th.id];
-    var attempts=F.title.attempts[th.id]||[];
-    var last=attempts.length?attempts[attempts.length-1]:null;
-    if(pending) return '<button class="af-chip af-chip-pending" data-action="af-settings-open" title="Generating a title using the configured route…">'+icon('refresh',12)+'<b>Titling…</b></button>';
-    if(locked) return '<button class="af-chip af-chip-locked" data-action="af-settings-open" title="Manually renamed. Auto-title is locked until Regenerate title (thread menu).">'+icon('lock',12)+'<b>Title locked</b></button>';
-    if(last && last.outcome==='unavailable') return '<button class="af-chip af-chip-warn" data-action="af-settings-open" title="'+e('Title route unavailable: '+last.reason)+'">'+icon('warning',12)+'<b>Title unavailable</b></button>';
-    return '';
-  };
+  titleChipImpl = titleMark;
+
 
   EXT.chainAction('reset-all', function(){
     restoreFixture();
@@ -1418,6 +1685,16 @@
   window.PM56_FEATURES = {
     restore: restoreFixture,
     fixture: function(){ return buildFixture(); },
-    state: function(){ return RT.features; }
+    state: function(){ return RT.features; },
+    /* New chat defaults: the same guarded path its dropdowns take (the sheet must be open), for callers that
+       choose without the menu: field 'eli5' (on | off), 'thought' (Auto | Expanded) or 'title' (a policy) */
+    setDefault: function(field, value){
+      var c=ctxNow(), d=c && c.state.dialog; if(!d || d.type!=='af-settings') return false;
+      if(field==='eli5') applyEli5Default(c, d, value);
+      else if(field==='thought') applyThought(c, d, value);
+      else if(field==='title') applyTitlePolicy(c, d, value);
+      else return false;
+      return true;
+    }
   };
 })();

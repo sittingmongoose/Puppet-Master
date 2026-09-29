@@ -639,12 +639,14 @@
         },
         "chat_contract": {
           "type": "object", "additionalProperties": false,
-          "required": ["progression", "thread_label", "prompt", "domain_actions", "same_answer_eli5", "tour_stores_refs_not_content", "local_example_provider_fallthrough", "zero_use_requires_observation"],
+          "required": ["progression", "thread_label", "prompt", "domain_actions", "same_answer_eli5", "original_reply_rewritten", "tour_stores_refs_not_content", "local_example_provider_fallthrough", "zero_use_requires_observation"],
           "properties": {
             "progression": {"type": "array", "prefixItems": [{"const": "open_assistant_chat"}, {"const": "Teacher"}, {"const": "real_composer_send"}, {"const": "deterministic_local_reply"}, {"const": "same_answer_eli5"}], "items": false, "minItems": 5, "maxItems": 5},
             "thread_label": {"const": "Guided example"}, "prompt": {"const": "What happens before Puppet Master changes my files?"},
-            "domain_actions": {"type": "array", "prefixItems": [{"const": "cmd.persona.select"}, {"const": "cmd.chat.send"}, {"const": "cmd.chat.eli5.set"}], "items": false, "minItems": 3, "maxItems": 3},
-            "same_answer_eli5": {"const": true}, "tour_stores_refs_not_content": {"const": true},
+            "domain_actions": {"type": "array", "description": "Owner commands the tour reuses (DL-126): cmd.chat.eli5.set is the quick dot the callout points to for later replies; cmd.chat.eli5.explain_reply writes the same-answer ELI5 step.", "prefixItems": [{"const": "cmd.persona.select"}, {"const": "cmd.chat.send"}, {"const": "cmd.chat.eli5.set"}, {"const": "cmd.chat.eli5.explain_reply"}], "items": false, "minItems": 4, "maxItems": 4},
+            "same_answer_eli5": {"const": true, "description": "The same answer is shown in simple words through Explain this reply simply (cmd.chat.eli5.explain_reply): one extra simpler reply; the original is not rewritten (DL-126)."},
+            "original_reply_rewritten": {"const": false, "description": "No ELI5 switch or tour step re-sends, regenerates or rewrites the example answer (DL-126)."},
+            "tour_stores_refs_not_content": {"const": true},
             "local_example_provider_fallthrough": {"const": false}, "zero_use_requires_observation": {"const": true}
           }
         },

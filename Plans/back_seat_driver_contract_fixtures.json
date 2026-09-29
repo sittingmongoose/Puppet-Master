@@ -1,0 +1,467 @@
+{
+  "schema_id": "pm.back_seat_driver.contract_fixtures.v1",
+  "schema_version": "1.0.0",
+  "owner_schema": "Plans/back_seat_driver_contracts.schema.json",
+  "revision": "wand-modules-redesign-2026-09-27",
+  "scope": "Static contract-shape cases for the 2026-09-27 additions only: pm.bsd.finding.v1 presentation_weight and dismissed_by_user (Back_Seat_Driver.md section 16, BSD-031, BSD-037) and the request/result pairs of cmd.bsd.finding.dismiss and cmd.bsd.catch_up.release (section 18, BSD-037, DL-130, CS-085). The other five record families have no cases here yet. A passing case proves a shape only: no handler, catalogue admission, storage, event, or native dispatch.",
+  "valid": [
+    {
+      "name": "emitted_concern_stamped_note",
+      "definition": "bsd_finding",
+      "value": {
+        "schema_id": "pm.bsd.finding.v1",
+        "schema_version": "1.0.0",
+        "bsd_finding_id": "bsd-finding:fixture:emitted-note",
+        "finding_key": "finding-key:unsafe-migration-order",
+        "assignment_id": "bsd-assignment:fixture:1",
+        "raised_against_generation": 3,
+        "latest_checked_generation": 4,
+        "severity": "concern",
+        "claim": "The migration drops a column before the reader stops using it.",
+        "affected_object_refs": [
+          "object:migrations/0042"
+        ],
+        "rule_or_constraint_refs": [
+          "rule:expand-contract"
+        ],
+        "evidence_refs": [
+          "evidence:review-cycle:7"
+        ],
+        "state": "emitted",
+        "reconfirmation_count": 1,
+        "closed_reason": null,
+        "presentation_weight": "note",
+        "created_at": "2026-09-27T12:00:00Z",
+        "updated_at": "2026-09-27T12:00:00Z"
+      }
+    },
+    {
+      "name": "emitted_nit_stamped_aside",
+      "definition": "bsd_finding",
+      "value": {
+        "schema_id": "pm.bsd.finding.v1",
+        "schema_version": "1.0.0",
+        "bsd_finding_id": "bsd-finding:fixture:emitted-aside",
+        "finding_key": "finding-key:naming-nit",
+        "assignment_id": "bsd-assignment:fixture:1",
+        "raised_against_generation": 3,
+        "latest_checked_generation": 4,
+        "severity": "nit",
+        "claim": "The migration drops a column before the reader stops using it.",
+        "affected_object_refs": [
+          "object:migrations/0042"
+        ],
+        "rule_or_constraint_refs": [
+          "rule:expand-contract"
+        ],
+        "evidence_refs": [
+          "evidence:review-cycle:7"
+        ],
+        "state": "emitted",
+        "reconfirmation_count": 1,
+        "closed_reason": null,
+        "presentation_weight": "aside",
+        "created_at": "2026-09-27T12:00:00Z",
+        "updated_at": "2026-09-27T12:00:00Z"
+      }
+    },
+    {
+      "name": "held_finding_has_no_weight_yet",
+      "definition": "bsd_finding",
+      "value": {
+        "schema_id": "pm.bsd.finding.v1",
+        "schema_version": "1.0.0",
+        "bsd_finding_id": "bsd-finding:fixture:held",
+        "finding_key": "finding-key:unsafe-migration-order",
+        "assignment_id": "bsd-assignment:fixture:1",
+        "raised_against_generation": 3,
+        "latest_checked_generation": 3,
+        "severity": "concern",
+        "claim": "The migration drops a column before the reader stops using it.",
+        "affected_object_refs": [
+          "object:migrations/0042"
+        ],
+        "rule_or_constraint_refs": [
+          "rule:expand-contract"
+        ],
+        "evidence_refs": [
+          "evidence:review-cycle:7"
+        ],
+        "state": "held",
+        "reconfirmation_count": 0,
+        "closed_reason": null,
+        "created_at": "2026-09-27T12:00:00Z",
+        "updated_at": "2026-09-27T12:00:00Z"
+      }
+    },
+    {
+      "name": "user_dismissed_finding_keeps_its_weight",
+      "definition": "bsd_finding",
+      "value": {
+        "schema_id": "pm.bsd.finding.v1",
+        "schema_version": "1.0.0",
+        "bsd_finding_id": "bsd-finding:fixture:dismissed",
+        "finding_key": "finding-key:unsafe-migration-order",
+        "assignment_id": "bsd-assignment:fixture:1",
+        "raised_against_generation": 3,
+        "latest_checked_generation": 4,
+        "severity": "concern",
+        "claim": "The migration drops a column before the reader stops using it.",
+        "affected_object_refs": [
+          "object:migrations/0042"
+        ],
+        "rule_or_constraint_refs": [
+          "rule:expand-contract"
+        ],
+        "evidence_refs": [
+          "evidence:review-cycle:7"
+        ],
+        "state": "closed",
+        "reconfirmation_count": 1,
+        "closed_reason": "dismissed_by_user",
+        "presentation_weight": "note",
+        "created_at": "2026-09-27T12:00:00Z",
+        "updated_at": "2026-09-27T12:00:00Z"
+      }
+    },
+    {
+      "name": "dismiss_from_advisor_note",
+      "definition": "bsd_finding_dismiss_request",
+      "value": {
+        "schema_id": "pm.bsd.finding_dismiss_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "BSDFindingDismissRequest",
+        "command_id": "cmd.bsd.finding.dismiss",
+        "command_instance_id": "command:bsd-finding-dismiss:1",
+        "project_id": "project:fixture",
+        "scope_kind": "finding",
+        "expected_epoch": 2,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:1",
+        "idempotency_key": "idempotency:bsd-dismiss:1",
+        "source_surface": "bsd_note",
+        "return_route": "route:chat:thread:fixture",
+        "bsd_finding_id": "bsd-finding:fixture:emitted-note",
+        "finding_key": "finding-key:unsafe-migration-order"
+      }
+    },
+    {
+      "name": "dismiss_from_context_details",
+      "definition": "bsd_finding_dismiss_request",
+      "value": {
+        "schema_id": "pm.bsd.finding_dismiss_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "BSDFindingDismissRequest",
+        "command_id": "cmd.bsd.finding.dismiss",
+        "command_instance_id": "command:bsd-finding-dismiss:2",
+        "project_id": "project:fixture",
+        "scope_kind": "finding",
+        "expected_epoch": 2,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:1",
+        "idempotency_key": "idempotency:bsd-dismiss:2",
+        "source_surface": "bsd_details",
+        "return_route": "route:chat:context-details:bsd",
+        "bsd_finding_id": "bsd-finding:fixture:emitted-note",
+        "finding_key": "finding-key:unsafe-migration-order"
+      }
+    },
+    {
+      "name": "dismiss_accepted_closes_finding",
+      "definition": "bsd_finding_dismiss_result",
+      "value": {
+        "schema_id": "pm.bsd.finding_dismiss_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "BSDFindingDismissResult",
+        "command_id": "cmd.bsd.finding.dismiss",
+        "command_instance_id": "command:bsd-finding-dismiss:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "resulting_epoch": 2,
+        "projection_ref": "projection:bsd:assignment:fixture:1",
+        "primary_run_mutated": false,
+        "authority_granted": false,
+        "bsd_finding_id": "bsd-finding:fixture:emitted-note",
+        "finding_key": "finding-key:unsafe-migration-order",
+        "finding_state": "closed",
+        "closed_reason": "dismissed_by_user"
+      }
+    },
+    {
+      "name": "dismiss_prior_epoch_rejected",
+      "definition": "bsd_finding_dismiss_result",
+      "value": {
+        "schema_id": "pm.bsd.finding_dismiss_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "BSDFindingDismissResult",
+        "command_id": "cmd.bsd.finding.dismiss",
+        "command_instance_id": "command:bsd-finding-dismiss:3",
+        "outcome": "rejected",
+        "error_code": "stale_epoch",
+        "resulting_epoch": 3,
+        "projection_ref": "projection:bsd:assignment:fixture:1",
+        "primary_run_mutated": false,
+        "authority_granted": false,
+        "bsd_finding_id": "bsd-finding:fixture:emitted-note",
+        "finding_key": "finding-key:unsafe-migration-order",
+        "finding_state": "emitted",
+        "closed_reason": null
+      }
+    },
+    {
+      "name": "dismiss_not_emitted_rejected",
+      "definition": "bsd_finding_dismiss_result",
+      "value": {
+        "schema_id": "pm.bsd.finding_dismiss_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "BSDFindingDismissResult",
+        "command_id": "cmd.bsd.finding.dismiss",
+        "command_instance_id": "command:bsd-finding-dismiss:4",
+        "outcome": "rejected",
+        "error_code": "already_in_state",
+        "resulting_epoch": 2,
+        "projection_ref": "projection:bsd:assignment:fixture:1",
+        "primary_run_mutated": false,
+        "authority_granted": false,
+        "bsd_finding_id": "bsd-finding:fixture:emitted-note",
+        "finding_key": "finding-key:unsafe-migration-order",
+        "finding_state": "closed",
+        "closed_reason": "dismissed_by_user"
+      }
+    },
+    {
+      "name": "release_from_catch_up_line",
+      "definition": "bsd_catch_up_release_request",
+      "value": {
+        "schema_id": "pm.bsd.catch_up_release_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "BSDCatchUpReleaseRequest",
+        "command_id": "cmd.bsd.catch_up.release",
+        "command_instance_id": "command:bsd-catch-up-release:1",
+        "project_id": "project:fixture",
+        "scope_kind": "assignment",
+        "expected_epoch": 2,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:1",
+        "idempotency_key": "idempotency:bsd-release:1",
+        "source_surface": "bsd_note",
+        "return_route": "route:chat:thread:fixture",
+        "bsd_assignment_id": "bsd-assignment:fixture:1",
+        "primary_generation": 5
+      }
+    },
+    {
+      "name": "release_accepted_ends_wait",
+      "definition": "bsd_catch_up_release_result",
+      "value": {
+        "schema_id": "pm.bsd.catch_up_release_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "BSDCatchUpReleaseResult",
+        "command_id": "cmd.bsd.catch_up.release",
+        "command_instance_id": "command:bsd-catch-up-release:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "resulting_epoch": 2,
+        "projection_ref": "projection:bsd:assignment:fixture:1",
+        "primary_run_mutated": false,
+        "authority_granted": false,
+        "bsd_assignment_id": "bsd-assignment:fixture:1",
+        "primary_generation": 5,
+        "catch_up_wait_released": true
+      }
+    },
+    {
+      "name": "release_without_wait_rejected",
+      "definition": "bsd_catch_up_release_result",
+      "value": {
+        "schema_id": "pm.bsd.catch_up_release_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "BSDCatchUpReleaseResult",
+        "command_id": "cmd.bsd.catch_up.release",
+        "command_instance_id": "command:bsd-catch-up-release:2",
+        "outcome": "rejected",
+        "error_code": "already_in_state",
+        "resulting_epoch": 2,
+        "projection_ref": "projection:bsd:assignment:fixture:1",
+        "primary_run_mutated": false,
+        "authority_granted": false,
+        "bsd_assignment_id": "bsd-assignment:fixture:1",
+        "primary_generation": 5,
+        "catch_up_wait_released": false
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "emitted_finding_without_weight",
+      "definition": "bsd_finding",
+      "base_valid": "emitted_concern_stamped_note",
+      "remove": [
+        "presentation_weight"
+      ],
+      "expected_error": "an emitted finding carries the weight stamped at emission (BSD-031)"
+    },
+    {
+      "name": "held_finding_with_weight",
+      "definition": "bsd_finding",
+      "base_valid": "held_finding_has_no_weight_yet",
+      "patch": {
+        "presentation_weight": "note"
+      },
+      "expected_error": "presentation_weight is absent until emission (section 16)"
+    },
+    {
+      "name": "unknown_weight",
+      "definition": "bsd_finding",
+      "base_valid": "emitted_concern_stamped_note",
+      "patch": {
+        "presentation_weight": "card"
+      },
+      "expected_error": "presentation_weight is note or aside; emitted advice is never a card (BSD-030)"
+    },
+    {
+      "name": "dismissed_reason_on_open_finding",
+      "definition": "bsd_finding",
+      "base_valid": "emitted_concern_stamped_note",
+      "patch": {
+        "closed_reason": "dismissed_by_user"
+      },
+      "expected_error": "dismissed_by_user requires state closed (BSD-037)"
+    },
+    {
+      "name": "dismissed_finding_without_weight",
+      "definition": "bsd_finding",
+      "base_valid": "user_dismissed_finding_keeps_its_weight",
+      "remove": [
+        "presentation_weight"
+      ],
+      "expected_error": "only an emitted finding can be dismissed, so it keeps its stamped weight"
+    },
+    {
+      "name": "dismiss_from_unknown_surface",
+      "definition": "bsd_finding_dismiss_request",
+      "base_valid": "dismiss_from_advisor_note",
+      "patch": {
+        "source_surface": "wand"
+      },
+      "expected_error": "dismissal source surfaces are bsd_note and bsd_details only"
+    },
+    {
+      "name": "dismiss_without_expected_epoch",
+      "definition": "bsd_finding_dismiss_request",
+      "base_valid": "dismiss_from_advisor_note",
+      "remove": [
+        "expected_epoch"
+      ],
+      "expected_error": "dismissal is epoch-fenced (BSD-037)"
+    },
+    {
+      "name": "dismiss_scoped_to_assignment",
+      "definition": "bsd_finding_dismiss_request",
+      "base_valid": "dismiss_from_advisor_note",
+      "patch": {
+        "scope_kind": "assignment"
+      },
+      "expected_error": "the dismissal scope identity is the finding"
+    },
+    {
+      "name": "dismiss_accepted_with_other_reason",
+      "definition": "bsd_finding_dismiss_result",
+      "base_valid": "dismiss_accepted_closes_finding",
+      "patch": {
+        "closed_reason": "stopped"
+      },
+      "expected_error": "an accepted dismissal records dismissed_by_user"
+    },
+    {
+      "name": "dismiss_accepted_left_emitted",
+      "definition": "bsd_finding_dismiss_result",
+      "base_valid": "dismiss_accepted_closes_finding",
+      "patch": {
+        "finding_state": "emitted"
+      },
+      "expected_error": "an accepted dismissal closes the finding"
+    },
+    {
+      "name": "dismiss_rejected_without_error",
+      "definition": "bsd_finding_dismiss_result",
+      "base_valid": "dismiss_prior_epoch_rejected",
+      "patch": {
+        "error_code": null
+      },
+      "expected_error": "a failure stays a typed failure (section 18)"
+    },
+    {
+      "name": "dismiss_mutates_primary",
+      "definition": "bsd_finding_dismiss_result",
+      "base_valid": "dismiss_accepted_closes_finding",
+      "patch": {
+        "primary_run_mutated": true
+      },
+      "expected_error": "dismissal never changes the primary run"
+    },
+    {
+      "name": "dismiss_uncatalogued_error",
+      "definition": "bsd_finding_dismiss_result",
+      "base_valid": "dismiss_prior_epoch_rejected",
+      "patch": {
+        "error_code": "finding_dismissed"
+      },
+      "expected_error": "errors come from the closed section 18 set"
+    },
+    {
+      "name": "release_from_details",
+      "definition": "bsd_catch_up_release_request",
+      "base_valid": "release_from_catch_up_line",
+      "patch": {
+        "source_surface": "bsd_details"
+      },
+      "expected_error": "the catch-up release source surface is bsd_note only"
+    },
+    {
+      "name": "release_without_generation",
+      "definition": "bsd_catch_up_release_request",
+      "base_valid": "release_from_catch_up_line",
+      "remove": [
+        "primary_generation"
+      ],
+      "expected_error": "the request names the boundary generation being waited on"
+    },
+    {
+      "name": "release_accepted_without_release",
+      "definition": "bsd_catch_up_release_result",
+      "base_valid": "release_accepted_ends_wait",
+      "patch": {
+        "catch_up_wait_released": false
+      },
+      "expected_error": "an accepted release ends the wait"
+    },
+    {
+      "name": "release_rejected_but_released",
+      "definition": "bsd_catch_up_release_result",
+      "base_valid": "release_without_wait_rejected",
+      "patch": {
+        "catch_up_wait_released": true
+      },
+      "expected_error": "a rejected release changes nothing"
+    },
+    {
+      "name": "release_grants_authority",
+      "definition": "bsd_catch_up_release_result",
+      "base_valid": "release_accepted_ends_wait",
+      "patch": {
+        "authority_granted": true
+      },
+      "expected_error": "no BSD result grants authority (section 18)"
+    },
+    {
+      "name": "release_mutates_primary",
+      "definition": "bsd_catch_up_release_result",
+      "base_valid": "release_accepted_ends_wait",
+      "patch": {
+        "primary_run_mutated": true
+      },
+      "expected_error": "the release lets the primary continue; it never mutates it"
+    }
+  ]
+}

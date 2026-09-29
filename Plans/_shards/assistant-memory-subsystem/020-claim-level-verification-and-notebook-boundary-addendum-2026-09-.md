@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L2523-L2626
+Source lines: L2536-L2643
 
-Source SHA256: `7b10a22be6347ac99d87c7a8ecb5e0b901523944c34c376b34bb91320deda431`
+Source SHA256: `1146ba782c1b0fd98d3388d47cc4dfdeb946746f9e019d2ec558fff430f6c038`
 
 ---
 
@@ -48,6 +48,8 @@ owner_hints: [Plans/assistant-memory-subsystem.md]
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Working_Notebook.md
 
+Display pointer (2026-09-27): a claim's `currentness` drives the "Out of date" display group; see AMS-047.
+
 ```yaml
 plan_unit_id: AMS-045
 unit_type: requirement
@@ -79,6 +81,8 @@ owner_hints: [Plans/assistant-memory-subsystem.md]
 ```
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md
+
+Display pointer (2026-09-27): until reassessment, a stale Verified gist is shown under "Out of date" and does not auto-inject; see AMS-047.
 
 ```yaml
 plan_unit_id: AMS-046

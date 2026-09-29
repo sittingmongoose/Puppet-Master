@@ -451,12 +451,13 @@
       "handler_location": "handlers::bsd::assignment_resume",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.bsd.assignment.resume dispatches the typed request BSDAssignmentControlRequest and returns BSDAssignmentControlResult; the surfaces that may raise it are exactly: wand, context, bsd_details, prd_builder, planning_wizard, usage.",
+        "cmd.bsd.assignment.resume dispatches the typed request BSDAssignmentControlRequest and returns BSDAssignmentControlResult; the surfaces that may raise it are exactly: wand, context, bsd_details, prd_builder, planning_wizard, usage, bsd_note.",
         "Read state.assistant_redesign.bsd_assignment_resume.availability and state.assistant_redesign.bsd_assignment_resume.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Back_Seat_Driver.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): bsd_note joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Future production evidence for cmd.bsd.assignment.resume: source-hashed native dispatcher and sole handler handlers::bsd::assignment_resume, typed BSDAssignmentControlRequest/BSDAssignmentControlResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Back_Seat_Driver.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.bsd.assignment.resume. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.bsd_assignment_resume.availability",
@@ -513,12 +514,13 @@
       "handler_location": "handlers::bsd::assignment_retry",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.bsd.assignment.retry dispatches the typed request BSDAssignmentRetryRequest and returns BSDAssignmentRetryResult; the surfaces that may raise it are exactly: wand, context, bsd_details, prd_builder, planning_wizard, usage.",
+        "cmd.bsd.assignment.retry dispatches the typed request BSDAssignmentRetryRequest and returns BSDAssignmentRetryResult; the surfaces that may raise it are exactly: wand, context, bsd_details, prd_builder, planning_wizard, usage, bsd_note.",
         "Read state.assistant_redesign.bsd_assignment_retry.availability and state.assistant_redesign.bsd_assignment_retry.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Back_Seat_Driver.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): bsd_note joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Future production evidence for cmd.bsd.assignment.retry: source-hashed native dispatcher and sole handler handlers::bsd::assignment_retry, typed BSDAssignmentRetryRequest/BSDAssignmentRetryResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Back_Seat_Driver.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.bsd.assignment.retry. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.bsd_assignment_retry.availability",
@@ -699,12 +701,13 @@
       "handler_location": "handlers::bsd::finding_open",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.bsd.finding.open dispatches the typed request BSDFindingRoute and returns RouteResult; the surfaces that may raise it are exactly: wand, context, bsd_details, prd_builder, planning_wizard, usage.",
+        "cmd.bsd.finding.open dispatches the typed request BSDFindingRoute and returns RouteResult; the surfaces that may raise it are exactly: wand, context, bsd_details, prd_builder, planning_wizard, usage, bsd_note.",
         "Read state.assistant_redesign.bsd_finding_open.availability and state.assistant_redesign.bsd_finding_open.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Back_Seat_Driver.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): bsd_note joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Future production evidence for cmd.bsd.finding.open: source-hashed native dispatcher and sole handler handlers::bsd::finding_open, typed BSDFindingRoute/RouteResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Back_Seat_Driver.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.bsd.finding.open. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.bsd_finding_open.availability",
@@ -1319,12 +1322,13 @@
       "handler_location": "handlers::collaboration::crew_auto_open_config",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.crew_auto.open_config dispatches the typed request CrewAutoConfigRoute and returns RouteResult; the surfaces that may raise it are exactly: multi_agent_menu.",
+        "cmd.chat.crew_auto.open_config dispatches the typed request CrewAutoConfigRoute and returns RouteResult; the surfaces that may raise it are exactly: multi_agent_menu, workflow_modal.",
         "Read state.assistant_redesign.chat_crew_auto_open_config.availability and state.assistant_redesign.chat_crew_auto_open_config.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Collaborative_Workflows.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-172, WM-063): workflow_modal joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them. workflow_modal is the Crew sheet's Settings… link; the multi_agent_menu producer is the Crew Auto settings… row. Review and BrainStorm have no wand producer (DL-119)."
       ],
       "evidence_required": "Future production evidence for cmd.chat.crew_auto.open_config: source-hashed native dispatcher and sole handler handlers::collaboration::crew_auto_open_config, typed CrewAutoConfigRoute/RouteResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.crew_auto.open_config. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_crew_auto_open_config.availability",
@@ -1766,13 +1770,14 @@
       "handler_location": "handlers::scheduling::schedule_message_cancel",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.schedule_message.cancel dispatches the typed request ScheduledMessageCancelRequest and returns ScheduledMessageCancelResult; the surfaces that may raise it are exactly: schedule_details.",
+        "cmd.chat.schedule_message.cancel dispatches the typed request ScheduledMessageCancelRequest and returns ScheduledMessageCancelResult; the surfaces that may raise it are exactly: schedule_details, scheduled_message_card, schedule_manager.",
         "Read state.assistant_redesign.chat_schedule_message_cancel.availability and state.assistant_redesign.chat_schedule_message_cancel.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Scheduling_and_Quota_Resume.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
-        "Correction v4 (SMSG-012, SMSG-016): cancel affects exactly one schedule, preserves the immutable audit record, and leaves other schedules in the thread untouched. Hiding a card never deletes schedule evidence."
+        "Correction v4 (SMSG-012, SMSG-016): cancel affects exactly one schedule, preserves the immutable audit record, and leaves other schedules in the thread untouched. Hiding a card never deletes schedule evidence.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): scheduled_message_card, schedule_manager joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Future production evidence for cmd.chat.schedule_message.cancel: source-hashed native dispatcher and sole handler handlers::scheduling::schedule_message_cancel, typed ScheduledMessageCancelRequest/ScheduledMessageCancelResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Scheduling_and_Quota_Resume.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.schedule_message.cancel. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-031) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.chat_schedule_message_cancel.availability",
@@ -1834,13 +1839,14 @@
       "handler_location": "handlers::scheduling::schedule_message_update",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.schedule_message.update dispatches the typed request ScheduledMessageUpdateRequest and returns ScheduledMessageUpdateResult; the surfaces that may raise it are exactly: schedule_details.",
+        "cmd.chat.schedule_message.update dispatches the typed request ScheduledMessageUpdateRequest and returns ScheduledMessageUpdateResult; the surfaces that may raise it are exactly: schedule_details, scheduled_message_card, schedule_manager.",
         "Read state.assistant_redesign.chat_schedule_message_update.availability and state.assistant_redesign.chat_schedule_message_update.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Scheduling_and_Quota_Resume.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
-        "Correction v4 (SMSG-005, SMSG-013): update uses expected revision and currentness, is refused against a Sent or in-dispatch schedule, and creates a new revision without mutating the historical failed dispatch attempt."
+        "Correction v4 (SMSG-005, SMSG-013): update uses expected revision and currentness, is refused against a Sent or in-dispatch schedule, and creates a new revision without mutating the historical failed dispatch attempt.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): scheduled_message_card, schedule_manager joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Future production evidence for cmd.chat.schedule_message.update: source-hashed native dispatcher and sole handler handlers::scheduling::schedule_message_update, typed ScheduledMessageUpdateRequest/ScheduledMessageUpdateResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Scheduling_and_Quota_Resume.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.schedule_message.update. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-030) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.chat_schedule_message_update.availability",
@@ -2026,12 +2032,13 @@
       "handler_location": "handlers::assistant_memory::teach_open_memory",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.teach.open_memory dispatches the typed request MemoryRoute and returns RouteResult; the surfaces that may raise it are exactly: teach_capture, message_menu.",
+        "cmd.chat.teach.open_memory dispatches the typed request MemoryRoute and returns RouteResult; the surfaces that may raise it are exactly: teach_capture, message_menu, wand, memory_proposal_line, teach_receipt.",
         "Read state.assistant_redesign.chat_teach_open_memory.availability and state.assistant_redesign.chat_teach_open_memory.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/assistant-memory-subsystem.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062; teach_receipt by UCC-172, WM-063): wand, memory_proposal_line, teach_receipt joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them. It stays the one memory route: the wand's Memory…, the proposal line's Review and the Teach receipt all reach it."
       ],
       "evidence_required": "Future production evidence for cmd.chat.teach.open_memory: source-hashed native dispatcher and sole handler handlers::assistant_memory::teach_open_memory, typed MemoryRoute/RouteResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/assistant-memory-subsystem.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.teach.open_memory. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_teach_open_memory.availability",
@@ -2088,12 +2095,13 @@
       "handler_location": "handlers::todo_runtime::todos_open",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.todos.open dispatches the typed request TodoRoute and returns RouteResult; the surfaces that may raise it are exactly: activity_bar, todo_hover.",
+        "cmd.chat.todos.open dispatches the typed request TodoRoute and returns RouteResult; the surfaces that may raise it are exactly: activity_bar, todo_hover, review_card, review_panel, chat_room_card, chat_room_panel.",
         "Read state.assistant_redesign.chat_todos_open.availability and state.assistant_redesign.chat_todos_open.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/ToDo_Runtime.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): review_card, review_panel, chat_room_card, chat_room_panel joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Future production evidence for cmd.chat.todos.open: source-hashed native dispatcher and sole handler handlers::todo_runtime::todos_open, typed TodoRoute/RouteResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/ToDo_Runtime.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.todos.open. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_todos_open.availability",
@@ -2342,14 +2350,15 @@
       "handler_location": "handlers::collaboration::configure",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.collaboration.configure dispatches the typed request CollaborationConfigureRequest and returns CollaborationConfigureResult; the surfaces that may raise it are exactly: workflow_modal, workflow_card, workflow_panel, activity, composer.",
+        "cmd.collaboration.configure dispatches the typed request CollaborationConfigureRequest and returns CollaborationConfigureResult; the surfaces that may raise it are exactly: workflow_modal, workflow_card, workflow_panel, activity, composer, mode_menu, natural_language, plan_schedule.",
         "Read state.assistant_redesign.collaboration_configure.availability and state.assistant_redesign.collaboration_configure.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Collaborative_Workflows.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
         "Correction v4 (MODAL-001..003): configure validates and previews a local WorkflowLaunchDraft only. Before a confirmed Start there is no provider request, participant session, Usage record, durable start event, workflow artifact, project mutation, permission grant, installed package, settings write, card or Activity entry. Capability preview is not execution.",
-        "Correction v4 (MODAL-016): temporary MCP, tool or package provisioning is admitted only after Start and normal permission approval; preflight never mutates host or project."
+        "Correction v4 (MODAL-016): temporary MCP, tool or package provisioning is admitted only after Start and normal permission approval; preflight never mutates host or project.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): mode_menu, natural_language, plan_schedule joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them. Each is a preview with no side effects; plan_schedule is the Build At sheet's Set up the Crew…. No wand row produces this command for Review or BrainStorm (UCC-172)."
       ],
       "evidence_required": "Future production evidence for cmd.collaboration.configure: source-hashed native dispatcher and sole handler handlers::collaboration::configure, typed CollaborationConfigureRequest/CollaborationConfigureResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.collaboration.configure. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-014, CW-015) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.collaboration_configure.availability",
@@ -2473,12 +2482,13 @@
       "handler_location": "handlers::collaboration::open",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.collaboration.open dispatches the typed request CollaborationOpenRequest and returns CollaborationOpenResult; the surfaces that may raise it are exactly: workflow_modal, workflow_card, workflow_panel, activity, composer.",
+        "cmd.collaboration.open dispatches the typed request CollaborationOpenRequest and returns CollaborationOpenResult; the surfaces that may raise it are exactly: workflow_modal, workflow_card, workflow_panel, activity, composer, run_dock.",
         "Read state.assistant_redesign.collaboration_open.availability and state.assistant_redesign.collaboration_open.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Collaborative_Workflows.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): run_dock joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them. run_dock only opens the run; it never takes a permission decision."
       ],
       "evidence_required": "Future production evidence for cmd.collaboration.open: source-hashed native dispatcher and sole handler handlers::collaboration::open, typed CollaborationOpenRequest/CollaborationOpenResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.collaboration.open. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.collaboration_open.availability",
@@ -2597,12 +2607,13 @@
       "handler_location": "handlers::collaboration::pause",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.collaboration.pause dispatches the typed request CollaborationPauseRequest and returns CollaborationPauseResult; the surfaces that may raise it are exactly: workflow_modal, workflow_card, workflow_panel, activity, composer.",
+        "cmd.collaboration.pause dispatches the typed request CollaborationPauseRequest and returns CollaborationPauseResult; the surfaces that may raise it are exactly: workflow_modal, workflow_card, workflow_panel, activity, composer, wonderer_workspace.",
         "Read state.assistant_redesign.collaboration_pause.availability and state.assistant_redesign.collaboration_pause.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Collaborative_Workflows.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): wonderer_workspace joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Future production evidence for cmd.collaboration.pause: source-hashed native dispatcher and sole handler handlers::collaboration::pause, typed CollaborationPauseRequest/CollaborationPauseResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.collaboration.pause. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.collaboration_pause.availability",
@@ -2733,12 +2744,13 @@
       "handler_location": "handlers::collaboration::resume",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.collaboration.resume dispatches the typed request CollaborationResumeRequest and returns CollaborationResumeResult; the surfaces that may raise it are exactly: workflow_modal, workflow_card, workflow_panel, activity, composer.",
+        "cmd.collaboration.resume dispatches the typed request CollaborationResumeRequest and returns CollaborationResumeResult; the surfaces that may raise it are exactly: workflow_modal, workflow_card, workflow_panel, activity, composer, wonderer_workspace.",
         "Read state.assistant_redesign.collaboration_resume.availability and state.assistant_redesign.collaboration_resume.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Collaborative_Workflows.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): wonderer_workspace joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Future production evidence for cmd.collaboration.resume: source-hashed native dispatcher and sole handler handlers::collaboration::resume, typed CollaborationResumeRequest/CollaborationResumeResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.collaboration.resume. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.collaboration_resume.availability",
@@ -2795,12 +2807,13 @@
       "handler_location": "handlers::scheduling::execution_window_cancel",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.execution_window.cancel dispatches the typed request ExecutionWindowCancelRequest and returns ExecutionWindowCancelResult; the surfaces that may raise it are exactly: plan_schedule, run_schedule, settings.",
+        "cmd.execution_window.cancel dispatches the typed request ExecutionWindowCancelRequest and returns ExecutionWindowCancelResult; the surfaces that may raise it are exactly: plan_schedule, run_schedule, settings, schedule_manager.",
         "Read state.assistant_redesign.execution_window_cancel.availability and state.assistant_redesign.execution_window_cancel.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Scheduling_and_Quota_Resume.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): schedule_manager joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Future production evidence for cmd.execution_window.cancel: source-hashed native dispatcher and sole handler handlers::scheduling::execution_window_cancel, typed ExecutionWindowCancelRequest/ExecutionWindowCancelResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Scheduling_and_Quota_Resume.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.execution_window.cancel. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.execution_window_cancel.availability",
@@ -2919,12 +2932,13 @@
       "handler_location": "handlers::scheduling::execution_window_update",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.execution_window.update dispatches the typed request ExecutionWindowUpdateRequest and returns ExecutionWindowUpdateResult; the surfaces that may raise it are exactly: plan_schedule, run_schedule, settings.",
+        "cmd.execution_window.update dispatches the typed request ExecutionWindowUpdateRequest and returns ExecutionWindowUpdateResult; the surfaces that may raise it are exactly: plan_schedule, run_schedule, settings, schedule_manager.",
         "Read state.assistant_redesign.execution_window_update.availability and state.assistant_redesign.execution_window_update.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Scheduling_and_Quota_Resume.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): schedule_manager joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Future production evidence for cmd.execution_window.update: source-hashed native dispatcher and sole handler handlers::scheduling::execution_window_update, typed ExecutionWindowUpdateRequest/ExecutionWindowUpdateResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Scheduling_and_Quota_Resume.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.execution_window.update. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.execution_window_update.availability",
@@ -3105,14 +3119,15 @@
       "handler_location": "handlers::collaboration::review_send_findings_to_agent",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.review.send_findings_to_agent dispatches the typed request ReviewSendFindingsRequest and returns CollaborationMessageResult; the surfaces that may raise it are exactly: review_card, review_panel.",
+        "cmd.review.send_findings_to_agent dispatches the typed request ReviewSendFindingsRequest and returns ComposerBufferResult; the surfaces that may raise it are exactly: review_card, review_panel.",
         "Read state.assistant_redesign.review_send_findings_to_agent.availability and state.assistant_redesign.review_send_findings_to_agent.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Collaborative_Workflows.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Composer fill (2026-09-27 wand-module redesign, UCC-172, DL-125): the command writes a fix request built from the selected findings into the source thread's empty composer and never sends; the user sends it. It returns ComposerBufferResult and refuses with composer_not_empty when the composer already holds text, changing nothing."
       ],
-      "evidence_required": "Future production evidence for cmd.review.send_findings_to_agent: source-hashed native dispatcher and sole handler handlers::collaboration::review_send_findings_to_agent, typed ReviewSendFindingsRequest/CollaborationMessageResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.review.send_findings_to_agent. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.review.send_findings_to_agent: source-hashed native dispatcher and sole handler handlers::collaboration::review_send_findings_to_agent, typed ReviewSendFindingsRequest/ComposerBufferResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.review.send_findings_to_agent. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.review_send_findings_to_agent.availability",
       "disabled_reason_projection": "state.assistant_redesign.review_send_findings_to_agent.disabled_reason",
       "effect_contract": {
@@ -3120,7 +3135,7 @@
         "description": "Owner typed result and projection under Plans/Collaborative_Workflows.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
           "Plans/Collaborative_Workflows.md",
-          "CollaborationMessageResult projection"
+          "ComposerBufferResult projection"
         ]
       },
       "accessibility_contract": {
@@ -4157,7 +4172,8 @@
         "Negative path is enforced: all-or-none.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
         "Correction v4 (MODAL-013): the specialised atomic contract is retained. PlanRun and CrewRun commit together or neither commits; the command is never decomposed into cmd.collaboration.start followed by cmd.chat.plan.build.",
-        "Correction v4 (MODAL-014): Plan version and hash freeze at Start. A Plan that changed while the modal was open is refused with a typed stale result and the user reopens against the new version."
+        "Correction v4 (MODAL-014): Plan version and hash freeze at Start. A Plan that changed while the modal was open is refused with a typed stale result and the user reopens against the new version.",
+        "GUI producer (2026-09-27 wand-module redesign, UCC-169 REV-12): the Crew configuration sheet in Build With Crew mode is this command's GUI producer. Its Start dispatches cmd.chat.plan.build_with_crew as one atomic PlanRun and CrewRun (MODAL-013) and never decomposes into cmd.collaboration.start."
       ],
       "evidence_required": "Future production evidence for cmd.chat.plan.build_with_crew: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Assistant_Plan_Runtime.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-017. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-022) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.chat_plan_build_with_crew.availability",
@@ -4685,7 +4701,8 @@
         "The durable effect is exactly: Deep Plan version. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: linked Plan card.",
         "Negative path is enforced: one final Plan.",
-        "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): wonderer_workspace also raise cmd.brainstorm.synthesize_plan, and no other surface is added. Each reads state.assistant_redesign.brainstorm_synthesize_plan.availability and state.assistant_redesign.brainstorm_synthesize_plan.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Future production evidence for cmd.brainstorm.synthesize_plan: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-029. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.brainstorm_synthesize_plan.availability",
@@ -5492,7 +5509,7 @@
     },
     "assistant.redesign.w_046.chat_schedule_message": {
       "ui_element_id": "assistant.redesign.w_046.chat_schedule_message",
-      "ui_location": "Puppet Master Assistant > wand.schedule_message",
+      "ui_location": "Puppet Master Assistant > schedule_sheet",
       "ui_command_id": "cmd.chat.schedule_message",
       "handler_location": "handlers::scheduling::schedule_message",
       "expected_event_types": [],
@@ -5504,7 +5521,8 @@
         "Negative path is enforced: revalidate at dispatch.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
         "Correction v4 (SMSG-001, SMSG-004): a ScheduledMessageProjection card renders only after a durable commit -- never on button press and never as a toast alone. The source ComposerBuffer clears only after that commit; a failure preserves text, attachments, browser refs, destination, cursor and selection so retry needs no reconstruction.",
-        "Correction v4 (SMSG-007..009, BSTALE-007, FOLDER-005): attachments, artifacts and folder manifests freeze exact immutable versions and hashes at commit; a live browser selector must be frozen to a snapshot or scheduling is refused."
+        "Correction v4 (SMSG-007..009, BSTALE-007, FOLDER-005): attachments, artifacts and folder manifests freeze exact immutable versions and hashes at commit; a live browser selector must be frozen to a snapshot or scheduling is refused.",
+        "Producer rebind (2026-09-27 wand-module redesign, UCC-169, WM-062): only the schedule_sheet primary dispatches cmd.chat.schedule_message. The wand row (formerly wand.schedule_message) only opens the Schedule Message sheet and dispatches nothing; presets, date, time, time zone, missed policy, grace and route model are draft fields of this request, never commands (CDRY-021)."
       ],
       "evidence_required": "Future production evidence for cmd.chat.schedule_message: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Scheduling_and_Quota_Resume.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-046. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-029) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.chat_schedule_message.availability",
@@ -5518,7 +5536,7 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "Expose a stable role, name, description, and current state for cmd.chat.schedule_message in wand.schedule_message.",
+        "role_or_semantics": "Expose a stable role, name, description, and current state for cmd.chat.schedule_message in schedule_sheet.",
         "keyboard_access": "Keyboard and pointer dispatch the identical typed request for cmd.chat.schedule_message only when available.",
         "focus_management": "Retain invoking focus while pending and settle to the exact initiating route, focus, and continuation.",
         "disabled_announcement": "Announce state.assistant_redesign.chat_schedule_message.disabled_reason, including handler_unavailable and command_not_registered, without secrets or raw output."
@@ -5640,7 +5658,8 @@
         "The durable effect is exactly: Teach capture proposal. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: capture card.",
         "Negative path is enforced: not Teacher Persona.",
-        "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062; teach_document by UCC-172, WM-063): wand, memory_sheet, teach_document also raise cmd.chat.teach.capture, and no other surface is added. Each reads state.assistant_redesign.chat_teach_capture.availability and state.assistant_redesign.chat_teach_capture.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them. Every Teach entry opens the one Teach sheet (teach_capture) and the request carries mode new or correct; there is no in-chat capture card and capture writes no memory. The sheet's save is cmd.chat.teach.confirm with the TeachConfirmRequest fields of ACD-477, including locked; its Cancel, close, Escape and scrim are cmd.chat.teach.cancel."
       ],
       "evidence_required": "Future production evidence for cmd.chat.teach.capture: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Assistant Memory.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-049. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_teach_capture.availability",
@@ -5693,31 +5712,34 @@
     },
     "assistant.redesign.w_051.chat_eli5_set": {
       "ui_element_id": "assistant.redesign.w_051.chat_eli5_set",
-      "ui_location": "Puppet Master Assistant > wand.eli5",
+      "ui_location": "Puppet Master Assistant > eli5_sheet",
       "ui_command_id": "cmd.chat.eli5.set",
       "handler_location": "handlers::assistant_chat::eli5_set",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.eli5.set names exactly one owner-adjudicated future target handlers::assistant_chat::eli5_set in Plans/Assistant Chat.md; the target string and this production-intent row are not native dispatcher or handler proof.",
+        "cmd.chat.eli5.set names exactly one owner-adjudicated future target handlers::assistant_chat::eli5_set in Plans/assistant-chat-design.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_eli5_set.availability and state.assistant_redesign.chat_eli5_set.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: thread override. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: wand/chip/responses.",
         "Negative path is enforced: artifact content unchanged.",
+        "cmd.chat.eli5.set dispatches the typed request ELI5ThreadOverrideRequest and returns ELI5ThreadOverrideResult; the surfaces that may raise it are exactly: eli5_sheet, composer.",
+        "Producer rebind and value set (2026-09-27 wand-module closure, DL-126, UCC-175, WM-064): eli5_sheet (Standard or Simple, Follow my usual setting, and the This chat level of How it's decided) and composer (the ELI5 dot, the one-click on and off for this chat) are the only producers. The wand's ELI5 row only opens the ELI5 sheet and dispatches nothing, and the guided tour's ELI5 step consumes this same entry; no second ELI5 entry exists. ELI5ThreadOverrideRequest carries exactly one of on, off and inherit; inherit deletes this chat's override so the chat resolves chat override, else the project default, else the app default (general.interaction.chat-eli5, then the project scope of general.interaction.eli5-default, which is a Settings follow-up, then general.interaction.eli5-default). The sheet's All chats and project levels are Settings transactions, never this command. Each surface reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them.",
+        "Negative path (2026-09-27 wand-module closure, DL-126, UCC-175, WM-064): an ELI5 switch changes only replies that start after it. It never re-sends, regenerates or rewrites an earlier reply, a reply still streaming finishes in the style it started with, and a switch never produces a second response. A simpler version of a finished reply is only cmd.chat.eli5.explain_reply (UCC-174), a separate command, and only when the user asks.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],
-      "evidence_required": "Future production evidence for cmd.chat.eli5.set: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Assistant Chat.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-051. The owner binding and this production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.chat.eli5.set: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/assistant-chat-design.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-051. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_eli5_set.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_eli5_set.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "thread override under Plans/Assistant Chat.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "thread override under Plans/assistant-chat-design.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
         "receipt_or_event_refs": [
-          "Plans/Assistant Chat.md",
+          "Plans/assistant-chat-design.md",
           "thread override"
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "Expose a stable role, name, description, and current state for cmd.chat.eli5.set in wand.eli5.",
+        "role_or_semantics": "Expose a stable role, name, description, and current state for cmd.chat.eli5.set in eli5_sheet and the composer ELI5 dot.",
         "keyboard_access": "Keyboard and pointer dispatch the identical typed request for cmd.chat.eli5.set only when available.",
         "focus_management": "Retain invoking focus while pending and settle to the exact initiating route, focus, and continuation.",
         "disabled_announcement": "Announce state.assistant_redesign.chat_eli5_set.disabled_reason, including handler_unavailable and command_not_registered, without secrets or raw output."
@@ -5744,6 +5766,11 @@
           "requirement": "Negative path. Prove the negative path holds: artifact content unchanged."
         },
         {
+          "test_id": "wiring.assistant_redesign.chat_eli5_set.no_rewrite",
+          "evidence_kind": "state_projection",
+          "requirement": "Negative path (DL-126, UCC-175). Prove on, off and inherit each change only replies that start after the switch: no earlier reply is re-sent, regenerated or rewritten, a streaming reply finishes in its starting style, and no second response is produced; inherit deletes the chat override and the chat then resolves to the project default, else the app default."
+        },
+        {
           "test_id": "wiring.assistant_redesign.chat_eli5_set.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role and name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement."
@@ -5751,12 +5778,13 @@
       ],
       "event_test_requirements": [
         "Assert cmd.chat.eli5.set records only its typed result, receipt, or projection and emits no unregistered persisted domain event.",
-        "Assert a refusal, a stale target, or an idempotent replay produces no duplicate durable effect."
+        "Assert a refusal, a stale target, or an idempotent replay produces no duplicate durable effect.",
+        "Assert cmd.chat.eli5.set with on, off or inherit writes only the chat override and emits no reply, regenerate, re-send or rewrite effect on any earlier message (DL-126)."
       ]
     },
     "assistant.redesign.w_052.chat_revert": {
       "ui_element_id": "assistant.redesign.w_052.chat_revert",
-      "ui_location": "Puppet Master Assistant > revert.action",
+      "ui_location": "Puppet Master Assistant > revert_confirm",
       "ui_command_id": "cmd.chat.revert",
       "handler_location": "handlers::chat::revert",
       "expected_event_types": [],
@@ -5767,7 +5795,8 @@
         "Consume only the exact FileSafe outcome and matching journal/equality proof: restored_clean, restore_skipped, restore_refused, restore_failed or restore_recovery_required. Preserve fences and holds on unresolved recovery; never report partial success or restored_with_conflicts.",
         "FileSafe restores files only, never conversation, queue, or thread state. Refresh editors only after the durable owner result; do not reinterpret recorded paths through current working_directory or recreate a removed worktree.",
         "Every named reverse consumer renders from the same owner projection: Changes/message/wand.",
-        "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): only the revert_confirm primary dispatches cmd.chat.revert. message_files_row, the wand row, Changes and the message menu open the Revert confirm sheet, which is not a command. expected_turn_manifest_sha256 is the hash of the manifest the sheet shows. There is no kept outcome and no conflict-dismissal outcome; leaving the files as they are is a local dismiss that writes no record, and See what's blocking it only opens the Revert document at that file."
       ],
       "evidence_required": "Future production evidence for cmd.chat.revert: source-hashed sole Chat dispatcher and FileSafe delegation, immutable whole-turn request binding, exact typed result/error projection, journal/equality and rollback proof, restart/kill/race/remote-custody negatives, owner-required event admission, actual pointer/keyboard/focus and reverse GUI coverage. Plans/assistant-chat-design.md resolves the turn; Plans/FileSafe.md owns restoration; Plans/Commands_System.md and Plans/Contracts_V0.md own command/result and EventRecord rules. Static rows prove no native handler or event producer.",
       "state_selector": "state.commands.chat_revert.availability",
@@ -5783,7 +5812,7 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "Expose a stable role, name, description, and current state for cmd.chat.revert in revert.action.",
+        "role_or_semantics": "Expose a stable role, name, description, and current state for cmd.chat.revert in revert_confirm.",
         "keyboard_access": "Keyboard and pointer dispatch the identical typed request for cmd.chat.revert only when available.",
         "focus_management": "Retain invoking focus while pending and settle to the exact initiating route, focus, and continuation.",
         "disabled_announcement": "Announce state.commands.chat_revert.disabled_reason, including handler_unavailable and command_not_registered, without secrets or raw output."
@@ -5833,7 +5862,8 @@
         "The durable effect is exactly: helper attempt. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection: thread title.",
         "Negative path is enforced: explicit model no fallback.",
-        "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): chat_header also raise cmd.chat.thread.regenerate_title, and no other surface is added. Each reads state.assistant_redesign.chat_thread_regenerate_title.availability and state.assistant_redesign.chat_thread_regenerate_title.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them. Its label is set by UCC-173."
       ],
       "evidence_required": "Future production evidence for cmd.chat.thread.regenerate_title: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/assistant-chat-design.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-054. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_thread_regenerate_title.availability",
@@ -15389,7 +15419,8 @@
         "cmd.chat.memory.discard must expose projected state selector and disabled reason before dispatch",
         "cmd.chat.memory.discard dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.chat.memory.discard must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.chat.memory.discard must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.chat.memory.discard must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): memory_sheet also raise cmd.chat.memory.discard, and no other surface is added. Each reads state.commands.chat_memory_discard.availability and state.commands.chat_memory_discard.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Production wiring contract for cmd.chat.memory.discard; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.chat_memory_discard.availability",
@@ -15499,7 +15530,8 @@
         "cmd.chat.memory.pin must expose projected state selector and disabled reason before dispatch",
         "cmd.chat.memory.pin dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.chat.memory.pin must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.chat.memory.pin must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.chat.memory.pin must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): memory_sheet also raise cmd.chat.memory.pin, and no other surface is added. Each reads state.commands.chat_memory_pin.availability and state.commands.chat_memory_pin.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Production wiring contract for cmd.chat.memory.pin; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.chat_memory_pin.availability",
@@ -15554,7 +15586,8 @@
         "cmd.chat.memory.preview_capsule must expose projected state selector and disabled reason before dispatch",
         "cmd.chat.memory.preview_capsule dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.chat.memory.preview_capsule must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.chat.memory.preview_capsule must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.chat.memory.preview_capsule must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062; teach_document by UCC-172, WM-063): memory_sheet, teach_document also raise cmd.chat.memory.preview_capsule, and no other surface is added. Each reads state.commands.chat_memory_preview_capsule.availability and state.commands.chat_memory_preview_capsule.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them. See what your next message will include is this row: a preview computation with no persisted domain event."
       ],
       "evidence_required": "Production wiring contract for cmd.chat.memory.preview_capsule; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.chat_memory_preview_capsule.availability",
@@ -15829,7 +15862,8 @@
         "cmd.chat.memory.toggle_auto_save_unverified must expose projected state selector and disabled reason before dispatch",
         "cmd.chat.memory.toggle_auto_save_unverified dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.chat.memory.toggle_auto_save_unverified must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.chat.memory.toggle_auto_save_unverified must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.chat.memory.toggle_auto_save_unverified must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): memory_sheet also raise cmd.chat.memory.toggle_auto_save_unverified, and no other surface is added. Each reads state.commands.chat_memory_toggle_auto_save_unverified.availability and state.commands.chat_memory_toggle_auto_save_unverified.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Production wiring contract for cmd.chat.memory.toggle_auto_save_unverified; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.chat_memory_toggle_auto_save_unverified.availability",
@@ -15939,7 +15973,8 @@
         "cmd.chat.memory.verify must expose projected state selector and disabled reason before dispatch",
         "cmd.chat.memory.verify dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.chat.memory.verify must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.chat.memory.verify must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.chat.memory.verify must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): memory_sheet also raise cmd.chat.memory.verify, and no other surface is added. Each reads state.commands.chat_memory_verify.availability and state.commands.chat_memory_verify.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Production wiring contract for cmd.chat.memory.verify; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.chat_memory_verify.availability",
@@ -16216,7 +16251,8 @@
         "cmd.chat.open_thread must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.chat.open_thread must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "cmd.chat.open_thread availability class is selection (thread_exists) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)",
-        "Cross-surface thread entry wrapper carrying route/OpenSubject identity; it opens the chat panel when closed, does not duplicate the chat-panel-local cmd.chat.switch_thread, and retired prototype token cmd.chat.open_at (excluded from production wiring) migrates to this canonical id."
+        "Cross-surface thread entry wrapper carrying route/OpenSubject identity; it opens the chat panel when closed, does not duplicate the chat-panel-local cmd.chat.switch_thread, and retired prototype token cmd.chat.open_at (excluded from production wiring) migrates to this canonical id.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): scheduled_message_card, schedule_manager also raise cmd.chat.open_thread, and no other surface is added. Each reads state.cmd_chat_open_thread.enabled and state.cmd_chat_open_thread.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them. Go to message and Open message carry route_target message."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/assistant-chat-design.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_chat_open_thread.enabled",
@@ -16283,7 +16319,8 @@
         "cmd.chat.open_thread_context_details must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.chat.open_thread_context_details must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "PMConcept7 reuses the one shared thread Context Detail Pane and shared Assistant store; this command must not create a page-local drawer or app-wide Usage substitute.",
-        "Opening/hovering the context-ring menu is local; this command dispatches only after explicit More Details selection."
+        "Opening/hovering the context-ring menu is local; this command dispatches only after explicit More Details selection.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): bsd_note also raise cmd.chat.open_thread_context_details, and no other surface is added. Each reads state.commands.chat_open_thread_context_details.availability and state.commands.chat_open_thread_context_details.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them."
       ],
       "evidence_required": "Production wiring contract for cmd.chat.open_thread_context_details; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.chat_open_thread_context_details.availability",
@@ -16729,7 +16766,8 @@
         "Bind exact project, thread, repository, worktree, complete recorded canonical-absolute affected paths, expected whole-turn manifest hash, idempotency key and permission evidence. Omitted target selection is Chat-owned; no_eligible_mutating_turn creates no restore transaction.",
         "Every surface reads state.commands.chat_revert.availability and state.commands.chat_revert.disabled_reason. Keep handler_unavailable without native proof and fail closed on missing required Event Authority; no receipt-only substitute may bypass an unadmitted restore event family.",
         "Consume only the exact FileSafe outcome and matching journal/equality proof: restored_clean, restore_skipped, restore_refused, restore_failed or restore_recovery_required. Preserve fences and holds on unresolved recovery; never report partial success or restored_with_conflicts.",
-        "FileSafe restores files only, never conversation, queue, or thread state. Refresh editors only after the durable owner result; do not reinterpret recorded paths through current working_directory or recreate a removed worktree."
+        "FileSafe restores files only, never conversation, queue, or thread state. Refresh editors only after the durable owner result; do not reinterpret recorded paths through current working_directory or recreate a removed worktree.",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): only the revert_confirm primary dispatches cmd.chat.revert. message_files_row, the wand row, Changes and the message menu open the Revert confirm sheet, which is not a command. expected_turn_manifest_sha256 is the hash of the manifest the sheet shows. There is no kept outcome and no conflict-dismissal outcome; leaving the files as they are is a local dismiss that writes no record, and See what's blocking it only opens the Revert document at that file."
       ],
       "evidence_required": "Future production evidence for cmd.chat.revert: source-hashed sole Chat dispatcher and FileSafe delegation, immutable whole-turn request binding, exact typed result/error projection, journal/equality and rollback proof, restart/kill/race/remote-custody negatives, owner-required event admission, actual pointer/keyboard/focus and reverse GUI coverage. Plans/assistant-chat-design.md resolves the turn; Plans/FileSafe.md owns restoration; Plans/Commands_System.md and Plans/Contracts_V0.md own command/result and EventRecord rules. Static rows prove no native handler or event producer.",
       "state_selector": "state.commands.chat_revert.availability",
@@ -41541,7 +41579,8 @@
         "Review opens the decision surface only; the approval decision itself stays on the runtime HITL commands",
         "Route identity preserves the requesting thread/run correlation for the audit trail",
         "cmd.permissions.review_request must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.permissions.review_request must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.permissions.review_request must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): workflow_card also raise cmd.permissions.review_request, and no other surface is added. Each reads state.commands.permissions_review_request.availability and state.commands.permissions_review_request.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them. Details on a needs-you decision opens the review from its workflow_card; run_dock never produces this command."
       ],
       "evidence_required": "Production wiring contract for cmd.permissions.review_request; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.permissions_review_request.availability",
@@ -52433,7 +52472,8 @@
         "cmd.runtime.approve must expose projected state selector and disabled reason before dispatch",
         "cmd.runtime.approve dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.runtime.approve must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.runtime.approve must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.runtime.approve must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): workflow_card also raise cmd.runtime.approve, and no other surface is added. Each reads state.commands.runtime_approve.availability and state.commands.runtime_approve.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them. A needs-you decision (Allow once) is taken only on its workflow_card; run_dock never produces this command."
       ],
       "evidence_required": "Production wiring contract for cmd.runtime.approve; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.runtime_approve.availability",
@@ -52493,7 +52533,8 @@
         "cmd.runtime.decline must expose projected state selector and disabled reason before dispatch",
         "cmd.runtime.decline dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.runtime.decline must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.runtime.decline must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.runtime.decline must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): workflow_card also raise cmd.runtime.decline, and no other surface is added. Each reads state.commands.runtime_decline.availability and state.commands.runtime_decline.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them. A needs-you decision (Don't allow) is taken only on its workflow_card; run_dock never produces this command."
       ],
       "evidence_required": "Production wiring contract for cmd.runtime.decline; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.runtime_decline.availability",

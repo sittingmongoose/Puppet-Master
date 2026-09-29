@@ -46,6 +46,53 @@ function windowAt(rec,at){
  }
  return {ok:true,open:false,phase:'closed',next:next(rec.timezone,rec.days_of_week,start.h,start.mi,at)};
 }
-const api=Object.freeze({parts,parse,resolve,next,windowAt,shift,weekday});
+/* Clock changes (the describeDst real-checkpoint fix). transitions(zone, from, to) lists every offset change
+   between two instants, located to the minute: at = the first instant on the new offset, shift = minutes the wall
+   clock moves (+60 forward, -60 back), fromMin / toMin = the wall minute of day it moves from and to, date = the
+   local date it happens on. impact(change, slot) says whether a slot meets that change: slot is
+   {kind:'recurring', start:'22:00', stop:'02:00', days:[1..5], windDownMinutes} or {kind:'once', date, time};
+   it returns null, or {hits:[{name:'start'|'stop'|'wrapup', minute}], spans} where a hit is a checkpoint inside
+   the skipped (forward) or repeated (back) wall span and spans means the change happens while the slot runs.
+   Pure arithmetic; the sentences are the Scheduling owner's. */
+function offsetAt(zone,t){const p=parts(zone,t);return p?Math.round((wall(p)-t)/minute)*minute:null;}
+function transitions(zone,from,to){
+ if(!formatter(zone)||!Number.isFinite(from)||!Number.isFinite(to)||to<=from)return [];
+ const out=[];let prev=offsetAt(zone,from),t=from;
+ while(t<to){
+  const n=Math.min(t+day,to),off=offsetAt(zone,n);
+  if(off!==prev&&off!=null&&prev!=null){
+   let lo=Math.floor(t/minute),hi=Math.ceil(n/minute);
+   while(hi-lo>1){const mid=Math.floor((lo+hi)/2);if(offsetAt(zone,mid*minute)===prev)lo=mid;else hi=mid;}
+   const at=hi*minute,after=parts(zone,at),shiftMin=Math.round((off-prev)/minute),toMin=after.h*60+after.mi;
+   out.push({at,kind:shiftMin>0?'spring_forward':'fall_back',shift:shiftMin,toMin,fromMin:toMin-shiftMin,date:{y:after.y,mo:after.mo,d:after.d}});
+  }
+  prev=off;t=n;
+ }
+ return out;
+}
+const minuteOf=s=>{const p=parse('2000-01-01',s);return p?p.h*60+p.mi:null;};
+function impact(change,slot){
+ if(!change||!slot)return null;
+ const D=change.date,wd=weekday(D),prevWd=(wd+6)%7;
+ const lo=Math.min(change.fromMin,change.toMin),hi=Math.max(change.fromMin,change.toMin);
+ const hits=[],inSpan=m=>m>=lo&&m<hi;
+ if(slot.kind==='once'){
+  const p=parse(slot.date,slot.time);
+  if(!p||p.y!==D.y||p.mo!==D.mo||p.d!==D.d)return null;
+  const m=p.h*60+p.mi;if(inSpan(m))hits.push({name:'start',minute:m});
+  return hits.length?{hits,spans:false}:null;
+ }
+ const S=minuteOf(slot.start),E=minuteOf(slot.stop);
+ if(S==null||E==null||!Array.isArray(slot.days)||S===E)return null;
+ const on=x=>slot.days.includes(x),wrap=E<S,W=E-Math.max(0,Number(slot.windDownMinutes)||0);
+ const stopHere=wrap?on(prevWd):on(wd);
+ if(on(wd)&&inSpan(S))hits.push({name:'start',minute:S});
+ if(stopHere&&inSpan(E))hits.push({name:'stop',minute:E});
+ if(stopHere&&W>=0&&W!==E&&inSpan(W))hits.push({name:'wrapup',minute:W});
+ const runs=[];if(wrap){if(on(prevWd))runs.push([0,E]);if(on(wd))runs.push([S,1440]);}else if(on(wd))runs.push([S,E]);
+ const spans=runs.some(r=>change.fromMin>r[0]&&change.fromMin<r[1]);
+ return hits.length||spans?{hits,spans}:null;
+}
+const api=Object.freeze({parts,parse,resolve,next,windowAt,shift,weekday,transitions,impact});
 root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
 })(typeof window==='undefined'?globalThis:window);

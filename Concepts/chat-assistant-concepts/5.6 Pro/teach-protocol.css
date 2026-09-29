@@ -1,19 +1,235 @@
-/* Teach: dialog rebuilt on the PM56_SHELL grammar (module-shell.css). The rules
-   here style only what the shell does not own: the related-teaching block and
-   capture quote emitted into the dialog, and the Taught-memory editor document. */
-.teach-related .selected{outline:1px solid var(--accent);background:var(--surface-3);}
-.teach-help,.teach-source small{color:var(--muted);font-size:11px;line-height:1.5;}
-.teach-related,.teach-revoke,.teach-preview{border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin:12px 0;background:var(--surface-2);}
-.teach-related small{display:block;margin:4px 0;color:var(--muted);font-size:10px;}.teach-related button,.teach-revoke button{margin-right:8px;margin-top:6px;}
-#teach-related:empty{display:none;}
-#teach-error:empty{display:none;}
-.teach-document{max-width:100%;min-width:0;padding:20px;box-sizing:border-box;}.teach-document h2{font-size:21px;margin:12px 0;}
-.teach-version{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;min-width:0;}
-.teach-version header,.teach-preview header{display:flex;gap:12px;align-items:baseline;justify-content:space-between;flex-wrap:wrap;}
-.teach-version p,.teach-preview p,.teach-related p,.teach-quote{font-size:13px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere;}
-.teach-version small,.teach-preview small{color:var(--muted);font-size:11px;}.teach-actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0;}
-.teach-version details{color:var(--muted);font-size:11px;line-height:1.6;}.teach-version summary{cursor:pointer;}.teach-version dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;}.teach-version dd{margin:0;overflow-wrap:anywhere;}
-.teach-source{padding:12px;border:1px solid var(--border);border-radius:var(--radius);margin-top:12px;}
-@media(max-width:750px){.teach-document{padding:14px;}.teach-version{padding:12px;}}
+/* Teach (DESIGN-SPEC 8.11): the kind parts of the Teach sheet, the receipt in the chat and the Taught memory document.
+   Every primitive (sheet, hero, question, plate, check, switch, foot, refusal, ledger line, tick, view, inline confirm)
+   is styled by module-shell.css; only pmx-teach-* parts live here. J-2: text >= 8 px from any line and >= 12 px from a
+   container's sides, >= 10 px between controls, line height >= 1.45; when space runs short text ellipsizes or wraps. */
 
-.teach-receipt .event-copy{min-width:0;}.teach-receipt .soft-button{white-space:nowrap;}
+/* module tokens (5.1 token discipline): the rule card's lift and the shackle closing on Save. Owner answer E-22
+   (2026-09-27): motion follows each theme family's personality, written once in the foundation's tokens. So these are
+   aliases of foundation tokens, declared on body (where the theme blocks sit) so a family's own value resolves here;
+   no per-theme value is written in this file. */
+body{--pmx-t-lift:var(--pmx-t-light);--pmx-t-lock:var(--pmx-t-row);}
+
+/* the surgical slots (MUST-KEEP ids): an empty slot takes no room */
+#teach-related:empty, #teach-error:empty{display:none;}
+
+/* ---------------------------------------------------------------- the sheet: left column (the rule, where it applies) */
+.pmx-sheet .pmx-teach-hero{margin-top:0;}
+.pmx-sheet .pmx-teach-hero .pmx-hero-main > .pmx-help{margin-top:8px;}
+/* the hero helper (the "Try:" examples) stays in short windows too: the foundation drops hero helpers at <= 820 px
+   tall, but Teach's column has the room, and the examples are how a first-time user learns what a rule looks like */
+.pmx-sheet.pmx-teach-sheet .pmx-teach-hero .pmx-hero-main > .pmx-help{display:block;}
+/* "Try:" is a fixed first column; its three links sit 16 px apart (J-2 item 3) and wrap inside their own column with
+   12 px between rows, hanging under the first link */
+.pmx-sheet .pmx-teach-try{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;column-gap:16px;}
+.pmx-sheet .pmx-teach-trylinks{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 16px;min-width:0;}
+.pmx-sheet .pmx-teach-try .pmx-teach-trylink{display:inline;min-height:0;height:auto;padding:0;border:0;background:none;color:var(--accent);font:600 12px/17.5px var(--font-ui);cursor:pointer;}
+.pmx-sheet .pmx-teach-try .pmx-teach-trylink:hover{text-decoration:underline;text-underline-offset:3px;background:none;}
+body[data-theme^="retro"] .pmx-sheet .pmx-teach-try .pmx-teach-trylink{font-size:11px;line-height:16px;}
+.pmx-teach-safety{margin:12px 0 0;min-height:18px;}
+.pmx-teach-safe{display:flex;align-items:flex-start;gap:8px;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-teach-safe > svg{flex:none;margin-top:2px;color:var(--positive);}
+.pmx-teach-safe[data-state="warn"]{color:var(--text);}
+.pmx-teach-safe[data-state="warn"] > svg{color:var(--warning);}
+.pmx-teach-safe b{font-weight:600;}
+.pmx-sheet .pmx-teach-where{margin-top:20px;}
+
+/* the reach plate: three concentric rings. Each button is its ring's 36 px label band (unboxed: no two controls
+   overlap, J-2); the ring is the button's child shape (inner rings on top, so a click anywhere on a ring reaches its
+   button). The chosen ring carries the wash, the rings inside it are included, the wider rings dim. */
+.pmx-sheet .pmx-teach-plate{display:block;height:auto;min-height:0;max-height:none;margin:10px 0 0;padding:12px;box-sizing:border-box;}
+.pmx-sheet .pmx-teach-plate .pmx-plate-cap{position:static;margin:0;font:inherit;color:var(--text);}
+.pmx-teach-rings{position:relative;height:124px;min-width:0;}
+.pmx-teach-ring{position:absolute;height:36px;display:flex;align-items:flex-start;min-width:0;margin:0;padding:8px 12px;box-sizing:border-box;border:0;border-radius:0;
+  background:none;box-shadow:none;color:var(--text);text-align:left;cursor:pointer;font:inherit;}
+.pmx-teach-ring:hover, .pmx-teach-ring:active{background:none;}
+.pmx-teach-ring[data-kind="user"]{top:0;left:0;right:0;z-index:1;}
+.pmx-teach-ring[data-kind="project"]{top:36px;left:16px;right:16px;z-index:2;}
+.pmx-teach-ring[data-kind="thread"]{top:72px;left:32px;right:32px;z-index:3;}
+.pmx-teach-ring-shape{position:absolute;left:0;right:0;top:0;box-sizing:border-box;border:1.5px solid var(--pmx-line);border-radius:18px;pointer-events:auto;
+  transition:border-color var(--pmx-t-light) var(--pmx-ease-linear),background-color var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-teach-ring[data-kind="user"] > .pmx-teach-ring-shape{height:124px;}
+.pmx-teach-ring[data-kind="project"] > .pmx-teach-ring-shape{height:80px;border-radius:14px;}
+.pmx-teach-ring[data-kind="thread"] > .pmx-teach-ring-shape{height:36px;border-radius:10px;}
+.pmx-teach-ring-say{position:relative;display:flex;align-items:baseline;gap:10px;min-width:0;white-space:nowrap;}
+.pmx-teach-ring-say > b{flex:none;font:600 12.5px/18.5px var(--font-ui);}
+.pmx-teach-ring-help{min-width:0;overflow:hidden;text-overflow:ellipsis;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-teach-ring-warn{display:inline-flex;align-items:center;gap:6px;min-width:0;overflow:hidden;font:var(--pmx-fs-help);color:var(--text);}
+.pmx-teach-ring-warn > svg{flex:none;color:var(--warning);}
+.pmx-teach-ring-warn > span{min-width:0;overflow:hidden;text-overflow:ellipsis;}
+.pmx-teach-ring[data-state="on"] > .pmx-teach-ring-shape{border-color:var(--accent);background:var(--pmx-wash);}
+.pmx-teach-ring[data-state="out"]{color:var(--muted);}
+.pmx-teach-ring[data-state="out"] > .pmx-teach-ring-shape{border-color:var(--pmx-hatch);}
+.pmx-teach-ring[data-state="out"] .pmx-teach-ring-help{color:var(--subtle);}
+.pmx-teach-ring[data-state="off"]{color:var(--subtle);cursor:default;}
+.pmx-teach-ring[data-state="off"] > .pmx-teach-ring-shape{border-style:dashed;border-color:var(--pmx-hatch);}
+.pmx-teach-ring[data-state="off"] .pmx-teach-ring-help{color:var(--subtle);}
+.pmx-teach-ring:not(:disabled):not([data-state="on"]):hover > .pmx-teach-ring-shape{border-color:var(--border-strong);}
+/* a refused Save marks the block that caused it: its title takes the warning colour (the ring says why) */
+.pmx-sheet .pmx-teach-where[data-teach-refused="1"] .pmx-q-title{color:var(--warning);}
+.pmx-sheet .pmx-teach-reason{margin:8px 0 0;}
+.pmx-sheet .pmx-teach-checks{margin-top:20px;}
+
+/* ---------------------------------------------------------------- the sheet: right column (what will be saved) */
+.pmx-teach-card{margin:0;padding:14px 16px 12px;border-radius:var(--pmx-r-md);background:var(--pmx-floor);min-width:0;}
+.pmx-teach-rule{margin:0;min-height:23px;font:var(--pmx-voice-w) 17px/23px var(--pmx-voice);letter-spacing:-.01em;color:var(--text);overflow-wrap:anywhere;
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
+body[data-theme^="retro"] .pmx-teach-rule{font-size:15.5px;line-height:22.5px;letter-spacing:0;}
+.pmx-teach-rule:empty::before{content:attr(data-empty);font-weight:400;color:var(--subtle);}
+.pmx-teach-inchat [data-pmx-mirror="teach-rule"]:empty::before{content:"…";}
+.pmx-teach-meta{margin:10px 0 0;display:flex;align-items:center;gap:8px;min-width:0;font:var(--pmx-fs-meta);color:var(--muted);}
+.pmx-teach-meta > span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pmx-teach-lock{flex:none;color:var(--muted);overflow:visible;}
+.pmx-teach-meta[data-state="locked"] .pmx-teach-lock{color:var(--text);}
+/* a draft is not saved yet: its shackle stands open; on Save it drops shut (WAAPI on the leaving sheet) */
+.pmx-teach-card[data-state="draft"] .pmx-teach-shackle{transform:translateY(-2.5px);}
+.pmx-teach-src{margin-top:8px;min-width:0;}
+.pmx-teach-sum{display:flex;align-items:center;gap:6px;width:max-content;max-width:100%;min-height:24px;list-style:none;cursor:pointer;font:600 12px/17.5px var(--font-ui);color:var(--muted);}
+.pmx-teach-sum::-webkit-details-marker{display:none;}
+.pmx-teach-sum::marker{content:"";}
+.pmx-teach-sum:hover{color:var(--text);}
+.pmx-teach-sum > svg{flex:none;transition:transform var(--pmx-t-swap) var(--pmx-ease-out);}
+.pmx-teach-sum > span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+:is(.pmx-teach-src, .pmx-teach-disc)[open] > .pmx-teach-sum > svg{transform:rotate(90deg);}
+.pmx-teach-quote{margin:6px 0 0 19px;font:400 12.5px/18.5px var(--pmx-voice);color:var(--muted);overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
+.pmx-teach-from{margin:8px 0 0;font:var(--pmx-fs-help);color:var(--muted);}
+
+/* "In your chat": the receipt as it will land, at 1:1 (review cycle 1: a scaled copy read at 9 px), laid out at the
+   tray's width, so the receipt's own narrow tier applies (kind, headline ellipsized, View). At Save it is laid out at
+   the chat card's width in the same task, just before the flight is armed: the clone is the whole receipt at its real
+   size and lands on identical geometry with no scaling. It is the Save flight's source (PM56_PMX.handoff), so the
+   leaving sheet hides it while its clone flies. */
+.pmx-sheet .pmx-teach-inchat{margin:20px 0 0;min-width:0;}
+.pmx-teach-tray{position:relative;margin-top:8px;padding:10px 12px;height:var(--pmx-receipt-h);border-radius:var(--pmx-r-md);background:var(--pmx-floor);overflow:hidden;box-sizing:content-box;}
+.pmx-teach-fly{width:auto;min-width:0;}
+.pmx-ghost[data-exit="start"] .pmx-teach-fly{visibility:hidden;}
+
+/* the similar rule (and, in an edit, what changes): a side-by-side word comparison and the one choice Save waits for */
+.pmx-sheet .pmx-teach-similar{margin-top:20px;min-width:0;animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;}
+.pmx-teach-similar[data-state="error"]{background:var(--pmx-card-warm);border-radius:12px;box-shadow:0 0 0 8px var(--pmx-card-warm);}
+.pmx-teach-sim-say{margin:0;display:flex;align-items:flex-start;gap:8px;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-teach-sim-say > svg{flex:none;margin-top:2px;}
+.pmx-teach-sim-say b{color:var(--text);font-weight:600;}
+.pmx-teach-diff{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:10px;min-width:0;}
+.pmx-teach-diff-col{min-width:0;}
+.pmx-teach-diff-cap{margin:0;font:var(--pmx-fs-fine);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-teach-diff-t{margin:4px 0 0;font:400 12.5px/18.5px var(--pmx-voice);color:var(--text);overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden;}
+.pmx-teach-del{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--muted);}
+.pmx-teach-add{padding:0 1px;border-radius:3px;background:var(--pmx-wash);color:var(--text);}
+.pmx-teach-same{color:var(--muted);}
+.pmx-teach-similar .pmx-switch{margin-top:12px;}
+/* workaround until pmxSwitch has a "nothing chosen" state (FOUNDATION REQUEST): no rule under either word */
+.pmx-teach-similar .pmx-switch[data-state="unset"] .pmx-switch-rule{opacity:0;}
+.pmx-teach-sim-help{margin:8px 0 0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-teach-sim-warn{display:inline-flex;align-items:center;gap:6px;color:var(--text);}
+.pmx-teach-sim-warn > svg{flex:none;color:var(--warning);}
+.pmx-teach-sim-more{margin:8px 0 0;font:var(--pmx-fs-fine);color:var(--muted);}
+
+/* the foot's fine print: the /teach tip and "Teach isn't the Teacher Persona" (its hover card explains) */
+.pmx-teach-tip{margin:0;min-width:0;font:var(--pmx-fs-fine);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-teach-tip b{color:var(--text);font-weight:600;}
+span.pmx-teach-persona, .pmx-teach-persona-line > span{text-decoration:underline dotted;text-decoration-color:var(--border-strong);text-underline-offset:3px;cursor:help;}
+
+/* ---------------------------------------------------------------- in the chat */
+.pmx-teach-rh b{font-weight:var(--pmx-voice-w);}
+/* the reply tick (owner answer E-36): Followed is quiet meta ink; Missed takes the warm glyph and full ink, and its
+   [Ask for a fix] sits 10 px after it with J-2 control padding (10 x 7) */
+.pmx-teach-tick[data-state="missed"]{color:var(--text);}
+.pmx-teach-tick[data-state="missed"] > svg{color:var(--warning);}
+/* the verdict is its own line under the reply, first in the meta row and visible at rest (review cycle 1; owner answer
+   E-36: a reply that missed a rule must say so without a hover). The row wraps only for it; the rest of the row (time,
+   runtime, the Noted tick, Copy, Details, More) stays hover-gated on the line under it, exactly as the transcript owner
+   shows it, and keeps its place (visibility, not display) so nothing moves on hover. Its words drop only when even a
+   whole line is under 250 px, and in a row narrower than the glyph plus [Ask for a fix] the button wraps under the
+   glyph (J-2: drop or wrap, never compress). */
+.pmx-teach-verdict{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 10px;flex:0 0 100%;order:-1;min-width:0;}
+.message-chrome:has(> .pmx-teach-verdict){flex-wrap:wrap;row-gap:10px;opacity:1;visibility:visible;transform:none;}
+.message-chrome:has(> .pmx-teach-verdict) > .message-meta:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .message-actions:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .pm-msg-overflow:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .pmx-tick:not(.pmx-teach-verdict){opacity:0;visibility:hidden;transition:opacity 150ms,visibility 0s linear 280ms;}
+:is(.message:hover, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .pmx-teach-verdict) > .message-meta:not(.pmx-teach-verdict),
+:is(.message:hover, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .pmx-teach-verdict) > .message-actions:not(.pmx-teach-verdict),
+:is(.message:hover, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .pmx-teach-verdict) > .pm-msg-overflow:not(.pmx-teach-verdict),
+:is(.message:hover, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .pmx-teach-verdict) > .pmx-tick:not(.pmx-teach-verdict),
+.message-chrome.is-overflow-open:has(> .pmx-teach-verdict) > .message-meta:not(.pmx-teach-verdict),
+.message-chrome.is-overflow-open:has(> .pmx-teach-verdict) > .message-actions:not(.pmx-teach-verdict),
+.message-chrome.is-overflow-open:has(> .pmx-teach-verdict) > .pm-msg-overflow:not(.pmx-teach-verdict),
+.message-chrome.is-overflow-open:has(> .pmx-teach-verdict) > .pmx-tick:not(.pmx-teach-verdict){opacity:1;visibility:visible;transition:opacity 150ms,visibility 0s;}
+@media (max-width: 590px){ .message-chrome:has(> .pmx-teach-verdict) > .message-meta:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .message-actions:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .pm-msg-overflow:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .pmx-tick:not(.pmx-teach-verdict){opacity:1;visibility:visible;transition:none;} }
+@media (prefers-reduced-motion: reduce){ .message-chrome:has(> .pmx-teach-verdict) > .message-meta,
+.message-chrome:has(> .pmx-teach-verdict) > .message-actions,
+.message-chrome:has(> .pmx-teach-verdict) > .pm-msg-overflow,
+.message-chrome:has(> .pmx-teach-verdict) > .pmx-tick{transition:none !important;} }
+@container msgChrome (max-width: 250px){.pmx-teach-verdict > .pmx-teach-tick > span{display:none;}}
+/* transcript variant 2 (speaker column 82 px | message) drops the chrome row into the speaker column; a row that shows
+   the verdict at rest sits under the message instead */
+.transcript[data-variant="2"] .message > .message-chrome:has(> .pmx-teach-verdict){grid-column:2;}
+.pmx-teach-verdict > .pmx-teach-fix{min-height:0;height:auto;padding:7px 10px;margin:-7px 0;border:0;background:none;color:var(--accent);font:var(--pmx-fs-meta);font-weight:600;white-space:nowrap;}
+.pmx-teach-verdict > .pmx-teach-fix:hover{text-decoration:underline;text-underline-offset:3px;background:none;}
+
+/* ---------------------------------------------------------------- the Taught memory document (a pmxView) */
+/* the head never squeezes (review cycle 1): the title keeps its own width and the actions take what is left of the
+   first two rows, wrapping whole buttons; the status sentence runs the full width under both. Below 900 px the head
+   stacks: title, mark, status, then the actions on their own row (10 px apart, the first one's ink under the title). */
+.pmx-view.pmx-teach-doc > .pmx-view-head.drawer-head{grid-template-columns:max-content minmax(0,1fr);}
+.pmx-view.pmx-teach-doc > .pmx-view-head > .pmx-view-status{grid-column:1 / -1;}
+.pmx-view.pmx-teach-doc > .pmx-view-head > .pmx-view-acts{grid-column:2;grid-row:1 / 3;gap:10px;}
+@container pmxview (max-width: 900px){
+  .pmx-view.pmx-teach-doc > .pmx-view-head.drawer-head{grid-template-columns:minmax(0,1fr);}
+  .pmx-view.pmx-teach-doc > .pmx-view-head > .pmx-view-acts{grid-column:1;grid-row:4;justify-content:flex-start;margin:12px 0 0 -10px;}
+}
+.pmx-teach-docbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin:18px 0 0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-teach-docbar > .text-button{margin-left:-10px;color:var(--accent);font-weight:600;}
+.pmx-teach-export{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
+.pmx-teach-rows{min-width:0;}
+.pmx-teach-row{display:grid;grid-template-columns:18px minmax(0,1fr);column-gap:12px;padding:14px 0;min-width:0;
+  animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-at-r2) + var(--i, 0) * var(--pmx-t-cascade));}
+.pmx-teach-row + .pmx-teach-row{box-shadow:0 -1px 0 var(--border);}
+.pmx-teach-rglyph{display:flex;justify-content:center;padding-top:3px;color:var(--muted);}
+.pmx-teach-row[data-state="on"] .pmx-teach-rglyph{color:var(--text);}
+.pmx-teach-rcopy{min-width:0;}
+.pmx-teach-rtext{margin:0;font:var(--pmx-voice-w) 15px/21px var(--pmx-voice);color:var(--text);overflow-wrap:anywhere;}
+body[data-theme^="retro"] .pmx-teach-rtext{font-size:14px;line-height:20.5px;}
+.pmx-teach-row[data-state="off"] .pmx-teach-rtext{color:var(--muted);}
+.pmx-teach-rmeta{margin:4px 0 0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-teach-rmeta b{color:var(--text);font-weight:600;}
+.pmx-teach-prov{margin:6px 0 0;display:flex;align-items:center;gap:6px;font:var(--pmx-fs-fine);color:var(--subtle);}
+.pmx-teach-racts{display:flex;flex-wrap:wrap;gap:12px 10px;margin:10px 0 0 -10px;}
+.pmx-teach-racts > .text-button{color:var(--text);font-weight:600;}
+.pmx-teach-acts-help{margin:6px 0 0;font:var(--pmx-fs-fine);color:var(--subtle);}
+.pmx-teach-warn{margin:10px 0 0;display:flex;align-items:flex-start;gap:6px;font:var(--pmx-fs-help);color:var(--text);}
+.pmx-teach-warn > svg{flex:none;margin-top:2px;color:var(--warning);}
+.pmx-teach-confirm{margin-top:12px;}
+.pmx-teach-source{margin-top:12px;min-width:0;}
+.pmx-teach-source > .pmx-teach-from{margin:0;}
+.pmx-teach-source > .pmx-teach-quote{margin:6px 0 0;}
+.pmx-teach-source > .text-button{margin:6px 0 0 -10px;color:var(--accent);font-weight:600;}
+.pmx-teach-disc{margin-top:10px;min-width:0;}
+.pmx-teach-disc-body{margin-top:6px;padding-left:19px;min-width:0;}
+.pmx-teach-dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;font:var(--pmx-fs-help);}
+.pmx-teach-dl dt{color:var(--muted);}
+.pmx-teach-dl dd{margin:0;color:var(--text);overflow-wrap:anywhere;}
+.pmx-teach-none{margin:0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-teach-source > .pmx-teach-none{margin-top:6px;}
+.pmx-teach-next{margin:18px 0 8px;min-width:0;}
+.pmx-teach-h{margin:0;font:var(--pmx-fs-q);letter-spacing:var(--pmx-ls-q);color:var(--text);}
+.pmx-teach-next > .pmx-help{margin-top:4px;}
+.pmx-teach-next h4{margin:16px 0 6px;font:600 12px/17.5px var(--font-ui);color:var(--muted);}
+.pmx-teach-next ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;}
+.pmx-teach-next li{display:grid;grid-template-columns:14px minmax(0,1fr);column-gap:8px;align-items:start;font:var(--pmx-fs-help);color:var(--text);}
+.pmx-teach-next li > svg{margin-top:2px;color:var(--muted);}
+.pmx-teach-next li[data-state="in"] > svg{color:var(--text);}
+.pmx-teach-next li > span{min-width:0;overflow-wrap:anywhere;}
+.pmx-teach-next li small{grid-column:2;margin-top:2px;font:var(--pmx-fs-fine);color:var(--muted);}
+.pmx-teach-persona-line{margin:18px 0 0;font:var(--pmx-fs-fine);color:var(--muted);}
+.pmx-teach-tech{margin:0;font:var(--pmx-fs-fine);color:var(--muted);overflow-wrap:anywhere;}
+.pmx-teach-tech + .pmx-teach-tech{margin-top:6px;}
+
+/* keyboard focus (FOUNDATION REQUEST in MEMTEACH notes): the app's global button:focus-visible ring is a runtime
+   color-mix (IMPACT A1-15 forbids it on pmx surfaces); inside Teach's own surfaces it takes the precomputed token */
+:is(.pmx-teach-sheet, .pmx-teach-doc, .pmx-teach-receipt, .pmx-teach-verdict, .teach-demo-guide) :is(button, input, textarea, summary, [tabindex]):focus-visible{outline-color:var(--pmx-focus-outline);}
+.pmx-teach-ring:focus-visible{outline:none;}
+.pmx-teach-ring:focus-visible > .pmx-teach-ring-shape{outline:2px solid var(--pmx-focus-outline);outline-offset:2px;}

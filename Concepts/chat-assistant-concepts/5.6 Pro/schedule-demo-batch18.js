@@ -34,7 +34,8 @@ function start(ctx,flow){
  }
  sessions.set(t.id,r);R.quota.waiting=false;ctx.renderApp();
 }
-function button(action,label,extra=''){return '<button class="soft-button" data-action="'+action+'" '+extra+'>'+label+'</button>';}
+const PHASE_WORDS={idle:'Waiting',admitted:'Running',winding_down:'Wrapping up',paused_safe:'Paused at a safe point',completed:'Finished'};
+function button(action,label,extra=''){return '<button type="button" class="text-button" data-action="'+action+'" '+extra+'>'+label+'</button>';}
 function artifactButton(ref,label){return button('open-artifact',label,'data-version="'+ref.artifact_version+'" data-ref="'+encodeURIComponent(JSON.stringify(ref))+'"');}
 function controls(ctx,r){
  const m=record(r),b=build(r);let html='';
@@ -44,14 +45,17 @@ function controls(ctx,r){
    html=button('b18-window-open','Evaluate window opening')+button('b18-window-wind','Move to wind-down')+button('b18-window-close','Move to pause time')+button('b18-window-next','Next eligible window')+
      button('b18-quota','Simulate Usage '+(R.quota.waiting?'available':'unavailable'))+button('b18-consent','Allow Usage resume for this run')+
      button('b18-plan','Open Plan');
-   html+='<div class="b18-clock-state"><span>Clock: '+ctx.esc(new Date(at).toISOString())+'</span><span>'+ctx.esc(b.held_reason||b.runPhase||'Waiting')+'</span></div>';
+   html+='<div class="b18-clock-state"><span>Demo clock: '+ctx.esc(PM56_SHELL.pmxTime.at(at,b.timezone))+'</span><span>'+ctx.esc(b.held_reason||PHASE_WORDS[b.runPhase]||'Waiting')+'</span></div>';
  }
  return html;
 }
 E.slot('composerBelow',ctx=>{
  const r=sessions.get(ctx.thread.id);if(!r)return '';const m=record(r),b=build(r);
- const hint=r.instruction|| (r.flow==='messages'?(!m?'Open the wand → Schedule Message. Nothing is scheduled by this preparation.':'Publish V2, then evaluate the scheduled time. The message still reads V1. Disconnect V1 to try a Held result.'):(!b?'Send the prepared Plan request, then use More → Build At. Do not Build Now.':'Let the first output finish, move to wind-down, then the next window. The original run and completed output must survive.'));
- return '<section class="b18-guide" data-b18-flow="'+r.flow+'"><div class="b18-guide-title"><strong>Batch 18 · '+(r.guideTitle|| (r.flow==='messages'?'Exact scheduled messages':'Recurring execution windows'))+'</strong><small>Explicit local clock · no background service</small></div><p>'+ctx.esc(hint)+'</p><details class="b18-clock" '+(r.clockOpen?'open':'')+'><summary>Local clock &amp; input controls</summary><div class="b18-controls">'+controls(ctx,r)+'</div>'+(r.last?'<p class="b18-decision" role="status">'+ctx.esc(r.last)+'</p>':'')+'</details></section>';
+ const hint=r.instruction|| (r.flow==='messages'?(!m?'Open the wand, then Schedule Message. Nothing is scheduled by this preparation.':'Publish V2, then evaluate the scheduled time. The message still reads V1. Disconnect V1 to try a Held result.'):(!b?'Send the prepared Plan request, then use More, then Build At. Do not Build Now.':'Let the first output finish, move to wind-down, then the next window. The original run and completed output must survive.'));
+ /* the one pmx guide look (G-25): caption, the next step, and the demo clock as a native <details> under it */
+ const title=r.guideTitle||(r.flow==='messages'?'Exact scheduled messages':'Recurring execution windows');
+ return PM56_SHELL.pmxGuide({key:'b18-guide',cls:'b18-guide',attrs:'data-b18-flow="'+ctx.esc(r.flow)+'"',placement:'dock',caption:'Guided example · '+ctx.esc(title)+' · no AI cost',step:ctx.esc(hint),
+  extra:'<details class="b18-clock" '+(r.clockOpen?'open':'')+'><summary>'+PM56_SHELL.pmxGlyph('chevron-down',13)+'<span>Demo clock and controls</span></summary><div class="b18-controls">'+controls(ctx,r)+'</div>'+(r.last?'<p class="b18-decision" role="status">'+ctx.esc(r.last)+'</p>':'')+'</details>'});
 });
 E.slot('transcriptMessage',ctx=>{const m=ctx.m||ctx.message;return m?.type==='b18-result'?'<article class="b18-result"><strong>Sum: '+ctx.esc(m.sum)+'</strong><p>Calculated from the exact scheduled attachment. This is a local calculation, not a provider response.</p>'+artifactButton(m.ref,'Inspect result and source identity')+'</article>':'';});
 function outcome(r,out){r.last=out.ok?out.duplicate?'Original receipt returned; no duplicate delivery.':out.completed?'The existing run is complete. No new run was started.':out.resumed?'The same unfinished PlanRun resumed.':out.paused?'The original run paused at a safe boundary.':out.winding_down?'Wind-down: the bounded operation may finish, but no new work is admitted.':'Clock evaluated through the shared scheduler.':out.detail||out.error||'Refused';E.ctx().renderApp();}

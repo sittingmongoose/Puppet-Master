@@ -112,25 +112,80 @@
 .af-verify-badge.af-verify-deferred{ color:var(--danger); border-color:color-mix(in srgb, var(--danger) 40%, var(--border)); }
 
 /* =====================================================================
-   5. HEADER CHIPS (Teacher active, title state)
+   5. HEADER: the Teacher chip (Teacher Persona, not a PREFS surface), and
+      the chat's name (PREFS, DESIGN-SPEC 8.14, on F0b's hooks: the header's
+      .chat-title[data-pmx-title-state] and its keyed .pmx-chat-title-word
+      spans). The name's state is never a pill: a shimmer on the title while
+      a name is on its way, a lock glyph when you named the chat, a warning
+      glyph when it couldn't be named.
    ===================================================================== */
 .af-chip{
   display:inline-flex; align-items:center; gap:5px; padding:4px 9px; border-radius:999px;
   border:1px solid var(--border-strong); background:var(--surface-2); color:var(--muted);
   font:600 10.5px var(--font-ui); white-space:nowrap; cursor:default;
 }
-button.af-chip{ cursor:pointer; }
-button.af-chip:hover{ background:var(--surface-3); color:var(--text); }
 .af-chip b{ font-weight:700; color:inherit; }
 .af-chip-teacher{
   border-color:color-mix(in srgb, var(--accent-2) 50%, var(--border-strong));
   background:color-mix(in srgb, var(--accent-2) 15%, var(--surface-2)); color:var(--text);
 }
-.af-chip-pending{ color:var(--accent); border-color:color-mix(in srgb, var(--accent) 45%, var(--border-strong)); }
-.af-chip-pending svg{ animation:af-spin 900ms linear infinite; }
-.af-chip-locked{ color:var(--text); }
-.af-chip-warn{ color:var(--warning); border-color:color-mix(in srgb, var(--warning) 50%, var(--border-strong)); background:color-mix(in srgb, var(--warning) 12%, var(--surface-2)); }
-@keyframes af-spin{ to{ transform:rotate(360deg); } }
+/* The naming motion's own durations (FOUNDATION REQUEST: move them into pmx-system.css :root beside 5.1's table):
+   the width FLIP of a new name is 280 ms (8.14); New chat defaults' naming specimen shimmers 520 ms before its
+   name arrives. Retro scales them by 0.6 like every --pmx-t-* (IMPACT A1-13). */
+:root{ --pmx-t-title-flip:280ms; --pmx-t-title-naming:520ms; }
+body[data-theme^="retro"]{ --pmx-t-title-flip:168ms; --pmx-t-title-naming:312ms; }
+/* while a new name arrives, each word is one whole-word box so it can rise 3 px (assistant-features.js morphTitle,
+   WAAPI; a box never splits a word, and its baseline stays the text's). At rest the words are inline again, so a long
+   title's ellipsis sits right where the text is cut. */
+body.pmx-title-morphing .chat-title .pmx-chat-title-word{ display:inline-block; overflow:visible; }
+/* while a name is on its way: one shimmer band across the title, and nothing else moves */
+.chat-title[data-pmx-title-state="naming"] .pmx-chat-title{
+  background:linear-gradient(100deg, var(--muted) 38%, var(--text) 50%, var(--muted) 62%) no-repeat;
+  background-size:300% 100%; background-position:100% 0;
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  /* started a quarter in, so the band is on the words from the first frame (a name often takes under a second) */
+  animation:pmx-sheen var(--pmx-shimmer) var(--pmx-ease-linear) calc(var(--pmx-shimmer) * -.25) infinite;
+}
+/* and the title clips instead of showing an ellipsis after words that are not visible yet (a body class, set for the
+   length of the morph by assistant-features.js) */
+body.pmx-title-morphing .chat-title .pmx-chat-title{ text-overflow:clip; }
+/* a narrow header (391 px with Activity open) cuts the NAME, never the status word: .chat-state is the title's flex
+   sibling, and styles.css's .chat-title span rule would otherwise shrink and ellipsize it too */
+.chat-header .chat-title .pmx-chat-title{ flex:0 1 auto; min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.chat-header .chat-title .chat-state{ flex:none; overflow:visible; text-overflow:clip; white-space:nowrap; }
+/* the mark (headerExtras) sits right after the title: the flex order moves it ahead of the header's tools */
+.chat-header > .pmx-chat-title-mark, .chat-header > .pmx-chat-title-naming{ order:1; }
+.chat-header > .chat-head-spacer, .chat-header > .chat-head-spacer ~ :not(.pmx-chat-title-mark, .pmx-chat-title-naming){ order:2; }
+.chat-header > .pmx-chat-title-mark{
+  flex:none; display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; margin-left:-2px;
+  border-radius:var(--pmx-r-xs); color:var(--muted); cursor:pointer;
+  transition:color var(--pmx-t-light) var(--pmx-ease-linear);
+  animation:pmx-pop var(--pmx-t-pop) var(--pmx-ease-pop) backwards;
+}
+.chat-header > .pmx-chat-title-mark:hover, .chat-header > .pmx-chat-title-mark:focus-visible{ color:var(--text); }
+.chat-header > .pmx-chat-title-mark[data-state="unavailable"]{ color:var(--warning); }
+.chat-header > .pmx-chat-title-mark:focus-visible{ outline:2px solid var(--pmx-focus-outline); outline-offset:1px; }
+/* under reduced motion nothing shimmers, so a quiet word says a name is on its way (it is hidden otherwise) */
+.chat-header > .pmx-chat-title-naming{ display:none; flex:none; font:var(--pmx-fs-meta); font-weight:var(--pmx-w-reg); color:var(--muted); white-space:nowrap; }
+@media (prefers-reduced-motion: reduce){
+  .chat-title[data-pmx-title-state="naming"] .pmx-chat-title{ background:none; color:inherit; }
+  .chat-header > .pmx-chat-title-naming{ display:inline-flex; }
+}
+body.pm56-reduced .chat-title[data-pmx-title-state="naming"] .pmx-chat-title{ background:none; color:inherit; }
+body.pm56-reduced .chat-header > .pmx-chat-title-naming{ display:inline-flex; }
+/* ...and while that word shows, the status word steps aside, so the header never reads "Ready  Naming…" (until the
+   FOUNDATION REQUEST's slot puts the word right after the name) */
+@media (prefers-reduced-motion: reduce){
+  .chat-title[data-pmx-title-state="naming"] .chat-state{ display:none; }
+}
+body.pm56-reduced .chat-title[data-pmx-title-state="naming"] .chat-state{ display:none; }
+/* "Name it for me" when it can't run (before the first message, naming off, the model unavailable): it reads as
+   disabled like the menu's other disabled rows, and keeps its reason line */
+.menu-item.af-title-regen-off{ opacity:.62; cursor:default; }
+.menu-item.af-title-regen-off:hover, .menu-item.af-title-regen-off:active{ background:transparent; color:var(--muted); transform:none; }
+.menu-item.af-title-regen-off .menu-icon{ color:var(--subtle); background:var(--surface-2); }
+.menu-item.af-title-regen-off .menu-copy strong{ color:var(--muted); }
+.menu-item.af-title-regen-off .menu-copy span{ color:var(--subtle); }
 
 /* =====================================================================
    6. REVERT LAST AGENT EDIT
@@ -209,35 +264,98 @@ button.af-chip:hover{ background:var(--surface-3); color:var(--text); }
 .af-file-label:focus-within, input.af-visually-hidden:focus-visible + .af-file-label,
 .af-file-label:has(+ input.af-visually-hidden:focus-visible){ outline:2px solid var(--accent); outline-offset:2px; }
 
-/* =====================================================================
-   8. ELI5 PREVIEW CARD
-   ===================================================================== */
-.af-eli5-card .system-card-body{ display:grid; gap:9px; }
-.af-eli5-pair{ display:grid; grid-template-columns:1fr 1fr; gap:9px; }
-.af-eli5-col{
-  display:grid; gap:4px; padding:9px 10px; border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--surface-2);
-}
-.af-eli5-col label{ display:flex; align-items:center; gap:4px; font-size:9.5px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--subtle); }
-.af-eli5-col p{ margin:0; font-size:12px; line-height:1.55; color:var(--text); }
-.af-eli5-simple{ border-color:color-mix(in srgb, var(--accent) 40%, var(--border)); background:color-mix(in srgb, var(--accent) 8%, var(--surface-2)); }
-.af-eli5-simple label{ color:var(--accent); }
-.af-code-block{
-  margin:0; padding:9px 10px; border-radius:var(--radius-sm); border:1px solid var(--border-strong);
-  background:var(--surface-4); color:var(--text); font:11.5px/1.5 var(--font-mono); overflow:auto; white-space:pre;
-}
+/* 8. (the ELI5 preview card is gone: ELI5 shows one answer, simple or standard; PREFS, DESIGN-SPEC 8.13) */
 
 /* =====================================================================
-   9. THREAD MENU (the settings dialog now renders through the shared
-   PM56_SHELL grammar in module-shell.css; its old rules are gone)
+   9. NEW CHAT DEFAULTS (PREFS, DESIGN-SPEC 8.14): a compact pmx sheet
+   (720 x 600). Three questions on the left, each a label, a helper line and
+   a preserved dropdown; on the right ONE plate floor holding a live specimen
+   beside each question (the plate's rows are the body's rows, through
+   subgrid). Kind-specific parts only (pmx-dflt-*); every primitive keeps its
+   own look. ("Name it for me" in the thread menu is a plain preserved menu
+   row: it has no rules of its own.)
    ===================================================================== */
+.pmx-dflt{ display:grid; grid-template-columns:minmax(0,1fr) minmax(196px,232px); grid-template-rows:auto auto auto;
+  column-gap:24px; row-gap:16px; align-content:space-between; min-width:0; }
+.pmx-dflt > .pmx-dflt-q{ grid-column:1; min-width:0; }
+/* the triggers sit flush with the body, whose overflow (it may scroll) cut the left of their focus ring: the body
+   gets 4 px of inline room that its negative margin gives back, so nothing moves (FOUNDATION REQUEST: .pmx-body) */
+.pmx-sheet .pmx-body:has(> .pmx-dflt){ padding-left:4px; margin-left:-4px; }
+@media (min-width:948px){ .pmx-sheet .pmx-body:has(> .pmx-dflt){ padding-right:4px; margin-right:-4px; } }
+.pmx-dflt > .pmx-dflt-q:nth-child(1){ grid-row:1; }
+.pmx-dflt > .pmx-dflt-q:nth-child(2){ grid-row:2; }
+.pmx-dflt > .pmx-dflt-q:nth-child(3){ grid-row:3; }
+.pmx-sheet .pmx-dflt .pmx-dflt-ctl{ margin-top:0; }
+.pmx-sheet .pmx-dflt .pmx-dflt-ctl .pmx-ctl-control{ max-width:300px; }
+/* retro clamps a question's helper to one line (module-shell.css); here it may wrap to two, since the row's
+   specimen leaves room. In the tall state (the naming warning note under Name new chats) retro's wider monospace
+   drops the Recent line whole instead, so no helper is cut (the warning note and the specimen already say why
+   chats won't be named) */
+body[data-theme^="retro"] .pmx-dflt[data-tall="1"] .pmx-dflt-recent{ display:none; }
+body[data-theme^="retro"] .pmx-sheet .pmx-dflt .pmx-dflt-ctl .pmx-ctl-copy .pmx-help{
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; white-space:normal; overflow:hidden; }
+/* secondary lines under a question: >= 6 px under its dropdown (J-2 item 4) */
+.pmx-dflt-note{ margin-top:8px; }
+.pmx-dflt-recent{ font-variant-numeric:tabular-nums; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+/* retro's monospace runs wider: the Recent line keeps to one line (its whole text is its hover text) */
+body[data-theme^="retro"] .pmx-dflt-note{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.pmx-dflt-warn-note{ display:flex; align-items:flex-start; gap:8px; margin:8px 0 0; font:var(--pmx-fs-help); color:var(--muted); }
+.pmx-dflt-warn-note > svg{ flex:none; margin-top:2px; color:var(--warning); }
+/* M1 reading order: the questions after the head, 40 ms apart; the plate fades in with the foundation's timing */
+.pmx-sheet .pmx-dflt > .pmx-dflt-q{ animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-q) backwards; }
+.pmx-sheet .pmx-dflt > .pmx-dflt-q:nth-child(2){ animation-delay:calc(var(--pmx-t-at-q) + var(--pmx-t-cascade)); }
+.pmx-sheet .pmx-dflt > .pmx-dflt-q:nth-child(3){ animation-delay:calc(var(--pmx-t-at-q) + 2 * var(--pmx-t-cascade)); }
+.pmx-sheet .pmx-dflt-warn-note{ animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards; }
 
-.af-menu-divider{ height:1px; margin:4px 8px; background:var(--border); }
+/* the plate: one floor down the right, a specimen level with each question; the rows share the body's spare
+   height (align-content above), so the floor ends with the body in every state instead of leaving a dead band */
+.pmx-sheet .pmx-dflt-plate{ grid-column:2; grid-row:1 / span 3; display:grid; grid-template-rows:subgrid; row-gap:16px;
+  height:auto; margin:0; padding:14px; }
+.pmx-dflt-spec{ min-width:0; align-self:center; }
+/* 1 · the voice: the same answer, standard or simple; a change re-sets its words once (eli5-preferences.css) */
+.pmx-dflt-cap{ margin:0 0 4px; font:var(--pmx-fs-fine); color:var(--subtle); }
+body[data-theme^="retro"] .pmx-dflt-cap{ color:var(--muted); }
+.pmx-dflt-say{ margin:0; font:var(--pmx-w-reg) 13px/19px var(--pmx-voice); color:var(--text); }
+body[data-theme^="retro"] .pmx-dflt-say{ font-size:12px; line-height:18px; }
+/* 2 · the thinking fold: folded to one line (While it thinks) or open beside the answer (Always open); a change
+   opens or folds it once (WAAPI height, assistant-features.js) */
+.pmx-dflt-fold{ display:flex; align-items:center; gap:6px; margin:0; font:600 12px/17.5px var(--font-ui); color:var(--muted); }
+.pmx-dflt-fold > svg{ flex:none; transition:transform var(--pmx-t-move) var(--pmx-ease-move); }
+.pmx-dflt-think[data-open="1"] .pmx-dflt-fold > svg{ transform:rotate(90deg); }
+.pmx-dflt-thought{ overflow:hidden; padding-left:18px; }
+.pmx-dflt-thought > p{ margin:4px 0 0; font:var(--pmx-fs-help); color:var(--muted); }
+.pmx-dflt-think[data-open="0"] .pmx-dflt-thought{ height:0; visibility:hidden; }
+.pmx-dflt-answer{ margin:8px 0 0; font:var(--pmx-w-reg) 13px/19px var(--pmx-voice); color:var(--text); }
+.pmx-dflt-preview{ margin-top:10px; }
+body[data-theme^="retro"] .pmx-dflt-answer{ font-size:12px; line-height:18px; }
+/* 3 · the name a new chat gets: a changed way of naming plays the naming once ("New chat" shimmers, then the name
+   arrives word by word, like the header); off, it stays "New chat"; waiting, a warning beside it */
+.pmx-dflt-title{ position:relative; display:flex; align-items:center; gap:8px; margin:0; min-width:0; font:600 13.5px/20px var(--font-ui); color:var(--text); }
+body[data-theme^="retro"] .pmx-dflt-title{ font-size:12.5px; }
+.pmx-dflt-name{ min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.pmx-dflt-naming:is([data-state="off"], [data-state="waiting"]) .pmx-dflt-name{ color:var(--muted); }
+.pmx-dflt-flag{ flex:none; display:inline-flex; color:var(--warning); animation:pmx-pop var(--pmx-t-pop) var(--pmx-ease-pop) backwards; }
+.pmx-dflt-sub{ margin:4px 0 0; font:var(--pmx-fs-fine); color:var(--subtle); }
+/* the only line that says why chats won't be named reads clearly, and retro's hatched floor needs the stronger ink */
+.pmx-dflt-naming[data-state="waiting"] .pmx-dflt-sub, body[data-theme^="retro"] .pmx-dflt-sub{ color:var(--muted); }
+.pmx-dflt-nc{ position:absolute; left:0; top:0; visibility:hidden; pointer-events:none; white-space:nowrap;
+  background:linear-gradient(100deg, var(--muted) 38%, var(--text) 50%, var(--muted) 62%) no-repeat;
+  background-size:300% 100%; background-position:100% 0; -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation:pmx-dflt-naming var(--pmx-t-title-naming) var(--pmx-ease-linear); }
+@keyframes pmx-dflt-naming{
+  0%{ visibility:visible; opacity:1; background-position:100% 0; }
+  80%{ visibility:visible; opacity:1; background-position:0 0; }
+  100%{ visibility:visible; opacity:0; background-position:0 0; }
+}
+.pmx-dflt-name[data-replay="1"] .pmx-dflt-w{ display:inline-block; animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;
+  animation-delay:calc(var(--pmx-t-title-naming) * .8 + var(--i, 0) * var(--pmx-t-cascade)); }
+/* the foot has one primary (Done): with no Cancel, the say column and the primary are its only two columns */
+.pmx-sheet .pmx-foot.pmx-dflt-foot{ grid-template-columns:minmax(0,1fr) auto; }
 
 /* =====================================================================
    10. RESPONSIVE
    ===================================================================== */
 @media (max-width:590px){
-  .af-eli5-pair{ grid-template-columns:1fr; }
   .af-manifest-row{ grid-template-columns:auto minmax(0,1fr); }
   .af-manifest-row .af-manifest-stat{ display:none; }
   .af-phase{ min-width:0; flex:1 1 42%; }
@@ -247,7 +365,6 @@ button.af-chip:hover{ background:var(--surface-3); color:var(--text); }
    11. REDUCED MOTION — remove decoration, never a state change
    ===================================================================== */
 @media (prefers-reduced-motion: reduce){
-  .af-chip-pending svg{ animation:none !important; }
   .af-phase.af-phase-active .af-phase-dot{ animation:none !important; }
   .af-chip-choice, .af-tab{ transition:none !important; }
 }

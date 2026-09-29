@@ -1,14 +1,79 @@
-/* Chat Room uses the existing document and card tokens; no video-layout layer. */
-.room-document{min-width:0;max-width:100%;}
-.room-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:11px;}
-.room-controls{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;}
-.room-message{border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin:10px 0;background:var(--surface-2);min-width:0;}
-.room-message.selected{outline:1px solid var(--accent);outline-offset:1px;}
-.room-message header{display:flex;align-items:center;justify-content:space-between;gap:8px;}
-.room-message p,.room-promotion p{font-size:13px;line-height:1.6;overflow-wrap:anywhere;margin:8px 0;}
-.room-message small{color:var(--muted);font-size:10px;}
-.room-select{margin-top:5px;}
-.room-promotion{padding:14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface-3);margin:16px 0;}
-.room-promotion>div{display:flex;gap:8px;flex-wrap:wrap;}
-.room-provenance{font-size:10px!important;color:var(--muted);margin-top:18px;}
-@media(max-width:750px){.room-message{padding:10px;}.room-meta{font-size:10px;}}
+/* Chat Room (ROOM-A): the sheet plate, the in-chat card and the queued rows above the composer. The room document is
+   room-view.css (ROOM-B); the old document's rules left with its markup. */
+
+/* ---- ROOM-A presentation (DESIGN-SPEC 8.3): the sheet plate's tabletop question and the turn-policy hover draw ---- */
+.pmx-room-topic-fo{overflow:visible;}
+.pmx-room-topic{display:flex;align-items:center;justify-content:center;width:100%;height:100%;text-align:center;
+  font:var(--pmx-w-reg) 10.5px/15.5px var(--font-ui);color:var(--muted);overflow:hidden;
+  transition:color var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-room-topic > span{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;overflow-wrap:anywhere;}
+#pmOverlayRoot[data-pmx-focus~="job"] .pmx-room-topic{color:var(--accent);}
+/* IMPACT A1-05: hovering "Who talks when" replays the turn-policy path once, as a clip reveal (never a dash offset) */
+@keyframes pmx-room-redraw{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+#pmOverlayRoot[data-pmx-focus~="policy"] .pmx-sheet .pmx-plate .pmx-p-line[data-pmx-part~="policy"]{animation:pmx-room-redraw var(--pmx-t-draw) var(--pmx-ease-out) 0ms 1 both;}
+@media (prefers-reduced-motion: reduce){#pmOverlayRoot[data-pmx-focus~="policy"] .pmx-sheet .pmx-plate .pmx-p-line[data-pmx-part~="policy"]{animation:none;}}
+body.pm56-reduced #pmOverlayRoot[data-pmx-focus~="policy"] .pmx-sheet .pmx-plate .pmx-p-line[data-pmx-part~="policy"]{animation:none;}
+
+/* ---- ROOM-A presentation: the finished card's summary and its promotion row (8.3, G-16). Card-only names
+   (pmx-room-card-*): the room document has its own promotion block, and a shared name let its flex row widen the
+   card. Every row here may shrink (min-width:0), so no rule from elsewhere can push the card sideways. ---- */
+.pmx-run .pmx-room-card-summary{margin:8px 0 0;min-width:0;color:var(--muted);font:var(--pmx-w-reg) 12.5px/18px var(--font-ui);}
+.pmx-run .pmx-room-card-summary > *{margin:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;}
+.pmx-run .pmx-room-card-promote{display:block;margin:10px 0 0;min-width:0;max-width:100%;}
+.pmx-run .pmx-room-card-promote-row{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;margin:0;min-width:0;min-height:32px;}
+.pmx-run .pmx-room-card-promote-label{font:500 11.5px/16px var(--font-ui);color:var(--subtle);margin-right:2px;}
+.pmx-run .pmx-room-card-help{margin:6px 0 0;min-width:0;font:var(--pmx-w-reg) 11px/16px var(--font-ui);color:var(--subtle);}
+.pmx-run .pmx-room-card-made{display:flex;align-items:center;gap:8px;margin:8px 0 0;min-width:0;max-width:100%;font:var(--pmx-w-reg) 12px/18px var(--font-ui);color:var(--muted);}
+.pmx-run .pmx-room-card-made > svg{flex:none;color:var(--positive);}
+.pmx-run .pmx-room-card-made > span{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pmx-run .pmx-room-card-made > button{flex:none;}
+/* the speaker's lane before its first word lands: no bare quote marks (the words are filled in at render time,
+   so this only guards a lane that has nothing to say yet) */
+.pmx-run .pmx-lane-l2 q[data-room-stream]:empty{display:none;}
+/* E-18: the queue's own line on the card, under the lanes; it wraps (the last-round words must be readable at 311 px) */
+.pmx-run .pmx-room-card-queue{margin:8px 0 0;min-width:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);white-space:normal;overflow-wrap:anywhere;}
+.pmx-run .pmx-room-card-queue[data-tone="needs"]{color:var(--text);}
+.pmx-run .pmx-room-card-queue b{font-weight:600;color:var(--text);}
+/* 7.2 S tier: the queue line takes the place of the lanes after the speaker's (up next is in the sentence already,
+   the previous turn is in the room document), so the live card stays in its budget (J-2: drop a secondary element,
+   never compress) */
+@container pmxrun (max-width: 359px){.pmx-run .pmx-lanes:has(~ .pmx-room-card-queue) > .pmx-lane:nth-of-type(n+2){display:none;}}
+/* the receipt (8.3 "Finished · 2 rounds · 1 To-Do"): under 520 px COLLAB hides the time slot, so the rounds ride in
+   the headline and the check glyph stands for "Finished"; from 520 px the time slot carries the rounds */
+@container pmxrun (max-width: 519.98px){.pmx-receipt .pmx-room-card-fin{display:none;}}
+@container pmxrun (min-width: 520px){.pmx-receipt .pmx-room-card-rounds{display:none;}}
+/* 7.2 S tier (a card under 360 px): the rest of the summary drops; the headline carries it and the room document
+   has it whole (J-2: drop a secondary element, never compress) */
+@container pmxrun (max-width: 359px){.pmx-run .pmx-room-card-summary{display:none;}}
+/* M6: the summary and the promotion row rise in once, 40 ms apart, when the finished face mounts */
+.pmx-run[data-density="result"] .pmx-room-card-summary, .pmx-run[data-density="result"] .pmx-room-card-promote{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-cascade) * 3);}
+.pmx-run[data-density="result"] .pmx-room-card-promote{animation-delay:calc(var(--pmx-t-cascade) * 4);}
+@media (prefers-reduced-motion: reduce){.pmx-run[data-density="result"] .pmx-room-card-summary, .pmx-run[data-density="result"] .pmx-room-card-promote{animation:none;}}
+body.pm56-reduced .pmx-run[data-density="result"] .pmx-room-card-summary, body.pm56-reduced .pmx-run[data-density="result"] .pmx-room-card-promote{animation:none;}
+/* M4: the marker that travels from the finished speaker's mark to the next one's (a transient body node) */
+.pmx-room-marker{position:fixed;z-index:var(--pmx-z-flight,1160);width:14px;height:2px;border-radius:1px;background:var(--text);pointer-events:none;}
+/* E-18 (owner answer): the room's queued messages above the composer, in the main chat queue's place and words
+   (Queued · the message · Edit · Send now). J-2: text 12 px from the row's sides, 10 px between controls and 16 px
+   from the text to the first one, 34 px buttons so the glyph keeps 10 px inside. */
+.pmx-room-queue{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;max-width:980px;margin:0 auto 8px;}
+.pmx-room-queue-row{display:flex;align-items:center;gap:10px;min-height:46px;padding:5px 5px 5px 12px;
+  border:1px solid var(--border);border-radius:10px;background:var(--surface-2);font-family:var(--font-ui);}
+.pmx-room-queue-label{flex:none;font:500 11.5px/17px var(--font-ui);color:var(--subtle);}
+.pmx-room-queue-text{flex:1;min-width:0;margin-right:8px;font:var(--pmx-w-reg) 12.5px/18px var(--font-ui);color:var(--muted);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pmx-room-queue-btn{flex:none;display:inline-grid;place-items:center;width:34px;height:34px;padding:0;margin:0;
+  border:1px solid var(--border);border-radius:8px;background:var(--surface-3);color:var(--subtle);cursor:pointer;
+  transition:color var(--pmx-t-light) var(--pmx-ease-linear),border-color var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-room-queue-btn:hover:not(:disabled),.pmx-room-queue-btn:focus-visible{color:var(--text);border-color:var(--border-strong);}
+.pmx-room-queue-btn:disabled{opacity:.45;cursor:default;}
+.pmx-room-queue-btn svg{width:14px;height:14px;}
+.pmx-room-queue-acts{flex:none;display:flex;align-items:center;gap:10px;margin-left:auto;}
+/* "Not sent" (the room can no longer take it): Send to the assistant instead, then Edit and Remove. When the words
+   would get less than 160 px, the controls take a line of their own under them (wrap, never squeeze) */
+.pmx-room-queue-row[data-state="not-sent"]{flex-wrap:wrap;row-gap:6px;}
+.pmx-room-queue-row[data-state="not-sent"] .pmx-room-queue-text{flex:1 1 160px;}
+.pmx-room-queue-row[data-state="not-sent"] .pmx-room-queue-label{color:var(--text);}
+.pmx-room-queue-alt{flex:none;min-height:34px;padding:7px 10px;margin:0;white-space:nowrap;}
+/* the receipt's headline wins width over its expand chevron under 520 px ("2 rounds · 1 To-Do" in retro's mono
+   needs ~140 px); More opens the finished face there, as it does on every receipt */
+@container pmxrun (max-width: 519.98px){.pmx-receipt[data-pmx-kind="chat_room"] .pmx-run-foot [data-action="collab-toggle-expand"]{display:none;}}

@@ -1,0 +1,574 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260927-006-wand-command-census",
+  "updated_at_utc": "2026-09-28T00:30:00+00:00",
+  "last_event_id": "evt-016",
+  "canonical_plan_targets": [
+    "Plans/Automated_Testing_System.md",
+    "Plans/Commands_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Automated_Testing_System.md",
+    "Plans/Commands_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Automated_Testing_System.md",
+    "Plans/Commands_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md"
+  ],
+  "governance_status": "not_requested",
+  "latest_audit_ref": null,
+  "latest_audit_status": null,
+  "validation_state": {
+    "ledger_health": "pass",
+    "compile_witness": "pass"
+  },
+  "planned_owner_docs": [
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Commands_System.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/Automated_Testing_System.md"
+  ],
+  "reserved_id_ranges": {
+    "UCC": "UCC-169..UCC-178",
+    "CS": "CS-085..CS-092",
+    "CDRY": "CDRY-021..CDRY-026",
+    "WM": "WM-062..WM-066",
+    "CV (companion task only)": "CV-356..CV-370",
+    "ATS (companion task only)": "ATS-062..ATS-066"
+  },
+  "status": "prose_compile_open",
+  "items": [
+    {
+      "queue_id": "queue-001",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-03"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-169",
+        "WM-062"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-169",
+        "WM-062"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-002",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-04"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-169",
+        "WM-062"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-169",
+        "WM-062"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-003",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-acd-12"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-169",
+        "WM-062"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-169",
+        "WM-062"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-004",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-07"
+      ],
+      "target_doc": "Plans/Commands_System.md",
+      "target_docs": [
+        "Plans/Commands_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "CDRY-021"
+      ],
+      "compiled_plan_unit_ids": [
+        "CDRY-021"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-005",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-08"
+      ],
+      "target_doc": "Plans/Commands_System.md",
+      "target_docs": [
+        "Plans/Commands_System.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "target_plan_unit_ids": [
+        "CDRY-006",
+        "CDRY-021"
+      ],
+      "compiled_plan_unit_ids": [
+        "CDRY-021"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-006",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-09"
+      ],
+      "target_doc": "Plans/Commands_System.md",
+      "target_docs": [
+        "Plans/Commands_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "CS-086"
+      ],
+      "compiled_plan_unit_ids": [
+        "CS-086"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-007",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-01"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-170"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-170"
+      ],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-008",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-02"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-171"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-171"
+      ],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-009",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-03-w"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-172",
+        "WM-063"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-172",
+        "WM-063"
+      ],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-010",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-04-w"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-172",
+        "WM-063"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-172",
+        "WM-063"
+      ],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-011",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-05"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-173"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-173"
+      ],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-012",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-07-w"
+      ],
+      "target_doc": "Plans/Commands_System.md",
+      "target_docs": [
+        "Plans/Commands_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "CS-085",
+        "CDRY-022"
+      ],
+      "compiled_plan_unit_ids": [
+        "CS-085",
+        "CDRY-022"
+      ],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-013",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmp-02"
+      ],
+      "target_doc": "Plans/Wiring_Matrix.md",
+      "target_docs": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "target_plan_unit_ids": [
+        "WM-063"
+      ],
+      "compiled_plan_unit_ids": [
+        "WM-063"
+      ],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-014",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-01-c"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-170"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-170"
+      ],
+      "compile_event_id": "evt-010"
+    },
+    {
+      "queue_id": "queue-015",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-02-c"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-174",
+        "UCC-171"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-174",
+        "UCC-171"
+      ],
+      "compile_event_id": "evt-010"
+    },
+    {
+      "queue_id": "queue-016",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-03-c"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-175",
+        "UCC-172"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-175",
+        "UCC-172"
+      ],
+      "compile_event_id": "evt-010"
+    },
+    {
+      "queue_id": "queue-017",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmd-07-c"
+      ],
+      "target_doc": "Plans/Commands_System.md",
+      "target_docs": [
+        "Plans/Commands_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "CS-087",
+        "CDRY-023",
+        "CDRY-022"
+      ],
+      "compiled_plan_unit_ids": [
+        "CS-087",
+        "CDRY-023",
+        "CDRY-022"
+      ],
+      "compile_event_id": "evt-010"
+    },
+    {
+      "queue_id": "queue-018",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-cmp-02-c"
+      ],
+      "target_doc": "Plans/Wiring_Matrix.md",
+      "target_docs": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "target_plan_unit_ids": [
+        "WM-064",
+        "WM-063"
+      ],
+      "compiled_plan_unit_ids": [
+        "WM-064",
+        "WM-063"
+      ],
+      "compile_event_id": "evt-010"
+    },
+    {
+      "queue_id": "queue-019",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-ats-066"
+      ],
+      "target_doc": "Plans/Automated_Testing_System.md",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "ATS-066"
+      ],
+      "compiled_plan_unit_ids": [
+        "ATS-066"
+      ],
+      "compile_event_id": "evt-010"
+    },
+    {
+      "queue_id": "queue-020",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-wm-041-tour"
+      ],
+      "target_doc": "Plans/Wiring_Matrix.md",
+      "target_docs": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "target_plan_unit_ids": [
+        "WM-041"
+      ],
+      "compiled_plan_unit_ids": [
+        "WM-041"
+      ],
+      "compile_event_id": "evt-013"
+    },
+    {
+      "queue_id": "queue-021",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-brv-crew-auto"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-172",
+        "UCC-170",
+        "WM-063",
+        "WM-064"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-172",
+        "UCC-170",
+        "WM-063",
+        "WM-064"
+      ],
+      "compile_event_id": "evt-014"
+    },
+    {
+      "queue_id": "queue-022",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-brv-census"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-170",
+        "UCC-169"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-170",
+        "UCC-169"
+      ],
+      "compile_event_id": "evt-014"
+    },
+    {
+      "queue_id": "queue-023",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-brv-identities"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-169",
+        "CDRY-021",
+        "CDRY-022",
+        "CS-087"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-169",
+        "CDRY-021",
+        "CDRY-022",
+        "CS-087"
+      ],
+      "compile_event_id": "evt-014"
+    },
+    {
+      "queue_id": "queue-024",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-brv-tour"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-175",
+        "WM-064",
+        "WM-041"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-175",
+        "WM-064",
+        "WM-041"
+      ],
+      "compile_event_id": "evt-014"
+    },
+    {
+      "queue_id": "queue-025",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g6-brv-mech"
+      ],
+      "target_doc": "Plans/UI_Command_Catalog.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "target_plan_unit_ids": [
+        "UCC-169",
+        "UCC-171",
+        "UCC-172",
+        "UCC-174",
+        "UCC-175",
+        "CDRY-021",
+        "CS-085",
+        "CDRY-022",
+        "CDRY-023",
+        "WM-062",
+        "WM-063",
+        "WM-064"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-169",
+        "UCC-171",
+        "UCC-172",
+        "UCC-174",
+        "UCC-175",
+        "CDRY-021",
+        "CS-085",
+        "CDRY-022",
+        "CDRY-023",
+        "WM-062",
+        "WM-063",
+        "WM-064"
+      ],
+      "compile_event_id": "evt-014"
+    }
+  ],
+  "notes": "Prose only for the NOW, WAIT and closure waves; wiring companions were written in evt-007 (WAIT) and evt-012 (closure). The guided tour wiring rows were re-pointed to DL-126 in evt-013 (WM-041 and the 2026-08-31 addendum paragraph). q-016 is answered: the ELI5 schemas exist in Plans/assistant_chat_contracts.schema.json. Blind review G6 cycle 1 repairs compiled in evt-014 (DL-135, DL-120 and DL-112 lead rulings; counts, schema location, tour ELI5 routing, reciprocity); wiring JSON follow-ups are q-017. Blind review G6 cycle 1 repairs compiled in evt-014 (DL-135, DL-120 and DL-112 lead rulings; counts, schema location, tour ELI5 routing, reciprocity); wiring JSON follow-ups are q-017.",
+  "terminal_ledger_event_id": null
+}

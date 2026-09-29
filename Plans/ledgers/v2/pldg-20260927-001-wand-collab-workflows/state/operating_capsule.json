@@ -1,0 +1,21 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260927-001-wand-collab-workflows",
+  "updated_at_utc": "2026-09-27T23:59:30+00:00",
+  "authority": "Live Plans are canon; this ledger is source lineage only.",
+  "scope": "Group G1 of the wand-modules canon compile: register lines B-CW-01..B-CW-29 of the impact register snapshot; the NOW lines, then the WAIT lines whose decision cards the owner answered (Decision_Log DL-110..DL-135), then the design lead's follow-up rulings of 2026-09-27, then the closure wave (DL-126 as resolved, DL-137), which also owns EP-129..EP-131 in Plans/Executor_Protocol.md and ATS-063 in Plans/Automated_Testing_System.md.",
+  "negative_constraints": [
+    "Do not edit Settings_System.md, settings_inventory.json, or state where Save as my default is stored (owner exclusion, 2026-09-27).",
+    "Do not carry PMConcept7-port, Slint-production or Demo Studio work into canon (owner exclusion, 2026-09-27).",
+    "Do not settle a question that waits on an owner decision card; record it as an open question naming the card key and E id.",
+    "Do not edit the Chat WOW sections or redefine their IDs (DL-104..108, ACD-469..475, F3-562..565, UCC-168, DR-043, UIW-024, ATS-061, EP-128, CV-355, CDRY-013) or the EP-128 stream vocabulary; reference them.",
+    "Do not carry pmx-* class names, data-k keys, pmPatch rules, harness hooks, localStorage or PM56_* names into canon (register B0-05).",
+    "Do not edit Plans/_shards/**, Plans/.plan_index/**, Plans/.evidence/**, Plans/Spec_Lock.json or Plans/auto_decisions.jsonl.",
+    "Do not edit a Plans file assigned to another group of CANON-PLAN."
+  ],
+  "source_refs": [
+    "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/source_shards/findings.md"
+  ],
+  "next_action": "Blind review cycle 2 (the last) of the cycle-1 repairs, including the ATS-062 companion update of evt-023; then the integrator regenerates shards and the plan index and commits. Open questions q-026..q-034 wait on a new card, the owner or the Settings owner; none blocks landing."
+}

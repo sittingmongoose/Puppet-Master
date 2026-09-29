@@ -1,0 +1,253 @@
+{
+  "schema_id": "pm.usage.run_estimate_contract_fixtures.v1",
+  "owner_schema": "Plans/usage_run_estimate_contracts.schema.json",
+  "owner_doc": "Plans/usage-feature.md",
+  "source_ledger": "Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage",
+  "claim_boundary": "Static schema and fixture consistency only. No estimate is computed, no pricing snapshot or latency sample is read and no provider is called; runtime, provider, visual and performance proof remains NOT_RUN.",
+  "valid": [
+    {
+      "name": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
+      "definition": "run_estimate",
+      "value": {
+        "schema_id": "pm.usage.run_estimate.v1",
+        "duration_s": [
+          300,
+          900
+        ],
+        "cost_microdollars": [
+          2000000,
+          6000000
+        ],
+        "basis": {
+          "pricing_snapshot_id": "pricing-2026-09-27-01",
+          "latency_sample_ref": "latency-samples/crew-review/2026-09"
+        },
+        "source_class": "pricing_estimated"
+      }
+    },
+    {
+      "name": "chat_room_estimate_counts_replies",
+      "definition": "run_estimate",
+      "value": {
+        "schema_id": "pm.usage.run_estimate.v1",
+        "duration_s": [
+          120,
+          480
+        ],
+        "cost_microdollars": [
+          400000,
+          1500000
+        ],
+        "basis": {
+          "pricing_snapshot_id": "pricing-2026-09-27-01",
+          "latency_sample_ref": "latency-samples/chat-room/2026-09"
+        },
+        "source_class": "pricing_estimated",
+        "replies": [
+          6,
+          12
+        ]
+      }
+    },
+    {
+      "name": "review_estimate_with_equal_bounds",
+      "definition": "run_estimate",
+      "value": {
+        "schema_id": "pm.usage.run_estimate.v1",
+        "duration_s": [
+          600,
+          600
+        ],
+        "cost_microdollars": [
+          0,
+          250000
+        ],
+        "basis": {
+          "pricing_snapshot_id": "pricing-2026-09-20-03",
+          "latency_sample_ref": "latency-samples/crew-review/2026-09"
+        },
+        "source_class": "pricing_estimated"
+      }
+    },
+    {
+      "name": "no_pricing_snapshot_no_range",
+      "definition": "run_estimate_no_basis",
+      "value": {
+        "schema_id": "pm.usage.run_estimate_no_basis.v1",
+        "missing_basis": [
+          "pricing_snapshot"
+        ],
+        "source_class": "pricing_estimated"
+      }
+    },
+    {
+      "name": "no_basis_at_all_no_range",
+      "definition": "run_estimate_no_basis",
+      "value": {
+        "schema_id": "pm.usage.run_estimate_no_basis.v1",
+        "missing_basis": [
+          "pricing_snapshot",
+          "latency_samples"
+        ],
+        "source_class": "pricing_estimated"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "estimate_persisted_as_a_usage_record",
+      "definition": "run_estimate",
+      "base_valid": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
+      "rejects_for": "run_estimate additionalProperties false",
+      "reason": "An estimate is never a UsageRecord and is never persisted as usage (UF-104).",
+      "patch": {
+        "usage_record_id": "ur-0001"
+      }
+    },
+    {
+      "name": "estimate_settled",
+      "definition": "run_estimate",
+      "base_valid": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
+      "rejects_for": "run_estimate additionalProperties false",
+      "reason": "An estimate is never settled (UF-104).",
+      "patch": {
+        "settlement_status": "settled"
+      }
+    },
+    {
+      "name": "estimate_counted_against_a_limit",
+      "definition": "run_estimate",
+      "base_valid": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
+      "rejects_for": "run_estimate additionalProperties false",
+      "reason": "An estimate never counts against a quota or a limit (UF-104).",
+      "patch": {
+        "counts_against_limit": true
+      }
+    },
+    {
+      "name": "estimate_claims_a_provider_report",
+      "definition": "run_estimate",
+      "base_valid": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
+      "rejects_for": "source_class const pricing_estimated",
+      "reason": "The estimate makes no provider call, so it can never be provider_reported (UF-104).",
+      "patch": {
+        "source_class": "provider_reported"
+      }
+    },
+    {
+      "name": "estimate_cost_as_a_single_figure",
+      "definition": "run_estimate",
+      "base_valid": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
+      "rejects_for": "cost_microdollars is a [lo, hi] range",
+      "reason": "Every figure is shown as a range with about (UF-104).",
+      "patch": {
+        "cost_microdollars": 6000000
+      }
+    },
+    {
+      "name": "estimate_duration_with_three_bounds",
+      "definition": "run_estimate",
+      "base_valid": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
+      "rejects_for": "range items false after two",
+      "reason": "A range has exactly a low and a high bound.",
+      "patch": {
+        "duration_s": [
+          300,
+          600,
+          900
+        ]
+      }
+    },
+    {
+      "name": "estimate_negative_cost_bound",
+      "definition": "run_estimate",
+      "base_valid": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
+      "rejects_for": "range minimum 0",
+      "reason": "Cost bounds are never negative.",
+      "patch": {
+        "cost_microdollars.0": -1
+      }
+    },
+    {
+      "name": "estimate_without_latency_samples",
+      "definition": "run_estimate",
+      "base_valid": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
+      "rejects_for": "estimate_basis requires latency_sample_ref",
+      "reason": "The basis names the latency samples that timed duration_s (UF-104).",
+      "remove": [
+        "basis.latency_sample_ref"
+      ]
+    },
+    {
+      "name": "estimate_without_basis_but_with_a_range",
+      "definition": "run_estimate",
+      "base_valid": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
+      "rejects_for": "run_estimate requires basis",
+      "reason": "A range with no basis is a number with nothing behind it (UF-104).",
+      "remove": [
+        "basis"
+      ]
+    },
+    {
+      "name": "estimate_zero_replies",
+      "definition": "run_estimate",
+      "base_valid": "chat_room_estimate_counts_replies",
+      "rejects_for": "replies minimum 1",
+      "reason": "A run that counts replies expects at least one.",
+      "patch": {
+        "replies": [
+          0,
+          12
+        ]
+      }
+    },
+    {
+      "name": "no_basis_shows_zero_dollars",
+      "definition": "run_estimate_no_basis",
+      "base_valid": "no_basis_at_all_no_range",
+      "rejects_for": "run_estimate_no_basis additionalProperties false",
+      "reason": "With no basis there is no figure, never $0.00 (UF-104).",
+      "patch": {
+        "cost_microdollars": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "no_basis_shows_a_duration",
+      "definition": "run_estimate_no_basis",
+      "base_valid": "no_basis_at_all_no_range",
+      "rejects_for": "run_estimate_no_basis additionalProperties false",
+      "reason": "With no basis the estimate carries no range (UF-104).",
+      "patch": {
+        "duration_s": [
+          300,
+          900
+        ]
+      }
+    },
+    {
+      "name": "no_basis_names_nothing_missing",
+      "definition": "run_estimate_no_basis",
+      "base_valid": "no_basis_at_all_no_range",
+      "rejects_for": "missing_basis minItems 1",
+      "reason": "An estimate without a range says which basis is absent.",
+      "patch": {
+        "missing_basis": []
+      }
+    },
+    {
+      "name": "no_basis_unknown_reason",
+      "definition": "run_estimate_no_basis",
+      "base_valid": "no_basis_at_all_no_range",
+      "rejects_for": "missing_basis closed enum",
+      "reason": "Only a missing pricing snapshot or missing latency samples leave an estimate without a range.",
+      "patch": {
+        "missing_basis": [
+          "provider_offline"
+        ]
+      }
+    }
+  ]
+}

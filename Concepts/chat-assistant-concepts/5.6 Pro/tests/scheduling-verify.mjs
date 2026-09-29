@@ -77,6 +77,19 @@ async function click(selector) {
 async function ensureWandOpen() {
   const already = await ev(() => (window.PM56_EXT.ctx().state.menu || {}).type === 'wand');
   if (!already) { await click(sel('open-menu', { menu: 'wand' })); await page.waitForTimeout(220); }
+  /* Re-baselined 2026-09-27 (SCHED, spec 10.2 G-23): the wand rows sit in
+     collapsible groups, so the Scheduling group is opened before its rows
+     are clicked. */
+  if (!(await page.$('.overlay-menu [data-action="sched-open-manage"]'))) {
+    await click(sel('polish-wand-group', { group: 'schedule' }));
+    await page.waitForTimeout(220);
+  }
+}
+/* Registered-only handlers (demo and test controls with no visible button in
+   the redesigned sheets, 00-BRIEF B.12) are reached the way the Demo Studio
+   reaches them (repair-demos.js invoke): through the real action registry. */
+async function runAction(action, data) {
+  return ev(([a, d]) => { const b = document.createElement('button'); Object.assign(b.dataset, d || {}); return window.PM56_EXT.run(a, b, new Event('click')); }, [action, data || {}]);
 }
 
 async function main() {
@@ -138,60 +151,57 @@ async function main() {
      2. Build At… is reachable for a Plan — via the Plan card's own
         pd-build-at -> pd-at-bind hand-off into scheduling.js's real dialog
      ================================================================ */
-  /* The ap-index Plan card renders in the query thread's transcript. */
+  /* The ap-index Plan card renders in the query thread's transcript.
+     Re-baselined 2026-09-27 (SCHED, spec 8.8 / 10.2 G-23): "Build At…" is a
+     secondary action behind the card's "More" list (plans.js cardFooter), and
+     it opens scheduling.js's own Build At sheet directly (plans.js's
+     mini-dialog and its pd-at-bind hand-off only run when scheduling.js is
+     absent). The plan id, version and hash left the header pill for the
+     sheet's Technical details. */
   await ev(() => window.PM56_DEMO.selectThread('query'));
   await page.waitForTimeout(300);
-  const planCardPresent = await ev(() => !!document.querySelector('.plan-doc[data-plan-id="ap-index"] [data-action="pd-build-at"]'));
-  check('the Plan card exposes a "Build At…" control', planCardPresent);
-  await click(sel('pd-build-at', { id: 'ap-index' }));
+  const cardSel = '.plan-doc[data-plan-id="ap-index"]';
+  await click(`${cardSel} [data-action="pd-more-actions"][data-id="ap-index"]`);
   await page.waitForTimeout(250);
-  const miniDialogOpen = await ev(() => !!document.querySelector('.pd-dialog[role="dialog"][aria-label="Build At…"]'));
-  check('clicking "Build At…" opens the Plan card\'s own binding dialog', miniDialogOpen);
+  const planCardPresent = await ev(s => !!document.querySelector(s + ' [data-action="pd-build-at"][data-id="ap-index"]'), cardSel);
+  check('the Plan card exposes a "Build At…" control', planCardPresent);
 
-  /* REGRESSION GUARD — this was a real defect, driven and caught via the
-     real route, not inferred: plans.js's own mini-dialog (.pd-dialog, used
-     by Info/Crew/At/Export) used to render `position:relative` with no
-     left/top/transform and without the base `.dialog` class, so it laid out
-     at the top-left of #pmOverlayRoot (which is pointer-events:none) instead
-     of centred and interactive — document.elementFromPoint() at the
-     "Schedule" button's own rendered centre resolved to Plan-card
-     transcript content (`.pd-p` / `.pd-rich`) instead of the button, so a
-     real mouse click could not reach it. Fixed: the shell now emits
-     `class="dialog pd-dialog"` and plans.css no longer re-declares
-     position/left/top/transform, so `.dialog` (styles.css) supplies
-     position:fixed, the centring transform, --z-dialog and
-     pointer-events:auto. Kept as a live hit-test rather than deleted, so a
-     future regression here is caught the same way this one was found. */
-  const occlusion = await ev(() => {
-    const b = document.querySelector('[data-action="pd-at-bind"][data-id="ap-index"]');
-    const dlg = document.querySelector('.pd-dialog');
-    if (!b || !dlg) return null;
+  /* REGRESSION GUARD (kept as a live hit-test): the control that opens the
+     schedule must be reachable at its own rendered centre, not covered by
+     other transcript content, so a real mouse click reaches it. */
+  const occlusion = await ev(s => {
+    const b = document.querySelector(s + ' [data-action="pd-build-at"][data-id="ap-index"]');
+    if (!b) return null;
+    b.scrollIntoView({ block: 'center' });
     const r = b.getBoundingClientRect();
     const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
-    return {
-      dialogComputedPosition: getComputedStyle(dlg).position,
-      dialogRect: dlg.getBoundingClientRect(),
-      buttonRect: r,
-      elementActuallyAtButtonCenter: hit ? (hit.tagName + '.' + (hit.className || '')) : null,
-      hitIsTheButton: hit === b
-    };
-  });
-  check('the "Schedule" confirm button is reachable at its own rendered screen position (not occluded by other content)',
+    return { buttonRect: r, elementActuallyAtButtonCenter: hit ? (hit.tagName + '.' + (hit.className || '')) : null, hitIsTheButton: !!hit && (hit === b || b.contains(hit)) };
+  }, cardSel);
+  check('the "Build At…" control is reachable at its own rendered screen position (not occluded by other content)',
     occlusion && occlusion.hitIsTheButton, JSON.stringify(occlusion));
 
-  await click(sel('pd-at-bind', { id: 'ap-index' }));
-  await page.waitForTimeout(300);
+  const bt = await page.$(`${cardSel} [data-action="pd-build-at"][data-id="ap-index"]`);
+  if (bt) { const r = await bt.boundingBox(); if (r) await page.mouse.click(r.x + r.width / 2, r.y + r.height / 2); }
+  await page.waitForTimeout(400);
   const mouseClickWorked = await ev(() => (window.PM56_EXT.ctx().state.dialog || {}).type === 'sched-build-at');
-  check('a real mouse click on "Schedule" reaches scheduling.js\'s dialog',
+  check('a real mouse click on "Build At…" reaches scheduling.js\'s dialog',
     mouseClickWorked, 'mouse click opened sched-build-at? ' + mouseClickWorked);
 
   const buildDlg = await ev(() => {
     const d = document.querySelector('.sched-dialog--build');
-    return d ? { present: true, pill: (d.querySelector('.meta-pill') || {}).textContent } : { present: false };
+    return d ? { present: true, label: d.getAttribute('aria-label') } : { present: false };
   });
   check('the real execution-window dialog opens from the mouse click',
     buildDlg.present, JSON.stringify(buildDlg));
-  check('the Build At dialog names the exact plan/version/hash', buildDlg.present && /ap-index/.test(buildDlg.pill) && /V5/.test(buildDlg.pill) && /hash/.test(buildDlg.pill), buildDlg.pill);
+  await click('.sched-dialog--build [data-action="sched-toggle-tech"]');
+  await page.waitForTimeout(250);
+  const tech = await ev(() => {
+    const t = document.querySelector('.sched-dialog--build .pmx-sched-tech');
+    const b = t && t.querySelector('[data-action="sched-toggle-tech"]');
+    return t ? { open: b ? b.getAttribute('aria-expanded') : null, text: t.textContent } : null;
+  });
+  check('the Build At dialog names the exact plan/version/hash (in its Technical details)',
+    !!tech && tech.open === 'true' && /ap-index/.test(tech.text) && /V5/.test(tech.text) && /hash/.test(tech.text), JSON.stringify(tech));
 
   /* ================================================================
      3. an execution window with start / wind-down / pause / recurring
@@ -222,11 +232,26 @@ async function main() {
   const tzOptionCount = await ev(() => document.querySelectorAll('.overlay-menu [data-action="shared-choice-pick"]').length);
   check('execution window offers a real IANA timezone choice', tzOptionCount >= 8, String(tzOptionCount));
   check('execution window has all 7 day-of-week chips', windowFields.dayChips === 7, String(windowFields.dayChips));
-  check('a DST summary states what happens on the transition night (default tz has DST)',
-    /spring-forward/i.test(windowFields.dst) && /fall-back/i.test(windowFields.dst), windowFields.dst.slice(0, 200));
+  /* Re-baselined 2026-09-27 (SCHED, spec 8.8 G-21/G-33): the default zone is
+     now the device's zone (UTC in this headless browser), and the DST fine
+     print speaks only of clock changes this slot actually meets. So a zone
+     with daylight saving is chosen through the open picker first, and the
+     Saturday and Sunday nights are switched on so that both of that zone's
+     changes (early Sunday) fall inside the 10 PM-2 AM slot. */
+  await click('.overlay-menu [data-action="shared-choice-pick"][data-value="America/Chicago"]');
+  await page.waitForTimeout(200);
+  for (const d of ['6', '0']) {
+    const on = await ev(d => (document.querySelector(`[data-action="sched-toggle-day"][data-day="${d}"]`) || {}).getAttribute?.('aria-pressed'), d);
+    if (on !== 'true') { await click(sel('sched-toggle-day', { day: d })); await page.waitForTimeout(150); }
+  }
+  const dstText = await ev(() => (document.querySelector('.sched-dst') || {}).textContent || '');
+  check('a DST summary states what happens on the transition night (a zone with DST)',
+    /spring-forward/i.test(dstText) && /fall-back/i.test(dstText), dstText.slice(0, 240));
 
   /* a no-DST zone must say so truthfully rather than fabricate a transition —
-     chosen through the still-open picker menu, the real user route */
+     chosen through the picker menu, the real user route */
+  await click(sel('sched-pick-build-tz'));
+  await page.waitForTimeout(250);
   await click('.overlay-menu [data-action="shared-choice-pick"][data-value="Asia/Kolkata"]');
   await page.waitForTimeout(200);
   const noDstText = await ev(() => (document.querySelector('.sched-dst') || {}).textContent || '');
@@ -256,7 +281,13 @@ async function main() {
   const advanceBtnBefore = await ev(() => !!document.querySelector('[data-k="sched-bld-bld-nightly-index"] [data-action="sched-advance-window"]'));
   check('an active schedule shows an Advance window control', advanceBtnBefore);
 
-  await click(sel('sched-simulate-revision', { id: 'bld-nightly-index' }));
+  /* Re-baselined 2026-09-27: the Plan is revised through its owner
+     (PM56_PLANS.revise, the path an ordinary Revise takes, PSCHED-006), which
+     calls scheduling's invalidateForPlanRevision. The old simulated revision
+     never moved the Plan itself, so the Use V6 consent could not bind to a
+     version that did not exist and was rightly refused. */
+  const revised = await ev(() => { const r = window.PM56_PLANS.revise('ap-index', 'Also cover the p50 path in the fixture.'); window.PM56_EXT.ctx().renderApp(); return r; });
+  check('the Plan owner accepts a revision to V6', revised && revised.ok && revised.version === 6, JSON.stringify(revised));
   await page.waitForTimeout(300);
   const afterRevise = await ev(() => {
     const b = window.PM56_SCHED.list().builds.find(x => x.schedule_id === 'bld-nightly-index');
@@ -271,7 +302,8 @@ async function main() {
       chip: (row.querySelector('.mdl-chip') || {}).textContent,
       hasAdvance: !!row.querySelector('[data-action="sched-advance-window"]'),
       hasRebind: !!row.querySelector('[data-action="sched-rebind-build"]'),
-      reasonText: (row.querySelector('.sched-reason') || {}).textContent
+      /* re-baselined: the row's plain status sentence (.pmx-sched-bsay) carries the reason */
+      reasonText: (row.querySelector('.pmx-sched-bsay') || {}).textContent
     };
   });
   check('the invalidated row shows "Needs update" and the reason, in the UI',
@@ -280,7 +312,8 @@ async function main() {
     rowAfterRevise && !rowAfterRevise.hasAdvance, JSON.stringify(rowAfterRevise));
   check('it offers an explicit Rebind control instead', rowAfterRevise && rowAfterRevise.hasRebind, JSON.stringify(rowAfterRevise));
 
-  await click(sel('sched-rebind-build', { id: 'bld-nightly-index' }));
+  /* scoped to the manager's row: the Plan card's schedule line behind the sheet carries the same action */
+  await click(`[data-k="sched-bld-bld-nightly-index"] ${sel('sched-rebind-build', { id: 'bld-nightly-index' })}`);
   await page.waitForTimeout(300);
   const afterRebind = await ev(() => {
     const b = window.PM56_SCHED.list().builds.find(x => x.schedule_id === 'bld-nightly-index');
@@ -293,7 +326,7 @@ async function main() {
      5a. IDEMPOTENCY — a duplicate nightly fire does not double-run
      (packet §15.2/§15.5, SQR-003/SQR-007)
      ================================================================ */
-  await click(sel('sched-advance-window', { id: 'bld-nightly-index' }));
+  await click(`[data-k="sched-bld-bld-nightly-index"] ${sel('sched-advance-window', { id: 'bld-nightly-index' })}`);
   await page.waitForTimeout(250);
   const occAfterFirst = await ev(() => {
     const b = window.PM56_SCHED.list().builds.find(x => x.schedule_id === 'bld-nightly-index');
@@ -301,7 +334,7 @@ async function main() {
   });
   check('advancing the window admits one occurrence', occAfterFirst === 1, String(occAfterFirst));
 
-  await click(sel('sched-fire-duplicate', { id: 'bld-nightly-index' }));
+  await runAction('sched-fire-duplicate', { id: 'bld-nightly-index' });
   await page.waitForTimeout(250);
   const occAfterDuplicate = await ev(() => {
     const b = window.PM56_SCHED.list().builds.find(x => x.schedule_id === 'bld-nightly-index');
@@ -355,13 +388,19 @@ async function main() {
     !!created && created.thread_id === 'route' && created.state === 'scheduled', JSON.stringify(created));
 
   if (created) {
-    const rowSel = `[data-k="sched-msg-${created.scheduled_dispatch_id}"]`;
+    /* Re-baselined 2026-09-27: the commit confirms in the same sheet (spec 8.7,
+       IMPACT A4-03), and nothing is ever sent before its time ("not_due":
+       "Nothing was sent early"). So delivery is driven the way the B18 local
+       clock drives it: PM56_SCHED.dispatchMessageAt at the record's own
+       scheduled instant, once and then again (the duplicate delivery). */
+    const dispatchDue = () => ev(id => { const S = window.PM56_SCHED, m = S.list().messages.find(x => x.scheduled_dispatch_id === id); const out = S.dispatchMessageAt(id, Date.parse(m.scheduled_at_utc)); window.PM56_EXT.ctx().renderApp(); return out; }, created.scheduled_dispatch_id);
     const msgCountBefore = await ev(() => window.PM56_EXT.ctx().thread.messages.length);
-    await click(`${rowSel} [data-action="sched-dispatch-message"]`);
+    await dispatchDue();
     await page.waitForTimeout(400);
     const afterDispatch = await ev(id => window.PM56_SCHED.list().messages.find(m => m.scheduled_dispatch_id === id), created.scheduled_dispatch_id);
-    check('Dispatch now marks the scheduled record as dispatched',
-      afterDispatch && afterDispatch.state === 'dispatched' && !!afterDispatch.dispatchedMessageId, JSON.stringify(afterDispatch));
+    check('delivery at the scheduled time marks the record Sent',
+      /* re-baselined: the record's state word is the canon "sent" (SMSG; the older "dispatched" is read as sent) */
+      afterDispatch && ['sent', 'dispatched'].includes(afterDispatch.state) && !!afterDispatch.dispatchedMessageId, JSON.stringify(afterDispatch).slice(0, 400));
     const msgCountAfterFirst = await ev(() => window.PM56_EXT.ctx().thread.messages.length);
     /* REGRESSION GUARD — this was a real defect, driven and caught via the
        real route, not inferred: dispatchMessage() used to resolve its target
@@ -376,7 +415,7 @@ async function main() {
        `EXT.ctx().state.threads` (falling back to the fixture only if no
        live ctx is available). Both directions are asserted below so a
        regression here is caught the same way this one was found. */
-    check('"Dispatch now" delivers the message into the THREAD THE USER IS LOOKING AT',
+    check('delivery puts the message into the THREAD THE USER IS LOOKING AT',
       msgCountAfterFirst > msgCountBefore, `visible transcript count ${msgCountBefore} -> ${msgCountAfterFirst}`);
     const deliveryTarget = await ev((dispatchedId) => {
       const stale = (window.PM56_DATA.threads || []).find(x => x.id === 'route');
@@ -389,7 +428,7 @@ async function main() {
     check('the dispatched message lands in the LIVE rendered thread, not the stale fixture copy',
       deliveryTarget.inLiveRenderedState && !deliveryTarget.inStaleFixtureCopy, JSON.stringify(deliveryTarget));
 
-    await click(`${rowSel} [data-action="sched-dispatch-message"]`);
+    await dispatchDue();
     await page.waitForTimeout(400);
     const msgCountAfterSecond = await ev(() => window.PM56_EXT.ctx().thread.messages.length);
     check('firing the same dispatch again does not send a second message (idempotency)',
@@ -409,28 +448,30 @@ async function main() {
   await ensureWandOpen();
   await click(sel('sched-open-manage'));
   await page.waitForTimeout(300);
-  await click(sel('sched-manage-tab', { tab: 'precedence' }));
-  await page.waitForTimeout(200);
-  const stopBefore = await ev(() => { const s = window.PM56_SCHED.list(); return null; });
-  await click(sel('sched-simulate-stop'));
-  await page.waitForTimeout(250);
-  const stopState = await ev(() => {
-    const el = document.querySelector('[data-k="sched-precedence"]');
-    return el ? el.textContent : null;
-  });
-  check('a manual Stop latches, visibly, in the Precedence panel', stopState && /Yes/.test(stopState), stopState);
-
+  /* Re-baselined 2026-09-27 (spec 8.9): the Precedence panel is the "Pause all
+     automations" block on the Resume & Safety Policy tab (data-tab quota);
+     the stop, resume-attempt and race demos are registered-only handlers.
+     Re-baselined 2026-09-28 (DL-136, owner answer p12/E-19 A): a manual Stop is
+     its own latch and never turns the project-wide switch on; the panel names
+     it ("You pressed Stop") beside the switch, which stays Off. */
   await click(sel('sched-manage-tab', { tab: 'quota' }));
   await page.waitForTimeout(200);
-  await click(sel('sched-attempt-resume'));
+  await runAction('sched-simulate-stop');
+  await page.waitForTimeout(250);
+  const safety = () => ev(() => {
+    const el = document.querySelector('[data-k="sched-safety"]');
+    return el ? { state: el.getAttribute('data-state'), text: el.textContent } : null;
+  });
+  const stopState = await safety();
+  check('a manual Stop latches, visibly, in the Resume & Safety panel (and does not turn the project switch on)', stopState && stopState.state === 'off' && /You pressed Stop/.test(stopState.text), JSON.stringify(stopState));
+
+  await runAction('sched-attempt-resume');
   await page.waitForTimeout(250);
   const resumeEvent = await ev(() => window.PM56_SCHED.list().events[0]);
   check('an auto-resume attempt while manually stopped is REFUSED with a visible, stated reason',
     resumeEvent && resumeEvent.clause === 'manual_stop_latched' && /Manual Stop/i.test(resumeEvent.detail), JSON.stringify(resumeEvent));
 
-  await click(sel('sched-manage-tab', { tab: 'precedence' }));
-  await page.waitForTimeout(200);
-  await click(sel('sched-race-demo'));
+  await runAction('sched-race-demo');
   await page.waitForTimeout(300);
   const raceEvent = await ev(() => window.PM56_SCHED.list().events[0]);
   check('a dispatch decided before a stop and delivered after it is discarded, not delivered',
@@ -438,21 +479,88 @@ async function main() {
 
   await click(sel('sched-clear-stop'));
   await page.waitForTimeout(250);
-  const stopCleared = await ev(() => {
-    const el = document.querySelector('[data-k="sched-precedence"]');
-    return el ? el.textContent : null;
-  });
-  check('an explicit user resume clears the latch', stopCleared && /No/.test(stopCleared), stopCleared);
+  const stopCleared = await safety();
+  check('an explicit user resume clears the latch', stopCleared && stopCleared.state === 'off' && /Off:/.test(stopCleared.text) && !/You pressed Stop/.test(stopCleared.text), JSON.stringify(stopCleared));
+
+  /* ================================================================
+     6b. PAUSE ALL AUTOMATIONS (SQR-018, DL-136 — owner answer p12/E-19 A):
+         the real project-wide switch, driven through its visible control
+     ================================================================ */
+  const sw = await ev(() => [...document.querySelectorAll('[data-k="sched-pause-switch"] [data-action="sched-set-pause"]')].map(b => ({ v: b.dataset.value, disabled: b.disabled, role: b.getAttribute('role') })));
+  check('the Pause all automations switch is interactive (two enabled choices, never read-only)', sw.length === 2 && sw.every(x => !x.disabled && x.role === 'radio'), JSON.stringify(sw));
+  const offCopy = await safety();
+  check('the preview fine print is gone and the panel says plainly what the switch does and who turns it off',
+    offCopy && !/In this preview|each run separately/i.test(offCopy.text) && /every scheduled send and scheduled build in this project/.test(offCopy.text) && /[Oo]nly you can turn it off/.test(offCopy.text), offCopy && offCopy.text);
+  await click('[data-k="sched-pause-switch"] [data-action="sched-set-pause"][data-value="on"]');
+  await page.waitForTimeout(250);
+  const onState = await safety();
+  check('turning the switch on shows "Paused by you" and "Turn back on"', onState && onState.state === 'paused' && /Paused by you/.test(onState.text) && /Turn back on/.test(onState.text), JSON.stringify(onState));
+  const pauseEv = await ev(() => window.PM56_SCHED.list().events[0]);
+  check('the change emits runtime.automation_pause_changed', pauseEv && pauseEv.type === 'runtime.automation_pause_changed' && /Turned on/.test(pauseEv.detail), JSON.stringify(pauseEv));
+  const badge = await ev(() => { const S = window.PM56_SCHED, rec = S.automationPause(), again = S.setAutomationPause(true), bot = S.setAutomationPause(false, 'assistant'); return { rec, again, bot, after: S.automationPause() }; });
+  check('setting the value it already has returns the record unchanged (the epoch does not move)', badge.again.ok && badge.again.unchanged && badge.after.user_stop_epoch === badge.rec.user_stop_epoch, JSON.stringify(badge));
+  check('only a user actor may turn it off (anything else: permission_denied)', badge.bot.error === 'permission_denied' && badge.after.paused === true, JSON.stringify(badge.bot));
+  await runAction('sched-attempt-resume');
+  await page.waitForTimeout(200);
+  const qEv = await ev(() => window.PM56_SCHED.list().events[0]);
+  check('a quota auto-resume while paused is refused with project_automation_paused', qEv && qEv.clause === 'project_automation_paused', JSON.stringify(qEv));
+  await click(sel('sched-clear-pause'));
+  await page.waitForTimeout(250);
+  const offAgain = await safety();
+  check('"Turn back on" turns the switch off', offAgain && offAgain.state === 'off' && /Off:/.test(offAgain.text), JSON.stringify(offAgain));
   await click(sel('sched-close-dialog'));
   await page.waitForTimeout(200);
+
+  /* the canon's switch-off rules, on real owner commands in a private test thread (restored afterwards) */
+  const pauseCases = await ev(() => {
+    const out = [], ck = (n, v, d) => out.push({ n, v: !!v, d: d === undefined ? '' : JSON.stringify(d).slice(0, 300) });
+    const S = window.PM56_SCHED, C = window.PM56_COMPOSER_STATE, ctx = window.PM56_EXT.ctx(), prevThread = ctx.state.selectedThread;
+    const t = JSON.parse(JSON.stringify(ctx.state.threads.find(x => x.id === 'query')));
+    Object.assign(t, { id: 'pause-test', title: 'Pause verification', messages: [], projectId: 'pause', worktreeId: 'pause', archived: false });
+    ctx.state.threads.push(t); ctx.switchThread(t.id); ctx.state.model = window.PM56_DATA.models.find(m => m.status === 'ready').id; S.restore();
+    const make = (text, missed, date) => { ctx.state.composer = text; const b = C.bufferFor(t.id); b.text = text; b.attachments = []; b.destination = null;
+      const d = S.messageDraft(); d.date = date || '2027-05-10'; d.time = '22:00'; d.timezone = 'America/New_York'; d.missed = missed; const r = S.saveMessage(d); if (!r.ok) throw Error(JSON.stringify(r)); return r.record; };
+    const sent = () => t.messages.filter(m => m.viaSchedule).length;
+    try {
+      S.setAutomationPause(true);
+      const hold = make('Pause probe: hold', 'hold'), next = make('Pause probe: next available', 'next_available', '2027-05-11');
+      ck('a schedule created while paused does not lift the switch', S.automationPause().paused === true && hold.state === 'scheduled');
+      const dueAt = Date.parse(hold.scheduled_at_utc), r1 = S.dispatchMessageAt(hold.scheduled_dispatch_id, dueAt), r2 = S.dispatchMessageAt(next.scheduled_dispatch_id, Date.parse(next.scheduled_at_utc));
+      ck('a send time that arrives while paused is held with project_automation_paused, nothing sent',
+        hold.state === 'held' && next.state === 'held' && hold.dispatch_attempts.at(-1).result.error === 'project_automation_paused' && sent() === 0, [hold.state, next.state, r1, r2]);
+      ctx.renderApp();
+      const card = document.querySelector('.transcript .sched-card[data-schedule-id="' + CSS.escape(hold.scheduled_dispatch_id) + '"]');
+      ck('the held card names the pause as its reason and offers Send now', card && /Held/.test(card.textContent) && /Pause all automations is on/.test(card.textContent) && !!card.querySelector('[data-action="sched-card-send-now"]'), card && card.textContent);
+      const tk = S.messageTicket(next.scheduled_dispatch_id, Date.now()).ticket;
+      S.setAutomationPause(false);
+      ck('switch-off: under "hold" the message stays held and now names the missed time, not the switch',
+        hold.state === 'held' && hold.dispatch_attempts.at(-1).result.error === 'missed_time_held', hold.dispatch_attempts.at(-1));
+      ck('switch-off: under "next available" it dispatches exactly once, no backlog burst', next.state === 'sent' && sent() === 1, [next.state, sent()]);
+      ck('no item keeps the reason "Pause all automations is on" once it is off', !S.list().messages.some(m => m.state === 'held' && (m.dispatch_attempts || []).at(-1)?.result?.error === 'project_automation_paused'));
+      S.setAutomationPause(true);
+      const late = make('Pause probe: decided before', 'next_available', '2027-05-12'), tk2 = S.messageTicket(late.scheduled_dispatch_id, Date.parse(late.scheduled_at_utc)).ticket;
+      S.setAutomationPause(false); S.setAutomationPause(true); S.setAutomationPause(false);
+      const r3 = S.deliverMessage(tk2);
+      ck('a dispatch decided before the switch was turned on and delivered after it is discarded', r3.discarded && r3.error === 'project_automation_paused' && late.state === 'scheduled' && sent() === 1, [r3, late.state]);
+      S.setAutomationPause(true);
+      const again = make('Pause probe: send now', 'hold', '2027-05-13'); S.dispatchMessageAt(again.scheduled_dispatch_id, Date.parse(again.scheduled_at_utc)); ctx.renderApp();
+      const btn = document.querySelector('.transcript .sched-card[data-schedule-id="' + CSS.escape(again.scheduled_dispatch_id) + '"] [data-action="sched-card-send-now"]');
+      if (btn) btn.click();
+      ck('Send now on a paused-held message sends that one message and leaves the switch on', again.state === 'sent' && S.automationPause().paused === true, [again.state, again.dispatch_attempts.at(-1)?.result]);
+    } catch (e) { ck('pause cases ran', false, String(e && e.stack || e)); }
+    finally { S.setAutomationPause(false); S.restore(); ctx.state.threads = ctx.state.threads.filter(x => x.id !== 'pause-test'); ctx.switchThread(prevThread); ctx.renderApp(); }
+    return out;
+  });
+  for (const c of pauseCases) check(c.n, c.v, c.d);
 
   /* ================================================================
      7. QUOTA WAIT STRIP: reset truth AND its source shown together, opt-in
         auto-resume checkbox; unknown says `unknown`, never a countdown
         (packet §15.4, SQR-005 — owned by composer-state.js, consumed here)
      ================================================================ */
-  await ensureWandOpen();
-  await click(sel('cs-quota-demo'));
+  /* Re-baselined: the quota demos left the wand for the Demo Studio gallery
+     (delivery-polish.js demoOnly); reached through the action registry. */
+  await runAction('cs-quota-demo');
   await page.waitForTimeout(250);
   const stripOn = await ev(() => {
     const el = document.querySelector('.cs-quota');
@@ -473,8 +581,7 @@ async function main() {
       return el ? el.textContent : '';
     });
     if (/unknown/i.test(current)) break;
-    await ensureWandOpen();
-    await click(sel('cs-quota-source'));
+    await runAction('cs-quota-source');
     await page.waitForTimeout(200);
   }
   const unknownState = await ev(() => {

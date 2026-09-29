@@ -1,0 +1,1058 @@
+{
+  "schema_id": "pm.assistant_chat.contract_fixtures.v1",
+  "schema_version": "1.0.0",
+  "owner_schema": "Plans/assistant_chat_contracts.schema.json",
+  "revision": "wand-modules-redesign-2026-09-27",
+  "scope": "Static contract-shape cases for the command request/result pairs Plans/Commands_System.md routes to Plans/assistant_chat_contracts.schema.json: cmd.chat.goal.open_editor, cmd.chat.composer.destination.set, cmd.chat.composer.destination.clear, cmd.chat.thread.regenerate_title (ACD-462, ACD-479), cmd.chat.eli5.set with on, off or inherit (UCC-175, ACD-484) and cmd.chat.eli5.explain_reply (UCC-174, CS-087, ACD-484; DL-126). Each invalid case changes one field of the named valid case and fails on the one constraint its expected_error names. A passing case proves a shape only: no handler, catalogue admission, storage, event or native dispatch, and not the runtime ELI5 behaviour ATS-065 checks.",
+  "valid": [
+    {
+      "name": "goal_editor_route_from_goal_hover",
+      "definition": "GoalEditorRoute",
+      "value": {
+        "schema_id": "pm.chat.goal_editor_route.v1",
+        "schema_version": "1.0.0",
+        "request_type": "GoalEditorRoute",
+        "command_id": "cmd.chat.goal.open_editor",
+        "command_instance_id": "cmdi:chat:1",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:chat:1",
+        "source_surface": "goal_hover",
+        "return_route": "route:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "goal_id": "goal:fixture:1"
+      }
+    },
+    {
+      "name": "goal_editor_route_opened",
+      "definition": "RouteResult",
+      "value": {
+        "schema_id": "pm.chat.route_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "RouteResult",
+        "command_id": "cmd.chat.goal.open_editor",
+        "command_instance_id": "cmdi:chat:2",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "route_target": "goal_activity_detail",
+        "edit_mode": true,
+        "goal_id": "goal:fixture:1"
+      }
+    },
+    {
+      "name": "goal_editor_route_goal_gone",
+      "definition": "RouteResult",
+      "value": {
+        "schema_id": "pm.chat.route_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "RouteResult",
+        "command_id": "cmd.chat.goal.open_editor",
+        "command_instance_id": "cmdi:chat:3",
+        "outcome": "rejected",
+        "error_code": "target_not_found",
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "route_target": "goal_activity_detail",
+        "edit_mode": true,
+        "goal_id": "goal:fixture:2"
+      }
+    },
+    {
+      "name": "destination_set_brainstorm_from_workflow_card",
+      "definition": "ComposerDestinationSetRequest",
+      "value": {
+        "schema_id": "pm.chat.composer_destination_set_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "ComposerDestinationSetRequest",
+        "command_id": "cmd.chat.composer.destination.set",
+        "command_instance_id": "cmdi:chat:4",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:chat:4",
+        "source_surface": "workflow_card",
+        "return_route": "route:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "destination": {
+          "destination_kind": "brainstorm",
+          "destination_id": "collab-run:fixture:bs-1",
+          "display_label": "BrainStorm · Provider Architecture · 4 helpers",
+          "state_generation": 3
+        }
+      }
+    },
+    {
+      "name": "destination_set_crew_participant_from_panel",
+      "definition": "ComposerDestinationSetRequest",
+      "value": {
+        "schema_id": "pm.chat.composer_destination_set_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "ComposerDestinationSetRequest",
+        "command_id": "cmd.chat.composer.destination.set",
+        "command_instance_id": "cmdi:chat:5",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:chat:5",
+        "source_surface": "workflow_panel",
+        "return_route": "route:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "destination": {
+          "destination_kind": "crew",
+          "destination_id": "collab-run:fixture:crew-1",
+          "participant_id": "participant:fixture:crew-1:2",
+          "display_label": "Crew · Storage migration · Helper 2",
+          "state_generation": 7
+        }
+      }
+    },
+    {
+      "name": "destination_set_plan_revision_from_composer",
+      "definition": "ComposerDestinationSetRequest",
+      "value": {
+        "schema_id": "pm.chat.composer_destination_set_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "ComposerDestinationSetRequest",
+        "command_id": "cmd.chat.composer.destination.set",
+        "command_instance_id": "cmdi:chat:6",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:chat:6",
+        "source_surface": "composer",
+        "return_route": "route:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "destination": {
+          "destination_kind": "plan_revision",
+          "destination_id": "assistant-plan:fixture:1@r4",
+          "display_label": "Plan · Storage migration · revision 4",
+          "state_generation": 4
+        }
+      }
+    },
+    {
+      "name": "destination_set_bound",
+      "definition": "ComposerDestinationSetResult",
+      "value": {
+        "schema_id": "pm.chat.composer_destination_set_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ComposerDestinationSetResult",
+        "command_id": "cmd.chat.composer.destination.set",
+        "command_instance_id": "cmdi:chat:7",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "destination": {
+          "destination_kind": "brainstorm",
+          "destination_id": "collab-run:fixture:bs-1",
+          "display_label": "BrainStorm · Provider Architecture · 4 helpers",
+          "state_generation": 3
+        },
+        "side_effects": {
+          "workflow_started": false,
+          "unsent_input_sent": false,
+          "composer_buffer_cleared": false
+        }
+      }
+    },
+    {
+      "name": "destination_set_target_no_longer_accepts_input",
+      "definition": "ComposerDestinationSetResult",
+      "value": {
+        "schema_id": "pm.chat.composer_destination_set_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ComposerDestinationSetResult",
+        "command_id": "cmd.chat.composer.destination.set",
+        "command_instance_id": "cmdi:chat:8",
+        "outcome": "rejected",
+        "error_code": "stale_currentness",
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "destination": null,
+        "side_effects": {
+          "workflow_started": false,
+          "unsent_input_sent": false,
+          "composer_buffer_cleared": false
+        }
+      }
+    },
+    {
+      "name": "destination_clear_from_composer",
+      "definition": "ComposerDestinationClearRequest",
+      "value": {
+        "schema_id": "pm.chat.composer_destination_clear_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "ComposerDestinationClearRequest",
+        "command_id": "cmd.chat.composer.destination.clear",
+        "command_instance_id": "cmdi:chat:9",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:chat:9",
+        "source_surface": "composer",
+        "return_route": "route:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1"
+      }
+    },
+    {
+      "name": "destination_cleared",
+      "definition": "ComposerDestinationClearResult",
+      "value": {
+        "schema_id": "pm.chat.composer_destination_clear_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ComposerDestinationClearResult",
+        "command_id": "cmd.chat.composer.destination.clear",
+        "command_instance_id": "cmdi:chat:10",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "destination_cleared": true,
+        "side_effects": {
+          "workflow_started": false,
+          "unsent_input_sent": false,
+          "composer_buffer_cleared": false
+        }
+      }
+    },
+    {
+      "name": "destination_clear_owner_unavailable",
+      "definition": "ComposerDestinationClearResult",
+      "value": {
+        "schema_id": "pm.chat.composer_destination_clear_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ComposerDestinationClearResult",
+        "command_id": "cmd.chat.composer.destination.clear",
+        "command_instance_id": "cmdi:chat:11",
+        "outcome": "rejected",
+        "error_code": "owner_unavailable",
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "destination_cleared": false,
+        "side_effects": {
+          "workflow_started": false,
+          "unsent_input_sent": false,
+          "composer_buffer_cleared": false
+        }
+      }
+    },
+    {
+      "name": "title_regenerate_from_thread_menu",
+      "definition": "ThreadTitleRegenerateRequest",
+      "value": {
+        "schema_id": "pm.chat.thread_title_regenerate_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "ThreadTitleRegenerateRequest",
+        "command_id": "cmd.chat.thread.regenerate_title",
+        "command_instance_id": "cmdi:chat:12",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:chat:12",
+        "source_surface": "thread_menu",
+        "return_route": "route:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1"
+      }
+    },
+    {
+      "name": "title_regenerate_from_chat_header",
+      "definition": "ThreadTitleRegenerateRequest",
+      "value": {
+        "schema_id": "pm.chat.thread_title_regenerate_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "ThreadTitleRegenerateRequest",
+        "command_id": "cmd.chat.thread.regenerate_title",
+        "command_instance_id": "cmdi:chat:13",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:chat:13",
+        "source_surface": "chat_header",
+        "return_route": "route:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1"
+      }
+    },
+    {
+      "name": "title_named_and_lock_cleared",
+      "definition": "ThreadTitleGenerationResult",
+      "value": {
+        "schema_id": "pm.chat.thread_title_generation_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ThreadTitleGenerationResult",
+        "command_id": "cmd.chat.thread.regenerate_title",
+        "command_instance_id": "cmdi:chat:14",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "title_locked": false,
+        "attempt": {
+          "thread_id": "thread:fixture:1",
+          "attempt_id": "title-attempt:fixture:4",
+          "requested_route": "model-route:fixture:title-small",
+          "effective_route": "model-route:fixture:title-small",
+          "outcome": "named",
+          "title": "Storage branch rebase",
+          "at": "2026-09-27T21:04:10Z"
+        }
+      }
+    },
+    {
+      "name": "title_naming_pending",
+      "definition": "ThreadTitleGenerationResult",
+      "value": {
+        "schema_id": "pm.chat.thread_title_generation_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ThreadTitleGenerationResult",
+        "command_id": "cmd.chat.thread.regenerate_title",
+        "command_instance_id": "cmdi:chat:15",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "title_locked": false,
+        "attempt": {
+          "thread_id": "thread:fixture:1",
+          "attempt_id": "title-attempt:fixture:5",
+          "requested_route": "model-route:fixture:title-small",
+          "outcome": "pending",
+          "at": "2026-09-27T21:05:00Z"
+        }
+      }
+    },
+    {
+      "name": "title_model_unavailable_recorded_without_substitute",
+      "definition": "ThreadTitleGenerationResult",
+      "value": {
+        "schema_id": "pm.chat.thread_title_generation_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ThreadTitleGenerationResult",
+        "command_id": "cmd.chat.thread.regenerate_title",
+        "command_instance_id": "cmdi:chat:16",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "title_locked": false,
+        "attempt": {
+          "thread_id": "thread:fixture:1",
+          "attempt_id": "title-attempt:fixture:6",
+          "requested_route": "model-route:fixture:title-small",
+          "outcome": "route_unavailable",
+          "at": "2026-09-27T21:06:00Z"
+        }
+      }
+    },
+    {
+      "name": "title_policy_off_refused",
+      "definition": "ThreadTitleGenerationResult",
+      "value": {
+        "schema_id": "pm.chat.thread_title_generation_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ThreadTitleGenerationResult",
+        "command_id": "cmd.chat.thread.regenerate_title",
+        "command_instance_id": "cmdi:chat:17",
+        "outcome": "rejected",
+        "error_code": "precondition_failed",
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "title_locked": true,
+        "attempt": null
+      }
+    },
+    {
+      "name": "eli5_on_from_sheet",
+      "definition": "ELI5ThreadOverrideRequest",
+      "value": {
+        "schema_id": "pm.chat.eli5_thread_override_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "ELI5ThreadOverrideRequest",
+        "command_id": "cmd.chat.eli5.set",
+        "command_instance_id": "cmdi:chat:18",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:chat:18",
+        "source_surface": "eli5_sheet",
+        "return_route": "route:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "value": "on"
+      }
+    },
+    {
+      "name": "eli5_off_from_quick_dot",
+      "definition": "ELI5ThreadOverrideRequest",
+      "value": {
+        "schema_id": "pm.chat.eli5_thread_override_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "ELI5ThreadOverrideRequest",
+        "command_id": "cmd.chat.eli5.set",
+        "command_instance_id": "cmdi:chat:19",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:chat:19",
+        "source_surface": "composer",
+        "return_route": "route:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "value": "off"
+      }
+    },
+    {
+      "name": "eli5_inherit_from_sheet",
+      "definition": "ELI5ThreadOverrideRequest",
+      "value": {
+        "schema_id": "pm.chat.eli5_thread_override_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "ELI5ThreadOverrideRequest",
+        "command_id": "cmd.chat.eli5.set",
+        "command_instance_id": "cmdi:chat:20",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:chat:20",
+        "source_surface": "eli5_sheet",
+        "return_route": "route:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "value": "inherit"
+      }
+    },
+    {
+      "name": "eli5_override_set_on",
+      "definition": "ELI5ThreadOverrideResult",
+      "value": {
+        "schema_id": "pm.chat.eli5_thread_override_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ELI5ThreadOverrideResult",
+        "command_id": "cmd.chat.eli5.set",
+        "command_instance_id": "cmdi:chat:21",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "requested_value": "on",
+        "chat_override": "on",
+        "applies_from": "next_reply",
+        "side_effects": {
+          "earlier_reply_rewritten": false,
+          "reply_resent": false,
+          "reply_regenerated": false,
+          "second_response_produced": false
+        }
+      }
+    },
+    {
+      "name": "eli5_override_deleted_by_inherit",
+      "definition": "ELI5ThreadOverrideResult",
+      "value": {
+        "schema_id": "pm.chat.eli5_thread_override_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ELI5ThreadOverrideResult",
+        "command_id": "cmd.chat.eli5.set",
+        "command_instance_id": "cmdi:chat:22",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "requested_value": "inherit",
+        "chat_override": null,
+        "applies_from": "next_reply",
+        "side_effects": {
+          "earlier_reply_rewritten": false,
+          "reply_resent": false,
+          "reply_regenerated": false,
+          "second_response_produced": false
+        }
+      }
+    },
+    {
+      "name": "eli5_set_refused_permission",
+      "definition": "ELI5ThreadOverrideResult",
+      "value": {
+        "schema_id": "pm.chat.eli5_thread_override_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ELI5ThreadOverrideResult",
+        "command_id": "cmd.chat.eli5.set",
+        "command_instance_id": "cmdi:chat:23",
+        "outcome": "rejected",
+        "error_code": "permission_denied",
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "requested_value": "off",
+        "chat_override": "on",
+        "applies_from": "next_reply",
+        "side_effects": {
+          "earlier_reply_rewritten": false,
+          "reply_resent": false,
+          "reply_regenerated": false,
+          "second_response_produced": false
+        }
+      }
+    },
+    {
+      "name": "explain_reply_from_message_actions",
+      "definition": "ELI5ExplainReplyRequest",
+      "value": {
+        "schema_id": "pm.chat.eli5_explain_reply_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "ELI5ExplainReplyRequest",
+        "command_id": "cmd.chat.eli5.explain_reply",
+        "command_instance_id": "cmdi:chat:24",
+        "project_id": "project:fixture:atlas",
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:chat:24",
+        "source_surface": "message_chrome",
+        "return_route": "route:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "message_id": "message:fixture:1:18"
+      }
+    },
+    {
+      "name": "explain_reply_one_extra_simple_reply",
+      "definition": "ELI5ExplainReplyResult",
+      "value": {
+        "schema_id": "pm.chat.eli5_explain_reply_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ELI5ExplainReplyResult",
+        "command_id": "cmd.chat.eli5.explain_reply",
+        "command_instance_id": "cmdi:chat:25",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "message_id": "message:fixture:1:18",
+        "target_reply_state": "finished",
+        "replies_written": 1,
+        "new_reply_message_id": "message:fixture:1:21",
+        "new_reply_style": "simple",
+        "side_effects": {
+          "target_reply_changed": false,
+          "target_reply_resent": false,
+          "target_reply_regenerated": false,
+          "target_reply_replaced": false,
+          "eli5_setting_changed": false
+        }
+      }
+    },
+    {
+      "name": "explain_reply_refused_while_streaming",
+      "definition": "ELI5ExplainReplyResult",
+      "value": {
+        "schema_id": "pm.chat.eli5_explain_reply_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ELI5ExplainReplyResult",
+        "command_id": "cmd.chat.eli5.explain_reply",
+        "command_instance_id": "cmdi:chat:26",
+        "outcome": "rejected",
+        "error_code": "precondition_failed",
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "message_id": "message:fixture:1:22",
+        "target_reply_state": "streaming",
+        "replies_written": 0,
+        "new_reply_message_id": null,
+        "new_reply_style": null,
+        "side_effects": {
+          "target_reply_changed": false,
+          "target_reply_resent": false,
+          "target_reply_regenerated": false,
+          "target_reply_replaced": false,
+          "eli5_setting_changed": false
+        }
+      }
+    },
+    {
+      "name": "explain_reply_target_not_found",
+      "definition": "ELI5ExplainReplyResult",
+      "value": {
+        "schema_id": "pm.chat.eli5_explain_reply_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ELI5ExplainReplyResult",
+        "command_id": "cmd.chat.eli5.explain_reply",
+        "command_instance_id": "cmdi:chat:27",
+        "outcome": "rejected",
+        "error_code": "target_not_found",
+        "projection_ref": "projection:assistant:thread:fixture:1",
+        "thread_id": "thread:fixture:1",
+        "message_id": "message:fixture:1:99",
+        "target_reply_state": null,
+        "replies_written": 0,
+        "new_reply_message_id": null,
+        "new_reply_style": null,
+        "side_effects": {
+          "target_reply_changed": false,
+          "target_reply_resent": false,
+          "target_reply_regenerated": false,
+          "target_reply_replaced": false,
+          "eli5_setting_changed": false
+        }
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "request_schema_version_other",
+      "definition": "ELI5ThreadOverrideRequest",
+      "base_valid": "eli5_on_from_sheet",
+      "expected_error": "schema_version is const 1.0.0",
+      "patch": {
+        "schema_version": "2.0.0"
+      }
+    },
+    {
+      "name": "request_without_idempotency_key",
+      "definition": "ELI5ThreadOverrideRequest",
+      "base_valid": "eli5_on_from_sheet",
+      "expected_error": "idempotency_key is required",
+      "remove": [
+        "idempotency_key"
+      ]
+    },
+    {
+      "name": "request_actor_ref_secret_like",
+      "definition": "ELI5ThreadOverrideRequest",
+      "base_valid": "eli5_on_from_sheet",
+      "expected_error": "actor_ref must be a non-secret reference",
+      "patch": {
+        "actor_ref": "api_key:fixture"
+      }
+    },
+    {
+      "name": "result_accepted_with_error",
+      "definition": "ELI5ThreadOverrideResult",
+      "base_valid": "eli5_override_set_on",
+      "expected_error": "an accepted result carries error_code null",
+      "patch": {
+        "error_code": "owner_unavailable"
+      }
+    },
+    {
+      "name": "result_rejected_without_error",
+      "definition": "ELI5ExplainReplyResult",
+      "base_valid": "explain_reply_target_not_found",
+      "expected_error": "a rejected result carries a typed error_code",
+      "patch": {
+        "error_code": null
+      }
+    },
+    {
+      "name": "goal_editor_from_thread_menu",
+      "definition": "GoalEditorRoute",
+      "base_valid": "goal_editor_route_from_goal_hover",
+      "expected_error": "the only source surface is goal_hover",
+      "patch": {
+        "source_surface": "thread_menu"
+      }
+    },
+    {
+      "name": "goal_editor_without_goal",
+      "definition": "GoalEditorRoute",
+      "base_valid": "goal_editor_route_from_goal_hover",
+      "expected_error": "goal_id is required",
+      "remove": [
+        "goal_id"
+      ]
+    },
+    {
+      "name": "goal_route_not_edit_mode",
+      "definition": "RouteResult",
+      "base_valid": "goal_editor_route_opened",
+      "expected_error": "the route opens Goal Activity Detail in edit mode",
+      "patch": {
+        "edit_mode": false
+      }
+    },
+    {
+      "name": "goal_route_other_target",
+      "definition": "RouteResult",
+      "base_valid": "goal_editor_route_opened",
+      "expected_error": "route_target is const goal_activity_detail",
+      "patch": {
+        "route_target": "goal_list"
+      }
+    },
+    {
+      "name": "destination_kind_outside_closed_set",
+      "definition": "ComposerDestinationSetRequest",
+      "base_valid": "destination_set_brainstorm_from_workflow_card",
+      "expected_error": "destination_kind is closed by Collaborative_Workflows.md section 4.5",
+      "patch": {
+        "destination.destination_kind": "goal"
+      }
+    },
+    {
+      "name": "destination_without_state_generation",
+      "definition": "ComposerDestinationSetRequest",
+      "base_valid": "destination_set_brainstorm_from_workflow_card",
+      "expected_error": "state_generation is required for dispatch revalidation",
+      "remove": [
+        "destination.state_generation"
+      ]
+    },
+    {
+      "name": "destination_set_without_thread",
+      "definition": "ComposerDestinationSetRequest",
+      "base_valid": "destination_set_brainstorm_from_workflow_card",
+      "expected_error": "the exact originating thread_id is required",
+      "remove": [
+        "thread_id"
+      ]
+    },
+    {
+      "name": "destination_set_starts_workflow",
+      "definition": "ComposerDestinationSetResult",
+      "base_valid": "destination_set_bound",
+      "expected_error": "a destination change never starts the workflow",
+      "patch": {
+        "side_effects.workflow_started": true
+      }
+    },
+    {
+      "name": "destination_set_sends_unsent_input",
+      "definition": "ComposerDestinationSetResult",
+      "base_valid": "destination_set_bound",
+      "expected_error": "a destination change never sends unsent input",
+      "patch": {
+        "side_effects.unsent_input_sent": true
+      }
+    },
+    {
+      "name": "destination_rejected_but_bound",
+      "definition": "ComposerDestinationSetResult",
+      "base_valid": "destination_set_target_no_longer_accepts_input",
+      "expected_error": "a rejected set binds nothing (destination null)",
+      "patch": {
+        "destination": {
+          "destination_kind": "brainstorm",
+          "destination_id": "collab-run:fixture:bs-1",
+          "display_label": "BrainStorm · Provider Architecture · 4 helpers",
+          "state_generation": 3
+        }
+      }
+    },
+    {
+      "name": "destination_clear_accepted_not_cleared",
+      "definition": "ComposerDestinationClearResult",
+      "base_valid": "destination_cleared",
+      "expected_error": "an accepted clear returns destination_cleared true",
+      "patch": {
+        "destination_cleared": false
+      }
+    },
+    {
+      "name": "destination_clear_empties_buffer",
+      "definition": "ComposerDestinationClearResult",
+      "base_valid": "destination_cleared",
+      "expected_error": "clearing the destination never clears composer text or attachments",
+      "patch": {
+        "side_effects.composer_buffer_cleared": true
+      }
+    },
+    {
+      "name": "title_regenerate_from_wand",
+      "definition": "ThreadTitleRegenerateRequest",
+      "base_valid": "title_regenerate_from_thread_menu",
+      "expected_error": "source surfaces are thread_menu and chat_header",
+      "patch": {
+        "source_surface": "wand"
+      }
+    },
+    {
+      "name": "title_accepted_keeps_lock",
+      "definition": "ThreadTitleGenerationResult",
+      "base_valid": "title_named_and_lock_cleared",
+      "expected_error": "explicit regeneration clears thread.title_locked",
+      "patch": {
+        "title_locked": true
+      }
+    },
+    {
+      "name": "title_explicit_attempt_user_locked",
+      "definition": "ThreadTitleGenerationResult",
+      "base_valid": "title_named_and_lock_cleared",
+      "expected_error": "an explicit attempt is never user_locked",
+      "patch": {
+        "attempt.outcome": "user_locked"
+      }
+    },
+    {
+      "name": "title_named_without_title",
+      "definition": "ThreadTitleGenerationResult",
+      "base_valid": "title_named_and_lock_cleared",
+      "expected_error": "a named attempt carries its title",
+      "remove": [
+        "attempt.title"
+      ]
+    },
+    {
+      "name": "title_unavailable_model_substituted",
+      "definition": "ThreadTitleGenerationResult",
+      "base_valid": "title_model_unavailable_recorded_without_substitute",
+      "expected_error": "route_unavailable is never silently replaced by another model (no effective_route)",
+      "patch": {
+        "attempt.effective_route": "model-route:fixture:other"
+      }
+    },
+    {
+      "name": "title_attempt_unknown_outcome",
+      "definition": "ThreadTitleGenerationResult",
+      "base_valid": "title_naming_pending",
+      "expected_error": "outcome is one of the six ACD-479 outcomes",
+      "patch": {
+        "attempt.outcome": "renamed"
+      }
+    },
+    {
+      "name": "title_rejected_with_attempt",
+      "definition": "ThreadTitleGenerationResult",
+      "base_valid": "title_policy_off_refused",
+      "expected_error": "a refused regeneration produces no attempt",
+      "patch": {
+        "attempt": {
+          "thread_id": "thread:fixture:1",
+          "attempt_id": "title-attempt:fixture:9",
+          "requested_route": "model-route:fixture:title-small",
+          "outcome": "policy_off",
+          "at": "2026-09-27T21:07:00Z"
+        }
+      }
+    },
+    {
+      "name": "eli5_value_toggle",
+      "definition": "ELI5ThreadOverrideRequest",
+      "base_valid": "eli5_on_from_sheet",
+      "expected_error": "value is exactly on, off or inherit (no toggle)",
+      "patch": {
+        "value": "toggle"
+      }
+    },
+    {
+      "name": "eli5_value_project_default",
+      "definition": "ELI5ThreadOverrideRequest",
+      "base_valid": "eli5_inherit_from_sheet",
+      "expected_error": "value is exactly on, off or inherit (no project-level value)",
+      "patch": {
+        "value": "project"
+      }
+    },
+    {
+      "name": "eli5_value_boolean",
+      "definition": "ELI5ThreadOverrideRequest",
+      "base_valid": "eli5_off_from_quick_dot",
+      "expected_error": "value is exactly on, off or inherit, not a boolean",
+      "patch": {
+        "value": false
+      }
+    },
+    {
+      "name": "eli5_set_without_value",
+      "definition": "ELI5ThreadOverrideRequest",
+      "base_valid": "eli5_on_from_sheet",
+      "expected_error": "value is required",
+      "remove": [
+        "value"
+      ]
+    },
+    {
+      "name": "eli5_set_from_wand_row",
+      "definition": "ELI5ThreadOverrideRequest",
+      "base_valid": "eli5_on_from_sheet",
+      "expected_error": "the wand's ELI5 row only opens the sheet; sources are eli5_sheet and composer",
+      "patch": {
+        "source_surface": "wand"
+      }
+    },
+    {
+      "name": "eli5_set_writes_setting_key",
+      "definition": "ELI5ThreadOverrideRequest",
+      "base_valid": "eli5_on_from_sheet",
+      "expected_error": "the request names no Settings key or project default",
+      "patch": {
+        "setting_key": "general.interaction.eli5-default"
+      }
+    },
+    {
+      "name": "eli5_inherit_keeps_override",
+      "definition": "ELI5ThreadOverrideResult",
+      "base_valid": "eli5_override_deleted_by_inherit",
+      "expected_error": "inherit deletes the chat override (chat_override null)",
+      "patch": {
+        "chat_override": "on"
+      }
+    },
+    {
+      "name": "eli5_on_not_applied",
+      "definition": "ELI5ThreadOverrideResult",
+      "base_valid": "eli5_override_set_on",
+      "expected_error": "an accepted on leaves chat_override on",
+      "patch": {
+        "chat_override": "off"
+      }
+    },
+    {
+      "name": "eli5_switch_rewrites_earlier_reply",
+      "definition": "ELI5ThreadOverrideResult",
+      "base_valid": "eli5_override_set_on",
+      "expected_error": "a switch never rewrites an earlier reply",
+      "patch": {
+        "side_effects.earlier_reply_rewritten": true
+      }
+    },
+    {
+      "name": "eli5_switch_second_response",
+      "definition": "ELI5ThreadOverrideResult",
+      "base_valid": "eli5_override_set_on",
+      "expected_error": "a switch never produces a second response",
+      "patch": {
+        "side_effects.second_response_produced": true
+      }
+    },
+    {
+      "name": "eli5_switch_regenerates_reply",
+      "definition": "ELI5ThreadOverrideResult",
+      "base_valid": "eli5_override_deleted_by_inherit",
+      "expected_error": "a switch never regenerates a reply",
+      "patch": {
+        "side_effects.reply_regenerated": true
+      }
+    },
+    {
+      "name": "eli5_switch_applies_to_current_reply",
+      "definition": "ELI5ThreadOverrideResult",
+      "base_valid": "eli5_override_set_on",
+      "expected_error": "a switch applies from the next reply only",
+      "patch": {
+        "applies_from": "current_reply"
+      }
+    },
+    {
+      "name": "explain_without_message_id",
+      "definition": "ELI5ExplainReplyRequest",
+      "base_valid": "explain_reply_from_message_actions",
+      "expected_error": "the request targets one reply by message_id",
+      "remove": [
+        "message_id"
+      ]
+    },
+    {
+      "name": "explain_from_wand",
+      "definition": "ELI5ExplainReplyRequest",
+      "base_valid": "explain_reply_from_message_actions",
+      "expected_error": "the only source surface is message_chrome",
+      "patch": {
+        "source_surface": "wand"
+      }
+    },
+    {
+      "name": "explain_wrong_command",
+      "definition": "ELI5ExplainReplyRequest",
+      "base_valid": "explain_reply_from_message_actions",
+      "expected_error": "command_id is const cmd.chat.eli5.explain_reply (not an alias of retry)",
+      "patch": {
+        "command_id": "cmd.chat.retry_message"
+      }
+    },
+    {
+      "name": "explain_request_sets_eli5",
+      "definition": "ELI5ExplainReplyRequest",
+      "base_valid": "explain_reply_from_message_actions",
+      "expected_error": "the request carries no ELI5 value",
+      "patch": {
+        "value": "on"
+      }
+    },
+    {
+      "name": "explain_two_replies",
+      "definition": "ELI5ExplainReplyResult",
+      "base_valid": "explain_reply_one_extra_simple_reply",
+      "expected_error": "an accepted request writes exactly one reply",
+      "patch": {
+        "replies_written": 2
+      }
+    },
+    {
+      "name": "explain_accepted_without_new_reply",
+      "definition": "ELI5ExplainReplyResult",
+      "base_valid": "explain_reply_one_extra_simple_reply",
+      "expected_error": "an accepted request names the one new reply",
+      "patch": {
+        "new_reply_message_id": null
+      }
+    },
+    {
+      "name": "explain_extra_reply_not_simple",
+      "definition": "ELI5ExplainReplyResult",
+      "base_valid": "explain_reply_one_extra_simple_reply",
+      "expected_error": "the extra reply is written in Simple",
+      "patch": {
+        "new_reply_style": null
+      }
+    },
+    {
+      "name": "explain_accepted_target_unknown",
+      "definition": "ELI5ExplainReplyResult",
+      "base_valid": "explain_reply_one_extra_simple_reply",
+      "expected_error": "an accepted request targeted a finished reply",
+      "patch": {
+        "target_reply_state": null
+      }
+    },
+    {
+      "name": "explain_rewrites_target",
+      "definition": "ELI5ExplainReplyResult",
+      "base_valid": "explain_reply_one_extra_simple_reply",
+      "expected_error": "the reply it explains is never changed",
+      "patch": {
+        "side_effects.target_reply_changed": true
+      }
+    },
+    {
+      "name": "explain_replaces_target",
+      "definition": "ELI5ExplainReplyResult",
+      "base_valid": "explain_reply_one_extra_simple_reply",
+      "expected_error": "the reply it explains is never replaced",
+      "patch": {
+        "side_effects.target_reply_replaced": true
+      }
+    },
+    {
+      "name": "explain_changes_eli5_state",
+      "definition": "ELI5ExplainReplyResult",
+      "base_valid": "explain_reply_one_extra_simple_reply",
+      "expected_error": "Explain this reply simply never changes the chat's ELI5 state",
+      "patch": {
+        "side_effects.eli5_setting_changed": true
+      }
+    },
+    {
+      "name": "explain_streaming_wrong_refusal",
+      "definition": "ELI5ExplainReplyResult",
+      "base_valid": "explain_reply_refused_while_streaming",
+      "expected_error": "a streaming target is refused with precondition_failed",
+      "patch": {
+        "error_code": "target_not_found"
+      }
+    },
+    {
+      "name": "explain_streaming_writes_reply",
+      "definition": "ELI5ExplainReplyResult",
+      "base_valid": "explain_reply_refused_while_streaming",
+      "expected_error": "a refused request writes no reply",
+      "patch": {
+        "replies_written": 1
+      }
+    },
+    {
+      "name": "explain_streaming_names_new_reply",
+      "definition": "ELI5ExplainReplyResult",
+      "base_valid": "explain_reply_refused_while_streaming",
+      "expected_error": "a refused request names no new reply",
+      "patch": {
+        "new_reply_message_id": "message:fixture:1:23"
+      }
+    }
+  ]
+}

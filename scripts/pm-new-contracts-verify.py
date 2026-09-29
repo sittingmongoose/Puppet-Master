@@ -94,9 +94,40 @@ CONTRACT_PAIRS = (
     ("Plans/testing_session_command_contracts.schema.json", "Plans/testing_session_command_contract_fixtures.json"),
     ("Plans/artifact_recording_command_contracts.schema.json", "Plans/artifact_recording_command_contract_fixtures.json"),
     ("Plans/commands_shortcuts_contracts.schema.json", "Plans/commands_shortcuts_contract_fixtures.json"),
+    # 2026-09-27 wand-modules companion (ledger pldg-20260927-002-wand-back-seat-driver): the BSD
+    # finding weight/dismissal fields and the DL-130 dismiss/catch-up-release request/result shapes
+    # (Back_Seat_Driver.md sections 16 and 18, BSD-031, BSD-037; Commands_System.md CS-085).
+    ("Plans/back_seat_driver_contracts.schema.json", "Plans/back_seat_driver_contract_fixtures.json"),
+    # 2026-09-27 wand-modules companion (ledger pldg-20260927-004-wand-memory-plan-usage): the
+    # cmd.chat.memory.export request and payload with pointer-only evidence and the three stored
+    # verification states, and the included_teaching_ids reply fragment (assistant-memory-subsystem.md
+    # AMS-051, AMS-052; Commands_System.md CS-085); the UF-104 pre-start run estimate (usage-feature.md).
+    ("Plans/assistant_memory_contracts.schema.json", "Plans/assistant_memory_contract_fixtures.json"),
+    ("Plans/usage_run_estimate_contracts.schema.json", "Plans/usage_run_estimate_contract_fixtures.json"),
+    # 2026-09-27 wand-modules companion (ledger pldg-20260927-003-wand-scheduling, register B-SQR-09):
+    # the owner schema Commands_System.md names for Scheduling_and_Quota_Resume.md, with the request/result
+    # pairs of the six commands the scheduling sheets, card, manager and Plan card dispatch (SQR-013,
+    # SQR-015, SQR-017). Window-create and quota-consent definitions are not authored yet.
+    ("Plans/scheduling_and_quota_resume_contracts.schema.json", "Plans/scheduling_and_quota_resume_contract_fixtures.json"),
+    # 2026-09-27 wand-modules companion (ledger pldg-20260927-001-wand-collab-workflows, register B-CW-29):
+    # the owner schema Commands_System.md names for Collaborative_Workflows.md, with the section 12 records,
+    # the completion and participant activity projections, and the request/result pairs of every
+    # collaborative command, including cmd.chat_room.end and cmd.brainstorm.research_lead (CWR-018..CWR-039).
+    ("Plans/collaborative_workflows_contracts.schema.json", "Plans/collaborative_workflows_contract_fixtures.json"),
+    # 2026-09-27 wand-modules companion (ledgers pldg-20260927-005 and -006, DL-126): the owner schema
+    # Commands_System.md names for assistant-chat-design.md, with the request/result pairs of
+    # cmd.chat.goal.open_editor, cmd.chat.composer.destination.set/.clear, cmd.chat.thread.regenerate_title
+    # (ACD-462, ACD-479), cmd.chat.eli5.set with on|off|inherit (UCC-175, ACD-484) and
+    # cmd.chat.eli5.explain_reply (UCC-174, CS-087, ACD-484).
+    ("Plans/assistant_chat_contracts.schema.json", "Plans/assistant_chat_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 35
+# 35 -> 36 on 2026-09-27: the Back Seat Driver pair above.
+# 36 -> 38 on 2026-09-27: the assistant memory and usage run estimate pairs above.
+# 38 -> 39 on 2026-09-27: the scheduling and quota resume pair above.
+# 39 -> 40 on 2026-09-27: the collaborative workflows pair above.
+# 40 -> 41 on 2026-09-27: the assistant chat pair above.
+EXPECTED_CONTRACT_PAIR_COUNT = 41
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"

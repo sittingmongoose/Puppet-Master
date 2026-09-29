@@ -1,7 +1,9 @@
 #!/usr/bin/env node
-/* Throwaway visual pass for the eleven redesigned wand-module dialogs.
+/* Throwaway visual pass for the twelve redesigned wand-module dialogs.
    Opens each dialog from the wand, asserts shell grammar + zero native
-   selects + zero slot throws, screenshots dark then light. Not committed. */
+   selects + zero slot throws, screenshots dark then light. Not committed.
+   2026-09-27 (REVERT, DESIGN-SPEC 10.2): the Revert sheet joined the list; its wand
+   row is enabled only when the chat holds a change, so the recorded example makes one. */
 import { chromium } from 'playwright-core';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -123,6 +125,23 @@ await pass('defaults', async () => {
   await ensureRow('[data-action="af-settings-open"]', 'preferences');
   return clickVisible('[data-action="af-settings-open"]');
 });
+/* Revert Last Agent Edit (8.12): the recorded example changes three files in its own chat, then
+   the Workflows row opens the sheet; the pass returns to the chat it started in afterwards. */
+async function act(name, data = {}) {
+  return ev(([name, data]) => { const b = document.createElement('button'); b.dataset.action = name; Object.assign(b.dataset, data); const f = window.PM56_EXT._actions[name]; if (!f) return false; f(window.PM56_EXT.ctx(), b, new Event('click')); window.PM56_EXT.ctx().renderApp(); return true; }, [name, data]);
+}
+const homeThread = await ev(() => window.PM56_EXT.ctx().thread.id);
+await pass('revert', async () => {
+  if (!(await act('revert-demo-start', { flow: 'whole' }))) return false;
+  await wait(500);
+  await act('revert-demo-apply');
+  await wait(400);
+  await ensureRow('[data-action="af-revert-preview"]', 'work');
+  return clickVisible('[data-action="af-revert-preview"]:not([disabled])');
+});
+await closeDialog();
+await ev(id => window.PM56_DEMO.selectThread(id), homeThread);
+await wait(300);
 
 /* light theme re-shoot */
 await ev(() => window.PM56_DEMO.setTheme('basic-light'));

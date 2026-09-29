@@ -277,9 +277,11 @@
           "domain_actions": [
             "cmd.persona.select",
             "cmd.chat.send",
-            "cmd.chat.eli5.set"
+            "cmd.chat.eli5.set",
+            "cmd.chat.eli5.explain_reply"
           ],
           "same_answer_eli5": true,
+          "original_reply_rewritten": false,
           "tour_stores_refs_not_content": true,
           "local_example_provider_fallthrough": false,
           "zero_use_requires_observation": true
@@ -1574,6 +1576,18 @@
       "case_id": "tour_eli5_changes_answer",
       "json_pointer": "/contracts/2/chat_contract/same_answer_eli5",
       "replacement": false,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_eli5_rewrites_original_reply",
+      "json_pointer": "/contracts/2/chat_contract/original_reply_rewritten",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "tour_eli5_same_answer_through_switch",
+      "json_pointer": "/contracts/2/chat_contract/domain_actions/3",
+      "replacement": "cmd.chat.eli5.set",
       "expected": "rejected"
     },
     {

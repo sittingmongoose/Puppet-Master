@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36436-L37124
+Source lines: L36468-L37167
 
-Source SHA256: `3043fc6bf2f03cd94009cfe985b764e37e4caeb80dc3da571998bcad5100aa94`
+Source SHA256: `28175e393a15cdbe7fbc591613fedf387026ac3ee8759b7dd3494cd06b077aa4`
 
 ---
 
@@ -34,6 +34,8 @@ invariants.
   The chat transcript container enforces positive bottom padding such that the final transcript
   message child at settled bottom scroll rests completely above the pill without collision or
   occlusion. The bar is never replaced with plain text and is never rendered as an opaque in-flow footer.
+  The padding is measured with the composer stack as it stands, including the dock when it shows
+  (F3-567), so the last card's footer is never under the pill.
 
 ### 18. Transcript Constraints, Card Visual Rhythm, Diffs, and Work-Note Boundary
 
@@ -66,12 +68,15 @@ invariants.
 - **Direct Hover Navigation (APR-006):** Redundant "Open Activity" buttons are completely removed
   from all activity hover cards. Clicking directly on an item row, task title, participant card, or
   artifact entry immediately opens that specific record in the pinned Activity Detail panel,
-  preserving domain identity and focus.
+  preserving domain identity and focus. Exception (DL-122, F3-580): a click on the Crew, BrainStorm,
+  Review or Chat Room domain chip itself reveals the newest card of that kind in the thread; the rows
+  of those domains' hover cards keep this routing, so Activity Detail stays reachable.
 - **Non-Scrolling Bounded Previews (APR-007):** All activity hover preview panels are strictly
   bounded surfaces with no internal scrollbars (`overflow: hidden`). Previews display a curated,
   representative subset of items (up to 4–6 items). An overflow summary counter (e.g., "+7 more")
   navigates directly to the full Activity Detail panel on click, but does not masquerade as an Open
-  Activity action button.
+  Activity action button. The collaboration hover cards (at most four run rows plus one overflow
+  line that opens Activity) satisfy this rule unchanged.
 - **Preview Routing Identity (APR-042):** Selecting an item from an activity preview retains exact
   item identity and domain context during routing. Selecting a file change in Changes preview routes
   directly to the specific file diff view; selecting an artifact routes directly to the artifact
@@ -86,7 +91,8 @@ invariants.
   presents a concise, high-signal information hierarchy: active context window usage, current
   token counts, pinned sources, and high-level Back Seat Driver (BSD) status. Detailed inspection
   (e.g., full prompt breakdown, BSD sensitivity, catch-up configuration, and stage bindings) is
-  placed behind intentional disclosure toggles.
+  placed behind intentional disclosure toggles. Back Seat Driver's section is three plain facts and
+  three native disclosures with no metric-card grid (DL-122, F3-580).
 - **Strict Elimination of Left-Edge Accent Stripes (APR-034):** Decorative left-edge vertical
   accent bars, colored side stripes, inset accent borders, and pseudo-element stripes are strictly
   prohibited across all Assistant and Settings surfaces (including gray or muted substitutes).
@@ -139,7 +145,8 @@ invariants.
   Persona, and Strategy. All pickers share consistent keyboard navigation, anchoring, and search filters.
 - **Plain-Language Collaboration Configuration (APR-052):** All collaboration options use plain-language
   labels with concise descriptive subtitles explaining the exact operational difference between modes
-  (e.g., Single Agent vs Multi-Pass Review, Quick vs Exhaustive BrainStorm).
+  (e.g., Single Agent vs Multi-Pass Review, or the Deep Plan strategies Thorough, Exhaustive and
+  BrainStorm; BrainStorm has no Quick strategy).
 - **Consistent Inset Popup Footers (APR-053):** Configuration modal footers enforce consistent
   inset padding (16 px horizontal and vertical), subtle top separator borders, and standard button
   clustering (primary action right-aligned, secondary/cancel left- or right-adjacent with clear hierarchy).
@@ -160,6 +167,10 @@ invariants.
   7. *Chat Room Detail:* Multi-agent participant list, room topic, round counter, and conversation timeline.
   8. *Changes Detail:* Aggregated file modifications, colored additions/deletions, path links, and diff inspection triggers.
   9. *Artifacts Detail:* Generated documents, diagrams, code outputs, export options, and lineage metadata.
+
+  Scoped exception (2026-09-27, DL-122): for Crew, BrainStorm, Review and Chat Room (items 4 to 7) the
+  Activity Detail body is the short team list of F3-580, and the kind content listed above lives in
+  the run view (ACD-480). The other five families keep the native presentation above.
 - **Read-Only Demonstration Semantics (APR-067):** Read-only inspection fixtures and demo cards
   render findings, diagnostics, and code views without interactive mutation controls or misleading
   active buttons, clearly labeling the static or demo nature of the content.

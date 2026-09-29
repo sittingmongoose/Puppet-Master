@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25375-L25416
+Source lines: L25402-L25449
 
-Source SHA256: `82693e025835e537590128c7917aa84700243edfa6b447ccd818cebdcbf55b0f`
+Source SHA256: `c0598b7cd330cb81288c38ca4b6a84c5c384b981cceeb49af40429a0507db3ff`
 
 ---
 
@@ -24,8 +24,10 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   The existing cmd.chat.composer.destination.set and cmd.chat.thread.regenerate_title declarations
   in UCC-156 are Assistant Chat-owned. Destination selection binds the exact thread and existing
-  workflow/participant/Plan-revision/component-list target and names it visibly in composer chrome;
-  it does not create or start that workflow or send unrelated unsent input. Explicit title regeneration
+  workflow/participant/Plan-revision target (the destination kinds Collaborative_Workflows §4.5
+  closes) and names it visibly in composer chrome; it does not create or start that workflow or send
+  unrelated unsent input. The numbered component list that cmd.browser.component.add_to_composer
+  builds is message content attached to the composer, never a destination. Explicit title regeneration
   consumes the existing title policy and title-model availability and clears the manual-rename lock
   only through its owner operation. Neither command owns a second ComposerBuffer, collaborative
   runtime, model service or artifact store.
@@ -38,15 +40,19 @@ acceptance_criteria:
   - Revalidate the exact originating thread and target at dispatch; changing the active tab must not redirect a pending operation.
   - Keep unsent buffer state isolated and preserve the originating route and focus on failure or owner unavailability.
   - Existing policy, permission, idempotency, title-lock and currentness rules remain authoritative; a production-intent row does not prove a model call, persistence or event.
-  - Markdown references in partial Touch Closure rows identify declarations, not materialized machine schemas; exact request/result/error and native execution evidence remain required before operational closure.
+  - Markdown references in partial Touch Closure rows identify the declarations in Plans/assistant_chat_contracts.schema.json; native execution evidence remains required before operational closure.
+  - Never offer the browser component list as a destination; it has no destination_kind.
 validation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, scripts/pm-assistant-contract-check.py, future native destination and title currentness tests]
 risk_class: wrong_chat_owner_or_unproved_dispatch
 reasoning_tier: high
 context_scope: composer_and_title_owner_reference_repair
 implementation_surfaces: [Plans/assistant-chat-design.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
 node_compile_hint: {mode: owner_and_touch_accounting_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/UI_Command_Catalog.md#UCC-158]
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/UI_Command_Catalog.md#UCC-158, "Lead ruling 2026-09-27 (ledger pldg-20260927-005 q-019): the component list is message content, not a destination kind"]
+preserved_exact_tokens: [cmd.browser.component.add_to_composer, destination_kind]
 negative_constraints: [No new command or handler., No second buffer or collaboration owner., No fabricated schema or native proof., No event or readiness admission.]
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-158, ContractName:Plans/Commands_System.md, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Models_System.md, ContractName:Plans/DRY_Rules.md#DR-040
+
+Amended 2026-09-27: the per-attempt title record (`ThreadTitleAttempt`), `thread.title_locked` and the chat header's title states that follow from `cmd.chat.thread.regenerate_title` are specified in ACD-479, which also adds the `chat_header` surface for it. The command, its owner and the title policy stay as stated here.

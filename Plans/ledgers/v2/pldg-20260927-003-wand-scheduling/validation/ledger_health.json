@@ -1,0 +1,17 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260927-003-wand-scheduling",
+  "updated_at_utc": "2026-09-28T00:15:00+00:00",
+  "status": "pass_prose_compiled",
+  "summary": {
+    "events": 14,
+    "design_atoms": 8,
+    "decisions": 10,
+    "open_questions": 4,
+    "deferred_questions": 0,
+    "open_blockers": 0,
+    "compile_queue_items": 7
+  },
+  "notes": "Prose compile; WAIT wave reviewed 2026-09-27; companions (B-SQR-09) written 2026-09-27; closure wave 2026-09-27: B-SQR-05 compiled from DL-136 (SQR-018 new, SQR-001 and SQR-006 amended, ATS-064 new, three Assistant_Plan_Runtime.md sentences), q-001 answered; closure companions written 2026-09-27 (Plans/scheduling_and_quota_resume_contracts.schema.json + Plans/scheduling_and_quota_resume_contract_fixtures.json: AutomationPauseSetRequest/Result, ProjectAutomationPauseRecord), q-006 opened. Blind review cycle 1 (2026-09-28): R-01..R-11 repaired (dec-009, dec-010, cor-008..cor-019); witness pass.",
+  "errors": []
+}

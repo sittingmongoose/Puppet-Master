@@ -47,15 +47,17 @@
     ready: () => C.answered('a1') });
 
   S({ id: 'same_answer_eli5', chapter: 'ask', kind: 'action', after: true,
-    /* the real ELI5 toggle; when it turns on, the same bubble is rewritten (and back if it turns off) */
-    tick(st) { const on = !!q('span.chat-toggle-btn.toggle-eli5.active'); if (on !== st.eli5Shown) { st.eli5Shown = on; if (C.lastAnswerEl()) C.rewrite(on); } },
-    enter(st) { st.eli5Shown = !!q('span.chat-toggle-btn.toggle-eli5.active'); },
-    target: () => (TR.st.sess.done.includes('same_answer_eli5') ? C.lastAnswerEl() : C.eli5Btn()),
-    done: (st) => st.eli5Shown && C.eli5Shown(),
+    /* Explain this reply simply (cmd.chat.eli5.explain_reply, DL-126) adds one simpler reply under the example answer,
+       which stays as it was. Then the spotlight moves to the quick ELI5 switch by the message box (cmd.chat.eli5.set),
+       which changes only the replies written after it; Ask sends the next question to show that. */
+    target: (st) => (st.sess.done.includes('same_answer_eli5') ? C.eli5Btn() : C.explainBtn(C.midFor('a1'))),
+    /* the callout keeps one place clear of Chat, so it never covers the answer or the simpler reply being read */
+    avoid: () => [document.getElementById('chatPanel')],
+    done: () => C.explainedSame('a1'),
     extra: (st) => (st.sess.done.includes('same_answer_eli5') ? `<div class="o55t-inline">${TR.btn('askProject', T('tour.steps.same_answer_eli5.ask'), 'secondary')}</div>` : ''),
     actions: { askProject: async () => { const t = C.composer(); if (!t) return; t.focus(); t.value = T('tour.teacher.q2'); t.dispatchEvent(new Event('input', { bubbles: true })); await M.delay(120); const b = C.sendBtn(); if (b) b.click(); } },
     stay: true,
-    showMe: async (sm) => { await sm.click(C.eli5Btn()); } });
+    showMe: async (sm) => { await sm.click(C.explainBtn(C.midFor('a1'))); } });
 
   /* ================================================================ chapter 2: Make the workspace yours */
   const ORIENT = [() => q('.page-tabs'), () => document.getElementById('pm-home-workspace'), () => document.getElementById('chatPanel')];

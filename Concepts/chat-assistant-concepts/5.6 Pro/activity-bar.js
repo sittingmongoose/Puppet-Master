@@ -143,6 +143,7 @@
      motion, so weight and glow have to carry it too. stroke-width set in CSS
      overrides the presentation attribute icon() writes, and it inherits from
      the <svg> to the paths, so one property does it. */
+  var KIND_DOMAINS = { crew: 1, brainstorm: 1, review: 1, chat_room: 1 };
   var TONE_STROKE = {
     blocked: '2.2', attention: '2.1', working: '2.1',
     changed: '1.8', done: '1.5', idle: '1.4'
@@ -303,8 +304,13 @@
          custom property's var() is substituted on the element that declares
          it. On <html> the token would not resolve. */
       setVar(body, '--ab-ink-' + id, TONE_INK[tone] || TONE_INK.idle);
-      setVar(body, '--ab-anim-' + id, TONE_ANIM[tone] || 'none');
-      setVar(body, '--ab-shadow-' + id, TONE_SHADOW[tone] || 'none');
+      /* The four collaboration domains draw a pmx kind glyph (svg.pmx-kind) in
+         the rail. A run can work for an hour: the pmx grammar allows no
+         breathing loop and no glow halo on it (5.6 DON'T 4). Working is carried
+         by the glyph's ink and stroke weight and the chip's count instead. */
+      var still = KIND_DOMAINS[id] && tone === 'working';
+      setVar(body, '--ab-anim-' + id, still ? 'none' : (TONE_ANIM[tone] || 'none'));
+      setVar(body, '--ab-shadow-' + id, still ? 'none' : (TONE_SHADOW[tone] || 'none'));
       setVar(body, '--ab-stroke-' + id, TONE_STROKE[tone] || '1.8');
     }
     var t = diffTotals(ctx);
@@ -406,9 +412,6 @@
   }
 
   /* ------------------------------------------------------------- subagents */
-  function initials(name) {
-    return String(name || '?').split(/\s+/).map(function (w) { return w[0] || ''; }).join('').slice(0, 2).toUpperCase();
-  }
   function agentCard(ctx, def) {
     var agents = list(coll(ctx).subagents);
     var shown = byRank(agents).slice(0, ROWS);
@@ -434,11 +437,14 @@
     if(window.PM56_CREW?.activityRuns(ctx).length)return window.PM56_CREW.activityHover(ctx);
     var crew = list(coll(ctx).crew);
     var shown = byRank(crew).slice(0, ROWS);
-    var body = shown.length ? shown.map(function (a) {
+    var SH = window.PM56_SHELL;
+    var body = shown.length ? shown.map(function (a, i) {
       var s = st(a.status);
+      /* a member's face is its cast mark (silhouette x hue), never initials (7.13, B1) */
+      var mk = SH && SH.pmxMark ? SH.pmxMark({ role: a.effectivePersona || a.requestedPersona || a.persona || 'Implementer', seat: (i % 8) + 1, size: 18 }) : '';
       return row({
         k: 'crew:' + a.id, state: s.tone,
-        lead: '<span class="ab-avatar" data-tone="' + s.tone + '">' + esc(initials(a.name)) + '</span>',
+        lead: '<span class="ab-avatar" data-tone="' + s.tone + '">' + mk + '</span>',
         main: a.name,
         sub: a.current || '',
         right: '<span class="ab-row-right"><b data-tone="' + s.tone + '">' + esc(s.label) + '</b></span>',

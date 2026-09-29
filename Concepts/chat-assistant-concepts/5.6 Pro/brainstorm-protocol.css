@@ -1,3 +1,115 @@
-/* Shared narrow document grammar; no colored edge bands. Working styles untouched. */
-.bs-document{max-width:840px;margin:0 auto;padding:22px 24px 32px!important;min-width:0}.bs-document h1{font-size:20px;line-height:1.35;margin:10px 0;overflow-wrap:anywhere}.bs-document h3{font-size:13px}.bs-meta,.bs-summary{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-size:11px;color:var(--muted)}.bs-summary{padding:8px 0}.bs-summary strong{color:var(--text);font-size:12px}.bs-objective{font-size:12px;line-height:1.65;color:var(--muted);margin:8px 0 12px}.bs-toolbar,.bs-actions,.bs-evidence-links{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.bs-toolbar{padding:5px 0 12px}.bs-toolbar [aria-pressed=true]{font-weight:650;color:var(--text)}.bs-actions{padding:12px 0}.bs-actions button,.bs-evidence-links button{font-size:11px;white-space:normal;text-align:left}.bs-decision{padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;gap:7px}.bs-decision>span{color:var(--muted);font-size:11px}.bs-decision>strong{font-size:15px}.bs-decision p,.bs-option p,.bs-vote p{font-size:12px;line-height:1.6;color:var(--muted);margin:6px 0}.bs-option{padding:16px 0;border-bottom:1px solid var(--line);min-width:0}.bs-option header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;font-size:13px;line-height:1.5}.bs-option header>span{font-size:11px;color:var(--muted)}.bs-option details{margin-top:8px;font-size:12px}.bs-option summary,.bs-detail summary{cursor:pointer;font-weight:550;font-size:12px}.bs-option dl{display:grid;grid-template-columns:64px minmax(0,1fr);gap:9px;margin:12px 0;line-height:1.6;font-size:11px}.bs-option dt{color:var(--muted)}.bs-option dd{margin:0}.bs-option small,.bs-vote small{display:block;font-size:10px;color:var(--muted);margin-top:6px}.bs-constraint{display:flex;align-items:flex-start;gap:8px;margin-top:7px;font-size:11px;line-height:1.55}.bs-constraint svg{flex:none;margin-top:2px}.bs-detail{padding:13px 0;border-bottom:1px solid var(--line);font-size:12px}.bs-detail>p{line-height:1.6;color:var(--muted)}.bs-vote{display:grid;gap:4px;padding:12px 0}.bs-vote>strong{font-size:12px}.bs-vote>span{font-size:11px;color:var(--muted)}.bs-provenance,.bs-empty{font-size:10px;color:var(--muted);line-height:1.6}.bs-source,.bs-markdown{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;font-size:12px;line-height:1.65;padding:14px;border:1px solid var(--line);border-radius:9px;max-width:100%}.bs-evidence-links{margin:10px 0}.bs-evidence-links button{display:inline-flex;align-items:center;gap:4px}.bs-backlink{margin:12px 18px}.collab-kind-brainstorm .collab-card-head{flex-wrap:wrap}.collab-kind-brainstorm .collab-card-title{min-width:0;flex:1 1 150px;overflow-wrap:anywhere}.collab-kind-brainstorm .collab-card-foot{flex-wrap:wrap}
-@media(max-width:800px){.bs-document{padding:16px!important}.bs-document h1{font-size:18px}.bs-meta{justify-content:flex-start}}
+/* BrainStorm: the legacy inline summary the exported renderSummary / renderActions still emit (MUST-KEEP API), and
+   the kind parts below. The documents are styled by brainstorm-view.css (STORM-B). No coloured edge bands. */
+.bs-summary{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-size:11px;color:var(--muted)}.bs-summary{padding:8px 0}.bs-summary strong{color:var(--text);font-size:12px}.bs-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.bs-actions{padding:12px 0}.bs-actions button{font-size:11px;white-space:normal;text-align:left}
+/* ---- STORM-A presentation (DESIGN-SPEC 8.4, 7; J-2 spacing). Kind parts only: every primitive is the
+   foundation's. The sheet's question-budget helper drops in short windows with the other sheet helpers. ---- */
+.pmx-sheet .pmx-bs-qhelp{margin:6px 0 0;}
+@media (max-height:820px){.pmx-sheet .pmx-bs-qhelp{display:none;}}
+/* retro's monospace side column has no line to spare at 1440 x 900: the label's hover card carries it there */
+body[data-theme^="retro"] .pmx-sheet .pmx-bs-qhelp{display:none;}
+/* the must-haves (review fix, J-2): the box carries border, fill and focus ring (the hero field's pattern); the field
+   inside grows with its rules from one line to two and scrolls past that (one line in short windows). The box keeps
+   the 7 px padding above and below, outside the field, and the field is exactly whole 17.5 px lines tall, so typing
+   scrolls it by whole lines (its 2 px bottom scroll padding makes the caret reveal take in the caret line's
+   half-leading, so the end of the text sits on the field's bottom edge, one line or two; measured scrollTop within
+   0.5 px of a 17.5 px multiple, the whole-pixel scroll offset's limit) and a hidden line never shows half cut. The
+   label keeps to the first line. Two lines is
+   what the hero's side holds without growing the sheet (measured: the side column has 5 px to spare at 1440 x 900),
+   once the preview's "In your chat" caption leaves, as COLLAB's own short-window rule already does. */
+.pmx-sheet .pmx-hero-side:has(.pmx-bs-must) .pmx-preview > figcaption{display:none;}
+.pmx-sheet .pmx-collab-must.pmx-bs-must{align-items:start;}
+.pmx-sheet .pmx-bs-must > .pmx-ctl-label{padding-top:8px;}
+.pmx-sheet .pmx-bs-mbox{display:block;min-width:0;box-sizing:border-box;padding:7px 0;overflow:hidden;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;}
+.pmx-sheet .pmx-bs-mbox:focus-within{border-color:var(--pmx-focus-edge);box-shadow:0 0 0 3px var(--pmx-focus-ring);}
+.pmx-sheet .pmx-collab-must .pmx-bs-mbox > textarea{display:block;width:100%;box-sizing:border-box;margin:0;padding:0 10px;border:0;border-radius:0;background:transparent;outline:none;box-shadow:none;
+ field-sizing:content;height:auto;min-height:17.5px;max-height:calc(2 * 17.5px);line-height:17.5px;overflow:hidden auto;scrollbar-width:thin;scroll-padding-block:0 2px;}
+@media (max-height:820px){.pmx-sheet .pmx-collab-must .pmx-bs-mbox > textarea{max-height:17.5px;}}
+/* a recorded example's rules, read-only: the first rule on the label's line, the note under both */
+.pmx-sheet .pmx-bs-must[data-recorded] > .pmx-ctl-label{padding-top:0;}
+.pmx-sheet .pmx-bs-mrule{min-width:0;font:var(--pmx-w-reg) 12.5px/18.5px var(--font-ui);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+body[data-theme^="retro"] .pmx-sheet .pmx-bs-mrule{font-size:11.5px;line-height:17px;}
+.pmx-sheet .pmx-bs-mnote{grid-column:1 / -1;margin-top:1px;min-width:0;font:var(--pmx-w-reg) 11px/16px var(--font-ui);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* blind proposals: one sealed note per helper, face down once it is in (never its words, BS-05) */
+.pmx-run .pmx-bs-notes{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:0 10px;margin:0;padding:8px 0;min-width:0;}
+.pmx-run .pmx-bs-note{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;text-align:center;}
+.pmx-run .pmx-bs-note-name{max-width:100%;font:var(--pmx-w-620) 12px/16px var(--font-ui);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-run .pmx-bs-note-state{display:flex;align-items:center;max-width:100%;font:var(--pmx-w-reg) 11px/15px var(--font-ui);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-run .pmx-bs-note-state .pmx-sealed{margin-right:6px;animation:pmx-bs-land var(--pmx-t-pop) var(--pmx-ease-pop) backwards;}
+.pmx-run .pmx-bs-note[data-state="writing"] .pmx-bs-note-state{color:var(--subtle);}
+@keyframes pmx-bs-land{from{opacity:0;transform:scale(.6);}}
+/* line up: the options the ideas boiled down to, each with the marks of the ideas it merged */
+.pmx-run .pmx-bs-opts{display:grid;gap:0;margin:0;min-width:0;}
+.pmx-run .pmx-bs-opt{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;column-gap:10px;min-height:34px;padding:8px 0;box-sizing:border-box;min-width:0;}
+.pmx-run .pmx-bs-opt + .pmx-bs-opt{box-shadow:0 -1px 0 var(--border);}
+.pmx-run .pmx-bs-opt-marks{display:inline-flex;gap:4px;perspective:400px;}
+.pmx-run .pmx-bs-from{display:inline-flex;backface-visibility:hidden;}
+.pmx-run .pmx-bs-opt-title{min-width:0;font:var(--pmx-w-620) 12.5px/18px var(--font-ui);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pmx-run .pmx-bs-opt-from{font:var(--pmx-w-reg) 11.5px/16px var(--font-ui);color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums;}
+body[data-theme^="retro"] .pmx-run .pmx-bs-opt-title{font-size:11.5px;}
+@media (prefers-reduced-motion:reduce){.pmx-run .pmx-bs-note-state .pmx-sealed{animation:none;}}
+body.pm56-reduced .pmx-run .pmx-bs-note-state .pmx-sealed{animation:none;}
+.pmx-run .pmx-bs-opt[data-state="ruled"] .pmx-bs-opt-marks, .pmx-run .pmx-bs-opt[data-state="ruled"] .pmx-bs-opt-from{opacity:.55;}
+.pmx-run .pmx-bs-opt-title s{text-decoration-thickness:1.5px;}
+.pmx-run .pmx-bs-opts + .pmx-ruled{margin-top:4px;}
+/* ---- the vote board (review fixes, J-2: never cut a name to letters). Kind-scoped over pmxVoteBoard until the
+   foundation takes these (FOUNDATION REQUESTS in STORM-A-NOTES): the grid comes from the kind (two options share it
+   equally, three or more by backers; the 64 px aisle and the 76 px wing only while someone stands there), the box grows with its content, titles
+   wrap to two lines, the marks stand alone and the backers' names are one wrapping line under their column. ---- */
+.pmx-run .pmx-bs-board > .pmx-votes{grid-template-columns:var(--pmx-bs-vote-cols);height:auto;min-height:104px;}
+.pmx-run .pmx-bs-board[data-aisle="0"] .pmx-vote-aisle, .pmx-run .pmx-bs-board[data-wing="0"] .pmx-vote-wing{display:none;}
+.pmx-run .pmx-bs-board .pmx-vote-title{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:normal;line-height:17px;}
+.pmx-run .pmx-bs-board .pmx-vote-title s, .pmx-run .pmx-bs-tally s{text-decoration-thickness:1.5px;}
+.pmx-run .pmx-bs-board .pmx-vote-count{display:contents;}
+.pmx-run .pmx-bs-board .pmx-bs-vc{margin:4px 0 0;font:var(--pmx-w-reg) 11px/16px var(--font-ui);color:var(--muted);font-variant-numeric:tabular-nums;}
+.pmx-run .pmx-bs-board .pmx-vote-floor{margin-top:auto;padding-top:6px;flex-wrap:wrap;row-gap:6px;}
+.pmx-run .pmx-bs-board .pmx-bs-vnames{order:1;margin-top:4px;max-width:100%;font:var(--pmx-w-reg) 10.5px/15.5px var(--font-ui);color:var(--muted);overflow-wrap:normal;}
+.pmx-run .pmx-bs-board .pmx-bs-vn{white-space:nowrap;}
+.pmx-run .pmx-bs-board .pmx-bs-vmark{display:inline-flex;}
+/* M tier (7.2 budget): three or more backers stand as marks only (each mark's hover card names it and how sure it
+   was); two names or fewer still fit their column in a line or two. From the L tier every column prints its names. */
+@container pmxrun (max-width: 519.98px){
+ .pmx-run .pmx-bs-board .pmx-vote-opt:has(.pmx-vote-floor > .pmx-voter:nth-child(3)) .pmx-bs-vnames{display:none;}
+}
+/* the vote's ruled-out line keeps one line (7.2 budgets; the board already strikes the option and says "ruled out"); its
+   fixed part comes first, and the whole sentence is its hover card. The fact check before it shows both lines. */
+.pmx-run .pmx-bs-board ~ .pmx-ruled{height:auto;}
+.pmx-run .pmx-bs-board ~ .pmx-ruled > span{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
+/* a ruled-out option: its title struck, its backers' marks dimmed, its words at full contrast */
+.pmx-run .pmx-bs-board .pmx-vote-opt:has(.pmx-vote-title s) .pmx-vote-floor{opacity:.55;}
+/* the aisle: one voter's mark, "+2" under it when more are deciding (the sentence names them) */
+.pmx-run .pmx-bs-board .pmx-bs-more{color:var(--muted);font-variant-numeric:tabular-nums;}
+/* the wing: the kind's own labels ("Doesn't vote" for the Wonderer, "Abstained" for a helper that abstained) */
+.pmx-run .pmx-bs-board .pmx-vote-wing > p:not(.pmx-bs-wlab){display:none;}
+.pmx-run .pmx-bs-board .pmx-vote-wing > .pmx-bs-wlab{white-space:normal;overflow:visible;}
+.pmx-run .pmx-bs-board .pmx-vote-wing > .pmx-bs-wlab ~ .pmx-bs-wlab{margin-top:8px;}
+/* while the run view holds Write the plan (7.12) the decision row keeps no empty actions line */
+.pmx-run[data-pmx-kind="brainstorm"] .pmx-decision-acts:empty{display:none;}
+/* the vote at the S tier (7.2): one counted line in place of the staged board */
+.pmx-run .pmx-bs-board{min-width:0;}
+.pmx-run .pmx-bs-tally{display:none;margin:0;padding:8px 0;font:var(--pmx-fs-sentence);color:var(--muted);min-width:0;overflow:hidden;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-variant-numeric:tabular-nums;}
+.pmx-run .pmx-bs-tally b{font-weight:var(--pmx-w-620);color:var(--text);}
+/* a count never leaves its "for" or its option on a line of its own (review fix) */
+.pmx-run .pmx-bs-tally .pmx-bs-tc{white-space:nowrap;}
+@container pmxrun (max-width: 359.98px){
+ .pmx-run .pmx-bs-board{display:none;}
+ .pmx-run .pmx-bs-tally{display:-webkit-box;}
+}
+/* seven stops: at the L tier the labelled track needs about 700 px, so from 520 to 719 px it keeps the M form
+   (dots and the one "now" line; the labels live in each stop's hover card). FOUNDATION REQUEST in STORM-A-NOTES. */
+@container pmxrun (min-width: 520px) and (max-width: 719.98px){
+ .pmx-run[data-pmx-kind="brainstorm"] .pmx-track.pmx-track .pmx-stop-label{display:none;}
+ .pmx-run[data-pmx-kind="brainstorm"] .pmx-track.pmx-track .pmx-track-now{display:block;flex:1 1 auto;}
+ .pmx-run[data-pmx-kind="brainstorm"] .pmx-track.pmx-track .pmx-track-line .pmx-stop + .pmx-stop::before{width:22px;margin:0 3px;}
+}
+/* the dissent pull-quote's caption: "full text in the panel" wherever the card clamps a long quote */
+.pmx-run .pmx-quote .pmx-bs-qfull, .pmx-run .pmx-quote[data-bs-long="m"] .pmx-bs-qkeep{display:none;}
+.pmx-run .pmx-quote[data-bs-long="m"] .pmx-bs-qfull{display:inline;}
+@container pmxrun (max-width: 359.98px){
+ .pmx-run .pmx-quote[data-bs-long="s"] .pmx-bs-qkeep{display:none;}
+ .pmx-run .pmx-quote[data-bs-long="s"] .pmx-bs-qfull{display:inline;}
+}
+/* the result's figures sentence takes two lines at the S and M tiers (7.2, amended R-11), so "1 ruled out" is never cut
+   in retro's monospace at 391 (the foundation's two-line form starts below 260 px) */
+@container pmxrun (max-width: 519.98px){
+ .pmx-run[data-pmx-kind="brainstorm"] .pmx-result-sub{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:clip;}
+}

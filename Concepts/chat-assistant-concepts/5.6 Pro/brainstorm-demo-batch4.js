@@ -5,7 +5,8 @@
  'use strict';
  const E=window.PM56_EXT,C=window.PM56_COLLAB,B=window.PM56_BRAINSTORM,P=window.PM56_PLANS;
  const clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map(),sessions=new Map();
- const flows={synthesis:{label:'Explore and synthesize',summary:'Independent ideas → debate → one Deep Plan'},constraint:{label:'A constraint outweighs the vote',summary:'Popular option rejected → dissent retained → offline Plan'}};
+ const flows={synthesis:{label:'Decide and write one plan',summary:'Ideas drafted alone → a debate → one plan'},constraint:{label:'A rule beats the vote',summary:'The popular option breaks a rule → its backers’ view is kept → one plan'}};
+ const S=window.PM56_SHELL,ms=v=>window.PM56_CLOCK&&window.PM56_CLOCK.ms?window.PM56_CLOCK.ms(v):v;
  const hash=x=>{let h=2166136261;for(const c of JSON.stringify(x)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return 'demo:'+((h>>>0).toString(16)).padStart(8,'0');};
  function fixture(kind){
   const rows=[{id:'z',label:'Zeta Alpha'},{id:'a',label:'Alpha'}],query=' alpha ';
@@ -36,6 +37,8 @@
   Object.assign(base,{id:tid,title:flows[kind].label+' · recorded example',status:'ready',pinned:false,archived:false,goalId:null,messages:[{id:tid+'-request',role:'user',type:'text',body:fixture(kind).objective+' Collection contents must stay on the device.'}]});c.state.threads.push(base);
   Object.assign(c.state,{demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};window.PM56_RUNTIME.composer.destination=null;
   active={kind,threadId:tid,runId:null,played:false,resultsOpened:false,evidenceSeen:false,dissentSeen:false,planOpened:false,markdownSeen:false,errors:[],events:[]};sessions.set(tid,active);C.openConfigure('brainstorm');const d=C.draft(),input=fixture(kind);d.name=input.label;d.purpose=input.objective;d.brainstormInput=input;
+  // IMPACT A1-01: the recording is flagged, and its rules are copied into the user field as prefill only.
+  d.mustHaves=input.constraints.filter(x=>x.hard).map(x=>x.text).join('\n');if(C.markRecorded)C.markRecorded(d);
   // Prepare the final dialog before switching: switchThread already renders
   // the app and overlays. Do not render the old page and this modal twice.
   c.state.dialog={type:'collab-configure'};c.switchThread(tid);
@@ -51,35 +54,54 @@
   const r=runId?C.run(runId):current(),session=runId?sessions.get(r?.threadId):active;
   if(!r||!session||(session.runId&&session.runId!==r.id)||r.status!=='running'||clocks.has(r.id)||session.played)return;
   session.runId=r.id;
-  if(r.participants.length!==r.brainstorm.attempts.length){session.errors.push('This recorded example contains core participants only. Optional specialist workflows need their own recordings.');E.ctx().renderApp();return;}
+  if(r.participants.length!==r.brainstorm.attempts.length){session.errors.push('This recording has the four core helpers only. Remove the specialists, then play it again.');E.ctx().renderApp();return;}
   const records=expected(r,session.kind),a=r.brainstorm.attempts,clock={timer:null,index:0};session.played=true;clocks.set(r.id,clock);
   const x=()=>({epoch:r.stopEpoch,sourceHash:r.brainstorm.input.sourceHash});
+  /* at[i]: the stop each recorded step moves the run into (a rejected step names it in the failed sentence) */
+  const at=a.map(()=>'blind_proposals');
   const actions=a.map((attempt,i)=>()=>B.submitProposal(r.id,{...x(),attemptId:attempt.id,assignmentRevision:attempt.assignmentRevision,proposal:clone(records.proposals[i])}));
-  actions.push(()=>B.normalize(r.id,x()));
-  for(let round=1;round<=r.config.debateRounds;round++)actions.push(()=>B.debate(r.id,{...x(),round,messages:[{participantId:a[0].participantId,body:round===1?'Separate input handling from query work, but preserve result order and request identity.':'Measure startup and transfer costs before choosing a default cutoff.',evidenceRefs:['query','latency']},{participantId:a[1].participantId,body:session.kind==='constraint'?'The hosted alternative requires uploads. A higher vote count cannot override that constraint.':'A simple local path remains the rollback. No latency benefit has been demonstrated yet.',evidenceRefs:['requirements','capabilities']}]}));
+  actions.push(()=>B.normalize(r.id,x()));at.push('normalize');
+  for(let round=1;round<=r.config.debateRounds;round++,at.push('debate'))actions.push(()=>B.debate(r.id,{...x(),round,messages:[{participantId:a[0].participantId,body:round===1?'Separate input handling from query work, but preserve result order and request identity.':'Measure startup and transfer costs before choosing a default cutoff.',evidenceRefs:['query','latency']},{participantId:a[1].participantId,body:session.kind==='constraint'?'The hosted alternative requires uploads. A higher vote count cannot override that constraint.':'A simple local path remains the rollback. No latency benefit has been demonstrated yet.',evidenceRefs:['requirements','capabilities']}]}));
+  at.push('evidence','vote','vote');
   actions.push(()=>B.recordEvidence(r.id,{...x(),checks:r.brainstorm.proposals.map(q=>({proposalId:q.id,evidenceRefs:q.evidenceRefs,summary:q.facts.networkRequired?'Network dependency conflicts with the offline constraint.':'Local query behavior is consistent with the frozen requirement; speed remains unmeasured.'}))}));
   actions.push(()=>{for(let i=0;i<a.length;i++){const result=B.vote(r.id,a[i].participantId,{...x(),...clone(records.votes[i])});if(!result.ok)return result;}return {ok:true};});
   actions.push(()=>B.decide(r.id,{...x(),selectedProposalId:'worker',reason:session.kind==='constraint'?'Choose the local snapshot path. The hosted option has more recorded support but violates the no-upload requirement. Preserve those preferences as dissent, not permission to ignore the constraint.':'Choose the snapshot worker, retain the simple local fallback, and make device measurements an acceptance step rather than claiming an unmeasured speedup.',steps:records.steps}));
   function next(){if(clocks.get(r.id)!==clock)return;if(r.status==='paused'){clock.timer=setTimeout(next,120);return;}if(r.status!=='running'){stopClock(r.id);return;}
    try{const res=actions[clock.index++]();if(!res.ok)throw Error(res.error);session.events.push({phase:r.brainstorm.phase,at:performance.now()});}
-   catch(e){session.errors.push(String(e.message||e));stopClock(r.id);E.ctx().renderApp();return;}
-   E.ctx().renderApp();if(clock.index<actions.length)clock.timer=setTimeout(next,450);else stopClock(r.id);
+   catch(e){session.failure=String(e.message||e);stopClock(r.id);session.errors.push(failRun(r,at[clock.index-1]).replace(/^The recording/,'The BrainStorm recording')+' Replay starts it again.');E.ctx().renderApp();return;}
+   E.ctx().renderApp();if(clock.index<actions.length)clock.timer=setTimeout(next,ms(450));else stopClock(r.id);
   }
-  clock.timer=setTimeout(next,800);E.ctx().renderApp();
+  clock.timer=setTimeout(next,ms(800));E.ctx().renderApp();
+ }
+ /* A rejected recorded step ends the run through the run's own failed state (review fix): the card shows the shared
+    failed face with this plain sentence, the guide offers Replay; the error code stays in data-failure. */
+ function failRun(r,key){
+  const stops=B.stops?B.stops():[],at=(stops.find(x=>x.key===key)||{}).label||'';
+  const reason='The recording stopped'+(at?' at '+at:'')+'. Everything so far is kept.';
+  if(['running','paused'].includes(r.status)){
+   r.status='failed';r.blockedReason=reason;r.completedAt=new Date().toISOString();r.stopEpoch+=1;
+   if(C.appendMessage)C.appendMessage(r.id,{senderKind:'system',senderName:'System',messageType:'message',body:reason});
+  }
+  return reason;
  }
  function finished(){const r=current();return !!(r?.brainstorm?.synthesis&&active.resultsOpened&&active.evidenceSeen&&active.dissentSeen&&active.planOpened&&active.markdownSeen);}
+ /* The recorded sheet carries no guide line (review fix, as the Crew demos): pmxGuide's sheet strip cannot keep its ink
+    8 px from its hairlines under a one-line lead (F0 request), and its only step was the sheet's own primary. The sheet
+    still says it is recorded (its read-only rules and foot); the dock guide takes over once the sheet closes. */
  function guide(c,inDialog=false,inEditor=false){
-  if(!active||c.state.selectedThread!==active.threadId||!!c.state.dialog!==inDialog)return '';const r=current();
-  if(inDialog&&(C.draft()?.kind!=='brainstorm'||r))return '';
-  if(!inDialog&&(innerWidth<=1100&&c.state.editorRevealed)!==inEditor)return '';
+  if(inDialog||!active||c.state.selectedThread!==active.threadId||!!c.state.dialog)return '';const r=current();
+  if((innerWidth<=1100&&c.state.editorRevealed)!==inEditor)return '';
   const done=finished(),b=r?.brainstorm,ended=r&&['canceled','failed'].includes(r.status);
-  let text=!r?'Configure the core roles, then Start BrainStorm.':!active.played?'Play the recorded exploration.':!b.decision?'Independent proposals → debate → evidence → votes.':!active.resultsOpened?'Open the exploration to inspect alternatives.':!active.dissentSeen?'Expand Dissent retained.':!active.evidenceSeen?'Open one cited source.':!b.synthesis?'Synthesize the recommended Deep Plan.':!active.markdownSeen?'Inspect the Plan in Markdown.':'Deep Plan ready. No build has started.';
-  if(r?.status==='paused')text='Paused. Resume through the workflow controls.';
-  if(ended)text='Recorded run ended. Replay starts a fresh configuration.';
+  // The dissent disclosure opens by default in the run view, so reading it there counts as seeing it.
+  if(inEditor&&active.resultsOpened&&b?.dissent?.length&&document.querySelector('.bs-document [data-bs-section="dissent"][open]'))active.dissentSeen=true;
+  let text=!r?'Set up the team, then press Start BrainStorm.':!active.played?'Play the recording to watch the team decide.':!b.decision?'The helpers draft alone, debate, check the facts and vote.':!active.resultsOpened?'Open Panel to see how they decided.':!active.dissentSeen?'Read what still disagrees. It is kept word for word.':!active.evidenceSeen?'Open one of the sources they used.':!b.synthesis?'Press Write the plan to turn the pick into one plan.':!active.markdownSeen?'Open the plan and show it as Markdown.':'Plan ready. Nothing has been built.';
+  if(r?.status==='paused')text='Paused. Resume it from the run’s controls.';
+  if(ended)text='This recording ended. Replay starts it again.';
   if(active.errors.length)text=active.errors[0];
-  return '<div class="bs-demo-guide" data-k="bs-demo-guide"><div><small>Recorded example · no provider calls</small><strong>'+c.esc(text)+'</strong></div><div class="bs-demo-controls">'+(done||ended||active.errors.length?'<button class="soft-button" data-action="brainstorm-demo-replay">Replay</button>':r&&!active.played?'<button class="soft-button" data-action="brainstorm-demo-play">Play exploration</button>':'')+'<button class="icon-button" data-action="brainstorm-demo-close" title="Close guide">'+c.icon('close',12)+'</button></div></div>';
+  const acts=done||ended||active.errors.length?[{action:'brainstorm-demo-replay',label:'Replay'}]:r&&!active.played?[{action:'brainstorm-demo-play',label:'Play the recording'}]:r&&b?.decision&&!active.resultsOpened&&!inEditor?[{action:'brainstorm-open-results',label:'See how they decided',attrs:'data-run="'+c.esc(r.id)+'"'}]:[];
+  return S.pmxGuide({key:'bs-demo-guide',cls:'bs-demo-guide',placement:inEditor?'doc':'dock',attrs:active.failure?'data-failure="'+c.esc(active.failure)+'"':'',step:c.esc(text),actions:acts,close:{action:'brainstorm-demo-close',label:'Close the guide'}});
  }
- ['brainstorm-open-results','brainstorm-open-evidence','brainstorm-open-plan','collab-brainstorm-synthesize'].forEach(name=>E.chainAction(name,(c,b)=>{const r=current();if(r&&b.dataset.run===r.id){if(name==='brainstorm-open-results')active.resultsOpened=true;if(name==='brainstorm-open-evidence')active.evidenceSeen=true;if(name==='brainstorm-open-plan'||name==='collab-brainstorm-synthesize')active.planOpened=true;}return false;}));
+ ['brainstorm-open-results','brainstorm-open-evidence','brainstorm-open-plan','collab-brainstorm-synthesize'].forEach(name=>E.chainAction(name,(c,b)=>{const r=current();if(r&&b.dataset.run===r.id){if(name==='brainstorm-open-results'){active.resultsOpened=true;if(r.brainstorm.dissent?.length)active.dissentSeen=true;}if(name==='brainstorm-open-evidence')active.evidenceSeen=true;if(name==='brainstorm-open-plan'||name==='collab-brainstorm-synthesize')active.planOpened=true;}return false;}));
  E.chainAction('pd-view',(c,b)=>{const r=current();if(r?.brainstorm.synthesis?.planId===b.dataset.id&&b.dataset.value==='markdown')active.markdownSeen=true;return false;});
  document.addEventListener('toggle',e=>{
   if(!active||!e.target.matches?.('[data-bs-section="dissent"]')||!e.target.open)return;
@@ -93,12 +115,13 @@
  E.action('brainstorm-demo-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('brainstorm-demo-play',()=>{play();return true;});E.action('brainstorm-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('brainstorm-demo-close',()=>{current();active=null;E.ctx().renderApp();return true;});
  E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);sessions.clear();active=null;return false;});
  ['plan-demo-start','schedule-demo-start','review-demo-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));
- const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided BrainStorm workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="brainstorm-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
+ const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>BrainStorm recordings</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="brainstorm-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
 
  function controls(c,r){
   const session=sessions.get(r.threadId);
   if(!session||session===active||(session.runId&&session.runId!==r.id)||session.played||!['running','paused'].includes(r.status))return '';
-  return '<button class="soft-button" data-action="brainstorm-example-play" data-run="'+c.esc(r.id)+'"'+(r.status==='paused'?' disabled title="Resume this run before playing the example"':'')+'>Play exploration</button>';
+  // MOD-17: a disabled control prints its reason beside it, never in a title
+  return '<button type="button" class="text-button" data-action="brainstorm-example-play" data-run="'+c.esc(r.id)+'"'+(r.status==='paused'?' disabled':'')+'>Play the recording</button>'+(r.status==='paused'?'<span class="pmx-reason">Resume the run to play the recording.</span>':'');
  }
  E.action('brainstorm-example-play',(c,b)=>{play(b.dataset.run);return true;});
  window.PM56_BRAINSTORM_DEMOS={controls,start,play,fixture,expected,guide,editorGuide:id=>active&&active.runId===id?guide(E.ctx(),false,true):'',planGuide:id=>current()?.brainstorm.synthesis?.planId===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,runId:current()?.id||null,finished:finished()}):null};

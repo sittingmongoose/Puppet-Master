@@ -1,23 +1,219 @@
-/* B10: native card grammar, quiet hierarchy, no left stripes or global layout changes. */
-.revert-document{padding:24px;color:var(--text);font:13px/1.6 var(--font-ui);min-width:0;max-width:100%}
-.revert-eyebrow{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px;color:var(--muted)}
-.revert-document h2{font-size:23px;line-height:1.25;letter-spacing:-.5px;margin:16px 0 8px}.revert-lede{color:var(--muted);line-height:1.65;margin:8px 0 18px}
-.revert-summary{display:grid;grid-template-columns:1fr 1.45fr 1fr;border:1px solid var(--border);border-radius:13px;overflow:hidden;background:var(--surface-2);margin:20px 0}
-.revert-summary>div{padding:14px 12px;display:flex;flex-direction:column;gap:4px}.revert-summary strong{font-size:18px;font-weight:600;line-height:1.2}.revert-summary small{font-size:10px;color:var(--muted);line-height:1.45}
-.revert-summary>div+div{border-left:1px solid var(--border)}.revert-controls{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.revert-controls button{white-space:normal;max-width:100%}
-.revert-files{display:grid;gap:10px;margin-top:20px}.revert-document details{border:1px solid var(--border);border-radius:12px;background:var(--surface-2);padding:12px 14px;min-width:0}
-.revert-document>details{margin-top:16px}.revert-document summary{cursor:pointer;font-size:12px}.revert-document summary::marker{color:var(--muted)}
-.revert-file-title{display:inline-flex;flex-wrap:wrap;gap:5px 9px;align-items:center;vertical-align:top;max-width:calc(100% - 22px)}.revert-file-title strong{font-size:11px;font-weight:600;overflow-wrap:anywhere}
-.revert-kind{font-size:9px;text-transform:uppercase;letter-spacing:.3px;color:var(--muted)}.revert-file-state{font-size:10px;color:var(--muted)}.revert-warning{color:var(--warning,#d4a96b)}
-.revert-inverse{color:var(--muted);font-size:11px;margin:12px 0}.revert-sources{display:grid;gap:9px}.revert-source{padding:10px 12px;background:var(--surface-1,var(--surface));border:1px solid var(--border);border-radius:8px;min-width:0}
-.revert-source small{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}.revert-source pre{font:11px/1.7 var(--font-mono,monospace);margin:6px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}.revert-absent{font-size:11px;font-style:italic;color:var(--muted);margin:6px 0 0}
-.revert-callout{border:1px solid var(--border);padding:14px;border-radius:12px;background:var(--surface-2)}.revert-callout strong{font-size:12px}.revert-callout p{font-size:11px;overflow-wrap:anywhere;margin:6px 0}.revert-callout small{font-size:11px;color:var(--muted)}
-.revert-history{padding-left:18px;font-size:11px;margin:10px 0 0}.revert-history li{padding:5px 0;overflow-wrap:anywhere}.revert-history span{display:block;color:var(--muted)}.revert-boundary{display:block;color:var(--muted);font-size:10px;line-height:1.6;margin-top:18px}
-.revert-card .system-card-head{flex-wrap:wrap}.revert-card p{margin:0}.revert-card .revert-controls{margin:12px 0 0}
-.revert-confirm .dialog-head{align-items:center}.revert-confirm .dialog-head small{font-size:10px;color:var(--muted)}.revert-confirm h2{font-size:19px;margin:3px 0 0}.revert-confirm .dialog-body{overflow-y:auto;max-height:calc(100vh - 170px)}
-.revert-preview-files{border:1px solid var(--border);border-radius:12px;overflow:hidden}.revert-preview-files>div{display:flex;align-items:center;gap:12px;padding:13px 14px;background:var(--surface-2);min-width:0}.revert-preview-files>div+div{border-top:1px solid var(--border)}
-.revert-preview-files strong{font-size:12px;font-weight:600;overflow-wrap:anywhere}.revert-preview-files small{display:block;font-size:11px;color:var(--muted);margin-top:4px}.revert-preview-files>div>span:nth-child(2){flex:1;min-width:0}.revert-preview-icon{color:var(--muted)}
-.revert-preview-note{display:flex;align-items:flex-start;gap:8px;font-size:11px;color:var(--muted);line-height:1.6;margin:16px 0}.revert-preview-note svg{flex-shrink:0;margin-top:3px}
-@media(max-width:820px){.revert-document{padding:16px}.revert-document h2{font-size:21px}.revert-summary>div{padding:12px 9px}.revert-summary strong{font-size:16px}.revert-confirm .dialog-body{max-height:calc(100vh - 140px)}}
-.revert-confirm .dialog-head{display:flex;justify-content:space-between;gap:16px;padding:20px 22px 16px;border-bottom:1px solid var(--border)}
-.revert-confirm .dialog-body{padding:18px 22px 22px}.revert-confirm .dialog-head>.icon-button{flex:none}.revert-confirm .revert-controls{justify-content:flex-end;margin-top:20px}
+/* Revert Last Agent Edit (DESIGN-SPEC 8.12): the kind-specific parts only. The sheet, the files row under the reply,
+   the ledger lines, the document and the guides are the pmx primitives (module-shell.css); nothing here restyles a pmx
+   primitive class. Every rule keys on pmx-revert-* classes and look-only data-* (data-state, data-kind, data-face), so
+   the sheet's exit ghost, which keeps only pmx-* classes, looks the same. Durations and eases are the pmx tokens. */
+
+/* ---- the sheet body: the file list takes the room the fixed 520 px sheet leaves and scrolls inside itself */
+.pmx-revert-body{display:flex;flex-direction:column;min-width:0;min-height:0;contain:size;}
+.pmx-revert-body > :not(.pmx-revert-files){flex:none;}
+/* the list is as tall as its rows and the promise sits right under it (any spare height falls below, above the
+   foot); only when the rows need more than the sheet has does it shrink and scroll inside itself */
+.pmx-revert-files{flex:0 1 auto;min-height:0;margin:10px 0 0;overflow:hidden auto;scrollbar-width:thin;overscroll-behavior:contain;}
+/* past five files the list shows four and a half rows, so the next row visibly waits below (REVERT-01: the reader
+   sees there are more files before approving "Revert 6 files"; five and a half do not fit the 520 px sheet) */
+.pmx-revert-files[data-many]{max-height:calc(4.5 * var(--pmx-revert-row-h));}
+.pmx-revert-files{--pmx-revert-row-h:53px;}
+body[data-theme^="retro"] .pmx-revert-files{--pmx-revert-row-h:52px;}
+/* while it overflows (past five files, or a mini diff open) it scrolls with the 14 px fade at its foot (6.3); the
+   flag is on #pmOverlayRoot, so the list node stays exactly as its template drew it */
+#pmOverlayRoot[data-revert-list-over] .pmx-revert-files{padding-bottom:14px;-webkit-mask-image:linear-gradient(#000 calc(100% - 14px),transparent);mask-image:linear-gradient(#000 calc(100% - 14px),transparent);}
+/* once scrolled, the rows leaving under "What goes back" fade the same 14 px (the flag follows scrollTop) */
+#pmOverlayRoot[data-revert-list-over][data-revert-list-top] .pmx-revert-files{-webkit-mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 14px),transparent);mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 14px),transparent);}
+/* M1 reading order (5.2): the question after the head, then each file row at 40 ms steps; rows drawn after the sheet
+   settles (a face change, a mini diff) enter at once */
+.pmx-sheet .pmx-revert-body > .pmx-q{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-q) backwards;}
+.pmx-sheet .pmx-revert-file{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) calc(var(--pmx-t-at-q) + (var(--i, 0) + 1) * var(--pmx-t-cascade)) backwards;}
+/* the promise (or the Technical details line) comes after the rows it speaks about */
+.pmx-sheet .pmx-revert-tech{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) calc(var(--pmx-t-at-q) + 4 * var(--pmx-t-cascade)) backwards;}
+.pmx-sheet .pmx-revert-body .pmx-promise{animation-delay:calc(var(--pmx-t-at-q) + 4 * var(--pmx-t-cascade));}
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet :is(.pmx-revert-body > .pmx-q, .pmx-revert-file, .pmx-revert-tech){animation-delay:0ms;}
+/* the one Technical details line: beside the promise, or on its own when a face has no promise */
+.pmx-revert-techline{flex:none;margin-left:auto;padding-left:16px;font:var(--pmx-fs-fine);color:var(--subtle);white-space:nowrap;}
+.pmx-revert-tech{flex:none;display:flex;margin:12px 0 0;}
+.pmx-revert-tech > .pmx-revert-techline{padding-left:0;}
+.pmx-revert-tech code, .pmx-revert-more code{font-size:11px;}
+
+/* ---- one file: a details row whose summary is the row; "Show the change" opens a three-line mini diff under it */
+.pmx-revert-file{position:relative;display:block;margin:0;padding:0 12px;border-radius:10px;min-width:0;}
+.pmx-revert-file[data-state="changed"] + .pmx-revert-file[data-state="changed"]{margin-top:2px;}
+.pmx-revert-sum{position:relative;z-index:1;display:grid;grid-template-columns:16px minmax(0,1fr) auto;column-gap:12px;align-items:center;min-height:52px;padding:7px 0;list-style:none;cursor:pointer;min-width:0;}
+.pmx-revert-sum::-webkit-details-marker{display:none;}
+.pmx-revert-sum::marker{content:"";}
+.pmx-revert-glyph{display:flex;align-items:center;justify-content:center;width:16px;height:16px;color:var(--muted);}
+.pmx-revert-glyph > svg{display:block;}
+.pmx-revert-copy{display:flex;flex-direction:column;gap:3px;min-width:0;}
+.pmx-revert-l1, .pmx-revert-l2{display:flex;align-items:baseline;min-width:0;}
+.pmx-revert-l1{gap:10px;}
+.pmx-revert-l2{gap:14px;align-items:center;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-revert-path{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0;padding:0;border:0;border-radius:0;background:none;font:var(--pmx-w-reg) 12.5px/18.5px var(--font-mono);color:var(--text);}
+.pmx-revert-counts{flex:none;font:var(--pmx-fs-meta);white-space:nowrap;}
+.pmx-revert-plus, .pmx-revert-minus{font-style:normal;}
+.pmx-revert-plus{color:var(--positive);}
+.pmx-revert-minus{color:var(--danger);}
+.pmx-revert-verb{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pmx-revert-verb b{font-weight:600;color:var(--text);}
+.pmx-revert-show{flex:none;display:inline-flex;align-items:center;gap:5px;color:var(--muted);font-weight:600;white-space:nowrap;}
+.pmx-revert-sum:hover .pmx-revert-show, .pmx-revert-file[open] .pmx-revert-show{color:var(--text);}
+.pmx-revert-show > svg{flex:none;transition:transform var(--pmx-t-row) var(--pmx-ease-move);}
+.pmx-revert-file[open] .pmx-revert-show > svg{transform:rotate(180deg);}
+.pmx-revert-show-b, .pmx-revert-file[open] .pmx-revert-show-a{display:none;}
+.pmx-revert-file[open] .pmx-revert-show-b{display:inline;}
+.pmx-revert-sum:hover .pmx-revert-show > span{text-decoration:underline;text-underline-offset:3px;}
+.pmx-revert-state{display:inline-flex;align-items:center;gap:6px;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;}
+.pmx-revert-block{height:32px;min-height:32px;padding:0 10px;margin-right:-10px;border:0;background:none;color:var(--text);font:600 12px/16px var(--font-ui);white-space:nowrap;}
+.pmx-revert-block:hover{background:none;text-decoration:underline;text-underline-offset:3px;}
+
+/* a later edit: the whole row turns warm (never a side strip) and takes one highlighter pass, with no shake;
+   the rows that did not change read "Not changed" */
+.pmx-revert-file[data-state="changed"]{background:var(--pmx-card-warm);}
+.pmx-revert-file[data-state="changed"] .pmx-revert-glyph{color:var(--warning);}
+/* rows revert would not change: "Not changed" beside a later edit, and "Nothing to do" when every file is already back */
+.pmx-revert-file:is([data-state="held"], [data-state="back"]) .pmx-revert-glyph{color:var(--subtle);}
+.pmx-revert-file[data-state="changed"] > .pmx-revert-sum::before{content:"";position:absolute;z-index:-1;inset:0 -12px;border-radius:10px;background:var(--pmx-edge-warm-low);opacity:0;pointer-events:none;animation:pmx-revert-pass calc(var(--pmx-t-ink-in) + var(--pmx-t-wash)) var(--pmx-ease-linear) 1;}
+@keyframes pmx-revert-pass{0%{opacity:1;clip-path:inset(0 100% 0 0)}17%{opacity:1;clip-path:inset(0 0 0 0)}100%{opacity:0;clip-path:inset(0 0 0 0)}}
+
+/* the mini diff and the document's diffs: code fill, +/- gutters, lines never wrap (they scroll in their own box) */
+.pmx-revert-mini, .pmx-revert-diff{margin:0;padding:8px 12px;border-radius:var(--pmx-r-sm);background:var(--code);font:var(--pmx-w-reg) 12px/18px var(--font-mono);color:var(--text);white-space:pre;overflow:auto hidden;scrollbar-width:thin;}
+.pmx-revert-mini{margin:0 0 12px 28px;}
+.pmx-revert-ln{display:block;min-height:18px;}
+.pmx-revert-ln > i{display:inline-block;width:2ch;font-style:normal;}
+.pmx-revert-ln-del{color:var(--muted);}
+.pmx-revert-ln-gap{color:var(--subtle);font-family:var(--font-ui);font-size:11.5px;}
+
+/* ---- the rewind (8.12; only on a durable restored_clean, IMPACT A1-35): the rows' glyphs turn back at 40 ms steps,
+   their counters roll to 0, then a check is revealed by a clip (IMPACT A1-05). Reduced motion (and the exit ghost)
+   show the end state: the zero counters and the check. */
+.pmx-revert-file[data-state="done"] .pmx-revert-glyph > svg{animation:pmx-revert-turn var(--pmx-t-draw) var(--pmx-ease-move) calc(var(--i, 0) * var(--pmx-t-cascade)) backwards;}
+@keyframes pmx-revert-turn{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
+.pmx-revert-roll{flex:none;align-self:center;display:block;height:17px;overflow:hidden;}
+.pmx-revert-odo{display:flex;flex-direction:column;transform:translateY(-17px);animation:pmx-revert-roll var(--pmx-t-row) var(--pmx-ease-out) calc(var(--pmx-t-at-rows) + var(--i, 0) * var(--pmx-t-cascade)) backwards;}
+.pmx-revert-odo > .pmx-revert-counts{display:block;height:17px;}
+@keyframes pmx-revert-roll{from{transform:translateY(0)}to{transform:translateY(-17px)}}
+.pmx-revert-was{visibility:hidden;animation:pmx-revert-was var(--pmx-t-row) var(--pmx-ease-linear) calc(var(--pmx-t-at-rows) + var(--i, 0) * var(--pmx-t-cascade)) backwards;}
+@keyframes pmx-revert-was{from, to{visibility:visible}}
+svg.pmx-revert-check{color:var(--positive);}
+.pmx-revert-file[data-state="done"] .pmx-revert-check{animation:pmx-revert-reveal var(--pmx-t-flip) var(--pmx-ease-out) calc(var(--pmx-t-move) + var(--i, 0) * var(--pmx-t-cascade)) backwards;}
+@keyframes pmx-revert-reveal{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.pmx-revert-put{display:inline-block;color:var(--text);}
+.pmx-revert-file[data-state="done"] .pmx-revert-put{animation:pmx-revert-rise var(--pmx-t-row) var(--pmx-ease-out) calc(var(--pmx-t-move) + var(--i, 0) * var(--pmx-t-cascade)) backwards;}
+@keyframes pmx-revert-rise{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+/* ---- in chat: the reverted files row, and the outcome glyphs of the ledger lines (colour only inside glyphs) */
+.pmx-revert-did{color:var(--muted);}
+.pmx-revert-did b{font-weight:600;color:var(--text);}
+svg.pmx-revert-tone-ok{color:var(--positive);}
+svg.pmx-revert-tone-warn{color:var(--warning);}
+svg.pmx-revert-tone-bad{color:var(--danger);}
+svg.pmx-revert-tone-quiet, svg.pmx-revert-tlg{color:var(--muted);}
+
+/* An outcome line keeps its headline readable at every card width (R-21, J-2: drop, never squeeze). Below the L tier
+   the kind word and mark go and "See what happened" reads "Open" (retro: below 640), at the same widths as on the files
+   row; the headline drops words from its end:
+   .pmx-revert-hl-l shows only where its whole sentence fits (the time then rides the hover card), .pmx-revert-hl-m
+   leaves the S line, and a refusal swaps "Couldn't revert: checkout.js changed" for "Not reverted: checkout.js changed",
+   then "Not reverted · checkout.js" below 360 and "Not reverted" alone at the S tier. .pmx-revert-hl-nl is the short ending that the wide sentence replaces.
+   Retro's monospace and friendly's Poppins run wider than Inter, so they take the refusal's steps at a wider line.
+   Measured with the demo's file names at 311, 391, 417 and 591 in basic, glass, friendly and retro (REVERT-NOTES). */
+.pmx-revert-see-short, .pmx-revert-hl-l, .pmx-revert-hl-short, .pmx-revert-hl-s{display:none;}
+@container pmxrun (min-width: 560px){
+  body:not([data-theme^="retro"], [data-theme^="friendly"]) .pmx-revert-line .pmx-revert-hl-l{display:inline;}
+  body:not([data-theme^="retro"], [data-theme^="friendly"]) .pmx-revert-line .pmx-revert-hl-nl{display:none;}
+  body:not([data-theme^="retro"], [data-theme^="friendly"]) .pmx-revert-line:has(.pmx-revert-hl-l) .pmx-receipt-meta{display:none;}
+}
+@container pmxrun (max-width: 519.98px){
+  /* the outcome glyph stands in for the kind mark: the headline itself says what happened, and a line never opens
+     with three glyphs in a row (the recorded example's play-ring stays, A1-24) */
+  .pmx-run.pmx-revert-line .pmx-run-head > .pmx-run-kind{display:none;}
+  .pmx-revert-line .pmx-revert-see-long{display:none;}
+  .pmx-revert-line .pmx-revert-see-short{display:inline;}
+}
+@container pmxrun (max-width: 639.98px){
+  body[data-theme^="retro"] .pmx-revert-line .pmx-revert-see-long{display:none;}
+  body[data-theme^="retro"] .pmx-revert-line .pmx-revert-see-short{display:inline;}
+}
+@container pmxrun (max-width: 429.98px){
+  body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-revert-line .pmx-revert-hl-full{display:none;}
+  body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-revert-line .pmx-revert-hl-short{display:inline;}
+}
+@container pmxrun (max-width: 359.98px){
+  .pmx-revert-line .pmx-revert-hl-m, .pmx-revert-line .pmx-revert-hl-full{display:none;}
+  .pmx-revert-line .pmx-revert-hl-short, .pmx-revert-line .pmx-revert-hl-s{display:inline;}
+}
+/* the S tier (a 230 or 204 px chat): a refusal reads "Not reverted" alone (the file name rides the hover card), and in
+   retro and friendly, whose faces run wider, "Reverted: 1 file" reads "Reverted" */
+@container pmxrun (max-width: 279.98px){
+  .pmx-revert-line .pmx-revert-hl-s{display:none;}
+  body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-revert-line .pmx-revert-hl-cnt{display:none;}
+}
+
+/* the files row is its own container: the older-change reason and "See what happened" shorten where the row would
+   otherwise wrap to a second line (7.10: at most 40 px beside the reply) */
+.pmx-revert-row{container:pmxrvrow / inline-size;flex-wrap:nowrap;white-space:nowrap;}
+/* one line at every width (7.10): the words shorten by the steps below and, past the last step, end in an ellipsis;
+   the glyph, the counts and the action never wrap away from them or shrink */
+.pmx-revert-row > *{flex:none;}
+.pmx-revert-row > .pmx-revert-did, .pmx-revert-row > .pmx-reason, .pmx-revert-row > .pmx-revert-words{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;}
+.pmx-revert-row .pmx-revert-see-short, .pmx-revert-why-m, .pmx-revert-why-s, .pmx-revert-why-xs{display:none;}
+/* the already-back row: " · nothing to revert" goes first; "See what happened" reads "Open" below 520 (retro: 640), at the
+   same widths as on the outcome lines, so a row and a line in one chat never name the same action two ways */
+@container pmxrvrow (max-width: 519.98px){
+  .pmx-revert-did-more{display:none;}
+  .pmx-revert-row .pmx-revert-see-long{display:none;} .pmx-revert-row .pmx-revert-see-short{display:inline;}
+}
+@container pmxrvrow (max-width: 639.98px){
+  body[data-theme^="retro"] .pmx-revert-row .pmx-revert-see-long{display:none;}
+  body[data-theme^="retro"] .pmx-revert-row .pmx-revert-see-short{display:inline;}
+}
+@container pmxrvrow (max-width: 459.98px){
+  .pmx-revert-why-l{display:none;}
+  body:not([data-theme^="retro"]) .pmx-revert-why-m{display:inline;}
+  body[data-theme^="retro"] .pmx-revert-why-s{display:inline;}
+}
+/* the S tier (a 230 or 204 px chat): "Changed " goes, so "3 files +3 −2 · Revert" keeps its action in view */
+@container pmxrvrow (max-width: 259.98px){
+  .pmx-revert-changed{display:none;}
+}
+@container pmxrvrow (max-width: 359.98px){
+  body:not([data-theme^="retro"]) .pmx-revert-why-m{display:none;}
+  body:not([data-theme^="retro"]) .pmx-revert-why-s{display:inline;}
+  body[data-theme^="retro"] .pmx-revert-why-s{display:none;}
+  body[data-theme^="retro"] .pmx-revert-why-xs{display:inline;}
+}
+
+/* ---- the Revert document (revert:{turnId}) */
+.pmx-revert-dfile{position:relative;min-width:0;}
+.pmx-revert-dfile + .pmx-revert-dfile{margin-top:28px;}
+.pmx-revert-dhead{min-height:0;padding:0;cursor:default;}
+.pmx-revert-dfile[data-state="changed"] .pmx-revert-state, .pmx-revert-dfile[data-state="moved"] .pmx-revert-state{color:var(--text);font-weight:600;}
+.pmx-revert-dfile[data-state="changed"] .pmx-revert-glyph, .pmx-revert-dfile[data-state="moved"] .pmx-revert-glyph{color:var(--warning);}
+.pmx-revert-switch{margin-top:12px;}
+.pmx-revert-cap{margin:10px 0 0;}
+.pmx-revert-diff{margin-top:8px;padding:10px 12px;border-radius:var(--pmx-r-md);}
+/* opened at a file ("See what's blocking it"): that file takes one highlighter pass. The view keeps only 4 px of its own
+   padding on the right (its gutter is outside it), so the wash reaches 12 px past the file on the left and 4 px on the
+   right, and the right-aligned state word sits 8 px in: every text stays 12 px from the wash's edges (J-2) without the
+   wash widening the view */
+.pmx-revert-dhead > .pmx-revert-state{padding-right:8px;}
+.pmx-revert-dfile[data-focus="1"]::before{content:"";position:absolute;inset:-8px -4px -8px -12px;border-radius:10px;background:var(--pmx-wash);opacity:0;pointer-events:none;animation:pmx-revert-pass calc(var(--pmx-t-ink-in) + var(--pmx-t-wash)) var(--pmx-ease-linear) 1;}
+.pmx-revert-more{margin-top:28px;}
+.pmx-revert-more-sum{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 10px;margin-left:-10px;list-style:none;cursor:pointer;font:var(--pmx-fs-meta);color:var(--muted);}
+.pmx-revert-more-sum::-webkit-details-marker{display:none;}
+.pmx-revert-more-sum::marker{content:"";}
+.pmx-revert-more-sum > svg{transition:transform var(--pmx-t-row) var(--pmx-ease-move);}
+.pmx-revert-more[open] > .pmx-revert-more-sum > svg{transform:rotate(90deg);}
+.pmx-revert-more-sum:hover{color:var(--text);}
+.pmx-revert-more > .pmx-fine{margin:6px 0 0;max-width:78ch;}
+.pmx-revert-prov{margin:12px 0 0;}
+
+/* the focus targets this module names (the files row after a revert, the document's switch at a file) ring in the
+   precomputed pmx focus colour, never the app's color-mix() outline (FOUNDATION REQUEST: one rule for all pmx surfaces) */
+.pmx-revert-row:focus-visible, .pmx-revert-switch > .pmx-switch-opt:focus-visible{outline:2px solid var(--pmx-focus-outline);outline-offset:2px;}
+.revert-confirm .pmx-foot > button:focus-visible{outline-color:var(--pmx-focus-outline);}
+
+/* ---- the sheet's foot: the ineligible face has no primary (FOUNDATION REQUEST 2), so Close takes the last column
+   and ends at the content edge like every other face's last button */
+.revert-confirm .pmx-foot:not(:has(> .pmx-primary)):not(:has(> .pmx-revert-see)){grid-template-columns:minmax(0,1fr) auto;}
+
+/* retro: monospace runs wider, so the file names step down one pixel */
+body[data-theme^="retro"] .pmx-revert-path{font-size:11.5px;line-height:17.5px;}
+body[data-theme^="retro"] .pmx-revert-line .pmx-revert-who{font-size:11.5px;}

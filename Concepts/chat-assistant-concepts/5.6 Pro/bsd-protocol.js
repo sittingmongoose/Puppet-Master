@@ -11,7 +11,15 @@
  const digest=x=>{let h=2166136261;for(const c of canonical(x)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return (h>>>0).toString(16).padStart(8,'0');};
  const norm=s=>String(s||'').normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim();
  const TRIGGERS=['pre_first_material_mutation','pre_high_risk_action','constraint_divergence','repeated_normalized_failure','environment_identity_change','major_verification_failure','pre_terminal_completion_claim','configured_stage_boundary','project_watch_rule','held_finding_reconfirmation'];
- const STAGES=[['prd_builder','PRD Builder'],['planning_wizard','Planning Wizard'],['deep_plan','Plan Drafting'],['planunit_compile','PlanUnit Compilation'],['worknode_generation','WorkNode Generation'],['worknode_execution','Code Generation'],['verification','Verification Run'],['plan_compile','Gate Evaluation'],['worknode_audit','Audit Review'],['certification','Certification']];
+ /* IMPACT A1-43 (canon BSD "Ten presentation rows do not delete runtime stages"): each Settings row is [row id,
+    canonical name, the exact operational stages it covers]. Gate Evaluation is the readiness stage of worknode_audit
+    (never plan_compile, which PlanUnit Compilation covers); Audit Review is its audit stage. Ordinary `assistant`
+    work has no row and resolves from the project policy. An unknown stage name fails validation; it is never
+    silently resolved as if it had no row. */
+ const STAGES=[['prd_builder','PRD Builder',['prd_builder']],['planning_wizard','Planning Wizard',['planning_wizard']],['deep_plan','Plan Drafting',['deep_plan']],['planunit_compile','PlanUnit Compilation',['planunit_compile','plan_compile']],['worknode_generation','WorkNode Generation',['worknode_generation']],['worknode_execution','Code Generation',['worknode_execution','remediation']],['verification','Verification Run',['verification']],['gate_evaluation','Gate Evaluation',['worknode_audit:readiness']],['worknode_audit','Audit Review',['worknode_audit','worknode_audit:audit']],['certification','Certification',['certification']]];
+ const STAGE_ROW=new Map(STAGES.flatMap(([id,,ops])=>ops.map(op=>[op,id])));
+ /* the row an operational stage resolves through: a row id, null for ordinary assistant work, undefined when unknown */
+ const stageRow=stage=>stage==='assistant'?null:STAGE_ROW.has(stage)?STAGE_ROW.get(stage):undefined;
  const READ_TOOLS=['file.read','file.search','grep','lsp.diagnostics','scm.diff','test.inspect','artifact.read','receipt.read','usage.read','browser.inspect','research.read'];
  const QUARANTINE=['malformed_output','mutating_instruction','credential_exfiltration','instruction_override','unsafe_content','tool_authority_violation'];
  const rank={nit:0,concern:1,critical:2};
@@ -26,7 +34,7 @@
   policy(projectId){return clone(this.policies.get(projectId)||{projectId,revision:0,...defaults()});}
   validate(values){
    if(!values||typeof values.fast!=='boolean'||typeof values.effort!=='string'||!['off','auto','on'].includes(values.mode)||!['inherit','off','auto','on'].includes(values.workflowMode)||!['conservative','balanced','frequent'].includes(values.sensitivity)||![0,15,30,60].includes(values.catchUpSeconds)||!Number.isInteger(values.cooldownTurns)||values.cooldownTurns<0||values.cooldownTurns>100||typeof values.retainTranscript!=='boolean'||!Number.isFinite(values.selfCompactThreshold)||values.selfCompactThreshold<.1||values.selfCompactThreshold>.95||typeof values.modelId!=='string'||!values.modelId||typeof values.persona!=='string'||!values.persona)return 'invalid_request';
-   if(!Array.isArray(values.stages)||values.stages.length!==STAGES.length||STAGES.some(([id])=>values.stages.filter(s=>s&&s.id===id).length!==1)||values.stages.some(s=>!s||!['inherit','off','auto','on'].includes(s.mode)))return 'invalid_request';
+   if(!Array.isArray(values.stages)||values.stages.some(s=>!s||!STAGES.some(([id])=>id===s.id))||values.stages.length!==STAGES.length||STAGES.some(([id])=>values.stages.filter(s=>s&&s.id===id).length!==1)||values.stages.some(s=>!s||!['inherit','off','auto','on'].includes(s.mode)))return 'invalid_request';
    if(values.tools&&(!Array.isArray(values.tools)||values.tools.some(t=>!READ_TOOLS.includes(t))))return 'tool_profile_widening_rejected';
    return null;
   }
@@ -40,14 +48,14 @@
    if(!a&&req.threadId){const source=this.read(req.threadId);if(source&&source.projectId===req.projectId){const key=this.workflowKey(source),wb=this.workflowBindings.get(key);if(wb)this.workflowBindings.set(key,{...wb,revision:wb.revision+1,policy:clone(p),identity:clone(req.identity||wb.identity)});}}
    this.onChange();return result(true,{revision:p.revision,epoch:a?.epoch,policy:p});
   }
-  resolve(p,stage){const row=p.stages.find(s=>s.id===stage);if(row&&row.mode!=='inherit')return {mode:row.mode,source:'stage'};if(p.workflowMode!=='inherit')return {mode:p.workflowMode,source:'workflow'};return {mode:['off','auto','on'].includes(p.mode)?p.mode:'auto',source:'project'};}
+  resolve(p,stage){const rowId=stageRow(stage),row=rowId?p.stages.find(s=>s.id===rowId):null;if(row&&row.mode!=='inherit')return {mode:row.mode,source:'stage'};if(p.workflowMode!=='inherit')return {mode:p.workflowMode,source:'workflow'};return {mode:['off','auto','on'].includes(p.mode)?p.mode:'auto',source:'project'};}
   workflowKey(s){return canonical([s.projectId,s.threadId,s.runId,s.workflow||'assistant']);}
   key(s){return canonical([s.projectId,s.threadId,s.runId,s.workflow||'assistant',s.stage||'worknode_execution']);}
   fingerprint(s){return digest([s.projectId,s.threadId,s.runId,s.primaryEpoch||0,s.worktree,s.primaryRoute,s.permission,s.contextRevision||'',s.historyRevision||'']);}
   sameScope(a,s){return a.scopeKey===this.key(s);}
   binding(a){return {id:a.bindingId,revision:a.bindingRevision,assignmentId:a.id,projectId:a.projectId,threadId:a.threadId,policy:clone(a.policy),identity:clone(a.identity),mode:a.mode,stage:a.stage};}
   bind(threadId,identity){
-   const s=this.read(threadId);if(!s)return result(false,{error:'owner_unavailable'});
+   const s=this.read(threadId);if(!s)return result(false,{error:'owner_unavailable'});if(stageRow(s.stage||'worknode_execution')===undefined)return result(false,{error:'unknown_stage'});
    let wb=this.workflowBindings.get(this.workflowKey(s));if(!wb){wb={id:this.id('workflow-binding'),revision:1,policy:this.policy(s.projectId),identity:clone(identity)};this.workflowBindings.set(this.workflowKey(s),wb);}const p=clone(wb.policy),mode=this.resolve(p,s.stage||'worknode_execution'),key=this.key(s),prior=this.byScope.get(key);identity=clone(wb.identity);
    if(prior)return result(true,{assignmentId:prior,duplicate:true,binding:this.binding(this.assignments.get(prior))});
    if(mode.mode==='off'){this.receipts.push({threadId,projectId:s.projectId,outcome:'no_call_off',local:true});return result(true,{assignmentId:null,noCall:'no_call_off'});}
@@ -136,5 +144,5 @@
   snapshot(threadId){const a=this.current(threadId);if(!a)return null;this.sync(a);return clone(a);}
   nativeCommand(){return result(false,{error:'command_not_registered'});}
  }
- root.PM56_BSD_ENGINE={Engine,defaults,TRIGGERS,STAGES,READ_TOOLS,QUARANTINE,clone,digest,canonical};
+ root.PM56_BSD_ENGINE={Engine,defaults,TRIGGERS,STAGES,stageRow,READ_TOOLS,QUARANTINE,clone,digest,canonical};
 })(typeof window==='undefined'?globalThis:window);

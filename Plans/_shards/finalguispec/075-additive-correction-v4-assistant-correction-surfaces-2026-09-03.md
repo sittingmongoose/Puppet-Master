@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36262-L36434
+Source lines: L36282-L36466
 
-Source SHA256: `3043fc6bf2f03cd94009cfe985b764e37e4caeb80dc3da571998bcad5100aa94`
+Source SHA256: `28175e393a15cdbe7fbc591613fedf387026ac3ee8759b7dd3494cd06b077aa4`
 
 ---
 
@@ -95,24 +95,31 @@ its reason with repair or cancel actions and no partial runtime card.
 
 ### MODAL-001, MODAL-004..008, MODAL-010..012, MODAL-014, MODAL-018 — Modals as transactions
 
-Opening or editing a Crew, Crew Auto, BrainStorm, Review, Chat Room, BSD-workflow, or
-Build-With-Crew modal creates only local draft state. No placeholder card, no Activity entry, and
-no `Running` state appears during configuration, and cancel leaves no transcript trace.
+These modals are the configuration sheets of the wand modules GUI contract (F3-566); every rule
+below applies to them unchanged. Opening or editing a Crew, Crew Auto, BrainStorm, Review, Chat
+Room, BSD-workflow, or Build-With-Crew sheet creates only local draft state. No placeholder card,
+no Activity entry, and no `Running` state appears during configuration, and cancel leaves no
+transcript trace. Committing Crew Auto changes a project rule, not a run, so it creates no run card.
 
-A failed Start keeps the modal values and shows the typed failure; it never clears the user's
+A failed Start keeps the sheet values and shows the typed failure; it never clears the user's
 configuration and never renders a fake card.
 
 `Crew Auto`'s checkmark reflects effective stored state and appears only after configuration
-confirmation and a successful Settings commit; cancel restores the prior state.
+confirmation and a successful Settings commit; cancel restores the prior state. Since 2026-09-27
+(DL-120, F3-578) that sentence applies to turning Crew Auto on for the project from the Crew Auto
+sheet. In a chat the check shows the stored value in force for that chat, the chat's override or
+else the project value, and checking it commits that chat's override (`cmd.chat.crew_auto.set`
+with scope `thread`) before the check changes, without opening the sheet first. No optimistic
+change is allowed for either the project value or a chat's override.
 
-If a Review target changed while the modal was open, the modal offers refresh-to-current or the
+If a Review target changed while the sheet was open, the sheet offers refresh-to-current or the
 explicitly identified old immutable target. There is no silent swap.
 
 A held natural-language BrainStorm request is restored intact to the composer on cancel, with its
-text and attachments. Build With Crew refuses a Plan that changed while its modal was open and
+text and attachments. Build With Crew refuses a Plan that changed while its sheet was open and
 tells the user to reopen against the new version.
 
-Modal selection, expand/collapse, hover, tabs, and close use shared view-state primitives, not
+Sheet selection, expand/collapse, hover, tabs, and close use shared view-state primitives, not
 domain commands.
 
 ### PART-001, PART-003, PART-007..008, PART-010..012, PART-017..018, PART-023..024 — Participants
@@ -133,15 +140,17 @@ A failed Crew coordinator shows `Needs attention` with its allowed actions; no o
 silently becomes coordinator. A Chat Room with failed members keeps a truthful roster and shows no
 fabricated messages.
 
-Cards, Activity, and full panels expose partial, failed, and waived counts and currentness with
-details reachable from participant rows, without flooding the main transcript. A constrained
+Run cards, Activity, and the run view (the editor document that replaced the full panel, ACD-480)
+expose partial, failed, and waived counts and currentness with details reachable from participant rows, without flooding the main transcript. A constrained
 provider discloses its control tier before Start and in the final artifact.
 
 ### SMSG-001..003, SMSG-012..013, SMSG-018 — The scheduled-message card
 
 A scheduled message renders one card in its source thread after a durable commit — never before,
 and never as a toast alone. Its visible states are `Scheduled`, `Held`, `Sent`, `Canceled`,
-`Failed`, and `Expired`, each with truthful actions and reasons.
+`Failed`, and `Expired`, each with truthful actions and reasons. Each presentation of the card in
+the transcript — the future bubble, the held decision and the one-line receipt — prints its state
+word first, then the time and the rest (F3-576; Scheduling_and_Quota_Resume SQR-012).
 
 The card shows the exact time, IANA timezone, destination, a short text preview, the attachment
 count, the requested model or route, and whether Edit and Cancel are available. Hashes stay in
@@ -169,9 +178,12 @@ its reason.
 
 ### CDRY-006 — Visual toggles are view state, not commands
 
-Modal open and close, the Plan Rich/Markdown toggle, card expand and collapse, hover,
+Modal and sheet open and close, the Plan Rich/Markdown toggle, card expand and collapse, hover,
 local tabs, and To-Do parent expansion all use local or shared view-state primitives
-and emit no domain event. Where a preference persists it uses the shared UI state
+and emit no domain event. The wand modules redesign adds these to the same class (F3-576): a run
+card's density and expand state and its More row, a sheet's Advanced page and hover-to-light, a
+run view's tab and selected participant, the Revert document's comparison switch, dock
+visibility and reveal, and Cancel, close and Escape on a collaboration sheet. Where a preference persists it uses the shared UI state
 owner. No domain command is registered for a visual action, and the command census in
 `Plans/Commands_System.md` records each of these as local or shared view-state reuse.
 

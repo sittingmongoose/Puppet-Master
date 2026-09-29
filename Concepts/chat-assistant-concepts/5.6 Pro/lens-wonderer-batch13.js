@@ -12,19 +12,18 @@
   const flows={
     shape:{title:'Shape, summarize, and restore',detail:'Mute → Focus → source preview → restore unchanged history',kind:'lens'},
     stale:{title:'A preview is not a promise',detail:'Change a source → reject stale Apply → review the new version',kind:'lens'},
-    leads:{title:'Follow a connected lead',detail:'Research a hypothesis → deliberate disposition → one Deep Plan',kind:'wonderer'},
-    dissent:{title:'Evidence changes; dissent stays',detail:'Reject an outdated check → research again → retain core dissent',kind:'wonderer'}
+    leads:{title:'Check an idea from another field',detail:'Check an idea → decide on it → one plan',kind:'wonderer'},
+    dissent:{title:'A source changes; the disagreement stays',detail:'An old check is refused → check again → the disagreement is kept',kind:'wonderer'}
   };
   const run=id=>C.run(id), session=tid=>sessions.get(tid||E.ctx().thread.id);
   const current=c=>C.runsForThread(c.thread.id).find(r=>r.wonderer);
   const refresh=()=>{E.ctx().renderApp();E.ctx().renderOverlays();};
-  function reply(r){if(!r?.ok)E.ctx().toast('No change made',(r?.error||'Unavailable').replaceAll('_',' ')+'.');refresh();return r;}
-  function button(c,action,label,attrs='',why=''){
-    return '<button class="soft-button" data-action="'+action+'" '+attrs+(why?' disabled title="'+c.esc(why)+'"':'')+'>'+label+'</button>';
-  }
+  /* 9.0/DON'T 18: a refusal reads as a sentence; the code stays out of the reading line */
+  const REFUSED={explicit_reason_required:'Say why first: your reason goes into the plan with your choice.',lead_not_substantiated:'A check has to support it before it goes in the plan.',research_pending:'Wait for the check to finish.',refresh_stale_lead:'Check it again first: its source changed.',run_not_running:'The run isn’t running.',evidence_unavailable:'That source isn’t available.',no_evidence_selected:'This idea has no source to check.',lead_dropped:'This idea was set aside.'};
+  function reply(r){if(!r?.ok)E.ctx().toast('Nothing changed',REFUSED[r?.error]||'That didn’t change anything.');refresh();return r;}
   function newThread(flow){
     const c=E.ctx(),tid='batch13-'+flow+'-'+(++serial),base=copy(c.state.threads.find(t=>t.id==='query'));
-    Object.assign(base,{id:tid,title:flows[flow].title+' · local example',status:'ready',pinned:false,archived:false,goalId:null,messages:[]});
+    Object.assign(base,{id:tid,title:flows[flow].title+(flows[flow].kind==='wonderer'?' · recorded example':' · local example'),status:'ready',pinned:false,archived:false,goalId:null,messages:[]});
     c.state.threads.push(base);sessions.set(tid,{threadId:tid,flow,guide:true,startedAt:Date.now()});
     Object.assign(c.state,{demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false});
     c.state.activity.open=false;c.state.capabilities.goal=false;
@@ -52,6 +51,8 @@
     t.messages=[{id:tid+'-request',role:'user',type:'text',body:input.objective+' Keep Wonderer’s adjacent leads separate from the core decision.'},{id:tid+'-work',role:'assistant',type:'b13-wonderer',threadId:tid}];
     C.openConfigure('brainstorm');const d=C.draft();
     d.name=flows[flow].title;d.purpose=input.objective;d.brainstormInput=input;d.wonderer=true;
+    // IMPACT A1-01: a recorded draft is flagged; its rules are copied into the user field as prefill only
+    d.mustHaves=input.constraints.filter(x=>x.hard).map(x=>x.text).join('\n');if(C.markRecorded)C.markRecorded(d);
     d.wondererInput={seedId:'offline-search',seed:input.objective,projectId:t.projectId??null,flow};
     c.state.dialog={type:'collab-configure'};c.switchThread(tid);
   }
@@ -138,52 +139,134 @@
     payload.blocks.push(p('Wonderer is an additive Persona plus methodology Skill. It abstains from the core ballot; no core participant, vote, decision, or dissent was replaced. Local exercise evidence is not live external research.'));
     return payload;
   }
+  /* ---- presentation (G-26 · the Wonderer workspace, STORM-B): a pmxView with the Wonderer mark; one row per idea;
+     "Bring the work together"; the run's Pause/Resume inside .b13-workspace; Technical details last. ---- */
+  const S=window.PM56_SHELL;
+  const STATE_WORD={hypothesis:'Hypothesis',research_pending:'Checking',researched:'Checked',unsubstantiated:'Not supported',user_decided:'Your choice',stale:'Out of date',dropped:'Set aside'};
+  const PHASE_WORD={intake:'understanding the ask',blind_proposals:'drafting alone',normalize:'lining up the options',debate:'debating',evidence:'checking the facts',vote:'voting',synthesis:'ready to write the plan',completed:'plan written'};
+  const wmark=size=>S.pmxMark({role:'wonderer',seat:7,size:size||22});
+  function btn(c,action,label,attrs,disabled,primary){return '<button type="button" class="'+(primary?'primary-button':'text-button')+'" data-action="'+action+'" '+(attrs||'')+(disabled?' disabled':'')+'>'+label+'</button>';}
   function leadCard(c,r,l){
-    const w=r.wonderer,esc=c.esc,attrs='data-run="'+esc(r.id)+'" data-lead="'+esc(l.id)+'"',busy=l.state==='research_pending'||w.pending.some(t=>t.leadId===l.id&&!t.finished),why=r.status!=='running'?'Run is not running':'';
-    const label=({hypothesis:'Hypothesis',research_pending:'Checking source',researched:'Source supports this lead',unsubstantiated:'Not substantiated',user_decided:'User decision · not fact',stale:'Out of date',dropped:'Excluded outdated lead'})[l.state]||l.state;
-    return '<section class="b13-lead" data-k="lead:'+esc(r.id+':'+l.id)+'" data-lead-id="'+esc(l.id)+'" data-state="'+l.state+'"><div class="b13-lead-head"><small>'+esc(l.dimension)+'</small><span class="b13-status">'+esc(label)+'</span></div><h2>'+esc(l.claim)+'</h2><p class="b13-tether"><strong>Why it matters</strong> '+esc(l.tether)+'</p>'+
-      (l.evidence?'<div class="b13-evidence"><strong>Evidence · version '+l.evidence.version+'</strong><p>'+esc(l.evidence.summary)+'</p><small>'+esc(l.evidence.provenance)+'</small></div>':'<p class="b13-quiet">'+(l.state==='user_decided'?'No research evidence supplied. Included only as an explicit user choice.':'No research conclusion yet. This lead is not a fact or an accepted decision.')+'</p>')+
-      (l.state==='stale'?'<p class="b13-warning">The source changed. The old conclusion is not eligible for inclusion. Check the current version or explicitly exclude it.</p>':'')+
-      (l.decision?'<p class="b13-disposition"><strong>'+(l.included?'Included':'Excluded')+'</strong> · '+esc(l.decision.reason)+'</p>':'')+
-      '<div class="b13-actions">'+(l.artifactId?button(c,'b13-research',busy?'Checking…':l.evidence||l.state==='stale'?'Research again':'Research local sample',attrs,why||(busy?'Check already pending':''))+button(c,'b13-source','Open source',attrs)+(w.flow==='dissent'&&l.id==='fence'?button(c,'b13-source-change','Revise ordering sample','data-run="'+esc(r.id)+'"',why):''):'')+'</div>'+
-      '<label class="b13-reason">Disposition reason<textarea data-k="reason:'+esc(r.id+':'+l.id)+'" data-b13-reason="'+esc(r.id+':'+l.id)+'" rows="2" placeholder="Explain the inclusion, exclusion, or explicit user choice.">'+esc(reasons.get(r.id+':'+l.id)||'')+'</textarea></label><div class="b13-actions">'+
-      button(c,'b13-decide',l.state==='user_decided'?'Include user decision':'Include researched lead',attrs+' data-kind="include"',why||(!['researched','user_decided'].includes(l.state)?'Research support or an explicit user decision is required':''))+
-      button(c,'b13-decide','Exclude',attrs+' data-kind="exclude"',why||(busy?'Wait for the source check':''))+
-      button(c,'b13-decide','Use as my decision',attrs+' data-kind="user_decided"',why||(['research_pending','stale','dropped'].includes(l.state)?'Refresh or finish the source check first':''))+'</div><small class="b13-quiet">A user choice remains labelled as a choice, never as researched fact.</small></section>';
+    const w=r.wonderer,esc=c.esc,attrs='data-run="'+esc(r.id)+'" data-lead="'+esc(l.id)+'"',running=r.status==='running';
+    const busy=l.state==='research_pending'||w.pending.some(t=>t.leadId===l.id&&!t.finished);
+    const canInclude=['researched','user_decided'].includes(l.state),canChoose=!['research_pending','stale','dropped'].includes(l.state);
+    const why=[];
+    if(!running)why.push('The run isn’t running, so nothing can change here.');
+    else{
+      if(busy)why.push('Checking the source now.');
+      else if(!canInclude)why.push(l.state==='stale'?'Its source changed: check it again or set it aside.':'Use it in the plan once a check supports it, or make it your own decision.');
+      if(!busy&&!canChoose&&l.state!=='stale')why.push('Check it again before making it your decision.');
+    }
+    const check=l.artifactId?btn(c,'b13-research',busy?'Checking…':l.evidence||l.state==='stale'?'Check it again':'Check it',attrs,!running||busy):'';
+    const source=l.artifactId?btn(c,'b13-source','Open the source',attrs):'';
+    const change=w.flow==='dissent'&&l.id==='fence'?btn(c,'b13-source-change','Change the sample','data-run="'+esc(r.id)+'"',!running):'';
+    const state=STATE_WORD[l.state]||l.state;
+    const said=l.evidence?esc(l.evidence.summary):l.state==='user_decided'?'No check supports it. It is in the plan only as your decision.':l.state==='stale'?'The source changed, so the earlier check no longer counts.':'Not checked yet. It is not a fact or a decision.';
+    return '<section class="b13-lead" data-k="lead:'+esc(r.id+':'+l.id)+'" data-lead-id="'+esc(l.id)+'" data-state="'+esc(l.state)+'">'+
+      '<p class="b13-idea">'+esc(l.claim)+'</p>'+
+      '<p class="b13-line"><span>Relates to:</span> '+esc(l.dimension)+'</p><p class="b13-line"><span>Why it matters:</span> '+esc(l.tether)+'</p>'+
+      '<p class="b13-state"><b>'+esc(state)+'</b> · '+said+'</p>'+
+      (l.evidence?'<p class="b13-prov">'+esc(l.evidence.provenance)+' Version '+esc(l.evidence.version)+'.</p>':'')+
+      (l.decision?'<p class="b13-decided"><b>'+(l.included?'In the plan':'Set aside')+'</b> · '+esc(l.decision.reason)+'</p>':'')+
+      ((check||source||change)?'<div class="b13-acts">'+check+source+change+'</div>':'')+
+      '<label class="b13-reason"><span>Why? This goes into the plan with your choice.</span><textarea data-k="reason:'+esc(r.id+':'+l.id)+'" data-b13-reason="'+esc(r.id+':'+l.id)+'" rows="2" placeholder="Say why you use it or set it aside.">'+esc(reasons.get(r.id+':'+l.id)||'')+'</textarea></label>'+
+      '<div class="b13-acts">'+btn(c,'b13-decide',l.state==='user_decided'?'Keep my decision in the plan':'Use it in the plan',attrs+' data-kind="include"',!running||!canInclude)+
+        btn(c,'b13-decide','Set aside',attrs+' data-kind="exclude"',!running||busy)+
+        btn(c,'b13-decide','Use as my decision',attrs+' data-kind="user_decided"',!running||!canChoose)+'</div>'+
+      (why.length?'<p class="pmx-reason b13-why">'+why.map(esc).join(' ')+'</p>':'')+
+      '</section>';
   }
+  /* The one reason "Write the plan" waits on the Wonderer's side (review fix: the card, the run view and this workspace
+     print the same string). code: stale | pending | undecided | core | stopped | '' ; count = ideas still to decide. */
+  function convergenceState(r,g){
+    if(!r?.wonderer||!r.brainstorm)return {ok:true,code:'',reason:'',count:0};
+    g=g||protocol.convergence(r);const leads=r.wonderer.leads||[],count=g.unresolved.length;
+    if(r.brainstorm.synthesis)return {ok:true,code:'',reason:'',count:0};
+    if(r.status!=='running')return {ok:false,code:'stopped',reason:'The run isn’t running.',count};
+    if(leads.some(l=>l.state==='stale'))return {ok:false,code:'stale',reason:'Check or set aside the ideas that changed first.',count};
+    if(leads.some(l=>l.state==='research_pending')||r.wonderer.pending.some(t=>!t.finished))return {ok:false,code:'pending',reason:'Wait for the check that is running to finish first.',count};
+    if(!g.ok)return {ok:false,code:'undecided',reason:'Give each idea a decision first.',count};
+    if(r.brainstorm.phase!=='synthesis')return {ok:false,code:'core',reason:'Finish the core round first.',count:0};
+    return {ok:true,code:'',reason:'',count:0};
+  }
+  function convergenceReason(r,g){return convergenceState(r,g).reason;}
   function workspace(c,r){
-    if(!r?.wonderer)return '<article class="editor-doc"><h1>Wonderer unavailable</h1><p>Start a configured collaborative run first.</p></article>';
-    const w=protocol.refresh(r),g=protocol.convergence(r),esc=c.esc,attrs='data-run="'+esc(r.id)+'"',s=session(r.threadId);
-    const core=r.participants.filter(p=>!p.additiveRoleKind||p.additiveRoleKind==='none');
-    return '<article class="editor-doc b13-workspace" data-wonderer-run="'+esc(r.id)+'"><header class="b13-heading"><small>Wonderer · additive exploration</small><h1>'+esc(w.seed)+'</h1><p>Three connected leads. One existing collaborative run. No automatic promotion.</p></header><div class="b13-stats"><span><strong>'+core.length+'</strong> core roles</span><span><strong>1</strong> Wonderer</span><span><strong>'+g.additions.length+'</strong> included</span><span><strong>'+g.unresolved.length+'</strong> undecided</span></div>'+
-      '<div class="b13-actions">'+button(c,'b13-core',w.corePlayback.status==='playing'?'Core round playing…':w.corePlayback.status==='completed'?'Core round complete':'Play recorded core round',attrs,r.status!=='running'||['playing','completed'].includes(w.corePlayback.status)?'Core round is already running, complete, or unavailable':'')+button(c,'brainstorm-open-results','Core exploration',attrs)+button(c,'collab-pause','Pause',attrs,r.status!=='running'?'Run is not running':'')+button(c,'collab-resume','Resume',attrs,r.status!=='paused'?'Run is not paused':'')+'</div>'+
-      (w.corePlayback.errors.length?'<p class="b13-warning">'+esc(w.corePlayback.errors.join('; '))+'</p>':'')+
-      '<p class="b13-quiet">Built-in Persona + methodology Skill · default ballot: abstain · local sample only · no provider calls or claimed cost.</p>'+
-      w.leads.map(l=>leadCard(c,r,l)).join('')+
-      '<section class="b13-convergence" data-k="convergence:'+esc(r.id)+'"><h2>Bring the work together</h2><p>'+(g.ok?'Every specialist lead has an explicit disposition.':'Resolve '+g.unresolved.length+' specialist lead'+(g.unresolved.length===1?'':'s')+' before synthesis.')+' Core votes and dissent stay separate.</p><p>Core phase: <strong>'+esc(B.phaseLabel(r))+'</strong> · recorded dissent: <strong>'+r.brainstorm.dissent.length+'</strong></p>'+button(c,'collab-brainstorm-synthesize',r.brainstorm.synthesis?'Open Deep Plan':'Synthesize Deep Plan',attrs,!r.brainstorm.synthesis&&(!g.ok||r.brainstorm.phase!=='synthesis'||r.status!=='running')?'Finish the core round and every specialist disposition':'')+'</section>'+
-      '<details class="b13-technical" data-b13-disclosure="'+esc(r.id)+'"'+(disclosures.has(r.id)?' open':'')+' data-k="technical:'+esc(r.id)+'"><summary>Technical details and source-revision exercise</summary><p>Run '+esc(r.id)+' · '+esc(r.status)+' · epoch '+r.stopEpoch+' · definition '+r.definitionRevision+'</p><p>Source checks rejected: '+w.rejected.length+'. Local record history is session-only.</p>'+button(c,'b13-source-change','Revise the ordering sample',attrs,r.status!=='running'?'Run is not running':'')+'<p>Changes the shared artifact version. A pending response must be rejected; an included result becomes stale.</p><pre>'+esc(JSON.stringify({defaultSpecialistVote:w.defaultVote,coreVotes:r.brainstorm.votes,dissent:r.brainstorm.dissent,rejected:w.rejected},null,2))+'</pre></details>'+((s?.guide)?'<p class="b13-quiet">Start with Research local sample. Give every lead an explicit disposition, play the core round, then synthesize. '+button(c,'b13-hide-guide','Dismiss guidance')+'</p>':'')+'</article>';
+    if(!r?.wonderer)return S.pmxView({key:'b13-none',cls:'b13-workspace',kind:'wonderer',markHtml:wmark(20),kindWord:'Wonderer',title:'Wonderer’s ideas',statusHtml:'Start a BrainStorm with Wonderer added first.'});
+    const w=protocol.refresh(r),g=protocol.convergence(r),esc=c.esc,attrs='data-run="'+esc(r.id)+'"',running=r.status==='running';
+    const core=r.participants.filter(p=>!p.additiveRoleKind||p.additiveRoleKind==='none'),b=r.brainstorm;
+    const cp=w.corePlayback,acts=(running&&cp.status==='not_started'?btn(c,'b13-core','Play the core round',attrs):'')+btn(c,'brainstorm-open-results','See how they decided',attrs)+
+      (running?btn(c,'collab-pause',S.pmxGlyph('pause',13)+'Pause',attrs):r.status==='paused'?btn(c,'collab-resume',S.pmxGlyph('play',13)+'Resume',attrs):'');
+    const status='<b>'+(r.status==='paused'?'Paused':cp.status==='playing'?'The core round is playing':g.unresolved.length?plural(g.unresolved.length,'idea')+' to decide':'Every idea has a decision')+'</b> · Ideas from other fields. Each stays a hypothesis until it’s checked.';
+    const why=convergenceReason(r,g),done=!!b.synthesis;
+    const conv=S.pmxViewSection({key:'convergence:'+r.id,cls:'b13-convergence',title:'Bring the work together',
+      body:'<p class="b13-say">'+(g.ok?'Every idea has a decision.':'Decide on '+plural(g.unresolved.length,'idea')+' first.')+' The core votes and the disagreement stay as they are.</p>'+
+        '<p class="b13-say">Core round: '+esc(PHASE_WORD[b.phase]||b.phase)+' · '+plural(b.dissent.length,'disagreement')+' kept.</p>'+
+        '<div class="b13-acts">'+btn(c,'collab-brainstorm-synthesize',done?'Open Plan':'Write the plan',attrs,!done&&!!why,true)+'</div>'+(why?'<p class="pmx-reason b13-why">'+esc(why)+'</p>':'')});
+    const tech='<details class="b13-technical" data-b13-disclosure="'+esc(r.id)+'"'+(disclosures.has(r.id)?' open':'')+' data-k="technical:'+esc(r.id)+'"><summary>Technical details</summary>'+
+      '<p class="b13-say">Run '+esc(r.id)+' · '+esc(r.status)+' · stop epoch '+r.stopEpoch+' · definition '+r.definitionRevision+'. Checks refused because their source changed: '+w.rejected.length+'. This history lasts for this session only.</p>'+
+      '<p class="b13-say">Wonderer is a built-in Persona with a methodology Skill. It never votes (its ballot is “abstain”). Checks run on local samples only: no AI provider, no cost.</p>'+
+      '<div class="b13-acts">'+btn(c,'b13-source-change','Change the ordering sample',attrs,!running)+'</div><p class="b13-say">Changes the shared file’s version. A check still running is refused, and an idea already in the plan goes out of date.</p>'+
+      '<pre class="b13-pre">'+esc(JSON.stringify({defaultSpecialistVote:w.defaultVote,coreVotes:b.votes,dissent:b.dissent,rejected:w.rejected},null,2))+'</pre></details>';
+    const aside='<ul class="b13-aside"><li><b>'+plural(core.length,'core helper')+'</b> and one Wonderer</li><li><b>'+g.additions.length+'</b> in the plan · <b>'+g.unresolved.length+'</b> to decide</li><li>Wonderer never votes, so the core ballot is unchanged.</li>'+
+      (cp.errors.length?'<li class="pmx-reason">The core round stopped. Replay the example to try again.</li>':'')+'</ul>';
+    return S.pmxView({key:'b13-view:'+r.id,cls:'b13-workspace',attrs:'data-wonderer-run="'+esc(r.id)+'"',kind:'wonderer',markHtml:wmark(20),kindWord:'Wonderer · BrainStorm',title:'Wonderer’s ideas',
+      statusHtml:status,actionsHtml:acts,mainHtml:'<div class="b13-leads">'+w.leads.map(l=>leadCard(c,r,l)).join('')+'</div>'+conv+tech,asideHtml:aside});
   }
+  function plural(n,one){return n+' '+one+(n===1?'':'s');}
   function lensCard(c){
-    const s=session(),tid=c.thread.id;if(!s)return '';
-    return '<section class="b13-lens-tools" data-k="b13-lens-tools"><h3>Source and effective context</h3><p>Inspect what the local Lens assembler would include. The original conversation is never rewritten.</p><div class="b13-actions">'+button(c,'b13-effective','Inspect effective context')+button(c,'b13-change-message','Revise the ranking source')+'</div><small class="b13-quiet">The revision button edits message 2 in this exercise only; it tests an outdated preview. Other threads are unchanged.</small></section>';
+    const s=session();if(!s)return '';
+    return '<section class="b13-lens-tools" data-k="b13-lens-tools"><p class="b13-say"><b>What the assistant would read</b> · Lens never rewrites the conversation. Check what it would include, or change a message to test an out-of-date preview.</p><div class="b13-acts">'+btn(c,'b13-effective','See what it would read')+btn(c,'b13-change-message','Change message 2')+'</div></section>';
   }
-  function guide(c){const s=session(c.thread.id);if(!s?.guide)return '';return '<div class="b13-guide" data-k="b13-guide"><div><strong>'+c.esc(flows[s.flow].title)+'</strong><span>'+c.esc(flows[s.flow].kind==='lens'?'Open Lens beside search. Choose a mode, select messages, then preview or seal.':'Configure Wonderer additively, then open the leads workspace. Research alone does not include a lead.')+'</span></div><button class="icon-button" data-action="b13-hide-guide" title="Dismiss guidance">'+c.icon('close',12)+'</button></div>';}
+  /* The guide reads the live state and moves on with the user (review fix): set up -> open the ideas -> check one ->
+     decide on each -> write the plan -> done. Its caption is the run's provenance (the card's words). */
+  function wondererStep(c,s){
+    const r=current(c),esc=c.esc;
+    if(!r)return {text:c.state.dialog?'Wonderer is already on the team. Press Start BrainStorm.':'Set up the BrainStorm. Wonderer is already on the team.'};
+    const w=r.wonderer,leads=w?.leads||[],opened=s.opened||(c.state.editorTabs||[]).includes('wonderer:'+r.id),cp=w?.corePlayback||{},b=r.brainstorm||{};
+    const open=[{action:'b13-open',label:'Open Wonderer’s ideas',attrs:'data-run="'+esc(r.id)+'"'}];
+    if(['canceled','cancelled','failed'].includes(r.status)&&!b.synthesis)return {text:'This example ended. Everything so far is kept.'};
+    if(b.synthesis)return {text:'Plan written. Wonderer’s ideas went in only as you decided; the core votes and the disagreement are unchanged. Nothing has been built.'};
+    if(r.status==='paused')return {text:'Paused. Resume it from Wonderer’s ideas.',actions:opened?[]:open};
+    if(!opened)return {text:'Open Wonderer’s ideas. Each one stays a hypothesis until it’s checked.',actions:open};
+    const g=protocol.convergence(r),st=convergenceState(r,g);
+    if(st.code==='stale')return {text:'A source changed, so its check no longer counts. Check that Wonderer idea again or set it aside.'};
+    const checked=leads.some(l=>l.evidence||l.decision||l.state==='research_pending');
+    if(!checked)return {text:(cp.status==='not_started'?'Play the core round, then check one of Wonderer’s ideas.':'Check one of Wonderer’s ideas.')+' A check alone never puts an idea in the plan.'};
+    if(!g.ok){const n=g.unresolved.length,how='use it in the plan, set it aside or use it as your decision. Say why first.';return {text:n===leads.length?'Decide on each of Wonderer’s ideas: '+how:n===1?'One of Wonderer’s ideas is left. Decide on it: '+how:n+' of Wonderer’s ideas are left. Decide on each: '+how};}
+    if(st.code==='core'||st.code==='pending')return {text:'Every Wonderer idea has a decision. '+(st.code==='core'?(cp.status==='not_started'?'Play the core round, then write the plan.':'Wait for the core round to finish, then write the plan.'):'Wait for the check to finish, then write the plan.')};
+    return {text:'Every Wonderer idea has a decision. Press Write the plan: one plan, with the disagreement kept.'};
+  }
+  function guide(c){
+    const s=session(c.thread.id);if(!s?.guide)return '';
+    const lens=flows[s.flow].kind==='lens',step=lens?{text:'Open Lens beside search. Pick a mode, select messages, then preview or seal.'}:wondererStep(c,s);
+    /* the Wonderer flows are recorded examples: the caption is the card's (PM56_COLLAB.provenance), Lens stays local */
+    const r=lens?null:current(c),recorded=!lens&&(r?C.provenance(r.id)==='recorded':!!(C.isRecordedDraft&&C.isRecordedDraft(C.draft())));
+    return S.pmxGuide({key:'b13-guide',cls:'b13-guide',placement:'dock',caption:recorded?undefined:'Local example · no AI cost',step:c.esc(step.text),actions:step.actions||[],close:{action:'b13-hide-guide',label:'Close the guide'}});
+  }
   E.slot('composerBelow',guide);
   E.slot('transcriptMessage',c=>{
     if(c.m?.type==='b13-lens-controls')return lensCard(c);
     if(c.m?.type!=='b13-wonderer')return '';
-    const r=current(c);return '<section class="b13-entry" data-k="b13-entry"><div>'+c.icon('sparkles',20)+'</div><div><h3>Wonderer · connected leads</h3><p>'+(r?'Hypotheses, source checks, and deliberate choices stay separate from the core vote.':'Configure the additive specialist. Opening the modal starts nothing.')+'</p>'+button(c,r?'b13-open':'b13-configure',r?'Open leads and evidence':'Configure BrainStorm','data-run="'+c.esc(r?.id||'')+'"')+'</div></section>';
+    const r=current(c),g=r?protocol.convergence(r):null,tid=c.esc(c.thread.id);
+    /* the one-line receipt in the ledger grammar (G-26) */
+    return S.pmxLedgerLine({key:'b13-entry:'+tid,cls:'b13-entry',kind:'wonderer',markHtml:wmark(16),kindWord:'Wonderer',title:'Wonderer’s ideas',
+      headline:r?plural(r.wonderer.leads.length,'idea')+' from other fields · '+g.additions.length+' in the plan · '+g.unresolved.length+' to decide':'Ideas from other fields, kept apart from the vote',
+      actions:[{action:r?'b13-open':'b13-configure',label:r?'Open':'Set up BrainStorm',attrs:'data-run="'+c.esc(r?.id||'')+'"'}]});
   });
-  E.slot('editorTabLabel',c=>c.editorId?.startsWith('wonderer:')?'Wonderer · leads':c.editorId?.startsWith('wonder-source:')?'Wonderer · source':c.editorId?.startsWith('lens-effective:')?'Effective context':'');
+  E.slot('editorTabLabel',c=>c.editorId?.startsWith('wonderer:')?'Wonderer’s ideas':c.editorId?.startsWith('wonder-source:')?'Wonderer · source':c.editorId?.startsWith('lens-effective:')?'What it would read':'');
   E.slot('editorDocument',c=>{
     if(c.editorId?.startsWith('wonderer:'))return workspace(c,run(c.editorId.slice(9)));
-    if(c.editorId?.startsWith('wonder-source:')){const a=D.artifacts.find(a=>a.id===c.editorId.slice(14));return '<article class="editor-doc b13-source"><small>Shared artifact · current version '+c.esc(a?.version??'unknown')+'</small><h1>'+c.esc(a?.name||'Source unavailable')+'</h1><pre>'+c.esc(a?.status==='active'?a.content:'Source unavailable or revoked.')+'</pre><p>'+c.esc(a?.provenance||'')+'</p></article>';}
-    if(c.editorId?.startsWith('lens-effective:')){const tid=c.editorId.slice(15),f=L.effectiveHistory(tid);return '<article class="editor-doc b13-source"><small>Local Lens assembly · session-only</small><h1>Effective context</h1><p>Read-only projection of selected canonical messages and source-linked summaries. Focus preserves chronology and marks priority; it does not claim a live provider prompt.</p><pre>'+c.esc(JSON.stringify(f,null,2))+'</pre></article>';}
+    if(c.editorId?.startsWith('wonder-source:')){const a=D.artifacts.find(a=>a.id===c.editorId.slice(14)),on=a?.status==='active';
+      return S.pmxView({key:'b13-src:'+c.editorId.slice(14),cls:'b13-source',kind:'wonderer',markHtml:wmark(20),kindWord:'Wonderer · source',title:c.esc(a?.name||'Source unavailable'),
+        statusHtml:'Shared file · version '+c.esc(a?.version??'unknown'),mainHtml:'<pre class="b13-pre">'+c.esc(on?a.content:'This source is no longer available.')+'</pre>'+(a?.provenance?'<p class="b13-say">'+c.esc(a.provenance)+'</p>':'')});}
+    if(c.editorId?.startsWith('lens-effective:')){const tid=c.editorId.slice(15),f=L.effectiveHistory(tid);
+      return S.pmxView({key:'b13-eff:'+tid,cls:'b13-source',kind:'lens',markHtml:S.pmxGlyph('eye',20),kindWord:'Lens',title:'What the assistant would read',
+        statusHtml:'A read-only view of the selected messages and their linked summaries, in order. Focus marks priority; it does not claim to be a real provider prompt.',mainHtml:'<pre class="b13-pre">'+c.esc(JSON.stringify(f,null,2))+'</pre>'});}
     return '';
   });
   E.action('b13-start',(c,b)=>{start(b.dataset.flow);return true;});
   E.action('b13-hide-guide',c=>{const s=session();if(s)s.guide=false;refresh();return true;});
-  E.action('b13-open',(c,b)=>{c.openEditor('wonderer:'+b.dataset.run);return true;});
+  E.action('b13-open',(c,b)=>{const s=session();if(s)s.opened=true;c.openEditor('wonderer:'+b.dataset.run);return true;});
   E.action('b13-configure',c=>{const s=session();if(s)start(s.flow);return true;});
   E.action('b13-core',(c,b)=>{playCore(run(b.dataset.run));return true;});
   E.action('b13-research',(c,b)=>{research(run(b.dataset.run),b.dataset.lead);return true;});
@@ -196,7 +279,7 @@
   document.addEventListener('input',e=>{const key=e.target?.dataset?.b13Reason;if(key)reasons.set(key,e.target.value);});
   E.chainAction('reset-all',()=>{for(const t of clocks.values())clearTimeout(t);clocks.clear();sessions.clear();reasons.clear();disclosures.clear();return false;});
   const G=window.PM56_REPAIR_DEMOS,previous=G.gallery;
-  G.gallery=c=>'<section class="demo-section"><h3>Context Lens & Wonderer · Batch 13</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="b13-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+previous(c);
-  window.PM56_WONDERER={protocol,admit,convergence:r=>protocol.convergence(r),augmentPlan,sourceResult,research,playCore};
+  G.gallery=c=>'<section class="demo-section"><h3>Context Lens and Wonderer</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="b13-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+previous(c);
+  window.PM56_WONDERER={protocol,admit,convergence:r=>protocol.convergence(r),convergenceState:r=>convergenceState(r),convergenceReason:r=>convergenceReason(r),augmentPlan,sourceResult,research,playCore};
   window.PM56_BATCH13={start,flows,snapshot:tid=>copy(session(tid)||null),currentRun:()=>current(E.ctx())};
 })();

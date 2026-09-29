@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L1635-L1895
+Source lines: L1635-L1899
 
-Source SHA256: `661b5d839dfd40ccce5e60202e64011ee81334c4dcf201ab7965e2e089fc7ea2`
+Source SHA256: `e02058f00d1765b4befb41a1f47505e9f1c9df99fb754d825ba06753a084d05d`
 
 ---
 
@@ -30,14 +30,15 @@ canonical_text: >-
   Review, while genuinely committed rows require owner-revalidated per-row phase continuation. Guided Tour acceptance
   consumes PWIZ-023 and F3-521's September 3 newbie-first revision: optional local practice in exact
   `chat_teacher`/`workspace`/`planning_wizard` chapter order, shared manual/Show Me handlers and observed predicates,
-  same-answer ELI5, at least half of meaningful actions and dwell in Planning, safe checkpoint recovery, and no work
+  same-answer ELI5 as one extra, simpler reply from Explain this reply simply with the original reply unchanged (DL-126),
+  at least half of meaningful actions and dwell in Planning, safe checkpoint recovery, and no work
   started. Its eleven typed tour actions include Show Me but exclude the separate retired restore/keep-layout and
   tour-owned Reduced Motion actions. Heading focus, clamped callouts, Skip restoration, default-restore/explicit-Keep Finish
   layout, Doctor/Health no-false-green, MCP/server degraded visibility, and FileSafe fail-closed readiness remain
   required. Static, browser-concept, native runtime, accessibility, motion-quality, and visual evidence remain distinct.
 gui_related: true
 gui_classification_reason: Validates modal onboarding, optional three-chapter tour, owner-return states, accessibility, errors, and truthful Doctor/Health presentation.
-depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, F3-521, SRV-001, SRV-003, SRV-004, RAS-001, RAS-007, BRS-001, BRS-003, BRS-006, PJCT-001, ACD-431, T-088, T-089, MI-028, MI-029, F2-155]
+depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, F3-521, SRV-001, SRV-003, SRV-004, RAS-001, RAS-007, BRS-001, BRS-003, BRS-006, PJCT-001, ACD-431, ACD-484, T-088, T-089, MI-028, MI-029, F2-155]
 unblocks: []
 acceptance_criteria:
   - Tests consume the exact PWIZ-021 main_stage_order, connect_existing_stage_order and deferred_project_stage_order definitions, not a testing-owned roster. Main includes eleven semantic stages; explicit Project Later skips provider work without a fake Project and connect-existing retains its six-stage shortcut.
@@ -73,9 +74,9 @@ acceptance_criteria:
   - Every important manual and Show Me path reaches the same mounted owner action and success predicate; tests include unrelated clicks, timers, generic Next, look-alikes, missing targets, state changes, repeated Show Me, and interruption during pre-cue/travel/arrival/settle. None may fabricate an action result.
   - Workspace tests verify real Chat movement with shared docked/undocked state and a real widget add/move/resize/focus result, reversible layout capture, exact Skip restoration, default Finish restoration, and explicit Keep.
   - Planning tests bind meaningful action and dwell shares to a declared step census and require both shares to be at least one half. The book-club goal, three outcomes, who-can-edit decision, why, assumptions/unresolved choices, review, genuine changed answer, specific shared-access consequence, final real-page landing with committed Project, and no-work-start boundary all require observed results. An unsure answer stays unresolved; clicking Edit alone cannot choose an answer or complete the edit.
-  - Assistant Chat opens first; the real guide selector selects Teacher, the real composer sends the supplied question, a local answer streams in the same labeled conversation, and ELI5 changes that same answer. Tests measure zero provider requests and zero usage increment, not merely a hard-coded declaration.
+  - Assistant Chat opens first; the real guide selector selects Teacher, the real composer sends the supplied question, a local answer streams in the same labeled conversation, and Explain this reply simply (`cmd.chat.eli5.explain_reply`) shows that same answer in simple words as one extra, simpler reply while the original reply stays unchanged; no ELI5 switch re-sends, regenerates or rewrites it (DL-126). Tests measure zero provider requests and zero usage increment, not merely a hard-coded declaration.
   - Guided-example ownership survives Pause, later chapters, Finish, and Replay. Actual composer Enter/send and slash-command text remain on the deterministic local path; unrelated threads retain their existing handler. Interrupted or replaced local streams cannot append late chunks, clear another stream's busy state, replace the current lesson answer, or advance a different session/thread/step. Missing telemetry remains unavailable, never an inferred zero-use pass.
-  - Tests enforce the eleven-action tour census owned by PWIZ-023, including ui.guided_tour.show_me. Separate ui.guided_tour.restore_layout, ui.guided_tour.keep_layout, and ui.guided_tour.toggle_reduced_motion actions remain rejected. Chat selection/send/ELI5 reuse cmd.persona.select, cmd.chat.send, and cmd.chat.eli5.set; local fixture adapters do not establish native handler registration or production receipts.
+  - Tests enforce the eleven-action tour census owned by PWIZ-023, including ui.guided_tour.show_me. Separate ui.guided_tour.restore_layout, ui.guided_tour.keep_layout, and ui.guided_tour.toggle_reduced_motion actions remain rejected. Chat selection/send/ELI5 reuse cmd.persona.select, cmd.chat.send, cmd.chat.eli5.set (the quick dot, later replies only), and cmd.chat.eli5.explain_reply (DL-126); local fixture adapters do not establish native handler registration or production receipts.
   - The top controls place ELI5 beside Pause and Skip Tour. The brief opening explains ELI5 and Reduced Motion; the Tour reads the effective Settings-owned general.visual.reduce-animations preference without writing it or adding a motion-toggle screen. Reduced Motion retains sequence/cause-and-effect and action parity.
   - Each scene heading receives programmatic focus. Callouts measure, clamp, and remeasure the mounted target across resize, scale, localization, movement, and route changes; stale or missing target geometry cannot advance the film.
   - Skip restores exact captured layout, Chat thread/selection/placeholder/draft, and focus. Finish requires current prerequisite predicates, restores temporary layout by default or honors explicit Keep, removes practice content, and lands on the real Planning Wizard without work. Restoration failure remains recoverable, never completed. Safe checkpoint tests revalidate owner state on Close/reload/resume, reject stale/secret-bearing records, return to the earliest unsatisfied prerequisite, and never replay domain work.
@@ -235,6 +236,8 @@ preserved_exact_tokens:
   - "Needs attention"
   - "hide if server fails"
   - "fail-closed"
+  - "Explain this reply simply"
+  - "cmd.chat.eli5.explain_reply"
 negative_constraints:
   - Do not call this feature acceptance-covered without owner-current Onboarding path/denominator/fence tests, independent local-backend/optional-forge coverage, one-dispatch proof, optional provider setup, typed choice help, path-correct migration, current newbie-first Guided Tour manual/Show Me/checkpoint/terminal coverage, owner-security, and Doctor no-false-green tests.
   - Do not restore predecessor four-screen/provider-first, five-stage, seven-stage or nine-stage producers. Paid-provider then Free Models is now the accepted post-Project-commit order, including Free Models after paid Skip; it does not restore provider-first setup.
@@ -250,7 +253,8 @@ negative_constraints:
   - Do not retain either predecessor tour controller or accept chapter order other than `chat_teacher`, `workspace`, `planning_wizard`.
   - Do not replace real workspace practice with narration or treat a generic Options click as proof of a widget mutation.
   - Do not satisfy a required Planning action from narration, a timer, generic Next, a look-alike, or an Edit button that silently picks an answer.
-  - Do not complete Chat/Teacher without its real selection/composer, deterministic same-conversation reply, same-answer ELI5, measured zero provider requests, and zero usage increment.
+  - Do not complete Chat/Teacher without its real selection/composer, deterministic same-conversation reply, same-answer ELI5 as one extra, simpler reply, measured zero provider requests, and zero usage increment.
+  - Do not accept a Chat/Teacher ELI5 step that re-sends, regenerates or rewrites the example answer; its simpler version is one extra reply from Explain this reply simply (DL-126).
   - Do not restore `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, or `ui.guided_tour.toggle_reduced_motion` as current requests, aliases, handlers, or compatibility actions.
   - Do not add a Guided Tour-specific Reduced Motion toggle or separate motion scene; the Tour only explains and honors the Settings-owned preference.
   - Do not let callouts escape the viewport, point at stale geometry, or bypass scene-heading focus.

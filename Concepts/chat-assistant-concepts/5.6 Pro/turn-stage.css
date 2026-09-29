@@ -191,44 +191,7 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
   border: 1px solid color-mix(in srgb, var(--fam-people) 22%, var(--tx-sheet-edge));
   border-radius: 16px;
 }
-.transcript-inner > [data-family="people"] :is(.collab-kind-badge, .system-card-head > .event-icon, > .event-icon, .work-output-icon) {
-  color: var(--fam-people); background: color-mix(in srgb, var(--fam-people) 14%, transparent);
-}
 .transcript-inner > [data-family="people"] .system-card-head { border-bottom-color: color-mix(in srgb, var(--fam-people) 16%, var(--tx-sheet-edge)); }
-.tx-avatars { display: inline-flex; align-items: center; padding-left: 6px; flex: 0 0 auto; }
-.tx-avatars > i {
-  width: 22px; height: 22px; margin-left: -6px; border-radius: 50%;
-  display: grid; place-items: center; font: 700 8.5px/1 var(--font-ui); font-style: normal; letter-spacing: .02em;
-  color: var(--text); background: color-mix(in srgb, var(--fam-people) 26%, var(--surface-3));
-  box-shadow: 0 0 0 2px var(--tx-sheet);
-}
-.tx-avatars > i[data-tone="run"] { box-shadow: 0 0 0 2px var(--tx-sheet), 0 0 0 3.5px color-mix(in srgb, var(--tx-live) 70%, transparent); }
-.tx-avatars > i[data-tone="bad"] { box-shadow: 0 0 0 2px var(--tx-sheet), 0 0 0 3.5px color-mix(in srgb, var(--danger) 70%, transparent); }
-.tx-avatars > i.more { background: var(--surface-3); color: var(--muted); }
-
-/* TIME -- a ticket: stub with the time, perforated edge, punched notches */
-.transcript-inner > [data-family="time"].sched-card {
-  --stub: 84px;
-  display: grid; grid-template-columns: var(--stub) minmax(0, 1fr); align-items: start;
-  padding: 0; border-radius: 14px;
-  background: var(--tx-sheet); border: 1px solid color-mix(in srgb, var(--fam-time) 26%, var(--tx-sheet-edge));
-  -webkit-mask: radial-gradient(circle 7px at var(--stub) 0, #0000 97%, #000) top / 100% 51% no-repeat, radial-gradient(circle 7px at var(--stub) 100%, #0000 97%, #000) bottom / 100% 51% no-repeat;
-  mask: radial-gradient(circle 7px at var(--stub) 0, #0000 97%, #000) top / 100% 51% no-repeat, radial-gradient(circle 7px at var(--stub) 100%, #0000 97%, #000) bottom / 100% 51% no-repeat;
-}
-.transcript-inner > [data-family="time"].sched-card > :not(.sched-stub) { grid-column: 2; padding-left: 15px; padding-right: 14px; min-width: 0; overflow-wrap: anywhere; }
-.transcript-inner > [data-family="time"].sched-card > .sched-card-head { padding-top: 12px; }
-.transcript-inner > [data-family="time"].sched-card > :last-child { padding-bottom: 11px; }
-.sched-stub {
-  grid-column: 1; grid-row: 1 / span 12; align-self: stretch;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
-  padding: 12px 6px; text-align: center; color: var(--fam-time);
-  border-right: 1.5px dashed color-mix(in srgb, var(--fam-time) 42%, transparent);
-  background: color-mix(in srgb, var(--fam-time) 7%, transparent);
-}
-.sched-stub b { font-size: 15px; font-weight: 750; letter-spacing: -.01em; line-height: 1.1; font-variant-numeric: tabular-nums; }
-.sched-stub span { font-size: 11px; color: color-mix(in srgb, var(--fam-time) 80%, var(--text)); }
-.sched-stub small { font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-.transcript-inner > [data-family="time"].sched-card:is(.sched-card-sent, .sched-card-canceled, .sched-card-expired) .sched-stub { color: var(--muted); background: color-mix(in srgb, var(--text) 3%, transparent); border-right-color: var(--tx-sheet-edge); }
 
 /* LEDGER -- not a card: one quiet line (icon, title, first line of detail) */
 .transcript-inner > [data-family="ledger"].event-card {
@@ -308,7 +271,6 @@ body[data-theme] { --tx-gutter: 24px; }
 .chat-stage .transcript { overflow-anchor: none; }
 
 /* accent budget, the remaining decoration: family hues instead of the accent */
-.transcript-inner > [data-family="time"] .sched-kind svg { color: var(--fam-time); border-color: transparent; }
 .transcript-inner .att-tracer-fill { background: color-mix(in srgb, var(--text) 42%, transparent); }
 .transcript-inner > [data-family="people"] .agent-progress i { background: var(--fam-people); }
 .transcript-inner > [data-family="deliverable"] .artifact-preview { color: var(--fam-deliverable); }

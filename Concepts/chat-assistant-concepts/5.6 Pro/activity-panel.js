@@ -347,15 +347,21 @@
       });
     }
     if (domain === 'crew') {
+      var seatIn = {};
       return (sc.crew || []).concat(window.PM56_CREW?.activityMembers(ctx)||[]).map(function (a) {
         var sm = statusMeta(a.status, agentTone(a.status));
+        /* a Crew member's face is its cast mark (silhouette x hue, the card's head cluster), never initials */
+        var runKey = a.crewRunId || a.runId || '';
+        seatIn[runKey] = (seatIn[runKey] || 0) + 1;
+        var SH = window.PM56_SHELL;
+        var mark = SH && SH.pmxMark ? SH.pmxMark({ role: a.effectivePersona || a.requestedPersona || a.persona || 'Implementer', seat: ((seatIn[runKey] - 1) % 8) + 1, size: 18, state: a.status === 'working' ? 'working' : a.status === 'done' ? 'done' : 'idle' }) : '';
         return {
           domain: 'crew', id: a.id, title: a.name, sub: a.current || '',
           right: sm.label, ledger: sm.label,
           tone: sm.tone, progress: null,
           state: sm.label, action: 'open-crew',
           attrs: ' data-id="' + esc(ctx, a.id) + '"',
-          initials: String(a.name || '?').split(/\s+/).map(function (w) { return w[0]; }).join('').slice(0, 2),
+          mark: mark,
           group: 'Crew', raw: a
         };
       });
@@ -817,7 +823,8 @@
   ];
   function boardCard(ctx, it) {
     var on = isSelected(ctx, it.domain, it.id);
-    var face = it.initials
+    var face = it.mark ? '<span class="pmap-av pmap-av-glyph">' + it.mark + '</span>'
+      : it.initials
       ? '<span class="pmap-av">' + esc(ctx, it.initials) + '</span>'
       : '<span class="pmap-av pmap-av-glyph">' + ctx.icon(ICONS[it.domain], 12) + '</span>';
     return '<button class="pmap-card' + (on ? ' is-selected' : '') + '" data-k="pmap-c:' + esc(ctx, it.domain + ':' + it.id) +

@@ -1,0 +1,107 @@
+/* crew-view.css — CREW-B: PM56_CREW.viewParts + CrewPlanVM renderer + the Crew run view (spec 8.1). */
+/* Only crew-* classes: the pmx primitives (pmxView, pmxViewSection, pmxTimeline, pmxTeamRow, pmxPlate, pmxGuide)
+   keep their foundation look. J-2: text keeps 8 px from every hairline, rows 8 px above and below their text, line
+   heights >= 1.45, controls 10 px apart; the plan table keeps fixed columns and no cell wraps past two lines. */
+/* the recorded example's guide as the view's first row (C27 'doc') keeps 20 px above the view's head */
+.crew-work-document > .pmx-guide{margin:0 0 20px;}
+/* M8: this file's own frame (builds without collab-view.js) rises in place once, when its document opens (the article
+   is keyed by run, so ticks and tab changes never replay it); COLLAB-VIEW's frame (.collab-view) carries its own M8
+   cascade. Reduced motion is covered by pmx-system.css's [class*="pmx-"] policy (instant) */
+article.pmx-view.crew-work-document:not(.collab-view){animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;}
+
+/* the view's More row (real buttons in the view's own flow, directly above the tabs) */
+.crew-view-more{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin:16px 0 0;}
+.crew-view-off{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 12px;}
+.crew-view-off .pmx-fine{font-size:11.5px;line-height:17px;}
+/* a disabled action reads as unavailable beside the enabled ones (its printed reason says why) */
+.crew-view-off .text-button:disabled{color:var(--subtle);font-weight:var(--pmx-w-reg);cursor:default;}
+.crew-view-off .text-button:disabled:hover{background:none;color:var(--subtle);}
+
+/* disclosures: a chevron that turns, never the native marker */
+:is(.crew-plan-disc, .crew-plan-raw, .crew-source, .crew-view-tech) > summary{display:flex;align-items:center;gap:8px;min-height:32px;padding:0 10px 0 0;list-style:none;cursor:pointer;color:var(--muted);font:500 12px/18px var(--font-ui);}
+:is(.crew-plan-disc, .crew-plan-raw, .crew-source, .crew-view-tech) > summary::-webkit-details-marker{display:none;}
+:is(.crew-plan-disc, .crew-plan-raw, .crew-source, .crew-view-tech) > summary > svg{flex:none;}
+:is(.crew-plan-disc, .crew-plan-raw, .crew-source, .crew-view-tech)[open] > summary > svg{transform:rotate(90deg);}
+:is(.crew-plan-disc, .crew-plan-raw, .crew-source, .crew-view-tech) > summary:hover{color:var(--text);}
+.crew-source > summary{color:var(--text);font-weight:600;}
+
+/* The plan: Part · Who · Done when · State, each part followed by its own disclosure row */
+/* fixed columns that never scroll: a cell clamps to two lines and the full words are in the part's disclosure */
+.crew-plan-wrap{max-width:100%;min-width:0;}
+.crew-plan-table{width:100%;table-layout:fixed;border-collapse:collapse;font:var(--pmx-w-reg) 13px/20px var(--font-ui);color:var(--text);}
+.crew-plan-table th{padding:0 14px 10px 0;text-align:left;vertical-align:bottom;font:600 12px/18px var(--font-ui);color:var(--muted);border-bottom:1px solid var(--border);}
+.crew-plan-table th:nth-child(1){width:31%;}
+.crew-plan-table th:nth-child(2){width:19%;}
+.crew-plan-table th:nth-child(3){width:32%;}
+.crew-plan-table th:nth-child(4){width:18%;}
+.crew-plan-row > td{padding:12px 14px 4px 0;vertical-align:top;}
+.crew-plan-drow > td{padding:0 0 8px;border-bottom:1px solid var(--border);}
+.crew-plan-part b{display:block;font-weight:600;}
+.crew-plan-part small{display:block;margin-top:6px;font:var(--pmx-w-reg) 11.5px/17px var(--font-ui);color:var(--muted);}
+.crew-clamp{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere;}
+.crew-plan-who, .crew-plan-when{color:var(--text);}
+.crew-plan-state{display:inline-flex;align-items:flex-start;gap:6px;color:var(--muted);}
+.crew-plan-state > svg{flex:none;margin-top:3px;}
+.crew-plan-state[data-state="done"]{color:var(--positive);}
+.crew-plan-state[data-state="working"]{color:var(--text);font-weight:600;}
+.crew-plan-state[data-state="needs"]{color:var(--warning);}
+.crew-plan-state[data-state="failed"]{color:var(--danger);}
+.crew-plan-more{padding:2px 0 8px 20px;min-width:0;}
+.crew-plan-h{margin:14px 0 4px;font:600 12px/18px var(--font-ui);color:var(--text);}
+.crew-plan-more > .crew-plan-h:first-child{margin-top:6px;}
+.crew-work-document .crew-plan-p{margin:0;max-width:72ch;font:var(--pmx-w-reg) 13px/20px var(--font-ui);color:var(--text);}
+.crew-work-document .crew-plan-p + .crew-plan-p{margin-top:6px;}
+.crew-work-document .crew-plan-quiet{color:var(--muted);}
+.crew-plan-raw{margin-top:12px;}
+.crew-plan-more .pmx-fine{margin:8px 0 0;font-size:11.5px;line-height:17px;}
+
+/* The result */
+.crew-result{min-width:0;}
+.crew-result-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:0;font:var(--pmx-w-reg) 13px/20px var(--font-ui);color:var(--text);}
+.crew-result-head > svg{flex:none;color:var(--muted);}
+.crew-result-head b{font-weight:600;}
+.crew-result-meta{color:var(--muted);font-size:12px;line-height:18px;}
+.crew-result-acts{margin:4px 0 0;}
+.crew-result-acts .text-button{display:inline-flex;align-items:center;gap:8px;}
+
+/* The team (one line per helper with its current verb) */
+.crew-team{list-style:none;margin:0;padding:0;}
+.crew-team > li{display:flex;align-items:center;gap:12px;min-height:36px;padding:8px 0;}
+.crew-team-line{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;min-width:0;font:var(--pmx-w-reg) 13px/20px var(--font-ui);}
+.crew-team-line > b{font-weight:600;color:var(--text);}
+.crew-team-line > span{color:var(--muted);}
+
+/* What the Crew started from (the locked copy) */
+.crew-source-rows, .crew-source-req{margin:0;padding:0;list-style:none;}
+.crew-source-rows > li{display:flex;align-items:baseline;gap:12px;padding:4px 0;font:var(--pmx-w-reg) 13px/20px var(--font-ui);}
+.crew-source-id{min-width:20px;color:var(--muted);}
+.crew-source-rows code{white-space:pre;font:12px/20px var(--font-mono);color:var(--text);}
+.crew-source-req > li{padding:3px 0;font:var(--pmx-w-reg) 13px/20px var(--font-ui);color:var(--text);}
+.crew-source-fine{display:flex;align-items:center;gap:6px;}
+.crew-source-fine > svg{flex:none;}
+
+/* The aside: the figures, the clamp, stand-ins, the permission sentence, Technical details */
+.crew-view-facts{list-style:none;margin:0;padding:0;font:var(--pmx-w-reg) 12.5px/19px var(--font-ui);color:var(--muted);}
+.crew-view-facts > li + li{margin-top:10px;}
+.crew-view-facts b{color:var(--text);font-weight:600;}
+.crew-view-tech{margin-top:16px;}
+.crew-view-tech .pmx-fine{margin:6px 0 0;font-size:11.5px;line-height:17px;overflow-wrap:anywhere;}
+
+/* Team tab: the Coordinator line above the helper rows */
+.crew-view-lead{display:flex;align-items:center;gap:10px;margin:0 0 8px;font:var(--pmx-w-reg) 12.5px/19px var(--font-ui);color:var(--muted);}
+.crew-view-lead > .pmx-mark{flex:none;}
+
+/* Cost tab */
+.crew-cost-line{margin:0;font:var(--pmx-w-reg) 13px/20px var(--font-ui);color:var(--text);}
+.crew-cost-fine{margin:6px 0 12px;font-size:11.5px;line-height:17px;}
+.crew-cost-per{list-style:none;margin:0;padding:0;}
+/* one row per helper, as the Team tab's: an 18 px mark cell, the name beside it, the amount (or model) at the right */
+.crew-cost-per > li{display:flex;align-items:center;gap:10px;min-height:36px;padding:8px 0;font:var(--pmx-w-reg) 13px/20px var(--font-ui);}
+.crew-cost-mark{flex:0 0 18px;width:18px;display:flex;align-items:center;justify-content:center;}
+.crew-cost-name{flex:0 1 auto;min-width:0;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.crew-cost-amt{flex:none;margin-left:auto;padding-left:16px;color:var(--muted);white-space:nowrap;}
+.crew-view-msg + .crew-view-msg{margin-top:12px;}
+
+body[data-theme^="retro"] .crew-plan-table{font-size:12px;}
+body[data-theme^="retro"] span.crew-team-line, body[data-theme^="retro"] p.crew-plan-p, body[data-theme^="retro"] p.crew-cost-line,
+body[data-theme^="retro"] .crew-source-rows > li, body[data-theme^="retro"] .crew-source-req > li{font-size:12px;}

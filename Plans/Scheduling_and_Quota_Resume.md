@@ -43,7 +43,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-featur
 From highest to lowest:
 
 1. user Cancel or Stop;
-2. user manual Pause;
+2. user manual Pause, including the project-wide "Pause all automations" switch (SQR-018, DL-136), which is a user manual stop at project scope;
 3. owner safety, permission, or recovery block;
 4. inactive execution window;
 5. quota unavailable;
@@ -54,6 +54,8 @@ An automatic mechanism may never clear a higher-priority state. Concretely: a qu
 
 Manual Stop, Pause, and Cancel latch a monotonically increasing `user_stop_epoch`. Every eligibility evaluation captures the epoch it was computed against and compares it again at dispatch. A dispatch decided before a manual stop and delivered after it is discarded rather than executed. Only an explicit user resume, or a new schedule the user creates, clears the latch.
 
+"Pause all automations" (SQR-018, DL-136) latches the same way at project scope. Turning it on with `cmd.runtime.automation_pause.set` advances the project's `user_stop_epoch` the way Manual Stop advances a run's, every eligibility evaluation for a target in the project captures that epoch beside the target's own and compares both again at dispatch, and while it is on every scheduled send and scheduled build in the project is held. Only the user clears it, by turning it off. No automatic mechanism clears or bypasses it (a quota reset, a window opening, a schedule time, or a Goal, Plan or Crew automatic continuation), and a new schedule created while it is on does not clear it. Work the user starts directly, such as Send now on a held message, is not an automation and is not held by it (SQR-018).
+
 This precedence is normative for every consumer. Where any other document appears to permit automatic resume over a manual stop, this document wins.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Executor_Protocol.md
@@ -62,7 +64,7 @@ ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Execu
 
 Settings stores the defaults; this owner stores the operational records. The defaults are `assistant.scheduling.wind_down_minutes` (10), `assistant.scheduling.missed_dispatch_policy` (`hold`), `assistant.scheduling.default_grace_minutes` (30), `assistant.scheduling.resume_next_window` (true), `assistant.usage.auto_resume_default` (false), and `assistant.scheduling.dst_policy` (`preserve_local_wall_clock`).
 
-A default is read at creation time and copied into the record. Changing a default afterwards never retroactively alters an existing schedule or consent. These keys require Settings inventory census and registration through `Plans/Settings_System.md` and `Plans/settings_inventory.json`; naming them here fixes ownership and does not claim registration.
+A default is read at creation time and copied into the record. Changing a default afterwards never retroactively alters an existing schedule or consent. The scheduling sheets, the scheduled-message cards and the Schedule Manager show these values with the display labels fixed in SQR-017 ("Ask me first", "Keep going next time", "Wrap-up time" and the rest); a label never renames a key or a stored value, and how the Settings rows label these defaults belongs to the Settings owner, not to this document. These keys require Settings inventory census and registration through `Plans/Settings_System.md` and `Plans/settings_inventory.json`; naming them here fixes ownership and does not claim registration.
 
 ContractRef: ContractName:Plans/Settings_System.md
 
@@ -76,15 +78,16 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Scheduling_and_Quota_Resume.md
 canonical_text: >-
-  Automation precedence from highest to lowest is user Cancel or Stop, user manual Pause, owner safety/permission/recovery block, inactive execution window, quota unavailable, scheduled eligibility, and Goal/Plan/Crew automatic continuation. An automatic mechanism may never clear a higher-priority state. Manual Stop, Pause, and Cancel latch a monotonically increasing user_stop_epoch; every eligibility evaluation captures the epoch it was computed against and compares it again at dispatch, and a dispatch decided before a manual stop and delivered after it is discarded. Only an explicit user resume or a new user-created schedule clears the latch. This precedence is normative for every consumer and wins over any other document that appears to permit automatic resume over a manual stop.
+  Automation precedence from highest to lowest is user Cancel or Stop, user manual Pause, owner safety/permission/recovery block, inactive execution window, quota unavailable, scheduled eligibility, and Goal/Plan/Crew automatic continuation. An automatic mechanism may never clear a higher-priority state. Manual Stop, Pause, and Cancel latch a monotonically increasing user_stop_epoch; every eligibility evaluation captures the epoch it was computed against and compares it again at dispatch, and a dispatch decided before a manual stop and delivered after it is discarded. Only an explicit user resume or a new user-created schedule clears the latch. The project-wide Pause all automations switch (SQR-018, DL-136) is a user manual stop at project scope and ranks with user manual Pause: cmd.runtime.automation_pause.set with paused true advances the project's user_stop_epoch the way Manual Stop does, every evaluation compares the project's epoch as well as the target's, and only the same command with paused false, sent by the user, clears it; a new schedule created while it is on does not. A command refused because a per-run manual stop is latched on its target fails with manual_stop_latched, while a dispatch the project switch holds records the failed clause project_automation_paused instead (SQR-006, SQR-018). This precedence is normative for every consumer and wins over any other document that appears to permit automatic resume over a manual stop.
 gui_related: true
 gui_classification_reason: Resume controls must render disabled with the latched-stop reason rather than appearing available.
 depends_on: []
-unblocks: [SQR-005, SQR-006]
+unblocks: [SQR-005, SQR-006, SQR-018]
 acceptance_criteria:
   - A quota reset, window opening, cleared dependency, schedule firing, or provider retry does not resume manually stopped work.
   - A dispatch decided before a stop and delivered after it is discarded.
   - Only an explicit user action clears the latch.
+  - With Pause all automations on, no scheduled send or scheduled build in the project dispatches, and only the user turning it off clears it.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - node tests/scheduling-verify.mjs
@@ -105,9 +108,11 @@ source_lineage:
 preserved_exact_tokens:
   - "user_stop_epoch"
   - "manual_stop_latched"
+  - "cmd.runtime.automation_pause.set"
 negative_constraints:
   - Do not let any automatic mechanism clear a manual stop.
   - Do not evaluate eligibility once and dispatch without re-checking the stop epoch.
+  - Do not let a new schedule, a quota reset, a window opening or an automatic continuation clear the project-wide automation pause.
 owner_hints:
   - Plans/Scheduling_and_Quota_Resume.md
 ```
@@ -296,15 +301,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Scheduling_and_Quota_Resume.md
 canonical_text: >-
-  One eligibility predicate governs scheduled messages, scheduled builds, window resume, and quota resume. Every clause must hold: consent or schedule active, target run existing and unfinished, no latched manual pause or cancel with a matching user_stop_epoch, an open execution window or none applicable, healthy provider and account as recorded, a current target by exact Plan version and hash or exact message snapshot and thread currentness, no permission/safety/recovery block, required tools/MCP/skills available as recorded, and a resolvable project and worktree. Evaluation happens twice -- once to decide and once immediately before dispatch -- and any clause failing at the second check aborts the dispatch and records the exact failed clause. Resume applies to unfinished work only and never replays a completed side effect. An aborted dispatch is visible, never silent.
+  One eligibility predicate governs scheduled messages, scheduled builds, window resume, and quota resume. Every clause must hold: consent or schedule active, target run existing and unfinished, no latched manual pause or cancel with a matching user_stop_epoch, Pause all automations off for the target's project with the project's user_stop_epoch matching (SQR-018, DL-136), an open execution window or none applicable, healthy provider and account as recorded, a current target by exact Plan version and hash or exact message snapshot and thread currentness, no permission/safety/recovery block, required tools/MCP/skills available as recorded, and a resolvable project and worktree. Evaluation happens twice -- once to decide and once immediately before dispatch -- and any clause failing at the second check aborts the dispatch and records the exact failed clause. Resume applies to unfinished work only and never replays a completed side effect. An aborted dispatch is visible, never silent. While Pause all automations is on, the second check that would revalidate any scheduled message, scheduled build, window resume or quota resume in the project fails with the exact failed clause project_automation_paused, and no automatic mechanism satisfies that clause; only the user turning the switch off does. The clause does not apply to the one dispatch of a Send now: the accepted cmd.chat.schedule_message.update with reschedule_to now records the user as its actor, so that dispatch is user-started work, every other clause still holds, and the switch stays on (SQR-018).
 gui_related: true
 gui_classification_reason: The exact failed clause must be surfaced to the user so the blocked automation is actionable.
 depends_on: [SQR-001, SQR-005]
-unblocks: []
+unblocks: [SQR-016, SQR-018]
 acceptance_criteria:
   - Eligibility is evaluated twice and re-checked immediately before dispatch.
   - A resume never replays work committed before the pause.
   - An aborted dispatch names the exact failed clause and is visible.
+  - With Pause all automations on, every automatic dispatch in the project fails with project_automation_paused, and the one dispatch of a user's Send now does not.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - node tests/scheduling-verify.mjs
@@ -324,6 +330,7 @@ source_lineage:
 preserved_exact_tokens:
   - "revalidate"
   - "unfinished work only"
+  - "project_automation_paused"
 negative_constraints:
   - Do not dispatch on a stale eligibility decision.
   - Do not replay a completed side effect on resume.
@@ -379,7 +386,7 @@ owner_hints:
 
 ### Schedule Message
 
-`Schedule Message` lives in the **wand** menu — not in the mode menu, and not in the composer tools row.
+`Schedule Message` lives in the **wand** menu — not in the mode menu, and not in the composer tools row. The wand row only opens the Schedule Message sheet; the sheet's text starts as the composer's exact text and stays editable, and the sheet's primary action is the one commit (SQR-013).
 
 Scheduling freezes a `ScheduledMessageSnapshot`:
 
@@ -407,7 +414,7 @@ The snapshot freezes thread and destination, the exact text, the exact attachmen
 
 Before dispatch the service revalidates destination, attachment availability, project and worktree, permissions, and the selected route. A failure to revalidate is a held or failed dispatch that names the reason. The service must never silently send to a different destination, a different model, or a different account than the snapshot recorded. Where the recorded route is no longer available, the dispatch holds and surfaces the substitution the user would have to accept, rather than substituting on their behalf.
 
-Missed-time behavior is the user's choice at schedule time: `hold` keeps the dispatch pending until the user acts; `next_available` sends at the next opportunity; `cancel_after_grace` expires the dispatch after `grace_seconds`. The default missed policy is `hold` and the default grace is thirty minutes, both configurable through Settings.
+Missed-time behavior is the user's choice at schedule time: `hold` keeps the dispatch pending until the user acts; `next_available` sends at the next opportunity; `cancel_after_grace` expires the dispatch after `grace_seconds`. The default missed policy is `hold` and the default grace is thirty minutes, both configurable through Settings. A message sheet labels the three values "Ask me first", "Send as soon as I'm back" and "Skip it if it's more than N min late", where N is the recorded grace in minutes; the per-surface labels are fixed in SQR-017.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
 
@@ -417,11 +424,15 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Fil
 
 A scheduled Plan build binds the exact `plan_id`, `plan_version`, and content hash through `exact_target_version` and `exact_target_hash`. It does not bind "the current Plan".
 
-A revision **invalidates** the pending schedule. The schedule moves to `invalidated` with `invalidated_reason` naming the version change, and it requires an explicit update or reschedule. Building a newer Plan than the user scheduled is a defect, and silently rebinding to the newest version is the same defect with better manners.
+A Build At commit is one command. The window specification (one time or a recurring slot, days, start, stop, wind-down, next-window resume, missed policy, grace and timezone) rides inside the `AssistantPlanScheduleRequest` of `cmd.chat.plan.schedule_build`, and the owner creates the exact-version binding and its `ExecutionSchedule` in one transaction. The surface never dispatches `cmd.execution_window.create` beside it, so no half-created schedule can exist.
+
+A revision **invalidates** the pending schedule. The schedule moves to `invalidated` with `invalidated_reason` naming the version change, and it requires an explicit update or reschedule. The Plan card's "Schedule needs update" line offers that explicit step: "Use V<n>" (for example "Use V3") is `cmd.chat.plan.schedule_build` against the new version's exact hash, the user's click is the explicit reschedule, and the invalidated schedule stays as its audit record; Cancel schedule is `cmd.execution_window.cancel` by the `schedule_id` that `cmd.chat.plan.schedule_build` returned. Building a newer Plan than the user scheduled is a defect, and silently rebinding to the newest version is the same defect with better manners.
 
 Repeated schedules against one target are **execution windows for the same run**, not repeated duplicate builds. A nightly window that opens five times does not produce five builds of the same Plan version; it produces one run that is admitted, paused at wind-down, and resumed in the next window. Idempotency is keyed on `(schedule_id, target_id, exact_target_hash, occurrence_start)` so that a restart, a duplicate timer fire, or a clock adjustment cannot double-dispatch.
 
 `Build With Crew` and an ordinary build schedule identically; the crew configuration is part of the target, not part of the schedule.
+
+The Plan card's schedule line, the Build At sheet's contract and the overnight receipt are specified in SQR-015 and SQR-016.
 
 ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Collaborative_Workflows.md
 
@@ -505,6 +516,7 @@ One predicate governs every automatic dispatch — scheduled message, scheduled 
 - consent or schedule is `enabled`/`active`;
 - the target run still exists and is unfinished;
 - no manual pause or cancel is latched, and `user_stop_epoch` matches the epoch the decision was computed against;
+- "Pause all automations" is off for the target's project, and the project's `user_stop_epoch` matches the epoch the decision was computed against (SQR-018, DL-136); when this clause fails the recorded failed clause is `project_automation_paused`. The clause does not apply to the one dispatch of a Send now, the accepted `cmd.chat.schedule_message.update` with `reschedule_to: "now"` that records the user as its actor; that dispatch is user-started, every other clause still holds, and the switch stays on;
 - the execution window is currently open, or none applies;
 - provider and account are healthy and selected as recorded;
 - the target is current — exact Plan version and hash, or exact message snapshot and thread currentness;
@@ -522,16 +534,17 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.
 
 | Command ID | Meaning | Required result boundary |
 |---|---|---|
-| `cmd.chat.schedule_message` | Freeze and schedule the composer's exact text and attachments from the wand | Returns `scheduled_dispatch_id` and the frozen snapshot ref. Creates no Goal, Plan, or To-Do. |
-| `cmd.chat.schedule_message.update` | Update a pending scheduled message | Rebinds the exact snapshot under the expected revision; refused once dispatch has started. |
+| `cmd.chat.schedule_message` | Freeze and schedule the exact text and attachments of the Schedule Message sheet, which the wand opens prefilled from the composer | Precondition `schedule_text_not_empty`: the sheet's own text must not be empty, whatever the composer holds. Returns `scheduled_dispatch_id` and the frozen snapshot ref. The composer buffer clears only after the durable commit, and only when the scheduled text came from it. Creates no Goal, Plan, or To-Do. |
+| `cmd.chat.schedule_message.update` | Update a `scheduled` or `held` message: Edit, Edit and send, Reschedule, and Send now | Rebinds the exact snapshot under the expected revision; refused once dispatch has started. Send now on a `held` message, including one held because it was missed, is this update with `reschedule_to: "now"`, never a new command. |
 | `cmd.chat.schedule_message.cancel` | Cancel a pending scheduled message | Terminal; the snapshot is retained for audit and never dispatched. |
-| `cmd.chat.plan.schedule_build` | Bind an execution schedule to an exact Plan version and hash | Returns `schedule_id` with `exact_target_version` and `exact_target_hash` set; a later Plan revision invalidates it. |
-| `cmd.execution_window.create` | Create a one-time or recurring execution window | Returns `schedule_id`; creating a window admits no work by itself. |
+| `cmd.chat.plan.schedule_build` | Bind an execution schedule to an exact Plan version and hash; the window specification rides inside `AssistantPlanScheduleRequest` | Creates the binding and its `ExecutionSchedule` in one transaction and returns `schedule_id` with `exact_target_version` and `exact_target_hash` set; a later Plan revision invalidates it. Use V<n> on an invalidated schedule is this command against the new version's exact hash, an explicit reschedule. |
+| `cmd.execution_window.create` | Create a one-time or recurring execution window | Returns `schedule_id`; creating a window admits no work by itself. Never dispatched beside `cmd.chat.plan.schedule_build` for one Build At commit. |
 | `cmd.execution_window.update` | Update an execution window | Never silently changes an in-flight run's admission; a narrowed window takes effect at the next wind-down boundary. |
-| `cmd.execution_window.cancel` | Cancel an execution window | Work already admitted continues under its own owner; cancelling a window is not a Stop. |
+| `cmd.execution_window.cancel` | Cancel an execution window, including Cancel schedule on a Plan card or in the Schedule Manager | Targets the `schedule_id` that `cmd.chat.plan.schedule_build` returned; there is no `schedule_build.cancel`. Work already admitted continues under its own owner; cancelling a window is not a Stop. |
 | `cmd.runtime.quota_resume.set` | Record opt-in consent to resume when quota resets | Requires a known `reset_truth` value; consent is scoped to run, provider, and account and is defeated by a latched manual stop. |
+| `cmd.runtime.automation_pause.set` | Turn the project-wide "Pause all automations" switch on or off (SQR-018, DL-136); project-scoped, payload `paused` true or false, from the Schedule Manager's Resume & Safety Policy tab | Target identity is the `project_id`. `paused: true` latches a manual stop at project scope by advancing the project's `user_stop_epoch` the way Manual Stop does; `paused: false` is the only way to clear it, and only a user actor may send it (any other actor is refused with `permission_denied`). Returns the project's pause record: `paused`, the project's `user_stop_epoch`, who changed it, when, and its revision. Setting the value it already has returns the record unchanged and does not advance the epoch again. It cancels nothing, invalidates no schedule, disables no quota consent, releases no per-run latch and dispatches nothing by itself. It is never a Settings value. |
 
-Every request carries `schema_id`, `schema_version`, command ID, command instance ID, `project_id`, target identity, expected revision, expected target hash where applicable, actor, permission snapshot, idempotency key, source surface, and return route. Typed errors are `invalid_request`, `schedule_not_found`, `stale_schedule_revision`, `target_not_found`, `target_version_changed`, `dispatch_already_started`, `manual_stop_latched`, `window_inactive`, `quota_unavailable`, `reset_truth_unknown`, `route_unavailable`, `command_not_registered`, `permission_denied`, `owner_unavailable`, or `cancelled`.
+Every request carries `schema_id`, `schema_version`, command ID, command instance ID, `project_id`, target identity, expected revision, expected target hash where applicable, actor, permission snapshot, idempotency key, source surface, and return route. The source surfaces are `schedule_sheet` (the Schedule Message sheet), `plan_schedule` (the Build At sheet), `scheduled_message_card`, `schedule_manager` and `plan_card`. The wand row and the Plan card's `Build At…` button only open their sheets and are not source surfaces of these commands. Typed errors are `invalid_request`, `schedule_not_found`, `stale_schedule_revision`, `target_not_found`, `target_version_changed`, `dispatch_already_started`, `manual_stop_latched`, `window_inactive`, `quota_unavailable`, `reset_truth_unknown`, `route_unavailable`, `command_not_registered`, `permission_denied`, `owner_unavailable`, or `cancelled`.
 
 Until the central command catalog, Event Authority, and production wiring rows close for a given ID, its controls render disabled with `command_not_registered`. No page-local handler, alias, fixture, timer, or toast may simulate success.
 
@@ -539,7 +552,9 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Comman
 
 ### Events
 
-The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, and `runtime.quota_resume_attempted`. All twelve require central EventRecord registration and payload schemas before emission.
+The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.
+
+`runtime.automation_pause_changed` is emitted once for each change of the project-wide "Pause all automations" switch made by `cmd.runtime.automation_pause.set` (SQR-018, DL-136), never for a request that sets the value the switch already has, and carries `project_id`, `paused`, the project's `user_stop_epoch`, the actor and the time. A scheduled message whose send time arrives while the switch is on emits `scheduled_dispatch.held` with the failed clause `project_automation_paused`, and a refused quota resume emits `runtime.quota_resume_attempted` with that clause; the switch adds no other event.
 
 `scheduled_dispatch.dispatched` carries the idempotency key and the revalidation result so a duplicate is provably a duplicate. `runtime.quota_resume_attempted` carries the eligibility outcome including the exact failed clause when the attempt was refused, because a refused resume is the case an operator most needs to see. `execution_window.invalidated` carries `invalidated_reason`.
 
@@ -569,7 +584,7 @@ Structural tests validate all three schemas and fixtures, the enum values, the I
 
 Behavioral tests must prove that a scheduled message sends the exact frozen text, attachments, destination, and route, and holds rather than substituting when the route is unavailable; that a Plan revision invalidates a pending build schedule instead of building the newer version; that a recurring nightly window produces one run resumed across occurrences rather than duplicate builds; that wind-down reaches a safe point and persists To-Do work bindings before pausing; that a spring-forward gap and a fall-back repetition each resolve to exactly one dispatch; that a restart recomputes occurrences and applies the missed policy without firing a backlog burst; and that a duplicate timer fire returns the original result.
 
-Negative tests must prove that a manual Stop, Pause, or Cancel defeats quota resume, window resume, scheduled dispatch, and Crew Auto; that a dispatch decided before a stop and delivered after it is discarded; that an unknown reset time is never rendered as a confident countdown; that auto-resume is off by default and scoped to run, provider, and account; that a resume never replays a completed side effect; and that an aborted dispatch names the exact eligibility clause that failed.
+Negative tests must prove that a manual Stop, Pause, or Cancel defeats quota resume, window resume, scheduled dispatch, and Crew Auto; that a dispatch decided before a stop and delivered after it is discarded; that an unknown reset time is never rendered as a confident countdown; that auto-resume is off by default and scoped to run, provider, and account; that a resume never replays a completed side effect; and that an aborted dispatch names the exact eligibility clause that failed. They must also prove, for the project-wide "Pause all automations" switch (SQR-018), that while it is on no scheduled send or scheduled build in the project dispatches, except the one message of a Send now the user sends, which leaves the switch on; that a quota reset, a window opening, a schedule time, an automatic continuation or a newly created schedule does not clear it; that a dispatch decided before it was turned on and delivered after is discarded; and that turning it off releases no per-run latch and fires no backlog burst (ATS-064).
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Progression_Gates.md
 
@@ -684,7 +699,11 @@ Wall-clock time is never the sole deduplication key.
 
 The projection reuses the existing `cmd.chat.schedule_message`,
 `cmd.chat.schedule_message.update` and `cmd.chat.schedule_message.cancel`; every card
-action maps onto one of those three. Dispatch is
+action maps onto one of those three or onto navigation. Edit, Edit and send and Reschedule are
+`cmd.chat.schedule_message.update`; Send now on a `held` message is the same update with
+`reschedule_to: "now"`; Cancel is `cmd.chat.schedule_message.cancel` with the expected revision and
+currentness; Go to message is `cmd.chat.open_thread` with `route_target: message`; Details only
+discloses. The full mapping is SQR-013. Dispatch is
 `internal.scheduler.dispatch_scheduled_message`, an internal scheduler action with its
 own idempotency domain — not a second user command, and not a state-set command. No
 `schedule_message.state.set` exists.
@@ -704,12 +723,17 @@ pm.schedule.message_projection.v1
 ```
 
 Visible states are `Scheduled`, `Held`, `Sent`, `Canceled`, `Failed`, and `Expired`, mapped from
-owner state with no local inference. Each state carries truthful actions and reasons. Building
-and Goal statuses are never used for messages.
+owner state with no local inference. A message missed while Puppet Master was closed under the
+`hold` policy is `Held` with a missed reason, never a seventh state. Each state carries truthful
+actions and reasons, and every form begins its visible sentence with its state word. `Scheduled`
+renders as a future bubble at its transcript position, `Held` as a decision bubble, and `Sent`,
+`Canceled`, `Failed` and `Expired` as one-line receipts; the state is shown as a glyph and the
+word, never as a badge (SQR-012). Building and Goal statuses are never used for messages.
 
-The card shows the exact time, the IANA timezone, the destination, a short text preview, the
-attachment count, the requested model or route, and the availability of Edit and Cancel.
-Technical hashes stay in Details, and secret attachment paths are never exposed.
+The pending forms show the exact time, the IANA timezone, the destination, a short text preview,
+the attachment count, the requested model or route, and the availability of Edit and Cancel.
+Receipts keep the time and zone in their details. Technical hashes stay in Details, and secret
+attachment paths are never exposed.
 
 ### SMSG-004..006 — Composer safety, edit races, and dispatch
 
@@ -774,11 +798,14 @@ distinguish message schedules from run schedules and thread-wide clearing is pro
 
 The scheduled-message projection rebuilds after restart from owner records and exposes `Held` and
 `Failed` currentness without client timers. Closing the client neither cancels nor duplicates a
-schedule, and browser local storage is never authoritative.
+schedule, and browser local storage is never authoritative. Every countdown and clock ring on a
+card, in the dock or in the Schedule Manager derives from the owner's `scheduled_at` and
+server-owned time; a client tick may repaint it, never decide it.
 
 `Schedule Message` stays in the Assistant wand menu, which opens the exact scheduling modal. The
 thread card is the later lifecycle projection, not a second creation entry point, and scheduling
-is not moved into extra non-wand chrome.
+is not moved into extra non-wand chrome. The dock lines of SQR-012 are attention items whose Show
+only reveals the card; they are not a scheduling entry point.
 
 ## Continuation Revalidation Addendum (2026-09-05)
 
@@ -831,19 +858,23 @@ APR-028, and APR-043.
   3. *Resume & Safety Policy:* Quota pause auto-resume settings, circuit breakers, grace periods,
      and DST handling.
   4. *Events & Automation:* System event listeners, webhook dispatches, and periodic cron routines.
-- **Filtering and Scope:** Each category provides independent status filtering (Active, Paused,
-  Completed, Failed, Expired), execution time sorting, and search filtering without cross-category
-  state confusion.
+- **Filtering and Scope:** Scheduled Messages, Execution & Build Windows, and Events & Automation
+  each provide independent status filtering, execution time sorting, and search filtering without
+  cross-category state confusion. The status filter keeps the stored values Active, Paused,
+  Completed, Failed and Expired, adds the values Held and Canceled, and offers All for no filter;
+  its display labels are Waiting, Paused, Needs you, Done or sent, Didn't send, Skipped, and
+  Canceled, one per stored value, mapped in SQR-014. Resume & Safety Policy is a policy tab, not a list, and has nothing to filter.
 
 ### 12. Scheduled-Message Card Grammar and State Separation (APR-028)
 
 - **Card Lifecycle States:** Scheduled messages project clear visual separation between active and
   historical states:
-  1. *Active/Pending Cards:* High-visibility cards with primary status badge `Scheduled` or `Held`,
-     disclosing destination target, exact dispatch time, IANA timezone, attachment count, requested
-     route/model, and active Edit / Cancel actions.
-  2. *Quiet Historical Receipts:* Sent, Canceled, Expired, and Failed records render as subtle,
-     compact receipts. A `Sent` receipt links directly to the dispatched message in thread history.
+  1. *Active/Pending Cards:* `Scheduled` is a future bubble and `Held` a decision bubble, each led
+     by a glyph and its state word (no status badge), disclosing destination target, exact dispatch
+     time, IANA timezone, attachment count, requested route/model, and active Edit / Cancel actions.
+  2. *Quiet Historical Receipts:* Sent, Canceled, Expired, and Failed records render as one-line
+     receipts that begin with the state word. A `Sent` receipt links directly to the dispatched
+     message in thread history and does not repeat the message text.
 - **Privacy and Secrets Protection:** Sensitive attachment file system paths, authentication tokens,
   and cryptographic payload hashes are relegated strictly to the More Details disclosure panel and
   never rendered in the primary card summary.
@@ -1023,3 +1054,617 @@ negative_constraints:
   deployed migration.
 - No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
 ```
+
+## Wand Modules Redesign Addendum (2026-09-27)
+
+This addendum compiles the scheduling lines of the wand-modules redesign (ledger
+`pldg-20260927-003-wand-scheduling`) from the design spec frozen at
+`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md`
+(SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`), sections 8.7 to 8.9 and 8.15,
+and register lines B-SQR-01 to B-SQR-07 of
+`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md`
+(SHA-256 `71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493`). It carries the contract, not the
+concept: no concept class, key, harness hook or browser-storage rule becomes canon. The transcript families and
+the accent budget are ACD-469's and the shared dock is `Plans/assistant-chat-design.md`'s; this owner supplies
+content to them and redefines neither. The scheduling defaults stay Settings-owned (section 1). The project-wide
+"Pause all automations" switch (B-SQR-05) is compiled in SQR-018 from the owner's answer on decision card p12,
+recorded as DL-136.
+
+### SQR-012 - Scheduled-Message Card Grammar And Scheduling Dock Lines
+
+A scheduled message has one card in its source thread, and its form follows the owner state. `Scheduled` is a
+future bubble at its transcript position: right-aligned like the message it will become, outlined as not yet
+sent, holding the exact text, with a dateline that begins with the word Scheduled and gives the send time in the
+schedule's own timezone and the time remaining, a clock ring that fills over the real remaining time, and one
+fine line naming the destination, the attachment count, the requested model or route and the zone with its IANA
+name. `Held` is a decision bubble: a warm whole-surface tint whose sentence begins with Held and names the exact
+reason, including "missed at <time>" for a message missed under the `hold` policy. `Sent`, `Canceled`, `Failed`
+and `Expired` are one-line receipts that begin with their state word; a `Sent` receipt gives the send time and
+when it was scheduled, links to the dispatched message and does not repeat the text, and the dispatched user
+message carries a "Sent on schedule" mark linked to its schedule. The state always reads as a glyph and the word,
+never as a status badge. Under ACD-469's family map the `Scheduled` and `Held` forms present in the Time family
+and the four receipts as Ledger lines. Within the Time family the card's internals are owned here: the time
+shown is the schedule's own local time, and the card carries no separate ticket or stub, so ACD-469's "ticket
+with a time block" does not describe the scheduled-message card's internals.
+
+Scheduling contributes attention items to the shared dock above the composer and nothing else. While any
+message in the thread is `Held`, one needs-you line reads "1 scheduled message needs you" (or the count) with
+Show. While any message in the thread is `Scheduled`, one line of the lowest priority reads "Coming up", the
+next send time, a short preview and "+N more", with Show. Both are derived from the scheduled-message
+projection, carry the schedule identity, and Show only reveals the card. Scheduling adds no second strip, no
+second quota strip and no checkbox; the quota wait strip in section 3 stays the one quota surface.
+
+```yaml
+plan_unit_id: SQR-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  A scheduled message has one card in its source thread whose form follows owner state. Scheduled is a future
+  bubble at its transcript position with a dateline that begins with Scheduled, gives the send time in the
+  schedule's own timezone and the time remaining, a clock ring over the real remaining time, and a fine line
+  naming destination, attachment count, requested model or route, and zone with IANA name. Held is a decision
+  bubble whose sentence begins with Held and names the exact reason, including a missed time under the hold
+  policy. Sent, Canceled, Failed and Expired are one-line receipts that begin with their state word; a Sent
+  receipt links to the dispatched message without repeating the text. States read as a glyph and the word,
+  never a badge. Under ACD-469's family map Scheduled and Held present in the Time family and the receipts as
+  Ledger lines; the card's internals are owned here and carry no ticket or stub. Scheduling contributes to the
+  shared dock only one needs-you line while a message in the thread is Held and one lowest-priority Coming up
+  line with the next send time, a preview and +N more; Show only reveals the card, and no second strip, quota
+  strip or checkbox is added.
+gui_related: true
+gui_classification_reason: Defines the in-chat forms of a scheduled message and the dock lines scheduling supplies.
+depends_on: [SQR-002, SQR-007, SQR-009, ACD-469]
+unblocks: [SQR-013, SQR-018]
+acceptance_criteria:
+  - "Each of the six owner states renders in its form, and every form's visible sentence begins with its state word."
+  - "A message missed under the hold policy renders as Held with its missed reason, never as a seventh state."
+  - "No form renders the state as a badge, and a Sent receipt does not repeat the message text."
+  - "The dock carries at most one needs-you line and one Coming up line from scheduling, and Show dispatches no command."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: scheduled_message_state_misread
+reasoning_tier: standard
+context_scope: scheduled_message_card
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.7 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-01, B-SQR-02 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+preserved_exact_tokens:
+  - "Scheduled"
+  - "Held"
+  - "Sent"
+  - "Canceled"
+  - "Failed"
+  - "Expired"
+  - "future bubble"
+  - "decision bubble"
+  - "Coming up"
+negative_constraints:
+  - Do not render a scheduled-message state as a badge or without its state word.
+  - Do not add a seventh visible state for a missed message.
+  - Do not add a second scheduling strip, quota strip or checkbox above the composer.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+### SQR-013 - Card And Sheet Actions Map Onto The Existing Commands
+
+Every scheduling control is an existing command, navigation or a disclosure. The Schedule Message sheet's primary
+is `cmd.chat.schedule_message` with precondition `schedule_text_not_empty`: the sheet has its own editable text,
+prefilled from the composer, so an empty composer does not block it; the composer buffer clears only after the
+durable commit and only when the scheduled text came from it. On the card and in the Schedule Manager, Edit,
+Edit and send and Reschedule are `cmd.chat.schedule_message.update`; Edit refuses with its typed reason, printed
+as a sentence, once dispatch has started. Send now on a `Held` message, including a missed one, is the same
+update with `reschedule_to: "now"`. Cancel is `cmd.chat.schedule_message.cancel` with the expected revision and
+currentness. Go to message and Open message are `cmd.chat.open_thread` with `route_target: message`. Details and
+Technical details only disclose.
+
+The Build At sheet's primary is one `cmd.chat.plan.schedule_build` whose `AssistantPlanScheduleRequest` carries
+the window specification; the owner creates the binding and its `ExecutionSchedule` atomically, and the surface
+never pairs it with `cmd.execution_window.create`. A Crew chosen in the sheet is frozen into that request's
+topology (PSCHED-001..003). Use V<n> on an invalidated schedule is `cmd.chat.plan.schedule_build` against the new
+version's exact hash, an explicit reschedule that leaves the invalidated schedule as its audit record. Cancel
+schedule is `cmd.execution_window.cancel` by the returned `schedule_id`, and editing a build schedule is
+`cmd.execution_window.update`. The source surfaces are `schedule_sheet`, `plan_schedule`,
+`scheduled_message_card`, `schedule_manager` and `plan_card`, registered in the command catalog; the wand row and
+the Plan card's `Build At…` only open their sheets.
+
+```yaml
+plan_unit_id: SQR-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  Every scheduling control is an existing command, navigation or a disclosure. Schedule Message commits through
+  cmd.chat.schedule_message with precondition schedule_text_not_empty, and the composer clears only after the
+  durable commit and only when the text came from it. Edit, Edit and send and Reschedule are
+  cmd.chat.schedule_message.update, refused with a printed typed reason once dispatch started; Send now on a Held
+  message is that update with reschedule_to now; Cancel is cmd.chat.schedule_message.cancel with expected
+  revision and currentness; Go to message is cmd.chat.open_thread with route_target message. Build At commits one
+  cmd.chat.plan.schedule_build whose AssistantPlanScheduleRequest carries the window specification, created
+  atomically and never paired with cmd.execution_window.create; Use V<n> is schedule_build against the new
+  version's exact hash as an explicit reschedule; Cancel schedule is cmd.execution_window.cancel by the returned
+  schedule_id; editing a build is cmd.execution_window.update. Source surfaces are schedule_sheet, plan_schedule,
+  scheduled_message_card, schedule_manager and plan_card.
+gui_related: true
+gui_classification_reason: Binds every scheduling button on the sheet, card, manager and Plan card to its command.
+depends_on: [SQR-002, SQR-003, SQR-010, SQR-012]
+unblocks: []
+acceptance_criteria:
+  - "Scheduling a message with an empty composer and non-empty sheet text succeeds; an empty sheet text is refused."
+  - "Send now dispatches cmd.chat.schedule_message.update with reschedule_to now, and no new command id exists for it."
+  - "One Build At commit dispatches exactly one command and leaves either a complete schedule or none."
+  - "Use V<n> never rebinds silently: it is a user-dispatched schedule_build against the new exact hash, and the old schedule stays invalidated."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: scheduling_action_command_drift
+reasoning_tier: high
+context_scope: scheduling_command_mapping
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+node_compile_hint:
+  mode: owner_command_mapping
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.15 and #8.7 G-21 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-03 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+preserved_exact_tokens:
+  - "schedule_text_not_empty"
+  - "reschedule_to"
+  - "AssistantPlanScheduleRequest"
+  - "cmd.chat.schedule_message.update"
+  - "cmd.execution_window.cancel"
+  - "scheduled_message_card"
+  - "schedule_manager"
+negative_constraints:
+  - Do not mint a new command for Send now, Reschedule or Use V<n>.
+  - Do not dispatch cmd.execution_window.create beside cmd.chat.plan.schedule_build for one Build At commit.
+  - Do not clear the composer before the durable schedule commit.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md
+
+### SQR-014 - Schedule Manager Status Labels, Agenda Groups And Focused Record
+
+The Schedule Manager keeps its four canonical tabs (SQR-009). Scheduled Messages reads as an agenda grouped
+Needs you, Tonight, Tomorrow, Later and Past, by the owner's scheduled time in the viewer's timezone (the group for
+the rest of the current day reads Today before evening); `Held` records sit in Needs you and terminal records in
+Past as single lines. A row gives the time, the first line of the text, the destination, the state word with its
+sentence, and its actions, and each schedule identity has exactly one row. A 48-hour overview above the tabs
+draws scheduled messages and build slots from the same projection. Scheduled Messages, Execution & Build Windows
+and Events & Automation each have a search field, a status filter and a sort; Resume & Safety Policy is a policy
+tab, not a list, and has nothing to filter.
+
+The status filter keeps the stored values Active, Paused, Completed, Failed and Expired that APR-027 named, adds
+two values, Held and Canceled, and keeps All for no filter. Each label names one stored value and maps onto owner
+states: All (every record), Waiting (Active: `scheduled` messages and `active` windows), Paused (Paused: `paused`
+windows), Needs you (Held: `held` messages and `invalidated` build schedules), Done or sent (Completed:
+`dispatched` messages and `completed` windows), Didn't send (Failed: `failed`), Skipped (Expired: `expired`), and
+Canceled (Canceled: `cancelled`). A label never renames a stored value. Selecting a record opens its focused view in the same
+sheet: the record's full sentence, its time track and its actions, with a way back to the full list.
+
+```yaml
+plan_unit_id: SQR-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  The Schedule Manager keeps its four canonical tabs. Scheduled Messages is an agenda grouped Needs you, Tonight,
+  Tomorrow, Later and Past by owner scheduled time in the viewer's timezone, with Held in Needs you, terminal
+  records in Past, and exactly one row per schedule identity. Scheduled Messages, Execution & Build Windows and
+  Events & Automation each have search, status filter and sort; Resume & Safety Policy is a policy tab, not a
+  list. The status filter keeps the stored values Active, Paused, Completed, Failed and Expired, adds Held and
+  Canceled, and keeps All for no filter; its labels Waiting, Paused, Needs you (held messages and invalidated
+  build schedules), Done or sent, Didn't send, Skipped and Canceled each name one stored value and map onto owner
+  states. Selecting a record opens a focused view in the same sheet with its full sentence, time track and actions.
+gui_related: true
+gui_classification_reason: Defines the Schedule Manager's grouping, filter labels and focused view.
+depends_on: [SQR-009]
+unblocks: [SQR-018]
+acceptance_criteria:
+  - "Every filter label names one stored value and maps to owner states as listed; Active, Paused, Completed, Failed and Expired keep their stored values, and Held and Canceled are the only values added."
+  - "Each schedule identity appears in exactly one row under any filter and query."
+  - "Resume & Safety Policy shows no search, status filter or sort."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: schedule_manager_label_state_drift
+reasoning_tier: standard
+context_scope: schedule_manager_ui
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.9 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-04 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+preserved_exact_tokens:
+  - "Waiting"
+  - "Needs you"
+  - "Done or sent"
+  - "Didn't send"
+  - "Skipped"
+  - "Tonight"
+  - "Tomorrow"
+  - "Later"
+  - "Past"
+negative_constraints:
+  - Do not change the stored status filter values to match the labels.
+  - Do not render Resume & Safety Policy as a filterable list.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md
+
+### SQR-015 - Build At Sheet And The Plan Card Schedule Line
+
+The Build At sheet binds the exact Plan version it names and commits through SQR-013. It offers One time or
+Nightly time slot (`schedule_kind` `one_time` or `recurring_window`), the days as words, the start and stop
+times, Keep going next time, Wrap-up time, the timezone, who builds it (`execution_topology`: "The assistant
+builds it", "As a Goal", whose Goal is created only when the build starts, or "A Crew"), and what to do if the
+slot is missed. A value the sheet shows is the value it records: when the missed policy is `cancel_after_grace`
+the minutes shown are recorded as the schedule's `grace_seconds`. The read-back sentence and any DST line are
+computed from the real start, stop and wind-down; Plan id, version and hash sit in Technical details.
+
+The Plan card's schedule line is secondary information beside the Build control; its placement belongs to
+`Plans/Assistant_Plan_Runtime.md` and its content to this owner. Before a run it gives the cadence, the slot and
+the next occurrence with a thin night ribbon (the slot, a now tick and the step progress); during an open slot
+it reads "Building now" with the wrap-up time. Every other state leads with its canon token: `Outside execution
+window` with when it continues, `Paused` for a build the user paused, `Waiting for Usage` with the reset time and
+its reset truth (no countdown when the reset is unknown), and `Schedule needs update` for an invalidated schedule,
+with Use V<n> and Cancel schedule. The line never replaces the Build control's `Building…`, and `Scheduled` is
+never a primary Plan status (PSCHED-011).
+
+```yaml
+plan_unit_id: SQR-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  The Build At sheet binds the exact Plan version it names and commits through SQR-013, offering schedule_kind,
+  days, start and stop, Keep going next time, Wrap-up time, timezone, execution_topology and the missed policy.
+  A value the sheet shows is the value it records; under cancel_after_grace the shown minutes are recorded as
+  grace_seconds. The read-back and DST line are computed from the real start, stop and wind-down; Plan id,
+  version and hash sit in Technical details. The Plan card schedule line is secondary information whose placement
+  is Assistant Plan Runtime's and whose content is this owner's: cadence, slot, next occurrence and a night
+  ribbon before a run, Building now with the wrap-up time during a slot, and otherwise a lead canon token of
+  Outside execution window, Paused, Waiting for Usage (with reset truth, no countdown when unknown) or Schedule
+  needs update with Use V<n> and Cancel schedule. It never replaces the Build control's Building… and Scheduled
+  is never a primary Plan status.
+gui_related: true
+gui_classification_reason: Defines the Build At sheet's recorded values and the Plan card schedule line's states.
+depends_on: [SQR-003, SQR-004, SQR-005, SQR-013]
+unblocks: [SQR-016, SQR-018]
+acceptance_criteria:
+  - "Every value shown on the Build At sheet, including the grace minutes, equals the value recorded on the schedule."
+  - "Each secondary state of the schedule line begins with Outside execution window, Paused, Waiting for Usage or Schedule needs update."
+  - "The Build control keeps Building… while the schedule line shows any secondary state."
+  - "An unknown reset renders no countdown on the schedule line."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: scheduled_build_display_value_drift
+reasoning_tier: standard
+context_scope: build_at_surfaces
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.8 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-06 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+preserved_exact_tokens:
+  - "Outside execution window"
+  - "Waiting for Usage"
+  - "Paused"
+  - "Schedule needs update"
+  - "Building…"
+  - "grace_seconds"
+negative_constraints:
+  - Do not show a Build At value that the schedule does not record.
+  - Do not let the schedule line replace the Build control label or show Scheduled as a Plan status.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/FinalGUISpec.md
+
+### SQR-016 - Occurrence Summary, Overnight Receipt, Night Journal And Away Digest
+
+Each window occurrence of a scheduled build has one occurrence summary, written by this owner once when the
+occurrence closes (paused at wind-down, completed, cancelled or held) and keyed by `schedule_id` and occurrence
+start, so a replay or restart returns the same summary. It is a projection: rebuilt from this owner's schedule
+and dispatch records and from the run's step progress and pause facts as its owner reports them. It records the
+occurrence's real bounds, the steps built of the total, how the occurrence ended, and the outcomes of scheduled
+messages in the same thread during it.
+
+Three surfaces read it and none writes it. The overnight receipt is one Ledger-family receipt in the Plan's
+thread per occurrence ("Overnight: built 2 of 5 steps (10:00 PM–1:52 AM, paused safely) · sent 1 scheduled
+message · 1 message needs you · Open"), whose Open focuses the record in the Schedule Manager; it is not a Plan
+status, never changes the Build control, and is not itself a needs-you item. The night journal lists the
+summaries in the build's Schedule Manager row ("Night 1: built 2 of 5 steps · paused safely at 1:52 AM"). The
+"since you were last here" digest is a query over the same records for outcomes after an instant the consuming
+surface supplies; this owner stores no per-user last-seen marker. No new command or event name is introduced.
+
+```yaml
+plan_unit_id: SQR-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  Each window occurrence of a scheduled build has one occurrence summary, written by this owner once when the
+  occurrence closes and keyed by schedule_id and occurrence start so replay returns the same summary. It is a
+  projection rebuilt from schedule and dispatch records and the run owner's reported step progress and pause
+  facts, recording real bounds, steps built of total, how the occurrence ended, and same-thread scheduled message
+  outcomes. The overnight receipt is one Ledger-family receipt per occurrence in the Plan's thread whose Open
+  focuses the Schedule Manager record; it is not a Plan status, never changes the Build control, and is not a
+  needs-you item. The night journal lists the summaries in the build's manager row. The since you were last here
+  digest queries the same records after an instant the consuming surface supplies; this owner stores no per-user
+  marker. No new command or event name is introduced.
+gui_related: true
+gui_classification_reason: Defines the overnight receipt, the night journal and the away digest as projections of one summary.
+depends_on: [SQR-004, SQR-006, SQR-007, SQR-015]
+unblocks: []
+acceptance_criteria:
+  - "One occurrence produces exactly one summary and at most one overnight receipt, across replay and restart."
+  - "The overnight receipt, the night journal and the away digest agree because they read the same summary."
+  - "No overnight receipt changes a Plan status or the Build control label."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: duplicate_or_divergent_occurrence_reporting
+reasoning_tier: standard
+context_scope: scheduled_build_projections
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_projection_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.8 and #8.9 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-06 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+preserved_exact_tokens:
+  - "occurrence summary"
+  - "overnight receipt"
+  - "night journal"
+  - "since you were last here"
+negative_constraints:
+  - Do not write more than one overnight receipt for one occurrence.
+  - Do not present an occurrence outcome as a Plan status.
+  - Do not store a per-user last-seen marker in this owner.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/assistant-chat-design.md
+
+### SQR-017 - Display Labels For Missed Policy, Next-Window Resume And Wind-Down
+
+The surfaces label the stored values as follows, and a label never renames a value, a field or a Settings key.
+The missed policy's menu is titled "If it's missed" on the Schedule Message sheet and "If the slot is missed" on
+the Build At sheet. For a message, `hold` reads "Ask me first", `next_available` "Send as soon as I'm back" and
+`cancel_after_grace` "Skip it if it's more than N min late". For a build, `hold` reads "Ask me first",
+`next_available` "Build at the next chance" and `cancel_after_grace` "Skip it if it's more than N min late". N is
+the recorded grace in minutes. `auto_resume_next_window`, defaulted from `resume_next_window`, reads "Keep going
+next time" ("Unfinished work continues in the next slot."). `wind_down_seconds`, defaulted from
+`wind_down_minutes`, reads "Wrap-up time" ("Stop starting new tasks this many minutes before the end, so nothing
+is cut off mid-way."). Timezone choices list the device zone first, as the default, then the others, each with
+its IANA name; UTC is offered as "UTC" and is never the default.
+
+```yaml
+plan_unit_id: SQR-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  Display labels never rename a stored value, field or Settings key. The missed-policy menu is titled If it's
+  missed for a message and If the slot is missed for a build. For a message hold reads Ask me first,
+  next_available Send as soon as I'm back, and cancel_after_grace Skip it if it's more than N min late; for a
+  build hold reads Ask me first, next_available Build at the next chance, and cancel_after_grace Skip it if it's
+  more than N min late, where N is the recorded grace in minutes. auto_resume_next_window, defaulted from
+  resume_next_window, reads Keep going next time; wind_down_seconds, defaulted from wind_down_minutes, reads
+  Wrap-up time. Timezone choices list the device zone first as the default, each with its IANA name, and UTC is
+  never the default.
+gui_related: true
+gui_classification_reason: Fixes the words the scheduling sheets show for stored scheduling values.
+depends_on: [SQR-002, SQR-004]
+unblocks: []
+acceptance_criteria:
+  - "Each missed-policy value shows its per-surface label, and the stored value is unchanged."
+  - "The grace minutes in a Skip label equal the recorded grace."
+  - "The default timezone choice is the device zone, not UTC."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: scheduling_label_value_drift
+reasoning_tier: standard
+context_scope: scheduling_display_labels
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.7 and #8.8 G-33 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-07 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+preserved_exact_tokens:
+  - "Ask me first"
+  - "Send as soon as I'm back"
+  - "Build at the next chance"
+  - "Keep going next time"
+  - "Wrap-up time"
+  - "resume_next_window"
+  - "cancel_after_grace"
+negative_constraints:
+  - Do not rename a stored scheduling value or Settings key to match its label.
+  - Do not default the timezone to UTC.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Settings_System.md
+
+### SQR-018 - Project-Wide Pause All Automations
+
+"Pause all automations" is one project-wide switch that stops every scheduled send and scheduled build in the
+project until the user turns it back on (DL-136, decision card p12, register line B-SQR-05). One command sets and
+clears it: `cmd.runtime.automation_pause.set`, project-scoped, whose payload `paused` is true or false. The switch
+lives in the Schedule Manager's Resume & Safety Policy tab, which is where the Build At sheet's promise "Pause all
+automations always wins." points. Its state is a project-scoped operational record owned here, holding the
+`project_id`, `paused`, the project's `user_stop_epoch`, who changed it, when, and a revision. It is never a
+Settings value, and no Settings default seeds it.
+
+The switch is a user manual stop at project scope and ranks with user manual Pause in the section 1 precedence.
+Turning it on advances the project's `user_stop_epoch` the way Manual Stop advances a run's. Every eligibility
+evaluation for a target in the project captures that epoch beside the target's own and compares both again at
+dispatch, so a dispatch decided before the switch was turned on and delivered after it is discarded. While it is
+on, the one eligibility predicate (SQR-006) fails for every scheduled message, scheduled build, window resume and
+quota resume in the project, with the failed clause `project_automation_paused`. A scheduled build that is already
+running when the switch is turned on stops admitting new work and pauses at its next safe point, the boundary that
+wind-down uses (SQR-004), never in the middle of an atomic operation. A message whose dispatch had already started
+completes. Turning the switch on cancels nothing, invalidates no schedule, disables no quota consent and changes no
+per-run latch; it only holds them.
+
+Only the user clears the switch, by sending the command with `paused` false; a request from any other actor is
+refused with `permission_denied`. No automatic mechanism clears or bypasses it: not a quota reset, a window
+opening, a schedule time, a cleared dependency, a provider retry, or a Goal, Plan or Crew automatic continuation.
+Creating a new schedule while the switch is on does not clear it; the new schedule is recorded and waits like the
+others. Work the user starts directly is not an automation and is not blocked: Send, Build, an explicit user
+resume of one run, and Send now on a held message still act, and each acts on that one item and leaves the switch
+on. The dispatch of a Send now is exempt from the `project_automation_paused` clause because the accepted
+`cmd.chat.schedule_message.update` with `reschedule_to: "now"` records the user as its actor (SQR-006); every other
+clause still holds. A request that sets the
+value the switch already has returns the record unchanged and does not advance the epoch again.
+
+Turning the switch off clears only the project latch. It releases no per-run manual Pause, Stop or Cancel, and it
+dispatches nothing by itself. Every item it held is evaluated again by the one predicate. An occurrence that came
+due while the switch was on is a missed occurrence and follows its recorded missed policy once, as after a
+restart (section 4), so no backlog burst fires. A message whose send time arrived while the switch was on is
+stored `held` whatever its missed policy, and at switch-off the owner applies that policy to it: under `hold` it
+stays `held` for the user and its sentence names the missed time instead of the switch; under `next_available`,
+and under `cancel_after_grace` while it is still within its grace, it returns to `scheduled` for immediate
+dispatch and dispatches once through both eligibility checks; under `cancel_after_grace` past its grace it moves
+to `expired`. Once the switch is off no item keeps the reason "Pause all automations is on". A scheduled build
+that the switch paused is resumed by the scheduler only when the predicate passes again after switch-off, and
+never replays work it had already committed.
+
+The reason is visible on every item the switch holds. On the Resume & Safety Policy tab the switch reads "Pause
+all automations" with "Off: scheduled things start on time." when it is off, and "Paused by you at <time>" with
+"Turn back on" when it is on; "Turn back on" sends the command with `paused` false. While it is on, every
+scheduled-message card, Schedule Manager row and Plan card schedule line in the project that it holds names the
+reason "Pause all automations is on". A message held at its send time is `Held` and its sentence begins with Held
+and names that reason (SQR-012); a build it holds has a schedule line that begins with `Paused` (SQR-015); and the
+manager rows keep the labels of SQR-014. No stored state value is added: a message held at its send time is
+`held`, a run the switch pauses is `paused`, and stored schedule states are unchanged. Each change of the switch
+emits `runtime.automation_pause_changed` (section 3, Events).
+
+```yaml
+plan_unit_id: SQR-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: >-
+  Pause all automations is one project-wide switch that stops every scheduled send and scheduled build in the
+  project until the user turns it back on (DL-136). cmd.runtime.automation_pause.set, project-scoped with payload
+  paused true or false, sets and clears it from the Schedule Manager's Resume & Safety Policy tab; its state is a
+  project-scoped operational record owned here and never a Settings value. It is a user manual stop at project
+  scope that ranks with user manual Pause: turning it on advances the project's user_stop_epoch the way Manual
+  Stop does, every evaluation compares the project's epoch as well as the target's, and while it is on the one
+  eligibility predicate fails for every scheduled message, scheduled build, window resume and quota resume in the
+  project with the failed clause project_automation_paused. A running scheduled build pauses at its next safe
+  point, never mid-atomic-operation, and a dispatch already started completes. It cancels, invalidates and
+  disables nothing and changes no per-run latch. Only the user clears it, by sending paused false; no quota
+  reset, window opening, schedule time, cleared dependency, provider retry, Goal, Plan or Crew continuation, or
+  newly created schedule clears or bypasses it. Work the user starts directly is not blocked and leaves the switch
+  on: Send, Build, an explicit user resume of one run, and Send now, whose single dispatch is exempt from
+  project_automation_paused because its accepted update records the user as actor. Turning it off releases no
+  per-run latch and dispatches nothing by itself; each occurrence that came due while it was on follows its
+  recorded missed policy once, with no backlog burst: a message it held stays held naming its missed time under
+  hold, returns to scheduled and dispatches once under next_available or within the grace of cancel_after_grace,
+  and expires past that grace, and no item keeps the switch's reason once it is off. Every item it holds names the reason Pause all
+  automations is on, the switch reads Paused by you at a time with Turn back on, or Off: scheduled things start on
+  time., and each change emits runtime.automation_pause_changed.
+gui_related: true
+gui_classification_reason: Defines the Resume & Safety Policy switch and the reason every held scheduled item shows.
+depends_on: [SQR-001, SQR-004, SQR-006, SQR-012, SQR-014, SQR-015]
+unblocks: [ATS-064]
+acceptance_criteria:
+  - "While Pause all automations is on, no scheduled send, scheduled build, window resume or quota resume in the project dispatches, and each refusal records project_automation_paused."
+  - "A Send now the user sends while the switch is on dispatches that one message, and the switch stays on."
+  - "A dispatch decided before the switch was turned on and delivered after it is discarded."
+  - "A quota reset, window opening, schedule time, automatic continuation or newly created schedule leaves the switch on."
+  - "Only a user request with paused false clears it; any other actor is refused with permission_denied."
+  - "Turning it off releases no per-run latch, and each occurrence that came due while it was on follows its recorded missed policy with no backlog burst."
+  - "At switch-off a message it held stays held naming its missed time under hold, dispatches once under next_available or within its grace, and expires past its grace."
+  - "Every item the switch holds shows the reason Pause all automations is on."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - node tests/scheduling-verify.mjs
+risk_class: automatic_resume_overrides_user_stop
+reasoning_tier: high
+context_scope: scheduling_precedence
+implementation_surfaces:
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: scheduling_precedence_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-136"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json p12 (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-05 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.8 and #8.9 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+preserved_exact_tokens:
+  - "Pause all automations"
+  - "cmd.runtime.automation_pause.set"
+  - "project_automation_paused"
+  - "runtime.automation_pause_changed"
+  - "user_stop_epoch"
+  - "Pause all automations is on"
+  - "Paused by you at"
+  - "Turn back on"
+  - "Off: scheduled things start on time."
+negative_constraints:
+  - Do not let any automatic mechanism, or a newly created schedule, clear or bypass the project pause.
+  - Do not store the project pause as a Settings value.
+  - Do not cancel, invalidate or disable a schedule or consent because the project pause was turned on.
+  - Do not fire a backlog of occurrences when the project pause is turned off.
+  - Do not interrupt an atomic operation to honour the project pause.
+owner_hints:
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Decision_Log.md#DL-136, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Assistant_Plan_Runtime.md, UICommand:cmd.runtime.automation_pause.set

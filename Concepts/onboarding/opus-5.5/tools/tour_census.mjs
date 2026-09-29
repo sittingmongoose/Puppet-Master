@@ -3,7 +3,7 @@
  * The tour is walked the way t2 walks it (Show Me for each action, Next for each explanation). For every step it
  * records the learner's meaningful actions (an action step is one; adding and then placing the widget, and opening
  * Why before answering, are two), the words on screen the step asks the learner to read (the callout, plus the
- * answer, rewrite or plan section the step points at), and the time the action itself took. Dwell per step is
+ * answer, simpler reply or plan section the step points at), and the time the action itself took. Dwell per step is
  * reading time at the given pace + the action's own time + 0.8 s to decide per action. The packet asks that Plan
  * before building get at least half of both. Writes census.json and prints the table. */
 import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
@@ -29,7 +29,7 @@ mkdirSync(out, { recursive: true });
 /* what else a step asks the learner to read, besides its callout */
 const READ = {
   answer_stream: () => (window.O55.tour.chat.lastAnswerEl() || {}).textContent || '',
-  same_answer_eli5: () => (window.O55.tour.chat.lastAnswerEl() || {}).textContent || '',
+  same_answer_eli5: () => { const c = window.O55.tour.chat, x = c.simplerFor(c.midFor('a1')), el = x && document.querySelector(`#chatPanel [data-pm6-mid="${x}"]`); return (el || {}).textContent || ''; },
   three_outcomes: () => (document.getElementById('pm6WizTopicList') || {}).textContent || '',
   access_answer: () => ((document.querySelector('#pm6WizThread .o55p-bubble') || {}).textContent || ''),
   review: () => (document.getElementById('pm6WizDoc') || {}).textContent || '',

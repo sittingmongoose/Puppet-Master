@@ -1,0 +1,21 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260927-005-wand-chat-gui-contract",
+  "updated_at_utc": "2026-09-29T06:38:43+00:00",
+  "status": "fail_deferred_governance_coverage",
+  "summary": {
+    "events": 20,
+    "design_atoms": 57,
+    "decisions": 61,
+    "open_questions": 5,
+    "deferred_questions": 0,
+    "open_blockers": 0,
+    "compile_queue_items": 57
+  },
+  "notes": "pm-bootstrap-ledger-validate.py on 2026-09-27: the only errors are governance coverage for Plans/Decision_Log.md, which was already absent from Spec_Lock and plan_graph coverage before this ledger; refreshing that coverage is the designated Plans agent's reseal. Every other check passes.",
+  "errors": [
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Decision_Log.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Decision_Log.md']"
+  ],
+  "validator_status": "fail"
+}

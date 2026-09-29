@@ -794,7 +794,7 @@ Crew definition, participant specs, effective roster, transcript, and card/panel
 
 `Build At…` creates an exact-version scheduled build. The schedule binds `assistant_plan_id`, `plan_version`, and `plan_hash`. A later revision invalidates the pending schedule, emits `assistant_plan.schedule_invalidated`, places a `Schedule needs update` notice on the Plan card, and disables automatic dispatch until the user explicitly updates or reschedules. There is no silent retarget to the newer version, and no schedule may dispatch a version it did not bind.
 
-Before dispatch, the scheduler revalidates the bound Plan version and hash, the provider and account, the project and worktree, the permission and tool snapshot, and the execution window. A revalidation failure holds the dispatch with an exact reason instead of building a different Plan. A recurring window resumes the one existing run; it never starts a duplicate build per occurrence. Manual pause, cancel, or Stop always overrides scheduled or quota auto-resume.
+Before dispatch, the scheduler revalidates the bound Plan version and hash, the provider and account, the project and worktree, the permission and tool snapshot, and the execution window. A revalidation failure holds the dispatch with an exact reason instead of building a different Plan. A recurring window resumes the one existing run; it never starts a duplicate build per occurrence. Manual pause, cancel, or Stop always overrides scheduled or quota auto-resume. The project-wide "Pause all automations" switch (`Plans/Scheduling_and_Quota_Resume.md` SQR-018, DL-136) is such a manual pause at project scope: while it is on, a scheduled build in the project is not admitted, and a `PlanRun` bound to a schedule that is running when it is turned on moves to `paused` at its next safe boundary, never mid-atomic-operation. For that run the control stays `Building…` and the secondary line reads `Paused`, naming "Pause all automations is on"; the scheduler resumes the run only after the user turns the switch off and the scheduler's eligibility check passes again. Work the user starts directly, such as Build or an explicit user resume of that run, is not an automation and still acts while the switch stays on (SQR-018).
 
 Timer authority, window arithmetic, wind-down, DST behavior, and quota-resume consent are owned by `Plans/Scheduling_and_Quota_Resume.md`. `cmd.chat.plan.schedule_build` is that owner's command; this document owns the Plan-side binding and invalidation rules it must honor.
 
@@ -1239,7 +1239,9 @@ fourth terminal label.
 Nonterminal trouble is secondary truth beside the control: `Paused`, `Waiting for Usage`,
 `Outside execution window`, `Needs attention`, `Build failed`, `Recovery required`. The exact
 owner reason and the allowed actions are visible. A generic `Working` label that hides a failure
-is prohibited.
+is prohibited. On the Plan card's schedule line, every one of these states the line shows leads
+with its token (for example `Outside execution window` · continues Mon 10 PM); the line sits
+beside the Build control and never replaces `Building…` (APR-071).
 
 ```text
 pm.assistant_plan.execution_attention_projection.v1
@@ -1728,3 +1730,46 @@ negative_constraints:
   deployed migration.
 - No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
 ```
+
+## Wand Modules Redesign Addendum (2026-09-27)
+
+The 2026-09-27 redesign of the Puppet Master 5.6 Pro wand modules (design spec §8.1, §8.8 and §8.15, frozen at `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md`, SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`) redraws the Plan card's schedule line and the Crew sheet opened from a Plan. This addendum records what those surfaces must keep of this runtime's contract. It changes no Build label, no admission rule and no command. The Crew sheet itself, its fields and its copy are owned by `Plans/Collaborative_Workflows.md`; windows, timers and the frozen topology snapshot by `Plans/Scheduling_and_Quota_Resume.md` (PSCHED-001..003).
+
+### APR-071 - Plan Card Schedule Line And The Two Plan-Bound Crew Modes
+
+```yaml
+plan_unit_id: APR-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: >-
+  The Plan card's schedule line is secondary truth beside the Build control and never replaces its label: while the Plan is unfinished the control still reads Building…, and every nonterminal run state the line shows leads with its PFAIL-002 token, so a build stopped for the night reads "Outside execution window · …", a build waiting on a quota reset reads "Waiting for Usage · …" (with no countdown when the reset time is unknown), a build the user paused reads "Paused · …"; a schedule invalidated by a revision is not a PFAIL-002 state and leads instead with the Schedule needs update notice that this runtime's Build With Crew and Build At rule places on the Plan card (PSCHED-005..006), reading "Schedule needs update · …". The Crew sheet has two Plan-bound modes, and both bind the exact Plan version and hash. Build With Crew mode builds the current version now: it dispatches cmd.chat.plan.build_with_crew, never cmd.collaboration.start, so the PlanRun and the CrewRun commit together or neither commits (MODAL-013); the Plan identity, version and fingerprint are shown, the request comes from the Plan and is read-only, and a Plan that changed while the sheet was open refuses Start in place with stale_plan_version and sends the user back to reopen against the new version (MODAL-014). Scheduled mode, opened from Build At with the Crew topology, starts nothing: its confirmed configuration becomes the collaboration definition frozen by cmd.chat.plan.schedule_build at schedule commit (PSCHED-001..003), and because that build runs unattended, anything that would need the user at dispatch (specialists, a separate Coordinator model, a model that is not ready) is disabled with the reason "Scheduled builds can't use this: they run while you're away."
+gui_related: true
+gui_classification_reason: The schedule line and the two Crew sheet modes are user-visible Plan card and modal behaviour.
+depends_on: [APR-007, APR-011]
+unblocks: []
+acceptance_criteria:
+  - The Build control reads Building… whatever the schedule line shows; the line's states lead with Outside execution window, Waiting for Usage, Paused or Schedule needs update.
+  - Build With Crew mode dispatches cmd.chat.plan.build_with_crew and never cmd.collaboration.start; a changed Plan refuses Start with stale_plan_version.
+  - Scheduled mode creates no PlanRun, CrewRun or provider attempt; its configuration is frozen with the schedule, and disabled options carry the scheduled-build reason.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main
+risk_class: wrong_version_or_hidden_build_state
+reasoning_tier: high
+context_scope: assistant_plan_build_routes
+implementation_surfaces: [Plans/Assistant_Plan_Runtime.md, Plans/Collaborative_Workflows.md, Plans/Scheduling_and_Quota_Resume.md]
+node_compile_hint: {mode: assistant_plan_build_routes, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.8 IMPACT A1-30, #8.1 G-28 and scheduled mode, #8.15 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-APR-01 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
+  - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
+preserved_exact_tokens: ["Building…", "Outside execution window", "Waiting for Usage", "Paused", "Schedule needs update", "Build With Crew", "Build At", "cmd.chat.plan.build_with_crew", "cmd.collaboration.start", "stale_plan_version", "cmd.chat.plan.schedule_build", "Scheduled builds can't use this: they run while you're away."]
+negative_constraints:
+  - Do not let the schedule line replace or relabel the Build control.
+  - Do not start Build With Crew as a collaboration start plus a separate build.
+  - Do not create a run or a provider attempt when a Crew is configured for a scheduled build.
+owner_hints: [Plans/Assistant_Plan_Runtime.md, Plans/Collaborative_Workflows.md, Plans/Scheduling_and_Quota_Resume.md]
+```
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md#pfail-001002--four-labels-and-where-trouble-is-told, ContractName:Plans/Assistant_Plan_Runtime.md#build-with-crew-and-build-at, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Scheduling_and_Quota_Resume.md, UICommand:cmd.chat.plan.build_with_crew, UICommand:cmd.chat.plan.schedule_build

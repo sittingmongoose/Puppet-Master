@@ -83,12 +83,14 @@ async function openWand() {
    assertion right after this helper's first use below. */
 async function openConfigureFromWand(kind) {
   await openWand();
-  let rowFound = await clickSel(`[data-action="collab-open-configure"][data-kind="${kind}"]`);
+  /* the wand's own row (button.menu-item), never a card's "Run again with changes…", which shares the action */
+  const row = `button.menu-item[data-action="collab-open-configure"][data-kind="${kind}"]:not([data-auto]):not([data-reconfigure])`;
+  let rowFound = await clickSel(row);
   if (!rowFound) {
     /* Wand rows live under collapsible groups; expand Workflows once and retry. */
     await clickSel('[data-action="polish-wand-group"][data-group="work"]');
     await page.waitForTimeout(200);
-    rowFound = await clickSel(`[data-action="collab-open-configure"][data-kind="${kind}"]`);
+    rowFound = await clickSel(row);
   }
   await page.waitForTimeout(200);
   const dialogOpen = await ev(() => !!document.querySelector('.collab-configure'));
@@ -139,7 +141,9 @@ async function main() {
 
   /* ---- run/thread map for the four seeds, and the shared-renderer + card/panel/participant sweep ---- */
   const SEED = [
-    { id: 'crew-query-perf', kind: 'crew', thread: 'query' },
+    /* narrow-review.js (COLLAB) moves the Crew seed onto the recovery-collaboration thread; the harness follows it
+       (the patched scratch copy carried this fix until COLLAB step 3) */
+    { id: 'crew-query-perf', kind: 'crew', thread: 'recovery-collaboration' },
     { id: 'brainstorm-provider-failover', kind: 'brainstorm', thread: 'plan-deep' },
     { id: 'review-orchestrator-boundary', kind: 'review', thread: 'subagents' },
     /* chatroom-onboarding deliberately seeds on the 'crew' thread, not
@@ -166,7 +170,8 @@ async function main() {
     check(`${s.kind}: the shared transcript card renders on its own thread with the common card structure`,
       cardShape && Object.values(cardShape).every(Boolean), JSON.stringify(cardShape));
 
-    /* card expands inline, then pops out to a full panel showing the SAME run */
+    /* card expands inline, then Open Panel opens the SAME run in the docked run view (COLLAB step 3, spec 4.4 / 7.9 /
+       G-14: the editor pane, not a centred dialog; the view root keeps the .collab-panel hooks) */
     await clickSel(`[data-action="collab-toggle-expand"][data-run="${s.id}"]`);
     const expanded = await ev(id => {
       const b = document.querySelector(`.collab-card[data-run-id="${id}"] .collab-card-body`);
@@ -178,13 +183,16 @@ async function main() {
     const panelRun = await ev(id => {
       const p = document.querySelector('.collab-panel');
       if (!p) return null;
-      const run = window.PM56_COLLAB.run(id);
-      return { titleMatches: p.querySelector('.drawer-head strong') && p.querySelector('.drawer-head strong').textContent === run.title, hasTranscriptTab: !!p.querySelector('[data-action="collab-panel-tab"][data-tab="transcript"]') };
+      const run = window.PM56_COLLAB.run(id), st = window.PM56_EXT.ctx().state;
+      return { titleMatches: p.querySelector('.drawer-head strong') && p.querySelector('.drawer-head strong').textContent === run.title, hasTranscriptTab: !!p.querySelector('[data-action="collab-panel-tab"][data-tab="transcript"]'),
+        docked: !!st.editorRevealed && String(st.activeEditor || '').split(':').slice(1).join(':') === id && !p.closest('.dialog'), noDialog: !st.dialog };
     }, s.id);
-    check(`${s.kind}: Open Panel pops the SAME run out to the full shared panel shell`, opened && panelRun && panelRun.titleMatches && panelRun.hasTranscriptTab, JSON.stringify(panelRun));
+    check(`${s.kind}: Open Panel opens the SAME run in the docked run view (editor pane, .collab-panel hooks, no dialog)`, opened && panelRun && panelRun.titleMatches && panelRun.hasTranscriptTab && panelRun.docked && panelRun.noDialog, JSON.stringify(panelRun));
 
-    /* Message targets the ordinary composer — chrome visibly names the destination */
+    /* Message targets the ordinary composer — chrome visibly names the destination. Message lives on the run card
+       (7.9, G-14); the docked run view is not modal, so the card stays reachable beside it. */
     const destBefore = await ev(() => (window.PM56_RUNTIME.composer || {}).destination);
+    await closeDialog();
     await clickSel(`[data-action="collab-message"][data-run="${s.id}"]`);
     await page.waitForTimeout(200);
     const destAfter = await ev(id => ({ dest: (window.PM56_RUNTIME.composer || {}).destination, run: window.PM56_COLLAB.run(id) }), s.id);
@@ -205,7 +213,7 @@ async function main() {
   /* clicking a participant opens THAT participant's transcript: one with real
      output (crew's first member) and one with none yet (a truthful empty
      transcript, never a fabricated summary) */
-  await selectThread('query');
+  await selectThread('recovery-collaboration');
   await openPanel('crew-query-perf');
   await clickSel('.collab-panel [data-action="collab-panel-tab"][data-tab="participants"]');
   const crewRun = await getRun('crew-query-perf');
@@ -261,9 +269,9 @@ async function main() {
     check(`${kind}: cancelling the modal starts nothing (no draft retained, no dialog left open)`, afterCancel.draft === null && afterCancel.dialogGone, JSON.stringify(afterCancel));
   }
 
-  /* ================= 3. requested vs effective — drive a real substitution through the modal ================= */
+  /* ================= 3. an offline model blocks Start (owner answer E-03 B, 2026-09-27): nothing stands in by itself ================= */
   const openedCrew = await openConfigureFromWand('crew');
-  check('the crew configure modal opened for the substitution drive-through', openedCrew.rowFound && openedCrew.dialogOpen);
+  check('the crew configure modal opened for the offline-model drive-through', openedCrew.rowFound && openedCrew.dialogOpen);
   const runsBeforeSub = await runsLen();
   const firstRowPick = '.collab-participant-editor .collab-participant-editor-row:first-child [data-action="collab-pick-model"]';
   await clickSel(firstRowPick);
@@ -273,30 +281,46 @@ async function main() {
   await page.waitForTimeout(150);
   const draftAfterSelect = await ev(() => window.PM56_COLLAB.draft().rows[0].requestedModelId);
   check('selecting a demo-unavailable model updates the draft state immediately', draftAfterSelect === 'kimi-k3-turbo', draftAfterSelect);
-  const effLineImmediately = await ev(() => !!document.querySelector('.collab-participant-editor-row:first-child .collab-route-eff'));
+  const offlineRow = await ev(() => {
+    const row = document.querySelector('.collab-participant-editor-row:first-child');
+    const eff = row ? row.querySelector('.collab-route-eff') : null;
+    return { text: eff ? eff.textContent.replace(/\s+/g, ' ').trim() : null, failure: row ? row.getAttribute('data-failure') : null, fix: !!(eff && eff.querySelector('[data-action="collab-refusal-fix"]')) };
+  });
+  /* 6.4 (COLLAB step 1): Start stays disabled until the job has text, so the Crew gets a job first */
+  await ev(() => { const t = document.querySelector('.collab-configure [data-collab-input="purpose"]'); if (t) { t.value = 'Export the collection to CSV without losing quotes'; t.dispatchEvent(new Event('input', { bubbles: true })); } });
+  await page.waitForTimeout(150);
+  const startBlocked = await ev(() => {
+    const b = document.querySelector('[data-action="collab-modal-commit"]');
+    const w = document.querySelector('.collab-configure .collab-limit-warn');
+    return { disabled: !!(b && b.disabled), reason: w ? w.textContent.trim() : null };
+  });
+  await ev(() => { const b = document.querySelector('[data-action="collab-modal-commit"]'); if (b) b.click(); });
+  await page.waitForTimeout(250);
+  check('the Configure modal shows the offline notice on the row immediately, with a Fix and data-failure (no separate action needed to force a re-render)',
+    !!offlineRow.text && /offline right now/i.test(offlineRow.text) && /Pick another model to start/i.test(offlineRow.text) && offlineRow.fix && !!offlineRow.failure, JSON.stringify(offlineRow));
+  check('Start stays disabled with the same sentence while an offline model is chosen, and nothing is created',
+    startBlocked.disabled && /offline right now/i.test(startBlocked.reason || '') && (await runsLen()) === runsBeforeSub, JSON.stringify(startBlocked));
+  await clickSel('.collab-participant-editor-row:first-child .collab-route-eff [data-action="collab-refusal-fix"]');
+  await page.waitForTimeout(250);
+  const fixOpensPicker = await ev(() => !!document.querySelector('.overlay-menu.model-menu'));
+  check('Fix opens that row\'s own model picker', fixOpensPicker, String(fixOpensPicker));
+  await ev(() => { const o = document.querySelector('.overlay-menu.model-menu [data-action="set-model"][data-value="sonnet46"]'); if (o) o.click(); });
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(200);
+  const cleared = await ev(() => ({
+    notice: !!document.querySelector('.collab-participant-editor-row:first-child .collab-route-eff'),
+    disabled: !!(document.querySelector('[data-action="collab-modal-commit"]') || {}).disabled
+  }));
+  check('picking another model clears the notice and enables Start', !cleared.notice && !cleared.disabled, JSON.stringify(cleared));
   await clickSel('[data-action="collab-modal-commit"]');
   await page.waitForTimeout(250);
   const newCrew = await ev(n => window.PM56_COLLAB.runs()[n], runsBeforeSub);
   check('committing the modal creates exactly one new run (Crew Auto aside)', (await runsLen()) === runsBeforeSub + 1, String(await runsLen()));
-  check('the committed participant records BOTH requested and effective identity, with a substitution reason (never a silent substitution)',
-    newCrew && newCrew.participants[0].requestedModelId === 'kimi-k3-turbo' &&
-    newCrew.participants[0].effectiveModelId && newCrew.participants[0].effectiveModelId !== 'kimi-k3-turbo' &&
-    !!newCrew.participants[0].substitutionReason,
-    JSON.stringify({ requested: newCrew && newCrew.participants[0].requestedModelId, effective: newCrew && newCrew.participants[0].effectiveModelId, reason: newCrew && newCrew.participants[0].substitutionReason }));
-  await selectThread(newCrew.threadId);
-  await openPanel(newCrew.id);
-  await clickSel('.collab-panel [data-action="collab-panel-tab"][data-tab="participants"]');
-  const effRenderedAfterCommit = await ev(() => {
-    const row = document.querySelector('.collab-panel .collab-participant');
-    const eff = row ? row.querySelector('.collab-route-eff') : null;
-    return eff ? eff.textContent : null;
-  });
-  check('the committed run\'s panel renders the requested/effective disclosure for the substituted participant',
-    !!effRenderedAfterCommit && /effective|no substitute/i.test(effRenderedAfterCommit), effRenderedAfterCommit);
+  check('the committed participants run on the models chosen: requested equals effective, with no substitution',
+    newCrew && newCrew.participants.every(p => p.requestedModelId === p.effectiveModelId && !p.substitutionReason),
+    JSON.stringify(newCrew && newCrew.participants.map(p => ({ requested: p.requestedModelId, effective: p.effectiveModelId, reason: p.substitutionReason }))));
   check('a normal (non-substituted) participant renders no effective-route chrome — disclosure is not noise',
     normalRoute === true, String(normalRoute));
-  check('the Configure modal repaints the requested/effective note immediately on selecting an unavailable model (no separate action needed to force a re-render)',
-    effLineImmediately === true, String(effLineImmediately));
   await closeDialog();
 
   /* ================= 7. Review: 1–8 default 3, repeated models, one frozen pack, never auto-repairs ================= */
@@ -314,9 +338,16 @@ async function main() {
   for (let i = 0; i < 5; i++) await clickSel('[data-action="collab-modal-add-participant"]');
   const at8 = await ev(() => ({ n: window.PM56_COLLAB.draft().rows.length, disabled: document.querySelector('[data-action="collab-modal-commit"]').disabled, warn: !!document.querySelector('.collab-limit-warn') }));
   check('Review accepts up to 8 reviewers with Commit still enabled', at8.n === 8 && !at8.disabled && !at8.warn, JSON.stringify(at8));
+  /* spec 10.2 (COLLAB harness change): the sheet never lets the roster go out of range, so a 9th add is refused
+     at the add control, which says why; Start stays enabled for the 8 reviewers that are there */
   await clickSel('[data-action="collab-modal-add-participant"]');
-  const at9 = await ev(() => ({ n: window.PM56_COLLAB.draft().rows.length, disabled: document.querySelector('[data-action="collab-modal-commit"]').disabled, warn: !!document.querySelector('.collab-limit-warn') }));
-  check('a 9th reviewer goes out of range: Commit disables and the modal discloses it', at9.n === 9 && at9.disabled && at9.warn, JSON.stringify(at9));
+  const at9 = await ev(() => {
+    const add = document.querySelector('.collab-configure [data-action="collab-modal-add-participant"]');
+    const foot = add ? add.closest('.pmx-roster-foot') : null;
+    return { n: window.PM56_COLLAB.draft().rows.length, addDisabled: !!(add && add.disabled), reason: foot ? foot.textContent.replace(/\s+/g, ' ').trim() : '',
+      commitDisabled: document.querySelector('[data-action="collab-modal-commit"]').disabled };
+  });
+  check('a 9th add is refused and the add control shows the reason', at9.n === 8 && at9.addDisabled && /up to 8 reviewers/i.test(at9.reason) && !at9.commitDisabled, JSON.stringify(at9));
   await clickSel('[data-action="collab-modal-cancel"]');
   await page.waitForTimeout(160);
 
@@ -426,45 +457,69 @@ async function main() {
     `${synthMsgCount1} -> ${synthMsgCount2} coordinator response messages`);
   await closeDialog();
 
-  /* ================= 10. Crew Auto: cannot start without committed config; cannot widen authority ================= */
+  /* ================= 10. Crew Auto (owner answer E-02, 2026-09-27): the assistant's permission to call a Crew by
+     itself, ON by default with default rules; the chat's check overrides it for that chat; its settings sheet
+     commits rules, never a run; it cannot widen authority ================= */
   const runsBeforeAuto = await runsLen();
   await openWand();
   const autoCheckedBefore = await ev(() => {
     const cb = document.querySelector('.collab-auto-row input[type="checkbox"]');
-    return { checked: cb ? cb.checked : null, autoConfigured: !!window.PM56_COLLAB.definitions().crew.autoConfigured };
+    const def = window.PM56_COLLAB.definitions().crew;
+    return { checked: cb ? cb.checked : null, autoConfigured: !!def.autoConfigured, autoEnabled: !!def.autoEnabled, policy: !!def.autoPolicy };
   });
-  check('Crew Auto starts unchecked and unconfigured', autoCheckedBefore.checked === false && !autoCheckedBefore.autoConfigured, JSON.stringify(autoCheckedBefore));
+  check('Crew Auto starts on by default, with default rules (E-02)',
+    autoCheckedBefore.checked === true && autoCheckedBefore.autoConfigured && autoCheckedBefore.autoEnabled && autoCheckedBefore.policy, JSON.stringify(autoCheckedBefore));
 
   await clickSel('[data-action="collab-crew-auto-toggle"]');
   await page.waitForTimeout(200);
   const afterFirstToggle = await ev(() => ({
     modalOpen: !!document.querySelector('.collab-configure'),
-    isAutoMode: !!(window.PM56_COLLAB.draft() && window.PM56_COLLAB.draft().autoMode),
-    autoEnabled: !!window.PM56_COLLAB.definitions().crew.autoEnabled
+    chat: window.PM56_COLLAB.crewAutoAllowed(),
+    projectDefault: !!window.PM56_COLLAB.definitions().crew.autoEnabled,
+    runs: window.PM56_COLLAB.runs().length
   }));
-  check('checking Crew Auto before it is configured OPENS the configuration modal rather than enabling anything directly',
-    afterFirstToggle.modalOpen && afterFirstToggle.isAutoMode && !afterFirstToggle.autoEnabled, JSON.stringify(afterFirstToggle));
-  const menuClosedForAutoRoute = await ev(() => !document.querySelector('[data-overlay="root-menu"]'));
-  check('unlike the four Wand-menu configure rows above, the Crew Auto route DOES close the Wand menu behind it (collab-crew-auto-toggle calls ctx.closeMenu()) — confirms the fix exists, just not applied to the other four rows',
-    menuClosedForAutoRoute, String(menuClosedForAutoRoute));
-
-  await clickSel('[data-action="collab-modal-cancel"]');
-  await page.waitForTimeout(160);
-  const afterCancelAuto = await ev(() => ({ autoConfigured: !!window.PM56_COLLAB.definitions().crew.autoConfigured, runs: window.PM56_COLLAB.runs().length }));
-  check('cancelling the Crew Auto modal leaves it unconfigured and starts nothing',
-    !afterCancelAuto.autoConfigured && afterCancelAuto.runs === runsBeforeAuto, JSON.stringify(afterCancelAuto));
-
+  check('unchecking Crew Auto turns it off for this chat only: no sheet, the project default and the runs untouched',
+    !afterFirstToggle.modalOpen && afterFirstToggle.chat === false && afterFirstToggle.projectDefault && afterFirstToggle.runs === runsBeforeAuto, JSON.stringify(afterFirstToggle));
   await openWand();
   await clickSel('[data-action="collab-crew-auto-toggle"]');
   await page.waitForTimeout(200);
-  await clickSel('[data-action="collab-crew-auto-refuse-demo"]');
+  const afterSecondToggle = await ev(() => window.PM56_COLLAB.crewAutoAllowed());
+  check('checking it again turns Crew Auto back on in this chat', afterSecondToggle === true, String(afterSecondToggle));
+
+  const revBefore = await ev(() => (window.PM56_COLLAB.definitions().crew.autoPolicy || {}).revision || 0);
+  await openWand();
+  await clickSel('[data-action="collab-open-configure"][data-kind="crew"][data-auto="1"]');
+  await page.waitForTimeout(250);
+  const settingsOpen = await ev(() => ({
+    modalOpen: !!document.querySelector('.collab-configure'),
+    isAutoMode: !!(window.PM56_COLLAB.draft() && window.PM56_COLLAB.draft().autoMode),
+    menuClosed: !document.querySelector('[data-overlay="root-menu"]')
+  }));
+  check('"Crew Auto settings…" opens the Crew Auto sheet in place of the Wand menu', settingsOpen.modalOpen && settingsOpen.isAutoMode && settingsOpen.menuClosed, JSON.stringify(settingsOpen));
+
+  await clickSel('[data-action="collab-modal-cancel"]');
+  await page.waitForTimeout(160);
+  const afterCancelAuto = await ev(() => ({ revision: (window.PM56_COLLAB.definitions().crew.autoPolicy || {}).revision || 0, runs: window.PM56_COLLAB.runs().length }));
+  check('cancelling the Crew Auto sheet changes no rules and starts nothing',
+    afterCancelAuto.revision === revBefore && afterCancelAuto.runs === runsBeforeAuto, JSON.stringify(afterCancelAuto));
+
+  /* the refuse control's emitter (spec 8.2, 10.2): a quiet "Recorded example" line inside the Crew Auto sheet while
+     the Crew demo is active. The demo opens its own chat and creates no run. */
+  await escapeAll();
+  const beforeDemo = await ev(() => ({ thread: window.PM56_EXT.ctx().state.selectedThread, history: window.PM56_EXT.ctx().state.historyMode }));
+  await ev(() => window.PM56_CREW_DEMOS && window.PM56_CREW_DEMOS.start('auto'));
+  await page.waitForTimeout(400);
+  await openWand();
+  await clickSel('[data-action="collab-open-configure"][data-kind="crew"][data-auto="1"]');
+  await page.waitForTimeout(250);
+  const refuseShown = await clickSel('.collab-configure [data-action="collab-crew-auto-refuse-demo"]');
   await page.waitForTimeout(250);
   const afterRefuseDemo = await ev(() => ({
     text: document.body.innerText.includes('Crew Auto refused'),
     runs: window.PM56_COLLAB.runs().length
   }));
   check('the "widen authority" demo control is durably refused (recorded, not a toast alone) and starts nothing',
-    afterRefuseDemo.text && afterRefuseDemo.runs === runsBeforeAuto, JSON.stringify(afterRefuseDemo));
+    refuseShown && afterRefuseDemo.text && afterRefuseDemo.runs === runsBeforeAuto, JSON.stringify({ refuseShown, ...afterRefuseDemo }));
 
   await clickSel('[data-action="collab-modal-commit"]');
   await page.waitForTimeout(250);
@@ -485,6 +540,14 @@ async function main() {
   check('Crew Auto now shows checked in the Multi-Agent menu, reflecting the committed configuration', autoCheckedAfter === true, String(autoCheckedAfter));
   await page.keyboard.press('Escape').catch(() => {});
   await page.waitForTimeout(150);
+  /* leave the Crew demo (its own close action) and return to the chat and history panel the section started from */
+  await ev(b => {
+    const c = window.PM56_EXT.ctx(), x = document.createElement('button');
+    x.dataset.action = 'crew-demo-close'; document.body.appendChild(x); x.click(); x.remove();
+    if (b.thread && c.switchThread) c.switchThread(b.thread);
+    c.state.historyMode = b.history; c.renderApp();
+  }, beforeDemo);
+  await page.waitForTimeout(250);
 
   /* ================= 11. Chat Room: ordinary discussion promotes nothing; explicit promotion does ================= */
   await selectThread('crew');
@@ -512,6 +575,84 @@ async function main() {
     JSON.stringify(roomAfterPromote.chatRoom.promotions));
   const promoteReceipt = await ev(() => document.body.innerText.includes('Promoted to To-Do'));
   check('the explicit promotion is recorded as a durable, visible receipt in the transcript', promoteReceipt);
+
+  /* ================= 12. "Run again with changes…" on an ended run starts a FRESH run (review-COLLAB-1 blocker):
+     the sheet promises "Starts a fresh run; this one stays as it is", so the ended record is never rewritten ================= */
+  await escapeAll();
+  const opened12 = await openConfigureFromWand('crew');
+  await page.fill('.collab-configure textarea[data-collab-input="purpose"]', 'First job for crew');
+  await page.waitForTimeout(150);
+  await clickSel('.collab-configure [data-action="collab-modal-commit"]');
+  await page.waitForTimeout(1300);
+  const firstId = await ev(() => { const r = window.PM56_COLLAB.runs(); return r[r.length - 1].id; });
+  await clickSel(`.pmx-run[data-run-id="${firstId}"] [data-action="collab-toggle-more"][data-run="${firstId}"]`);
+  await clickSel(`.pmx-run[data-run-id="${firstId}"] [data-action="collab-cancel-ask"][data-run="${firstId}"]`);
+  await clickSel(`.pmx-run[data-run-id="${firstId}"] [data-action="collab-cancel"][data-run="${firstId}"]`);
+  await page.waitForTimeout(300);
+  const snap = r => ({ status: r.status, purpose: r.purpose, title: r.title, rev: r.definitionRevision, parts: r.participants.map(p => p.id).join(','), msgs: r.messages.length });
+  const endedBefore = snap(await getRun(firstId));
+  const runsBeforeRerun = await runsLen();
+  const rerunOpened = await clickSel(`.pmx-run[data-run-id="${firstId}"] [data-action="collab-open-configure"][data-reconfigure="${firstId}"]`);
+  await page.waitForTimeout(300);
+  const rerunSheet = await ev(() => { const d = window.PM56_COLLAB.draft(); const t = document.querySelector('.collab-configure .pmx-title'); return { open: !!document.querySelector('.collab-configure'), reconfigure: d && d.reconfigureRunId, rerunOf: d && d.rerunOf, title: t ? t.innerText.replace(/\s+/g, ' ') : '' }; });
+  await page.fill('.collab-configure textarea[data-collab-input="purpose"]', 'Changed job');
+  await page.waitForTimeout(150);
+  await clickSel('.collab-configure [data-action="collab-modal-commit"]');
+  await page.waitForTimeout(1300);
+  const endedAfter = snap(await getRun(firstId));
+  const fresh = await ev(() => { const r = window.PM56_COLLAB.runs(); const x = r[r.length - 1]; const c = document.querySelector(`.pmx-run[data-run-id="${x.id}"]`); return { id: x.id, purpose: x.purpose, rerunOf: x.rerunOf, density: c && c.dataset.density }; });
+  check('Run again with changes… on a cancelled run opens a fresh-run sheet ("Run this Crew again"), not a reconfiguration',
+    opened12.dialogOpen && rerunOpened && rerunSheet.open && !rerunSheet.reconfigure && rerunSheet.rerunOf === firstId && /Run this Crew again/.test(rerunSheet.title), JSON.stringify(rerunSheet));
+  check('its Start creates exactly one new waiting run and leaves the ended run exactly as it was',
+    (await runsLen()) === runsBeforeRerun + 1 && fresh.id !== firstId && fresh.purpose === 'Changed job' && fresh.rerunOf === firstId && fresh.density === 'waiting' &&
+    endedBefore.status === 'canceled' && JSON.stringify(endedAfter) === JSON.stringify(endedBefore), JSON.stringify({ endedBefore, endedAfter, fresh }));
+
+  /* ---- owner answer E-31 (DL-137, 2026-09-27): live helper text streams, reusing the reply streaming ---- */
+  /* on a freshly loaded page, so every seed is as it was loaded (the sections above pause, synthesize and cancel them) */
+  await page.goto(TARGET, { waitUntil: 'load', timeout: 45000 });
+  await page.waitForTimeout(1200);
+  await selectThread('plan-deep');
+  const E31 = 'brainstorm-provider-failover';
+  await ev(r => { const c = document.querySelector(`.pmx-run[data-run-id="${r}"]`); if (c) c.scrollIntoView({ block: 'center' }); }, E31);
+  await page.waitForTimeout(300);
+  /* runs started earlier in this suite may have folded the BrainStorm card (F.9): open it with its own chevron */
+  const e31Density = await ev(r => (document.querySelector(`.pmx-run[data-run-id="${r}"]`) || {}).dataset?.density || 'missing', E31);
+  if (e31Density === 'collapsed') { await clickSel(`.pmx-run[data-run-id="${E31}"] [data-action="collab-toggle-expand"][data-run="${E31}"]`); await page.waitForTimeout(300); }
+  const e31Say = (i, body) => ev(([r, i, body]) => { const run = window.PM56_COLLAB.run(r), p = run.participants[i]; const m = window.PM56_COLLAB.appendMessage(r, { senderKind: 'participant', senderId: p.id, senderName: p.role, messageType: 'message', body }); (window.__e31Mids = window.__e31Mids || []).push(m.id); window.PM56_EXT.ctx().renderApp(); return p.id; }, [E31, i, body]);
+  const e31Lane = pid => ev(([r, pid]) => { const l = document.querySelector(`.pmx-run[data-run-id="${r}"] .pmx-lane[data-participant="${pid}"] .pmx-lane-l2`); if (!l) return null; const q = l.querySelector('q[data-collab-stream]'); return { streaming: !!q, keep: l.hasAttribute('data-pm-keep'), words: (q ? q.textContent : '').split(/\s+/).filter(Boolean).length, html: l.innerHTML, text: l.textContent }; }, [E31, pid]);
+  const e31State = await ev(r => window.PM56_COLLAB.presentState(r), E31);
+  const e31Pid = await e31Say(0, 'I would keep the **account boundary** first-class: the spend guard says no before a single token leaves, for every helper in the run.');
+  await page.waitForTimeout(250);
+  const e31Mid = await e31Lane(e31Pid);
+  await page.waitForTimeout(2600);
+  const e31End = await e31Lane(e31Pid);
+  check('E-31: a helper message that arrives on a live run streams into its lane through PM56_PMX.stream (a kept island, words arriving)',
+    e31State === 'running' && e31Mid && e31Mid.streaming && e31Mid.keep && e31Mid.words > 0 && e31Mid.words < 26, JSON.stringify({ e31State, e31Density, e31Mid }));
+  check('E-31: once every word is in, the whole message lands once, with its inline markup, and the island is gone',
+    e31End && !e31End.streaming && !e31End.keep && /<(b|strong)>account<\/(b|strong)>/.test(e31End.html), JSON.stringify(e31End));
+  await e31Say(0, 'A long second thought that is still arriving when the run stops: ' + 'more words '.repeat(60));
+  await page.waitForTimeout(250);
+  const e31Before = await e31Lane(e31Pid);
+  await clickSel(`.pmx-run[data-run-id="${E31}"] [data-action="collab-toggle-more"][data-run="${E31}"]`);
+  await clickSel(`.pmx-run[data-run-id="${E31}"] [data-action="collab-pause"][data-run="${E31}"]`);
+  await page.waitForTimeout(300);
+  const e31Paused = await e31Lane(e31Pid);
+  check('E-31: pausing the run mid-stream ends the stream at once: no island, the written message whole, no words still arriving',
+    e31Before && e31Before.streaming && e31Paused && !e31Paused.streaming && /still arriving when the run stops/.test(e31Paused.text), JSON.stringify({ e31Before, e31Paused }));
+  await clickSel(`.pmx-run[data-run-id="${E31}"] [data-action="collab-resume"][data-run="${E31}"]`);
+  await page.waitForTimeout(300);
+  const e31Pid2 = await e31Say(1, 'Words from a helper that fails part-way: ' + 'still coming '.repeat(60));
+  await page.waitForTimeout(250);
+  const e31Fb = await e31Lane(e31Pid2);
+  /* the provider failing is simulated on the record (nothing in the demo fails a seed helper), then put back */
+  const e31Was = await ev(([r, pid]) => { const p = window.PM56_COLLAB.run(r).participants.find(x => x.id === pid); const was = { status: p.status, outcome: p.outcome }; p.status = 'failed'; p.outcome = 'failed'; window.PM56_EXT.ctx().renderApp(); return was; }, [E31, e31Pid2]);
+  await page.waitForTimeout(300);
+  const e31Fa = await e31Lane(e31Pid2);
+  await ev(([r, pid, was]) => { const run = window.PM56_COLLAB.run(r), p = run.participants.find(x => x.id === pid); p.status = was.status; p.outcome = was.outcome;
+    /* and the four messages this section said are taken back, so the protocol sections below read the seed as loaded */
+    run.messages = run.messages.filter(m => !window.__e31Mids.includes(m.id)); window.PM56_EXT.ctx().renderApp(); }, [E31, e31Pid2, e31Was]);
+  check('E-31: a helper that fails mid-stream stops streaming (its lane says it didn’t finish; nothing still arriving)',
+    e31Fb && e31Fb.streaming && e31Fa && !e31Fa.streaming, JSON.stringify({ e31Fb, e31Fa }));
 
   /* ---- console clean ---- */
   check('no console errors during the whole run', consoleErrors.length === 0, consoleErrors.slice(0, 5).join(' | '));

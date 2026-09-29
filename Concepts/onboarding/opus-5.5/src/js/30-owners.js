@@ -62,6 +62,7 @@
     /* shell and tour (local UI) */
     'cmd.panel.switch': { owner: 'Shell', phase: 'tour_local' }, 'cmd.persona.select': { owner: 'Chat', phase: 'tour_local' },
     'cmd.chat.send': { owner: 'Chat', phase: 'tour_local' }, 'cmd.chat.eli5.set': { owner: 'Chat', phase: 'tour_local' },
+    'cmd.chat.eli5.explain_reply': { owner: 'Chat', phase: 'tour_local' },
     'cmd.widget.add': { owner: 'Dashboard', phase: 'tour_local' }, 'cmd.workspace.layout.restore': { owner: 'Workspace', phase: 'tour_local' }
   };
   const PRECOMMIT = new Set(['read_only_preflight', 'selected_source_auth']);

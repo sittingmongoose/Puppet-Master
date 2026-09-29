@@ -73,6 +73,50 @@
     if(!d) return icon('sparkles', size);
     return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${d}</svg>`;
   }
+  /* F0b (f): a module's kind mark (DESIGN-SPEC 4.2 B2) when module-shell provides one at
+     call time, else the old stroke icon, so the concept still renders without it. */
+  function kindMark(kind, size, fallback){
+    const S=window.PM56_SHELL;
+    if(S&&typeof S.pmxKindMark==='function'){ try{ const h=S.pmxKindMark(kind,size); if(h) return h; }catch(err){} }
+    return icon(fallback,size);
+  }
+  /* F0b (c, f): the composer's capability dots. The classes (.capability-dot.goal|crew|bsd|
+     context|eli5), CAP_HOVER and the order stay; keys are the dot's name (identity). Crew
+     shows the Crew kind mark, ELI5 its speech bubble (never sparkles) with a plain hover, and
+     Back Seat Driver's dot belongs to its owner: PM56_BSD.dot(ctx) returns '' or null (no
+     dot), a full HTML string, or {glyph, hover, state}. Without it, the legacy flag shows the
+     eye (the permanent warning triangle is gone). */
+  function capDot(name, glyph, hover){
+    return `<span class="capability-dot ${name}" data-k="cap:${name}"${hoverAttrs('cap-'+name,hover)}>${glyph}</span>`;
+  }
+  function bsdCapabilityDot(){
+    const B=window.PM56_BSD;
+    if(B&&typeof B.dot==='function'){
+      let d=null;
+      try{ d=B.dot(extCtx()); }catch(err){ console.error('PM56_BSD.dot threw', err); return ''; }
+      if(!d) return '';
+      if(typeof d==='string') return d;
+      return `<span class="capability-dot bsd" data-k="cap:bsd"${d.state?` data-bsd-state="${esc(d.state)}"`:''}${hoverAttrs('cap-bsd',d.hover||CAP_HOVER.bsd+' active')}>${d.glyph||kindMark('bsd',16,'eye')}</span>`;
+    }
+    if(state.capabilities.bsd==='Off') return '';
+    return capDot('bsd',kindMark(state.capabilities.bsd==='On'?'bsd-on':'bsd-auto',16,'eye'),CAP_HOVER.bsd+' active');
+  }
+  /* E-02: whether the assistant may call a Crew in this chat: Collaboration's answer (this chat's Crew Auto check over
+     the project default) when it is loaded, else the legacy flag */
+  function crewAutoHere(){
+    const C=window.PM56_COLLAB;
+    if(C&&typeof C.crewAutoAllowed==='function'){ try{ return !!C.crewAutoAllowed(state.selectedThread); }catch(err){} }
+    return !!state.capabilities.crew;
+  }
+  function renderCapabilityDots(){
+    const dots=[];
+    if(state.capabilities.goal) dots.push(capDot('goal',icon('goal',16),CAP_HOVER.goal+' active'));
+    if(crewAutoHere()) dots.push(capDot('crew',kindMark('crew',16,'users'),'Crew Auto on in this chat'));
+    const bsd=bsdCapabilityDot(); if(bsd) dots.push(bsd);
+    if(state.capabilities.context!=='Off') dots.push(capDot('context',icon('lens',16),CAP_HOVER.context+' active'));
+    if(state.capabilities.eli5) dots.push(capDot('eli5',kindMark('eli5',16,'chat'),'Simple explanations in this chat'));
+    return dots.slice(0,5).join('');
+  }
   function modeGlyph(mode, size=13){
     if(mode==='Ask') return icon('info', size);
     if(String(mode).includes('Plan')) return icon('document', size);
@@ -100,7 +144,9 @@
        Review submenu entry. `thoroughness` above is retained only so older fixtures and
        harnesses that read it keep working -- nothing new writes it. */
     planStrategy:'Standard', deepPlanStrategy:'Thorough', grillMe:false, reviewStrategy:'Multi-Pass Review',
-    capabilities:{goal:true,crew:false,bsd:'Auto',context:'Auto',eli5:false,thought:'Auto'},
+    /* E-02 (owner, 2026-09-27): crew is this chat's Crew Auto answer ("may the assistant call a Crew?"), on by default;
+       the project-wide Crew Auto setting decides the default (PM56_COLLAB.crewAutoAllowed reads both) */
+    capabilities:{goal:true,crew:true,bsd:'Auto',context:'Auto',eli5:false,thought:'Auto'},
     activityCaps:{goal:{},crew:{}},
     messageExpanded:{}, messageDetails:{}, copyFlashId:null, workTerminal:{}, work:{step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null}, works:{},
     decision:null, questionIndex:0, questions:clone(D.questions), questionQueue:2,
@@ -216,7 +262,18 @@
     'contextBsdRow','contextBsdSection','editorTabLabel','editorDocument','workRecord',
     /* Chat WOW: FIRST-non-empty (not concatenated) -- a module names the family
        of a message type it renders: prose|user|work|deliverable|needs|people|time|ledger. */
-    'transcriptFamily'];
+    'transcriptFamily',
+    /* closing (PREFS request): inside .chat-title, right after the title's words and before the status, for a mark that
+       belongs to the name (ELI5's lock / warning glyph); headerExtras still renders after the search button */
+    'headerTitleAfter',
+    /* pmx foundation (F0b, DESIGN-SPEC 4.5): an OBSERVER slot, not markup. Each
+       registrant is called as fn(ctx, info) with info.phase === ctx.phase:
+         'overlay' after every renderOverlays() (info.patched: did the payload change),
+         'app'     at the very end of renderApp() (info.flips: the height FLIPs it ran),
+         'scope'   at the end of patchScope() -- the 500 ms work tick goes
+                   lightTick -> patchScope, never renderApp (info.scope: the node).
+       Return values are ignored. PM56_PMX.after() is meant to be the one registrant. */
+    'afterRender'];
 
   function ensureExt(){
     /* Keep in sync with EXT_SHIM in build.py: whichever of the two runs first
@@ -310,6 +367,23 @@
   }
   EXT.ctx = extCtx; EXT.render = extRender; EXT.replace = extReplace;
   EXT.run = extRun; EXT.runAfter = extRunAfter;
+  /* F0b (a): the afterRender observer slot (see EXT_SLOTS). One lookup when nothing is
+     registered, because renderApp runs on every state change. A hook may render; the
+     nested render runs the hooks once more and a third level is dropped, so a hook that
+     always re-renders cannot recurse forever. */
+  let afterRenderDepth=0;
+  function runAfterRender(phase, info){
+    const fns=EXT._slots.afterRender;
+    if(!fns||!fns.length||afterRenderDepth>1) return;
+    afterRenderDepth++;
+    try{
+      const arg=Object.assign({phase}, info);
+      const ctx=extCtx(arg);
+      for(const fn of fns.slice()){
+        try{ fn(ctx, arg); }catch(err){ console.error('PM56_EXT slot "afterRender" threw', err); }
+      }
+    } finally { afterRenderDepth--; }
+  }
 
   /* 15d: this claimed "Redacted context exported" and exported nothing. A
      standalone file:// page can still hand the browser a real file through a
@@ -803,6 +877,22 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     </section>`;
   }
 
+  /* F0b (g), DESIGN-SPEC 8.14 amendment G-34: the header title is a host PREFS can style.
+     The state comes from PM56_FEATURES.state().title (idle when that module is absent); each
+     word is its own span keyed by position and word, so an unchanged word keeps its node and
+     a changed one enters fresh (PREFS's shimmer and word morph). headerExtras is untouched. */
+  function titleState(t){
+    const F=window.PM56_FEATURES&&typeof window.PM56_FEATURES.state==='function'?window.PM56_FEATURES.state():null;
+    const T=F&&F.title; if(!T||!t) return 'idle';
+    if(T.pending&&T.pending[t.id]) return 'naming';
+    if(T.locks&&T.locks[t.id]) return 'locked';
+    const a=T.attempts&&T.attempts[t.id], last=a&&a.length?a[a.length-1]:null;
+    return last&&last.outcome==='unavailable'?'unavailable':'idle';
+  }
+  function titleWords(t){
+    return String(t.title||'').split(/\s+/).filter(Boolean)
+      .map((w,i)=>`<span class="pmx-chat-title-word" data-k="tw:${i}:${esc(w)}" style="--i:${i}">${esc(w)}</span>`).join(' ');
+  }
   function renderChatHeader(t){
     /* Context ring percentage. The ring's value is an INLINE style attribute, so no
        module stylesheet can reach it -- it has to be resolved here. PM56_CTX comes from
@@ -812,7 +902,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="chat-header">
       <button class="icon-button" data-action="toggle-history"${hoverAttrs('open-history','Open thread history')}>${icon('history',14)}</button>
       <button class="icon-button" data-action="new-thread"${hoverAttrs('new-thread','Start a new thread')}>${icon('plus',16,'hh-plus-glyph')}</button>
-      <div class="chat-title"><span>${esc(t.title)}</span><span class="chat-state"><i class="status-dot ${t.status}"></i>${esc(statusLabel(t.status))}</span></div>
+      <div class="chat-title" data-pmx-title-state="${titleState(t)}"><span class="pmx-chat-title">${titleWords(t)}</span>${extRender('headerTitleAfter',{thread:t})}<span class="chat-state"><i class="status-dot ${t.status}"></i>${esc(statusLabel(t.status))}</span></div>
       <span class="chat-head-spacer"></span>
       ${extRender('headerLeading',{thread:t})}
       <button class="icon-button" data-action="thread-search" data-menu-anchor="thread-search"${hoverAttrs('thread-search','Search this thread or every thread')}>${icon('search',14)}</button>
@@ -987,14 +1077,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const d=map[m.type]||['info',m.title||m.type,''];
     const actions=[];
     if(m.type==='question-receipt') actions.push(`<button class="soft-button" data-action="open-questionnaire">Resume</button>`);
-    if(m.type==='bsd-advice') actions.push(`<button class="soft-button" data-action="open-bsd-details">${icon('eye',12)} Evidence</button><button class="text-button" data-action="dismiss-event" data-id="${esc(m.id)}">Dismiss</button>`);
+    if(m.type==='bsd-advice') actions.push(`<button class="soft-button" data-action="open-bsd-details">${icon('eye',12)} Why?</button><button class="text-button" data-action="dismiss-event" data-id="${esc(m.id)}">Dismiss</button>`);
     if(m.type.startsWith('context-')) actions.push(`<button class="soft-button" data-action="context-details">${icon('info',12)} Details</button>`);
     if(m.type==='permission') actions.push(`<button class="soft-button" data-action="open-permission">Review</button>`);
     if(m.type==='tool-error') actions.push(`<button class="soft-button" data-action="trigger-work-recovery">Recover</button>`);
     /* The actions array is a fixed if-chain, so module-rendered system cards (restore
        points, rewound regions) could carry no buttons at all. Emits nothing unregistered. */
     const extActions=extRender('systemCardActions',{message:m}); if(extActions) actions.push(extActions);
-    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy">${m.title&&m.title!==d[1]?`<span class="event-kind">${esc(d[1])}</span>`:''}<strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p>${m.type==='bsd-advice'?`<p><strong>Impact:</strong> The primary agent changed from rewriting history to a forward migration with rollback evidence.</p>`:''}</div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
+    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy">${m.title&&m.title!==d[1]?`<span class="event-kind">${esc(d[1])}</span>`:''}<strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p></div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
   }
   function renderWorkingAnimation(m,ownedProjection){
     const rec=ownedProjection||workRecFor(m)||state.work;
@@ -1451,13 +1541,6 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      It does not create Goal presence on threads that do not own one. */
   /* Goal V2 fallback: objective, lifecycle, revision. No phase counters -- a Goal has no numerator. */
   const GOAL_FALLBACK={title:'Optimize analytics query performance',status:'active',revision:1,blocker:''};
-  const CREW_FALLBACK=[
-    {id:'crew-planner', name:'Planner', status:'waiting', current:'Holding the next slice'},
-    {id:'crew-impl', name:'Implementer', status:'working', current:'Applying the agreed change'},
-    {id:'crew-review', name:'Reviewer', status:'waiting', current:'Waiting on the implementer'},
-    {id:'crew-browser', name:'Browser auditor', status:'blocked', current:'Needs a live page'}
-  ];
-
   /* Goal V2: one objective plus a four-value lifecycle. There is no phase count
      to project, so the bar shows the revision instead of a done/total pair --
      a Goal has no numerator. Legacy phase fields are read only to migrate an
@@ -1490,16 +1573,6 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      drops only that stamp; it does not wipe other threads or erase receipts.
      Crew stays when the thread has a `crew` event, or when Crew Mode is On
      on the selected thread (stub). A `crew` event is not Subagents. */
-  function crewMembers(tid, msgs){
-    const ev=(msgs||[]).find(m=>m.type==='crew');
-    const raw=ev&&String(ev.detail||'').replace(/\.$/,'');
-    const names=raw?raw.split(/\s*,\s*|\s+and\s+/).map(s=>s.trim()).filter(Boolean):[];
-    const src=names.length?names.map((name,i)=>{
-      const fb=CREW_FALLBACK[i]||CREW_FALLBACK[CREW_FALLBACK.length-1];
-      return {id:`crew-${tid}-${i}`, name:name.replace(/^./,c=>c.toUpperCase()), status:fb.status, current:fb.current};
-    }):CREW_FALLBACK.map(x=>({...x, id:`${x.id}-${tid}`}));
-    return src;
-  }
   function activityScope(tid){
     tid=tid||state.selectedThread;
     const thread=threadById(tid);
@@ -1532,8 +1605,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const subagents=(D.subagents||[]).filter(a=>a.parentThreadId===tid);
     const hasSubagents=subagents.length>0||msgs.some(m=>m.type==='live-agents');
     const hasCrewEvent=msgs.some(m=>m.type==='crew');
-    const hasCrew=hasCrewEvent||(!!state.capabilities.crew&&tid===state.selectedThread);
-    const crew=hasCrew?crewMembers(tid, msgs):[];
+    /* E-02: the crew capability is a permission (Crew Auto may call a Crew), on by default, so it no longer conjures an
+       empty Crew domain in every chat's Activity; a Crew shows there when one has run (COLLAB_DOMAINS below) */
+    const hasCrew=hasCrewEvent;
+    /* F0b (j): no invented members. Real Crew runs are collab.crew (projected below by
+       activityDefs); the legacy domain alone says "No Crews in this chat yet." */
+    const crew=[];
     const changes=(D.changes||[]).filter(c=>c.threadId===tid);
     const invoked=new Set();
     msgs.forEach(m=>{ if((m.type==='artifact'||m.type==='plan-card')&&m.artifactId) invoked.add(m.artifactId); });
@@ -1642,17 +1719,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         summary:agents.length?`${plural(aWorking,'agent','agents')} working, ${aBlocked} blocked`:'No child agents',
         detail:agents.slice(0,2).map(a=>`${a.name} ${a.status}`).join(' · ')||'No child agents'};
     }
+    /* F0b (j): the legacy domain (a crew event or "Allow Crews in this chat" on, with no Crew
+       run) no longer lists invented members. A thread with Crew runs is projected by the
+       COLLAB_DOMAINS loop below, which replaces this entry. */
     if(scope.live.crew){
-      const crew=scope.crew;
-      const cWorking=crew.filter(c=>c.status==='working').length;
-      const cBlocked=crew.filter(c=>c.status==='blocked').length;
-      const cWaiting=crew.filter(c=>c.status==='waiting').length;
-      out.crew={icon:'users',label:'Crew',
-        count:String(crew.length),
-        state:cWorking?'live':'changed',
-        tone:cBlocked?'blocked':cWorking?'working':cWaiting?'idle':'done',
-        summary:crew.length?crew.map(c=>c.name).slice(0,3).join(' · '):'Crew Mode is on',
-        detail:`${plural(cWorking,'member','members')} working · ${cBlocked} blocked`};
+      out.crew={icon:'users',label:'Crew',count:'0',state:'changed',tone:'idle',
+        summary:'No Crews in this chat yet.',
+        detail:'A Crew you start in this chat shows up here.'};
     }
     if(scope.live.changes){
       const changes=scope.changes;
@@ -1702,7 +1775,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const defs=activityDefs();
     const items=Object.entries(defs);
     if(!items.length) return '';
-    return `<div class="activity-wrap" data-k="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}"><i class="state-mark ${d.state}"></i>${icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span></button>`;}).join('')}</div></div>`;
+    return `<div class="activity-wrap" data-k="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}"><i class="state-mark ${d.state}"></i>${COLLAB_DOMAINS[id]?kindMark(id,12,d.icon):icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span></button>`;}).join('')}</div></div>`;
   }
   function renderJumpBottom(){
     const working=turnBusy();
@@ -1745,7 +1818,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(id==='goal') return extReplace('goalSection',{}, `<div class="activity-line"><span class="status-dot working"></span><div class="copy"><strong>Optimize analytics query performance</strong><span>Running · Phase 2/4 · 68% · Revision 4</span></div><span class="right">2m 06s</span></div><div class="activity-line"><span class="event-icon" style="width:20px;height:20px">${icon('warning',10)}</span><div class="copy"><strong>Exact blocker</strong><span>Production schema modification requires explicit approval.</span></div></div><div class="plan-actions"><button class="soft-button" data-action="open-goal">View Goal</button><button class="soft-button" data-action="edit-goal">Edit</button><button class="soft-button" data-action="pause-goal">Pause</button><button class="soft-button" data-action="resume-goal">Resume</button><button class="soft-button" data-action="stop-goal">Stop</button><button class="text-button danger" data-action="clear-goal">Clear</button></div>`);
     if(id==='todo') return scope.todos.map(x=>`<div class="activity-line"><span class="event-icon" style="width:20px;height:20px;color:${x.status==='done'?'var(--positive)':x.status==='blocked'?'var(--danger)':'var(--accent)'}">${icon(x.status==='done'?'check':x.status==='blocked'?'lock':'todo',10)}</span><div class="copy"><strong>${esc(x.label)}</strong><span>${esc(x.source)}${x.blocker?` · ${esc(x.blocker)}`:''}</span></div><span class="right">${esc(x.status)}</span></div>`).join('');
     if(id==='subagents') return scope.subagents.map(a=>`<button class="activity-line" data-action="open-agent" data-id="${esc(a.id)}"><span class="agent-avatar" style="width:22px;height:22px;border-radius:7px">${esc(a.name.split(' ').map(x=>x[0]).join('').slice(0,2))}</span><span class="copy"><strong>${esc(a.name)} · ${esc(a.model)}</strong><span>${esc(a.current)}${a.blocker?` · ${esc(a.blocker)}`:''}</span></span><span class="right">${esc(lblOf('subagentStatus',a.status))} · ${esc(a.elapsed)}</span></button>`).join('');
-    if(id==='crew') return scope.crew.map(c=>`<div class="activity-line"><span class="agent-avatar" style="width:22px;height:22px;border-radius:7px">${esc(c.name.split(' ').map(x=>x[0]).join('').slice(0,2))}</span><span class="copy"><strong>${esc(c.name)}</strong><span>${esc(c.current||lblOf('subagentStatus',c.status))}</span></span><span class="right">${esc(lblOf('subagentStatus',c.status))}</span></div>`).join('');
+    if(id==='crew') return `<div class="activity-line"><span class="copy"><strong>No Crews in this chat yet.</strong><span>A Crew you start in this chat shows up here.</span></span></div>`;
     if(id==='changes') return scope.changes.map(c=>`<button class="activity-line" data-action="open-change" data-path="${esc(c.path)}"><span class="event-icon" style="width:20px;height:20px">${icon('file-edit',10)}</span><span class="copy"><strong>${esc(c.path)}:${c.line}</strong><span>${esc(c.summary)}</span></span><span class="right" style="color:var(--positive)">+${c.add} <i style="color:var(--danger)">−${c.del}</i></span></button>`).join('');
     return scope.artifacts.map(a=>`<button class="activity-line" data-action="open-artifact" data-id="${esc(a.id)}" data-artifact-id="${esc(a.id)}"><span class="event-icon" style="width:20px;height:20px;color:${a.status==='error'?'var(--danger)':a.status==='stale'?'var(--warning)':'var(--accent)'}">${icon(a.kind==='image'?'image':a.kind==='mermaid'?'code':'artifact',10)}</span><span class="copy"><strong>${esc(a.title)}</strong><span>${esc(a.kind)} · version ${a.version} · ${esc(a.summary)}</span></span><span class="right">${esc(lblOf('artifactStatus',a.status))}</span></button>`).join('');
   }
@@ -1838,10 +1911,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        button here costs the five selector chips ~30% of their width. */
     const drafts=state.draftHistory[state.selectedThread]||[];
     const showDrafts=drafts.length&&!state.composer.trim();
-    const caps=[];
-    if(state.capabilities.goal)caps.push(['goal','goal']); if(state.capabilities.crew)caps.push(['users','crew']); if(state.capabilities.bsd!=='Off')caps.push(['warning','bsd']); if(state.capabilities.context!=='Off')caps.push(['lens','context']); if(state.capabilities.eli5)caps.push(['sparkles','eli5']);
+    const capDots=renderCapabilityDots();
     const sendBtn=sendButtonHtml();
-    return `<div class="composer">${extRender('composerBelow',{position:'above'})}<div class="composer-box" data-k="composer-box">${extRender('composerRibbon',{})}${extRender('composerTray',{})}<div class="composer-field"><textarea class="composer-input" data-input="composer" placeholder="Ask Puppet Master, use natural language, or type / for commands…">${esc(state.composer)}</textarea><div class="composer-infield"><div class="composer-infield-l"><button class="icon-button" data-action="attach"${hoverAttrs('attach','Attach files or images')}>${icon('attach',16)}</button><span class="capability-indicators">${caps.slice(0,5).map(c=>`<span class="capability-dot ${c[1]}"${hoverAttrs('cap-'+c[1],(CAP_HOVER[c[1]]||c[1])+' active')}>${icon(c[0],16)}</span>`).join('')}</span></div>${sendBtn}</div></div><div class="composer-tools"><button class="selector-button active" data-kind="persona" data-action="open-menu" data-menu="persona" data-menu-anchor="persona"${hoverAttrs('sel-persona','Persona · '+state.persona)}><span class="sel-icon">${icon('users',13)}</span><span class="sel-label">${esc(state.persona)}</span></button><button class="selector-button active" data-kind="model" data-action="open-menu" data-menu="model" data-menu-anchor="model"${hoverAttrs('sel-model','Model · '+m.name)}><span class="sel-icon">${providerMark(m.provider,13)}</span><span class="sel-label">${esc(m.name)}</span>${state.fast&&m.fast?icon('lightning',11,'fast-bolt'):''}</button><button class="selector-button active" data-kind="mode" data-action="open-menu" data-menu="mode" data-menu-anchor="mode"${hoverAttrs('sel-mode','Mode · '+state.mode)}><span class="sel-icon">${modeGlyph(state.mode,13)}</span><span class="sel-label">${esc(state.mode)}</span></button><button class="selector-button active" data-kind="permissions" data-action="open-menu" data-menu="permissions" data-menu-anchor="permissions"${hoverAttrs('sel-permissions','Permissions · '+state.permissions)}><span class="sel-icon">${icon('lock',13)}</span><span class="sel-label">${esc(state.permissions)}</span></button><button class="icon-button ${Object.values(state.capabilities).some(x=>x===true||x==='On'||x==='Focus'||x==='Expanded')?'active':''}" data-action="open-menu" data-menu="wand" data-menu-anchor="wand"${hoverAttrs('wand','Capabilities and Goal Mode')}>${icon('wand',14)}</button></div><div class="composer-hint">${esc(state.persona)} · ${esc(m.name)} · ${esc(state.mode)} · ${esc(state.permissions)}</div></div></div>`;
+    return `<div class="composer">${extRender('composerBelow',{position:'above'})}<div class="composer-box" data-k="composer-box">${extRender('composerRibbon',{})}${extRender('composerTray',{})}<div class="composer-field"><textarea class="composer-input" data-input="composer" placeholder="Ask Puppet Master, use natural language, or type / for commands…">${esc(state.composer)}</textarea><div class="composer-infield"><div class="composer-infield-l"><button class="icon-button" data-action="attach"${hoverAttrs('attach','Attach files or images')}>${icon('attach',16)}</button><span class="capability-indicators">${capDots}</span></div>${sendBtn}</div></div><div class="composer-tools"><button class="selector-button active" data-kind="persona" data-action="open-menu" data-menu="persona" data-menu-anchor="persona"${hoverAttrs('sel-persona','Persona · '+state.persona)}><span class="sel-icon">${icon('users',13)}</span><span class="sel-label">${esc(state.persona)}</span></button><button class="selector-button active" data-kind="model" data-action="open-menu" data-menu="model" data-menu-anchor="model"${hoverAttrs('sel-model','Model · '+m.name)}><span class="sel-icon">${providerMark(m.provider,13)}</span><span class="sel-label">${esc(m.name)}</span>${state.fast&&m.fast?icon('lightning',11,'fast-bolt'):''}</button><button class="selector-button active" data-kind="mode" data-action="open-menu" data-menu="mode" data-menu-anchor="mode"${hoverAttrs('sel-mode','Mode · '+state.mode)}><span class="sel-icon">${modeGlyph(state.mode,13)}</span><span class="sel-label">${esc(state.mode)}</span></button><button class="selector-button active" data-kind="permissions" data-action="open-menu" data-menu="permissions" data-menu-anchor="permissions"${hoverAttrs('sel-permissions','Permissions · '+state.permissions)}><span class="sel-icon">${icon('lock',13)}</span><span class="sel-label">${esc(state.permissions)}</span></button><button class="icon-button ${Object.values(state.capabilities).some(x=>x===true||x==='On'||x==='Focus'||x==='Expanded')?'active':''}" data-action="open-menu" data-menu="wand" data-menu-anchor="wand"${hoverAttrs('wand','Capabilities and Goal Mode')}>${icon('wand',14)}</button></div><div class="composer-hint">${esc(state.persona)} · ${esc(m.name)} · ${esc(state.mode)} · ${esc(state.permissions)}</div></div></div>`;
   }
 
   function queueOf(){
@@ -2154,6 +2226,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     armJumpBottomListener();
     armFollowObserver();
     syncJumpBottom();
+    runAfterRender('app',{flips});
   }
 
   /* patchScope (Chat WOW M1): re-render ONE keyed live node with the same
@@ -2183,6 +2256,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     rollDigits(rollBefore);
     restoreScroll(positions,{workH, post, workGrow:workFlipped(flips)});
     retainHoverAfterRender();
+    runAfterRender('scope',{scope:live, flips});
     return true;
   }
 
@@ -2315,7 +2389,22 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      track grows smoothly on its own. */
   function flipHeights(targets, before){
     const done=[];
-    if(window.PM56_MOTION && window.PM56_MOTION.reduced()) return done;
+    /* F0b (review cycle 1, DESIGN-SPEC 5.7): body.pm56-reduced is the same policy as the media
+       query (PM56_PMX.reduced() reads both), but PM56_MOTION.reduced() reads only the query, so
+       the 320 ms height FLIP still ran on .pmx-run cards under the class. Under either, nothing
+       animates and the end height is already laid out. The changes are still measured, as
+       done.instant, so restoreScroll can keep a scrolled-away reader's content still when a pmx
+       card above it changes height (workFlipGrowth). `done` itself stays the FLIPs that ran. */
+    if((window.PM56_MOTION && window.PM56_MOTION.reduced()) || document.body.classList.contains('pm56-reduced')){
+      done.instant=[];
+      for(const el of targets){
+        if(!el.isConnected) continue;
+        const h0=before.get(el); if(h0==null) continue;
+        const h1=el.getBoundingClientRect().height;
+        if(Math.abs(h1-h0)>=1) done.instant.push({el,h0,h1});
+      }
+      return done;
+    }
     for(const el of targets){
       if(!el.isConnected) continue;
       const h0=before.get(el); if(h0==null) continue;
@@ -2528,7 +2617,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      so a reader at the bottom is not pulled down with the shrink */
   let workShrinkFn=null;
   function onWorkShrink(fn){ workShrinkFn=typeof fn==='function'?fn:null; }
-  function workFlipped(flips){ const g=workFlipGrowth(flips); if(g<-4&&workShrinkFn){ try{ workShrinkFn(-g); }catch(e){} } return g; }
+  /* workFlipGrowth returns {total, el, h0, h1, instant} since F0b (b); the shrink hold reads
+     the working-card total, as it did when the growth was a bare number. Comparing the object
+     itself with -4 was always false, so the hold never fired and a shrinking card snapped the
+     thread down mid-turn (turn-verify "the thread never jumps down mid-turn"). */
+  function workFlipped(flips){ const g=workFlipGrowth(flips); const tot=typeof g==='number'?g:((g&&g.total)||0); if(tot<-4&&workShrinkFn){ try{ workShrinkFn(-tot); }catch(e){} } return g; }
   function stickToBottom(instant){
     tStick=true;
     const el=tEl();
@@ -2573,7 +2666,44 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const el=tEl(); if(!el||pre==null) return;
     if(el.scrollTop<pre-0.5){ const max=el.scrollHeight-el.clientHeight; writeScrollInstant(el,Math.min(pre,max)); if(post) post.transcript=el.scrollTop; }
   }
-  function workFlipGrowth(flips){ let g=0; for(const f of flips||[]) if(f.el.closest&&f.el.closest('.working-card')) g+=f.h1-f.h0; return g; }
+  /* F0b (b), cleared by Chat WOW: the follower was hard-wired to .working-card. It now also
+     serves the pmx transcript surfaces. `total` is the working-card growth exactly as before
+     (the working-card path is unchanged); `el/h0/h1` is the flip with the largest height
+     change inside any follow host, which restoreScroll hands to the follower.
+     IMPACT A2-18: the pmx part of the host list is PM56_PMX.SURFACES (pmx-system.js), the one
+     list of pmx transcript surfaces, read at call time. FOLLOW_PMX_FALLBACK is the spec's list
+     (DESIGN-SPEC 4.5), used only when pmx-system.js is absent. Entries are class names
+     ('pmx-run') or selectors ('.sched-card.pmx-bubble'); an unusable list falls back. */
+  const FOLLOW_PMX_FALLBACK=['pmx-run','pmx-receipt','pmx-note','pmx-files','pmx-bubble'];
+  let followHostsFor=null, followHostsSel='';
+  function followHosts(){
+    const S=window.PM56_PMX&&window.PM56_PMX.SURFACES;
+    const list=Array.isArray(S)&&S.length?S:FOLLOW_PMX_FALLBACK;
+    const key=list.join('|');
+    if(key!==followHostsFor){
+      const toSel=l=>['.working-card'].concat(l.map(x=>String(x).trim()).filter(Boolean).map(x=>/^-?[A-Za-z_][\w-]*$/.test(x)?'.'+x:x)).join(', ');
+      let sel=toSel(list);
+      try{ document.documentElement.matches(sel); }catch(e){ sel=toSel(FOLLOW_PMX_FALLBACK); }
+      followHostsFor=key; followHostsSel=sel;
+    }
+    return followHostsSel;
+  }
+  function workFlipGrowth(flips){
+    let g=0, big=null;
+    /* Review cycle 1: under reduced motion no FLIP ran and flipHeights measured the instant
+       changes instead (flips.instant). They name the pmx card to follow; `total` stays the
+       animated working-card growth only, so the working-card path is exactly as before. */
+    const instant=!!(flips&&!flips.length&&flips.instant&&flips.instant.length);
+    const list=instant?flips.instant:flips;
+    if(!list||!list.length) return {total:0, el:null, h0:0, h1:0};
+    const hosts=followHosts();
+    for(const f of list){
+      const host=f.el.closest&&f.el.closest(hosts); if(!host) continue;
+      if(host.classList.contains('working-card')&&!instant) g+=f.h1-f.h0;
+      if(!big||Math.abs(f.h1-f.h0)>Math.abs(big.h1-big.h0)) big=f;
+    }
+    return {total:g, el:big?big.el:null, h0:big?big.h0:0, h1:big?big.h1:0, instant};
+  }
   function transcriptAwayFromBottom(){
     const el=scrollKeyEl('transcript');
     if(!el) return false;
@@ -2688,6 +2818,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
          Clock-only ticks (|Δh| < 1px) must NOT start a new 420ms follower —
          that fights the user's wheel for nearly the entire 500ms tick period. */
       const startH=opts&&opts.workH;
+      const grow=opts&&opts.workGrow;
+      const workGrow=typeof grow==='number'?grow:((grow&&grow.total)||0);
+      let following=false;
       /* P1: the working body's FLIP is holding it at its OLD height when this
          runs, so the live card height alone never showed the change and the
          follower never started; the FLIP's own target delta does. A reader
@@ -2695,12 +2828,25 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(startH!=null&&!tStick){
         const card=(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
         const hNow=card?card.getBoundingClientRect().height:startH;
-        if(Math.abs(hNow-startH)>=1||Math.abs((opts&&opts.workGrow)||0)>=1) followWorkCardHeight(startH);
+        if(Math.abs(hNow-startH)>=1||Math.abs(workGrow)>=1){ followWorkCardHeight(startH); following=true; }
+      }
+      /* F0b (b): a pmx surface (PM56_PMX.SURFACES) whose flip changed height. Its FLIP
+         is still holding it at h0 in this frame, so the host's height now is its old height.
+         Same three rules: never for a reader stuck to the bottom, never for a clock-only
+         change (|dh| < 1px), and the follower only anchors what sits below the card. */
+      const flipEl=grow&&typeof grow==='object'?grow.el:null;
+      if(!following&&!tStick&&flipEl&&flipEl.isConnected&&Math.abs(grow.h1-grow.h0)>=1){
+        const host=flipEl.closest(followHosts());
+        /* Review cycle 1: under reduced motion nothing holds the card at h0, so its old height
+           is its height now less the change flipHeights measured, and the follower's first
+           step runs in this frame. */
+        if(host&&!host.classList.contains('working-card')) followWorkCardHeight(host.getBoundingClientRect().height-(grow.instant?grow.h1-grow.h0:0), flipEl, grow.instant);
       }
       syncJumpBottom();
     });
   }
-  function followWorkCardHeight(startH){
+  function followWorkCardHeight(startH, flipEl, sync){
+    const hosts=flipEl?followHosts():null;
     /* This anchors what sits BELOW a card whose height changes, for a reader
        scrolled away. A reader stuck to the bottom is the glide's: anchoring
        there fought it, and fought the room a folding card holds for its answer
@@ -2723,7 +2869,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(cancelled||scrollIntents.has('transcript')||!tr.isConnected){
         tr.style.overflowAnchor=prevAnchor; return;
       }
-      const card=(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
+      /* F0b (b): with an element, follow the card that holds it; without, the working card. */
+      const card=flipEl?(flipEl.isConnected?flipEl.closest(hosts):null):(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
       if(!card){ tr.style.overflowAnchor=prevAnchor; return; }
       const h=card.getBoundingClientRect().height;
       const cr=card.getBoundingClientRect(), vr=tr.getBoundingClientRect();
@@ -2743,7 +2890,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(el<1100 && (el<360 || still<6)) requestAnimationFrame(tick);
       else tr.style.overflowAnchor=prevAnchor;
     };
-    requestAnimationFrame(tick);
+    /* Review cycle 1: `sync` (a pmx card under reduced motion, from restoreScroll's frame) runs
+       the first step now. The change is already laid out and no FLIP holds it, so waiting a
+       frame painted the reader's content moved by the full change for one frame. */
+    if(sync) tick(); else requestAnimationFrame(tick);
   }
   // The lens is an in-flow sibling, never a positioned transcript overlay.
   function renderInlineLens(){
@@ -2759,6 +2909,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   let lastOverlayPayload='';
   function renderOverlays(){
     const root=document.getElementById('pmOverlayRoot');
+    /* F0b (IMPACT A1-36): a scoped picker opened from a sheet goes with that sheet. Closing the
+       sheet (x, Cancel, Save, Start) while its picker was open left the 560 px menu hanging at
+       the window's left edge, anchored to nothing, and the next Escape went to it. */
+    if(state.menu&&state.menu.scopedPicker&&state.menu.fromDialog&&(!state.dialog||state.dialog.type!==state.menu.fromDialog)){ state.menu=null; scopedPicker=null; }
     const parts=[];
     if(state.historyMode==='floating') parts.push(`<aside class="history-flyout" data-history-variant="${state.variants[1]}">${renderHistoryContent(true)}</aside>`);
     if(state.context.details) parts.push(renderContextDrawer());
@@ -2771,12 +2925,46 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const payload=parts.join('');
     /* Work ticks re-enter renderApp every 500ms. Re-patching an unchanged
        overlay root fires pointerout on hovered chrome and blinks tips. */
-    if(payload!==lastOverlayPayload){
+    const menuSig=state.menu?`${state.menu.type}|${state.menu.anchor}`:'';
+    const patched=payload!==lastOverlayPayload;
+    if(patched){
       lastOverlayPayload=payload;
+      const held=holdMenuPlacement(root, menuSig);
       pmPatch(root,payload);
+      restoreMenuPlacement(root, held);
     }
+    lastMenuSig=menuSig;
     syncHoverCard();
+    runAfterRender('overlay',{patched});
     requestAnimationFrame(positionOverlays);
+  }
+  /* F0b (e), the model-menu fold fix (DESIGN-SPEC 10.1 e; brief C.5, D-16). The 13th model
+     was never below reach: scrollIntoView brings kimi-k3-turbo into the list. What missed was
+     the click. Moving onto a model row opens its effort sidecar (setSubmenu -> this render),
+     and pmSyncAttrs rewrites the root menu's style from the template (height only), deleting
+     the left/top positionOverlays wrote. positionOverlays runs on the next frame, so for the
+     rest of this one the menu sits at its static position (x ~ 0) and a mousedown that
+     arrives in that window lands on whatever is under it (the sheet), closing the menu with
+     nothing picked. menus.js repairs exactly this for the sidecar lane; this is the same
+     repair for the root lane: when the SAME menu is re-patched (not an open, not another
+     menu reusing the node), put its last placement back at once. Nothing is measured here,
+     so the sprout's measurement rules are untouched, and positionOverlays still re-places it
+     on the next frame. */
+  let lastMenuSig='';
+  function holdMenuPlacement(root, sig){
+    if(!sig||sig!==lastMenuSig) return null;
+    const el=root.querySelector(':scope > [data-overlay="root-menu"]');
+    if(!el||!el.style.left) return null;
+    return {el, left:el.style.left, top:el.style.top,
+      ox:el.style.getPropertyValue('--origin-x'), oy:el.style.getPropertyValue('--origin-y')};
+  }
+  function restoreMenuPlacement(root, h){
+    if(!h||root.querySelector(':scope > [data-overlay="root-menu"]')!==h.el) return;
+    const s=h.el.style;
+    if(!s.left) s.left=h.left;
+    if(!s.top&&h.top) s.top=h.top;
+    if(h.ox&&!s.getPropertyValue('--origin-x')) s.setProperty('--origin-x',h.ox);
+    if(h.oy&&!s.getPropertyValue('--origin-y')) s.setProperty('--origin-y',h.oy);
   }
 
   /* Text hover tips stay available while a menu/drawer is open (those surfaces
@@ -2968,7 +3156,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderWandMenu(){
     const rows=[
       ['goal','Goal Mode','Create and manage a durable goal','goal-menu',state.capabilities.goal?'On':'Off','goal'],
-      ['crew','Crew','Coordinate a role-based group of agents','crew-menu',state.capabilities.crew?'On':'Off','users'],
+      /* F0b (d), D-2, E-02 (owner, 2026-09-27): the legacy Crew permission is this chat's Crew Auto override. Same
+         submenu and values; the answer is Collaboration's (the Crew Auto check below reads the same flag). */
+      ['crew','Crew Auto in this chat','Lets the assistant call a Crew when a job needs one','crew-menu',crewAutoHere()?'On':'Off','users'],
       /* Assistant-redesign wave: the BSD and ELI5 rows are gone from here.
          Both were superseded and both now have ONE owner that renders through
          `wandRows`, so leaving these produced two Back Seat Driver rows and two
@@ -3040,16 +3230,45 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const models=filteredModels();
     const groups=new Set(models.map(x=>x.provider)).size;
     const content=models.length?models.length*MODEL_ROW_H+groups*MODEL_GROUP_H:64;
-    return clamp(MODEL_HEAD_H+MODEL_LIST_PAD+content,190,Math.min(560,window.innerHeight-24));
+    /* F0b (e), DESIGN-SPEC R-27 (the C.5 fold fix): a scoped model picker, opened from a
+       trigger in a sheet, takes at most the room on its trigger's larger side, less the 8 px
+       margin and 3 px gap positionOverlays keeps, so it opens wholly on that side, never over
+       its own trigger, with every row inside the list. The composer's model menu keeps the
+       viewport clamp. Only the cap changes: the look, the sprout and the height spring are
+       menus.js's and untouched. */
+    let cap=Math.min(560,window.innerHeight-24);
+    if(state.menu&&state.menu.type==='model'&&state.menu.scopedPicker){
+      const a=document.querySelector(`[data-menu-anchor="${CSS.escape(state.menu.anchor)}"]`);
+      const r=a&&a.getBoundingClientRect();
+      if(r&&(r.width||r.height)) cap=Math.max(120,Math.min(cap,Math.max(r.top-11,window.innerHeight-r.bottom-11)));
+    }
+    return clamp(MODEL_HEAD_H+MODEL_LIST_PAD+content,Math.min(190,cap),cap);
   }
 
   function renderContextCompactMenu(){
     return extReplace('contextCompactMenu',{}, `<div class="menu-head"><strong>Context</strong><span class="spacer"></span><span class="meta-pill">64%</span></div><div style="padding:9px"><div class="context-big"><strong>83.9K</strong><span>of 131K tokens loaded</span></div><div class="context-bar"><i></i></div><div class="metric-grid" style="grid-template-columns:1fr 1fr;margin-top:8px"><div class="metric-card"><label>Cache hit</label><strong>78%</strong></div><div class="metric-card"><label>Available</label><strong>47.1K</strong></div></div><div class="composition-bar" style="margin-top:8px"><i></i><i></i><i></i><i></i><i></i></div><div style="display:flex;justify-content:space-between;color:var(--subtle);font-size:9px;margin-top:4px"><span>Source composition</span><span>5 source groups</span></div></div><div class="menu-divider"></div><button class="menu-item" data-action="compact-now"><span class="menu-icon">${icon('collapse',13)}</span><span class="menu-copy"><strong>Compact Now</strong><span>Preview and apply a source-aware compaction</span></span></button><button class="menu-item" data-action="context-details"><span class="menu-icon">${icon('info',13)}</span><span class="menu-copy"><strong>More Details</strong><span>Window, tokens, cache, composition, cost, and raw projection</span></span>${icon('chevron',11)}</button>`);
   }
 
+  /* F0b (i): threadMenu gains a position right under Rename ({position:'after-rename'}); the
+     end of the menu is {position:'end'}. A registrant that ignores `position` returns the same
+     markup for both and is placed once, at the end, as before; one that answers the two
+     positions differently is placed where it asked (PREFS: "Name it for me" under Rename). */
+  function threadMenuParts(t,id){
+    const fns=EXT._slots.threadMenu||[], after=[], end=[];
+    if(!fns.length) return {after:'',end:''};
+    const ca=extCtx({thread:t,id,position:'after-rename'}), ce=extCtx({thread:t,id,position:'end'});
+    for(const fn of fns){
+      let a='', e='';
+      try{ a=fn(ca)||''; }catch(err){ console.error('PM56_EXT slot "threadMenu" threw', err); }
+      try{ e=fn(ce)||''; }catch(err){ console.error('PM56_EXT slot "threadMenu" threw', err); }
+      if(a===e){ if(e) end.push(e); } else { if(a) after.push(a); if(e) end.push(e); }
+    }
+    return {after:after.join(''), end:end.join('')};
+  }
   function renderThreadMenu(id){
     const t=state.threads.find(x=>x.id===id);if(!t)return '';
-    return `<div class="menu-head"><strong>${esc(t.title)}</strong><span class="spacer"></span><span class="chat-meta">${esc(statusLabel(t.status))}</span></div>${!t.archived?`<button class="menu-item" data-action="toggle-thread-pin" data-id="${esc(id)}"><span class="menu-icon">${icon(t.pinned?'unpin':'pin',13)}</span><span class="menu-copy"><strong>${t.pinned?'Unpin':'Pin'} thread</strong><span>${t.pinned?'Move to Recent':'Keep at the top'}</span></span></button><button class="menu-item" data-action="rename-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('edit',13)}</span><span class="menu-copy"><strong>Rename</strong><span>Change the thread title</span></span></button><button class="menu-item" data-action="fork-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('fork',13)}</span><span class="menu-copy"><strong>Fork thread</strong><span>Create a child branch with lineage</span></span></button><button class="menu-item" data-action="archive-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('archive',13)}</span><span class="menu-copy"><strong>Archive</strong><span>Hide from active groups but keep searchable</span></span></button>`:`<button class="menu-item" data-action="restore-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('restore',13)}</span><span class="menu-copy"><strong>Restore thread</strong><span>Return it to Recent</span></span></button><button class="menu-item" data-action="fork-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('fork',13)}</span><span class="menu-copy"><strong>Fork archived thread</strong><span>Create an active child branch</span></span></button>`}${extRender('threadMenu',{thread:t,id})}`;
+    const tm=threadMenuParts(t,id);
+    return `<div class="menu-head"><strong>${esc(t.title)}</strong><span class="spacer"></span><span class="chat-meta">${esc(statusLabel(t.status))}</span></div>${!t.archived?`<button class="menu-item" data-action="toggle-thread-pin" data-id="${esc(id)}"><span class="menu-icon">${icon(t.pinned?'unpin':'pin',13)}</span><span class="menu-copy"><strong>${t.pinned?'Unpin':'Pin'} thread</strong><span>${t.pinned?'Move to Recent':'Keep at the top'}</span></span></button><button class="menu-item" data-action="rename-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('edit',13)}</span><span class="menu-copy"><strong>Rename</strong><span>Change the thread title</span></span></button>${tm.after}<button class="menu-item" data-action="fork-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('fork',13)}</span><span class="menu-copy"><strong>Fork thread</strong><span>Create a child branch with lineage</span></span></button><button class="menu-item" data-action="archive-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('archive',13)}</span><span class="menu-copy"><strong>Archive</strong><span>Hide from active groups but keep searchable</span></span></button>`:`<button class="menu-item" data-action="restore-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('restore',13)}</span><span class="menu-copy"><strong>Restore thread</strong><span>Return it to Recent</span></span></button><button class="menu-item" data-action="fork-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('fork',13)}</span><span class="menu-copy"><strong>Fork archived thread</strong><span>Create an active child branch</span></span></button>${tm.after}`}${tm.end}`;
   }
 
   function renderThreadSearchMenu(){
@@ -3080,11 +3299,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       return `<div class="menu-head"><strong>Review</strong><span class="spacer"></span><span class="chat-meta">Read-only</span></div>${opts.map(o=>`<button class="menu-item ${state.reviewStrategy===o[0]?'active':''}" data-action="set-review-strategy" data-value="${esc(o[0])}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${state.reviewStrategy===o[0]?icon('check',11):''}</button>`).join('')}`;
     }
     if(id==='goal-menu')return renderCapabilitySub('Goal Mode',[['On','Enable natural-language, /goal, and button invocation'],['Off','Disable the visible Goal Mode capability']],state.capabilities.goal?'On':'Off','set-goal-cap');
-    if(id==='crew-menu')return renderCapabilitySub('Crew',[['On','Allow role-based agent crews'],['Off','Keep crew coordination disabled']],state.capabilities.crew?'On':'Off','set-crew-cap');
-    if(id==='bsd-menu')return renderCapabilitySub('Back Seat Driver',[['Off','Never run independent review'],['Auto','Intervene only when material'],['On','Review every substantial turn']],state.capabilities.bsd,'set-bsd-cap');
+    /* E-02 (owner, 2026-09-27): set-crew-cap answers this chat's Crew Auto (collaboration.js chains it), so the choice is
+       enforced where Crew Auto decides; turning Crew Auto off in the project settings stops it being on by default. */
+    if(id==='crew-menu')return renderCapabilitySub('Crew Auto in this chat',[['On','The assistant may call a Crew when a job needs one.'],['Off','No Crew starts by itself in this chat. Your Crew Auto settings are kept.']],crewAutoHere()?'On':'Off','set-crew-cap');
+    if(id==='bsd-menu')return renderCapabilitySub('Back Seat Driver',[['Off','No second opinion'],['Auto','Checks at key moments'],['On','Checks after every step']],state.capabilities.bsd,'set-bsd-cap');
     if(id==='context-lens')return extReplace('contextLensMenu',{}, `<div class="menu-head"><strong>Context Lens</strong></div>${[['Auto','Use source-aware automatic selection'],['Focus','Prioritize selected current sources'],['Mute','Omit selected superseded sources'],['Subcompact','Preview a staged context reduction'],['Off','Disable Context Lens receipts']].map(o=>`<button class="menu-item ${state.capabilities.context===o[0]?'active':''}" data-action="set-context-cap" data-value="${o[0]}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${state.capabilities.context===o[0]?icon('check',11):''}</button>`).join('')}${state.capabilities.context==='Subcompact'?`<div class="menu-divider"></div><div style="padding:7px"><p style="font-size:10px;color:var(--muted);margin:0 0 7px">Preview: remove 18.4K tokens while retaining provenance.</p><div class="plan-actions"><button class="soft-button" data-action="cancel-subcompact">Cancel</button><button class="primary-button" data-action="apply-subcompact">Apply</button></div></div>`:''}`);
     if(id==='eli5-menu')return renderCapabilitySub('ELI5',[['On','Show a simpler explanation after selected responses'],['Off','Keep standard response depth']],state.capabilities.eli5?'On':'Off','set-eli5-cap');
-    if(id==='thought-menu')return renderCapabilitySub('Thought Stream',[['Auto','Expand only when permitted and useful'],['Expanded','Keep the permitted live thought stream open']],state.capabilities.thought,'set-thought-cap');
+    /* F0b (i): PREFS's Thought Stream copy (DESIGN-SPEC 8.14); the values stay Auto|Expanded. */
+    if(id==='thought-menu')return renderCapabilitySub('Thought Stream',[['Auto','Opens while the AI is thinking, then folds away','While it thinks'],['Expanded','Keeps the thinking visible next to the answer','Always open']],state.capabilities.thought,'set-thought-cap');
     /* Assistant-redesign wave: a module that contributes a `wandRows` entry with
        its own `data-submenu` had no way to render that sidecar -- bsd.js's
        BSD row opened a real, empty sidecar with zero items. This is the missing
@@ -3092,7 +3314,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        an id app.js does not already own. */
     return extRender('submenu',{id});
   }
-  function renderCapabilitySub(title,items,current,action){ return `<div class="menu-head"><strong>${esc(title)}</strong></div>${items.map(o=>`<button class="menu-item ${current===o[0]?'active':''}" data-action="${action}" data-value="${esc(o[0])}"><span class="menu-copy"><strong>${esc(o[0])}</strong><span>${esc(o[1])}</span></span>${current===o[0]?icon('check',11):''}</button>`).join('')}`; }
+  /* items: [value, description, label (defaults to value), fine line]. F0b (d, i). */
+  function renderCapabilitySub(title,items,current,action){ return `<div class="menu-head"><strong>${esc(title)}</strong></div>${items.map(o=>`<button class="menu-item ${current===o[0]?'active':''}" data-action="${action}" data-value="${esc(o[0])}"><span class="menu-copy"><strong>${esc(o[2]||o[0])}</strong><span>${esc(o[1])}</span>${o[3]?`<span>${esc(o[3])}</span>`:''}</span>${current===o[0]?icon('check',11):''}</button>`).join('')}`; }
   function renderCompactSubmenu(id){ return `<div class="menu-head"><button class="icon-button" data-action="submenu-back">${icon('left',12)}</button><strong>Back</strong></div>${renderSubmenu(id)}`; }
 
   function renderContextDrawer(){
@@ -3118,10 +3341,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(state.dialog.type==='demo') return renderDemoDialog();
     if(state.dialog.type==='rename') return `<section class="dialog"><div class="drawer-head"><strong>Rename thread</strong><span class="spacer"></span><button class="icon-button" data-action="close-dialog">${icon('close',13)}</button></div><div class="dialog-body"><label class="input-wrap"><input data-input="rename-thread" value="${esc(state.dialog.value)}"></label><div class="decision-actions"><button class="soft-button" data-action="close-dialog">Cancel</button><button class="primary-button" data-action="save-thread-name">Rename</button></div></div></section>`;
     if(state.dialog.type==='compact') return `<section class="dialog" style="width:min(620px,calc(100vw - 20px))"><div class="drawer-head"><strong>Compact context</strong><span class="meta-pill">Preview</span><span class="spacer"></span><button class="icon-button" data-action="close-dialog">${icon('close',13)}</button></div><div class="dialog-body"><div class="metric-grid"><div class="metric-card"><label>Before</label><strong>83.9K</strong></div><div class="metric-card"><label>Removed</label><strong>18.4K</strong></div><div class="metric-card"><label>After</label><strong>65.5K</strong></div></div><p style="color:var(--muted)">Superseded concept sources and duplicated tool receipts will be compressed. Current requirements, active files, decisions, artifacts, and provenance remain available.</p><div class="decision-actions"><button class="soft-button" data-action="close-dialog">Cancel</button><button class="primary-button" data-action="apply-compaction">Apply compaction</button></div></div></section>`;
-    if(state.dialog.type==='bsd') return `<section class="dialog" style="width:min(700px,calc(100vw - 20px))"><div class="drawer-head"><strong>Back Seat Driver evidence</strong><span class="meta-pill">Material intervention</span><span class="spacer"></span><button class="icon-button" data-action="close-dialog">${icon('close',13)}</button></div><div class="dialog-body"><div class="event-card warning"><span class="event-icon">${icon('warning',14)}</span><div class="event-copy"><strong>Unsafe assumption detected</strong><p>The requested rewrite would mutate already-applied migration history and undermine rollback evidence.</p></div></div><h3>What changed</h3><p>The parent agent rejected history rewriting, created a forward migration, added a rollback gate, and preserved the prior migration lineage.</p><h3>Supporting evidence</h3><div class="code-block">migrations/0042_events.sql     already applied
+    /* F0b (k), DESIGN-SPEC 8.6 G-34: the legacy evidence dialog in BSD's words (noticed,
+       re-checked, suggested). Same dialog type, close action and code block. */
+    if(state.dialog.type==='bsd') return `<section class="dialog" style="width:min(700px,calc(100vw - 20px))"><div class="drawer-head"><strong>What Back Seat Driver noticed</strong><span class="spacer"></span><button class="icon-button" data-action="close-dialog">${icon('close',13)}</button></div><div class="dialog-body"><div class="event-card warning"><span class="event-icon">${icon('eye',14)}</span><div class="event-copy"><strong>It noticed a risky assumption</strong><p>The request would rewrite a migration that has already run. That changes history the database has recorded, and the record of how to reverse it would be lost.</p></div></div><h3>What it suggested</h3><p>It re-checked the plan against the migrations that already ran and suggested a new forward migration instead. The assistant took the suggestion: it kept the earlier migration as it was, added migration 0043, and added a check that the change can be reversed.</p><h3>What it checked</h3><div class="code-block">migrations/0042_events.sql     already applied
 schema_migrations                 checksum recorded
 production policy                 forward-only history
-recommended path                  migration 0043 + rollback</div></div></section>`;
+suggested path                    migration 0043, reversible</div></div></section>`;
     /* Modal slot. Built-in dialog types return above this line, so a module can only
        ever render a type app.js does not know. Needed for a real destructive confirm:
        without it a module cannot be modal at all, and loses aria-modal. */
@@ -3185,6 +3410,10 @@ recommended path                  migration 0043 + rollback</div></div></section
         const rootW=root.offsetWidth, rootH=root.offsetHeight;
         let left=state.menu.side==='right'?ar.right-rootW:ar.left;
         if(state.menu.type==='model'||state.menu.type==='context'||state.menu.type==='thread-search') left=ar.right-rootW;
+        /* F0b (e): a scoped model picker (opened from a sheet's trigger) grows from its
+           trigger's left edge, as in the reference prototype, so it lies over the sheet
+           instead of hanging off its left side. The composer's model menu keeps its right edge. */
+        if(state.menu.type==='model'&&state.menu.scopedPicker) left=ar.left;
         left=clamp(left,8,window.innerWidth-rootW-8);
         const below=window.innerHeight-ar.bottom-8, above=ar.top-8;
         let top=below>=rootH+gap?ar.bottom+gap:Math.max(8,ar.top-rootH-gap);
@@ -3223,7 +3452,10 @@ recommended path                  migration 0043 + rollback</div></div></section
     const anchorEl=document.querySelector(`[data-menu-anchor="${CSS.escape(anchor)}"]`);
     const rect=anchorEl?.getBoundingClientRect();
     const side=rect&&rect.left<window.innerWidth*.53?'right':'left';
-    state.menu={type,anchor,side,sub:null,compactSub:null,query:'',...extra};state.hover=null;renderOverlays();
+    state.menu={type,anchor,side,sub:null,compactSub:null,query:'',...extra};state.hover=null;
+    /* F0b (IMPACT A1-36): remember the sheet a scoped picker was opened from (see renderOverlays). */
+    if(extra.scopedPicker&&state.dialog&&anchorEl&&anchorEl.closest('#pmOverlayRoot .dialog')) state.menu.fromDialog=state.dialog.type;
+    renderOverlays();
     if(type==='lens'){
       requestAnimationFrame(()=>{ syncChatDock(); requestAnimationFrame(syncChatDock); });
     }
@@ -3235,7 +3467,15 @@ recommended path                  migration 0043 + rollback</div></div></section
   function closeMenu(){
     const anchor=state.menu?.scopedPicker?state.menu.anchor:null;
     state.menu=null;scopedPicker=null;renderOverlays();
-    if(anchor)requestAnimationFrame(()=>document.querySelector(`[data-menu-anchor="${CSS.escape(anchor)}"]`)?.focus({preventScroll:true}));
+    /* F0b (IMPACT A1-36): the queued return to the picker's trigger runs only when nothing took
+       focus in the meantime (focus fell to <body>, or is still in a menu). It used to pull focus
+       off a field the reader clicked to close the picker, and off a new sheet's hero or a
+       sheet's focus return (DESIGN-SPEC 6.7) when the pick closed or swapped the sheet. */
+    if(anchor)requestAnimationFrame(()=>{
+      const a=document.activeElement;
+      if(a&&a!==document.body&&!a.closest('.overlay-menu')) return;
+      document.querySelector(`[data-menu-anchor="${CSS.escape(anchor)}"]`)?.focus({preventScroll:true});
+    });
   }
   function setSubmenu(id){
     if(!state.menu)return;
@@ -3633,9 +3873,10 @@ recommended path                  migration 0043 + rollback</div></div></section
     'Live subagents':()=>{switchThread('subagents');state.work={step:7,running:true,expanded:false,started:true,completed:false,elapsed:47,openPhase:null};state.activity={...state.activity,open:true,domain:'subagents'};renderApp();armWorkTimer();},
     'Blocked subagent':()=>{switchThread('subagents');state.work={step:7,running:false,expanded:true,started:true,completed:false,elapsed:96,openPhase:null};state.activity={...state.activity,open:true,domain:'subagents'};renderApp();addReceipt('blocked','Schema Reviewer blocked','Production schema modification requires explicit approval. The other agents continued.');},
 
-    'BSD intervention':()=>{switchThread('bsd');addReceipt('bsd-advice','Back Seat Driver intervened','Rewriting applied migration history would destroy rollback evidence, so a forward migration was substituted.');openDialog({type:'bsd'});},
+    /* F0b (k): BSD receipts say noticed / re-checked / suggested; never intervened or blocked. */
+    'BSD intervention':()=>{switchThread('bsd');addReceipt('bsd-advice','Back Seat Driver suggested a safer path','It noticed that rewriting a migration that already ran would lose the record of how to reverse it, re-checked, and suggested a new forward migration instead.');openDialog({type:'bsd'});},
     'BSD silent check':()=>{switchThread('bsd');addReceipt('bsd-evaluating','Back Seat Driver checked silently','The turn was reviewed and found materially sound, so nothing interrupted the primary agent.');},
-    'BSD timeout':()=>{switchThread('bsd');addReceipt('tool-error','Back Seat Driver timed out','Independent review exceeded its budget. The primary turn was not blocked and no advice was recorded.');},
+    'BSD timeout':()=>{switchThread('bsd');addReceipt('tool-error','Back Seat Driver timed out','Advisor couldn\'t check this step (took too long). Your main work continues, and no note was recorded.');},
 
     'Context Focus':()=>{switchThread('context');state.capabilities.context='Focus';addReceipt('context-focus','Context Lens · Focus','Current files and final references prioritized; six superseded sources dropped in rank.');},
     'Context Mute':()=>{switchThread('context');state.capabilities.context='Mute';addReceipt('context-mute','Context Lens · Mute','Four superseded sources omitted from the active projection and still rehydratable.');},
@@ -3705,7 +3946,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(name==='Subcompact applied'){state.context.compacted=true;addReceipt('context-subcompact','Subcompact applied','18.4K tokens removed while active requirements and provenance remain available.');return;}
     if(name==='Subcompact cancelled'){addReceipt('context-subcompact','Subcompact cancelled','The preview was discarded and the active context was not changed.');return;}
     if(name==='Goal paused'||name==='Goal blocked'){switchThread('goal-replan');addReceipt('goal-receipt',name,name==='Goal blocked'?'Exact blocker: migration policy requires explicit approval.':'The current goal is paused and remains resumable.');return;}
-    if(['BSD unavailable','BSD quota limited'].includes(name)){switchThread('bsd');addReceipt('bsd-advice',name,'The primary agent continued safely; independent review degraded gracefully without blocking the turn.');return;}
+    if(['BSD unavailable','BSD quota limited'].includes(name)){switchThread('bsd');addReceipt('bsd-advice',name,name==='BSD unavailable'?'Advisor couldn\'t check this step (the advisor model isn\'t available). Your main work continues.':'Advisor couldn\'t check this step (usage limit reached). Your main work continues.');return;}
     if(name==='Plain text conversation'){switchThread('plain');return;}
     if(name==='Archived threads'){state.historyMode=isNarrow()?'floating':'pinned';state.historySearch='Archived';renderApp();return;}
     if(name==='Cross-thread search'){openMenu('thread-search','thread-search',{query:'context'});return;}
@@ -3719,9 +3960,23 @@ recommended path                  migration 0043 + rollback</div></div></section
     renderApp();
   }
 
+  /* F0b: the clicked menu row's rect, written on #pmOverlayRoot BEFORE any action runs
+     closeMenu() (DESIGN-SPEC 4.5 origin, brief D.5). A sheet opened from the wand grows from
+     that row; pmx-system.css reads --pmx-from-x/-y (the row's centre) and -w/-h. This also
+     covers keyboard activation, which fires no pointerdown. Only #pmOverlayRoot is written. */
+  function captureMenuOrigin(btn){
+    if(!btn||!btn.closest('#pmOverlayRoot .overlay-menu')) return;
+    const r=btn.getBoundingClientRect(), o=document.getElementById('pmOverlayRoot');
+    if(!o||!r.width) return;
+    o.style.setProperty('--pmx-from-x',`${Math.round(r.left+r.width/2)}px`);
+    o.style.setProperty('--pmx-from-y',`${Math.round(r.top+r.height/2)}px`);
+    o.style.setProperty('--pmx-from-w',`${Math.round(r.width)}px`);
+    o.style.setProperty('--pmx-from-h',`${Math.round(r.height)}px`);
+  }
   document.addEventListener('click',e=>{
     const btn=e.target.closest('[data-action]');
     const sub=e.target.closest('[data-submenu]');
+    captureMenuOrigin(btn);
     if(sub&&state.menu&&!btn){ e.stopPropagation(); setSubmenu(sub.dataset.submenu); return; }
     if(!btn){if(state.menu&&!e.target.closest('.overlay-menu,.lens-dock'))closeMenu();return;}
     const a=btn.dataset.action;
@@ -3842,7 +4097,9 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='toggle-fast'){state.model=btn.dataset.model;state.fast=!state.fast;renderApp();renderOverlays();savePrefs();return;}
     if(a==='submenu-back'){state.menu.compactSub=null;state.menu.sub=null;renderOverlays();return;}
     if(a==='set-goal-cap'){state.capabilities.goal=btn.dataset.value==='On';stampActivityCap('goal',state.capabilities.goal);if(state.capabilities.goal)revealActivityDomain('goal');closeMenu();renderApp();savePrefs();return;}
-    if(a==='set-crew-cap'){state.capabilities.crew=btn.dataset.value==='On';stampActivityCap('crew',state.capabilities.crew);if(state.capabilities.crew)revealActivityDomain('crew');closeMenu();renderApp();savePrefs();return;}
+    /* F0b (j), IMPACT A5-06: the legacy switch enforces nothing ("Preview: shown, not enforced
+       yet"), so turning it on opens nothing: no Activity Detail, on invented or real Crews. */
+    if(a==='set-crew-cap'){state.capabilities.crew=btn.dataset.value==='On';stampActivityCap('crew',state.capabilities.crew);closeMenu();renderApp();savePrefs();return;}
     if(a==='set-bsd-cap'){state.capabilities.bsd=btn.dataset.value;closeMenu();renderApp();savePrefs();return;}
     if(a==='set-context-cap'){state.capabilities.context=btn.dataset.value;if(btn.dataset.value==='Subcompact'){state.menu.sub='context-lens';renderOverlays();}else{closeMenu();addReceipt(btn.dataset.value==='Focus'?'context-focus':'context-mute',`Context Lens · ${btn.dataset.value}`,btn.dataset.value==='Focus'?'Current files and final references prioritized.':'Selected superseded sources omitted from the active projection.');}return;}
     if(a==='set-eli5-cap'){state.capabilities.eli5=btn.dataset.value==='On';closeMenu();renderApp();return;}
@@ -3939,7 +4196,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     if((e.metaKey||e.ctrlKey)&&e.key==='Enter'&&document.activeElement?.matches('[data-input="composer"]')){e.preventDefault();handleSend();}
     if(e.key==='Escape'){
       if(state.menu){closeMenu();return;}
-      if(state.dialog){if(state.dialog.type==='collab-configure'){EXT._actions['collab-modal-cancel'](EXT.ctx(),null,e);return;}if(window.PM56_CTX&&window.PM56_CTX.cancelPreview&&window.PM56_CTX.cancelPreview(state.dialog,'escape'))return;if(state.dialog.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom};state.dialog=null;renderOverlays();return;}
+      if(state.dialog){if(state.dialog.type==='collab-configure'){EXT._actions['collab-modal-cancel'](EXT.ctx(),null,e);return;}if(window.PM56_CTX&&window.PM56_CTX.cancelPreview&&window.PM56_CTX.cancelPreview(state.dialog,'escape'))return;{/* F0b: Escape runs a pmx sheet's own cancel (its x), like the scrim (DESIGN-SPEC 6.7, 4.6). */const x=document.querySelector('#pmOverlayRoot .pmx-sheet .pmx-close');if(x){x.click();return;}}if(state.dialog.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom};state.dialog=null;renderOverlays();return;}
       if(state.context.details){state.context.details=false;renderOverlays();return;}
       if(state.activity.open&&!activityPinnedInLayout()){const domain=state.activity.domain;state.hover=null;state.activity.open=false;state.activity.pinned=false;renderApp();focusActivityBarDomain(domain);return;}
       if(state.hover){state.hover=null;syncHoverCard();return;}

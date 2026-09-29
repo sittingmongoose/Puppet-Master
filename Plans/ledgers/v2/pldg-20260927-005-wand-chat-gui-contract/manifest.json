@@ -1,0 +1,22 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260927-005-wand-chat-gui-contract",
+  "updated_at_utc": "2026-09-29T06:38:43+00:00",
+  "title": "Wand modules redesign: chat module behaviour and the GUI contract",
+  "status": "active",
+  "created_at_utc": "2026-09-27T19:15:00+00:00",
+  "record_counts": {
+    "events": 20,
+    "design_atoms": 57,
+    "decisions": 61,
+    "questions": 21,
+    "blockers": 0,
+    "corrections": 57
+  },
+  "source_refs": [
+    "Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/source_shards/findings.md"
+  ],
+  "phase": "prose_compiled_pending_review",
+  "last_event_id": "evt-020"
+}

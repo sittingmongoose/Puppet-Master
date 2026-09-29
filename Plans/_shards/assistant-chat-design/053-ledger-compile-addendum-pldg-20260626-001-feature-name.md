@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L23020-L23394
+Source lines: L23029-L23405
 
-Source SHA256: `82693e025835e537590128c7917aa84700243edfa6b447ccd818cebdcbf55b0f`
+Source SHA256: `c0598b7cd330cb81288c38ca4b6a84c5c384b981cceeb49af40429a0507db3ff`
 
 ---
 
@@ -383,3 +383,5 @@ owner_hints:
 - Plans/Runtime_Artifacts_Panel.md
 - Plans/Glossary.md
 ```
+
+Amended 2026-09-27: the explicit capture card through which an answer is saved as taught memory is the Teach sheet, prefilled from the answer (DL-127, ACD-477); there is no inline capture card in the chat. The later unlock and revoke actions are `cmd.chat.teach.set_lock` and `cmd.chat.teach.revoke` (DL-130, ACD-481).

@@ -1,0 +1,104 @@
+/* room-view.css — ROOM-B: PM56_ROOM.viewParts + RoomDiscussionVM renderer + the Chat Room run view (spec 8.3).
+   Kind parts only (pmx-rv-*), every rule scoped to the view root the renderer draws (.pmx-view.room-discussion), so
+   nothing here can reach the in-chat card (ROOM-A's pmx-room-* classes). The frame is COLLAB's (collab-view.css); the
+   only frame part touched is the room document's head, which the room pins while the conversation scrolls (8.3
+   "sticky header"; FOUNDATION REQUEST 1 in ROOM-B-NOTES asks for a pmxView option). Spacing follows J-2: 8 px text
+   to lines, 12 px to fills, 10 px between controls, 20 px between blocks, line-height >= 1.45. */
+
+/* The room document borrows 16 px of the editor's own side padding and pads 20 px inside it, so the sticky head's
+   fill can span the view's full width with its text 20 px from the fill's edges and nothing overflows sideways. */
+.pmx-view.room-document{max-width:1012px;margin-inline:max(-16px, calc((100% - 1012px) / 2));padding-top:4px;padding-left:20px;padding-right:20px;}
+
+/* sticky head: the title, the status line and the one primary stay in reach while the discussion scrolls. The fill
+   reaches 20 px past the text on both sides, so no text sits near its edge. */
+.pmx-view.room-document > .pmx-view-head.drawer-head{position:sticky;top:-20px;z-index:3;margin:-4px -20px 0;padding:18px 20px 14px;background:var(--surface);box-shadow:0 1px 0 var(--border);}
+body[data-theme^="glass"] .pmx-view.room-document > .pmx-view-head.drawer-head{background:var(--pmx-sheet-bg);}
+.pmx-view.room-discussion .room-meta.pmx-rv-say{display:inline;justify-content:normal;gap:0;flex-wrap:nowrap;font:inherit;color:inherit;}
+.pmx-view.room-discussion .pmx-rv-prov{display:flex;align-items:center;gap:6px;margin-top:6px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--subtle);}
+.pmx-view.room-discussion .pmx-rv-prov svg{flex:none;}
+
+/* the actions: the frame's Pause / Message / More, the room's quiet words, then its one primary; the primary's helper
+   (or the reason it is disabled) under them */
+.pmx-view.room-discussion .pmx-view-head .pmx-view-acts{max-width:460px;}
+.pmx-view.room-discussion .room-controls.pmx-rv-controls{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:10px;max-width:460px;margin:0 0 0 auto;}
+.pmx-view.room-discussion .pmx-rv-acthelp{flex-basis:100%;max-width:340px;margin:6px 0 0 auto;text-align:right;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-view.room-discussion .pmx-rv-controls .primary-button[disabled]{opacity:.45;cursor:default;}
+/* J-2 (never compress): in a view narrower than the title plus the whole action row (the docked editor at 1440 and
+   below), the actions take their own row under the status line instead of squeezing the title into a column */
+@container pmxview (max-width: 900px){
+  .pmx-view.room-discussion .pmx-view-head .pmx-view-acts{grid-column:1 / -1;grid-row:4;max-width:none;justify-content:flex-start;margin-top:12px;}
+  .pmx-view.room-discussion .pmx-view-head .room-controls.pmx-rv-controls{justify-content:flex-start;max-width:none;margin:0 0 0 -10px;}
+  .pmx-view.room-discussion .pmx-view-head .pmx-rv-acthelp{max-width:none;margin:6px 0 0;text-align:left;}
+}
+
+/* Discussion: the summary pinned on top, then the script in chapters (one per round), then what you queued */
+.pmx-view.room-discussion .pmx-rv-landed{margin-bottom:28px;}
+.pmx-view.room-discussion .pmx-rv-landed .pmx-result{gap:10px;}
+.pmx-view.room-discussion .pmx-rv-sumbody{margin:0 0 0 26px;min-width:0;}
+.pmx-view.room-discussion .pmx-rv-sumbody .pmx-md{font:var(--pmx-fs-body);color:var(--text);}
+.pmx-view.room-discussion .pmx-rv-promote{display:flex;flex-wrap:wrap;align-items:center;gap:10px;min-width:0;margin:4px 0 0 16px;}
+.pmx-view.room-discussion .pmx-rv-promote > .pmx-fine{margin-right:0;padding-left:10px;}
+.pmx-view.room-discussion :is(.pmx-rv-promote, .pmx-rv-acts, .pmx-rv-receipt) .text-button{color:var(--accent);font-weight:600;}
+.pmx-view.room-discussion .pmx-rv-promote .text-button[disabled]{color:var(--subtle);cursor:default;}
+.pmx-view.room-discussion .pmx-rv-goalwhy, .pmx-view.room-discussion .pmx-rv-promhelp{margin:6px 0 0 26px;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-view.room-discussion .pmx-rv-receipt{display:flex;flex-wrap:wrap;align-items:center;gap:0 8px;margin:12px 0 0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);line-height:1.5;color:var(--muted);}
+.pmx-view.room-discussion .pmx-rv-landed .pmx-rv-receipt{margin-left:26px;}
+.pmx-view.room-discussion .pmx-rv-receipt > svg{flex:none;color:var(--positive);}
+
+.pmx-view.room-discussion .pmx-rv-scriptwrap{display:flex;flex-direction:column;gap:20px;min-width:0;}
+.pmx-view.room-discussion .pmx-divider.pmx-rv-round{margin:4px 0 0;}
+.pmx-view.room-discussion .pmx-timeline.pmx-rv-script{gap:22px;}
+.pmx-view.room-discussion .pmx-rv-msg{position:relative;}
+.pmx-view.room-discussion .pmx-rv-msg > header{min-height:32px;align-items:center;}
+.pmx-view.room-discussion .pmx-rv-msg > header .pmx-rv-who.text-button{margin-left:-10px;color:var(--text);font-weight:var(--pmx-w-620);}
+.pmx-view.room-discussion .pmx-rv-msg > header .pmx-rv-who.text-button:hover{color:var(--accent);}
+.pmx-view.room-discussion .pmx-rv-msg > header .pmx-fine{white-space:nowrap;}
+.pmx-view.room-discussion .pmx-rv-msg[data-who="you"] .pmx-entry-body{color:var(--muted);}
+.pmx-view.room-discussion .pmx-rv-msg .pmx-entry-body{margin-top:0;}
+.pmx-view.room-discussion .pmx-rv-reply{display:flex;align-items:baseline;gap:6px;margin:0 0 6px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);line-height:1.5;color:var(--muted);}
+.pmx-view.room-discussion .pmx-rv-reply > svg{flex:none;align-self:center;}
+.pmx-view.room-discussion .pmx-rv-live{margin:0;font:var(--pmx-fs-body);color:var(--text);}
+.pmx-view.room-discussion .pmx-rv-live q{quotes:none;}
+.pmx-view.room-discussion .pmx-rv-msg[data-speaking="1"] > header .pmx-fine{color:var(--accent);}
+/* E-18: a queued message is words only, quiet, under the script; its status line may wrap (the reason can be long) */
+.pmx-view.room-discussion .pmx-rv-queued .pmx-rv-msg > header{flex-wrap:wrap;row-gap:0;}
+.pmx-view.room-discussion .pmx-rv-queued .pmx-rv-msg > header .pmx-fine{white-space:normal;min-width:0;}
+.pmx-view.room-discussion .pmx-rv-qtext{margin:0;font:var(--pmx-fs-body);color:var(--muted);overflow-wrap:anywhere;}
+
+/* Promote to, per message: shown on hover or keyboard focus, always in the DOM. It sits on the message's name row,
+   at its right end, so a long script does not grow by a row per message. */
+.pmx-view.room-discussion .pmx-rv-acts{position:absolute;top:0;right:0;display:flex;align-items:center;gap:10px;margin:0;opacity:0;transition:opacity var(--pmx-t-fade) var(--pmx-ease-linear);}
+.pmx-view.room-discussion .pmx-rv-acts > .pmx-fine{padding-right:0;}
+.pmx-view.room-discussion .pmx-rv-msg:is(:hover, :focus-within) .pmx-rv-acts{opacity:1;}
+
+/* M4: a message that arrives while the view is open washes once (entrance-once: the template marks it) */
+.pmx-view.room-discussion .pmx-rv-msg[data-arrive="1"]{animation:pmx-wash calc(var(--pmx-t-wash) / 2) var(--pmx-ease-out) both;border-radius:8px;}
+/* reduced motion is the instant end state (IMPACT A1-03): no wash, and the document's buttons change without a fade */
+@media (prefers-reduced-motion: reduce){ .pmx-view.room-discussion :is(.pmx-rv-msg[data-arrive], .pmx-rv-acts, button, summary){animation:none;transition:none;} }
+body.pm56-reduced .pmx-view.room-discussion :is(.pmx-rv-msg[data-arrive], .pmx-rv-acts, button, summary){animation:none;transition:none;}
+
+.pmx-view.room-discussion .pmx-rv-empty{margin:0;font:var(--pmx-fs-sentence);color:var(--muted);}
+
+/* the aside: who is at the table, how they talk, the promise, the transcript, Technical details */
+.pmx-view.room-discussion .pmx-rv-asidehead{margin:0;}
+.pmx-view.room-discussion .pmx-rv-table{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;}
+.pmx-view.room-discussion .pmx-rv-table li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;align-items:start;font:var(--pmx-fs-sentence);color:var(--muted);}
+.pmx-view.room-discussion .pmx-rv-table li b{color:var(--text);}
+.pmx-view.room-discussion .pmx-rv-table li > .pmx-mark{margin-top:1px;}
+.pmx-view.room-discussion .pmx-rv-table small{display:block;margin-top:6px;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-view.room-discussion .pmx-view-aside .pmx-rv-policy{margin:20px 0 0;font:var(--pmx-fs-sentence);color:var(--muted);}
+.pmx-view.room-discussion .pmx-rv-policy b{color:var(--text);}
+.pmx-view.room-discussion .pmx-view-aside .pmx-rv-promise{display:flex;gap:8px;align-items:flex-start;margin:12px 0 0;font:var(--pmx-fs-sentence);color:var(--muted);}
+.pmx-view.room-discussion .pmx-rv-promise svg{flex:none;margin-top:2px;}
+.pmx-view.room-discussion .pmx-view-aside .pmx-rv-export{display:inline-flex;align-items:center;gap:8px;margin:16px 0 0 -10px;color:var(--accent);font-weight:600;}
+.pmx-view.room-discussion .pmx-view-aside .pmx-rv-tech{margin:12px 0 0;}
+.pmx-view.room-discussion .pmx-rv-tech > summary{display:flex;align-items:center;min-height:32px;cursor:pointer;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
+.pmx-view.room-discussion .pmx-rv-tech > p{margin:8px 0 0;overflow-wrap:anywhere;}
+
+/* a speaker's own messages (the frame's Team and Cost tabs are COLLAB's) */
+.pmx-view.room-discussion .pmx-rv-pjob{margin:-4px 0 16px;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-view.room-discussion .pmx-rv-pmsg{margin:0 0 20px;min-width:0;}
+.pmx-view.room-discussion .pmx-rv-pmsg > .pmx-fine{margin:0 0 6px;}
+.pmx-view.room-discussion .pmx-rv-pmsg .pmx-md{font:var(--pmx-fs-body);color:var(--text);}
+.pmx-view.room-discussion .pmx-rv-pmessage{margin:-4px 0 16px -10px;}
+.pmx-view.room-discussion .pmx-rv-pmessage .text-button{color:var(--accent);font-weight:600;}

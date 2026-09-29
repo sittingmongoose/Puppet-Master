@@ -24,6 +24,7 @@ if(source.includes('  function usageWidgetContext('))functions.push('usageWidget
 if(source.includes('  function widgetResumeCheck('))functions.push('widgetResumeCheck');
 if(source.includes('  function teacherExchangeReady('))functions.push('teacherExchangeReady');
 if(source.includes('  function teacherResumePrerequisite('))functions.push('teacherResumePrerequisite');
+if(source.includes('  function teacherExplanationReady('))functions.push('teacherExplanationReady');
 const extracted=functions.map(extract).join('\n');
 const inspection=source.match(/captureOriginal:(function\(\)\{[^\n]+?\})\n/);assert.ok(inspection,'Closed read-only inspection entrypoint.');
 function fixture(raw=null,{unavailable=false}={}){
@@ -33,7 +34,7 @@ function fixture(raw=null,{unavailable=false}={}){
   const state={open:false,status:'first_launch',step_id:'tour.intro.comfort',step_index:0,source:'unknown',eli5_enabled:false,completed:false,skipped:false,layout_disposition:'pending',layout_snapshot_restored:false};
   const steps=[{id:'tour.intro.comfort',index:0,meaningful:false},{id:'tour.workspace.chat.dock',index:1,meaningful:true},{id:'tour.chat.teacher.ask',index:2,meaningful:true},{id:'tour.planning.approval_boundary',index:3,meaningful:false}];
   const context=vm.createContext({state,original:null,checkpointRecovery:null,STEP_BY_ID:Object.fromEntries(steps.map(step=>[step.id,step])),STEP_DEFS:steps,STORYBOARD:{revision},root,stage,heading,skip,callout:node(),resumeButton:node(),replayButton:node(),backButton:node(),eli5Button:node(),halo:node(),pointer:node(),progress:node(),forwardSlot:node(),transitionTimer:0,history:[],effectReceipts:[],uiActionLog:[],receiptSerial:0,sessionSerial:0,meaningful:[],planningFixture:null,teacherPending:null,practiceWidgetId:null,workspacePanelId:null,completedSteps:{},innerWidth:1440,innerHeight:960,
-    AUTHORITATIVE_PROMPT:'What happens before Puppet Master changes my files?',guidedThreadIds:Object.create(null),resumeRevalidationError:null,teacherExchange:null,
+    AUTHORITATIVE_PROMPT:'What happens before Puppet Master changes my files?',guidedThreadIds:Object.create(null),resumeRevalidationError:null,teacherExchange:null,teacherExplanation:null,
     document:{documentElement:node()},sessionStorage:{getItem(name){assert.equal(name,key);if(blockedRead)throw Error('fixture-unavailable');return stored;},setItem(name,value){writes.push(['set',name]);stored=value;},removeItem(name){writes.push(['remove',name]);stored=null;}},
     clone:value=>value==null?value:JSON.parse(JSON.stringify(value)),esc:value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'),stageButton:(action,label)=>`<button data-ui-action-id="${action}">${label}</button>`,
     clearTimeout:()=>{},clearAutoAdvance:()=>{},cancelStepPoll:()=>{},clearChoreography:()=>{},stopTargetTracking:()=>{},cancelTeacherTurn:()=>{},removePlanningFixture:()=>{},uninstallTeacherSendAdapter:()=>{},notify:()=>{},positionTarget:()=>{},
@@ -182,8 +183,9 @@ try{
     const f=liveResumeFixture('tour.chat.teacher.ask');f.context.window.PM_DEMO.state.chat.activeThread='ordinary';f.context.state.open=true;f.run(extract('sendGuidedComposer'));
     const input={value:'/web search example.com',matches:()=>true,closest:()=>({})};f.context.event={type:'keydown',key:'Enter',target:input,preventDefault:()=>f.calls.push('preventDefault'),stopImmediatePropagation:()=>f.calls.push('stopImmediatePropagation')};f.run('sendGuidedComposer(event)');assert.equal(input.value,'/web search example.com');assert.deepEqual(f.calls,['preventDefault','stopImmediatePropagation','render']);assert.equal(f.context.state.action_status,'failed');
   });
-  check('a wrong-thread question cannot replace the draft or dispatch, and ELI5 cannot alter it',()=>{
-    const f=liveResumeFixture('tour.chat.teacher.ask');f.context.window.PM_DEMO.state.chat.activeThread='ordinary';f.context.state.open=true;f.context.document.querySelectorAll=()=>{f.calls.push('ordinaryToggleQuery');return [];};f.run(['sendTeacherQuestion','toggleEli5','syncEli5'].map(extract).join('\n'));assert.equal(f.run('sendTeacherQuestion("practice text")'),false);assert.equal(f.run('toggleEli5(true)'),false);f.run('syncEli5()');assert.deepEqual(f.calls,[]);
+  check('a wrong-thread question cannot replace the draft or dispatch, and the tour ELI5 changes only its narration',()=>{
+    const f=liveResumeFixture('tour.chat.teacher.ask');f.context.window.PM_DEMO.state.chat.activeThread='ordinary';f.context.state.open=true;f.context.document.querySelectorAll=()=>{f.calls.push('ordinaryToggleQuery');return [];};f.run(['sendTeacherQuestion','toggleEli5','syncEli5'].map(extract).join('\n'));assert.equal(f.run('sendTeacherQuestion("practice text")'),false);
+    const chat=f.value('window.PM_DEMO.state.chat');assert.equal(f.run('toggleEli5(true)'),true);assert.equal(f.context.state.eli5_enabled,true);assert.equal(f.records.at(-1).action,'ui.guided_tour.toggle_eli5');assert.equal(f.records.at(-1).payload.changes,'tour_narration_only');f.run('syncEli5()');assert.deepEqual(f.calls,[]);assert.deepEqual(f.value('window.PM_DEMO.state.chat'),chat);
   });
   for(const switchThread of [false,true])check(`deferred Teacher completion ${switchThread?'rejects a changed thread':'rechecks the active guided thread'}`,()=>{
     const f=liveResumeFixture('tour.chat.teacher.ask'),d=f.context.window.PM_DEMO,thread=d.state.chat.threads['guided-thread'];let settle;
@@ -385,15 +387,36 @@ try{
     ['empty reply',f=>f.reply.html='   '],['edited question',f=>f.question.text='Different question'],
     ['reversed pair',f=>f.thread.messages.reverse()],['duplicated reply object',f=>f.thread.messages.push(f.reply)],
     ['mismatched message ref',f=>f.context.state.teacher_response_message_id='unrelated'],['mismatched answer ref',f=>f.context.state.teacher_answer_id='unrelated']
-  ])check(`${name} cannot satisfy Teacher completion or receive an ELI5 edit`,()=>{
-    const f=teacherExchangeFixture();mutate(f);const before=f.value('window.PM_DEMO.state.chat');assert.equal(f.run('teacherExchangeReady()'),false);assert.equal(f.run('stepPredicate("tour.chat.teacher.ask")'),false);f.run(extract('applyTeacherMode'));assert.equal(f.run('applyTeacherMode()'),false);assert.deepEqual(f.value('window.PM_DEMO.state.chat'),before);assert.deepEqual(f.calls,[]);
+  ])check(`${name} cannot satisfy Teacher completion or receive a simpler reply`,()=>{
+    const f=teacherExchangeFixture();mutate(f);const before=f.value('window.PM_DEMO.state.chat');assert.equal(f.run('teacherExchangeReady()'),false);assert.equal(f.run('stepPredicate("tour.chat.teacher.ask")'),false);f.run(extract('explainTeacherReply'));assert.equal(f.run('explainTeacherReply()'),false);assert.equal(f.run('stepPredicate("tour.chat.teacher.eli5")'),false);assert.deepEqual(f.value('window.PM_DEMO.state.chat'),before);assert.deepEqual(f.calls,[]);
   });
-  check('unrelated message insertion cannot redirect ELI5 through an old array index',()=>{
-    const f=teacherExchangeFixture('tour.chat.teacher.eli5'),unrelated={role:'assistant',html:'Do not overwrite',guided_example:false},sink={textContent:''};f.thread.messages.unshift(unrelated);assert.equal(f.context.state.teacher_response_index,1);let selector;
-    f.context.document.querySelector=value=>{selector=value;return sink;};f.context.guidedTeacherAnswer=()=>({id:'fixture-answer',html:'Simpler answer',copy_mode:'eli5'});f.run(extract('applyTeacherMode'));assert.equal(f.run('applyTeacherMode()'),true);assert.equal(f.reply.html,'Simpler answer');assert.equal(f.question.text,'Fixture question');assert.equal(unrelated.html,'Do not overwrite');assert.equal(f.context.state.teacher_response_index,2);assert.equal(sink.textContent,'Simpler answer');assert.equal(selector,'[data-pm6-mid="reply-1"] .pm6-chat-sink');assert.equal(f.context.state.teacher_copy_mode,'eli5');
+  /* DL-126: Explain this reply simply writes ONE extra, simpler reply directly after the retained answer, found by
+     identity rather than array position; the answer, the question and every other message stay as they were. */
+  function explainFixture(){
+    const f=teacherExchangeFixture('tour.chat.teacher.eli5'),emitted=[],owner=[],selectors=[];
+    Object.assign(f.context,{AUTHORITATIVE_ANSWER:{id:'fixture-answer',normal:'Fixture answer',eli5:'Simpler answer'},teacherMessageSerial:0,ownerActionEvent:(id,payload)=>owner.push({id,payload})});
+    f.context.window.PM_DEMO.emit=(name,payload)=>emitted.push({name,payload});f.context.document.querySelector=value=>{selectors.push(value);return null;};
+    f.run(['explainTeacherReply','toggleEli5','syncEli5'].map(extract).join('\n'));
+    return {...f,emitted,owner,selectors};
+  }
+  check('unrelated message insertion cannot redirect Explain this reply simply through an old array index',()=>{
+    const f=explainFixture(),unrelated={role:'assistant',html:'Do not overwrite',guided_example:false};f.thread.messages.unshift(unrelated);
+    assert.equal(f.run('explainTeacherReply()'),true);assert.equal(f.thread.messages.length,4);assert.equal(f.thread.messages[2],f.reply);
+    const extra=f.thread.messages[3];assert.equal(extra.html,'Simpler answer');assert.equal(extra.role,'assistant');assert.equal(extra.guided_example,true);assert.equal(extra.explains_message_id,'reply-1');assert.equal(extra.command_id,'cmd.chat.eli5.explain_reply');
+    assert.equal(f.reply.html,'Fixture answer');assert.equal(f.question.text,'Fixture question');assert.equal(unrelated.html,'Do not overwrite');assert.equal(f.context.state.teacher_copy_mode,'normal');
+    assert.equal(f.context.state.teacher_explanation_message_id,'pm7gt-teacher-simpler-1');assert.deepEqual(f.emitted.map(e=>e.payload.type),['start','chunk','done']);assert.ok(f.emitted.every(e=>e.payload.msgId==='pm7gt-teacher-simpler-1'&&e.payload.threadId==='guided-thread'));
+    assert.deepEqual(JSON.parse(JSON.stringify(f.owner)),[{id:'cmd.chat.eli5.explain_reply',payload:{message_id:'reply-1',extra_reply_message_id:'pm7gt-teacher-simpler-1',original_reply_rewritten:false,chat_eli5_changed:false}}]);
+    assert.equal(f.run('teacherExplanationReady()'),true);assert.equal(f.run('stepPredicate("tour.chat.teacher.eli5")'),true);
+    assert.equal(f.run('explainTeacherReply()'),false);assert.equal(f.thread.messages.length,4);
   });
-  check('an unavailable reply DOM sink does not cause a fallback write into another answer',()=>{
-    const f=teacherExchangeFixture();let selectors=[];f.context.document.querySelector=value=>{selectors.push(value);return null;};f.context.guidedTeacherAnswer=()=>({id:'fixture-answer',html:'Simpler answer',copy_mode:'eli5'});f.run(extract('applyTeacherMode'));assert.equal(f.run('applyTeacherMode()'),true);assert.deepEqual(selectors,['[data-pm6-mid="reply-1"] .pm6-chat-sink']);assert.equal(f.reply.html,'Simpler answer');
+  check('an unavailable reply DOM node writes into no other answer and still leaves one simpler reply with the owner',()=>{
+    const f=explainFixture();assert.equal(f.run('explainTeacherReply()'),true);assert.deepEqual(f.selectors,['[data-pm6-mid="reply-1"]','[data-pm6-mid="pm7gt-teacher-simpler-1"]']);assert.equal(f.reply.html,'Fixture answer');assert.equal(f.thread.messages.length,3);
+  });
+  check('the tour ELI5 cannot rewrite the example answer or satisfy the Explain step',()=>{
+    const f=explainFixture(),before=f.value('window.PM_DEMO.state.chat');assert.equal(f.run('toggleEli5(true)'),true);assert.equal(f.run('toggleEli5(false)'),true);assert.deepEqual(f.value('window.PM_DEMO.state.chat'),before);assert.deepEqual(f.emitted,[]);assert.deepEqual(f.owner,[]);assert.equal(f.run('stepPredicate("tour.chat.teacher.eli5")'),false);
+  });
+  check('a rewritten example answer never satisfies the Explain step',()=>{
+    const f=explainFixture();assert.equal(f.run('explainTeacherReply()'),true);f.reply.html='Simpler answer';assert.equal(f.run('teacherExplanationReady()'),false);assert.equal(f.run('stepPredicate("tour.chat.teacher.eli5")'),false);
   });
   for(const id of ['tour.chat.teacher.ask','tour.chat.teacher.reply','tour.chat.teacher.eli5'])check(`Resume from ${id} returns to the missing exchange without sending or replacing a draft`,()=>{
     const f=teacherExchangeFixture(id);f.thread.messages.pop();f.context.completedSteps={'tour.chat.teacher.select':{keep:true},'tour.chat.teacher.ask':{status:'applied'},'tour.chat.teacher.eli5':{status:'applied'}};f.context.state.action_status='complete';f.context.history=['tour.intro.comfort','tour.chat.teacher.ask','tour.chat.teacher.reply'];const before=f.value('window.PM_DEMO.state.chat'),original=f.value('original');
@@ -405,14 +428,14 @@ try{
   check('an observed answer can be completed after an interruption with no replay',()=>{
     const f=teacherExchangeFixture();f.run('resume()');assert.equal(f.context.completion.status,'no_change');assert.equal(f.context.completion.metadata.owner_action_dispatched,false);assert.ok(!f.calls.includes('ordinarySend'));assert.ok(!f.calls.includes('prepareTeacherPractice'));
   });
-  check('Resume revokes an undone ELI5 setting without repeating the valid exchange',()=>{
-    const f=teacherExchangeFixture('tour.chat.teacher.eli5');f.context.completedSteps['tour.chat.teacher.ask']={status:'applied'};f.context.completedSteps['tour.chat.teacher.eli5']={status:'applied'};f.context.state.action_status='complete';f.context.state.eli5_enabled=false;f.run('resume()');assert.equal(f.context.state.step_id,'tour.chat.teacher.eli5');assert.equal(f.context.state.action_status,'idle');assert.equal(f.context.completedSteps['tour.chat.teacher.eli5'],undefined);assert.ok(f.context.completedSteps['tour.chat.teacher.ask']);assert.equal(f.thread.messages.length,2);assert.deepEqual(f.calls,['render']);
+  check('Resume revokes a missing simpler reply without repeating the valid exchange',()=>{
+    const f=teacherExchangeFixture('tour.chat.teacher.eli5');f.context.completedSteps['tour.chat.teacher.ask']={status:'applied'};f.context.completedSteps['tour.chat.teacher.eli5']={status:'applied'};f.context.state.action_status='complete';f.context.teacherExplanation=null;f.run('resume()');assert.equal(f.context.state.step_id,'tour.chat.teacher.eli5');assert.equal(f.context.state.action_status,'idle');assert.equal(f.context.completedSteps['tour.chat.teacher.eli5'],undefined);assert.ok(f.context.completedSteps['tour.chat.teacher.ask']);assert.equal(f.thread.messages.length,2);assert.deepEqual(f.calls,['render']);
   });
   check('an unreadable guided message collection blocks Resume before preparation',()=>{
     const f=teacherExchangeFixture();f.thread.messages=null;f.context.completedSteps['tour.chat.teacher.ask']={status:'applied'};f.run('resume()');assert.equal(f.context.state.status,'recovery_required');assert.match(f.context.state.last_error,/conversation is unavailable/);assert.deepEqual(f.calls,['render']);assert.deepEqual(f.writes,[]);assert.equal(f.thread.messages,null);
   });
-  check('a missing exchange cannot receive a Teacher ELI5 owner action or reply highlight',()=>{
-    const f=teacherExchangeFixture('tour.chat.teacher.eli5');f.thread.messages.pop();f.context.state.open=true;f.run(['toggleEli5','stepTargetSelector'].map(extract).join('\n'));assert.equal(f.value('performOwnerAction(currentDef())').owner_action_dispatched,false);assert.equal(f.run('toggleEli5(true)'),false);assert.equal(f.run('stepTargetSelector("tour.chat.teacher.reply")'),'');assert.deepEqual(f.calls,[]);
+  check('a missing exchange cannot receive the Explain owner action, a simpler reply or a reply highlight',()=>{
+    const f=teacherExchangeFixture('tour.chat.teacher.eli5');f.thread.messages.pop();f.context.state.open=true;f.run(['explainTeacherReply','stepTargetSelector'].map(extract).join('\n'));assert.equal(f.value('performOwnerAction(currentDef())').owner_action_dispatched,false);assert.equal(f.run('explainTeacherReply()'),false);assert.equal(f.run('stepTargetSelector("tour.chat.teacher.reply")'),'');assert.equal(f.run('stepTargetSelector("tour.chat.teacher.eli5")'),'');assert.equal(f.thread.messages.length,1);assert.deepEqual(f.calls,[]);
   });
   check('exchange refs and conversation content are absent from the safe marker',()=>{
     const f=teacherExchangeFixture();f.run('persistCheckpoint()');assert.equal(Object.hasOwn(JSON.parse(f.raw()),'teacherExchange'),false);assert.equal(f.raw().includes('Fixture question'),false);assert.equal(f.raw().includes('Fixture answer'),false);

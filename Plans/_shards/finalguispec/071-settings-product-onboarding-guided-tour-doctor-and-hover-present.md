@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L34973-L35717
+Source lines: L34976-L35725
 
-Source SHA256: `3043fc6bf2f03cd94009cfe985b764e37e4caeb80dc3da571998bcad5100aa94`
+Source SHA256: `28175e393a15cdbe7fbc591613fedf387026ac3ee8759b7dd3494cd06b077aa4`
 
 ---
 
@@ -275,7 +275,11 @@ canonical_text: >-
   Guided Tour teaches through successful actions over the mounted Puppet Master application in one stable chapter
   order: Assistant Chat with Teacher, workspace practice, then Planning Wizard. Chat opens through its real control;
   the learner sends the supplied local question, sees Teacher's answer stream in the same labeled guided-example
-  conversation, and applies ELI5 to that same answer. Workspace practice explains navigation and panels, asks the
+  conversation, and then sees that same answer in simple words through Explain this reply simply
+  (`cmd.chat.eli5.explain_reply`), which adds one extra, simpler reply after the example answer and never rewrites or
+  regenerates the original; the callout then points to the quick dot by the message box, which makes later replies
+  simple, and names the ELI5 popup behind the wand's ELI5 row (the ELI5 sheet, F3-581), where the chat's choice is set
+  (DL-126, ACD-484). Workspace practice explains navigation and panels, asks the
   learner to move/dock Chat and use a real widget, and shares state across docked/undocked views. Every important
   action offers Try it and Show Me; both invoke the same mounted owner handler and satisfy the same observed success
   predicate. Show Me uses interruptible pre-cue, visible travel, destination reaction, and settle, never teleportation
@@ -306,29 +310,29 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit owns the directed tour story, focus, overlay, choreography, and accessible presentation.
 split_recommended: false
-depends_on: [F3-520, PWIZ-023, ACD-431]
+depends_on: [F3-520, PWIZ-023, ACD-431, ACD-484, F3-581]
 unblocks: [F3-524]
 acceptance_criteria:
   - "The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current story."
   - "Every enabled Back or forward control moves exactly one valid story beat, remains reachable and visibly button-shaped, and preserves the scene's mounted state; a coached beat with a required real target advances only from that target's observed action rather than from unrelated clicks, elapsed time, or a generic forward control."
-  - "The brief opening introduces `ui.guided_tour.toggle_eli5` beside Pause and Skip and explains Reduced Motion; it reads `general.visual.reduce-animations` and directs changes to Settings without inventing a separate toggle or detour."
+  - "The brief opening introduces `ui.guided_tour.toggle_eli5` (labelled `ELI5: Off` until turned on) beside Pause and Skip Tour and explains Reduced Motion; it reads `general.visual.reduce-animations` and directs changes to Settings without inventing a separate toggle or detour."
   - "The Tour bar keeps the persistent Look menu (`Change the look`: four families plus Light/Dark) and sound control reachable by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`) at once with presentation-only effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference toggle beside `ui.guided_tour.toggle_eli5`."
   - "Workspace practice explains page navigation and panel purpose, asks the learner to move/dock Chat and add, move, resize, or focus a real widget, and makes the destination and persisted owner result readable. The temporary layout is reversible."
-  - "Every important action offers visible Try it and Show Me using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
+  - "Every important action offers visible Try it and Show Me (`ui.guided_tour.show_me`) using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
   - "Planning receives at least half of meaningful action count and meaningful dwell time, measured against a declared step census. The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
   - "The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved."
   - "Assistant Chat opens first through its real shell action and retains the same conversation when moved; successful Finish lands on the real Planning Wizard, not Chat, without starting work."
   - "Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution."
-  - "Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner detail; ELI5 uses clearer words, shorter structure, and less assumed knowledge without baby talk, forced metaphors, or inaccurate simplification. The same already-visible answer updates."
+  - "Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner detail; ELI5 uses clearer words, shorter structure, and less assumed knowledge without baby talk, forced metaphors, or inaccurate simplification. The already-visible answer never changes; the ELI5 version is one extra reply written by Explain this reply simply (`cmd.chat.eli5.explain_reply`, DL-126)."
   - "Every one of the current 47 supported Teacher topics is discoverable through compact categories, search, or grouped sample questions in the real Chat surface; the initial suggestions stay calm, but the full corpus is not hidden behind knowledge of an exact phrase. Unsupported questions offer relevant categories and examples rather than one tiny hard-coded list or an unrelated fallback answer."
   - "Teacher starts with the supplied question `What happens before Puppet Master changes my files?`; optional grouped questions remain discoverable without a checklist wall. An expanded library yields the callout where needed, stays keyboard-reachable, and restores the same beat on close without clipping or losing the target."
   - "Teacher says Safe History is local, Git or Jujutsu organizes that local timeline without a Git/Jujutsu account, FileSafe is complementary, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin can hold a separate optional online copy; it never calls Git or Jujutsu a shared home, account, website, or hosted copy."
-  - "The opening Teacher practice uses the real guide selector, Teacher selection, supplied prompt sent through the real composer, a streamed local same-conversation answer, and same-answer ELI5 before workspace practice; the thread is subtly labeled Guided example."
+  - "The opening Teacher practice uses the real guide selector, Teacher selection, supplied prompt sent through the real composer, a streamed local same-conversation answer, and same-answer ELI5 (Explain this reply simply adds one extra, simpler reply; the original reply is not rewritten, DL-126) before workspace practice; the thread is subtly labeled Guided example."
   - "The Guided example label is visible on the mounted conversation, not only its backing record. Guided text remains local when paused, in another chapter, or retained after completion/replay; composer shortcuts cannot dispatch web/tool/provider work. Late local-stream callbacks are fenced to their original session and conversation, and missing usage telemetry is not zero-use proof. Ordinary conversations keep their normal behavior."
   - "Every automatic non-interaction scene transition puts programmatic focus on the current h2 scene heading with tabindex=-1 and the documented programmatic-focus-landmark exemption; it never auto-focuses an action or opens a visual PMHoverTag, while exact coached interactions wait for the person to focus or activate the real target."
   - "Teacher practice uses the exact novice composer placeholder `Ask Teacher anything about Puppet Master…`; Skip reinstates the exact pre-tour placeholder and pre-tour layout rather than leaving Teacher copy or a partial tour arrangement behind."
   - "Visible headings, instructions, results, unavailable reasons, and buttons use novice-friendly outcome language; the internal term `shell`, raw command/route/schema IDs, receipt labels, and owner/provider/model/token jargon never appear in product copy."
-  - "Pause, Back, valid forward navigation, and Skip remain reachable and operational. Close/reload resumes the last safe step after owner-state revalidation. Skip restores captured layout/Chat state/focus; Finish restores by default and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard. Failed restoration exposes recovery, never false completion."
+  - "Pause, Back, valid forward navigation, and Skip remain reachable and operational. Close/reload resumes the last safe step after owner-state revalidation. Skip restores captured layout/Chat state/focus; Finish tour restores by default and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard. Failed restoration exposes recovery, never false completion."
   - "Effective Reduced Motion uses restrained transitions that preserve sequence and cause/effect, focus, hierarchy, announcements, and action parity. Settings changes are honored without discarding the step; hidden/collapsed surfaces stop decorative work and duplicate subscriptions."
   - "Callout and halo geometry is measured against the live target and viewport, remeasures after real layout changes, clamps to every edge, and never covers the target whenever any safe above/below/side placement or bounded callout shrink can avoid it; short/narrow fallback keeps both target and callout usable instead of accepting a misleading offset highlight."
   - "Guided Tour uses no left-edge color-rail callouts. Basic uses an exact instructional/blueprint director, Friendly an organic illustrated guide, Glass a spatial layered lens, and Retro a terminal/pixel director; these systems differ in silhouette, typography, target treatment, and choreography rather than just color."
@@ -337,7 +341,7 @@ acceptance_criteria:
   - "PMConcept7 browser behavior, effect receipts, and observed mounted-owner results remain concept_fixture_only evidence; they are not production command receipts, native Slint wiring, runtime certification, or product-readiness proof."
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first static presentation consumer; story/actions reference the v3 owner definitions)"
-  - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning, eleven-action, shared Show Me, same-answer ELI5, safe checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery or runtime acceptance)"
+  - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning, eleven-action, shared Show Me, same-answer ELI5 as one extra, simpler reply with the original reply unchanged, safe checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery or runtime acceptance)"
   - Concepts/pm7-tools/guided_tour_source.py authored guards
   - Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs scoped concept lifecycle checks, not native or final visual acceptance
   - future mounted-owner handler observation, focus, Skip restoration, completion disposition, and film review
@@ -355,9 +359,10 @@ source_lineage:
   - Concepts/pm7-tools/guided_tour_source.py
   - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/04_GUIDED_TOUR_REBUILD.md"
   - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md"
-preserved_exact_tokens: [Planning Wizard, Assistant Chat, Teacher, Guided example, "What happens before Puppet Master changes my files?", "Ask Teacher anything about Puppet Master…", ELI5, "ELI5: Off", Reduced Motion, general.visual.reduce-animations, ui.guided_tour.toggle_eli5, ui.guided_tour.show_me, programmatic-focus-landmark, Pause, Skip Tour, Back, Try it, Show Me, Finish tour, "Change the look", "Sound off — click to turn on", general.visual.theme, general.visual.theme-mode, general.interaction.sound-effects]
+preserved_exact_tokens: [Planning Wizard, Assistant Chat, Teacher, Guided example, "What happens before Puppet Master changes my files?", "Ask Teacher anything about Puppet Master…", ELI5, "ELI5: Off", Reduced Motion, general.visual.reduce-animations, ui.guided_tour.toggle_eli5, ui.guided_tour.show_me, programmatic-focus-landmark, Pause, Skip Tour, Back, Try it, Show Me, Finish tour, "Change the look", "Sound off — click to turn on", general.visual.theme, general.visual.theme-mode, general.interaction.sound-effects, Explain this reply simply, cmd.chat.eli5.explain_reply]
 negative_constraints:
   - "Do not build a tooltip carousel, parallel demo application, or five-chapter tour."
+  - "Do not rewrite, regenerate or replace the Teacher example answer for ELI5; its simpler version is one extra reply from Explain this reply simply (DL-126)."
   - "Do not clone live controls, fabricate success, or cancel owner work when a view closes."
   - "Do not use a provider, model, token budget, or protected AuthBrowserSession content for the deterministic lesson."
   - "Do not retain the superseded Usage-first/Chat-final film or revive the old five-chapter controller."

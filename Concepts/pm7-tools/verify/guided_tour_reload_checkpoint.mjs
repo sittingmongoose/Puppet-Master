@@ -135,13 +135,14 @@ try{
     assert.equal(result.completed.action_status,'complete');assert.equal(result.resumed.step_id,'tour.chat.teacher.ask');assert.equal(result.resumed.action_status,'idle');assert.equal(result.resumed.teacher_message_sent,false);assert.equal(result.unchanged,true);assert.equal(result.receiptDelta,0);assert.equal(result.thread,result.completed.teacher_thread_id);
   });
   await fresh();
-  await check('ELI5 follows the bound reply when the Chat owner inserts an earlier message',async()=>{
+  await check('Explain this reply simply follows the bound reply when the Chat owner inserts an earlier message, and never rewrites it',async()=>{
     await page.evaluate(()=>{window.PM7_GUIDED_TOUR.start({step:'tour.chat.teacher.ask'});const state=window.PM7_GUIDED_TOUR.snapshot();window.PM_DEMO.chat.send(state.teacher_thread_id,'What happens before Puppet Master changes my files?');});
     await page.waitForFunction(()=>window.PM7_GUIDED_TOUR.snapshot().teacher_message_sent===true);
-    await page.evaluate(()=>{const state=window.PM7_GUIDED_TOUR.snapshot(),thread=window.PM_DEMO.state.chat.threads[state.teacher_thread_id],reply=thread.messages[thread.messages.length-1],user=thread.messages[thread.messages.length-2],other={role:'assistant',html:'Unrelated owner message',guided_example:false};window.__teacherIdentity={reply,user,other,replyBefore:reply.html,userBefore:user.text};thread.messages.unshift(other);});
-    await page.locator('#pm7gt-eli5').click();
-    const result=await page.evaluate(()=>({changed:window.__teacherIdentity.reply.html!==window.__teacherIdentity.replyBefore,userUnchanged:window.__teacherIdentity.user.text===window.__teacherIdentity.userBefore,unrelated:window.__teacherIdentity.other.html,state:window.PM7_GUIDED_TOUR.snapshot()}));
-    assert.equal(result.changed,true);assert.equal(result.userUnchanged,true);assert.equal(result.unrelated,'Unrelated owner message');assert.equal(result.state.teacher_copy_mode,'eli5');assert.equal(result.state.teacher_answer_id,'before_files_change');
+    await page.evaluate(()=>{const state=window.PM7_GUIDED_TOUR.snapshot(),thread=window.PM_DEMO.state.chat.threads[state.teacher_thread_id],reply=thread.messages[thread.messages.length-1],user=thread.messages[thread.messages.length-2],other={role:'assistant',html:'Unrelated owner message',guided_example:false};window.__teacherIdentity={thread,reply,user,other,replyBefore:reply.html,userBefore:user.text};thread.messages.unshift(other);});
+    await page.waitForSelector('[data-pm7gt-explain-reply]',{state:'attached'});await page.evaluate(()=>document.querySelector('[data-pm7gt-explain-reply]').click());
+    const result=await page.evaluate(()=>{const t=window.__teacherIdentity,rows=t.thread.messages,extra=rows[rows.indexOf(t.reply)+1];return {replyUnchanged:t.reply.html===t.replyBefore,userUnchanged:t.user.text===t.userBefore,unrelated:t.other.html,extraExplains:extra&&extra.explains_message_id,extraSimpler:!!extra&&extra.html!==t.replyBefore,count:rows.length,state:window.PM7_GUIDED_TOUR.snapshot()};});
+    assert.equal(result.replyUnchanged,true);assert.equal(result.userUnchanged,true);assert.equal(result.unrelated,'Unrelated owner message');assert.equal(result.extraExplains,result.state.teacher_response_message_id);assert.equal(result.extraSimpler,true);assert.equal(result.count,4);
+    assert.equal(result.state.teacher_copy_mode,'normal');assert.equal(result.state.teacher_answer_id,'before_files_change');assert.equal(result.state.original_reply_rewritten,false);assert.ok(result.state.teacher_explanation_message_id);
   });
   await fresh();
   await check('same-tab Teacher Resume preserves the paused draft and thread',async()=>{
