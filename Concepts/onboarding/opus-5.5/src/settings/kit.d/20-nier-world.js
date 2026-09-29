@@ -64,7 +64,7 @@
       while (used.size < n) used.add(Math.floor(rnd() * strokes.length));
       used.forEach(i => { d += strokes[i](); });
     }
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126 5" fill="none" stroke="INK" stroke-width="1" stroke-opacity=".6" stroke-linecap="square"><path d="${d}"/></svg>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126 5" fill="none" stroke="INK" stroke-width="1" stroke-opacity=".42" stroke-linecap="square"><path d="${d}"/></svg>`;
   }
   ART.glyphs = glyphStrip();
   function artSheet() {
@@ -201,7 +201,7 @@
     D.on('run.state', s => {
       const now = s && (s.state || s.stage), before = runState; runState = now;
       if (now !== 'complete' || !before || before === 'complete') return;
-      const h = s.history && s.history[0], what = h && h.label ? h.label : `Run ${s.id || ''}`.trim();
+      const h = (s.history || []).find(x => x && x.id === s.id), what = h && h.label ? h.label : `Run ${s.id || ''}`.trim();
       banner('Orchestrator', 'Build complete', `${what}. Create PR is unlocked in Source Control.`);
     });
     D.on('chat.state', () => { if (ro) roUpdate(); });
