@@ -1476,14 +1476,23 @@ def park() -> Scene:
     sc = Scene('park', 'Amusement Park')
     rng = random.Random(6060)
     G = 540
-    # fireworks, faint and far, in their own group (they may fade in and out)
+    # far: fireworks nobody is watching (in their own group: they may fade in and out), a drop tower, the far side of
+    # the park (a carousel dome with its flag, a second coaster's lift hill, a line of trees)
+    sc.plane(.42)
     sc.open('class="a-fireworks" data-box="700 40 700 200"')
-    sc.s(burst(770, 132, 42, rng) + burst(922, 86, 30, rng, 12) + burst(1330, 150, 36, rng, 14), w=.7, op=.6)
+    sc.s(burst(770, 132, 42, rng) + burst(922, 86, 30, rng, 12) + burst(1330, 150, 36, rng, 14), w=.75, op=.9)
     sc.close()
-    # a drop tower far off, faint
-    sc.k(poly([(1452, 470), (1458, 112), (1470, 112), (1476, 470)]), w=.75, op=.5)
-    sc.s(rect(1446, 300, 36, 16) + ''.join(line(1458, 130 + i * 24, 1470, 142 + i * 24) for i in range(14)), w=.6, op=.45)
-    sc.k(poly([(1440, 112), (1464, 88), (1488, 112)]), w=.75, op=.5)
+    sc.k(poly([(1452, 470), (1458, 112), (1470, 112), (1476, 470)]), w=.8)
+    sc.s(rect(1446, 300, 36, 16) + ''.join(line(1458, 130 + i * 24, 1470, 142 + i * 24) for i in range(14)), w=.75, op=.8)
+    sc.k(poly([(1440, 112), (1464, 88), (1488, 112)]), w=.8)
+    lift = bezier_pts((1060, 470), (1110, 420), (1160, 330), (1200, 322), 12) + bezier_pts((1200, 322), (1230, 318), (1250, 380), (1290, 470), 10)[1:]
+    sc.s(smooth(lift) + smooth(offset_line(lift, 4)) + ''.join(line(x, y + 4, x, 470) for x, y in resample(lift, 26)[1:-1]), w=.8)
+    sc.k(poly(arc_pts(1380, 470, 50, 52, 180, 360, 16)) + 'M1380 418v-26', w=.8)
+    sc.s(''.join(line(1380, 418, 1380 + 50 * math.cos(math.radians(a_)), 470 + 52 * math.sin(math.radians(a_))) for a_ in (205, 240, 300, 335)), w=.75, op=.7)
+    sc.f(poly([(1380, 392), (1394, 396), (1380, 400)]))
+    trees_far, tb, te = canopy_band(-20, 1640, 470, rng, r=(8, 16), wave=(6, .01, 2), big=.1)
+    sc.k(trees_far + 'L1640 600L-20 600Z', w=.8)
+    sc.plane(.75)
 
     # the roller coaster: a lift hill, a drop, a loop, and a span that ends in the air
     track = bezier_pts((600, 520), (660, 470), (760, 250), (812, 240), 20)
@@ -1516,7 +1525,8 @@ def park() -> Scene:
     cx_, cy_ = track[12]
     sc.k(poly([(cx_ - 12, cy_ - 4), (cx_ + 10, cy_ - 14), (cx_ + 14, cy_ - 6), (cx_ - 8, cy_ + 4)]), w=.9)
 
-    # the circus tent, strung with pennants
+    # the circus tent, strung with pennants (the near plane from here)
+    sc.plane(1)
     tent_c, tent_top, tent_eave, tw = 1188, 372, 470, 132
     pen = ''
     tri = ''
@@ -1547,7 +1557,9 @@ def park() -> Scene:
         x += tw / 7
     sc.s(val, w=.8)
     sc.s(''.join(vline(tent_c - tw + 10 + i * (2 * tw - 20) / 8, tent_eave + 12, G - tent_eave - 12) for i in range(1, 8)), w=.55, op=.6)
-    sc.f(f'M{n(tent_c - 18)} {G}v-30q18 -22 36 0v30Z')
+    sc.k(f'M{n(tent_c - 18)} {G}v-30q18 -22 36 0v30Z', w=.9)
+    sc.s(hatch([(tent_c - 17, G), (tent_c - 17, G - 30), (tent_c, G - 44), (tent_c + 17, G - 30), (tent_c + 17, G)], 90, 2.8, rng, inset=1), w=.75, op=.85)
+    hang_vines(sc, rng, [(tent_c - tw + 12, tent_eave + 8), (tent_c - tw + 60, tent_eave + 6), (tent_c + tw - 30, tent_eave + 8)], (20, 60), sway=(2, 4))
     sc.s(f'M{tent_c} {tent_top}v-34', w=.9)
     sc.f(poly([(tent_c, tent_top - 34), (tent_c + 16, tent_top - 29), (tent_c, tent_top - 24)]))
 
@@ -1555,11 +1567,13 @@ def park() -> Scene:
     sc.k(rect(566, 470, 54, 70))
     sc.k(poly([(558, 470), (628, 470), (620, 456), (566, 456)]), w=.9)
     sc.s(''.join(line(566 + i * 9, 456, 562 + i * 10.5, 470) for i in range(1, 7)) + rect(576, 482, 34, 22), w=.6, op=.85)
-    sc.f(rect(580, 486, 26, 14), op=.7)
+    sc.s(hatch([(580, 486), (606, 486), (606, 500), (580, 500)], 45, 3, rng), w=.75, op=.8)
     bl = ''
     for bx, by, br_ in ((600, 392, 11), (618, 380, 9), (586, 404, 8)):
-        bl += circle_path(bx, by, br_) + f'M{n(bx)} {n(by + br_)}q{n(rng.uniform(-6, 6))} 24 {n(606 - bx)} {n(456 - by - br_)}'
+        bl += circle_path(bx, by, br_) + f'M{n(bx)} {n(by + br_)}q{n(rng.uniform(-6, 6))} 30 {n(650 - bx)} {n(G - 26 - by - br_)}'
     sc.k(bl, w=.8)
+    # the small machine holding them, waiting by the booth
+    machine(sc, 642, G, 1.25, 'stand', look=(-1.2, -1.6))
 
     # the park's gate on the left: two pillars, an arch of bulbs, a blank sign hanging askew
     gate = rect(40, 404, 26, 136) + rect(170, 404, 26, 136)
