@@ -1650,85 +1650,157 @@ def reflect_strokes(outline, water_y, rng, gap=5.5, depth=1.0, keep=.8):
     return out
 
 
+def ruin_outline(x, wl, w, h, kind, rng):
+    """A drowned building's outline standing on the water line, by kind: broken, stepped, mast, leaning, notched."""
+    t = wl - h
+    if kind == 'stepped':
+        s1 = rng.uniform(.35, .6)
+        top = [(x, t + h * .22), (x + w * s1, t + h * .22), (x + w * s1, t), (x + w * .85, t + rng.uniform(0, 8)), (x + w, t + 10)]
+    elif kind == 'mast':
+        top = [(x, t), (x + w * .45, t), (x + w * .45, t - h * .45), (x + w * .5, t - h * .45), (x + w * .5, t), (x + w, t + 3)]
+    elif kind == 'notched':
+        top = [(x, t + 6), (x + w * .3, t), (x + w * .55, t + h * .3), (x + w * .72, t + h * .12), (x + w, t + 4)]
+    else:
+        k = rng.randint(3, 5)
+        top = [(x + w * i / k, t + rng.uniform(0, h * .22)) for i in range(k + 1)]
+    ps = [(x, wl + 4)] + top + [(x + w, wl + 4)]
+    if kind == 'leaning':
+        lean = rng.choice((-1, 1)) * rng.uniform(4, 10)
+        ps = [(px + lean * (wl - py) / max(h, 1), py) for px, py in ps]
+    return ps
+
+
+def ripple_rings(cx, y, w, rng, rings=3):
+    out = ''
+    for i in range(rings):
+        rx, ry = w / 2 + 10 + i * 15, 2.5 + i * 2
+        a0, a1 = rng.uniform(8, 30), rng.uniform(150, 172)
+        out += smooth(arc_pts(cx, y, rx, ry, a0, a1, 10))
+    return out
+
+
 def flooded() -> Scene:
     sc = Scene('flooded', 'Flooded City')
     rng = random.Random(8484)
     WL = 404  # the water line at the horizon
-    # long quiet clouds
-    sc.s(hline(120, 150, 260) + hline(180, 160, 160) + hline(1080, 120, 300) + hline(1160, 131, 180), w=.7, op=.45)
-    # the far drowned skyline on the horizon, faint
-    far = ''
+    # far: long quiet clouds, the drowned skyline (broken, stepped, masts, leaning, notched, some hazed), mist on the
+    # water at its foot
+    sc.plane(.42)
+    sc.s(hline(120, 150, 260) + hline(180, 160, 160) + hline(1080, 120, 300) + hline(1160, 131, 180), w=.75, op=.9)
+    far, haze, refl = '', '', ''
     x = -10
     while x < W:
-        w = rng.uniform(26, 70)
-        h = rng.uniform(30, 120)
-        lean = rng.uniform(-6, 6) if rng.random() < .35 else 0
-        far += poly([(x, WL), (x + lean, WL - h + rng.uniform(0, 12)), (x + w * .5 + lean, WL - h + rng.uniform(-4, 16)), (x + w + lean, WL - h + rng.uniform(-6, 10)), (x + w, WL)])
-        x += w + rng.uniform(10, 50)
-    sc.k(far, w=.7, op=.5)
-    sc.s(reflect_strokes([(0, WL), (0, WL - 60), (1600, WL - 60), (1600, WL)], WL, rng, gap=7, depth=.35, keep=.35), w=.5, op=.3)
-    # the towers: (x, width, height, tilt, water line, windows?)
+        w = rng.uniform(22, 64)
+        h = rng.uniform(28, 118)
+        kind = rng.choice(('broken', 'broken', 'stepped', 'mast', 'leaning', 'notched', 'plain'))
+        ps = ruin_outline(x, WL, w, h, kind, rng)
+        far += poly(ps)
+        if rng.random() < .4:
+            haze += hatch(ps, 90, 6, rng, keep=.7, inset=3)
+        refl += reflect_strokes(ps, WL, rng, gap=6, depth=.45, keep=.45)
+        x += w + rng.uniform(6, 40)
+    sc.s(refl, w=.7, op=.7)
+    sc.k(far, w=.8)
+    sc.s(haze, w=.7, op=.7)
+    mist = ''.join(hline(rng.uniform(-60, 1500), WL - rng.uniform(2, 14), rng.uniform(120, 420)) for _ in range(9))
+    sc.s(mist, w=.75, op=.8)
+
+    # mid: ruins half a mile off: a broken dome, a bare frame, a stepped block, a radio mast, broken towers
+    sc.plane(.7)
+    mid = [(478, 420, 58, 140, 'frame'), (862, 424, 130, 70, 'dome'), (1082, 426, 58, 118, 'stepped'), (1398, 422, 40, 150, 'mast'),
+           (214, 418, 62, 150, 'broken'), (1560, 420, 60, 130, 'notched'), (700, 416, 44, 96, 'leaning')]
+    for x, wl, w, h, kind in sorted(mid, key=lambda t: t[1]):
+        if kind == 'dome':
+            cx = x + w / 2
+            ps = arc_pts(cx, wl + 4, w / 2, h, 180, 360, 24)
+            ps = [(px, py + (10 if 250 < 180 + (i * 180 / 24) < 280 and py < wl - h * .8 else 0)) for i, (px, py) in enumerate(ps)]
+            sc.s(reflect_strokes(ps, wl, rng, gap=5.2, depth=.7, keep=.75), w=.75, op=.8)
+            sc.k(poly(ps))
+            ribs = ''.join(smooth([(cx + (w / 2) * f * math.cos(math.radians(a_)), wl + 4 - h * math.sin(math.radians(a_))) for a_ in range(0, 91, 15)]) for f in (-.6, -.25, .25, .6))
+            sc.s(ribs + hline(x + 6, wl - h * .35, w - 12), w=.75, op=.8)
+            sc.s(hatch(arc_pts(cx - 8, wl - h * .78, 16, 9, 0, 360, 12), 90, 2.8, rng), w=.75)
+            continue
+        if kind == 'frame':
+            ps = [(x, wl + 4), (x, wl - h), (x + w, wl - h + 16), (x + w, wl + 4)]
+            sc.s(reflect_strokes(ps, wl, rng, gap=5.2, depth=.7, keep=.6), w=.75, op=.8)
+            fr = ''.join(vline(x + i * w / 3, wl - h + (6 if i else 0) + i * 5, h - i * 5 + 4) for i in range(4))
+            fr += ''.join(hline(x, wl - h + 18 + j * 24, w) for j in range(int(h / 24)))
+            sc.s(fr, w=.9)
+            continue
+        ps = ruin_outline(x, wl, w, h, kind, rng)
+        sc.s(reflect_strokes(ps, wl, rng, gap=5.2, depth=.7, keep=.75), w=.75, op=.8)
+        sc.k(poly(ps))
+        sc.s(''.join(hline(x + 4, wl - 16 - j * 18, w - 8) for j in range(int((h - 20) / 18)) if rng.random() < .6), w=.75, op=.7)
+        if kind == 'mast':
+            sc.s(line(x + w * .47, wl - h * 1.45, x - 30, wl) + line(x + w * .47, wl - h * 1.45, x + w + 34, wl), w=.75, op=.7)
+
+    # near: the towers standing tilted in the water, overgrown, their reflections deep
+    sc.plane(1)
     specs = [(80, 132, 420, -5, 494, None), (300, 86, 250, 8, 448, None), (378, 74, 290, -3, 444, None),
              (1004, 58, 232, 4, 434, 'dark'), (1150, 64, 170, -9, 426, None), (1226, 158, 404, 4, 504, None),
              (1470, 90, 176, -2, 440, None)]
-    order = sorted(specs, key=lambda t: t[4])
-    for (x, w, h, tilt, wl, kind) in order:
+    rings = ''
+    for (x, w, h, tilt, wl, kind) in sorted(specs, key=lambda t: t[4]):
         cx = x + w / 2
         top = wl - h
         k = rng.randint(3, 5)
         jag = [(x + w * i / k, top + rng.uniform(0, 22)) for i in range(k + 1)]
         outline = [(x, wl + 6)] + jag + [(x + w, wl + 6)]
         rot_out = [rot(p, (cx, wl), tilt) for p in outline]
-        # reflection first, under the water line
-        sc.s(reflect_strokes([p for p in rot_out], wl, rng, gap=5.2, depth=.62), w=.7, op=.7)
+        sc.s(reflect_strokes(rot_out, wl, rng, gap=4.8, depth=.9, keep=.85), w=.75, op=.75)
         sc.open(f'transform="rotate({num(tilt)} {n(cx)} {n(wl)})"')
+        sc.k(poly(outline))
         if kind == 'dark':
-            sc.f(poly(outline))
+            face = [(x + 2, wl), (x + 2, jag[0][1] + 4)] + [(px, py + 4) for px, py in jag[1:-1]] + [(x + w - 2, jag[-1][1] + 4), (x + w - 2, wl)]
+            sc.s(hatch(face, 90, 2.6, rng, inset=1), w=.75, op=.8)
             sc.k(''.join(rect(x + 10 + c * 18, wl - h + 40 + r * 26, 8, 12) for c in range(int((w - 16) / 18)) for r in range(int((h - 60) / 26)) if rng.random() < .35), stroke=False)
         else:
-            sc.k(poly(outline))
             fl = ''
             yy = wl - 22
             while yy > top + 26:
                 fl += hline(x + 4, yy, w - 8) if rng.random() < .55 else hline(x + 4 + rng.uniform(0, w * .4), yy, w * rng.uniform(.2, .5))
                 yy -= 22
-            sc.s(fl, w=.65, op=.75)
-            sc.f(''.join(rect(x + 8 + c * 16, wl - h + 36 + r * 22, 7, 10) for c in range(int((w - 12) / 16)) for r in range(int((h - 56) / 22)) if rng.random() < .16), op=.8)
-            sc.s(hatch([(x + w * .8, wl), (x + w, wl), (x + w, jag[-1][1] + 3), (x + w * .8, jag[-2][1] + 6)], 75, 5, rng, keep=.9, inset=1), w=.55, op=.7)
+            sc.s(fl, w=.7, op=.75)
+            sc.f(''.join(rect(x + 10 + c * 16, wl - h + 38 + r * 22, 5, 7) for c in range(int((w - 12) / 16)) for r in range(int((h - 56) / 22)) if rng.random() < .1), op=.8)
+            sc.s(hatch([(x + w * .8, wl), (x + w, wl), (x + w, jag[-1][1] + 3), (x + w * .8, jag[-2][1] + 6)], 75, 5, rng, keep=.9, inset=1), w=.7, op=.7)
         sc.close()
-        # the water line itself: a ripple ring round the base
         wlx0, wlx1 = rot((x, wl), (cx, wl), tilt)[0], rot((x + w, wl), (cx, wl), tilt)[0]
-        sc.s(f'M{n(wlx0 - 12)} {n(wl + 2)}h{n(wlx1 - wlx0 + 24)}M{n(wlx0 - 4)} {n(wl + 6)}h{n(wlx1 - wlx0 + 8)}', w=.8)
+        sc.s(f'M{n(wlx0 - 12)} {n(wl + 2)}h{n(wlx1 - wlx0 + 24)}', w=.85)
+        rings += ripple_rings((wlx0 + wlx1) / 2, wl + 4, wlx1 - wlx0, rng, 2 if h < 300 else 3)
         hang_vines(sc, rng, along([rot(p, (cx, wl), tilt) for p in jag], rng, 3), (30, 110), sway=(2, 5))
         if h > 400:
             px, py = rot(jag[len(jag) // 2], (cx, wl), tilt)
             sc.k(canopy(px, py - 12, 26, 14, rng, ps=crown_pts(px, py - 12, 26, 14, rng)), w=.9)
-    # the water: long faint strokes, denser toward the horizon
+    sc.s(rings, w=.75, op=.55)
+    # the water: long calm strokes, fine and close toward the horizon, wider apart and longer near
     wat = ''
-    y = WL + 6
+    y = WL + 5
     while y < H:
         t = (y - WL) / (H - WL)
-        for _ in range(int(3 + 5 * (1 - t))):
-            x0 = rng.uniform(-40, 1600)
-            wat += hline(x0, y, rng.uniform(30, 140) * (0.5 + t))
-        y += 9 + t * 16
-    sc.s(wat, w=.55, op=.45)
+        for _ in range(int(2 + 4 * (1 - t))):
+            wat += hline(rng.uniform(-60, 1600), y, rng.uniform(60, 260) * (0.5 + t))
+        y += 7 + t * 18
+    sc.s(wat, w=.75, op=.4)
     # a drowned overpass: its deck slanting into the water, railings still standing
     ov = [(560, 452), (820, 424), (822, 434), (562, 464)]
-    sc.s(reflect_strokes(ov + [(560, 470)], 466, rng, gap=5, depth=.9), w=.6, op=.6)
+    sc.s(reflect_strokes(ov + [(560, 470)], 466, rng, gap=5, depth=.9), w=.75, op=.6)
     sc.k(poly(ov))
-    sc.s(line(560, 443, 820, 415) + ''.join(line(566 + i * 16, 451 - i * 1.72, 566 + i * 16, 442 - i * 1.72) for i in range(16)), w=.7)
-    sc.s(rebar(822, 430, rng, 3, 12), w=.7)
+    sc.s(line(560, 443, 820, 415) + ''.join(line(566 + i * 16, 451 - i * 1.72, 566 + i * 16, 442 - i * 1.72) for i in range(16)), w=.75)
+    sc.s(rebar(822, 430, rng, 3, 12), w=.75)
     hang_vines(sc, rng, [(600, 461), (680, 452), (760, 444)], (10, 30), sway=(1, 3))
-    # what shows above the surface: a sign, a lamp post, a bus roof, a drifting boat
+    # what shows above the surface: a sign, a lamp post, a bus roof
     sc.s('M902 500v-46M890 454h24v14h-24ZM902 502h-10M902 502h12', w=.85)
-    sc.s(reflect_strokes([(890, 502), (890, 454), (914, 454), (914, 502)], 502, rng, gap=5, depth=.8), w=.6, op=.6)
+    sc.s(reflect_strokes([(890, 502), (890, 454), (914, 454), (914, 502)], 502, rng, gap=5, depth=.8), w=.75, op=.6)
     sc.s('M960 470v-80q0-10 10-12l12-2', w=.9)
+    sc.s(reflect_strokes([(958, 470), (958, 392), (962, 392), (962, 470)], 470, rng, gap=5, depth=.6), w=.75, op=.5)
     sc.k('M1400 530l6 -12h96l6 12Z', w=.9)
-    sc.s(''.join(rect(1416 + i * 16, 521, 10, 6) for i in range(5)) + 'M1390 534h130', w=.6, op=.8)
-    boat = 'M690 516q30 10 62 0l-6 -9h-50Z'
-    sc.k(boat, w=.9)
-    sc.s('M706 507v-22l16 18M692 520h58M700 524h40', w=.7, op=.8)
+    sc.s(''.join(rect(1416 + i * 16, 521, 10, 6) for i in range(5)) + 'M1390 534h130', w=.75, op=.8)
+    # a drifting boat; a small machine sits in it, fishing, its line making rings on the still water
+    machine(sc, 718, 512, 1.05, 'sit', look=(1.2, .6))
+    sc.s('M728 500l40 -40M768 460q14 20 18 58', w=.8)
+    sc.s(ripple_rings(786, 520, 4, rng, 3) + 'M786 516v4', w=.75, op=.7)
+    sc.k('M690 516q30 10 62 0l-6 -9h-50Z', w=.95)
+    sc.s('M692 522h58M700 526h40', w=.75, op=.7)
     sc.s(birds([(652, 176), (670, 168), (688, 182)], rng, size=5), w=.85)
     # glints on the water, twinkling when the scene may move
     gl = ''
