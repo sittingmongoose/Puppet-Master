@@ -97,7 +97,10 @@ html[data-o55-nier-parts~="headers"] .pm51-popout-title { margin: -4px -4px 4px;
 html[data-o55-nier-parts~="headers"] .pm6-orch-modal-title { padding: 8px 12px; letter-spacing: .12em; text-transform: uppercase; }
 html[data-o55-nier-parts~="headers"] .rs-panel-head .clear-all-btn { background: transparent !important; border-color: var(--o55-nier-on-ink) !important; }
 /* a toast's title row is the band */
-html[data-o55-nier-parts~="headers"] #rsStage .rs-card .n-row { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); margin: -8px -10px 5px; padding: 5px 10px; }
+html[data-o55-nier-parts~="headers"] #rsStage .rs-card .n-row { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); margin: -8px -10px 5px; padding: 5px 10px; width: calc(100% + 20px) !important; box-sizing: border-box; }
+/* an alert's band is in the error or warning ink */
+html[data-o55-nier-parts~="headers"] #rsStage .rs-card.n-sev-error .n-row, html[data-o55-nier-parts~="voice"] #rsStage .rs-card.rs-card.n-sev-error::before { background: var(--o55-nier-error); color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="headers"] #rsStage .rs-card.n-sev-warn .n-row, html[data-o55-nier-parts~="voice"] #rsStage .rs-card.rs-card.n-sev-warn::before { background: var(--o55-nier-warn-text); color: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="headers"] #rsStage .rs-card .n-row :where(*) { color: inherit !important; }
 html[data-o55-nier-parts~="headers"] #rsStage .rs-card .n-sev-dot { background: var(--o55-nier-on-ink) !important; }
 
@@ -173,7 +176,9 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-s
 #o55np-reboot .o55np-rb-meter { position: relative; height: 6px; margin-top: 12px; border: 1px solid var(--rb-paper); }
 #o55np-reboot .o55np-rb-meter > i { position: absolute; left: 1px; top: 1px; bottom: 1px; right: 1px; background: repeating-linear-gradient(90deg, var(--rb-paper) 0 10px, transparent 10px 13px);
   transform-origin: left center; transform: scaleX(0); will-change: transform; }
-#o55np-reboot .o55np-rb-line[data-ok]::after { content: "  OK"; }
+#o55np-reboot .o55np-rb-line { display: flex; gap: 10px; }
+#o55np-reboot .o55np-rb-line::after { content: "- - -"; margin-left: auto; opacity: .6; }
+#o55np-reboot .o55np-rb-line[data-ok]::after { content: "OK"; opacity: 1; }
 
 /* ---- Slice open [slice]: menus, popovers and dialogs unfold from a 1px line, one flicker step, and fold back ---- */
 /* the sprouting family (the title-bar menus, Settings drop-downs, chat pickers, context pop-ups): their sprout becomes
@@ -181,7 +186,9 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-s
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-tb-menu, .pm6-chat-more-menu, .pm51-popout, .pm-home-portal, .pm6-chat-pt-popout-portal,
   .pm6-chat-persona-popout-portal, .pm6-chat-effort-popout-portal, .pm6-chat-mini-popout-portal, .pm6-chat-mode-popout-portal, .context-hover-module,
   .context-lens-popover, .wt-bind-dropdown, .pm6-tb-search-pop) {
-  --pm6-sprout-ox: 50%; --pm6-sprout-oy: 50%; --pm6-sprout-tx: 0px; --pm6-sprout-ty: 0px; --pm6-sprout-sx: 1; --pm6-sprout-sy: 1;
+  /* the sprout is written inline per opening (setPopoutSprout), so identity needs !important */
+  --pm6-sprout-ox: 50% !important; --pm6-sprout-oy: 50% !important; --pm6-sprout-tx: 0px !important; --pm6-sprout-ty: 0px !important;
+  --pm6-sprout-sx: 1 !important; --pm6-sprout-sy: 1 !important;
   scale: 1 .006;
   transition: scale 150ms cubic-bezier(.6, 0, .85, .35), opacity 70ms linear 120ms, visibility 0s linear 200ms !important;
 }
@@ -190,7 +197,8 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-tb-menu
   .context-lens-popover, .wt-bind-dropdown, .pm6-tb-search-pop):is(.is-open, .open):not(.is-closing) {
   scale: none; transition: none !important; animation: o55np-slice 300ms linear backwards;
 }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .rs-panel { --rs-sprout-ox: 50%; --rs-sprout-oy: 50%; --rs-sprout-sx: 1; --rs-sprout-sy: 1; --rs-sprout-tx: 0px; --rs-sprout-ty: 0px; }
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .rs-panel { --rs-sprout-ox: 50% !important; --rs-sprout-oy: 50% !important; --rs-sprout-sx: 1 !important;
+  --rs-sprout-sy: 1 !important; --rs-sprout-tx: 0px !important; --rs-sprout-ty: 0px !important; }
 /* the rest open by animation only (they close their own way) */
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.rs-panel.open:not(.is-closing), #panel-settings .overlay > .dialog, .pm6-orch-modal, .pm-ctx-menu.is-open,
   .fm-ctx.is-open, .pm7ctx-pop.is-open, .pm7-dash-size-pop.open, .pm7u-pop:is(.open, .is-open), .chat-dropdown-popover:is(.active, .is-open), .slash-command-menu.visible,

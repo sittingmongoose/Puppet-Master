@@ -458,7 +458,7 @@
     const t = e.target; if (!t || !t.closest) return;
     if (t.closest(CANCEL_SEL)) sfx('cancel');
     else if (t.closest(CONFIRM_SEL)) sfx('confirm');
-    else if (t.closest(CURSOR_SEL) || t.closest(TOGGLE_SEL)) sfx('select');
+    else if (t.closest(CURSOR_SEL) || t.closest(TOGGLE_SEL) || t.closest('.page-tab, .pm-segtab-item')) sfx('select');
   }
   function soundKey(e) { if (e.key === 'Escape') sfx('cancel'); else if (e.key === 'Enter' && e.target && e.target.closest && e.target.closest(CURSOR_SEL)) sfx('select'); }
   PARTS.sounds = {
