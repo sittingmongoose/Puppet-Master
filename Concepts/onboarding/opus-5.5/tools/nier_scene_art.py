@@ -1769,7 +1769,7 @@ def flooded() -> Scene:
         sc.k(poly(outline))
         if kind == 'dark':
             face = [(x + 2, wl), (x + 2, jag[0][1] + 4)] + [(px, py + 4) for px, py in jag[1:-1]] + [(x + w - 2, jag[-1][1] + 4), (x + w - 2, wl)]
-            sc.s(hatch(face, 90, 2.6, rng, inset=1), w=.75, op=.8)
+            sc.s(hatch(face, 90, 3.6, rng, inset=1), w=.75, op=.6)
             sc.k(''.join(rect(x + 10 + c * 18, wl - h + 40 + r * 26, 8, 12) for c in range(int((w - 16) / 18)) for r in range(int((h - 60) / 26)) if rng.random() < .35), stroke=False)
         else:
             fl = ''
