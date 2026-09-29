@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 import math
 import random
+import re
 import sys
 from pathlib import Path
 
@@ -1394,7 +1395,9 @@ def forest() -> Scene:
     body += poly([(1270, 348), (1270, 318), (1306, 318), (1306, 348)])
     sc.k(body)
     sc.s(detail, w=.7, op=.85)
-    sc.f(dark)
+    # the windows as drawn arches with a mullion: a solid slit would be the brightest mark on the page in dark mode
+    sc.s(dark, w=.85)
+    sc.s(''.join(vline(float(a_) + float(w_) / 2, float(b_) - 2, -float(h_) * .7) for a_, b_, h_, w_ in re.findall(r'M(-?[\d.]+) (-?[\d.]+)v-(-?[\d.]+)q0 -?[\d.]+ (-?[\d.]+)', dark)), w=.75, op=.8)
     sc.k(roofs)
     sc.s(roofh, w=.55, op=.75)
     sc.s(hatch([(1188, 352), (1200, 352), (1200, 154), (1188, 154)], 90, 3.2, rng, inset=1) +
