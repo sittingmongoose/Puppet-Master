@@ -1,0 +1,271 @@
+/* O55 · NieR Mode World parts (12 of the 29; kit.d/20-nier-world.js is the script half). Every rule is scoped by
+   html[data-o55-nier-parts~="<key>"], which kit.d/18-nier.js writes only while NieR Mode is painted, so nothing here
+   applies while it is off; the few overlays the script makes exist only while their part is live. Colours are the
+   palette's helper tokens (styles.d/13-nier.css). The line art (empty states, machine glyphs) is data: SVG made once
+   by the script as custom properties per mode (--o55nw-art-*), because an image cannot read a CSS variable.
+   Motion rules: continuous motion is transform or opacity only (the save diamond's turn, nothing else loops); the
+   block fill's one-shot reveal steps a clip in seven frames. Everything that moves stops under html[data-motion=
+   "reduced"] and the system preference, and CSS durations follow Animation speed (kit.d/17-look.js). Overlays never
+   take a click (pointer-events: none). No has-selectors, no filters, no masks. */
+
+/* ================================================================================ Boot sequence [boot] */
+/* The script shows #o55nw-boot once, when the app opens with NieR Mode on: a mono log over the boot paint, about a
+   second, then it clears. It never takes a click, and a key or a click clears it at once. */
+#o55nw-boot { position: fixed; inset: 0; z-index: 2147483400; pointer-events: none; contain: strict; overflow: hidden;
+  background: var(--o55-nier-paper, var(--background)); color: var(--o55-nier-ink, var(--text-primary));
+  font: 500 11px/1.9 var(--mono-font, ui-monospace, monospace); letter-spacing: .16em; text-transform: uppercase;
+  animation: o55nw-boot-out 1100ms linear both; will-change: opacity; }
+#o55nw-boot::before { content: ""; position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(var(--o55-nier-ink-rgb, 0,0,0), .06) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb, 0,0,0), .06) 1px, transparent 1px);
+  background-size: 32px 32px; background-position: -1px -1px; }
+#o55nw-boot .o55nw-boot-log { position: absolute; left: 50%; top: 50%; width: 400px; margin: -92px 0 0 -200px; }
+#o55nw-boot .o55nw-boot-head { font: 600 15px/1.4 var(--display-font, var(--body-font, sans-serif)); letter-spacing: .3em; padding-bottom: 8px; margin-bottom: 12px;
+  background: linear-gradient(currentColor, currentColor) left bottom / 5px 5px no-repeat, linear-gradient(currentColor, currentColor) right bottom / 5px 5px no-repeat,
+    linear-gradient(currentColor, currentColor) center calc(100% - 2px) / calc(100% - 12px) 1px no-repeat; }
+#o55nw-boot .o55nw-boot-head small { display: block; font: 500 9px/1.6 var(--mono-font, monospace); letter-spacing: .26em; opacity: .7; }
+#o55nw-boot .o55nw-boot-line { display: flex; align-items: baseline; gap: 10px; opacity: 0; animation: o55nw-boot-line 1ms step-end both; animation-delay: calc(90ms + var(--i) * 105ms); }
+#o55nw-boot .o55nw-boot-line > i { flex: 1; height: 1px; align-self: center; background: repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 6px); opacity: .45; }
+#o55nw-boot .o55nw-boot-line > b { font-weight: 600; opacity: 0; animation: o55nw-boot-line 1ms step-end both; animation-delay: calc(170ms + var(--i) * 105ms); }
+#o55nw-boot .o55nw-boot-meter { position: relative; height: 8px; margin-top: 14px; border: 1px solid currentColor; }
+#o55nw-boot .o55nw-boot-meter > i { position: absolute; inset: 1px; background: repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 13px);
+  transform-origin: left center; transform: scaleX(0); animation: o55nw-boot-meter 640ms steps(12, end) 80ms both; will-change: transform; }
+@keyframes o55nw-boot-line { to { opacity: 1; } }
+@keyframes o55nw-boot-meter { to { transform: scaleX(1); } }
+/* full cover, then the game's flicker off */
+@keyframes o55nw-boot-out { 0%, 70% { opacity: 1; } 76% { opacity: 0; } 82% { opacity: .8; } 88% { opacity: 0; } 93% { opacity: .35; } 100% { opacity: 0; } }
+#o55nw-boot[data-skip] { animation: none; opacity: 0; }
+
+/* ================================================================================ Unit readouts [readouts] */
+/* The status bar reads like a unit's status panel: inverted mono labels (SYS, NET, AI, CTX) and square indicators; the
+   context budget is an HP bar of twelve cells (the script adds the AI and CTX items and names the NET item). */
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar { letter-spacing: .08em; text-transform: uppercase; }
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .pm7-statusitem { gap: 6px; }
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar :is([data-status-action="system"], [data-o55nw-label])::before {
+  content: attr(data-o55nw-label); order: -2; padding: 1px 4px 0; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+  font: 600 8.5px/12px var(--mono-font); letter-spacing: .14em; }
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar [data-status-action="system"]::before { content: "SYS"; }
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .pm7-status-dot,
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .o55nw-ind { order: -1; width: 7px; height: 7px; border-radius: 0 !important; box-shadow: none !important;
+  background: var(--o55-nier-ink); outline: 1px solid var(--o55-nier-ink); outline-offset: 1px; }
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .o55nw-ind[data-state="off"] { background: transparent; }
+html[data-o55-nier-parts~="readouts"] #pm7GlobalStatusBar .o55nw-ind[data-state="warn"] { background: var(--o55-nier-warn); outline-color: var(--o55-nier-warn); }
+.o55nw-readout { display: none; }
+html[data-o55-nier-parts~="readouts"] .o55nw-readout { display: inline-flex; }
+.o55nw-hp { position: relative; display: inline-block; width: 84px; height: 9px; box-sizing: border-box; padding: 1px; border: 1px solid rgba(var(--o55-nier-ink-rgb), .6);
+  background: repeating-linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .16) 0 5px, transparent 5px 7px) content-box; }
+.o55nw-hp > i { position: absolute; left: 1px; top: 1px; bottom: 1px; width: calc(var(--hp, 0) * 7px - 2px); max-width: calc(100% - 2px);
+  background: repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 5px, transparent 5px 7px); }
+.o55nw-hp[data-low] > i { background: repeating-linear-gradient(90deg, var(--o55-nier-error) 0 5px, transparent 5px 7px); }
+
+/* ================================================================================ Block progress [blocks] */
+/* Progress bars are rows of ink cells: the track shows every empty cell, the fill is whole cells, and a fill that
+   appears reveals itself cell by cell (seven clip steps, one shot). A change of value steps instead of gliding. */
+html[data-o55-nier-parts~="blocks"] :is(.pm6-dash-bar, .sa-progress-bar, .pm6-opcard-progressbar, .context-hover-module .chm-bar, .pm6-wiz-topic-prog, #panel-settings .pm51-meter-track, .pm6-wiz-activity-bar) {
+  height: 8px !important; min-height: 8px; padding: 1px !important; box-sizing: border-box !important; border-radius: 0 !important;
+  border: 1px solid rgba(var(--o55-nier-ink-rgb), .55) !important; box-shadow: none !important;
+  background: repeating-linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .13) 0 4px, transparent 4px 6px) content-box !important;
+}
+html[data-o55-nier-parts~="blocks"] :is(.pm6-dash-bar-fill, .sa-progress-fill, .pm6-opcard-progressfill, .context-hover-module .chm-bar-fill, .pm6-wiz-topic-prog-fill, #panel-settings .pm51-meter-fill, .pm6-wiz-activity-fill) {
+  border-radius: 0 !important; box-shadow: none !important;
+  background: repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 4px, transparent 4px 6px) !important;
+  transition-timing-function: steps(5, end) !important;
+}
+html[data-o55-nier-parts~="blocks"] #panel-settings .pm51-meter-fill { inset: 1px auto 1px 1px; }
+html[data-o55-nier-parts~="blocks"]:not([data-motion="reduced"]) :is(.pm6-dash-bar-fill, .sa-progress-fill, .pm6-opcard-progressfill, .pm6-wiz-topic-prog-fill, #panel-settings .pm51-meter-fill) {
+  animation: o55nw-cells 560ms steps(7, end) both;
+}
+@keyframes o55nw-cells { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+/* the tone of the work: finished in the olive, waiting on you in the warning ink, blocked in the error ink */
+html[data-o55-nier-parts~="blocks"] :is(.pm6-dash-bar-fill.is-done, .pm6-wiz-topic-card[data-tstate="ready"] .pm6-wiz-topic-prog-fill) {
+  background: repeating-linear-gradient(90deg, var(--o55-nier-ok) 0 4px, transparent 4px 6px) !important; }
+html[data-o55-nier-parts~="blocks"] :is(.pm6-dash-bar-fill.is-warn, #panel-settings .pm51-meter.tone-attention .pm51-meter-fill, .pm6-wiz-topic-card:is([data-tstate="impacted"], [data-tstate="review-impact"]) .pm6-wiz-topic-prog-fill) {
+  background: repeating-linear-gradient(90deg, var(--o55-nier-warn-text) 0 4px, transparent 4px 6px) !important; }
+html[data-o55-nier-parts~="blocks"] :is(#panel-settings .pm51-meter.tone-blocked .pm51-meter-fill, .pm6-wiz-topic-card[data-tstate="blocked"] .pm6-wiz-topic-prog-fill) {
+  background: repeating-linear-gradient(90deg, var(--o55-nier-error) 0 4px, transparent 4px 6px) !important; }
+/* Usage's meters hold their numbers inside the track: the fill is a faint row of cells behind the text */
+html[data-o55-nier-parts~="blocks"] .pm7u-metertrack { border-radius: 0 !important; border-color: rgba(var(--o55-nier-ink-rgb), .5) !important; background: transparent !important; }
+html[data-o55-nier-parts~="blocks"] .pm7u-meterfill { border-radius: 0 !important; opacity: 1 !important;
+  background: repeating-linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .26) 0 6px, transparent 6px 8px) !important; }
+
+/* ================================================================================ Ink charts [charts] */
+/* Charts in monochrome ink: a series is told apart by its pattern (solid, hatch, cross-hatch, dots, rules), never by
+   hue. CSS gradients paint the boxes; an SVG area (one series) takes a faint ink fill under an ink line. */
+html[data-o55-nier-parts~="charts"] {
+  --o55nw-solid: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink));
+  --o55nw-hatch: repeating-linear-gradient(135deg, var(--o55-nier-ink) 0 1.5px, transparent 1.5px 4.5px);
+  --o55nw-cross: repeating-linear-gradient(45deg, var(--o55-nier-ink) 0 1px, transparent 1px 4px), repeating-linear-gradient(135deg, var(--o55-nier-ink) 0 1px, transparent 1px 4px);
+  --o55nw-dots: radial-gradient(circle at 2px 2px, var(--o55-nier-ink) 1.1px, transparent 1.4px) 0 0 / 4px 4px;
+  --o55nw-rules: repeating-linear-gradient(0deg, var(--o55-nier-ink) 0 1px, transparent 1px 3.5px);
+}
+/* Usage bar charts: older buckets hatched, the recent ones solid */
+html[data-o55-nier-parts~="charts"] .pm7u-barfill { background: var(--o55nw-hatch) !important; opacity: 1 !important; border: 1px solid var(--o55-nier-ink) !important; border-bottom: 0 !important;
+  border-radius: 0 !important; box-sizing: border-box !important; box-shadow: none !important; }
+html[data-o55-nier-parts~="charts"] .pm7u-barcol.is-recent .pm7u-barfill { background: var(--o55nw-solid) !important; }
+/* the context donut: what is used in solid ink, what is free in dots */
+html[data-o55-nier-parts~="charts"] .pm7u-donut { background: conic-gradient(var(--o55-nier-ink) calc(var(--pct, 0) * 1%), transparent 0), var(--o55nw-dots) !important; }
+/* legends and series marks: one pattern per place in the list */
+html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n + 1) :is(i, .pm7u-swatch, .pm7u-segdot),
+html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n + 1):is(i, span) { background: var(--o55nw-solid) !important; }
+html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n + 2) :is(i, .pm7u-swatch, .pm7u-segdot),
+html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n + 2):is(i, span) { background: var(--o55nw-hatch) !important; }
+html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n + 3) :is(i, .pm7u-swatch, .pm7u-segdot),
+html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n + 3):is(i, span) { background: var(--o55nw-cross) !important; }
+html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n + 4) :is(i, .pm7u-swatch, .pm7u-segdot),
+html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n + 4):is(i, span) { background: var(--o55nw-dots) !important; }
+html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n) :is(i, .pm7u-swatch, .pm7u-segdot),
+html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n):is(i, span) { background: var(--o55nw-rules) !important; }
+/* the card's own series dot is a solid square of ink */
+html[data-o55-nier-parts~="charts"] .pm7u-carddot { background: var(--o55-nier-ink) !important; box-shadow: none !important; border-radius: 0 !important; }
+/* dashboard: sparkline in ink over a faint area, the ring's track dotted, the lane bars by state (when Block progress
+   is removed; with it, the bars are ink cells) */
+html[data-o55-nier-parts~="charts"] .pm6-dash-spark-line { stroke: var(--o55-nier-ink) !important; stroke-width: 1.5px; }
+html[data-o55-nier-parts~="charts"] .pm6-dash-spark-fill { fill: rgba(var(--o55-nier-ink-rgb), .14) !important; }
+html[data-o55-nier-parts~="charts"] .pm6-dash-ring-track { stroke: var(--o55-nier-ink) !important; stroke-dasharray: 1.5 3; opacity: .55; }
+html[data-o55-nier-parts~="charts"] .pm6-dash-ring-val { stroke: var(--o55-nier-ink) !important; stroke-linecap: butt !important; }
+html[data-o55-nier-parts~="charts"]:not([data-o55-nier-parts~="blocks"]) .pm6-dash-bar-fill { background: var(--o55nw-solid) !important; }
+html[data-o55-nier-parts~="charts"]:not([data-o55-nier-parts~="blocks"]) .pm6-dash-bar-fill.is-run { background: var(--o55nw-hatch) !important; }
+html[data-o55-nier-parts~="charts"]:not([data-o55-nier-parts~="blocks"]) .pm6-dash-bar-fill.is-warn { background: var(--o55nw-cross) !important; }
+html[data-o55-nier-parts~="charts"]:not([data-o55-nier-parts~="blocks"]) .pm6-dash-bar-fill.is-queue { background: var(--o55nw-dots) !important; }
+
+/* ================================================================================ Map ticks [ticks] */
+/* Dashboard and Usage cards and the workspace's docked panels get the map's corner ticks and a small grid coordinate
+   (A-01 on the dashboard, U-01 in Usage, W-01 for the workspace panels). Counters, no script. */
+html[data-o55-nier-parts~="ticks"] {
+  --o55nw-ticks: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink));
+  --o55nw-ticks-size: 8px 1px, 1px 8px, 8px 1px, 1px 8px, 8px 1px, 1px 8px, 8px 1px, 1px 8px;
+  --o55nw-ticks-pos: left 3px top 3px, left 3px top 3px, right 3px top 3px, right 3px top 3px, left 3px bottom 3px, left 3px bottom 3px, right 3px bottom 3px, right 3px bottom 3px;
+}
+html[data-o55-nier-parts~="ticks"] :is(.pm6-dash-card, .pm7u-card) {
+  background-image: var(--o55nw-ticks) !important; background-size: var(--o55nw-ticks-size) !important;
+  background-position: var(--o55nw-ticks-pos) !important; background-repeat: no-repeat !important;
+}
+html[data-o55-nier-parts~="ticks"] #pm6DashGrid { counter-reset: o55nw-dash; }
+html[data-o55-nier-parts~="ticks"] .pm6-dash-card { counter-increment: o55nw-dash; }
+html[data-o55-nier-parts~="ticks"] .pm7u-board { counter-reset: o55nw-usage; }
+html[data-o55-nier-parts~="ticks"] .pm7u-card { counter-increment: o55nw-usage; }
+html[data-o55-nier-parts~="ticks"] :is(.pm6-dash-card > .pm6-dash-card-head, .pm7u-card > .pm7u-cardhead)::after {
+  position: absolute; left: 13px; bottom: 3px; z-index: 4; pointer-events: none;
+  font: 500 8px/1 var(--mono-font); letter-spacing: .16em; color: var(--o55-nier-ink); opacity: .6;
+}
+html[data-o55-nier-parts~="ticks"] .pm6-dash-card > .pm6-dash-card-head::after { content: "A-" counter(o55nw-dash, decimal-leading-zero); }
+html[data-o55-nier-parts~="ticks"] .pm7u-card > .pm7u-cardhead::after { content: "U-" counter(o55nw-usage, decimal-leading-zero); }
+/* the workspace's panels: the ticks and the coordinate ride on a layer over the panel's frame */
+html[data-o55-nier-parts~="ticks"] #pm-home-workspace { counter-reset: o55nw-dock; }
+html[data-o55-nier-parts~="ticks"] .pm-home-surface { counter-increment: o55nw-dock; }
+html[data-o55-nier-parts~="ticks"] .pm-home-surface::after {
+  content: "W-" counter(o55nw-dock, decimal-leading-zero); position: absolute; inset: 0; z-index: 6; pointer-events: none;
+  padding: 3px 14px 0 0; box-sizing: border-box; text-align: right;
+  font: 500 7.5px/1 var(--mono-font); letter-spacing: .16em; color: rgba(var(--o55-nier-ink-rgb), .55);
+  background-image: var(--o55nw-ticks); background-size: var(--o55nw-ticks-size); background-position: var(--o55nw-ticks-pos); background-repeat: no-repeat;
+}
+
+/* ================================================================================ Machine glyphs [glyphs] */
+/* A faint strip of drawn machine-script strokes under the YoRHa headers, right of the rule's middle (an original
+   pattern, not a real script). With YoRHa headers installed it joins their rule's layers; without, it stands alone. */
+html[data-o55-nier-parts~="glyphs"]:not([data-o55-nier-parts~="headers"]) :is(.o55-group-head, .pm6-dash-card-head, .pm7u-cardhead, .pm6-orch-w-head, #panel-settings .workspace-separator, #panel-settings .pm51-section-copy, .roster-head) {
+  background-image: var(--o55nw-art-glyphs) !important; background-size: 126px 5px !important; background-position: right 14px bottom 3px !important;
+  background-repeat: no-repeat !important; padding-bottom: 10px !important;
+}
+html[data-o55-nier-parts~="glyphs"][data-o55-nier-parts~="headers"] :is(.o55-group-head, .pm6-dash-card-head, .pm7u-cardhead, .pm6-orch-w-head, #panel-settings .workspace-separator, #panel-settings .pm51-section-copy, .roster-head) {
+  background-image: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)), var(--o55nw-art-glyphs) !important;
+  background-size: 5px 5px, 5px 5px, calc(100% - 12px) 1px, 126px 5px !important;
+  background-position: left bottom, right bottom, center calc(100% - 2px), right 14px bottom 5px !important;
+  background-repeat: no-repeat !important; padding-bottom: 12px !important;
+}
+
+/* ================================================================================ Intel tooltips [intel] */
+/* Hover and focus tags (the #pm-hover-tag-root layer that also replaces native titles) become intel cards: a square
+   frame, the title in an ink band behind a square bullet, the detail below, one corner notch. They unfold. */
+html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag {
+  padding: 0 0 6px !important; min-width: 120px; border: 1px solid var(--o55-nier-ink) !important; border-radius: 0 !important;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right 2px bottom 2px / 5px 5px no-repeat, var(--o55-nier-overlay) !important;
+  color: var(--o55-nier-ink) !important; box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16) !important;
+  transform: scaleY(.08) !important; transform-origin: 50% 0 !important;
+  transition: opacity 90ms linear, transform 140ms cubic-bezier(.2, .85, .25, 1), visibility 0ms linear 140ms !important;
+}
+html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag[data-open="true"] { transform: none !important; transition-delay: 0ms !important; }
+html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag[data-detail="false"] { padding-bottom: 0 !important; background: var(--o55-nier-ink) !important; }
+html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag strong {
+  position: relative; padding: 4px 9px 3px 21px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+  font: 600 10px/1.4 var(--mono-font); letter-spacing: .12em; text-transform: uppercase;
+}
+html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag strong::before {
+  content: ""; position: absolute; left: 9px; top: 50%; width: 5px; height: 5px; margin-top: -3px; background: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag p { margin: 5px 0 0; padding: 0 9px; color: var(--o55-nier-ink); opacity: .82; }
+html[data-motion="reduced"][data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag { transform: none !important; transition: none !important; }
+
+/* ================================================================================ Square icon strokes [icons] */
+/* Every icon draws with square caps and mitred joins. The line-art illustrations keep their own strokes. */
+html[data-o55-nier-parts~="icons"] svg:not(.o55-scene):not(.o55-nier-art) :is(path, line, polyline, polygon, rect, circle, ellipse) {
+  stroke-linecap: square !important; stroke-linejoin: miter !important;
+}
+
+/* ================================================================================ Pod 042 in Chat [pod042] */
+/* The persona is in the picker's list only while NieR Mode and this part are on (tools/build.py adds it to
+   PERSONA_CATALOG; src/js/84-pod042-chat.js answers for it and hands the chat back when it goes). */
+html:not([data-o55-nier-parts~="pod042"]) .pm6-chat-personaitem[data-persona="Pod 042"] { display: none !important; }
+html[data-o55-nier-parts~="pod042"] .pm6-chat-personaitem[data-persona="Pod 042"] .pm6-chat-personaname::before {
+  content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 7px 1px 1px; background: currentColor; transform: rotate(45deg); }
+
+/* ================================================================================ Quest banners [quests] */
+/* A wide ink band across the upper window (plan approved, build complete, tour complete): it unfolds from a line,
+   holds, and folds away. It never takes a click. */
+#o55nw-quest { position: fixed; left: 0; right: 0; top: 23vh; z-index: 2147482600; pointer-events: none; contain: layout paint style;
+  display: grid; place-items: center; height: 92px; color: var(--o55-nier-on-ink); }
+#o55nw-quest > .o55nw-q-band { position: absolute; inset: 0; background: rgba(var(--o55-nier-ink-rgb), .94); transform-origin: 50% 50%; will-change: transform, opacity;
+  background-image: linear-gradient(var(--o55-nier-on-ink), var(--o55-nier-on-ink)), linear-gradient(var(--o55-nier-on-ink), var(--o55-nier-on-ink)),
+    repeating-linear-gradient(to bottom, transparent 0 2px, rgba(var(--o55-nier-paper-rgb), .06) 2px 3px);
+  background-size: 100% 1px, 100% 1px, 100% 100%; background-position: 0 6px, 0 calc(100% - 6px), 0 0; background-repeat: no-repeat; }
+#o55nw-quest > .o55nw-q-copy { position: relative; display: grid; grid-template-columns: auto 1fr; column-gap: 16px; align-items: center; width: min(640px, calc(100vw - 48px)); will-change: opacity; }
+#o55nw-quest .o55nw-q-copy > :not(.o55nw-q-mark) { grid-column: 2; }
+#o55nw-quest .o55nw-q-mark { grid-row: 1 / span 3; width: 22px; height: 22px; border: 1.5px solid currentColor; transform: rotate(45deg); box-sizing: border-box; display: grid; place-items: center; }
+#o55nw-quest .o55nw-q-mark::after { content: ""; width: 8px; height: 8px; background: currentColor; }
+#o55nw-quest .o55nw-q-kicker { font: 500 9px/1.4 var(--mono-font); letter-spacing: .3em; opacity: .75; text-transform: uppercase; }
+#o55nw-quest .o55nw-q-title { font: 600 20px/1.25 var(--display-font, var(--body-font)); letter-spacing: .26em; text-transform: uppercase; }
+#o55nw-quest .o55nw-q-line { grid-column: 2; font: 500 11px/1.5 var(--mono-font); letter-spacing: .06em; opacity: .9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ================================================================================ Ink empty states [empty] */
+/* Empty states carry a small original ink drawing above their words: the Pod, a boxy machine lifeform or a flower. */
+html[data-o55-nier-parts~="empty"] :is(.editor-empty-state, .pm6-bottom-empty, .search-empty, #panel-settings .empty-state, #panel-settings .pm51-empty, .all-settings-empty) { --o55nw-art: var(--o55nw-art-pod); }
+html[data-o55-nier-parts~="empty"] :is(.pm6-dash-empty, .pm6-orch-empty, .pm7u-empty, .pm7-nplan-empty) { --o55nw-art: var(--o55nw-art-machine); }
+html[data-o55-nier-parts~="empty"] :is(.pm6-proj-empty, .s4-psm-empty, .rs-stack.empty) { --o55nw-art: var(--o55nw-art-flower); }
+html[data-o55-nier-parts~="empty"] .pm6-orch-empty:nth-of-type(3n + 2) { --o55nw-art: var(--o55nw-art-flower); }
+html[data-o55-nier-parts~="empty"] .pm6-orch-empty:nth-of-type(3n) { --o55nw-art: var(--o55nw-art-pod); }
+html[data-o55-nier-parts~="empty"] :is(.editor-empty-state, .pm6-bottom-empty, .search-empty, #panel-settings .empty-state, #panel-settings .pm51-empty, .all-settings-empty,
+  .pm6-dash-empty, .pm6-orch-empty, .pm7u-empty, .pm7-nplan-empty, .pm6-proj-empty, .s4-psm-empty)::before {
+  content: ""; display: block; flex: none; width: 44px; height: 44px; margin: 0 auto 8px; background: var(--o55nw-art) center / contain no-repeat; opacity: .82;
+}
+html[data-o55-nier-parts~="empty"] :is(.pm6-dash-empty, .pm6-orch-empty, .pm7-nplan-empty)::before { width: 30px; height: 30px; margin-bottom: 5px; }
+html[data-o55-nier-parts~="empty"] .editor-empty-state { flex-direction: column; }
+html[data-o55-nier-parts~="empty"] :is(.pm6-bottom-empty-ico, .pm6-proj-empty-ico) { display: none !important; }
+/* the notification inbox: its bell makes way for the flower */
+html[data-o55-nier-parts~="empty"] .rs-stack.empty .rs-empty-bell { display: none !important; }
+html[data-o55-nier-parts~="empty"] .rs-stack.empty::before { content: ""; display: block; width: 18px; height: 18px; margin: 0 auto; background: var(--o55nw-art) center / contain no-repeat; }
+
+/* ================================================================================ Save signal [save] */
+/* A Settings save: the diamond turns beside "Saving…", then sits filled beside "Data saved", in the lower right
+   corner (left of the Pod companion when it is there), and goes. */
+#o55nw-save { position: fixed; right: 16px; bottom: 36px; z-index: 2147481600; pointer-events: none; display: flex; align-items: center; gap: 9px;
+  padding: 5px 12px 5px 10px; border: 1px solid var(--o55-nier-ink); background: var(--o55-nier-overlay); color: var(--o55-nier-ink);
+  font: 500 10px/1.3 var(--mono-font); letter-spacing: .16em; text-transform: uppercase; opacity: 0; transform: translateY(4px);
+  transition: opacity 160ms linear, transform 160ms cubic-bezier(.2, .85, .25, 1); will-change: opacity, transform; }
+html[data-o55-nier-parts~="pod"] #o55nw-save { right: 66px; }
+#o55nw-save[data-state] { opacity: 1; transform: none; }
+#o55nw-save[data-state="gone"] { opacity: 0; transform: translateY(4px); }
+#o55nw-save > i { position: relative; width: 11px; height: 11px; flex: none; will-change: transform; }
+#o55nw-save > i::before { content: ""; position: absolute; inset: 1.5px; border: 1.5px solid currentColor; transform: rotate(45deg); }
+#o55nw-save > i::after { content: ""; position: absolute; inset: 4.5px; background: currentColor; transform: rotate(45deg); opacity: 0; }
+#o55nw-save[data-state="done"] > i::after { opacity: 1; }
+html:not([data-motion="reduced"]) #o55nw-save[data-state="saving"] > i { animation: o55nw-turn 900ms linear infinite; }
+@keyframes o55nw-turn { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+
+/* ================================================================================ Reduced motion */
+html[data-motion="reduced"] :is(#o55nw-save, #o55nw-save > i) { transition: none !important; animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  #o55nw-save, #o55nw-save > i, #pm-hover-tag-root .pm-hover-tag { transition: none !important; animation: none !important; }
+  html[data-o55-nier-parts~="blocks"] :is(.pm6-dash-bar-fill, .sa-progress-fill, .pm6-opcard-progressfill, .pm6-wiz-topic-prog-fill, #panel-settings .pm51-meter-fill) { animation: none !important; }
+}

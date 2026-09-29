@@ -516,11 +516,13 @@
   window.addEventListener('load', () => { hooks(); sync(); });
   window.setTimeout(sync, 0);
 
-  /* test hooks: which script parts are live, what sounded, and a toast or decode on demand */
+  /* test hooks: which script parts are live, what sounded, and a toast or decode on demand; play() is the synth */
   window.PM_NIER_PARTS = Object.freeze({
     live: () => [...live],
     sounds: () => sfxLog.slice(),
     decode: el => decode(el),
+    /* the synth for the World parts (kit.d/20-nier-world.js): plays only while Menu sounds is live and sounds are on */
+    play: name => sfx(name),
     sync
   });
 })();
