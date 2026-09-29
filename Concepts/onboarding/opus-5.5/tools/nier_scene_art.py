@@ -53,6 +53,12 @@ def line(x1, y1, x2, y2) -> str:
     return f'M{n(x1)} {n(y1)}L{n(x2)} {n(y2)}'
 
 
+def rline(x1, y1, x2, y2) -> str:
+    """A segment as a move and a relative step (the rounded end point is kept exact)."""
+    a, b = round(x1, PREC), round(y1, PREC)
+    return f'M{n(a)} {n(b)}l{n(round(x2, PREC) - a)} {n(round(y2, PREC) - b)}'
+
+
 def hline(x, y, length) -> str:
     return f'M{n(x)} {n(y)}h{n(length)}'
 
@@ -140,10 +146,10 @@ def hatch(poly_pts, angle, gap, rng=None, jitter=0.0, keep=1.0, inset=0.0, dash=
                 t = t0
                 while t < t1:
                     e = min(t + dash[0] * (0.6 + 0.8 * (rng.random() if rng else 0.5)), t1)
-                    out.append(line(p[0] + d[0] * t, p[1] + d[1] * t, p[0] + d[0] * e, p[1] + d[1] * e))
+                    out.append(rline(p[0] + d[0] * t, p[1] + d[1] * t, p[0] + d[0] * e, p[1] + d[1] * e))
                     t = e + dash[1] * (0.5 + (rng.random() if rng else 0.5))
             else:
-                out.append(line(p[0] + d[0] * t0, p[1] + d[1] * t0, p[0] + d[0] * t1, p[1] + d[1] * t1))
+                out.append(rline(p[0] + d[0] * t0, p[1] + d[1] * t0, p[0] + d[0] * t1, p[1] + d[1] * t1))
         k += gap
     return ''.join(out)
 
@@ -203,6 +209,12 @@ class Scene:
         """An outline filled with the ground colour, hiding what is behind it (stroke=False: the fill alone)."""
         if d:
             self.items.append(f'<path{self._a(w, op, "k")}{"" if stroke else " stroke=\"none\""} d="{d}"/>')
+
+    def kgroup(self, ds, w=None, op=None):
+        """Several ground-filled outlines that share their look, drawn in order inside one group."""
+        ds = [d for d in ds if d]
+        if ds:
+            self.items.append(f'<g{self._a(w, op, "k")}>' + ''.join(f'<path d="{d}"/>' for d in ds) + '</g>')
 
     def open(self, attrs: str):
         self.items.append(f'<g {attrs}>')
@@ -1181,7 +1193,7 @@ def pine(x, g, h, rng, solid=False):
             pts_l.append((x - wn, yn))
             pts_r.append((x + wn, yn))
     shape = [(x, g - h - 6)] + pts_r + list(reversed(pts_l))
-    return poly(shape)
+    return rpoly(shape)
 
 
 def interp(ps, x):
@@ -1194,6 +1206,100 @@ def interp(ps, x):
     return ps[-1][1]
 
 
+def rpoly(ps, close=True) -> str:
+    """A polyline in relative steps (short numbers, small files)."""
+    q = [(round(x, PREC), round(y, PREC)) for x, y in ps]
+    out = f'M{n(q[0][0])} {n(q[0][1])}l' + ' '.join(f'{n(b[0] - a[0])} {n(b[1] - a[1])}' for a, b in zip(q, q[1:]))
+    return out.replace(' -', '-') + ('Z' if close else '')
+
+
+def leafy_crown(cx, by, rx, ry, rng, leaf=(6, 13)):
+    """A tree crown: a lumpy dome (two or three lobes) whose rim is made of small round leaf clusters of varied size,
+    closed beneath where nearer crowns hide it. Returns (path in relative curves, rim points)."""
+    lobes = rng.randint(2, 3)
+    ph = rng.uniform(0, 6.28)
+    rim = []
+    steps = 60
+    for i in range(steps + 1):
+        a = math.pi + math.pi * i / steps
+        k = 1 + .16 * math.sin(lobes * 2 * a + ph) + .05 * math.sin(7 * a + ph * 2)
+        rim.append((cx + rx * k * math.cos(a), by + ry * k * math.sin(a)))
+    # walk the rim, dropping leaf-cluster boundaries at random spacing
+    cum = [0.0]
+    for p0, p1 in zip(rim, rim[1:]):
+        cum.append(cum[-1] + math.hypot(p1[0] - p0[0], p1[1] - p0[1]))
+    marks_, t = [0.0], 0.0
+    while t < cum[-1]:
+        t += rng.uniform(*leaf)
+        marks_.append(min(t, cum[-1]))
+    def at(d):
+        for i in range(1, len(cum)):
+            if cum[i] >= d:
+                u = (d - cum[i - 1]) / ((cum[i] - cum[i - 1]) or 1)
+                return (rim[i - 1][0] + (rim[i][0] - rim[i - 1][0]) * u, rim[i - 1][1] + (rim[i][1] - rim[i - 1][1]) * u)
+        return rim[-1]
+    pts_ = [at(d) for d in marks_]
+    q = [(round(x, PREC), round(y, PREC)) for x, y in pts_]
+    out = f'M{n(q[0][0])} {n(q[0][1])}q'
+    parts = []
+    for (x0, y0), (x1, y1) in zip(q, q[1:]):
+        mx, my = (x0 + x1) / 2, (y0 + y1) / 2
+        ox, oy = mx - cx, my - by
+        L = math.hypot(ox, oy) or 1
+        h = math.hypot(x1 - x0, y1 - y0) * rng.uniform(.35, .6)
+        parts.append(f'{n(mx + ox / L * h - x0)} {n(my + oy / L * h - y0)} {n(x1 - x0)} {n(y1 - y0)}')
+    out += ' '.join(parts).replace(' -', '-')
+    out += f'Q{n(cx)} {n(by + ry * 1.1 + 70)} {n(q[0][0])} {n(q[0][1])}Z'
+    return out, pts_
+
+
+def woodland(sc, rng, x0, x1, by, r, rows=2, wave=(0, 0, 0), shade=.8, dy=20, kinds=(.5, .25, .25), leaf=(6, 13), gap=(1.1, 1.6), marks=True):
+    """Rows of tree crowns of mixed size and kind (round, tall, spreading), back row first, each hiding the ones behind;
+    their undersides hatched in shadow, a few leaf marks on their lit side (hatching and marks merged per row)."""
+    amp, freq, ph = wave
+    for row in range(rows):
+        x = x0 - rng.uniform(0, r[1])
+        hat, mk, crowns = '', '', []
+        while x < x1 + r[1]:
+            rr = rng.uniform(*r)
+            kind = rng.random()
+            if kind < kinds[0]:
+                rx, ry = rr, rr * rng.uniform(.7, .95)
+            elif kind < kinds[0] + kinds[1]:
+                rx, ry = rr * .6, rr * rng.uniform(1.3, 1.7)
+            else:
+                rx, ry = rr * 1.4, rr * .58
+            b = by + row * dy + amp * math.sin(x * freq + ph) + rng.uniform(-8, 8)
+            d, pts_ = leafy_crown(x, b, rx, ry, rng, leaf)
+            crowns.append(d)
+            low = [p for p in pts_ if p[1] > b - ry * .3]
+            if len(low) > 2 and shade:
+                hat += hatch(low + [(x + rx * .6, b + 6), (x - rx * .6, b + 6)], 62, 5.2 if row == rows - 1 else 5.6, rng, keep=.6 if row == rows - 1 else .5, inset=2)
+            if marks and row == rows - 1:
+                for _ in range(int(rr / 14)):
+                    mx, my = x + rng.uniform(-rx * .55, rx * .2), b - ry * rng.uniform(.3, .7)
+                    mk += f'M{n(mx - 4)} {n(my)}q2 -3 4 0q2 -3 4 0'
+            x += rx * rng.uniform(*gap)
+        sc.kgroup(crowns, w=1.0 if row == rows - 1 else .9)
+        sc.s(hat, w=.7, op=shade)
+        sc.s(mk, w=.75, op=.55)
+
+
+def dead_tree(x, g, h, rng):
+    """A bare tree: a trunk forking into thinning branches."""
+    out = ''
+
+    def br(x0, y0, a, L, d):
+        nonlocal out
+        x1, y1 = x0 + math.cos(a) * L, y0 + math.sin(a) * L
+        out += line(x0, y0, x1, y1)
+        if d > 0:
+            for da in (-.45 - rng.uniform(0, .25), .35 + rng.uniform(0, .25)):
+                br(x1, y1, a + da, L * rng.uniform(.55, .7), d - 1)
+    br(x, g, -math.pi / 2 + rng.uniform(-.1, .1), h * .42, 3)
+    return out
+
+
 def forest() -> Scene:
     sc = Scene('forest', 'Forest Castle')
     rng = random.Random(2525)
@@ -1202,10 +1308,12 @@ def forest() -> Scene:
     crows = birds([(1110, 64), (1136, 52), (1162, 70), (1236, 96), (1256, 88)], rng, size=5)
 
     # the far forest, rising in soft hills on either side, faint
-    far, fb, fe = canopy_band(-20, 1640, 404, rng, r=(7, 14), wave=(24, .006, 1.1), big=.1)
-    sc.k(poly([(222, 400), (222, 316), (230, 310), (236, 322), (244, 304), (252, 318), (258, 312), (258, 396)]) + 'M231 346v-10a3 3 0 0 1 6 0v10Z', w=.75, op=.55)
-    sc.k(far + 'L1640 600L-20 600Z', w=.75, op=.55)
-    sc.s(crown_marks(fb, rng, .3, 2), w=.5, op=.4)
+    far, fb, fe = canopy_band(-20, 1640, 404, rng, r=(13, 24), wave=(24, .006, 1.1), big=.1)
+    sc.plane(.42)
+    sc.k(poly([(222, 400), (222, 316), (230, 310), (236, 322), (244, 304), (252, 318), (258, 312), (258, 396)]) + 'M231 346v-10a3 3 0 0 1 6 0v10Z', w=.8)
+    sc.k(far + 'L1640 600L-20 600Z', w=.8)
+    sc.s(crown_marks(fb, rng, .3, 2), w=.7, op=.7)
+    sc.plane(.86)
 
     # the crag: an uneven rock mass, a sheer cliff on its right
     crag = [(760, 480), (800, 440), (832, 420), (858, 396), (884, 384), (930, 378), (962, 366), (1010, 362), (1060, 360),
@@ -1267,7 +1375,8 @@ def forest() -> Scene:
     body += poly([(1004, 364), (1004, 236), (1150, 236), (1150, 356)])
     roofs += poly([(996, 236), (1077, 164), (1158, 236)])
     roofh += hatch([(1077, 164), (1158, 236), (1080, 236)], 98, 3.6, rng, inset=1)
-    dark += circle_path(1077, 212, 9) + ''.join(gothic(1016 + i * 32, 262, 9, 40) for i in range(5) if i != 2) + gothic(1066, 300, 22, 64)
+    dark += ''.join(gothic(1016 + i * 32, 262, 9, 40) for i in range(5) if i != 2)
+    detail += gothic(1066, 300, 22, 64) + circle_path(1077, 212, 9) + hatch(arc_pts(1077, 212, 8, 8, 0, 360, 12), 45, 2.8, rng) + hatch([(1067, 364), (1067, 330), (1077, 302), (1087, 330), (1087, 364)], 90, 2.8, rng)
     detail += circle_path(1077, 212, 14) + hline(1004, 244, 146) + hline(1004, 318, 146)
     for bx in (1004, 1150):
         sgn = -1 if bx == 1004 else 1
@@ -1293,19 +1402,18 @@ def forest() -> Scene:
          hatch([(906, 380), (918, 380), (918, 268), (906, 268)], 90, 3.4, rng, inset=1), w=.55, op=.7)
     hang_vines(sc, rng, [(924, 324), (960, 324), (1010, 246), (1140, 246), (1162, 154), (1236, 232), (1264, 234), (1290, 320)], (24, 90), sway=(2, 5))
 
-    # the mid forest closing round the crag's foot, pines standing out of it
+    # the mid forest closing round the crag's foot: foliage masses of every size and kind, pines and two dead trees
+    # standing out of them
+    sc.plane(.92)
     pines = ''
-    for px, ph_ in ((110, 120), (160, 92), (404, 142), (452, 102), (1488, 132), (1534, 156), (1586, 108), (700, 100)):
-        pines += pine(px, 474, ph_, rng)
+    for px, ph_ in ((110, 124), (160, 96), (404, 146), (452, 106), (1488, 136), (1534, 160), (1586, 112), (700, 104)):
+        pines += pine(px, 476, ph_, rng)
     sc.k(pines, w=.9)
-    mid, mb, me = canopy_band(-20, 1640, 474, rng, r=(10, 20), wave=(12, .011, .3))
-    sc.k(mid + 'L1640 600L-20 600Z')
-    sc.s(crown_marks(mb, rng, .6, 3), w=.6, op=.7)
-
-    # the near forest: big clumps, the dark under them
-    near, nb, ne = canopy_band(-20, 1640, 534, rng, r=(15, 30), wave=(9, .017, 2), big=.25)
-    sc.k(near + 'L1640 600L-20 600Z', w=1.05)
-    sc.s(crown_marks(nb, rng, .85, 4), w=.65, op=.85)
+    sc.s(dead_tree(620, 470, 150, rng) + dead_tree(1440, 476, 130, rng), w=.9)
+    woodland(sc, rng, -20, 1620, 458, (26, 50), rows=2, wave=(8, .011, .3), shade=.7, dy=28, leaf=(9, 17), marks=False, kinds=(.6, .3, .1), gap=(.95, 1.3))
+    # the near forest: great crowns along the bottom, cropped by the frame
+    sc.plane(1)
+    woodland(sc, rng, -40, 1640, 544, (48, 84), rows=1, wave=(6, .017, 2), shade=.8, kinds=(.7, .1, .2), leaf=(12, 22), gap=(1.0, 1.35))
     # crows round the high tower (they wheel when the scene may move)
     sc.open('class="a-birds" data-box="1090 36 190 76"')
     sc.s(crows, w=.85)
