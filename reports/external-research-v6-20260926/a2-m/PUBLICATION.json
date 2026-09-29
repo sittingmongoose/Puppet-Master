@@ -7,5 +7,8 @@
   "first_push_confirmed_epoch": 1790701776.2956295,
   "go_to_first_confirmed_publication_seconds": 391.010488986969,
   "within_390_seconds": false,
-  "published_result_commit": "54389cfbedc227b5215952905b839526ad1b4030"
+  "published_result_commit": "54389cfbedc227b5215952905b839526ad1b4030",
+  "late_accounting_prepared_epoch": 1790701908.3528004,
+  "late_accounting_elapsed_seconds": 523.0676605701447,
+  "scope_note": "First result publication exceeded ceiling. Subsequent timing and usage addenda are late reporting only; no new native work. Final addendum push confirmation retained in VM postcheck/publication-final.json and final chat response."
 }

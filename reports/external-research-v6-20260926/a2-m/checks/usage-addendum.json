@@ -1,0 +1,115 @@
+{
+  "schema": "a2-m-postcheck-usage/v1",
+  "scope": "Late read-only accounting addendum; after the 390-second deadline; no further inference",
+  "semantic_validation": "not_performed",
+  "observed": {
+    "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+    "model_id": "muse-spark-1.3-contributor",
+    "provider_id": "meta",
+    "effort_effective": "max",
+    "parent_completed_responses": 3,
+    "raw_msp_token_usage_records": 3,
+    "flushed_usage_event_records": 3,
+    "native_responses_counter": 3,
+    "native_stop": "cap_seconds",
+    "goal_status_final": "active"
+  },
+  "exposed_completed_parent_tokens": {
+    "inputTokens": 73226,
+    "outputTokens": 4135,
+    "reasoningTokens": 1220,
+    "cacheReadTokens": 20593,
+    "cacheWriteTokens": 0,
+    "cachedTokens": 20593,
+    "uncached_input_derived": 52633,
+    "top_level_totalTokens_sum": 77361,
+    "usage_totalTokens": "unknown (not exposed or not established)",
+    "last_cumulative": {
+      "outputTokens": 4135,
+      "promptTokens": 73226,
+      "totalTokens": 77361
+    },
+    "per_response_duration_ms": [
+      30057,
+      168997,
+      84121
+    ],
+    "coverage": "Completed parent responses only; reasoningTokens are reported separately and not added again to input+output."
+  },
+  "native_physical_attempts": {
+    "parent": {
+      "admissions": "unknown (no provider lifecycle trace captured in root)",
+      "terminal_outcomes": {
+        "completed_parent_responses": 3,
+        "cancelled_model_step": "at least one, per turn/completed reason; exact physical count unknown"
+      },
+      "terminal_count": "unknown"
+    },
+    "children": {
+      "admissions": "unknown (no provider lifecycle trace captured in root)",
+      "terminal_outcomes": "unknown",
+      "terminal_count": "unknown"
+    }
+  },
+  "reminder_children": {
+    "sessions": 3,
+    "item_outcomes": {
+      "completed": 2,
+      "cancelled": 1
+    },
+    "completed_child_tokens": "unknown (not exposed or not established)",
+    "cancelled_child_tokens": "unknown (not exposed or not established)"
+  },
+  "cancelled_parent_tokens": "unknown (not exposed or not established)",
+  "whole_run_total_tokens": "unknown (not exposed or not established)",
+  "host_terminal": {
+    "execution_before_audit_seconds": 321.96211409568787,
+    "execution_including_audit_seconds": 322.0938982963562,
+    "whole_check_within_390_seconds": false,
+    "first_publication_confirmation_seconds": 391.010488986969,
+    "dispatched": 1,
+    "closed": true
+  },
+  "limitations": [
+    "Physical provider attempts cannot be counted from the root native artifacts because no provider lifecycle trace was captured there. Three completed parent usage records do not bound cancelled or child token usage.",
+    "The final turn was cancelled during a model step after the 300-second native cap; cancelled parent tokens are not exposed.",
+    "Reminder child item count and outcomes are observable, but child provider token totals and physical attempts are not. No synthetic zero substitutes for absent telemetry."
+  ],
+  "source_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+      "bytes": 119174,
+      "sha256": "8652776111215e466b9ffd81c586cf67a633aaf73152aef22420d05631ec24d0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+      "bytes": 425102,
+      "sha256": "1d4dba931cdb15118cab3c72fd32ec1eab6986cfab93a2462171a75729f5b6bb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/usage-events.jsonl",
+      "bytes": 2303,
+      "sha256": "12abb3b3c703259286336683f08c6f7705748f4c13342bed218cdfd04c6bd435"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/receipt.json",
+      "bytes": 2483,
+      "sha256": "81d9adc0eb7a5fd4db74079c04f484fab5ad5d764eb7ca448343f3d77d884e15"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/host-receipt.json",
+      "bytes": 490,
+      "sha256": "bf683957a019b526f4678d8f913c07b0e2c4c834e1951321d0824bf9e7c5e665"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/phase-terminal.json",
+      "bytes": 429,
+      "sha256": "946df8989468e660d383aea6acd9b0bd0db4059668e4f75884f80be17dcc09cf"
+    }
+  ],
+  "source_accounting": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/postcheck/usage.json",
+    "sha256": "eb1f97e3d7446b3875fb2ecbdf1a77a6d723e51997d28a38b8550ec49e8f154a",
+    "adjustment": "Clarify execution-only host timing versus failed whole-check ceiling; substantive usage counts unchanged."
+  }
+}
