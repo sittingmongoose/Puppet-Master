@@ -1,0 +1,15 @@
+test_result_annotation_on_both_roles_retained_verbatim_through_close (test_native_results.NativeResults.test_result_annotation_on_both_roles_retained_verbatim_through_close) ... ok
+test_result_extra_status_error_and_unknown_fields_are_not_success (test_native_results.NativeResults.test_result_extra_status_error_and_unknown_fields_are_not_success) ... ok
+test_result_missing_or_wrong_correlation_identity_faults (test_native_results.NativeResults.test_result_missing_or_wrong_correlation_identity_faults) ... ok
+test_result_annotated_snapshot_and_state_exist_before_ack (test_native_results.NativeResults.test_result_annotated_snapshot_and_state_exist_before_ack) ... ok
+test_result_failed_terminal_cannot_be_blessed_by_either_success_form (test_native_results.NativeResults.test_result_failed_terminal_cannot_be_blessed_by_either_success_form) ... ok
+test_empty_and_partial_marker_stay_pending_for_unbounded_logical_time (test_native_results.NativeResults.test_empty_and_partial_marker_stay_pending_for_unbounded_logical_time) ... ok
+test_payload_before_marker_completion_order_is_required (test_native_results.NativeResults.test_payload_before_marker_completion_order_is_required) ... ok
+test_invalid_latest_withholds_prior_without_affecting_independent (test_native_results.NativeResults.test_invalid_latest_withholds_prior_without_affecting_independent) ... ok
+test_idle_polls_do_not_rewrite_five_projections_and_still_detect_mutation (test_native_results.NativeResults.test_idle_polls_do_not_rewrite_five_projections_and_still_detect_mutation) ... ok
+test_host_cap_and_cancel_remain_incomplete_with_all_valid_content (test_native_results.NativeResults.test_host_cap_and_cancel_remain_incomplete_with_all_valid_content) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.358s
+
+OK

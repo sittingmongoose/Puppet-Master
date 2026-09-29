@@ -1,0 +1,106 @@
+{
+  "schema": "muse-four-offline-validation/v1",
+  "status": "PASS",
+  "live_calls": 0,
+  "approval_files_created": 0,
+  "scope": "Bounded development tests only; no candidate research or formal grading.",
+  "test_count": 41,
+  "groups": [
+    {
+      "name": "four-submission audit",
+      "tests": 19,
+      "status": "PASS",
+      "command": "python3 -B muse-four-v1/tools/test_four_check.py -v",
+      "log_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/four-tests-unittest.log",
+      "log_sha256": "8541e1d6872a0ae2cadbc2b5aeaad3673db3839ad5d3a285e279c40fa16a9af9"
+    },
+    {
+      "name": "reused operator refusal guards",
+      "tests": 6,
+      "label": "operator-guards",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/tools/test_operator_guards.py"
+      ],
+      "cwd": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926",
+      "exit_code": 0,
+      "seconds": 0.2608206272125244,
+      "log_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/operator-guards.log",
+      "log_sha256": "2d122711b7d40324ddc5455500c062a6f698c36027330144a60e3e62b5cf566b"
+    },
+    {
+      "name": "selected existing receiver/result regressions",
+      "tests": 10,
+      "label": "reused-boundary-regressions",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_native_results.NativeResults.test_result_annotation_on_both_roles_retained_verbatim_through_close",
+        "test_native_results.NativeResults.test_result_extra_status_error_and_unknown_fields_are_not_success",
+        "test_native_results.NativeResults.test_result_missing_or_wrong_correlation_identity_faults",
+        "test_native_results.NativeResults.test_result_annotated_snapshot_and_state_exist_before_ack",
+        "test_native_results.NativeResults.test_result_failed_terminal_cannot_be_blessed_by_either_success_form",
+        "test_native_results.NativeResults.test_empty_and_partial_marker_stay_pending_for_unbounded_logical_time",
+        "test_native_results.NativeResults.test_payload_before_marker_completion_order_is_required",
+        "test_native_results.NativeResults.test_invalid_latest_withholds_prior_without_affecting_independent",
+        "test_native_results.NativeResults.test_idle_polls_do_not_rewrite_five_projections_and_still_detect_mutation",
+        "test_native_results.NativeResults.test_host_cap_and_cancel_remain_incomplete_with_all_valid_content"
+      ],
+      "cwd": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/tools",
+      "exit_code": 0,
+      "seconds": 0.5651445388793945,
+      "log_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/reused-boundary-regressions.log",
+      "log_sha256": "bd220f1b6b4f8d03751fb3f92f781e40e5562136ed024e8df2023331131da321"
+    },
+    {
+      "name": "compact accounting/publication",
+      "tests": 6,
+      "label": "compact-accounting",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/tools/test_report_check.py",
+        "-v"
+      ],
+      "cwd": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926",
+      "exit_code": 0,
+      "seconds": 0.17699766159057617,
+      "log_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/report-check-tests.log",
+      "log_sha256": "4b8183c677e25575842dd0a2f5de313d8639aafd0ef79e143299db2eb5f09974"
+    }
+  ],
+  "syntax": {
+    "python_ast": "PASS, all six new tool files",
+    "prepared_shell_blocks": "PASS, bash -n only; never executed"
+  },
+  "synthetic_captures": {
+    "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/four-tests-captures.json",
+    "sha256": "0f22d0acc344565360c3b52680e91a5ce8b3e298dd844f1a1f502f517ad4da0e",
+    "raw_traces": "VM-only; explicitly synthetic fixtures"
+  },
+  "preservation": {
+    "schema": "muse-four-preservation/v1",
+    "checked_files": 3655,
+    "changed": [],
+    "missing": [],
+    "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/preservation-before.json",
+    "manifest_sha256": "8977c327eab9de69b2ea3e8882e7cb9d4c3ad19f2803f64f1f0e81e05855d6a2",
+    "scope": "Read-only before/after hashes of frozen original files; raw manifest VM-only. __pycache__ excluded."
+  },
+  "read_only_real_failure_fixture": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+    "sha256": "1d4dba931cdb15118cab3c72fd32ec1eab6986cfab93a2462171a75729f5b6bb",
+    "use": "existing Task-ID retry interval extraction only, no regrade or reconstruction"
+  },
+  "limits": [
+    "Synthetic event/lifecycle/order fixtures are not native execution or service-reliability evidence.",
+    "Host publication timestamps in the audit fixture are synthetic; real read/write ordering remains a future required check.",
+    "No measured future wall-time or cost reduction; native waits remain inside all elapsed clocks.",
+    "Private A2 journal test skips in public checkout; repository source/test review cannot reproduce private raw captures.",
+    "Semantic research quality and end-to-end Planning Wizard performance are outside this check."
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "pass-dynamic-target": {
+    "synthetic": true,
+    "status": "pass",
+    "target_id": "F0002",
+    "checks": {
+      "source_pins": "pass",
+      "allocation_and_acknowledgements": "pass",
+      "template_snapshots_receipts": "pass",
+      "current_and_history": "pass",
+      "native_completion_proofs": "pass",
+      "native_batches": "observed",
+      "marker_overlap": "observed",
+      "receipt_read_order": "pass",
+      "prescribed_native_order": "pass",
+      "same_session_goal_scope": "pass",
+      "unchanged_idle_polls": "pass"
+    },
+    "files": {
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/four-tests-pass-dynamic-target-audit.json",
+        "sha256": "bdb1d65181f40f4bfaaa4041a99f355c511be3381b6996c148cce7060719dcef"
+      },
+      "journal": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/four-tests-pass-dynamic-target-native.jsonl",
+        "sha256": "299b5003a21694fdb0d29e48098134b7456b7827dc2e8bdeadaf2f3e1a9f0187"
+      },
+      "receipt_order": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/four-tests-pass-dynamic-target-receipt-order.jsonl",
+        "sha256": "49d86669d3db15549b1570b7ca2705a05bb38dfc847cb92cca54af1cb012ead2"
+      }
+    }
+  },
+  "fail-capped-goal": {
+    "synthetic": true,
+    "status": "fail",
+    "target_id": "F0001",
+    "checks": {
+      "source_pins": "pass",
+      "allocation_and_acknowledgements": "pass",
+      "template_snapshots_receipts": "pass",
+      "current_and_history": "pass",
+      "native_completion_proofs": "pass",
+      "native_batches": "observed",
+      "marker_overlap": "observed",
+      "receipt_read_order": "pass",
+      "prescribed_native_order": "pass",
+      "same_session_goal_scope": "fail",
+      "unchanged_idle_polls": "pass"
+    },
+    "files": {
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/four-tests-fail-capped-goal-audit.json",
+        "sha256": "17fa2967ff1d7e6bb8379075c3f2afbe55608004a05fb17da352a35d7061673a"
+      },
+      "journal": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/four-tests-fail-capped-goal-native.jsonl",
+        "sha256": "c5bc1790c3bf53267959252ab6f63d28f0edc4868b3e90906c255d2593e85cff"
+      },
+      "receipt_order": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/four-tests-fail-capped-goal-receipt-order.jsonl",
+        "sha256": "e9dd586436704abf888b1da1b471d253d63cab2f83676c9ba1ff3d3b2043c5c9"
+      }
+    }
+  },
+  "fail-wrong-revision": {
+    "synthetic": true,
+    "status": "fail",
+    "target_id": "F0001",
+    "checks": {
+      "source_pins": "pass",
+      "allocation_and_acknowledgements": "fail",
+      "template_snapshots_receipts": "not_reached",
+      "current_and_history": "not_reached",
+      "native_completion_proofs": "not_reached",
+      "native_batches": "not_reached",
+      "marker_overlap": "not_reached",
+      "receipt_read_order": "not_reached",
+      "prescribed_native_order": "not_reached",
+      "same_session_goal_scope": "unavailable",
+      "unchanged_idle_polls": "not_reached"
+    },
+    "files": {
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/four-tests-fail-wrong-revision-audit.json",
+        "sha256": "d144aee0186a1f9b5d081deedaf51074a0afac6893dcaaa9bfcca15300d0eddc"
+      },
+      "journal": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/four-tests-fail-wrong-revision-native.jsonl",
+        "sha256": "4115681a22db175494b97484d857a9187d1776f8f28df22b29aa2067435ace79"
+      },
+      "receipt_order": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/four-tests-fail-wrong-revision-receipt-order.jsonl",
+        "sha256": "fc55de93afa95c4f54185297ef3c6927628748225322409475823495e70dc6df"
+      }
+    }
+  },
+  "inconclusive-premature-initial-read": {
+    "synthetic": true,
+    "status": "inconclusive",
+    "target_id": "F0001",
+    "checks": {
+      "source_pins": "pass",
+      "allocation_and_acknowledgements": "pass",
+      "template_snapshots_receipts": "pass",
+      "current_and_history": "pass",
+      "native_completion_proofs": "pass",
+      "native_batches": "observed",
+      "marker_overlap": "observed",
+      "receipt_read_order": "inconclusive",
+      "prescribed_native_order": "inconclusive",
+      "same_session_goal_scope": "pass",
+      "unchanged_idle_polls": "pass"
+    },
+    "files": {
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/four-tests-inconclusive-premature-initial-read-audit.json",
+        "sha256": "780247325411d2835738c3c1f2caf4a8bd87edbf1ffe687f9ee7b2182a16db63"
+      },
+      "journal": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/four-tests-inconclusive-premature-initial-read-native.jsonl",
+        "sha256": "271718fcb412f44aac2741858b9aeed4a29150acb5ec9dd9781f2b6f67c1d945"
+      },
+      "receipt_order": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-four-v1/evidence/four-tests-inconclusive-premature-initial-read-receipt-order.jsonl",
+        "sha256": "e9dd586436704abf888b1da1b471d253d63cab2f83676c9ba1ff3d3b2043c5c9"
+      }
+    }
+  }
+}

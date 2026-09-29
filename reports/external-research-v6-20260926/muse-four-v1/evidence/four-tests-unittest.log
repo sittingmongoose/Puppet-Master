@@ -1,0 +1,24 @@
+test_corrupt_current_or_history_cannot_pass (__main__.FourAuditChecks.test_corrupt_current_or_history_cannot_pass) ... ok
+test_duplicate_native_write_cannot_pass (__main__.FourAuditChecks.test_duplicate_native_write_cannot_pass) ... ok
+test_extra_valid_attempt_cannot_pass (__main__.FourAuditChecks.test_extra_valid_attempt_cannot_pass) ... ok
+test_four_valid_records_with_protocol_fault_cannot_pass (__main__.FourAuditChecks.test_four_valid_records_with_protocol_fault_cannot_pass) ... ok
+test_goal_cap_or_missing_completion_cannot_pass (__main__.FourAuditChecks.test_goal_cap_or_missing_completion_cannot_pass) ... ok
+test_independent_mutation_cannot_pass (__main__.FourAuditChecks.test_independent_mutation_cannot_pass) ... ok
+test_invalid_attempt_cannot_pass (__main__.FourAuditChecks.test_invalid_attempt_cannot_pass) ... ok
+test_missing_final_status_read_cannot_pass (__main__.FourAuditChecks.test_missing_final_status_read_cannot_pass) ... ok
+test_missing_initial_receipt_reads_cannot_pass (__main__.FourAuditChecks.test_missing_initial_receipt_reads_cannot_pass) ... ok
+test_missing_revision_receipt_reads_cannot_pass (__main__.FourAuditChecks.test_missing_revision_receipt_reads_cannot_pass) ... ok
+test_missing_second_revision_cannot_pass (__main__.FourAuditChecks.test_missing_second_revision_cannot_pass) ... ok
+test_packet_hash_drift_cannot_pass (__main__.FourAuditChecks.test_packet_hash_drift_cannot_pass) ... ok
+test_premature_initial_receipt_reads_cannot_pass (__main__.FourAuditChecks.test_premature_initial_receipt_reads_cannot_pass) ... ok
+test_premature_revision_receipt_read_cannot_pass (__main__.FourAuditChecks.test_premature_revision_receipt_read_cannot_pass) ... ok
+test_valid_annotated_results (__main__.FourAuditChecks.test_valid_annotated_results) ... ok
+test_valid_initial_batch_without_overlap (__main__.FourAuditChecks.test_valid_initial_batch_without_overlap) ... ok
+test_valid_plain_and_dynamic_target_identity (__main__.FourAuditChecks.test_valid_plain_and_dynamic_target_identity) ... ok
+test_wrong_revision_bytes_cannot_pass (__main__.FourAuditChecks.test_wrong_revision_bytes_cannot_pass) ... ok
+test_wrong_revision_name_cannot_pass (__main__.FourAuditChecks.test_wrong_revision_name_cannot_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 1.415s
+
+OK

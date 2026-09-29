@@ -1,0 +1,140 @@
+{
+  "schema": "muse-four-source-pins/v1",
+  "scope": "OFFLINE PREPARATION ONLY; source identity is not launch authorization",
+  "reviewed_diagnosis_commit": "8eb170986053619e348e13c2ca4e259c81e418ea",
+  "files": {
+    "RESULTS.md": {
+      "sha256": "c69c08cd833cb1cd54d777065488d79e730474cd3415cfda696077f89fe34408",
+      "bytes": 4638
+    },
+    "NEXT_CHECK.md": {
+      "sha256": "25ba2a799f4a152369f0c163792d3c9ece99b4264141df0e226e5b23a3efe56f",
+      "bytes": 7234
+    },
+    "VALIDATION.json": {
+      "sha256": "2527d1cc21ddf8c15f993aea1fb6c6f92c36723b8b026332982ad1c45c0f5c2d",
+      "bytes": 5558
+    },
+    "input-manifest.json": {
+      "sha256": "50f4a7a0c2908e84c211f2d4b2e443ee1295b1301c23863898988b64b67c8ea0",
+      "bytes": 640
+    },
+    "inputs/task.txt": {
+      "sha256": "e8740ba1df0a675d04c8638fdb034ab17b2ac3bffce95ea727f8ff4edf5e6eff",
+      "bytes": 3572
+    },
+    "inputs/templates/01.md": {
+      "sha256": "b18578814c7ba4b04e28f4d0f140e4d36327ce89ee62450a408836fcea622349",
+      "bytes": 1194
+    },
+    "inputs/templates/07.md": {
+      "sha256": "30f83a0fda6c35b2d64cf025276b373b7d1bdf648d3e21d2fc3742e65b141590",
+      "bytes": 1197
+    },
+    "inputs/templates/revision-1.md": {
+      "sha256": "ea2926478b66f8e63bd7ca6904ffc5b95b92e788e73831495681f2f6821af2a8",
+      "bytes": 1426
+    },
+    "inputs/templates/revision-2.md": {
+      "sha256": "c0481af9a06b4512861de5fe63221b7415ba1dab5ac47d946c7c9fd4a5f8ae90",
+      "bytes": 1365
+    },
+    "tools/audit_check.py": {
+      "sha256": "dbca50502114129bf399277ec20a979e8e0b5e2085e0c31d5a1ff8d68887133f",
+      "bytes": 16718
+    },
+    "tools/report_check.py": {
+      "sha256": "bd9c9f5a7f72a411b02435ca563bdec5bf0427e14e7b29c9f18c1c903858c59c",
+      "bytes": 16010
+    },
+    "tools/run_check.py": {
+      "sha256": "0e030774b0c2fd842a4d16e9c0bf89b719e3f7c7e23b1ea5c110bfc4134fc418",
+      "bytes": 12894
+    },
+    "tools/test_four_check.py": {
+      "sha256": "30fccc1256583c8289187c69a95b8d102cb4fe98979e9af197a87e8b95273073",
+      "bytes": 11770
+    },
+    "tools/test_operator_guards.py": {
+      "sha256": "e7359a73a35ea819003e176b87ba33e6616d6effcc882cbe99d5316d81957764",
+      "bytes": 797
+    },
+    "tools/test_report_check.py": {
+      "sha256": "1e106e9a4f3be579adad58450d2f3fcadf0690f5e491c94299d03585fa8b34bc",
+      "bytes": 6715
+    },
+    "evidence/four-tests-unittest.log": {
+      "sha256": "8541e1d6872a0ae2cadbc2b5aeaad3673db3839ad5d3a285e279c40fa16a9af9",
+      "bytes": 2341
+    },
+    "evidence/four-tests-captures.json": {
+      "sha256": "0f22d0acc344565360c3b52680e91a5ce8b3e298dd844f1a1f502f517ad4da0e",
+      "bytes": 5654
+    },
+    "evidence/operator-guards.log": {
+      "sha256": "2d122711b7d40324ddc5455500c062a6f698c36027330144a60e3e62b5cf566b",
+      "bytes": 886
+    },
+    "evidence/reused-boundary-regressions.log": {
+      "sha256": "bd220f1b6b4f8d03751fb3f92f781e40e5562136ed024e8df2023331131da321",
+      "bytes": 1831
+    },
+    "evidence/parent-targeted-tests.json": {
+      "sha256": "f500d4c83fb57b775560c7de5eec5d57d0872167a210c6d616a26d4dc0121600",
+      "bytes": 2332
+    },
+    "evidence/report-check-tests.log": {
+      "sha256": "4b8183c677e25575842dd0a2f5de313d8639aafd0ef79e143299db2eb5f09974",
+      "bytes": 826
+    },
+    "evidence/report-check-tests.json": {
+      "sha256": "fc1cd467b8a087144e68127a81970a2f64f6cb9177d7fa48f117b77a36d4732a",
+      "bytes": 554
+    },
+    "evidence/preservation-report.json": {
+      "sha256": "9d715f9c9f5e1c48aa94927604a75c8fa688ab6bcac5428c7d6da82ff5847af7",
+      "bytes": 442
+    }
+  },
+  "unchanged_lab_dependencies": {
+    "ack-boundary-v1/SOURCE_PINS.json": "f5844a44719f14db1dcb696eede03696e4b57456dabc56703f709ac18e1b0f2e",
+    "ack-boundary-v1/tools/native_completion.py": "83dac66a29bc0778ed0edfa134fd04db03eda34602e5c80d5938c17c4dc2fd38",
+    "ack-boundary-v1/tools/completion_store.py": "a1e460bd38afa2fab09d28442a7b59d2ac295aaee8921f9c127b57946c20f909",
+    "ack-boundary-v1/tools/host_receiver.py": "3edefb29c495a642dc70748dd0a07b43cccc1493a74caee3ab7c4a855347d283",
+    "ack-boundary-v1/tools/test_ack_boundary.py": "bac64cc0f47cfde8c30245d47f9fa5325fd1ecf98ffd0997daf8faa6a4f2db06",
+    "ack-boundary-v1/fixtures/native_events.py": "8423ffabb9b2ded62d6b1b60933e8606b2957339cfe5102c7f2e21f856823328",
+    "muse-result-v2/tools/native_completion.py": "3c125f305febe3bcc84fd240edf94ca90d4651ccf88dda0b10dbf5db739dc52c",
+    "muse-result-v2/tools/audit_check.py": "b6e285d446f74024a3f413d461d2ed13c2386934c191b6bdcf9d8bda9f8e6b83",
+    "muse-result-v2/tools/test_audit_check.py": "3e8330c83426f400e0e1c192aedb894e2fd5d809a5b32df9521417a341e9e3f3",
+    "muse-result-v2/tools/test_native_results.py": "bb6d8e47a2a93a04e60beca87db63dd5db95dd6186dd97e07b673bc551641248",
+    "muse-result-v2/tools/test_operator_guards.py": "0f63c260ea87b659658a3051a7e3e7ab26b4277c0dc5ef1d9d62e624e49003ad",
+    "a1-m-tools/audit_a1.py": "8126e1dabbaa5a397ea773d999a2e548e29af16fe6224d682cb894f13080bdf5",
+    "tools/run_arm.py": "330ae90097254192bf95fd52ebee4cdda0a9d19325bc3c4c88bde6ad4b4d4520",
+    "tools/r1b/run_goal_r1b.py": "4cfd7aee946cd8db9ef70a0adf2cfe8279a5cdc13cb3c8b7cd299775dee97ae7",
+    "tools/r1b/muse-serve-noshell.sh": "fecdb795d96fcdbf8895349dc81435dbf28b8e07ecbdbdaee2cff61c3f790586"
+  },
+  "unchanged_transitive_dependencies": "ack-boundary-v1/SOURCE_PINS.json is pinned above and verified in full by the prepared operator, including runtime/driver dependencies. Result reader is the unchanged muse-result-v2 successor.",
+  "runtime_binary": {
+    "path": "/home/sittingmongoose/.local/bin/muse-bin-1.4.0-R4161.1",
+    "sha256": "1b68bd4518d53a2aaff063915df4d141b0a205e6d79038299d04e3a14e85a5b9"
+  },
+  "published_dependency_aliases": {
+    "a1-m-tools/audit_a1.py": "a1-m/operator/audit_a1.py",
+    "tools/r1b/run_goal_r1b.py": "r1b-prep-rev3/tools/run_goal_r1b.py"
+  },
+  "limits": {
+    "native_seconds": 300,
+    "parent_responses": 48,
+    "whole_seconds": 390,
+    "included_host_reserve_seconds": 90,
+    "setup_gate_seconds": 10,
+    "payload_attempts": 4,
+    "marker_attempts": 4,
+    "payload_utf8_bytes": 4096,
+    "slots": 1,
+    "manual_retries": 0,
+    "replacements": 0,
+    "extra_corrections": 0
+  },
+  "binding": "Later actual Go must name the published commit and the external SHA-256 of this manifest. The unchanged Go epoch covers confirmed publication; no approval file is prepared."
+}

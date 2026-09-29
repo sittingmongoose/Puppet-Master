@@ -1,0 +1,11 @@
+test_existing_root_refuses (four_prior_operator_guards.OperatorGuards.test_existing_root_refuses) ... ok
+test_expired_or_future_clock_refuses (four_prior_operator_guards.OperatorGuards.test_expired_or_future_clock_refuses) ... ok
+test_missing_authorization_reference_refuses (four_prior_operator_guards.OperatorGuards.test_missing_authorization_reference_refuses) ... ok
+test_pinned_packet_dependency_drift_refuses_before_claim (four_prior_operator_guards.OperatorGuards.test_pinned_packet_dependency_drift_refuses_before_claim) ... ok
+test_root_outside_lab_refuses (four_prior_operator_guards.OperatorGuards.test_root_outside_lab_refuses) ... ok
+test_successor_binding_reaches_existing_host (four_prior_operator_guards.OperatorGuards.test_successor_binding_reaches_existing_host) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.017s
+
+OK

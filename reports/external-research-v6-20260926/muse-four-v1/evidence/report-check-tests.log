@@ -1,0 +1,11 @@
+test_cap_or_missing_count_cannot_pass (__main__.CompactReportTests.test_cap_or_missing_count_cannot_pass) ... ok
+test_existing_a2_task_id_retry_intervals (__main__.CompactReportTests.test_existing_a2_task_id_retry_intervals) ... ok
+test_late_first_publication_fails (__main__.CompactReportTests.test_late_first_publication_fails) ... ok
+test_missing_usage_components_are_unknown (__main__.CompactReportTests.test_missing_usage_components_are_unknown) ... ok
+test_partial_telemetry_is_reported_unknown (__main__.CompactReportTests.test_partial_telemetry_is_reported_unknown) ... ok
+test_publication_boundaries_and_separate_confirmations (__main__.CompactReportTests.test_publication_boundaries_and_separate_confirmations) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.020s
+
+OK
