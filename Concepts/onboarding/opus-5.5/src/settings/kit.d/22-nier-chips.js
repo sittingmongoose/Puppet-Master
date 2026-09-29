@@ -144,7 +144,8 @@
     box.querySelectorAll('.o55nc-scene').forEach(b => setA(b, 'aria-checked', String(b.dataset.o55ncBg === bg)));
     const rb = box.querySelector('[data-o55nc-replay]'), why = box.querySelector('.o55nc-replay-why');
     const reason = !have.has('reboot') ? 'Install Reboot moment to play it.' : still() ? 'Reduce motion is on, so it does not play.' : '';
-    rb.disabled = !!reason; if (why.textContent !== reason) why.textContent = reason;
+    /* not the disabled property: the hover-tag layer turns a disabled button into a lasting aria-disabled one */
+    setA(rb, 'aria-disabled', String(!!reason)); if (why.textContent !== reason) why.textContent = reason;
   }
   function paintThumbs(wrap) {
     const box = wrap.querySelector('.o55nc'); if (!box) return;
@@ -162,7 +163,8 @@
     if (p) { const def = PRESETS.find(x => x.id === p.dataset.o55ncPreset); if (def) { N.setParts(def.keys()); paint(wrap); } return; }
     const s = t.closest('[data-o55nc-bg]');
     if (s) { const v = s.dataset.o55ncBg; if (v !== N.background() && o55NierCommitRow(BG, v)) paint(wrap); return; }
-    if (t.closest('[data-o55nc-replay]')) { N.replay(); return; }
+    const r = t.closest('[data-o55nc-replay]');
+    if (r) { if (r.getAttribute('aria-disabled') !== 'true') N.replay(); return; }
     if (t.closest('[data-o55nc-on]')) { N.set(true); }
   }
   function open() {

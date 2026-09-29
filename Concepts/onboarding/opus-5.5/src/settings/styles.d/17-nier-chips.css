@@ -32,6 +32,7 @@
 .o55nc-preset[aria-pressed="true"] { background: var(--o55nc-ink); color: var(--o55nc-paper); border-color: var(--o55nc-ink); }
 .o55nc-preset[aria-pressed="true"] small { color: inherit; opacity: .78; }
 .o55nc-replay { justify-content: center; }
+.o55nc-replay[aria-disabled="true"] { opacity: .5; cursor: default; }
 .o55nc-replay-why { margin: -4px 0 0; min-height: 0; font-size: 11px; color: var(--o55nc-soft); }
 .o55nc-replay-why:empty { display: none; }
 
