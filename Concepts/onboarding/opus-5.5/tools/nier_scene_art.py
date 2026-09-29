@@ -155,25 +155,37 @@ def num(v: float) -> str:
     return s[1:] if s.startswith('0.') else s
 
 
+MIN_W = .7  # the thinnest line drawn: finer strokes read fainter at 1x than at 2x, so lightness comes from alpha instead
+
+
 class Scene:
     """Paths in drawing order (back to front). Strokes inherit the root's ink and width; `f` paths are solid ink; `k`
-    paths are stroked and filled with the ground colour (class k), so a nearer object hides what lies behind it."""
+    paths are stroked and filled with the ground colour (class k), so a nearer object hides what lies behind it.
+    Lightness is stroke-opacity / fill-opacity on the path (never group opacity, so a knock-out stays opaque).
+    `plane(a)` sets the alpha of a depth plane (far .42, mid .72, near 1) for everything drawn until the next call."""
 
     def __init__(self, key: str, title: str):
         self.key, self.title = key, title
         self.items: list[str] = []
+        self.depth = 1.0
 
-    @staticmethod
-    def _a(w=None, op=None, cls=None, fill=False):
+    def plane(self, a: float):
+        self.depth = a
+
+    def _a(self, w=None, op=None, cls=None, fill=False):
         a = ''
         if cls:
             a += f' class="{cls}"'
         if fill:
             a += ' fill="currentColor" stroke="none"'
+        alpha = (1.0 if op is None else op) * self.depth
+        if w is not None and w < MIN_W:
+            alpha *= w / MIN_W
+            w = MIN_W
         if w is not None:
             a += f' stroke-width="{num(w)}"'
-        if op is not None:
-            a += f' opacity="{num(op)}"'
+        if alpha < .995:
+            a += f' {"fill" if fill else "stroke"}-opacity="{num(max(alpha, .05))}"'
         return a
 
     def s(self, d: str, w=None, op=None, cls=None):
@@ -182,7 +194,8 @@ class Scene:
             self.items.append(f'<path{self._a(w, op, cls)} d="{d}"/>')
 
     def f(self, d: str, op=None, cls=None):
-        """A solid ink shape."""
+        """A solid ink shape (kept small: a solid mass reads as a blob at low opacity, and as the brightest thing in
+        dark mode)."""
         if d:
             self.items.append(f'<path{self._a(None, op, cls, fill=True)} d="{d}"/>')
 
@@ -675,198 +688,148 @@ def hexagon(cx, cy, r):
     return [(cx + r * math.cos(math.radians(60 * i)), cy + r * math.sin(math.radians(60 * i))) for i in range(6)]
 
 
+def inside(poly_pts, x, y):
+    """Point in polygon (even-odd)."""
+    c = False
+    for (x0, y0), (x1, y1) in zip(poly_pts, poly_pts[1:] + poly_pts[:1]):
+        if (y0 > y) != (y1 > y) and x < x0 + (y - y0) * (x1 - x0) / (y1 - y0):
+            c = not c
+    return c
+
+
 def bunker() -> Scene:
     sc = Scene('bunker', 'The Bunker')
     rng = random.Random(4242)
-    # the planet: a great circle whose limb arcs across the lower picture
-    PX, PY, PR = 940, 2960, 2600
-    top_y = lambda x: PY - math.sqrt(max(PR * PR - (x - PX) ** 2, 0))
-    ang = lambda x: math.degrees(math.atan2(-math.sqrt(max(PR * PR - (x - PX) ** 2, 0)), x - PX))
-    a_l, a_r = ang(-40), ang(1640)
-    # stars first, so the planet and the station hide those behind them
+    # far: stars, a pair of flight units far off, the orbit
+    sc.plane(.42)
     stars = ''
-    for _ in range(30):
-        x, y = rng.uniform(20, 1580), rng.uniform(60, 360)
-        if y > top_y(x) - 40:
-            continue
+    for _ in range(34):
+        x, y = rng.uniform(20, 1580), rng.uniform(40, 300)
         k = rng.uniform(1.6, 3.4)
         stars += f'M{n(x - k)} {n(y)}h{n(2 * k)}M{n(x)} {n(y - k)}v{n(2 * k)}' if rng.random() < .4 else f'M{n(x)} {n(y)}h.1'
-    sc.s(stars, w=.9, op=.8)
-    limb = arc_pts(PX, PY, PR, PR, a_l, a_r, 56)
-    sc.k(poly(limb + [(1640, 600), (-40, 600)]))
-    sc.s(arc_path(PX, PY, PR + 7, a_l, a_r) + arc_path(PX, PY, PR + 17, a_l + .4, a_r - .6), w=.7, op=.6)
-    sc.s(arc_path(PX, PY, PR + 32, a_l + 3, a_r - 3), w=.6, op=.3)
-    # cloud bands along the curve
+    sc.s(stars, w=.9)
+    sc.s('M1300 118l18 -4l-6 4l6 4ZM1334 132l14 -3l-5 3l5 3Z', w=.9)
+    # the planet: a dome whose limb curves away behind the window frame at both ends
+    PX, PY, PR = 800, 1480, 1150
+    ang = lambda x: math.degrees(math.atan2(-math.sqrt(max(PR * PR - (x - PX) ** 2, 0)), x - PX))
+    a_l, a_r = ang(40), ang(1560)
+    sc.plane(.62)
+    for d, op in ((34, .35), (20, .6), (9, .85)):
+        sc.s(arc_path(PX, PY, PR + d, ang(40 - d), ang(1560 + d)), w=.8, op=op)
+    sc.plane(1)
+    sc.k(poly(arc_pts(PX, PY, PR, PR, a_l, a_r, 60) + [(1560, 600), (40, 600)]))
+    # cloud bands along the curve, a continent, the night side in broken arcs
     clouds = ''
-    for d, span in ((12, (a_l + 1, a_l + 12)), (20, (a_l + 15, a_r - 16)), (38, (a_l + 4, a_l + 20)), (46, (a_l + 24, a_r - 6)),
-                    (70, (a_l + 8, a_l + 30)), (96, (a_l + 20, a_r - 12)), (128, (a_l + 2, a_r - 22)), (160, (a_l + 10, a_r - 30))):
+    for d, span in ((10, (a_l + 4, a_l + 18)), (18, (a_l + 22, a_r - 20)), (34, (a_l + 8, a_l + 26)), (44, (a_l + 30, a_r - 8)),
+                    (66, (a_l + 12, a_l + 36)), (90, (a_l + 24, a_r - 16)), (120, (a_l + 6, a_r - 26)), (156, (a_l + 16, a_r - 34))):
         a0, a1 = span
         while a0 < a1:
-            seg = rng.uniform(2.5, 7.5)
-            clouds += arc_scallops(PX, PY, PR - d - rng.uniform(-4, 4), a0, min(a0 + seg, a1), rng, bump=(6, 16))
-            a0 += seg + rng.uniform(1.2, 4.5)
-    sc.s(clouds, w=.8, op=.85)
-    # two continents seen flat on the curve: wobbling outlines with bays, their land hatched in broken strokes
-    for ca, cw, cd, ch, seed in ((a_l + 29, 12, 70, 62, 3), (a_l + 17.5, 5, 44, 30, 7)):
+            seg = rng.uniform(2.5, 6.5)
+            clouds += arc_scallops(PX, PY, PR - d - rng.uniform(-3, 3), a0, min(a0 + seg, a1), rng, bump=(5, 13))
+            a0 += seg + rng.uniform(1.2, 4)
+    sc.s(clouds, w=.8, op=.8)
+    for ca, cw, cd, ch, seed in ((a_l + 44, 16, 74, 70, 3), (a_l + 25, 6, 50, 34, 7)):
         lr = random.Random(seed)
         land = []
         for i in range(40):
             t = 2 * math.pi * i / 40
-            wob = 1 + .16 * math.sin(3 * t + lr.uniform(0, 6)) + .1 * math.sin(5 * t + lr.uniform(0, 6)) + lr.uniform(-.05, .05)
+            wob = 1 + .16 * math.sin(3 * t + lr.uniform(0, 6)) + .1 * math.sin(5 * t + lr.uniform(0, 6))
             aa = ca + cw / 2 * math.cos(t) * wob
             rr = PR - cd - ch / 2 * math.sin(t) * wob
             land.append((PX + rr * math.cos(math.radians(aa)), PY + rr * math.sin(math.radians(aa))))
         sc.s(smooth(land, close=True), w=.8, op=.75)
-        sc.s(hatch(land, 14, 7, rng, keep=.6, inset=4, dash=(8, 7)), w=.55, op=.45)
-    # the night side: the terminator's dusk in broken arcs
+        sc.s(hatch(land, 14, 6.5, rng, keep=.6, inset=4, dash=(8, 7)), w=.7, op=.4)
     nh = ''
-    for i in range(10):
-        r = PR - 8 - i * 14
-        a0 = ang(1210 + i * 26 + rng.uniform(-10, 10))
-        nh += arc_path(PX, PY, r, a0, a_r)
-    sc.s(nh, w=.6, op=.5)
-    # the station's orbit, a dashed ellipse arc sweeping past it
-    orb = arc_pts(760, 420, 980, 150, 196, 338, 90)
-    od = ''
-    for i in range(0, len(orb) - 1, 2):
-        od += line(*orb[i], *orb[i + 1])
-    sc.s(od, w=.6, op=.55)
+    for i in range(12):
+        r = PR - 6 - i * 13
+        nh += arc_path(PX, PY, r, ang(1150 + i * 22 + rng.uniform(-8, 8)), ang(1600))
+    sc.s(nh, w=.7, op=.45)
+    sc.plane(.5)
+    orb = arc_pts(800, 470, 900, 190, 190, 350, 90)
+    sc.s(''.join(line(*orb[i], *orb[i + 1]) for i in range(0, len(orb) - 1, 2)), w=.75)
+    sc.plane(1)
 
-    # the station, tilted in orbit over the limb
-    cx, cy = 600, 262
-    sc.open(f'transform="rotate(-8 {cx} {cy})"')
-    # the ring's far half, behind everything
-    sc.s(smooth(arc_pts(cx, cy, 120, 26, 180, 360, 36)) + smooth(arc_pts(cx, cy, 110, 21, 180, 360, 36)), w=.85)
-
-    def truss(x0, x1, y0, y1):
-        d = poly([(x0, y0), (x1, y0), (x1, y1), (x0, y1)])
-        k = ''
-        step = 13 if x1 > x0 else -13
-        x, up = x0, True
-        while (x1 - x) * step > 0:
-            nx = x + step if (x1 - x - step) * step >= 0 else x1
-            k += line(x, y1 if up else y0, nx, y0 if up else y1)
-            up = not up
-            x = nx
-        return d, k
-    arms_o, arms_k = '', ''
-    for sgn, ln_ in ((-1, 390), (1, 420)):
-        d, k = truss(cx + sgn * 30, cx + sgn * ln_, cy - 6, cy + 6)
-        arms_o += d
-        arms_k += k
-    # a second, shorter spar under the main one, carrying the solar wings
-    for sgn, ln_ in ((-1, 300), (1, 330)):
-        d, k = truss(cx + sgn * 150, cx + sgn * ln_, cy + 34, cy + 42)
-        arms_o += d + line(cx + sgn * 160, cy + 6, cx + sgn * 160, cy + 34) + line(cx + sgn * (ln_ - 10), cy + 6, cx + sgn * (ln_ - 10), cy + 34)
-        arms_k += k
-    sc.k(arms_o)
-    sc.s(arms_k, w=.65, op=.85)
-    # solar wings hanging from the lower spar, hatched as cells
-    wings = ''
-    wh = ''
-    for sgn, x0 in ((-1, 170), (1, 180)):
-        for i in range(2):
-            wx = cx + sgn * (x0 + i * 72) - (60 if sgn < 0 else 0)
-            wing = [(wx, cy + 48), (wx + 60, cy + 48), (wx + 60, cy + 120), (wx, cy + 120)]
-            wings += poly(wing) + line(wx + 30, cy + 42, wx + 30, cy + 48)
-            wh += hatch(wing, 90, 7.5, rng, inset=1) + hline(wx, cy + 72, 60) + hline(wx, cy + 96, 60)
-    sc.k(wings, w=.85)
-    sc.s(wh, w=.5, op=.7)
-    # modules along the main arms, with hexagonal ports
-    mods, md = '', ''
-    for sgn in (-1, 1):
-        for off, mw, mh in ((74, 44, 30), (230, 58, 38), (330, 34, 24)):
-            mx = cx + sgn * off - mw / 2
-            mods += rect(mx, cy - mh / 2, mw, mh)
-            if mw > 40:
-                md += hline(mx + 4, cy - mh / 2 + 6, mw - 8) + hline(mx + 4, cy + mh / 2 - 6, mw - 8)
-                for i in range(3):
-                    md += poly(hexagon(mx + mw * (i + 1) / 4, cy, 4.5))
-    sc.k(mods)
-    sc.s(md, w=.65, op=.85)
-    # radiator fins at the ends
-    fins, fh = '', ''
-    for sgn, ln_ in ((-1, 390), (1, 420)):
-        for i in range(3):
-            fx = cx + sgn * (ln_ + 10 + i * 20)
-            f = [(fx - 7, cy - 64), (fx + 7, cy - 64), (fx + 7, cy + 50), (fx - 7, cy + 50)]
-            fins += poly(f)
-            fh += hatch(f, 0, 6, rng, inset=1.5)
-        fins += line(cx + sgn * ln_, cy, cx + sgn * (ln_ + 57), cy)
-    sc.k(fins, w=.85)
-    sc.s(fh, w=.5, op=.7)
-    # the core: an octagonal tower with lit ports, spires above and below
-    core = [(cx - 22, cy - 96), (cx + 22, cy - 96), (cx + 32, cy - 78), (cx + 32, cy + 78), (cx + 22, cy + 96),
-            (cx - 22, cy + 96), (cx - 32, cy + 78), (cx - 32, cy - 78)]
-    sp = line(cx, cy - 96, cx, cy - 176) + line(cx, cy + 96, cx, cy + 150)
-    for yy, ww in ((-120, 16), (-140, 12), (-160, 8), (118, 10), (136, 7)):
-        sp += line(cx - ww, cy + yy, cx + ww, cy + yy)
-    sc.s(sp, w=.9)
-    sc.f(poly(hexagon(cx, cy - 180, 4)))
+    # the station: a monolithic faceted diamond, its shadowed faces hatched, girdled by a hexagonal platform whose
+    # blades reach out left and right; spires above and below, four short diagonal vanes
+    cx, cy = 640, 222
+    T = lambda pts_: [(cx + x, cy + y) for x, y in pts_]
+    P = lambda x, y: (cx + x, cy + y)
+    sc.open(f'transform="rotate(-6 {cx} {cy})"')
+    sp = line(*P(0, -126), *P(0, -196)) + line(*P(0, 118), *P(0, 176))
+    for y, w in ((-150, 12), (-170, 7), (140, 9), (158, 5)):
+        sp += line(*P(-w, y), *P(w, y))
+    sc.s(sp, w=.85)
+    vanes = ''
+    vh = ''
+    for sx, sy in ((-1, -1), (1, -1), (-1, 1), (1, 1)):
+        v = T([(sx * 22, sy * 56), (sx * 100, sy * 122), (sx * 46, sy * 30)])
+        vanes += poly(v)
+        if sx > 0:
+            vh += hatch(v, 90, 3.4, rng, inset=.8)
+    sc.k(vanes, w=.9)
+    sc.s(vh, w=.7, op=.55)
+    # blades: long thin wedges from the platform out to points
+    blades = poly(T([(186, -12), (360, -3), (372, 0), (360, 3), (186, 6)])) + poly(T([(-186, -12), (-340, -3), (-352, 0), (-340, 3), (-186, 6)]))
+    sc.k(blades, w=.9)
+    sc.s(hatch(T([(186, 0), (360, 0), (360, 3), (186, 6)]), 0, 2.5, rng) + hatch(T([(-186, 0), (-340, 0), (-340, 3), (-186, 6)]), 0, 2.5, rng)
+         + ''.join(line(*P(x, -9), *P(x, 5)) for x in (230, 280, 320, -230, -280)), w=.7, op=.7)
+    core = T([(0, -126), (48, -4), (0, 118), (-48, -4)])
     sc.k(poly(core))
-    cd = line(cx - 11, cy - 96, cx - 11, cy + 96) + line(cx + 11, cy - 96, cx + 11, cy + 96)
-    for yy in (-64, -34, 34, 64):
-        cd += line(cx - 32, cy + yy, cx + 32, cy + yy)
-    sc.s(cd, w=.7, op=.85)
-    sc.s(hatch([(cx + 11, cy - 96), (cx + 22, cy - 96), (cx + 32, cy - 78), (cx + 32, cy + 78), (cx + 22, cy + 96), (cx + 11, cy + 96)], 90, 3.4, rng, inset=1), w=.55, op=.75)
-    sc.f(''.join(rect(cx - 3, cy + yy - 3, 6, 6) for yy in (-80, -50, 50, 80)))
-    # the ring's near half, a band across the core, with its spokes
-    sc.k(poly(arc_pts(cx, cy, 120, 26, 0, 180, 36) + list(reversed(arc_pts(cx, cy, 110, 21, 0, 180, 36)))), w=.9)
-    tk = ''
-    for i in range(1, 14):
-        a = 180 * i / 14
-        tk += line(cx + 110 * math.cos(math.radians(a)), cy + 21 * math.sin(math.radians(a)), cx + 120 * math.cos(math.radians(a)), cy + 26 * math.sin(math.radians(a)))
-    sc.s(tk, w=.55, op=.8)
+    sc.s(hatch(T([(0, -126), (48, -4), (0, 118), (4, -4)]), 72, 3, rng, inset=1), w=.7, op=.6)
+    sc.s(line(*P(0, -126), *P(0, 118)) + line(*P(-30, -50), *P(30, -50)) + line(*P(-22, 58), *P(22, 58)), w=.75, op=.8)
+    plat = T([(-192, -10), (-150, -26), (150, -26), (192, -10), (150, 10), (-150, 10)])
+    sc.k(poly(plat))
+    sc.s(hatch(T([(-192, -10), (192, -10), (150, 10), (-150, 10)]), 60, 3.2, rng, inset=1), w=.7, op=.55)
+    sc.s(line(*P(-150, -18), *P(150, -18)), w=.7, op=.8)
+    sc.k(''.join(poly(hexagon(*P(x, -1), 4.6)) for x in range(-140, 150, 28) if abs(x) > 20), w=.75)
+    sc.f(''.join(rect(*P(x - 1.8, y - 1.8), 3.6, 3.6) for x, y in ((0, -90), (0, -66), (0, 84))))
     sc.close()
 
-    # a far satellite and a supply shuttle crossing
-    s2 = rect(1318, 150, 18, 12) + line(1300, 156, 1318, 156) + line(1336, 156, 1354, 156) + rect(1286, 148, 14, 16) + rect(1354, 148, 14, 16)
-    sc.k(s2, w=.8)
-
-    # the great window: a rounded aperture; the frame around it paved with hexagonal panels, deeper at the corners
-    L, Rt, B, CR = 46, W - 46, H - 30, 200
-
-    def outside(x, y, pad=0.0):
-        if x < L - pad or x > Rt + pad or y > B + pad:
-            return True
-        for ccx in (L + CR, Rt - CR):
-            ccy = B - CR
-            if (x - ccx) * (1 if ccx > W / 2 else -1) > 0 and y > ccy and math.hypot(x - ccx, y - ccy) > CR + pad:
-                return True
-        return False
-    R = 19
+    # the great window: a flat-bottomed hexagonal porthole, a bolted frame, the wall around it paved with panels
+    ap = [(262, 498), (1338, 498), (1576, 150), (1600, 150), (1600, 560), (0, 560), (0, 150), (24, 150)]
+    aperture = [(24, 150), (262, 498), (1338, 498), (1576, 150)]
+    frame_out = [(-4, 150), (250, 516), (1350, 516), (1604, 150)]
+    wall = frame_out + [(1604, 600), (-4, 600)]
+    band = aperture + list(reversed(frame_out))
+    R = 21
     hx, hy = R * 1.5, R * math.sqrt(3)
-    frame, solid, inner = '', '', ''
+    panels, inner, shade = '', '', ''
     for col in range(int(W / hx) + 2):
         for row in range(int(H / hy) + 2):
             x = col * hx
-            y = H + 6 - row * hy - (hy / 2 if col % 2 else 0)
-            if y < 250 or not outside(x, y, pad=R * .55):
+            y = H + 8 - row * hy - (hy / 2 if col % 2 else 0)
+            if y < 140 or not inside(wall, x, y) or inside(band + [], x, y):
                 continue
-            frame += poly(hexagon(x, y, R - 1.5))
+            if not all(inside(wall, px, py) for px, py in hexagon(x, y, R * .8)):
+                continue
+            panels += poly(hexagon(x, y, R - 1.3))
             r = rng.random()
-            if r < .12:
-                solid += poly(hexagon(x, y, R - 6.5))
-            elif r < .36:
-                inner += poly(hexagon(x, y, R - 7))
-    # the rim: the aperture's outline twice, a gasket between
-    def rim(off):
-        ps = [(L - off, 250)]
-        ps += arc_pts(L + CR, B - CR, CR + off, CR + off, 180, 90, 20)
-        ps += arc_pts(Rt - CR, B - CR, CR + off, CR + off, 90, 0, 20)
-        ps += [(Rt + off, 250)]
-        return ps
-    sc.k(poly(rim(9) + list(reversed(rim(-3)))), w=1)
-    sc.s(smooth(rim(3)), w=.55, op=.7)
-    sc.k(frame, w=.85)
-    sc.s(inner, w=.55, op=.75)
-    sc.f(solid, op=.85)
-    # a supply shuttle crossing (it glides across when the scene may move)
-    sc.open('class="a-shuttle" data-box="1010 300 200 50"')
-    sc.k('M1110 330l30 -7l9 5l-9 5Z', w=.8)
-    sc.s('M1100 331h-50M1094 334h-26', w=.6, op=.5)
+            if r < .14:
+                shade += hatch(hexagon(x, y, R - 6), 45, 3.2, rng, inset=.5)
+            elif r < .4:
+                inner += poly(hexagon(x, y, R - 6))
+    sc.k(poly(wall), stroke=False)
+    sc.k(panels, w=.8)
+    sc.s(inner, w=.7, op=.7)
+    sc.s(shade, w=.7, op=.55)
+    sc.k(poly(band), w=1.2)
+    sc.s(smooth([(12, 150), (256, 507), (1344, 507), (1590, 150)]) if False else poly([(12, 150), (256, 507), (1344, 507), (1590, 150)], close=False), w=.75, op=.8)
+    bolts = ''
+    for (x0, y0), (x1, y1) in zip([(12, 150), (256, 507), (1344, 507)], [(256, 507), (1344, 507), (1590, 150)]):
+        L = math.hypot(x1 - x0, y1 - y0)
+        k = int(L / 56)
+        for i in range(1, k):
+            bolts += circle_path(x0 + (x1 - x0) * i / k, y0 + (y1 - y0) * i / k, 1.8)
+    sc.s(bolts, w=.75)
+    sc.s(hatch([(262, 498), (1338, 498), (1332, 506), (268, 506)], 90, 5, rng, inset=.5), w=.7, op=.5)
+
+    # a flight unit crossing (it glides across when the scene may move)
+    sc.open('class="a-shuttle" data-box="1040 300 200 50"')
+    sc.k('M1140 326l30 -8l-8 6l12 2l-12 2l8 6Z', w=.85)
+    sc.s('M1130 327h-50M1124 330h-26', w=.75, op=.5)
     sc.close()
     return sc
+
 
 # =====================================================================================================================
 # Desert: long dunes burying apartment blocks, a great pipe arching out of the sand, heat shimmering over it all.
