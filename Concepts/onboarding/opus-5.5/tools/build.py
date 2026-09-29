@@ -279,6 +279,12 @@ NIER_PATCHES = [
     ("if(themeKey!==lastPaintThemeKey||currentSlug!==slug){",
      "if(themeKey!==lastPaintThemeKey||currentSlug!==slug||(window.PM_THEME&&typeof window.PM_THEME.getFamily==='function'&&window.PM_THEME.getFamily()!==family)){",
      'nier paint hook: applyPaint repaint test'),
+    # Pod 042 (the World part "Pod 042 in Chat", key pod042) joins the Assistant Chat persona picker after Teacher. It
+    # shows only while NieR Mode and that part are on (styles.d/15-nier-world.css hides it otherwise), and
+    # src/js/84-pod042-chat.js answers for it locally, as the Teacher adapter does, and hands the chat back.
+    ("var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher'];",
+     "var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher', 'Pod 042'];",
+     'pod 042 persona'),
 ]
 
 # Owner exposures (Astra precedent): hand the real owners to onboarding/tour without a second implementation.

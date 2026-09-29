@@ -1520,5 +1520,53 @@
       "passwordHint": "Kept in your computer's password store, never in Puppet Master's files."
     },
     "checking": "Checking the bucket"
+  },
+  "pod042": {
+    "label": "Pod 042 · answered on this computer",
+    "popover": "Pod 042 answers from a few prepared replies on this computer. It doesn’t use your AI plan.",
+    "greet": [
+      "Report: Pod 042 is online and assigned to this Project.",
+      "Query: What should this unit look into? Plans, builds, usage, history and settings are within range."
+    ],
+    "thanks": [
+      "Report: Acknowledged. Pod 042 remains on standby."
+    ],
+    "plan": [
+      "Analysis: Planning Wizard turns a rough goal into outcomes and a few real decisions before any work starts.",
+      "Proposal: Open Planning Wizard, answer its questions, then read the plan part by part before Approve And Build."
+    ],
+    "runNone": [
+      "Report: No build is running.",
+      "Proposal: Approve a plan in Planning Wizard to start one."
+    ],
+    "runDone": [
+      "Report: Run {run} is complete.",
+      "Proposal: Create a pull request from Source Control to hand the work in."
+    ],
+    "runLive": [
+      "Analysis: Run {run} is {stage}. {done} of {total} lanes are finished.",
+      "Proposal: The Orchestrator shows each lane, and anything waiting on you."
+    ],
+    "usage": [
+      "Analysis: The current thread holds {used} of {max} context tokens ({pct} percent).",
+      "Report: Capacity is sufficient."
+    ],
+    "usageHigh": [
+      "Analysis: The current thread holds {used} of {max} context tokens ({pct} percent).",
+      "Alert: Capacity is running low.",
+      "Proposal: Compact the thread from Usage, under Context."
+    ],
+    "safe": [
+      "Analysis: Safe History keeps every version of this Project.",
+      "Proposal: Open the History panel and go back to any earlier version."
+    ],
+    "nier": [
+      "Report: NieR Mode is on with {n} of {all} parts installed.",
+      "Proposal: Settings, App & Input, Customize NieR Mode installs or removes parts."
+    ],
+    "unknown": [
+      "Query: This unit could not match “{q}” to a known task.",
+      "Proposal: Ask about plans, builds, usage, history or settings."
+    ]
   }
 }
