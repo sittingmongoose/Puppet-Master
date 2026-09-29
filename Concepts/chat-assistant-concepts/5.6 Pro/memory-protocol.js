@@ -166,7 +166,7 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
  }
  function pickSel(id,shown){return id&&shown.some(g=>g.id===id)?id:(shown[0]?shown[0].id:null);}
  function disc(e,key,label,body,dflt){const open=disclosures.has(key)?disclosures.get(key):dflt;
-  return '<details class="pmx-mem-disc" data-k="'+e(key)+'" data-memory-disclosure="'+e(key)+'"'+(open?' open':'')+'><summary class="pmx-mem-sum">'+S.pmxGlyph('chevron-right',13)+'<span>'+label+'</span></summary><div class="pmx-mem-disc-body">'+body+'</div></details>';}
+  return S.pmxDisclosure({key,cls:'pmx-mem-disc',attrs:'data-memory-disclosure="'+e(key)+'"',open,summary:label,body});}
 
  /* ---- the ribbon: "what your next message brings" (the sheet's plate, keyed memory-preview; G-21 hooks on its cards) */
  const CARD_MAX=3;

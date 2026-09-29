@@ -2021,6 +2021,7 @@
       (b.schedule_kind === 'one_time' ? 'Jump to its start time' : 'Jump to the next start') + '</button></p></details></div>';
   }
   document.addEventListener('toggle', function (e) { var el = e.target; if (!el || !el.matches || !el.matches('details[data-sched-try]')) return; (ui.tryOpen || (ui.tryOpen = {}))[el.getAttribute('data-sched-try')] = el.open; }, true);
+  document.addEventListener('toggle', function (e) { var el = e.target; if (!el || !el.matches || !el.matches('details[data-sched-raw]')) return; (ui.techOpen || (ui.techOpen = {}))['raw:' + el.getAttribute('data-sched-raw')] = el.open; }, true);
   function buildConfirmation(rec, d, editing) {
     var plan = window.PM56_PLANS && window.PM56_PLANS.get(rec.target_id), words = buildWords(d);
     var draft = d ? { kind: d.kind, date: d.date, time: d.time, startTime: d.startTime, pauseTime: d.pauseTime, days: (d.days || []).slice(), windDown: d.windDown, timezone: d.timezone } : null;
@@ -2609,8 +2610,8 @@
     var id = m.scheduled_dispatch_id, raw = !!(ui.techOpen && ui.techOpen['raw:' + id]), long = String(m.text || '').length > 240 || ['sent', 'canceled', 'expired', 'failed'].indexOf(stateOf(m)) >= 0;
     return '<div class="pmx-sched-rec" data-k="sched-rec-' + esc(id) + '">' + (long ? '<p class="pmx-sched-rectext">' + esc(m.text) + '</p>' : '') + recordFacts(m, now) +
       techBlock('rec:' + id, techLines(m)) +
-      (ui.techOpen && ui.techOpen['rec:' + id] ? '<button type="button" class="text-button pmx-sched-rawbtn" data-action="sched-toggle-tech" data-value="raw:' + esc(id) + '" aria-expanded="' + raw + '">' + (raw ? 'Hide raw data' : 'Show raw data') + '</button>' +
-        (raw ? '<pre class="pmx-sched-raw">' + esc(JSON.stringify({ attachments: attachmentSnapshots(m), attempts: list(m.dispatch_attempts) }, null, 2)) + '</pre>' : '') : '') +
+      (ui.techOpen && ui.techOpen['rec:' + id] ? SH.pmxDisclosure({ key: 'sched-raw-' + id, cls: 'pmx-sched-raw-disc', attrs: 'data-sched-raw="' + esc(id) + '"', open: raw, summary: 'Show raw data',
+        body: '<pre class="pmx-sched-raw">' + esc(JSON.stringify({ attachments: attachmentSnapshots(m), attempts: list(m.dispatch_attempts) }, null, 2)) + '</pre>' }) : '') +
       '<p class="pmx-sched-recacts"><button type="button" class="text-button" data-action="sched-focus-record" data-id="' + esc(id) + '">All scheduled</button></p></div>';
   }
   /* a 14 px clock ring: the track and the part of the wait that has passed (redrawn by the template each minute; not a loop) */

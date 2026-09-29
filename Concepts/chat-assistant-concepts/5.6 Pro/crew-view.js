@@ -178,7 +178,7 @@
         : '<p class="crew-plan-p crew-plan-quiet">Nothing yet.</p>') +
       '<p class="crew-plan-h">How it was checked</p><p class="crew-plan-p' + (checked ? '' : ' crew-plan-quiet') + '">' +
         (checked ? 'The Coordinator checked it against the locked copy of the job and its “done when”. It counts only because it matched.' + (p.secondTry ? ' It passed on the 2nd try.' : '') : 'Not checked yet. A part counts only once its result matches what was asked.') + '</p>' +
-      (a && a.result ? '<details class="crew-plan-raw" data-crew-view-disclosure="raw-' + esc(p.id) + '" data-run="' + esc(vm.runId) + '"' + (disclosureOpen(vm.runId, 'raw-' + p.id) ? ' open' : '') + '><summary>' + g('chevron-right', 12) + '<span>Show raw data</span></summary><pre class="pmx-code">' + esc(JSON.stringify(a.result, null, 2)) + '</pre></details>' : '') +
+      (a && a.result ? S().pmxDisclosure({ cls: 'crew-plan-raw', attrs: 'data-crew-view-disclosure="raw-' + esc(p.id) + '" data-run="' + esc(vm.runId) + '"', open: disclosureOpen(vm.runId, 'raw-' + p.id), summary: 'Show raw data', body: '<pre class="pmx-code">' + esc(JSON.stringify(a.result, null, 2)) + '</pre>' }) : '') +
       (p.markDone && p.status !== 'done' ? '<p class="crew-plan-p"><button type="button" class="text-button" data-action="' + esc(p.markDone.action) + '" ' + (p.markDone.attrs || '') + '>Mark as done…</button></p><p class="pmx-fine">Say what shows it’s finished, for example ‘tests pass: 42/42’. A command just running isn’t proof.</p>' : '') +
       '</div>';
     return '<details class="crew-plan-disc" data-crew-disclosure="' + esc(p.id) + '" data-run="' + esc(vm.runId) + '"' + (disclosureOpen(vm.runId, p.id) ? ' open' : '') + '>' +
@@ -213,7 +213,7 @@
       '<p class="crew-plan-h">The records</p><ul class="crew-source-rows">' + (s.rows || []).map(function (x) { return '<li><span class="crew-source-id">' + esc(x.id) + '</span><code>' + esc(x.title) + '</code></li>'; }).join('') + '</ul>' +
       (req.length ? '<p class="crew-plan-h">What the result must keep</p><ul class="crew-source-req">' + req.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
       '<p class="pmx-fine crew-source-fine">' + g('lock', 12) + '<span>The fingerprint proves the input didn’t change.</span></p>' +
-      '<details class="crew-plan-raw" data-crew-view-disclosure="tech-source" data-run="' + esc(vm.runId) + '"' + (disclosureOpen(vm.runId, 'tech-source') ? ' open' : '') + '><summary>' + g('chevron-right', 12) + '<span>Technical details</span></summary><p class="pmx-fine">Fingerprint ' + esc(s.hash || '') + '</p></details>' +
+      S().pmxDisclosure({ cls: 'crew-plan-raw', attrs: 'data-crew-view-disclosure="tech-source" data-run="' + esc(vm.runId) + '"', open: disclosureOpen(vm.runId, 'tech-source'), summary: 'Technical details', body: '<p class="pmx-fine">Fingerprint ' + esc(s.hash || '') + '</p>' }) +
       '</div></details>';
   }
   function renderPlanBound(vm) {

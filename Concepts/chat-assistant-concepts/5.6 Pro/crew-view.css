@@ -18,11 +18,11 @@ article.pmx-view.crew-work-document:not(.collab-view){animation:pmx-row-in var(-
 .crew-view-off .text-button:disabled:hover{background:none;color:var(--subtle);}
 
 /* disclosures: a chevron that turns, never the native marker */
-:is(.crew-plan-disc, .crew-plan-raw, .crew-source, .crew-view-tech) > summary{display:flex;align-items:center;gap:8px;min-height:32px;padding:0 10px 0 0;list-style:none;cursor:pointer;color:var(--muted);font:500 12px/18px var(--font-ui);}
-:is(.crew-plan-disc, .crew-plan-raw, .crew-source, .crew-view-tech) > summary::-webkit-details-marker{display:none;}
-:is(.crew-plan-disc, .crew-plan-raw, .crew-source, .crew-view-tech) > summary > svg{flex:none;}
-:is(.crew-plan-disc, .crew-plan-raw, .crew-source, .crew-view-tech)[open] > summary > svg{transform:rotate(90deg);}
-:is(.crew-plan-disc, .crew-plan-raw, .crew-source, .crew-view-tech) > summary:hover{color:var(--text);}
+:is(.crew-plan-disc, .crew-source, .crew-view-tech) > summary{display:flex;align-items:center;gap:8px;min-height:32px;padding:0 10px 0 0;list-style:none;cursor:pointer;color:var(--muted);font:500 12px/18px var(--font-ui);}
+:is(.crew-plan-disc, .crew-source, .crew-view-tech) > summary::-webkit-details-marker{display:none;}
+:is(.crew-plan-disc, .crew-source, .crew-view-tech) > summary > svg{flex:none;}
+:is(.crew-plan-disc, .crew-source, .crew-view-tech)[open] > summary > svg{transform:rotate(90deg);}
+:is(.crew-plan-disc, .crew-source, .crew-view-tech) > summary:hover{color:var(--text);}
 .crew-source > summary{color:var(--text);font-weight:600;}
 
 /* The plan: Part · Who · Done when · State, each part followed by its own disclosure row */
