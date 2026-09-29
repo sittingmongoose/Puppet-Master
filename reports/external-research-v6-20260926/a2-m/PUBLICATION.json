@@ -3,5 +3,9 @@
   "deadline_epoch": 1790701775.2851405,
   "execution_terminal_seconds": 322.0938982963562,
   "prepared_epoch": 1790701744.4867399,
-  "confirmed_publication": "pending; execution success does not establish publication timing"
+  "confirmed_publication": "confirmed; this timestamp is a subsequent accounting addendum",
+  "first_push_confirmed_epoch": 1790701776.2956295,
+  "go_to_first_confirmed_publication_seconds": 391.010488986969,
+  "within_390_seconds": false,
+  "published_result_commit": "54389cfbedc227b5215952905b839526ad1b4030"
 }
