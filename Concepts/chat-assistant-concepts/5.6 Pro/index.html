@@ -26046,11 +26046,22 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
   }
 
   /* ---- per-card choreography timers ----------------------------------- */
-  var TIMERS = {};
-  function killTimers(id) { (TIMERS[id] || []).forEach(clearTimeout); TIMERS[id] = []; }
+  var TIMERS = {}, GEN = {};
+  function killTimers(id) { (TIMERS[id] || []).forEach(clearTimeout); TIMERS[id] = []; GEN[id] = (GEN[id] || 0) + 1; }
   /* choreography delays are motion time: a film that slows PM56_CLOCK slows them too */
   function later(id, ms, fn) { var K = window.PM56_CLOCK; (TIMERS[id] = TIMERS[id] || []).push(setTimeout(fn, K && K.ms ? K.ms(ms) : ms)); }
   function clearAllTimers() { for (var k in TIMERS) killTimers(k); }
+  /* Runs fn once the frame being prepared now has painted. A choreography's
+     steps are timed from there, not from the call: a collapse begun inside a
+     long task (the work tick's two renders ran 400-450ms on a loaded machine)
+     found C2 and the strip already due at its first paint and ran them back to
+     back, each render re-arming the one-frame height hold, so the card sat at
+     its old height past the answer mounting under it (measured by the
+     popup-modules closing review). killTimers() voids a step still waiting. */
+  function afterPaint(id, fn) {
+    var g = GEN[id] || 0;
+    requestAnimationFrame(function () { if ((GEN[id] || 0) === g) later(id, 0, fn); });
+  }
   function rerender() { if (lastRender) lastRender(); }
   function reduced() { var M = window.PM56_MOTION; return !!(M && M.reduced && M.reduced()); }
   function motionNow() { var K = window.PM56_CLOCK; return K && K.now ? K.now() : performance.now(); }
@@ -26067,16 +26078,18 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     }
     ui.anim = 'c1';
     if (finalCompact != null) ui.pendingCompact = finalCompact;
-    later(id, 430, function () { ui.anim = 'c2'; rerender(); shrinkStage(id); });
-    later(id, 690, function () {
-      ui.anim = null; ui.pin = null;
-      /* Mark the landing state BEFORE the render: the auto-collapse detector
-         keys on shown==='stage', and without this the finished choreography
-         read as "newly superseded while open" and restarted itself forever
-         (measured: the strip never mounted, `lift` looping every ~700ms). */
-      ui.shown = 'strip';
-      if (ui.pendingCompact != null) { ui.compact = ui.pendingCompact; delete ui.pendingCompact; }
-      rerender();
+    afterPaint(id, function () {
+      later(id, 430, function () { ui.anim = 'c2'; rerender(); shrinkStage(id); });
+      later(id, 690, function () {
+        ui.anim = null; ui.pin = null;
+        /* Mark the landing state BEFORE the render: the auto-collapse detector
+           keys on shown==='stage', and without this the finished choreography
+           read as "newly superseded while open" and restarted itself forever
+           (measured: the strip never mounted, `lift` looping every ~700ms). */
+        ui.shown = 'strip';
+        if (ui.pendingCompact != null) { ui.compact = ui.pendingCompact; delete ui.pendingCompact; }
+        rerender();
+      });
     });
   }
 
@@ -26105,7 +26118,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     if (pinIdx == null) ui.pinUid = null;
     if (reduced()) { ui.anim = null; return; }
     ui.anim = 'e1';
-    later(id, 440, function () { ui.anim = null; rerender(); });
+    afterPaint(id, function () { later(id, 440, function () { ui.anim = null; rerender(); }); });
   }
 
   /* Continuous rotation: accumulated per card, shortest arc per move. */

@@ -3,6 +3,7 @@
  *   node turn-verify.mjs [--file index.html] [--json out.json] [--cpu-throttle 4]
  *   (--cpu-throttle slows the page's CPU N times through CDP, so frames run long
  *   the way they do on a loaded machine)
+ *   [--only <text>]  run only the groups whose name contains <text>, e.g. "live agent turn"
  *
  * Every check reads painted state or a measured quantity (rects, samples taken
  * every frame in the page, rendered audio), never a dispatch count. Scenarios run
@@ -18,6 +19,7 @@ const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i
 const ROOT = decodeURIComponent(path.dirname(new URL(import.meta.url).pathname));
 const FILE = path.resolve(opt('file', path.join(ROOT, 'index.html')));
 const THROTTLE = Number(opt('cpu-throttle', 1));
+const ONLY = opt('only', '');
 const OUT = opt('json', null);
 const results = [];
 let group = null;
@@ -43,7 +45,7 @@ async function typeSend(page, text) {
   await ta.click(); await ta.fill(text); await sleep(60);
   await page.click('[data-action="send"]');
 }
-async function safe(name, fn) { group = name; try { await fn(); } catch (e) { check(`${name} [threw]`, false, String(e).split('\n')[0]); } }
+async function safe(name, fn) { if (ONLY && !name.includes(ONLY)) return; group = name; try { await fn(); } catch (e) { check(`${name} [threw]`, false, String(e).split('\n')[0]); } }
 
 /* ------------------------------------------------------------------ send */
 await safe('send flight', async () => {
