@@ -913,12 +913,38 @@ def ripples(x0, x1, y0, y1, rng, count):
     return out
 
 
+def ripple_patch(prof, x0, x1, rng, rows=4, gap=5.5, start=7):
+    """Sand ripples: a few strokes following the dune's line just below it, broken and wavering."""
+    out = ''
+    pts_ = [p for p in prof if x0 <= p[0] <= x1]
+    if len(pts_) < 2:
+        return ''
+    for r in range(rows):
+        off = start + r * gap + rng.uniform(-1, 1)
+        seg = [(x, y + off + math.sin(x * .09 + r) * 1.2) for x, y in pts_]
+        i = rng.randrange(0, 2)
+        while i < len(seg) - 1:
+            j = min(len(seg), i + rng.randint(2, 5))
+            if j - i >= 2:
+                out += smooth(seg[i:j]) if j - i >= 3 else poly(seg[i:j], close=False)
+            i = j + rng.randint(1, 2)
+    return out
+
+
+def drift(x, yb, w, h, rng):
+    """A sand drift banked against something: a short steep windward face, a long lee tail."""
+    ps = [(x - w * .9, yb + 2), (x - w * .45, yb - h * .55), (x - w * .1, yb - h), (x + w * .4, yb - h * .8), (x + w * 1.1, yb - h * .35), (x + w * 1.8, yb + 2)]
+    return ps
+
+
 def desert() -> Scene:
     sc = Scene('desert', 'Desert')
     rng = random.Random(1717)
-    # the sun behind haze, heat trembling low over the sand
-    sc.s(circle_path(1210, 214, 46), w=.9, op=.7)
-    sc.s(hline(1150, 202, 120) + hline(1158, 222, 104) + hline(1172, 240, 76), w=.7, op=.55)
+    yat = lambda prof, x: interp(prof, x)
+    # far: the sun behind haze, the heat high up, a mesa and a line of drowned towers
+    sc.plane(.5)
+    sc.s(circle_path(1210, 206, 46), w=.9)
+    sc.s(hline(1150, 194, 120) + hline(1158, 214, 104) + hline(1172, 232, 76), w=.75, op=.8)
     heat, heat_low = '', ''
     for i in range(22):
         x = rng.uniform(40, 1560)
@@ -930,114 +956,146 @@ def desert() -> Scene:
             heat_low += path_
         else:
             heat += path_
-    sc.s(heat, w=.7, op=.45)
-    # the far horizon: a mesa and a line of drowned towers, one leaning, faint and hatched
+    sc.s(heat, w=.75, op=.8)
+    sc.plane(.42)
     far = [(-10, 358), (120, 355), (150, 336), (178, 337), (196, 356), (420, 354), (1310, 354), (1350, 306), (1470, 302),
            (1512, 354), (1610, 356)]
     sc.k(poly(far + [(1610, 380), (-10, 380)]), stroke=False)
-    sc.s(poly(far, close=False), w=.75, op=.55)
-    sc.s(hatch([(1350, 306), (1470, 302), (1512, 354), (1310, 354)], 90, 7, rng, keep=.8, inset=3), w=.55, op=.35)
-    towers = ''
-    th = ''
-    for tx, tw, tt, lean in ((560, 26, 210, 0), (598, 18, 262, 3), (640, 30, 236, -4), (980, 22, 176, 6), (1010, 34, 250, 0)):
+    sc.s(poly(far, close=False), w=.8)
+    sc.s(hatch([(1350, 306), (1470, 302), (1512, 354), (1310, 354)], 90, 7, rng, keep=.8, inset=3), w=.7, op=.7)
+    towers, th = '', ''
+    for tx, tw, tt, lean in ((520, 26, 210, 0), (558, 18, 262, 3), (600, 30, 236, -4), (1030, 22, 196, 6), (1060, 34, 250, 0)):
         pts_ = [(tx, 356), (tx + lean, tt + rng.uniform(0, 10)), (tx + tw * .5 + lean, tt + rng.uniform(4, 18)), (tx + tw + lean, tt + rng.uniform(0, 8)), (tx + tw, 356)]
         towers += poly(pts_)
         th += hatch(pts_, 90, 5, rng, keep=.7, inset=2)
-    sc.k(towers, w=.7, op=.5)
-    sc.s(th, w=.5, op=.3)
+    sc.k(towers, w=.8)
+    sc.s(th, w=.7, op=.7)
 
-    # back dunes, with telephone poles marching over them, their wires sagging
-    d1c = [(260, 70, 260), (820, 54, 300), (1340, 80, 280)]
+    # the back dune, telephone poles marching over it, a block nearly swallowed by a drift
+    sc.plane(.66)
+    d1c = [(240, 70, 260), (820, 50, 300), (1380, 80, 280)]
     d1 = dune_profile(-20, 1620, 420, d1c, rng)
     sc.k(poly(d1 + [(1620, 600), (-20, 600)]), stroke=False)
     sc.s(smooth(d1), w=.9)
-    sc.s(lee_hatch(d1, d1c, rng, gap=6, depth=22), w=.55, op=.6)
-    yat = lambda prof, x: min(prof, key=lambda p: abs(p[0] - x))[1]
-    poles = ''
-    tops = []
-    for i, px in enumerate((820, 905, 982, 1052, 1116, 1174)):
-        hh = 88 - i * 10
+    sc.s(lee_hatch(d1, d1c, rng, gap=6, depth=22), w=.7, op=.7)
+    sc.s(ripple_patch(d1, 60, 220, rng, 3) + ripple_patch(d1, 600, 790, rng, 3), w=.7, op=.7)
+    poles, tops = '', []
+    for i, px in enumerate((1250, 1318, 1380, 1438, 1492, 1546, 1596)):
+        hh = 90 - i * 9
         gy = yat(d1, px) + 4
-        lean = (-3, 2, -1, 4, -2, 6)[i]
+        lean = (-3, 2, -1, 4, -2, 6, 1)[i]
         tops.append((px + lean, gy - hh))
         poles += line(px, gy, px + lean, gy - hh) + line(px + lean - 9 + i, gy - hh + 7, px + lean + 9 - i, gy - hh + 7)
     wires = ''
     for (x0, y0), (x1, y1) in zip(tops, tops[1:]):
         for dy in (7, 10):
-            wires += f'M{n(x0)} {n(y0 + dy)}Q{n((x0 + x1) / 2)} {n((y0 + y1) / 2 + dy + 14)} {n(x1)} {n(y1 + dy)}'
-    wires += f'M{n(tops[-1][0])} {n(tops[-1][1] + 7)}q12 26 6 56'
-    sc.s(poles, w=.85)
-    sc.s(wires, w=.6, op=.8)
-
-    # a far block, nearly swallowed
-    sc.open('transform="rotate(-6 760 400)"')
-    sc.k(poly([(730, 400), (730, 330), (792, 330), (792, 400)]), w=.85)
-    sc.f(''.join(rect(737 + c * 14, 337 + r * 15, 7, 7) for c in range(4) for r in range(3) if (c + r) % 3), op=.6)
+            wires += f'M{n(x0)} {n(y0 + dy)}Q{n((x0 + x1) / 2)} {n((y0 + y1) / 2 + dy + 13)} {n(x1)} {n(y1 + dy)}'
+    sc.s(poles, w=.9)
+    sc.s(wires, w=.75, op=.85)
+    fbx, fby = 1330, yat(d1, 1360) + 8
+    sc.open(f'transform="rotate(-8 {fbx + 30} {n(fby)})"')
+    sc.k(poly([(fbx, fby), (fbx, fby - 62), (fbx + 58, fby - 62), (fbx + 58, fby)]), w=.9)
+    sc.s(''.join(vline(fbx + 8 + c * 13 + j * 2.5, fby - 54 + r * 15, 7) for c in range(4) for r in range(3) for j in range(2) if (c + r) % 3), w=.75, op=.8)
     sc.close()
+    dr = drift(fbx + 18, fby + 2, 40, 30, rng)
+    sc.k(smooth(dr) + 'Z', w=.9)
+    sc.s(ripple_patch(dr, fbx - 10, fbx + 80, rng, 2, 5, 5), w=.7, op=.7)
 
-    # the great pipe: out of the sand, over, and back in, ringed at its joints
-    PX, PY, PRo, PRi = 560, 522, 176, 146
+    # the colossus: a machine as big as a house, sunk to its brow, one great dead eye, one arm reaching out
+    sc.plane(.82)
+    HX, HY = 820, 490
+    head = arc_pts(HX, HY, 116, 112, 180, 360, 36)
+    sc.k(poly(head))
+    sc.s(line(HX - 110, HY - 34, HX + 110, HY - 34) + line(HX - 104, HY - 50, HX + 104, HY - 50), w=.9)
+    sc.s(''.join(circle_path(HX - 100 + i * 20, HY - 42, 1.6) for i in range(11)), w=.75)
+    sc.s(hatch([(HX + 40, HY - 108), (HX + 116, HY), (HX + 60, HY), (HX + 20, HY - 50)], 70, 3.6, rng, inset=1.5), w=.7, op=.7)
+    sc.k(circle_path(HX - 32, HY - 78, 21) + circle_path(HX + 30, HY - 80, 10), w=1)
+    sc.s(hatch(arc_pts(HX - 32, HY - 78, 14, 14, 0, 360, 16), 45, 2.6, rng) + circle_path(HX - 32, HY - 78, 15), w=.75)
+    sc.s(line(HX + 20, HY - 90, HX + 40, HY - 70) + line(HX - 60, HY - 104, HX - 44, HY - 94), w=.9)
+    # its arm, out of the sand beside it, segment by segment, the hand open to the sky
+    arm = [(HX + 150, HY - 10), (HX + 172, HY - 86), (HX + 196, HY - 150), (HX + 170, HY - 204)]
+    segs = ''
+    for (x0, y0), (x1, y1), r in zip(arm, arm[1:], (19, 16, 13)):
+        dx, dy = x1 - x0, y1 - y0
+        L = math.hypot(dx, dy)
+        nx_, ny_ = -dy / L * r, dx / L * r
+        segs += poly([(x0 + nx_, y0 + ny_), (x1 + nx_ * .85, y1 + ny_ * .85), (x1 - nx_ * .85, y1 - ny_ * .85), (x0 - nx_, y0 - ny_)])
+    sc.k(segs)
+    sc.s(hatch([(arm[0][0] + 6, arm[0][1]), (arm[1][0] + 6, arm[1][1]), (arm[1][0] + 15, arm[1][1] + 3), (arm[0][0] + 19, arm[0][1] + 3)], 70, 3.4, rng, inset=1), w=.7, op=.7)
+    sc.k(''.join(circle_path(x, y, 12) for x, y in arm[1:3]), w=.9)
+    hx_, hy_ = arm[-1]
+    palm = [(hx_ - 13, hy_ + 4), (hx_ + 13, hy_ + 4), (hx_ + 10, hy_ - 12), (hx_ - 10, hy_ - 12)]
+    fingers = ''
+    for bx, ax_, ay_ in ((-9, -26, -32), (0, -4, -44), (9, 20, -34)):
+        fingers += poly([(hx_ + bx - 4, hy_ - 11), (hx_ + ax_ * .55 - 4, hy_ + ay_ * .6), (hx_ + ax_, hy_ + ay_), (hx_ + ax_ * .55 + 4, hy_ + ay_ * .6 + 2), (hx_ + bx + 4, hy_ - 11)])
+    sc.k(poly(palm) + fingers, w=1)
+
+    # the great pipe out of the sand and back in, ringed at its joints
+    sc.plane(.88)
+    PX, PY, PRo, PRi = 470, 520, 160, 132
     outer = arc_pts(PX, PY, PRo, PRo * .92, 180, 360, 44)
     inner = arc_pts(PX, PY, PRi, PRi * .91, 180, 360, 44)
     sc.k(poly(outer + list(reversed(inner))))
     rings = ''
-    for a in (200, 226, 254, 284, 314, 340):
-        ca, sa = math.cos(math.radians(a)), math.sin(math.radians(a))
+    for a_ in (200, 226, 254, 284, 314, 340):
+        ca, sa = math.cos(math.radians(a_)), math.sin(math.radians(a_))
         p0 = (PX + PRo * ca, PY + PRo * .92 * sa)
         p1 = (PX + PRi * ca, PY + PRi * .91 * sa)
         q0 = (PX + (PRo + 4) * ca, PY + (PRo + 4) * .92 * sa)
         rings += line(*p0, *p1) + line(*q0, p1[0] + (q0[0] - p0[0]) * 1.2, p1[1] + (q0[1] - p0[1]) * 1.2)
-    sc.s(rings, w=.8)
+    sc.s(rings, w=.85)
     sh = [p for p in inner if p[0] > PX + 20] + list(reversed([p for p in outer if p[0] > PX + 20]))
-    sc.s(hatch(sh, 62, 4.6, rng, keep=.88, inset=1.5), w=.55, op=.75)
-    # a broken pipe standing out of the sand at the right, its mouth dark
-    sc.open('transform="rotate(26 1400 486)"')
-    sc.k(poly([(1382, 486), (1382, 356), (1418, 356), (1418, 486)]))
-    sc.k('M1382 356a18 7 0 1 0 36 0a18 7 0 1 0 -36 0Z', w=.9)
-    sc.f('M1387 356a13 4.5 0 1 0 26 0a13 4.5 0 1 0 -26 0Z')
-    sc.s(hline(1382, 392, 36) + hline(1382, 397, 36) + hline(1382, 450, 36) + hline(1382, 455, 36), w=.7)
-    sc.s(hatch([(1406, 362), (1418, 362), (1418, 486), (1406, 486)], 90, 3.4, rng, inset=1), w=.55, op=.75)
+    sc.s(hatch(sh, 62, 4.4, rng, keep=.88, inset=1.5), w=.7, op=.75)
+    # the mid dunes, over the pipe's feet and the colossus's jaw
+    d2c = [(120, 46, 220), (300, 30, 160), (640, 44, 200), (980, 58, 240), (1480, 44, 220)]
+    d2 = dune_profile(-20, 1620, 494, d2c, rng)
+    sc.k(poly(d2 + [(1620, 600), (-20, 600)]), stroke=False)
+    sc.s(smooth(d2), w=1)
+    sc.s(lee_hatch(d2, d2c, rng, gap=5.5, depth=24), w=.7, op=.72)
+    sc.s(ripple_patch(d2, 420, 600, rng, 3) + ripple_patch(d2, 820, 960, rng, 4) + ripple_patch(d2, 1300, 1460, rng, 3), w=.7, op=.72)
+    # a broken pipe standing out of the sand, its mouth dark
+    sc.open('transform="rotate(26 1452 492)"')
+    sc.k(poly([(1434, 492), (1434, 372), (1470, 372), (1470, 492)]))
+    sc.k('M1434 372a18 7 0 1 0 36 0a18 7 0 1 0 -36 0Z', w=.9)
+    sc.s(hatch(arc_pts(1452, 372, 13, 4.5, 0, 360, 12), 90, 2.2, rng) + hline(1434, 408, 36) + hline(1434, 413, 36) + hline(1434, 460, 36), w=.75)
+    sc.s(hatch([(1458, 378), (1470, 378), (1470, 492), (1458, 492)], 90, 3.4, rng, inset=1), w=.7, op=.75)
     sc.close()
 
-    # mid dunes, burying the pipe's feet
-    d2c = [(120, 46, 220), (380, 40, 180), (760, 44, 200), (1030, 62, 240), (1480, 44, 220)]
-    d2 = dune_profile(-20, 1620, 490, d2c, rng)
-    sc.k(poly(d2 + [(1620, 600), (-20, 600)]), stroke=False)
-    sc.s(smooth(d2), w=.95)
-    sc.s(lee_hatch(d2, d2c, rng, gap=5.5, depth=24), w=.55, op=.65)
+    # the near: two apartment blocks sinking into the front dunes, their windows dark hatched hollows
+    sc.plane(1)
 
-    # two apartment blocks sinking into the front dunes: balconies in bands, windows in dark rows, some filled with sand
     def block(x, base, w, h, tilt, floors, cols, seed):
         br = random.Random(seed)
         sc.open(f'transform="rotate({num(tilt)} {n(x + w / 2)} {n(base)})"')
         top = base - h
         sc.k(poly([(x, base), (x, top + 6), (x + w * .3, top), (x + w * .55, top + 10), (x + w * .8, top + 4), (x + w, top + 8), (x + w, base)]))
         fh, cw = h / floors, w / cols
-        slabs, voids = '', ''
+        slabs, wins = '', ''
         for f in range(1, floors):
             yy = base - f * fh
             slabs += hline(x - 4, yy, w + 8) + hline(x - 4, yy + 3, w + 8)
             for c in range(cols):
-                if br.random() < .6:
-                    voids += rect(x + c * cw + cw * .24, yy - fh * .7, cw * .52, fh * .48)
-        sc.s(slabs, w=.7, op=.85)
-        sc.f(voids, op=.8)
-        sc.s(hatch([(x + w * .84, base), (x + w, base), (x + w, top + 8), (x + w * .84, top + 6)], 75, 4.2, rng, keep=.9, inset=1), w=.55, op=.7)
+                if br.random() < .62:
+                    wx, wy, ww, wh = x + c * cw + cw * .24, yy - fh * .7, cw * .52, fh * .48
+                    wins += ''.join(vline(wx + 1.5 + j * 3, wy, wh) for j in range(int(ww / 3)))
+        sc.s(slabs, w=.8, op=.85)
+        sc.s(wins, w=.75, op=.8)
+        sc.s(hatch([(x + w * .84, base), (x + w, base), (x + w, top + 8), (x + w * .84, top + 6)], 75, 4.2, rng, keep=.9, inset=1), w=.7, op=.7)
         sc.close()
-    block(140, 548, 188, 262, 7, 9, 6, 3)
+    block(110, 548, 188, 262, 7, 9, 6, 3)
     block(1098, 548, 158, 216, -13, 7, 5, 5)
-
-    # a machine's round head, half sunk in the sand, still looking out
-    mh = circle_path(944, 530, 17) + 'M927 526q17 -7 34 0'
-    sc.k(mh, w=1)
-    sc.f(circle_path(938, 520, 2.6) + circle_path(951, 520, 2.6))
-    sc.s('M944 513v-9M941 504h6', w=.8)
-    # the front dunes over the blocks' lower floors; sand blowing off the crests
-    d3c = [(250, 78, 240), (720, 30, 260), (1180, 90, 250), (1560, 40, 200)]
+    # a small machine sits by the colossus, half sunk in its own drift
+    mx, my = 1000, 532
+    machine(sc, mx, my, 1.2, 'stand', look=(-1.4, -.6))
+    md = drift(mx + 2, my + 3, 22, 16, rng)
+    sc.k(smooth(md) + 'Z', w=.9)
+    # the front dunes over the blocks' lower floors; sand blowing off the crests; ripples on the windward faces
+    d3c = [(230, 78, 240), (720, 30, 260), (1180, 90, 250), (1560, 40, 200)]
     d3 = dune_profile(-20, 1620, 552, d3c, rng)
     sc.k(poly(d3 + [(1620, 600), (-20, 600)]), stroke=False)
-    sc.s(smooth(d3), w=1.1)
-    sc.s(lee_hatch(d3, d3c, rng, gap=4.6, depth=32), w=.6, op=.72)
+    sc.s(smooth(d3), w=1.15)
+    sc.s(lee_hatch(d3, d3c, rng, gap=4.6, depth=32), w=.75, op=.75)
+    sc.s(ripple_patch(d3, 20, 200, rng, 4, 6) + ripple_patch(d3, 520, 700, rng, 4, 6) + ripple_patch(d3, 960, 1150, rng, 4, 6) + ripple_patch(d3, 1400, 1540, rng, 3, 6), w=.75, op=.75)
     wisps = ''
     for prof, cr in ((d1, d1c), (d2, d2c), (d3, d3c)):
         for cx_, ch_, cw_ in cr:
@@ -1045,18 +1103,18 @@ def desert() -> Scene:
             for j in range(3):
                 L = rng.uniform(18, 40)
                 wisps += f'M{n(cx_ + 2)} {n(cy_ - 1 - j * 2)}q{n(L * .5)} {n(-4 - j * 2)} {n(L)} {n(-2 - j * 3)}'
-    sc.s(wisps, w=.55, op=.55)
-    sc.s(ripples(0, 1600, 505, 556, rng, 24), w=.6, op=.55)
-    # a dead shrub, a snapped pole leaning into the wind
+    sc.s(wisps, w=.7, op=.55)
     shrub = ''
     for i in range(7):
-        a = math.radians(-160 + i * 22)
-        shrub += f'M880 {n(yat(d3, 880) + 2)}q{n(math.cos(a) * 6)} {n(math.sin(a) * 9)} {n(math.cos(a) * 14)} {n(math.sin(a) * 16)}'
-    sc.s(shrub, w=.75)
+        a_ = math.radians(-160 + i * 22)
+        shrub += f'M640 {n(yat(d3, 640) + 2)}q{n(math.cos(a_) * 6)} {n(math.sin(a_) * 9)} {n(math.cos(a_) * 14)} {n(math.sin(a_) * 16)}'
+    sc.s(shrub, w=.8)
     # the heat low over the dunes (it shimmers when the scene may move)
+    sc.plane(.5)
     sc.open('class="a-heat" data-box="0 256 1600 90"')
-    sc.s(heat_low, w=.7, op=.45)
+    sc.s(heat_low, w=.75, op=.8)
     sc.close()
+    sc.plane(1)
     return sc
 
 # =====================================================================================================================
