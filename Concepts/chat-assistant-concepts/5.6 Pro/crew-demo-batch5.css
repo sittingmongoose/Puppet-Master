@@ -16,7 +16,7 @@
 .pmx-guide.crew-demo-guide{container:crew-demo-guide / inline-size;}
 @container crew-demo-guide (max-width: 419px){
  /* the empty action column's 12 px gap goes back to the text (the close X keeps the guide's own right padding) */
- .pmx-guide.crew-demo-guide :is(.pmx-guide-cap, .pmx-guide-step, .crew-demo-evaluation){grid-column:1 / -1;margin-right:-12px;}
+ .pmx-guide.crew-demo-guide .pmx-guide-cap, .pmx-guide.crew-demo-guide .pmx-guide-step, .pmx-guide.crew-demo-guide .crew-demo-evaluation{grid-column:1 / -1;margin-right:-12px;}
  .pmx-guide.crew-demo-guide .pmx-guide-acts{grid-column:1 / -1;grid-row:auto;flex-wrap:wrap;gap:4px 10px;margin:6px 0 0 -10px;}
  .pmx-guide.crew-demo-guide .pmx-guide-acts:empty{display:none;}
  .pmx-guide.crew-demo-guide > .pmx-guide-close{top:3px;margin-top:0;}

@@ -652,7 +652,8 @@ const j1 = [];
    2026-09-28 (second rerun): about 7k extra element restyles in the 8 s fold/stream window. Every *.css of the
    concept is scanned (comments stripped). Since the lane fix landed in the worktree (20:24Z, lane patch v2) this is a
    hard check: a hit fails the selfcheck and prints a `has-scope` line naming file and selector. The fix is always to
-   give the rightmost compound a class the targets carry (`> :is(.a, .b):not(X)` for `> :not(X)`, `> .pmx-act[...]`). */
+   give the rightmost compound a class the targets carry (`> .a:not(X), > .b:not(X)` for `> :not(X)`, `> .pmx-act[...]`;
+   one selector per class, not `> :is(.a, .b)`: see the universal-bucket check below). */
 const hasScope = [];
 (function hasScopeSources() {
   const path = require('path');
@@ -679,6 +680,44 @@ const hasScope = [];
 })();
 for (const h of hasScope) console.log('has-scope: ' + h);
 pc('closing review: no :has() rule widens the shared :has invalidation set (whole subtree or a bare attribute)', hasScope.length === 0, hasScope);
+/* Closing perf pass (turn-verify --cpu-throttle 4, 2026-09-29): Chromium files a rule under the class, id, attribute
+   or tag of its RIGHTMOST compound and tries it only on elements that carry one; a rightmost compound led by
+   `:is(...)` / `:where(...)` with no class, id, tag or attribute of its own lands in the universal bucket and is tried
+   on EVERY element in EVERY style recalc (the fold's renders force 5-10 recalcs each, turn-stage restyles the whole
+   document every frame). When no ancestor compound carries a class or id either (`:is(.a, .b)`, `body[data-theme]
+   :is(.a, .b)`, `:is(.x, .y) :is(code, pre)`), the ancestor bloom filter cannot reject it first. 210 universal-bucket
+   selectors in the built page against main's 40 made our full-document recalc about 20 % dearer than main's and cost
+   the throttled fold its 300 ms hold. Write one selector per argument instead (`X .a, X .b`; `X code, X pre`) and keep
+   the :is() specificity, which is that of its largest argument (repeat an arm's own class, `.x.x`, or qualify it with
+   the tag its producer emits). Hard check over our module sheets (Chat WOW's sheets are theirs): no rightmost
+   :is()/:where() list without a feature of its own and without an ancestor class or id, except where Chromium buckets
+   it anyway (:focus, :focus-visible). */
+const uniBucket = [];
+(function universalBucketSources() {
+  const path = require('path');
+  const dir = path.join(__dirname, '..');
+  const THEIRS = /^(styles|motion|turn-stage|turn-stream|chat-sound|orbit|questions|variants-[abc]|transcripts|composer)\.css$/;
+  const topSplit = (s, sep) => { const out = []; let d = 0, cur = '', q = null; for (const c of s) { if (q) { cur += c; if (c === q) q = null; continue; } if (c === '"' || c === "'") { q = c; cur += c; continue; } if (c === '(' || c === '[') d++; else if (c === ')' || c === ']') d--; if (d === 0 && sep.test(c)) { out.push(cur); cur = ''; continue; } cur += c; } out.push(cur); return out; };
+  const compounds = sel => topSplit(sel.trim().replace(/\s*([>+~])\s*/g, ' '), /\s/).filter(Boolean);
+  const depth0 = c => { let d = 0, out = ''; for (const ch of c) { if (ch === '(') { d++; continue; } if (ch === ')') { d--; continue; } if (d === 0) out += ch; } return out; };
+  for (const f of fs.readdirSync(dir).filter(n => /\.css$/.test(n) && !THEIRS.test(n)).sort()) {
+    const css = fs.readFileSync(path.join(dir, f), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+    const re = /([^{};]+)\{/g; let m;
+    while ((m = re.exec(css))) {
+      const pre = m[1].trim(); if (!pre || pre[0] === '@' || !/:(is|where)\(/.test(pre)) continue;
+      for (const cx of topSplit(pre, /,/)) {
+        const cs = compounds(cx); if (!cs.length) continue;
+        const right = cs[cs.length - 1], own = depth0(right).replace(/::?[a-z-]+/g, '');
+        if (!/^:(is|where)\(/.test(right) || /[.#\[]/.test(own) || /^[a-zA-Z]/.test(own) || /:focus/.test(right)) continue;
+        /* an ancestor class or id outside a :is() list lets the bloom filter reject it first */
+        if (/[.#][\w-]/.test(cs.slice(0, -1).map(depth0).join(' '))) continue;
+        uniBucket.push(f + ': ' + cx.trim().replace(/\s+/g, ' ').slice(0, 160));
+      }
+    }
+  }
+})();
+for (const u of uniBucket) console.log('universal-bucket: ' + u);
+pc('closing perf pass: no rule of ours is tried on every element with no ancestor to reject it first (a rightmost :is() list, no class, id or tag)', uniBucket.length === 0, uniBucket);
 /* IMPACT amendments (2026-09-27), read from the foundation sources (comments and embedded font data
    stripped): no color-mix() (A1-15), no backdrop-filter (A1-02), no element filter (A1-04), no
    stroke-dashoffset or pathLength (A1-05), PARTS defined, exported and holding the 6.6 vocabulary,

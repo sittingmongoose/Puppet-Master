@@ -5,7 +5,7 @@
 .pmx-view.review-document{max-width:980px;padding:4px 4px 60px !important;}
 .pmx-view.pmx-rview.collab-panel{display:block;max-height:none;}
 .pmx-view.pmx-rview .text-button{white-space:nowrap;text-align:center;}
-.pmx-view.pmx-rview :is(pre.review-source, pre.review-markdown){border:0;max-width:none;}
+.pmx-view.pmx-rview pre.review-source, .pmx-view.pmx-rview pre.review-markdown{border:0;max-width:none;}
 /* the legacy collaboration.css rules on the hook classes this view carries (boxes, 10.5 px type, dashed borders) */
 .pmx-view.pmx-rview li.collab-readonly-note, .pmx-view.pmx-rview li.collab-targetpack{display:block;margin:0;font:inherit;color:inherit;}
 .pmx-view.pmx-rview .collab-finding.collab-excluded{border:0;border-radius:0;padding:10px 0 12px;background:none;opacity:1;}

@@ -154,7 +154,7 @@ body.pmx-title-morphing .chat-title .pmx-chat-title{ text-overflow:clip; }
 .chat-header .chat-title .pmx-chat-title{ flex:0 1 auto; min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
 .chat-header .chat-title .chat-state{ flex:none; overflow:visible; text-overflow:clip; white-space:nowrap; }
 /* the mark (headerExtras) sits right after the title: the flex order moves it ahead of the header's tools */
-.chat-header > :is(.pmx-chat-title-mark, .pmx-chat-title-naming){ order:1; }
+.chat-header > .pmx-chat-title-mark, .chat-header > .pmx-chat-title-naming{ order:1; }
 .chat-header > .chat-head-spacer, .chat-header > .chat-head-spacer ~ :not(.pmx-chat-title-mark, .pmx-chat-title-naming){ order:2; }
 .chat-header > .pmx-chat-title-mark{
   flex:none; display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; margin-left:-2px;

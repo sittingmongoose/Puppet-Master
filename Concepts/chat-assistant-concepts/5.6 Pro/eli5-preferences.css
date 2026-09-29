@@ -29,7 +29,7 @@ body[data-theme^="retro"] .pmx-eli5-say{font-size:13px;line-height:19px;}
 body[data-theme^="retro"] .pmx-eli5-say code{font-size:12px;line-height:19px;}
 /* a choice re-sets the chosen answer once: its words fade in in reading order, the whole within the cap (the same
    re-set plays in New chat defaults' voice specimen, .pmx-dflt-say, assistant-features.css) */
-:is(.pmx-eli5-say, .pmx-dflt-say)[data-reset="1"]{--pmx-eli5-step:min(calc(var(--pmx-t-eli5-char) * var(--cw, 6)), calc(var(--pmx-t-eli5-reset) / var(--nw, 1)));}
+.pmx-eli5-say[data-reset="1"], .pmx-dflt-say[data-reset="1"]{--pmx-eli5-step:min(calc(var(--pmx-t-eli5-char) * var(--cw, 6)), calc(var(--pmx-t-eli5-reset) / var(--nw, 1)));}
 :is(.pmx-eli5-say, .pmx-dflt-say)[data-reset="1"] .pmx-eli5-w{animation:pmx-fade-in var(--pmx-t-swap) var(--pmx-ease-out) backwards;animation-delay:calc(var(--i, 0) * var(--pmx-eli5-step));}
 /* the one shared code line under both voices: the same whichever voice is chosen, and it never moves (the answer
    row is as tall as the longer answer in both states, so a choice changes no height). A hairline across both

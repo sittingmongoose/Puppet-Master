@@ -48,7 +48,7 @@ body[data-theme^="retro"] .pmx-sheet .pmx-bs-mrule{font-size:11.5px;line-height:
 body[data-theme^="retro"] .pmx-run .pmx-bs-opt-title{font-size:11.5px;}
 @media (prefers-reduced-motion:reduce){.pmx-run .pmx-bs-note-state .pmx-sealed{animation:none;}}
 body.pm56-reduced .pmx-run .pmx-bs-note-state .pmx-sealed{animation:none;}
-.pmx-run .pmx-bs-opt[data-state="ruled"] :is(.pmx-bs-opt-marks,.pmx-bs-opt-from){opacity:.55;}
+.pmx-run .pmx-bs-opt[data-state="ruled"] .pmx-bs-opt-marks, .pmx-run .pmx-bs-opt[data-state="ruled"] .pmx-bs-opt-from{opacity:.55;}
 .pmx-run .pmx-bs-opt-title s{text-decoration-thickness:1.5px;}
 .pmx-run .pmx-bs-opts + .pmx-ruled{margin-top:4px;}
 /* ---- the vote board (review fixes, J-2: never cut a name to letters). Kind-scoped over pmxVoteBoard until the

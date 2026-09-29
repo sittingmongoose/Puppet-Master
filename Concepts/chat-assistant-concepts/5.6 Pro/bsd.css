@@ -42,7 +42,7 @@
    Details, behind Why?) */
 .pmx-note.bsd-card .pmx-note-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;}
 /* J-1: no italic face; emphasis in an advisor's answer is weight and ink, as in pmx markdown */
-.pmx-note.bsd-card .pmx-note-body :is(em, i, cite){font-style:normal;font-weight:var(--pmx-w-560);color:var(--text);}
+.pmx-note.bsd-card .pmx-note-body em, .pmx-note.bsd-card .pmx-note-body i, .pmx-note.bsd-card .pmx-note-body cite{font-style:normal;font-weight:var(--pmx-w-560);color:var(--text);}
 .pmx-note.bsd-card .pmx-note-body{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;}
 .pmx-note.bsd-card .pmx-bsd-dhelp{margin-left:6px;font:var(--pmx-fs-fine);color:var(--subtle);white-space:nowrap;}
 @container pmxbsdnote (max-width: 339px){.pmx-note.bsd-card .pmx-bsd-dhelp{display:none;}}
@@ -121,7 +121,7 @@
    boxes inside the section (G-26). .bsd-section keeps the stripe-removal overrides applied (B.10).
    ===================================================================== */
 /* code and raw data in the theme's code face (J-1: IBM Plex Mono in retro), as inside every pmx surface */
-:is(.pmx-bsd-details, .pmx-bsd-rawbody) :is(code, pre){font-family:var(--font-mono);}
+:is(.pmx-bsd-details, .pmx-bsd-rawbody) code, :is(.pmx-bsd-details, .pmx-bsd-rawbody) pre{font-family:var(--font-mono);}
 .pmx-bsd-details{margin-top:12px;padding:4px 0 0;font:var(--pmx-fs-help);color:var(--text);}
 :where(.pmx-bsd-details, .pmx-bsd-rawbody) p{margin:0;}
 .pmx-bsd-dh{display:flex;align-items:center;gap:10px;min-height:32px;}
@@ -157,7 +157,7 @@
 .pmx-bsd-why-say{font:var(--pmx-fs-help);color:var(--text);overflow-wrap:anywhere;min-width:0;}
 .pmx-bsd-why-say p{margin:0;}
 .pmx-bsd-why-say p + p, .pmx-bsd-why-say :is(ul, ol, pre, .pmx-table-wrap){margin-top:8px;}
-.pmx-bsd-why-say :is(ul, ol){padding-left:18px;}
+.pmx-bsd-why-say ul, .pmx-bsd-why-say ol{padding-left:18px;}
 .pmx-bsd-sub{margin-top:12px; font:var(--pmx-fs-meta);color:var(--muted);}
 .pmx-bsd-list{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:6px;font:var(--pmx-fs-help);color:var(--text);}
 .pmx-bsd-list li{min-width:0;overflow-wrap:anywhere;}
@@ -227,8 +227,9 @@
 .pmx-bsd-sheet .pmx-bsd-plate .pmx-bsd-sev{fill:var(--warning);}
 /* M1: each cue lands (pop 150) as its stem finishes drawing, never floating before its stem; one arriving later
    (a mode change after the sheet settled) pops at once while its stem draws. Reduced motion: the pmx policy removes it. */
-.pmx-bsd-sheet .pmx-bsd-plate :is(.pmx-p-cue, .pmx-bsd-quiet){transform-box:fill-box;transform-origin:center;animation:pmx-pop var(--pmx-t-pop) var(--pmx-ease-pop) calc(var(--pmx-t-at-lines) + var(--pmx-t-draw) * .8) backwards;}
-#pmOverlayRoot.pmx-sheet-settled .pmx-bsd-sheet .pmx-bsd-plate :is(.pmx-p-cue, .pmx-bsd-quiet){animation-delay:calc(var(--pmx-t-draw) * .6);}
+.pmx-bsd-sheet .pmx-bsd-plate .pmx-p-cue, .pmx-bsd-sheet .pmx-bsd-plate .pmx-bsd-quiet{transform-box:fill-box;transform-origin:center;animation:pmx-pop var(--pmx-t-pop) var(--pmx-ease-pop) calc(var(--pmx-t-at-lines) + var(--pmx-t-draw) * .8) backwards;}
+#pmOverlayRoot.pmx-sheet-settled .pmx-bsd-sheet .pmx-bsd-plate .pmx-p-cue,
+#pmOverlayRoot.pmx-sheet-settled .pmx-bsd-sheet .pmx-bsd-plate .pmx-bsd-quiet{animation-delay:calc(var(--pmx-t-draw) * .6);}
 .pmx-bsd-sheet .pmx-bsd-top{flex:none;margin-top:10px;overflow:visible;}
 .pmx-bsd-sheet .pmx-bsd-cols{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 36px;margin-top:12px;}
 /* the reference's 176 px trigger column (FOUNDATION REQUEST: a pmxCtl width option), so the helpers keep two lines */
@@ -247,7 +248,8 @@
 .pmx-bsd-sheet .pmx-bsd-route + .pmx-help + .pmx-fine{margin-top:0;}
 /* ...and the column keeps its height (review cycle 1: it scrolled 40-55 px and cut the Memory helper): the saving
    line and the notes summary, which the Advanced entry repeats, give way while the no-substitute sentence shows */
-.pmx-bsd-sheet .pmx-bsd-col:has(.pmx-bsd-route) :is(.pmx-bsd-route + .pmx-help + .pmx-fine, .pmx-bsd-tidy){display:none;}
+.pmx-bsd-sheet .pmx-bsd-col:has(.pmx-bsd-route) .pmx-bsd-route + .pmx-help + .pmx-fine,
+.pmx-bsd-sheet .pmx-bsd-col:has(.pmx-bsd-route) .pmx-bsd-tidy.pmx-bsd-tidy.pmx-bsd-tidy{display:none;}
 .pmx-bsd-sheet .pmx-bsd-q .pmx-check{margin-top:10px;}
 /* the notes summary sits on the check's text column (the 15 px box + its 10 px gap) */
 .pmx-bsd-sheet .pmx-bsd-tidy{margin:4px 0 0 25px;}
@@ -262,11 +264,11 @@ body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-bsd-sheet .pmx-bsd
 body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-bsd-sheet .pmx-bsd-col .pmx-ctl-copy .pmx-help{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:clip;}
 /* J-2 fitted copy (bsd.js fit()): exactly one of the full, shorter (retro and friendly) and shortest (windows under
    800 px tall) sentences shows */
-.pmx-bsd-sheet :is(.pmx-bsd-mid, .pmx-bsd-tiny){display:none;}
+.pmx-bsd-sheet .pmx-bsd-mid, .pmx-bsd-sheet .pmx-bsd-tiny{display:none;}
 body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-bsd-sheet .pmx-bsd-mid{display:inline;}
 body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-bsd-sheet .pmx-bsd-full:has(+ .pmx-bsd-mid){display:none;}
 @media (max-height: 799.98px){
-  body .pmx-bsd-sheet :has(> .pmx-bsd-tiny) > :is(.pmx-bsd-full, .pmx-bsd-mid){display:none;}
+  body .pmx-bsd-sheet :has(> .pmx-bsd-tiny) > .pmx-bsd-full, body .pmx-bsd-sheet :has(> .pmx-bsd-tiny) > .pmx-bsd-mid{display:none;}
   body .pmx-bsd-sheet .pmx-bsd-tiny{display:inline;}
 }
 /* the foot (review cycle 1): the read-back is the sheet's promise-last sentence and the estimate carries the honesty

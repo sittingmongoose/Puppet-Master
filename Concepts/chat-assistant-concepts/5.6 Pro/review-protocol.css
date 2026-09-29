@@ -28,7 +28,7 @@
 .pmx-run .pmx-review-finding .pmx-finding-meta{flex-wrap:wrap;column-gap:0;row-gap:2px;white-space:normal;margin-left:-18px;clip-path:inset(-4px -4px -4px 18px);}
 .pmx-run .pmx-review-finding .pmx-finding-meta > .pmx-sep{display:none;}
 .pmx-run .pmx-review-finding .pmx-finding-meta > .pmx-sev{margin-left:18px;}
-.pmx-run .pmx-review-finding :is(.pmx-review-disp, .pmx-review-agree)::before{content:"\00B7";flex:none;display:inline-block;width:18px;text-align:center;color:var(--subtle);}
+.pmx-run .pmx-review-finding .pmx-review-disp::before, .pmx-run .pmx-review-finding .pmx-review-agree::before{content:"\00B7";flex:none;display:inline-block;width:18px;text-align:center;color:var(--subtle);}
 .pmx-run .pmx-review-finding .pmx-review-agree::before{margin-right:-5px;}
 .pmx-run .pmx-review-disp{flex:none;white-space:nowrap;}
 /* below 260 px the compact agreement grid drops; the sentence and the track's count say the same (J-2: drop, never

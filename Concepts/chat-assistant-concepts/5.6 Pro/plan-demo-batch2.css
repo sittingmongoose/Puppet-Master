@@ -7,7 +7,7 @@
 .plan-sched-say b{color:var(--text);font-weight:600;}
 .plan-schedule-line[data-tone="update"] .plan-sched-mark{color:var(--warning);}
 .plan-sched-acts{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:0 10px;margin:-6px -10px -6px 0;}
-.plan-sched-acts > :is(.text-button, .soft-button){height:32px;min-height:32px;padding:0 10px;font:600 12px/16px var(--font-ui);white-space:nowrap;}
+.plan-sched-acts > .text-button, .plan-sched-acts > .soft-button{height:32px;min-height:32px;padding:0 10px;font:600 12px/16px var(--font-ui);white-space:nowrap;}
 .plan-sched-acts > .text-button{color:var(--muted);}
 .plan-sched-foot{grid-column:2 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;min-width:0;font:500 11.5px/17px var(--font-ui);color:var(--muted);font-variant-numeric:tabular-nums;}
 .plan-sched-ribbon{display:block;flex:none;}

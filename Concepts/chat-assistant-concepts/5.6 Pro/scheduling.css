@@ -45,7 +45,7 @@
 .pmx-sheet .pmx-sched-inputs > .pmx-ctl{margin-top:0;}
 /* the date and time boxes stand as tall as the preserved zone trigger beside them (its two lines), so the row's
    labels and boxes line up; the trigger itself is untouched (DON'T 12) */
-.pmx-sheet .pmx-sched-inputs :is(input[type=date], input[type=time]){height:47px;padding:0 10px;font-size:12.5px;color-scheme:inherit;}
+.pmx-sheet .pmx-sched-inputs input[type=date], .pmx-sheet .pmx-sched-inputs input[type=time]{height:47px;padding:0 10px;font-size:12.5px;color-scheme:inherit;}
 .pmx-sheet .pmx-sched-resolved{margin:0;align-self:end;padding-bottom:14px;min-width:0;font:var(--pmx-fs-help);color:var(--muted);}
 .pmx-sheet .pmx-sched-resolved b{color:var(--text);font-weight:var(--pmx-w-620);}
 /* a time and a countdown never break inside themselves ("in 2 h / 1 m") */
@@ -166,7 +166,11 @@ body[data-theme^="retro"] .pmx-sheet.sched-dialog .pmx-promise > span{white-spac
 .pmx-sheet .pmx-sched-hero{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-hero) backwards;}
 .pmx-sheet .pmx-sched-when, .pmx-sheet .pmx-sched-week{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-q) backwards;}
 .pmx-sheet .pmx-sched-lower{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) calc(var(--pmx-t-at-q) + 2 * var(--pmx-t-cascade)) backwards;}
-#pmOverlayRoot.pmx-sheet-settled .pmx-sheet :is(.pmx-sched-hero, .pmx-sched-when, .pmx-sched-week, .pmx-sched-lower, .pmx-sched-band){animation-delay:0ms;}
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-sched-hero,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-sched-when,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-sched-week,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-sched-lower,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-sched-band{animation-delay:0ms;}
 
 /* ---- narrow sheets (the 900 and 700 wide windows): the rows stack, nothing scrolls sideways */
 /* short windows (1024 x 768): the bubble shows two lines and scrolls inside itself past them, and the blocks sit

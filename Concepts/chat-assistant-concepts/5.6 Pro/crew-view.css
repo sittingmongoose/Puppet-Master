@@ -103,4 +103,5 @@ article.pmx-view.crew-work-document:not(.collab-view){animation:pmx-row-in var(-
 .crew-view-msg + .crew-view-msg{margin-top:12px;}
 
 body[data-theme^="retro"] .crew-plan-table{font-size:12px;}
-body[data-theme^="retro"] :is(.crew-team-line, .crew-plan-p, .crew-cost-line, .crew-source-rows > li, .crew-source-req > li){font-size:12px;}
+body[data-theme^="retro"] span.crew-team-line, body[data-theme^="retro"] p.crew-plan-p, body[data-theme^="retro"] p.crew-cost-line,
+body[data-theme^="retro"] .crew-source-rows > li, body[data-theme^="retro"] .crew-source-req > li{font-size:12px;}

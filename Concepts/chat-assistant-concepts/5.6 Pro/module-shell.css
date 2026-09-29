@@ -160,7 +160,10 @@ body[data-theme^="friendly"]{
 .pmx-del{color:var(--danger);font-style:normal;}
 .pmx-sep{color:var(--subtle);}
 /* J-1: code in any pmx surface is the theme's code face (IBM Plex Mono in retro), never the UA's bare monospace */
-:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-files, .pmx-guide, .pmx-bubble) :is(code, kbd, samp, pre){font-family:var(--font-mono);}
+:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-files, .pmx-guide, .pmx-bubble) code,
+:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-files, .pmx-guide, .pmx-bubble) kbd,
+:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-files, .pmx-guide, .pmx-bubble) samp,
+:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-files, .pmx-guide, .pmx-bubble) pre{font-family:var(--font-mono);}
 /* The primary-button glow is removed inside every pmx surface (DON'T 4, 3.4). */
 :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide) .primary-button{box-shadow:none;}
 :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide) .primary-button:hover{filter:none;background:var(--pmx-primary-hover);}
@@ -236,7 +239,7 @@ body[data-theme^="friendly"]{
 /* closing (SCHED, MEMTEACH): the warm fill is the block's own padding (it was an 8 px box-shadow spread, so the fill
    had no box and every title in it measured 0-3 px from its edge); the negative margin keeps the layout in place */
 .pmx-sheet .pmx-q[data-state="error"]{background:var(--pmx-card-warm);border-radius:12px;padding:8px;margin-left:-8px;margin-right:-8px;box-shadow:none;}
-.pmx-sheet .pmx-q[data-state="error"] :is(.pmx-q-n, .pmx-q-title){color:var(--warning);}
+.pmx-sheet .pmx-q[data-state="error"] .pmx-q-n, .pmx-sheet .pmx-q[data-state="error"] .pmx-q-title{color:var(--warning);}
 
 /* ================================================================ A3 hero */
 /* R-18: the hero spans the sheet (the legacy .mdl-section{align-self:start} shrank it to max-content) */
@@ -263,7 +266,8 @@ body[data-theme^="friendly"]{
 .pmx-sheet input.pmx-hero-field:focus{border-color:var(--pmx-focus-edge);box-shadow:0 0 0 3px var(--pmx-focus-ring);}
 .pmx-sheet .pmx-hero-main > .pmx-help{margin-top:8px;}
 .pmx-sheet .pmx-hero-main > .pmx-q-head{align-items:center;min-height:32px;}
-.pmx-sheet .pmx-hero-main > .pmx-q-head:has(.pmx-hero-aside) + :is(.pmx-hero-box, .pmx-hero-field){margin-top:12px;}
+.pmx-sheet .pmx-hero-main > .pmx-q-head:has(.pmx-hero-aside) + .pmx-hero-box,
+.pmx-sheet .pmx-hero-main > .pmx-q-head:has(.pmx-hero-aside) + .pmx-hero-field{margin-top:12px;}
 .pmx-sheet .pmx-hero-side{min-width:0;}
 .pmx-sheet .pmx-hero-aside{margin-left:auto;display:flex;align-items:center;gap:10px;width:280px;max-width:50%;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;}
 /* J-2: the card-title field is a boxed 32 px input (text used to sit on its underline) */
@@ -554,14 +558,14 @@ body[data-theme$="-light"] .pmx-sheet .pmx-primary[data-tone="warm"]{color:#fff;
 .pmx-m-nw{fill:none;stroke:var(--warning);stroke-width:2.2;stroke-linecap:round;}
 .pmx-m-nx{fill:none;stroke:var(--danger);stroke-width:1.8;stroke-linecap:round;}
 .pmx-m-sw{fill:none;stroke:var(--muted);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
-:is(.pmx-mark, .pmx-p-mark)[data-state="queued"]{opacity:.5;}
+.pmx-mark[data-state="queued"], .pmx-p-mark[data-state="queued"]{opacity:.5;}
 :is(.pmx-mark, .pmx-p-mark)[data-state="queued"] .pmx-m-ring{stroke:var(--subtle);stroke-dasharray:1.5 2.5;}
 :is(.pmx-mark, .pmx-p-mark)[data-state="needs"] .pmx-m-ring{stroke:var(--warning);}
-:is(.pmx-mark, .pmx-p-mark)[data-state="failed"]{opacity:.45;}
-:is(.pmx-mark, .pmx-p-mark)[data-state="abstained"]{opacity:.6;}
+.pmx-mark[data-state="failed"], .pmx-p-mark[data-state="failed"]{opacity:.45;}
+.pmx-mark[data-state="abstained"], .pmx-p-mark[data-state="abstained"]{opacity:.6;}
 :is(.pmx-mark, .pmx-p-mark)[data-state="optional"] .pmx-m-sil{stroke-dasharray:2.5 2.5;}
 body[data-theme^="retro"] .pmx-m-sil{fill:none;}
-body[data-theme^="retro"] :is(.pmx-m-sil, .pmx-m-spks, .pmx-m-ring){stroke-linecap:square;stroke-linejoin:miter;}
+body[data-theme^="retro"] .pmx-m-sil, body[data-theme^="retro"] .pmx-m-spks, body[data-theme^="retro"] .pmx-m-ring{stroke-linecap:square;stroke-linejoin:miter;}
 .pmx-run .pmx-mark, .pmx-dock .pmx-mark{--pmx-notch-bg:var(--pmx-card);}
 .pmx-run[data-tone="warm"] .pmx-mark, .pmx-run[data-density="attention"]:not([data-tone="accent"]) .pmx-mark, .pmx-dock-line[data-tone="needs"] .pmx-mark{--pmx-notch-bg:var(--pmx-card-warm);}
 .pmx-sheet .pmx-mark{--pmx-notch-bg:var(--surface-2);}
@@ -634,7 +638,7 @@ body[data-theme^="retro"] .pmx-plate{background-image:linear-gradient(var(--pmx-
 .pmx-p-paper-text > span{display:block;max-width:100%;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pmx-p-paper-text > .pmx-p-note{color:var(--muted);}
 .pmx-p-paper-text > .pmx-p-lab{margin-top:2.5px;color:var(--text);}
-.pmx-p-paper-text :is(.pmx-p-note, .pmx-p-lab){transition:color var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-p-paper-text .pmx-p-note, .pmx-p-paper-text .pmx-p-lab{transition:color var(--pmx-t-light) var(--pmx-ease-linear);}
 .pmx-p-floorbar{fill:var(--pmx-seat,var(--muted));}
 .pmx-p-fold{fill:none;stroke:var(--pmx-line);stroke-width:1;}
 .pmx-p-hatchbox{fill:none;stroke:var(--pmx-hatch);stroke-width:1;}
@@ -679,7 +683,9 @@ body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 .pmx-run .pmx-run-body:empty{display:none;}
 .pmx-run .pmx-run-foot{display:flex;flex-wrap:nowrap;align-items:center;gap:0;min-width:0;padding:0;border:0;}
 .pmx-run .pmx-run-foot:empty{display:none;}
-.pmx-run[data-density]:not(.pmx-receipt) > :is(.pmx-run-head, .pmx-run-body, .pmx-run-foot){padding-left:14px;padding-right:14px;}
+.pmx-run[data-density]:not(.pmx-receipt) > .pmx-run-head,
+.pmx-run[data-density]:not(.pmx-receipt) > .pmx-run-body,
+.pmx-run[data-density]:not(.pmx-receipt) > .pmx-run-foot{padding-left:14px;padding-right:14px;}
 
 /* C3 sentence (fixed 36 px, two lines) */
 .pmx-sentence[data-status]{margin:0;display:flex;gap:8px;align-items:flex-start;height:37px;min-width:0;padding:0;border:0;border-radius:0;background:none;font:var(--pmx-fs-sentence);color:var(--muted);overflow:hidden;white-space:normal;}
@@ -782,7 +788,7 @@ p.pmx-meta, .pmx-meta{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-r
 /* J-2: 32 px actions with 10 px sides; wrapped rows keep 12 px; boxed neighbours keep 10 px (text buttons carry their own padding) */
 .pmx-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 6px;min-height:32px;width:100%;min-width:0;}
 .pmx-act{height:32px;min-height:32px;padding:0 10px;border-radius:8px;font:var(--pmx-w-560) 12px/16px var(--font-ui);white-space:nowrap;}
-.pmx-actions > :is(.primary-button, .soft-button) + :is(.primary-button, .soft-button){margin-left:4px;}
+.pmx-actions > :is(.primary-button, .soft-button) + .primary-button, .pmx-actions > :is(.primary-button, .soft-button) + .soft-button{margin-left:4px;}
 .pmx-act.text-button{color:var(--muted);background:none;}
 .pmx-act.text-button:hover{color:var(--text);background:var(--surface-3);}
 .pmx-act.primary-button{height:32px;min-height:32px;padding:0 14px;}
@@ -965,7 +971,7 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 .pmx-md{min-width:0;font:var(--pmx-fs-body);color:var(--text);overflow-wrap:anywhere;}
 .pmx-md p{margin:0 0 8px;} .pmx-md p:last-child{margin-bottom:0;}
 .pmx-view .pmx-md p{color:inherit;max-width:78ch;}
-.pmx-view .pmx-md :is(h3, h4, h5){margin:14px 0 6px;font:var(--pmx-w-650) 13.5px/19px var(--font-ui);letter-spacing:0;color:var(--text);}
+.pmx-view .pmx-md h3, .pmx-view .pmx-md h4, .pmx-view .pmx-md h5{margin:14px 0 6px;font:var(--pmx-w-650) 13.5px/19px var(--font-ui);letter-spacing:0;color:var(--text);}
 .pmx-view .pmx-md h3{font-size:15px;line-height:21px;}
 .pmx-md ul, .pmx-md ol{margin:0 0 8px;padding-left:20px;}
 .pmx-md li{margin:2px 0;}
@@ -975,7 +981,7 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 .pmx-md a{color:var(--text);text-decoration:underline;text-decoration-color:var(--border-strong);text-underline-offset:3px;}
 .pmx-md blockquote, .pmx-md .pmx-md-quote{margin:8px 0;padding:0 0 0 14px;font:var(--pmx-w-reg) 13.5px/20px var(--pmx-voice);color:var(--muted);border:0;box-shadow:none;}
 .pmx-md hr{border:0;height:1px;background:var(--border);margin:12px 0;}
-.pmx-md :is(em, i, cite){font-style:normal;font-weight:var(--pmx-w-560);color:var(--text);}
+.pmx-md em, .pmx-md i, .pmx-md cite{font-style:normal;font-weight:var(--pmx-w-560);color:var(--text);}
 .pmx-md[data-mode="compact"]{font:var(--pmx-fs-sentence);color:var(--muted);}
 /* review cycle 2 (principle 5, 10.1 step 7): compact markdown lives in a 4-line budget (the builder counts it: a
    paragraph 2 lines, a list one line per item, a code or table row 2) so a 1,500-word message never grows the card.
@@ -984,10 +990,13 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 .pmx-md[data-mode="compact"] p:not(.pmx-coderow){margin:0 0 4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .pmx-md[data-mode="compact"] p[data-clamp="1"]{-webkit-line-clamp:1;}
 .pmx-md[data-mode="compact"] > .pmx-coderow{margin:0 0 4px;}
-.pmx-md[data-mode="compact"] :is(ul, ol){margin:0 0 4px;}
+.pmx-md[data-mode="compact"] ul, .pmx-md[data-mode="compact"] ol{margin:0 0 4px;}
 .pmx-md[data-mode="compact"] li{margin:0;}
 .pmx-md[data-mode="compact"] li > span{display:block;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.pmx-md[data-mode="compact"] > :is(p, ul, ol, div):last-child{margin-bottom:0;}
+.pmx-md[data-mode="compact"] > p:last-child,
+.pmx-md[data-mode="compact"] > ul:last-child,
+.pmx-md[data-mode="compact"] > ol:last-child,
+.pmx-md[data-mode="compact"] > div:last-child{margin-bottom:0;}
 /* inside a run card the compact block has the output preview's box: never taller than 88 px, whatever arrives */
 .pmx-run .pmx-md[data-mode="compact"]{max-height:88px;overflow:hidden;}
 .pmx-md[data-mode="compact"] b, .pmx-md[data-mode="compact"] strong{color:var(--text);}
@@ -1045,10 +1054,10 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
    the text column (J-2 item 4). These guards outrank collaboration.css's .collab-route-eff{display:inline-flex;
    gap:4px;font-weight:600}, which put the fine print BESIDE the sentence as a second cramped column, and its
    -sub warning ink (a stand-in is information, A7). They also cover a caller's own .collab-route-eff span. */
-.pmx-team-row .pmx-team-who :is(.collab-route-eff, .pmx-route-eff), .pmx-participant > :is(.collab-route-eff, .pmx-route-eff){display:block;gap:0;font-weight:inherit;color:var(--muted);}
+.pmx-team-row .pmx-team-who .collab-route-eff, .pmx-team-row .pmx-team-who .pmx-route-eff, .pmx-participant > .collab-route-eff, .pmx-participant > .pmx-route-eff{display:block;gap:0;font-weight:inherit;color:var(--muted);}
 .pmx-team-row .pmx-team-who :is(.collab-route-eff, .pmx-route-eff) .pmx-fine, .pmx-participant > :is(.collab-route-eff, .pmx-route-eff) .pmx-fine{display:block;margin-top:4px;}
-.pmx-team-row .pmx-team-who :is(.collab-route-eff-failed, .pmx-route-eff[data-tone="failed"]), .pmx-participant > :is(.collab-route-eff-failed, .pmx-route-eff[data-tone="failed"]){color:var(--danger);}
-.pmx-participant > :is(.collab-route-eff, .pmx-route-eff){margin:-4px 0 12px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);}
+.pmx-team-row .pmx-team-who .collab-route-eff-failed.collab-route-eff-failed, .pmx-team-row .pmx-team-who .pmx-route-eff[data-tone="failed"], .pmx-participant > .collab-route-eff-failed.collab-route-eff-failed, .pmx-participant > .pmx-route-eff[data-tone="failed"]{color:var(--danger);}
+.pmx-participant > .collab-route-eff, .pmx-participant > .pmx-route-eff{margin:-4px 0 12px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);}
 /* 7.13 Activity Detail: 36 px rows (mark 18, name, one state word; the stand-in line under the name when requested and
    effective differ) */
 .pmx-team-row.pmx-team-row[data-size="s"]{grid-template-columns:18px minmax(0,1fr) auto auto;gap:10px;min-height:36px;padding:8px 12px 8px 0;}
@@ -1061,7 +1070,7 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 /* ================================================================ 7.2 width tiers (the card is its own container) */
 @container pmxrun (max-width: 359.98px){
   .pmx-run-kindword{display:none;}
-  .pmx-cluster:not(.pmx-cluster--mini) > :is(.pmx-mark, .pmx-cluster-screen):not(:first-child), .pmx-cluster:not(.pmx-cluster--mini) > .pmx-cluster-more{display:none;}
+  .pmx-cluster:not(.pmx-cluster--mini) > .pmx-mark:not(:first-child), .pmx-cluster:not(.pmx-cluster--mini) > .pmx-cluster-screen:not(:first-child), .pmx-cluster:not(.pmx-cluster--mini) > .pmx-cluster-more{display:none;}
   .pmx-cluster:not(.pmx-cluster--mini)[data-count]:not([data-count="0"]):not([data-count="1"])::after{content:attr(data-count);margin-left:3px;font:500 11px/16px var(--font-ui);color:var(--muted);}
   .pmx-lane{grid-template-columns:22px minmax(0,1fr);}
   .pmx-lane-time{display:none;}
@@ -1144,7 +1153,8 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
   .pmx-credits .pmx-credits-rest{display:flex !important;flex:none;}
   /* attention: one lane (its first line only) and the builder's narrow "+N more · Show all" row, whose count
      includes the lanes hidden here */
-  .pmx-run[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > :is(.pmx-lane ~ .pmx-lane, .pmx-lanes-more:not(.pmx-lanes-more-s)){display:none;}
+  .pmx-run[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lane ~ .pmx-lane,
+  .pmx-run[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lanes-more:not(.pmx-lanes-more-s){display:none;}
   .pmx-run[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s{display:flex;}
   .pmx-run[data-density="attention"] .pmx-lane{grid-template-rows:17.5px;row-gap:0;height:40px;min-height:40px;padding:0;align-content:center;}
   .pmx-run[data-density="attention"] .pmx-lane-mark{grid-row:1;}
@@ -1249,8 +1259,12 @@ body:is([data-theme^="retro"], [data-theme^="friendly"]) :is(.pmx-sheet, .pmx-ru
 body:is([data-theme^="retro"], [data-theme^="friendly"]) :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide) .primary-button{font-weight:700;}
 /* friendly: Poppins' ink runs taller than Inter's, so a sheet or run-view button is 36 px tall and keeps 7 px of
    padding above and below its label (J-2 rule 2, eight-theme verification IMPACT A2-25); cards keep 32 (12 px labels) */
-body[data-theme^="friendly"] :is(.pmx-sheet, .pmx-view) :is(.text-button, .soft-button, .primary-button):not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *, .pmx-row-act, .pmx-step, .icon-button){min-height:36px;}
+body[data-theme^="friendly"] :is(.pmx-sheet, .pmx-view) .text-button:not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *, .pmx-row-act, .pmx-step, .icon-button),
+body[data-theme^="friendly"] :is(.pmx-sheet, .pmx-view) .soft-button:not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *, .pmx-row-act, .pmx-step, .icon-button),
+body[data-theme^="friendly"] :is(.pmx-sheet, .pmx-view) .primary-button:not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *, .pmx-row-act, .pmx-step, .icon-button){min-height:36px;}
 body[data-theme^="friendly"] .pmx-sheet :is(.pmx-cancel, .pmx-save, .pmx-confirm-acts > button, .pmx-advpage-head .text-button, .pmx-addrow),
-body[data-theme^="friendly"] .pmx-view .pmx-view-acts :is(.primary-button, .text-button){height:36px;min-height:36px;}
+body[data-theme^="friendly"] .pmx-view .pmx-view-acts .primary-button, body[data-theme^="friendly"] .pmx-view .pmx-view-acts .text-button{height:36px;min-height:36px;}
 /* retro: IBM Plex Mono runs wide and tall; button labels step down to 12 px so a 32 px button keeps 7 px above and below */
-body[data-theme^="retro"] :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-bubble, .pmx-guide, .pmx-files) :is(.text-button, .primary-button, .soft-button):not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *){font-size:12px;}
+body[data-theme^="retro"] :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-bubble, .pmx-guide, .pmx-files) .text-button:not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *),
+body[data-theme^="retro"] :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-bubble, .pmx-guide, .pmx-files) .primary-button:not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *),
+body[data-theme^="retro"] :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-bubble, .pmx-guide, .pmx-files) .soft-button:not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *){font-size:12px;}

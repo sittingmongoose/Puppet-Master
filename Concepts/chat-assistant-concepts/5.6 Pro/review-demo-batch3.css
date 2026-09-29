@@ -5,6 +5,6 @@
    own hook until pmxGuide has a stacked mode (REVIEW-B FOUNDATION REQUEST 4). */
 .pmx-guide.review-demo-guide{container:review-demo-guide / inline-size;}
 @container review-demo-guide (max-width: 399px){
- .pmx-guide.review-demo-guide :is(.pmx-guide-cap, .pmx-guide-step){grid-column:1 / -1;}
+ .pmx-guide.review-demo-guide .pmx-guide-cap, .pmx-guide.review-demo-guide .pmx-guide-step{grid-column:1 / -1;}
  .pmx-guide.review-demo-guide .pmx-guide-acts{grid-column:1 / -1;grid-row:3;margin:6px 0 0 -10px;}
 }

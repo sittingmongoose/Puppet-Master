@@ -68,7 +68,7 @@ body{--pmx-t-verify:var(--pmx-t-flip);}
 .pmx-sheet .pmx-mem-panes{flex:1 1 0;min-height:0;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:32px;
   margin:12px 0 0;padding:0;border:0;border-radius:0;background:none;overflow:hidden;align-self:stretch;}
 .pmx-sheet .pmx-mem-panes[data-state="rules"], .pmx-sheet .pmx-mem-panes[data-state="empty"]{grid-template-columns:minmax(0,1fr);}
-.pmx-sheet :is(.pmx-mem-list, .pmx-mem-side, .pmx-mem-rules){min-height:0;min-width:0;overflow:hidden auto;scrollbar-width:thin;padding-bottom:14px;box-sizing:border-box;
+.pmx-sheet .pmx-mem-list, .pmx-sheet .pmx-mem-side, .pmx-sheet .pmx-mem-rules{min-height:0;min-width:0;overflow:hidden auto;scrollbar-width:thin;padding-bottom:14px;box-sizing:border-box;
   -webkit-mask-image:linear-gradient(#000 calc(100% - 14px),transparent);mask-image:linear-gradient(#000 calc(100% - 14px),transparent);}
 .pmx-sheet .pmx-mem-list{padding-right:4px;}
 .pmx-sheet .pmx-mem-side{padding-right:6px;}
@@ -84,8 +84,8 @@ body{--pmx-t-verify:var(--pmx-t-flip);}
 .pmx-mem-row[data-tone="warm"]{background:var(--pmx-card-warm);box-shadow:0 0 0 1px var(--pmx-edge-warm);}
 .pmx-mem-row:focus-visible{outline:2px solid var(--pmx-focus-outline);outline-offset:1px;}
 .pmx-mem-rglyph, .pmx-mem-sglyph{display:grid;place-items:center;color:var(--muted);}
-:is(.pmx-mem-row, .pmx-mem-sglyph)[data-state="verified"] :is(.pmx-mem-rglyph, svg){color:var(--positive);}
-:is(.pmx-mem-row, .pmx-mem-sglyph)[data-state="decide"] :is(.pmx-mem-rglyph, svg){color:var(--warning);}
+:is(.pmx-mem-row, .pmx-mem-sglyph)[data-state="verified"] .pmx-mem-rglyph, :is(.pmx-mem-row, .pmx-mem-sglyph)[data-state="verified"] svg{color:var(--positive);}
+:is(.pmx-mem-row, .pmx-mem-sglyph)[data-state="decide"] .pmx-mem-rglyph, :is(.pmx-mem-row, .pmx-mem-sglyph)[data-state="decide"] svg{color:var(--warning);}
 .pmx-mem-rcopy{display:block;min-width:0;}
 .pmx-mem-rcopy > b{display:block;font:var(--pmx-fs-ctl);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pmx-mem-rcopy > small{display:block;margin-top:4px;font:var(--pmx-fs-help);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -168,15 +168,23 @@ body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-mem-rule-text{font
 .pmx-mem-rule .pmx-mem-rcopy small b{font-weight:600;color:var(--text);}
 .pmx-mem-rule[data-state="off"] .pmx-mem-rule-text{color:var(--muted);}
 .pmx-mem-rule-acts{display:flex;gap:10px;}
-.pmx-mem-rule > :is(.pmx-mem-confirm, .pmx-mem-rnote){grid-column:2 / -1;}
+.pmx-mem-rule > .pmx-mem-confirm, .pmx-mem-rule > .pmx-mem-rnote{grid-column:2 / -1;}
 .pmx-mem-rule > .pmx-mem-rnote{margin:0;}
 .pmx-mem-rules-foot{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 0;padding-left:2px;}
 
 /* M1: the sheet's own parts enter in reading order (head, ribbon, bar, rows, detail); late arrivals enter at once */
-.pmx-sheet :is(.pmx-mem-bar, .pmx-mem-helps){animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-q) backwards;}
-.pmx-sheet :is(.pmx-mem-glabel, .pmx-mem-row, .pmx-mem-rule){animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-at-rows) + var(--i, 0) * var(--pmx-t-cascade));}
-.pmx-sheet :is(.pmx-mem-detail, .pmx-mem-next, .pmx-mem-empty){animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-at-rows) + 2 * var(--pmx-t-cascade));}
-#pmOverlayRoot.pmx-sheet-settled .pmx-sheet :is(.pmx-mem-bar, .pmx-mem-helps, .pmx-mem-glabel, .pmx-mem-row, .pmx-mem-rule, .pmx-mem-detail, .pmx-mem-next, .pmx-mem-empty, .pmx-mem-card){animation-delay:0ms;}
+.pmx-sheet .pmx-mem-bar, .pmx-sheet .pmx-mem-helps{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-q) backwards;}
+.pmx-sheet .pmx-mem-glabel, .pmx-sheet .pmx-mem-row, .pmx-sheet .pmx-mem-rule{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-at-rows) + var(--i, 0) * var(--pmx-t-cascade));}
+.pmx-sheet .pmx-mem-detail, .pmx-sheet .pmx-mem-next, .pmx-sheet .pmx-mem-empty{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-at-rows) + 2 * var(--pmx-t-cascade));}
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-bar,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-helps,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-glabel,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-row,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-rule,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-detail,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-next,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-empty,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-card{animation-delay:0ms;}
 
 /* the foot: the keep-unverified check where the read-back sits, Export, Done */
 .pmx-mem-export{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
@@ -191,7 +199,7 @@ body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-mem-rule-text{font
   .pmx-sheet .pmx-mem-body{contain:none;}
   .pmx-mem-fhelp{text-align:left;}
   .pmx-sheet .pmx-mem-panes{flex:none;grid-template-columns:minmax(0,1fr);overflow:visible;}
-  .pmx-sheet :is(.pmx-mem-list, .pmx-mem-side, .pmx-mem-rules){overflow:visible;-webkit-mask-image:none;mask-image:none;padding-bottom:0;}
+  .pmx-sheet .pmx-mem-list, .pmx-sheet .pmx-mem-side, .pmx-sheet .pmx-mem-rules{overflow:visible;-webkit-mask-image:none;mask-image:none;padding-bottom:0;}
   .pmx-mem-bar{flex-wrap:wrap;row-gap:8px;}
   .pmx-mem-helps{flex-wrap:wrap;row-gap:4px;}
   .pmx-mem-helps .pmx-help{white-space:normal;}

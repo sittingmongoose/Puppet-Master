@@ -17,7 +17,7 @@
 .ctx-drawer .bsd-section,.ctx-drawer .context-section {border-left:0;}
 .ctx-drawer .bsd-section::before,.ctx-drawer .context-section::before {display:none;}
 /* Decorative card accents are not functional diff gutters or working rails. */
-:is(.collab-card,.ctx-cap,.ctx-fallback) {border-left-width:0;}
+.collab-card, .ctx-cap, .ctx-fallback {border-left-width:0;}
 .collab-card::before {display:none;}
 @media(max-width:620px){
  .ctx-drawer .drawer-scroll {padding:16px 18px;}

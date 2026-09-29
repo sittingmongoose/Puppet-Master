@@ -46,10 +46,10 @@ body.pm56-reduced #pmOverlayRoot[data-pmx-focus~="policy"] .pmx-sheet .pmx-plate
    has it whole (J-2: drop a secondary element, never compress) */
 @container pmxrun (max-width: 359px){.pmx-run .pmx-room-card-summary{display:none;}}
 /* M6: the summary and the promotion row rise in once, 40 ms apart, when the finished face mounts */
-.pmx-run[data-density="result"] :is(.pmx-room-card-summary, .pmx-room-card-promote){animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-cascade) * 3);}
+.pmx-run[data-density="result"] .pmx-room-card-summary, .pmx-run[data-density="result"] .pmx-room-card-promote{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-cascade) * 3);}
 .pmx-run[data-density="result"] .pmx-room-card-promote{animation-delay:calc(var(--pmx-t-cascade) * 4);}
-@media (prefers-reduced-motion: reduce){.pmx-run[data-density="result"] :is(.pmx-room-card-summary, .pmx-room-card-promote){animation:none;}}
-body.pm56-reduced .pmx-run[data-density="result"] :is(.pmx-room-card-summary, .pmx-room-card-promote){animation:none;}
+@media (prefers-reduced-motion: reduce){.pmx-run[data-density="result"] .pmx-room-card-summary, .pmx-run[data-density="result"] .pmx-room-card-promote{animation:none;}}
+body.pm56-reduced .pmx-run[data-density="result"] .pmx-room-card-summary, body.pm56-reduced .pmx-run[data-density="result"] .pmx-room-card-promote{animation:none;}
 /* M4: the marker that travels from the finished speaker's mark to the next one's (a transient body node) */
 .pmx-room-marker{position:fixed;z-index:var(--pmx-z-flight,1160);width:14px;height:2px;border-radius:1px;background:var(--text);pointer-events:none;}
 /* E-18 (owner answer): the room's queued messages above the composer, in the main chat queue's place and words

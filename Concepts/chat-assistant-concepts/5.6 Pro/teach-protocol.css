@@ -127,7 +127,7 @@ body[data-theme^="retro"] .pmx-teach-rule{font-size:15.5px;line-height:22.5px;le
 /* the foot's fine print: the /teach tip and "Teach isn't the Teacher Persona" (its hover card explains) */
 .pmx-teach-tip{margin:0;min-width:0;font:var(--pmx-fs-fine);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pmx-teach-tip b{color:var(--text);font-weight:600;}
-:is(.pmx-teach-persona, .pmx-teach-persona-line > span){text-decoration:underline dotted;text-decoration-color:var(--border-strong);text-underline-offset:3px;cursor:help;}
+span.pmx-teach-persona, .pmx-teach-persona-line > span{text-decoration:underline dotted;text-decoration-color:var(--border-strong);text-underline-offset:3px;cursor:help;}
 
 /* ---------------------------------------------------------------- in the chat */
 .pmx-teach-rh b{font-weight:var(--pmx-voice-w);}
@@ -143,11 +143,26 @@ body[data-theme^="retro"] .pmx-teach-rule{font-size:15.5px;line-height:22.5px;le
    glyph (J-2: drop or wrap, never compress). */
 .pmx-teach-verdict{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 10px;flex:0 0 100%;order:-1;min-width:0;}
 .message-chrome:has(> .pmx-teach-verdict){flex-wrap:wrap;row-gap:10px;opacity:1;visibility:visible;transform:none;}
-.message-chrome:has(> .pmx-teach-verdict) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.pmx-teach-verdict){opacity:0;visibility:hidden;transition:opacity 150ms,visibility 0s linear 280ms;}
-:is(.message:hover, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .pmx-teach-verdict) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.pmx-teach-verdict),
-.message-chrome.is-overflow-open:has(> .pmx-teach-verdict) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.pmx-teach-verdict){opacity:1;visibility:visible;transition:opacity 150ms,visibility 0s;}
-@media (max-width: 590px){ .message-chrome:has(> .pmx-teach-verdict) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.pmx-teach-verdict){opacity:1;visibility:visible;transition:none;} }
-@media (prefers-reduced-motion: reduce){ .message-chrome:has(> .pmx-teach-verdict) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick){transition:none !important;} }
+.message-chrome:has(> .pmx-teach-verdict) > .message-meta:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .message-actions:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .pm-msg-overflow:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .pmx-tick:not(.pmx-teach-verdict){opacity:0;visibility:hidden;transition:opacity 150ms,visibility 0s linear 280ms;}
+:is(.message:hover, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .pmx-teach-verdict) > .message-meta:not(.pmx-teach-verdict),
+:is(.message:hover, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .pmx-teach-verdict) > .message-actions:not(.pmx-teach-verdict),
+:is(.message:hover, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .pmx-teach-verdict) > .pm-msg-overflow:not(.pmx-teach-verdict),
+:is(.message:hover, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .pmx-teach-verdict) > .pmx-tick:not(.pmx-teach-verdict),
+.message-chrome.is-overflow-open:has(> .pmx-teach-verdict) > .message-meta:not(.pmx-teach-verdict),
+.message-chrome.is-overflow-open:has(> .pmx-teach-verdict) > .message-actions:not(.pmx-teach-verdict),
+.message-chrome.is-overflow-open:has(> .pmx-teach-verdict) > .pm-msg-overflow:not(.pmx-teach-verdict),
+.message-chrome.is-overflow-open:has(> .pmx-teach-verdict) > .pmx-tick:not(.pmx-teach-verdict){opacity:1;visibility:visible;transition:opacity 150ms,visibility 0s;}
+@media (max-width: 590px){ .message-chrome:has(> .pmx-teach-verdict) > .message-meta:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .message-actions:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .pm-msg-overflow:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .pmx-tick:not(.pmx-teach-verdict){opacity:1;visibility:visible;transition:none;} }
+@media (prefers-reduced-motion: reduce){ .message-chrome:has(> .pmx-teach-verdict) > .message-meta,
+.message-chrome:has(> .pmx-teach-verdict) > .message-actions,
+.message-chrome:has(> .pmx-teach-verdict) > .pm-msg-overflow,
+.message-chrome:has(> .pmx-teach-verdict) > .pmx-tick{transition:none !important;} }
 @container msgChrome (max-width: 250px){.pmx-teach-verdict > .pmx-teach-tick > span{display:none;}}
 /* transcript variant 2 (speaker column 82 px | message) drops the chrome row into the speaker column; a row that shows
    the verdict at rest sits under the message instead */

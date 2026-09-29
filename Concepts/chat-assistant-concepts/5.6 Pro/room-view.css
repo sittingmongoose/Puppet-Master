@@ -40,7 +40,7 @@ body[data-theme^="glass"] .pmx-view.room-document > .pmx-view-head.drawer-head{b
 .pmx-view.room-discussion .pmx-rv-promote > .pmx-fine{margin-right:0;padding-left:10px;}
 .pmx-view.room-discussion :is(.pmx-rv-promote, .pmx-rv-acts, .pmx-rv-receipt) .text-button{color:var(--accent);font-weight:600;}
 .pmx-view.room-discussion .pmx-rv-promote .text-button[disabled]{color:var(--subtle);cursor:default;}
-.pmx-view.room-discussion :is(.pmx-rv-goalwhy, .pmx-rv-promhelp){margin:6px 0 0 26px;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-view.room-discussion .pmx-rv-goalwhy, .pmx-view.room-discussion .pmx-rv-promhelp{margin:6px 0 0 26px;font:var(--pmx-fs-help);color:var(--muted);}
 .pmx-view.room-discussion .pmx-rv-receipt{display:flex;flex-wrap:wrap;align-items:center;gap:0 8px;margin:12px 0 0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);line-height:1.5;color:var(--muted);}
 .pmx-view.room-discussion .pmx-rv-landed .pmx-rv-receipt{margin-left:26px;}
 .pmx-view.room-discussion .pmx-rv-receipt > svg{flex:none;color:var(--positive);}

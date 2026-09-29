@@ -278,7 +278,7 @@ body[data-theme^="glass"] #pmOverlayRoot:not(.pmx-swapping) > .pmx-sheet{animati
    the wash. No re-render, no caret risk. The per-part rules (four per part)
    are generated at load from the one vocabulary, PM56_PMX.PARTS. */
 .pmx-plate [data-pmx-part]{transition:opacity var(--pmx-t-light) var(--pmx-ease-linear);}
-.pmx-plate [data-pmx-part] :is(.pmx-p-lab, .pmx-p-note, .pmx-p-sub){transition:fill var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-plate [data-pmx-part] .pmx-p-lab, .pmx-plate [data-pmx-part] .pmx-p-note, .pmx-plate [data-pmx-part] .pmx-p-sub{transition:fill var(--pmx-t-light) var(--pmx-ease-linear);}
 .pmx-readback .pmx-rb{transition:background-color var(--pmx-t-light) var(--pmx-ease-linear),box-shadow var(--pmx-t-light) var(--pmx-ease-linear);border-radius:3px;}
 #pmOverlayRoot[data-pmx-focus] .pmx-plate [data-pmx-part]{opacity:.35;}
 

@@ -8533,7 +8533,10 @@ body[data-theme^="friendly"]{
 .pmx-del{color:var(--danger);font-style:normal;}
 .pmx-sep{color:var(--subtle);}
 /* J-1: code in any pmx surface is the theme's code face (IBM Plex Mono in retro), never the UA's bare monospace */
-:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-files, .pmx-guide, .pmx-bubble) :is(code, kbd, samp, pre){font-family:var(--font-mono);}
+:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-files, .pmx-guide, .pmx-bubble) code,
+:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-files, .pmx-guide, .pmx-bubble) kbd,
+:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-files, .pmx-guide, .pmx-bubble) samp,
+:is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-files, .pmx-guide, .pmx-bubble) pre{font-family:var(--font-mono);}
 /* The primary-button glow is removed inside every pmx surface (DON'T 4, 3.4). */
 :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide) .primary-button{box-shadow:none;}
 :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide) .primary-button:hover{filter:none;background:var(--pmx-primary-hover);}
@@ -8609,7 +8612,7 @@ body[data-theme^="friendly"]{
 /* closing (SCHED, MEMTEACH): the warm fill is the block's own padding (it was an 8 px box-shadow spread, so the fill
    had no box and every title in it measured 0-3 px from its edge); the negative margin keeps the layout in place */
 .pmx-sheet .pmx-q[data-state="error"]{background:var(--pmx-card-warm);border-radius:12px;padding:8px;margin-left:-8px;margin-right:-8px;box-shadow:none;}
-.pmx-sheet .pmx-q[data-state="error"] :is(.pmx-q-n, .pmx-q-title){color:var(--warning);}
+.pmx-sheet .pmx-q[data-state="error"] .pmx-q-n, .pmx-sheet .pmx-q[data-state="error"] .pmx-q-title{color:var(--warning);}
 
 /* ================================================================ A3 hero */
 /* R-18: the hero spans the sheet (the legacy .mdl-section{align-self:start} shrank it to max-content) */
@@ -8636,7 +8639,8 @@ body[data-theme^="friendly"]{
 .pmx-sheet input.pmx-hero-field:focus{border-color:var(--pmx-focus-edge);box-shadow:0 0 0 3px var(--pmx-focus-ring);}
 .pmx-sheet .pmx-hero-main > .pmx-help{margin-top:8px;}
 .pmx-sheet .pmx-hero-main > .pmx-q-head{align-items:center;min-height:32px;}
-.pmx-sheet .pmx-hero-main > .pmx-q-head:has(.pmx-hero-aside) + :is(.pmx-hero-box, .pmx-hero-field){margin-top:12px;}
+.pmx-sheet .pmx-hero-main > .pmx-q-head:has(.pmx-hero-aside) + .pmx-hero-box,
+.pmx-sheet .pmx-hero-main > .pmx-q-head:has(.pmx-hero-aside) + .pmx-hero-field{margin-top:12px;}
 .pmx-sheet .pmx-hero-side{min-width:0;}
 .pmx-sheet .pmx-hero-aside{margin-left:auto;display:flex;align-items:center;gap:10px;width:280px;max-width:50%;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;}
 /* J-2: the card-title field is a boxed 32 px input (text used to sit on its underline) */
@@ -8927,14 +8931,14 @@ body[data-theme$="-light"] .pmx-sheet .pmx-primary[data-tone="warm"]{color:#fff;
 .pmx-m-nw{fill:none;stroke:var(--warning);stroke-width:2.2;stroke-linecap:round;}
 .pmx-m-nx{fill:none;stroke:var(--danger);stroke-width:1.8;stroke-linecap:round;}
 .pmx-m-sw{fill:none;stroke:var(--muted);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
-:is(.pmx-mark, .pmx-p-mark)[data-state="queued"]{opacity:.5;}
+.pmx-mark[data-state="queued"], .pmx-p-mark[data-state="queued"]{opacity:.5;}
 :is(.pmx-mark, .pmx-p-mark)[data-state="queued"] .pmx-m-ring{stroke:var(--subtle);stroke-dasharray:1.5 2.5;}
 :is(.pmx-mark, .pmx-p-mark)[data-state="needs"] .pmx-m-ring{stroke:var(--warning);}
-:is(.pmx-mark, .pmx-p-mark)[data-state="failed"]{opacity:.45;}
-:is(.pmx-mark, .pmx-p-mark)[data-state="abstained"]{opacity:.6;}
+.pmx-mark[data-state="failed"], .pmx-p-mark[data-state="failed"]{opacity:.45;}
+.pmx-mark[data-state="abstained"], .pmx-p-mark[data-state="abstained"]{opacity:.6;}
 :is(.pmx-mark, .pmx-p-mark)[data-state="optional"] .pmx-m-sil{stroke-dasharray:2.5 2.5;}
 body[data-theme^="retro"] .pmx-m-sil{fill:none;}
-body[data-theme^="retro"] :is(.pmx-m-sil, .pmx-m-spks, .pmx-m-ring){stroke-linecap:square;stroke-linejoin:miter;}
+body[data-theme^="retro"] .pmx-m-sil, body[data-theme^="retro"] .pmx-m-spks, body[data-theme^="retro"] .pmx-m-ring{stroke-linecap:square;stroke-linejoin:miter;}
 .pmx-run .pmx-mark, .pmx-dock .pmx-mark{--pmx-notch-bg:var(--pmx-card);}
 .pmx-run[data-tone="warm"] .pmx-mark, .pmx-run[data-density="attention"]:not([data-tone="accent"]) .pmx-mark, .pmx-dock-line[data-tone="needs"] .pmx-mark{--pmx-notch-bg:var(--pmx-card-warm);}
 .pmx-sheet .pmx-mark{--pmx-notch-bg:var(--surface-2);}
@@ -9007,7 +9011,7 @@ body[data-theme^="retro"] .pmx-plate{background-image:linear-gradient(var(--pmx-
 .pmx-p-paper-text > span{display:block;max-width:100%;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pmx-p-paper-text > .pmx-p-note{color:var(--muted);}
 .pmx-p-paper-text > .pmx-p-lab{margin-top:2.5px;color:var(--text);}
-.pmx-p-paper-text :is(.pmx-p-note, .pmx-p-lab){transition:color var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-p-paper-text .pmx-p-note, .pmx-p-paper-text .pmx-p-lab{transition:color var(--pmx-t-light) var(--pmx-ease-linear);}
 .pmx-p-floorbar{fill:var(--pmx-seat,var(--muted));}
 .pmx-p-fold{fill:none;stroke:var(--pmx-line);stroke-width:1;}
 .pmx-p-hatchbox{fill:none;stroke:var(--pmx-hatch);stroke-width:1;}
@@ -9052,7 +9056,9 @@ body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 .pmx-run .pmx-run-body:empty{display:none;}
 .pmx-run .pmx-run-foot{display:flex;flex-wrap:nowrap;align-items:center;gap:0;min-width:0;padding:0;border:0;}
 .pmx-run .pmx-run-foot:empty{display:none;}
-.pmx-run[data-density]:not(.pmx-receipt) > :is(.pmx-run-head, .pmx-run-body, .pmx-run-foot){padding-left:14px;padding-right:14px;}
+.pmx-run[data-density]:not(.pmx-receipt) > .pmx-run-head,
+.pmx-run[data-density]:not(.pmx-receipt) > .pmx-run-body,
+.pmx-run[data-density]:not(.pmx-receipt) > .pmx-run-foot{padding-left:14px;padding-right:14px;}
 
 /* C3 sentence (fixed 36 px, two lines) */
 .pmx-sentence[data-status]{margin:0;display:flex;gap:8px;align-items:flex-start;height:37px;min-width:0;padding:0;border:0;border-radius:0;background:none;font:var(--pmx-fs-sentence);color:var(--muted);overflow:hidden;white-space:normal;}
@@ -9155,7 +9161,7 @@ p.pmx-meta, .pmx-meta{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-r
 /* J-2: 32 px actions with 10 px sides; wrapped rows keep 12 px; boxed neighbours keep 10 px (text buttons carry their own padding) */
 .pmx-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 6px;min-height:32px;width:100%;min-width:0;}
 .pmx-act{height:32px;min-height:32px;padding:0 10px;border-radius:8px;font:var(--pmx-w-560) 12px/16px var(--font-ui);white-space:nowrap;}
-.pmx-actions > :is(.primary-button, .soft-button) + :is(.primary-button, .soft-button){margin-left:4px;}
+.pmx-actions > :is(.primary-button, .soft-button) + .primary-button, .pmx-actions > :is(.primary-button, .soft-button) + .soft-button{margin-left:4px;}
 .pmx-act.text-button{color:var(--muted);background:none;}
 .pmx-act.text-button:hover{color:var(--text);background:var(--surface-3);}
 .pmx-act.primary-button{height:32px;min-height:32px;padding:0 14px;}
@@ -9338,7 +9344,7 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 .pmx-md{min-width:0;font:var(--pmx-fs-body);color:var(--text);overflow-wrap:anywhere;}
 .pmx-md p{margin:0 0 8px;} .pmx-md p:last-child{margin-bottom:0;}
 .pmx-view .pmx-md p{color:inherit;max-width:78ch;}
-.pmx-view .pmx-md :is(h3, h4, h5){margin:14px 0 6px;font:var(--pmx-w-650) 13.5px/19px var(--font-ui);letter-spacing:0;color:var(--text);}
+.pmx-view .pmx-md h3, .pmx-view .pmx-md h4, .pmx-view .pmx-md h5{margin:14px 0 6px;font:var(--pmx-w-650) 13.5px/19px var(--font-ui);letter-spacing:0;color:var(--text);}
 .pmx-view .pmx-md h3{font-size:15px;line-height:21px;}
 .pmx-md ul, .pmx-md ol{margin:0 0 8px;padding-left:20px;}
 .pmx-md li{margin:2px 0;}
@@ -9348,7 +9354,7 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 .pmx-md a{color:var(--text);text-decoration:underline;text-decoration-color:var(--border-strong);text-underline-offset:3px;}
 .pmx-md blockquote, .pmx-md .pmx-md-quote{margin:8px 0;padding:0 0 0 14px;font:var(--pmx-w-reg) 13.5px/20px var(--pmx-voice);color:var(--muted);border:0;box-shadow:none;}
 .pmx-md hr{border:0;height:1px;background:var(--border);margin:12px 0;}
-.pmx-md :is(em, i, cite){font-style:normal;font-weight:var(--pmx-w-560);color:var(--text);}
+.pmx-md em, .pmx-md i, .pmx-md cite{font-style:normal;font-weight:var(--pmx-w-560);color:var(--text);}
 .pmx-md[data-mode="compact"]{font:var(--pmx-fs-sentence);color:var(--muted);}
 /* review cycle 2 (principle 5, 10.1 step 7): compact markdown lives in a 4-line budget (the builder counts it: a
    paragraph 2 lines, a list one line per item, a code or table row 2) so a 1,500-word message never grows the card.
@@ -9357,10 +9363,13 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 .pmx-md[data-mode="compact"] p:not(.pmx-coderow){margin:0 0 4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .pmx-md[data-mode="compact"] p[data-clamp="1"]{-webkit-line-clamp:1;}
 .pmx-md[data-mode="compact"] > .pmx-coderow{margin:0 0 4px;}
-.pmx-md[data-mode="compact"] :is(ul, ol){margin:0 0 4px;}
+.pmx-md[data-mode="compact"] ul, .pmx-md[data-mode="compact"] ol{margin:0 0 4px;}
 .pmx-md[data-mode="compact"] li{margin:0;}
 .pmx-md[data-mode="compact"] li > span{display:block;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.pmx-md[data-mode="compact"] > :is(p, ul, ol, div):last-child{margin-bottom:0;}
+.pmx-md[data-mode="compact"] > p:last-child,
+.pmx-md[data-mode="compact"] > ul:last-child,
+.pmx-md[data-mode="compact"] > ol:last-child,
+.pmx-md[data-mode="compact"] > div:last-child{margin-bottom:0;}
 /* inside a run card the compact block has the output preview's box: never taller than 88 px, whatever arrives */
 .pmx-run .pmx-md[data-mode="compact"]{max-height:88px;overflow:hidden;}
 .pmx-md[data-mode="compact"] b, .pmx-md[data-mode="compact"] strong{color:var(--text);}
@@ -9418,10 +9427,10 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
    the text column (J-2 item 4). These guards outrank collaboration.css's .collab-route-eff{display:inline-flex;
    gap:4px;font-weight:600}, which put the fine print BESIDE the sentence as a second cramped column, and its
    -sub warning ink (a stand-in is information, A7). They also cover a caller's own .collab-route-eff span. */
-.pmx-team-row .pmx-team-who :is(.collab-route-eff, .pmx-route-eff), .pmx-participant > :is(.collab-route-eff, .pmx-route-eff){display:block;gap:0;font-weight:inherit;color:var(--muted);}
+.pmx-team-row .pmx-team-who .collab-route-eff, .pmx-team-row .pmx-team-who .pmx-route-eff, .pmx-participant > .collab-route-eff, .pmx-participant > .pmx-route-eff{display:block;gap:0;font-weight:inherit;color:var(--muted);}
 .pmx-team-row .pmx-team-who :is(.collab-route-eff, .pmx-route-eff) .pmx-fine, .pmx-participant > :is(.collab-route-eff, .pmx-route-eff) .pmx-fine{display:block;margin-top:4px;}
-.pmx-team-row .pmx-team-who :is(.collab-route-eff-failed, .pmx-route-eff[data-tone="failed"]), .pmx-participant > :is(.collab-route-eff-failed, .pmx-route-eff[data-tone="failed"]){color:var(--danger);}
-.pmx-participant > :is(.collab-route-eff, .pmx-route-eff){margin:-4px 0 12px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);}
+.pmx-team-row .pmx-team-who .collab-route-eff-failed.collab-route-eff-failed, .pmx-team-row .pmx-team-who .pmx-route-eff[data-tone="failed"], .pmx-participant > .collab-route-eff-failed.collab-route-eff-failed, .pmx-participant > .pmx-route-eff[data-tone="failed"]{color:var(--danger);}
+.pmx-participant > .collab-route-eff, .pmx-participant > .pmx-route-eff{margin:-4px 0 12px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);}
 /* 7.13 Activity Detail: 36 px rows (mark 18, name, one state word; the stand-in line under the name when requested and
    effective differ) */
 .pmx-team-row.pmx-team-row[data-size="s"]{grid-template-columns:18px minmax(0,1fr) auto auto;gap:10px;min-height:36px;padding:8px 12px 8px 0;}
@@ -9434,7 +9443,7 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 /* ================================================================ 7.2 width tiers (the card is its own container) */
 @container pmxrun (max-width: 359.98px){
   .pmx-run-kindword{display:none;}
-  .pmx-cluster:not(.pmx-cluster--mini) > :is(.pmx-mark, .pmx-cluster-screen):not(:first-child), .pmx-cluster:not(.pmx-cluster--mini) > .pmx-cluster-more{display:none;}
+  .pmx-cluster:not(.pmx-cluster--mini) > .pmx-mark:not(:first-child), .pmx-cluster:not(.pmx-cluster--mini) > .pmx-cluster-screen:not(:first-child), .pmx-cluster:not(.pmx-cluster--mini) > .pmx-cluster-more{display:none;}
   .pmx-cluster:not(.pmx-cluster--mini)[data-count]:not([data-count="0"]):not([data-count="1"])::after{content:attr(data-count);margin-left:3px;font:500 11px/16px var(--font-ui);color:var(--muted);}
   .pmx-lane{grid-template-columns:22px minmax(0,1fr);}
   .pmx-lane-time{display:none;}
@@ -9517,7 +9526,8 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
   .pmx-credits .pmx-credits-rest{display:flex !important;flex:none;}
   /* attention: one lane (its first line only) and the builder's narrow "+N more · Show all" row, whose count
      includes the lanes hidden here */
-  .pmx-run[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > :is(.pmx-lane ~ .pmx-lane, .pmx-lanes-more:not(.pmx-lanes-more-s)){display:none;}
+  .pmx-run[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lane ~ .pmx-lane,
+  .pmx-run[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lanes-more:not(.pmx-lanes-more-s){display:none;}
   .pmx-run[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s{display:flex;}
   .pmx-run[data-density="attention"] .pmx-lane{grid-template-rows:17.5px;row-gap:0;height:40px;min-height:40px;padding:0;align-content:center;}
   .pmx-run[data-density="attention"] .pmx-lane-mark{grid-row:1;}
@@ -9622,11 +9632,15 @@ body:is([data-theme^="retro"], [data-theme^="friendly"]) :is(.pmx-sheet, .pmx-ru
 body:is([data-theme^="retro"], [data-theme^="friendly"]) :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-guide) .primary-button{font-weight:700;}
 /* friendly: Poppins' ink runs taller than Inter's, so a sheet or run-view button is 36 px tall and keeps 7 px of
    padding above and below its label (J-2 rule 2, eight-theme verification IMPACT A2-25); cards keep 32 (12 px labels) */
-body[data-theme^="friendly"] :is(.pmx-sheet, .pmx-view) :is(.text-button, .soft-button, .primary-button):not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *, .pmx-row-act, .pmx-step, .icon-button){min-height:36px;}
+body[data-theme^="friendly"] :is(.pmx-sheet, .pmx-view) .text-button:not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *, .pmx-row-act, .pmx-step, .icon-button),
+body[data-theme^="friendly"] :is(.pmx-sheet, .pmx-view) .soft-button:not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *, .pmx-row-act, .pmx-step, .icon-button),
+body[data-theme^="friendly"] :is(.pmx-sheet, .pmx-view) .primary-button:not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *, .pmx-row-act, .pmx-step, .icon-button){min-height:36px;}
 body[data-theme^="friendly"] .pmx-sheet :is(.pmx-cancel, .pmx-save, .pmx-confirm-acts > button, .pmx-advpage-head .text-button, .pmx-addrow),
-body[data-theme^="friendly"] .pmx-view .pmx-view-acts :is(.primary-button, .text-button){height:36px;min-height:36px;}
+body[data-theme^="friendly"] .pmx-view .pmx-view-acts .primary-button, body[data-theme^="friendly"] .pmx-view .pmx-view-acts .text-button{height:36px;min-height:36px;}
 /* retro: IBM Plex Mono runs wide and tall; button labels step down to 12 px so a 32 px button keeps 7 px above and below */
-body[data-theme^="retro"] :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-bubble, .pmx-guide, .pmx-files) :is(.text-button, .primary-button, .soft-button):not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *){font-size:12px;}
+body[data-theme^="retro"] :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-bubble, .pmx-guide, .pmx-files) .text-button:not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *),
+body[data-theme^="retro"] :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-bubble, .pmx-guide, .pmx-files) .primary-button:not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *),
+body[data-theme^="retro"] :is(.pmx-sheet, .pmx-run, .pmx-view, .pmx-dock, .pmx-note, .pmx-bubble, .pmx-guide, .pmx-files) .soft-button:not(.pmx-finding-todo *, .pmx-promise *, .pmx-refusal *){font-size:12px;}
 
 /* composer-state.css — styles for composer-state.js (destination ribbon,
  * eligible-destination picker, quota wait strip, invisible persistence /
@@ -10237,7 +10251,7 @@ body[data-theme^="glass"] #pmOverlayRoot:not(.pmx-swapping) > .pmx-sheet{animati
    the wash. No re-render, no caret risk. The per-part rules (four per part)
    are generated at load from the one vocabulary, PM56_PMX.PARTS. */
 .pmx-plate [data-pmx-part]{transition:opacity var(--pmx-t-light) var(--pmx-ease-linear);}
-.pmx-plate [data-pmx-part] :is(.pmx-p-lab, .pmx-p-note, .pmx-p-sub){transition:fill var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-plate [data-pmx-part] .pmx-p-lab, .pmx-plate [data-pmx-part] .pmx-p-note, .pmx-plate [data-pmx-part] .pmx-p-sub{transition:fill var(--pmx-t-light) var(--pmx-ease-linear);}
 .pmx-readback .pmx-rb{transition:background-color var(--pmx-t-light) var(--pmx-ease-linear),box-shadow var(--pmx-t-light) var(--pmx-ease-linear);border-radius:3px;}
 #pmOverlayRoot[data-pmx-focus] .pmx-plate [data-pmx-part]{opacity:.35;}
 
@@ -11708,7 +11722,8 @@ body.pm56-reduced .pmx-run[data-density="live"] .pmx-stop[data-state="now"] + .p
 .pmx-run.collab-card > .pmx-run-foot.collab-card-foot { flex-wrap: nowrap; }
 /* 7.2 attention budget (M 360, L 360): the loud face keeps the helper that needs you (its lane first) and the builder's
    "+N more · Show all" row for the others, as the S tier does (module-shell.css); Show all lists every lane */
-.pmx-run.collab-card[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > :is(.pmx-lane ~ .pmx-lane, .pmx-lanes-more:not(.pmx-lanes-more-s)) { display: none; }
+.pmx-run.collab-card[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lane ~ .pmx-lane,
+.pmx-run.collab-card[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lanes-more:not(.pmx-lanes-more-s) { display: none; }
 .pmx-run.collab-card[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s { display: flex; }
 /* OWNER ANSWER E-31 (DL-137): a helper's line streaming into its lane (collaboration.js laneLine2). The words wear the
    lane's own line-2 face, the same as the whole quote that replaces them once every word is in, so the swap changes
@@ -11728,10 +11743,12 @@ body.pm56-reduced .pmx-run[data-density="live"] .pmx-stop[data-state="now"] + .p
 /* M6 / M7 (G-07, R-08): while the template holds the old face, its body and foot fade out and reach 0 exactly when the
    face switches (M6: 140 ms ending at the 260 ms hold; M7: the 120 ms hold). The head stays. */
 @keyframes pmx-collab-fade-out { from { opacity: 1; } to { opacity: 0; } }
-.pmx-run.collab-card[data-pmx-settling="1"][data-collab-settle="result"] > :is(.pmx-run-body, .pmx-run-foot) {
+.pmx-run.collab-card[data-pmx-settling="1"][data-collab-settle="result"] > .pmx-run-body,
+.pmx-run.collab-card[data-pmx-settling="1"][data-collab-settle="result"] > .pmx-run-foot {
   animation: pmx-collab-fade-out var(--pmx-t-swapdlg) var(--pmx-ease-in) calc(var(--pmx-t-stop) + var(--pmx-t-at-r1) - var(--pmx-t-swapdlg)) both;
 }
-.pmx-run.collab-card[data-pmx-settling="1"][data-collab-settle="receipt"] > :is(.pmx-run-body, .pmx-run-foot) {
+.pmx-run.collab-card[data-pmx-settling="1"][data-collab-settle="receipt"] > .pmx-run-body,
+.pmx-run.collab-card[data-pmx-settling="1"][data-collab-settle="receipt"] > .pmx-run-foot {
   animation: pmx-collab-fade-out var(--pmx-t-fade) var(--pmx-ease-out) both;
 }
 /* M6 beat 3: the result's content comes first (headline +20, figures +40, output +60, credits +100 with their caption)
@@ -11801,7 +11818,7 @@ body.pm56-reduced .pmx-run[data-density="live"] .pmx-stop[data-state="now"] + .p
 .pmx-sheet .pmx-collab-modrow input.pmx-row-job{color:var(--text);}
 /* Review's hero (8.5): the target trigger beside "Anything specific?", the helper under both */
 .pmx-sheet .pmx-collab-hero--before .pmx-hero-main{display:grid;grid-template-columns:236px minmax(0,1fr);column-gap:12px;align-items:start;}
-.pmx-sheet .pmx-collab-hero--before .pmx-hero-main > :is(.pmx-q-head, .pmx-help){grid-column:1 / -1;}
+.pmx-sheet .pmx-collab-hero--before .pmx-hero-main > .pmx-q-head, .pmx-sheet .pmx-collab-hero--before .pmx-hero-main > .pmx-help{grid-column:1 / -1;}
 .pmx-sheet .pmx-collab-hero--before .pmx-hero-main > .pmx-hero-box{grid-column:2;margin-top:12px;}
 .pmx-sheet .pmx-collab-target{grid-column:1;margin-top:12px;min-width:0;}
 /* Review's focus grid and "Also give them" (8.5) */
@@ -11947,7 +11964,7 @@ body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28p
    Details, behind Why?) */
 .pmx-note.bsd-card .pmx-note-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;}
 /* J-1: no italic face; emphasis in an advisor's answer is weight and ink, as in pmx markdown */
-.pmx-note.bsd-card .pmx-note-body :is(em, i, cite){font-style:normal;font-weight:var(--pmx-w-560);color:var(--text);}
+.pmx-note.bsd-card .pmx-note-body em, .pmx-note.bsd-card .pmx-note-body i, .pmx-note.bsd-card .pmx-note-body cite{font-style:normal;font-weight:var(--pmx-w-560);color:var(--text);}
 .pmx-note.bsd-card .pmx-note-body{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;}
 .pmx-note.bsd-card .pmx-bsd-dhelp{margin-left:6px;font:var(--pmx-fs-fine);color:var(--subtle);white-space:nowrap;}
 @container pmxbsdnote (max-width: 339px){.pmx-note.bsd-card .pmx-bsd-dhelp{display:none;}}
@@ -12026,7 +12043,7 @@ body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28p
    boxes inside the section (G-26). .bsd-section keeps the stripe-removal overrides applied (B.10).
    ===================================================================== */
 /* code and raw data in the theme's code face (J-1: IBM Plex Mono in retro), as inside every pmx surface */
-:is(.pmx-bsd-details, .pmx-bsd-rawbody) :is(code, pre){font-family:var(--font-mono);}
+:is(.pmx-bsd-details, .pmx-bsd-rawbody) code, :is(.pmx-bsd-details, .pmx-bsd-rawbody) pre{font-family:var(--font-mono);}
 .pmx-bsd-details{margin-top:12px;padding:4px 0 0;font:var(--pmx-fs-help);color:var(--text);}
 :where(.pmx-bsd-details, .pmx-bsd-rawbody) p{margin:0;}
 .pmx-bsd-dh{display:flex;align-items:center;gap:10px;min-height:32px;}
@@ -12062,7 +12079,7 @@ body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28p
 .pmx-bsd-why-say{font:var(--pmx-fs-help);color:var(--text);overflow-wrap:anywhere;min-width:0;}
 .pmx-bsd-why-say p{margin:0;}
 .pmx-bsd-why-say p + p, .pmx-bsd-why-say :is(ul, ol, pre, .pmx-table-wrap){margin-top:8px;}
-.pmx-bsd-why-say :is(ul, ol){padding-left:18px;}
+.pmx-bsd-why-say ul, .pmx-bsd-why-say ol{padding-left:18px;}
 .pmx-bsd-sub{margin-top:12px; font:var(--pmx-fs-meta);color:var(--muted);}
 .pmx-bsd-list{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:6px;font:var(--pmx-fs-help);color:var(--text);}
 .pmx-bsd-list li{min-width:0;overflow-wrap:anywhere;}
@@ -12132,8 +12149,9 @@ body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28p
 .pmx-bsd-sheet .pmx-bsd-plate .pmx-bsd-sev{fill:var(--warning);}
 /* M1: each cue lands (pop 150) as its stem finishes drawing, never floating before its stem; one arriving later
    (a mode change after the sheet settled) pops at once while its stem draws. Reduced motion: the pmx policy removes it. */
-.pmx-bsd-sheet .pmx-bsd-plate :is(.pmx-p-cue, .pmx-bsd-quiet){transform-box:fill-box;transform-origin:center;animation:pmx-pop var(--pmx-t-pop) var(--pmx-ease-pop) calc(var(--pmx-t-at-lines) + var(--pmx-t-draw) * .8) backwards;}
-#pmOverlayRoot.pmx-sheet-settled .pmx-bsd-sheet .pmx-bsd-plate :is(.pmx-p-cue, .pmx-bsd-quiet){animation-delay:calc(var(--pmx-t-draw) * .6);}
+.pmx-bsd-sheet .pmx-bsd-plate .pmx-p-cue, .pmx-bsd-sheet .pmx-bsd-plate .pmx-bsd-quiet{transform-box:fill-box;transform-origin:center;animation:pmx-pop var(--pmx-t-pop) var(--pmx-ease-pop) calc(var(--pmx-t-at-lines) + var(--pmx-t-draw) * .8) backwards;}
+#pmOverlayRoot.pmx-sheet-settled .pmx-bsd-sheet .pmx-bsd-plate .pmx-p-cue,
+#pmOverlayRoot.pmx-sheet-settled .pmx-bsd-sheet .pmx-bsd-plate .pmx-bsd-quiet{animation-delay:calc(var(--pmx-t-draw) * .6);}
 .pmx-bsd-sheet .pmx-bsd-top{flex:none;margin-top:10px;overflow:visible;}
 .pmx-bsd-sheet .pmx-bsd-cols{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 36px;margin-top:12px;}
 /* the reference's 176 px trigger column (FOUNDATION REQUEST: a pmxCtl width option), so the helpers keep two lines */
@@ -12152,7 +12170,8 @@ body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28p
 .pmx-bsd-sheet .pmx-bsd-route + .pmx-help + .pmx-fine{margin-top:0;}
 /* ...and the column keeps its height (review cycle 1: it scrolled 40-55 px and cut the Memory helper): the saving
    line and the notes summary, which the Advanced entry repeats, give way while the no-substitute sentence shows */
-.pmx-bsd-sheet .pmx-bsd-col:has(.pmx-bsd-route) :is(.pmx-bsd-route + .pmx-help + .pmx-fine, .pmx-bsd-tidy){display:none;}
+.pmx-bsd-sheet .pmx-bsd-col:has(.pmx-bsd-route) .pmx-bsd-route + .pmx-help + .pmx-fine,
+.pmx-bsd-sheet .pmx-bsd-col:has(.pmx-bsd-route) .pmx-bsd-tidy.pmx-bsd-tidy.pmx-bsd-tidy{display:none;}
 .pmx-bsd-sheet .pmx-bsd-q .pmx-check{margin-top:10px;}
 /* the notes summary sits on the check's text column (the 15 px box + its 10 px gap) */
 .pmx-bsd-sheet .pmx-bsd-tidy{margin:4px 0 0 25px;}
@@ -12167,11 +12186,11 @@ body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-bsd-sheet .pmx-bsd
 body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-bsd-sheet .pmx-bsd-col .pmx-ctl-copy .pmx-help{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:clip;}
 /* J-2 fitted copy (bsd.js fit()): exactly one of the full, shorter (retro and friendly) and shortest (windows under
    800 px tall) sentences shows */
-.pmx-bsd-sheet :is(.pmx-bsd-mid, .pmx-bsd-tiny){display:none;}
+.pmx-bsd-sheet .pmx-bsd-mid, .pmx-bsd-sheet .pmx-bsd-tiny{display:none;}
 body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-bsd-sheet .pmx-bsd-mid{display:inline;}
 body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-bsd-sheet .pmx-bsd-full:has(+ .pmx-bsd-mid){display:none;}
 @media (max-height: 799.98px){
-  body .pmx-bsd-sheet :has(> .pmx-bsd-tiny) > :is(.pmx-bsd-full, .pmx-bsd-mid){display:none;}
+  body .pmx-bsd-sheet :has(> .pmx-bsd-tiny) > .pmx-bsd-full, body .pmx-bsd-sheet :has(> .pmx-bsd-tiny) > .pmx-bsd-mid{display:none;}
   body .pmx-bsd-sheet .pmx-bsd-tiny{display:inline;}
 }
 /* the foot (review cycle 1): the read-back is the sheet's promise-last sentence and the estimate carries the honesty
@@ -12273,7 +12292,7 @@ body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-bsd-sheet .pmx-bsd
 .pmx-sheet .pmx-sched-inputs > .pmx-ctl{margin-top:0;}
 /* the date and time boxes stand as tall as the preserved zone trigger beside them (its two lines), so the row's
    labels and boxes line up; the trigger itself is untouched (DON'T 12) */
-.pmx-sheet .pmx-sched-inputs :is(input[type=date], input[type=time]){height:47px;padding:0 10px;font-size:12.5px;color-scheme:inherit;}
+.pmx-sheet .pmx-sched-inputs input[type=date], .pmx-sheet .pmx-sched-inputs input[type=time]{height:47px;padding:0 10px;font-size:12.5px;color-scheme:inherit;}
 .pmx-sheet .pmx-sched-resolved{margin:0;align-self:end;padding-bottom:14px;min-width:0;font:var(--pmx-fs-help);color:var(--muted);}
 .pmx-sheet .pmx-sched-resolved b{color:var(--text);font-weight:var(--pmx-w-620);}
 /* a time and a countdown never break inside themselves ("in 2 h / 1 m") */
@@ -12394,7 +12413,11 @@ body[data-theme^="retro"] .pmx-sheet.sched-dialog .pmx-promise > span{white-spac
 .pmx-sheet .pmx-sched-hero{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-hero) backwards;}
 .pmx-sheet .pmx-sched-when, .pmx-sheet .pmx-sched-week{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-q) backwards;}
 .pmx-sheet .pmx-sched-lower{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) calc(var(--pmx-t-at-q) + 2 * var(--pmx-t-cascade)) backwards;}
-#pmOverlayRoot.pmx-sheet-settled .pmx-sheet :is(.pmx-sched-hero, .pmx-sched-when, .pmx-sched-week, .pmx-sched-lower, .pmx-sched-band){animation-delay:0ms;}
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-sched-hero,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-sched-when,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-sched-week,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-sched-lower,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-sched-band{animation-delay:0ms;}
 
 /* ---- narrow sheets (the 900 and 700 wide windows): the rows stack, nothing scrolls sideways */
 /* short windows (1024 x 768): the bubble shows two lines and scrolls inside itself past them, and the blocks sit
@@ -13303,7 +13326,7 @@ body.pmx-title-morphing .chat-title .pmx-chat-title{ text-overflow:clip; }
 .chat-header .chat-title .pmx-chat-title{ flex:0 1 auto; min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
 .chat-header .chat-title .chat-state{ flex:none; overflow:visible; text-overflow:clip; white-space:nowrap; }
 /* the mark (headerExtras) sits right after the title: the flex order moves it ahead of the header's tools */
-.chat-header > :is(.pmx-chat-title-mark, .pmx-chat-title-naming){ order:1; }
+.chat-header > .pmx-chat-title-mark, .chat-header > .pmx-chat-title-naming{ order:1; }
 .chat-header > .chat-head-spacer, .chat-header > .chat-head-spacer ~ :not(.pmx-chat-title-mark, .pmx-chat-title-naming){ order:2; }
 .chat-header > .pmx-chat-title-mark{
   flex:none; display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; margin-left:-2px;
@@ -13732,7 +13755,7 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .ctx-drawer .bsd-section,.ctx-drawer .context-section {border-left:0;}
 .ctx-drawer .bsd-section::before,.ctx-drawer .context-section::before {display:none;}
 /* Decorative card accents are not functional diff gutters or working rails. */
-:is(.collab-card,.ctx-cap,.ctx-fallback) {border-left-width:0;}
+.collab-card, .ctx-cap, .ctx-fallback {border-left-width:0;}
 .collab-card::before {display:none;}
 @media(max-width:620px){
  .ctx-drawer .drawer-scroll {padding:16px 18px;}
@@ -13771,7 +13794,7 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .plan-sched-say b{color:var(--text);font-weight:600;}
 .plan-schedule-line[data-tone="update"] .plan-sched-mark{color:var(--warning);}
 .plan-sched-acts{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:0 10px;margin:-6px -10px -6px 0;}
-.plan-sched-acts > :is(.text-button, .soft-button){height:32px;min-height:32px;padding:0 10px;font:600 12px/16px var(--font-ui);white-space:nowrap;}
+.plan-sched-acts > .text-button, .plan-sched-acts > .soft-button{height:32px;min-height:32px;padding:0 10px;font:600 12px/16px var(--font-ui);white-space:nowrap;}
 .plan-sched-acts > .text-button{color:var(--muted);}
 .plan-sched-foot{grid-column:2 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;min-width:0;font:500 11.5px/17px var(--font-ui);color:var(--muted);font-variant-numeric:tabular-nums;}
 .plan-sched-ribbon{display:block;flex:none;}
@@ -13819,7 +13842,7 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .pmx-run .pmx-review-finding .pmx-finding-meta{flex-wrap:wrap;column-gap:0;row-gap:2px;white-space:normal;margin-left:-18px;clip-path:inset(-4px -4px -4px 18px);}
 .pmx-run .pmx-review-finding .pmx-finding-meta > .pmx-sep{display:none;}
 .pmx-run .pmx-review-finding .pmx-finding-meta > .pmx-sev{margin-left:18px;}
-.pmx-run .pmx-review-finding :is(.pmx-review-disp, .pmx-review-agree)::before{content:"\00B7";flex:none;display:inline-block;width:18px;text-align:center;color:var(--subtle);}
+.pmx-run .pmx-review-finding .pmx-review-disp::before, .pmx-run .pmx-review-finding .pmx-review-agree::before{content:"\00B7";flex:none;display:inline-block;width:18px;text-align:center;color:var(--subtle);}
 .pmx-run .pmx-review-finding .pmx-review-agree::before{margin-right:-5px;}
 .pmx-run .pmx-review-disp{flex:none;white-space:nowrap;}
 /* below 260 px the compact agreement grid drops; the sentence and the track's count say the same (J-2: drop, never
@@ -13850,7 +13873,7 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
    own hook until pmxGuide has a stacked mode (REVIEW-B FOUNDATION REQUEST 4). */
 .pmx-guide.review-demo-guide{container:review-demo-guide / inline-size;}
 @container review-demo-guide (max-width: 399px){
- .pmx-guide.review-demo-guide :is(.pmx-guide-cap, .pmx-guide-step){grid-column:1 / -1;}
+ .pmx-guide.review-demo-guide .pmx-guide-cap, .pmx-guide.review-demo-guide .pmx-guide-step{grid-column:1 / -1;}
  .pmx-guide.review-demo-guide .pmx-guide-acts{grid-column:1 / -1;grid-row:3;margin:6px 0 0 -10px;}
 }
 
@@ -13904,7 +13927,7 @@ body[data-theme^="retro"] .pmx-sheet .pmx-bs-mrule{font-size:11.5px;line-height:
 body[data-theme^="retro"] .pmx-run .pmx-bs-opt-title{font-size:11.5px;}
 @media (prefers-reduced-motion:reduce){.pmx-run .pmx-bs-note-state .pmx-sealed{animation:none;}}
 body.pm56-reduced .pmx-run .pmx-bs-note-state .pmx-sealed{animation:none;}
-.pmx-run .pmx-bs-opt[data-state="ruled"] :is(.pmx-bs-opt-marks,.pmx-bs-opt-from){opacity:.55;}
+.pmx-run .pmx-bs-opt[data-state="ruled"] .pmx-bs-opt-marks, .pmx-run .pmx-bs-opt[data-state="ruled"] .pmx-bs-opt-from{opacity:.55;}
 .pmx-run .pmx-bs-opt-title s{text-decoration-thickness:1.5px;}
 .pmx-run .pmx-bs-opts + .pmx-ruled{margin-top:4px;}
 /* ---- the vote board (review fixes, J-2: never cut a name to letters). Kind-scoped over pmxVoteBoard until the
@@ -14005,11 +14028,26 @@ body.pm56-reduced .pmx-run .pmx-bs-note-state .pmx-sealed{animation:none;}
 .message-chrome>.crew-summary-rec{flex:0 0 100%;order:-1;min-width:0;overflow:hidden}
 .message-chrome>.crew-summary-rec>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .message-chrome:has(> .crew-summary-rec){flex-wrap:wrap;row-gap:10px;opacity:1;visibility:visible;transform:none}
-.message-chrome:has(> .crew-summary-rec) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.crew-summary-rec){opacity:0;visibility:hidden;transition:opacity var(--pmx-t-fade) linear,visibility 0s linear var(--pmx-t-fade)}
-:is(.message:hover, .message:focus-within, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .crew-summary-rec) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.crew-summary-rec),
-.message-chrome.is-overflow-open:has(> .crew-summary-rec) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.crew-summary-rec){opacity:1;visibility:visible;transition:opacity var(--pmx-t-fade) linear,visibility 0s}
-@media (max-width: 590px){ .message-chrome:has(> .crew-summary-rec) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.crew-summary-rec){opacity:1;visibility:visible;transition:none} }
-@media (prefers-reduced-motion: reduce){ .message-chrome:has(> .crew-summary-rec) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick){transition:none !important} }
+.message-chrome:has(> .crew-summary-rec) > .message-meta:not(.crew-summary-rec),
+.message-chrome:has(> .crew-summary-rec) > .message-actions:not(.crew-summary-rec),
+.message-chrome:has(> .crew-summary-rec) > .pm-msg-overflow:not(.crew-summary-rec),
+.message-chrome:has(> .crew-summary-rec) > .pmx-tick:not(.crew-summary-rec){opacity:0;visibility:hidden;transition:opacity var(--pmx-t-fade) linear,visibility 0s linear var(--pmx-t-fade)}
+:is(.message:hover, .message:focus-within, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .crew-summary-rec) > .message-meta:not(.crew-summary-rec),
+:is(.message:hover, .message:focus-within, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .crew-summary-rec) > .message-actions:not(.crew-summary-rec),
+:is(.message:hover, .message:focus-within, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .crew-summary-rec) > .pm-msg-overflow:not(.crew-summary-rec),
+:is(.message:hover, .message:focus-within, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .crew-summary-rec) > .pmx-tick:not(.crew-summary-rec),
+.message-chrome.is-overflow-open:has(> .crew-summary-rec) > .message-meta:not(.crew-summary-rec),
+.message-chrome.is-overflow-open:has(> .crew-summary-rec) > .message-actions:not(.crew-summary-rec),
+.message-chrome.is-overflow-open:has(> .crew-summary-rec) > .pm-msg-overflow:not(.crew-summary-rec),
+.message-chrome.is-overflow-open:has(> .crew-summary-rec) > .pmx-tick:not(.crew-summary-rec){opacity:1;visibility:visible;transition:opacity var(--pmx-t-fade) linear,visibility 0s}
+@media (max-width: 590px){ .message-chrome:has(> .crew-summary-rec) > .message-meta:not(.crew-summary-rec),
+.message-chrome:has(> .crew-summary-rec) > .message-actions:not(.crew-summary-rec),
+.message-chrome:has(> .crew-summary-rec) > .pm-msg-overflow:not(.crew-summary-rec),
+.message-chrome:has(> .crew-summary-rec) > .pmx-tick:not(.crew-summary-rec){opacity:1;visibility:visible;transition:none} }
+@media (prefers-reduced-motion: reduce){ .message-chrome:has(> .crew-summary-rec) > .message-meta,
+.message-chrome:has(> .crew-summary-rec) > .message-actions,
+.message-chrome:has(> .crew-summary-rec) > .pm-msg-overflow,
+.message-chrome:has(> .crew-summary-rec) > .pmx-tick{transition:none !important} }
 
 /* 7.13: the legacy crew Activity domain in the collaboration grammar (hover rows, Detail body) */
 .ab-card .pmx-crew-abrow .pmx-crew-abmark{flex:none;display:inline-flex;color:var(--muted);align-self:flex-start;margin-top:2px}
@@ -14045,7 +14083,7 @@ body.pm56-reduced .pmx-run .pmx-bs-note-state .pmx-sealed{animation:none;}
 .pmx-guide.crew-demo-guide{container:crew-demo-guide / inline-size;}
 @container crew-demo-guide (max-width: 419px){
  /* the empty action column's 12 px gap goes back to the text (the close X keeps the guide's own right padding) */
- .pmx-guide.crew-demo-guide :is(.pmx-guide-cap, .pmx-guide-step, .crew-demo-evaluation){grid-column:1 / -1;margin-right:-12px;}
+ .pmx-guide.crew-demo-guide .pmx-guide-cap, .pmx-guide.crew-demo-guide .pmx-guide-step, .pmx-guide.crew-demo-guide .crew-demo-evaluation{grid-column:1 / -1;margin-right:-12px;}
  .pmx-guide.crew-demo-guide .pmx-guide-acts{grid-column:1 / -1;grid-row:auto;flex-wrap:wrap;gap:4px 10px;margin:6px 0 0 -10px;}
  .pmx-guide.crew-demo-guide .pmx-guide-acts:empty{display:none;}
  .pmx-guide.crew-demo-guide > .pmx-guide-close{top:3px;margin-top:0;}
@@ -14099,10 +14137,10 @@ body.pm56-reduced #pmOverlayRoot[data-pmx-focus~="policy"] .pmx-sheet .pmx-plate
    has it whole (J-2: drop a secondary element, never compress) */
 @container pmxrun (max-width: 359px){.pmx-run .pmx-room-card-summary{display:none;}}
 /* M6: the summary and the promotion row rise in once, 40 ms apart, when the finished face mounts */
-.pmx-run[data-density="result"] :is(.pmx-room-card-summary, .pmx-room-card-promote){animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-cascade) * 3);}
+.pmx-run[data-density="result"] .pmx-room-card-summary, .pmx-run[data-density="result"] .pmx-room-card-promote{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-cascade) * 3);}
 .pmx-run[data-density="result"] .pmx-room-card-promote{animation-delay:calc(var(--pmx-t-cascade) * 4);}
-@media (prefers-reduced-motion: reduce){.pmx-run[data-density="result"] :is(.pmx-room-card-summary, .pmx-room-card-promote){animation:none;}}
-body.pm56-reduced .pmx-run[data-density="result"] :is(.pmx-room-card-summary, .pmx-room-card-promote){animation:none;}
+@media (prefers-reduced-motion: reduce){.pmx-run[data-density="result"] .pmx-room-card-summary, .pmx-run[data-density="result"] .pmx-room-card-promote{animation:none;}}
+body.pm56-reduced .pmx-run[data-density="result"] .pmx-room-card-summary, body.pm56-reduced .pmx-run[data-density="result"] .pmx-room-card-promote{animation:none;}
 /* M4: the marker that travels from the finished speaker's mark to the next one's (a transient body node) */
 .pmx-room-marker{position:fixed;z-index:var(--pmx-z-flight,1160);width:14px;height:2px;border-radius:1px;background:var(--text);pointer-events:none;}
 /* E-18 (owner answer): the room's queued messages above the composer, in the main chat queue's place and words
@@ -14138,8 +14176,8 @@ body.pm56-reduced .pmx-run[data-density="result"] :is(.pmx-room-card-summary, .p
    4 in ROOM-B-NOTES asks pmxGuide for this layout). */
 .pmx-guide.room-demo-guide{container:roomguide / inline-size;}
 .pmx-guide.room-demo-guide.room-demo-guide-stack .pmx-guide-acts{grid-column:1 / -1;grid-row:3;margin:6px 0 0 -10px;}
-.pmx-guide.room-demo-guide.room-demo-guide-stack :is(.pmx-guide-cap, .pmx-guide-step){grid-column:1 / -1;}
-@container roomguide (max-width: 420px){ .room-demo-guide :is(.pmx-guide-cap, .pmx-guide-step){grid-column:1 / -1;} .room-demo-guide .pmx-guide-acts{grid-column:1 / -1;grid-row:3;margin:6px 0 0 -10px;} }
+.pmx-guide.room-demo-guide.room-demo-guide-stack .pmx-guide-cap, .pmx-guide.room-demo-guide.room-demo-guide-stack .pmx-guide-step{grid-column:1 / -1;}
+@container roomguide (max-width: 420px){ .room-demo-guide .pmx-guide-cap, .room-demo-guide .pmx-guide-step{grid-column:1 / -1;} .room-demo-guide .pmx-guide-acts{grid-column:1 / -1;grid-row:3;margin:6px 0 0 -10px;} }
 
 /* Teach (DESIGN-SPEC 8.11): the kind parts of the Teach sheet, the receipt in the chat and the Taught memory document.
    Every primitive (sheet, hero, question, plate, check, switch, foot, refusal, ledger line, tick, view, inline confirm)
@@ -14270,7 +14308,7 @@ body[data-theme^="retro"] .pmx-teach-rule{font-size:15.5px;line-height:22.5px;le
 /* the foot's fine print: the /teach tip and "Teach isn't the Teacher Persona" (its hover card explains) */
 .pmx-teach-tip{margin:0;min-width:0;font:var(--pmx-fs-fine);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pmx-teach-tip b{color:var(--text);font-weight:600;}
-:is(.pmx-teach-persona, .pmx-teach-persona-line > span){text-decoration:underline dotted;text-decoration-color:var(--border-strong);text-underline-offset:3px;cursor:help;}
+span.pmx-teach-persona, .pmx-teach-persona-line > span{text-decoration:underline dotted;text-decoration-color:var(--border-strong);text-underline-offset:3px;cursor:help;}
 
 /* ---------------------------------------------------------------- in the chat */
 .pmx-teach-rh b{font-weight:var(--pmx-voice-w);}
@@ -14286,11 +14324,26 @@ body[data-theme^="retro"] .pmx-teach-rule{font-size:15.5px;line-height:22.5px;le
    glyph (J-2: drop or wrap, never compress). */
 .pmx-teach-verdict{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 10px;flex:0 0 100%;order:-1;min-width:0;}
 .message-chrome:has(> .pmx-teach-verdict){flex-wrap:wrap;row-gap:10px;opacity:1;visibility:visible;transform:none;}
-.message-chrome:has(> .pmx-teach-verdict) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.pmx-teach-verdict){opacity:0;visibility:hidden;transition:opacity 150ms,visibility 0s linear 280ms;}
-:is(.message:hover, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .pmx-teach-verdict) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.pmx-teach-verdict),
-.message-chrome.is-overflow-open:has(> .pmx-teach-verdict) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.pmx-teach-verdict){opacity:1;visibility:visible;transition:opacity 150ms,visibility 0s;}
-@media (max-width: 590px){ .message-chrome:has(> .pmx-teach-verdict) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick):not(.pmx-teach-verdict){opacity:1;visibility:visible;transition:none;} }
-@media (prefers-reduced-motion: reduce){ .message-chrome:has(> .pmx-teach-verdict) > :is(.message-meta, .message-actions, .pm-msg-overflow, .pmx-tick){transition:none !important;} }
+.message-chrome:has(> .pmx-teach-verdict) > .message-meta:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .message-actions:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .pm-msg-overflow:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .pmx-tick:not(.pmx-teach-verdict){opacity:0;visibility:hidden;transition:opacity 150ms,visibility 0s linear 280ms;}
+:is(.message:hover, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .pmx-teach-verdict) > .message-meta:not(.pmx-teach-verdict),
+:is(.message:hover, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .pmx-teach-verdict) > .message-actions:not(.pmx-teach-verdict),
+:is(.message:hover, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .pmx-teach-verdict) > .pm-msg-overflow:not(.pmx-teach-verdict),
+:is(.message:hover, .message:has(.pm-msg-overflow), .message:has(.pm-msg-more[aria-expanded="true"]), .tx-peek) .message-chrome:has(> .pmx-teach-verdict) > .pmx-tick:not(.pmx-teach-verdict),
+.message-chrome.is-overflow-open:has(> .pmx-teach-verdict) > .message-meta:not(.pmx-teach-verdict),
+.message-chrome.is-overflow-open:has(> .pmx-teach-verdict) > .message-actions:not(.pmx-teach-verdict),
+.message-chrome.is-overflow-open:has(> .pmx-teach-verdict) > .pm-msg-overflow:not(.pmx-teach-verdict),
+.message-chrome.is-overflow-open:has(> .pmx-teach-verdict) > .pmx-tick:not(.pmx-teach-verdict){opacity:1;visibility:visible;transition:opacity 150ms,visibility 0s;}
+@media (max-width: 590px){ .message-chrome:has(> .pmx-teach-verdict) > .message-meta:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .message-actions:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .pm-msg-overflow:not(.pmx-teach-verdict),
+.message-chrome:has(> .pmx-teach-verdict) > .pmx-tick:not(.pmx-teach-verdict){opacity:1;visibility:visible;transition:none;} }
+@media (prefers-reduced-motion: reduce){ .message-chrome:has(> .pmx-teach-verdict) > .message-meta,
+.message-chrome:has(> .pmx-teach-verdict) > .message-actions,
+.message-chrome:has(> .pmx-teach-verdict) > .pm-msg-overflow,
+.message-chrome:has(> .pmx-teach-verdict) > .pmx-tick{transition:none !important;} }
 @container msgChrome (max-width: 250px){.pmx-teach-verdict > .pmx-teach-tick > span{display:none;}}
 /* transcript variant 2 (speaker column 82 px | message) drops the chrome row into the speaker column; a row that shows
    the verdict at rest sits under the message instead */
@@ -14434,7 +14487,7 @@ body{--pmx-t-verify:var(--pmx-t-flip);}
 .pmx-sheet .pmx-mem-panes{flex:1 1 0;min-height:0;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:32px;
   margin:12px 0 0;padding:0;border:0;border-radius:0;background:none;overflow:hidden;align-self:stretch;}
 .pmx-sheet .pmx-mem-panes[data-state="rules"], .pmx-sheet .pmx-mem-panes[data-state="empty"]{grid-template-columns:minmax(0,1fr);}
-.pmx-sheet :is(.pmx-mem-list, .pmx-mem-side, .pmx-mem-rules){min-height:0;min-width:0;overflow:hidden auto;scrollbar-width:thin;padding-bottom:14px;box-sizing:border-box;
+.pmx-sheet .pmx-mem-list, .pmx-sheet .pmx-mem-side, .pmx-sheet .pmx-mem-rules{min-height:0;min-width:0;overflow:hidden auto;scrollbar-width:thin;padding-bottom:14px;box-sizing:border-box;
   -webkit-mask-image:linear-gradient(#000 calc(100% - 14px),transparent);mask-image:linear-gradient(#000 calc(100% - 14px),transparent);}
 .pmx-sheet .pmx-mem-list{padding-right:4px;}
 .pmx-sheet .pmx-mem-side{padding-right:6px;}
@@ -14450,8 +14503,8 @@ body{--pmx-t-verify:var(--pmx-t-flip);}
 .pmx-mem-row[data-tone="warm"]{background:var(--pmx-card-warm);box-shadow:0 0 0 1px var(--pmx-edge-warm);}
 .pmx-mem-row:focus-visible{outline:2px solid var(--pmx-focus-outline);outline-offset:1px;}
 .pmx-mem-rglyph, .pmx-mem-sglyph{display:grid;place-items:center;color:var(--muted);}
-:is(.pmx-mem-row, .pmx-mem-sglyph)[data-state="verified"] :is(.pmx-mem-rglyph, svg){color:var(--positive);}
-:is(.pmx-mem-row, .pmx-mem-sglyph)[data-state="decide"] :is(.pmx-mem-rglyph, svg){color:var(--warning);}
+:is(.pmx-mem-row, .pmx-mem-sglyph)[data-state="verified"] .pmx-mem-rglyph, :is(.pmx-mem-row, .pmx-mem-sglyph)[data-state="verified"] svg{color:var(--positive);}
+:is(.pmx-mem-row, .pmx-mem-sglyph)[data-state="decide"] .pmx-mem-rglyph, :is(.pmx-mem-row, .pmx-mem-sglyph)[data-state="decide"] svg{color:var(--warning);}
 .pmx-mem-rcopy{display:block;min-width:0;}
 .pmx-mem-rcopy > b{display:block;font:var(--pmx-fs-ctl);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pmx-mem-rcopy > small{display:block;margin-top:4px;font:var(--pmx-fs-help);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -14534,15 +14587,23 @@ body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-mem-rule-text{font
 .pmx-mem-rule .pmx-mem-rcopy small b{font-weight:600;color:var(--text);}
 .pmx-mem-rule[data-state="off"] .pmx-mem-rule-text{color:var(--muted);}
 .pmx-mem-rule-acts{display:flex;gap:10px;}
-.pmx-mem-rule > :is(.pmx-mem-confirm, .pmx-mem-rnote){grid-column:2 / -1;}
+.pmx-mem-rule > .pmx-mem-confirm, .pmx-mem-rule > .pmx-mem-rnote{grid-column:2 / -1;}
 .pmx-mem-rule > .pmx-mem-rnote{margin:0;}
 .pmx-mem-rules-foot{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 0;padding-left:2px;}
 
 /* M1: the sheet's own parts enter in reading order (head, ribbon, bar, rows, detail); late arrivals enter at once */
-.pmx-sheet :is(.pmx-mem-bar, .pmx-mem-helps){animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-q) backwards;}
-.pmx-sheet :is(.pmx-mem-glabel, .pmx-mem-row, .pmx-mem-rule){animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-at-rows) + var(--i, 0) * var(--pmx-t-cascade));}
-.pmx-sheet :is(.pmx-mem-detail, .pmx-mem-next, .pmx-mem-empty){animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-at-rows) + 2 * var(--pmx-t-cascade));}
-#pmOverlayRoot.pmx-sheet-settled .pmx-sheet :is(.pmx-mem-bar, .pmx-mem-helps, .pmx-mem-glabel, .pmx-mem-row, .pmx-mem-rule, .pmx-mem-detail, .pmx-mem-next, .pmx-mem-empty, .pmx-mem-card){animation-delay:0ms;}
+.pmx-sheet .pmx-mem-bar, .pmx-sheet .pmx-mem-helps{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-q) backwards;}
+.pmx-sheet .pmx-mem-glabel, .pmx-sheet .pmx-mem-row, .pmx-sheet .pmx-mem-rule{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-at-rows) + var(--i, 0) * var(--pmx-t-cascade));}
+.pmx-sheet .pmx-mem-detail, .pmx-sheet .pmx-mem-next, .pmx-sheet .pmx-mem-empty{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) backwards;animation-delay:calc(var(--pmx-t-at-rows) + 2 * var(--pmx-t-cascade));}
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-bar,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-helps,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-glabel,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-row,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-rule,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-detail,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-next,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-empty,
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet .pmx-mem-card{animation-delay:0ms;}
 
 /* the foot: the keep-unverified check where the read-back sits, Export, Done */
 .pmx-mem-export{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
@@ -14557,7 +14618,7 @@ body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-mem-rule-text{font
   .pmx-sheet .pmx-mem-body{contain:none;}
   .pmx-mem-fhelp{text-align:left;}
   .pmx-sheet .pmx-mem-panes{flex:none;grid-template-columns:minmax(0,1fr);overflow:visible;}
-  .pmx-sheet :is(.pmx-mem-list, .pmx-mem-side, .pmx-mem-rules){overflow:visible;-webkit-mask-image:none;mask-image:none;padding-bottom:0;}
+  .pmx-sheet .pmx-mem-list, .pmx-sheet .pmx-mem-side, .pmx-sheet .pmx-mem-rules{overflow:visible;-webkit-mask-image:none;mask-image:none;padding-bottom:0;}
   .pmx-mem-bar{flex-wrap:wrap;row-gap:8px;}
   .pmx-mem-helps{flex-wrap:wrap;row-gap:4px;}
   .pmx-mem-helps .pmx-help{white-space:normal;}
@@ -14775,7 +14836,7 @@ svg.pmx-revert-tone-quiet, svg.pmx-revert-tlg{color:var(--muted);}
 }
 @container pmxrun (max-width: 359.98px){
   .pmx-revert-line .pmx-revert-hl-m, .pmx-revert-line .pmx-revert-hl-full{display:none;}
-  .pmx-revert-line :is(.pmx-revert-hl-short, .pmx-revert-hl-s){display:inline;}
+  .pmx-revert-line .pmx-revert-hl-short, .pmx-revert-line .pmx-revert-hl-s{display:inline;}
 }
 /* the S tier (a 230 or 204 px chat): a refusal reads "Not reverted" alone (the file name rides the hover card), and in
    retro and friendly, whose faces run wider, "Reverted: 1 file" reads "Reverted" */
@@ -14790,7 +14851,7 @@ svg.pmx-revert-tone-quiet, svg.pmx-revert-tlg{color:var(--muted);}
 /* one line at every width (7.10): the words shorten by the steps below and, past the last step, end in an ellipsis;
    the glyph, the counts and the action never wrap away from them or shrink */
 .pmx-revert-row > *{flex:none;}
-.pmx-revert-row > :is(.pmx-revert-did, .pmx-reason, .pmx-revert-words){flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;}
+.pmx-revert-row > .pmx-revert-did, .pmx-revert-row > .pmx-reason, .pmx-revert-row > .pmx-revert-words{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;}
 .pmx-revert-row .pmx-revert-see-short, .pmx-revert-why-m, .pmx-revert-why-s, .pmx-revert-why-xs{display:none;}
 /* the already-back row: " · nothing to revert" goes first; "See what happened" reads "Open" below 520 (retro: 640), at the
    same widths as on the outcome lines, so a row and a line in one chat never name the same action two ways */
@@ -14893,7 +14954,7 @@ body[data-theme^="retro"] .pmx-eli5-say{font-size:13px;line-height:19px;}
 body[data-theme^="retro"] .pmx-eli5-say code{font-size:12px;line-height:19px;}
 /* a choice re-sets the chosen answer once: its words fade in in reading order, the whole within the cap (the same
    re-set plays in New chat defaults' voice specimen, .pmx-dflt-say, assistant-features.css) */
-:is(.pmx-eli5-say, .pmx-dflt-say)[data-reset="1"]{--pmx-eli5-step:min(calc(var(--pmx-t-eli5-char) * var(--cw, 6)), calc(var(--pmx-t-eli5-reset) / var(--nw, 1)));}
+.pmx-eli5-say[data-reset="1"], .pmx-dflt-say[data-reset="1"]{--pmx-eli5-step:min(calc(var(--pmx-t-eli5-char) * var(--cw, 6)), calc(var(--pmx-t-eli5-reset) / var(--nw, 1)));}
 :is(.pmx-eli5-say, .pmx-dflt-say)[data-reset="1"] .pmx-eli5-w{animation:pmx-fade-in var(--pmx-t-swap) var(--pmx-ease-out) backwards;animation-delay:calc(var(--i, 0) * var(--pmx-eli5-step));}
 /* the one shared code line under both voices: the same whichever voice is chosen, and it never moves (the answer
    row is as tall as the longer answer in both states, so a choice changes no height). A hairline across both
@@ -15034,7 +15095,7 @@ body.pm56-reduced .transcript-inner > .message:has(> .eli5-change){animation:non
 .bsd12-work .bsd12-disclosure[open] > summary .bsd12-chev{transform:rotate(90deg);}
 .bsd12-work .bsd12-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px;margin-top:12px;}
 .bsd12-work .bsd12-field{display:flex;flex-direction:column;gap:8px;min-width:0;font:var(--pmx-fs-help);color:var(--muted);}
-.bsd12-work .bsd12-field :is(input, select){width:100%;min-width:0;min-height:34px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--pmx-r-sm);background:var(--surface-2);color:var(--text);font:var(--pmx-fs-help);box-sizing:border-box;}
+.bsd12-work .bsd12-field input, .bsd12-work .bsd12-field select{width:100%;min-width:0;min-height:34px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--pmx-r-sm);background:var(--surface-2);color:var(--text);font:var(--pmx-fs-help);box-sizing:border-box;}
 .bsd12-work .bsd12-disclosure > .bsd12-field{margin-top:12px;}
 .bsd12-work .bsd12-source-code{margin:8px 0 0;padding:10px 12px;border-radius:var(--pmx-r-md);background:var(--code);font:11px/17px var(--font-mono);white-space:pre-wrap;overflow-wrap:anywhere;color:var(--text);}
 @container pmxview (max-width: 520px){.bsd12-work .bsd12-grid{grid-template-columns:minmax(0,1fr);}}
@@ -15173,7 +15234,7 @@ body.pm56-reduced .transcript-inner > .message:has(> .eli5-change){animation:non
 .b18-clock > summary::-webkit-details-marker{display:none;}
 .b18-clock > summary > svg{flex:none;transition:transform var(--pmx-t-light,160ms) var(--pmx-ease-out,ease-out);}
 .b18-clock[open] > summary > svg{transform:rotate(180deg);}
-:is(.b18-guide, .b18c-guide) :is(.b18-controls, .b18c-controls){display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;min-width:0;margin-left:-10px;padding-top:4px;}
+:is(.b18-guide, .b18c-guide) .b18-controls, :is(.b18-guide, .b18c-guide) .b18c-controls{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;min-width:0;margin-left:-10px;padding-top:4px;}
 .b18-guide details[open] .b18-controls{max-height:180px;overflow:auto;scrollbar-width:thin;}
 :is(.b18-guide, .b18c-guide) :is(.b18-controls, .b18c-controls) > .text-button{height:auto;min-height:32px;max-width:100%;padding:7px 10px;white-space:normal;text-align:left;font:600 12px/16px var(--font-ui);color:var(--accent);}
 .b18-clock-state{flex-basis:100%;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;padding:6px 0 2px;font:var(--pmx-fs-meta);color:var(--muted);font-variant-numeric:tabular-nums;}
@@ -15421,7 +15482,8 @@ article.pmx-view.crew-work-document:not(.collab-view){animation:pmx-row-in var(-
 .crew-view-msg + .crew-view-msg{margin-top:12px;}
 
 body[data-theme^="retro"] .crew-plan-table{font-size:12px;}
-body[data-theme^="retro"] :is(.crew-team-line, .crew-plan-p, .crew-cost-line, .crew-source-rows > li, .crew-source-req > li){font-size:12px;}
+body[data-theme^="retro"] span.crew-team-line, body[data-theme^="retro"] p.crew-plan-p, body[data-theme^="retro"] p.crew-cost-line,
+body[data-theme^="retro"] .crew-source-rows > li, body[data-theme^="retro"] .crew-source-req > li{font-size:12px;}
 
 /* review-view.css — REVIEW-B: PM56_REVIEW.viewParts + ReviewReportVM renderer + the Review run view (spec 8.5).
    Only pmx-rview-* classes (the kind's own parts); no pmx primitive is restyled. The first block neutralises the
@@ -15430,7 +15492,7 @@ body[data-theme^="retro"] :is(.crew-team-line, .crew-plan-p, .crew-cost-line, .c
 .pmx-view.review-document{max-width:980px;padding:4px 4px 60px !important;}
 .pmx-view.pmx-rview.collab-panel{display:block;max-height:none;}
 .pmx-view.pmx-rview .text-button{white-space:nowrap;text-align:center;}
-.pmx-view.pmx-rview :is(pre.review-source, pre.review-markdown){border:0;max-width:none;}
+.pmx-view.pmx-rview pre.review-source, .pmx-view.pmx-rview pre.review-markdown{border:0;max-width:none;}
 /* the legacy collaboration.css rules on the hook classes this view carries (boxes, 10.5 px type, dashed borders) */
 .pmx-view.pmx-rview li.collab-readonly-note, .pmx-view.pmx-rview li.collab-targetpack{display:block;margin:0;font:inherit;color:inherit;}
 .pmx-view.pmx-rview .collab-finding.collab-excluded{border:0;border-radius:0;padding:10px 0 12px;background:none;opacity:1;}
@@ -15685,7 +15747,7 @@ body[data-theme^="glass"] .pmx-view.room-document > .pmx-view-head.drawer-head{b
 .pmx-view.room-discussion .pmx-rv-promote > .pmx-fine{margin-right:0;padding-left:10px;}
 .pmx-view.room-discussion :is(.pmx-rv-promote, .pmx-rv-acts, .pmx-rv-receipt) .text-button{color:var(--accent);font-weight:600;}
 .pmx-view.room-discussion .pmx-rv-promote .text-button[disabled]{color:var(--subtle);cursor:default;}
-.pmx-view.room-discussion :is(.pmx-rv-goalwhy, .pmx-rv-promhelp){margin:6px 0 0 26px;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-view.room-discussion .pmx-rv-goalwhy, .pmx-view.room-discussion .pmx-rv-promhelp{margin:6px 0 0 26px;font:var(--pmx-fs-help);color:var(--muted);}
 .pmx-view.room-discussion .pmx-rv-receipt{display:flex;flex-wrap:wrap;align-items:center;gap:0 8px;margin:12px 0 0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);line-height:1.5;color:var(--muted);}
 .pmx-view.room-discussion .pmx-rv-landed .pmx-rv-receipt{margin-left:26px;}
 .pmx-view.room-discussion .pmx-rv-receipt > svg{flex:none;color:var(--positive);}
@@ -32912,7 +32974,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       var f = '#pmOverlayRoot[data-pmx-focus~="' + p + '"] ', q = '[data-pmx-part~="' + p + '"]';
       out.push(f + '.pmx-plate ' + q + '{opacity:1;--pmx-line:var(--accent);--pmx-seat:var(--accent);--pmx-seat-fill:var(--pmx-seat-fill-accent);}');
       out.push(f + '.pmx-plate :is(path, circle, rect)' + q + '{stroke:var(--accent);}');
-      out.push(f + '.pmx-plate ' + q + ' :is(.pmx-p-lab, .pmx-p-note, .pmx-p-sub), ' + f + '.pmx-plate text' + q + '{fill:var(--accent);color:var(--accent);}');
+      out.push(['.pmx-p-lab', '.pmx-p-note', '.pmx-p-sub'].map(function (c) { return f + '.pmx-plate ' + q + ' ' + c; }).join(', ') + ', ' + f + '.pmx-plate text' + q + '{fill:var(--accent);color:var(--accent);}');
       out.push(f + '.pmx-readback ' + q + '{background-color:var(--pmx-wash);box-shadow:0 0 0 2px var(--pmx-wash);}');
     });
     var fam = '.transcript .transcript-inner > [data-family]';
@@ -32923,7 +32985,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     /* a family wrapper whose job is to carry a surface is not a card; the needs family's halo never reaches one */
     out.push(fam + SURFACES.map(function (c) { return ':not(.' + c + ')'; }).join('') + ':has(' + SURFACES.map(function (c) { return '> .' + c; }).join(', ') + ')' +
       '{padding:0;border:0;border-radius:0;background:none;box-shadow:none;-webkit-mask:none;mask:none;}');
-    out.push('.transcript .transcript-inner > [data-family="needs"] :is(' + SURFACE_SELECTOR + '){box-shadow:var(--pmx-own-shadow,none);}');
+    out.push(SURFACES.map(function (c) { return '.transcript .transcript-inner > [data-family="needs"] .' + c; }).join(', ') + '{box-shadow:var(--pmx-own-shadow,none);}');
     /* G-35 (5.5) item 3: a pmx surface never plays the transcript's message entrance (styles.css message-arrive);
        a run card arrives only through M3, the others through their own entrance */
     out.push('.transcript-inner > .message:is(' + SURFACE_SELECTOR + '), .transcript-inner > .message:has(' + SURFACES.map(function (c) { return '> .' + c; }).join(', ') + '){animation:none;}');

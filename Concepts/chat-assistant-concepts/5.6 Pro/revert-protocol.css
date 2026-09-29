@@ -137,7 +137,7 @@ svg.pmx-revert-tone-quiet, svg.pmx-revert-tlg{color:var(--muted);}
 }
 @container pmxrun (max-width: 359.98px){
   .pmx-revert-line .pmx-revert-hl-m, .pmx-revert-line .pmx-revert-hl-full{display:none;}
-  .pmx-revert-line :is(.pmx-revert-hl-short, .pmx-revert-hl-s){display:inline;}
+  .pmx-revert-line .pmx-revert-hl-short, .pmx-revert-line .pmx-revert-hl-s{display:inline;}
 }
 /* the S tier (a 230 or 204 px chat): a refusal reads "Not reverted" alone (the file name rides the hover card), and in
    retro and friendly, whose faces run wider, "Reverted: 1 file" reads "Reverted" */
@@ -152,7 +152,7 @@ svg.pmx-revert-tone-quiet, svg.pmx-revert-tlg{color:var(--muted);}
 /* one line at every width (7.10): the words shorten by the steps below and, past the last step, end in an ellipsis;
    the glyph, the counts and the action never wrap away from them or shrink */
 .pmx-revert-row > *{flex:none;}
-.pmx-revert-row > :is(.pmx-revert-did, .pmx-reason, .pmx-revert-words){flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;}
+.pmx-revert-row > .pmx-revert-did, .pmx-revert-row > .pmx-reason, .pmx-revert-row > .pmx-revert-words{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;}
 .pmx-revert-row .pmx-revert-see-short, .pmx-revert-why-m, .pmx-revert-why-s, .pmx-revert-why-xs{display:none;}
 /* the already-back row: " · nothing to revert" goes first; "See what happened" reads "Open" below 520 (retro: 640), at the
    same widths as on the outcome lines, so a row and a line in one chat never name the same action two ways */

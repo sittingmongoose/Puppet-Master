@@ -5,5 +5,5 @@
    4 in ROOM-B-NOTES asks pmxGuide for this layout). */
 .pmx-guide.room-demo-guide{container:roomguide / inline-size;}
 .pmx-guide.room-demo-guide.room-demo-guide-stack .pmx-guide-acts{grid-column:1 / -1;grid-row:3;margin:6px 0 0 -10px;}
-.pmx-guide.room-demo-guide.room-demo-guide-stack :is(.pmx-guide-cap, .pmx-guide-step){grid-column:1 / -1;}
-@container roomguide (max-width: 420px){ .room-demo-guide :is(.pmx-guide-cap, .pmx-guide-step){grid-column:1 / -1;} .room-demo-guide .pmx-guide-acts{grid-column:1 / -1;grid-row:3;margin:6px 0 0 -10px;} }
+.pmx-guide.room-demo-guide.room-demo-guide-stack .pmx-guide-cap, .pmx-guide.room-demo-guide.room-demo-guide-stack .pmx-guide-step{grid-column:1 / -1;}
+@container roomguide (max-width: 420px){ .room-demo-guide .pmx-guide-cap, .room-demo-guide .pmx-guide-step{grid-column:1 / -1;} .room-demo-guide .pmx-guide-acts{grid-column:1 / -1;grid-row:3;margin:6px 0 0 -10px;} }

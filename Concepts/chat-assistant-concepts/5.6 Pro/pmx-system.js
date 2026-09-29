@@ -92,7 +92,7 @@
       var f = '#pmOverlayRoot[data-pmx-focus~="' + p + '"] ', q = '[data-pmx-part~="' + p + '"]';
       out.push(f + '.pmx-plate ' + q + '{opacity:1;--pmx-line:var(--accent);--pmx-seat:var(--accent);--pmx-seat-fill:var(--pmx-seat-fill-accent);}');
       out.push(f + '.pmx-plate :is(path, circle, rect)' + q + '{stroke:var(--accent);}');
-      out.push(f + '.pmx-plate ' + q + ' :is(.pmx-p-lab, .pmx-p-note, .pmx-p-sub), ' + f + '.pmx-plate text' + q + '{fill:var(--accent);color:var(--accent);}');
+      out.push(['.pmx-p-lab', '.pmx-p-note', '.pmx-p-sub'].map(function (c) { return f + '.pmx-plate ' + q + ' ' + c; }).join(', ') + ', ' + f + '.pmx-plate text' + q + '{fill:var(--accent);color:var(--accent);}');
       out.push(f + '.pmx-readback ' + q + '{background-color:var(--pmx-wash);box-shadow:0 0 0 2px var(--pmx-wash);}');
     });
     var fam = '.transcript .transcript-inner > [data-family]';
@@ -103,7 +103,7 @@
     /* a family wrapper whose job is to carry a surface is not a card; the needs family's halo never reaches one */
     out.push(fam + SURFACES.map(function (c) { return ':not(.' + c + ')'; }).join('') + ':has(' + SURFACES.map(function (c) { return '> .' + c; }).join(', ') + ')' +
       '{padding:0;border:0;border-radius:0;background:none;box-shadow:none;-webkit-mask:none;mask:none;}');
-    out.push('.transcript .transcript-inner > [data-family="needs"] :is(' + SURFACE_SELECTOR + '){box-shadow:var(--pmx-own-shadow,none);}');
+    out.push(SURFACES.map(function (c) { return '.transcript .transcript-inner > [data-family="needs"] .' + c; }).join(', ') + '{box-shadow:var(--pmx-own-shadow,none);}');
     /* G-35 (5.5) item 3: a pmx surface never plays the transcript's message entrance (styles.css message-arrive);
        a run card arrives only through M3, the others through their own entrance */
     out.push('.transcript-inner > .message:is(' + SURFACE_SELECTOR + '), .transcript-inner > .message:has(' + SURFACES.map(function (c) { return '> .' + c; }).join(', ') + '){animation:none;}');

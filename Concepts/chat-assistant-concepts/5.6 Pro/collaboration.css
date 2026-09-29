@@ -43,7 +43,8 @@
 .pmx-run.collab-card > .pmx-run-foot.collab-card-foot { flex-wrap: nowrap; }
 /* 7.2 attention budget (M 360, L 360): the loud face keeps the helper that needs you (its lane first) and the builder's
    "+N more · Show all" row for the others, as the S tier does (module-shell.css); Show all lists every lane */
-.pmx-run.collab-card[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > :is(.pmx-lane ~ .pmx-lane, .pmx-lanes-more:not(.pmx-lanes-more-s)) { display: none; }
+.pmx-run.collab-card[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lane ~ .pmx-lane,
+.pmx-run.collab-card[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lanes-more:not(.pmx-lanes-more-s) { display: none; }
 .pmx-run.collab-card[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s { display: flex; }
 /* OWNER ANSWER E-31 (DL-137): a helper's line streaming into its lane (collaboration.js laneLine2). The words wear the
    lane's own line-2 face, the same as the whole quote that replaces them once every word is in, so the swap changes
@@ -63,10 +64,12 @@
 /* M6 / M7 (G-07, R-08): while the template holds the old face, its body and foot fade out and reach 0 exactly when the
    face switches (M6: 140 ms ending at the 260 ms hold; M7: the 120 ms hold). The head stays. */
 @keyframes pmx-collab-fade-out { from { opacity: 1; } to { opacity: 0; } }
-.pmx-run.collab-card[data-pmx-settling="1"][data-collab-settle="result"] > :is(.pmx-run-body, .pmx-run-foot) {
+.pmx-run.collab-card[data-pmx-settling="1"][data-collab-settle="result"] > .pmx-run-body,
+.pmx-run.collab-card[data-pmx-settling="1"][data-collab-settle="result"] > .pmx-run-foot {
   animation: pmx-collab-fade-out var(--pmx-t-swapdlg) var(--pmx-ease-in) calc(var(--pmx-t-stop) + var(--pmx-t-at-r1) - var(--pmx-t-swapdlg)) both;
 }
-.pmx-run.collab-card[data-pmx-settling="1"][data-collab-settle="receipt"] > :is(.pmx-run-body, .pmx-run-foot) {
+.pmx-run.collab-card[data-pmx-settling="1"][data-collab-settle="receipt"] > .pmx-run-body,
+.pmx-run.collab-card[data-pmx-settling="1"][data-collab-settle="receipt"] > .pmx-run-foot {
   animation: pmx-collab-fade-out var(--pmx-t-fade) var(--pmx-ease-out) both;
 }
 /* M6 beat 3: the result's content comes first (headline +20, figures +40, output +60, credits +100 with their caption)
@@ -136,7 +139,7 @@
 .pmx-sheet .pmx-collab-modrow input.pmx-row-job{color:var(--text);}
 /* Review's hero (8.5): the target trigger beside "Anything specific?", the helper under both */
 .pmx-sheet .pmx-collab-hero--before .pmx-hero-main{display:grid;grid-template-columns:236px minmax(0,1fr);column-gap:12px;align-items:start;}
-.pmx-sheet .pmx-collab-hero--before .pmx-hero-main > :is(.pmx-q-head, .pmx-help){grid-column:1 / -1;}
+.pmx-sheet .pmx-collab-hero--before .pmx-hero-main > .pmx-q-head, .pmx-sheet .pmx-collab-hero--before .pmx-hero-main > .pmx-help{grid-column:1 / -1;}
 .pmx-sheet .pmx-collab-hero--before .pmx-hero-main > .pmx-hero-box{grid-column:2;margin-top:12px;}
 .pmx-sheet .pmx-collab-target{grid-column:1;margin-top:12px;min-width:0;}
 /* Review's focus grid and "Also give them" (8.5) */
