@@ -7024,7 +7024,7 @@ owner_hints:
 
 ### CS-086 - Text-Editing Keys Inside Sheet Text Fields
 
-Inside a focused text field, the defaults of `extensions.commands.text-editing-keys` bind Ctrl+K to "Delete to end of line" and Ctrl+W to "Delete previous word". The global shortcuts bind the same chords to "Open command palette" and "Close current tab/panel" (FinalGUISpec 4.4). The clash predates the Assistant wand redesign: it already exists in the chat composer, and each redesigned sheet's main text field now carries it too. The redesign adds no key binding and changes no default. Which binding wins inside a text field belongs to the Commands and Shortcuts owner and is not decided here.
+Inside a focused text field, the defaults of `extensions.commands.text-editing-keys` bind Ctrl+K to "Delete to end of line" and Ctrl+W to "Delete previous word". The global shortcuts bind the same chords to "Open command palette" and "Close current tab/panel" (FinalGUISpec 4.4). The clash predates the Assistant wand redesign: it already exists in the chat composer, and each redesigned sheet's main text field now carries it too. The redesign adds no key binding and changes no default. Which binding wins inside a text field belongs to the Commands and Shortcuts owner and is not decided here. The clash-handling choice the manager exposes from 2026-09-27 (S8, `When two actions share keys`, `extensions.commands.conflict-handling`, CS-081) governs shortcut bindings in the shortcuts delta that share keys; whether it also governs these text-field defaults is part of the same owner decision and is not assumed here.
 
 ```yaml
 plan_unit_id: CS-086

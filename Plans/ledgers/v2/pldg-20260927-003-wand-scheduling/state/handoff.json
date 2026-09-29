@@ -2,7 +2,7 @@
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-003-wand-scheduling",
   "updated_at_utc": "2026-09-28T00:15:00+00:00",
-  "last_event_id": "evt-013",
+  "last_event_id": "evt-014",
   "canonical_plan_targets": [
     "Plans/Scheduling_and_Quota_Resume.md"
   ],
@@ -36,7 +36,7 @@
   },
   "current_phase": "prose_compiled_pending_review",
   "cursor": {
-    "last_event_id": "evt-013",
+    "last_event_id": "evt-014",
     "next_action": "Lead: regenerate shards and index once for all groups; blind review cycle 1 repaired (R-01..R-11, evt-012), cycle 2 at most. Open: q-003 (R-1 to Chat WOW), q-004 (stored grace_seconds and the occurrence summary shape), q-005 (plan_card on cmd.execution_window.cancel, for the command census), q-006 (pause record storage registration, runtime.automation_pause_changed EventRecord, the command census's exclusion/wiring entry, tests/scheduling-verify.mjs)."
   },
   "source_refs": [

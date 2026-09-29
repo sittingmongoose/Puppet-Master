@@ -2,7 +2,7 @@
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-001-wand-collab-workflows",
   "updated_at_utc": "2026-09-27T23:59:30+00:00",
-  "last_event_id": "evt-023",
+  "last_event_id": "evt-024",
   "canonical_plan_targets": [
     "Plans/Collaborative_Workflows.md",
     "Plans/Executor_Protocol.md",
@@ -77,7 +77,7 @@
     "EP-131"
   ],
   "cursor": {
-    "last_event_id": "evt-023",
+    "last_event_id": "evt-024",
     "next_action": "Blind review cycle 2 (the last) of the cycle-1 repairs, including the ATS-062 companion update of evt-023; then the integrator regenerates shards and the plan index and commits. Open questions q-026..q-034 wait on a new card, the owner or the Settings owner; none blocks landing."
   },
   "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md."

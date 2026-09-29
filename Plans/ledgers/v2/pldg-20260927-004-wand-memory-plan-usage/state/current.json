@@ -2,7 +2,7 @@
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-004-wand-memory-plan-usage",
   "updated_at_utc": "2026-09-27T23:40:00+00:00",
-  "last_event_id": "evt-007",
+  "last_event_id": "evt-008",
   "canonical_plan_targets": [
     "Plans/Assistant_Plan_Runtime.md",
     "Plans/Personas.md",
@@ -76,7 +76,7 @@
     "AMS-053"
   ],
   "cursor": {
-    "last_event_id": "evt-007",
+    "last_event_id": "evt-008",
     "next_action": "Integrator: regenerate shards and index once for all groups, run blind review cycle 2 if wanted (cap two), then land. Open, none blocking: q-006 (hard ceiling only, DL-131), q-007 (AMS-053 companion outcome field and fix command), q-008 (Back_Seat_Driver.md spelling, that owner), q-009 (mixed Followed and Missed display), q-014 (UF-104 per-figure basis)."
   },
   "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md."

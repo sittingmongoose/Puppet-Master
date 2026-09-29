@@ -2,7 +2,7 @@
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-005-wand-chat-gui-contract",
   "updated_at_utc": "2026-09-28T00:30:00+00:00",
-  "last_event_id": "evt-017",
+  "last_event_id": "evt-018",
   "canonical_plan_targets": [
     "Plans/Automated_Testing_System.md",
     "Plans/DRY_Rules.md",
@@ -135,7 +135,7 @@
     "UIW-025"
   ],
   "cursor": {
-    "last_event_id": "evt-017",
+    "last_event_id": "evt-018",
     "next_action": "Integrator: regenerate shards and the plan index once for all groups, run the compile witness again, then blind review cycle 2 (the last; whatever is still open after it is recorded as an open ledger question). Cycle 1 (findings R-01..R-20) is repaired in evt-016 and evt-017; findings Records 47-57 name each repair. Open: q-005, q-008, q-015, q-018, q-020, q-021."
   },
   "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md.",

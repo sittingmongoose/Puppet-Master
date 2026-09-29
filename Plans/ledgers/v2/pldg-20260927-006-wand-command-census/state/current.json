@@ -2,7 +2,7 @@
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-006-wand-command-census",
   "updated_at_utc": "2026-09-28T00:30:00+00:00",
-  "last_event_id": "evt-015",
+  "last_event_id": "evt-016",
   "canonical_plan_targets": [
     "Plans/Automated_Testing_System.md",
     "Plans/Commands_System.md",
@@ -71,7 +71,7 @@
     "WM-041"
   ],
   "cursor": {
-    "last_event_id": "evt-015",
+    "last_event_id": "evt-016",
     "next_action": "NOW, WAIT and closure prose compiled; wiring companions evt-007 and evt-012; tour ELI5 re-pointed evt-013; blind review G6 cycle 1 repairs compiled evt-014 (DL-135, DL-120, DL-112 now compiled; q-009, q-011, q-012 answered). Next: blind review cycle 2 (the last); the companion task for q-017 (three Wiring_Matrix.production.json entries); the integrator regenerates shards and the plan index. Open: q-013, q-014, q-015, q-017, q-018, q-019; none blocks landing."
   },
   "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md."
