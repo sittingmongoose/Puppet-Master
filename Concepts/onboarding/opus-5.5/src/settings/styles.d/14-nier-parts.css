@@ -1,0 +1,311 @@
+/* O55 · NieR Mode parts: Look, Motion, Sound & voice and Pointer (17 of the 29; kit.d/19-nier-parts.js is the script
+   half). Every rule is scoped by html[data-o55-nier-parts~="<key>"], which kit.d/18-nier.js writes only while NieR Mode
+   is painted, so nothing here applies while it is off. Colours are the palette's helper tokens (styles.d/13-nier.css);
+   the only literals are the pointer images and the reboot cover, which have to exist before the palette is painted.
+   Motion rules: continuous motion is transform, scale, translate or opacity only, run by the compositor; nothing
+   animates a filter, mask, blend, box-shadow, clip-path or background. Every motion part is off under
+   html[data-motion="reduced"] and under the system's reduced-motion preference. CSS durations are scaled by the look
+   layer's Animation speed sheet (kit.d/17-look.js). Overlays never take a click (pointer-events: none). */
+
+/* ======================================================================================================== Look */
+
+/* ---- Square hairlines [square]: no rounded corner anywhere, 1px lines, square knobs, boxes, bullets and dots ---- */
+html[data-o55-nier-parts~="square"] {
+  --radius-xs: 0px !important; --radius-sm: 0px !important; --radius-md: 0px !important; --radius-lg: 0px !important;
+  --radius-xl: 0px !important; --radius-pill: 0px !important; --border-radius: 0px !important; --border-width: 1px !important;
+}
+html[data-o55-nier-parts~="square"] #panel-settings {
+  --k3-radius-sm: 0px !important; --k3-radius-md: 0px !important; --k3-radius-lg: 0px !important; --k3-radius-xl: 0px !important;
+}
+html[data-o55-nier-parts~="square"] *, html[data-o55-nier-parts~="square"] *::before, html[data-o55-nier-parts~="square"] *::after { border-radius: 0 !important; }
+html[data-o55-nier-parts~="square"] :is(ul, ol.o55np-keep) { list-style-type: square; }
+html[data-o55-nier-parts~="square"] input:is([type="checkbox"], [type="radio"]) { accent-color: var(--o55-nier-ink); }
+
+/* ---- Menu cursor [cursor]: the hovered or chosen item is an ink bar with paper text; one square cursor beside it ---- */
+html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon,
+  .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item,
+  .pm7u-navbtn, .pm7u-poprow, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item,
+  .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item,
+  .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])):hover,
+html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active,
+  .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active,
+  .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .pm7u-navbtn.active, .pm7u-poprow.active, .orch-tab.active, .fm-row.selected,
+  .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) {
+  background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
+  box-shadow: none !important; text-shadow: none !important;
+}
+/* everything inside the bar reads in paper; a badge inside it turns over again */
+html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon,
+  .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item,
+  .pm7u-navbtn, .pm7u-poprow, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item,
+  .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item,
+  .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])):hover :where(*),
+html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active,
+  .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active,
+  .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .pm7u-navbtn.active, .pm7u-poprow.active, .orch-tab.active, .fm-row.selected,
+  .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) :where(*) {
+  color: inherit !important; -webkit-text-fill-color: currentColor;
+}
+html[data-o55-nier-parts~="cursor"] :is(.orch-tab, .pm7u-navbtn, .resource-row, .chat-thread-item, .fm-row, .index-link):is(:hover, .active, .is-active, .selected) :is([class*="badge"], [class*="count"], kbd) {
+  background: var(--o55-nier-on-ink) !important; color: var(--o55-nier-ink) !important; border-color: var(--o55-nier-on-ink) !important;
+}
+/* the bar's own marks (index bullets, active side ticks) would double the cursor: hide them */
+html[data-o55-nier-parts~="cursor"] :is(.index-link.is-active, .domain-link.active, .side-link.active)::before { background: var(--o55-nier-on-ink) !important; }
+/* the one shared cursor: a small ink square with a notch, gliding by transform, nudging in two steps */
+#o55np-cursor { position: fixed; left: 0; top: 0; width: 9px; height: 9px; z-index: 2147483000; pointer-events: none; opacity: 0;
+  transform: translate(-40px, -40px); transition: transform 120ms cubic-bezier(.25, .9, .3, 1), opacity 90ms linear; will-change: transform, opacity; contain: strict; }
+#o55np-cursor[data-on] { opacity: 1; }
+#o55np-cursor[data-jump] { transition: opacity 90ms linear; }
+#o55np-cursor > i { position: absolute; inset: 0; display: block;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 6px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 6px 100% no-repeat; }
+#o55np-cursor > i::after { content: ""; position: absolute; left: 2px; top: 2px; width: 2px; height: 2px; background: var(--o55-nier-paper); }
+#o55np-cursor[data-side="right"] > i { transform: scaleX(-1); }
+#o55np-cursor[data-side="below"] > i { transform: rotate(90deg); }
+html:not([data-motion="reduced"]) #o55np-cursor[data-on] > i { animation: o55np-nudge 1.1s step-end infinite; }
+html:not([data-motion="reduced"]) #o55np-cursor[data-on][data-side="right"] > i { animation-name: o55np-nudge-r; }
+html:not([data-motion="reduced"]) #o55np-cursor[data-on][data-side="below"] > i { animation-name: o55np-nudge-b; }
+@keyframes o55np-nudge { 0% { translate: 0 0; } 50% { translate: -3px 0; } 100% { translate: 0 0; } }
+@keyframes o55np-nudge-r { 0% { translate: 0 0; } 50% { translate: 3px 0; } 100% { translate: 0 0; } }
+@keyframes o55np-nudge-b { 0% { translate: 0 0; } 50% { translate: 0 3px; } 100% { translate: 0 0; } }
+html[data-motion="reduced"] #o55np-cursor { transition: none; }
+
+/* ---- YoRHa headers [headers]: wide-spaced capitals over a rule with square end caps; ink title bands ---- */
+html[data-o55-nier-parts~="headers"] :is(.o55-group-title, .pm6-dash-card-title, .pm7u-cardtitle, .pm6-orch-w-title, .pm51-section-title, .roster-title,
+  .rail-heading, .sh-title, .pm6-chat-sbtitle-label, .pm6-orch-w-kicker, #panel-settings .workspace-separator h2, #panel-settings .rail-title,
+  .projects-title, .orch-title, #pm7uRoomTitle, .pm7u-brand h1, .pm6-wiz-hero-title, .pm6-wiz-sect-label, .rs-panel-head > span) {
+  text-transform: uppercase; letter-spacing: .16em; font-feature-settings: "palt" 0;
+}
+html[data-o55-nier-parts~="headers"] :is(#panel-settings .workspace-separator h2, .projects-title, .orch-title, #pm7uRoomTitle, .pm7u-brand h1, .pm6-wiz-hero-title) { letter-spacing: .12em; font-weight: 600; }
+/* card titles share their head with chips and buttons: a narrower spacing keeps them whole */
+html[data-o55-nier-parts~="headers"] :is(.pm6-dash-card-title, .pm7u-cardtitle, .pm6-orch-w-title) { letter-spacing: .07em; }
+/* the rule: a hairline across the header box with a square cap at each end */
+html[data-o55-nier-parts~="headers"] :is(.o55-group-head, .pm6-dash-card-head, .pm7u-cardhead, .pm6-orch-w-head, #panel-settings .workspace-separator, #panel-settings .pm51-section-copy, .roster-head) {
+  background-image: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) !important;
+  background-size: 5px 5px, 5px 5px, calc(100% - 12px) 1px !important;
+  background-position: left bottom, right bottom, center calc(100% - 2px) !important;
+  background-repeat: no-repeat !important; background-origin: border-box !important;
+  padding-bottom: 9px !important;
+}
+html[data-o55-nier-parts~="headers"] #panel-settings .workspace-separator { border-bottom-color: transparent !important; }
+/* dialogs, drawers, dropdown titles and the inbox head: the ink title band */
+html[data-o55-nier-parts~="headers"] :is(#panel-settings .dialog-head, .pm6-orch-modal-title, .pm51-popout-title, .rs-panel-head, .pm7u-insphead) {
+  background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
+}
+html[data-o55-nier-parts~="headers"] :is(#panel-settings .dialog-head, .pm6-orch-modal-title, .pm51-popout-title, .rs-panel-head, .pm7u-insphead) :where(*) { color: inherit !important; }
+html[data-o55-nier-parts~="headers"] .pm51-popout-title { margin: -4px -4px 4px; padding: 6px 12px; letter-spacing: .16em; }
+html[data-o55-nier-parts~="headers"] .pm6-orch-modal-title { padding: 8px 12px; letter-spacing: .12em; text-transform: uppercase; }
+html[data-o55-nier-parts~="headers"] .rs-panel-head .clear-all-btn { background: transparent !important; border-color: var(--o55-nier-on-ink) !important; }
+/* a toast's title row is the band */
+html[data-o55-nier-parts~="headers"] #rsStage .rs-card .n-row { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); margin: -8px -10px 5px; padding: 5px 10px; }
+html[data-o55-nier-parts~="headers"] #rsStage .rs-card .n-row :where(*) { color: inherit !important; }
+html[data-o55-nier-parts~="headers"] #rsStage .rs-card .n-sev-dot { background: var(--o55-nier-on-ink) !important; }
+
+/* ---- Parchment ground [ground]: a still grid and faint scanlines behind the shell, painted once ---- */
+/* The layer sits between the scene (z 0, styles.d/16-nier-scenes.css) and the shell, so both read: the scene's own
+   canvas-coloured fade covers the grid nowhere, and the grid runs faintly over the scene's ink. */
+#o55np-ground { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; contain: strict; display: none; }
+html[data-o55-nier-parts~="ground"] #o55np-ground, html[data-o55-nier-parts~="particles"] #o55np-ground { display: block; }
+html[data-o55-nier][data-o55-nier-parts~="ground"] body > .app-shell, html[data-o55-nier][data-o55-nier-parts~="particles"] body > .app-shell { position: relative; z-index: 2; }
+#o55np-ground > .o55np-grid { position: absolute; inset: 0; display: none;
+  background-image:
+    repeating-linear-gradient(to bottom, rgba(var(--o55-nier-ink-rgb), .035) 0 1px, transparent 1px 3px),
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .07) 1px, transparent 1px),
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .035) 1px, transparent 1px);
+  background-size: 100% 3px, 128px 128px, 128px 128px, 32px 32px, 32px 32px;
+  background-position: 0 0, -1px -1px, -1px -1px, -1px -1px, -1px -1px; }
+html[data-o55-nier-parts~="ground"] #o55np-ground > .o55np-grid { display: block; }
+/* the same grid, faint, on the grounds text sits on where no panel covers the window */
+html[data-o55-nier-parts~="ground"] :is(#panel-settings .workspace-shell, .page-wizard, .page-orchestrator, .page-projects, #pm7UsageApp.pm7u-shell) {
+  background-image:
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .045) 1px, transparent 1px);
+  background-size: 32px 32px, 32px 32px; background-position: -1px -1px, -1px -1px;
+}
+
+/* ---- Target brackets [brackets]: four square corners on keyboard focus and on a chosen item, one gliding reticle ---- */
+html[data-o55-nier-parts~="brackets"] :focus-visible { outline: 0 !important; box-shadow: none !important; }
+html[data-o55-nier-parts~="brackets"] .focus-ring { outline: 0 !important; box-shadow: none !important; }
+#o55np-reticle { position: fixed; left: 0; top: 0; width: 0; height: 0; z-index: 2147483001; pointer-events: none; opacity: 0; transition: opacity 110ms linear; }
+#o55np-reticle[data-on] { opacity: 1; }
+#o55np-reticle[data-jump] > i { transition: none; }
+#o55np-reticle > i { position: absolute; left: 0; top: 0; width: 10px; height: 10px; display: block; will-change: transform;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 2px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 2px 100% no-repeat;
+  transition: transform 150ms cubic-bezier(.25, .9, .3, 1); }
+html[data-motion="reduced"] #o55np-reticle > i, html[data-motion="reduced"] #o55np-reticle { transition: none; }
+
+/* ---- Diamond loaders [diamonds]: spinners and busy marks become a slowly turning hollow diamond ---- */
+html[data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .o55-ph-active .o55-phmark, .thread-working-pulse) {
+  border: 1px solid var(--o55-nier-ink) !important; background: transparent !important; box-shadow: none !important;
+  outline: 1px solid rgba(var(--o55-nier-ink-rgb), .55); outline-offset: -5px;
+  transform: rotateY(0deg) rotate(45deg) scale(.72);
+  animation: o55np-diamond 2.8s linear infinite !important;
+}
+html[data-o55-nier-parts~="diamonds"] :is(.o55-spin, .o55-ph-active .o55-phmark, .thread-working-pulse) { outline: 0; }
+html[data-o55-nier-parts~="diamonds"] :is(.o55-spin, .o55-ph-active .o55-phmark)::after { display: none !important; }
+html[data-o55-nier-parts~="diamonds"] :is(.pm6-spin, .pm7u-iconbtn.spinning) svg {
+  border: 1px solid currentColor; box-sizing: border-box; outline: 1px solid currentColor; outline-offset: -5px;
+  animation: o55np-diamond 2.8s linear infinite !important;
+}
+html[data-o55-nier-parts~="diamonds"] :is(.pm6-spin, .pm7u-iconbtn.spinning) svg > * { visibility: hidden; }
+@keyframes o55np-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.72); } to { transform: rotateY(360deg) rotate(45deg) scale(.72); } }
+html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .o55-ph-active .o55-phmark, .thread-working-pulse, .pm6-spin svg, .pm7u-iconbtn.spinning svg) { animation: none !important; }
+
+/* ====================================================================================================== Motion */
+
+/* ---- Reboot moment [reboot]: the cover (kit.d/19-nier-parts.js runs it inside PM_NIER.setTransition) ----
+   The cover exists before the palette is painted (turning NieR Mode on), so its two inks are written here: they are the
+   theme's own ink and parchment (nier/nier-automata.json: light text #211f1b on #dcd8c2, dark text #d1cdb7 on #2f2d26). */
+#o55np-reboot { position: fixed; inset: 0; z-index: 2147483600; pointer-events: none; overflow: hidden; contain: strict;
+  --rb-ink: #211f1b; --rb-paper: #dcd8c2; --rb-ink-rgb: 33, 31, 27; }
+#o55np-reboot[data-tone="dark"] { --rb-ink: #d1cdb7; --rb-paper: #2f2d26; --rb-ink-rgb: 209, 205, 183; }
+#o55np-reboot > .o55np-rb-band { position: absolute; inset: 0; background: var(--rb-ink); transform: translateY(-101%); will-change: transform; }
+#o55np-reboot > .o55np-rb-band::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px; background: var(--rb-ink); box-shadow: 0 -3px 0 var(--rb-ink); }
+#o55np-reboot > .o55np-rb-band > .o55np-rb-lines { position: absolute; inset: 0;
+  background: repeating-linear-gradient(to bottom, rgba(var(--rb-ink-rgb), 0) 0 2px, rgba(0, 0, 0, .09) 2px 3px); opacity: .9; }
+#o55np-reboot .o55np-rb-copy { position: absolute; left: 50%; top: 50%; width: 360px; margin: -44px 0 0 -180px; color: var(--rb-paper);
+  font: 500 11px/1.7 "PM NieR Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .22em; text-transform: uppercase; }
+#o55np-reboot .o55np-rb-title { font: 600 15px/1.4 "PM NieR Sans", "Inter", system-ui, sans-serif; letter-spacing: .3em; margin-bottom: 10px;
+  padding-bottom: 8px; background: linear-gradient(var(--rb-paper), var(--rb-paper)) left bottom / 5px 5px no-repeat, linear-gradient(var(--rb-paper), var(--rb-paper)) right bottom / 5px 5px no-repeat,
+  linear-gradient(var(--rb-paper), var(--rb-paper)) center calc(100% - 2px) / calc(100% - 12px) 1px no-repeat; }
+#o55np-reboot .o55np-rb-meter { position: relative; height: 6px; margin-top: 12px; border: 1px solid var(--rb-paper); }
+#o55np-reboot .o55np-rb-meter > i { position: absolute; left: 1px; top: 1px; bottom: 1px; right: 1px; background: repeating-linear-gradient(90deg, var(--rb-paper) 0 10px, transparent 10px 13px);
+  transform-origin: left center; transform: scaleX(0); will-change: transform; }
+#o55np-reboot .o55np-rb-line[data-ok]::after { content: "  OK"; }
+
+/* ---- Slice open [slice]: menus, popovers and dialogs unfold from a 1px line, one flicker step, and fold back ---- */
+/* the sprouting family (the title-bar menus, Settings drop-downs, chat pickers, context pop-ups): their sprout becomes
+   identity, and scale carries the slice both ways */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-tb-menu, .pm6-chat-more-menu, .pm51-popout, .pm-home-portal, .pm6-chat-pt-popout-portal,
+  .pm6-chat-persona-popout-portal, .pm6-chat-effort-popout-portal, .pm6-chat-mini-popout-portal, .pm6-chat-mode-popout-portal, .context-hover-module,
+  .context-lens-popover, .wt-bind-dropdown, .pm6-tb-search-pop) {
+  --pm6-sprout-ox: 50%; --pm6-sprout-oy: 50%; --pm6-sprout-tx: 0px; --pm6-sprout-ty: 0px; --pm6-sprout-sx: 1; --pm6-sprout-sy: 1;
+  scale: 1 .006;
+  transition: scale 150ms cubic-bezier(.6, 0, .85, .35), opacity 70ms linear 120ms, visibility 0s linear 200ms !important;
+}
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pm6-tb-menu, .pm6-chat-more-menu, .pm51-popout, .pm-home-portal, .pm6-chat-pt-popout-portal,
+  .pm6-chat-persona-popout-portal, .pm6-chat-effort-popout-portal, .pm6-chat-mini-popout-portal, .pm6-chat-mode-popout-portal, .context-hover-module,
+  .context-lens-popover, .wt-bind-dropdown, .pm6-tb-search-pop):is(.is-open, .open):not(.is-closing) {
+  scale: none; transition: none !important; animation: o55np-slice 300ms linear backwards;
+}
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .rs-panel { --rs-sprout-ox: 50%; --rs-sprout-oy: 50%; --rs-sprout-sx: 1; --rs-sprout-sy: 1; --rs-sprout-tx: 0px; --rs-sprout-ty: 0px; }
+/* the rest open by animation only (they close their own way) */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.rs-panel.open:not(.is-closing), #panel-settings .overlay > .dialog, .pm6-orch-modal, .pm-ctx-menu.is-open,
+  .fm-ctx.is-open, .pm7ctx-pop.is-open, .pm7-dash-size-pop.open, .pm7u-pop:is(.open, .is-open), .chat-dropdown-popover:is(.active, .is-open), .slash-command-menu.visible,
+  .dropdown-menu:is(.open, .is-open), .pm-ed-overflow-menu.is-open, .msg-runtime-popover.visible, .pm6-status-pop.visible, #panel-settings .popover) {
+  animation: o55np-slice 300ms linear backwards !important; transform-origin: 50% 50%;
+}
+@keyframes o55np-slice {
+  0% { scale: 1 .006; opacity: 1; animation-timing-function: cubic-bezier(.2, .85, .25, 1); }
+  58% { scale: 1 1; opacity: 1; animation-timing-function: step-end; }
+  66% { scale: 1 1; opacity: .3; animation-timing-function: step-end; }
+  74% { scale: 1 1; opacity: 1; }
+  100% { scale: 1 1; opacity: 1; }
+}
+
+/* ---- Page wipe [wipe]: an ink-edged band over the page area while a page change draws (kit.d/19-nier-parts.js) ---- */
+#o55np-wipe { position: fixed; z-index: 900; pointer-events: none; overflow: hidden; contain: strict; }
+#o55np-wipe > i { position: absolute; inset: 0; display: block; will-change: transform;
+  background:
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left top / 3px 100% no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 22px, rgba(var(--o55-nier-ink-rgb), .12) 22px 23px),
+    var(--background); }
+#o55np-wipe > i::before { content: ""; position: absolute; top: 0; bottom: 0; left: 7px; width: 1px; background: var(--o55-nier-ink); opacity: .55; }
+
+/* ---- Drifting particles [particles]: a dozen small ink squares drifting in the ground layer ---- */
+html:not([data-o55-nier-parts~="particles"]) #o55np-ground > .o55np-mote { display: none; }
+#o55np-ground > .o55np-mote { position: absolute; display: block; width: 4px; height: 4px; background: rgba(var(--o55-nier-ink-rgb), .3); will-change: transform; }
+#o55np-ground > .o55np-mote:nth-of-type(3n) { width: 6px; height: 6px; background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .34); }
+#o55np-ground > .o55np-mote:nth-of-type(4n + 1) { width: 3px; height: 3px; }
+#o55np-ground > .o55np-mote:nth-of-type(1) { left: 8%; top: 22%; --d: 61s; --dl: -12s; }
+#o55np-ground > .o55np-mote:nth-of-type(2) { left: 17%; top: 71%; --d: 83s; --dl: -40s; }
+#o55np-ground > .o55np-mote:nth-of-type(3) { left: 29%; top: 38%; --d: 72s; --dl: -5s; }
+#o55np-ground > .o55np-mote:nth-of-type(4) { left: 37%; top: 86%; --d: 95s; --dl: -60s; }
+#o55np-ground > .o55np-mote:nth-of-type(5) { left: 46%; top: 14%; --d: 68s; --dl: -30s; }
+#o55np-ground > .o55np-mote:nth-of-type(6) { left: 55%; top: 57%; --d: 88s; --dl: -18s; }
+#o55np-ground > .o55np-mote:nth-of-type(7) { left: 63%; top: 29%; --d: 76s; --dl: -52s; }
+#o55np-ground > .o55np-mote:nth-of-type(8) { left: 71%; top: 78%; --d: 64s; --dl: -9s; }
+#o55np-ground > .o55np-mote:nth-of-type(9) { left: 79%; top: 45%; --d: 91s; --dl: -71s; }
+#o55np-ground > .o55np-mote:nth-of-type(10) { left: 86%; top: 12%; --d: 70s; --dl: -26s; }
+#o55np-ground > .o55np-mote:nth-of-type(11) { left: 92%; top: 63%; --d: 84s; --dl: -44s; }
+#o55np-ground > .o55np-mote:nth-of-type(12) { left: 23%; top: 8%; --d: 99s; --dl: -80s; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]):not([data-o55-open]) #o55np-ground > .o55np-mote { animation: o55np-drift var(--d, 70s) linear var(--dl, 0s) infinite; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]):not([data-o55-open]) #o55np-ground > .o55np-mote:nth-of-type(even) { animation-name: o55np-drift-b; }
+#o55np-ground[data-idle] > .o55np-mote { animation-play-state: paused !important; }
+@keyframes o55np-drift { 0% { transform: translate(0, 0) rotate(0deg); } 25% { transform: translate(38px, -64px) rotate(90deg); } 50% { transform: translate(84px, -22px) rotate(180deg); }
+  75% { transform: translate(40px, 40px) rotate(270deg); } 100% { transform: translate(0, 0) rotate(360deg); } }
+@keyframes o55np-drift-b { 0% { transform: translate(0, 0); } 33% { transform: translate(-52px, 30px); } 66% { transform: translate(-18px, -70px); } 100% { transform: translate(0, 0); } }
+
+/* ---- Scan sweep [sweep]: one faint line crossing the window every twelve seconds (a one-shot Web Animation) ---- */
+#o55np-sweep { position: fixed; left: 0; right: 0; top: 0; height: 56px; z-index: 2147481000; pointer-events: none; opacity: 0; will-change: transform, opacity;
+  background: linear-gradient(to bottom, rgba(var(--o55-nier-ink-rgb), 0), rgba(var(--o55-nier-ink-rgb), .028) 90%, rgba(var(--o55-nier-ink-rgb), .12) 98.2%, rgba(var(--o55-nier-ink-rgb), 0)); }
+
+/* ---- Alert glitch [glitch]: the split slices of an error or warning toast (kit.d/19-nier-parts.js animates them) ---- */
+.o55np-glitch-slice { position: absolute !important; inset: 0 !important; width: auto !important; height: auto !important; min-height: 0 !important; margin: 0 !important;
+  pointer-events: none !important; animation: none !important; z-index: 2; will-change: transform; }
+
+/* =============================================================================================== Sound & voice */
+
+/* ---- Pod voice [voice]: Report / Alert / Proposal leads, and the POD 042 band on toasts ---- */
+html[data-o55-nier-parts~="voice"] #rsStage .rs-card .n-title::before,
+html[data-o55-nier-parts~="voice"] #rsClip .rs-card .n-title::before,
+html[data-o55-nier-parts~="voice"] .rs-item .t::before { content: "Report: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] :is(#rsStage, #rsClip) .rs-card:is(.n-sev-warn, .n-sev-error) .n-title::before,
+html[data-o55-nier-parts~="voice"] .rs-item:is(.n-sev-warn, .n-sev-error) .t::before { content: "Alert: "; }
+html[data-o55-nier-parts~="voice"] #rsStage .rs-card[data-o55-pod="proposal"]:not(.n-sev-warn):not(.n-sev-error) .n-title::before,
+html[data-o55-nier-parts~="voice"] .rs-item:is(.kind-hitl, .kind-permission, .kind-filesafe, .kind-concern, .kind-wizard, .kind-usage):not(.n-sev-warn):not(.n-sev-error) .t::before { content: "Proposal: "; }
+html[data-o55-nier-parts~="voice"] #rsStage .rs-card::before {
+  content: "POD 042"; display: block; margin: -8px -10px 0; padding: 3px 10px 2px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+  font: 500 9px/1.4 var(--mono-font); letter-spacing: .28em;
+}
+html[data-o55-nier-parts~="voice"][data-o55-nier-parts~="headers"] #rsStage .rs-card .n-row { margin-top: 0; padding-top: 2px; }
+html[data-o55-nier-parts~="voice"] #pm7uToast::before { content: "Report: "; }
+
+/* ---- Pod companion [pod]: a small ink-line Pod hovering by the bottom-right corner ---- */
+#o55np-pod { position: fixed; right: 14px; bottom: 58px; width: 40px; height: 52px; z-index: 2147481500; pointer-events: none; contain: layout style;
+  color: var(--o55-nier-ink); display: none; }
+html[data-o55-nier-parts~="pod"] #o55np-pod { display: block; }
+html[data-o55-open] #o55np-pod { display: none; }
+#o55np-pod .o55np-pod-bob, #o55np-pod .o55np-pod-body, #o55np-pod .o55np-pod-shadow { position: absolute; left: 0; top: 0; width: 40px; height: 52px; will-change: transform; }
+#o55np-pod svg { display: block; width: 40px; height: 52px; overflow: visible; }
+#o55np-pod .o55np-pod-fill { fill: var(--o55-nier-paper); }
+#o55np-pod .o55np-pod-ink { fill: currentColor; }
+#o55np-pod .o55np-pod-shadow { transform-origin: 20px 48px; }
+#o55np-pod .o55np-pod-body { transform-origin: 20px 22px; }
+#o55np-pod .o55np-pod-signal { position: absolute; left: 6px; top: 10px; width: 4px; height: 4px; background: currentColor; opacity: 0; will-change: transform, opacity; }
+html:not([data-motion="reduced"]) #o55np-pod:not([data-idle]) .o55np-pod-bob { animation: o55np-bob 3.6s ease-in-out infinite alternate; }
+html:not([data-motion="reduced"]) #o55np-pod:not([data-idle]) .o55np-pod-shadow { animation: o55np-bob-shadow 3.6s ease-in-out infinite alternate; }
+@keyframes o55np-bob { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+@keyframes o55np-bob-shadow { from { transform: scaleX(1); opacity: .9; } to { transform: scaleX(.7); opacity: .5; } }
+
+/* ===================================================================================================== Pointer */
+
+/* ---- Square pointer [pointer]: a small ink square with a notch; a hollow one over things you can press ----
+   The images are data URIs, so their colours are written out: the palette's ink with a parchment rim (light), and
+   parchment with an ink rim (dark). The hot spot is the top-left corner. */
+html[data-o55-nier-parts~="pointer"], html[data-o55-nier-parts~="pointer"] body {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 1.5H12.5V8.5H8.5V12.5H1.5Z' fill='%23211f1b' stroke='%23dcd8c2' stroke-width='1'/%3E%3C/svg%3E") 1 1, auto;
+}
+html[data-o55-nier-parts~="pointer"] :is(button, a[href], [role="button"], [role="tab"], [role="menuitem"], [role="option"], [role="switch"], [data-action], summary, select, label[for],
+  input:is([type="checkbox"], [type="radio"], [type="range"], [type="button"], [type="submit"]), .page-tab, .activity-bar .icon, .fm-row, .chat-thread-item, .tab) {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 1.5H12.5V8.5H8.5V12.5H1.5Z' fill='%23211f1b' stroke='%23dcd8c2' stroke-width='1'/%3E%3Cpath d='M4 4H8V8H4Z' fill='%23dcd8c2'/%3E%3C/svg%3E") 1 1, pointer;
+}
+html[data-theme="basic-dark"][data-o55-nier-parts~="pointer"], html[data-theme="basic-dark"][data-o55-nier-parts~="pointer"] body {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 1.5H12.5V8.5H8.5V12.5H1.5Z' fill='%23d1cdb7' stroke='%232f2d26' stroke-width='1'/%3E%3C/svg%3E") 1 1, auto;
+}
+html[data-theme="basic-dark"][data-o55-nier-parts~="pointer"] :is(button, a[href], [role="button"], [role="tab"], [role="menuitem"], [role="option"], [role="switch"], [data-action], summary, select, label[for],
+  input:is([type="checkbox"], [type="radio"], [type="range"], [type="button"], [type="submit"]), .page-tab, .activity-bar .icon, .fm-row, .chat-thread-item, .tab) {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 1.5H12.5V8.5H8.5V12.5H1.5Z' fill='%23d1cdb7' stroke='%232f2d26' stroke-width='1'/%3E%3Cpath d='M4 4H8V8H4Z' fill='%232f2d26'/%3E%3C/svg%3E") 1 1, pointer;
+}
+
+/* ============================================================================================ Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
+  html[data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .o55-ph-active .o55-phmark, .thread-working-pulse, .pm6-spin svg, .pm7u-iconbtn.spinning svg) { animation: none !important; }
+  html[data-o55-nier-parts~="slice"] :is(.pm6-tb-menu, .pm6-chat-more-menu, .pm51-popout, .pm-home-portal, .pm6-chat-pt-popout-portal, .pm6-chat-persona-popout-portal,
+    .pm6-chat-effort-popout-portal, .pm6-chat-mini-popout-portal, .pm6-chat-mode-popout-portal, .context-hover-module, .context-lens-popover, .wt-bind-dropdown,
+    .pm6-tb-search-pop, .rs-panel, .dialog, .pm6-orch-modal, .pm-ctx-menu, .fm-ctx, .pm7ctx-pop, .pm7-dash-size-pop, .pm7u-pop, .chat-dropdown-popover, .slash-command-menu,
+    .dropdown-menu, .pm-ed-overflow-menu, .msg-runtime-popover, .pm6-status-pop, .popover) { scale: none !important; }
+}
