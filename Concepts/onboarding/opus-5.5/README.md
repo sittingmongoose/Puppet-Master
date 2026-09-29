@@ -43,7 +43,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `src/js/50–57` | Art: scene system, four family prop libraries (Basic blueprint, Friendly paper theatre, Glass light lab, Retro arcade), scene compositions. |
 | `src/js/60–62` | The window, components, flow helpers (phased owner operations, countdowns, QR drawing). |
 | `src/js/65–74` | Screens by chapter: Welcome, Computer (Connect, Server, Restore), Project (begin, folder, NAS/SSH, name, start-like, keep safe, online copy, away, review, creating, protect), AI (providers, Free Models), Ready. |
-| `src/js/80–83` | The Guided Tour: engine (spotlight, callout, bar, Show Me pointer, snapshot/restore, checkpoints), the Teacher chat adapter (local answers, ELI5 rewrite), the Planning Wizard practice run, and the 18 steps. |
+| `src/js/80–83` | The Guided Tour: engine (spotlight, callout, bar, Show Me pointer, snapshot/restore, checkpoints), the Teacher chat adapter (local answers, Explain this reply simply), the Planning Wizard practice run, and the 18 steps. |
 | `src/js/90–95` | Concept demo pill; boot, shims for the shell's existing callers, driver switches (`?o55=fresh|off|screen=<id>`, `?o55scenario=<id>`). |
 | `src/css/` | Window, components, motion, art. Colours come from the live theme tokens. |
 | `src/coverage.map.json` → `src/coverage.json` | Every setup-plan field (63) and conditional (26) mapped to the screen or control that sets it, plus screens → scenes and scenarios → drivers. |
@@ -63,7 +63,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `tools/sound_render.mjs` + `tools/sound_board.py` | Offline renders of every sound kit, listening boards, spectrograms, live trace check. |
 | `tools/tour_scenarios.mjs <out> [--only t1,t2] [--snaps]` | Tour acceptance by real CDP input: t1 every step by hand then Restore, t2 every action through Show Me then Keep, t3 Skip restores, t4 reload recovery, t5 missing target. Every run also checks that no raw copy key shows and that a settled callout never covers its target. |
 | `tools/tour_shots.mjs <out> [--themes] [--width --height]` | Every tour step settled, in each theme (parallel browsers), plus after-states and the dock step mid-drag. |
-| `tools/tour_film.mjs <out> [--scenes] [--themes] [--rate]` | Slow-motion films of the handoff, the tour opening, every Show Me, the ELI5 rewrite, the plan read part by part and the finish. |
+| `tools/tour_film.mjs <out> [--scenes] [--themes] [--rate]` | Slow-motion films of the handoff, the tour opening, every Show Me, Explain this reply simply, the plan read part by part and the finish. |
 | `tools/tour_census.mjs <out> [--wpm]` | Meaningful actions and dwell time per chapter, measured on the real tour. |
 | `tools/perf/perf.py <page> <out.json> [--themes] [--quick] [--headful] [--tracefps]` | Performance walk per theme (opening, screens at rest and changing, typing, tour steps, Show Me, look picker). Python stdlib only, so it runs on the Windows PC over SSH as well as on the VM (`xvfb-run … --headful`). See "Performance rules". |
 | `tools/perf/film.py <page> <outdir> [--themes] [--scenes] [--rate 0.1] [--solid 0\|1]` | Slow-motion 60 fps films of the opening, a screen change with the rig, typing, the tour's ring and Show Me, on the Windows GPU. |
@@ -104,7 +104,9 @@ Chrome) and drive `PM51.go(domain, workspace)`; check all eight themes and 760 /
 ## The Guided Tour
 
 Three chapters in the real app, 18 steps: **Ask and understand** (open Chat with the Chat icon, choose Teacher, send
-the supplied question, read the local answer, turn ELI5 on and watch the same answer rewrite), **Make the workspace
+the supplied question, read the local answer, ask for Explain this reply simply, which adds one simpler reply under
+the answer and leaves the answer as it was (DL-126), then meet the quick ELI5 switch by the message box, which changes
+only later replies), **Make the workspace
 yours** (a glide over pages, workspace and Chat; drag Chat to the glowing left dock; add the Approval queue widget and
 place it), **Plan before building** (open Planning Wizard by its visible route, use the practice goal, open an
 outcome, answer the access question with Why this matters, review, read the plan part by part, change the answer and
@@ -116,7 +118,7 @@ recovery panel instead of claiming the earlier layout or unsaved draft was resto
 into the tour's first callout.
 
 Measured with `tools/tour_census.mjs`: 14 meaningful actions, 7 of them in Planning (50 %), and 4.5 minutes at 200
-words a minute, 53 % of it in Planning (the packet asks for at least half of both).
+words a minute, 52 % of it in Planning (the packet asks for at least half of both).
 
 Native durable owner snapshot admission remains to be implemented; the browser fixture cannot recover an unsaved
 composer draft from a bounded reference after a full reload.

@@ -4976,7 +4976,9 @@
       "requirement_refs": [
         "Plans/assistant-chat-design.md#ACD-426",
         "Plans/UI_Command_Catalog.md#UCC-156",
-        "Plans/Planning_Wizard.md#PWIZ-023"
+        "Plans/Planning_Wizard.md#PWIZ-023",
+        "Plans/assistant-chat-design.md#ACD-484",
+        "Plans/UI_Command_Catalog.md#UCC-174"
       ],
       "owner_plan": "Plans/assistant-chat-design.md",
       "plan_unit": "ACD-426",
@@ -4987,7 +4989,7 @@
       "availability_rule": "Exact Project/thread/target identity, current owner revision and owner availability are required.",
       "permission_gate": "Existing owner permissions apply; the guided example must remain local without provider fallthrough.",
       "disabled_reason_rule": "Expose absent/stale owner, missing target or unavailable handler without inferred success.",
-      "handler_owner": "Existing handlers::chat::send and handlers::assistant_chat::eli5_set routes; no new Tour handler.",
+      "handler_owner": "Existing handlers::chat::send, handlers::assistant_chat::eli5_set and handlers::assistant_chat::eli5_explain_reply routes; no new Tour handler.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
       "production_or_simulation": "Existing catalog/wiring candidate identity and scoped concept adapter only, not native execution.",
@@ -4999,7 +5001,8 @@
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json",
         "Plans/Planning_Wizard.md#PWIZ-023",
-        "Concepts/pm7-tools/guided_tour_source.py"
+        "Concepts/pm7-tools/guided_tour_source.py",
+        "Concepts/onboarding/opus-5.5/src/js/81-tour-chat.js"
       ],
       "event_refs": [
         "Existing domain event candidates remain subject to Event Authority; no Tour event admission."
@@ -10386,6 +10389,14 @@
       "cmd.chat.eli5.set",
       "partial",
       "Existing thread ELI5 owner reused independently of the global default and Tour narration toggle; in the tour it is the quick dot for later replies and never rewrites the example answer (DL-126). Same-answer concept behavior is not dedicated machine payload or native isolation evidence."
+    ],
+    [
+      "TOUCH-TCHAT-003",
+      "TCP-TOUR-CHAT",
+      "command",
+      "cmd.chat.eli5.explain_reply",
+      "blocked",
+      "Catalogued Chat owner command (UCC-174, ACD-484) used by the tour's Explain this reply simply step: one extra, simpler reply under the finished example answer, whose text stays unchanged, and no change to the chat's ELI5 (DL-126). Not admitted to production wiring (candidate_not_registered, handler_unavailable), so the step's production checkpoint cannot be satisfied until admission (WM-041); the concept writes that reply locally in the Guided example only. Dedicated machine payload, idempotency and native execution remain unproven."
     ],
     [
       "TOUCH-DOC-001",

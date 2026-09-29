@@ -1,4 +1,4 @@
-/* ---- O55 Guided Tour: scrim + spotlight, callout, tour bar, Show Me pointer, ELI5 rewrite, Wizard practice ------
+/* ---- O55 Guided Tour: scrim + spotlight, callout, tour bar, Show Me pointer, Explain this reply simply, Wizard practice ------
    The scrim is tinted by the theme (never black) and does not block the app unless a step asks it to. Families differ
    in material and motion: Basic blueprint (leader lines, crosshair pointer), Friendly paper (bubble, glove), Glass light
    (glowing ring and orb), Retro terminal (marching ants, pixel hand, stepped moves). */
@@ -195,12 +195,17 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-handoff .o55-win { animation-
 @keyframes o55t-chipin { from { opacity: 0; transform: translateY(8px); } }
 .o55t-root[data-family="retro"] .o55t-chip { border-radius: 0; animation-timing-function: steps(3); }
 
-/* ELI5: kept words stay, removed words fold away, new words type in */
-.o55e-w { display: inline; transition: opacity 300ms ease; }
-.o55e-del { display: inline-block; overflow: hidden; white-space: pre; vertical-align: bottom; animation: o55e-fold 520ms cubic-bezier(0.3, 0, 0.2, 1) forwards; color: var(--text-muted); text-decoration: line-through; }
-@keyframes o55e-fold { 0% { max-width: 12em; opacity: 1; } 60% { opacity: 0; } 100% { max-width: 0; opacity: 0; } }
-.o55e-ins { opacity: 0; animation: o55e-type 260ms ease forwards; animation-delay: calc(560ms + var(--k, 0) * 45ms); color: var(--accent-lime); }
-@keyframes o55e-type { from { opacity: 0; } to { opacity: 1; color: inherit; } }
+/* Explain this reply simply (DL-126): a quiet control under a finished guided answer, and one quiet line on the simpler
+   reply it adds, saying what that reply is. The answer itself is never rewritten. */
+.o55-explain-row { display: flex; margin: 6px 0 2px; }
+.o55-explain { display: inline-flex; align-items: center; gap: 6px; min-height: 26px; padding: 3px 10px; border: 1px solid var(--border); border-radius: 8px; background: transparent;
+  color: var(--text-secondary); font: 600 12px/1.3 var(--body-font); cursor: pointer; transition: color 160ms ease, border-color 160ms ease, background 160ms ease; }
+.o55-explain .o55-sg { flex: none; color: var(--accent-lime); }
+.o55-explain:hover, .o55-explain:focus-visible { color: var(--text-primary); border-color: var(--accent-lime); background: color-mix(in srgb, var(--accent-lime) 8%, transparent); }
+.o55-explain[aria-disabled="true"] { opacity: 0.5; cursor: default; border-color: var(--border); background: transparent; color: var(--text-secondary); }
+.o55-explains { display: flex; align-items: center; gap: 6px; margin: 0 0 6px; color: var(--text-muted); font: 600 11px/1.3 var(--body-font); }
+.o55-explains .o55-sg { flex: none; color: var(--accent-lime); }
+html[data-theme^="retro"] .o55-explain { border-radius: 0; }
 .o55-guided-thread .thread-title::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 6px; border-radius: 50%; background: var(--accent-lime); vertical-align: middle; }
 
 /* Planning Wizard practice (Guided example inside the real Wizard) */
@@ -244,14 +249,12 @@ html[data-theme-family="retro"] .o55p-pulse { animation-timing-function: steps(5
 html[data-motion="reduced"] .o55t-callout, html[data-motion="reduced"] .o55t-bar { transition-duration: 0.01ms !important; }
 html[data-motion="reduced"] .o55t-ring, html[data-motion="reduced"] .o55t-ringbox, html[data-motion="reduced"] .o55t-ph, html[data-motion="reduced"] .o55t-zone, html[data-motion="reduced"] .o55t-zonelabel svg { animation: none !important; }
 html[data-motion="reduced"] .o55t-ph0 { opacity: 1; } /* the dashes stand still */
-html[data-motion="reduced"] .o55e-del { animation: none; display: none; }
-html[data-motion="reduced"] .o55e-ins, html[data-motion="reduced"] .o55p-fresh, html[data-motion="reduced"] .o55p-gone { animation-duration: 0.01ms !important; animation-delay: 0ms !important; }
+html[data-motion="reduced"] .o55p-fresh, html[data-motion="reduced"] .o55p-gone { animation-duration: 0.01ms !important; animation-delay: 0ms !important; }
 @media (prefers-reduced-motion: reduce) {
   .o55t-callout, .o55t-bar { transition-duration: 0.01ms !important; }
   .o55t-ring, .o55t-ringbox, .o55t-ph, .o55t-zone, .o55t-zonelabel svg { animation: none !important; }
   .o55t-ph0 { opacity: 1; }
-  .o55e-del { animation: none; display: none; }
-  .o55e-ins, .o55p-fresh, .o55p-gone { animation-duration: 0.01ms !important; animation-delay: 0ms !important; }
+  .o55p-fresh, .o55p-gone { animation-duration: 0.01ms !important; animation-delay: 0ms !important; }
 }
 /* the concept demo pill steps aside while the tour runs (it would sit on the tour bar on narrow windows) */
 html[data-o55-tour] #o55-demo { display: none !important; }

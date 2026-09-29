@@ -683,19 +683,26 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
         )
     add("TCP-GUIDED-NAV", "ui_action", {guided_focus_action})
     # Reuse domain owners, not the predecessor concept-local Chat spellings.
-    # This closed projection admits only these three already catalogued routes;
+    # This closed projection admits only these four already catalogued routes;
     # it must not turn the entire ambient catalog into a new Touch denominator.
+    # DL-126: the tour shows the example answer in simple words only through
+    # Explain this reply simply (one extra reply); the quick ELI5 switch changes
+    # later replies only. cmd.chat.eli5.explain_reply is catalogued (UCC-174) but
+    # not admitted to production wiring (Wiring_Matrix.production.exclusions.json,
+    # candidate_not_registered), so its Touch row stays blocked until admission.
     guided_domain_actions = {
         "TCP-TOUR-PERSONA": {"cmd.persona.select"},
-        "TCP-TOUR-CHAT": {"cmd.chat.send", "cmd.chat.eli5.set"},
+        "TCP-TOUR-CHAT": {"cmd.chat.send", "cmd.chat.eli5.set", "cmd.chat.eli5.explain_reply"},
     }
+    guided_non_admitted = {"cmd.chat.eli5.explain_reply"}
     catalog_tokens = tokens(read("Plans/UI_Command_Catalog.md"))
     for profile, actions in guided_domain_actions.items():
         if not actions <= catalog_tokens:
             raise ValueError(f"Guided Tour domain routes absent from canonical catalog: {sorted(actions - catalog_tokens)}")
         if not actions <= effective_guided_actions:
             inventory_failures.append(f"Guided Tour reused domain routes missing from effective source: {sorted(actions - effective_guided_actions)}")
-        add(profile, "command", actions)
+        add(profile, "command", actions - guided_non_admitted)
+        add(profile, "command", actions & guided_non_admitted, "blocked")
     add("TCP-PANEL", "command", {"cmd.panel.switch", "cmd.panel.undock", "cmd.panel.redock"})
     add("TCP-WIDGET", "command", {"cmd.widget.add", "cmd.widget.remove", "cmd.widget.configure"})
     add("TCP-WIDGET-MOTION", "command", {"cmd.widget.move", "cmd.widget.resize"})
@@ -1858,8 +1865,11 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # catalog.chat_queue_send_now for cmd.chat.queue.send_now (1154 -> 1155).
     # Like cmd.chat.queue.remove it has no Touch row; no row, profile, alias,
     # exclusion, native handler or proof is added.
+    # 2026-09-29 tour re-point (DL-126, ledger pldg-20260927-005 q-018): one
+    # blocked TCP-TOUR-CHAT row for cmd.chat.eli5.explain_reply (674 -> 675); it
+    # stays out of production wiring, so no entry, exclusion or alias changes.
     exact_resolved_denominators = {
-        "row_count": 674,
+        "row_count": 675,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
         "profile_count": 135,

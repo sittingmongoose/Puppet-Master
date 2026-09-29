@@ -55,7 +55,7 @@ const SCENES = {
   'sm-open-chat': { frames: 150, setup: async () => { await __f.start(); await __f.go('open_chat'); }, trigger: () => __f.showMe() },
   'sm-teacher': { frames: 150, setup: async () => { await __f.start(); __f.chatOn(); await __f.go('select_teacher'); await window.O55.tour.chat.ensureThread(); }, trigger: () => __f.showMe() },
   'sm-send': { frames: 170, setup: async () => { await __f.start(); await __f.teacher(); await __f.go('send_question'); }, trigger: () => __f.showMe() },
-  'eli5': { frames: 150, setup: async () => { await __f.start(); await __f.asked(); await __f.go('same_answer_eli5'); }, trigger: () => __f.click('span.chat-toggle-btn.toggle-eli5') },
+  'eli5': { frames: 150, setup: async () => { await __f.start(); await __f.asked(); await __f.go('same_answer_eli5'); await __f.wait(400); }, trigger: () => __f.click('#chatPanel [data-o55-explain]') },
   'step-next': { frames: 80, setup: async () => { await __f.start(); await __f.asked(); await __f.go('answer_stream'); await __f.wait(500); }, trigger: () => __f.click('#pm-o55-tour .o55t-callout [data-o55t="next"]') },
   'sm-dock': { frames: 210, setup: async () => { await __f.start(); await __f.go('move_or_dock_chat'); }, trigger: () => __f.showMe() },
   'sm-widget': { frames: 480, setup: async () => { await __f.start(); await __f.go('widget_action'); }, trigger: () => __f.showMe() },

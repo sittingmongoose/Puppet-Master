@@ -135,8 +135,28 @@ async function byHandChapter1(t, A) {
   A.ok(await t.ev(() => { const el = window.O55.tour.chat.lastAnswerEl(); return !!el && /Guided example/.test(el.textContent) && !/Est\. Cost|Tokens/.test(el.textContent); }), 'answer labelled Guided example, no token or cost line');
   await t.callout('next');
   await t.untilStep('same_answer_eli5');
-  await t.click('span.chat-toggle-btn.toggle-eli5', 'ELI5'); await t.until(() => window.O55.tour.state().done.includes('same_answer_eli5'), 'ELI5 rewrite'); await sleep(1300); await t.snap('eli5');
-  A.ok(await t.ev(() => /First, Puppet Master writes down/.test(window.O55.tour.chat.lastAnswerEl().textContent)), 'the same bubble now reads the ELI5 answer');
+  /* DL-126: Explain this reply simply adds ONE simpler reply under the example answer, which is never rewritten; the
+     quick ELI5 switch by the message box changes only replies written after it */
+  A.ok(await t.ev(() => !document.querySelector('#chatPanel .toggle-eli5.active')), 'the example chat starts with ELI5 off');
+  await t.until(() => { const c = window.O55.tour.chat, b = c.explainBtn(c.midFor('a1')); return !!b && b.getAttribute('aria-disabled') === 'false'; }, 'Explain this reply simply ready');
+  await t.click('#chatPanel [data-o55-explain]', 'Explain this reply simply');
+  await t.until(() => window.O55.tour.state().done.includes('same_answer_eli5'), 'one simpler reply'); await sleep(1300); await t.snap('eli5');
+  const replies = () => t.ev(() => [...document.querySelectorAll('#chatPanel .pm6-chat-msg.assistant')].filter((m) => m.getClientRects().length).map((m) => (m.querySelector('.pm6-chat-sink') || {}).textContent.trim()));
+  const two = await replies();
+  A.eq(two.length, 2, 'exactly one extra reply: the example answer and its simpler reply');
+  A.ok(/^Before work begins, Puppet Master turns your request into a plan\./.test(two[0] || ''), 'the example answer is unchanged');
+  A.ok(/^First, Puppet Master writes down/.test(two[1] || ''), 'the simpler reply sits directly under it');
+  A.ok(await t.ev(() => { const c = window.O55.tour.chat, x = c.simplerFor(c.midFor('a1')), el = x && document.querySelector(`#chatPanel [data-pm6-mid="${x}"] .o55-explains`); return !!el && /Simpler explanation of the reply above/.test(el.textContent); }), 'the simpler reply says what it is');
+  A.ok(await t.ev(() => !document.querySelector('#chatPanel [data-o55-explain]') && !document.querySelector('#chatPanel .toggle-eli5.active')), 'Explain leaves once used, and the chat ELI5 did not change');
+  await t.until(() => { const h = window.O55.tour.st.hole, el = window.O55.tour.chat.eli5Btn(); if (!h || !el) return false; const r = el.getBoundingClientRect(); return h.x <= r.left && h.y <= r.top && h.x + h.w >= r.right && h.y + h.h >= r.bottom && h.w < r.width + 40; }, 'the spotlight moves to the quick ELI5 switch');
+  await t.click('span.chat-toggle-btn.toggle-eli5', 'quick ELI5'); await sleep(500);
+  A.eq(JSON.stringify(await replies()), JSON.stringify(two), 'switching ELI5 rewrites no reply');
+  await t.callout('askProject'); await t.until(() => window.O55.tour.chat.answered('a2'), 'a later reply'); await sleep(400);
+  const three = await replies();
+  A.eq(JSON.stringify(three.slice(0, 2)), JSON.stringify(two), 'earlier replies stay as they were');
+  A.ok(/^A Project is one workspace/.test(three[2] || ''), 'the reply written after the switch is simple');
+  A.ok(await t.ev(() => !document.querySelector('#chatPanel [data-o55-explain]')), 'a reply written simple offers no Explain');
+  await t.snap('eli5_later');
   await t.callout('next');
 }
 async function byHandChapter2(t, A) {
@@ -300,14 +320,17 @@ def('t6', 'Back rewinds a step, so it can be done again or watched with Show Me'
   A.eq(await t.ev(() => window.O55.tour.chat.persona()), persona0, 'Back: the guide is ' + persona0 + ' again');
   A.ok(await showMeOffered(t), 'Back: Show Me is offered on Choose Teacher');
   await t.callout('showMe'); await t.untilStep('send_question', 12000);
-  /* send, read the answer, turn ELI5 on; Back: ELI5 off and the answer as it was; Back again: the exchange is gone */
+  /* send, read the answer, ask for the simpler reply; Back: the simpler reply is gone and Explain is offered again, the
+     answer as it was; Back again: the exchange is gone */
   await t.callout('fillQuestion'); await t.click('#chatPanel .pm6-chat-send', 'Send');
   await t.untilStep('answer_stream'); await t.until(() => window.O55.tour.chat.answered('a1'), 'answer'); await t.callout('next');
-  await t.untilStep('same_answer_eli5'); await t.click('span.chat-toggle-btn.toggle-eli5', 'ELI5');
-  await t.until(done('same_answer_eli5'), 'ELI5 rewrite'); await sleep(1400);
+  await t.untilStep('same_answer_eli5');
+  await t.until(() => { const c = window.O55.tour.chat, b = c.explainBtn(c.midFor('a1')); return !!b && b.getAttribute('aria-disabled') === 'false'; }, 'Explain ready');
+  await t.click('#chatPanel [data-o55-explain]', 'Explain this reply simply');
+  await t.until(done('same_answer_eli5'), 'one simpler reply'); await sleep(1400);
   await t.callout('back'); await t.untilStep('answer_stream'); await sleep(1600);
-  A.ok(await t.ev(() => !document.querySelector('span.chat-toggle-btn.toggle-eli5.active')), 'Back: ELI5 is off again');
-  A.ok(!(await t.ev(() => window.O55.tour.chat.eli5Shown())), 'Back: the answer reads the ordinary way again');
+  A.eq(await t.ev(() => [...document.querySelectorAll('#chatPanel .pm6-chat-msg.assistant')].filter((m) => m.getClientRects().length).length), 1, 'Back: the simpler reply is gone');
+  A.ok(await t.ev(() => { const c = window.O55.tour.chat, el = document.querySelector(`#chatPanel [data-pm6-mid="${c.midFor('a1')}"] .pm6-chat-sink`); return !!el && /^Before work begins/.test(el.textContent.trim()) && !!c.explainBtn(c.midFor('a1')); }), 'Back: the answer is as it was and Explain is offered again');
   await t.callout('back'); await t.untilStep('send_question'); await sleep(500);
   A.eq(await t.ev(() => [...document.querySelectorAll('#chatPanel .pm6-chat-msg')].filter((m) => m.getClientRects().length).length), 0, 'Back: the question and its answer are gone from the Guided example');
   A.ok(!(await t.ev(done('send_question'))) && (await showMeOffered(t)), 'Back: the question is not counted as sent, and Show Me is offered');

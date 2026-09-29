@@ -1305,10 +1305,10 @@
         "doEli5": "Read the answer."
       },
       "same_answer_eli5": {
-        "title": "ELI5 makes the same answer simpler.",
-        "do": "Turn on ELI5 in Chat.",
-        "doEli5": "Click ELI5 in Chat.",
-        "after": "Same meaning, fewer words. You can switch it any time.",
+        "title": "Teacher can explain an answer more simply.",
+        "do": "Choose Explain this reply simply under the answer.",
+        "doEli5": "Click Explain this reply simply.",
+        "after": "One simpler reply was added, and the answer above did not change. Turn on ELI5 by the message box to make later replies simple.",
         "ask": "Ask: What is a Project?"
       },
       "workspace_orientation": {
@@ -1408,6 +1408,10 @@
       "q2": "What is a Project?",
       "a2": "A Project keeps one body of work—its files, plans, history, and Project-specific settings—together.",
       "a2eli5": "A Project is one workspace for one thing you are making. It keeps the right files and decisions together.",
+      "explain": "Explain this reply simply",
+      "explainDetail": "Adds one simpler reply under this one. The reply itself and this chat’s ELI5 stay as they are.",
+      "explainWait": "Available when this reply finishes.",
+      "explains": "Simpler explanation of the reply above",
       "suggest": "Ask:",
       "own": "Teacher answers tour questions from its guide. Try one of these:",
       "topics": {
