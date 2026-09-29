@@ -1,0 +1,852 @@
+{
+  "schema": "a2-timing-model-chronology/v1",
+  "scope": "read_only_mechanical_a1_a2",
+  "semantics": {
+    "duration_ms": "The model_completed and session/tokenUsage durationMs fields are native reported per completed parent response; A2 retry delays occur within the second and third response intervals. They are not pure model inference time.",
+    "terminal_duration_ms": "model.attempt.lifecycle terminal duration_ms is the elapsed outer model step as reported by local tracing, including inner provider retries where present.",
+    "time_to_first_wire_event_ms": "provider stream open to first SSE wire event, not first model token or first visible output.",
+    "time_to_first_token_ms": "Native turn/completed exposes this field for A2; its exact token definition is not established by these artifacts and it must not be equated with first SSE event or first visible MSP item.",
+    "timestamps": "Journal recorded_at is microseconds since epoch; MSP emittedAtMs is milliseconds; trace timestamps are UTC text. Cross-source pairings are ordered and ID matched where IDs exist.",
+    "first_recorded_parent_msp_item": "Earliest parent reasoning or tool item observed for each completed response in the MSP stream. This is a user-visible stream item boundary, not a measured first model token.",
+    "overlap_ms_derived": "Intersection of reminder MSP item interval and traced parent outer model attempt interval. A1 child 2 uses its traced child terminal as the end because its MSP item completion is absent."
+  },
+  "observations": {
+    "a1": {
+      "session_id": "01a0e995-e9c2-7091-9e95-d05e89632941",
+      "parent_run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+      "completed_parent_responses": [
+        {
+          "response_id": "resp_6abac6214818a349e9d542df",
+          "response_created_at": "2026-09-28T19:55:16.575433Z",
+          "response_created_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-session.jsonl",
+            "line": 42
+          },
+          "provider_request_id": "658419d4-942a-42f3-b962-aebf98940f0f",
+          "stream_succeeded_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-session.jsonl",
+            "line": 47
+          },
+          "time_to_first_wire_event_ms": 14,
+          "model_completed_at": "2026-09-28T19:55:23.624567Z",
+          "model_completed_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-session.jsonl",
+            "line": 49
+          },
+          "duration_ms": 12008,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "inputTokens": 20675,
+            "outputTokens": 901,
+            "reasoningTokens": 384,
+            "cacheReadTokens": 0,
+            "cacheWriteTokens": 0,
+            "cachedTokens": 0,
+            "totalTokens": 21576
+          },
+          "usage_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-msp.jsonl",
+            "line": 17
+          },
+          "model_attempt_id": "01a0e995-eab4-74c2-8412-3bc844449a26:0:1",
+          "first_recorded_parent_msp_item": {
+            "at_emitted_ms": 1790625316582,
+            "kind": "reasoning",
+            "method": "item/started",
+            "ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-msp.jsonl",
+              "line": 14
+            }
+          },
+          "first_parent_sse_wire_event": {
+            "at": "2026-09-28T19:55:13.923528Z",
+            "ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+              "line": 76
+            }
+          }
+        },
+        {
+          "response_id": "resp_6abac62dc8c2086278d64fff",
+          "response_created_at": "2026-09-28T19:55:28.155491Z",
+          "response_created_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-session.jsonl",
+            "line": 164
+          },
+          "provider_request_id": "ab96f68d-58f6-4eae-9ae9-45a381f43c28",
+          "stream_succeeded_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-session.jsonl",
+            "line": 170
+          },
+          "time_to_first_wire_event_ms": 5,
+          "model_completed_at": "2026-09-28T19:55:50.015534Z",
+          "model_completed_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-session.jsonl",
+            "line": 172
+          },
+          "duration_ms": 25890,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "inputTokens": 24758,
+            "outputTokens": 2518,
+            "reasoningTokens": 534,
+            "cacheReadTokens": 20593,
+            "cacheWriteTokens": 0,
+            "cachedTokens": 20593,
+            "totalTokens": 27276
+          },
+          "usage_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-msp.jsonl",
+            "line": 41
+          },
+          "model_attempt_id": "01a0e995-eab4-74c2-8412-3bc844449a26:1:1",
+          "first_recorded_parent_msp_item": {
+            "at_emitted_ms": 1790625328166,
+            "kind": "reasoning",
+            "method": "item/started",
+            "ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-msp.jsonl",
+              "line": 37
+            }
+          },
+          "first_parent_sse_wire_event": {
+            "at": "2026-09-28T19:55:25.577957Z",
+            "ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+              "line": 175
+            }
+          }
+        }
+      ],
+      "parent_model_attempts": [
+        {
+          "attempt_id": "01a0e995-eab4-74c2-8412-3bc844449a26:0:1",
+          "admitted_at": "2026-09-28T19:55:11.612564Z",
+          "admission_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+            "line": 63
+          },
+          "terminal_at": "2026-09-28T19:55:23.636144Z",
+          "terminal_outcome": "tool_calls",
+          "terminal_duration_ms": 12023,
+          "terminal_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+            "line": 80
+          }
+        },
+        {
+          "attempt_id": "01a0e995-eab4-74c2-8412-3bc844449a26:1:1",
+          "admitted_at": "2026-09-28T19:55:24.121006Z",
+          "admission_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+            "line": 160
+          },
+          "terminal_at": "2026-09-28T19:55:50.028581Z",
+          "terminal_outcome": "tool_calls",
+          "terminal_duration_ms": 25907,
+          "terminal_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+            "line": 179
+          }
+        },
+        {
+          "attempt_id": "01a0e995-eab4-74c2-8412-3bc844449a26:2:1",
+          "admitted_at": "2026-09-28T19:55:50.455285Z",
+          "admission_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+            "line": 238
+          },
+          "terminal_at": "2026-09-28T19:55:50.470063Z",
+          "terminal_outcome": "cancelled",
+          "terminal_duration_ms": 14,
+          "terminal_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+            "line": 250
+          }
+        }
+      ],
+      "parent_provider_retries": [],
+      "reminder_children": [
+        {
+          "child_session_id": "6d64e71b-c1d5-4c3d-b36d-0c35ab2f0c18",
+          "generation_id": 1,
+          "task_id": "01a0e995-eb3b-73b3-9333-dacedd4cc09f",
+          "item_started_at": "2026-09-28T19:55:11.567765Z",
+          "item_started_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-msp.jsonl",
+            "line": 12
+          },
+          "item_terminal_at": "2026-09-28T19:55:50.360277Z",
+          "item_status": "completed",
+          "item_terminal_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-msp.jsonl",
+            "line": 61
+          },
+          "model_attempts": [
+            {
+              "attempt_id": "6d64e71b-c1d5-4c3d-b36d-0c35ab2f0c18:0:1",
+              "admitted_at": "2026-09-28T19:55:11.619708Z",
+              "admission_ref": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+                "line": 71
+              },
+              "terminal_at": "2026-09-28T19:55:25.004596Z",
+              "terminal_outcome": "tool_calls",
+              "terminal_duration_ms": 13384,
+              "terminal_ref": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+                "line": 165
+              }
+            }
+          ],
+          "item_elapsed_ms_derived": 38792.512,
+          "overlapping_parent_model_attempts": [
+            {
+              "parent_attempt_id": "01a0e995-eab4-74c2-8412-3bc844449a26:0:1",
+              "overlap_ms_derived": 12023.58
+            },
+            {
+              "parent_attempt_id": "01a0e995-eab4-74c2-8412-3bc844449a26:1:1",
+              "overlap_ms_derived": 25907.575
+            }
+          ]
+        },
+        {
+          "child_session_id": "f68ead43-ffd0-4a7e-89fb-cad82d052aad",
+          "generation_id": 2,
+          "task_id": "01a0e996-82e5-7d10-a0d8-b4a3cb80b2f6",
+          "item_started_at": "2026-09-28T19:55:50.397007Z",
+          "item_started_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-msp.jsonl",
+            "line": 62
+          },
+          "model_attempts": [
+            {
+              "attempt_id": "f68ead43-ffd0-4a7e-89fb-cad82d052aad:0:1",
+              "admitted_at": "2026-09-28T19:55:50.462713Z",
+              "admission_ref": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+                "line": 246
+              },
+              "terminal_at": "2026-09-28T19:55:50.470260Z",
+              "terminal_outcome": "cancelled",
+              "terminal_duration_ms": 7,
+              "terminal_ref": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+                "line": 253
+              }
+            }
+          ],
+          "overlapping_parent_model_attempts": [
+            {
+              "parent_attempt_id": "01a0e995-eab4-74c2-8412-3bc844449a26:2:1",
+              "overlap_ms_derived": 14.778
+            }
+          ],
+          "interval_end_basis": "last child model attempt terminal; reminder item terminal missing from bound MSP"
+        }
+      ],
+      "unattributed_first_wire_events": [
+        {
+          "at": "2026-09-28T19:55:12.477634Z",
+          "stream_open_to_first_event_us": 4676,
+          "ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+            "line": 74
+          }
+        },
+        {
+          "at": "2026-09-28T19:55:13.923528Z",
+          "stream_open_to_first_event_us": 15234,
+          "ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+            "line": 76
+          }
+        },
+        {
+          "at": "2026-09-28T19:55:25.577957Z",
+          "stream_open_to_first_event_us": 5691,
+          "ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+            "line": 175
+          }
+        }
+      ],
+      "turn_terminal_metric": null,
+      "source_pins": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-session.jsonl",
+          "bytes": 322384,
+          "sha256": "a36eece85612559f6a30b8676b77c37d83330c7fae3d6fc59a27fbc6a4aa3bfa"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-msp.jsonl",
+          "bytes": 89077,
+          "sha256": "973fa2e29ef350b098ee976ce0ab4198dd2d52e821ad79865a243a13e06bab21"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log",
+          "bytes": 73594,
+          "sha256": "bb59ca0d4c6559b490969d246d2448775b0f40e76249b8a1a3bfe74ba2c52def"
+        }
+      ]
+    },
+    "a2": {
+      "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+      "parent_run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+      "completed_parent_responses": [
+        {
+          "response_id": "resp_6abbef69b6b6716cafb04848",
+          "response_created_at": "2026-09-29T17:03:39.429558Z",
+          "response_created_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+            "line": 42
+          },
+          "provider_request_id": "f01e5ca4-9330-4c0b-b89c-fd51b7ae6c79",
+          "stream_succeeded_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+            "line": 45
+          },
+          "time_to_first_wire_event_ms": 83,
+          "model_completed_at": "2026-09-29T17:03:41.967221Z",
+          "model_completed_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+            "line": 47
+          },
+          "duration_ms": 30057,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "inputTokens": 20677,
+            "outputTokens": 691,
+            "reasoningTokens": 200,
+            "cacheReadTokens": 0,
+            "cacheWriteTokens": 0,
+            "cachedTokens": 0,
+            "totalTokens": 21368
+          },
+          "usage_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+            "line": 14
+          },
+          "model_attempt_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd:0:1",
+          "first_recorded_parent_msp_item": {
+            "at_emitted_ms": 1790701422011,
+            "kind": "toolCall",
+            "method": "item/started",
+            "ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+              "line": 16
+            }
+          },
+          "first_parent_sse_wire_event": {
+            "at": "2026-09-29T17:03:37.974029Z",
+            "ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+              "line": 74
+            }
+          }
+        },
+        {
+          "response_id": "resp_6abbf007792c41c8de60403b",
+          "response_created_at": "2026-09-29T17:06:16.972268Z",
+          "response_created_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+            "line": 166
+          },
+          "provider_request_id": "32fe6697-35f0-4e7c-bd33-b96181f1bf42",
+          "stream_succeeded_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+            "line": 172
+          },
+          "time_to_first_wire_event_ms": 17,
+          "model_completed_at": "2026-09-29T17:06:31.525712Z",
+          "model_completed_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+            "line": 174
+          },
+          "duration_ms": 168997,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "inputTokens": 24574,
+            "outputTokens": 2904,
+            "reasoningTokens": 926,
+            "cacheReadTokens": 20593,
+            "cacheWriteTokens": 0,
+            "cachedTokens": 20593,
+            "totalTokens": 27478
+          },
+          "usage_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+            "line": 38
+          },
+          "model_attempt_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd:1:1",
+          "first_recorded_parent_msp_item": {
+            "at_emitted_ms": 1790701576982,
+            "kind": "reasoning",
+            "method": "item/started",
+            "ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+              "line": 34
+            }
+          },
+          "first_parent_sse_wire_event": {
+            "at": "2026-09-29T17:06:15.229992Z",
+            "ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+              "line": 187
+            }
+          }
+        },
+        {
+          "response_id": "resp_6abbf068448adf4253684528",
+          "response_created_at": "2026-09-29T17:07:53.623538Z",
+          "response_created_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+            "line": 272
+          },
+          "provider_request_id": "19d07a6e-70cb-491a-8535-14ffe88f8aad",
+          "stream_succeeded_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+            "line": 275
+          },
+          "time_to_first_wire_event_ms": 131,
+          "model_completed_at": "2026-09-29T17:07:56.173241Z",
+          "model_completed_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+            "line": 277
+          },
+          "duration_ms": 84121,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "inputTokens": 27975,
+            "outputTokens": 540,
+            "reasoningTokens": 94,
+            "cacheReadTokens": 0,
+            "cacheWriteTokens": 0,
+            "cachedTokens": 0,
+            "totalTokens": 28515
+          },
+          "usage_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+            "line": 60
+          },
+          "model_attempt_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd:2:1",
+          "first_recorded_parent_msp_item": {
+            "at_emitted_ms": 1790701676211,
+            "kind": "toolCall",
+            "method": "item/started",
+            "ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+              "line": 62
+            }
+          },
+          "first_parent_sse_wire_event": {
+            "at": "2026-09-29T17:07:53.075129Z",
+            "ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+              "line": 277
+            }
+          }
+        }
+      ],
+      "parent_model_attempts": [
+        {
+          "attempt_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd:0:1",
+          "admitted_at": "2026-09-29T17:03:11.904608Z",
+          "admission_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+            "line": 63
+          },
+          "terminal_at": "2026-09-29T17:03:41.981652Z",
+          "terminal_outcome": "tool_calls",
+          "terminal_duration_ms": 30077,
+          "terminal_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+            "line": 80
+          }
+        },
+        {
+          "attempt_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd:1:1",
+          "admitted_at": "2026-09-29T17:03:42.523901Z",
+          "admission_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+            "line": 160
+          },
+          "terminal_at": "2026-09-29T17:06:31.540348Z",
+          "terminal_outcome": "tool_calls",
+          "terminal_duration_ms": 169016,
+          "terminal_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+            "line": 191
+          }
+        },
+        {
+          "attempt_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd:2:1",
+          "admitted_at": "2026-09-29T17:06:32.047341Z",
+          "admission_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+            "line": 250
+          },
+          "terminal_at": "2026-09-29T17:07:56.185927Z",
+          "terminal_outcome": "tool_calls",
+          "terminal_duration_ms": 84138,
+          "terminal_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+            "line": 281
+          }
+        },
+        {
+          "attempt_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd:3:1",
+          "admitted_at": "2026-09-29T17:07:56.683441Z",
+          "admission_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+            "line": 340
+          },
+          "terminal_at": "2026-09-29T17:08:12.009413Z",
+          "terminal_outcome": "cancelled",
+          "terminal_duration_ms": 15325,
+          "terminal_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+            "line": 354
+          }
+        }
+      ],
+      "parent_provider_retries": [
+        {
+          "task_id": "01a0ee1f-47a4-7ee2-9c13-d48d74adadb1",
+          "attempt": 1,
+          "http_status": 503,
+          "request_id": "44830e36-bb14-4f9c-a65d-cb9c1f20b5e0",
+          "retry_delay_ms": 60000,
+          "at": "2026-09-29T17:03:43.568475Z",
+          "ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+            "line": 162
+          }
+        },
+        {
+          "task_id": "01a0ee1f-47a4-7ee2-9c13-d48d74adadb1",
+          "attempt": 2,
+          "http_status": 503,
+          "request_id": "9bad18f6-f423-4825-b3d8-575a181111f7",
+          "retry_delay_ms": 60000,
+          "at": "2026-09-29T17:04:44.820769Z",
+          "ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+            "line": 164
+          }
+        },
+        {
+          "task_id": "01a0ee21-ddd6-7560-99b9-b0d631236db4",
+          "attempt": 1,
+          "http_status": 503,
+          "request_id": "d44cd366-65db-45bc-98f0-5ee908b32ac7",
+          "retry_delay_ms": 60000,
+          "at": "2026-09-29T17:06:33.595837Z",
+          "ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+            "line": 270
+          }
+        },
+        {
+          "task_id": "01a0ee23-2873-7cc2-a42f-7fb89c101b18",
+          "attempt": 1,
+          "http_status": 503,
+          "request_id": "8c1f1555-c5d6-4899-adee-abcc1090b809",
+          "retry_delay_ms": 60000,
+          "at": "2026-09-29T17:07:58.098798Z",
+          "ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+            "line": 373
+          }
+        }
+      ],
+      "reminder_children": [
+        {
+          "child_session_id": "6a38b86d-24eb-49c9-82b4-00d94dc0843a",
+          "generation_id": 1,
+          "task_id": "01a0ee1e-cfd2-71f3-b9d9-b2800a750f8b",
+          "item_started_at": "2026-09-29T17:03:11.851553Z",
+          "item_started_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+            "line": 12
+          },
+          "item_terminal_at": "2026-09-29T17:06:31.937843Z",
+          "item_status": "completed",
+          "item_terminal_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+            "line": 58
+          },
+          "model_attempts": [
+            {
+              "attempt_id": "6a38b86d-24eb-49c9-82b4-00d94dc0843a:0:1",
+              "admitted_at": "2026-09-29T17:03:11.911891Z",
+              "admission_ref": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+                "line": 71
+              },
+              "retry_scheduled": {
+                "at": "2026-09-29T17:03:41.912506Z",
+                "delay_ms": 1000,
+                "ref": {
+                  "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+                  "line": 75
+                }
+              }
+            },
+            {
+              "attempt_id": "6a38b86d-24eb-49c9-82b4-00d94dc0843a:0:2",
+              "admitted_at": "2026-09-29T17:03:42.913822Z",
+              "admission_ref": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+                "line": 166
+              },
+              "terminal_at": "2026-09-29T17:04:11.933798Z",
+              "terminal_outcome": "tool_calls",
+              "terminal_duration_ms": 29019,
+              "terminal_ref": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+                "line": 174
+              }
+            }
+          ],
+          "item_elapsed_ms_derived": 200086.29,
+          "overlapping_parent_model_attempts": [
+            {
+              "parent_attempt_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd:0:1",
+              "overlap_ms_derived": 30077.044
+            },
+            {
+              "parent_attempt_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd:1:1",
+              "overlap_ms_derived": 169016.447
+            }
+          ]
+        },
+        {
+          "child_session_id": "fd48871a-9f36-4eb8-a59c-6d421b69bc80",
+          "generation_id": 2,
+          "task_id": "01a0ee21-dd92-7c50-a8f0-68b26dfc3ddc",
+          "item_started_at": "2026-09-29T17:06:31.985557Z",
+          "item_started_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+            "line": 59
+          },
+          "item_terminal_at": "2026-09-29T17:07:56.57166Z",
+          "item_status": "completed",
+          "item_terminal_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+            "line": 80
+          },
+          "model_attempts": [
+            {
+              "attempt_id": "fd48871a-9f36-4eb8-a59c-6d421b69bc80:0:1",
+              "admitted_at": "2026-09-29T17:06:32.054966Z",
+              "admission_ref": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+                "line": 258
+              },
+              "terminal_at": "2026-09-29T17:07:02.149507Z",
+              "terminal_outcome": "tool_calls",
+              "terminal_duration_ms": 30094,
+              "terminal_ref": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+                "line": 266
+              }
+            }
+          ],
+          "item_elapsed_ms_derived": 84586.103,
+          "overlapping_parent_model_attempts": [
+            {
+              "parent_attempt_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd:2:1",
+              "overlap_ms_derived": 84138.586
+            }
+          ]
+        },
+        {
+          "child_session_id": "eeb225c2-220a-4503-b3ac-b5265e883785",
+          "generation_id": 3,
+          "task_id": "01a0ee23-282d-70a2-bce3-b5a564493b00",
+          "item_started_at": "2026-09-29T17:07:56.621195Z",
+          "item_started_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+            "line": 81
+          },
+          "item_terminal_at": "2026-09-29T17:08:12.015234Z",
+          "item_status": "cancelled",
+          "item_terminal_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+            "line": 85
+          },
+          "model_attempts": [
+            {
+              "attempt_id": "eeb225c2-220a-4503-b3ac-b5265e883785:0:1",
+              "admitted_at": "2026-09-29T17:07:56.691354Z",
+              "admission_ref": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+                "line": 348
+              },
+              "terminal_at": "2026-09-29T17:08:12.009632Z",
+              "terminal_outcome": "cancelled",
+              "terminal_duration_ms": 15318,
+              "terminal_ref": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+                "line": 357
+              }
+            }
+          ],
+          "item_elapsed_ms_derived": 15394.039,
+          "overlapping_parent_model_attempts": [
+            {
+              "parent_attempt_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd:3:1",
+              "overlap_ms_derived": 15325.972
+            }
+          ]
+        }
+      ],
+      "unattributed_first_wire_events": [
+        {
+          "at": "2026-09-29T17:03:37.974029Z",
+          "stream_open_to_first_event_us": 83668,
+          "ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+            "line": 74
+          }
+        },
+        {
+          "at": "2026-09-29T17:04:10.190794Z",
+          "stream_open_to_first_event_us": 22373,
+          "ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+            "line": 170
+          }
+        },
+        {
+          "at": "2026-09-29T17:06:15.229992Z",
+          "stream_open_to_first_event_us": 18013,
+          "ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+            "line": 187
+          }
+        },
+        {
+          "at": "2026-09-29T17:06:59.295790Z",
+          "stream_open_to_first_event_us": 10964,
+          "ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+            "line": 262
+          }
+        },
+        {
+          "at": "2026-09-29T17:07:53.075129Z",
+          "stream_open_to_first_event_us": 132186,
+          "ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+            "line": 277
+          }
+        }
+      ],
+      "turn_terminal_metric": {
+        "duration_ms": 300291,
+        "time_to_first_token_ms": 185245,
+        "terminal": "cancelled",
+        "ref": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+          "line": 87
+        }
+      },
+      "source_pins": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+          "bytes": 425102,
+          "sha256": "1d4dba931cdb15118cab3c72fd32ec1eab6986cfab93a2462171a75729f5b6bb"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl",
+          "bytes": 119174,
+          "sha256": "8652776111215e466b9ffd81c586cf67a633aaf73152aef22420d05631ec24d0"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+          "bytes": 104330,
+          "sha256": "9fc81deaf3cdd8076a56a4b108af85c3135048a32c604a4a4421af3e6582bf8d"
+        }
+      ]
+    }
+  },
+  "deductions": {
+    "a1_parent_completed": 2,
+    "a1_parent_cancelled_model_attempts": 1,
+    "a2_parent_completed": 3,
+    "a2_parent_cancelled_model_attempts": 1,
+    "a2_parent_provider_503_retries": 4,
+    "a2_parent_outer_model_attempts": 4,
+    "a2_child_outer_model_attempts": 4,
+    "a2_child_outcomes": [
+      "completed",
+      "completed",
+      "cancelled"
+    ],
+    "limits": "No child usage or cancelled parent token totals in bound artifacts; no whole-run token total inferred. A2 provider 503 retry attempts are nested inside outer model attempts, not additional completed parent responses.",
+    "a2_parent_physical_provider_attempts_observed": 7,
+    "a2_child_physical_provider_attempts_observed": 4,
+    "a2_provider_attempt_count_basis": "Count provider_request.lifecycle phase=attempt in exact-session trace, assigned by concurrent outer model task windows and journal retry status; these are physical provider attempts, distinct from four parent and four child outer model attempts.",
+    "a2_parent_physical_provider_attempt_refs": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+        "line": 64
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+        "line": 161
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+        "line": 183
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+        "line": 185
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+        "line": 251
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+        "line": 275
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+        "line": 341
+      }
+    ],
+    "a2_child_physical_provider_attempt_refs": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+        "line": 72
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+        "line": 167
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+        "line": 259
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log",
+        "line": 349
+      }
+    ]
+  },
+  "append_only_qualifications": {
+    "original_extraction": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/model-chronology.json",
+      "sha256": "07bb61a27cf9e833c2da350957cbdb03186db216859a2a2917f6e12b788096a5"
+    },
+    "physical_attempts": "Eleven provider_request.lifecycle phase=attempt lines are directly observed in the exact A2 process trace. Those lines lack run/session/request IDs. The 7-parent/4-child partition uses adjacent ID-bearing model admission records and task-ID-bound retry status, so it is a contextual correlation, not IDs carried by provider lines. Do not equate it with 11 completed responses.",
+    "first_wire_events": "provider_stream.lifecycle first_event lines also lack request/run IDs; first_parent_sse_wire_event fields are contextual attributions, not independently ID-bound first-token timestamps. The direct session/task successful-stream time_to_first_event counter and raw trace duration_us can differ slightly; preserve both.",
+    "first_visible_items": "MSP item/started timestamps are exposed reasoning/tool item boundaries. A toolCall start after completion is not first generated token latency.",
+    "duration_sum": "Parent outer admission/terminal spans are non-overlapping here, but child items and host polling overlap them. Reported response durationMs and outer terminal_duration_ms use different boundaries and differ by small protocol bookkeeping intervals. Do not replace either counter or sum them together."
+  }
+}

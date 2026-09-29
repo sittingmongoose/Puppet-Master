@@ -1,0 +1,141 @@
+{
+  "schema": "a2-timing-read-only-sources/v1",
+  "reviewed_commit": "158140cb425fe3c4ceaa3eef1715ce66126e4c8a",
+  "newer_work_check": "Local clean branch, HEAD and remote branch all at reviewed commit; one check, no newer work found.",
+  "scope": "Offline mechanical diagnosis only; Astra orchestration and explicit Sol medium helper. No candidate/evaluator/Opus/native/account/smoke call, Store, repair, rescore, approval file or implementation change.",
+  "sources": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-session.jsonl": {
+      "bytes": 322384,
+      "sha256": "a36eece85612559f6a30b8676b77c37d83330c7fae3d6fc59a27fbc6a4aa3bfa"
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/phase-clock.json": {
+      "sha256": "a66d98ce67601d92c04e6fda3c39d396439c533ea4bea797774928a384feef37",
+      "bytes": 270
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/host-receipt.json": {
+      "sha256": "32224d9bcba764be291b319b03b9b86c78dedfa5251c2a5801e49fb3cd6bed94",
+      "bytes": 540
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/phase-terminal.json": {
+      "sha256": "2a7063843d1c9673df212d2964c316e749e4e593d08b352f65ad8371dca71251",
+      "bytes": 333
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/dispatch.json": {
+      "sha256": "2aecae5cd5a6dc3c194fbfb62812c7dafd1bf01a3af921d7282e79e5ac737af5",
+      "bytes": 1169
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/store/state.json": {
+      "sha256": "de2df92ad51569794f8444a008308082f241beb8647c67e93a4fdcef4297136b",
+      "bytes": 31184
+    },
+    "/home/sittingmongoose/pm-worktrees/external-research-v6-20260927/reports/external-research-v6-20260926/a1-m/PUBLICATION.json": {
+      "sha256": "d76c22b6c919d5b75620d714e52a1aca3779c423f4b73e00cf7e5bb45c577ff3",
+      "bytes": 1227
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl": {
+      "bytes": 425102,
+      "sha256": "1d4dba931cdb15118cab3c72fd32ec1eab6986cfab93a2462171a75729f5b6bb"
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/phase-clock.json": {
+      "sha256": "9850b6ecb81d32892b047587a24ca72d45b8bdc11413163ca67cb9aac9a4eb99",
+      "bytes": 270
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/host-receipt.json": {
+      "sha256": "bf683957a019b526f4678d8f913c07b0e2c4c834e1951321d0824bf9e7c5e665",
+      "bytes": 490
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/phase-terminal.json": {
+      "sha256": "946df8989468e660d383aea6acd9b0bd0db4059668e4f75884f80be17dcc09cf",
+      "bytes": 429
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/dispatch.json": {
+      "sha256": "2b69a05512161f89d54838cac3bccee2ab3aefacb25fab3ddc793270369a059d",
+      "bytes": 1170
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/store/state.json": {
+      "sha256": "77c2f0ae7a02228e9ce05ce7445f3167df4e296828144dbb01e22ec1d37e922a",
+      "bytes": 110834
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/receipt-order.jsonl": {
+      "sha256": "b77499dacab6581df871ca241c348e777c26fe93f7ebeb55a28acede92499ffa",
+      "bytes": 3024
+    },
+    "/home/sittingmongoose/pm-worktrees/external-research-v6-20260927/reports/external-research-v6-20260926/a2-m/PUBLICATION.json": {
+      "sha256": "035f6314baefc2d3844c122ac18772f73162ce1ef2003fe71b4d03bf6596037e",
+      "bytes": 842
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/postcheck/publication-final.json": {
+      "sha256": "c522ddeaec3b150d018c5f9d173d94717c17a39dcd8d3bf78a42058e63408c74"
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-msp.jsonl": {
+      "bytes": 89077,
+      "sha256": "973fa2e29ef350b098ee976ce0ab4198dd2d52e821ad79865a243a13e06bab21"
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-provider-trace.log": {
+      "bytes": 73594,
+      "sha256": "bb59ca0d4c6559b490969d246d2448775b0f40e76249b8a1a3bfe74ba2c52def"
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-msp.jsonl": {
+      "bytes": 119174,
+      "sha256": "8652776111215e466b9ffd81c586cf67a633aaf73152aef22420d05631ec24d0"
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/a2-exact-session-trace.log": {
+      "bytes": 104330,
+      "sha256": "9fc81deaf3cdd8076a56a4b108af85c3135048a32c604a4a4421af3e6582bf8d"
+    },
+    "/home/sittingmongoose/.local/share/muse/local-tracing/bootstrap/cli-59a1262e-9b89-407e-b587-cb08263d1dfa.log": {
+      "bytes": 104330,
+      "sha256": "9fc81deaf3cdd8076a56a4b108af85c3135048a32c604a4a4421af3e6582bf8d"
+    },
+    "/home/sittingmongoose/.codex/attachments/c2432c6e-b890-436f-9eb7-90d84f3ede3e/pasted-text-1.txt": {
+      "sha256": "e821df7127f0901f236e2db495741c9d300c665bc3069242c51b29a8159e4e2a",
+      "bytes": 13413
+    }
+  },
+  "published_files": {
+    "TIMELINE.md": {
+      "sha256": "2b9bfb16a7b5840f7e21652c650c9089f1a0f3ce0cc15f175f07d9d9cc867b54",
+      "bytes": 8892
+    },
+    "DECISION.md": {
+      "sha256": "42770e08fc7af32f237021cc9772df05bf8ab81567ecd3b71721521f478c1fcf",
+      "bytes": 6578
+    },
+    "evidence/model-chronology-qualified.json": {
+      "sha256": "8296e9b4825a38cacd720bcb0db93dcb75c46c626592843e9bd37c3c5aa38dd4",
+      "bytes": 38733
+    },
+    "evidence/tool-host-chronology.json": {
+      "sha256": "f6b3ef653c75253c43682c8a174ebbd311a60f7ee0304f6c75c17ae337250da9",
+      "bytes": 101703
+    },
+    "evidence/retry-intervals.json": {
+      "sha256": "190fb8ed1cf409fde35171389197de7a95c8752b1e5b9d175356313fd3502ff9",
+      "bytes": 2242
+    },
+    "evidence/trace-lookup.json": {
+      "sha256": "c8a2168b04bf94eecf1e54a13fddd69613737f3d568adcbc79e98559b27260c3",
+      "bytes": 519
+    }
+  },
+  "original_preservation": {
+    "files": 117,
+    "changed_or_missing": [],
+    "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-timing-v1/evidence/preservation-before.json",
+    "manifest_sha256": "ae5508b32ea9b820d5d2e7d2cafeddb6254ea14ad21521114a933f834950d20e",
+    "verified_epoch": 1790705648.42929
+  },
+  "verification": [
+    "Response IDs in model chronology equal the exact committed tool-batch response IDs in both journals.",
+    "All mapped call commits precede starts, terminals and result commits.",
+    "Six A2 receipt publications, fifteen within-batch marker overlaps, zero receipt Reads.",
+    "Task-ID retry joins yield 180.023499s completed waits and 13.905108s until cancellation for last wait.",
+    "All pinned original artifacts and referenced raw sources retain identical bytes."
+  ],
+  "measurement_limits": [
+    "Provider/first-SSE trace lines lack IDs: the extraction retains explicit appended correlation caveats.",
+    "No new test campaign or live experiment ran. Offline consistency checks do not constitute a semantic grade.",
+    "Existing aggregate failures remain authoritative."
+  ],
+  "raw_material": "Exact-session trace, complete extraction intermediates and preservation manifest remain on VM; only derived timing/ID metadata published."
+}

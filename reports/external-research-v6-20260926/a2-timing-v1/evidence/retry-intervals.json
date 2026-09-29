@@ -1,0 +1,63 @@
+{
+  "scope": "Journal task-ID matched retry status to next attempt opening or cancellation; measured event interval, not provider queue decomposition",
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl",
+  "events": [
+    {
+      "task_id": "01a0ee1f-47a4-7ee2-9c13-d48d74adadb1",
+      "status_line": 162,
+      "status_sequence": 163,
+      "request_id": "44830e36-bb14-4f9c-a65d-cb9c1f20b5e0",
+      "http_status": 503,
+      "scheduled_retry_ms": 60000,
+      "status_epoch_us": 1790701423568475,
+      "next_line": 163,
+      "next_sequence": 164,
+      "next_boundary": "next_opening_stream",
+      "next_epoch_us": 1790701483578440,
+      "observed_interval_seconds": 60.009965
+    },
+    {
+      "task_id": "01a0ee1f-47a4-7ee2-9c13-d48d74adadb1",
+      "status_line": 164,
+      "status_sequence": 165,
+      "request_id": "9bad18f6-f423-4825-b3d8-575a181111f7",
+      "http_status": 503,
+      "scheduled_retry_ms": 60000,
+      "status_epoch_us": 1790701484820769,
+      "next_line": 165,
+      "next_sequence": 166,
+      "next_boundary": "next_opening_stream",
+      "next_epoch_us": 1790701544826834,
+      "observed_interval_seconds": 60.006065
+    },
+    {
+      "task_id": "01a0ee21-ddd6-7560-99b9-b0d631236db4",
+      "status_line": 270,
+      "status_sequence": 271,
+      "request_id": "d44cd366-65db-45bc-98f0-5ee908b32ac7",
+      "http_status": 503,
+      "scheduled_retry_ms": 60000,
+      "status_epoch_us": 1790701593595837,
+      "next_line": 271,
+      "next_sequence": 272,
+      "next_boundary": "next_opening_stream",
+      "next_epoch_us": 1790701653603306,
+      "observed_interval_seconds": 60.007469
+    },
+    {
+      "task_id": "01a0ee23-2873-7cc2-a42f-7fb89c101b18",
+      "status_line": 373,
+      "status_sequence": 374,
+      "request_id": "8c1f1555-c5d6-4899-adee-abcc1090b809",
+      "http_status": 503,
+      "scheduled_retry_ms": 60000,
+      "status_epoch_us": 1790701678098798,
+      "next_line": 375,
+      "next_sequence": 376,
+      "next_boundary": "cancelled",
+      "next_epoch_us": 1790701692003906,
+      "observed_interval_seconds": 13.905108
+    }
+  ],
+  "completed_retry_intervals_sum_seconds": 180.02349900000002
+}

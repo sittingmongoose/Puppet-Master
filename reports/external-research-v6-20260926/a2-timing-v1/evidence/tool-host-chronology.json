@@ -1,0 +1,2728 @@
+{
+  "scope": "Read-only A1/A2 tool and host chronology; no Store or native invocation",
+  "runs": {
+    "A1": {
+      "root": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928",
+      "session_id": "01a0e995-e9c2-7091-9e95-d05e89632941",
+      "phase_start_epoch": 1790625309.2463663,
+      "batch_count": 2,
+      "batches": [
+        {
+          "response_id": "resp_6abac6214818a349e9d542df",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "calls": [
+            "call_01a0e99609bb7780b879f79d8cbbe45f",
+            "call_01a0e9960b7f73b9935df7c48c258f57",
+            "call_01a0e9960d6d7017943c2a5d195c43f7",
+            "call_01a0e9960f08779e9b95eedc0d5016a8",
+            "call_01a0e99610db76b4a05e82f0b92a0a7e",
+            "call_01a0e99612ba705fb1ac2dfb939c857a",
+            "call_01a0e9961455735f8ade2004d6d96250",
+            "call_01a0e99615f2774d8fbc11c1a5b9ae99",
+            "call_01a0e996179b74348af6c867181c7703"
+          ],
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 51,
+            "sequence": 52,
+            "epoch_us": 1790625323631450,
+            "seconds_from_phase_start": 14.385084
+          }
+        },
+        {
+          "response_id": "resp_6abac62dc8c2086278d64fff",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "calls": [
+            "call_01a0e9963a16774cab12b84e388d9cc5",
+            "call_01a0e99646487096952f2d479c53a21c",
+            "call_01a0e996522176c48d14b6c558fd809b",
+            "call_01a0e9965eb071729f737c876c0dbab5",
+            "call_01a0e9966b577365adfb0f70927af09d",
+            "call_01a0e9967671766a82142689dc93161c"
+          ],
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 174,
+            "sequence": 175,
+            "epoch_us": 1790625350022691,
+            "seconds_from_phase_start": 40.776325
+          }
+        }
+      ],
+      "calls": [
+        {
+          "call_id": "call_01a0e99609bb7780b879f79d8cbbe45f",
+          "tool": "read_file",
+          "path": "inputs/01.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac6214818a349e9d542df",
+          "message_id": "3c15c082-c95b-4037-afa6-22ffcefae76e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 51,
+            "sequence": 52,
+            "epoch_us": 1790625323631450,
+            "seconds_from_phase_start": 14.385084
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 58,
+            "sequence": 59,
+            "epoch_us": 1790625323659582,
+            "seconds_from_phase_start": 14.413216
+          },
+          "effect_id": "01a0e996-1a74-7ab2-874b-dee3c6d373ec",
+          "task_id": "01a0e996-1a74-7ab2-874b-dee3c6d373ec",
+          "task_stream": {
+            "id": "01a0e996-1a74-7ab2-874b-dee3c6d373ec",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 127,
+            "sequence": 128,
+            "epoch_us": 1790625323918937,
+            "seconds_from_phase_start": 14.672571
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e99609bb7780b879f79d8cbbe45f",
+            "effect_id": "01a0e996-1a74-7ab2-874b-dee3c6d373ec",
+            "kind": "terminal",
+            "model_call_index": 0,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-1a74-7ab2-874b-dee3c6d373ec",
+            "task_stream": {
+              "id": "01a0e996-1a74-7ab2-874b-dee3c6d373ec",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 151,
+            "sequence": 152,
+            "epoch_us": 1790625324005246,
+            "seconds_from_phase_start": 14.75888
+          },
+          "result_batch_id": "3c15c082-c95b-4037-afa6-22ffcefae76e"
+        },
+        {
+          "call_id": "call_01a0e9960b7f73b9935df7c48c258f57",
+          "tool": "read_file",
+          "path": "inputs/02.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac6214818a349e9d542df",
+          "message_id": "3c15c082-c95b-4037-afa6-22ffcefae76e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 51,
+            "sequence": 52,
+            "epoch_us": 1790625323631450,
+            "seconds_from_phase_start": 14.385084
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 65,
+            "sequence": 66,
+            "epoch_us": 1790625323685045,
+            "seconds_from_phase_start": 14.438679
+          },
+          "effect_id": "01a0e996-1a8f-77f3-8e38-3729bcc50715",
+          "task_id": "01a0e996-1a8f-77f3-8e38-3729bcc50715",
+          "task_stream": {
+            "id": "01a0e996-1a8f-77f3-8e38-3729bcc50715",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 133,
+            "sequence": 134,
+            "epoch_us": 1790625323940545,
+            "seconds_from_phase_start": 14.694179
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e9960b7f73b9935df7c48c258f57",
+            "effect_id": "01a0e996-1a8f-77f3-8e38-3729bcc50715",
+            "kind": "terminal",
+            "model_call_index": 1,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-1a8f-77f3-8e38-3729bcc50715",
+            "task_stream": {
+              "id": "01a0e996-1a8f-77f3-8e38-3729bcc50715",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 151,
+            "sequence": 152,
+            "epoch_us": 1790625324005246,
+            "seconds_from_phase_start": 14.75888
+          },
+          "result_batch_id": "3c15c082-c95b-4037-afa6-22ffcefae76e"
+        },
+        {
+          "call_id": "call_01a0e9960d6d7017943c2a5d195c43f7",
+          "tool": "read_file",
+          "path": "inputs/03.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac6214818a349e9d542df",
+          "message_id": "3c15c082-c95b-4037-afa6-22ffcefae76e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 51,
+            "sequence": 52,
+            "epoch_us": 1790625323631450,
+            "seconds_from_phase_start": 14.385084
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 72,
+            "sequence": 73,
+            "epoch_us": 1790625323709878,
+            "seconds_from_phase_start": 14.463512
+          },
+          "effect_id": "01a0e996-1aa8-7653-aebf-c09fa411e49c",
+          "task_id": "01a0e996-1aa8-7653-aebf-c09fa411e49c",
+          "task_stream": {
+            "id": "01a0e996-1aa8-7653-aebf-c09fa411e49c",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 124,
+            "sequence": 125,
+            "epoch_us": 1790625323907433,
+            "seconds_from_phase_start": 14.661067
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e9960d6d7017943c2a5d195c43f7",
+            "effect_id": "01a0e996-1aa8-7653-aebf-c09fa411e49c",
+            "kind": "terminal",
+            "model_call_index": 2,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-1aa8-7653-aebf-c09fa411e49c",
+            "task_stream": {
+              "id": "01a0e996-1aa8-7653-aebf-c09fa411e49c",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 151,
+            "sequence": 152,
+            "epoch_us": 1790625324005246,
+            "seconds_from_phase_start": 14.75888
+          },
+          "result_batch_id": "3c15c082-c95b-4037-afa6-22ffcefae76e"
+        },
+        {
+          "call_id": "call_01a0e9960f08779e9b95eedc0d5016a8",
+          "tool": "read_file",
+          "path": "inputs/04.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac6214818a349e9d542df",
+          "message_id": "3c15c082-c95b-4037-afa6-22ffcefae76e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 51,
+            "sequence": 52,
+            "epoch_us": 1790625323631450,
+            "seconds_from_phase_start": 14.385084
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 79,
+            "sequence": 80,
+            "epoch_us": 1790625323736397,
+            "seconds_from_phase_start": 14.490031
+          },
+          "effect_id": "01a0e996-1ac1-7353-ab6f-a0a2ba9cab7b",
+          "task_id": "01a0e996-1ac1-7353-ab6f-a0a2ba9cab7b",
+          "task_stream": {
+            "id": "01a0e996-1ac1-7353-ab6f-a0a2ba9cab7b",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 130,
+            "sequence": 131,
+            "epoch_us": 1790625323930066,
+            "seconds_from_phase_start": 14.6837
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e9960f08779e9b95eedc0d5016a8",
+            "effect_id": "01a0e996-1ac1-7353-ab6f-a0a2ba9cab7b",
+            "kind": "terminal",
+            "model_call_index": 3,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-1ac1-7353-ab6f-a0a2ba9cab7b",
+            "task_stream": {
+              "id": "01a0e996-1ac1-7353-ab6f-a0a2ba9cab7b",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 151,
+            "sequence": 152,
+            "epoch_us": 1790625324005246,
+            "seconds_from_phase_start": 14.75888
+          },
+          "result_batch_id": "3c15c082-c95b-4037-afa6-22ffcefae76e"
+        },
+        {
+          "call_id": "call_01a0e99610db76b4a05e82f0b92a0a7e",
+          "tool": "read_file",
+          "path": "inputs/05.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac6214818a349e9d542df",
+          "message_id": "3c15c082-c95b-4037-afa6-22ffcefae76e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 51,
+            "sequence": 52,
+            "epoch_us": 1790625323631450,
+            "seconds_from_phase_start": 14.385084
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 86,
+            "sequence": 87,
+            "epoch_us": 1790625323765937,
+            "seconds_from_phase_start": 14.519571
+          },
+          "effect_id": "01a0e996-1ade-7a40-95e8-b8e5bb8c994f",
+          "task_id": "01a0e996-1ade-7a40-95e8-b8e5bb8c994f",
+          "task_stream": {
+            "id": "01a0e996-1ade-7a40-95e8-b8e5bb8c994f",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 118,
+            "sequence": 119,
+            "epoch_us": 1790625323887476,
+            "seconds_from_phase_start": 14.64111
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e99610db76b4a05e82f0b92a0a7e",
+            "effect_id": "01a0e996-1ade-7a40-95e8-b8e5bb8c994f",
+            "kind": "terminal",
+            "model_call_index": 4,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-1ade-7a40-95e8-b8e5bb8c994f",
+            "task_stream": {
+              "id": "01a0e996-1ade-7a40-95e8-b8e5bb8c994f",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 151,
+            "sequence": 152,
+            "epoch_us": 1790625324005246,
+            "seconds_from_phase_start": 14.75888
+          },
+          "result_batch_id": "3c15c082-c95b-4037-afa6-22ffcefae76e"
+        },
+        {
+          "call_id": "call_01a0e99612ba705fb1ac2dfb939c857a",
+          "tool": "read_file",
+          "path": "inputs/06.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac6214818a349e9d542df",
+          "message_id": "3c15c082-c95b-4037-afa6-22ffcefae76e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 51,
+            "sequence": 52,
+            "epoch_us": 1790625323631450,
+            "seconds_from_phase_start": 14.385084
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 93,
+            "sequence": 94,
+            "epoch_us": 1790625323790562,
+            "seconds_from_phase_start": 14.544196
+          },
+          "effect_id": "01a0e996-1af9-7081-91dd-705752bf8f06",
+          "task_id": "01a0e996-1af9-7081-91dd-705752bf8f06",
+          "task_stream": {
+            "id": "01a0e996-1af9-7081-91dd-705752bf8f06",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 115,
+            "sequence": 116,
+            "epoch_us": 1790625323876599,
+            "seconds_from_phase_start": 14.630233
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e99612ba705fb1ac2dfb939c857a",
+            "effect_id": "01a0e996-1af9-7081-91dd-705752bf8f06",
+            "kind": "terminal",
+            "model_call_index": 5,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-1af9-7081-91dd-705752bf8f06",
+            "task_stream": {
+              "id": "01a0e996-1af9-7081-91dd-705752bf8f06",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 151,
+            "sequence": 152,
+            "epoch_us": 1790625324005246,
+            "seconds_from_phase_start": 14.75888
+          },
+          "result_batch_id": "3c15c082-c95b-4037-afa6-22ffcefae76e"
+        },
+        {
+          "call_id": "call_01a0e9961455735f8ade2004d6d96250",
+          "tool": "read_file",
+          "path": "inputs/07.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac6214818a349e9d542df",
+          "message_id": "3c15c082-c95b-4037-afa6-22ffcefae76e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 51,
+            "sequence": 52,
+            "epoch_us": 1790625323631450,
+            "seconds_from_phase_start": 14.385084
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 100,
+            "sequence": 101,
+            "epoch_us": 1790625323817590,
+            "seconds_from_phase_start": 14.571224
+          },
+          "effect_id": "01a0e996-1b13-74b1-a3c8-b1e372da33bf",
+          "task_id": "01a0e996-1b13-74b1-a3c8-b1e372da33bf",
+          "task_stream": {
+            "id": "01a0e996-1b13-74b1-a3c8-b1e372da33bf",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 121,
+            "sequence": 122,
+            "epoch_us": 1790625323897949,
+            "seconds_from_phase_start": 14.651583
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e9961455735f8ade2004d6d96250",
+            "effect_id": "01a0e996-1b13-74b1-a3c8-b1e372da33bf",
+            "kind": "terminal",
+            "model_call_index": 6,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-1b13-74b1-a3c8-b1e372da33bf",
+            "task_stream": {
+              "id": "01a0e996-1b13-74b1-a3c8-b1e372da33bf",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 151,
+            "sequence": 152,
+            "epoch_us": 1790625324005246,
+            "seconds_from_phase_start": 14.75888
+          },
+          "result_batch_id": "3c15c082-c95b-4037-afa6-22ffcefae76e"
+        },
+        {
+          "call_id": "call_01a0e99615f2774d8fbc11c1a5b9ae99",
+          "tool": "read_file",
+          "path": "inputs/revision-1.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac6214818a349e9d542df",
+          "message_id": "3c15c082-c95b-4037-afa6-22ffcefae76e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 51,
+            "sequence": 52,
+            "epoch_us": 1790625323631450,
+            "seconds_from_phase_start": 14.385084
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 107,
+            "sequence": 108,
+            "epoch_us": 1790625323842975,
+            "seconds_from_phase_start": 14.596609
+          },
+          "effect_id": "01a0e996-1b2c-7b31-a0e6-2b7bd2f74e12",
+          "task_id": "01a0e996-1b2c-7b31-a0e6-2b7bd2f74e12",
+          "task_stream": {
+            "id": "01a0e996-1b2c-7b31-a0e6-2b7bd2f74e12",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 136,
+            "sequence": 137,
+            "epoch_us": 1790625323950215,
+            "seconds_from_phase_start": 14.703849
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e99615f2774d8fbc11c1a5b9ae99",
+            "effect_id": "01a0e996-1b2c-7b31-a0e6-2b7bd2f74e12",
+            "kind": "terminal",
+            "model_call_index": 7,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-1b2c-7b31-a0e6-2b7bd2f74e12",
+            "task_stream": {
+              "id": "01a0e996-1b2c-7b31-a0e6-2b7bd2f74e12",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 151,
+            "sequence": 152,
+            "epoch_us": 1790625324005246,
+            "seconds_from_phase_start": 14.75888
+          },
+          "result_batch_id": "3c15c082-c95b-4037-afa6-22ffcefae76e"
+        },
+        {
+          "call_id": "call_01a0e996179b74348af6c867181c7703",
+          "tool": "read_file",
+          "path": "inputs/revision-2.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac6214818a349e9d542df",
+          "message_id": "3c15c082-c95b-4037-afa6-22ffcefae76e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 51,
+            "sequence": 52,
+            "epoch_us": 1790625323631450,
+            "seconds_from_phase_start": 14.385084
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 114,
+            "sequence": 115,
+            "epoch_us": 1790625323867503,
+            "seconds_from_phase_start": 14.621137
+          },
+          "effect_id": "01a0e996-1b46-7481-be8b-4bb4ca454c0a",
+          "task_id": "01a0e996-1b46-7481-be8b-4bb4ca454c0a",
+          "task_stream": {
+            "id": "01a0e996-1b46-7481-be8b-4bb4ca454c0a",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 139,
+            "sequence": 140,
+            "epoch_us": 1790625323960415,
+            "seconds_from_phase_start": 14.714049
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e996179b74348af6c867181c7703",
+            "effect_id": "01a0e996-1b46-7481-be8b-4bb4ca454c0a",
+            "kind": "terminal",
+            "model_call_index": 8,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-1b46-7481-be8b-4bb4ca454c0a",
+            "task_stream": {
+              "id": "01a0e996-1b46-7481-be8b-4bb4ca454c0a",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 151,
+            "sequence": 152,
+            "epoch_us": 1790625324005246,
+            "seconds_from_phase_start": 14.75888
+          },
+          "result_batch_id": "3c15c082-c95b-4037-afa6-22ffcefae76e"
+        },
+        {
+          "call_id": "call_01a0e9963a16774cab12b84e388d9cc5",
+          "tool": "write_file",
+          "path": "out/submissions/new--batch-01.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac62dc8c2086278d64fff",
+          "message_id": "57eff187-9043-437b-97a0-f89816c2d3df",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 174,
+            "sequence": 175,
+            "epoch_us": 1790625350022691,
+            "seconds_from_phase_start": 40.776325
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 181,
+            "sequence": 182,
+            "epoch_us": 1790625350051879,
+            "seconds_from_phase_start": 40.805513
+          },
+          "effect_id": "01a0e996-818c-71b2-8506-664870e7625a",
+          "task_id": "01a0e996-818c-71b2-8506-664870e7625a",
+          "task_stream": {
+            "id": "01a0e996-818c-71b2-8506-664870e7625a",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 217,
+            "sequence": 218,
+            "epoch_us": 1790625350203662,
+            "seconds_from_phase_start": 40.957296
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e9963a16774cab12b84e388d9cc5",
+            "effect_id": "01a0e996-818c-71b2-8506-664870e7625a",
+            "kind": "terminal",
+            "model_call_index": 0,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-818c-71b2-8506-664870e7625a",
+            "task_stream": {
+              "id": "01a0e996-818c-71b2-8506-664870e7625a",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 247,
+            "sequence": 248,
+            "epoch_us": 1790625350348737,
+            "seconds_from_phase_start": 41.102371
+          },
+          "result_batch_id": "57eff187-9043-437b-97a0-f89816c2d3df"
+        },
+        {
+          "call_id": "call_01a0e99646487096952f2d479c53a21c",
+          "tool": "write_file",
+          "path": "out/submissions/new--batch-02.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac62dc8c2086278d64fff",
+          "message_id": "57eff187-9043-437b-97a0-f89816c2d3df",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 174,
+            "sequence": 175,
+            "epoch_us": 1790625350022691,
+            "seconds_from_phase_start": 40.776325
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 188,
+            "sequence": 189,
+            "epoch_us": 1790625350075921,
+            "seconds_from_phase_start": 40.829555
+          },
+          "effect_id": "01a0e996-81a6-7b92-b034-779ba7b37db2",
+          "task_id": "01a0e996-81a6-7b92-b034-779ba7b37db2",
+          "task_stream": {
+            "id": "01a0e996-81a6-7b92-b034-779ba7b37db2",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 221,
+            "sequence": 222,
+            "epoch_us": 1790625350222627,
+            "seconds_from_phase_start": 40.976261
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e99646487096952f2d479c53a21c",
+            "effect_id": "01a0e996-81a6-7b92-b034-779ba7b37db2",
+            "kind": "terminal",
+            "model_call_index": 1,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-81a6-7b92-b034-779ba7b37db2",
+            "task_stream": {
+              "id": "01a0e996-81a6-7b92-b034-779ba7b37db2",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 247,
+            "sequence": 248,
+            "epoch_us": 1790625350348737,
+            "seconds_from_phase_start": 41.102371
+          },
+          "result_batch_id": "57eff187-9043-437b-97a0-f89816c2d3df"
+        },
+        {
+          "call_id": "call_01a0e996522176c48d14b6c558fd809b",
+          "tool": "write_file",
+          "path": "out/submissions/new--batch-03.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac62dc8c2086278d64fff",
+          "message_id": "57eff187-9043-437b-97a0-f89816c2d3df",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 174,
+            "sequence": 175,
+            "epoch_us": 1790625350022691,
+            "seconds_from_phase_start": 40.776325
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 195,
+            "sequence": 196,
+            "epoch_us": 1790625350102074,
+            "seconds_from_phase_start": 40.855708
+          },
+          "effect_id": "01a0e996-81be-7823-8825-8c97b08981cd",
+          "task_id": "01a0e996-81be-7823-8825-8c97b08981cd",
+          "task_stream": {
+            "id": "01a0e996-81be-7823-8825-8c97b08981cd",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 229,
+            "sequence": 230,
+            "epoch_us": 1790625350266605,
+            "seconds_from_phase_start": 41.020239
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e996522176c48d14b6c558fd809b",
+            "effect_id": "01a0e996-81be-7823-8825-8c97b08981cd",
+            "kind": "terminal",
+            "model_call_index": 2,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-81be-7823-8825-8c97b08981cd",
+            "task_stream": {
+              "id": "01a0e996-81be-7823-8825-8c97b08981cd",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 247,
+            "sequence": 248,
+            "epoch_us": 1790625350348737,
+            "seconds_from_phase_start": 41.102371
+          },
+          "result_batch_id": "57eff187-9043-437b-97a0-f89816c2d3df"
+        },
+        {
+          "call_id": "call_01a0e9965eb071729f737c876c0dbab5",
+          "tool": "write_file",
+          "path": "out/submissions/new--batch-04.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac62dc8c2086278d64fff",
+          "message_id": "57eff187-9043-437b-97a0-f89816c2d3df",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 174,
+            "sequence": 175,
+            "epoch_us": 1790625350022691,
+            "seconds_from_phase_start": 40.776325
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 202,
+            "sequence": 203,
+            "epoch_us": 1790625350128424,
+            "seconds_from_phase_start": 40.882058
+          },
+          "effect_id": "01a0e996-81da-7f62-be30-1ab173fac7f2",
+          "task_id": "01a0e996-81da-7f62-be30-1ab173fac7f2",
+          "task_stream": {
+            "id": "01a0e996-81da-7f62-be30-1ab173fac7f2",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 233,
+            "sequence": 234,
+            "epoch_us": 1790625350291398,
+            "seconds_from_phase_start": 41.045032
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e9965eb071729f737c876c0dbab5",
+            "effect_id": "01a0e996-81da-7f62-be30-1ab173fac7f2",
+            "kind": "terminal",
+            "model_call_index": 3,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-81da-7f62-be30-1ab173fac7f2",
+            "task_stream": {
+              "id": "01a0e996-81da-7f62-be30-1ab173fac7f2",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 247,
+            "sequence": 248,
+            "epoch_us": 1790625350348737,
+            "seconds_from_phase_start": 41.102371
+          },
+          "result_batch_id": "57eff187-9043-437b-97a0-f89816c2d3df"
+        },
+        {
+          "call_id": "call_01a0e9966b577365adfb0f70927af09d",
+          "tool": "write_file",
+          "path": "out/submissions/new--batch-05.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac62dc8c2086278d64fff",
+          "message_id": "57eff187-9043-437b-97a0-f89816c2d3df",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 174,
+            "sequence": 175,
+            "epoch_us": 1790625350022691,
+            "seconds_from_phase_start": 40.776325
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 209,
+            "sequence": 210,
+            "epoch_us": 1790625350153193,
+            "seconds_from_phase_start": 40.906827
+          },
+          "effect_id": "01a0e996-81f3-73d0-8ea2-e72d8507c617",
+          "task_id": "01a0e996-81f3-73d0-8ea2-e72d8507c617",
+          "task_stream": {
+            "id": "01a0e996-81f3-73d0-8ea2-e72d8507c617",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 225,
+            "sequence": 226,
+            "epoch_us": 1790625350245690,
+            "seconds_from_phase_start": 40.999324
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e9966b577365adfb0f70927af09d",
+            "effect_id": "01a0e996-81f3-73d0-8ea2-e72d8507c617",
+            "kind": "terminal",
+            "model_call_index": 4,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-81f3-73d0-8ea2-e72d8507c617",
+            "task_stream": {
+              "id": "01a0e996-81f3-73d0-8ea2-e72d8507c617",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 247,
+            "sequence": 248,
+            "epoch_us": 1790625350348737,
+            "seconds_from_phase_start": 41.102371
+          },
+          "result_batch_id": "57eff187-9043-437b-97a0-f89816c2d3df"
+        },
+        {
+          "call_id": "call_01a0e9967671766a82142689dc93161c",
+          "tool": "write_file",
+          "path": "out/submissions/new--batch-06.md",
+          "run_id": "01a0e995-eab4-74c2-8412-3bc844449a26",
+          "response_id": "resp_6abac62dc8c2086278d64fff",
+          "message_id": "57eff187-9043-437b-97a0-f89816c2d3df",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 174,
+            "sequence": 175,
+            "epoch_us": 1790625350022691,
+            "seconds_from_phase_start": 40.776325
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 216,
+            "sequence": 217,
+            "epoch_us": 1790625350178827,
+            "seconds_from_phase_start": 40.932461
+          },
+          "effect_id": "01a0e996-820c-75e1-a43b-78c98a988d90",
+          "task_id": "01a0e996-820c-75e1-a43b-78c98a988d90",
+          "task_stream": {
+            "id": "01a0e996-820c-75e1-a43b-78c98a988d90",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 237,
+            "sequence": 238,
+            "epoch_us": 1790625350311755,
+            "seconds_from_phase_start": 41.065389
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0e9967671766a82142689dc93161c",
+            "effect_id": "01a0e996-820c-75e1-a43b-78c98a988d90",
+            "kind": "terminal",
+            "model_call_index": 5,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0e996-820c-75e1-a43b-78c98a988d90",
+            "task_stream": {
+              "id": "01a0e996-820c-75e1-a43b-78c98a988d90",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 247,
+            "sequence": 248,
+            "epoch_us": 1790625350348737,
+            "seconds_from_phase_start": 41.102371
+          },
+          "result_batch_id": "57eff187-9043-437b-97a0-f89816c2d3df"
+        }
+      ],
+      "receipt_publications": [],
+      "receipt_reads": [],
+      "all_read_paths": [
+        "inputs/01.md",
+        "inputs/02.md",
+        "inputs/03.md",
+        "inputs/04.md",
+        "inputs/05.md",
+        "inputs/06.md",
+        "inputs/07.md",
+        "inputs/revision-1.md",
+        "inputs/revision-2.md"
+      ],
+      "overlapping_marker_pairs": [],
+      "host": {
+        "error": "RuntimeError: structural/protocol failure; no correction slot",
+        "process_exit": -15,
+        "native_stop": null,
+        "driver_and_receiver_seconds": 39.94531059265137,
+        "host_poll_calls": 781,
+        "receiver_core_poll_seconds": 0.7451236211927608,
+        "projection_publications": 19,
+        "idle_publication": {
+          "polls": 0,
+          "publication_delta": 0,
+          "projection_bytes_unchanged": true
+        },
+        "complete_check_seconds_before_audit": 41.19468283653259,
+        "inputs_unchanged": true,
+        "structurally_complete": false,
+        "closed": true
+      },
+      "execution_terminal": {
+        "start_epoch": 1790625309.2463663,
+        "end_epoch": 1790625350.5688913,
+        "complete_check_seconds": 41.32252502441406,
+        "within_whole_ceiling": true,
+        "state": "closed",
+        "dispatched": 1,
+        "replacement_authorized": false,
+        "native_stop": null,
+        "host_error": "RuntimeError: structural/protocol failure; no correction slot"
+      },
+      "publication": {
+        "bundle_prepared_epoch": 1790625687.1952791,
+        "seconds_since_execution_phase_start": 377.94891333580017,
+        "execution_phase_terminal_seconds": 41.32252502441406,
+        "scope": "Post-check explanation and bundle preparation; Git push completion follows.",
+        "pre_execution_orchestration_seconds": 464.2463662624359,
+        "pre_execution_orchestration_basis": "Native Codex goal created_epoch1790624845; includes source inspection and one-use operator/audit construction, not candidate usage.",
+        "first_push_confirmation": {
+          "push_observed_complete_epoch": 1790625707.8557117,
+          "seconds_since_execution_phase_start": 398.60934591293335,
+          "execution_check_seconds": 41.32252502441406,
+          "commit": "39c919c0cf1e53779cc190cf7b5895a5a2933a83"
+        },
+        "authorization_goal_to_first_push_confirmation_seconds": 862.8557116985321,
+        "scope_limit": "Execution/staging/closure/automatic audit completed in41.323s. GitHub publication was confirmed398.609s after run-clock start; actual earlier push finish is unmeasured. Completion of the broader workflow including publication within390s is not established. Source inspection/operator construction before the run clock is also reported separately, not hidden in native usage."
+      },
+      "native_journal_last_event": {
+        "source": "native/muse-session.jsonl",
+        "line": 262,
+        "sequence": 263,
+        "epoch_us": 1790625350437536,
+        "seconds_from_phase_start": 41.19117
+      }
+    },
+    "A2": {
+      "root": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929",
+      "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+      "phase_start_epoch": 1790701385.2851405,
+      "batch_count": 3,
+      "batches": [
+        {
+          "response_id": "resp_6abbef69b6b6716cafb04848",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "calls": [
+            "call_01a0ee1f3ca6742cb5f2bb9bfbfdd71f",
+            "call_01a0ee1f3d7d7023a63dca34ac7535b4",
+            "call_01a0ee1f3e9d72158ba1338a7d0d52c3",
+            "call_01a0ee1f3f9975c09a0b011a0877673b",
+            "call_01a0ee1f409871be92a5ececd86cc3d8",
+            "call_01a0ee1f41b372989cda4e5db6e8a50b",
+            "call_01a0ee1f42b274d69d0785d155d6b4d0",
+            "call_01a0ee1f43b9733195175f1e4c990dbc",
+            "call_01a0ee1f44b371e482cbb23575fb89e7"
+          ],
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 49,
+            "sequence": 50,
+            "epoch_us": 1790701421975784,
+            "seconds_from_phase_start": 36.690644
+          }
+        },
+        {
+          "response_id": "resp_6abbf007792c41c8de60403b",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "calls": [
+            "call_01a0ee21b86d74b893e3ca208c9736f5",
+            "call_01a0ee21bee27787bc3c8cee58ea54fe",
+            "call_01a0ee21c5a771f1b9443a016a4b5975",
+            "call_01a0ee21cb6275d1bf4fe459ec5dbd32",
+            "call_01a0ee21d09e76ceac3f1d4d693a8bdf",
+            "call_01a0ee21d5ef76bfacedd59fc09ea4a8"
+          ],
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 176,
+            "sequence": 177,
+            "epoch_us": 1790701591533738,
+            "seconds_from_phase_start": 206.248597
+          }
+        },
+        {
+          "response_id": "resp_6abbf068448adf4253684528",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "calls": [
+            "call_01a0ee231cf676bea1943e5aa0a37ae2",
+            "call_01a0ee231e61712f89c98fea7149e584",
+            "call_01a0ee231fc17539b98d2316e528427a",
+            "call_01a0ee23211b72abaefeec75f012aeeb",
+            "call_01a0ee23229975f588ac1447130da10f",
+            "call_01a0ee2323f4712ab11a1d99974b9a9f"
+          ],
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 279,
+            "sequence": 280,
+            "epoch_us": 1790701676181528,
+            "seconds_from_phase_start": 290.896388
+          }
+        }
+      ],
+      "calls": [
+        {
+          "call_id": "call_01a0ee1f3ca6742cb5f2bb9bfbfdd71f",
+          "tool": "read_file",
+          "path": "inputs/01.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbef69b6b6716cafb04848",
+          "message_id": "11e3e819-ad38-46a6-9507-fc933159b1d4",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 49,
+            "sequence": 50,
+            "epoch_us": 1790701421975784,
+            "seconds_from_phase_start": 36.690644
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 56,
+            "sequence": 57,
+            "epoch_us": 1790701422011918,
+            "seconds_from_phase_start": 36.726778
+          },
+          "effect_id": "01a0ee1f-459d-7160-889f-c1c410d68d49",
+          "task_id": "01a0ee1f-459d-7160-889f-c1c410d68d49",
+          "task_stream": {
+            "id": "01a0ee1f-459d-7160-889f-c1c410d68d49",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 113,
+            "sequence": 114,
+            "epoch_us": 1790701422267830,
+            "seconds_from_phase_start": 36.982689
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee1f3ca6742cb5f2bb9bfbfdd71f",
+            "effect_id": "01a0ee1f-459d-7160-889f-c1c410d68d49",
+            "kind": "terminal",
+            "model_call_index": 0,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee1f-459d-7160-889f-c1c410d68d49",
+            "task_stream": {
+              "id": "01a0ee1f-459d-7160-889f-c1c410d68d49",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 149,
+            "sequence": 150,
+            "epoch_us": 1790701422427577,
+            "seconds_from_phase_start": 37.142437
+          },
+          "result_batch_id": "11e3e819-ad38-46a6-9507-fc933159b1d4"
+        },
+        {
+          "call_id": "call_01a0ee1f3d7d7023a63dca34ac7535b4",
+          "tool": "read_file",
+          "path": "inputs/02.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbef69b6b6716cafb04848",
+          "message_id": "11e3e819-ad38-46a6-9507-fc933159b1d4",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 49,
+            "sequence": 50,
+            "epoch_us": 1790701421975784,
+            "seconds_from_phase_start": 36.690644
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 63,
+            "sequence": 64,
+            "epoch_us": 1790701422041868,
+            "seconds_from_phase_start": 36.756727
+          },
+          "effect_id": "01a0ee1f-45c0-7600-87b3-787ba5ef9162",
+          "task_id": "01a0ee1f-45c0-7600-87b3-787ba5ef9162",
+          "task_stream": {
+            "id": "01a0ee1f-45c0-7600-87b3-787ba5ef9162",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 122,
+            "sequence": 123,
+            "epoch_us": 1790701422306283,
+            "seconds_from_phase_start": 37.021142
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee1f3d7d7023a63dca34ac7535b4",
+            "effect_id": "01a0ee1f-45c0-7600-87b3-787ba5ef9162",
+            "kind": "terminal",
+            "model_call_index": 1,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee1f-45c0-7600-87b3-787ba5ef9162",
+            "task_stream": {
+              "id": "01a0ee1f-45c0-7600-87b3-787ba5ef9162",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 149,
+            "sequence": 150,
+            "epoch_us": 1790701422427577,
+            "seconds_from_phase_start": 37.142437
+          },
+          "result_batch_id": "11e3e819-ad38-46a6-9507-fc933159b1d4"
+        },
+        {
+          "call_id": "call_01a0ee1f3e9d72158ba1338a7d0d52c3",
+          "tool": "read_file",
+          "path": "inputs/03.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbef69b6b6716cafb04848",
+          "message_id": "11e3e819-ad38-46a6-9507-fc933159b1d4",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 49,
+            "sequence": 50,
+            "epoch_us": 1790701421975784,
+            "seconds_from_phase_start": 36.690644
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 70,
+            "sequence": 71,
+            "epoch_us": 1790701422074195,
+            "seconds_from_phase_start": 36.789054
+          },
+          "effect_id": "01a0ee1f-45df-7460-ae6c-97e06c95c4cc",
+          "task_id": "01a0ee1f-45df-7460-ae6c-97e06c95c4cc",
+          "task_stream": {
+            "id": "01a0ee1f-45df-7460-ae6c-97e06c95c4cc",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 128,
+            "sequence": 129,
+            "epoch_us": 1790701422332841,
+            "seconds_from_phase_start": 37.0477
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee1f3e9d72158ba1338a7d0d52c3",
+            "effect_id": "01a0ee1f-45df-7460-ae6c-97e06c95c4cc",
+            "kind": "terminal",
+            "model_call_index": 2,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee1f-45df-7460-ae6c-97e06c95c4cc",
+            "task_stream": {
+              "id": "01a0ee1f-45df-7460-ae6c-97e06c95c4cc",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 149,
+            "sequence": 150,
+            "epoch_us": 1790701422427577,
+            "seconds_from_phase_start": 37.142437
+          },
+          "result_batch_id": "11e3e819-ad38-46a6-9507-fc933159b1d4"
+        },
+        {
+          "call_id": "call_01a0ee1f3f9975c09a0b011a0877673b",
+          "tool": "read_file",
+          "path": "inputs/04.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbef69b6b6716cafb04848",
+          "message_id": "11e3e819-ad38-46a6-9507-fc933159b1d4",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 49,
+            "sequence": 50,
+            "epoch_us": 1790701421975784,
+            "seconds_from_phase_start": 36.690644
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 77,
+            "sequence": 78,
+            "epoch_us": 1790701422105481,
+            "seconds_from_phase_start": 36.82034
+          },
+          "effect_id": "01a0ee1f-45fe-75b2-a833-69bdfaa28231",
+          "task_id": "01a0ee1f-45fe-75b2-a833-69bdfaa28231",
+          "task_stream": {
+            "id": "01a0ee1f-45fe-75b2-a833-69bdfaa28231",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 119,
+            "sequence": 120,
+            "epoch_us": 1790701422294248,
+            "seconds_from_phase_start": 37.009108
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee1f3f9975c09a0b011a0877673b",
+            "effect_id": "01a0ee1f-45fe-75b2-a833-69bdfaa28231",
+            "kind": "terminal",
+            "model_call_index": 3,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee1f-45fe-75b2-a833-69bdfaa28231",
+            "task_stream": {
+              "id": "01a0ee1f-45fe-75b2-a833-69bdfaa28231",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 149,
+            "sequence": 150,
+            "epoch_us": 1790701422427577,
+            "seconds_from_phase_start": 37.142437
+          },
+          "result_batch_id": "11e3e819-ad38-46a6-9507-fc933159b1d4"
+        },
+        {
+          "call_id": "call_01a0ee1f409871be92a5ececd86cc3d8",
+          "tool": "read_file",
+          "path": "inputs/05.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbef69b6b6716cafb04848",
+          "message_id": "11e3e819-ad38-46a6-9507-fc933159b1d4",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 49,
+            "sequence": 50,
+            "epoch_us": 1790701421975784,
+            "seconds_from_phase_start": 36.690644
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 84,
+            "sequence": 85,
+            "epoch_us": 1790701422135496,
+            "seconds_from_phase_start": 36.850355
+          },
+          "effect_id": "01a0ee1f-461d-7442-9f84-9d6625ce18d1",
+          "task_id": "01a0ee1f-461d-7442-9f84-9d6625ce18d1",
+          "task_stream": {
+            "id": "01a0ee1f-461d-7442-9f84-9d6625ce18d1",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 137,
+            "sequence": 138,
+            "epoch_us": 1790701422372310,
+            "seconds_from_phase_start": 37.087169
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee1f409871be92a5ececd86cc3d8",
+            "effect_id": "01a0ee1f-461d-7442-9f84-9d6625ce18d1",
+            "kind": "terminal",
+            "model_call_index": 4,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee1f-461d-7442-9f84-9d6625ce18d1",
+            "task_stream": {
+              "id": "01a0ee1f-461d-7442-9f84-9d6625ce18d1",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 149,
+            "sequence": 150,
+            "epoch_us": 1790701422427577,
+            "seconds_from_phase_start": 37.142437
+          },
+          "result_batch_id": "11e3e819-ad38-46a6-9507-fc933159b1d4"
+        },
+        {
+          "call_id": "call_01a0ee1f41b372989cda4e5db6e8a50b",
+          "tool": "read_file",
+          "path": "inputs/06.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbef69b6b6716cafb04848",
+          "message_id": "11e3e819-ad38-46a6-9507-fc933159b1d4",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 49,
+            "sequence": 50,
+            "epoch_us": 1790701421975784,
+            "seconds_from_phase_start": 36.690644
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 91,
+            "sequence": 92,
+            "epoch_us": 1790701422167495,
+            "seconds_from_phase_start": 36.882354
+          },
+          "effect_id": "01a0ee1f-463b-7462-923d-5341049b4c5b",
+          "task_id": "01a0ee1f-463b-7462-923d-5341049b4c5b",
+          "task_stream": {
+            "id": "01a0ee1f-463b-7462-923d-5341049b4c5b",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 134,
+            "sequence": 135,
+            "epoch_us": 1790701422359002,
+            "seconds_from_phase_start": 37.073862
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee1f41b372989cda4e5db6e8a50b",
+            "effect_id": "01a0ee1f-463b-7462-923d-5341049b4c5b",
+            "kind": "terminal",
+            "model_call_index": 5,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee1f-463b-7462-923d-5341049b4c5b",
+            "task_stream": {
+              "id": "01a0ee1f-463b-7462-923d-5341049b4c5b",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 149,
+            "sequence": 150,
+            "epoch_us": 1790701422427577,
+            "seconds_from_phase_start": 37.142437
+          },
+          "result_batch_id": "11e3e819-ad38-46a6-9507-fc933159b1d4"
+        },
+        {
+          "call_id": "call_01a0ee1f42b274d69d0785d155d6b4d0",
+          "tool": "read_file",
+          "path": "inputs/07.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbef69b6b6716cafb04848",
+          "message_id": "11e3e819-ad38-46a6-9507-fc933159b1d4",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 49,
+            "sequence": 50,
+            "epoch_us": 1790701421975784,
+            "seconds_from_phase_start": 36.690644
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 98,
+            "sequence": 99,
+            "epoch_us": 1790701422196955,
+            "seconds_from_phase_start": 36.911814
+          },
+          "effect_id": "01a0ee1f-465b-7781-ab91-71173ddd146f",
+          "task_id": "01a0ee1f-465b-7781-ab91-71173ddd146f",
+          "task_stream": {
+            "id": "01a0ee1f-465b-7781-ab91-71173ddd146f",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 125,
+            "sequence": 126,
+            "epoch_us": 1790701422320225,
+            "seconds_from_phase_start": 37.035084
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee1f42b274d69d0785d155d6b4d0",
+            "effect_id": "01a0ee1f-465b-7781-ab91-71173ddd146f",
+            "kind": "terminal",
+            "model_call_index": 6,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee1f-465b-7781-ab91-71173ddd146f",
+            "task_stream": {
+              "id": "01a0ee1f-465b-7781-ab91-71173ddd146f",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 149,
+            "sequence": 150,
+            "epoch_us": 1790701422427577,
+            "seconds_from_phase_start": 37.142437
+          },
+          "result_batch_id": "11e3e819-ad38-46a6-9507-fc933159b1d4"
+        },
+        {
+          "call_id": "call_01a0ee1f43b9733195175f1e4c990dbc",
+          "tool": "read_file",
+          "path": "inputs/revision-1.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbef69b6b6716cafb04848",
+          "message_id": "11e3e819-ad38-46a6-9507-fc933159b1d4",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 49,
+            "sequence": 50,
+            "epoch_us": 1790701421975784,
+            "seconds_from_phase_start": 36.690644
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 105,
+            "sequence": 106,
+            "epoch_us": 1790701422227445,
+            "seconds_from_phase_start": 36.942304
+          },
+          "effect_id": "01a0ee1f-4679-7433-97a4-70d45e5bba6b",
+          "task_id": "01a0ee1f-4679-7433-97a4-70d45e5bba6b",
+          "task_stream": {
+            "id": "01a0ee1f-4679-7433-97a4-70d45e5bba6b",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 116,
+            "sequence": 117,
+            "epoch_us": 1790701422280978,
+            "seconds_from_phase_start": 36.995837
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee1f43b9733195175f1e4c990dbc",
+            "effect_id": "01a0ee1f-4679-7433-97a4-70d45e5bba6b",
+            "kind": "terminal",
+            "model_call_index": 7,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee1f-4679-7433-97a4-70d45e5bba6b",
+            "task_stream": {
+              "id": "01a0ee1f-4679-7433-97a4-70d45e5bba6b",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 149,
+            "sequence": 150,
+            "epoch_us": 1790701422427577,
+            "seconds_from_phase_start": 37.142437
+          },
+          "result_batch_id": "11e3e819-ad38-46a6-9507-fc933159b1d4"
+        },
+        {
+          "call_id": "call_01a0ee1f44b371e482cbb23575fb89e7",
+          "tool": "read_file",
+          "path": "inputs/revision-2.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbef69b6b6716cafb04848",
+          "message_id": "11e3e819-ad38-46a6-9507-fc933159b1d4",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 49,
+            "sequence": 50,
+            "epoch_us": 1790701421975784,
+            "seconds_from_phase_start": 36.690644
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 112,
+            "sequence": 113,
+            "epoch_us": 1790701422258545,
+            "seconds_from_phase_start": 36.973404
+          },
+          "effect_id": "01a0ee1f-4697-7c52-96fb-38a81b18367c",
+          "task_id": "01a0ee1f-4697-7c52-96fb-38a81b18367c",
+          "task_stream": {
+            "id": "01a0ee1f-4697-7c52-96fb-38a81b18367c",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 131,
+            "sequence": 132,
+            "epoch_us": 1790701422346033,
+            "seconds_from_phase_start": 37.060893
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee1f44b371e482cbb23575fb89e7",
+            "effect_id": "01a0ee1f-4697-7c52-96fb-38a81b18367c",
+            "kind": "terminal",
+            "model_call_index": 8,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 0,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee1f-4697-7c52-96fb-38a81b18367c",
+            "task_stream": {
+              "id": "01a0ee1f-4697-7c52-96fb-38a81b18367c",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 149,
+            "sequence": 150,
+            "epoch_us": 1790701422427577,
+            "seconds_from_phase_start": 37.142437
+          },
+          "result_batch_id": "11e3e819-ad38-46a6-9507-fc933159b1d4"
+        },
+        {
+          "call_id": "call_01a0ee21b86d74b893e3ca208c9736f5",
+          "tool": "write_file",
+          "path": "out/submissions/new--batch-01.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbf007792c41c8de60403b",
+          "message_id": "da96499d-cea8-4756-98bd-574b61fb917e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 176,
+            "sequence": 177,
+            "epoch_us": 1790701591533738,
+            "seconds_from_phase_start": 206.248597
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 183,
+            "sequence": 184,
+            "epoch_us": 1790701591567577,
+            "seconds_from_phase_start": 206.282436
+          },
+          "effect_id": "01a0ee21-dbf4-7193-870a-8c1d44273302",
+          "task_id": "01a0ee21-dbf4-7193-870a-8c1d44273302",
+          "task_stream": {
+            "id": "01a0ee21-dbf4-7193-870a-8c1d44273302",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 235,
+            "sequence": 236,
+            "epoch_us": 1790701591855086,
+            "seconds_from_phase_start": 206.569946
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee21b86d74b893e3ca208c9736f5",
+            "effect_id": "01a0ee21-dbf4-7193-870a-8c1d44273302",
+            "kind": "terminal",
+            "model_call_index": 0,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee21-dbf4-7193-870a-8c1d44273302",
+            "task_stream": {
+              "id": "01a0ee21-dbf4-7193-870a-8c1d44273302",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 249,
+            "sequence": 250,
+            "epoch_us": 1790701591925450,
+            "seconds_from_phase_start": 206.64031
+          },
+          "result_batch_id": "da96499d-cea8-4756-98bd-574b61fb917e"
+        },
+        {
+          "call_id": "call_01a0ee21bee27787bc3c8cee58ea54fe",
+          "tool": "write_file",
+          "path": "out/submissions/new--batch-02.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbf007792c41c8de60403b",
+          "message_id": "da96499d-cea8-4756-98bd-574b61fb917e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 176,
+            "sequence": 177,
+            "epoch_us": 1790701591533738,
+            "seconds_from_phase_start": 206.248597
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 190,
+            "sequence": 191,
+            "epoch_us": 1790701591599853,
+            "seconds_from_phase_start": 206.314713
+          },
+          "effect_id": "01a0ee21-dc13-7df1-b264-54527c953b77",
+          "task_id": "01a0ee21-dc13-7df1-b264-54527c953b77",
+          "task_stream": {
+            "id": "01a0ee21-dc13-7df1-b264-54527c953b77",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 223,
+            "sequence": 224,
+            "epoch_us": 1790701591776592,
+            "seconds_from_phase_start": 206.491452
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee21bee27787bc3c8cee58ea54fe",
+            "effect_id": "01a0ee21-dc13-7df1-b264-54527c953b77",
+            "kind": "terminal",
+            "model_call_index": 1,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee21-dc13-7df1-b264-54527c953b77",
+            "task_stream": {
+              "id": "01a0ee21-dc13-7df1-b264-54527c953b77",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 249,
+            "sequence": 250,
+            "epoch_us": 1790701591925450,
+            "seconds_from_phase_start": 206.64031
+          },
+          "result_batch_id": "da96499d-cea8-4756-98bd-574b61fb917e"
+        },
+        {
+          "call_id": "call_01a0ee21c5a771f1b9443a016a4b5975",
+          "tool": "write_file",
+          "path": "out/submissions/new--batch-03.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbf007792c41c8de60403b",
+          "message_id": "da96499d-cea8-4756-98bd-574b61fb917e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 176,
+            "sequence": 177,
+            "epoch_us": 1790701591533738,
+            "seconds_from_phase_start": 206.248597
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 197,
+            "sequence": 198,
+            "epoch_us": 1790701591631169,
+            "seconds_from_phase_start": 206.346029
+          },
+          "effect_id": "01a0ee21-dc33-7a93-a987-9b58deec9e99",
+          "task_id": "01a0ee21-dc33-7a93-a987-9b58deec9e99",
+          "task_stream": {
+            "id": "01a0ee21-dc33-7a93-a987-9b58deec9e99",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 227,
+            "sequence": 228,
+            "epoch_us": 1790701591804751,
+            "seconds_from_phase_start": 206.51961
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee21c5a771f1b9443a016a4b5975",
+            "effect_id": "01a0ee21-dc33-7a93-a987-9b58deec9e99",
+            "kind": "terminal",
+            "model_call_index": 2,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee21-dc33-7a93-a987-9b58deec9e99",
+            "task_stream": {
+              "id": "01a0ee21-dc33-7a93-a987-9b58deec9e99",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 249,
+            "sequence": 250,
+            "epoch_us": 1790701591925450,
+            "seconds_from_phase_start": 206.64031
+          },
+          "result_batch_id": "da96499d-cea8-4756-98bd-574b61fb917e"
+        },
+        {
+          "call_id": "call_01a0ee21cb6275d1bf4fe459ec5dbd32",
+          "tool": "write_file",
+          "path": "out/submissions/new--batch-04.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbf007792c41c8de60403b",
+          "message_id": "da96499d-cea8-4756-98bd-574b61fb917e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 176,
+            "sequence": 177,
+            "epoch_us": 1790701591533738,
+            "seconds_from_phase_start": 206.248597
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 204,
+            "sequence": 205,
+            "epoch_us": 1790701591660137,
+            "seconds_from_phase_start": 206.374996
+          },
+          "effect_id": "01a0ee21-dc52-7212-ba84-d9134c8bcdbf",
+          "task_id": "01a0ee21-dc52-7212-ba84-d9134c8bcdbf",
+          "task_stream": {
+            "id": "01a0ee21-dc52-7212-ba84-d9134c8bcdbf",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 231,
+            "sequence": 232,
+            "epoch_us": 1790701591829900,
+            "seconds_from_phase_start": 206.54476
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee21cb6275d1bf4fe459ec5dbd32",
+            "effect_id": "01a0ee21-dc52-7212-ba84-d9134c8bcdbf",
+            "kind": "terminal",
+            "model_call_index": 3,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee21-dc52-7212-ba84-d9134c8bcdbf",
+            "task_stream": {
+              "id": "01a0ee21-dc52-7212-ba84-d9134c8bcdbf",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 249,
+            "sequence": 250,
+            "epoch_us": 1790701591925450,
+            "seconds_from_phase_start": 206.64031
+          },
+          "result_batch_id": "da96499d-cea8-4756-98bd-574b61fb917e"
+        },
+        {
+          "call_id": "call_01a0ee21d09e76ceac3f1d4d693a8bdf",
+          "tool": "write_file",
+          "path": "out/submissions/new--batch-05.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbf007792c41c8de60403b",
+          "message_id": "da96499d-cea8-4756-98bd-574b61fb917e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 176,
+            "sequence": 177,
+            "epoch_us": 1790701591533738,
+            "seconds_from_phase_start": 206.248597
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 211,
+            "sequence": 212,
+            "epoch_us": 1790701591691064,
+            "seconds_from_phase_start": 206.405923
+          },
+          "effect_id": "01a0ee21-dc6f-7982-8715-ed252dfabe2d",
+          "task_id": "01a0ee21-dc6f-7982-8715-ed252dfabe2d",
+          "task_stream": {
+            "id": "01a0ee21-dc6f-7982-8715-ed252dfabe2d",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 219,
+            "sequence": 220,
+            "epoch_us": 1790701591752451,
+            "seconds_from_phase_start": 206.46731
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee21d09e76ceac3f1d4d693a8bdf",
+            "effect_id": "01a0ee21-dc6f-7982-8715-ed252dfabe2d",
+            "kind": "terminal",
+            "model_call_index": 4,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee21-dc6f-7982-8715-ed252dfabe2d",
+            "task_stream": {
+              "id": "01a0ee21-dc6f-7982-8715-ed252dfabe2d",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 249,
+            "sequence": 250,
+            "epoch_us": 1790701591925450,
+            "seconds_from_phase_start": 206.64031
+          },
+          "result_batch_id": "da96499d-cea8-4756-98bd-574b61fb917e"
+        },
+        {
+          "call_id": "call_01a0ee21d5ef76bfacedd59fc09ea4a8",
+          "tool": "write_file",
+          "path": "out/submissions/new--batch-06.md",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbf007792c41c8de60403b",
+          "message_id": "da96499d-cea8-4756-98bd-574b61fb917e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 176,
+            "sequence": 177,
+            "epoch_us": 1790701591533738,
+            "seconds_from_phase_start": 206.248597
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 218,
+            "sequence": 219,
+            "epoch_us": 1790701591721454,
+            "seconds_from_phase_start": 206.436313
+          },
+          "effect_id": "01a0ee21-dc8f-7ae0-a696-dacb6fecf8c9",
+          "task_id": "01a0ee21-dc8f-7ae0-a696-dacb6fecf8c9",
+          "task_stream": {
+            "id": "01a0ee21-dc8f-7ae0-a696-dacb6fecf8c9",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 239,
+            "sequence": 240,
+            "epoch_us": 1790701591879364,
+            "seconds_from_phase_start": 206.594223
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee21d5ef76bfacedd59fc09ea4a8",
+            "effect_id": "01a0ee21-dc8f-7ae0-a696-dacb6fecf8c9",
+            "kind": "terminal",
+            "model_call_index": 5,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee21-dc8f-7ae0-a696-dacb6fecf8c9",
+            "task_stream": {
+              "id": "01a0ee21-dc8f-7ae0-a696-dacb6fecf8c9",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 249,
+            "sequence": 250,
+            "epoch_us": 1790701591925450,
+            "seconds_from_phase_start": 206.64031
+          },
+          "result_batch_id": "da96499d-cea8-4756-98bd-574b61fb917e"
+        },
+        {
+          "call_id": "call_01a0ee231cf676bea1943e5aa0a37ae2",
+          "tool": "write_file",
+          "path": "out/requests/new--batch-01",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbf068448adf4253684528",
+          "message_id": "201909df-7b97-4c6d-9928-ac84a8376e3e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 279,
+            "sequence": 280,
+            "epoch_us": 1790701676181528,
+            "seconds_from_phase_start": 290.896388
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 286,
+            "sequence": 287,
+            "epoch_us": 1790701676211656,
+            "seconds_from_phase_start": 290.926516
+          },
+          "effect_id": "01a0ee23-269a-7a41-b527-23f6dca63cf5",
+          "task_id": "01a0ee23-269a-7a41-b527-23f6dca63cf5",
+          "task_stream": {
+            "id": "01a0ee23-269a-7a41-b527-23f6dca63cf5",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 326,
+            "sequence": 327,
+            "epoch_us": 1790701676410024,
+            "seconds_from_phase_start": 291.124883
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee231cf676bea1943e5aa0a37ae2",
+            "effect_id": "01a0ee23-269a-7a41-b527-23f6dca63cf5",
+            "kind": "terminal",
+            "model_call_index": 0,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee23-269a-7a41-b527-23f6dca63cf5",
+            "task_stream": {
+              "id": "01a0ee23-269a-7a41-b527-23f6dca63cf5",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 352,
+            "sequence": 353,
+            "epoch_us": 1790701676558696,
+            "seconds_from_phase_start": 291.273556
+          },
+          "result_batch_id": "201909df-7b97-4c6d-9928-ac84a8376e3e"
+        },
+        {
+          "call_id": "call_01a0ee231e61712f89c98fea7149e584",
+          "tool": "write_file",
+          "path": "out/requests/new--batch-02",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbf068448adf4253684528",
+          "message_id": "201909df-7b97-4c6d-9928-ac84a8376e3e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 279,
+            "sequence": 280,
+            "epoch_us": 1790701676181528,
+            "seconds_from_phase_start": 290.896388
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 293,
+            "sequence": 294,
+            "epoch_us": 1790701676238311,
+            "seconds_from_phase_start": 290.953171
+          },
+          "effect_id": "01a0ee23-26b7-7c72-9757-6693f3fefb0a",
+          "task_id": "01a0ee23-26b7-7c72-9757-6693f3fefb0a",
+          "task_stream": {
+            "id": "01a0ee23-26b7-7c72-9757-6693f3fefb0a",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 322,
+            "sequence": 323,
+            "epoch_us": 1790701676382929,
+            "seconds_from_phase_start": 291.097789
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee231e61712f89c98fea7149e584",
+            "effect_id": "01a0ee23-26b7-7c72-9757-6693f3fefb0a",
+            "kind": "terminal",
+            "model_call_index": 1,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee23-26b7-7c72-9757-6693f3fefb0a",
+            "task_stream": {
+              "id": "01a0ee23-26b7-7c72-9757-6693f3fefb0a",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 352,
+            "sequence": 353,
+            "epoch_us": 1790701676558696,
+            "seconds_from_phase_start": 291.273556
+          },
+          "result_batch_id": "201909df-7b97-4c6d-9928-ac84a8376e3e"
+        },
+        {
+          "call_id": "call_01a0ee231fc17539b98d2316e528427a",
+          "tool": "write_file",
+          "path": "out/requests/new--batch-03",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbf068448adf4253684528",
+          "message_id": "201909df-7b97-4c6d-9928-ac84a8376e3e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 279,
+            "sequence": 280,
+            "epoch_us": 1790701676181528,
+            "seconds_from_phase_start": 290.896388
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 300,
+            "sequence": 301,
+            "epoch_us": 1790701676266438,
+            "seconds_from_phase_start": 290.981297
+          },
+          "effect_id": "01a0ee23-26d1-7743-817e-2ab7f50f91ef",
+          "task_id": "01a0ee23-26d1-7743-817e-2ab7f50f91ef",
+          "task_stream": {
+            "id": "01a0ee23-26d1-7743-817e-2ab7f50f91ef",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 330,
+            "sequence": 331,
+            "epoch_us": 1790701676434482,
+            "seconds_from_phase_start": 291.149342
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee231fc17539b98d2316e528427a",
+            "effect_id": "01a0ee23-26d1-7743-817e-2ab7f50f91ef",
+            "kind": "terminal",
+            "model_call_index": 2,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee23-26d1-7743-817e-2ab7f50f91ef",
+            "task_stream": {
+              "id": "01a0ee23-26d1-7743-817e-2ab7f50f91ef",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 352,
+            "sequence": 353,
+            "epoch_us": 1790701676558696,
+            "seconds_from_phase_start": 291.273556
+          },
+          "result_batch_id": "201909df-7b97-4c6d-9928-ac84a8376e3e"
+        },
+        {
+          "call_id": "call_01a0ee23211b72abaefeec75f012aeeb",
+          "tool": "write_file",
+          "path": "out/requests/new--batch-04",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbf068448adf4253684528",
+          "message_id": "201909df-7b97-4c6d-9928-ac84a8376e3e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 279,
+            "sequence": 280,
+            "epoch_us": 1790701676181528,
+            "seconds_from_phase_start": 290.896388
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 307,
+            "sequence": 308,
+            "epoch_us": 1790701676293839,
+            "seconds_from_phase_start": 291.008698
+          },
+          "effect_id": "01a0ee23-26ee-71b2-a7e2-452513da4177",
+          "task_id": "01a0ee23-26ee-71b2-a7e2-452513da4177",
+          "task_stream": {
+            "id": "01a0ee23-26ee-71b2-a7e2-452513da4177",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 342,
+            "sequence": 343,
+            "epoch_us": 1790701676515137,
+            "seconds_from_phase_start": 291.229996
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee23211b72abaefeec75f012aeeb",
+            "effect_id": "01a0ee23-26ee-71b2-a7e2-452513da4177",
+            "kind": "terminal",
+            "model_call_index": 3,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee23-26ee-71b2-a7e2-452513da4177",
+            "task_stream": {
+              "id": "01a0ee23-26ee-71b2-a7e2-452513da4177",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 352,
+            "sequence": 353,
+            "epoch_us": 1790701676558696,
+            "seconds_from_phase_start": 291.273556
+          },
+          "result_batch_id": "201909df-7b97-4c6d-9928-ac84a8376e3e"
+        },
+        {
+          "call_id": "call_01a0ee23229975f588ac1447130da10f",
+          "tool": "write_file",
+          "path": "out/requests/new--batch-05",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbf068448adf4253684528",
+          "message_id": "201909df-7b97-4c6d-9928-ac84a8376e3e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 279,
+            "sequence": 280,
+            "epoch_us": 1790701676181528,
+            "seconds_from_phase_start": 290.896388
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 314,
+            "sequence": 315,
+            "epoch_us": 1790701676322293,
+            "seconds_from_phase_start": 291.037153
+          },
+          "effect_id": "01a0ee23-2709-7473-b1a6-13777192688a",
+          "task_id": "01a0ee23-2709-7473-b1a6-13777192688a",
+          "task_stream": {
+            "id": "01a0ee23-2709-7473-b1a6-13777192688a",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 334,
+            "sequence": 335,
+            "epoch_us": 1790701676461490,
+            "seconds_from_phase_start": 291.176349
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee23229975f588ac1447130da10f",
+            "effect_id": "01a0ee23-2709-7473-b1a6-13777192688a",
+            "kind": "terminal",
+            "model_call_index": 4,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee23-2709-7473-b1a6-13777192688a",
+            "task_stream": {
+              "id": "01a0ee23-2709-7473-b1a6-13777192688a",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 352,
+            "sequence": 353,
+            "epoch_us": 1790701676558696,
+            "seconds_from_phase_start": 291.273556
+          },
+          "result_batch_id": "201909df-7b97-4c6d-9928-ac84a8376e3e"
+        },
+        {
+          "call_id": "call_01a0ee2323f4712ab11a1d99974b9a9f",
+          "tool": "write_file",
+          "path": "out/requests/new--batch-06",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "response_id": "resp_6abbf068448adf4253684528",
+          "message_id": "201909df-7b97-4c6d-9928-ac84a8376e3e",
+          "committed": {
+            "source": "native/muse-session.jsonl",
+            "line": 279,
+            "sequence": 280,
+            "epoch_us": 1790701676181528,
+            "seconds_from_phase_start": 290.896388
+          },
+          "started": {
+            "source": "native/muse-session.jsonl",
+            "line": 321,
+            "sequence": 322,
+            "epoch_us": 1790701676351938,
+            "seconds_from_phase_start": 291.066797
+          },
+          "effect_id": "01a0ee23-2727-77a2-8660-10e09b1ae20c",
+          "task_id": "01a0ee23-2727-77a2-8660-10e09b1ae20c",
+          "task_stream": {
+            "id": "01a0ee23-2727-77a2-8660-10e09b1ae20c",
+            "kind": "task"
+          },
+          "terminal": {
+            "source": "native/muse-session.jsonl",
+            "line": 338,
+            "sequence": 339,
+            "epoch_us": 1790701676485981,
+            "seconds_from_phase_start": 291.20084
+          },
+          "terminal_outcome": {
+            "call_id": "call_01a0ee2323f4712ab11a1d99974b9a9f",
+            "effect_id": "01a0ee23-2727-77a2-8660-10e09b1ae20c",
+            "kind": "terminal",
+            "model_call_index": 5,
+            "outcome": {
+              "kind": "completed",
+              "output_ref_count": 1,
+              "task_completion": {
+                "kind": "complete"
+              }
+            },
+            "task_id": "01a0ee23-2727-77a2-8660-10e09b1ae20c",
+            "task_stream": {
+              "id": "01a0ee23-2727-77a2-8660-10e09b1ae20c",
+              "kind": "task"
+            }
+          },
+          "result": {
+            "source": "native/muse-session.jsonl",
+            "line": 352,
+            "sequence": 353,
+            "epoch_us": 1790701676558696,
+            "seconds_from_phase_start": 291.273556
+          },
+          "result_batch_id": "201909df-7b97-4c6d-9928-ac84a8376e3e"
+        }
+      ],
+      "receipt_publications": [
+        {
+          "kind": "receipt_published",
+          "request": "new--batch-01",
+          "sequence": 1,
+          "finding_id": "F0001",
+          "revision": 1,
+          "status": "VALID_UNVERIFIED",
+          "snapshot_sha256": "b18578814c7ba4b04e28f4d0f140e4d36327ce89ee62450a408836fcea622349",
+          "marker_snapshot_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+          "snapshots_and_state_precede_receipt": true,
+          "receipt_published_epoch_ns": 1790701676585346882,
+          "receipt_sha256": "42e45f904d8c4e09e0860bc1e0bd3fb8c5bc6ccb24997385c8d781f166c0d34b",
+          "source": "receipt-order.jsonl",
+          "line": 1,
+          "seconds_from_phase_start": 291.300206
+        },
+        {
+          "kind": "receipt_published",
+          "request": "new--batch-02",
+          "sequence": 2,
+          "finding_id": "F0002",
+          "revision": 1,
+          "status": "VALID_UNVERIFIED",
+          "snapshot_sha256": "fec3a849f7d54e32902268f950d3ff51ff91e1f480be9836fd62b4ccf7334f63",
+          "marker_snapshot_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+          "snapshots_and_state_precede_receipt": true,
+          "receipt_published_epoch_ns": 1790701676601453107,
+          "receipt_sha256": "86efbf10184fac235802f2267442e1e17b241ce0ca6ed22adff85af7554ee053",
+          "source": "receipt-order.jsonl",
+          "line": 2,
+          "seconds_from_phase_start": 291.316313
+        },
+        {
+          "kind": "receipt_published",
+          "request": "new--batch-03",
+          "sequence": 3,
+          "finding_id": "F0003",
+          "revision": 1,
+          "status": "VALID_UNVERIFIED",
+          "snapshot_sha256": "930b6d21e10253a85ee96cd678a61254a8ae588a1ce201ff8f3870028f648edf",
+          "marker_snapshot_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+          "snapshots_and_state_precede_receipt": true,
+          "receipt_published_epoch_ns": 1790701676619186643,
+          "receipt_sha256": "95faf595fd599f7bc4bc965c35f6dfc391e483c618d58a2bf93ca762ddd9e0e5",
+          "source": "receipt-order.jsonl",
+          "line": 3,
+          "seconds_from_phase_start": 291.334046
+        },
+        {
+          "kind": "receipt_published",
+          "request": "new--batch-04",
+          "sequence": 4,
+          "finding_id": "F0004",
+          "revision": 1,
+          "status": "VALID_UNVERIFIED",
+          "snapshot_sha256": "245027d190f940a570818ebed0812d5ba161b343dd68eb7a5bc37fd38501c594",
+          "marker_snapshot_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+          "snapshots_and_state_precede_receipt": true,
+          "receipt_published_epoch_ns": 1790701676634421281,
+          "receipt_sha256": "70cf5f284f24d3d4fc9f2aaa439543f60b8f8207ed5114fc72bf546594be6ca4",
+          "source": "receipt-order.jsonl",
+          "line": 4,
+          "seconds_from_phase_start": 291.349281
+        },
+        {
+          "kind": "receipt_published",
+          "request": "new--batch-05",
+          "sequence": 5,
+          "finding_id": "F0005",
+          "revision": 1,
+          "status": "VALID_UNVERIFIED",
+          "snapshot_sha256": "04253ecfb1bf83e1f658ad7a4c9e32b91a524fb7b31308969ef66a4d86045ea8",
+          "marker_snapshot_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+          "snapshots_and_state_precede_receipt": true,
+          "receipt_published_epoch_ns": 1790701676648525687,
+          "receipt_sha256": "10fbcac7194dad13fdb373e9a7368690f61f63aa492eb0c4615a358146523929",
+          "source": "receipt-order.jsonl",
+          "line": 5,
+          "seconds_from_phase_start": 291.363385
+        },
+        {
+          "kind": "receipt_published",
+          "request": "new--batch-06",
+          "sequence": 6,
+          "finding_id": "F0006",
+          "revision": 1,
+          "status": "VALID_UNVERIFIED",
+          "snapshot_sha256": "cfb640b238f3951074666b233875632e6d5569a9652a890deb5ef317bc56e07f",
+          "marker_snapshot_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+          "snapshots_and_state_precede_receipt": true,
+          "receipt_published_epoch_ns": 1790701676661927158,
+          "receipt_sha256": "d4c2ea48619273f53a4bbe0caea230b687933eea41c7dca3ed3b8c97b326963a",
+          "source": "receipt-order.jsonl",
+          "line": 6,
+          "seconds_from_phase_start": 291.376787
+        }
+      ],
+      "receipt_reads": [],
+      "all_read_paths": [
+        "inputs/01.md",
+        "inputs/02.md",
+        "inputs/03.md",
+        "inputs/04.md",
+        "inputs/05.md",
+        "inputs/06.md",
+        "inputs/07.md",
+        "inputs/revision-1.md",
+        "inputs/revision-2.md"
+      ],
+      "overlapping_marker_pairs": [
+        {
+          "calls": [
+            "call_01a0ee231cf676bea1943e5aa0a37ae2",
+            "call_01a0ee231e61712f89c98fea7149e584"
+          ],
+          "overlap_us": 144618
+        },
+        {
+          "calls": [
+            "call_01a0ee231cf676bea1943e5aa0a37ae2",
+            "call_01a0ee231fc17539b98d2316e528427a"
+          ],
+          "overlap_us": 143586
+        },
+        {
+          "calls": [
+            "call_01a0ee231cf676bea1943e5aa0a37ae2",
+            "call_01a0ee23211b72abaefeec75f012aeeb"
+          ],
+          "overlap_us": 116185
+        },
+        {
+          "calls": [
+            "call_01a0ee231cf676bea1943e5aa0a37ae2",
+            "call_01a0ee23229975f588ac1447130da10f"
+          ],
+          "overlap_us": 87731
+        },
+        {
+          "calls": [
+            "call_01a0ee231cf676bea1943e5aa0a37ae2",
+            "call_01a0ee2323f4712ab11a1d99974b9a9f"
+          ],
+          "overlap_us": 58086
+        },
+        {
+          "calls": [
+            "call_01a0ee231e61712f89c98fea7149e584",
+            "call_01a0ee231fc17539b98d2316e528427a"
+          ],
+          "overlap_us": 116491
+        },
+        {
+          "calls": [
+            "call_01a0ee231e61712f89c98fea7149e584",
+            "call_01a0ee23211b72abaefeec75f012aeeb"
+          ],
+          "overlap_us": 89090
+        },
+        {
+          "calls": [
+            "call_01a0ee231e61712f89c98fea7149e584",
+            "call_01a0ee23229975f588ac1447130da10f"
+          ],
+          "overlap_us": 60636
+        },
+        {
+          "calls": [
+            "call_01a0ee231e61712f89c98fea7149e584",
+            "call_01a0ee2323f4712ab11a1d99974b9a9f"
+          ],
+          "overlap_us": 30991
+        },
+        {
+          "calls": [
+            "call_01a0ee231fc17539b98d2316e528427a",
+            "call_01a0ee23211b72abaefeec75f012aeeb"
+          ],
+          "overlap_us": 140643
+        },
+        {
+          "calls": [
+            "call_01a0ee231fc17539b98d2316e528427a",
+            "call_01a0ee23229975f588ac1447130da10f"
+          ],
+          "overlap_us": 112189
+        },
+        {
+          "calls": [
+            "call_01a0ee231fc17539b98d2316e528427a",
+            "call_01a0ee2323f4712ab11a1d99974b9a9f"
+          ],
+          "overlap_us": 82544
+        },
+        {
+          "calls": [
+            "call_01a0ee23211b72abaefeec75f012aeeb",
+            "call_01a0ee23229975f588ac1447130da10f"
+          ],
+          "overlap_us": 139197
+        },
+        {
+          "calls": [
+            "call_01a0ee23211b72abaefeec75f012aeeb",
+            "call_01a0ee2323f4712ab11a1d99974b9a9f"
+          ],
+          "overlap_us": 134043
+        },
+        {
+          "calls": [
+            "call_01a0ee23229975f588ac1447130da10f",
+            "call_01a0ee2323f4712ab11a1d99974b9a9f"
+          ],
+          "overlap_us": 109552
+        }
+      ],
+      "host": {
+        "error": null,
+        "process_exit": 0,
+        "native_stop": "cap_seconds",
+        "driver_and_receiver_seconds": 319.020409822464,
+        "host_poll_calls": 6017,
+        "receiver_core_poll_seconds": 16.481840587046463,
+        "projection_publications": 34,
+        "idle_publication": {
+          "polls": 493,
+          "publication_delta": 0,
+          "projection_bytes_unchanged": true
+        },
+        "complete_check_seconds_before_audit": 321.96211409568787,
+        "inputs_unchanged": true,
+        "structurally_complete": true,
+        "closed": true
+      },
+      "execution_terminal": {
+        "start_epoch": 1790701385.2851405,
+        "end_epoch": 1790701707.3790388,
+        "execution_terminal_seconds_from_go": 322.0938982963562,
+        "execution_terminal_within_whole_ceiling": true,
+        "whole_check_including_publication": "pending; host must record publication confirmation against same deadline",
+        "state": "closed",
+        "dispatched": 1,
+        "replacement_authorized": false,
+        "native_stop": "cap_seconds",
+        "host_error": null
+      },
+      "publication": {
+        "go_epoch": 1790701385.2851405,
+        "deadline_epoch": 1790701775.2851405,
+        "execution_terminal_seconds": 322.0938982963562,
+        "prepared_epoch": 1790701744.4867399,
+        "confirmed_publication": "confirmed; this timestamp is a subsequent accounting addendum",
+        "first_push_confirmed_epoch": 1790701776.2956295,
+        "go_to_first_confirmed_publication_seconds": 391.010488986969,
+        "within_390_seconds": false,
+        "published_result_commit": "54389cfbedc227b5215952905b839526ad1b4030",
+        "late_accounting_prepared_epoch": 1790701908.3528004,
+        "late_accounting_elapsed_seconds": 523.0676605701447,
+        "scope_note": "First result publication exceeded ceiling. Subsequent timing and usage addenda are late reporting only; no new native work. Final addendum push confirmation retained in VM postcheck/publication-final.json and final chat response."
+      },
+      "native_journal_last_event": {
+        "source": "native/muse-session.jsonl",
+        "line": 380,
+        "sequence": 381,
+        "epoch_us": 1790701707021187,
+        "seconds_from_phase_start": 321.736047
+      },
+      "late_publication_confirmation": {
+        "confirmed_epoch": 1790701911.646521,
+        "total_go_to_final_addendum_confirmation_seconds": 526.3613805770874,
+        "within_390_seconds": false,
+        "commit": "158140cb425fe3c4ceaa3eef1715ce66126e4c8a",
+        "scope": "Final late timing/usage addendum publication; not extra execution budget or another native check."
+      }
+    }
+  },
+  "sources": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/native/muse-session.jsonl": {
+      "sha256": "a36eece85612559f6a30b8676b77c37d83330c7fae3d6fc59a27fbc6a4aa3bfa",
+      "bytes": 322384
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/phase-clock.json": {
+      "sha256": "a66d98ce67601d92c04e6fda3c39d396439c533ea4bea797774928a384feef37",
+      "bytes": 270
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/host-receipt.json": {
+      "sha256": "32224d9bcba764be291b319b03b9b86c78dedfa5251c2a5801e49fb3cd6bed94",
+      "bytes": 540
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/phase-terminal.json": {
+      "sha256": "2a7063843d1c9673df212d2964c316e749e4e593d08b352f65ad8371dca71251",
+      "bytes": 333
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/dispatch.json": {
+      "sha256": "2aecae5cd5a6dc3c194fbfb62812c7dafd1bf01a3af921d7282e79e5ac737af5",
+      "bytes": 1169
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a1-m-20260928/store/state.json": {
+      "sha256": "de2df92ad51569794f8444a008308082f241beb8647c67e93a4fdcef4297136b",
+      "bytes": 31184
+    },
+    "/home/sittingmongoose/pm-worktrees/external-research-v6-20260927/reports/external-research-v6-20260926/a1-m/PUBLICATION.json": {
+      "sha256": "d76c22b6c919d5b75620d714e52a1aca3779c423f4b73e00cf7e5bb45c577ff3",
+      "bytes": 1227
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/muse-session.jsonl": {
+      "sha256": "1d4dba931cdb15118cab3c72fd32ec1eab6986cfab93a2462171a75729f5b6bb",
+      "bytes": 425102
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/phase-clock.json": {
+      "sha256": "9850b6ecb81d32892b047587a24ca72d45b8bdc11413163ca67cb9aac9a4eb99",
+      "bytes": 270
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/host-receipt.json": {
+      "sha256": "bf683957a019b526f4678d8f913c07b0e2c4c834e1951321d0824bf9e7c5e665",
+      "bytes": 490
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/phase-terminal.json": {
+      "sha256": "946df8989468e660d383aea6acd9b0bd0db4059668e4f75884f80be17dcc09cf",
+      "bytes": 429
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/dispatch.json": {
+      "sha256": "2b69a05512161f89d54838cac3bccee2ab3aefacb25fab3ddc793270369a059d",
+      "bytes": 1170
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/store/state.json": {
+      "sha256": "77c2f0ae7a02228e9ce05ce7445f3167df4e296828144dbb01e22ec1d37e922a",
+      "bytes": 110834
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/receipt-order.jsonl": {
+      "sha256": "b77499dacab6581df871ca241c348e777c26fe93f7ebeb55a28acede92499ffa",
+      "bytes": 3024
+    },
+    "/home/sittingmongoose/pm-worktrees/external-research-v6-20260927/reports/external-research-v6-20260926/a2-m/PUBLICATION.json": {
+      "sha256": "035f6314baefc2d3844c122ac18772f73162ce1ef2003fe71b4d03bf6596037e",
+      "bytes": 842
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/postcheck/publication-final.json": {
+      "sha256": "c522ddeaec3b150d018c5f9d173d94717c17a39dcd8d3bf78a42058e63408c74"
+    }
+  }
+}
