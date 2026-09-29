@@ -141,8 +141,8 @@ html[data-motion="reduced"] #o55np-reticle > i, html[data-motion="reduced"] #o55
 
 /* ---- Diamond loaders [diamonds]: spinners and busy marks become a slowly turning hollow diamond ---- */
 html[data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .o55-ph-active .o55-phmark, .thread-working-pulse) {
-  border: 1px solid var(--o55-nier-ink) !important; background: transparent !important; box-shadow: none !important;
-  outline: 1px solid rgba(var(--o55-nier-ink-rgb), .55); outline-offset: -5px;
+  color: var(--o55-nier-ink); border: 1px solid currentColor !important; background: transparent !important; box-shadow: none !important;
+  outline: 1px solid currentColor; outline-offset: -5px;
   transform: rotateY(0deg) rotate(45deg) scale(.72);
   animation: o55np-diamond 2.8s linear infinite !important;
 }
