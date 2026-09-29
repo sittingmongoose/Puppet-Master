@@ -424,12 +424,12 @@ def tower(sc: Scene, rng, x, base, w, h, *, tilt=0.0, broken=True, floors=20, co
                 marks += hline(x + ci * cw + cw * .25, yy - fh * .2, cw * .5)
     for _ in range(clusters):
         c0, r0 = rng.randrange(cols), rng.randint(2, max(3, floors - 5))
-        for dc in range(rng.randint(1, 3)):
-            for dr in range(rng.randint(2, 4)):
-                if rng.random() < .75 and c0 + dc < cols:
+        for dc in range(rng.randint(1, 2)):
+            for dr in range(rng.randint(1, 3)):
+                if rng.random() < .6 and c0 + dc < cols:
                     yy = base - (r0 + dr) * fh
                     if yy - fh * .7 > crown():
-                        voids += rect(x + (c0 + dc) * cw + cw * .22, yy - fh * .7, cw * .56, fh * .5)
+                        voids += rect(x + (c0 + dc) * cw + cw * .3, yy - fh * .64, cw * .4, fh * .38)
     sc.s(marks, w=.7, op=.7)
     sc.f(voids, op=.85 if not far else .5)
     # the bite: slabs inside the torn corner
@@ -525,6 +525,39 @@ def bush(sc, rng, x, g, w, h):
         sc.s(hatch(low, 118, 4.5, rng, keep=.8, inset=2), w=.55, op=.75)
 
 
+def machine(sc, x, g, s=1.0, pose='stand', look=(0, 0), face=1):
+    """A small machine lifeform (an original design): a round head with two round eyes over a barrel body on stubby
+    legs; pose 'stand' on the ground at g, or 'sit' on a ledge at g with its legs hanging. Drawn as a ground-filled
+    silhouette with tiny solid eyes."""
+    hd = 7.5 * s
+    if pose == 'sit':
+        body_b, legs = g, f'M{n(x - 3.5 * s)} {n(g)}l{n(1 * s * face)} {n(9 * s)}M{n(x + 3.5 * s)} {n(g)}l{n(2 * s * face)} {n(8 * s)}'
+    else:
+        body_b, legs = g - 7 * s, f'M{n(x - 3.8 * s)} {n(g)}v{n(-7.5 * s)}M{n(x + 3.8 * s)} {n(g)}v{n(-7.5 * s)}'
+    top = body_b - 14 * s
+    body = (f'M{n(x - 8 * s)} {n(body_b)}v{n(-10 * s)}q0 {n(-4 * s)} {n(4 * s)} {n(-4 * s)}h{n(8 * s)}q{n(4 * s)} 0 {n(4 * s)} {n(4 * s)}v{n(10 * s)}Z')
+    arms = f'M{n(x - 8 * s)} {n(body_b - 9 * s)}l{n(-3 * s)} {n(6 * s)}M{n(x + 8 * s)} {n(body_b - 9 * s)}l{n(3 * s)} {n(6 * s)}'
+    hy = top - hd + 1.5 * s
+    sc.s(legs + arms, w=1.6 * s if s > .8 else 1.2)
+    sc.k(body + circle_path(x, hy, hd), w=1.0)
+    ex, ey = look
+    sc.f(circle_path(x - 3 * s + ex * s, hy + ey * s, 1.5 * s) + circle_path(x + 3 * s + ex * s, hy + ey * s, 1.5 * s))
+    return hy - hd
+
+
+def ivy(cx, cy, w, h, rng, n_=40):
+    """A patch of creeper on a wall: leaf ticks scattered in a loose oval, thickest at its heart."""
+    out = ''
+    for _ in range(n_):
+        a = rng.uniform(0, 2 * math.pi)
+        r = math.sqrt(rng.random())
+        x, y = cx + math.cos(a) * w / 2 * r, cy + math.sin(a) * h / 2 * r
+        sz = rng.uniform(2.2, 3.8)
+        t = rng.uniform(0, 2 * math.pi)
+        out += f'M{n(x)} {n(y)}q{n(math.cos(t) * sz * .6 - math.sin(t) * sz * .4)} {n(math.sin(t) * sz * .6 + math.cos(t) * sz * .4)} {n(math.cos(t) * sz)} {n(math.sin(t) * sz)}'
+    return out
+
+
 # =====================================================================================================================
 # City Ruins: a street of broken towers, one leaning on its neighbour, a severed elevated highway, the city reclaimed by
 # vines and trees.
@@ -559,14 +592,18 @@ def city() -> Scene:
         if rng.random() < .45:
             haze += hatch(ps, 90, 9, rng, keep=.7, inset=4)
         x += w + rng.uniform(4, 40)
-    sc.k(far, w=.7, op=.55)
-    sc.s(haze, w=.6, op=.35)
+    sc.plane(.42)
+    sc.k(far, w=.8)
+    sc.s(haze, w=.7, op=.7)
 
-    # 2. back towers
-    c_crown, _ = tower(sc, rng, 590, G, 96, 405, tilt=-3, floors=21, skeleton_from=.72, clusters=1)
-    d_crown, _ = tower(sc, rng, 868, G, 128, 300, floors=15, bite=('r', .52, .7, 38), clusters=2)
+    # 2. back towers, a plane nearer
+    sc.plane(.7)
+    c_crown, _ = tower(sc, rng, 590, G, 96, 405, tilt=-3, floors=21, skeleton_from=.72, clusters=0)
+    d_crown, _ = tower(sc, rng, 868, G, 128, 300, floors=15, bite=('r', .52, .7, 38), clusters=1)
     e_crown, _ = tower(sc, rng, 1060, G, 118, 250, tilt=1.5, floors=12, clusters=1)
-    g_crown, _ = tower(sc, rng, 1380, G, 150, 228, floors=11, skeleton_from=.38, clusters=1, side_hatch=False)
+    g_crown, _ = tower(sc, rng, 1380, G, 150, 228, floors=11, skeleton_from=.38, clusters=0, side_hatch=False)
+    hang_vines(sc, rng, along(c_crown, rng, 2) + along(e_crown, rng, 3) + along(d_crown, rng, 2), (30, 150))
+    sc.plane(.86)
 
     # 3. the elevated highway, broken in two, one span fallen to the street
     deck, dh = 356, 15
@@ -587,14 +624,14 @@ def city() -> Scene:
         if x0 == 872:
             l = [(x0, deck), (x1, deck), (x1, deck + dh), (x0 - 6, deck + dh), (x0 - 1, deck + 10), (x0 - 7, deck + 5)]
         deckp += poly(l)
-        shade += rect(x0 + 4, deck + dh, x1 - x0 - 8, 4)
+        shade += ''.join(hline(x0 + 4, deck + dh + 1.5 + i * 1.7, x1 - x0 - 8) for i in range(3))
         rail += hline(x0, deck - 9, x1 - x0)
         xx = x0 + 6
         while xx < x1:
             rail += vline(xx, deck - 9, 9)
             xx += 18
     sc.k(deckp)
-    sc.f(shade, op=.9)
+    sc.s(shade, w=.75, op=.8)
     sc.s(rail, w=.75)
     sc.s(rebar(630, deck + dh, rng, 4, 16) + rebar(868, deck + dh, rng, 3, 13), w=.75)
     fallen = [(716, G - 1), (848, deck + 34), (860, deck + 46), (731, G + 3)]
@@ -609,15 +646,19 @@ def city() -> Scene:
     hang_vines(sc, rng, [(rng.uniform(x0 + 10, x1 - 10), deck + dh + 4) for x0, x1 in spans for _ in range(int((x1 - x0) / 70))], (18, 80), sway=(2, 4))
 
     # 4. front towers: the tall left tower, the one leaning onto its neighbour, the right edge
+    # the machine sitting on the broken deck's edge, legs hanging, watching the street
+    machine(sc, 598, deck, 1.15, 'sit', look=(-.6, .6), face=-1)
+    sc.plane(1)
     b_crown, _ = tower(sc, rng, 270, G, 92, 300, floors=15, clusters=1)
-    a_crown, _ = tower(sc, rng, 60, G, 158, 462, tilt=4.5, floors=24, bite=('l', .36, .5, 32), clusters=2)
-    f_crown, _ = tower(sc, rng, 1236, G, 100, 432, tilt=-11.5, floors=22, clusters=2, broken=True)
+    a_crown, _ = tower(sc, rng, 60, G, 158, 462, tilt=4.5, floors=24, bite=('l', .36, .5, 32), clusters=1)
+    f_crown, _ = tower(sc, rng, 1236, G, 100, 432, tilt=-11.5, floors=22, clusters=1, broken=True)
     h_crown, _ = tower(sc, rng, 1520, G, 118, 360, tilt=-1.5, floors=18, clusters=1)
+    hang_vines(sc, rng, [(96, 250), (150, 300), (128, 380), (1262, 300), (1288, 360), (1556, 330), (300, 300)], (40, 130), sway=(2, 5))
 
     # vines from the crowns, a creeper up the leaning tower, trees rooted on the roofs
     hang_vines(sc, rng, along(a_crown, rng, 6), (70, 250))
     hang_vines(sc, rng, along(f_crown, rng, 4), (60, 200))
-    hang_vines(sc, rng, along(c_crown, rng, 2) + along(e_crown, rng, 3) + along(h_crown, rng, 4) + along(b_crown, rng, 2), (30, 150))
+    hang_vines(sc, rng, along(h_crown, rng, 4) + along(b_crown, rng, 2), (30, 150))
     for crown, at, r in ((a_crown, .45, 18), (e_crown, .35, 14), (h_crown, .55, 15), (b_crown, .7, 10)):
         px, py = crown[int(len(crown) * at)]
         sc.k(canopy(px, py - r * .6, r * 1.2, r * .7, rng, ps=crown_pts(px, py - r * .6, r * 1.2, r * .7, rng)), w=.9)
@@ -627,7 +668,7 @@ def city() -> Scene:
     tree(sc, rng, 1112, G, 84, 34, lean=-6)
     tree(sc, rng, 1346, G, 50, 22)
     tree(sc, rng, 26, G, 58, 26)
-    tree(sc, rng, 1476, G, 64, 36, solid=True, lean=4)
+    tree(sc, rng, 1478, G, 70, 38, lean=4)
     car = poly([(505, G), (508, G - 14), (522, G - 16), (534, G - 27), (566, G - 27), (578, G - 16), (596, G - 13), (598, G)])
     sc.k(car)
     sc.s(poly([(538, G - 24), (548, G - 24), (548, G - 16), (531, G - 16)]) + poly([(552, G - 24), (563, G - 24), (572, G - 16), (552, G - 16)])
@@ -637,7 +678,8 @@ def city() -> Scene:
     for bx, bw, bh in ((96, 70, 26), (238, 44, 18), (352, 60, 22), (640, 90, 30), (905, 70, 22), (1030, 56, 20),
                        (1262, 80, 28), (1430, 50, 18), (1560, 90, 30)):
         bush(sc, rng, bx, G, bw, bh)
-    ln, so = rubble(0, W, G, rng, count=36)
+    machine(sc, 656, G, 1.3, 'stand', look=(1.2, -1.4))
+    ln, so = rubble(0, W, G, rng, count=26)
     sc.s(ln, w=.8)
     sc.f(so, op=.9)
     sc.s(line(0, G, W, G), w=.9)
