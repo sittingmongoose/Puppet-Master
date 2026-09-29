@@ -54598,7 +54598,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
    stale:{status:'attention',word:'Needs attention',reason:H(vm.target.file)+' changed after this review started.'}}[vm.phase];
   out.sentence=sentence;
   /* the dock line (C14/C15) says what the card says: the partial decision is "needs you" only once it is offered */
-  out.dock=vm.phase==='partial'||vm.phase==='stale'?{tone:'needs',sentence:'<b>'+sentence.word+'</b> · '+sentence.reason}:live?{tone:'live',sentence:sentence.reason}:null;
+  out.dock=vm.phase==='partial'||vm.phase==='stale'?{tone:'needs',sentence:sentence.word+' · '+sentence.reason}:live?{tone:'live',sentence:sentence.reason}:null;
   /* the one loud moment (7.4): partial (A1-34 Retry) and the target that changed mid-run */
   out.decision=null;
   if(vm.phase==='partial'&&vm.partial){
