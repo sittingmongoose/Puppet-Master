@@ -31618,7 +31618,8 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
        reply did not follow is named ("Missed 1 of your rules") */
     ticks: { noted: 'Noted', verified: 'Verified', rules: 'Followed {n} of your rules', rule: 'Followed 1 of your rules', missed: 'Missed 1 of your rules', missedN: 'Missed {n} of your rules', simple: 'Simple explanation', sentOnSchedule: 'Sent on schedule' },
     exampleHelper: 'Opens a recorded {kind} in a new chat, with its own team. Your setup stays on this card.',
-    degraded: 'Degraded result: {done} of {all} reviewers finished'
+    degraded: 'Degraded result: {done} of {all} reviewers finished',
+    refusal: { strong: 'Can’t start yet.', fallback: 'Nothing was started. Your setup is unchanged.' }
   };
   /* pmxFill(template, vars) - fills {name} slots from vars (escaped) */
   function pmxFill(tpl, vars) {
@@ -43815,7 +43816,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     var helper = f.helper || (d.rows.filter(function (r) { return r.rowId === f.rowId; })[0] || {}).role || '';
     var t = S.pmxRefusalText(f.error, { helper: helper, kind: KIND_LABEL[d.kind], version: f.version, over: f.over }) || null;
     var fix = f.rowId && t && t.fix === 'Fix' ? { action: 'collab-refusal-fix', attrs: 'data-row="' + esc(f.rowId) + '"', label: 'Fix' } : null;
-    return S.pmxRefusal({ code: f.error, strong: t ? t.strong || 'Can’t start yet.' : 'Can’t start yet.', text: t ? t.text : 'Nothing was started. Your setup is unchanged.', fix: fix });
+    return S.pmxRefusal({ code: f.error, strong: t ? t.strong || S.PMX_COPY.refusal.strong : S.PMX_COPY.refusal.strong, text: t ? t.text : S.PMX_COPY.refusal.fallback, fix: fix });
   }
   function heroHtml(ctx, d, p) {
     var S = S_();
@@ -49075,7 +49076,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     grace_expired: 'It was too late, so it was skipped as you asked.', missed_time_held: 'The start time was missed, so it waits for you.',
     schedule_not_active: 'This schedule isn’t active, so nothing started.', worktree_snapshot_changed: 'The folder this plan builds in changed, so nothing started.',
     permission_snapshot_changed: 'This chat’s permissions changed after you scheduled it, so nothing started.' };
-  function plainClause(res) { var c = res && (res.clause || res.error); return PLAIN_CLAUSE[c] || SCHED_REFUSE[c] || (c && SH.pmxRefusalText ? (SH.pmxRefusalText(c, {}) || {}).text : '') || 'It couldn’t start, so nothing changed.'; }
+  function plainClause(res) { var c = res && (res.clause || res.error); return PLAIN_CLAUSE[c] || SCHED_REFUSE[c] || (c && SH.pmxRefusalText ? (SH.pmxRefusalText(c, {}) || {}).text : '') || SH.PMX_COPY.refusal.fallback; }
 
   /* Contract for plans.js (integrator-owned Plan card): register an action
      named exactly `sched-open-build-at` reading data-plan-id/data-plan-version,
@@ -54012,7 +54013,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     a.preview=S.dispatchBuildAt(b.schedule_id,at,b.revision);
     if(a.flow==='cancel'){
      if(a.preview.ok||p.status!=='ready'||p.approved)throw Error('The canceled schedule started work. It should not have.');
-    }else if(!a.preview.ok||p.status!=='building')throw Error('The build didn’t start. '+(S.refusalText?S.refusalText(a.preview):'It couldn’t start, so nothing changed.'));
+    }else if(!a.preview.ok||p.status!=='building')throw Error('The build didn’t start. '+(S.refusalText?S.refusalText(a.preview):window.PM56_SHELL.PMX_COPY.refusal.fallback));
    }
    if(kind==='todos'){
     control('pd-more-actions',{id:p.plan_id});await pause();if(active!==a)return;control('pd-open-todos',{id:p.plan_id});await pause();if(active!==a)return;control('pd-more-actions',{id:p.plan_id});

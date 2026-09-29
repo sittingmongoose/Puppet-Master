@@ -3354,7 +3354,7 @@
     var helper = f.helper || (d.rows.filter(function (r) { return r.rowId === f.rowId; })[0] || {}).role || '';
     var t = S.pmxRefusalText(f.error, { helper: helper, kind: KIND_LABEL[d.kind], version: f.version, over: f.over }) || null;
     var fix = f.rowId && t && t.fix === 'Fix' ? { action: 'collab-refusal-fix', attrs: 'data-row="' + esc(f.rowId) + '"', label: 'Fix' } : null;
-    return S.pmxRefusal({ code: f.error, strong: t ? t.strong || 'Can’t start yet.' : 'Can’t start yet.', text: t ? t.text : 'Nothing was started. Your setup is unchanged.', fix: fix });
+    return S.pmxRefusal({ code: f.error, strong: t ? t.strong || S.PMX_COPY.refusal.strong : S.PMX_COPY.refusal.strong, text: t ? t.text : S.PMX_COPY.refusal.fallback, fix: fix });
   }
   function heroHtml(ctx, d, p) {
     var S = S_();

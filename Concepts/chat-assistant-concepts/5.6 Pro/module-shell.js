@@ -1389,7 +1389,8 @@
        reply did not follow is named ("Missed 1 of your rules") */
     ticks: { noted: 'Noted', verified: 'Verified', rules: 'Followed {n} of your rules', rule: 'Followed 1 of your rules', missed: 'Missed 1 of your rules', missedN: 'Missed {n} of your rules', simple: 'Simple explanation', sentOnSchedule: 'Sent on schedule' },
     exampleHelper: 'Opens a recorded {kind} in a new chat, with its own team. Your setup stays on this card.',
-    degraded: 'Degraded result: {done} of {all} reviewers finished'
+    degraded: 'Degraded result: {done} of {all} reviewers finished',
+    refusal: { strong: 'Can’t start yet.', fallback: 'Nothing was started. Your setup is unchanged.' }
   };
   /* pmxFill(template, vars) - fills {name} slots from vars (escaped) */
   function pmxFill(tpl, vars) {

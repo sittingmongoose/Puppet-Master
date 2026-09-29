@@ -72,7 +72,7 @@
     a.preview=S.dispatchBuildAt(b.schedule_id,at,b.revision);
     if(a.flow==='cancel'){
      if(a.preview.ok||p.status!=='ready'||p.approved)throw Error('The canceled schedule started work. It should not have.');
-    }else if(!a.preview.ok||p.status!=='building')throw Error('The build didn’t start. '+(S.refusalText?S.refusalText(a.preview):'It couldn’t start, so nothing changed.'));
+    }else if(!a.preview.ok||p.status!=='building')throw Error('The build didn’t start. '+(S.refusalText?S.refusalText(a.preview):window.PM56_SHELL.PMX_COPY.refusal.fallback));
    }
    if(kind==='todos'){
     control('pd-more-actions',{id:p.plan_id});await pause();if(active!==a)return;control('pd-open-todos',{id:p.plan_id});await pause();if(active!==a)return;control('pd-more-actions',{id:p.plan_id});

@@ -2962,7 +2962,7 @@
     grace_expired: 'It was too late, so it was skipped as you asked.', missed_time_held: 'The start time was missed, so it waits for you.',
     schedule_not_active: 'This schedule isn’t active, so nothing started.', worktree_snapshot_changed: 'The folder this plan builds in changed, so nothing started.',
     permission_snapshot_changed: 'This chat’s permissions changed after you scheduled it, so nothing started.' };
-  function plainClause(res) { var c = res && (res.clause || res.error); return PLAIN_CLAUSE[c] || SCHED_REFUSE[c] || (c && SH.pmxRefusalText ? (SH.pmxRefusalText(c, {}) || {}).text : '') || 'It couldn’t start, so nothing changed.'; }
+  function plainClause(res) { var c = res && (res.clause || res.error); return PLAIN_CLAUSE[c] || SCHED_REFUSE[c] || (c && SH.pmxRefusalText ? (SH.pmxRefusalText(c, {}) || {}).text : '') || SH.PMX_COPY.refusal.fallback; }
 
   /* Contract for plans.js (integrator-owned Plan card): register an action
      named exactly `sched-open-build-at` reading data-plan-id/data-plan-version,

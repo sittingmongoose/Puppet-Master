@@ -435,6 +435,7 @@ const B = (name, html) => { built.push([name, html]); return html; };
   const refMiss = SCHED_BAD.filter(c => { const t = X.pmxRefusalText(c, { kind: 'Crew' }); const w = t ? (t.strong + ' ' + t.text) : ''; return !t || !t.text || /_/.test(w) || w.includes(c.replace(/_/g, ' ')) || /\{\w+\}/.test(w); });
   pc('closing review: pmxRefusalText words every scheduled-Crew code in plain language', refMiss.length === 0, refMiss);
   pc('closing review: plan_version_changed without a version never prints "version ."', !/version \./.test(X.pmxRefusalText('plan_version_changed', {}).text) && X.pmxRefusalText('plan_version_changed', { version: 4 }).text === 'Reopen it to use version 4.');
+  pc('closing follow-up: one generic refusal fallback', X.PMX_COPY.refusal && X.PMX_COPY.refusal.fallback === 'Nothing was started. Your setup is unchanged.' && X.PMX_COPY.refusal.strong === 'Can’t start yet.');
   /* closing review (receipt at 591 px): a recorded run's "Recorded example · no AI cost" lives in the hover card, not on the line */
   const rcRecCost = X.pmxReceipt({ key: 'rc2', runId: 'r7', kind: 'crew', kindWord: 'Crew', title: 'T', headline: 'Export ready', recorded: true, time: '6s', cost: X.PMX_COPY.cost.recorded, open: { action: 'collab-open-panel' } });
   const rcMeta = (rcRecCost.match(/<span class="pmx-receipt-meta">([\s\S]*?)<\/span><\/header>/) || [])[1] || '';
