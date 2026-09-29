@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/r1b/run_goal_r1b.py",
+    "--app",
+    "muse",
+    "--workspace",
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws",
+    "--prompt-file",
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/task.txt",
+    "--out",
+    "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native",
+    "--label",
+    "A2-M",
+    "--max-seconds",
+    "300",
+    "--max-responses",
+    "48"
+  ],
+  "launch_epoch": 1790701388.224625,
+  "prelaunch_seconds": 2.9394848346710205,
+  "task_sha256": "fbc5610eaa8c7b89ff2e392db1355e54cb1390c5d49f9febcc1d662952e1821c",
+  "objective_sha256": "6c93f6f20be2037c6893ac26cf6ba63387bec96fd0167b637985fafee63ff9f5",
+  "input_manifest_sha256": "589abeadda52ad5267fdfeac65da7abe9cdc6ba9df65b1f0351712a9d7fb1a1b",
+  "identities_sha256": "68340f96724986f15cb596e626db806c7b0dfb42d444aff05fb1de5570e5d960",
+  "receiver_instrumentation": "transparent write_json observation; frozen receiver/driver files unchanged",
+  "no_retries": true
+}

@@ -1,0 +1,131 @@
+{
+  "schema": "a1-m-mechanical-audit/v1",
+  "scope": "structural_only",
+  "semantic_validation": "not_performed",
+  "root": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929",
+  "status": "fail",
+  "checks": {
+    "source_pins": {
+      "status": "pass",
+      "errors": [],
+      "source_commit": "655fa669c71fa9832df479a16efd3b54f425dd08",
+      "checked_sha256": {
+        "ack-boundary-v1/tools/completion_store.py": "a1e460bd38afa2fab09d28442a7b59d2ac295aaee8921f9c127b57946c20f909",
+        "ack-boundary-v1/tools/native_completion.py": "83dac66a29bc0778ed0edfa134fd04db03eda34602e5c80d5938c17c4dc2fd38",
+        "i2-prep/tools/research_store.py": "8cba600b240cddb6951aa600146e3b0ccc8d4d1ffcd7e90bedc5f99378b05762",
+        "delivery-v2/tools/delivery_store.py": "81364fd1a4040ba457dd04779d096709c3524bee8704a2c8f453fb18264c85c7",
+        "offline-repair-v1/tools/delivery.py": "e1c7ea2e32bd00ef2606b5974b690a4537b6b200fd3c4e620880ae430b9ebe59"
+      },
+      "original_audit_sha256": "8126e1dabbaa5a397ea773d999a2e548e29af16fe6224d682cb894f13080bdf5",
+      "successor_reader_path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/muse-result-v2/tools/native_completion.py",
+      "successor_reader_sha256": "3c125f305febe3bcc84fd240edf94ca90d4651ccf88dda0b10dbf5db739dc52c"
+    },
+    "allocation_and_acknowledgements": {
+      "status": "fail",
+      "errors": [
+        "expected exactly one acknowledgement for each of nine request names",
+        "missing acknowledgements: new--independent, F0001--revision-1, F0001--revision-2"
+      ],
+      "acknowledged": 6,
+      "expected_count": 9,
+      "known_expected_requests": [
+        "new--batch-01",
+        "new--batch-02",
+        "new--batch-03",
+        "new--batch-04",
+        "new--batch-05",
+        "new--batch-06",
+        "new--independent",
+        "F0001--revision-1",
+        "F0001--revision-2"
+      ],
+      "missing_requests": [
+        "new--independent",
+        "F0001--revision-1",
+        "F0001--revision-2"
+      ],
+      "protocol_errors": [],
+      "native_stream_status": "closed",
+      "native_finalization_fault": null
+    },
+    "template_snapshots_receipts": {
+      "status": "not_reached",
+      "errors": [],
+      "blocked_by": [
+        "allocation_and_acknowledgements"
+      ],
+      "reason": "Required evidence unavailable; dependent grading was not exercised."
+    },
+    "current_and_history": {
+      "status": "not_reached",
+      "errors": [],
+      "blocked_by": [
+        "allocation_and_acknowledgements"
+      ],
+      "reason": "Required evidence unavailable; dependent grading was not exercised."
+    },
+    "native_completion_proofs": {
+      "status": "not_reached",
+      "errors": [],
+      "blocked_by": [
+        "allocation_and_acknowledgements"
+      ],
+      "reason": "Required evidence unavailable; dependent grading was not exercised."
+    },
+    "native_batches": {
+      "status": "not_reached",
+      "errors": [],
+      "blocked_by": [
+        "allocation_and_acknowledgements",
+        "native_completion_proofs"
+      ],
+      "reason": "Required evidence unavailable; dependent grading was not exercised."
+    },
+    "marker_overlap": {
+      "status": "not_reached",
+      "errors": [],
+      "blocked_by": [
+        "allocation_and_acknowledgements",
+        "native_completion_proofs"
+      ],
+      "reason": "Required evidence unavailable; dependent grading was not exercised."
+    },
+    "receipt_read_order": {
+      "status": "not_reached",
+      "errors": [],
+      "blocked_by": [
+        "allocation_and_acknowledgements",
+        "native_completion_proofs"
+      ],
+      "reason": "Required evidence unavailable; dependent grading was not exercised."
+    },
+    "prescribed_native_order": {
+      "status": "not_reached",
+      "errors": [],
+      "blocked_by": [
+        "allocation_and_acknowledgements",
+        "native_completion_proofs",
+        "receipt_read_order"
+      ],
+      "reason": "Required evidence unavailable; dependent grading was not exercised."
+    },
+    "same_session_goal_scope": {
+      "status": "unavailable",
+      "errors": [],
+      "blocked_by": [
+        "native_completion_proofs"
+      ],
+      "reason": "Required evidence unavailable; dependent grading was not exercised."
+    },
+    "unchanged_idle_polls": {
+      "status": "not_reached",
+      "errors": [],
+      "blocked_by": [
+        "allocation_and_acknowledgements"
+      ],
+      "reason": "Required evidence unavailable; dependent grading was not exercised."
+    }
+  },
+  "successor": "muse-result-v2",
+  "original_audit_sha256": "8126e1dabbaa5a397ea773d999a2e548e29af16fe6224d682cb894f13080bdf5"
+}

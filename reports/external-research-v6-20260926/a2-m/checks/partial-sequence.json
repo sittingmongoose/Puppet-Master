@@ -1,0 +1,1507 @@
+{
+  "scope": "Read-only observed partial sequence; does not override frozen full-task audit failure",
+  "completed_payloads": 6,
+  "completed_markers": 6,
+  "acknowledgements": 6,
+  "snapshots": 12,
+  "payload_batch_sequences": [
+    177
+  ],
+  "marker_batch_sequences": [
+    280
+  ],
+  "overlapping_marker_pairs": [
+    [
+      "call_01a0ee231cf676bea1943e5aa0a37ae2",
+      "call_01a0ee231e61712f89c98fea7149e584"
+    ],
+    [
+      "call_01a0ee231cf676bea1943e5aa0a37ae2",
+      "call_01a0ee231fc17539b98d2316e528427a"
+    ],
+    [
+      "call_01a0ee231cf676bea1943e5aa0a37ae2",
+      "call_01a0ee23211b72abaefeec75f012aeeb"
+    ],
+    [
+      "call_01a0ee231cf676bea1943e5aa0a37ae2",
+      "call_01a0ee23229975f588ac1447130da10f"
+    ],
+    [
+      "call_01a0ee231cf676bea1943e5aa0a37ae2",
+      "call_01a0ee2323f4712ab11a1d99974b9a9f"
+    ],
+    [
+      "call_01a0ee231e61712f89c98fea7149e584",
+      "call_01a0ee231fc17539b98d2316e528427a"
+    ],
+    [
+      "call_01a0ee231e61712f89c98fea7149e584",
+      "call_01a0ee23211b72abaefeec75f012aeeb"
+    ],
+    [
+      "call_01a0ee231e61712f89c98fea7149e584",
+      "call_01a0ee23229975f588ac1447130da10f"
+    ],
+    [
+      "call_01a0ee231e61712f89c98fea7149e584",
+      "call_01a0ee2323f4712ab11a1d99974b9a9f"
+    ],
+    [
+      "call_01a0ee231fc17539b98d2316e528427a",
+      "call_01a0ee23211b72abaefeec75f012aeeb"
+    ],
+    [
+      "call_01a0ee231fc17539b98d2316e528427a",
+      "call_01a0ee23229975f588ac1447130da10f"
+    ],
+    [
+      "call_01a0ee231fc17539b98d2316e528427a",
+      "call_01a0ee2323f4712ab11a1d99974b9a9f"
+    ],
+    [
+      "call_01a0ee23211b72abaefeec75f012aeeb",
+      "call_01a0ee23229975f588ac1447130da10f"
+    ],
+    [
+      "call_01a0ee23211b72abaefeec75f012aeeb",
+      "call_01a0ee2323f4712ab11a1d99974b9a9f"
+    ],
+    [
+      "call_01a0ee23229975f588ac1447130da10f",
+      "call_01a0ee2323f4712ab11a1d99974b9a9f"
+    ]
+  ],
+  "native_write_operations": [
+    {
+      "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+      "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+      "call_id": "call_01a0ee21b86d74b893e3ca208c9736f5",
+      "tool_name": "write_file",
+      "call_index": 0,
+      "call_sequence": 177,
+      "ordinal": 10,
+      "status": "complete",
+      "qualifies_write": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-01.md",
+      "content_sha256": "b18578814c7ba4b04e28f4d0f140e4d36327ce89ee62450a408836fcea622349",
+      "content_bytes": 1194,
+      "effect_id": "01a0ee21-dbf4-7193-870a-8c1d44273302",
+      "task_id": "01a0ee21-dbf4-7193-870a-8c1d44273302",
+      "task_stream": {
+        "id": "01a0ee21-dbf4-7193-870a-8c1d44273302",
+        "kind": "task"
+      },
+      "started_sequence": 184,
+      "terminal_sequence": 236,
+      "result_sequence": 250,
+      "native_result": {
+        "text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-01.md; note: near-duplicate sibling new--batch-02.md exists in this directory — verify this new file is intended",
+        "tool_call_id": "call_01a0ee21b86d74b893e3ca208c9736f5",
+        "tool_call_index": 0
+      },
+      "result_interpretation": {
+        "status": "recognized",
+        "form": "near_duplicate_sibling",
+        "raw_text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-01.md; note: near-duplicate sibling new--batch-02.md exists in this directory — verify this new file is intended",
+        "advisory_text": "; note: near-duplicate sibling new--batch-02.md exists in this directory — verify this new file is intended",
+        "completion": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-01.md",
+          "utf8_bytes": 1194
+        },
+        "reason": null
+      },
+      "complete_sequence": 250
+    },
+    {
+      "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+      "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+      "call_id": "call_01a0ee21bee27787bc3c8cee58ea54fe",
+      "tool_name": "write_file",
+      "call_index": 1,
+      "call_sequence": 177,
+      "ordinal": 11,
+      "status": "complete",
+      "qualifies_write": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-02.md",
+      "content_sha256": "fec3a849f7d54e32902268f950d3ff51ff91e1f480be9836fd62b4ccf7334f63",
+      "content_bytes": 1194,
+      "effect_id": "01a0ee21-dc13-7df1-b264-54527c953b77",
+      "task_id": "01a0ee21-dc13-7df1-b264-54527c953b77",
+      "task_stream": {
+        "id": "01a0ee21-dc13-7df1-b264-54527c953b77",
+        "kind": "task"
+      },
+      "started_sequence": 191,
+      "terminal_sequence": 224,
+      "result_sequence": 250,
+      "native_result": {
+        "text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-02.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "tool_call_id": "call_01a0ee21bee27787bc3c8cee58ea54fe",
+        "tool_call_index": 1
+      },
+      "result_interpretation": {
+        "status": "recognized",
+        "form": "near_duplicate_sibling",
+        "raw_text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-02.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "advisory_text": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "completion": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-02.md",
+          "utf8_bytes": 1194
+        },
+        "reason": null
+      },
+      "complete_sequence": 250
+    },
+    {
+      "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+      "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+      "call_id": "call_01a0ee21c5a771f1b9443a016a4b5975",
+      "tool_name": "write_file",
+      "call_index": 2,
+      "call_sequence": 177,
+      "ordinal": 12,
+      "status": "complete",
+      "qualifies_write": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-03.md",
+      "content_sha256": "930b6d21e10253a85ee96cd678a61254a8ae588a1ce201ff8f3870028f648edf",
+      "content_bytes": 1194,
+      "effect_id": "01a0ee21-dc33-7a93-a987-9b58deec9e99",
+      "task_id": "01a0ee21-dc33-7a93-a987-9b58deec9e99",
+      "task_stream": {
+        "id": "01a0ee21-dc33-7a93-a987-9b58deec9e99",
+        "kind": "task"
+      },
+      "started_sequence": 198,
+      "terminal_sequence": 228,
+      "result_sequence": 250,
+      "native_result": {
+        "text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-03.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "tool_call_id": "call_01a0ee21c5a771f1b9443a016a4b5975",
+        "tool_call_index": 2
+      },
+      "result_interpretation": {
+        "status": "recognized",
+        "form": "near_duplicate_sibling",
+        "raw_text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-03.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "advisory_text": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "completion": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-03.md",
+          "utf8_bytes": 1194
+        },
+        "reason": null
+      },
+      "complete_sequence": 250
+    },
+    {
+      "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+      "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+      "call_id": "call_01a0ee21cb6275d1bf4fe459ec5dbd32",
+      "tool_name": "write_file",
+      "call_index": 3,
+      "call_sequence": 177,
+      "ordinal": 13,
+      "status": "complete",
+      "qualifies_write": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-04.md",
+      "content_sha256": "245027d190f940a570818ebed0812d5ba161b343dd68eb7a5bc37fd38501c594",
+      "content_bytes": 1194,
+      "effect_id": "01a0ee21-dc52-7212-ba84-d9134c8bcdbf",
+      "task_id": "01a0ee21-dc52-7212-ba84-d9134c8bcdbf",
+      "task_stream": {
+        "id": "01a0ee21-dc52-7212-ba84-d9134c8bcdbf",
+        "kind": "task"
+      },
+      "started_sequence": 205,
+      "terminal_sequence": 232,
+      "result_sequence": 250,
+      "native_result": {
+        "text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-04.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "tool_call_id": "call_01a0ee21cb6275d1bf4fe459ec5dbd32",
+        "tool_call_index": 3
+      },
+      "result_interpretation": {
+        "status": "recognized",
+        "form": "near_duplicate_sibling",
+        "raw_text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-04.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "advisory_text": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "completion": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-04.md",
+          "utf8_bytes": 1194
+        },
+        "reason": null
+      },
+      "complete_sequence": 250
+    },
+    {
+      "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+      "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+      "call_id": "call_01a0ee21d09e76ceac3f1d4d693a8bdf",
+      "tool_name": "write_file",
+      "call_index": 4,
+      "call_sequence": 177,
+      "ordinal": 14,
+      "status": "complete",
+      "qualifies_write": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-05.md",
+      "content_sha256": "04253ecfb1bf83e1f658ad7a4c9e32b91a524fb7b31308969ef66a4d86045ea8",
+      "content_bytes": 1194,
+      "effect_id": "01a0ee21-dc6f-7982-8715-ed252dfabe2d",
+      "task_id": "01a0ee21-dc6f-7982-8715-ed252dfabe2d",
+      "task_stream": {
+        "id": "01a0ee21-dc6f-7982-8715-ed252dfabe2d",
+        "kind": "task"
+      },
+      "started_sequence": 212,
+      "terminal_sequence": 220,
+      "result_sequence": 250,
+      "native_result": {
+        "text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-05.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "tool_call_id": "call_01a0ee21d09e76ceac3f1d4d693a8bdf",
+        "tool_call_index": 4
+      },
+      "result_interpretation": {
+        "status": "recognized",
+        "form": "near_duplicate_sibling",
+        "raw_text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-05.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "advisory_text": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "completion": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-05.md",
+          "utf8_bytes": 1194
+        },
+        "reason": null
+      },
+      "complete_sequence": 250
+    },
+    {
+      "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+      "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+      "call_id": "call_01a0ee21d5ef76bfacedd59fc09ea4a8",
+      "tool_name": "write_file",
+      "call_index": 5,
+      "call_sequence": 177,
+      "ordinal": 15,
+      "status": "complete",
+      "qualifies_write": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-06.md",
+      "content_sha256": "cfb640b238f3951074666b233875632e6d5569a9652a890deb5ef317bc56e07f",
+      "content_bytes": 1194,
+      "effect_id": "01a0ee21-dc8f-7ae0-a696-dacb6fecf8c9",
+      "task_id": "01a0ee21-dc8f-7ae0-a696-dacb6fecf8c9",
+      "task_stream": {
+        "id": "01a0ee21-dc8f-7ae0-a696-dacb6fecf8c9",
+        "kind": "task"
+      },
+      "started_sequence": 219,
+      "terminal_sequence": 240,
+      "result_sequence": 250,
+      "native_result": {
+        "text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-06.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "tool_call_id": "call_01a0ee21d5ef76bfacedd59fc09ea4a8",
+        "tool_call_index": 5
+      },
+      "result_interpretation": {
+        "status": "recognized",
+        "form": "near_duplicate_sibling",
+        "raw_text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-06.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "advisory_text": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+        "completion": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-06.md",
+          "utf8_bytes": 1194
+        },
+        "reason": null
+      },
+      "complete_sequence": 250
+    },
+    {
+      "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+      "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+      "call_id": "call_01a0ee231cf676bea1943e5aa0a37ae2",
+      "tool_name": "write_file",
+      "call_index": 0,
+      "call_sequence": 280,
+      "ordinal": 16,
+      "status": "complete",
+      "qualifies_write": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-01",
+      "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "content_bytes": 7,
+      "effect_id": "01a0ee23-269a-7a41-b527-23f6dca63cf5",
+      "task_id": "01a0ee23-269a-7a41-b527-23f6dca63cf5",
+      "task_stream": {
+        "id": "01a0ee23-269a-7a41-b527-23f6dca63cf5",
+        "kind": "task"
+      },
+      "started_sequence": 287,
+      "terminal_sequence": 327,
+      "result_sequence": 353,
+      "native_result": {
+        "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-01; note: near-duplicate sibling new--batch-02 exists in this directory — verify this new file is intended",
+        "tool_call_id": "call_01a0ee231cf676bea1943e5aa0a37ae2",
+        "tool_call_index": 0
+      },
+      "result_interpretation": {
+        "status": "recognized",
+        "form": "near_duplicate_sibling",
+        "raw_text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-01; note: near-duplicate sibling new--batch-02 exists in this directory — verify this new file is intended",
+        "advisory_text": "; note: near-duplicate sibling new--batch-02 exists in this directory — verify this new file is intended",
+        "completion": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-01",
+          "utf8_bytes": 7
+        },
+        "reason": null
+      },
+      "complete_sequence": 353
+    },
+    {
+      "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+      "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+      "call_id": "call_01a0ee231e61712f89c98fea7149e584",
+      "tool_name": "write_file",
+      "call_index": 1,
+      "call_sequence": 280,
+      "ordinal": 17,
+      "status": "complete",
+      "qualifies_write": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-02",
+      "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "content_bytes": 7,
+      "effect_id": "01a0ee23-26b7-7c72-9757-6693f3fefb0a",
+      "task_id": "01a0ee23-26b7-7c72-9757-6693f3fefb0a",
+      "task_stream": {
+        "id": "01a0ee23-26b7-7c72-9757-6693f3fefb0a",
+        "kind": "task"
+      },
+      "started_sequence": 294,
+      "terminal_sequence": 323,
+      "result_sequence": 353,
+      "native_result": {
+        "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-02; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "tool_call_id": "call_01a0ee231e61712f89c98fea7149e584",
+        "tool_call_index": 1
+      },
+      "result_interpretation": {
+        "status": "recognized",
+        "form": "near_duplicate_sibling",
+        "raw_text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-02; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "advisory_text": "; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "completion": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-02",
+          "utf8_bytes": 7
+        },
+        "reason": null
+      },
+      "complete_sequence": 353
+    },
+    {
+      "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+      "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+      "call_id": "call_01a0ee231fc17539b98d2316e528427a",
+      "tool_name": "write_file",
+      "call_index": 2,
+      "call_sequence": 280,
+      "ordinal": 18,
+      "status": "complete",
+      "qualifies_write": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-03",
+      "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "content_bytes": 7,
+      "effect_id": "01a0ee23-26d1-7743-817e-2ab7f50f91ef",
+      "task_id": "01a0ee23-26d1-7743-817e-2ab7f50f91ef",
+      "task_stream": {
+        "id": "01a0ee23-26d1-7743-817e-2ab7f50f91ef",
+        "kind": "task"
+      },
+      "started_sequence": 301,
+      "terminal_sequence": 331,
+      "result_sequence": 353,
+      "native_result": {
+        "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-03; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "tool_call_id": "call_01a0ee231fc17539b98d2316e528427a",
+        "tool_call_index": 2
+      },
+      "result_interpretation": {
+        "status": "recognized",
+        "form": "near_duplicate_sibling",
+        "raw_text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-03; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "advisory_text": "; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "completion": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-03",
+          "utf8_bytes": 7
+        },
+        "reason": null
+      },
+      "complete_sequence": 353
+    },
+    {
+      "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+      "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+      "call_id": "call_01a0ee23211b72abaefeec75f012aeeb",
+      "tool_name": "write_file",
+      "call_index": 3,
+      "call_sequence": 280,
+      "ordinal": 19,
+      "status": "complete",
+      "qualifies_write": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-04",
+      "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "content_bytes": 7,
+      "effect_id": "01a0ee23-26ee-71b2-a7e2-452513da4177",
+      "task_id": "01a0ee23-26ee-71b2-a7e2-452513da4177",
+      "task_stream": {
+        "id": "01a0ee23-26ee-71b2-a7e2-452513da4177",
+        "kind": "task"
+      },
+      "started_sequence": 308,
+      "terminal_sequence": 343,
+      "result_sequence": 353,
+      "native_result": {
+        "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-04; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "tool_call_id": "call_01a0ee23211b72abaefeec75f012aeeb",
+        "tool_call_index": 3
+      },
+      "result_interpretation": {
+        "status": "recognized",
+        "form": "near_duplicate_sibling",
+        "raw_text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-04; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "advisory_text": "; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "completion": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-04",
+          "utf8_bytes": 7
+        },
+        "reason": null
+      },
+      "complete_sequence": 353
+    },
+    {
+      "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+      "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+      "call_id": "call_01a0ee23229975f588ac1447130da10f",
+      "tool_name": "write_file",
+      "call_index": 4,
+      "call_sequence": 280,
+      "ordinal": 20,
+      "status": "complete",
+      "qualifies_write": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-05",
+      "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "content_bytes": 7,
+      "effect_id": "01a0ee23-2709-7473-b1a6-13777192688a",
+      "task_id": "01a0ee23-2709-7473-b1a6-13777192688a",
+      "task_stream": {
+        "id": "01a0ee23-2709-7473-b1a6-13777192688a",
+        "kind": "task"
+      },
+      "started_sequence": 315,
+      "terminal_sequence": 335,
+      "result_sequence": 353,
+      "native_result": {
+        "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-05; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "tool_call_id": "call_01a0ee23229975f588ac1447130da10f",
+        "tool_call_index": 4
+      },
+      "result_interpretation": {
+        "status": "recognized",
+        "form": "near_duplicate_sibling",
+        "raw_text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-05; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "advisory_text": "; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "completion": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-05",
+          "utf8_bytes": 7
+        },
+        "reason": null
+      },
+      "complete_sequence": 353
+    },
+    {
+      "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+      "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+      "call_id": "call_01a0ee2323f4712ab11a1d99974b9a9f",
+      "tool_name": "write_file",
+      "call_index": 5,
+      "call_sequence": 280,
+      "ordinal": 21,
+      "status": "complete",
+      "qualifies_write": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-06",
+      "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "content_bytes": 7,
+      "effect_id": "01a0ee23-2727-77a2-8660-10e09b1ae20c",
+      "task_id": "01a0ee23-2727-77a2-8660-10e09b1ae20c",
+      "task_stream": {
+        "id": "01a0ee23-2727-77a2-8660-10e09b1ae20c",
+        "kind": "task"
+      },
+      "started_sequence": 322,
+      "terminal_sequence": 339,
+      "result_sequence": 353,
+      "native_result": {
+        "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-06; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "tool_call_id": "call_01a0ee2323f4712ab11a1d99974b9a9f",
+        "tool_call_index": 5
+      },
+      "result_interpretation": {
+        "status": "recognized",
+        "form": "near_duplicate_sibling",
+        "raw_text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-06; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "advisory_text": "; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+        "completion": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-06",
+          "utf8_bytes": 7
+        },
+        "reason": null
+      },
+      "complete_sequence": 353
+    }
+  ],
+  "acknowledgement_records": [
+    {
+      "sequence": 1,
+      "request": "new--batch-01",
+      "finding_id": "F0001",
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "raw_sha256": "b18578814c7ba4b04e28f4d0f140e4d36327ce89ee62450a408836fcea622349",
+      "marker_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "snapshot": "snapshots/0001.md",
+      "marker_snapshot": "snapshots/0001.request",
+      "finding": {
+        "id": "F0001",
+        "title": "Synthetic widget capacity batch-01 — minimized development fixture",
+        "parts": [
+          {
+            "id": "F0001_ASSERTION",
+            "type": "assertion",
+            "text": "This is a synthetic derivative fixture, not an exact carrier reproduction or a scored answer.\nThe artificial widget reports two synthetic units: OLD_WIDGET_UNITS_2.\n\n"
+          },
+          {
+            "id": "F0001_SOURCE_FIT",
+            "type": "source_fit",
+            "text": "Artificial fixture definition only; no external source or evaluator reference is used.\nThe quoted text is \"two units\" and the literal path is C:\\synthetic\\widget.txt.\n\n"
+          },
+          {
+            "id": "F0001_CONDITION",
+            "type": "condition",
+            "text": "Use the fabricated widget only when knob A is set to blue.\nPreserve this literal code, including its two-space indentation:\n\n```text\n  label = \"synthetic widget\"\n  path = \"C:\\synthetic\\widget.txt\"\n## condition\n  note = \"this heading is code content, not a field\"\n```\n\n"
+          },
+          {
+            "id": "F0001_IMPLICATION",
+            "type": "implication",
+            "text": "A synthetic display can show the two-unit value without treating it as a real measurement.\n\n"
+          },
+          {
+            "id": "F0001_VALIDATION_PROPOSAL",
+            "type": "validation_proposal",
+            "text": "UNEXECUTED: Set the artificial knob to blue and compare the displayed value with two synthetic units.\nRecord the observed value if this proposal is ever executed.\n\n"
+          },
+          {
+            "id": "F0001_UNCERTAINTY",
+            "type": "uncertainty",
+            "text": "The fixture makes no claim about a real widget, source corpus, or runtime.\n\n"
+          },
+          {
+            "id": "F0001_PLAN_FIT",
+            "type": "plan_fit",
+            "text": "No product Plan change is proposed; this is a development-only structural fixture.\n"
+          }
+        ]
+      },
+      "change_reason": null,
+      "revision": 1,
+      "changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": null,
+        "added_parts": [
+          "F0001_ASSERTION",
+          "F0001_CONDITION",
+          "F0001_IMPLICATION",
+          "F0001_PLAN_FIT",
+          "F0001_SOURCE_FIT",
+          "F0001_UNCERTAINTY",
+          "F0001_VALIDATION_PROPOSAL"
+        ],
+        "removed_parts": [],
+        "replaced_parts": [],
+        "title_changed": false
+      },
+      "completion_proof": {
+        "status": "complete",
+        "reason": null,
+        "payload": {
+          "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "call_id": "call_01a0ee21b86d74b893e3ca208c9736f5",
+          "tool_name": "write_file",
+          "call_index": 0,
+          "call_sequence": 177,
+          "ordinal": 10,
+          "status": "complete",
+          "qualifies_write": true,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-01.md",
+          "content_sha256": "b18578814c7ba4b04e28f4d0f140e4d36327ce89ee62450a408836fcea622349",
+          "content_bytes": 1194,
+          "effect_id": "01a0ee21-dbf4-7193-870a-8c1d44273302",
+          "task_id": "01a0ee21-dbf4-7193-870a-8c1d44273302",
+          "task_stream": {
+            "id": "01a0ee21-dbf4-7193-870a-8c1d44273302",
+            "kind": "task"
+          },
+          "started_sequence": 184,
+          "terminal_sequence": 236,
+          "result_sequence": 250,
+          "native_result": {
+            "text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-01.md; note: near-duplicate sibling new--batch-02.md exists in this directory — verify this new file is intended",
+            "tool_call_id": "call_01a0ee21b86d74b893e3ca208c9736f5",
+            "tool_call_index": 0
+          },
+          "result_interpretation": {
+            "status": "recognized",
+            "form": "near_duplicate_sibling",
+            "raw_text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-01.md; note: near-duplicate sibling new--batch-02.md exists in this directory — verify this new file is intended",
+            "advisory_text": "; note: near-duplicate sibling new--batch-02.md exists in this directory — verify this new file is intended",
+            "completion": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-01.md",
+              "utf8_bytes": 1194
+            },
+            "reason": null
+          },
+          "complete_sequence": 250,
+          "native_attempts": 1
+        },
+        "marker": {
+          "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "call_id": "call_01a0ee231cf676bea1943e5aa0a37ae2",
+          "tool_name": "write_file",
+          "call_index": 0,
+          "call_sequence": 280,
+          "ordinal": 16,
+          "status": "complete",
+          "qualifies_write": true,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-01",
+          "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+          "content_bytes": 7,
+          "effect_id": "01a0ee23-269a-7a41-b527-23f6dca63cf5",
+          "task_id": "01a0ee23-269a-7a41-b527-23f6dca63cf5",
+          "task_stream": {
+            "id": "01a0ee23-269a-7a41-b527-23f6dca63cf5",
+            "kind": "task"
+          },
+          "started_sequence": 287,
+          "terminal_sequence": 327,
+          "result_sequence": 353,
+          "native_result": {
+            "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-01; note: near-duplicate sibling new--batch-02 exists in this directory — verify this new file is intended",
+            "tool_call_id": "call_01a0ee231cf676bea1943e5aa0a37ae2",
+            "tool_call_index": 0
+          },
+          "result_interpretation": {
+            "status": "recognized",
+            "form": "near_duplicate_sibling",
+            "raw_text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-01; note: near-duplicate sibling new--batch-02 exists in this directory — verify this new file is intended",
+            "advisory_text": "; note: near-duplicate sibling new--batch-02 exists in this directory — verify this new file is intended",
+            "completion": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-01",
+              "utf8_bytes": 7
+            },
+            "reason": null
+          },
+          "complete_sequence": 353,
+          "native_attempts": 1
+        }
+      },
+      "native_lineage_ordinal": 16
+    },
+    {
+      "sequence": 2,
+      "request": "new--batch-02",
+      "finding_id": "F0002",
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "raw_sha256": "fec3a849f7d54e32902268f950d3ff51ff91e1f480be9836fd62b4ccf7334f63",
+      "marker_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "snapshot": "snapshots/0002.md",
+      "marker_snapshot": "snapshots/0002.request",
+      "finding": {
+        "id": "F0002",
+        "title": "Synthetic widget capacity batch-02 — minimized development fixture",
+        "parts": [
+          {
+            "id": "F0002_ASSERTION",
+            "type": "assertion",
+            "text": "This is a synthetic derivative fixture, not an exact carrier reproduction or a scored answer.\nThe artificial widget reports two synthetic units: OLD_WIDGET_UNITS_2.\n\n"
+          },
+          {
+            "id": "F0002_SOURCE_FIT",
+            "type": "source_fit",
+            "text": "Artificial fixture definition only; no external source or evaluator reference is used.\nThe quoted text is \"two units\" and the literal path is C:\\synthetic\\widget.txt.\n\n"
+          },
+          {
+            "id": "F0002_CONDITION",
+            "type": "condition",
+            "text": "Use the fabricated widget only when knob A is set to blue.\nPreserve this literal code, including its two-space indentation:\n\n```text\n  label = \"synthetic widget\"\n  path = \"C:\\synthetic\\widget.txt\"\n## condition\n  note = \"this heading is code content, not a field\"\n```\n\n"
+          },
+          {
+            "id": "F0002_IMPLICATION",
+            "type": "implication",
+            "text": "A synthetic display can show the two-unit value without treating it as a real measurement.\n\n"
+          },
+          {
+            "id": "F0002_VALIDATION_PROPOSAL",
+            "type": "validation_proposal",
+            "text": "UNEXECUTED: Set the artificial knob to blue and compare the displayed value with two synthetic units.\nRecord the observed value if this proposal is ever executed.\n\n"
+          },
+          {
+            "id": "F0002_UNCERTAINTY",
+            "type": "uncertainty",
+            "text": "The fixture makes no claim about a real widget, source corpus, or runtime.\n\n"
+          },
+          {
+            "id": "F0002_PLAN_FIT",
+            "type": "plan_fit",
+            "text": "No product Plan change is proposed; this is a development-only structural fixture.\n"
+          }
+        ]
+      },
+      "change_reason": null,
+      "revision": 1,
+      "changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": null,
+        "added_parts": [
+          "F0002_ASSERTION",
+          "F0002_CONDITION",
+          "F0002_IMPLICATION",
+          "F0002_PLAN_FIT",
+          "F0002_SOURCE_FIT",
+          "F0002_UNCERTAINTY",
+          "F0002_VALIDATION_PROPOSAL"
+        ],
+        "removed_parts": [],
+        "replaced_parts": [],
+        "title_changed": false
+      },
+      "completion_proof": {
+        "status": "complete",
+        "reason": null,
+        "payload": {
+          "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "call_id": "call_01a0ee21bee27787bc3c8cee58ea54fe",
+          "tool_name": "write_file",
+          "call_index": 1,
+          "call_sequence": 177,
+          "ordinal": 11,
+          "status": "complete",
+          "qualifies_write": true,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-02.md",
+          "content_sha256": "fec3a849f7d54e32902268f950d3ff51ff91e1f480be9836fd62b4ccf7334f63",
+          "content_bytes": 1194,
+          "effect_id": "01a0ee21-dc13-7df1-b264-54527c953b77",
+          "task_id": "01a0ee21-dc13-7df1-b264-54527c953b77",
+          "task_stream": {
+            "id": "01a0ee21-dc13-7df1-b264-54527c953b77",
+            "kind": "task"
+          },
+          "started_sequence": 191,
+          "terminal_sequence": 224,
+          "result_sequence": 250,
+          "native_result": {
+            "text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-02.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "tool_call_id": "call_01a0ee21bee27787bc3c8cee58ea54fe",
+            "tool_call_index": 1
+          },
+          "result_interpretation": {
+            "status": "recognized",
+            "form": "near_duplicate_sibling",
+            "raw_text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-02.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "advisory_text": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "completion": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-02.md",
+              "utf8_bytes": 1194
+            },
+            "reason": null
+          },
+          "complete_sequence": 250,
+          "native_attempts": 1
+        },
+        "marker": {
+          "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "call_id": "call_01a0ee231e61712f89c98fea7149e584",
+          "tool_name": "write_file",
+          "call_index": 1,
+          "call_sequence": 280,
+          "ordinal": 17,
+          "status": "complete",
+          "qualifies_write": true,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-02",
+          "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+          "content_bytes": 7,
+          "effect_id": "01a0ee23-26b7-7c72-9757-6693f3fefb0a",
+          "task_id": "01a0ee23-26b7-7c72-9757-6693f3fefb0a",
+          "task_stream": {
+            "id": "01a0ee23-26b7-7c72-9757-6693f3fefb0a",
+            "kind": "task"
+          },
+          "started_sequence": 294,
+          "terminal_sequence": 323,
+          "result_sequence": 353,
+          "native_result": {
+            "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-02; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "tool_call_id": "call_01a0ee231e61712f89c98fea7149e584",
+            "tool_call_index": 1
+          },
+          "result_interpretation": {
+            "status": "recognized",
+            "form": "near_duplicate_sibling",
+            "raw_text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-02; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "advisory_text": "; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "completion": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-02",
+              "utf8_bytes": 7
+            },
+            "reason": null
+          },
+          "complete_sequence": 353,
+          "native_attempts": 1
+        }
+      },
+      "native_lineage_ordinal": 17
+    },
+    {
+      "sequence": 3,
+      "request": "new--batch-03",
+      "finding_id": "F0003",
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "raw_sha256": "930b6d21e10253a85ee96cd678a61254a8ae588a1ce201ff8f3870028f648edf",
+      "marker_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "snapshot": "snapshots/0003.md",
+      "marker_snapshot": "snapshots/0003.request",
+      "finding": {
+        "id": "F0003",
+        "title": "Synthetic widget capacity batch-03 — minimized development fixture",
+        "parts": [
+          {
+            "id": "F0003_ASSERTION",
+            "type": "assertion",
+            "text": "This is a synthetic derivative fixture, not an exact carrier reproduction or a scored answer.\nThe artificial widget reports two synthetic units: OLD_WIDGET_UNITS_2.\n\n"
+          },
+          {
+            "id": "F0003_SOURCE_FIT",
+            "type": "source_fit",
+            "text": "Artificial fixture definition only; no external source or evaluator reference is used.\nThe quoted text is \"two units\" and the literal path is C:\\synthetic\\widget.txt.\n\n"
+          },
+          {
+            "id": "F0003_CONDITION",
+            "type": "condition",
+            "text": "Use the fabricated widget only when knob A is set to blue.\nPreserve this literal code, including its two-space indentation:\n\n```text\n  label = \"synthetic widget\"\n  path = \"C:\\synthetic\\widget.txt\"\n## condition\n  note = \"this heading is code content, not a field\"\n```\n\n"
+          },
+          {
+            "id": "F0003_IMPLICATION",
+            "type": "implication",
+            "text": "A synthetic display can show the two-unit value without treating it as a real measurement.\n\n"
+          },
+          {
+            "id": "F0003_VALIDATION_PROPOSAL",
+            "type": "validation_proposal",
+            "text": "UNEXECUTED: Set the artificial knob to blue and compare the displayed value with two synthetic units.\nRecord the observed value if this proposal is ever executed.\n\n"
+          },
+          {
+            "id": "F0003_UNCERTAINTY",
+            "type": "uncertainty",
+            "text": "The fixture makes no claim about a real widget, source corpus, or runtime.\n\n"
+          },
+          {
+            "id": "F0003_PLAN_FIT",
+            "type": "plan_fit",
+            "text": "No product Plan change is proposed; this is a development-only structural fixture.\n"
+          }
+        ]
+      },
+      "change_reason": null,
+      "revision": 1,
+      "changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": null,
+        "added_parts": [
+          "F0003_ASSERTION",
+          "F0003_CONDITION",
+          "F0003_IMPLICATION",
+          "F0003_PLAN_FIT",
+          "F0003_SOURCE_FIT",
+          "F0003_UNCERTAINTY",
+          "F0003_VALIDATION_PROPOSAL"
+        ],
+        "removed_parts": [],
+        "replaced_parts": [],
+        "title_changed": false
+      },
+      "completion_proof": {
+        "status": "complete",
+        "reason": null,
+        "payload": {
+          "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "call_id": "call_01a0ee21c5a771f1b9443a016a4b5975",
+          "tool_name": "write_file",
+          "call_index": 2,
+          "call_sequence": 177,
+          "ordinal": 12,
+          "status": "complete",
+          "qualifies_write": true,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-03.md",
+          "content_sha256": "930b6d21e10253a85ee96cd678a61254a8ae588a1ce201ff8f3870028f648edf",
+          "content_bytes": 1194,
+          "effect_id": "01a0ee21-dc33-7a93-a987-9b58deec9e99",
+          "task_id": "01a0ee21-dc33-7a93-a987-9b58deec9e99",
+          "task_stream": {
+            "id": "01a0ee21-dc33-7a93-a987-9b58deec9e99",
+            "kind": "task"
+          },
+          "started_sequence": 198,
+          "terminal_sequence": 228,
+          "result_sequence": 250,
+          "native_result": {
+            "text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-03.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "tool_call_id": "call_01a0ee21c5a771f1b9443a016a4b5975",
+            "tool_call_index": 2
+          },
+          "result_interpretation": {
+            "status": "recognized",
+            "form": "near_duplicate_sibling",
+            "raw_text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-03.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "advisory_text": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "completion": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-03.md",
+              "utf8_bytes": 1194
+            },
+            "reason": null
+          },
+          "complete_sequence": 250,
+          "native_attempts": 1
+        },
+        "marker": {
+          "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "call_id": "call_01a0ee231fc17539b98d2316e528427a",
+          "tool_name": "write_file",
+          "call_index": 2,
+          "call_sequence": 280,
+          "ordinal": 18,
+          "status": "complete",
+          "qualifies_write": true,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-03",
+          "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+          "content_bytes": 7,
+          "effect_id": "01a0ee23-26d1-7743-817e-2ab7f50f91ef",
+          "task_id": "01a0ee23-26d1-7743-817e-2ab7f50f91ef",
+          "task_stream": {
+            "id": "01a0ee23-26d1-7743-817e-2ab7f50f91ef",
+            "kind": "task"
+          },
+          "started_sequence": 301,
+          "terminal_sequence": 331,
+          "result_sequence": 353,
+          "native_result": {
+            "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-03; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "tool_call_id": "call_01a0ee231fc17539b98d2316e528427a",
+            "tool_call_index": 2
+          },
+          "result_interpretation": {
+            "status": "recognized",
+            "form": "near_duplicate_sibling",
+            "raw_text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-03; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "advisory_text": "; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "completion": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-03",
+              "utf8_bytes": 7
+            },
+            "reason": null
+          },
+          "complete_sequence": 353,
+          "native_attempts": 1
+        }
+      },
+      "native_lineage_ordinal": 18
+    },
+    {
+      "sequence": 4,
+      "request": "new--batch-04",
+      "finding_id": "F0004",
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "raw_sha256": "245027d190f940a570818ebed0812d5ba161b343dd68eb7a5bc37fd38501c594",
+      "marker_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "snapshot": "snapshots/0004.md",
+      "marker_snapshot": "snapshots/0004.request",
+      "finding": {
+        "id": "F0004",
+        "title": "Synthetic widget capacity batch-04 — minimized development fixture",
+        "parts": [
+          {
+            "id": "F0004_ASSERTION",
+            "type": "assertion",
+            "text": "This is a synthetic derivative fixture, not an exact carrier reproduction or a scored answer.\nThe artificial widget reports two synthetic units: OLD_WIDGET_UNITS_2.\n\n"
+          },
+          {
+            "id": "F0004_SOURCE_FIT",
+            "type": "source_fit",
+            "text": "Artificial fixture definition only; no external source or evaluator reference is used.\nThe quoted text is \"two units\" and the literal path is C:\\synthetic\\widget.txt.\n\n"
+          },
+          {
+            "id": "F0004_CONDITION",
+            "type": "condition",
+            "text": "Use the fabricated widget only when knob A is set to blue.\nPreserve this literal code, including its two-space indentation:\n\n```text\n  label = \"synthetic widget\"\n  path = \"C:\\synthetic\\widget.txt\"\n## condition\n  note = \"this heading is code content, not a field\"\n```\n\n"
+          },
+          {
+            "id": "F0004_IMPLICATION",
+            "type": "implication",
+            "text": "A synthetic display can show the two-unit value without treating it as a real measurement.\n\n"
+          },
+          {
+            "id": "F0004_VALIDATION_PROPOSAL",
+            "type": "validation_proposal",
+            "text": "UNEXECUTED: Set the artificial knob to blue and compare the displayed value with two synthetic units.\nRecord the observed value if this proposal is ever executed.\n\n"
+          },
+          {
+            "id": "F0004_UNCERTAINTY",
+            "type": "uncertainty",
+            "text": "The fixture makes no claim about a real widget, source corpus, or runtime.\n\n"
+          },
+          {
+            "id": "F0004_PLAN_FIT",
+            "type": "plan_fit",
+            "text": "No product Plan change is proposed; this is a development-only structural fixture.\n"
+          }
+        ]
+      },
+      "change_reason": null,
+      "revision": 1,
+      "changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": null,
+        "added_parts": [
+          "F0004_ASSERTION",
+          "F0004_CONDITION",
+          "F0004_IMPLICATION",
+          "F0004_PLAN_FIT",
+          "F0004_SOURCE_FIT",
+          "F0004_UNCERTAINTY",
+          "F0004_VALIDATION_PROPOSAL"
+        ],
+        "removed_parts": [],
+        "replaced_parts": [],
+        "title_changed": false
+      },
+      "completion_proof": {
+        "status": "complete",
+        "reason": null,
+        "payload": {
+          "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "call_id": "call_01a0ee21cb6275d1bf4fe459ec5dbd32",
+          "tool_name": "write_file",
+          "call_index": 3,
+          "call_sequence": 177,
+          "ordinal": 13,
+          "status": "complete",
+          "qualifies_write": true,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-04.md",
+          "content_sha256": "245027d190f940a570818ebed0812d5ba161b343dd68eb7a5bc37fd38501c594",
+          "content_bytes": 1194,
+          "effect_id": "01a0ee21-dc52-7212-ba84-d9134c8bcdbf",
+          "task_id": "01a0ee21-dc52-7212-ba84-d9134c8bcdbf",
+          "task_stream": {
+            "id": "01a0ee21-dc52-7212-ba84-d9134c8bcdbf",
+            "kind": "task"
+          },
+          "started_sequence": 205,
+          "terminal_sequence": 232,
+          "result_sequence": 250,
+          "native_result": {
+            "text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-04.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "tool_call_id": "call_01a0ee21cb6275d1bf4fe459ec5dbd32",
+            "tool_call_index": 3
+          },
+          "result_interpretation": {
+            "status": "recognized",
+            "form": "near_duplicate_sibling",
+            "raw_text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-04.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "advisory_text": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "completion": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-04.md",
+              "utf8_bytes": 1194
+            },
+            "reason": null
+          },
+          "complete_sequence": 250,
+          "native_attempts": 1
+        },
+        "marker": {
+          "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "call_id": "call_01a0ee23211b72abaefeec75f012aeeb",
+          "tool_name": "write_file",
+          "call_index": 3,
+          "call_sequence": 280,
+          "ordinal": 19,
+          "status": "complete",
+          "qualifies_write": true,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-04",
+          "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+          "content_bytes": 7,
+          "effect_id": "01a0ee23-26ee-71b2-a7e2-452513da4177",
+          "task_id": "01a0ee23-26ee-71b2-a7e2-452513da4177",
+          "task_stream": {
+            "id": "01a0ee23-26ee-71b2-a7e2-452513da4177",
+            "kind": "task"
+          },
+          "started_sequence": 308,
+          "terminal_sequence": 343,
+          "result_sequence": 353,
+          "native_result": {
+            "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-04; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "tool_call_id": "call_01a0ee23211b72abaefeec75f012aeeb",
+            "tool_call_index": 3
+          },
+          "result_interpretation": {
+            "status": "recognized",
+            "form": "near_duplicate_sibling",
+            "raw_text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-04; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "advisory_text": "; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "completion": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-04",
+              "utf8_bytes": 7
+            },
+            "reason": null
+          },
+          "complete_sequence": 353,
+          "native_attempts": 1
+        }
+      },
+      "native_lineage_ordinal": 19
+    },
+    {
+      "sequence": 5,
+      "request": "new--batch-05",
+      "finding_id": "F0005",
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "raw_sha256": "04253ecfb1bf83e1f658ad7a4c9e32b91a524fb7b31308969ef66a4d86045ea8",
+      "marker_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "snapshot": "snapshots/0005.md",
+      "marker_snapshot": "snapshots/0005.request",
+      "finding": {
+        "id": "F0005",
+        "title": "Synthetic widget capacity batch-05 — minimized development fixture",
+        "parts": [
+          {
+            "id": "F0005_ASSERTION",
+            "type": "assertion",
+            "text": "This is a synthetic derivative fixture, not an exact carrier reproduction or a scored answer.\nThe artificial widget reports two synthetic units: OLD_WIDGET_UNITS_2.\n\n"
+          },
+          {
+            "id": "F0005_SOURCE_FIT",
+            "type": "source_fit",
+            "text": "Artificial fixture definition only; no external source or evaluator reference is used.\nThe quoted text is \"two units\" and the literal path is C:\\synthetic\\widget.txt.\n\n"
+          },
+          {
+            "id": "F0005_CONDITION",
+            "type": "condition",
+            "text": "Use the fabricated widget only when knob A is set to blue.\nPreserve this literal code, including its two-space indentation:\n\n```text\n  label = \"synthetic widget\"\n  path = \"C:\\synthetic\\widget.txt\"\n## condition\n  note = \"this heading is code content, not a field\"\n```\n\n"
+          },
+          {
+            "id": "F0005_IMPLICATION",
+            "type": "implication",
+            "text": "A synthetic display can show the two-unit value without treating it as a real measurement.\n\n"
+          },
+          {
+            "id": "F0005_VALIDATION_PROPOSAL",
+            "type": "validation_proposal",
+            "text": "UNEXECUTED: Set the artificial knob to blue and compare the displayed value with two synthetic units.\nRecord the observed value if this proposal is ever executed.\n\n"
+          },
+          {
+            "id": "F0005_UNCERTAINTY",
+            "type": "uncertainty",
+            "text": "The fixture makes no claim about a real widget, source corpus, or runtime.\n\n"
+          },
+          {
+            "id": "F0005_PLAN_FIT",
+            "type": "plan_fit",
+            "text": "No product Plan change is proposed; this is a development-only structural fixture.\n"
+          }
+        ]
+      },
+      "change_reason": null,
+      "revision": 1,
+      "changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": null,
+        "added_parts": [
+          "F0005_ASSERTION",
+          "F0005_CONDITION",
+          "F0005_IMPLICATION",
+          "F0005_PLAN_FIT",
+          "F0005_SOURCE_FIT",
+          "F0005_UNCERTAINTY",
+          "F0005_VALIDATION_PROPOSAL"
+        ],
+        "removed_parts": [],
+        "replaced_parts": [],
+        "title_changed": false
+      },
+      "completion_proof": {
+        "status": "complete",
+        "reason": null,
+        "payload": {
+          "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "call_id": "call_01a0ee21d09e76ceac3f1d4d693a8bdf",
+          "tool_name": "write_file",
+          "call_index": 4,
+          "call_sequence": 177,
+          "ordinal": 14,
+          "status": "complete",
+          "qualifies_write": true,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-05.md",
+          "content_sha256": "04253ecfb1bf83e1f658ad7a4c9e32b91a524fb7b31308969ef66a4d86045ea8",
+          "content_bytes": 1194,
+          "effect_id": "01a0ee21-dc6f-7982-8715-ed252dfabe2d",
+          "task_id": "01a0ee21-dc6f-7982-8715-ed252dfabe2d",
+          "task_stream": {
+            "id": "01a0ee21-dc6f-7982-8715-ed252dfabe2d",
+            "kind": "task"
+          },
+          "started_sequence": 212,
+          "terminal_sequence": 220,
+          "result_sequence": 250,
+          "native_result": {
+            "text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-05.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "tool_call_id": "call_01a0ee21d09e76ceac3f1d4d693a8bdf",
+            "tool_call_index": 4
+          },
+          "result_interpretation": {
+            "status": "recognized",
+            "form": "near_duplicate_sibling",
+            "raw_text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-05.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "advisory_text": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "completion": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-05.md",
+              "utf8_bytes": 1194
+            },
+            "reason": null
+          },
+          "complete_sequence": 250,
+          "native_attempts": 1
+        },
+        "marker": {
+          "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "call_id": "call_01a0ee23229975f588ac1447130da10f",
+          "tool_name": "write_file",
+          "call_index": 4,
+          "call_sequence": 280,
+          "ordinal": 20,
+          "status": "complete",
+          "qualifies_write": true,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-05",
+          "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+          "content_bytes": 7,
+          "effect_id": "01a0ee23-2709-7473-b1a6-13777192688a",
+          "task_id": "01a0ee23-2709-7473-b1a6-13777192688a",
+          "task_stream": {
+            "id": "01a0ee23-2709-7473-b1a6-13777192688a",
+            "kind": "task"
+          },
+          "started_sequence": 315,
+          "terminal_sequence": 335,
+          "result_sequence": 353,
+          "native_result": {
+            "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-05; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "tool_call_id": "call_01a0ee23229975f588ac1447130da10f",
+            "tool_call_index": 4
+          },
+          "result_interpretation": {
+            "status": "recognized",
+            "form": "near_duplicate_sibling",
+            "raw_text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-05; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "advisory_text": "; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "completion": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-05",
+              "utf8_bytes": 7
+            },
+            "reason": null
+          },
+          "complete_sequence": 353,
+          "native_attempts": 1
+        }
+      },
+      "native_lineage_ordinal": 20
+    },
+    {
+      "sequence": 6,
+      "request": "new--batch-06",
+      "finding_id": "F0006",
+      "status": "VALID_UNVERIFIED",
+      "diagnostics": [],
+      "raw_sha256": "cfb640b238f3951074666b233875632e6d5569a9652a890deb5ef317bc56e07f",
+      "marker_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+      "snapshot": "snapshots/0006.md",
+      "marker_snapshot": "snapshots/0006.request",
+      "finding": {
+        "id": "F0006",
+        "title": "Synthetic widget capacity batch-06 — minimized development fixture",
+        "parts": [
+          {
+            "id": "F0006_ASSERTION",
+            "type": "assertion",
+            "text": "This is a synthetic derivative fixture, not an exact carrier reproduction or a scored answer.\nThe artificial widget reports two synthetic units: OLD_WIDGET_UNITS_2.\n\n"
+          },
+          {
+            "id": "F0006_SOURCE_FIT",
+            "type": "source_fit",
+            "text": "Artificial fixture definition only; no external source or evaluator reference is used.\nThe quoted text is \"two units\" and the literal path is C:\\synthetic\\widget.txt.\n\n"
+          },
+          {
+            "id": "F0006_CONDITION",
+            "type": "condition",
+            "text": "Use the fabricated widget only when knob A is set to blue.\nPreserve this literal code, including its two-space indentation:\n\n```text\n  label = \"synthetic widget\"\n  path = \"C:\\synthetic\\widget.txt\"\n## condition\n  note = \"this heading is code content, not a field\"\n```\n\n"
+          },
+          {
+            "id": "F0006_IMPLICATION",
+            "type": "implication",
+            "text": "A synthetic display can show the two-unit value without treating it as a real measurement.\n\n"
+          },
+          {
+            "id": "F0006_VALIDATION_PROPOSAL",
+            "type": "validation_proposal",
+            "text": "UNEXECUTED: Set the artificial knob to blue and compare the displayed value with two synthetic units.\nRecord the observed value if this proposal is ever executed.\n\n"
+          },
+          {
+            "id": "F0006_UNCERTAINTY",
+            "type": "uncertainty",
+            "text": "The fixture makes no claim about a real widget, source corpus, or runtime.\n\n"
+          },
+          {
+            "id": "F0006_PLAN_FIT",
+            "type": "plan_fit",
+            "text": "No product Plan change is proposed; this is a development-only structural fixture.\n"
+          }
+        ]
+      },
+      "change_reason": null,
+      "revision": 1,
+      "changes": {
+        "basis": "last parsed record for byte comparison only; never a current fallback",
+        "previous_valid_attempt": null,
+        "added_parts": [
+          "F0006_ASSERTION",
+          "F0006_CONDITION",
+          "F0006_IMPLICATION",
+          "F0006_PLAN_FIT",
+          "F0006_SOURCE_FIT",
+          "F0006_UNCERTAINTY",
+          "F0006_VALIDATION_PROPOSAL"
+        ],
+        "removed_parts": [],
+        "replaced_parts": [],
+        "title_changed": false
+      },
+      "completion_proof": {
+        "status": "complete",
+        "reason": null,
+        "payload": {
+          "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "call_id": "call_01a0ee21d5ef76bfacedd59fc09ea4a8",
+          "tool_name": "write_file",
+          "call_index": 5,
+          "call_sequence": 177,
+          "ordinal": 15,
+          "status": "complete",
+          "qualifies_write": true,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-06.md",
+          "content_sha256": "cfb640b238f3951074666b233875632e6d5569a9652a890deb5ef317bc56e07f",
+          "content_bytes": 1194,
+          "effect_id": "01a0ee21-dc8f-7ae0-a696-dacb6fecf8c9",
+          "task_id": "01a0ee21-dc8f-7ae0-a696-dacb6fecf8c9",
+          "task_stream": {
+            "id": "01a0ee21-dc8f-7ae0-a696-dacb6fecf8c9",
+            "kind": "task"
+          },
+          "started_sequence": 219,
+          "terminal_sequence": 240,
+          "result_sequence": 250,
+          "native_result": {
+            "text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-06.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "tool_call_id": "call_01a0ee21d5ef76bfacedd59fc09ea4a8",
+            "tool_call_index": 5
+          },
+          "result_interpretation": {
+            "status": "recognized",
+            "form": "near_duplicate_sibling",
+            "raw_text": "wrote 1194 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-06.md; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "advisory_text": "; note: near-duplicate sibling new--batch-01.md exists in this directory — verify this new file is intended",
+            "completion": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/submissions/new--batch-06.md",
+              "utf8_bytes": 1194
+            },
+            "reason": null
+          },
+          "complete_sequence": 250,
+          "native_attempts": 1
+        },
+        "marker": {
+          "session_id": "01a0ee1e-ce2c-70e3-8379-280f794f1f1d",
+          "run_id": "01a0ee1e-cf34-737a-bbb3-b6300d2899dd",
+          "call_id": "call_01a0ee2323f4712ab11a1d99974b9a9f",
+          "tool_name": "write_file",
+          "call_index": 5,
+          "call_sequence": 280,
+          "ordinal": 21,
+          "status": "complete",
+          "qualifies_write": true,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-06",
+          "content_sha256": "b64430d09b6a4ac9444409330caafb4f7baa147dc9ce9d9d18aa5a4d441638e4",
+          "content_bytes": 7,
+          "effect_id": "01a0ee23-2727-77a2-8660-10e09b1ae20c",
+          "task_id": "01a0ee23-2727-77a2-8660-10e09b1ae20c",
+          "task_stream": {
+            "id": "01a0ee23-2727-77a2-8660-10e09b1ae20c",
+            "kind": "task"
+          },
+          "started_sequence": 322,
+          "terminal_sequence": 339,
+          "result_sequence": 353,
+          "native_result": {
+            "text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-06; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "tool_call_id": "call_01a0ee2323f4712ab11a1d99974b9a9f",
+            "tool_call_index": 5
+          },
+          "result_interpretation": {
+            "status": "recognized",
+            "form": "near_duplicate_sibling",
+            "raw_text": "wrote 7 bytes to /home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-06; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "advisory_text": "; note: near-duplicate sibling new--batch-01 exists in this directory — verify this new file is intended",
+            "completion": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/ws/out/requests/new--batch-06",
+              "utf8_bytes": 7
+            },
+            "reason": null
+          },
+          "complete_sequence": 353,
+          "native_attempts": 1
+        }
+      },
+      "native_lineage_ordinal": 21
+    }
+  ],
+  "protocol_errors": [],
+  "idle_publication": {
+    "polls": 493,
+    "publication_delta": 0,
+    "projection_bytes_unchanged": true
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "scope": "driver final receipt accounting; further unknown components remain unknown",
+  "requested_model": "muse-spark-1.3-contributor",
+  "requested_effort": "max",
+  "observed_model": "muse-spark-1.3-contributor",
+  "observed_effort": "max",
+  "native_responses": 3,
+  "driver_counters": {
+    "token_usage_events": 3,
+    "prompt_tokens": 73226,
+    "last_cumulative": {
+      "outputTokens": 4135,
+      "promptTokens": 73226,
+      "totalTokens": 77361
+    },
+    "turns_started": 1,
+    "turns_completed": [],
+    "inputTokens": 73226,
+    "outputTokens": 4135,
+    "reasoningTokens": 1220,
+    "cacheReadTokens": 20593,
+    "cacheWriteTokens": 0,
+    "cachedTokens": 20593
+  },
+  "stop_reason": "cap_seconds",
+  "elapsed_including_shutdown_grace": 315.3,
+  "whole_run_tokens": "unknown",
+  "child_tokens": "unknown",
+  "cancelled_tokens": "unknown",
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/a2-m-20260929/native/receipt.json",
+  "source_sha256": "81d9adc0eb7a5fd4db74079c04f484fab5ad5d764eb7ca448343f3d77d884e15"
+}
