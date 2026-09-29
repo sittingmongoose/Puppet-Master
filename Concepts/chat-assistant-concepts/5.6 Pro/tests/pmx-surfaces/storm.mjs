@@ -116,6 +116,16 @@ export default () => [
     await h.page.keyboard.type('Search must preserve the supplied result ranking.', { delay: 2 });
     await h.wait(200); await h.page.mouse.move(4, 4);
   }),
+  sheet('storm:sheet-must-wheel', 'BrainStorm must-haves after a mouse-wheel scroll: the field settles on whole lines, never a half-cut line', async h => {
+    const F = `${SHEET} textarea[data-collab-input="mustHaves"]`;
+    await typeInto(h, F, 'Search must work offline.');
+    for (const t of ['Keep the ranking.', 'No uploads.', 'Keep request ids.', 'Measure first.']) { await h.page.keyboard.press('Enter'); await h.page.keyboard.type(t, { delay: 2 }); }
+    await h.page.hover(F); await h.page.mouse.wheel(0, -9); await h.wait(700);
+    const r = await h.ev(sel => { const f = document.querySelector(sel), max = f.scrollHeight - f.clientHeight, t = f.scrollTop;
+      return { t, max, off: Math.min(Math.abs(t - Math.round(t / 17.5) * 17.5), Math.abs(t - max)) }; }, F);
+    if (r.off > 0.5) throw new Error('must-haves stopped mid-line after a wheel scroll: scrollTop ' + r.t + ' of ' + r.max);
+    await h.page.mouse.move(4, 4);
+  }),
   Object.assign(sheet('storm:sheet-recorded', 'BrainStorm sheet of the recorded example (the guided demo: its own rules read-only, the lean plate beside the guide strip)'), {
     /* the guided demo opens its own chat before the sheet (a thread and its first message, by design), so the effects
        ledger, whose baseline is taken before open(), would count the demo's own chat: opted out as crew:recorded-sheet is */

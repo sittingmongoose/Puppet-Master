@@ -55525,6 +55525,25 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   });
  }
  if(window.PM56_PMX&&window.PM56_PMX.after)window.PM56_PMX.after(motion);
+ /* must-haves: the field scrolls by whole 17.5 px lines (closing follow-up). The CSS lands typing on whole lines; a
+    wheel, trackpad or scrollbar scroll, or a caret reveal while an earlier line is edited, can still stop part way,
+    so when a scroll of the field ends it settles on the nearest whole line (instantly under reduced motion). Rounding
+    to the nearest line keeps the caret's line in view (the reveal is off by the caret's half-leading, under 9 px). */
+ const MUST_LINE=17.5,MUST_SEL='.pmx-bs-mbox > textarea[data-collab-input="mustHaves"]',mustT=new WeakMap();
+ function snapMust(el){
+  mustT.delete(el);if(!el.isConnected)return;
+  const max=el.scrollHeight-el.clientHeight;if(max<=0)return;
+  const to=Math.max(0,Math.min(max,Math.round(el.scrollTop/MUST_LINE)*MUST_LINE));
+  if(Math.abs(to-el.scrollTop)<=0.5)return;/* whole-pixel scroll offsets: within 0.5 px is on the line */
+  const X=X_(),still=!!(X&&X.reduced&&X.reduced());
+  try{el.scrollTo({top:to,behavior:still?'auto':'smooth'});}catch(e){el.scrollTop=to;}
+ }
+ function mustLater(el,ms){clearTimeout(mustT.get(el));mustT.set(el,setTimeout(()=>snapMust(el),ms));}
+ const HAS_SCROLLEND='onscrollend' in window;
+ document.addEventListener(HAS_SCROLLEND?'scrollend':'scroll',e=>{const el=e.target;
+  if(el&&el.tagName==='TEXTAREA'&&el.matches(MUST_SEL))mustLater(el,HAS_SCROLLEND?0:150);},{capture:true,passive:true});
+ ['input','keyup'].forEach(t=>document.addEventListener(t,e=>{const el=e.target;
+  if(el&&el.tagName==='TEXTAREA'&&el.matches(MUST_SEL))requestAnimationFrame(()=>mustLater(el,0));},true));
  window.PM56_BRAINSTORM={admit,owns,phaseLabel,tally,submitProposal,normalize,debate,recordEvidence,vote,decide,synthesize,renderSummary,renderActions,markdown,openResults,planPayload,
   /* presentation (STORM-A): the KIND INTERFACE parts, the waiting noun (IMPACT A1-20 / A3-04) and the chapters */
   sheetParts,cardParts,waitingNoun:WAIT_NOUN,chapters:()=>CHAPTERS.map(c=>({plate:c[0],stop:c[1],canon:c[2],part:c[3]}))};
