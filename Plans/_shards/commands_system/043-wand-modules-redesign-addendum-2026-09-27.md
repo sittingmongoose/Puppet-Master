@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6929-L7420
+Source lines: L6929-L7449
 
-Source SHA256: `eb0990774743299ac84c6e784bccd1c3fc26a77d6935a009afe4d49ff9152406`
+Source SHA256: `0b49b5b55c8dae805a985380a0c8642d335ef10e00b3e5bd763287bbb719f0c7`
 
 ---
 
@@ -199,6 +199,15 @@ canonical_text: >-
   with command_not_registered until central registration, Event Authority, storage and production
   wiring close; expected_event_types stays empty until Event Authority admits a family; and no
   page-local handler, alias or toast simulates success.
+  DL-138 requires companion schemas and fixtures now in the existing owner pairs:
+  collaborative_workflows_contracts.schema.json owns ChatRoomEndRequest/ChatRoomEndResult and
+  BrainstormLeadResearchRequest/BrainstormLeadResearchResult; back_seat_driver_contracts.schema.json
+  owns BSDFindingDismissRequest/BSDFindingDismissResult and BSDCatchUpReleaseRequest/BSDCatchUpReleaseResult;
+  assistant_memory_contracts.schema.json owns TeachRevokeRequest/TeachRevokeResult,
+  TeachLockRequest/TeachLockResult with locked, and MemoryExportRequest/ArtifactExportResult with scope,
+  plus the existing TeachConfirmRequest/TeachConfirmResult gaining locked. Each pair must validate
+  closed request/result fields, accepted examples and one-constraint negative fixtures. These
+  contract artifacts do not establish native handler availability or event admission.
 gui_related: true
 gui_classification_reason: "Fixes the dispatch identity and disabled state of visible End discussion, Check it, Dismiss, Don't wait, Turn off, Lock and Export controls."
 split_recommended: false
@@ -223,11 +232,31 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f section 3 and section 7.4 CC-2"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 line B-CMD-07"
   - "Plans/Decision_Log.md#DL-130"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
 preserved_exact_tokens:
+  - "scope"
+  - "locked"
+  - "TeachConfirmResult"
+  - "TeachConfirmRequest"
+  - "ArtifactExportResult"
+  - "MemoryExportRequest"
+  - "TeachLockResult"
+  - "TeachLockRequest"
+  - "TeachRevokeResult"
+  - "TeachRevokeRequest"
+  - "BSDCatchUpReleaseResult"
+  - "BSDCatchUpReleaseRequest"
+  - "BSDFindingDismissResult"
+  - "BSDFindingDismissRequest"
+  - "BrainstormLeadResearchResult"
+  - "BrainstormLeadResearchRequest"
+  - "ChatRoomEndResult"
+  - "ChatRoomEndRequest"
+  - "DL-138"
   - "handlers::collaboration::chat_room_end"
   - "handlers::collaboration::brainstorm_research_lead"
   - "handlers::bsd::finding_dismiss"

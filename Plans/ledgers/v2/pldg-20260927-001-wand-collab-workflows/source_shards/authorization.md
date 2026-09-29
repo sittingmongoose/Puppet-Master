@@ -92,3 +92,49 @@ answers left a design choice, the design lead's approved spec decides it and the
 spec (dec-049 from DESIGN-SPEC section 7.6, dec-050 from sections 8.0 G-29 and 8.1). Mechanical and reference repairs are
 recorded in dec-051. What still needs the owner or new facts is recorded as open questions q-030..q-034, none blocking landing.
 This is cycle one of at most two.
+
+## DL-138 answer wave (2026-09-29)
+
+Jared approved all 29 recommendations in /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md (SHA-256 345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c); DL-138 records the answer set. This phase compiles the owner prose and question closures listed below. Schema, fixture, gate and registry companions remain a separate pending phase. The prior source and review history above remains intact.
+
+- q-026: Crew and Chat Room Grill Me routes questions to helpers; owner targets CWR-028.
+
+- q-027: Crew Auto inherits general Crew parallelism; owner targets CWR-018, CWR-021.
+
+- q-028: Hard budgets cap run limits; owner targets CWR-029, CWR-032. Companion work remains pending.
+
+- q-029: Project ELI5 default uses the existing setting; owner targets CWR-033, SSYS-028. Companion work remains pending.
+
+- q-030: Untouched Crew Auto defaults start at revision one; owner targets CWR-004, CWR-021, CWR-038. Companion work remains pending.
+
+- q-031: Crew Auto default and per-chat override have homes; owner targets CWR-038, SSYS-028, ACD-076. Companion work remains pending.
+
+- q-032: Crew Auto receipt appears only in the chat of the action; owner targets CWR-038.
+
+- q-033: Coordinator receives an activity row; owner targets CWR-030, CWR-040, EP-129. Companion work remains pending.
+
+- q-034: Chat Room waits after the last configured round; owner targets CWR-024.
+
+- Cross-ledger Memory q-007: Review composer fill gains a taught-rule source; owner target CWR-031. Companion work remains pending.
+
+The previous findings.md bytes from origin/main 1a501f3341 are archived at `Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/source_shards/findings-through-main-1a501f3341.md`, SHA-256 `daf918cbdc74a2a11af8b99e936da69212c6b1ccb327dfc9f13edfad2bc0dbdd`. The active findings.md now states only DL-138 repair claims; historical records and lineage remain in the archive, and historical atom/queue/decision/event streams are unchanged.
+
+## DL-138 companion phase (2026-09-29T22:53:13+00:00)
+
+The owner-authorized second phase adds the typed schema/fixture companions after the required prose witness. DL-138 collaboration companions compiled after prose witness: collaboration schema and fixtures now cover nonparticipant coordinator activity, tagged taught_rule_check composer fill, and existing ChatRoomEnd/BrainstormLeadResearch negatives. Settings inventory/schema and thread metadata are coordinated with SSYS-028 and ACD-076; chat/wiring surface updates and ATS-062 98-positive/128-negative gate prose are cross-owner edits. Focused checks and repository-wide static checker pass. Blind review, aggregate gates, regeneration and governance remain outside this event. Static verification report: /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/part-b-collab-contracts-verify.json (SHA-256 1d8bb7ea8c52f1cf808ad7e79e2c555e3f17c712742ee09efa82e578dcff7ff0). Full-ledger witness: /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/part-b-001-witness-companion.log (SHA-256 3336fa4331a04613b4f526f67ee2e8bdb490e3ef58e2fdeca430bdecb8efb0d5). This records no runtime, implementation, UI, performance or governance claim.
+
+## Blind compile review cycle 1 — source-preserving corrections
+
+Reconciled the taught_rule_check message_chrome origin in the command census and corrected the nonexistent local q-035 receipt to Memory ledger q-007. The ELI5 app-default conflict is handled by the separately recorded owner resolution or open question; it is not silently decided by a review repair.
+
+Review source: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger001-cycle1/findings.jsonl sha256:aad8b67fefc83f8eca7c4d424709315f99b9b1a44e590ca9c28f8ca41a3e19f4`. Event `evt-027`, correction `cor-057`. These are fidelity repairs under the accepted answers; they create no runtime evidence or governance seal.
+
+## Open owner conflict — ELI5 All chats edit
+
+Question q-035 preserves the editable All chats requirement while its Settings commit and persistence route remains unresolved against SSYS-002. No option was selected; only that edit is disabled pending owner resolution. Source: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ELI5-OWNER-QUESTION.md sha256:526924d097a2118c32b5a29b35b85ec4f268a2461ffc1c6325f0e5828ddbb935`. Event `evt-028`.
+
+## DL-138 final compile review disposition
+
+DL-138 prose and companion compile reviewed through the two-cycle cap; every finding is dispositioned in Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/validation/blind_review_cycle2.json. Required deterministic checks pass except the explicitly allowed governance coverage errors and normal assistant checker exit 1 with errors empty. Open owner questions remain recorded; no native runtime or governance seal is claimed.
+
+Event `evt-029`. Raw review source: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger001-cycle2/findings.jsonl`; SHA-256 `70f04c323920334354dc04663998fda54c1ca224dc231aea2531f28bbee67cf0`.

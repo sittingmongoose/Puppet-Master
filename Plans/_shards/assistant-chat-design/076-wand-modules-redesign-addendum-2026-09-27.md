@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26316-L26988
+Source lines: L26343-L27032
 
-Source SHA256: `c0598b7cd330cb81288c38ca4b6a84c5c384b981cceeb49af40429a0507db3ff`
+Source SHA256: `2af0f35217dcf661b0a9eabfeb6be5109c8ed9c0b1366778c1368a117cad2823`
 
 ---
 
@@ -125,12 +125,19 @@ canonical_text: >-
   check is never hidden behind a Followed count. A rule whose check could not run earns no tick,
   and a reply with no passed or failed check shows no rule note. Used is never shown in place of
   either note. Section 6's user-locked sentence is unchanged.
+  DL-138 confirms the final wording. Persisted AMS-053 check results drive the note on reopen: passed
+  counts as Followed, failed counts as Missed and could_not_run earns no tick. A mixed result is one
+  line, Missed first, for example "Missed 1 of your rules · followed 2". See which rule opens the
+  saved check evidence as view state. Ask for a fix reuses cmd.review.send_findings_to_agent with
+  the taught_rule_check source variant (UCC-172): it fills the source thread's empty composer, returns
+  ComposerBufferResult, refuses composer_not_empty, and never sends or executes a fix. The user sends it.
 gui_related: true
 gui_classification_reason: "Defines what the user sets and sees when teaching Puppet Master a rule."
 split_recommended: false
 depends_on: [ACD-469, DL-127, DL-116, AMS-053]
 unblocks: [F3-570, F3-574, F3-579]
 acceptance_criteria:
+  - "Reopening retains the saved rule-check result, mixed results show one Missed-first line, and Ask for a fix only fills an empty composer until the user sends."
   - "Every entry point dispatches cmd.chat.teach.capture and opens the Teach sheet; nothing persists before cmd.chat.teach.confirm."
   - "No entry point renders an inline capture card in the chat."
   - "Confirm refuses user scope without public_safe and refuses text that looks like a secret, with the reason in words."
@@ -153,6 +160,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 8.11, 8.15"
   - "IMPACT-REGISTER B-ACD-02 (NOW part; the capture form and the locked field compiled 2026-09-27 from DL-127 and DL-130)"
   - "Plans/Decision_Log.md#DL-127"
@@ -160,6 +168,14 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
   - "Plans/assistant-memory-subsystem.md#AMS-053"
 preserved_exact_tokens:
+  - "composer_not_empty"
+  - "ComposerBufferResult"
+  - "taught_rule_check"
+  - "cmd.review.send_findings_to_agent"
+  - "Missed 1 of your rules · followed 2"
+  - "could_not_run"
+  - "failed"
+  - "passed"
   - "cmd.chat.teach.capture"
   - "cmd.chat.teach.confirm"
   - "public_safe"
@@ -589,8 +605,7 @@ canonical_text: >-
   cmd.chat.eli5.set with on, off or inherit; inherit deletes the override, so the chat follows the
   project default again. The app default is `general.interaction.eli5-default` (Explain Terms Everywhere), whose value Settings owns and registers as off. The project default is that same
   setting at project scope and applies to every chat in the project that has no override of its
-  own; adding the project scope is a Settings follow-up, out of scope for the wand-modules compile,
-  and this unit states only the resolution order. Each assistant reply resolves the style once, when it starts, and records the style it was written in, Standard or Simple; a retry the user
+  own. Settings owns and persists that project scope under DL-138 (SSYS-028). Each assistant reply resolves the style once, when it starts, and records the style it was written in, Standard or Simple; a retry the user
   asks for resolves the style again when the retry starts. Switching ELI5 changes only the replies
   that start after the switch. It never re-sends, regenerates or rewrites an earlier reply, and a
   reply still streaming at the moment of the switch finishes in the style it started with, so a switch never produces a second response. Each finished assistant reply may offer
@@ -643,11 +658,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.13 and its amendments G-21 and G-34, section 10.1 item f"
   - "IMPACT-REGISTER B-ACD-01 (card p08, E-11), C-21 (the guided tour), D-30 (retry re-resolves the style)"
   - "Plans/Decision_Log.md#DL-126 (Owner resolution, Jared, 2026-09-27, confirmed in chat)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5) answer record p08"
 preserved_exact_tokens:
+  - "DL-138"
   - "the chat override, otherwise the project default, otherwise the app default"
   - "general.interaction.chat-eli5"
   - "general.interaction.eli5-default"

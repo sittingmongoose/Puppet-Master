@@ -1,0 +1,67 @@
+{
+  "ledger_id": "pldg-20260927-004-wand-memory-plan-usage",
+  "cycle": 2,
+  "reviewed_base": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c",
+  "review_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger004-cycle2/findings.jsonl",
+  "review_source_sha256": "dce23c0af1be91e3ded5f10cba3f913f42847de169762be9fc94515adbc3744b",
+  "review_summary": {
+    "summary": true,
+    "units_reviewed": [
+      "BSD-022",
+      "BSD-031",
+      "BSD-032",
+      "BSD-033",
+      "BSD-035",
+      "BSD-037",
+      "CWR-004",
+      "CWR-018",
+      "CWR-021",
+      "CWR-024",
+      "CWR-028",
+      "CWR-029",
+      "CWR-030",
+      "CWR-031",
+      "CWR-032",
+      "CWR-033",
+      "CWR-038",
+      "CWR-040",
+      "DL-138",
+      "P-057",
+      "AMS-053",
+      "UF-104",
+      "UF-106"
+    ],
+    "verdict": "fix_then_land",
+    "n_findings": 2
+  },
+  "finding_count": 2,
+  "dispositions": [
+    {
+      "finding_id": "R-01",
+      "unit": "CWR-033",
+      "severity": "should_fix",
+      "state": "open_owner_question",
+      "disposition": "Recorded ledger001 q-035 already covers this unresolved owner conflict. Editable All chats remains the product requirement; no app-wide writer is admitted while it conflicts with existing Settings SSYS-002 project-only ordinary-value authority. The handoff permits open owner questions at the two-cycle cap.",
+      "question_ref": "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/records/questions.jsonl#q-035"
+    },
+    {
+      "finding_id": "R-02",
+      "unit": "UF-106",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Qualified the no-own-limit acceptance criterion by the run owner effective limit after hard-budget enforcement; general run limit applies only absent a tighter cap."
+    }
+  ],
+  "status": "closed_at_two_cycle_cap",
+  "validation_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/validation-final/results.json sha256:6a16de9aa510a2ace08d88dd13954f938d16a73e57db90c09655d7e3410b31f0",
+  "open_questions": [],
+  "external_open_questions": [
+    {
+      "ledger_id": "pldg-20260927-001-wand-collab-workflows",
+      "question_id": "q-035",
+      "owner": "Plans/Settings_System.md",
+      "scope": "All chats ELI5 edit only; project and chat scopes remain compiled"
+    }
+  ],
+  "claim_boundary": "Static compile and contract review only; no native runtime proof or governance seal."
+}

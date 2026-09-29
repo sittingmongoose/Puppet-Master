@@ -2,8 +2,8 @@
   "schema_id": "pm.assistant_chat.contract_fixtures.v1",
   "schema_version": "1.0.0",
   "owner_schema": "Plans/assistant_chat_contracts.schema.json",
-  "revision": "wand-modules-redesign-2026-09-27",
-  "scope": "Static contract-shape cases for the command request/result pairs Plans/Commands_System.md routes to Plans/assistant_chat_contracts.schema.json: cmd.chat.goal.open_editor, cmd.chat.composer.destination.set, cmd.chat.composer.destination.clear, cmd.chat.thread.regenerate_title (ACD-462, ACD-479), cmd.chat.eli5.set with on, off or inherit (UCC-175, ACD-484) and cmd.chat.eli5.explain_reply (UCC-174, CS-087, ACD-484; DL-126). Each invalid case changes one field of the named valid case and fails on the one constraint its expected_error names. A passing case proves a shape only: no handler, catalogue admission, storage, event or native dispatch, and not the runtime ELI5 behaviour ATS-065 checks.",
+  "revision": "wand-owner-answers-2026-09-29",
+  "scope": "Static contract-shape cases for the command request/result pairs Plans/Commands_System.md routes to Plans/assistant_chat_contracts.schema.json: cmd.chat.goal.open_editor, cmd.chat.composer.destination.set, cmd.chat.composer.destination.clear, cmd.chat.thread.regenerate_title (ACD-462, ACD-479), cmd.chat.eli5.set with on, off or inherit (UCC-175, ACD-484) and cmd.chat.eli5.explain_reply (UCC-174, CS-087, ACD-484; DL-126). Each invalid case changes one field of the named valid case and fails on the one constraint its expected_error names. A passing case proves a shape only: no handler, catalogue admission, storage, event or native dispatch, and not the runtime ELI5 behaviour ATS-065 checks. DL-138 adds the field-only ThreadCrewAutoOverride shape for existing metadata and rejects attempts to write project ELI5 scope through the chat override command. These fixtures do not prove reopen persistence.",
   "valid": [
     {
       "name": "goal_editor_route_from_goal_hover",
@@ -590,6 +590,32 @@
           "eli5_setting_changed": false
         }
       }
+    },
+    {
+      "name": "crew_auto_thread_on",
+      "definition": "ThreadCrewAutoOverride",
+      "value": {
+        "crew_auto_override": true
+      }
+    },
+    {
+      "name": "crew_auto_thread_off",
+      "definition": "ThreadCrewAutoOverride",
+      "value": {
+        "crew_auto_override": false
+      }
+    },
+    {
+      "name": "crew_auto_thread_null_inherits",
+      "definition": "ThreadCrewAutoOverride",
+      "value": {
+        "crew_auto_override": null
+      }
+    },
+    {
+      "name": "crew_auto_thread_absent_inherits",
+      "definition": "ThreadCrewAutoOverride",
+      "value": {}
     }
   ],
   "invalid": [
@@ -1052,6 +1078,51 @@
       "expected_error": "a refused request names no new reply",
       "patch": {
         "new_reply_message_id": "message:fixture:1:23"
+      }
+    },
+    {
+      "name": "crew_auto_override_string",
+      "definition": "ThreadCrewAutoOverride",
+      "base_valid": "crew_auto_thread_on",
+      "expected_error": "crew_auto_override is boolean or null, never a string",
+      "patch": {
+        "crew_auto_override": "on"
+      }
+    },
+    {
+      "name": "crew_auto_override_number",
+      "definition": "ThreadCrewAutoOverride",
+      "base_valid": "crew_auto_thread_on",
+      "expected_error": "crew_auto_override is boolean or null, never numeric truthiness",
+      "patch": {
+        "crew_auto_override": 1
+      }
+    },
+    {
+      "name": "crew_auto_override_new_record_envelope",
+      "definition": "ThreadCrewAutoOverride",
+      "base_valid": "crew_auto_thread_on",
+      "expected_error": "the field-only projection has no schema_id record envelope",
+      "patch": {
+        "schema_id": "pm.new_thread_record.v1"
+      }
+    },
+    {
+      "name": "eli5_project_scope_is_settings_only",
+      "definition": "ELI5ThreadOverrideRequest",
+      "base_valid": "eli5_on_from_sheet",
+      "expected_error": "the chat override request has no scope field for project Settings writes",
+      "patch": {
+        "scope": "project"
+      }
+    },
+    {
+      "name": "eli5_project_default_is_settings_only",
+      "definition": "ELI5ThreadOverrideRequest",
+      "base_valid": "eli5_on_from_sheet",
+      "expected_error": "project_default is not a chat override request field",
+      "patch": {
+        "project_default": true
       }
     }
   ]

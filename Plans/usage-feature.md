@@ -7120,12 +7120,13 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  A surface that offers to start a run may show a pre-start estimate. The estimate is one pure function of the run's definition, estimate(definition) → {duration_s: [lo, hi], cost_microdollars: [lo, hi], replies?, basis: {pricing_snapshot_id, latency_sample_ref}, source_class: pricing_estimated}, computed without any provider call before Start. cost_microdollars is priced from the pricing snapshot named in basis.pricing_snapshot_id and duration_s from the latency samples named in basis.latency_sample_ref; replies is present only for kinds that count replies. An estimate is never a UsageRecord: it is never persisted as usage, never aggregated, never settled and never counted against a quota or a limit. Every figure it produces is shown as a range with "about" and labelled as an estimate ("an estimate, not a promise"). When no pricing or latency basis exists the estimate carries no range, and the surface shows a sentence with no figure, never a number and never "$0.00".
+  A surface that offers to start a run may show a pre-start estimate. The estimate is one pure function of the run's definition, estimate(definition) → {duration_s?: [lo, hi], cost_microdollars?: [lo, hi], replies?, basis: {pricing_snapshot_id?, latency_sample_ref?}, source_class: pricing_estimated}, computed without any provider call before Start. cost_microdollars is priced from the pricing snapshot named in basis.pricing_snapshot_id and duration_s from the latency samples named in basis.latency_sample_ref; replies is present only for kinds that count replies. An estimate is never a UsageRecord: it is never persisted as usage, never aggregated, never settled and never counted against a quota or a limit. Every figure it produces is shown as a range with "about" and labelled as an estimate ("an estimate, not a promise"). Each figure is decided separately: with pricing but no latency basis, show only the cost range and say time depends on the work; with latency but no pricing basis, show only the duration range and say cost depends on the work. If neither basis exists, show Time and cost depend on the work without a figure, never a number or "$0.00" (DL-138).
 gui_related: true
 gui_classification_reason: The estimate line under a start control is user-visible, and its honesty rules bind every surface that shows it.
 depends_on: [UF-085, UF-090]
 unblocks: []
 acceptance_criteria:
+  - A known basis produces only its own figure; the unknown figure gets a depends-on-the-work sentence.
   - The estimate is computed with zero provider attempts and zero UsageRecords.
   - Its source_class is pricing_estimated and its basis names the pricing snapshot and the latency samples it used.
   - A shown estimate is a range with "about" and the words "an estimate, not a promise".
@@ -7140,10 +7141,11 @@ context_scope: usage_prestart_estimate
 implementation_surfaces: [Plans/usage-feature.md, Plans/Models_System.md, Plans/Collaborative_Workflows.md, Plans/usage_run_estimate_contracts.schema.json]
 node_compile_hint: {mode: usage_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138)"
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#6.4, #8.0, #9.1 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-USE-01 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
   - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
-preserved_exact_tokens: ["duration_s", "cost_microdollars", "pricing_snapshot_id", "latency_sample_ref", "pricing_estimated", "an estimate, not a promise", "$0.00"]
+preserved_exact_tokens: ["duration_s", "cost_microdollars", "pricing_snapshot_id", "latency_sample_ref", "pricing_estimated", "an estimate, not a promise", "$0.00", "time depends on the work", "cost depends on the work"]
 negative_constraints:
   - Do not persist, aggregate or settle an estimate as usage.
   - Do not call a provider to produce an estimate.
@@ -7199,14 +7201,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  A run's live cost (UF-105) is shown against the run's effective limit, which Usage reads from the run's limit contract (Plans/Collaborative_Workflows.md and executionLimits) and never resolves itself. By the owner's decision DL-131 (card p16, E-33), when a run's definition sets its own time or cost limit (DL-131 names a Crew's own limit, for example 45 minutes or $6), that limit overrides the general run limit rather than the tighter of the two winning. So a run whose own limit overrides the general one is never shown against the general limit, and a run with no limit of its own is shown against the general run limit. How a run that reaches its effective limit ends is the run owner's, not Usage's: per the lead's DL-131 follow-up it settles cancelled with a limit stop_reason and reads Stopped at your limit (Plans/Collaborative_Workflows.md, CWR-029), and its live cost stays the sum of its UsageRecords. Whether a run's own limit may exceed a hard ceiling such as a token or plan budget stays open in this compile's ledger and is not settled here.
+  A run's live cost (UF-105) is shown against the run's effective limit, which Usage reads from the run's limit contract (Plans/Collaborative_Workflows.md and executionLimits) and never resolves itself. By the owner's decision DL-131 (card p16, E-33), when a run's definition sets its own time or cost limit (DL-131 names a Crew's own limit, for example 45 minutes or $6), that limit overrides the general run limit rather than the tighter of the two winning. So a run whose own limit overrides the general one is never shown against the general limit, and a run with no limit of its own is shown against the general run limit. How a run that reaches its effective limit ends is the run owner's, not Usage's: per the lead's DL-131 follow-up it settles cancelled with a limit stop_reason and reads Stopped at your limit (Plans/Collaborative_Workflows.md, CWR-029), and its live cost stays the sum of its UsageRecords. A hard budget or ceiling, including the Plan budget, caps the effective run limit even when the run requested more; Usage displays the effective cap read from the run owner beside live cost and the requested amount remains visible in the sheet (DL-138).
 gui_related: true
 gui_classification_reason: The limit shown beside a run's live cost is user-visible.
 depends_on: [UF-105]
 unblocks: []
 acceptance_criteria:
-  - A run whose definition sets its own time or cost limit shows its live cost against that limit, even when the general run limit is tighter.
-  - A run without a limit of its own shows its live cost against the general run limit.
+  - The live figure is compared with the run owner's effective hard cap, not the uncapped requested amount.
+  - A run with its own time or cost limit shows live use against the run owner's effective cap after hard-budget enforcement, with its requested limit shown separately; it may exceed a softer general default only while remaining inside every hard cap.
+  - A run without a limit of its own shows its live cost against the run owner's effective limit after hard-budget enforcement; the general run limit applies only when no tighter hard cap applies.
   - Usage reads the effective limit from the run's limit contract and never computes the tighter of the two.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -7217,12 +7220,13 @@ context_scope: usage_collaboration_run_cost
 implementation_surfaces: [Plans/usage-feature.md, Plans/Collaborative_Workflows.md]
 node_compile_hint: {mode: usage_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138)"
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#9.1 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-USE-02 (WAIT part, card p16 E-33) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json (SHA-256 61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a)
   - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
   - Plans/Decision_Log.md#DL-131
-preserved_exact_tokens: ["effective limit", "general run limit", "executionLimits", "DL-131"]
+preserved_exact_tokens: ["effective limit", "general run limit", "executionLimits", "DL-131", "hard budget"]
 negative_constraints:
   - Do not show a run's cost against the general run limit when the run's own limit overrides it.
   - Do not let Usage choose between limits; it reads the run's effective limit.

@@ -1,35 +1,51 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-001-wand-collab-workflows",
-  "updated_at_utc": "2026-09-27T23:59:30+00:00",
-  "last_event_id": "evt-024",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "last_event_id": "evt-029",
   "canonical_plan_targets": [
+    "Plans/Automated_Testing_System.md",
     "Plans/Collaborative_Workflows.md",
     "Plans/Executor_Protocol.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Settings_System.md",
+    "Plans/assistant-chat-design.md"
   ],
   "compiled_owner_docs": [
+    "Plans/Automated_Testing_System.md",
     "Plans/Collaborative_Workflows.md",
     "Plans/Executor_Protocol.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Settings_System.md",
+    "Plans/assistant-chat-design.md"
   ],
   "compiled_plan_outputs": [
+    "Plans/Automated_Testing_System.md",
     "Plans/Collaborative_Workflows.md",
     "Plans/Executor_Protocol.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Settings_System.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/collaborative_workflows_contracts.schema.json",
+    "Plans/collaborative_workflows_contract_fixtures.json"
   ],
   "governance_status": "not_requested",
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/validation/blind_review_cycle2.json",
+  "latest_audit_status": "closed_at_two_cycle_cap",
   "validation_state": {
-    "ledger_health": "pass_prose_compiled",
+    "ledger_health": "pass_except_deferred_governance_coverage",
     "compile_witness": "pass",
-    "claim_boundary": "Owner prose plus the static contract companion (ATS-062, extended in the closure wave with live_message_id and CollaborationMessageInProgress, and after blind review cycle 1 with the CrewAutoSetRequest scope, the run's stop_reason and the crew_auto_receipt surface): schema and fixtures validated by pm-new-contracts-verify.py only. ATS-063 stays NOT_RUN until a runtime exists. No shard or index regeneration by this ledger's authors; no governance seal."
+    "contracts": "pass_static_only",
+    "shards_and_plan_index": "pass",
+    "wiring_and_touch_closure": "pass",
+    "blind_review": "closed_at_two_cycle_cap",
+    "assistant_contract_check": "normal_exit_1_errors_empty",
+    "settings_and_concept_companions": "Inventory valid; PM7 build check passed and tour 7/7.",
+    "claim_boundary": "Static compile checks and two blind reviews complete. Landing pending; governance not requested and native runtime not proven."
   },
   "planned_owner_docs": [
+    "Plans/Automated_Testing_System.md",
     "Plans/Collaborative_Workflows.md",
     "Plans/Executor_Protocol.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Settings_System.md",
+    "Plans/assistant-chat-design.md"
   ],
   "reserved_id_ranges": {
     "CWR": "CWR-018..CWR-039 (earlier waves); CWR-040..CWR-044 (closure wave, CWR-040 used)",
@@ -37,7 +53,7 @@
     "ATS (companion, B-CW-29)": "ATS-062 (used; the collaborative contract family registration, task 2)",
     "ATS (closure wave)": "ATS-063 (used)"
   },
-  "status": "prose_compiled_pending_review",
+  "status": "compiled_with_open_owner_questions",
   "items": [
     {
       "queue_id": "queue-001",
@@ -936,8 +952,230 @@
         "scripts/pm-new-contracts-verify.py"
       ],
       "compile_event_id": "evt-010"
+    },
+    {
+      "queue_id": "queue-047",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g001-dl138-grill"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-028"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-028"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-025"
+    },
+    {
+      "queue_id": "queue-048",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g001-dl138-parallel"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-018",
+        "CWR-021"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-018",
+        "CWR-021"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-025"
+    },
+    {
+      "queue_id": "queue-049",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g001-dl138-budget"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-029",
+        "CWR-032"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-029",
+        "CWR-032"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-025"
+    },
+    {
+      "queue_id": "queue-050",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g001-dl138-eli5"
+      ],
+      "target_doc": "Plans/Settings_System.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md",
+        "Plans/Settings_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-033",
+        "SSYS-028"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-033",
+        "SSYS-028"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-025"
+    },
+    {
+      "queue_id": "queue-051",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g001-dl138-defaults"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-004",
+        "CWR-021",
+        "CWR-038"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-004",
+        "CWR-021",
+        "CWR-038"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-025"
+    },
+    {
+      "queue_id": "queue-052",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g001-dl138-storage"
+      ],
+      "target_doc": "Plans/assistant-chat-design.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-038",
+        "SSYS-028",
+        "ACD-076"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-038",
+        "SSYS-028",
+        "ACD-076"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-025"
+    },
+    {
+      "queue_id": "queue-053",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g001-dl138-note"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-038"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-038"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-025"
+    },
+    {
+      "queue_id": "queue-054",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g001-dl138-coordinator"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-030",
+        "CWR-040",
+        "EP-129"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-030",
+        "CWR-040",
+        "EP-129"
+      ],
+      "companion_outputs": [
+        "Plans/collaborative_workflows_contract_fixtures.json",
+        "Plans/collaborative_workflows_contracts.schema.json"
+      ],
+      "compile_event_id": "evt-025"
+    },
+    {
+      "queue_id": "queue-055",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g001-dl138-rounds"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-024"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-024"
+      ],
+      "companion_outputs": [
+        "Plans/collaborative_workflows_contract_fixtures.json",
+        "Plans/collaborative_workflows_contracts.schema.json"
+      ],
+      "compile_event_id": "evt-025"
+    },
+    {
+      "queue_id": "queue-056",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g001-dl138-fixvariant"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "target_plan_unit_ids": [
+        "CWR-031"
+      ],
+      "compiled_plan_unit_ids": [
+        "CWR-031"
+      ],
+      "companion_outputs": [
+        "Plans/collaborative_workflows_contract_fixtures.json",
+        "Plans/collaborative_workflows_contracts.schema.json"
+      ],
+      "compile_event_id": "evt-025"
     }
   ],
-  "notes": "One item per register line or answered WAIT part; each compiles only the part named in the canon plan or settled by its Decision_Log entry.",
-  "terminal_ledger_event_id": null
+  "notes": "Historical and DL-138 queue items preserved. Prose and companion work complete; blind review closed at two cycles. Open owner questions are recorded separately.",
+  "terminal_ledger_event_id": "evt-029",
+  "latest_audit_sha256": "b1739fbdb82266f4c1b05cde26b3e66d01c1edb71fdd4f71a19f605d00f72fb1"
 }

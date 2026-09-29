@@ -1,0 +1,44 @@
+{
+  "ledger_id": "pldg-20260927-005-wand-chat-gui-contract",
+  "cycle": 2,
+  "reviewed_base": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c",
+  "review_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger005-cycle2/findings.jsonl",
+  "review_source_sha256": "e8426d95dc52327e226b3a9bb032a8b47ab3cc3912d9c0e30ddfc9cec83c670c",
+  "review_summary": {
+    "summary": true,
+    "units_reviewed": [
+      "APR-011",
+      "APR-014",
+      "DL-138",
+      "F3-077",
+      "F3-430",
+      "F3-566",
+      "F3-569",
+      "F3-571",
+      "F3-579",
+      "F3-581",
+      "SSYS-028",
+      "ACD-076",
+      "ACD-469",
+      "ACD-475",
+      "ACD-477",
+      "ACD-484"
+    ],
+    "verdict": "land",
+    "n_findings": 0
+  },
+  "finding_count": 0,
+  "dispositions": [],
+  "status": "closed_at_two_cycle_cap",
+  "validation_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/validation-final/results.json sha256:6a16de9aa510a2ace08d88dd13954f938d16a73e57db90c09655d7e3410b31f0",
+  "open_questions": [],
+  "external_open_questions": [
+    {
+      "ledger_id": "pldg-20260927-001-wand-collab-workflows",
+      "question_id": "q-035",
+      "owner": "Plans/Settings_System.md",
+      "scope": "All chats ELI5 edit only; project and chat scopes remain compiled"
+    }
+  ],
+  "claim_boundary": "Static compile and contract review only; no native runtime proof or governance seal."
+}

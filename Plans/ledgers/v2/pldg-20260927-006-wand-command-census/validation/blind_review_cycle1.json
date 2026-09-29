@@ -1,0 +1,32 @@
+{
+  "ledger_id": "pldg-20260927-006-wand-command-census",
+  "cycle": 1,
+  "review_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger006-cycle1/findings.jsonl",
+  "review_source_sha256": "ca72be4528c484384357eaa3bb35f27e74bc16d59065e4a36a5985307f72a065",
+  "reviewed_base": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c",
+  "finding_count": 3,
+  "dispositions": [
+    {
+      "finding_id": "R-01",
+      "unit": "UCC-173",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Updated active command label cells and retained older words as historical references."
+    },
+    {
+      "finding_id": "R-02",
+      "unit": "UCC-172",
+      "severity": "blocking",
+      "state": "repaired",
+      "disposition": "Added source_variant_eligible predicate and message_chrome restricted to taught_rule_check."
+    },
+    {
+      "finding_id": "R-03",
+      "unit": "UCC-172",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Updated active row to ComposerBufferResult and marked old result type historical."
+    }
+  ],
+  "status": "repairs_pending_recheck"
+}

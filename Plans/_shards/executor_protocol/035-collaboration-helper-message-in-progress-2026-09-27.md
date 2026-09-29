@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L8759-L8960
+Source lines: L8759-L8965
 
-Source SHA256: `787f7804781dddd254951a65815686c0e1aa003be34f47f74ab45d29dc0e3a12`
+Source SHA256: `7a1eafa8989ffd2cab6c9a85bb29f93b001a791de71b6eaa6f0986a301fdf601`
 
 ---
 
@@ -33,13 +33,16 @@ canonical_text: >-
   (Plans/Collaborative_Workflows.md CWR-040), never under another participant. Only the user sees
   it: no other participant, the coordinator included, receives or reads a message in progress, and
   participants receive the message only once it is written (EP-130). Several writers may stream at
-  once, each in its own lane.
-gui_related: false
-gui_classification_reason: "Defines the runtime binding of a helper message in progress that the collaboration lanes present."
+  once, each in its own lane. A coordinator who is not a participant receives its own derived
+  activity row from CWR-030, keyed by coordinator_run_ref, so its lane has state, verb and
+  live_message_id without borrowing a participant row (DL-138).
+gui_related: true
+gui_classification_reason: The runtime binding also governs visible coordinator and participant lanes, including their state, verb and message in progress.
 split_recommended: false
 depends_on: [EP-128]
 unblocks: [EP-130, EP-131, CWR-040]
 acceptance_criteria:
+  - A nonparticipant coordinator stream binds to its own activity row and lane.
   - "Every message in progress names its run, its sender_kind (participant or coordinator), its sender, and, for a participant, its slot and attempt."
   - "Every message in progress carries the collaboration_message_id allocated when its turn starts streaming."
   - "No participant or coordinator receives another writer's message in progress."
@@ -58,10 +61,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138)"
   - "Plans/Decision_Log.md#DL-137"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json sha256:33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5 p14"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-22"
 preserved_exact_tokens:
+  - "coordinator_run_ref"
   - "message in progress"
   - "collaboration_message_id"
   - "sender_kind"

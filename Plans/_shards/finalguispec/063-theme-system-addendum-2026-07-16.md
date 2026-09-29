@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29571-L30579
+Source lines: L29576-L30608
 
-Source SHA256: `28175e393a15cdbe7fbc591613fedf387026ac3ee8759b7dd3494cd06b077aa4`
+Source SHA256: `6eca938c359dfbe2c43525c0b5b4b39fd2475c03c73d25586cc511548f8b8d2c`
 
 ---
 
@@ -345,58 +345,82 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Friendly family ships Cal Sans display, Quicksand body, and Nunito fallback fonts
-  bundled locally with the application; no runtime font CDN is used. The Friendly ground is a
+  The theme families ship Inter for Basic and Glass, Poppins for Friendly with Nunito fallback,
+  and IBM Plex Mono for Retro only, bundled locally with the application; no runtime font CDN is used
+  (DL-138). The Friendly ground is a
   warm paper texture with an 18px dot grid and static pastel corner glows. Frosted chrome
   backdrop blur of 14px is limited to the title bar, status bar, and bottom panel. Five
   category pastels (mint, sky, coral, lavender, butter) tint category surfaces through the
   cozy hook tokens. The theme-switching restart rules extend to cross-family switches
   involving Friendly or Retro fonts: same-family switches stay live; cross-family switches
-  that change font families between Retro (Orbitron, Rajdhani) and Friendly (Cal Sans,
-  Quicksand, Nunito) require restart; and switches between the system-font Glass and Basic
+  that change font families between Retro (IBM Plex Mono) and Friendly (Poppins, Nunito) require restart; and switches between the Inter Glass and Basic
   families stay live.
+  NieR Mode overrides body and display with PM NieR Sans, the M PLUS 1 variable face at weights
+  100-900 in mplus1-latin-var.woff2, a free stand-in for the commercial Fontworks FOT-Rodin, and mono
+  with PM NieR Mono, the JetBrains Mono variable face at weights 100-800 in jetbrains-mono-latin-var.woff2.
+  Both are bundled under SIL OFL with their licences; the regular theme faces and Nunito fallback are
+  bundled too. The source font declarations are Concepts/onboarding/opus-5.5/src/settings/styles.d/13-nier.css
+  and its nier/fonts/OFL-*.txt licences. While on, NieR Mode owns general.visual.accent-color and
+  general.visual.app-font (F3-441); turning it off restores the chosen theme. It is an overlay, not a ninth theme.
 gui_related: true
 gui_classification_reason: This unit defines the visible Friendly theme fonts, ground texture, frosted chrome, pastels, and switch behavior.
 split_recommended: false
 depends_on: [F3-425, F3-077]
 unblocks: []
 acceptance_criteria:
-- "Cal Sans, Quicksand, and Nunito are bundled locally and no runtime font CDN request is made."
-- "The Friendly ground renders the paper texture with an 18px dot grid, and frosted 14px chrome blur is limited to the title bar, status bar, and bottom panel."
-- "The five category pastels (mint, sky, coral, lavender, butter) drive category surface tinting."
-- "Cross-family theme switches that change Retro or Friendly font families require restart, while same-family and Glass/Basic system-font switches stay live."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "Basic and Glass render Inter, Friendly Poppins with Nunito fallback, Retro IBM Plex Mono; NieR Mode renders its bundled PM NieR Sans and PM NieR Mono faces without a font network request."
+  - "Inter, Poppins, Nunito and IBM Plex Mono are bundled locally and no runtime font CDN request is made."
+  - "The Friendly ground renders the paper texture with an 18px dot grid, and frosted 14px chrome blur is limited to the title bar, status bar, and bottom panel."
+  - "The five category pastels (mint, sky, coral, lavender, butter) drive category surface tinting."
+  - "Cross-family theme switches that change Retro or Friendly font families require restart, while same-family and Glass/Basic Inter switches stay live."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+  - "Plans/FinalGUISpec.md"
 node_compile_hint:
   mode: friendly_family_ingredients_and_font_rules
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:964"
-- "Plans/FinalGUISpec.md:7647"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
+  - "Plans/FinalGUISpec.md:964"
+  - "Plans/FinalGUISpec.md:7647"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
-- "Cal Sans"
-- "Quicksand"
-- "Nunito"
-- "18px"
-- "14px"
+  - "100-900"
+  - "100-800"
+  - "Fontworks FOT-Rodin"
+  - "SIL OFL"
+  - "general.visual.app-font"
+  - "general.visual.accent-color"
+  - "jetbrains-mono-latin-var.woff2"
+  - "mplus1-latin-var.woff2"
+  - "JetBrains Mono"
+  - "M PLUS 1"
+  - "PM NieR Mono"
+  - "PM NieR Sans"
+  - "IBM Plex Mono"
+  - "Poppins"
+  - "Inter"
+  - "Cal Sans"
+  - "Quicksand"
+  - "Nunito"
+  - "18px"
+  - "14px"
 negative_constraints:
-- "Do not load Friendly fonts from a runtime font CDN, and do not apply frosted chrome blur outside the title bar, status bar, and bottom panel."
+  - "Do not load Friendly fonts from a runtime font CDN, and do not apply frosted chrome blur outside the title bar, status bar, and bottom panel."
 compatibility_only_notes:
-- "Slint portability: bundled font files register with the Slint font database; the paper texture, dot grid, and corner glows render as precomputed opaque or baked surfaces; the three chrome frosts render over known shell content; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+  - "Slint portability: bundled font files register with the Slint font database; the paper texture, dot grid, and corner glows render as precomputed opaque or baked surfaces; the three chrome frosts render over known shell content; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
-- "The concept loads Cal Sans, Quicksand, and Nunito from a runtime font CDN; that loading path is demo technique only and is replaced by locally bundled fonts."
+  - "DL-138 retires Cal Sans, Quicksand, Orbitron and Rajdhani as current theme faces; those names remain source lineage only. Runtime font CDN loading remains forbidden."
 owner_boundary_notes:
-- "The live/restart switching matrix remains owned by F3-077; this unit extends its restart set to cross-family Friendly/Retro font changes."
+  - "The live/restart switching matrix remains owned by F3-077; this unit extends its restart set to cross-family Friendly/Retro font changes."
 owner_hints:
-- "Plans/FinalGUISpec.md"
+  - "Plans/FinalGUISpec.md"
 ```
 
 ### F3-431 - Slint Theme Hazard Remediation
@@ -498,8 +522,8 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | `--ease-snap` | `cubic-bezier(.2,0,0,1)` |
 | `--ease-default` | `var(--ease-smooth)` |
 | `--sheen-dur` | `.6s` |
-| `--display-font` | `'Orbitron', sans-serif` |
-| `--body-font` | `'Rajdhani', sans-serif` |
+| `--display-font` | `'IBM Plex Mono', monospace` |
+| `--body-font` | `'IBM Plex Mono', monospace` |
 | `--mono-font` | `ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace` |
 | `--base-font-size` | `14px` |
 | `--line-height` | `1.4` |
@@ -552,9 +576,9 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Motion | `--ease-default` | `var(--ease-snap)` (resolves to `cubic-bezier(.2,0,0,1)`) |
 | Motion | `--motion-med` | `140ms` |
 | Motion | `--sheen-dur` | `.35s` |
-| Typography | `--display-font` | `'Orbitron', sans-serif` |
-| Typography | `--display-font-sm` | `'Rajdhani', sans-serif` |
-| Typography | `--body-font` | `'Rajdhani', sans-serif` |
+| Typography | `--display-font` | `'IBM Plex Mono', monospace` |
+| Typography | `--display-font-sm` | `'IBM Plex Mono', monospace` |
+| Typography | `--body-font` | `'IBM Plex Mono', monospace` |
 | Typography | `--base-font-size` | `15px` |
 | Typography | `--line-height` | `1.55` |
 | Typography | `--letter-spacing` | not defined (inherits root: `normal`) |
@@ -605,9 +629,9 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Motion | `--ease-default` | `var(--ease-snap)` (resolves to `cubic-bezier(.2,0,0,1)`) |
 | Motion | `--motion-med` | `140ms` |
 | Motion | `--sheen-dur` | `.35s` |
-| Typography | `--display-font` | `'Orbitron', sans-serif` |
-| Typography | `--display-font-sm` | `'Rajdhani', sans-serif` |
-| Typography | `--body-font` | `'Rajdhani', sans-serif` |
+| Typography | `--display-font` | `'IBM Plex Mono', monospace` |
+| Typography | `--display-font-sm` | `'IBM Plex Mono', monospace` |
+| Typography | `--body-font` | `'IBM Plex Mono', monospace` |
 | Typography | `--base-font-size` | `15px` |
 | Typography | `--line-height` | `1.55` |
 | Typography | `--letter-spacing` | not defined (inherits root: `normal`) |
@@ -856,8 +880,8 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Motion | `--ease-default` | `var(--ease-spring)` (resolves to `cubic-bezier(.34,1.56,.64,1)`) |
 | Motion | `--motion-med` | `260ms` |
 | Motion | `--sheen-dur` | `.55s` |
-| Typography | `--display-font` | `'Cal Sans', 'Nunito', system-ui, sans-serif` |
-| Typography | `--body-font` | `'Quicksand', 'Nunito', system-ui, sans-serif` |
+| Typography | `--display-font` | `'Poppins', 'Nunito', system-ui, sans-serif` |
+| Typography | `--body-font` | `'Poppins', 'Nunito', system-ui, sans-serif` |
 | Typography | `--base-font-size` | `14.5px` |
 | Typography | `--line-height` | `1.55` |
 | Typography | `--letter-spacing` | `normal` |
@@ -906,8 +930,8 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Motion | `--ease-default` | `var(--ease-spring)` (resolves to `cubic-bezier(.34,1.56,.64,1)`) |
 | Motion | `--motion-med` | `260ms` |
 | Motion | `--sheen-dur` | `.55s` |
-| Typography | `--display-font` | `'Cal Sans', 'Nunito', system-ui, sans-serif` |
-| Typography | `--body-font` | `'Quicksand', 'Nunito', system-ui, sans-serif` |
+| Typography | `--display-font` | `'Poppins', 'Nunito', system-ui, sans-serif` |
+| Typography | `--body-font` | `'Poppins', 'Nunito', system-ui, sans-serif` |
 | Typography | `--base-font-size` | `14.5px` |
 | Typography | `--line-height` | `1.55` |
 | Typography | `--letter-spacing` | `normal` |

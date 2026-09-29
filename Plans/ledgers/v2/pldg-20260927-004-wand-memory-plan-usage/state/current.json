@@ -1,16 +1,20 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-004-wand-memory-plan-usage",
-  "updated_at_utc": "2026-09-27T23:40:00+00:00",
-  "last_event_id": "evt-008",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "last_event_id": "evt-012",
   "canonical_plan_targets": [
     "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Back_Seat_Driver.md",
+    "Plans/Collaborative_Workflows.md",
     "Plans/Personas.md",
     "Plans/assistant-memory-subsystem.md",
     "Plans/usage-feature.md"
   ],
   "compiled_owner_docs": [
     "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Back_Seat_Driver.md",
+    "Plans/Collaborative_Workflows.md",
     "Plans/Models_System.md",
     "Plans/Personas.md",
     "Plans/assistant-memory-subsystem.md",
@@ -18,6 +22,8 @@
   ],
   "compiled_plan_outputs": [
     "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Back_Seat_Driver.md",
+    "Plans/Collaborative_Workflows.md",
     "Plans/Models_System.md",
     "Plans/Personas.md",
     "Plans/assistant-memory-subsystem.md",
@@ -29,18 +35,27 @@
     "scripts/pm-new-contracts-verify.py"
   ],
   "governance_status": "not_requested",
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage/validation/blind_review_cycle2.json",
+  "latest_audit_status": "closed_at_two_cycle_cap",
   "validation_state": {
-    "ledger_health": "pass",
-    "compile_witness": "pass"
+    "ledger_health": "pass_except_deferred_governance_coverage",
+    "compile_witness": "pass",
+    "contracts": "pass_static_only",
+    "shards_and_plan_index": "pass",
+    "wiring_and_touch_closure": "pass",
+    "blind_review": "closed_at_two_cycle_cap",
+    "assistant_contract_check": "normal_exit_1_errors_empty",
+    "settings_and_concept_companions": "Inventory valid; PM7 build check passed and tour 7/7.",
+    "claim_boundary": "Static compile checks and two blind reviews complete. Landing pending; governance not requested and native runtime not proven."
   },
   "planned_owner_docs": [
-    "Plans/assistant-memory-subsystem.md",
     "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Back_Seat_Driver.md",
+    "Plans/Collaborative_Workflows.md",
+    "Plans/Models_System.md",
     "Plans/Personas.md",
-    "Plans/usage-feature.md",
-    "Plans/Models_System.md"
+    "Plans/assistant-memory-subsystem.md",
+    "Plans/usage-feature.md"
   ],
   "reserved_id_ranges": {
     "AMS": "AMS-047..AMS-056",
@@ -49,12 +64,12 @@
     "UF": "UF-104..UF-110",
     "MS": "MS-140..MS-143"
   },
-  "phase": "prose_and_companions_compiled",
-  "accepted_decisions_count": 10,
-  "design_atoms_total": 13,
+  "phase": "compiled_with_open_owner_questions",
+  "accepted_decisions_count": 15,
+  "design_atoms_total": 18,
   "ready_for_plan_compile_atoms": 0,
   "candidate_atoms_count": 0,
-  "open_questions_count": 5,
+  "open_questions_count": 0,
   "deferred_questions_count": 0,
   "open_blockers_count": 0,
   "compiled_plan_unit_ids": [
@@ -62,22 +77,33 @@
     "AMS-018",
     "AMS-047",
     "AMS-048",
-    "APR-071",
-    "UF-104",
-    "UF-105",
     "AMS-049",
     "AMS-050",
     "AMS-051",
     "AMS-052",
-    "P-057",
+    "AMS-053",
+    "APR-071",
+    "BSD-022",
+    "CWR-031",
     "P-048",
+    "P-057",
     "P-058",
-    "UF-106",
-    "AMS-053"
+    "UF-104",
+    "UF-105",
+    "UF-106"
   ],
   "cursor": {
-    "last_event_id": "evt-008",
-    "next_action": "Integrator: regenerate shards and index once for all groups, run blind review cycle 2 if wanted (cap two), then land. Open, none blocking: q-006 (hard ceiling only, DL-131), q-007 (AMS-053 companion outcome field and fix command), q-008 (Back_Seat_Driver.md spelling, that owner), q-009 (mixed Followed and Missed display), q-014 (UF-104 per-figure basis)."
+    "last_event_id": "evt-012",
+    "next_action": "Land this reviewed compile; retain open owner questions and request the designated Plans agent reseal separately."
   },
-  "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md."
+  "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md.",
+  "latest_audit_sha256": "2093c60d2757be598a0bf683fce4b428137cd9054f83320e51883f94974700f9",
+  "external_open_questions": [
+    {
+      "ledger_id": "pldg-20260927-001-wand-collab-workflows",
+      "question_id": "q-035",
+      "owner": "Plans/Settings_System.md",
+      "scope": "All chats ELI5 edit only; project and chat scopes remain compiled"
+    }
+  ]
 }

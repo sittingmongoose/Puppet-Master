@@ -438,10 +438,10 @@ ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Co
 
 ### Execution windows
 
-`ExecutionSchedule` covers both one-time and recurring windows:
+`ExecutionSchedule` covers both one-time and recurring windows. A Build At commit persists the grace the user chose as `grace_seconds` in the versioned `pm.execution.schedule.v2` successor (DL-138); a v1 schedule read during migration receives the previously effective default grace without changing its original audit record. The custody schema, resource digest and storage registry must advance together before v2 writes are admitted:
 
 ```yaml
-schema_id: pm.execution.schedule.v1
+schema_id: pm.execution.schedule.v2
 fields:
   schedule_id: string
   project_id: string
@@ -456,6 +456,7 @@ fields:
   days_of_week: [integer]
   wind_down_seconds: integer
   missed_policy: hold|next_available|cancel_after_grace
+  grace_seconds: integer|null
   auto_resume_next_window: boolean
   state: active|paused|cancelled|completed|invalidated
   revision: integer
@@ -468,7 +469,7 @@ A window has a start time, an optional pause time, a wind-down duration, days of
 
 **DST policy** defaults to `preserve_local_wall_clock`: a window declared for 22:00 local opens at 22:00 local on both sides of a transition. A spring-forward gap that removes the declared local time resolves to the first valid instant after the gap; a fall-back repetition that duplicates the declared local time fires once, on the first occurrence, and the idempotency key prevents the second. Timezone is stored as an IANA name, never as a fixed offset, so a rule change is picked up rather than baked in.
 
-The GUI summarizes the effective schedule in plain language, including the timezone and the next occurrence in the user's local time, and shows the DST resolution when one applies. It never displays a confident next-occurrence time it cannot compute.
+The GUI summarizes the effective schedule in plain language, including the timezone and the next occurrence in the user's local time, and shows the DST resolution when one applies. It never displays a confident next-occurrence time it cannot compute. The stored `grace_seconds` is the exact value the Build At sheet read back, including after restart; the default applies only when the user did not choose one.
 
 ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/Executor_Protocol.md
 
@@ -1083,7 +1084,7 @@ and `Expired` are one-line receipts that begin with their state word; a `Sent` r
 when it was scheduled, links to the dispatched message and does not repeat the text, and the dispatched user
 message carries a "Sent on schedule" mark linked to its schedule. The state always reads as a glyph and the word,
 never as a status badge. Under ACD-469's family map the `Scheduled` and `Held` forms present in the Time family
-and the four receipts as Ledger lines. Within the Time family the card's internals are owned here: the time
+and the four receipts as Ledger lines. Within the Time family the card's internals are owned here (DL-138): the time
 shown is the schedule's own local time, and the card carries no separate ticket or stub, so ACD-469's "ticket
 with a time block" does not describe the scheduled-message card's internals.
 
@@ -1108,7 +1109,8 @@ canonical_text: >-
   policy. Sent, Canceled, Failed and Expired are one-line receipts that begin with their state word; a Sent
   receipt links to the dispatched message without repeating the text. States read as a glyph and the word,
   never a badge. Under ACD-469's family map Scheduled and Held present in the Time family and the receipts as
-  Ledger lines; the card's internals are owned here and carry no ticket or stub. Scheduling contributes to the
+  Ledger lines; the card's internals are owned here and carry no ticket or stub. ACD-469's Time-family
+  ticket phrase does not describe those internals (DL-138). Scheduling contributes to the
   shared dock only one needs-you line while a message in the thread is Held and one lowest-priority Coming up
   line with the next send time, a preview and +N more; Show only reveals the card, and no second strip, quota
   strip or checkbox is added.
@@ -1120,6 +1122,7 @@ acceptance_criteria:
   - "Each of the six owner states renders in its form, and every form's visible sentence begins with its state word."
   - "A message missed under the hold policy renders as Held with its missed reason, never as a seventh state."
   - "No form renders the state as a badge, and a Sent receipt does not repeat the message text."
+  - "The scheduled-message card uses its own-zone time and no separate ticket or stub inside the Time family."
   - "The dock carries at most one needs-you line and one Coming up line from scheduling, and Show dispatches no command."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -1138,6 +1141,7 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.7 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-01, B-SQR-02 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+  - "Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 6"
 preserved_exact_tokens:
   - "Scheduled"
   - "Held"
@@ -1148,6 +1152,7 @@ preserved_exact_tokens:
   - "future bubble"
   - "decision bubble"
   - "Coming up"
+  - "ticket"
 negative_constraints:
   - Do not render a scheduled-message state as a badge or without its state word.
   - Do not add a seventh visible state for a missed message.
@@ -1176,7 +1181,8 @@ never pairs it with `cmd.execution_window.create`. A Crew chosen in the sheet is
 topology (PSCHED-001..003). Use V<n> on an invalidated schedule is `cmd.chat.plan.schedule_build` against the new
 version's exact hash, an explicit reschedule that leaves the invalidated schedule as its audit record. Cancel
 schedule is `cmd.execution_window.cancel` by the returned `schedule_id`, and editing a build schedule is
-`cmd.execution_window.update`. The source surfaces are `schedule_sheet`, `plan_schedule`,
+`cmd.execution_window.update`. Cancel schedule on the Plan card is an admitted `plan_card` producer of
+`cmd.execution_window.cancel` (DL-138). The source surfaces are `schedule_sheet`, `plan_schedule`,
 `scheduled_message_card`, `schedule_manager` and `plan_card`, registered in the command catalog; the wand row and
 the Plan card's `Build At…` only open their sheets.
 
@@ -1196,7 +1202,8 @@ canonical_text: >-
   atomically and never paired with cmd.execution_window.create; Use V<n> is schedule_build against the new
   version's exact hash as an explicit reschedule; Cancel schedule is cmd.execution_window.cancel by the returned
   schedule_id; editing a build is cmd.execution_window.update. Source surfaces are schedule_sheet, plan_schedule,
-  scheduled_message_card, schedule_manager and plan_card.
+  scheduled_message_card, schedule_manager and plan_card; the Plan card's Cancel schedule is an admitted
+  plan_card producer of cmd.execution_window.cancel (DL-138).
 gui_related: true
 gui_classification_reason: Binds every scheduling button on the sheet, card, manager and Plan card to its command.
 depends_on: [SQR-002, SQR-003, SQR-010, SQR-012]
@@ -1206,6 +1213,7 @@ acceptance_criteria:
   - "Send now dispatches cmd.chat.schedule_message.update with reschedule_to now, and no new command id exists for it."
   - "One Build At commit dispatches exactly one command and leaves either a complete schedule or none."
   - "Use V<n> never rebinds silently: it is a user-dispatched schedule_build against the new exact hash, and the old schedule stays invalidated."
+  - "Cancel schedule on the Plan card dispatches cmd.execution_window.cancel from plan_card."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -1223,12 +1231,14 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.15 and #8.7 G-21 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-03 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+  - "Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 8"
 preserved_exact_tokens:
   - "schedule_text_not_empty"
   - "reschedule_to"
   - "AssistantPlanScheduleRequest"
   - "cmd.chat.schedule_message.update"
   - "cmd.execution_window.cancel"
+  - "plan_card"
   - "scheduled_message_card"
   - "schedule_manager"
 negative_constraints:
@@ -1345,7 +1355,7 @@ canonical_text: >-
   The Build At sheet binds the exact Plan version it names and commits through SQR-013, offering schedule_kind,
   days, start and stop, Keep going next time, Wrap-up time, timezone, execution_topology and the missed policy.
   A value the sheet shows is the value it records; under cancel_after_grace the shown minutes are recorded as
-  grace_seconds. The read-back and DST line are computed from the real start, stop and wind-down; Plan id,
+  grace_seconds in pm.execution.schedule.v2 and survive reload (DL-138). The read-back and DST line are computed from the real start, stop and wind-down; Plan id,
   version and hash sit in Technical details. The Plan card schedule line is secondary information whose placement
   is Assistant Plan Runtime's and whose content is this owner's: cadence, slot, next occurrence and a night
   ribbon before a run, Building now with the wrap-up time during a slot, and otherwise a lead canon token of
@@ -1358,6 +1368,7 @@ depends_on: [SQR-003, SQR-004, SQR-005, SQR-013]
 unblocks: [SQR-016, SQR-018]
 acceptance_criteria:
   - "Every value shown on the Build At sheet, including the grace minutes, equals the value recorded on the schedule."
+  - "The chosen grace_seconds survives restart in pm.execution.schedule.v2; a v1 read uses the previously effective default."
   - "Each secondary state of the schedule line begins with Outside execution window, Paused, Waiting for Usage or Schedule needs update."
   - "The Build control keeps Building… while the schedule line shows any secondary state."
   - "An unknown reset renders no countdown on the schedule line."
@@ -1378,11 +1389,13 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.8 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-06 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+  - "Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 7"
 preserved_exact_tokens:
   - "Outside execution window"
   - "Waiting for Usage"
   - "Paused"
   - "Schedule needs update"
+  - "pm.execution.schedule.v2"
   - "Building…"
   - "grace_seconds"
 negative_constraints:
@@ -1401,7 +1414,22 @@ occurrence closes (paused at wind-down, completed, cancelled or held) and keyed 
 start, so a replay or restart returns the same summary. It is a projection: rebuilt from this owner's schedule
 and dispatch records and from the run's step progress and pause facts as its owner reports them. It records the
 occurrence's real bounds, the steps built of the total, how the occurrence ended, and the outcomes of scheduled
-messages in the same thread during it.
+messages in the same thread during it. The `ExecutionOccurrenceSummary` projection contract is keyed by
+`schedule_id` and `occurrence_start` and requires `actual_start`, `actual_end`, `steps_built`, `steps_total`,
+`end_reason`, `execution_started`, and `scheduled_message_outcomes` with exact message identities and outcomes
+(DL-138). `execution_started` states whether any build work started in this occurrence. When true, it joins
+saved schedule and dispatch records to the exact `plan_run_id`, approved Plan version/hash, and durable work,
+To-Do mapping and adherence facts used by `AssistantPlanProgressProjector` (APR-011). `steps_built` counts
+distinct approved `plan_step_id` values completed in the occurrence, never skipped steps or raw To-Do count;
+`steps_total` is the bound Plan total. Real bounds and close reason come from dispatch and safe-pause or terminal
+facts. When a closed occurrence was held before any build work started, the summary instead uses retained
+Scheduling eligibility/hold and closure facts for that exact occurrence and the bound approved Plan. It records
+`execution_started: false`, `end_reason: held`, `steps_built: 0`, and explicit null `actual_start` and `actual_end`;
+`plan_run_id` is null if no PlanRun was admitted, or identifies the already-existing run if this was a held
+continuation window. `steps_total` still comes from the bound Plan and same-thread message outcomes still come
+from Scheduling records. No run is created for the summary and no execution timestamps are invented. An explicit
+not-started fact is distinct from missing history: without the retained hold/closure facts, or without required
+run facts for an occurrence that did start, the summary remains unavailable rather than guessing.
 
 Three surfaces read it and none writes it. The overnight receipt is one Ledger-family receipt in the Plan's
 thread per occurrence ("Overnight: built 2 of 5 steps (10:00 PM–1:52 AM, paused safely) · sent 1 scheduled
@@ -1421,7 +1449,16 @@ canonical_text: >-
   occurrence closes and keyed by schedule_id and occurrence start so replay returns the same summary. It is a
   projection rebuilt from schedule and dispatch records and the run owner's reported step progress and pause
   facts, recording real bounds, steps built of total, how the occurrence ended, and same-thread scheduled message
-  outcomes. The overnight receipt is one Ledger-family receipt per occurrence in the Plan's thread whose Open
+  outcomes. ExecutionOccurrenceSummary requires schedule_id, occurrence_start, actual_start, actual_end,
+  steps_built, steps_total, end_reason, execution_started and scheduled_message_outcomes with exact identities
+  (DL-138). When execution_started is true, it joins the exact plan_run_id and approved Plan version/hash to
+  durable work, To-Do and adherence facts used by AssistantPlanProgressProjector (APR-011); steps_built counts
+  distinct approved plan_step_id completions in that occurrence. A closed occurrence held before any build work
+  starts uses retained Scheduling eligibility/hold and closure facts for that occurrence and the bound Plan:
+  execution_started is false, end_reason is held, steps_built is 0, and actual_start and actual_end are null.
+  plan_run_id is null when no run was admitted, or names the existing run for a held continuation window.
+  steps_total is always the bound Plan total. The summary creates no run and invents no execution bounds;
+  missing historical facts remain unavailable, distinct from a recorded not-started outcome. The overnight receipt is one Ledger-family receipt per occurrence in the Plan's thread whose Open
   focuses the Schedule Manager record; it is not a Plan status, never changes the Build control, and is not a
   needs-you item. The night journal lists the summaries in the build's manager row. The since you were last here
   digest queries the same records after an instant the consuming surface supplies; this owner stores no per-user
@@ -1432,6 +1469,9 @@ depends_on: [SQR-004, SQR-006, SQR-007, SQR-015]
 unblocks: []
 acceptance_criteria:
   - "One occurrence produces exactly one summary and at most one overnight receipt, across replay and restart."
+  - "A closed occurrence held before execution has execution_started false, end_reason held, zero built steps and null execution bounds; no admitted run means a null plan_run_id."
+  - "ExecutionOccurrenceSummary fails closed when required Scheduling hold/closure facts or started-run step, pause or close facts are unavailable."
+  - "steps_built excludes skipped steps and raw To-Do counts; steps_total comes from the bound approved Plan."
   - "The overnight receipt, the night journal and the away digest agree because they read the same summary."
   - "No overnight receipt changes a Plan status or the Build control label."
 validation_surfaces:
@@ -1451,7 +1491,13 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.8 and #8.9 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-06 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+  - "Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 7"
 preserved_exact_tokens:
+  - "ExecutionOccurrenceSummary"
+  - "execution_started"
+  - "AssistantPlanProgressProjector"
+  - "steps_built"
+  - "steps_total"
   - "occurrence summary"
   - "overnight receipt"
   - "night journal"
@@ -1542,7 +1588,10 @@ clears it: `cmd.runtime.automation_pause.set`, project-scoped, whose payload `pa
 lives in the Schedule Manager's Resume & Safety Policy tab, which is where the Build At sheet's promise "Pause all
 automations always wins." points. Its state is a project-scoped operational record owned here, holding the
 `project_id`, `paused`, the project's `user_stop_epoch`, who changed it, when, and a revision. It is never a
-Settings value, and no Settings default seeds it.
+Settings value, and no Settings default seeds it. The Storage companion registers the project-scoped key
+`project_automation_pause.v1:{hex(storage_instance_id)}:{hex(project_id)}` and the
+`pm.runtime.project_automation_pause.v1` value with the storage registry under SP-323 before a durable write is claimed (DL-138). Until then the typed record remains a
+contract shape, not a registered physical writer.
 
 The switch is a user manual stop at project scope and ranks with user manual Pause in the section 1 precedence.
 Turning it on advances the project's `user_stop_epoch` the way Manual Stop advances a run's. Every eligibility
@@ -1585,8 +1634,12 @@ scheduled-message card, Schedule Manager row and Plan card schedule line in the 
 reason "Pause all automations is on". A message held at its send time is `Held` and its sentence begins with Held
 and names that reason (SQR-012); a build it holds has a schedule line that begins with `Paused` (SQR-015); and the
 manager rows keep the labels of SQR-014. No stored state value is added: a message held at its send time is
-`held`, a run the switch pauses is `paused`, and stored schedule states are unchanged. Each change of the switch
-emits `runtime.automation_pause_changed` (section 3, Events).
+`held`, a run the switch pauses is `paused`, and stored schedule states are unchanged. A changed value reserves
+`runtime.automation_pause_changed` (section 3, Events), but its EventRecord is not emitted while Event Authority
+registration is open; the result records `missing_event_registration` without treating its receipt as an event
+(DL-138). The Schedule Manager is the only candidate command producer; its wiring exclusion remains until the
+command's exact owner, handler and production wiring are admitted. ATS-064 names planned runtime scheduling
+checks, not an executed test result.
 
 ```yaml
 plan_unit_id: SQR-018
@@ -1595,9 +1648,10 @@ status: accepted
 owner_doc: Plans/Scheduling_and_Quota_Resume.md
 canonical_text: >-
   Pause all automations is one project-wide switch that stops every scheduled send and scheduled build in the
-  project until the user turns it back on (DL-136). cmd.runtime.automation_pause.set, project-scoped with payload
+  project until the user turns it back on (DL-136, DL-138). cmd.runtime.automation_pause.set, project-scoped with payload
   paused true or false, sets and clears it from the Schedule Manager's Resume & Safety Policy tab; its state is a
-  project-scoped operational record owned here and never a Settings value. It is a user manual stop at project
+  project-scoped operational record owned here and never a Settings value, with pending Storage key
+  project_automation_pause.v1:{hex(storage_instance_id)}:{hex(project_id)} for pm.runtime.project_automation_pause.v1 (SP-323). It is a user manual stop at project
   scope that ranks with user manual Pause: turning it on advances the project's user_stop_epoch the way Manual
   Stop does, every evaluation compares the project's epoch as well as the target's, and while it is on the one
   eligibility predicate fails for every scheduled message, scheduled build, window resume and quota resume in the
@@ -1613,7 +1667,8 @@ canonical_text: >-
   hold, returns to scheduled and dispatches once under next_available or within the grace of cancel_after_grace,
   and expires past that grace, and no item keeps the switch's reason once it is off. Every item it holds names the reason Pause all
   automations is on, the switch reads Paused by you at a time with Turn back on, or Off: scheduled things start on
-  time., and each change emits runtime.automation_pause_changed.
+  time. A changed value reserves runtime.automation_pause_changed, but EventRecord emission is disabled with
+  missing_event_registration until Event Authority admits that family; a receipt is not an event (DL-138).
 gui_related: true
 gui_classification_reason: Defines the Resume & Safety Policy switch and the reason every held scheduled item shows.
 depends_on: [SQR-001, SQR-004, SQR-006, SQR-012, SQR-014, SQR-015]
@@ -1627,6 +1682,7 @@ acceptance_criteria:
   - "Turning it off releases no per-run latch, and each occurrence that came due while it was on follows its recorded missed policy with no backlog burst."
   - "At switch-off a message it held stays held naming its missed time under hold, dispatches once under next_available or within its grace, and expires past its grace."
   - "Every item the switch holds shows the reason Pause all automations is on."
+  - "Before Event Authority admission, no runtime.automation_pause_changed EventRecord is emitted and the result reports missing_event_registration."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - node tests/scheduling-verify.mjs
@@ -1647,6 +1703,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json p12 (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-05 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.8 and #8.9 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
+  - "Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 9"
 preserved_exact_tokens:
   - "Pause all automations"
   - "cmd.runtime.automation_pause.set"
@@ -1657,6 +1714,8 @@ preserved_exact_tokens:
   - "Paused by you at"
   - "Turn back on"
   - "Off: scheduled things start on time."
+  - "project_automation_pause.v1:{hex(storage_instance_id)}:{hex(project_id)}"
+  - "missing_event_registration"
 negative_constraints:
   - Do not let any automatic mechanism, or a newly created schedule, clear or bypass the project pause.
   - Do not store the project pause as a Settings value.

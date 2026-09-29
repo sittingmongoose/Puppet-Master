@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/assistant_chat_contracts/1.0.0/schema.json",
   "title": "Assistant chat command contracts",
-  "$comment": "Owner contract schema named by Plans/Commands_System.md (Puppet Master Assistant Redesign Central Registration Addendum - 2026-09-03, \"Naming them here does not create them\"; CS-078, and CS-087 for the closure wave) for Plans/assistant-chat-design.md. Written 2026-09-27 as the companion of the wand-modules compile (ledgers pldg-20260927-005 and pldg-20260927-006; DL-126): the request/result pairs of every command whose contracts the central table points at this file, cmd.chat.goal.open_editor (GoalEditorRoute -> RouteResult), cmd.chat.composer.destination.set and cmd.chat.composer.destination.clear (ACD-462), cmd.chat.thread.regenerate_title (ACD-462, ACD-479), cmd.chat.eli5.set (ELI5ThreadOverrideRequest with the value on, off or inherit; UCC-175, ACD-484) and cmd.chat.eli5.explain_reply (ELI5ExplainReplyRequest/Result; UCC-174, CS-087, ACD-484). Where canon states only a command's meaning the shape is the minimal command envelope plus the target identity. ComposerDestination and ThreadTitleAttempt restate the fields Plans/Collaborative_Workflows.md section 4.5 and ACD-479 give them and are not new records: the record families pm.chat.composer_destination.v1 and pm.chat.thread_title_generation.v1 stay requires_central_adjudication. A definition here is a contract shape, not a handler, a catalogue registration or an admission: every command stays handler_unavailable, and cmd.chat.eli5.explain_reply stays a DL-035 candidate exclusion (WM-064). Requests and results are not records and add no storage key, EventRecord, writer, Settings key or physical family.",
+  "$comment": "Owner contract schema named by Plans/Commands_System.md (Puppet Master Assistant Redesign Central Registration Addendum - 2026-09-03, \"Naming them here does not create them\"; CS-078, and CS-087 for the closure wave) for Plans/assistant-chat-design.md. Written 2026-09-27 as the companion of the wand-modules compile (ledgers pldg-20260927-005 and pldg-20260927-006; DL-126): the request/result pairs of every command whose contracts the central table points at this file, cmd.chat.goal.open_editor (GoalEditorRoute -> RouteResult), cmd.chat.composer.destination.set and cmd.chat.composer.destination.clear (ACD-462), cmd.chat.thread.regenerate_title (ACD-462, ACD-479), cmd.chat.eli5.set (ELI5ThreadOverrideRequest with the value on, off or inherit; UCC-175, ACD-484) and cmd.chat.eli5.explain_reply (ELI5ExplainReplyRequest/Result; UCC-174, CS-087, ACD-484). Where canon states only a command's meaning the shape is the minimal command envelope plus the target identity. ComposerDestination and ThreadTitleAttempt restate the fields Plans/Collaborative_Workflows.md section 4.5 and ACD-479 give them and are not new records: the record families pm.chat.composer_destination.v1 and pm.chat.thread_title_generation.v1 stay requires_central_adjudication. A definition here is a contract shape, not a handler, a catalogue registration or an admission: every command stays handler_unavailable, and cmd.chat.eli5.explain_reply stays a DL-035 candidate exclusion (WM-064). Requests and results are not records and add no storage key, EventRecord, writer, Settings key or physical family. DL-138 companion (2026-09-29): ThreadCrewAutoOverride is only the optional field projection of ACD-076 existing thread metadata; it adds no record envelope, durable family, storage key, writer or Settings value. Reopen persistence remains the existing owner's runtime obligation.",
   "$defs": {
     "non_empty_string": {
       "type": "string",
@@ -1034,7 +1034,7 @@
       }
     },
     "ELI5ThreadOverrideRequest": {
-      "description": "ELI5ThreadOverrideRequest for cmd.chat.eli5.set (UCC-175, CS-087, ACD-484, DL-126). It writes only this chat's override, the per-conversation setting general.interaction.chat-eli5: value on or off sets it and inherit deletes it. Its only source surfaces are eli5_sheet (Standard or Simple, Follow my usual setting, and the This chat level) and composer (the quick dot, on or off); the wand's ELI5 row only opens the sheet and never dispatches it. The project default and the app default (general.interaction.eli5-default) are Settings writes, never this command. Contract shape only: handler_unavailable until admission.",
+      "description": "ELI5ThreadOverrideRequest for cmd.chat.eli5.set (UCC-175, CS-087, ACD-484, DL-126). It writes only this chat's override, the per-conversation setting general.interaction.chat-eli5: value on or off sets it and inherit deletes it. Its only source surfaces are eli5_sheet (Standard or Simple, Follow my usual setting, and the This chat level) and composer (the quick dot, on or off); the wand's ELI5 row only opens the sheet and never dispatches it. The project default and the app default (general.interaction.eli5-default) are Settings writes, never this command. Contract shape only: handler_unavailable until admission. DL-138/SSYS-028 persist general.interaction.eli5-default at project scope as well as app scope; adding that Settings level does not permit a scope or project-default write in this chat command.",
       "type": "object",
       "additionalProperties": false,
       "x-primary-identity-fields": [
@@ -1101,7 +1101,7 @@
       }
     },
     "ELI5ThreadOverrideResult": {
-      "description": "ELI5ThreadOverrideResult. Accepted: chat_override is the chat's override after the write, on or off, or null after inherit deleted it. The change applies from the next reply that starts (applies_from next_reply); every reply keeps the style it was written in, so side_effects are false on every path. Rejected changes nothing.",
+      "description": "ELI5ThreadOverrideResult. Accepted: chat_override is the chat's override after the write, on or off, or null after inherit deleted it. The change applies from the next reply that starts (applies_from next_reply); every reply keeps the style it was written in, so side_effects are false on every path. Rejected changes nothing. After inherit, resolution reads the persisted project general.interaction.eli5-default, falling back to the app value only when no project override is stored (DL-138, SSYS-028).",
       "type": "object",
       "additionalProperties": false,
       "x-primary-identity-fields": [
@@ -1592,6 +1592,20 @@
           }
         }
       ]
+    },
+    "ThreadCrewAutoOverride": {
+      "description": "Field-level projection of existing ACD-076 thread metadata (DL-138), not a full thread record or a new durable family. crew_auto_override true or false overrides the project Crew Auto value; null or an absent property inherits. The existing thread owner persists it across reopen. cmd.chat.crew_auto.set with scope thread changes this field only; this shape admits no command, writer, storage key, Settings value or runtime persistence proof.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "crew_auto_override": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "true/false is the explicit per-chat value; null and absence both inherit the project setting."
+        }
+      }
     }
   }
 }

@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-002-wand-back-seat-driver",
-  "updated_at_utc": "2026-09-27T23:40:00+00:00",
-  "last_event_id": "evt-009",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "last_event_id": "evt-015",
   "canonical_plan_targets": [
     "Plans/Back_Seat_Driver.md"
   ],
@@ -13,11 +13,18 @@
     "Plans/Back_Seat_Driver.md"
   ],
   "governance_status": "not_requested",
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver/validation/blind_review_cycle2.json",
+  "latest_audit_status": "closed_at_two_cycle_cap",
   "validation_state": {
-    "ledger_health": "see validation/ledger_health.json",
-    "compile_witness": "see G2-NOTES; rerun after every edit"
+    "ledger_health": "pass_except_deferred_governance_coverage",
+    "compile_witness": "pass",
+    "contracts": "pass_static_only",
+    "shards_and_plan_index": "pass",
+    "wiring_and_touch_closure": "pass",
+    "blind_review": "closed_at_two_cycle_cap",
+    "assistant_contract_check": "normal_exit_1_errors_empty",
+    "settings_and_concept_companions": "Inventory valid; PM7 build check passed and tour 7/7.",
+    "claim_boundary": "Static compile checks and two blind reviews complete. Landing pending; governance not requested and native runtime not proven."
   },
   "planned_owner_docs": [
     "Plans/Back_Seat_Driver.md"
@@ -25,7 +32,7 @@
   "reserved_id_ranges": {
     "BSD": "BSD-030..BSD-044"
   },
-  "status": "prose_and_companions_compiled",
+  "status": "compiled",
   "items": [
     {
       "queue_id": "queue-001",
@@ -216,8 +223,127 @@
       ],
       "companion_outputs": [],
       "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-011",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-bsd-followup-01"
+      ],
+      "target_doc": "Plans/Back_Seat_Driver.md",
+      "target_docs": [
+        "Plans/Back_Seat_Driver.md"
+      ],
+      "target_plan_unit_ids": [
+        "BSD-033",
+        "BSD-035"
+      ],
+      "compiled_plan_unit_ids": [
+        "BSD-033",
+        "BSD-035"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-010"
+    },
+    {
+      "queue_id": "queue-012",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-bsd-followup-02"
+      ],
+      "target_doc": "Plans/Back_Seat_Driver.md",
+      "target_docs": [
+        "Plans/Back_Seat_Driver.md"
+      ],
+      "target_plan_unit_ids": [
+        "BSD-035"
+      ],
+      "compiled_plan_unit_ids": [
+        "BSD-035"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-010"
+    },
+    {
+      "queue_id": "queue-013",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-bsd-followup-03"
+      ],
+      "target_doc": "Plans/Back_Seat_Driver.md",
+      "target_docs": [
+        "Plans/Back_Seat_Driver.md"
+      ],
+      "target_plan_unit_ids": [
+        "BSD-032",
+        "BSD-037"
+      ],
+      "compiled_plan_unit_ids": [
+        "BSD-032",
+        "BSD-037"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-010"
+    },
+    {
+      "queue_id": "queue-014",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-bsd-followup-04"
+      ],
+      "target_doc": "Plans/Back_Seat_Driver.md",
+      "target_docs": [
+        "Plans/Back_Seat_Driver.md"
+      ],
+      "target_plan_unit_ids": [
+        "BSD-037"
+      ],
+      "compiled_plan_unit_ids": [
+        "BSD-037"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-010"
+    },
+    {
+      "queue_id": "queue-015",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-bsd-followup-05"
+      ],
+      "target_doc": "Plans/Back_Seat_Driver.md",
+      "target_docs": [
+        "Plans/Back_Seat_Driver.md"
+      ],
+      "target_plan_unit_ids": [
+        "BSD-022"
+      ],
+      "compiled_plan_unit_ids": [
+        "BSD-022"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-010"
+    },
+    {
+      "queue_id": "queue-016",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-bsd-followup-06"
+      ],
+      "target_doc": "Plans/Back_Seat_Driver.md",
+      "target_docs": [
+        "Plans/Back_Seat_Driver.md"
+      ],
+      "target_plan_unit_ids": [
+        "BSD-037"
+      ],
+      "compiled_plan_unit_ids": [
+        "BSD-037"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-010"
     }
   ],
-  "notes": "One item per compiled register line or WAIT part; each names the owner PlanUnit it created. Companions recorded in evt-006; blind review cycle 1 repairs in evt-007; lead pass in evt-008.",
-  "terminal_ledger_event_id": null
+  "notes": "Historical and DL-138 queue items preserved. Prose and companion work complete; blind review closed at two cycles. Open owner questions are recorded separately.",
+  "terminal_ledger_event_id": "evt-015",
+  "latest_audit_sha256": "96384e0449e407502a569955346081b23f34ebb41b6dddef1b15b3d044d00bf4"
 }

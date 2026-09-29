@@ -1,17 +1,9 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-001-wand-collab-workflows",
-  "updated_at_utc": "2026-09-27T23:59:00+00:00",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
   "open_questions": [
-    "q-026",
-    "q-027",
-    "q-028",
-    "q-029",
-    "q-030",
-    "q-031",
-    "q-032",
-    "q-033",
-    "q-034"
+    "q-035"
   ],
   "answered_questions": [
     "q-001",
@@ -38,10 +30,24 @@
     "q-022",
     "q-023",
     "q-024",
-    "q-025"
+    "q-025",
+    "q-026",
+    "q-027",
+    "q-028",
+    "q-029",
+    "q-030",
+    "q-031",
+    "q-032",
+    "q-033",
+    "q-034"
   ],
   "open_blockers": [],
   "deferred_questions": [],
   "deferred_items": [],
-  "not_landed": []
+  "not_landed": [
+    "Reviewed DL-138 compile is ready for the required landing checks."
+  ],
+  "last_event_id": "evt-029",
+  "owner_question_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ELI5-OWNER-QUESTION.md sha256:526924d097a2118c32b5a29b35b85ec4f268a2461ffc1c6325f0e5828ddbb935",
+  "pending_companions": []
 }

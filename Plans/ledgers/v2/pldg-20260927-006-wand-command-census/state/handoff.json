@@ -1,38 +1,54 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-006-wand-command-census",
-  "updated_at_utc": "2026-09-28T00:30:00+00:00",
-  "last_event_id": "evt-016",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "last_event_id": "evt-022",
   "canonical_plan_targets": [
     "Plans/Automated_Testing_System.md",
     "Plans/Commands_System.md",
+    "Plans/Settings_System.md",
     "Plans/UI_Command_Catalog.md",
     "Plans/Wiring_Matrix.md"
   ],
   "compiled_owner_docs": [
     "Plans/Automated_Testing_System.md",
     "Plans/Commands_System.md",
+    "Plans/Settings_System.md",
     "Plans/UI_Command_Catalog.md",
     "Plans/Wiring_Matrix.md"
   ],
   "compiled_plan_outputs": [
+    "Concepts/PMConcept7.html",
+    "Concepts/TestOpus5.5PmConcept.html",
     "Plans/Automated_Testing_System.md",
     "Plans/Commands_System.md",
+    "Plans/Settings_System.md",
     "Plans/UI_Command_Catalog.md",
-    "Plans/Wiring_Matrix.md"
+    "Plans/Wiring_Matrix.md",
+    "Plans/Wiring_Matrix.production.exclusions.json",
+    "Plans/Wiring_Matrix.production.json",
+    "Plans/settings_inventory.json"
   ],
   "governance_status": "not_requested",
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/validation/blind_review_cycle2.json",
+  "latest_audit_status": "closed_at_two_cycle_cap",
   "validation_state": {
-    "ledger_health": "pass",
-    "compile_witness": "pass"
+    "ledger_health": "pass_except_deferred_governance_coverage",
+    "compile_witness": "pass",
+    "contracts": "pass_static_only",
+    "shards_and_plan_index": "pass",
+    "wiring_and_touch_closure": "pass",
+    "blind_review": "closed_at_two_cycle_cap",
+    "assistant_contract_check": "normal_exit_1_errors_empty",
+    "settings_and_concept_companions": "Inventory valid; PM7 build check passed and tour 7/7.",
+    "claim_boundary": "Static compile checks and two blind reviews complete. Landing pending; governance not requested and native runtime not proven."
   },
   "planned_owner_docs": [
-    "Plans/UI_Command_Catalog.md",
+    "Plans/Automated_Testing_System.md",
     "Plans/Commands_System.md",
-    "Plans/Wiring_Matrix.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Settings_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md"
   ],
   "reserved_id_ranges": {
     "UCC": "UCC-169..UCC-178",
@@ -42,13 +58,28 @@
     "CV (companion task only)": "CV-356..CV-370",
     "ATS (companion task only)": "ATS-062..ATS-066"
   },
-  "current_phase": "prose_compile_open",
+  "current_phase": "compiled_with_open_owner_questions",
   "cursor": {
-    "last_event_id": "evt-016",
-    "next_action": "NOW, WAIT and closure prose compiled; wiring companions evt-007 and evt-012; tour ELI5 re-pointed evt-013; blind review G6 cycle 1 repairs compiled evt-014 (DL-135, DL-120, DL-112 now compiled; q-009, q-011, q-012 answered). Next: blind review cycle 2 (the last); the companion task for q-017 (three Wiring_Matrix.production.json entries); the integrator regenerates shards and the plan index. Open: q-013, q-014, q-015, q-017, q-018, q-019; none blocks landing."
+    "last_event_id": "evt-022",
+    "next_action": "Land this reviewed compile; retain open owner questions and request the designated Plans agent reseal separately."
   },
   "source_refs": [
-    "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/authorization.md"
+    "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/findings-through-main-1a501f3341.md"
   ],
-  "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md."
+  "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md.",
+  "historical_findings_archive": {
+    "path": "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/findings-through-main-1a501f3341.md",
+    "sha256": "a30f22647301961923d1e5d3a01c5b709c9fc768c38046b700b5e3c503a851bf",
+    "base_commit": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c"
+  },
+  "latest_audit_sha256": "e18443fa03e8507569650527865a78b1763d4feaa28aad9e7a155e49c171f7a0",
+  "external_open_questions": [
+    {
+      "ledger_id": "pldg-20260927-001-wand-collab-workflows",
+      "question_id": "q-035",
+      "owner": "Plans/Settings_System.md",
+      "scope": "All chats ELI5 edit only; project and chat scopes remain compiled"
+    }
+  ]
 }

@@ -1,27 +1,36 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-003-wand-scheduling",
-  "updated_at_utc": "2026-09-28T00:15:00+00:00",
-  "last_event_id": "evt-014",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "last_event_id": "evt-023",
   "canonical_plan_targets": [
     "Plans/Scheduling_and_Quota_Resume.md"
   ],
   "compiled_owner_docs": [
     "Plans/Scheduling_and_Quota_Resume.md",
     "Plans/Assistant_Plan_Runtime.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Automated_Testing_System.md",
+    "Plans/storage-plan.md"
   ],
   "compiled_plan_outputs": [
     "Plans/Scheduling_and_Quota_Resume.md",
     "Plans/Assistant_Plan_Runtime.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Automated_Testing_System.md",
+    "Plans/storage-plan.md"
   ],
   "governance_status": "not_requested",
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/validation/blind_review_cycle2.json",
+  "latest_audit_status": "closed_at_two_cycle_cap",
   "validation_state": {
-    "ledger_health": "see validation/ledger_health.json",
-    "compile_witness": "pass"
+    "ledger_health": "pass_except_deferred_governance_coverage",
+    "compile_witness": "pass",
+    "contracts": "pass_static_only",
+    "shards_and_plan_index": "pass",
+    "wiring_and_touch_closure": "pass",
+    "blind_review": "closed_at_two_cycle_cap",
+    "assistant_contract_check": "normal_exit_1_errors_empty",
+    "settings_and_concept_companions": "Inventory valid; PM7 build check passed and tour 7/7.",
+    "claim_boundary": "Static compile checks and two blind reviews complete. Landing pending; governance not requested and native runtime not proven."
   },
   "planned_owner_docs": [
     "Plans/Scheduling_and_Quota_Resume.md",
@@ -34,14 +43,16 @@
     "PSCHED": "PSCHED-015..PSCHED-018",
     "ATS": "ATS-064"
   },
-  "current_phase": "prose_compiled_pending_review",
+  "current_phase": "compiled_with_open_owner_questions",
   "cursor": {
-    "last_event_id": "evt-014",
-    "next_action": "Lead: regenerate shards and index once for all groups; blind review cycle 1 repaired (R-01..R-11, evt-012), cycle 2 at most. Open: q-003 (R-1 to Chat WOW), q-004 (stored grace_seconds and the occurrence summary shape), q-005 (plan_card on cmd.execution_window.cancel, for the command census), q-006 (pause record storage registration, runtime.automation_pause_changed EventRecord, the command census's exclusion/wiring entry, tests/scheduling-verify.mjs)."
+    "last_event_id": "evt-023",
+    "next_action": "Land this reviewed compile; retain open owner questions and request the designated Plans agent reseal separately."
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/authorization.md",
-    "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/findings.md"
+    "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/findings.md",
+    "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/findings-through-main-1a501f3341.md"
   ],
-  "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md; re-read against the landed Chat updates.md (B0-01)."
+  "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md; re-read against the landed Chat updates.md (B0-01).",
+  "latest_audit_sha256": "abb6db0db14ca1631a0a196b7e3ef725efea4016ac30c9cc8d93ba7120bc3648"
 }

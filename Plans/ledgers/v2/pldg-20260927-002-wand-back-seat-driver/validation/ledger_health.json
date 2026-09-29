@@ -1,17 +1,23 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-002-wand-back-seat-driver",
-  "updated_at_utc": "2026-09-27T23:40:00+00:00",
-  "status": "prose_and_companions_compiled_review_cycle_1_lead_pass",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "status": "pass_except_deferred_governance_coverage",
   "summary": {
-    "events": 9,
-    "design_atoms": 11,
-    "decisions": 15,
-    "open_questions": 4,
+    "events": 15,
+    "design_atoms": 17,
+    "decisions": 21,
+    "open_questions": 0,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "compile_queue_items": 10
+    "compile_queue_items": 16
   },
-  "notes": "Prose and companions compiled; blind review cycle 1 repaired; lead pass done; four owner questions open, none blocking; regeneration pending.",
-  "errors": []
+  "notes": "DL-138 prose and companion compile reviewed through the two-cycle cap; every finding is dispositioned in Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver/validation/blind_review_cycle2.json. Required deterministic checks pass except the explicitly allowed governance coverage errors and normal assistant checker exit 1 with errors empty. Open owner questions remain recorded; no native runtime or governance seal is claimed.",
+  "errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Back_Seat_Driver.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Back_Seat_Driver.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Back_Seat_Driver.md']"
+  ],
+  "last_event_id": "evt-015",
+  "validator_status": "fail"
 }

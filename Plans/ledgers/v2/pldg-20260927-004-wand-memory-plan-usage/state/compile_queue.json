@@ -1,16 +1,20 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-004-wand-memory-plan-usage",
-  "updated_at_utc": "2026-09-27T23:40:00+00:00",
-  "last_event_id": "evt-008",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "last_event_id": "evt-012",
   "canonical_plan_targets": [
     "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Back_Seat_Driver.md",
+    "Plans/Collaborative_Workflows.md",
     "Plans/Personas.md",
     "Plans/assistant-memory-subsystem.md",
     "Plans/usage-feature.md"
   ],
   "compiled_owner_docs": [
     "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Back_Seat_Driver.md",
+    "Plans/Collaborative_Workflows.md",
     "Plans/Models_System.md",
     "Plans/Personas.md",
     "Plans/assistant-memory-subsystem.md",
@@ -18,6 +22,8 @@
   ],
   "compiled_plan_outputs": [
     "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Back_Seat_Driver.md",
+    "Plans/Collaborative_Workflows.md",
     "Plans/Models_System.md",
     "Plans/Personas.md",
     "Plans/assistant-memory-subsystem.md",
@@ -29,18 +35,27 @@
     "scripts/pm-new-contracts-verify.py"
   ],
   "governance_status": "not_requested",
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage/validation/blind_review_cycle2.json",
+  "latest_audit_status": "closed_at_two_cycle_cap",
   "validation_state": {
-    "ledger_health": "pass",
-    "compile_witness": "pass"
+    "ledger_health": "pass_except_deferred_governance_coverage",
+    "compile_witness": "pass",
+    "contracts": "pass_static_only",
+    "shards_and_plan_index": "pass",
+    "wiring_and_touch_closure": "pass",
+    "blind_review": "closed_at_two_cycle_cap",
+    "assistant_contract_check": "normal_exit_1_errors_empty",
+    "settings_and_concept_companions": "Inventory valid; PM7 build check passed and tour 7/7.",
+    "claim_boundary": "Static compile checks and two blind reviews complete. Landing pending; governance not requested and native runtime not proven."
   },
   "planned_owner_docs": [
-    "Plans/assistant-memory-subsystem.md",
     "Plans/Assistant_Plan_Runtime.md",
+    "Plans/Back_Seat_Driver.md",
+    "Plans/Collaborative_Workflows.md",
+    "Plans/Models_System.md",
     "Plans/Personas.md",
-    "Plans/usage-feature.md",
-    "Plans/Models_System.md"
+    "Plans/assistant-memory-subsystem.md",
+    "Plans/usage-feature.md"
   ],
   "reserved_id_ranges": {
     "AMS": "AMS-047..AMS-056",
@@ -49,7 +64,7 @@
     "UF": "UF-104..UF-110",
     "MS": "MS-140..MS-143"
   },
-  "status": "prose_and_companions_compiled",
+  "status": "compiled_with_open_owner_questions",
   "items": [
     {
       "queue_id": "queue-001",
@@ -448,8 +463,121 @@
       ],
       "companion_outputs": [],
       "compile_event_id": "evt-007"
+    },
+    {
+      "queue_id": "queue-016",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g004-dl138-hardbudget"
+      ],
+      "target_doc": "Plans/usage-feature.md",
+      "target_docs": [
+        "Plans/usage-feature.md"
+      ],
+      "target_plan_unit_ids": [
+        "UF-106"
+      ],
+      "compiled_plan_unit_ids": [
+        "UF-106"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-009"
+    },
+    {
+      "queue_id": "queue-017",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g004-dl138-rulecheck"
+      ],
+      "target_doc": "Plans/Collaborative_Workflows.md",
+      "target_docs": [
+        "Plans/Collaborative_Workflows.md",
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "target_plan_unit_ids": [
+        "AMS-053",
+        "CWR-031"
+      ],
+      "compiled_plan_unit_ids": [
+        "AMS-053",
+        "CWR-031"
+      ],
+      "companion_outputs": [
+        "Plans/assistant_memory_contract_fixtures.json",
+        "Plans/assistant_memory_contracts.schema.json",
+        "Plans/collaborative_workflows_contract_fixtures.json",
+        "Plans/collaborative_workflows_contracts.schema.json"
+      ],
+      "compile_event_id": "evt-009"
+    },
+    {
+      "queue_id": "queue-018",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g004-dl138-personaid"
+      ],
+      "target_doc": "Plans/Back_Seat_Driver.md",
+      "target_docs": [
+        "Plans/Back_Seat_Driver.md",
+        "Plans/Personas.md"
+      ],
+      "target_plan_unit_ids": [
+        "P-057",
+        "BSD-022"
+      ],
+      "compiled_plan_unit_ids": [
+        "P-057",
+        "BSD-022"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-009"
+    },
+    {
+      "queue_id": "queue-019",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g004-dl138-mixednote"
+      ],
+      "target_doc": "Plans/assistant-memory-subsystem.md",
+      "target_docs": [
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "target_plan_unit_ids": [
+        "AMS-053"
+      ],
+      "compiled_plan_unit_ids": [
+        "AMS-053"
+      ],
+      "companion_outputs": [
+        "Plans/assistant_memory_contract_fixtures.json",
+        "Plans/assistant_memory_contracts.schema.json"
+      ],
+      "compile_event_id": "evt-009"
+    },
+    {
+      "queue_id": "queue-020",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-g004-dl138-partialbasis"
+      ],
+      "target_doc": "Plans/usage-feature.md",
+      "target_docs": [
+        "Plans/usage-feature.md"
+      ],
+      "target_plan_unit_ids": [
+        "UF-104"
+      ],
+      "compiled_plan_unit_ids": [
+        "UF-104"
+      ],
+      "companion_outputs": [
+        "Plans/usage_run_estimate_contract_fixtures.json",
+        "Plans/usage_run_estimate_contracts.schema.json"
+      ],
+      "compile_event_id": "evt-009"
     }
   ],
-  "notes": "Empty. Each item: queue_id, status, source_atom_ids, target_doc, target_docs, target_plan_unit_ids, compiled_plan_unit_ids, compile_event_id.",
-  "terminal_ledger_event_id": null
+  "notes": "Historical and DL-138 queue items preserved. Prose and companion work complete; blind review closed at two cycles. Open owner questions are recorded separately.",
+  "terminal_ledger_event_id": "evt-012",
+  "latest_audit_sha256": "2093c60d2757be598a0bf683fce4b428137cd9054f83320e51883f94974700f9"
 }

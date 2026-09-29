@@ -58,3 +58,25 @@ Plans/Decision_Log.md, which the owner compiled in Collaborative_Workflows CWR-0
 and the lead's follow-up note that the catalog and WM-063 must cite DL-135 and state crew_auto_receipt as decided. Every other repair is
 mechanical, and the live text proves it. No new behaviour was invented. Settings stay out of scope, and the production wiring JSON
 follow-ups are recorded as q-017. Agent-relayed; not verifiable from inside this repository.
+
+## Current authorization — owner answers, 2026-09-29
+
+/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md (SHA-256 345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c) records Jared's approval of every recommended answer to all 29 questions, with the two NieR fonts amendment, now DL-138. This authorization supersedes the earlier Settings exclusion for the requested follow-ups and the Chat WOW no-edit instruction only for the scheduled-card compatibility and motion-scope confirmations. Assigned parallel agents may coordinate the owner documents; no production implementation or governance seal is authorized by this compile. Old scope statements above record their historical waves, not the active next action. Prose comes first; witness then separate companion work, blind review (maximum two cycles), regeneration and integrator landing follow.
+
+Historical findings scope: Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/findings-through-main-1a501f3341.md (SHA-256 a30f22647301961923d1e5d3a01c5b709c9fc768c38046b700b5e3c503a851bf) is a byte-preserving archive of the already-landed origin/main 1a501f3341 findings. Active findings name only this compile's repairs. This is source-memory maintenance, not a changed owner obligation or weakened validator. The full actual-ledger witness remains required.
+
+## Post-witness companion release — 2026-09-29
+
+The integrator explicitly released this phase after all six actual-ledger prose witnesses passed, including the Storage prose companion scope. This ledger's assigned companion outputs are `Plans/Wiring_Matrix.production.json`, `Plans/Wiring_Matrix.production.exclusions.json`. The scope permits static contracts and fixtures only; root owns shared gate pins, Settings inventory, regeneration and landing.
+
+## Blind compile review cycle 1 — source-preserving corrections
+
+Updated the active command catalog label cells to Summarize Now and Run Another Review, kept old names as historical terms, and aligned the Send Findings row to source-variant availability, message_chrome for taught_rule_check only, and ComposerBufferResult.
+
+Review source: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger006-cycle1/findings.jsonl sha256:ca72be4528c484384357eaa3bb35f27e74bc16d59065e4a36a5985307f72a065`. Event `evt-021`, correction `cor-034`. These are fidelity repairs under the accepted answers; they create no runtime evidence or governance seal.
+
+## DL-138 final compile review disposition
+
+DL-138 prose and companion compile reviewed through the two-cycle cap; every finding is dispositioned in Plans/ledgers/v2/pldg-20260927-006-wand-command-census/validation/blind_review_cycle2.json. Required deterministic checks pass except the explicitly allowed governance coverage errors and normal assistant checker exit 1 with errors empty. Open owner questions remain recorded; no native runtime or governance seal is claimed.
+
+Event `evt-022`. Raw review source: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger006-cycle2/findings.jsonl`; SHA-256 `7221c55f5887142b43c10794be05e117d14240058f892cd5b093c4cac71848ec`.

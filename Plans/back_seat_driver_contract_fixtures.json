@@ -289,6 +289,146 @@
         "primary_generation": 5,
         "catch_up_wait_released": false
       }
+    },
+    {
+      "name": "user_paused_assignment",
+      "definition": "bsd_assignment",
+      "value": {
+        "schema_id": "pm.bsd.assignment.v1",
+        "schema_version": "1.0.0",
+        "bsd_assignment_id": "bsd-assignment:fixture:paused",
+        "binding_id": "bsd-binding:fixture:1",
+        "stage_id": "stage:fixture:1",
+        "primary_run_id": "run:fixture:1",
+        "advisor_attempt_id": "advisor-attempt:fixture:1",
+        "epoch": 2,
+        "cursor": "cursor:fixture:1",
+        "stable_prefix_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "requested_effective_snapshot_ref": null,
+        "state": "paused",
+        "pause_cause": "user"
+      }
+    },
+    {
+      "name": "safety_paused_assignment",
+      "definition": "bsd_assignment",
+      "value": {
+        "schema_id": "pm.bsd.assignment.v1",
+        "schema_version": "1.0.0",
+        "bsd_assignment_id": "bsd-assignment:fixture:paused-safety",
+        "binding_id": "bsd-binding:fixture:1",
+        "stage_id": "stage:fixture:1",
+        "primary_run_id": "run:fixture:1",
+        "advisor_attempt_id": "advisor-attempt:fixture:1",
+        "epoch": 2,
+        "cursor": "cursor:fixture:1",
+        "stable_prefix_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "requested_effective_snapshot_ref": null,
+        "state": "paused",
+        "pause_cause": "safety"
+      }
+    },
+    {
+      "name": "resumed_assignment_clears_pause_cause",
+      "definition": "bsd_assignment",
+      "value": {
+        "schema_id": "pm.bsd.assignment.v1",
+        "schema_version": "1.0.0",
+        "bsd_assignment_id": "bsd-assignment:fixture:resumed",
+        "binding_id": "bsd-binding:fixture:1",
+        "stage_id": "stage:fixture:1",
+        "primary_run_id": "run:fixture:1",
+        "advisor_attempt_id": "advisor-attempt:fixture:1",
+        "epoch": 2,
+        "cursor": "cursor:fixture:1",
+        "stable_prefix_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "requested_effective_snapshot_ref": null,
+        "state": "reviewing"
+      }
+    },
+    {
+      "name": "stale_unreconfirmed_terminal_critical_note",
+      "definition": "bsd_finding",
+      "value": {
+        "schema_id": "pm.bsd.finding.v1",
+        "schema_version": "1.0.0",
+        "bsd_finding_id": "bsd-finding:fixture:stale-critical",
+        "finding_key": "finding-key:unsafe-migration-order",
+        "assignment_id": "bsd-assignment:fixture:1",
+        "raised_against_generation": 3,
+        "latest_checked_generation": 4,
+        "severity": "critical",
+        "claim": "The migration drops a column before the reader stops using it.",
+        "affected_object_refs": [
+          "object:migrations/0042"
+        ],
+        "rule_or_constraint_refs": [
+          "rule:expand-contract"
+        ],
+        "evidence_refs": [
+          "evidence:review-cycle:7"
+        ],
+        "state": "emitted",
+        "reconfirmation_count": 1,
+        "closed_reason": null,
+        "presentation_weight": "note",
+        "created_at": "2026-09-27T12:00:00Z",
+        "updated_at": "2026-09-27T12:00:00Z",
+        "stale": true,
+        "unreconfirmed": true
+      }
+    },
+    {
+      "name": "dismissed_stale_critical_retains_markers",
+      "definition": "bsd_finding",
+      "value": {
+        "schema_id": "pm.bsd.finding.v1",
+        "schema_version": "1.0.0",
+        "bsd_finding_id": "bsd-finding:fixture:dismissed-stale-critical",
+        "finding_key": "finding-key:unsafe-migration-order",
+        "assignment_id": "bsd-assignment:fixture:1",
+        "raised_against_generation": 3,
+        "latest_checked_generation": 4,
+        "severity": "critical",
+        "claim": "The migration drops a column before the reader stops using it.",
+        "affected_object_refs": [
+          "object:migrations/0042"
+        ],
+        "rule_or_constraint_refs": [
+          "rule:expand-contract"
+        ],
+        "evidence_refs": [
+          "evidence:review-cycle:7"
+        ],
+        "state": "closed",
+        "reconfirmation_count": 1,
+        "closed_reason": "dismissed_by_user",
+        "presentation_weight": "note",
+        "created_at": "2026-09-27T12:00:00Z",
+        "updated_at": "2026-09-27T12:00:00Z",
+        "stale": true,
+        "unreconfirmed": true
+      }
+    },
+    {
+      "name": "release_replaced_wait_rejected_stale_projection",
+      "definition": "bsd_catch_up_release_result",
+      "value": {
+        "schema_id": "pm.bsd.catch_up_release_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "BSDCatchUpReleaseResult",
+        "command_id": "cmd.bsd.catch_up.release",
+        "command_instance_id": "command:bsd-catch-up-release:replaced",
+        "outcome": "rejected",
+        "error_code": "stale_projection",
+        "resulting_epoch": 2,
+        "projection_ref": "projection:bsd:assignment:fixture:1",
+        "primary_run_mutated": false,
+        "authority_granted": false,
+        "bsd_assignment_id": "bsd-assignment:fixture:1",
+        "primary_generation": 5,
+        "catch_up_wait_released": false
+      }
     }
   ],
   "invalid": [
@@ -462,6 +602,69 @@
         "primary_run_mutated": true
       },
       "expected_error": "the release lets the primary continue; it never mutates it"
+    },
+    {
+      "name": "paused_assignment_without_cause",
+      "definition": "bsd_assignment",
+      "base_valid": "user_paused_assignment",
+      "remove": [
+        "pause_cause"
+      ],
+      "expected_error": "paused state requires a cause"
+    },
+    {
+      "name": "resumed_assignment_keeps_cause",
+      "definition": "bsd_assignment",
+      "base_valid": "resumed_assignment_clears_pause_cause",
+      "patch": {
+        "pause_cause": "user"
+      },
+      "expected_error": "a non-paused assignment clears its cause"
+    },
+    {
+      "name": "paused_assignment_unknown_cause",
+      "definition": "bsd_assignment",
+      "base_valid": "user_paused_assignment",
+      "patch": {
+        "pause_cause": "quota"
+      },
+      "expected_error": "only user or safety may pause"
+    },
+    {
+      "name": "stale_critical_without_unreconfirmed",
+      "definition": "bsd_finding",
+      "base_valid": "stale_unreconfirmed_terminal_critical_note",
+      "remove": [
+        "unreconfirmed"
+      ],
+      "expected_error": "stale and unreconfirmed are paired"
+    },
+    {
+      "name": "unreconfirmed_critical_without_stale",
+      "definition": "bsd_finding",
+      "base_valid": "stale_unreconfirmed_terminal_critical_note",
+      "remove": [
+        "stale"
+      ],
+      "expected_error": "stale and unreconfirmed are paired"
+    },
+    {
+      "name": "stale_critical_as_aside",
+      "definition": "bsd_finding",
+      "base_valid": "stale_unreconfirmed_terminal_critical_note",
+      "patch": {
+        "presentation_weight": "aside"
+      },
+      "expected_error": "shown stale critical is note weight"
+    },
+    {
+      "name": "stale_noncritical_finding",
+      "definition": "bsd_finding",
+      "base_valid": "stale_unreconfirmed_terminal_critical_note",
+      "patch": {
+        "severity": "concern"
+      },
+      "expected_error": "terminal stale exception is critical only"
     }
   ]
 }

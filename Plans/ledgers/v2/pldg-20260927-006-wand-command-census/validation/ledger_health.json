@@ -1,17 +1,29 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-006-wand-command-census",
-  "updated_at_utc": "2026-09-28T00:30:00+00:00",
-  "status": "pass",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "status": "pass_except_deferred_governance_coverage",
   "summary": {
-    "events": 16,
-    "design_atoms": 25,
-    "decisions": 26,
-    "open_questions": 6,
+    "events": 22,
+    "design_atoms": 32,
+    "decisions": 34,
+    "open_questions": 0,
+    "answered_questions": 19,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "compile_queue_items": 25
+    "compile_queue_items": 32
   },
-  "notes": "Prose compile of the NOW, WAIT and closure waves and the blind-review cycle 1 repairs; witness and validator run by the author.",
-  "errors": []
+  "notes": "DL-138 prose and companion compile reviewed through the two-cycle cap; every finding is dispositioned in Plans/ledgers/v2/pldg-20260927-006-wand-command-census/validation/blind_review_cycle2.json. Required deterministic checks pass except the explicitly allowed governance coverage errors and normal assistant checker exit 1 with errors empty. Open owner questions remain recorded; no native runtime or governance seal is claimed.",
+  "errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Settings_System.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Settings_System.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Settings_System.md']"
+  ],
+  "last_event_id": "evt-022",
+  "historical_findings_archive": {
+    "path": "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/findings-through-main-1a501f3341.md",
+    "sha256": "a30f22647301961923d1e5d3a01c5b709c9fc768c38046b700b5e3c503a851bf",
+    "base_commit": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c"
+  },
+  "validator_status": "fail"
 }

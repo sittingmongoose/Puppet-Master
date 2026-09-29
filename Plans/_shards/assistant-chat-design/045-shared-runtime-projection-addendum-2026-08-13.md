@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3606-L22243
+Source lines: L3606-L22257
 
-Source SHA256: `c0598b7cd330cb81288c38ca4b6a84c5c384b981cceeb49af40429a0507db3ff`
+Source SHA256: `2af0f35217dcf661b0a9eabfeb6be5109c8ed9c0b1366778c1368a117cad2823`
 
 ---
 
@@ -3598,16 +3598,26 @@ plan_unit_id: ACD-076
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Thread identity is stable across reopen, restore, archive, and branch-aware history, minted on the first user message, and carries canonical thread, session lineage, persona, overlay, and title metadata.
+canonical_text: >-
+  Thread identity is stable across reopen, restore, archive, and branch-aware history, minted on the first user message, and carries canonical thread, session lineage, persona, overlay, and title metadata.
+  The existing thread metadata persists crew_auto_override as true, false or null; absence or null
+  inherits the project Crew Auto setting. cmd.chat.crew_auto.set with scope thread writes this field
+  without changing the project value or opening the configuration sheet (DL-138, CWR-038).
+  ThreadCrewAutoOverride in Plans/assistant_chat_contracts.schema.json is a field-level contract
+  for this existing metadata only; it creates no durable family, storage key, writer or Settings
+  value, and passing its fixtures does not prove reopen persistence.
 gui_related: false
 gui_classification_reason: Thread identity and metadata are storage/runtime schema behavior.
 depends_on: [ACD-071]
 unblocks: [ACD-077]
 acceptance_criteria:
+  - "Crew Auto thread overrides survive reopen; absence or null inherits the project and thread writes leave the project default unchanged."
   - thread_id uses thr_{ulid} and is minted on the first user message.
   - Empty unsent drafts do not receive durable thread_id values.
   - persona_id remains registry/storage lineage only and not a thread runtime Persona identity field.
 validation_surfaces:
+  - Plans/assistant_chat_contracts.schema.json#/$defs/ThreadCrewAutoOverride
+  - Plans/assistant_chat_contract_fixtures.json
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
 risk_class: thread_identity
@@ -3621,8 +3631,12 @@ node_compile_hint:
   mode: thread_identity_fields
   create_worknodes: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0053
 preserved_exact_tokens:
+  - "ThreadCrewAutoOverride"
+  - "cmd.chat.crew_auto.set"
+  - "crew_auto_override"
   - "thr_{ulid}"
   - "dev_session_id"
   - "terminal_session_id"

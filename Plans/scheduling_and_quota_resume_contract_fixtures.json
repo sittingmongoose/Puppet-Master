@@ -920,6 +920,93 @@
         "changed_at": "2026-09-26T08:00:00Z",
         "revision": 6
       }
+    },
+    {
+      "name": "overnight_occurrence_summary_from_durable_facts",
+      "definition": "ExecutionOccurrenceSummary",
+      "value": {
+        "schema_id": "pm.execution.occurrence_summary.v1",
+        "schema_version": "1.0.0",
+        "schedule_id": "exec-schedule:fixture:1",
+        "occurrence_start": "2026-09-27T22:00:00Z",
+        "plan_run_id": "plan-run:fixture:1",
+        "plan_version": 2,
+        "plan_hash": "3333333333333333333333333333333333333333333333333333333333333333",
+        "actual_start": "2026-09-27T22:01:00Z",
+        "actual_end": "2026-09-28T01:52:00Z",
+        "steps_built": 2,
+        "steps_total": 5,
+        "end_reason": "paused_at_wind_down",
+        "scheduled_message_outcomes": [
+          {
+            "scheduled_message_id": "scheduled-message:fixture:1",
+            "outcome": "dispatched"
+          },
+          {
+            "scheduled_message_id": "scheduled-message:fixture:2",
+            "outcome": "held"
+          }
+        ],
+        "execution_started": true
+      }
+    },
+    {
+      "name": "held_occurrence_before_first_admission",
+      "definition": "ExecutionOccurrenceSummary",
+      "value": {
+        "schema_id": "pm.execution.occurrence_summary.v1",
+        "schema_version": "1.0.0",
+        "schedule_id": "exec-schedule:fixture:held-first",
+        "occurrence_start": "2026-09-27T22:00:00Z",
+        "plan_run_id": null,
+        "plan_version": 2,
+        "plan_hash": "3333333333333333333333333333333333333333333333333333333333333333",
+        "actual_start": null,
+        "actual_end": null,
+        "steps_built": 0,
+        "steps_total": 5,
+        "end_reason": "held",
+        "scheduled_message_outcomes": [
+          {
+            "scheduled_message_id": "scheduled-message:fixture:1",
+            "outcome": "dispatched"
+          },
+          {
+            "scheduled_message_id": "scheduled-message:fixture:2",
+            "outcome": "held"
+          }
+        ],
+        "execution_started": false
+      }
+    },
+    {
+      "name": "held_continuation_without_execution",
+      "definition": "ExecutionOccurrenceSummary",
+      "value": {
+        "schema_id": "pm.execution.occurrence_summary.v1",
+        "schema_version": "1.0.0",
+        "schedule_id": "exec-schedule:fixture:held-continuation",
+        "occurrence_start": "2026-09-27T22:00:00Z",
+        "plan_run_id": "plan-run:fixture:1",
+        "plan_version": 2,
+        "plan_hash": "3333333333333333333333333333333333333333333333333333333333333333",
+        "actual_start": null,
+        "actual_end": null,
+        "steps_built": 0,
+        "steps_total": 5,
+        "end_reason": "held",
+        "scheduled_message_outcomes": [
+          {
+            "scheduled_message_id": "scheduled-message:fixture:1",
+            "outcome": "dispatched"
+          },
+          {
+            "scheduled_message_id": "scheduled-message:fixture:2",
+            "outcome": "held"
+          }
+        ],
+        "execution_started": false
+      }
     }
   ],
   "invalid": [
@@ -1520,6 +1607,123 @@
       "patch": {
         "setting_key": "scheduling.automation_pause"
       }
+    },
+    {
+      "name": "occurrence_summary_without_exact_plan_hash",
+      "definition": "ExecutionOccurrenceSummary",
+      "base_valid": "overnight_occurrence_summary_from_durable_facts",
+      "remove": [
+        "plan_hash"
+      ],
+      "expected_error": "exact approved Plan hash is required"
+    },
+    {
+      "name": "occurrence_summary_without_actual_end",
+      "definition": "ExecutionOccurrenceSummary",
+      "base_valid": "overnight_occurrence_summary_from_durable_facts",
+      "remove": [
+        "actual_end"
+      ],
+      "expected_error": "real close bound is required"
+    },
+    {
+      "name": "occurrence_summary_without_steps_built",
+      "definition": "ExecutionOccurrenceSummary",
+      "base_valid": "overnight_occurrence_summary_from_durable_facts",
+      "remove": [
+        "steps_built"
+      ],
+      "expected_error": "built count cannot be guessed"
+    },
+    {
+      "name": "occurrence_summary_without_message_outcomes",
+      "definition": "ExecutionOccurrenceSummary",
+      "base_valid": "overnight_occurrence_summary_from_durable_facts",
+      "remove": [
+        "scheduled_message_outcomes"
+      ],
+      "expected_error": "message outcomes are required"
+    },
+    {
+      "name": "occurrence_summary_unknown_end_reason",
+      "definition": "ExecutionOccurrenceSummary",
+      "base_valid": "overnight_occurrence_summary_from_durable_facts",
+      "patch": {
+        "end_reason": "probably_paused"
+      },
+      "expected_error": "end reason is closed"
+    },
+    {
+      "name": "started_occurrence_without_run",
+      "definition": "ExecutionOccurrenceSummary",
+      "base_valid": "overnight_occurrence_summary_from_durable_facts",
+      "patch": {
+        "plan_run_id": null
+      },
+      "expected_error": "a started occurrence requires its admitted run"
+    },
+    {
+      "name": "started_occurrence_without_actual_start",
+      "definition": "ExecutionOccurrenceSummary",
+      "base_valid": "overnight_occurrence_summary_from_durable_facts",
+      "patch": {
+        "actual_start": null
+      },
+      "expected_error": "a started occurrence requires its actual start"
+    },
+    {
+      "name": "started_occurrence_without_actual_end",
+      "definition": "ExecutionOccurrenceSummary",
+      "base_valid": "overnight_occurrence_summary_from_durable_facts",
+      "patch": {
+        "actual_end": null
+      },
+      "expected_error": "a closed started occurrence requires its actual end"
+    },
+    {
+      "name": "held_occurrence_invents_start",
+      "definition": "ExecutionOccurrenceSummary",
+      "base_valid": "held_occurrence_before_first_admission",
+      "patch": {
+        "actual_start": "2026-09-27T22:01:00Z"
+      },
+      "expected_error": "not-started has no actual start"
+    },
+    {
+      "name": "held_occurrence_invents_end",
+      "definition": "ExecutionOccurrenceSummary",
+      "base_valid": "held_occurrence_before_first_admission",
+      "patch": {
+        "actual_end": "2026-09-28T01:52:00Z"
+      },
+      "expected_error": "not-started has no actual end"
+    },
+    {
+      "name": "held_occurrence_claims_built_step",
+      "definition": "ExecutionOccurrenceSummary",
+      "base_valid": "held_occurrence_before_first_admission",
+      "patch": {
+        "steps_built": 1
+      },
+      "expected_error": "not-started built zero steps"
+    },
+    {
+      "name": "not_started_occurrence_claims_completion",
+      "definition": "ExecutionOccurrenceSummary",
+      "base_valid": "held_occurrence_before_first_admission",
+      "patch": {
+        "end_reason": "completed"
+      },
+      "expected_error": "the not-started branch is a held occurrence"
+    },
+    {
+      "name": "occurrence_summary_missing_started_fact",
+      "definition": "ExecutionOccurrenceSummary",
+      "base_valid": "overnight_occurrence_summary_from_durable_facts",
+      "remove": [
+        "execution_started"
+      ],
+      "expected_error": "execution_started is required and never inferred from missing history"
     }
   ]
 }

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L13514-L14566
+Source lines: L13516-L14613
 
-Source SHA256: `e6236495f37921bf880f218081f73a050e3052c4b095f0e9540d344ab4f5b7a8`
+Source SHA256: `124899875c100510041d0cffe1b6a2095765d6e1fee967bcbb11b0b3fa2427df`
 
 ---
 
@@ -35,6 +35,7 @@ The redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room
 | `mode_menu`, `natural_language`, `plan_schedule` | `cmd.collaboration.configure` (a preview with no side effects; `plan_schedule` is the Build At sheet's "Set up the Crew…") |
 | `wand` | `cmd.chat.teach.open_memory` ("Memory…"), `cmd.chat.teach.capture` ("Teach…") |
 | `brainstorm_card` | `cmd.questionnaire.resume` ("Answer now") |
+| `plan_card` | `cmd.execution_window.cancel` (Cancel schedule, DL-138) |
 | `workflow_card` | `cmd.runtime.approve`, `cmd.runtime.decline`, `cmd.permissions.review_request` (Allow once, Don't allow and Details on a needs-you decision) |
 | `review_card`, `review_panel`, `chat_room_card`, `chat_room_panel` | `cmd.chat.todos.open` ("To-Do created · Open", Open To-Dos) |
 
@@ -77,12 +78,16 @@ canonical_text: >-
   or correct; the Teach sheet saves through cmd.chat.teach.confirm and closes through
   cmd.chat.teach.cancel. Every added surface takes the UCC-156 availability and disabled-reason
   obligation.
+  The Plan card's Cancel schedule control produces cmd.execution_window.cancel from plan_card
+  (SQR-013, DL-138), alongside schedule_manager; it cancels only the future execution schedule
+  through the existing request, never an already-running plan.
 gui_related: true
 gui_classification_reason: "Names the visible sheets, cards, dock lines and header that produce existing commands, and their disabled states."
 split_recommended: false
 depends_on: [UCC-156, ACD-476, ACD-477, ACD-478, ACD-479, CWR-020, CWR-031, BSD-030, SQR-012, SQR-013, AMS-047]
 unblocks: [WM-062, CDRY-021, UCC-170, UCC-171, UCC-172, CS-086]
 acceptance_criteria:
+  - "The Plan card and schedule manager are admitted producers of cmd.execution_window.cancel, with unchanged cancellation custody."
   - "Each surface in the two tables appears in the production wiring surface list of every row it names, and in no other row because of this addendum."
   - "run_dock never produces cmd.runtime.approve, cmd.runtime.decline or cmd.permissions.review_request."
   - "Build With Crew mode dispatches cmd.chat.plan.build_with_crew and never cmd.collaboration.start."
@@ -104,10 +109,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 7.4, 7.12, 8.1, 8.4, 8.10, 8.12, 8.14, 8.15"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-03, B-CMD-04, B-ACD-12"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
 preserved_exact_tokens:
+  - "cmd.execution_window.cancel"
+  - "plan_card"
   - "run_dock"
   - "wonderer_workspace"
   - "memory_proposal_line"
@@ -161,7 +169,7 @@ In the closure wave on 2026-09-27, three of them were settled. The owner confirm
 
 ### UCC-170 - Wand Module Command Census
 
-The census classifies the redesign's product controls: the sheets, cards, dock lines, run view, header, managers and documents of the redesigned Assistant wand modules. The redesign's commands audit counts 197 controls. 188 of them are product controls; the other nine are concept demo controls, which stay `CONCEPT_DEMO_ONLY` under CS-079 and are not listed here. The owner's closure answers add three product controls that the audit did not count. Two come from DL-126: the ELI5 dot by the message box, and "Explain this reply simply" on a finished reply. The third comes from DL-136: the "Pause all automations" switch, which the design had shown read-only. The census therefore lists 191 controls.
+The census classifies the redesign's product controls: the sheets, cards, dock lines, run view, header, managers and documents of the redesigned Assistant wand modules. The redesign's commands audit counts 197 controls. 188 of them are product controls; the other nine are concept demo controls, which stay `CONCEPT_DEMO_ONLY` under CS-079 and are not listed here. The owner's closure answers add three product controls that the audit did not count. Two come from DL-126: the ELI5 dot by the message box, and "Explain this reply simply" on a finished reply. The third comes from DL-136: the "Pause all automations" switch, which the design had shown read-only. DL-138 adds See which rule and Ask for a fix on the taught-rule note, bringing the census to 193 controls.
 
 Each control has exactly one of these dispositions:
 - **Command**: it dispatches the named row unchanged.
@@ -375,7 +383,7 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | Turn back on (automations paused by you) | New, `cmd.runtime.automation_pause.set` with paused false (UCC-174, DL-136). This and the switch are the only controls that clear the pause. | `schedule_manager` |
 | Done in the manager | View | `schedule_manager` |
 
-**Memory (9)**
+**Memory (11)**
 
 | Control | Disposition | Surfaces |
 |---|---|---|
@@ -388,6 +396,8 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | Export | New, `cmd.chat.memory.export` (UCC-171) | `memory_sheet` |
 | Editing a note and its half-life (not drawn) | No producer. `cmd.chat.memory.edit` has no control in the redesign. This is recorded, not filled here. | — |
 | "Noted" and "Verified" in a reply's meta row | View | transcript |
+| See which rule on Followed or Missed | View: saved rule-check evidence (AMS-053, DL-138) | `message_chrome` |
+| Ask for a fix on Missed | Command revised: `cmd.review.send_findings_to_agent`, `taught_rule_check` source; fills the empty composer and never sends (UCC-172, DL-138) | `message_chrome` |
 
 **Teach (11)**
 
@@ -428,7 +438,7 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | Standard or Simple | Command, revised, `cmd.chat.eli5.set` with off or on (UCC-175) | `eli5_sheet` |
 | "Follow my usual setting" | Command, revised, `cmd.chat.eli5.set` with inherit. It deletes this chat's override, so the chat follows the project default (UCC-175). | `eli5_sheet` |
 | "How it's decided": All chats | Settings: the app default, `general.interaction.eli5-default` | `eli5_sheet` |
-| "How it's decided": Chats in this project | Settings: the project default. It needs a project scope on `general.interaction.eli5-default`, which is a Settings follow-up outside this compile (UCC-175). | `eli5_sheet` |
+| "How it's decided": Chats in this project | Settings: the project scope of `general.interaction.eli5-default`, persisted by SSYS-028 (UCC-175, DL-138). | `eli5_sheet` |
 | "How it's decided": This chat | Command, revised, `cmd.chat.eli5.set`, the same as Standard or Simple | `eli5_sheet` |
 | The disclosure; Done | View | `eli5_sheet` |
 | The ELI5 dot by the message box | Command, revised, `cmd.chat.eli5.set` with on or off. It is the one-click switch for this chat (UCC-175). | `composer` |
@@ -452,12 +462,12 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  The wand-module command census classifies all 191 product controls of the redesigned Assistant wand
+  The wand-module command census classifies all 193 product controls of the redesigned Assistant wand
   modules: the commands audit's 197 less nine CONCEPT_DEMO_ONLY demo controls, plus the ELI5 dot,
   "Explain this reply simply" and the "Pause all automations" switch, which the closure answers add
-  (DL-126, DL-136). Each control is
+  (DL-126, DL-136), plus See which rule and Ask for a fix on the taught-rule note (DL-138). Each control is
   exactly one of Command (an existing row), Command revised (an existing row with a named revision),
-  New (a UCC-171 or UCC-174 row), Draft, View, Settings (outside this compile), No producer (retired
+  New (a UCC-171 or UCC-174 row), Draft, View, Settings (owner transaction), No producer (retired
   by a named decision, or not drawn in the product) or Open (a named unanswered card or follow-up;
   none remains). Review and BrainStorm have no wand producer of cmd.collaboration.configure (DL-119).
   End discussion is cmd.chat_room.end; advisor-note Dismiss is cmd.bsd.finding.dismiss; Don't wait is
@@ -476,6 +486,9 @@ canonical_text: >-
   sheet first; Allow Crews in this chat is retired into that check (DL-120, CWR-038). A Chat Room
   message sent mid-round is cmd.collaboration.message with delivery_mode queue, or steer for Send now
   (DL-112, CWR-024). No control is Open.
+  The Followed or Missed note is saved reply metadata, not an extra action. See which rule is view
+  state; Ask for a fix on message_chrome dispatches cmd.review.send_findings_to_agent with
+  taught_rule_check and obeys UCC-172's empty-composer, source-thread and no-send contract (DL-138).
 gui_related: true
 gui_classification_reason: "Classifies every visible control of the redesigned sheets, cards, dock, run view, header and managers."
 split_recommended: false
@@ -503,12 +516,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 4.6, 6.7, 7, 8.0-8.14"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f section 2"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 line B-CMD-01"
   - "Plans/Decision_Log.md#DL-112, #DL-118, #DL-119, #DL-120, #DL-125, #DL-126, #DL-127, #DL-130, #DL-134, #DL-135, #DL-136"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
 preserved_exact_tokens:
+  - "DL-138"
+  - "message_chrome"
+  - "taught_rule_check"
   - "CONCEPT_DEMO_ONLY"
   - "crew_auto_receipt"
   - "delivery_mode"
@@ -660,12 +678,12 @@ This unit adds the surfaces and row revisions that were waiting on the owner's a
 **Crew Auto (DL-119, DL-120, DL-135).**
 - `cmd.chat.crew_auto.open_config` is produced by three controls: the "Crew Auto settings…" row in `multi_agent_menu`, the "Settings…" link in the Crew sheet (`workflow_modal`), and the Change control of the Crew Auto note in the chat (`crew_auto_receipt`).
 - `crew_auto_receipt` is a new surface: the one line, "Crew Auto is on for this project", that turning Crew Auto on for the project leaves in the chat where it was turned on (DL-135, CWR-038). Its Change produces only `cmd.chat.crew_auto.open_config`. Saving rules while Crew Auto is already on, and changing one chat's check, leave no note.
-- `cmd.chat.crew_auto.set` carries a scope, closed as `project | thread` (DL-120, CWR-038). The Crew Auto sheet's primary sends project: one click and one command, whose one request carries the rules and the team and turns Crew Auto on for the project. A chat's Crew Auto check sends thread: it sets only that chat's override of the project value and never opens the sheet first (FinalGUISpec F3-578). There is no separate "Allow Crews in this chat" control; DL-120 retires it into the check. The project default being on is a change to the Settings key's default, outside this compile.
+- `cmd.chat.crew_auto.set` carries a scope, closed as `project | thread` (DL-120, CWR-038). The Crew Auto sheet's primary sends project: one click and one command, whose one request carries the rules and the team and turns Crew Auto on for the project. A chat's Crew Auto check sends thread: it sets only that chat's override of the project value and never opens the sheet first (FinalGUISpec F3-578). There is no separate "Allow Crews in this chat" control; DL-120 retires it into the check. Settings SSYS-028 owns the On project default; ACD-076 owns the persisted `crew_auto_override` thread field (DL-138).
 - The row's command label stays Configure Crew Auto; "Crew Auto settings…" is the row's menu text.
 - "Manage Defaults…" is not renamed and keeps its meaning.
 - Review and BrainStorm have no wand rows. `cmd.collaboration.configure` for them comes from `mode_menu` (Review, and BrainStorm under Deep Plan) and from `natural_language`, never from `wand`.
 
-**Send Findings To Agent (DL-125).** `cmd.review.send_findings_to_agent` writes a fix request, built from the selected findings, into the source thread's empty composer, and it never sends. The user sends it. Its result is `ComposerBufferResult`, and it refuses with `composer_not_empty` when the composer already holds text. The findings' lineage goes in the message metadata, never in the text. This supersedes the row's "Sends selected normalized findings to the ordinary agent turn as an explicit follow-up", and its `CollaborationMessageResult`.
+**Send Findings To Agent (DL-125).** `cmd.review.send_findings_to_agent` writes a fix request, built from the selected findings, into the source thread's empty composer, and it never sends. The user sends it. Its result is `ComposerBufferResult`, and it refuses with `composer_not_empty` when the composer already holds text. The findings' lineage goes in the message metadata, never in the text. This supersedes the former row's "Sends selected normalized findings to the ordinary agent turn as an explicit follow-up" and `CollaborationMessageResult`; the active row now declares `ComposerBufferResult`.
 
 **Settled in the closure wave.** The `eli5_sheet` surface, and the `inherit` value of `cmd.chat.eli5.set`, waited on DL-126's follow-up. The owner has now confirmed DL-126's resolution, and UCC-175 adds both.
 
@@ -694,12 +712,20 @@ canonical_text: >-
   cmd.review.send_findings_to_agent fills the empty composer and never sends, returns
   ComposerBufferResult and refuses with composer_not_empty (DL-125). eli5_sheet and the inherit value
   are settled by DL-126 and added in UCC-175.
+  DL-138 reuses cmd.review.send_findings_to_agent for Ask for a fix on message_chrome.
+  ReviewSendFindingsRequest keeps its existing review variant and adds a disjoint taught_rule_check
+  source variant carrying thread_id, reply_message_id and nonempty missed_teaching_refs, whose
+  memory_id and normalized_fact_sha256 identify failed checks on that reply's persisted context record.
+  source_kind is review_findings or taught_rule_check, with no invented review-run or finding IDs. ComposerBufferResult keeps source-specific lineage in metadata. Both
+  variants require the source thread's empty composer, refuse composer_not_empty and never send or
+  execute the fix; only the user sends. CWR-031 and AMS-053 own these source contracts.
 gui_related: true
 gui_classification_reason: "Names the visible Teach sheet entries, taught-rules document, receipt, Crew Auto rows and note, and Send Findings behaviour."
 split_recommended: false
 depends_on: [UCC-169, UCC-171, ACD-477, CWR-038]
 unblocks: [UCC-170, UCC-175, WM-063]
 acceptance_criteria:
+  - "Ask for a fix reuses the existing command with saved reply/check identities, never fabricated review findings, and refuses to overwrite a non-empty composer."
   - "Every Teach entry opens the same Teach sheet through cmd.chat.teach.capture, and no in-chat capture card exists."
   - "cmd.review.send_findings_to_agent never sends a message and refuses with composer_not_empty when the composer holds text."
   - "No wand producer of cmd.collaboration.configure exists for Review or BrainStorm."
@@ -720,11 +746,23 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f sections 4.1 (REV-5, REV-10, REV-11, REV-15) and 4.2"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-03, B-CMD-04"
   - "Plans/Decision_Log.md#DL-119, #DL-120, #DL-125, #DL-126, #DL-127, #DL-130, #DL-135"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
 preserved_exact_tokens:
+  - "source_kind"
+  - "review_findings"
+  - "thread_id"
+  - "reply_message_id"
+  - "missed_teaching_refs"
+  - "memory_id"
+  - "normalized_fact_sha256"
+  - "DL-138"
+  - "message_chrome"
+  - "taught_rule_check"
+  - "ReviewSendFindingsRequest"
   - "cmd.chat.crew_auto.set"
   - "Crew Auto is on for this project"
   - "teach_document"
@@ -770,7 +808,7 @@ The following are display words only; the data keeps its own words:
 - "snapshot" is shown for the frozen target pack.
 - "helpers" is shown for participants (DL-124).
 
-Two catalog label drifts are older than the redesign and have no decision card: Summarize Room against Summarize Now, and Run Review Again against Run Another Review. They are unchanged here and stay open.
+DL-138 settles the two older catalog label drifts: `cmd.chat_room.summarize` reads Summarize Now (formerly Summarize Room), and `cmd.review.run_again` reads Run Another Review (formerly Run Review Again). The old words remain historical lookup terms only.
 
 ```yaml
 plan_unit_id: UCC-173
@@ -786,14 +824,15 @@ canonical_text: >-
   settings… and Manage Defaults… is unchanged (DL-119). The seven new rows are labelled End Discussion,
   Check It, Dismiss Advice, Don't Wait, Turn Off Rule, Lock Rule and Export Memory (DL-130). Gist
   Review, frozen target pack and participant keep their data words and show Notes it took, snapshot and
-  helpers. Summarize Room against Summarize Now and Run Review Again against Run Another Review stay
-  open.
+  helpers. DL-138 sets cmd.chat_room.summarize to Summarize Now (formerly Summarize Room), and
+  cmd.review.run_again to Run Another Review (formerly Run Review Again).
 gui_related: true
 gui_classification_reason: "Sets the visible labels of redesigned menu rows, buttons and recovery actions."
 split_recommended: false
 depends_on: [UCC-171]
 unblocks: [UCC-170]
 acceptance_criteria:
+  - "Every producer shows Summarize Now and Run Another Review; the former labels remain history only."
   - "The regenerate-title and synthesize-plan rows show Name it for me and Write the plan, and the old labels appear only as superseded history."
   - "No recovery button says Try again, Check again or Open recovery."
   - "Gist Review, frozen target pack and participant remain the data words."
@@ -810,11 +849,15 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f section 8, L-1 to L-12"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 line B-CMD-05"
   - "Plans/Decision_Log.md#DL-118, #DL-119, #DL-124, #DL-130, #DL-134"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
 preserved_exact_tokens:
+  - "DL-138"
+  - "Run Another Review"
+  - "Summarize Now"
   - "Name it for me"
   - "Regenerate Title"
   - "Write the plan"
@@ -830,7 +873,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not delete the superseded labels; supersede them."
   - "Do not change the Settings key or scope behind Save as default."
-  - "Do not settle Summarize Room against Summarize Now or Run Review Again against Run Another Review without a decision."
+  - "Do not show the retired Summarize Room or Run Review Again label after DL-138."
 owner_hints:
   - Plans/UI_Command_Catalog.md
 ```
@@ -974,7 +1017,7 @@ This unit compiles DL-126's owner resolution for the ELI5 family.
 2. otherwise, the project default;
 3. otherwise, the app default.
 
-The app default is the existing setting `general.interaction.eli5-default`, and the per-chat override is the existing `general.interaction.chat-eli5`. The project default needs a project scope on `general.interaction.eli5-default`. That is a Settings follow-up, outside the wand-modules compile. This catalog names no new key and writes no Settings value.
+The app default is the existing setting `general.interaction.eli5-default`, and the per-chat override is the existing `general.interaction.chat-eli5`. The project default is the project scope of `general.interaction.eli5-default`, persisted by Settings SSYS-028 under DL-138. This catalog names no new key and writes no Settings value.
 
 **`cmd.chat.eli5.set` is revised.** `ELI5ThreadOverrideRequest` carries a value that is exactly one of `on`, `off` and `inherit`:
 - `on` and `off` set this chat's override.
@@ -1002,8 +1045,8 @@ canonical_text: >-
   ELI5 has a project default that applies everywhere in the project, and a chat's override replaces it
   for that chat only. A chat's ELI5 state resolves to the chat override, otherwise the project default,
   otherwise the app default (DL-126). The app default is general.interaction.eli5-default and the chat
-  override is general.interaction.chat-eli5. The project level needs a project scope on
-  general.interaction.eli5-default, which is a Settings follow-up outside this compile.
+  override is general.interaction.chat-eli5. The project level is the project scope of
+  general.interaction.eli5-default, persisted by Settings SSYS-028 (DL-138).
   cmd.chat.eli5.set takes on, off or inherit in ELI5ThreadOverrideRequest; inherit deletes the chat
   override so the chat follows the project default. A switch changes only the replies written after
   it and never re-sends, regenerates or rewrites an earlier reply, so it never produces a second
@@ -1037,12 +1080,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f section 2.17 (E-01 to E-07) and section 4.1 REV-6"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-01, B-CMD-03"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json sha256:33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5 answer p08"
   - "Plans/Decision_Log.md#DL-126"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
 preserved_exact_tokens:
+  - "DL-138"
   - "eli5_sheet"
   - "cmd.chat.eli5.set"
   - "ELI5ThreadOverrideRequest"

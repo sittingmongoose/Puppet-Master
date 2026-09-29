@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5323-L26396
+Source lines: L5323-L26401
 
-Source SHA256: `28175e393a15cdbe7fbc591613fedf387026ac3ee8759b7dd3494cd06b077aa4`
+Source SHA256: `6eca938c359dfbe2c43525c0b5b4b39fd2475c03c73d25586cc511548f8b8d2c`
 
 ---
 
@@ -4037,8 +4037,8 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Theme switching is live for colors, spacing, borders, overlays, and same-family switches, and
   requires restart for cross-family switches that change loaded font families (Retro's
-  Orbitron/Rajdhani, Friendly's Cal Sans/Quicksand/Nunito, or Glass/Basic system fonts); Glass
-  and Basic share system fonts so switches between them may be live. Auto presentation mode
+  IBM Plex Mono, Friendly's Poppins/Nunito, or Glass/Basic Inter); Glass
+  and Basic share Inter so switches between them may be live. Auto presentation mode
   follows the same within-family live rule: when the OS appearance (prefers-color-scheme)
   changes, the selected family resolves to its other variant instantly with no restart.
   Superseded lineage
@@ -4051,40 +4051,45 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "The bundled face mapping follows F3-430 and DL-138; same-family and Basic/Glass switches stay live under the existing switching rules."
+  - "The covered source span remains losslessly available for exact-text audit."
+  - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+  - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+  - "Plans/FinalGUISpec.md"
 node_compile_hint:
   mode: theme_switching_live_restart_rules
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0062"
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0062"
 preserved_exact_tokens:
-- "live colors"
-- "spacing"
-- "borders"
-- "overlays"
-- "restart required"
-- "font family"
-- "same-family instant"
-- "Basic remains one family"
-- "Auto presentation mode"
-- "prefers-color-scheme"
+  - "Poppins"
+  - "IBM Plex Mono"
+  - "Inter"
+  - "live colors"
+  - "spacing"
+  - "borders"
+  - "overlays"
+  - "restart required"
+  - "font family"
+  - "same-family instant"
+  - "Basic remains one family"
+  - "Auto presentation mode"
+  - "prefers-color-scheme"
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FinalGUISpec.md"
+  - "Plans/FinalGUISpec.md"
 ```
 
 ### F3-078 - Slint Theme Global Token Contract

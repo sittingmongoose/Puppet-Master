@@ -1,0 +1,35 @@
+{
+  "ledger_id": "pldg-20260927-003-wand-scheduling",
+  "cycle": 2,
+  "reviewed_base": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c",
+  "review_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger003-cycle2/findings.jsonl",
+  "review_source_sha256": "0fc68a96183f9d948ccb7a68cc92044ca83ad48c653040ffbd950d8971716bd0",
+  "review_summary": {
+    "summary": true,
+    "units_reviewed": [
+      "APR-011",
+      "APR-014",
+      "ATS-062",
+      "ATS-064",
+      "DL-138",
+      "SQR-012",
+      "SQR-013",
+      "SQR-015",
+      "SQR-016",
+      "SQR-018",
+      "SP-306",
+      "SP-323"
+    ],
+    "verdict": "land",
+    "n_findings": 0
+  },
+  "finding_count": 0,
+  "dispositions": [],
+  "status": "closed_at_two_cycle_cap",
+  "validation_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/validation-final/results.json sha256:6a16de9aa510a2ace08d88dd13954f938d16a73e57db90c09655d7e3410b31f0",
+  "open_questions": [
+    "q-006"
+  ],
+  "external_open_questions": [],
+  "claim_boundary": "Static compile and contract review only; no native runtime proof or governance seal."
+}

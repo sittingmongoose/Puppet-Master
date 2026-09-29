@@ -34,3 +34,27 @@ Reserved ID ranges (re-check the live maximum of each family on `origin/main` ri
 Only lines triaged NOW in the canon plan were compiled in the first pass. A line triaged WAIT was recorded as an open
 question naming its decision card and was compiled in the WAIT wave once its card was answered; an answer of "ask", or no
 answer, keeps it open. A line triaged OUT is not compiled.
+
+## Owner follow-up authority, 2026-09-29
+
+Jared approved all 29 recommended answers in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c`. DL-138 records the decision. This authorization supersedes the older operating restriction against settling unanswered cards for only the numbered follow-ups assigned to this ledger. It authorizes owner prose now, then typed companions after the separate phase release. No registry admission, runtime execution, shard/index generation or governance seal is inferred.
+
+## Landed findings archive for DL-138 witness
+
+The prior `findings.md` from origin/main `1a501f3341` is preserved byte-for-byte at `Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver/source_shards/findings-through-main-1a501f3341.md`, SHA-256 `54b2cf0c077a7422caa1436e0a517e895e4bf8a68d4ae3f3984f27e781566e10`. Active findings now contain only the DL-138 records, while all historical ledger record and queue streams remain. This records the resume boundary for the full `--base origin/main` compile witness.
+
+## Released typed companion phase, 2026-09-29
+
+The lead explicitly released this ledger’s bounded schema, fixture and registry companion files after the owner prose compile witnesses passed. The static contract validator result is `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/part-b-bsd-scheduling-contracts.json sha256:1d8bb7ea8c52f1cf808ad7e79e2c555e3f17c712742ee09efa82e578dcff7ff0`. This is shape and fixture evidence only, not native writer, restart, dispatch or EventRecord execution evidence. The unregistered `runtime.automation_pause_changed` family remains under DL-093 admission and Scheduling q-006 stays open.
+
+## Blind compile review cycle 1 — source-preserving corrections
+
+Reconciled DL-138 to the existing emitted state, stale/unreconfirmed data and stale_projection error; made the composer select the reviewing entry without changing context_state; completed BSD-037 result identity, resulting_epoch and projection_ref boundaries. Fixed Decision Log owner-unit routing and explicit snapshot policy. Retained the historical pause question as historical, now closed by DL-138.
+
+Review source: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger002-cycle1/findings.jsonl sha256:af0a3702de7fade4f0d59470af76255b2fb6c5bd2d45499ca9577dd941667d9a`. Event `evt-014`, correction `cor-032`. These are fidelity repairs under the accepted answers; they create no runtime evidence or governance seal.
+
+## DL-138 final compile review disposition
+
+DL-138 prose and companion compile reviewed through the two-cycle cap; every finding is dispositioned in Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver/validation/blind_review_cycle2.json. Required deterministic checks pass except the explicitly allowed governance coverage errors and normal assistant checker exit 1 with errors empty. Open owner questions remain recorded; no native runtime or governance seal is claimed.
+
+Event `evt-015`. Raw review source: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger002-cycle2/findings.jsonl`; SHA-256 `8cfb8c94bf635588724e3e5debb7856f5a4137926d90b38c9ca25545d6356014`.

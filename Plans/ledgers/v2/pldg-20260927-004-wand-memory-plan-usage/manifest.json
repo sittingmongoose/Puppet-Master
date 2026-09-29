@@ -1,22 +1,22 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-004-wand-memory-plan-usage",
-  "updated_at_utc": "2026-09-27T23:40:00+00:00",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
   "title": "Wand modules redesign: Memory, plan runtime records, Personas and pre-start estimates",
-  "status": "active",
+  "status": "compiled",
   "created_at_utc": "2026-09-27T19:15:00+00:00",
   "record_counts": {
-    "events": 8,
-    "design_atoms": 13,
-    "decisions": 10,
+    "events": 12,
+    "design_atoms": 18,
+    "decisions": 15,
     "questions": 14,
     "blockers": 0,
-    "corrections": 22
+    "corrections": 29
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage/source_shards/authorization.md",
     "Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage/source_shards/findings.md"
   ],
-  "phase": "prose_and_companions_compiled",
-  "last_event_id": "evt-008"
+  "phase": "compiled_with_open_owner_questions",
+  "last_event_id": "evt-012"
 }

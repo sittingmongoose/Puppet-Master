@@ -1,27 +1,36 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-003-wand-scheduling",
-  "updated_at_utc": "2026-09-28T00:15:00+00:00",
-  "last_event_id": "evt-014",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "last_event_id": "evt-023",
   "canonical_plan_targets": [
     "Plans/Scheduling_and_Quota_Resume.md"
   ],
   "compiled_owner_docs": [
     "Plans/Scheduling_and_Quota_Resume.md",
     "Plans/Assistant_Plan_Runtime.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Automated_Testing_System.md",
+    "Plans/storage-plan.md"
   ],
   "compiled_plan_outputs": [
     "Plans/Scheduling_and_Quota_Resume.md",
     "Plans/Assistant_Plan_Runtime.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Automated_Testing_System.md",
+    "Plans/storage-plan.md"
   ],
   "governance_status": "not_requested",
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/validation/blind_review_cycle2.json",
+  "latest_audit_status": "closed_at_two_cycle_cap",
   "validation_state": {
-    "ledger_health": "see validation/ledger_health.json",
-    "compile_witness": "pass"
+    "ledger_health": "pass_except_deferred_governance_coverage",
+    "compile_witness": "pass",
+    "contracts": "pass_static_only",
+    "shards_and_plan_index": "pass",
+    "wiring_and_touch_closure": "pass",
+    "blind_review": "closed_at_two_cycle_cap",
+    "assistant_contract_check": "normal_exit_1_errors_empty",
+    "settings_and_concept_companions": "Inventory valid; PM7 build check passed and tour 7/7.",
+    "claim_boundary": "Static compile checks and two blind reviews complete. Landing pending; governance not requested and native runtime not proven."
   },
   "planned_owner_docs": [
     "Plans/Scheduling_and_Quota_Resume.md",
@@ -34,7 +43,7 @@
     "PSCHED": "PSCHED-015..PSCHED-018",
     "ATS": "ATS-064"
   },
-  "status": "prose_compiled_pending_review",
+  "status": "compiled_with_open_owner_questions",
   "items": [
     {
       "queue_id": "queue-001",
@@ -179,8 +188,96 @@
       ],
       "companion_outputs": [],
       "compile_event_id": "evt-008"
+    },
+    {
+      "queue_id": "queue-008",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-sqr-followup-01"
+      ],
+      "target_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "target_docs": [
+        "Plans/Scheduling_and_Quota_Resume.md"
+      ],
+      "target_plan_unit_ids": [
+        "SQR-012"
+      ],
+      "compiled_plan_unit_ids": [
+        "SQR-012"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-015"
+    },
+    {
+      "queue_id": "queue-009",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-sqr-followup-02"
+      ],
+      "target_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "target_docs": [
+        "Plans/Scheduling_and_Quota_Resume.md",
+        "Plans/Assistant_Plan_Runtime.md",
+        "Plans/storage-plan.md"
+      ],
+      "target_plan_unit_ids": [
+        "SQR-015",
+        "SQR-016",
+        "APR-011",
+        "SP-306"
+      ],
+      "compiled_plan_unit_ids": [
+        "SQR-015",
+        "SQR-016",
+        "APR-011",
+        "SP-306"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-015"
+    },
+    {
+      "queue_id": "queue-010",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-sqr-followup-03"
+      ],
+      "target_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "target_docs": [
+        "Plans/Scheduling_and_Quota_Resume.md"
+      ],
+      "target_plan_unit_ids": [
+        "SQR-013"
+      ],
+      "compiled_plan_unit_ids": [
+        "SQR-013"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-015"
+    },
+    {
+      "queue_id": "queue-011",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-sqr-followup-04"
+      ],
+      "target_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "target_docs": [
+        "Plans/Scheduling_and_Quota_Resume.md",
+        "Plans/storage-plan.md"
+      ],
+      "target_plan_unit_ids": [
+        "SQR-018",
+        "SP-323"
+      ],
+      "compiled_plan_unit_ids": [
+        "SQR-018",
+        "SP-323"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-015"
     }
   ],
-  "terminal_ledger_event_id": null,
-  "notes": "Each item names the owner PlanUnits the line compiled into (compiled_plan_unit_ids, fenced units only) and, in target_plan_unit_ids, any heading-only unit it amended in place (CDRY-008). In-place prose amendments outside PlanUnits are listed in source_shards/findings.md. queue-007 is the closure wave (B-SQR-05, DL-136): SQR-018 and ATS-064 are new, SQR-001 and SQR-006 are amended in place, and the Assistant_Plan_Runtime.md section 3 sentences sits outside any PlanUnit. Companion outputs of the B-SQR-09 task are named in q-002; the closure wave wrote none."
+  "terminal_ledger_event_id": "evt-023",
+  "notes": "Historical and DL-138 queue items preserved. Prose and companion work complete; blind review closed at two cycles. Open owner questions are recorded separately.",
+  "latest_audit_sha256": "abb6db0db14ca1631a0a196b7e3ef725efea4016ac30c9cc8d93ba7120bc3648"
 }

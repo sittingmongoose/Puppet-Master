@@ -2895,12 +2895,30 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: >-
-  A taught rule counts as followed by a reply only when both of these hold: the rule was given to the Assistant for that reply, which is its presence in the reply's included_teaching_ids at the version that was included (AMS-051), and the finished reply passed that rule's check. A rule's check compares the rule's testable statement, at the included version, with the finished reply; it runs once the reply is finished, never on partial text, and it changes nothing in the reply, the rule or memory. For each included rule the check ends in one of three outcomes, passed, failed or could not run, and the outcome is kept with the reply's context record beside included_teaching_ids so the reply reads the same when the chat is reopened. The reply's note about applied rules uses the owner's word "Followed" (DL-116) and counts only rules whose check passed, for example "Followed 1 of your rules". A rule whose check failed is never counted as followed: the reply shows "Missed 1 of your rules" (the number is how many rules failed their check), with a way to see which rule was missed and a way to ask Puppet Master to fix the reply; the fix is the user's request, never started by the check itself. A rule whose check could not run earns no tick: it is counted neither as followed nor as missed, and a reply none of whose included rules passed or failed a check shows no rule note. A rule that was not included for the reply is never checked and never counted. "Used" is not shown in place of either note.
+  A taught rule counts as followed by a reply only when it was given to the Assistant for that
+  reply in included_teaching_ids at its included version (AMS-051) and the finished reply passed
+  that rule's check. The check compares the rule's testable statement at the included version with
+  the finished reply; it runs once after completion, never on partial text, and changes no reply,
+  rule or memory. For every included rule, rule_check_outcomes on the reply's saved context record
+  stores the IncludedTeachingRef pair memory_id and normalized_fact_sha256, plus one outcome:
+  passed, failed or could_not_run. Reopening
+  the chat reads the saved outcome rather than rerunning the check (DL-138).
+  The note uses the owner's Followed word (DL-116), counts only passed checks as Followed and failed checks as Missed. With both kinds, it
+  shows one line, "Missed 1 of your rules · followed 2", with the Missed count first. A Missed note
+  lets the user see the missed rule. Its ask-for-a-fix link reuses cmd.review.send_findings_to_agent
+  with source_kind taught_rule_check, reply_message_id and missed_teaching_refs; it fills only an
+  empty composer with an editable fix request and never sends or executes it (CWR-031, DL-138).
+  A check that could_not_run earns no tick, counts neither way, and a reply with no passed or failed
+  checks shows no rule note. A rule not included is never checked or counted. "Used" is never shown
+  in place of Followed or Missed.
 gui_related: true
 gui_classification_reason: The Followed and Missed notes on a reply, and the way to see which rule was missed and ask for a fix, are user-visible.
 depends_on: [AMS-051, AMS-018]
 unblocks: []
 acceptance_criteria:
+  - The saved reply context records passed, failed or could_not_run for each included teaching ID and version, and reopening does not rerun the check.
+  - A reply with passed and failed checks shows one line with the Missed count first and followed count second.
+  - Asking for a fix fills an empty composer through the taught_rule_check variant and never sends or executes the draft.
   - A rule counts as followed only when it is in the reply's included_teaching_ids and the finished reply passed that rule's check.
   - A reply whose included rule failed its check shows "Missed 1 of your rules" (or the number that failed), lets the user see which rule, and offers a way to ask for a fix.
   - A rule whose check could not run is counted neither as followed nor as missed; with no passed or failed check the reply shows no rule note.
@@ -2914,12 +2932,13 @@ context_scope: assistant_memory_prompt_record
 implementation_surfaces: [Plans/assistant-memory-subsystem.md, Plans/assistant-chat-design.md, Plans/FinalGUISpec.md, Plans/Prompt_Pipeline.md]
 node_compile_hint: {mode: memory_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md (SHA-256 345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c; DL-138, questions 18-19)
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.11 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-06 (card n07 E-36) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json (SHA-256 4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f)
   - Design lead ruling of 2026-09-27 on the DL-116 follow-up (the definition of following), recorded in Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
   - Plans/Decision_Log.md#DL-116
-preserved_exact_tokens: ["Followed", "Missed 1 of your rules", "included_teaching_ids", "Used", "DL-116"]
+preserved_exact_tokens: ["Followed", "Missed 1 of your rules", "included_teaching_ids", "rule_check_outcomes", "could_not_run", "Missed 1 of your rules · followed 2", "cmd.review.send_findings_to_agent", "source_kind", "taught_rule_check", "reply_message_id", "missed_teaching_refs", "Used", "DL-116"]
 negative_constraints:
   - Do not count a rule as followed because it was included, or because no check could run.
   - Do not hide a failed check behind a Followed count.

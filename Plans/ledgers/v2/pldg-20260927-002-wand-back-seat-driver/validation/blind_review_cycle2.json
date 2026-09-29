@@ -1,0 +1,45 @@
+{
+  "ledger_id": "pldg-20260927-002-wand-back-seat-driver",
+  "cycle": 2,
+  "reviewed_base": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c",
+  "review_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger002-cycle2/findings.jsonl",
+  "review_source_sha256": "8cfb8c94bf635588724e3e5debb7856f5a4137926d90b38c9ca25545d6356014",
+  "review_summary": {
+    "summary": true,
+    "units_reviewed": [
+      "BSD-022",
+      "BSD-031",
+      "BSD-032",
+      "BSD-033",
+      "BSD-035",
+      "BSD-037",
+      "DL-138"
+    ],
+    "verdict": "do_not_land",
+    "n_findings": 2
+  },
+  "finding_count": 2,
+  "dispositions": [
+    {
+      "finding_id": "R-01",
+      "unit": "DL-138",
+      "severity": "blocking",
+      "state": "not_actionable",
+      "disposition": "Packet excerpt boundary artifact; full Migration Coverage section is byte-identical to origin/main. No restoration needed.",
+      "evidence": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/cycle2-migration-coverage-adjudication.json",
+      "evidence_sha256": "54fb915a87c78c8efa432cf97ccd58e3940c040d882e05a09c790711593944e5"
+    },
+    {
+      "finding_id": "R-02",
+      "unit": "BSD-031",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Added DL-138 and exact SHA-bound approved answer source to BSD-031 source_lineage."
+    }
+  ],
+  "status": "closed_at_two_cycle_cap",
+  "validation_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/validation-final/results.json sha256:6a16de9aa510a2ace08d88dd13954f938d16a73e57db90c09655d7e3410b31f0",
+  "open_questions": [],
+  "external_open_questions": [],
+  "claim_boundary": "Static compile and contract review only; no native runtime proof or governance seal."
+}

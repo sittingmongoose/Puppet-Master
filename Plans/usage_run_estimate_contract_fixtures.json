@@ -70,13 +70,17 @@
       }
     },
     {
-      "name": "no_pricing_snapshot_no_range",
-      "definition": "run_estimate_no_basis",
+      "name": "no_pricing_snapshot_latency_only",
+      "definition": "run_estimate",
       "value": {
-        "schema_id": "pm.usage.run_estimate_no_basis.v1",
-        "missing_basis": [
-          "pricing_snapshot"
+        "schema_id": "pm.usage.run_estimate.v1",
+        "duration_s": [
+          300,
+          900
         ],
+        "basis": {
+          "latency_sample_ref": "latency-samples/crew-review/2026-09"
+        },
         "source_class": "pricing_estimated"
       }
     },
@@ -89,6 +93,21 @@
           "pricing_snapshot",
           "latency_samples"
         ],
+        "source_class": "pricing_estimated"
+      }
+    },
+    {
+      "name": "no_latency_samples_pricing_only",
+      "definition": "run_estimate",
+      "value": {
+        "schema_id": "pm.usage.run_estimate.v1",
+        "cost_microdollars": [
+          2000000,
+          6000000
+        ],
+        "basis": {
+          "pricing_snapshot_id": "pricing-2026-09-27-01"
+        },
         "source_class": "pricing_estimated"
       }
     }
@@ -172,8 +191,8 @@
       "name": "estimate_without_latency_samples",
       "definition": "run_estimate",
       "base_valid": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
-      "rejects_for": "estimate_basis requires latency_sample_ref",
-      "reason": "The basis names the latency samples that timed duration_s (UF-104).",
+      "rejects_for": "duration_s requires latency_sample_ref",
+      "reason": "The duration range cannot be shown without latency samples (UF-104, DL-138).",
       "remove": [
         "basis.latency_sample_ref"
       ]
@@ -231,8 +250,8 @@
       "name": "no_basis_names_nothing_missing",
       "definition": "run_estimate_no_basis",
       "base_valid": "no_basis_at_all_no_range",
-      "rejects_for": "missing_basis minItems 1",
-      "reason": "An estimate without a range says which basis is absent.",
+      "rejects_for": "missing_basis minItems 2",
+      "reason": "The no-basis result requires both bases absent (UF-104, DL-138).",
       "patch": {
         "missing_basis": []
       }
@@ -245,7 +264,74 @@
       "reason": "Only a missing pricing snapshot or missing latency samples leave an estimate without a range.",
       "patch": {
         "missing_basis": [
+          "pricing_snapshot",
           "provider_offline"
+        ]
+      }
+    },
+    {
+      "name": "cost_without_pricing_snapshot",
+      "definition": "run_estimate",
+      "base_valid": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
+      "rejects_for": "cost_microdollars requires pricing_snapshot_id",
+      "reason": "cost_microdollars requires pricing_snapshot_id",
+      "remove": [
+        "basis.pricing_snapshot_id"
+      ]
+    },
+    {
+      "name": "duration_without_latency_samples",
+      "definition": "run_estimate",
+      "base_valid": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
+      "rejects_for": "duration_s requires latency_sample_ref",
+      "reason": "duration_s requires latency_sample_ref",
+      "remove": [
+        "basis.latency_sample_ref"
+      ]
+    },
+    {
+      "name": "pricing_basis_without_cost",
+      "definition": "run_estimate",
+      "base_valid": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
+      "rejects_for": "pricing_snapshot_id requires cost_microdollars",
+      "reason": "pricing_snapshot_id requires cost_microdollars",
+      "remove": [
+        "cost_microdollars"
+      ]
+    },
+    {
+      "name": "latency_basis_without_duration",
+      "definition": "run_estimate",
+      "base_valid": "crew_estimate_five_to_fifteen_minutes_up_to_six_dollars",
+      "rejects_for": "latency_sample_ref requires duration_s",
+      "reason": "latency_sample_ref requires duration_s",
+      "remove": [
+        "duration_s"
+      ]
+    },
+    {
+      "name": "latency_only_with_unbased_cost",
+      "definition": "run_estimate",
+      "base_valid": "no_pricing_snapshot_latency_only",
+      "rejects_for": "cost_microdollars forbidden without pricing_snapshot_id",
+      "reason": "cost_microdollars forbidden without pricing_snapshot_id",
+      "patch": {
+        "cost_microdollars": [
+          0,
+          100000
+        ]
+      }
+    },
+    {
+      "name": "pricing_only_with_unbased_duration",
+      "definition": "run_estimate",
+      "base_valid": "no_latency_samples_pricing_only",
+      "rejects_for": "duration_s forbidden without latency_sample_ref",
+      "reason": "duration_s forbidden without latency_sample_ref",
+      "patch": {
+        "duration_s": [
+          300,
+          900
         ]
       }
     }

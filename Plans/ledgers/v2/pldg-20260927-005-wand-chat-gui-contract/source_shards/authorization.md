@@ -124,3 +124,25 @@ in its task (agent-relayed, not verifiable from inside this repository), also ed
 Basis: DL-126 (card p08, Jared's confirmed resolution) and the card's cost line ("The tour needs re-pointing to the new popup.") for the tour and ELI5 checks,
 and the companion obligation q-017 for the contract pair pointers. atom-g5-t-tour-01's constraint against editing tour canon outside its
 wave applied to that wave only; atom-g5-t-tour-02 re-pointed the Automated_Testing_System tour checks afterwards.
+
+## Current authorization — owner answers, 2026-09-29
+
+/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md (SHA-256 345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c) records Jared's approval of every recommended answer to all 29 questions, with the two NieR fonts amendment, now DL-138. This authorization supersedes the earlier Settings exclusion for the requested follow-ups and the Chat WOW no-edit instruction only for the scheduled-card compatibility and motion-scope confirmations. Assigned parallel agents may coordinate the owner documents; no production implementation or governance seal is authorized by this compile. Old scope statements above record their historical waves, not the active next action. Prose comes first; witness then separate companion work, blind review (maximum two cycles), regeneration and integrator landing follow.
+
+Historical findings scope: Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/source_shards/findings-through-main-1a501f3341.md (SHA-256 00b042815ad2927943a28319bba5f5737d5e5457396f0742f9c427def5fcf9eb) is a byte-preserving archive of the already-landed origin/main 1a501f3341 findings. Active findings name only this compile's repairs. This is source-memory maintenance, not a changed owner obligation or weakened validator. The full actual-ledger witness remains required.
+
+## Post-witness companion release — 2026-09-29
+
+The integrator explicitly released this phase after all six actual-ledger prose witnesses passed, including the Storage prose companion scope. This ledger's assigned companion outputs are `Plans/assistant_chat_contracts.schema.json`, `Plans/assistant_chat_contract_fixtures.json`. The scope permits static contracts and fixtures only; root owns shared gate pins, Settings inventory, regeneration and landing.
+
+## Blind compile review cycle 1 — source-preserving corrections
+
+Reconciled the shared Event Authority and snapshot decisions, added the composer-only Reviewing exception to F3-571, and corrected the all-answers atom to GUI-related. The ELI5 app-default conflict is handled by the separately recorded owner resolution or open question.
+
+Review source: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger005-cycle1/findings.jsonl sha256:63a1be47cb298983309c3c249627273b4499bfd073dc02b03c4bf3785a6f515c`. Event `evt-025`, correction `cor-067`. These are fidelity repairs under the accepted answers; they create no runtime evidence or governance seal.
+
+## DL-138 final compile review disposition
+
+DL-138 prose and companion compile reviewed through the two-cycle cap; every finding is dispositioned in Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/validation/blind_review_cycle2.json. Required deterministic checks pass except the explicitly allowed governance coverage errors and normal assistant checker exit 1 with errors empty. Open owner questions remain recorded; no native runtime or governance seal is claimed.
+
+Event `evt-026`. Raw review source: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger005-cycle2/findings.jsonl`; SHA-256 `e8426d95dc52327e226b3a9bb032a8b47ab3cc3912d9c0e30ddfc9cec83c670c`.

@@ -1529,7 +1529,7 @@ vertical padding remains 2 px through `--pm-home-pad-y`/`--pm-home-gap-y`.
 
 | Zone | Slint Container | Size | Behavior |
 |------|----------------|------|----------|
-| **Title bar** | `HorizontalLayout` | height: 28px fixed | App name (Orbitron Bold 14px), compact current-project context, title-bar page tabs, title-bar search, rightward notification stack with count badge (sitting between the title-bar page tabs and the title-bar search, exactly centred in that gap by two auto margins; F3-460 as amended 2026-08-13), theme selector (morphing sun/moon/auto icon trigger with Light/Dark/Auto mode control), settings gear |
+| **Title bar** | `HorizontalLayout` | height: 28px fixed | App name (theme font, bold 14px; F3-430), compact current-project context, title-bar page tabs, title-bar search, rightward notification stack with count badge (sitting between the title-bar page tabs and the title-bar search, exactly centred in that gap by two auto margins; F3-460 as amended 2026-08-13), theme selector (morphing sun/moon/auto icon trigger with Light/Dark/Auto mode control), settings gear |
 | **Activity bar** | `VerticalLayout` | width: 48px fixed | Icon-only vertical nav; always visible |
 | **Primary content** | `VerticalLayout` (flex: 1) | fills remaining space | Active page view; scrollable internally per page |
 | **Side panel** | `VerticalLayout` | width: 240-480px, resizable | Hosts the currently selected activity-bar side-panel surface; one visible at a time; detachable where supported |
@@ -1963,10 +1963,10 @@ Three-signal system for panel detach discovery:
 
 | Theme Family | Variants | Signature Effects | Target Audience |
 |-------|--------|--------------|----------------|
-| **Friendly** | 2 (Friendly Dark, Friendly Light) | Cozy: Cal Sans/Quicksand/Nunito, paper ground + 18px dot grid, category pastel tints, frosted chrome blur limited to title/status/bottom bars | Warm, approachable experience |
+| **Friendly** | 2 (Friendly Dark, Friendly Light) | Cozy: Poppins/Nunito, paper ground + 18px dot grid, category pastel tints, frosted chrome blur limited to title/status/bottom bars | Warm, approachable experience |
 | **Glass** | 2 (Glass Dark, Glass Light) | One-pane glass slab: single backdrop blur over a pre-blurred wallpaper asset, alpha-derived transparency steps, glass-alpha slider, background modes mesh/depth/minimal | Users who want the translucent composition |
-| **Retro** | 2 (Retro Dark, Retro Light) | Full: pixel grid, paper texture, scanlines (dark) or reduced opacity (light), hard shadows, sharp corners, Orbitron + Rajdhani | Users who love the original aesthetic |
-| **Basic** (factory seed: Basic Dark) | 2 (Basic Dark, Basic Light) | None: flat colors, subtle borders, rounded corners, system fonts | Accessibility, readability, reduced visual noise |
+| **Retro** | 2 (Retro Dark, Retro Light) | Full: pixel grid, paper texture, scanlines (dark) or reduced opacity (light), hard shadows, sharp corners, IBM Plex Mono | Users who love the original aesthetic |
+| **Basic** (factory seed: Basic Dark) | 2 (Basic Dark, Basic Light) | None: flat colors, subtle borders, rounded corners, Inter | Accessibility, readability, reduced visual noise |
 
 User-facing selector contract:
 - The GUI MUST expose exactly eight built-in theme variants, organized as four theme families (Friendly, Glass, Retro, Basic) x two schemes (dark, light): `Friendly Dark`, `Friendly Light`, `Glass Dark`, `Glass Light`, `Retro Dark`, `Retro Light`, `Basic Dark`, and `Basic Light`.
@@ -1993,8 +1993,8 @@ User-facing selector contract:
 | **shadow-type** | Hard offset (2,2) | Hard offset (2,2) | None | None |
 | **border-width** | 2px | 2px | 1px | 1px |
 | **border-radius** | 0px | 0px | 4px | 4px |
-| **display-font** | Orbitron Bold | Orbitron Bold | Inter / system-ui | Inter / system-ui |
-| **body-font** | Rajdhani | Rajdhani | Inter / system-ui | Inter / system-ui |
+| **display-font** | IBM Plex Mono Bold | IBM Plex Mono Bold | Inter / system-ui | Inter / system-ui |
+| **body-font** | IBM Plex Mono | IBM Plex Mono | Inter / system-ui | Inter / system-ui |
 | **mono-font** | System monospace | System monospace | System monospace | System monospace |
 | **base-font-size** | 14px | 14px | 15px | 15px |
 | **line-height** | 1.4 | 1.4 | 1.6 | 1.6 |
@@ -2025,9 +2025,9 @@ if Theme.retro-effects-enabled && Theme.paper-texture-enabled: PaperTextureOverl
 ### 6.4 Theme Switching
 
 - **Live switch** for colors, spacing, borders, overlays: Slint's reactive property system propagates changes instantly
-- **Restart required** for font family change: Cross-family switches that change loaded fonts (Retro's Orbitron/Rajdhani, Friendly's Cal Sans/Quicksand/Nunito, or Basic/Glass system fonts) require app restart because Slint loads fonts at initialization
+- **Restart required** for font family change: Cross-family switches that change loaded fonts (Retro's IBM Plex Mono, Friendly's Poppins/Nunito, or Basic/Glass Inter) require app restart because Slint loads fonts at initialization
 - **Within same family is live:** Switching between the dark and light variants of one family (for example Retro Dark to Retro Light, or Friendly Dark to Friendly Light) is instant (same fonts)
-- **Glass/Basic note:** Glass and Basic share system fonts, so switches between them MAY be live when no other loaded-font change occurs.
+- **Glass/Basic note:** Glass and Basic share Inter, so switches between them MAY be live when no other loaded-font change occurs.
 
 ### 6.5 Slint Implementation
 
@@ -9349,8 +9349,8 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Theme switching is live for colors, spacing, borders, overlays, and same-family switches, and
   requires restart for cross-family switches that change loaded font families (Retro's
-  Orbitron/Rajdhani, Friendly's Cal Sans/Quicksand/Nunito, or Glass/Basic system fonts); Glass
-  and Basic share system fonts so switches between them may be live. Auto presentation mode
+  IBM Plex Mono, Friendly's Poppins/Nunito, or Glass/Basic Inter); Glass
+  and Basic share Inter so switches between them may be live. Auto presentation mode
   follows the same within-family live rule: when the OS appearance (prefers-color-scheme)
   changes, the selected family resolves to its other variant instantly with no restart.
   Superseded lineage
@@ -9363,40 +9363,45 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "The bundled face mapping follows F3-430 and DL-138; same-family and Basic/Glass switches stay live under the existing switching rules."
+  - "The covered source span remains losslessly available for exact-text audit."
+  - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+  - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+  - "Plans/FinalGUISpec.md"
 node_compile_hint:
   mode: theme_switching_live_restart_rules
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0062"
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0062"
 preserved_exact_tokens:
-- "live colors"
-- "spacing"
-- "borders"
-- "overlays"
-- "restart required"
-- "font family"
-- "same-family instant"
-- "Basic remains one family"
-- "Auto presentation mode"
-- "prefers-color-scheme"
+  - "Poppins"
+  - "IBM Plex Mono"
+  - "Inter"
+  - "live colors"
+  - "spacing"
+  - "borders"
+  - "overlays"
+  - "restart required"
+  - "font family"
+  - "same-family instant"
+  - "Basic remains one family"
+  - "Auto presentation mode"
+  - "prefers-color-scheme"
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FinalGUISpec.md"
+  - "Plans/FinalGUISpec.md"
 ```
 
 ### F3-078 - Slint Theme Global Token Contract
@@ -29905,58 +29910,82 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Friendly family ships Cal Sans display, Quicksand body, and Nunito fallback fonts
-  bundled locally with the application; no runtime font CDN is used. The Friendly ground is a
+  The theme families ship Inter for Basic and Glass, Poppins for Friendly with Nunito fallback,
+  and IBM Plex Mono for Retro only, bundled locally with the application; no runtime font CDN is used
+  (DL-138). The Friendly ground is a
   warm paper texture with an 18px dot grid and static pastel corner glows. Frosted chrome
   backdrop blur of 14px is limited to the title bar, status bar, and bottom panel. Five
   category pastels (mint, sky, coral, lavender, butter) tint category surfaces through the
   cozy hook tokens. The theme-switching restart rules extend to cross-family switches
   involving Friendly or Retro fonts: same-family switches stay live; cross-family switches
-  that change font families between Retro (Orbitron, Rajdhani) and Friendly (Cal Sans,
-  Quicksand, Nunito) require restart; and switches between the system-font Glass and Basic
+  that change font families between Retro (IBM Plex Mono) and Friendly (Poppins, Nunito) require restart; and switches between the Inter Glass and Basic
   families stay live.
+  NieR Mode overrides body and display with PM NieR Sans, the M PLUS 1 variable face at weights
+  100-900 in mplus1-latin-var.woff2, a free stand-in for the commercial Fontworks FOT-Rodin, and mono
+  with PM NieR Mono, the JetBrains Mono variable face at weights 100-800 in jetbrains-mono-latin-var.woff2.
+  Both are bundled under SIL OFL with their licences; the regular theme faces and Nunito fallback are
+  bundled too. The source font declarations are Concepts/onboarding/opus-5.5/src/settings/styles.d/13-nier.css
+  and its nier/fonts/OFL-*.txt licences. While on, NieR Mode owns general.visual.accent-color and
+  general.visual.app-font (F3-441); turning it off restores the chosen theme. It is an overlay, not a ninth theme.
 gui_related: true
 gui_classification_reason: This unit defines the visible Friendly theme fonts, ground texture, frosted chrome, pastels, and switch behavior.
 split_recommended: false
 depends_on: [F3-425, F3-077]
 unblocks: []
 acceptance_criteria:
-- "Cal Sans, Quicksand, and Nunito are bundled locally and no runtime font CDN request is made."
-- "The Friendly ground renders the paper texture with an 18px dot grid, and frosted 14px chrome blur is limited to the title bar, status bar, and bottom panel."
-- "The five category pastels (mint, sky, coral, lavender, butter) drive category surface tinting."
-- "Cross-family theme switches that change Retro or Friendly font families require restart, while same-family and Glass/Basic system-font switches stay live."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "Basic and Glass render Inter, Friendly Poppins with Nunito fallback, Retro IBM Plex Mono; NieR Mode renders its bundled PM NieR Sans and PM NieR Mono faces without a font network request."
+  - "Inter, Poppins, Nunito and IBM Plex Mono are bundled locally and no runtime font CDN request is made."
+  - "The Friendly ground renders the paper texture with an 18px dot grid, and frosted 14px chrome blur is limited to the title bar, status bar, and bottom panel."
+  - "The five category pastels (mint, sky, coral, lavender, butter) drive category surface tinting."
+  - "Cross-family theme switches that change Retro or Friendly font families require restart, while same-family and Glass/Basic Inter switches stay live."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+  - "Plans/FinalGUISpec.md"
 node_compile_hint:
   mode: friendly_family_ingredients_and_font_rules
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:964"
-- "Plans/FinalGUISpec.md:7647"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
+  - "Plans/FinalGUISpec.md:964"
+  - "Plans/FinalGUISpec.md:7647"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
-- "Cal Sans"
-- "Quicksand"
-- "Nunito"
-- "18px"
-- "14px"
+  - "100-900"
+  - "100-800"
+  - "Fontworks FOT-Rodin"
+  - "SIL OFL"
+  - "general.visual.app-font"
+  - "general.visual.accent-color"
+  - "jetbrains-mono-latin-var.woff2"
+  - "mplus1-latin-var.woff2"
+  - "JetBrains Mono"
+  - "M PLUS 1"
+  - "PM NieR Mono"
+  - "PM NieR Sans"
+  - "IBM Plex Mono"
+  - "Poppins"
+  - "Inter"
+  - "Cal Sans"
+  - "Quicksand"
+  - "Nunito"
+  - "18px"
+  - "14px"
 negative_constraints:
-- "Do not load Friendly fonts from a runtime font CDN, and do not apply frosted chrome blur outside the title bar, status bar, and bottom panel."
+  - "Do not load Friendly fonts from a runtime font CDN, and do not apply frosted chrome blur outside the title bar, status bar, and bottom panel."
 compatibility_only_notes:
-- "Slint portability: bundled font files register with the Slint font database; the paper texture, dot grid, and corner glows render as precomputed opaque or baked surfaces; the three chrome frosts render over known shell content; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+  - "Slint portability: bundled font files register with the Slint font database; the paper texture, dot grid, and corner glows render as precomputed opaque or baked surfaces; the three chrome frosts render over known shell content; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
-- "The concept loads Cal Sans, Quicksand, and Nunito from a runtime font CDN; that loading path is demo technique only and is replaced by locally bundled fonts."
+  - "DL-138 retires Cal Sans, Quicksand, Orbitron and Rajdhani as current theme faces; those names remain source lineage only. Runtime font CDN loading remains forbidden."
 owner_boundary_notes:
-- "The live/restart switching matrix remains owned by F3-077; this unit extends its restart set to cross-family Friendly/Retro font changes."
+  - "The live/restart switching matrix remains owned by F3-077; this unit extends its restart set to cross-family Friendly/Retro font changes."
 owner_hints:
-- "Plans/FinalGUISpec.md"
+  - "Plans/FinalGUISpec.md"
 ```
 
 ### F3-431 - Slint Theme Hazard Remediation
@@ -30058,8 +30087,8 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | `--ease-snap` | `cubic-bezier(.2,0,0,1)` |
 | `--ease-default` | `var(--ease-smooth)` |
 | `--sheen-dur` | `.6s` |
-| `--display-font` | `'Orbitron', sans-serif` |
-| `--body-font` | `'Rajdhani', sans-serif` |
+| `--display-font` | `'IBM Plex Mono', monospace` |
+| `--body-font` | `'IBM Plex Mono', monospace` |
 | `--mono-font` | `ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace` |
 | `--base-font-size` | `14px` |
 | `--line-height` | `1.4` |
@@ -30112,9 +30141,9 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Motion | `--ease-default` | `var(--ease-snap)` (resolves to `cubic-bezier(.2,0,0,1)`) |
 | Motion | `--motion-med` | `140ms` |
 | Motion | `--sheen-dur` | `.35s` |
-| Typography | `--display-font` | `'Orbitron', sans-serif` |
-| Typography | `--display-font-sm` | `'Rajdhani', sans-serif` |
-| Typography | `--body-font` | `'Rajdhani', sans-serif` |
+| Typography | `--display-font` | `'IBM Plex Mono', monospace` |
+| Typography | `--display-font-sm` | `'IBM Plex Mono', monospace` |
+| Typography | `--body-font` | `'IBM Plex Mono', monospace` |
 | Typography | `--base-font-size` | `15px` |
 | Typography | `--line-height` | `1.55` |
 | Typography | `--letter-spacing` | not defined (inherits root: `normal`) |
@@ -30165,9 +30194,9 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Motion | `--ease-default` | `var(--ease-snap)` (resolves to `cubic-bezier(.2,0,0,1)`) |
 | Motion | `--motion-med` | `140ms` |
 | Motion | `--sheen-dur` | `.35s` |
-| Typography | `--display-font` | `'Orbitron', sans-serif` |
-| Typography | `--display-font-sm` | `'Rajdhani', sans-serif` |
-| Typography | `--body-font` | `'Rajdhani', sans-serif` |
+| Typography | `--display-font` | `'IBM Plex Mono', monospace` |
+| Typography | `--display-font-sm` | `'IBM Plex Mono', monospace` |
+| Typography | `--body-font` | `'IBM Plex Mono', monospace` |
 | Typography | `--base-font-size` | `15px` |
 | Typography | `--line-height` | `1.55` |
 | Typography | `--letter-spacing` | not defined (inherits root: `normal`) |
@@ -30416,8 +30445,8 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Motion | `--ease-default` | `var(--ease-spring)` (resolves to `cubic-bezier(.34,1.56,.64,1)`) |
 | Motion | `--motion-med` | `260ms` |
 | Motion | `--sheen-dur` | `.55s` |
-| Typography | `--display-font` | `'Cal Sans', 'Nunito', system-ui, sans-serif` |
-| Typography | `--body-font` | `'Quicksand', 'Nunito', system-ui, sans-serif` |
+| Typography | `--display-font` | `'Poppins', 'Nunito', system-ui, sans-serif` |
+| Typography | `--body-font` | `'Poppins', 'Nunito', system-ui, sans-serif` |
 | Typography | `--base-font-size` | `14.5px` |
 | Typography | `--line-height` | `1.55` |
 | Typography | `--letter-spacing` | `normal` |
@@ -30466,8 +30495,8 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Motion | `--ease-default` | `var(--ease-spring)` (resolves to `cubic-bezier(.34,1.56,.64,1)`) |
 | Motion | `--motion-med` | `260ms` |
 | Motion | `--sheen-dur` | `.55s` |
-| Typography | `--display-font` | `'Cal Sans', 'Nunito', system-ui, sans-serif` |
-| Typography | `--body-font` | `'Quicksand', 'Nunito', system-ui, sans-serif` |
+| Typography | `--display-font` | `'Poppins', 'Nunito', system-ui, sans-serif` |
+| Typography | `--body-font` | `'Poppins', 'Nunito', system-ui, sans-serif` |
 | Typography | `--base-font-size` | `14.5px` |
 | Typography | `--line-height` | `1.55` |
 | Typography | `--letter-spacing` | `normal` |
@@ -38566,7 +38595,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-469
 
 ## Wand Modules Redesign Addendum (2026-09-27)
 
-This addendum is the GUI contract for the redesigned Assistant wand popups and their in-chat presence, under Jared's instruction of 2026-09-27 and his amendments J-1 and J-2 (DL-109). Its source is the frozen design specification `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md` (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`); the 5.6 Pro concept is source lineage only, and its class names, keys and harness hooks are not canon. Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-476 through ACD-480, `Plans/Collaborative_Workflows.md`, `Plans/Back_Seat_Driver.md`, `Plans/Scheduling_and_Quota_Resume.md` and `Plans/assistant-memory-subsystem.md`. The transcript family map and the accent budget stay with ACD-469 and F3-562 (DR-043), and DR-044 names this addendum as the single owner of the wand modules' presentation grammar. Anything the units below leave unstated waits for Jared's answer and is not implied. F3-578 to F3-580 and the later amendments to F3-566, F3-567, F3-569, F3-571 and F3-575 compile the answers Jared gave on the decision cards (DL-110, DL-111, DL-114, DL-119, DL-122, DL-123, DL-127, DL-129 and DL-134), and F3-566 also states the per-family motion principle of DL-113 as the lead's ruling applied it. The lead's rulings on DL-120 and DL-116 are compiled too: F3-578, F3-531's amendment line, section 3 and the v4 MODAL paragraph make a chat's Crew Auto check the only per-chat Crew permission control, and F3-570 and F3-579 carry the reply's rule note (Followed, or Missed when a check failed). ELI5 is compiled as Jared confirmed it on 2026-09-27 (DL-126): F3-581 is its sheet, quick dot, reply tick and per-reply "Explain this reply simply" action, and F3-566, F3-570, F3-572, F3-531's and F3-532's amendment lines and sections 3, 4, 5 and 14 say the same in place. The canon theme typography and the minimum chat width are still open.
+This addendum is the GUI contract for the redesigned Assistant wand popups and their in-chat presence, under Jared's instruction of 2026-09-27 and his amendments J-1 and J-2 (DL-109). Its source is the frozen design specification `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md` (SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`); the 5.6 Pro concept is source lineage only, and its class names, keys and harness hooks are not canon. Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-476 through ACD-480, `Plans/Collaborative_Workflows.md`, `Plans/Back_Seat_Driver.md`, `Plans/Scheduling_and_Quota_Resume.md` and `Plans/assistant-memory-subsystem.md`. The transcript family map and the accent budget stay with ACD-469 and F3-562 (DR-043), and DR-044 names this addendum as the single owner of the wand modules' presentation grammar. Anything the units below leave unstated waits for Jared's answer and is not implied. F3-578 to F3-580 and the later amendments to F3-566, F3-567, F3-569, F3-571 and F3-575 compile the answers Jared gave on the decision cards (DL-110, DL-111, DL-114, DL-119, DL-122, DL-123, DL-127, DL-129 and DL-134), and F3-566 also states the per-family motion principle of DL-113 as the lead's ruling applied it. The lead's rulings on DL-120 and DL-116 are compiled too: F3-578, F3-531's amendment line, section 3 and the v4 MODAL paragraph make a chat's Crew Auto check the only per-chat Crew permission control, and F3-570 and F3-579 carry the reply's rule note (Followed, or Missed when a check failed). ELI5 is compiled as Jared confirmed it on 2026-09-27 (DL-126): F3-581 is its sheet, quick dot, reply tick and per-reply "Explain this reply simply" action, and F3-566, F3-570, F3-572, F3-531's and F3-532's amendment lines and sections 3, 4, 5 and 14 say the same in place. DL-138 settles the theme typography (F3-430) and the minimum chat width (F3-569).
 
 ### F3-566 - Wand Modules Redesign GUI Contract And Sheet Grammar
 
@@ -38633,12 +38662,16 @@ canonical_text: >-
   follows; roster rows are at least 52 px tall; body and helper text keep a line height of at
   least 1.45 and headlines 1.25. When space runs short, text wraps or ellipsizes or a secondary
   element drops; padding and gaps never compress.
+  DL-138 confirms this scope: theme durations govern sheets and a card's own changes; transcript
+  entrances retain ACD-475's shared timing and order. Wand cards that opt out of the family entrance
+  do not acquire a second entrance animation.
 gui_related: true
 gui_classification_reason: "Defines the grammar, sizes, typography and spacing of every wand module sheet."
 split_recommended: false
 depends_on: [DL-109, DL-113, DL-114, DL-115, ACD-475, F3-431, F3-531, F3-534]
 unblocks: [F3-567, F3-568, F3-569, F3-570, F3-573, F3-574, F3-576, F3-579, DR-044]
 acceptance_criteria:
+  - "Theme timing never overrides the shared timing or order of a transcript entrance."
   - "Every wand configuration popup with a committing primary renders the head, hero, plate, questions and foot anatomy with one primary; a sheet whose changes apply at once (the ELI5 sheet, F3-581) keeps the head, plate and foot, may have no hero or questions, and its foot shows only Done."
   - "No sheet scrolls in its common case at 1440 x 900 or 1280 x 800, and no sheet changes size while open."
   - "No kind or participant is drawn with initials or letters."
@@ -38662,12 +38695,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) owner amendments J-1 and J-2, sections 2.2, 3.2, 3.5, 6.1-6.6"
   - "IMPACT-REGISTER B-FGS-01, B-FGS-05 (NOW part)"
   - "Plans/Decision_Log.md#DL-109"
   - "Plans/Decision_Log.md#DL-114 (the solid surface, compiled 2026-09-27; IMPACT-REGISTER B-FGS-17, card n05, E-24)"
   - "Plans/Decision_Log.md#DL-113 (the per-family motion principle, the lead's ruling of 2026-09-27 on card n04, E-22; the token values stay out of canon, IMPACT-REGISTER B-FGS-19 OUT)"
 preserved_exact_tokens:
+  - "DL-138"
   - "configuration sheet"
   - "flat scrim"
   - "plate"
@@ -38860,12 +38895,16 @@ canonical_text: >-
   give way to one line saying where to decide, at the same height, so a control that changes the run
   is in one place at a time; decisions from an approval owner stay in the card. The collaboration
   hover cards show at most four run rows plus one overflow line (APR-007).
+  The chat pane beside an open plan or document has a minimum width of 360 px (DL-138;
+  Assistant_Plan_Runtime APR-014). The card's S tier measures its own content box after padding and
+  remains available below 360 px; it does not lower the chat pane minimum.
 gui_related: true
 gui_classification_reason: "Fixes run card geometry, receipts and the run view hand-off."
 split_recommended: false
 depends_on: [F3-566, ACD-480, DL-111, DL-123]
 unblocks: []
 acceptance_criteria:
+  - "The editor/chat split preserves a 360 px minimum chat pane while card tiers continue to measure card content width."
   - "A collapsed or sub-520 px card reaches Open Panel, Message and More through Expand; a finished run's Message prints why it is disabled."
   - "The Coordinator's mark never paints the accent."
   - "Card heights stay within the tier budgets under the periodic tick in all eight themes."
@@ -38887,10 +38926,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 7.1-7.2, 7.5, 7.8-7.10, 7.12-7.13"
   - "IMPACT-REGISTER B-FGS-05 (NOW part; the density facts compiled 2026-09-27 from DL-123, card p05, E-05), B-FGS-10 (NOW part), B-FGS-12 (APR-007 part)"
   - "Plans/Decision_Log.md#DL-111 (card n02, E-17: the Coordinator's colour)"
 preserved_exact_tokens:
+  - "360 px"
   - "S below 360 px"
   - "behind Expand"
   - "never the accent"
@@ -39000,9 +39041,11 @@ canonical_text: >-
   Driver's catch-up, failure and safety-pause lines are single in-flow lines at the same boundary.
   Back_Seat_Driver BSD-030 owns the note's content and attribution; this unit places it. Back Seat
   Driver shows the plain status words (DL-110): Up to date where canon said Caught up,
-  Double-checking for Finding held, and Paused: usage limit reached for Quota paused, wherever its
-  status is shown; the official word is not printed beside the plain one. Back_Seat_Driver BSD-035 owns
-  the word table.
+  Double-checking for Finding held, and Paused: usage limit reached for Quota paused; the official
+  word is not printed beside the plain one. Double-checking is limited to the Context row and Context
+  Details. While finding_held, the composer instead prints Reviewing by selecting the reviewing entry
+  of the same owner table without changing context_state or revealing a held finding (DL-138).
+  Back_Seat_Driver BSD-035 owns that table and its surface selection.
 gui_related: true
 gui_classification_reason: "Places Back Seat Driver advice in the transcript."
 split_recommended: false
@@ -39011,6 +39054,7 @@ unblocks: []
 acceptance_criteria:
   - "No Back Seat Driver advice renders as a card, with a roster or with a track."
   - "The Context row shows Up to date, Double-checking and Paused: usage limit reached, not the official words."
+  - "While finding_held, the composer prints Reviewing; Double-checking remains only in Context and its details."
   - "Stale critical advice keeps its stale and unreconfirmed labelling."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -39504,12 +39548,19 @@ canonical_text: >-
   its taught rules is F3-570's rule note under DL-116 as AMS-053 defines following: it counts only
   rules whose check the finished reply passed, a failed check reads "Missed 1 of your rules" with a
   way to see which rule and a way to ask for a fix, and a check that could not run earns no tick.
+  DL-138 confirms the final wording. Persisted AMS-053 check results drive the note on reopen: passed
+  counts as Followed, failed counts as Missed and could_not_run earns no tick. A mixed result is one
+  line, Missed first, for example "Missed 1 of your rules · followed 2". See which rule opens the
+  saved check evidence as view state. Ask for a fix reuses cmd.review.send_findings_to_agent with
+  the taught_rule_check source variant (UCC-172): it fills the source thread's empty composer, returns
+  ComposerBufferResult, refuses composer_not_empty, and never sends or executes a fix. The user sends it.
 gui_related: true
 gui_classification_reason: "Defines the Teach sheet, its chat receipts and the Your rules document."
 split_recommended: false
 depends_on: [F3-566, ACD-477, ACD-481, DL-127, DL-116, F3-570]
 unblocks: []
 acceptance_criteria:
+  - "Reopening retains the saved rule-check result, mixed results show one Missed-first line, and Ask for a fix only fills an empty composer until the user sends."
   - "Every Teach entry point opens the Teach sheet; no inline capture card renders in the chat."
   - "A reply's rule note never counts a rule as followed unless its check passed."
   - "Every project cannot be chosen without the safe-for-other-projects tick, and correct mode cannot widen the scope."
@@ -39530,12 +39581,21 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.11 (G-26, G-33, G-38)"
   - "IMPACT-REGISTER B-FGS-08 (Teach part); cards p09 (E-12) and p15 (E-32)"
   - "Plans/Decision_Log.md#DL-127"
   - "Plans/Decision_Log.md#DL-130"
   - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
 preserved_exact_tokens:
+  - "composer_not_empty"
+  - "ComposerBufferResult"
+  - "taught_rule_check"
+  - "cmd.review.send_findings_to_agent"
+  - "Missed 1 of your rules · followed 2"
+  - "could_not_run"
+  - "failed"
+  - "passed"
   - "Teach Puppet Master a rule"
   - "This thread"
   - "Every project"
@@ -39642,8 +39702,11 @@ canonical_text: >-
   dispatches cmd.chat.eli5.set with off or on for this chat. Under the plate, Follow my usual setting dispatches cmd.chat.eli5.set with inherit, which deletes this chat's override. The one
   disclosure, How it's decided, draws the resolution order as a trace, All chats, then Chats in this
   project, then This chat, with the level that decides lit. The All chats node is the Explain Terms Everywhere setting and the Chats in this project node is that setting at project scope;
-  both commit through Settings, never through a chat command, and the This chat node is the same
-  cmd.chat.eli5.set as the plate. The foot reads "Takes effect from your next message. Answers already here keep their wording." and, while a reply streams, says that reply keeps its current
+  both require Settings-owned commits, never a chat command, and the This chat node is the same
+  cmd.chat.eli5.set as the plate. The project transaction is defined by SSYS-028. The retained All chats
+  edit remains disabled with the Settings owner's reason while its app-wide persistence route conflicts
+  with SSYS-002 and awaits pldg-20260927-001-wand-collab-workflows q-035; no global writer is inferred
+  from this GUI requirement. The foot reads "Takes effect from your next message. Answers already here keep their wording." and, while a reply streams, says that reply keeps its current
   style. If the active chat changes while the sheet is open, the sheet changes nothing and reads
   "You switched chats. Open this again from the chat you want to change." Closing it returns focus
   to the wand trigger (UIW-025). The quick dot is the ELI5 kind mark among the composer's capability
@@ -39658,6 +39721,8 @@ canonical_text: >-
   thread as an ordinary assistant reply, carries the Simple explanation tick, names and links the
   reply it explains, and adds no divider. The concept's fine print calling project defaults a
   preview feature is not canon. The command catalog's surface id for the sheet is eli5_sheet.
+  The project-level general.interaction.eli5-default is persisted through Settings SSYS-028
+  (DL-138), so Chats in this project is a real editable level, resolved below This chat and above All chats.
 gui_related: true
 gui_classification_reason: "Defines the ELI5 sheet, the quick dot and ELI5's traces in the chat."
 split_recommended: false
@@ -39666,7 +39731,7 @@ unblocks: [ATS-065]
 acceptance_criteria:
   - "The wand's ELI5 row opens a 720 x 560 compact sheet whose height never changes while open."
   - "Standard, Simple and Follow my usual setting dispatch cmd.chat.eli5.set with off, on and inherit for the active chat."
-  - "The All chats and Chats in this project nodes commit through Settings and never through a chat command."
+  - "The project node commits through Settings; the retained All chats edit requires its Settings-owned commit contract and stays disabled while ledger001 q-035 is open. Neither uses a chat command."
   - "The quick dot is present lit or muted, and one click switches this chat's ELI5 without opening the sheet."
   - "After any switch, every earlier reply's text is unchanged; only the divider and later replies show the new style."
   - "Explain this reply simply is disabled while the reply streams, and on a finished reply adds exactly one reply at the end of the thread."
@@ -39685,11 +39750,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 3.2 (the ELI5 compact height), 4.3 C23, 7.10, 8.13 and its amendments G-21 and G-34, 10.1 item f"
   - "IMPACT-REGISTER B-FGS-02 (the ELI5 mark), B-FGS-03 (the ELI5 mark), B-FGS-08 (ELI5); card p08, E-11"
   - "Plans/Decision_Log.md#DL-126 (Owner resolution, Jared, 2026-09-27, confirmed in chat)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5) answer record p08"
 preserved_exact_tokens:
+  - "DL-138"
+  - "general.interaction.eli5-default"
   - "720 x 560"
   - "Explain things simply in this chat?"
   - "Follow my usual setting"

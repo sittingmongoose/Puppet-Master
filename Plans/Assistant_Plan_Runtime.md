@@ -547,6 +547,7 @@ status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
   Build With Crew admits the exact current Plan revision for execution through a configured Crew run owned by Collaborative Workflows instead of the single-agent build path; the crew configuration belongs to the build target and the Build control still shows exactly one of the four labels. Build At binds an execution schedule to the exact plan_id, plan_version, and content hash through Scheduling and Quota Resume, and a Plan revision invalidates that pending schedule with a named reason rather than silently rebinding to the newer version. Repeated occurrences of a recurring window resume one PlanRun rather than producing duplicate builds, and a manual Stop, Pause, or Cancel outranks every scheduled or quota-driven resume.
+  DL-138 confirms that, when execution_started is true, ExecutionOccurrenceSummary joins saved schedule/dispatch records to the exact plan_run_id and approved Plan version/hash and the durable work, To-Do mappings and adherence facts used by AssistantPlanProgressProjector. Real execution bounds and the close reason come from dispatch and safe-pause or terminal-run facts; steps_built counts distinct approved plan_step_id values completed during that occurrence, not skipped steps or raw To-Do counts, and steps_total is the bound Plan total. A closed occurrence held before any build work starts instead uses retained Scheduling eligibility/hold and closure facts for that exact occurrence and the bound approved Plan: execution_started false, end_reason held, steps_built 0, and null actual_start and actual_end. plan_run_id is null if no run was admitted, or names the existing run for a held continuation window. This creates no run. Missing historical facts remain unavailable, distinct from a recorded not-started outcome. Replay reconstructs the same summary without a new authoritative run record or event family.
 gui_related: true
 gui_classification_reason: These are Plan card actions with their own modals and an invalidated-schedule state on the card.
 depends_on: [APR-007]
@@ -556,6 +557,7 @@ acceptance_criteria:
   - Build At binds the exact version and hash and shows an invalidated state on revision.
   - A recurring window resumes one run rather than producing duplicate builds.
   - A manual stop defeats every scheduled or quota resume.
+  - ExecutionOccurrenceSummary is reproducible from durable owner facts; missing historical facts never become guessed times, counts or end reasons.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - node tests/assistant-plan-verify.mjs
@@ -571,10 +573,16 @@ node_compile_hint:
   mode: assistant_plan_build_routes
   create_worknodes: false
 source_lineage:
+  - Plans/Decision_Log.md#DL-138
   - pm-assistant-implementation-2026-09-02-recovered:PLAN-010
   - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#5.11
   - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#5.12
 preserved_exact_tokens:
+  - "ExecutionOccurrenceSummary"
+  - "AssistantPlanProgressProjector"
+  - "steps_built"
+  - "steps_total"
+  - "DL-138"
   - "Build With Crew"
   - "Build At"
 negative_constraints:
@@ -795,6 +803,8 @@ Crew definition, participant specs, effective roster, transcript, and card/panel
 `Build At…` creates an exact-version scheduled build. The schedule binds `assistant_plan_id`, `plan_version`, and `plan_hash`. A later revision invalidates the pending schedule, emits `assistant_plan.schedule_invalidated`, places a `Schedule needs update` notice on the Plan card, and disables automatic dispatch until the user explicitly updates or reschedules. There is no silent retarget to the newer version, and no schedule may dispatch a version it did not bind.
 
 Before dispatch, the scheduler revalidates the bound Plan version and hash, the provider and account, the project and worktree, the permission and tool snapshot, and the execution window. A revalidation failure holds the dispatch with an exact reason instead of building a different Plan. A recurring window resumes the one existing run; it never starts a duplicate build per occurrence. Manual pause, cancel, or Stop always overrides scheduled or quota auto-resume. The project-wide "Pause all automations" switch (`Plans/Scheduling_and_Quota_Resume.md` SQR-018, DL-136) is such a manual pause at project scope: while it is on, a scheduled build in the project is not admitted, and a `PlanRun` bound to a schedule that is running when it is turned on moves to `paused` at its next safe boundary, never mid-atomic-operation. For that run the control stays `Building…` and the secondary line reads `Paused`, naming "Pause all automations is on"; the scheduler resumes the run only after the user turns the switch off and the scheduler's eligibility check passes again. Work the user starts directly, such as Build or an explicit user resume of that run, is not an automation and still acts while the switch stays on (SQR-018).
+
+DL-138 confirms the run-owner input to `ExecutionOccurrenceSummary` (SQR-016): the scheduler joins its saved schedule and dispatch records to the exact `plan_run_id`, approved Plan version/hash and durable owner work, To-Do mappings and adherence facts used by `AssistantPlanProgressProjector`. It derives the real occurrence bounds and close reason from those dispatch and safe-pause or terminal-run facts, and counts the distinct approved `plan_step_id` values completed during the occurrence against the bound Plan's step total; skipped steps and raw To-Do counts are not built steps. Scheduled-message outcomes come from Scheduling records in the same thread and occurrence. For a closed occurrence held before any build work starts, SQR-016 instead reconstructs from retained Scheduling eligibility/hold and closure facts for that occurrence and the bound approved Plan. It records `execution_started: false`, `end_reason: held`, `steps_built: 0`, and null `actual_start` and `actual_end`; `plan_run_id` is null if no run was admitted, or names the existing run for a held continuation window. The summary creates no run. This is a reconstructable projection, not a new authoritative run record or event family: missing required historical facts leave it unavailable, distinct from a recorded not-started outcome. Replay and restart must reproduce the same summary for the same schedule and occurrence start. This is the runtime contract, not a claim that a runtime exists or has passed it.
 
 Timer authority, window arithmetic, wind-down, DST behavior, and quota-resume consent are owned by `Plans/Scheduling_and_Quota_Resume.md`. `cmd.chat.plan.schedule_build` is that owner's command; this document owns the Plan-side binding and invalidation rules it must honor.
 
@@ -1433,7 +1443,7 @@ APR-066.
   the editor pane to a readable width (minimum 480 px) if the split was previously collapsed to zero.
   Subsequent user resizing of the editor-to-chat divider preserves a minimum functional width for the
   chat canvas (minimum 360 px), preventing chat controls or the composer from collapsing into the
-  resize handle dead zone.
+  resize handle dead zone. DL-138 confirms 360 px as the minimum, superseding the older 320 px chat minimum.
 
 ### 17. Plan Schedule Invalidation and Immediate Build Precedence (APR-019)
 
@@ -1457,7 +1467,8 @@ canonical_text: >-
   the left editor tab bar with tab deduplication. The left plan tab exposes complete owner-backed control
   parity with the transcript Plan card (Rich/Markdown toggle, Build, Build With Crew, Build At, Revise,
   Send To Planning Wizard, Export, Cancel, Open To-Dos). Opening a plan expands collapsed splits to readable
-  width, and split resizing preserves minimum chat canvas width.
+  width, and split resizing preserves a minimum 360 px chat canvas width (DL-138), superseding the older
+  320 px chat minimum.
 gui_related: true
 gui_classification_reason: Governs left editor plan tab navigation, control parity, and responsive editor/chat split geometry.
 depends_on: [APR-013]
@@ -1482,9 +1493,12 @@ source_lineage:
   - APR-037
   - APR-038
   - APR-066
+  - Plans/Decision_Log.md#DL-138
 preserved_exact_tokens:
   - "plan tab"
   - "deduplication"
+  - "360 px"
+  - "DL-138"
   - "Build With Crew"
 negative_constraints:
   - Do not create duplicate editor tabs for the same plan.

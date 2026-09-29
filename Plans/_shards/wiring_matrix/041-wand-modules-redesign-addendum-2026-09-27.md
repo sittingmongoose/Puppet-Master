@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L4973-L5199
+Source lines: L4973-L5229
 
-Source SHA256: `f93f2e4f0e5dfa418ede8656000d7a2df98c04d2c67b65ad7cddb96e97cf637e`
+Source SHA256: `404019bb055035ef29c59d01614e270b6f1b546c06cac022bcbf36bf29dd5438`
 
 ---
 
@@ -30,6 +30,8 @@ canonical_text: >-
   brainstorm_card under the questionnaire family's existing exclusion and renders disabled with
   command_not_registered until admission. CDRY-021 view-state and draft-state controls get no
   production wiring entry. The entries are written by the companion task.
+  DL-138 adds plan_card to the existing cmd.execution_window.cancel production entry alongside
+  schedule_manager, matching UCC-169 and the already accepted request source; no new entry or handler is added.
 gui_related: true
 gui_classification_reason: "Binds visible dock, card, sheet and header producers to existing command routes and their disabled states."
 split_recommended: false
@@ -54,9 +56,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 7.4, 8.10, 8.12, 8.15"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-03, B-CMD-04, B-ACD-12"
 preserved_exact_tokens:
+  - "DL-138"
+  - "cmd.execution_window.cancel"
+  - "plan_card"
   - "assistant.redesign.cmd.chat_teach_open_memory"
   - "workflow_card"
   - "run_dock"
@@ -106,6 +112,15 @@ canonical_text: >-
   open-config entry and has no candidate exclusion; cmd.runtime.automation_stop.set is never wired and
   is excluded only as deliberately not registered. eli5_sheet, settled by DL-126, is wired by WM-064.
   The companion task writes the entries.
+  DL-138 requires the CS-085 request/result pairs and TeachConfirmRequest.locked to be defined
+  in their existing Collaboration, Back Seat Driver and Memory contract pairs before admission.
+  Schema completion does not admit a handler or remove an exclusion. The existing
+  assistant.redesign.cmd.chat_crew_auto_open_config entry includes crew_auto_receipt;
+  assistant.redesign.w_024.chat_crew_auto_set states project | thread, with the chat check writing
+  only its thread override and never opening the sheet. The existing cmd.review.send_findings_to_agent
+  entry also admits message_chrome for Ask for a fix with taught_rule_check; both source variants
+  retain ComposerBufferResult, composer_not_empty and the source-thread empty-composer/no-send rule
+  (UCC-172). These are revisions of existing entries, not new production rows.
 gui_related: true
 gui_classification_reason: "Binds the visible Teach, Crew Auto and new-command controls to wiring entries or exclusions and their disabled states."
 split_recommended: false
@@ -130,10 +145,20 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f section 7.4 CC-9"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 line B-CMP-02"
   - "Plans/Decision_Log.md#DL-130, #DL-135"
 preserved_exact_tokens:
+  - "composer_not_empty"
+  - "ComposerBufferResult"
+  - "taught_rule_check"
+  - "message_chrome"
+  - "cmd.review.send_findings_to_agent"
+  - "assistant.redesign.w_024.chat_crew_auto_set"
+  - "locked"
+  - "TeachConfirmRequest"
+  - "DL-138"
   - "Plans/Wiring_Matrix.production.exclusions.json"
   - "command_not_registered"
   - "assistant.redesign.cmd.chat_crew_auto_open_config"
@@ -167,7 +192,7 @@ When `cmd.runtime.automation_pause.set` is admitted, its production entry names 
 
 The guided tour's same-answer ELI5 step consumes `cmd.chat.eli5.explain_reply` (WM-041), and the tour becomes a consumer of that row's production entry when the row is admitted. Where the tour uses `cmd.chat.eli5.set`, it is the quick dot for later replies only, through this same entry; no second entry is added for it.
 
-**Held and unchanged.** `crew_auto_receipt` is wired as WM-063 states (DL-135). `cmd.runtime.automation_stop.set` keeps only its deliberately-not-registered exclusion. The Settings levels of the ELI5 sheet are Settings transactions: they get no command entry here, and the project scope they need is a Settings follow-up.
+**Held and unchanged.** `crew_auto_receipt` is wired as WM-063 states (DL-135). `cmd.runtime.automation_stop.set` keeps only its deliberately-not-registered exclusion. The Settings levels of the ELI5 sheet are Settings transactions: they get no command entry here, and Settings SSYS-028 persists their project scope (DL-138).
 
 The exclusions and the entry changes themselves are written by the companion task, not by this unit.
 
@@ -187,6 +212,9 @@ canonical_text: >-
   re-sends, regenerates or rewrites an earlier reply (DL-126). cmd.runtime.automation_stop.set keeps
   only its deliberately-not-registered exclusion, and the ELI5 sheet's Settings levels get no command
   entry. The companion task writes the entries.
+  DL-138 confirms that assistant.redesign.w_051.chat_eli5_set describes the tour's quick dot
+  for later replies only. Its same-answer step uses cmd.chat.eli5.explain_reply after admission;
+  no new production entry is added for the tour.
 gui_related: true
 gui_classification_reason: "Binds the visible ELI5 sheet, ELI5 dot, Explain this reply simply action and Pause all automations switch to wiring entries or exclusions and their disabled states."
 split_recommended: false
@@ -211,10 +239,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f section 7.4 CC-9"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-03, B-CMP-02"
   - "Plans/Decision_Log.md#DL-126, #DL-136"
 preserved_exact_tokens:
+  - "DL-138"
   - "Plans/Wiring_Matrix.production.exclusions.json"
   - "command_not_registered"
   - "assistant.redesign.w_051.chat_eli5_set"

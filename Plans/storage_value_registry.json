@@ -98075,8 +98075,8 @@
       ],
       "optional_fields": [],
       "nullable_fields": [],
-      "replay_behavior": "SP-306/APR-017 require full original value/key/scope/schema/version/hash/revision and authentic original issuance. Current state reads and retained original result reads use distinct full native guards. Changed native sources CAS whole originals and preserve unrelated fields; immutable effects/results/origins never reissue. SP-307 preserves the first genuine run completion anchor and uses original atomic retirement custody after authorized expiry; no transient preparation is required for retained replay.",
-      "migration": "Original StorageMigrationCoordinator proves complete actual owner issuance, original source/epoch identity, enrolled writer closure and coherent mandatory backup before stamping. No guessed origins, copied current data as historical birth, reset completion anchor, reconstructed removed body or implicit schema promotion. Restore applies original retirement/deletion authority before current-state admission; missing original authority is unavailable.",
+      "replay_behavior": "SP-306/APR-017 require full original value/key/scope/schema/version/hash/revision and authentic original issuance. Current state reads and retained original result reads use distinct full native guards. Changed native sources CAS whole originals and preserve unrelated fields; immutable effects/results/origins never reissue. SP-307 preserves the first genuine run completion anchor and uses original atomic retirement custody after authorized expiry; no transient preparation is required for retained replay. DL-138 reads v1 through explicit versioned migration with original source bytes and audit lineage preserved; v2 stores grace_seconds under the unchanged key.",
+      "migration": "Original StorageMigrationCoordinator proves complete actual owner issuance, original source/epoch identity, enrolled writer closure and coherent mandatory backup before stamping. No guessed origins, copied current data as historical birth, reset completion anchor, reconstructed removed body or implicit schema promotion. Restore applies original retirement/deletion authority before current-state admission; missing original authority is unavailable. DL-138 v1-to-v2 read migration uses the previously effective grace default and preserves the original source bytes and audit lineage until a qualified versioned write commits; missing/corrupt originals remain unavailable.",
       "retention_compaction": "New explicit mapping of actual admitted exact-target scheduling instruction/source authority to unchanged RP-AUTHORITY-INDEFINITE@1.0.0. Retain the complete closed original authority value indefinitely; storage pressure fails closed. Referenced raw bodies remain under their actual independent policies; no full Plan document, Goal body or attachment archive is introduced.",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Preserve every declared original native field, including native scheduling reason and consent values; classify and admit the full original value before publication. No field stripping, guessed values, secrets or credentials, raw provider diagnostic/archive, inline full Plan document or Goal text. References do not extend source lifetimes or authorize reconstruction.",
@@ -98112,7 +98112,14 @@
             "minimum": 1
           },
           "record": {
-            "$ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/ExecutionSchedule"
+            "oneOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/ExecutionSchedule"
+              },
+              {
+                "$ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/ExecutionScheduleV2"
+              }
+            ]
           }
         }
       },
@@ -98152,6 +98159,113 @@
           "Plans/Assistant_Plan_Runtime.md#APR-017",
           "Plans/Scheduling_and_Quota_Resume.md#SQR-011",
           "Plans/Decision_Log.md#DL-029"
+        ]
+      }
+    },
+    {
+      "family_id": "project_automation_pause",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "project_automation_pause.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.project_automation_pause.v1",
+      "value_schema_ref": "Plans/assistant_plan_cancel_custody.schema.json#/$defs/StorageProjectAutomationPause",
+      "owner_doc": "Plans/storage-plan.md#SP-323",
+      "producer": [
+        "Scheduling and Quota Resume"
+      ],
+      "consumers": [
+        "Scheduling and Quota Resume eligibility/dispatch owner",
+        "Storage current-custody, backup and restore readers"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "source_revision",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "SP-323/SQR-018: one current project manual-stop authority record. A repeated set returns the unchanged revision/epoch; only an authorized changed value uses whole-value CAS. Every automatic dispatch reads the whole current record and rechecks user_stop_epoch. Missing later custody blocks dispatch. No runtime.automation_pause_changed EventRecord is registered; missing_event_registration is reported.",
+      "migration": "Fresh genuine project birth creates revision-0 off under proven never-born custody. Existing project without authentic record is unavailable, never inferred off. There is no legacy key, guessed backfill or automatic birth. Backup/restore preserve the newer latch and epoch.",
+      "retention_compaction": "SP-323 assigns unchanged RP-AUTHORITY-INDEFINITE@1.0.0 to the complete original project manual-stop authority. No new TTL, limit or policy; storage pressure fails closed.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only exact project identity, pause boolean, user_stop_epoch, user actor reference, changed time and revision. No Settings value, secret, raw body, provider diagnostic or inferred default.",
+      "legacy_canonical_crosswalk_status": "New exact physical project authority key with no legacy alias or inferred project birth.",
+      "value_schema": {
+        "description": "SP-323/DL-138 closed one-record-per-project original custody under exact project_automation_pause.v1:{hex(storage_instance_id)}:{hex(project_id)} key. Whole-value CAS, authenticated never-born creation and backup/restore are owner obligations, not installed by this schema.",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "source_revision",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.project_automation_pause.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_key": {
+            "type": "string",
+            "pattern": "^project_automation_pause\\.v1:[0-9a-f]+:[0-9a-f]+$"
+          },
+          "source_revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/ProjectAutomationPauseRecord"
+          }
+        }
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-323",
+          "Plans/Scheduling_and_Quota_Resume.md#SQR-018",
+          "Plans/Decision_Log.md#DL-138"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-323",
+          "Plans/Scheduling_and_Quota_Resume.md#SQR-018",
+          "Plans/Decision_Log.md#DL-138"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-323",
+          "Plans/Scheduling_and_Quota_Resume.md#SQR-018",
+          "Plans/Decision_Log.md#DL-138"
         ]
       }
     },

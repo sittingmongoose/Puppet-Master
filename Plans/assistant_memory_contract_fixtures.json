@@ -267,6 +267,18 @@
             "memory_id": "teach-0009",
             "normalized_fact_sha256": "0a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f9"
           }
+        ],
+        "rule_check_outcomes": [
+          {
+            "memory_id": "teach-0007",
+            "normalized_fact_sha256": "3b7d0c9f1e2a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d",
+            "outcome": "passed"
+          },
+          {
+            "memory_id": "teach-0009",
+            "normalized_fact_sha256": "0a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f9",
+            "outcome": "failed"
+          }
         ]
       }
     },
@@ -277,7 +289,110 @@
         "schema_id": "pm.assistant_memory.reply_included_teachings.v1",
         "message_id": "msg-601",
         "thread_id": "thread-15",
-        "included_teaching_ids": []
+        "included_teaching_ids": [],
+        "rule_check_outcomes": []
+      }
+    },
+    {
+      "name": "teach_revoke_request_current",
+      "definition": "TeachRevokeRequest",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_revoke_request.v1",
+        "request_id": "req-revoke-01",
+        "command_id": "cmd.chat.teach.revoke",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "memory_id": "teach-0007",
+        "expected_revision": 3
+      }
+    },
+    {
+      "name": "teach_revoke_result_off",
+      "definition": "TeachRevokeResult",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_revoke_result.v1",
+        "request_id": "req-revoke-01",
+        "command_id": "cmd.chat.teach.revoke",
+        "committed": true,
+        "status": "committed",
+        "receipt_ref": "receipt-revoke-01",
+        "error_reason": null,
+        "memory_id": "teach-0007",
+        "revoked_at": "2026-09-29T12:00:00Z"
+      }
+    },
+    {
+      "name": "teach_lock_request_unlock",
+      "definition": "TeachLockRequest",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_lock_request.v1",
+        "request_id": "req-lock-01",
+        "command_id": "cmd.chat.teach.set_lock",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "memory_id": "teach-0007",
+        "expected_revision": 3,
+        "locked": false
+      }
+    },
+    {
+      "name": "teach_lock_result_unlock",
+      "definition": "TeachLockResult",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_lock_result.v1",
+        "request_id": "req-lock-01",
+        "command_id": "cmd.chat.teach.set_lock",
+        "committed": true,
+        "status": "committed",
+        "receipt_ref": "receipt-lock-01",
+        "error_reason": null,
+        "memory_id": "teach-0007",
+        "locked": false
+      }
+    },
+    {
+      "name": "teach_confirm_request_locked",
+      "definition": "TeachConfirmRequest",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_confirm_request.v1",
+        "request_id": "req-confirm-01",
+        "command_id": "cmd.chat.teach.confirm",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "capture_id": "capture-01",
+        "scope": "project",
+        "public_safe": false,
+        "locked": true,
+        "conflict_resolution": "keep_both"
+      }
+    },
+    {
+      "name": "teach_confirm_result_locked",
+      "definition": "TeachConfirmResult",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_confirm_result.v1",
+        "request_id": "req-confirm-01",
+        "command_id": "cmd.chat.teach.confirm",
+        "committed": true,
+        "status": "committed",
+        "receipt_ref": "receipt-confirm-01",
+        "error_reason": null,
+        "memory_id": "teach-0010",
+        "locked": true
+      }
+    },
+    {
+      "name": "memory_export_result_teachings",
+      "definition": "ArtifactExportResult",
+      "value": {
+        "schema_id": "pm.assistant_memory.artifact_export_result.v1",
+        "request_id": "export-req-01",
+        "command_id": "cmd.chat.memory.export",
+        "scope": "teachings",
+        "committed": true,
+        "status": "committed",
+        "artifact_ref": "artifact:export-01",
+        "error_reason": null
       }
     }
   ],
@@ -481,6 +596,132 @@
           "memory_id": "teach-0007",
           "normalized_fact_sha256": "3b7d0c9f1e2a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d"
         }
+      }
+    },
+    {
+      "name": "reply_without_rule_check_outcomes",
+      "definition": "ReplyIncludedTeachings",
+      "base_valid": "reply_included_two_rules",
+      "rejects_for": "rule_check_outcomes required",
+      "reason": "rule_check_outcomes required",
+      "remove": [
+        "rule_check_outcomes"
+      ]
+    },
+    {
+      "name": "reply_rule_check_unknown_outcome",
+      "definition": "ReplyIncludedTeachings",
+      "base_valid": "reply_included_two_rules",
+      "rejects_for": "rule outcome closed enum",
+      "reason": "rule outcome closed enum",
+      "patch": {
+        "rule_check_outcomes.0.outcome": "assumed_passed"
+      }
+    },
+    {
+      "name": "reply_rule_check_missing_version",
+      "definition": "ReplyIncludedTeachings",
+      "base_valid": "reply_included_two_rules",
+      "rejects_for": "rule outcome requires normalized_fact_sha256",
+      "reason": "rule outcome requires normalized_fact_sha256",
+      "remove": [
+        "rule_check_outcomes.0.normalized_fact_sha256"
+      ]
+    },
+    {
+      "name": "teach_revoke_without_revision",
+      "definition": "TeachRevokeRequest",
+      "base_valid": "teach_revoke_request_current",
+      "rejects_for": "expected_revision required",
+      "reason": "expected_revision required",
+      "remove": [
+        "expected_revision"
+      ]
+    },
+    {
+      "name": "teach_revoke_result_without_revoked_at",
+      "definition": "TeachRevokeResult",
+      "base_valid": "teach_revoke_result_off",
+      "rejects_for": "committed revoke requires revoked_at",
+      "reason": "committed revoke requires revoked_at",
+      "patch": {
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "teach_lock_without_locked",
+      "definition": "TeachLockRequest",
+      "base_valid": "teach_lock_request_unlock",
+      "rejects_for": "locked required",
+      "reason": "locked required",
+      "remove": [
+        "locked"
+      ]
+    },
+    {
+      "name": "teach_lock_result_wrong_command",
+      "definition": "TeachLockResult",
+      "base_valid": "teach_lock_result_unlock",
+      "rejects_for": "lock result command const",
+      "reason": "lock result command const",
+      "patch": {
+        "command_id": "cmd.chat.teach.revoke"
+      }
+    },
+    {
+      "name": "teach_confirm_without_locked",
+      "definition": "TeachConfirmRequest",
+      "base_valid": "teach_confirm_request_locked",
+      "rejects_for": "locked required",
+      "reason": "locked required",
+      "remove": [
+        "locked"
+      ]
+    },
+    {
+      "name": "teach_confirm_user_scope_not_public_safe",
+      "definition": "TeachConfirmRequest",
+      "base_valid": "teach_confirm_request_locked",
+      "rejects_for": "user scope requires public_safe",
+      "reason": "user scope requires public_safe",
+      "patch": {
+        "scope": "user"
+      }
+    },
+    {
+      "name": "teach_confirm_result_without_locked",
+      "definition": "TeachConfirmResult",
+      "base_valid": "teach_confirm_result_locked",
+      "rejects_for": "committed confirm requires locked bool",
+      "reason": "committed confirm requires locked bool",
+      "patch": {
+        "locked": null
+      }
+    },
+    {
+      "name": "memory_export_result_without_artifact",
+      "definition": "ArtifactExportResult",
+      "base_valid": "memory_export_result_teachings",
+      "rejects_for": "committed export requires artifact_ref",
+      "reason": "committed export requires artifact_ref",
+      "patch": {
+        "artifact_ref": null
+      }
+    },
+    {
+      "name": "reply_without_included_rule_has_check",
+      "definition": "ReplyIncludedTeachings",
+      "base_valid": "reply_included_no_rule",
+      "rejects_for": "no included rule forbids rule_check_outcomes",
+      "reason": "A rule check cannot be credited to a reply that included no taught rule.",
+      "patch": {
+        "rule_check_outcomes": [
+          {
+            "memory_id": "teach-0007",
+            "normalized_fact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "outcome": "passed"
+          }
+        ]
       }
     }
   ]

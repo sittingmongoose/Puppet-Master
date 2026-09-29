@@ -19964,11 +19964,12 @@
  {
   "id": "general.interaction.eli5-default",
   "label": "Explain Terms Everywhere",
-  "desc": "Turns term explanations on for every new chat. The per-chat toggle still wins for a chat you have changed. Never changes generated documents.",
+  "desc": "Default explanations for new chats at app and project levels. An explicit chat choice wins, then the project default, then the app default. Changing a default never changes an explicit chat choice or generated documents.",
   "type": "toggle",
   "default": false,
   "scope": [
-   "global"
+   "global",
+   "project"
   ],
   "tier": "simple",
   "related_features": [
@@ -20227,12 +20228,13 @@
  {
   "id": "branching.crew.crew-auto-enabled",
   "label": "Crew Auto",
-  "desc": "Lets the assistant offer a Crew by itself when a request looks complex enough. It still cannot start one until you commit a configuration, and it can never grant itself more permission than you already gave.",
+  "desc": "Lets the assistant start a Crew when needed, using the stored project rules and team. On by default for a new project; existing explicit off choices stay off. A chat's Crew Auto check persists only that thread's override; absent or null follows the project. It never grants additional permission.",
   "type": "toggle",
-  "default": false,
+  "default": true,
   "scope": [
    "global",
-   "project"
+   "project",
+   "run"
   ],
   "tier": "simple",
   "related_features": [

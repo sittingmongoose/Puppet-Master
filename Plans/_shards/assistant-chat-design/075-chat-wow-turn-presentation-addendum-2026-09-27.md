@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25821-L26314
+Source lines: L25835-L26341
 
-Source SHA256: `c0598b7cd330cb81288c38ca4b6a84c5c384b981cceeb49af40429a0507db3ff`
+Source SHA256: `2af0f35217dcf661b0a9eabfeb6be5109c8ed9c0b1366778c1368a117cad2823`
 
 ---
 
@@ -39,12 +39,16 @@ canonical_text: >-
   accent budget: the accent colours only live work, needs-you items, the one primary action of a
   card, and Send and Stop; family hues are quiet and appear only on eyebrow tiles and spine ticks.
   Message types, their persistence and the ACD-073 boundary are unchanged.
+  For scheduled-message cards, the Time-family ticket and time block identify the transcript
+  family only. Scheduling_and_Quota_Resume SQR-012 owns the card's internal layout and renders its
+  time in the schedule's own time zone; that layout is accepted within Time (DL-138).
 gui_related: true
 gui_classification_reason: "Defines how every transcript item renders in the default chat presentation."
 split_recommended: false
 depends_on: [DL-104, ACD-072, ACD-073]
 unblocks: [F3-562, DR-043]
 acceptance_criteria:
+  - "A scheduled-message card retains its SQR-012 layout and schedule time zone within the Time family."
   - "Every persisted message type and runtime card kind maps to exactly one of the seven families through one owner map."
   - "The spine, ticks and live light add no scroll width or height at any chat pane width."
   - "In Basic Dark no transcript element uses the accent outside live work, needs-you items, a card's one primary action, and Send and Stop."
@@ -64,9 +68,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "Plans/Decision_Log.md#DL-104"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
 preserved_exact_tokens:
+  - "DL-138"
+  - "SQR-012"
   - "Turn Stage"
   - "turn mark"
   - "spine"
@@ -456,12 +463,16 @@ canonical_text: >-
   key. Cues are subtle, at most one per 120ms, step ticks at most one per 250ms and silent inside
   bursts; audio starts only after a user gesture; and each cue accompanies a visible change, never
   carrying information alone. Reduced motion does not mute sound.
+  DL-138 confirms that theme-specific durations apply to sheets and a card's own changes,
+  while transcript entrances retain this unit's shared timing and order; wand cards which opt out
+  of the family entrance do not play an additional transcript entrance.
 gui_related: true
 gui_classification_reason: "Defines per-theme motion and the chat's sound cues."
 split_recommended: false
 depends_on: [DL-106, DL-107, UCC-103]
 unblocks: [F3-564, DR-043]
 acceptance_criteria:
+  - "Per-theme card or sheet durations cannot change transcript entrance timing or order."
   - "The same beat has the same timing and order in all four families."
   - "Reduced motion from either source lands end states."
   - "Chat cues route through the Notifications & Sounds owner; no chat-local sound setting or volume exists."
@@ -481,10 +492,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "Plans/Decision_Log.md#DL-106"
   - "Plans/Decision_Log.md#DL-107"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
 preserved_exact_tokens:
+  - "DL-138"
   - "Basic"
   - "Friendly"
   - "Glass"

@@ -1,0 +1,25 @@
+{
+  "ledger_id": "pldg-20260927-003-wand-scheduling",
+  "cycle": 1,
+  "review_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger003-cycle1/findings.jsonl",
+  "review_source_sha256": "1b167ca2cb4669332a61e546875cbdca80d136fd7f877038f26e0579911dc86b",
+  "reviewed_base": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c",
+  "finding_count": 2,
+  "dispositions": [
+    {
+      "finding_id": "R-01",
+      "unit": "SQR-016",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Added execution_started discriminator: started uses real bounds/run; held-before-execution uses durable hold/closure facts, zero built, null execution bounds and nullable never-admitted run. Added2positive/8negative fixtures."
+    },
+    {
+      "finding_id": "R-02",
+      "unit": "SQR-018",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Corrected active findings Record11 to exact SP323 namespaced physical key."
+    }
+  ],
+  "status": "repairs_pending_recheck"
+}

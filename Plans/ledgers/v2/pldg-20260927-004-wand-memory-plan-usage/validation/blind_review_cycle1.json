@@ -1,0 +1,46 @@
+{
+  "ledger_id": "pldg-20260927-004-wand-memory-plan-usage",
+  "cycle": 1,
+  "review_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger004-cycle1/findings.jsonl",
+  "review_source_sha256": "48681264c37cc4cc939000395935d6d20abe4b6094238d888b8881d2961a3e83",
+  "reviewed_base": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c",
+  "finding_count": 5,
+  "dispositions": [
+    {
+      "finding_id": "R-01",
+      "unit": "BSD-037",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Accepted inconsistency; repaired DL138 to canonical stale_projection instead of inventing stale_view."
+    },
+    {
+      "finding_id": "R-02",
+      "unit": "UF-106",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Qualified UF106 acceptance by effective hard cap, requested amount shown separately."
+    },
+    {
+      "finding_id": "R-03",
+      "unit": "BSD-035",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Same BSD table-selector repair as ledger002 R02."
+    },
+    {
+      "finding_id": "R-04",
+      "unit": "DL-138",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Preserved event registration as approved but outstanding Event Authority obligation and completion criteria."
+    },
+    {
+      "finding_id": "R-05",
+      "unit": "DL-138",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Same explicit snapshot/baseline process decision as ledger002 R06."
+    }
+  ],
+  "status": "repairs_pending_recheck"
+}

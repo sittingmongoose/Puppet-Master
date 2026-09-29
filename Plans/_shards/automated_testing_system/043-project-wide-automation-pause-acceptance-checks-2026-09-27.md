@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5586-L5660
+Source lines: L5588-L5670
 
-Source SHA256: `e02058f00d1765b4befb41a1f47505e9f1c9df99fb754d825ba06753a084d05d`
+Source SHA256: `2b02322a32fc054957efa8bac3e82e77bd336091340e32287303f58c1d27e337`
 
 ---
 
@@ -22,7 +22,7 @@ unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
-  The scheduling suite proves the project-wide Pause all automations switch of SQR-018 (DL-136) against
+  The required scheduling suite must prove the project-wide Pause all automations switch of SQR-018 (DL-136) against
   server-owned records. With the switch on, no scheduled message, scheduled build, window resume or quota resume in
   the project dispatches, each refusal records the failed clause project_automation_paused, and a scheduled message
   whose send time arrives is held with that clause. A dispatch decided before cmd.runtime.automation_pause.set
@@ -43,6 +43,7 @@ canonical_text: >-
   and no Settings value stores the switch. These are acceptance obligations only; every command row stays
   handler_unavailable in the catalog, and its controls render disabled with command_not_registered, until its
   catalog, event and wiring rows close.
+  DL-138 adds explicit durability and admission assertions: restart reads the saved project pause record and its user_stop_epoch unchanged; repeated absolute-value requests neither advance the epoch nor emit again; a non-user clear returns permission_denied; and while runtime.automation_pause_changed lacks its separate Event Authority admission, an attempted event publication reports missing_event_registration and appends zero EventRecord objects. Turning the switch off re-evaluates each held occurrence under its recorded missed policy at most once, without replaying completed work. The static companion pair may validate these request/result shapes, but these runtime assertions remain NOT_RUN until a runtime executes them.
 gui_related: true
 gui_classification_reason: The held reason and the switch's own line are visible outcomes the checks read from painted output.
 split_recommended: false
@@ -53,6 +54,9 @@ acceptance_criteria:
   - "No check passes on a client timer, a page-local flag or a dispatch count."
   - "A check proves that turning the switch on leaves every schedule, quota consent and per-run latch unchanged."
   - "A check proves that a user's Send now and Build act while the switch is on and leave it on."
+  - "Restart preserves the stored pause and epoch; repeated sets are idempotent and non-user clears are refused."
+  - "An unregistered automation-pause event appends zero EventRecord objects and reports missing_event_registration."
+  - "Runtime assertions remain NOT_RUN; schema validation is static companion evidence only."
 validation_surfaces:
   - node tests/scheduling-verify.mjs
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -68,9 +72,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138"
   - "Plans/Scheduling_and_Quota_Resume.md#SQR-018"
   - "Plans/Decision_Log.md#DL-136"
 preserved_exact_tokens:
+  - "DL-138"
+  - "missing_event_registration"
+  - "NOT_RUN"
   - "project_automation_paused"
   - "cmd.runtime.automation_pause.set"
   - "runtime.automation_pause_changed"

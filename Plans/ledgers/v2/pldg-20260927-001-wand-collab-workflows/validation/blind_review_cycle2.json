@@ -1,0 +1,53 @@
+{
+  "ledger_id": "pldg-20260927-001-wand-collab-workflows",
+  "cycle": 2,
+  "reviewed_base": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c",
+  "review_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger001-cycle2/findings.jsonl",
+  "review_source_sha256": "70f04c323920334354dc04663998fda54c1ca224dc231aea2531f28bbee67cf0",
+  "review_summary": {
+    "summary": true,
+    "units_reviewed": [
+      "ATS-062",
+      "ATS-064",
+      "CWR-004",
+      "CWR-018",
+      "CWR-021",
+      "CWR-024",
+      "CWR-028",
+      "CWR-029",
+      "CWR-030",
+      "CWR-031",
+      "CWR-032",
+      "CWR-033",
+      "CWR-038",
+      "CWR-040",
+      "DL-138",
+      "EP-129",
+      "SSYS-028",
+      "ACD-076",
+      "ACD-469",
+      "ACD-475",
+      "ACD-477",
+      "ACD-484"
+    ],
+    "verdict": "fix_then_land",
+    "n_findings": 1
+  },
+  "finding_count": 1,
+  "dispositions": [
+    {
+      "finding_id": "R-01",
+      "unit": "EP-129",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Set gui_related true and explain the visible coordinator and participant lane behavior owned by the unit."
+    }
+  ],
+  "status": "closed_at_two_cycle_cap",
+  "validation_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/validation-final/results.json sha256:6a16de9aa510a2ace08d88dd13954f938d16a73e57db90c09655d7e3410b31f0",
+  "open_questions": [
+    "q-035"
+  ],
+  "external_open_questions": [],
+  "claim_boundary": "Static compile and contract review only; no native runtime proof or governance seal."
+}

@@ -1,0 +1,32 @@
+{
+  "ledger_id": "pldg-20260927-001-wand-collab-workflows",
+  "cycle": 1,
+  "review_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger001-cycle1/findings.jsonl",
+  "review_source_sha256": "aad8b67fefc83f8eca7c4d424709315f99b9b1a44e590ca9c28f8ca41a3e19f4",
+  "reviewed_base": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c",
+  "finding_count": 3,
+  "dispositions": [
+    {
+      "finding_id": "R-01",
+      "unit": "CWR-031",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Repaired CWR section10 to permit message_chrome only for taught_rule_check."
+    },
+    {
+      "finding_id": "R-02",
+      "unit": "CWR-031",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Corrected active G1-35 receipt and dec-061 to Memory ledger004 q007; no invented local q035."
+    },
+    {
+      "finding_id": "R-03",
+      "unit": "SSYS-028",
+      "severity": "should_fix",
+      "state": "pending_owner",
+      "disposition": "Pending owner answer to app-wide editable default versus project-only Settings conflict; the draft fallback edit is not an accepted product decision."
+    }
+  ],
+  "status": "repairs_pending_recheck"
+}

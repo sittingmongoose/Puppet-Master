@@ -1,0 +1,67 @@
+{
+  "ledger_id": "pldg-20260927-002-wand-back-seat-driver",
+  "cycle": 1,
+  "review_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger002-cycle1/findings.jsonl",
+  "review_source_sha256": "af0a3702de7fade4f0d59470af76255b2fb6c5bd2d45499ca9577dd941667d9a",
+  "reviewed_base": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c",
+  "finding_count": 8,
+  "dispositions": [
+    {
+      "finding_id": "R-01",
+      "unit": "DL-138",
+      "severity": "blocking",
+      "state": "repaired",
+      "disposition": "Repaired DL138 to existing stale_projection; approved source uses plain stale view, not a new enum."
+    },
+    {
+      "finding_id": "R-02",
+      "unit": "BSD-035",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Defined composer selection of reviewing entry while retaining context_state."
+    },
+    {
+      "finding_id": "R-03",
+      "unit": "DL-138",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Added BSD037 and other actual owner units to DL138 row27."
+    },
+    {
+      "finding_id": "R-04",
+      "unit": "DL-138",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Replaced loose delivered wording with emitted."
+    },
+    {
+      "finding_id": "R-05",
+      "unit": "BSD-037",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Added result identity, resulting_epoch and projection_ref to canonical unit and acceptance."
+    },
+    {
+      "finding_id": "R-06",
+      "unit": "DL-138",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Added explicit post-Plans-landing snapshot+baseline policy and runbook owners."
+    },
+    {
+      "finding_id": "R-07",
+      "unit": "DL-138",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Retained exact stale and unreconfirmed data markers separate from visible not re-checked copy."
+    },
+    {
+      "finding_id": "R-08",
+      "unit": "DL-138",
+      "severity": "note",
+      "state": "repaired",
+      "disposition": "Replaced document-only route with BSD022."
+    }
+  ],
+  "status": "repairs_pending_recheck"
+}

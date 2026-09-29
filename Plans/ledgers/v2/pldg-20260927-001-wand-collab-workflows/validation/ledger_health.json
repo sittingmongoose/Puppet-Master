@@ -1,17 +1,23 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-001-wand-collab-workflows",
-  "updated_at_utc": "2026-09-27T23:59:30+00:00",
-  "status": "pass_prose_compiled",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "status": "pass_except_deferred_governance_coverage",
   "summary": {
-    "events": 24,
-    "design_atoms": 46,
-    "decisions": 51,
-    "open_questions": 9,
+    "events": 29,
+    "design_atoms": 56,
+    "decisions": 61,
+    "open_questions": 1,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "compile_queue_items": 46
+    "compile_queue_items": 56
   },
-  "notes": "Prose compile of the G1 NOW lines, the answered WAIT lines, the lead's follow-up rulings, the closure wave (E-31, E-11) and the blind review cycle 1 repairs; compile witness pass.",
-  "errors": []
+  "notes": "DL-138 prose and companion compile reviewed through the two-cycle cap; every finding is dispositioned in Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/validation/blind_review_cycle2.json. Required deterministic checks pass except the explicitly allowed governance coverage errors and normal assistant checker exit 1 with errors empty. Open owner questions remain recorded; no native runtime or governance seal is claimed.",
+  "errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Collaborative_Workflows.md', 'Plans/Settings_System.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Collaborative_Workflows.md', 'Plans/Settings_System.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Collaborative_Workflows.md', 'Plans/Executor_Protocol.md', 'Plans/Settings_System.md']"
+  ],
+  "last_event_id": "evt-029",
+  "validator_status": "fail"
 }

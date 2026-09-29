@@ -1,36 +1,55 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-005-wand-chat-gui-contract",
-  "updated_at_utc": "2026-09-29T06:38:43+00:00",
-  "open_questions": [
-    "q-005",
-    "q-008",
-    "q-015",
-    "q-020",
-    "q-021"
-  ],
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "open_questions": [],
   "answered_questions": [
     "q-001",
     "q-002",
     "q-003",
     "q-004",
+    "q-005",
     "q-006",
     "q-007",
+    "q-008",
     "q-009",
     "q-010",
     "q-011",
     "q-012",
     "q-013",
     "q-014",
+    "q-015",
     "q-016",
     "q-017",
     "q-018",
-    "q-019"
+    "q-019",
+    "q-020",
+    "q-021"
   ],
   "open_blockers": [],
   "deferred_questions": [],
   "deferred_items": [],
   "not_landed": [
-    "All compiled prose is unlanded: shards and index regeneration, review and landing are pending."
+    "Reviewed DL-138 compile is ready for the required landing checks."
+  ],
+  "last_event_id": "evt-026",
+  "pending_companions": [],
+  "historical_findings_archive": {
+    "path": "Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/source_shards/findings-through-main-1a501f3341.md",
+    "sha256": "00b042815ad2927943a28319bba5f5737d5e5457396f0742f9c427def5fcf9eb",
+    "base_commit": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c"
+  },
+  "completed_companion_followups": [
+    "#14 Crew Auto default/applicability and thread-metadata description in existing inventory ID.",
+    "#25 project ELI5 scope and precedence in existing inventory ID.",
+    "Current PMConcept7 generated outputs rebuilt; integrator reports build check0 and tour7/7."
+  ],
+  "external_open_questions": [
+    {
+      "ledger_id": "pldg-20260927-001-wand-collab-workflows",
+      "question_id": "q-035",
+      "owner": "Plans/Settings_System.md",
+      "scope": "All chats ELI5 edit only; project and chat scopes remain compiled"
+    }
   ]
 }

@@ -1,21 +1,29 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-005-wand-chat-gui-contract",
-  "updated_at_utc": "2026-09-29T06:38:43+00:00",
-  "status": "fail_deferred_governance_coverage",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "status": "pass_except_deferred_governance_coverage",
   "summary": {
-    "events": 20,
-    "design_atoms": 57,
-    "decisions": 61,
-    "open_questions": 5,
+    "events": 26,
+    "design_atoms": 66,
+    "decisions": 70,
+    "open_questions": 0,
+    "answered_questions": 21,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "compile_queue_items": 57
+    "compile_queue_items": 66
   },
-  "notes": "pm-bootstrap-ledger-validate.py on 2026-09-27: the only errors are governance coverage for Plans/Decision_Log.md, which was already absent from Spec_Lock and plan_graph coverage before this ledger; refreshing that coverage is the designated Plans agent's reseal. Every other check passes.",
+  "notes": "DL-138 prose and companion compile reviewed through the two-cycle cap; every finding is dispositioned in Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/validation/blind_review_cycle2.json. Required deterministic checks pass except the explicitly allowed governance coverage errors and normal assistant checker exit 1 with errors empty. Open owner questions remain recorded; no native runtime or governance seal is claimed.",
   "errors": [
-    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Decision_Log.md']",
-    "governance coverage targets missing from plan_graph coverage: ['Plans/Decision_Log.md']"
+    "governance coverage targets missing from sharding_config sources: ['Plans/Assistant_Plan_Runtime.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Assistant_Plan_Runtime.md', 'Plans/Decision_Log.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Assistant_Plan_Runtime.md', 'Plans/Decision_Log.md']"
   ],
-  "validator_status": "fail"
+  "validator_status": "fail",
+  "last_event_id": "evt-026",
+  "historical_findings_archive": {
+    "path": "Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/source_shards/findings-through-main-1a501f3341.md",
+    "sha256": "00b042815ad2927943a28319bba5f5737d5e5457396f0742f9c427def5fcf9eb",
+    "base_commit": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c"
+  }
 }

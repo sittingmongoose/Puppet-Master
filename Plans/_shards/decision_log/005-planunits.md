@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L2835-L10180
+Source lines: L2883-L10413
 
-Source SHA256: `69d9a5a44b7cf3b42af5b75b0ac955ee500048049e3083dd050f82db5d71667b`
+Source SHA256: `96ecdcbdda9594b541c26057fb39ce6f6e6b2bc400c0cf2a9e8ca72cecba76a2`
 
 ---
 
@@ -7353,4 +7353,189 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
   - Plans/Executor_Protocol.md
   - Plans/assistant-chat-design.md
+```
+
+### DL-138 - Approved Wand Modules Answers And Theme Fonts
+
+```yaml
+plan_unit_id: DL-138
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-138 records the following owner decisions. Jared answered all 29 distinct wand-modules questions (33 ledger
+  question records) on 2026-09-29 with their recommended options, including engineering defaults and follow-up routing,
+  and amended question 22 to include both NieR Mode fonts. The answer source is the owner authorization for this
+  compile. Jared said: "I agree with all your recommended for the 29 questions, except I added that there were 2
+  more fonts added with nier mode that needed to be added to the spec from PMConcept7. I want codex to handle those
+  questions too. When it finishes everything, it should do the snapshot. As for going forward, it should be after
+  plan changes."
+
+
+  1. Advisor pause state: Persist paused with a user or safety cause so Resume has a real state to validate.
+
+  2. Advisor composer status: Show Reviewing while a finding is being double-checked; Double-checking stays in Context.
+
+  3. Late critical finding: Use finding state emitted, retain stale and unreconfirmed data, print not re-checked at note weight, and accept Dismiss.
+
+  4. Replaced wait Release: Return stale_projection for the stale view and refresh the outdated control.
+
+  5. Advisor status word mapping: Close the duplicate as confirmed from ledger002 q-005 / dec-012; retain DL-110
+  pairings.
+
+  6. Scheduled Time card: Chat accepts Scheduling ownership of the scheduled-message card internals and its schedule
+  time zone.
+
+  7. Stored Build At grace and occurrence summary: Version the saved ExecutionSchedule to persist grace_seconds;
+  define an occurrence summary rebuilt from existing owner records.
+
+  8. Plan-card Cancel schedule: Add plan_card as an allowed origin for cmd.execution_window.cancel.
+
+  9. Pause all automations companions: Approve storage, wiring, runtime acceptance and event-registration work;
+  complete the first three now and retain event registration as an outstanding Event Authority obligation under
+  the required admission procedure.
+
+  10. Grill Me outside BrainStorm: Question peers and research independently; ask the user only through the ordinary
+  needs-you path, with no new allowance.
+
+  11. Crew Auto parallelism: Use Crew parallelism capped by app limits and show a read-only value on the sheet.
+
+  12. Hard budget vs run limit: Hard budgets always cap a run limit and the sheet shows both requested and effective
+  limits.
+
+  13. First Crew Auto run: Create untouched configuration version 1 with the project; no confirmation sheet before
+  first use, then show the note and settings link.
+
+  14. Crew Auto Settings and chat override: Set the factory project default On and persist the per-chat override
+  in thread metadata.
+
+  15. Crew Auto receipt edge cases: Emit no chat receipt for a Settings-origin change or a chat that opted out.
+
+  16. Coordinator lane state: Give a coordinator outside the helper roster a row in the same participant-status
+  projection.
+
+  17. Chat Room round exhaustion: Wait after the last round until the user adds rounds, summarizes, or ends the
+  room.
+
+  18. Rule-check persistence and fix action: Persist passed/failed/could-not-run results with the reply; reuse the
+  existing draft-only fix-request action and reconcile command and older wording.
+
+  19. Mixed rule-check result: Use one Missed-first line, for example Missed 1 of your rules · followed 2.
+
+  20. Partly known estimate: Decide the cost and time ranges independently; use depends on the work only for the
+  figure without a basis.
+
+  21. Critical Advisor ID: Use the canonical critical-advisor hyphen spelling in Back Seat Driver (P-057, BSD-022).
+
+  22. Bundled theme fonts: Adopt Inter for Basic/Glass, Poppins for Friendly, IBM Plex Mono for Retro, plus PM NieR
+  Sans and PM NieR Mono as specified below.
+
+  23. Chat/editor split width: Keep chat at least 360 px wide beside the editor.
+
+  24. Theme motion timing: Theme durations govern sheets and internal card changes; transcript entrances keep shared
+  timing.
+
+  25. Project ELI5 default: Add project applicability to general.interaction.eli5-default; resolve chat override,
+  then project, then app default.
+
+  26. Command display names: Use Summarize Now and Run Another Review.
+
+  27. Seven missing command shapes: Type End discussion, Research this lead, Dismiss a finding, Release a wait,
+  Revoke a rule, Lock a rule and Export memory in existing owner pairs; Confirm a rule also supports locked.
+  CS-085 and WM-063 route these contracts to CWR-031, BSD-037 and AMS-052.
+
+  28. Three old wiring descriptions: Update chat_crew_auto_open_config, w_024 chat_crew_auto_set and w_051 chat_eli5_set
+  to their current owner behavior.
+
+  29. Superseded command rows: Add pointers from older Send Findings To Agent, Regenerate Title and other replaced
+  rows to the newer rules.
+
+
+  Inter is bundled for Basic and Glass, Poppins for Friendly (with Nunito as its fallback), and IBM Plex Mono for
+  Retro. NieR Mode uses "PM NieR Sans", M PLUS 1 variable weights 100-900 from mplus1-latin-var.woff2, for body
+  and display: it is a free stand-in for the game's commercial Fontworks FOT-Rodin. NieR Mode uses "PM NieR Mono",
+  JetBrains Mono variable weights 100-800 from jetbrains-mono-latin-var.woff2, for mono text. All five named faces
+  are bundled with the app; both NieR faces are SIL OFL. Their source is Concepts/onboarding/opus-5.5/src/settings/styles.d/13-nier.css,
+  with licenses in Concepts/onboarding/opus-5.5/src/settings/nier/fonts/OFL-*.txt and notes in Concepts/onboarding/opus-5.5/src/settings/nier/SOURCE.md.
+  NieR Mode owns general.visual.accent-color and general.visual.app-font through kit.d/18-nier.js.
+
+
+  After every landing that changes any file under Plans/**, the landing agent runs snapshot-current and the landing check's --record-baseline in a full worktree at the new main, then lands the snapshot and baseline together as one separate commit under the same landing lock before releasing it. A landing with no Plans/** change needs no refresh. The operating rule belongs in reports/landing-checks/README.md, AGENTS.md and .claude/CLAUDE.md; this batch records the decision, and Part C applies those runbook changes after Part B lands.
+
+  Question 9 does not waive event admission: runtime.automation_pause_changed is not one of the seven coordination
+  families covered by DL-093. No event family is registered by this entry. Its approved registration remains
+  outstanding as Scheduling ledger q-006: Event Authority owns the family-specific decision and admission,
+  followed by the prescribed schema, registry, fixture, depth and checkpoint requirements before emission is enabled. Static schemas, fixtures and acceptance
+  contracts do not prove implemented runtime behavior.
+gui_related: true
+gui_classification_reason: Records owner decisions for collaboration, scheduling, advisor, chat, Settings, typography
+  and visible command behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- All 29 recommended answers and the complete two-face NieR amendment are preserved.
+- Each answer compiles through its named owner; event admission retains the separate DL-093 boundary.
+- Static contract evidence is distinguished from native runtime execution.
+validation_surfaces:
+- python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows --base origin/main
+- python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver --base origin/main
+- python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-003-wand-scheduling --base origin/main
+- python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main
+- python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract --base origin/main
+- python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-006-wand-command-census --base origin/main
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_answer_loss_or_unapproved_event_admission
+reasoning_tier: high
+context_scope: wand_modules_answer_resolution
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Automated_Testing_System.md
+- Plans/Back_Seat_Driver.md
+- Plans/Collaborative_Workflows.md
+- Plans/Commands_System.md
+- Plans/FinalGUISpec.md
+- Plans/Personas.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/Settings_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+- Plans/assistant-chat-design.md
+- Plans/assistant-memory-subsystem.md
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md, SHA-256 345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c
+- Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/source_shards/authorization.md
+- Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver/source_shards/authorization.md
+- Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/authorization.md
+- Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage/source_shards/authorization.md
+- Plans/ledgers/v2/pldg-20260927-005-wand-chat-gui-contract/source_shards/authorization.md
+- Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/authorization.md
+preserved_exact_tokens:
+- DL-138
+- PM NieR Sans
+- PM NieR Mono
+- Inter
+- Poppins
+- IBM Plex Mono
+- M PLUS 1
+- JetBrains Mono
+- mplus1-latin-var.woff2
+- jetbrains-mono-latin-var.woff2
+- 360 px
+- general.interaction.eli5-default
+- stale_projection
+- emitted
+- unreconfirmed
+- snapshot-current
+- --record-baseline
+negative_constraints:
+- Do not register runtime.automation_pause_changed under the seven-family approval of DL-093.
+- Do not treat static companion checks as implemented runtime evidence.
+owner_hints:
+- Plans/Decision_Log.md
 ```

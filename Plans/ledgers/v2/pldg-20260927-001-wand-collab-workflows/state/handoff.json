@@ -1,35 +1,51 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-001-wand-collab-workflows",
-  "updated_at_utc": "2026-09-27T23:59:30+00:00",
-  "last_event_id": "evt-024",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "last_event_id": "evt-029",
   "canonical_plan_targets": [
+    "Plans/Automated_Testing_System.md",
     "Plans/Collaborative_Workflows.md",
     "Plans/Executor_Protocol.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Settings_System.md",
+    "Plans/assistant-chat-design.md"
   ],
   "compiled_owner_docs": [
+    "Plans/Automated_Testing_System.md",
     "Plans/Collaborative_Workflows.md",
     "Plans/Executor_Protocol.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Settings_System.md",
+    "Plans/assistant-chat-design.md"
   ],
   "compiled_plan_outputs": [
+    "Plans/Automated_Testing_System.md",
     "Plans/Collaborative_Workflows.md",
     "Plans/Executor_Protocol.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Settings_System.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/collaborative_workflows_contracts.schema.json",
+    "Plans/collaborative_workflows_contract_fixtures.json"
   ],
   "governance_status": "not_requested",
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/validation/blind_review_cycle2.json",
+  "latest_audit_status": "closed_at_two_cycle_cap",
   "validation_state": {
-    "ledger_health": "pass_prose_compiled",
+    "ledger_health": "pass_except_deferred_governance_coverage",
     "compile_witness": "pass",
-    "claim_boundary": "Owner prose plus the static contract companion (ATS-062, extended in the closure wave with live_message_id and CollaborationMessageInProgress, and after blind review cycle 1 with the CrewAutoSetRequest scope, the run's stop_reason and the crew_auto_receipt surface): schema and fixtures validated by pm-new-contracts-verify.py only. ATS-063 stays NOT_RUN until a runtime exists. No shard or index regeneration by this ledger's authors; no governance seal."
+    "contracts": "pass_static_only",
+    "shards_and_plan_index": "pass",
+    "wiring_and_touch_closure": "pass",
+    "blind_review": "closed_at_two_cycle_cap",
+    "assistant_contract_check": "normal_exit_1_errors_empty",
+    "settings_and_concept_companions": "Inventory valid; PM7 build check passed and tour 7/7.",
+    "claim_boundary": "Static compile checks and two blind reviews complete. Landing pending; governance not requested and native runtime not proven."
   },
   "planned_owner_docs": [
+    "Plans/Automated_Testing_System.md",
     "Plans/Collaborative_Workflows.md",
     "Plans/Executor_Protocol.md",
-    "Plans/Automated_Testing_System.md"
+    "Plans/Settings_System.md",
+    "Plans/assistant-chat-design.md"
   ],
   "reserved_id_ranges": {
     "CWR": "CWR-018..CWR-039 (earlier waves); CWR-040..CWR-044 (closure wave, CWR-040 used)",
@@ -37,14 +53,16 @@
     "ATS (companion, B-CW-29)": "ATS-062 (used; the collaborative contract family registration, task 2)",
     "ATS (closure wave)": "ATS-063 (used)"
   },
-  "current_phase": "prose_compiled_pending_review",
+  "current_phase": "compiled_with_open_owner_questions",
   "cursor": {
-    "last_event_id": "evt-024",
-    "next_action": "Blind review cycle 2 (the last) of the cycle-1 repairs, including the ATS-062 companion update of evt-023; then the integrator regenerates shards and the plan index and commits. Open questions q-026..q-034 wait on a new card, the owner or the Settings owner; none blocks landing."
+    "last_event_id": "evt-029",
+    "next_action": "Land this reviewed compile; retain open owner questions and request the designated Plans agent reseal separately."
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/source_shards/authorization.md",
-    "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/source_shards/findings.md"
+    "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/source_shards/findings.md",
+    "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/source_shards/findings-through-main-1a501f3341.md"
   ],
-  "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md."
+  "landing_condition": "Witness exit 0, one blind form-driven review (cap two cycles), shard check and landing check per .claude/CLAUDE.md.",
+  "latest_audit_sha256": "b1739fbdb82266f4c1b05cde26b3e66d01c1edb71fdd4f71a19f605d00f72fb1"
 }

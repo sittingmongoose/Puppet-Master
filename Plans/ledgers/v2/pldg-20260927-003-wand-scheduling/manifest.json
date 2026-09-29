@@ -1,22 +1,23 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-003-wand-scheduling",
-  "updated_at_utc": "2026-09-28T00:15:00+00:00",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
   "title": "Wand modules redesign: Schedule Message, Build At and the Scheduled manager",
-  "status": "active",
+  "status": "compiled",
   "created_at_utc": "2026-09-27T19:15:00+00:00",
   "record_counts": {
-    "events": 14,
-    "design_atoms": 8,
-    "decisions": 10,
+    "events": 23,
+    "design_atoms": 12,
+    "decisions": 14,
     "questions": 6,
     "blockers": 0,
-    "corrections": 19
+    "corrections": 27
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/authorization.md",
-    "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/findings.md"
+    "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/findings.md",
+    "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/findings-through-main-1a501f3341.md"
   ],
-  "phase": "prose_compiled_pending_review",
-  "last_event_id": "evt-014"
+  "phase": "compiled_with_open_owner_questions",
+  "last_event_id": "evt-023"
 }

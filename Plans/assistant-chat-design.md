@@ -213,7 +213,7 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
 ### 2.1 Chat-level ELI5 (in chat only)
 
 - **What:** A setting **in the chat UI** that, when **on**, instructs the Assistant to explain technical terms and steps in simpler terms and with more detail (ELI5 = "Explain Like I'm 5") in **that chat**. It is set from the ELI5 popup (the wand's ELI5 row) or with one click on the quick dot by the message box (ACD-484, FinalGUISpec F3-581).
-- **Default:** a chat's ELI5 is resolved in this order: the chat's own override (`general.interaction.chat-eli5`), otherwise the project default, otherwise the app default `general.interaction.eli5-default` (Explain Terms Everywhere), which Settings registers as **OFF** (Expert/default LLM behavior). With nothing turned on, no extra "explain simply" instruction is added. The project default is the project scope of that same app-default setting; adding the scope is a Settings follow-up, and this section states only the order (DL-126).
+- **Default:** a chat's ELI5 is resolved in this order: the chat's own override (`general.interaction.chat-eli5`), otherwise the project default, otherwise the app default `general.interaction.eli5-default` (Explain Terms Everywhere), which Settings registers as **OFF** (Expert/default LLM behavior). With nothing turned on, no extra "explain simply" instruction is added. The project default is the project scope of that same app-default setting; Settings owns and persists that scope under DL-138 (SSYS-028), retaining the order of DL-126.
 - **Switching:** a switch changes only the replies started after it. It never re-sends, regenerates or rewrites an earlier reply, so a switch never produces a second response. A finished reply may offer "Explain this reply simply", which writes one extra, simpler reply only when the user asks (ACD-484).
 - **Scope:** Affects **Assistant chat behavior only** (explanations, follow-ups, teaching in the conversation).
 - **Does NOT affect:** Interviewer **documentation writing style**. When the interview generates PRD, AGENTS.md, requirements, or other docs, chat ELI5 is **ignored**; generated docs remain technical and precise for agent consumption.
@@ -1152,7 +1152,7 @@ Required fields and relationships:
 - `thread_id`: format `thr_{ulid}`; minted on the first user message; globally unique within the PM instance
 - `dev_session_id`: optional reference to the originating development/runtime session; one dev session may span multiple threads
 - `terminal_session_id`: optional lineage field when the thread was spawned from a terminal context
-- thread metadata includes `created_at`, `updated_at`, `title`, `mode_overlay`, `requested_persona`, `effective_persona`, `persona_selection_source`, and `persona_override_owner_id`; `persona_id` remains registry/storage lineage only and is not a thread runtime Persona identity field
+- thread metadata includes `created_at`, `updated_at`, `title`, `mode_overlay`, `requested_persona`, `effective_persona`, `persona_selection_source`, and `persona_override_owner_id`; `crew_auto_override` is an optional nullable boolean (true or false overrides the project, absent or null inherits), persisted on this same thread record through reopen (DL-138); `persona_id` remains registry/storage lineage only and is not a thread runtime Persona identity field
 
 Generation and lineage rules:
 - the system MUST NOT mint a durable `thread_id` for an unsent empty draft
@@ -7193,16 +7193,26 @@ plan_unit_id: ACD-076
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Thread identity is stable across reopen, restore, archive, and branch-aware history, minted on the first user message, and carries canonical thread, session lineage, persona, overlay, and title metadata.
+canonical_text: >-
+  Thread identity is stable across reopen, restore, archive, and branch-aware history, minted on the first user message, and carries canonical thread, session lineage, persona, overlay, and title metadata.
+  The existing thread metadata persists crew_auto_override as true, false or null; absence or null
+  inherits the project Crew Auto setting. cmd.chat.crew_auto.set with scope thread writes this field
+  without changing the project value or opening the configuration sheet (DL-138, CWR-038).
+  ThreadCrewAutoOverride in Plans/assistant_chat_contracts.schema.json is a field-level contract
+  for this existing metadata only; it creates no durable family, storage key, writer or Settings
+  value, and passing its fixtures does not prove reopen persistence.
 gui_related: false
 gui_classification_reason: Thread identity and metadata are storage/runtime schema behavior.
 depends_on: [ACD-071]
 unblocks: [ACD-077]
 acceptance_criteria:
+  - "Crew Auto thread overrides survive reopen; absence or null inherits the project and thread writes leave the project default unchanged."
   - thread_id uses thr_{ulid} and is minted on the first user message.
   - Empty unsent drafts do not receive durable thread_id values.
   - persona_id remains registry/storage lineage only and not a thread runtime Persona identity field.
 validation_surfaces:
+  - Plans/assistant_chat_contracts.schema.json#/$defs/ThreadCrewAutoOverride
+  - Plans/assistant_chat_contract_fixtures.json
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
 risk_class: thread_identity
@@ -7216,8 +7226,12 @@ node_compile_hint:
   mode: thread_identity_fields
   create_worknodes: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0053
 preserved_exact_tokens:
+  - "ThreadCrewAutoOverride"
+  - "cmd.chat.crew_auto.set"
+  - "crew_auto_override"
   - "thr_{ulid}"
   - "dev_session_id"
   - "terminal_session_id"
@@ -24850,7 +24864,7 @@ This section incorporates the cumulative v3 repairs and supersessions from the A
 16. **Typed Work Records and Diff Counts (`APR-039`, `APR-040`, `APR-041`, `APR-055`)**: Agent work items render with explicit semantic kinds: File change, File inspection, Activity, Plan, Artifact, or Work note. Change records display genuine file identity, line numbers, and hunks with green (+) additions and red (-) deletions. Obsolete editorial migration comments (e.g. "0043 supersedes 0039...") are excised. Inline code and emphasis format safely; unlinked content remains a Work note.
 17. **Internal Work-Note Boundary (`APR-056`)**: Internal work notes (scratch notes, reasoning fragments, diagnostic traces) are behind-the-scenes diagnostic state. They must never appear as ordinary transcript message cards or standalone user artifacts. Concise user-facing progress summaries are distinct, typed projections.
 18. **History Thread Currentness and Normal Workflows (`APR-057`, `APR-058`, `APR-067`)**: All 30 fixture threads in History are inventoried and aligned to current specifications. Everyday threads predominantly show running, completed, or successful work. Failure, blocked, or recovery states are segregated into an intentional, clearly labeled recovery minority (`recovery-scheduling`, `recovery-attachments`, `recovery-collaboration`). Unfinished work is not labeled "Needs attention" unless explicitly blocked or faulted. Read-only review fixtures demonstrate inspection and findings without mutating workspace files.
-19. **Responsive Editor/Chat Split (`APR-066`)**: Opening a plan or document and resizing the split container enforces explicit grid placement and min-size rules (`min-width: 320px` for chat), preventing the transcript from being squeezed into the resize handle track.
+19. **Responsive Editor/Chat Split (`APR-066`)**: Opening a plan or document and resizing the split container enforces explicit grid placement and min-size rules (`min-width: 360px` for chat, DL-138; Assistant_Plan_Runtime APR-014), preventing the transcript from being squeezed into the resize handle track.
 20. **Reference-Layout Supersession (`USER-REFERENCE-LAYOUT-ROLLBACK-20260908`)**: The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`) mandating flattened row layouts and forced single-column presentations across Activity Detail (Goal, To-Dos, and all Activity families) and Context More Details is selectively superseded. Assistant surfaces restore prior native card, panel, and grid presentation by removing reference-derived CSS overrides (`narrow-review.css`). Independent requirements—including pinned Activity Detail defaults, floating Chat Activity Bar with pointer pass-through, transcript zero horizontal scrolling (`scrollWidth <= clientWidth`), in-flow Context Lens, single bounded hover previews, concise disclosures, elimination of decorative left stripes, and separate Simple Goal vs To-Do semantics—remain strictly preserved. Scoped exception (2026-09-27, DL-122): the Activity Detail body of the four collaboration kinds (Crew, Chat Room, BrainStorm, Review) is a short team list, and Back Seat Driver's section of Context Details is three plain facts and three native disclosures, because each run's full detail lives in its run view (ACD-480); FinalGUISpec F3-580 states both. Every other Activity Detail family and Context Details section keeps the restored native card, panel and grid presentation.
 
 ```yaml
@@ -25849,12 +25863,16 @@ canonical_text: >-
   accent budget: the accent colours only live work, needs-you items, the one primary action of a
   card, and Send and Stop; family hues are quiet and appear only on eyebrow tiles and spine ticks.
   Message types, their persistence and the ACD-073 boundary are unchanged.
+  For scheduled-message cards, the Time-family ticket and time block identify the transcript
+  family only. Scheduling_and_Quota_Resume SQR-012 owns the card's internal layout and renders its
+  time in the schedule's own time zone; that layout is accepted within Time (DL-138).
 gui_related: true
 gui_classification_reason: "Defines how every transcript item renders in the default chat presentation."
 split_recommended: false
 depends_on: [DL-104, ACD-072, ACD-073]
 unblocks: [F3-562, DR-043]
 acceptance_criteria:
+  - "A scheduled-message card retains its SQR-012 layout and schedule time zone within the Time family."
   - "Every persisted message type and runtime card kind maps to exactly one of the seven families through one owner map."
   - "The spine, ticks and live light add no scroll width or height at any chat pane width."
   - "In Basic Dark no transcript element uses the accent outside live work, needs-you items, a card's one primary action, and Send and Stop."
@@ -25874,9 +25892,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "Plans/Decision_Log.md#DL-104"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
 preserved_exact_tokens:
+  - "DL-138"
+  - "SQR-012"
   - "Turn Stage"
   - "turn mark"
   - "spine"
@@ -26266,12 +26287,16 @@ canonical_text: >-
   key. Cues are subtle, at most one per 120ms, step ticks at most one per 250ms and silent inside
   bursts; audio starts only after a user gesture; and each cue accompanies a visible change, never
   carrying information alone. Reduced motion does not mute sound.
+  DL-138 confirms that theme-specific durations apply to sheets and a card's own changes,
+  while transcript entrances retain this unit's shared timing and order; wand cards which opt out
+  of the family entrance do not play an additional transcript entrance.
 gui_related: true
 gui_classification_reason: "Defines per-theme motion and the chat's sound cues."
 split_recommended: false
 depends_on: [DL-106, DL-107, UCC-103]
 unblocks: [F3-564, DR-043]
 acceptance_criteria:
+  - "Per-theme card or sheet durations cannot change transcript entrance timing or order."
   - "The same beat has the same timing and order in all four families."
   - "Reduced motion from either source lands end states."
   - "Chat cues route through the Notifications & Sounds owner; no chat-local sound setting or volume exists."
@@ -26291,10 +26316,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "Plans/Decision_Log.md#DL-106"
   - "Plans/Decision_Log.md#DL-107"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
 preserved_exact_tokens:
+  - "DL-138"
   - "Basic"
   - "Friendly"
   - "Glass"
@@ -26430,12 +26457,19 @@ canonical_text: >-
   check is never hidden behind a Followed count. A rule whose check could not run earns no tick,
   and a reply with no passed or failed check shows no rule note. Used is never shown in place of
   either note. Section 6's user-locked sentence is unchanged.
+  DL-138 confirms the final wording. Persisted AMS-053 check results drive the note on reopen: passed
+  counts as Followed, failed counts as Missed and could_not_run earns no tick. A mixed result is one
+  line, Missed first, for example "Missed 1 of your rules · followed 2". See which rule opens the
+  saved check evidence as view state. Ask for a fix reuses cmd.review.send_findings_to_agent with
+  the taught_rule_check source variant (UCC-172): it fills the source thread's empty composer, returns
+  ComposerBufferResult, refuses composer_not_empty, and never sends or executes a fix. The user sends it.
 gui_related: true
 gui_classification_reason: "Defines what the user sets and sees when teaching Puppet Master a rule."
 split_recommended: false
 depends_on: [ACD-469, DL-127, DL-116, AMS-053]
 unblocks: [F3-570, F3-574, F3-579]
 acceptance_criteria:
+  - "Reopening retains the saved rule-check result, mixed results show one Missed-first line, and Ask for a fix only fills an empty composer until the user sends."
   - "Every entry point dispatches cmd.chat.teach.capture and opens the Teach sheet; nothing persists before cmd.chat.teach.confirm."
   - "No entry point renders an inline capture card in the chat."
   - "Confirm refuses user scope without public_safe and refuses text that looks like a secret, with the reason in words."
@@ -26458,6 +26492,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 8.11, 8.15"
   - "IMPACT-REGISTER B-ACD-02 (NOW part; the capture form and the locked field compiled 2026-09-27 from DL-127 and DL-130)"
   - "Plans/Decision_Log.md#DL-127"
@@ -26465,6 +26500,14 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
   - "Plans/assistant-memory-subsystem.md#AMS-053"
 preserved_exact_tokens:
+  - "composer_not_empty"
+  - "ComposerBufferResult"
+  - "taught_rule_check"
+  - "cmd.review.send_findings_to_agent"
+  - "Missed 1 of your rules · followed 2"
+  - "could_not_run"
+  - "failed"
+  - "passed"
   - "cmd.chat.teach.capture"
   - "cmd.chat.teach.confirm"
   - "public_safe"
@@ -26894,8 +26937,7 @@ canonical_text: >-
   cmd.chat.eli5.set with on, off or inherit; inherit deletes the override, so the chat follows the
   project default again. The app default is `general.interaction.eli5-default` (Explain Terms Everywhere), whose value Settings owns and registers as off. The project default is that same
   setting at project scope and applies to every chat in the project that has no override of its
-  own; adding the project scope is a Settings follow-up, out of scope for the wand-modules compile,
-  and this unit states only the resolution order. Each assistant reply resolves the style once, when it starts, and records the style it was written in, Standard or Simple; a retry the user
+  own. Settings owns and persists that project scope under DL-138 (SSYS-028). Each assistant reply resolves the style once, when it starts, and records the style it was written in, Standard or Simple; a retry the user
   asks for resolves the style again when the retry starts. Switching ELI5 changes only the replies
   that start after the switch. It never re-sends, regenerates or rewrites an earlier reply, and a
   reply still streaming at the moment of the switch finishes in the style it started with, so a switch never produces a second response. Each finished assistant reply may offer
@@ -26948,11 +26990,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.13 and its amendments G-21 and G-34, section 10.1 item f"
   - "IMPACT-REGISTER B-ACD-01 (card p08, E-11), C-21 (the guided tour), D-30 (retry re-resolves the style)"
   - "Plans/Decision_Log.md#DL-126 (Owner resolution, Jared, 2026-09-27, confirmed in chat)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5) answer record p08"
 preserved_exact_tokens:
+  - "DL-138"
   - "the chat override, otherwise the project default, otherwise the app default"
   - "general.interaction.chat-eli5"
   - "general.interaction.eli5-default"

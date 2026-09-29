@@ -218,7 +218,7 @@
       }
     },
     "bsd_assignment": {
-      "description": "BSD assignment lifecycle record. Transcribed from Plans/Back_Seat_Driver.md section 16 (pm.bsd.assignment.v1) with the owner-pinned state vocabulary idle|queued|reviewing|holding|reconfirming|paused_quota|failed|stopped. requested_effective_snapshot_ref is nullable because an idle assignment may precede route resolution. Contract-validation shape only; admits no storage key, writer, physical family, or EventRecord.",
+      "description": "BSD assignment lifecycle record. Transcribed from Plans/Back_Seat_Driver.md section 16 (pm.bsd.assignment.v1) with the owner-pinned state vocabulary idle|queued|reviewing|holding|reconfirming|paused|paused_quota|failed|stopped. requested_effective_snapshot_ref is nullable because an idle assignment may precede route resolution. Contract-validation shape only; admits no storage key, writer, physical family, or EventRecord. A user or safety pause stores pause_cause; Resume clears it (BSD-033, DL-138).",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -276,12 +276,59 @@
             "reviewing",
             "holding",
             "reconfirming",
+            "paused",
             "paused_quota",
             "failed",
             "stopped"
           ]
+        },
+        "pause_cause": {
+          "enum": [
+            "user",
+            "safety"
+          ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "paused"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "pause_cause"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "not": {
+                  "const": "paused"
+                }
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "pause_cause"
+              ]
+            }
+          }
+        }
+      ]
     },
     "bsd_review_cycle": {
       "description": "BSD review cycle record. Transcribed from Plans/Back_Seat_Driver.md section 16 (pm.bsd.review_cycle.v1) with owner-pinned vocabularies: trigger_kind from the complete section 4 Auto trigger set, result from section 11 (silent|held|cleared|emitted|duplicate_suppressed|content_free_suppressed|failed|timed_out|quarantined), and no_call_reason from section 5. The frozen-boundary flag and the no-call reason are carried on the cycle so section 8 emissions and section 4 suppressions are both auditable. No conditional pairing between result and no_call_reason is encoded here; that semantics stays owner prose. Contract-validation shape only; admits no storage key, writer, physical family, or EventRecord.",
@@ -387,7 +434,7 @@
       }
     },
     "bsd_finding": {
-      "description": "BSD finding record. Transcribed from Plans/Back_Seat_Driver.md section 16 (pm.bsd.finding.v1). Severity is the section 7 vocabulary nit|concern|critical; blocker is excluded from every public surface and payload per section 2. State vocabulary is held|reconfirming|emitted|cleared|suppressed|closed. Held state is stored outside the advisor transcript so compaction cannot erase it. Contract-validation shape only; admits no storage key, writer, physical family, or EventRecord. presentation_weight (note|aside, 2026-09-27, BSD-031) is absent until the finding is emitted and stamped once at the emission transition: a nit, and any finding routed as a non-interrupting aside because the section 11 cooldown was running, is aside; every other emission is note. It is never recomputed, so an emitted finding must carry it and a held or reconfirming finding cannot. closed_reason stays an open owner string; the value dismissed_by_user (cmd.bsd.finding.dismiss, BSD-037) is written only when an emitted finding is closed by the user, so it requires state closed and a stamped presentation_weight.",
+      "description": "BSD finding record. Transcribed from Plans/Back_Seat_Driver.md section 16 (pm.bsd.finding.v1). Severity is the section 7 vocabulary nit|concern|critical; blocker is excluded from every public surface and payload per section 2. State vocabulary is held|reconfirming|emitted|cleared|suppressed|closed. Held state is stored outside the advisor transcript so compaction cannot erase it. Contract-validation shape only; admits no storage key, writer, physical family, or EventRecord. presentation_weight (note|aside, 2026-09-27, BSD-031) is absent until the finding is emitted and stamped once at the emission transition: a nit, and any finding routed as a non-interrupting aside because the section 11 cooldown was running, is aside; every other emission is note. It is never recomputed, so an emitted finding must carry it and a held or reconfirming finding cannot. closed_reason stays an open owner string; the value dismissed_by_user (cmd.bsd.finding.dismiss, BSD-037) is written only when an emitted finding is closed by the user, so it requires state closed and a stamped presentation_weight. DL-138/BSD-032 preserves stale=true and unreconfirmed=true together on a shown terminal critical emitted at note weight; dismissal retains both markers.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -489,6 +536,12 @@
         },
         "updated_at": {
           "$ref": "#/$defs/timestamp"
+        },
+        "stale": {
+          "const": true
+        },
+        "unreconfirmed": {
+          "const": true
         }
       },
       "allOf": [
@@ -546,6 +599,56 @@
             "properties": {
               "state": {
                 "const": "closed"
+              }
+            },
+            "required": [
+              "presentation_weight"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "stale"
+            ]
+          },
+          "then": {
+            "required": [
+              "unreconfirmed"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "unreconfirmed"
+            ]
+          },
+          "then": {
+            "required": [
+              "stale"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "stale"
+            ]
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "const": "critical"
+              },
+              "state": {
+                "enum": [
+                  "emitted",
+                  "closed"
+                ]
+              },
+              "presentation_weight": {
+                "const": "note"
               }
             },
             "required": [
@@ -923,7 +1026,7 @@
       }
     },
     "bsd_catch_up_release_result": {
-      "description": "BSDCatchUpReleaseResult, BSD-037. An accepted release ends the current catch-up wait at its boundary as if the catch_up_seconds cap had expired at that moment, so the primary continues at once; the advisor keeps reviewing, later findings follow section 8, and the release never pauses, stops or reconfigures the assignment and never changes catch_up_seconds. With no wait in progress the request is rejected already_in_state; a prior-epoch request is rejected stale_epoch. Every path fixes primary_run_mutated false and authority_granted false and carries a projection reference (section 18).",
+      "description": "BSDCatchUpReleaseResult, BSD-037. An accepted release ends the current catch-up wait at its boundary as if the catch_up_seconds cap had expired at that moment, so the primary continues at once; the advisor keeps reviewing, later findings follow section 8, and the release never pauses, stops or reconfigures the assignment and never changes catch_up_seconds. With no wait in progress the request is rejected already_in_state; a prior-epoch request is rejected stale_epoch. Every path fixes primary_run_mutated false and authority_granted false and carries a projection reference (section 18). DL-138: a replaced primary_generation is rejected stale_projection even if a new wait exists; no active wait is already_in_state.",
       "type": "object",
       "additionalProperties": false,
       "x-primary-identity-fields": [

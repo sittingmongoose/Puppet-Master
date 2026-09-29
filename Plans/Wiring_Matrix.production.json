@@ -1322,13 +1322,13 @@
       "handler_location": "handlers::collaboration::crew_auto_open_config",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.crew_auto.open_config dispatches the typed request CrewAutoConfigRoute and returns RouteResult; the surfaces that may raise it are exactly: multi_agent_menu, workflow_modal.",
+        "cmd.chat.crew_auto.open_config dispatches the typed request CrewAutoConfigRoute and returns RouteResult; the surfaces that may raise it are exactly: multi_agent_menu, workflow_modal, crew_auto_receipt.",
         "Read state.assistant_redesign.chat_crew_auto_open_config.availability and state.assistant_redesign.chat_crew_auto_open_config.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Collaborative_Workflows.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
-        "Producer surfaces (2026-09-27 wand-module redesign, UCC-172, WM-063): workflow_modal joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them. workflow_modal is the Crew sheet's Settings… link; the multi_agent_menu producer is the Crew Auto settings… row. Review and BrainStorm have no wand producer (DL-119)."
+        "Producer surfaces (DL-135, DL-138, UCC-172, WM-063): multi_agent_menu is Crew Auto settings…, workflow_modal is the Crew sheet Settings… link, and crew_auto_receipt is Change on the qualifying in-chat Crew Auto note. All three open configuration through this row only and read the same availability and disabled reason. Review and BrainStorm have no wand producer."
       ],
       "evidence_required": "Future production evidence for cmd.chat.crew_auto.open_config: source-hashed native dispatcher and sole handler handlers::collaboration::crew_auto_open_config, typed CrewAutoConfigRoute/RouteResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.crew_auto.open_config. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_crew_auto_open_config.availability",
@@ -2807,13 +2807,13 @@
       "handler_location": "handlers::scheduling::execution_window_cancel",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.execution_window.cancel dispatches the typed request ExecutionWindowCancelRequest and returns ExecutionWindowCancelResult; the surfaces that may raise it are exactly: plan_schedule, run_schedule, settings, schedule_manager.",
+        "cmd.execution_window.cancel dispatches the typed request ExecutionWindowCancelRequest and returns ExecutionWindowCancelResult; the surfaces that may raise it are exactly: plan_schedule, run_schedule, settings, schedule_manager, plan_card.",
         "Read state.assistant_redesign.execution_window_cancel.availability and state.assistant_redesign.execution_window_cancel.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Scheduling_and_Quota_Resume.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
-        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): schedule_manager joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them."
+        "Producer surfaces (DL-138, UCC-169, WM-062): plan_card adds Cancel schedule to the existing plan_schedule, run_schedule, settings and schedule_manager producers. It dispatches the existing ExecutionWindowCancelRequest; work already admitted continues under its owner. Every producer reads the same availability and exact disabled reason; no new row or handler is admitted."
       ],
       "evidence_required": "Future production evidence for cmd.execution_window.cancel: source-hashed native dispatcher and sole handler handlers::scheduling::execution_window_cancel, typed ExecutionWindowCancelRequest/ExecutionWindowCancelResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Scheduling_and_Quota_Resume.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.execution_window.cancel. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.execution_window_cancel.availability",
@@ -2857,6 +2857,11 @@
           "test_id": "wiring.assistant_redesign.execution_window_cancel.a11y",
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role, name, state, keyboard parity and disabled announcement for this element."
+        },
+        {
+          "test_id": "wiring.assistant_redesign.execution_window_cancel.plan_card",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove Plan-card Cancel schedule dispatches cmd.execution_window.cancel with source_surface plan_card to the existing scheduling owner and does not cancel already-admitted work."
         }
       ],
       "event_test_requirements": [
@@ -3119,20 +3124,20 @@
       "handler_location": "handlers::collaboration::review_send_findings_to_agent",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.review.send_findings_to_agent dispatches the typed request ReviewSendFindingsRequest and returns ComposerBufferResult; the surfaces that may raise it are exactly: review_card, review_panel.",
+        "cmd.review.send_findings_to_agent dispatches the typed request ReviewSendFindingsRequest and returns ComposerBufferResult; the surfaces that may raise it are exactly: review_card, review_panel, message_chrome.",
         "Read state.assistant_redesign.review_send_findings_to_agent.availability and state.assistant_redesign.review_send_findings_to_agent.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Collaborative_Workflows.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
-        "Composer fill (2026-09-27 wand-module redesign, UCC-172, DL-125): the command writes a fix request built from the selected findings into the source thread's empty composer and never sends; the user sends it. It returns ComposerBufferResult and refuses with composer_not_empty when the composer already holds text, changing nothing."
+        "Composer fill (DL-125, DL-138, UCC-172, CWR-031, AMS-053): ReviewSendFindingsRequest keeps source_kind review_findings for review_card and review_panel and adds taught_rule_check for Ask for a fix on message_chrome. The latter binds thread_id, reply_message_id and nonempty missed_teaching_refs using existing IncludedTeachingRef {memory_id, normalized_fact_sha256}; each must identify a saved failed check on that reply. It never fabricates a review run or finding ID. Both variants fill only the source thread's empty composer, return ComposerBufferResult with source-specific lineage in metadata, refuse composer_not_empty without changes, and never send or execute; the user sends."
       ],
       "evidence_required": "Future production evidence for cmd.review.send_findings_to_agent: source-hashed native dispatcher and sole handler handlers::collaboration::review_send_findings_to_agent, typed ReviewSendFindingsRequest/ComposerBufferResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.review.send_findings_to_agent. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.review_send_findings_to_agent.availability",
       "disabled_reason_projection": "state.assistant_redesign.review_send_findings_to_agent.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "Owner typed result and projection under Plans/Collaborative_Workflows.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "Draft-only ComposerBufferResult under CWR-031 and AMS-053: source-specific review_findings or taught_rule_check lineage accompanies an empty-source-composer fill. No message is sent or fix executed; no EventRecord is admitted by static closure.",
         "receipt_or_event_refs": [
           "Plans/Collaborative_Workflows.md",
           "ComposerBufferResult projection"
@@ -3169,6 +3174,11 @@
           "test_id": "wiring.assistant_redesign.review_send_findings_to_agent.a11y",
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role, name, state, keyboard parity and disabled announcement for this element."
+        },
+        {
+          "test_id": "wiring.assistant_redesign.review_send_findings_to_agent.taught_rule_check",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove message_chrome Ask for a fix uses the existing command and the saved failed-check IncludedTeachingRef identity, rejects a nonempty source composer with composer_not_empty, and emits neither a send nor an execution effect."
         }
       ],
       "event_test_requirements": [
@@ -4541,28 +4551,29 @@
     },
     "assistant.redesign.w_024.chat_crew_auto_set": {
       "ui_element_id": "assistant.redesign.w_024.chat_crew_auto_set",
-      "ui_location": "Puppet Master Assistant > crew_auto.menu",
+      "ui_location": "Puppet Master Assistant > Crew Auto sheet and per-chat Crew Auto check",
       "ui_command_id": "cmd.chat.crew_auto.set",
       "handler_location": "handlers::collaboration::crew_auto_set",
       "expected_event_types": [],
       "acceptance_checks": [
         "cmd.chat.crew_auto.set names exactly one owner-adjudicated future target handlers::collaboration::crew_auto_set in Plans/Collaborative_Workflows.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_crew_auto_set.availability and state.assistant_redesign.chat_crew_auto_set.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "The durable effect is exactly: project criteria/default revision. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
-        "Every named reverse consumer renders from the same owner projection: check/glyph.",
-        "Negative path is enforced: config before enable.",
+        "The durable effect follows scope project | thread (DL-120, DL-138, CWR-038): project commits project rules and the team in one request; thread writes only crew_auto_override on the existing thread metadata. Record only the owner typed result or projection and emit no unregistered EventRecord.",
+        "Every reverse consumer renders the same effective Crew Auto value: the thread override when present and non-null, otherwise the project value. Readback after reopen uses the persisted owner metadata.",
+        "Negative path: the per-chat check never opens configuration first or changes the project value; a failed owner commit preserves prior persisted state.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
-        "Correction v4 (MODAL-006, MODAL-008): the checkmark commits only after configuration confirmation and a successful project Settings transaction and reflects effective stored state. Cancel or a failed commit preserves the prior enabled state; nothing is enabled optimistically when the modal opens."
+        "DL-138 supersedes the earlier config-before-enable wording for the chat check. The Crew Auto sheet primary uses scope project with its rules/team; the chat check uses scope thread, writes true or false to crew_auto_override and does not open the sheet. Absent or null crew_auto_override inherits project (ACD-076); its existing storage owner, not a new Settings value, persists it. Neither path updates the visible check optimistically before successful owner commit."
       ],
       "evidence_required": "Future production evidence for cmd.chat.crew_auto.set: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-024. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-018) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.chat_crew_auto_set.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_crew_auto_set.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "project criteria/default revision under Plans/Collaborative_Workflows.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "description": "Scope project commits project rules/team; scope thread commits only crew_auto_override on existing thread metadata, never the project Settings value (CWR-038, ACD-076, DL-138). No new durable family or unregistered EventRecord.",
         "receipt_or_event_refs": [
-          "Plans/Collaborative_Workflows.md",
-          "project criteria/default revision"
+          "Plans/Collaborative_Workflows.md#CWR-038",
+          "Plans/assistant-chat-design.md#ACD-076",
+          "CrewAutoSetResult projection"
         ]
       },
       "accessibility_contract": {
@@ -4585,12 +4596,12 @@
         {
           "test_id": "wiring.assistant_redesign.chat_crew_auto_set.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove the durable effect is exactly 'project criteria/default revision' with typed receipt correlation and zero unregistered EventRecord effects."
+          "requirement": "Prove scope project commits project rules/team while scope thread changes only crew_auto_override, with exact owner readback and zero unregistered EventRecord effects."
         },
         {
           "test_id": "wiring.assistant_redesign.chat_crew_auto_set.negative",
           "evidence_kind": "state_projection",
-          "requirement": "Negative path. Prove the negative path holds: config before enable."
+          "requirement": "Negative path: the per-chat check never opens configuration or writes project Settings; failed commits preserve the prior override."
         },
         {
           "test_id": "wiring.assistant_redesign.chat_crew_auto_set.accessibility",
@@ -4600,7 +4611,7 @@
         {
           "test_id": "wiring.correction_v4.chat_crew_auto_set.crew_auto_commit_boundary",
           "evidence_kind": "state_projection",
-          "requirement": "Negative path. Prove the menu check is unchanged after opening and cancelling configuration and after a failed Settings commit."
+          "requirement": "Prove cancelling project configuration leaves prior project state unchanged; the per-chat check commits its thread override without opening configuration, and a failed commit leaves its prior value unchanged."
         }
       ],
       "event_test_requirements": [
@@ -5720,10 +5731,10 @@
         "cmd.chat.eli5.set names exactly one owner-adjudicated future target handlers::assistant_chat::eli5_set in Plans/assistant-chat-design.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_eli5_set.availability and state.assistant_redesign.chat_eli5_set.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "The durable effect is exactly: thread override. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
-        "Every named reverse consumer renders from the same owner projection: wand/chip/responses.",
+        "Every reverse consumer renders from the same owner projection: the ELI5 sheet, quick dot and forward-only reply style.",
         "Negative path is enforced: artifact content unchanged.",
         "cmd.chat.eli5.set dispatches the typed request ELI5ThreadOverrideRequest and returns ELI5ThreadOverrideResult; the surfaces that may raise it are exactly: eli5_sheet, composer.",
-        "Producer rebind and value set (2026-09-27 wand-module closure, DL-126, UCC-175, WM-064): eli5_sheet (Standard or Simple, Follow my usual setting, and the This chat level of How it's decided) and composer (the ELI5 dot, the one-click on and off for this chat) are the only producers. The wand's ELI5 row only opens the ELI5 sheet and dispatches nothing, and the guided tour's ELI5 step consumes this same entry; no second ELI5 entry exists. ELI5ThreadOverrideRequest carries exactly one of on, off and inherit; inherit deletes this chat's override so the chat resolves chat override, else the project default, else the app default (general.interaction.chat-eli5, then the project scope of general.interaction.eli5-default, which is a Settings follow-up, then general.interaction.eli5-default). The sheet's All chats and project levels are Settings transactions, never this command. Each surface reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them.",
+        "Producer rebind and value set (DL-126, DL-138, UCC-175, WM-064): eli5_sheet (Standard or Simple, Follow my usual setting, and This chat) and composer (the quick dot) are the only producers. The wand opens the sheet without dispatch. The guided tour consumes this entry only as the quick dot for later replies; its same-answer explanation uses cmd.chat.eli5.explain_reply when admitted, with no second ELI5 entry. ELI5ThreadOverrideRequest carries on, off or inherit. inherit deletes general.interaction.chat-eli5 so resolution is chat override, else the persisted project scope of general.interaction.eli5-default, else its app scope (Settings SSYS-028). All chats and Chats in this project are Settings transactions, never this command. Every producer reads the same availability and exact disabled reason.",
         "Negative path (2026-09-27 wand-module closure, DL-126, UCC-175, WM-064): an ELI5 switch changes only replies that start after it. It never re-sends, regenerates or rewrites an earlier reply, a reply still streaming finishes in the style it started with, and a switch never produces a second response. A simpler version of a finished reply is only cmd.chat.eli5.explain_reply (UCC-174), a separate command, and only when the user asks.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
       ],

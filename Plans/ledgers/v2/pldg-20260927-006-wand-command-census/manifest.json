@@ -1,22 +1,28 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-006-wand-command-census",
-  "updated_at_utc": "2026-09-28T00:30:00+00:00",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
   "title": "Wand modules redesign: command census, new command rows and wiring",
-  "status": "active",
+  "status": "compiled",
   "created_at_utc": "2026-09-27T19:15:00+00:00",
   "record_counts": {
-    "events": 16,
-    "design_atoms": 25,
-    "decisions": 26,
+    "events": 22,
+    "design_atoms": 32,
+    "decisions": 34,
+    "corrections": 35,
     "questions": 19,
-    "blockers": 0,
-    "corrections": 25
+    "blockers": 0
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/authorization.md",
-    "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/findings.md"
+    "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/findings.md",
+    "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/findings-through-main-1a501f3341.md"
   ],
-  "phase": "prose_compile_open",
-  "last_event_id": "evt-016"
+  "phase": "compiled_with_open_owner_questions",
+  "last_event_id": "evt-022",
+  "historical_findings_archive": {
+    "path": "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/findings-through-main-1a501f3341.md",
+    "sha256": "a30f22647301961923d1e5d3a01c5b709c9fc768c38046b700b5e3c503a851bf",
+    "base_commit": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c"
+  }
 }

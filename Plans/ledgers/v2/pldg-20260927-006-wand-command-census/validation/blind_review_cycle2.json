@@ -1,0 +1,65 @@
+{
+  "ledger_id": "pldg-20260927-006-wand-command-census",
+  "cycle": 2,
+  "reviewed_base": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c",
+  "review_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger006-cycle2/findings.jsonl",
+  "review_source_sha256": "7221c55f5887142b43c10794be05e117d14240058f892cd5b093c4cac71848ec",
+  "review_summary": {
+    "summary": true,
+    "units_reviewed": [
+      "CS-085",
+      "DL-138",
+      "SSYS-028",
+      "UCC-169",
+      "UCC-170",
+      "UCC-172",
+      "UCC-173",
+      "UCC-175",
+      "WM-062",
+      "WM-063",
+      "WM-064"
+    ],
+    "verdict": "fix_then_land",
+    "n_findings": 3
+  },
+  "finding_count": 3,
+  "dispositions": [
+    {
+      "finding_id": "R-01",
+      "unit": "DL-138",
+      "severity": "blocking",
+      "state": "open_owner_question",
+      "disposition": "Scheduling q-006 remains open, not closed. CODEX-HANDOFF section6 step2 expressly says register nothing and record an open question if the Event Authority procedure needs an owner entry DL-138 does not give. DL-093 does not authorize this family. Registration remains an approved outstanding obligation; no family is invented.",
+      "question_ref": "Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/records/questions.jsonl#q-006",
+      "evidence": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/CODEX-HANDOFF.md",
+      "evidence_sha256": "bbfc68e9e7b666f45c0f723144b326e105cb955dd6f20f148d3c0b8671f51a44"
+    },
+    {
+      "finding_id": "R-02",
+      "unit": "SSYS-028",
+      "severity": "should_fix",
+      "state": "open_owner_question",
+      "disposition": "Same unresolved ELI5 owner conflict as ledger001 q-035; the handoff permits an open owner question after the capped review. All chats remains an editable product requirement whose conflicting persistence route is not admitted by assumption.",
+      "question_ref": "Plans/ledgers/v2/pldg-20260927-001-wand-collab-workflows/records/questions.jsonl#q-035"
+    },
+    {
+      "finding_id": "R-03",
+      "unit": "DL-138",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "DL-138 now lists all six compile witnesses and all six ledger authorization source references."
+    }
+  ],
+  "status": "closed_at_two_cycle_cap",
+  "validation_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/validation-final/results.json sha256:6a16de9aa510a2ace08d88dd13954f938d16a73e57db90c09655d7e3410b31f0",
+  "open_questions": [],
+  "external_open_questions": [
+    {
+      "ledger_id": "pldg-20260927-001-wand-collab-workflows",
+      "question_id": "q-035",
+      "owner": "Plans/Settings_System.md",
+      "scope": "All chats ELI5 edit only; project and chat scopes remain compiled"
+    }
+  ],
+  "claim_boundary": "Static compile and contract review only; no native runtime proof or governance seal."
+}

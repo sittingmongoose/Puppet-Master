@@ -817,9 +817,17 @@
           "minimum": 1
         },
         "record": {
-          "$ref": "#/$defs/ExecutionSchedule"
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ExecutionSchedule"
+            },
+            {
+              "$ref": "#/$defs/ExecutionScheduleV2"
+            }
+          ]
         }
-      }
+      },
+      "description": "SP-306/DL-138: unchanged physical wrapper/key accepts the original v1 or the v2 logical schedule with persisted grace_seconds. Actual v1-to-v2 migration preserves original source bytes and audit lineage; schema admission alone installs no writer."
     },
     "StorageQuotaResumeConsent": {
       "type": "object",
@@ -3969,6 +3977,404 @@
           "$ref": "#/$defs/RunRetirementUnavailable"
         }
       ]
+    },
+    "ExecutionScheduleV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "schedule_id",
+        "project_id",
+        "target_kind",
+        "target_id",
+        "exact_target_version",
+        "exact_target_hash",
+        "schedule_kind",
+        "timezone",
+        "local_start",
+        "local_pause",
+        "days_of_week",
+        "wind_down_seconds",
+        "missed_policy",
+        "auto_resume_next_window",
+        "state",
+        "revision",
+        "invalidated_reason",
+        "dst_policy",
+        "grace_seconds"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.schedule.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "schedule_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_kind": {
+          "enum": [
+            "scheduled_message",
+            "assistant_plan_run",
+            "crew_run",
+            "goal_run",
+            "agent_run"
+          ]
+        },
+        "target_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exact_target_version": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exact_target_hash": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "schedule_kind": {
+          "enum": [
+            "one_time",
+            "recurring_window"
+          ]
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1
+        },
+        "local_start": {
+          "type": "string",
+          "minLength": 1
+        },
+        "local_pause": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "days_of_week": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "wind_down_seconds": {
+          "type": "integer"
+        },
+        "missed_policy": {
+          "enum": [
+            "hold",
+            "next_available",
+            "cancel_after_grace"
+          ]
+        },
+        "auto_resume_next_window": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "paused",
+            "cancelled",
+            "completed",
+            "invalidated"
+          ]
+        },
+        "revision": {
+          "type": "integer"
+        },
+        "invalidated_reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dst_policy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "grace_seconds": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 60,
+              "multipleOf": 60
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "invalidated"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "invalidated_reason": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "missed_policy": {
+                "const": "cancel_after_grace"
+              }
+            },
+            "required": [
+              "missed_policy"
+            ]
+          },
+          "then": {
+            "properties": {
+              "grace_seconds": {
+                "type": "integer",
+                "minimum": 60,
+                "multipleOf": 60
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "missed_policy": {
+                "enum": [
+                  "hold",
+                  "next_available"
+                ]
+              }
+            },
+            "required": [
+              "missed_policy"
+            ]
+          },
+          "then": {
+            "properties": {
+              "grace_seconds": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
+      "description": "DL-138/SQR-015 logical pm.execution.schedule.v2 successor under the existing execution_schedule.v1 physical family and key. Persists the chosen grace_seconds; v1 is read through explicit migration preserving source lineage."
+    },
+    "ProjectAutomationPauseRecord": {
+      "description": "SQR-018/SP-323 original project manual-stop record. Only a genuine project birth has revision 0 off; missing later custody is unavailable. Static schema, not a native writer or EventRecord (DL-138).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "paused",
+        "user_stop_epoch",
+        "changed_by_actor_ref",
+        "changed_by_actor_kind",
+        "changed_at",
+        "revision"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.runtime.project_automation_pause.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "user_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "changed_by_actor_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512,
+              "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "changed_by_actor_kind": {
+          "enum": [
+            "user",
+            null
+          ]
+        },
+        "changed_at": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?(?:Z|[+-][0-9]{2}:[0-9]{2})$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "revision": {
+                "const": 0
+              }
+            },
+            "required": [
+              "revision"
+            ]
+          },
+          "then": {
+            "properties": {
+              "paused": {
+                "const": false
+              },
+              "changed_by_actor_ref": {
+                "type": "null"
+              },
+              "changed_by_actor_kind": {
+                "type": "null"
+              },
+              "changed_at": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "changed_by_actor_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "changed_by_actor_kind": {
+                "const": "user"
+              },
+              "changed_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "paused": {
+                "const": true
+              }
+            },
+            "required": [
+              "paused"
+            ]
+          },
+          "then": {
+            "properties": {
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "user_stop_epoch": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "StorageProjectAutomationPause": {
+      "description": "SP-323/DL-138 closed one-record-per-project original custody under exact project_automation_pause.v1:{hex(storage_instance_id)}:{hex(project_id)} key. Whole-value CAS, authenticated never-born creation and backup/restore are owner obligations, not installed by this schema.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "source_revision",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.project_automation_pause.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^project_automation_pause\\.v1:[0-9a-f]+:[0-9a-f]+$"
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "record": {
+          "$ref": "#/$defs/ProjectAutomationPauseRecord"
+        }
+      }
     }
   }
 }

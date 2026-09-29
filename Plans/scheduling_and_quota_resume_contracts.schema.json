@@ -1817,7 +1817,7 @@
       ]
     },
     "ProjectAutomationPauseRecord": {
-      "description": "The project-scoped operational record behind \"Pause all automations\" (SQR-018): owned by Plans/Scheduling_and_Quota_Resume.md and never a Settings value; no Settings default seeds it. One record per project. user_stop_epoch is the project's monotonically increasing epoch that every eligibility evaluation for a target in the project captures beside the target's own (section 1; SQR-006, clause project_automation_paused). Only a user ever changes the record, so changed_by_actor_kind is user or, while the record is still at its initial revision 0 (switch off, never changed), null. A paused record always names the user who paused it and when (\"Paused by you at <time>\"). Contract shape only: its storage key and storage-registry entry are not made here (ledger question q-006).",
+      "description": "The project-scoped operational record behind \"Pause all automations\" (SQR-018): owned by Plans/Scheduling_and_Quota_Resume.md and never a Settings value; no Settings default seeds it. One record per project. user_stop_epoch is the project's monotonically increasing epoch that every eligibility evaluation for a target in the project captures beside the target's own (section 1; SQR-006, clause project_automation_paused). Only a user ever changes the record, so changed_by_actor_kind is user or, while the record is still at its initial revision 0 (switch off, never changed), null. A paused record always names the user who paused it and when (\"Paused by you at <time>\"). SP-323 registers the closed project_automation_pause physical family and exact key. This is a static custody contract, not a native writer or runtime proof (DL-138).",
       "type": "object",
       "additionalProperties": false,
       "x-primary-identity-fields": [
@@ -2033,7 +2033,7 @@
       }
     },
     "AutomationPauseSetResult": {
-      "description": "AutomationPauseSetResult. Every path returns the project's pause record (paused, the project's user_stop_epoch, who changed it, when, and its revision). Accepted: the record holds the requested value; changed is true only when the value moved, and then the owner emits runtime.automation_pause_changed once (section 3, Events; its EventRecord is not registered yet, so no event type is claimed here). Only a change to paused true advances the epoch; an idempotent re-set (changed false) and turning the switch off never do. Rejected (for example permission_denied for a non-user actor, which is how an automatic clear is refused) changes nothing and echoes the unchanged record. The side_effects members are false on every path.",
+      "description": "AutomationPauseSetResult. Every path returns the project's pause record (paused, the project's user_stop_epoch, who changed it, when, and its revision). Accepted: the record holds the requested value; changed is true only when the value moved, and the owner owes one runtime.automation_pause_changed event only after family-specific Event Authority admission. Until then no EventRecord is appended; the outcome reports missing_event_registration through owner diagnostics (DL-138, DL-093). Only a change to paused true advances the epoch; an idempotent re-set (changed false) and turning the switch off never do. Rejected (for example permission_denied for a non-user actor, which is how an automatic clear is refused) changes nothing and echoes the unchanged record. The side_effects members are false on every path.",
       "type": "object",
       "additionalProperties": false,
       "x-primary-identity-fields": [
@@ -2302,6 +2302,180 @@
                     "$ref": "#/$defs/positive_integer"
                   }
                 }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionOccurrenceSummary": {
+      "description": "SQR-016/DL-138 projection keyed by schedule_id and occurrence_start. Started occurrences use exact PlanRun, dispatch, work/To-Do/adherence and safe-pause/terminal facts. A closed occurrence held before any build work uses retained Scheduling eligibility/hold and closure facts: execution_started false, end_reason held, zero built steps and null execution bounds; plan_run_id is null only if no run was admitted. A recorded not-started outcome is distinct from missing historical facts, which make the projection unavailable. No run or timestamp is fabricated.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "schedule_id",
+        "occurrence_start",
+        "execution_started",
+        "plan_run_id",
+        "plan_version",
+        "plan_hash",
+        "actual_start",
+        "actual_end",
+        "steps_built",
+        "steps_total",
+        "end_reason",
+        "scheduled_message_outcomes"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.occurrence_summary.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "schedule_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "occurrence_start": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "plan_run_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plan_version": {
+          "$ref": "#/$defs/positive_integer"
+        },
+        "plan_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "actual_start": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actual_end": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "steps_built": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "steps_total": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "end_reason": {
+          "enum": [
+            "paused_at_wind_down",
+            "completed",
+            "cancelled",
+            "held"
+          ]
+        },
+        "scheduled_message_outcomes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "scheduled_message_id",
+              "outcome"
+            ],
+            "properties": {
+              "scheduled_message_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "outcome": {
+                "enum": [
+                  "scheduled",
+                  "held",
+                  "dispatched",
+                  "cancelled",
+                  "failed",
+                  "expired"
+                ]
+              }
+            }
+          },
+          "uniqueItems": true
+        },
+        "execution_started": {
+          "type": "boolean"
+        }
+      },
+      "x-primary-identity-fields": [
+        "schedule_id",
+        "occurrence_start"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "execution_started": {
+                "const": true
+              }
+            },
+            "required": [
+              "execution_started"
+            ]
+          },
+          "then": {
+            "properties": {
+              "plan_run_id": {
+                "type": "string"
+              },
+              "actual_start": {
+                "type": "string"
+              },
+              "actual_end": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "execution_started": {
+                "const": false
+              }
+            },
+            "required": [
+              "execution_started"
+            ]
+          },
+          "then": {
+            "properties": {
+              "actual_start": {
+                "type": "null"
+              },
+              "actual_end": {
+                "type": "null"
+              },
+              "steps_built": {
+                "const": 0
+              },
+              "end_reason": {
+                "const": "held"
               }
             }
           }

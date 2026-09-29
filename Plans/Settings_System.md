@@ -1448,9 +1448,11 @@ A default is read at the moment a modal opens or a record is created and is copi
 
 The packet proposed fifty setting IDs in an `assistant.*` / `browser.*` namespace with status `proposed_census_required`. A census over `Plans/settings_inventory.json` found no collision for any of them and confirmed that this inventory derives a setting's category and subgroup from its ID prefix. The packet spellings are therefore reconciled to canonical inventory IDs under the existing twelve categories, and each packet spelling is retained as a search alias on its canonical entry so an operator or a document that cites the packet ID still resolves. The packet spelling receives no second inventory row, no peer control, and no independent persistence identity.
 
-One reuse was found and is recorded rather than duplicated: `general.interaction.chat-eli5` already exists as the per-conversation ELI5 override. It is preserved unchanged, and the packet's `assistant.chat.eli5_default` is registered as the distinct application default `general.interaction.eli5-default`. The per-chat toggle continues to win for a chat the user has changed.
+One reuse was found and is recorded rather than duplicated: `general.interaction.chat-eli5` is the existing per-conversation ELI5 override. The packet's `assistant.chat.eli5_default` maps to the existing `general.interaction.eli5-default`, now applicable at both app-default and project-default levels (DL-138, question 25). The effective choice is the explicit chat override, otherwise the project's explicit default, otherwise the app default. Choosing inherit removes that chat's override; changing a default never changes an explicit chat choice or generated documents. Project defaults use the ordinary Settings transaction and project snapshot. The app default falls back to the bundled `default: false` on `general.interaction.eli5-default` in `Plans/settings_inventory.json`. F3-581 retains an editable All chats requirement, but its app-wide commit and persistence route conflicts with the Project-only ordinary Settings boundary in SSYS-002. That owner decision remains open as `pldg-20260927-001-wand-collab-workflows` q-035. No app-wide writer or global ordinary Settings value is admitted by the inventory scope; the All chats edit stays disabled with the Settings owner's reason until the conflict is resolved. This preserves the requirement as pending rather than deciding it is permanently read-only.
 
 The pre-existing `branching.crew.crew-enabled` toggle is preserved as the master Crew enable. The retired model in which Crew was *only* that switch is superseded by the configuration settings below; a Crew run now requires a committed configuration regardless of the toggle.
+
+DL-138, question 14, sets the factory `branching.crew.crew-auto-enabled` value to `true` for a new project; an existing explicit `false` stays false. The canonical ID retains `assistant.multi_agent.crew.auto_enabled` only as an alias. The per-chat Crew Auto check writes `crew_auto_override` (`true`, `false`, or `null`) in that thread's existing metadata through `cmd.chat.crew_auto.set` with `scope=thread`; absent or null inherits the project value. This is a Collaboration-owned thread preference, not a second ordinary Settings value or inventory ID. Commit precedes the visible check change, and a failed commit preserves the prior override. Thread-scoped applicability in the inventory is descriptive `run` metadata, not permission to persist ordinary Settings outside the project. The factory Crew Auto configuration is committed as version 1 when the project is created (CWR-021); the first automatic run does not require a confirmation sheet. Later configuration edits still require a successful explicit commit.
 
 | Canonical setting ID | Label | Type | Default | Manager | Packet spelling reconciled |
 |---|---|---|---|---|---|
@@ -1466,7 +1468,7 @@ The pre-existing `branching.crew.crew-enabled` toggle is preserved as the master
 | `branching.crew.crew-coordinator` | Crew Coordinator | `select` | `Parent assistant` | `multi-agent-workflows.crew` | `assistant.multi_agent.crew.coordinator` |
 | `branching.crew.crew-assignment-strategy` | Crew Assignment | `select` | `Manager directed` | `multi-agent-workflows.crew` | `assistant.multi_agent.crew.assignment_strategy` |
 | `branching.crew.crew-parallelism` | Crew Parallelism | `number` | `3` | `multi-agent-workflows.crew` | `assistant.multi_agent.crew.parallelism` |
-| `branching.crew.crew-auto-enabled` | Crew Auto | `toggle` | `false` | `multi-agent-workflows.crew` | `assistant.multi_agent.crew.auto_enabled` |
+| `branching.crew.crew-auto-enabled` | Crew Auto | `toggle` | `true` | `multi-agent-workflows.crew` | `assistant.multi_agent.crew.auto_enabled` |
 | `branching.crew.crew-auto-complexity` | Crew Auto Threshold | `select` | `High` | `multi-agent-workflows.crew` | `assistant.multi_agent.crew.auto_complexity` |
 | `branching.crew.crew-auto-max-members` | Crew Auto Size Limit | `number` | `4` | `multi-agent-workflows.crew` | `assistant.multi_agent.crew.auto_max_members` |
 | `branching.crew.brainstorm-core-participants` | BrainStorm Participants | `number` | `4` | `multi-agent-workflows.brainstorm` | `assistant.multi_agent.brainstorm.core_participants` |
@@ -1568,7 +1570,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  Fifty new settings are registered in Plans/settings_inventory.json under the existing twelve categories, because this inventory derives a setting's category and subgroup from its ID prefix. The packet's assistant.* and browser.* spellings are reconciled to those canonical IDs and retained as search aliases on the canonical entry; a packet spelling receives no second inventory row, no peer control, and no independent persistence identity. A census found one genuine reuse: general.interaction.chat-eli5 already exists as the per-conversation ELI5 override and is preserved unchanged, while the packet's application default is registered separately as general.interaction.eli5-default with the per-chat toggle still winning for a chat the user has changed. The pre-existing branching.crew.crew-enabled toggle is preserved as the master Crew enable, and the retired model in which Crew was only that switch is superseded because a Crew run now requires a committed configuration regardless of the toggle.
+  Fifty new settings are registered in Plans/settings_inventory.json under the existing twelve categories, because this inventory derives a setting's category and subgroup from its ID prefix. The packet's assistant.* and browser.* spellings are reconciled to those canonical IDs and retained as search aliases on the canonical entry; a packet spelling receives no second inventory row, no peer control, and no independent persistence identity. The original proposed_census_required packet status is retained as source lineage. A census found one genuine reuse: general.interaction.chat-eli5 is the per-conversation ELI5 override; general.interaction.eli5-default provides the app-default and project-default levels under DL-138. Resolve an explicit chat override first, then the project's explicit default, then the app default; inherit clears only the chat override and defaults never change generated documents. Project defaults use the ordinary Settings transaction and snapshot, and the app fallback is the bundled default false in Plans/settings_inventory.json. F3-581's editable All chats requirement remains pending: its app-wide commit and persistence route conflicts with SSYS-002 and is tracked as pldg-20260927-001-wand-collab-workflows q-035. Inventory scope admits no app-wide writer or global ordinary Settings value. Until the owner resolves that question, the All chats edit is disabled with the Settings owner's reason; its editable requirement is retained, not replaced by a permanent read-only decision. The pre-existing branching.crew.crew-enabled toggle is preserved as the master Crew enable, and the retired model in which Crew was only that switch is superseded because a Crew run now requires a committed configuration regardless of the toggle.
+  DL-138 sets branching.crew.crew-auto-enabled to factory true for a new project while preserving an existing explicit false. The per-chat override is crew_auto_override (true, false or null) on existing thread metadata, absent or null inheriting the project value. cmd.chat.crew_auto.set with scope=thread commits it before the check changes and preserves the prior value on failure. It is a Collaboration-owned preference, not another ordinary Settings value or inventory ID; inventory run applicability is descriptive metadata. The factory Crew Auto configuration is committed as version 1 when the project is created (CWR-021); later user edits require an explicit successful commit.
 gui_related: true
 gui_classification_reason: Each registered setting is a rendered control in a Settings pane with a category, subgroup, and tier.
 depends_on: [SSYS-027]
@@ -1578,6 +1581,10 @@ acceptance_criteria:
   - Every packet spelling resolves to exactly one canonical entry through its search aliases.
   - No packet spelling receives its own row or persistence identity.
   - The existing chat-eli5 override and crew-enabled toggle are preserved rather than duplicated.
+  - ELI5 resolves explicit chat, project, then app default without changing generated documents.
+  - The ELI5 app fallback uses the bundled inventory default false; the All chats edit stays disabled while ledger001 q-035 is open, and no app-wide write is admitted from scope metadata alone.
+  - New projects start with Crew Auto on; an existing explicit off choice survives.
+  - Crew Auto thread overrides survive reload in thread metadata and never mutate the project value or another chat.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py run-gates
@@ -1594,10 +1601,17 @@ node_compile_hint:
 source_lineage:
   - pm-assistant-implementation-2026-09-02-recovered:machine/settings.json
   - pm-assistant-implementation-2026-09-02-recovered:SET-002
+  - Plans/Decision_Log.md#DL-138
 preserved_exact_tokens:
   - "general.interaction.chat-eli5"
   - "branching.crew.crew-enabled"
   - "proposed_census_required"
+  - "general.interaction.eli5-default"
+  - "branching.crew.crew-auto-enabled"
+  - "crew_auto_override"
+  - "cmd.chat.crew_auto.set"
+  - "scope=thread"
+  - "DL-138"
 negative_constraints:
   - Do not create a second inventory row for a packet spelling.
   - Do not duplicate an existing setting that a census identified as reusable.
@@ -1642,9 +1656,11 @@ that it was untouched.
 
 A workflow modal never writes a default as a side effect of starting a run. Defaults change only
 through an explicit `Save as Default` action routed through this owner's transaction. Crew Auto's
-stored value commits only after configuration confirmation and a successful transaction; a
+user-edited configuration commits only after configuration confirmation and a successful transaction; a
 cancelled or failed commit preserves the prior stored state, and the menu check renders that
-stored state rather than an optimistic one.
+stored state rather than an optimistic one. The factory version-1 configuration created with a new project
+is already committed and needs no first-run confirmation (DL-138, CWR-021). A thread's Crew Auto check
+commits only its thread-metadata override, as SSYS-028 and CWR-038 specify.
 
 ### CDRY-013 — The Settings boundary
 

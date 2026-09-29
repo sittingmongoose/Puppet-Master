@@ -72,7 +72,7 @@ Collaborative artifacts are ordinary Puppet Master artifacts created through the
 
 Usage attribution is per participant and per run group through `usage_group_ref`. Participant rows, the panel, and the Usage surface show attributed cost and token consumption with requested/effective identity. Collaborative Workflows never fabricates totals, reset facts, or quota truth; it projects what the Usage owner reports and shows an explicit unknown state otherwise.
 
-Configured `concurrency`, `time_limit_seconds`, `token_limit`, and `cost_limit` are workflow-level requests. They narrow admission; they never widen it, except that a run's own time and cost limits replace the general run limit for that run (CWR-032, DL-131, 2026-09-27). Child admission, crew concurrency, nesting depth, and total active agent ceilings resolve through the `executionLimits` contract owned by `Plans/orchestrator-subagent-integration.md`. This document must not restate, widen, or invent alternate ceiling numbers. A configured concurrency above the orchestrator ceiling is clamped, disclosed as requested-versus-effective, and never silently honored.
+Configured `concurrency`, `time_limit_seconds`, `token_limit`, and `cost_limit` are workflow-level requests. They narrow admission; they never widen it, except that a run's own time and cost limits replace the general run limit for that run (CWR-032, DL-131, 2026-09-27). A hard budget or ceiling, including a Plan budget, caps the effective limit even when the run requests more; the requested and effective amounts are disclosed (DL-138). Child admission, crew concurrency, nesting depth, and total active agent ceilings resolve through the `executionLimits` contract owned by `Plans/orchestrator-subagent-integration.md`. This document must not restate, widen, or invent alternate ceiling numbers. A configured concurrency above the orchestrator ceiling is clamped, disclosed as requested-versus-effective, and never silently honored.
 
 ### 2.5 Permission ceiling
 
@@ -155,9 +155,11 @@ Crew Auto settings…
 Manage Defaults…
 ```
 
-Crew Auto is the assistant's permission to start a Crew by itself when it needs one (DL-120, 2026-09-27). It is on by default for a project. The project value is held by the Settings owner under `assistant.multi_agent.crew.auto_enabled` (section 14); bringing that key's default in line with DL-120 is the Settings owner's change, not this document's. The `Crew Auto` check in a chat shows the value in force for that chat: the chat's own override when it has one, otherwise the project value. Checking or unchecking it sets that chat's override only; it is committed before the check changes, and it never changes the project value or another chat. The rules and team Crew Auto uses are the project's stored Crew Auto configuration, which starts from the Settings defaults of section 14 and changes only when the Crew Auto sheet commits; a sheet draft that was never committed is never used. Unchecking Crew Auto stops the assistant starting Crews by itself in that chat and retains the stored configuration. `Crew Auto settings…` opens the Crew Auto sheet through `cmd.chat.crew_auto.open_config`, and `Manage Defaults…` keeps its route to the Settings manager (CWR-038, DL-119, 2026-09-27). Turning Crew Auto on for the project leaves one line in the chat, `Crew Auto is on for this project` (CWR-038, DL-135, 2026-09-27).
+Crew Auto is the assistant's permission to start a Crew by itself when it needs one (DL-120, 2026-09-27). It is on by default for a new project. The project value is held by the Settings owner under `assistant.multi_agent.crew.auto_enabled` (section 14); the project's untouched default Crew Auto configuration is created with revision 1. The `Crew Auto` check in a chat shows the value in force for that chat: the chat thread's `crew_auto_override` when true or false, otherwise the project value when it is null or absent. Checking or unchecking it sets that chat's override only; it is committed before the check changes, and it never changes the project value or another chat. The rules and team Crew Auto uses are the project's stored Crew Auto configuration, which starts from the Settings defaults of section 14 and changes only when the Crew Auto sheet commits; a sheet draft that was never committed is never used. No first-run confirmation sheet appears before Crew Auto first starts a Crew; the resulting run's one-line note links to `Crew Auto settings…`. Unchecking Crew Auto stops the assistant starting Crews by itself in that chat and retains the stored configuration. `Crew Auto settings…` opens the Crew Auto sheet through `cmd.chat.crew_auto.open_config`, and `Manage Defaults…` keeps its route to the Settings manager (CWR-038, DL-119, 2026-09-27). `Crew Auto is on for this project` appears only in the chat where the user turned it on; a change from project Settings and a chat whose own override is off add no such line (CWR-038, DL-135, DL-138).
 
 Crew Auto criteria may include independent subsystems, specialization fit, useful parallelism, a Plan recommendation, and a configurable complexity threshold. Crew Auto cannot widen authority beyond the parent ceiling, cannot raise the configured member cap, and cannot override an explicitly selected single-agent route. When criteria are not met, no Crew is created, no card appears, and no Usage is attributed; an unmet-criteria evaluation is not a failed run. Admission and the Crew Auto sheet's preview use one pure deterministic evaluator that makes no provider call, and every run records its `admission_source` and, when Crew Auto admitted it, its `crew_auto_revision` (CWR-021, 2026-09-27). The assistant decides when it wants a Crew; the evaluator decides whether it may start one. The assistant starts a Crew by itself only when Crew Auto is on for the chat and the evaluator admits that request, and a declined request stays with one assistant with nothing created (CWR-021, DL-120, 2026-09-27). Build With Crew on a Plan stays the user's choice: Crew Auto never starts it and is not required for it.
+
+Crew Auto uses the general Crew parallelism, clamped by app execution limits. Its sheet shows Working at the same time as a read-only effective value and has no separate Crew Auto at-once setting (CWR-021, DL-138).
 
 ### 5.4 Build With Crew
 
@@ -183,7 +185,7 @@ The Chat Room modal configures topic and room name; participants with model, acc
 
 Turn policy is deterministic and replayable. `moderated` routes each turn through the configured moderator. `round_robin` cycles participants in configured order. `free_discussion` admits participants under the concurrency limit with recorded admission order. `ask_everyone_once` asks each participant exactly once and then stops. `Next Round` advances one round under the active policy and never silently changes the policy.
 
-The user interacts through `Ask Everyone`, addressing selected participants, `@mention` of a participant, reply or thread where the policy supports it, adding or removing a participant through controlled reconfiguration, `Next Round`, `Pause`, `Resume`, `Cancel`, `Summarize Now`, and `End discussion`, which ends the room as `completed` through `cmd.chat_room.end`. User messages reach the room through the ordinary targeted composer and are delivered to the addressed participants exactly once. A message sent while a round is in progress is queued for the next round unless the user sends it now to steer the round without interrupting it; a message sent now is read first by the next participant to speak, and every later speaker in that round sees it (CWR-024, DL-112, 2026-09-27). Reconfiguration that adds or removes a participant bumps the definition revision and is recorded in the transcript as a `system` message; it never rewrites prior transcript attribution. Adding rounds after the last one (`Add 2 more rounds`) is the same reconfiguration, and continuing without a member who never joined or failed is an explicit waiver through it (CWR-024, 2026-09-27).
+The user interacts through `Ask Everyone`, addressing selected participants, `@mention` of a participant, reply or thread where the policy supports it, adding or removing a participant through controlled reconfiguration, `Next Round`, `Pause`, `Resume`, `Cancel`, `Summarize Now`, and `End discussion`, which ends the room as `completed` through `cmd.chat_room.end`. User messages reach the room through the ordinary targeted composer and are delivered to the addressed participants exactly once. A message sent while a round is in progress is queued for the next round unless the user sends it now to steer the round without interrupting it; a message sent now is read first by the next participant to speak, and every later speaker in that round sees it (CWR-024, DL-112, 2026-09-27). Reconfiguration that adds or removes a participant bumps the definition revision and is recorded in the transcript as a `system` message; it never rewrites prior transcript attribution. After the last configured round the room enters `waiting` and shows `This room used all its rounds`; it remains available for `Add 2 more rounds`, `Summarize Now`, or `End discussion`, and does not finish by itself. Adding rounds is the same reconfiguration, and continuing without a member who never joined or failed is an explicit waiver through it (CWR-024, DL-138).
 
 ### 6.4 Promotion
 
@@ -313,7 +315,7 @@ A Grill Me participant maps decision dependencies as a frontier: the set of deci
 
 Grill Me routes answerable factual questions to research agents instead of asking the user; finding facts is the workflow's job and deciding is the user's. Accepted answers are captured in the active Plan, PRD, or Wizard state through those owners. Grill Me has no implementation authority: it cannot mutate the target project, cannot start execution, and cannot approve anything.
 
-Grill Me is what raises the effective question maximum. It uses the same shared question bank as every other participant, so enabling it adds allowance without adding duplicate questions, and per-agent duplicate inflation is impossible by construction.
+In BrainStorm, Grill Me raises the effective question maximum and uses the shared question bank, so enabling it adds allowance without duplicate questions or per-agent inflation. In a Crew or Chat Room, Grill Me questions the other helpers and researches answerable facts itself; it does not gain a user-question allowance there. Only a decision that the user alone can answer reaches the user through the ordinary needs-you prompt (CWR-028, DL-138).
 
 ### 9.4 Placement
 
@@ -343,7 +345,7 @@ The exact collaborative command IDs owned by this document are listed below. The
 | `cmd.brainstorm.synthesize_plan` | domain_action | `BrainstormSynthesisRequest` / `AssistantPlanCreateResult` | Requests Plan creation from the Plan owner and returns that owner's create result. Creates exactly one Plan, preserves dissent and rejected alternatives in the synthesis, and leaves the BrainStorm card in place. Accepts `tie_resolution: coordinator` on a tied vote. |
 | `cmd.brainstorm.research_lead` | domain_action | `BrainstormLeadResearchRequest` / `BrainstormLeadResearchResult` | Asks a running or waiting BrainStorm run to research one Wonderer lead. The lead stays a hypothesis until research returns evidence; the result records that evidence or the reason the lead was set aside. Never accepts a lead as fact without evidence. |
 | `cmd.review.create_todos` | domain_action | `ReviewCreateTodosRequest` / `ReviewCreateTodosResult` | Converts explicitly selected confirmed findings into bounded To-Do items through the To-Do owner with lineage back to each `finding_id`. Never converts rejected, duplicate, or uncertain findings implicitly. |
-| `cmd.review.send_findings_to_agent` | domain_action | `ReviewSendFindingsRequest` / `ComposerBufferResult` | Writes a fix request built from the selected findings into the source thread's empty composer buffer and never sends it; refuses `composer_not_empty` when the buffer holds text. Lineage is in message metadata, never in the text. Performs no repair, no file mutation, and no automatic follow-on run. |
+| `cmd.review.send_findings_to_agent` | domain_action | `ReviewSendFindingsRequest` / `ComposerBufferResult` | Its tagged `review_findings` source writes a fix request from selected findings; its `taught_rule_check` source writes a fix request from failed taught-rule checks on a finished reply (AMS-053). Both fill only the source thread's empty composer, return `ComposerBufferResult`, refuse `composer_not_empty`, retain source lineage in message metadata, and never send or run the draft (DL-138). |
 | `cmd.review.run_again` | domain_action | `ReviewRunAgainRequest` / `CollaborationStartResult` | Starts a new review run against a newly frozen target pack. Never merges results into the prior run and never reuses a stale `ReviewTargetPack`. |
 | `cmd.chat_room.next_round` | domain_action | `ChatRoomRoundRequest` / `ChatRoomRoundResult` | Advances exactly one round under the active turn policy without changing that policy. Returns the deterministic participant order used. |
 | `cmd.chat_room.summarize` | domain_action | `ChatRoomSummarizeRequest` / `ArtifactResult` | Produces a synthesis artifact through the artifact owner. Creates no To-Do, Plan, or Goal and does not end the room. |
@@ -354,7 +356,7 @@ The exact collaborative command IDs owned by this document are listed below. The
 | `cmd.chat.crew_auto.set` | domain_action | `CrewAutoSetRequest` / `CrewAutoSetResult` | Sets Crew Auto at the scope its request names (CWR-038): `thread`, from a chat's check, sets only that chat's override of the project value; `project`, from the Crew Auto sheet, commits the rules and the team in one `CrewAutoSetRequest` and turns Crew Auto on for the project. An enable that finds no stored Crew Auto configuration returns `configuration_required` and changes no check. Commits before any check changes. Cannot widen authority. |
 | `cmd.chat.crew_auto.open_config` | shell_view | `CrewAutoConfigRoute` / `RouteResult` | Opens the Crew Auto configuration modal. Route success is not enablement; the check state changes only through `cmd.chat.crew_auto.set`. |
 
-Source surfaces for the ten `cmd.collaboration.*` rows are `workflow_modal`, `workflow_card`, `workflow_panel`, `activity`, and `composer`. `cmd.brainstorm.*` surfaces are `brainstorm_card` and `brainstorm_panel`, and `cmd.brainstorm.research_lead` also `wonderer_workspace`, the Wonderer workspace surface the central catalog registers (CWR-031; Plans/UI_Command_Catalog.md UCC-169, UCC-171); `cmd.review.*` surfaces are `review_card` and `review_panel`; `cmd.chat_room.*` surfaces are `chat_room_card` and `chat_room_panel`; `cmd.chat.crew_auto.set` surfaces are `multi_agent_menu` and `crew_auto_modal`; `cmd.chat.crew_auto.open_config` surfaces are `multi_agent_menu`, `workflow_modal` and `crew_auto_receipt` (CWR-038).
+Source surfaces for the ten `cmd.collaboration.*` rows are `workflow_modal`, `workflow_card`, `workflow_panel`, `activity`, and `composer`. `cmd.brainstorm.*` surfaces are `brainstorm_card` and `brainstorm_panel`, and `cmd.brainstorm.research_lead` also `wonderer_workspace`, the Wonderer workspace surface the central catalog registers (CWR-031; Plans/UI_Command_Catalog.md UCC-169, UCC-171); `cmd.review.*` surfaces are `review_card` and `review_panel`, with the catalog-owned `message_chrome` origin additionally allowed only for the `taught_rule_check` variant of `cmd.review.send_findings_to_agent` (UCC-172); its `review_findings` variant keeps the Review-only origins; `cmd.chat_room.*` surfaces are `chat_room_card` and `chat_room_panel`; `cmd.chat.crew_auto.set` surfaces are `multi_agent_menu` and `crew_auto_modal`; `cmd.chat.crew_auto.open_config` surfaces are `multi_agent_menu`, `workflow_modal` and `crew_auto_receipt` (CWR-038).
 
 `cmd.chat.plan.build_with_crew`, owned by `Plans/Assistant_Plan_Runtime.md`, is produced by the Crew sheet in Build With Crew mode and never decomposes into `cmd.collaboration.start`. The revisions to `open`, `reconfigure`, `message`, `export`, `synthesize_plan` and `send_findings_to_agent` above, and the rows `cmd.chat_room.end` and `cmd.brainstorm.research_lead`, are specified by CWR-031 (2026-09-27).
 
@@ -422,7 +424,7 @@ The participant activity projection (CWR-030) is derived on read from these even
 
 Settings stores ordinary project-bound defaults and renders the manager. This document stores the actual run and the frozen effective roster. Settings never stores a run, a transcript, a participant assignment, a finding, a vote, or a question bank; this document never becomes a second settings store.
 
-Settings provides a **Multi-Agent Workflows** manager with `Crew`, `BrainStorm`, `Review`, and `Chat Room` tabs. The default keys it owns are `assistant.multi_agent.crew.participant_count` (3), `assistant.multi_agent.crew.coordinator` (`parent_assistant`), `assistant.multi_agent.crew.assignment_strategy` (`manager_directed`), `assistant.multi_agent.crew.parallelism` (3), `assistant.multi_agent.crew.auto_enabled` (false), `assistant.multi_agent.crew.auto_complexity` (`high`), `assistant.multi_agent.crew.auto_max_members` (4), `assistant.multi_agent.brainstorm.core_participants` (4), `assistant.multi_agent.brainstorm.question_limit` (20), `assistant.multi_agent.grill_me.question_extension` (25), `assistant.multi_agent.brainstorm.external_research` (`maximum`), `assistant.multi_agent.brainstorm.independent_proposals` (true), `assistant.multi_agent.brainstorm.debate_rounds` (2), `assistant.multi_agent.brainstorm.voting` (`evidence_weighted`), `assistant.multi_agent.brainstorm.preserve_dissent` (true), `assistant.multi_agent.review.strategy` (`multi_pass`), `assistant.multi_agent.review.reviewer_count` (3), `assistant.multi_agent.review.blind_initial_pass` (true), `assistant.multi_agent.review.peer_corroboration` (true), `assistant.multi_agent.review.preserve_dissent` (true), `assistant.multi_agent.review.auto_repair` (false, locked off for this feature), `assistant.multi_agent.chat_room.participant_count` (4), `assistant.multi_agent.chat_room.turn_policy` (`moderated`), and `assistant.multi_agent.chat_room.max_rounds` (5). The Deep Plan Grill Me toggle uses `assistant.chat.deep_plan.grill_me_default` (false).
+Settings provides a **Multi-Agent Workflows** manager with `Crew`, `BrainStorm`, `Review`, and `Chat Room` tabs. The default keys it owns are `assistant.multi_agent.crew.participant_count` (3), `assistant.multi_agent.crew.coordinator` (`parent_assistant`), `assistant.multi_agent.crew.assignment_strategy` (`manager_directed`), `assistant.multi_agent.crew.parallelism` (3), `assistant.multi_agent.crew.auto_enabled` (true), `assistant.multi_agent.crew.auto_complexity` (`high`), `assistant.multi_agent.crew.auto_max_members` (4), `assistant.multi_agent.brainstorm.core_participants` (4), `assistant.multi_agent.brainstorm.question_limit` (20), `assistant.multi_agent.grill_me.question_extension` (25), `assistant.multi_agent.brainstorm.external_research` (`maximum`), `assistant.multi_agent.brainstorm.independent_proposals` (true), `assistant.multi_agent.brainstorm.debate_rounds` (2), `assistant.multi_agent.brainstorm.voting` (`evidence_weighted`), `assistant.multi_agent.brainstorm.preserve_dissent` (true), `assistant.multi_agent.review.strategy` (`multi_pass`), `assistant.multi_agent.review.reviewer_count` (3), `assistant.multi_agent.review.blind_initial_pass` (true), `assistant.multi_agent.review.peer_corroboration` (true), `assistant.multi_agent.review.preserve_dissent` (true), `assistant.multi_agent.review.auto_repair` (false, locked off for this feature), `assistant.multi_agent.chat_room.participant_count` (4), `assistant.multi_agent.chat_room.turn_policy` (`moderated`), and `assistant.multi_agent.chat_room.max_rounds` (5). The Deep Plan Grill Me toggle uses `assistant.chat.deep_plan.grill_me_default` (false). A chat's `crew_auto_override` belongs to chat thread metadata, not the project Settings value (DL-138).
 
 These keys require Settings inventory census and registration through `Plans/Settings_System.md` and `Plans/settings_inventory.json`; they are named here to fix the ownership boundary, not to claim registration. A default read at modal-open time is a snapshot: changing a Settings default afterward never retroactively alters a committed definition or a running run. The effective roster frozen at start is the run's truth, and the panel shows it even after Settings change.
 
@@ -628,12 +630,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  Crew is a configurable workflow, not an On/Off switch. Its configuration covers coordinator, roles, per-participant models and Personas, tools, and context; each assignment's expected outputs and dependencies are authored by the coordinator when it splits the job rather than configured (CWR-037, DL-128, 2026-09-27); and Crew remains distinct from Subagents. Crew Auto is the assistant's permission to start a Crew by itself when it needs one, on by default for a project; the checkable Crew Auto item of a chat's Multi-Agent submenu overrides the project value for that chat only, and there is no separate per-chat switch that allows Crews (DL-120, 2026-09-27). Crew Auto starts a run only from the project's stored Crew Auto configuration of section 5.3, which starts from the Settings defaults and changes only when the Crew Auto sheet commits; it never starts one from a sheet draft that was never committed, and it cannot widen the permission ceiling or the authority any participant already has. Build With Crew runs an exact Assistant Plan revision through a configured Crew rather than the single-agent build path, and the crew configuration is part of the build target rather than part of any schedule. Crew is not Orchestrator and must not be modelled as child-goal orchestration.
+  Crew is a configurable workflow, not an On/Off switch. Its configuration covers coordinator, roles, per-participant models and Personas, tools, and context; each assignment's expected outputs and dependencies are authored by the coordinator when it splits the job rather than configured (CWR-037, DL-128, 2026-09-27); and Crew remains distinct from Subagents. Crew Auto is the assistant's permission to start a Crew by itself when it needs one, on by default for a project; the checkable Crew Auto item of a chat's Multi-Agent submenu overrides the project value for that chat only, and there is no separate per-chat switch that allows Crews (DL-120, 2026-09-27). Crew Auto starts a run only from the project's stored Crew Auto configuration of section 5.3, created at project creation with revision 1 from the Settings defaults and changed only when the Crew Auto sheet commits; its first automatic run needs no confirmation sheet and leaves a one-line settings link; it never starts one from a sheet draft that was never committed, and it cannot widen the permission ceiling or the authority any participant already has. Build With Crew runs an exact Assistant Plan revision through a configured Crew rather than the single-agent build path, and the crew configuration is part of the build target rather than part of any schedule. Crew is not Orchestrator and must not be modelled as child-goal orchestration.
 gui_related: true
 gui_classification_reason: This defines the Crew modal, the checkable Crew Auto menu item, and the Build With Crew action.
 depends_on: [CWR-002]
 unblocks: []
 acceptance_criteria:
+  - A new project stores its untouched Crew Auto defaults as revision 1 and does not require a first-run confirmation sheet.
   - Crew Auto starts only from the project's stored Crew Auto configuration, never from an uncommitted sheet draft.
   - Crew Auto cannot widen authority or the permission ceiling.
   - Crew remains distinct from Subagents and from Orchestrator.
@@ -652,12 +655,14 @@ node_compile_hint:
   mode: crew_protocol_contract
   create_worknodes: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138)"
   - pm-assistant-implementation-2026-09-02-recovered:CREW-001
   - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#8
   - "Plans/Decision_Log.md DL-128 (card p10, E-14; 2026-09-27 amendment)"
   - "Plans/Decision_Log.md DL-120 (card p02, E-02; 2026-09-27 amendment, per the design lead's ruling)"
   - "Design lead ruling of 2026-09-27 on the owner's behalf, relayed in the G1 follow-up task (not verifiable from inside this repository)"
 preserved_exact_tokens:
+  - "revision 1"
   - "Crew Auto"
   - "Build With Crew"
 negative_constraints:
@@ -1558,7 +1563,8 @@ canonical_text: >-
   other section 3 fields (name and purpose, participants and roles, provider, account, model and
   Persona per participant, the Wonderer and Grill Me additions, and the coordinator or synthesis
   model) are on the sheet itself, and concurrency is set on the Crew sheet's own Working at the same
-  time control, never on the Advanced page. The
+  time control, never on the Advanced page. The Crew Auto sheet shows that same effective value
+  read-only, clamped by app execution limits, with no separate at-once setting. The
   substitution row and the permission ceiling are sentences and never settings: an unavailable
   chosen model blocks Start until the user replaces it (CWR-034, DL-121), and the ceiling is never
   configured upward. Kind rows follow the shared rows, and no row repeats
@@ -1570,6 +1576,7 @@ gui_classification_reason: This unit defines the configuration sheet, its close 
 depends_on: [CWR-002]
 unblocks: [CWR-032]
 acceptance_criteria:
+  - The Crew Auto sheet shows the effective general Crew parallelism read-only; it saves no separate at-once value.
   - Scrim click, close control, Cancel and Escape share one close path that creates no run, card, event or Usage.
   - The In your chat preview never becomes a card before a committed Start is admitted.
   - Computing the estimate makes no provider request, and an estimate without a basis reads "Time and cost depend on the work".
@@ -1588,10 +1595,12 @@ node_compile_hint:
   mode: collaborative_configuration_contract
   create_worknodes: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 6.1, 6.4, 8.0 (G-29), 8.1 (Working at the same time), 8.15"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-01"
   - "Plans/Decision_Log.md DL-121 (card p03, E-03), DL-117 (card n08, E-37); 2026-09-27 WAIT-wave amendment"
 preserved_exact_tokens:
+  - "read-only"
   - "configuration sheet"
   - "In your chat"
   - "an estimate, not a promise"
@@ -1755,8 +1764,10 @@ canonical_text: >-
   creates nothing: no Crew, no card, no Usage and no failed run. An admitted evaluation starts an
   ordinary Crew run. Every CollaborativeRun records admission_source, closed as
   `user | crew_auto | build_with_crew | scheduled_build`, and a run admitted by Crew Auto also records
-  crew_auto_revision, the revision of the stored Crew Auto configuration that admitted it, so the
-  card can say which rules started it. The Crew Auto team never raises the configured member cap: a
+  crew_auto_revision, the revision of the stored Crew Auto configuration that admitted it
+  (revision 1 for untouched defaults created with the project), so the card can say which rules
+  started it. Crew Auto uses the general Crew parallelism, clamped by app execution limits, and
+  has no separate at-once setting (DL-138). The Crew Auto team never raises the configured member cap: a
   team larger than the cap is refused as invalid_request naming the cap, and the cap is never
   overwritten from the roster length.
   Crew Auto is the assistant's permission to start a Crew by itself when it needs one (DL-120,
@@ -1772,6 +1783,7 @@ gui_classification_reason: The sheet's sample-request preview and the admitted c
 depends_on: [CWR-004]
 unblocks: []
 acceptance_criteria:
+  - Crew Auto uses general Crew parallelism after the app limit clamp and adds no separate parallelism setting.
   - The preview and admission call the same evaluator on the same criteria and agree for every request.
   - Evaluation makes no provider call.
   - A declined evaluation creates no run, card or Usage.
@@ -1790,11 +1802,13 @@ node_compile_hint:
   mode: collaborative_runtime_contract
   create_worknodes: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de section 8.2 (IMPACT A1-32)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-08 (NOW part)"
   - "Plans/Decision_Log.md DL-120 (card p02, E-02), per the design lead's ruling"
   - "Design lead ruling of 2026-09-27 on the owner's behalf, relayed in the G1 follow-up task (not verifiable from inside this repository)"
 preserved_exact_tokens:
+  - "general Crew parallelism"
   - "evaluate(criteria, request_features)"
   - "admission_source"
   - "user | crew_auto | build_with_crew | scheduled_build"
@@ -1942,12 +1956,13 @@ canonical_text: >-
   written once and delivered exactly once (section 2.3). End discussion ends a room through
   cmd.chat_room.end (CWR-031, DL-130): no further rounds or messages are taken, the run settles
   completed rather than cancelled, and promotion of the room's existing messages stays available.
-  The Moderator row writes the room's coordinator_spec (CWR-037).
+  After the last configured round the room enters waiting and shows This room used all its rounds. It stays waiting until the user adds rounds, chooses Summarize Now or ends the discussion; it never finishes automatically at that boundary (DL-138). The Moderator row writes the room's coordinator_spec (CWR-037).
 gui_related: true
 gui_classification_reason: This unit maps Chat Room card actions and Advanced rows to commands and definition fields.
 depends_on: [CWR-005, CWR-018]
 unblocks: []
 acceptance_criteria:
+  - The room waits after its last configured round so Add 2 more rounds remains valid.
   - Adding two rounds bumps the definition revision and writes one system transcript entry.
   - Continuing without a member records an explicit waiver with actor, reason and currentness.
   - The four Chat Room kind rows persist as definition fields.
@@ -1965,6 +1980,7 @@ node_compile_hint:
   mode: collaborative_runtime_contract
   create_worknodes: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 7.6, 8.3 (G-29), 8.15"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-10 (NOW part)"
   - "Plans/Decision_Log.md DL-112 (card n03, E-18), DL-130 (card p15, E-32), DL-132 (card p17, E-34)"
@@ -1972,6 +1988,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-10 (WAIT part)"
   - "Design lead ruling of 2026-09-27 on DL-112's follow-up (who receives a steer), relayed in the G1 follow-up task"
 preserved_exact_tokens:
+  - "This room used all its rounds"
   - "Add 2 more rounds"
   - "Continue without"
   - "cmd.collaboration.reconfigure"
@@ -2202,12 +2219,13 @@ canonical_text: >-
   Crew Auto teams and in Crews used for a scheduled build: the shelf shows them disabled with the
   reason, and a request that carries one is refused as invalid_request. Review has no specialists.
   Grill Me is a methodology Skill and never a Persona (DL-133), so its row has a model picker and no
-  Persona picker.
+  Persona picker. In BrainStorm, Grill Me uses the shared question bank and its question allowance. In a Crew or Chat Room, it questions the other helpers and researches facts itself; only a decision the user alone can answer reaches the user through the ordinary needs-you prompt, with no new allowance setting (DL-138).
 gui_related: true
 gui_classification_reason: This unit fixes where specialists are added, what their rows carry and where they are refused.
 depends_on: [CWR-008]
 unblocks: []
 acceptance_criteria:
+  - Crew and Chat Room Grill Me do not add a user-question allowance or interrupt the user outside the ordinary needs-you prompt.
   - A specialist row carries its own model (and Persona for Wonderer) and never occupies a core slot.
   - Specialists map to ParticipantSpec additive_role_kind with no new record shape.
   - Crew Auto teams and scheduled-build Crews refuse specialists with a stated reason.
@@ -2222,12 +2240,14 @@ node_compile_hint:
   mode: collaborative_configuration_contract
   create_worknodes: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 8.0, 8.1, 8.2, 12 (D-13)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-14"
   - "Plans/Decision_Log.md DL-133 (card p18, E-35)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json sha256:4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f p18"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-14 (WAIT part)"
 preserved_exact_tokens:
+  - "needs-you prompt"
   - "Add specialists"
   - "additive_role_kind"
   - "requested_model_id"
@@ -2268,6 +2288,8 @@ canonical_text: >-
   limit reached, everything the run produced so far is kept, and its allowed_actions offer running
   it again with changes (configure plus a new start, CWR-031) and opening the run view. Reaching a
   limit is a stop reason, not an attention reason, so attention_reason keeps its six values.
+  A hard budget such as a Plan budget caps the effective limit before admission (CWR-032, DL-138);
+  reaching that cap uses the same cancelled limit stop_reason and Stopped at your limit face.
 gui_related: true
 gui_classification_reason: The card's result face and decision rows are driven only by this projection.
 depends_on: [CWR-009]
@@ -2278,6 +2300,7 @@ acceptance_criteria:
   - attention_reason takes only the six listed values.
   - A coordinator failure shows Needs attention and never promotes another participant silently.
   - A run that reaches its limit settles cancelled with a limit stop_reason, never failed, and its card reads Stopped at your limit.
+  - A hard budget cap ends the run at that cap through the same limit stop_reason.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: completion_inferred_from_last_message
@@ -2289,6 +2312,7 @@ node_compile_hint:
   mode: collaborative_runtime_contract
   create_worknodes: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138, question 12)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 7.1 (G-30), 7.4, 7.6 (IMPACT A1-28)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-19 (NOW part), B-CW-27 (NOW part)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-19 (WAIT part), B-CW-20"
@@ -2333,6 +2357,13 @@ canonical_text: >-
   complete, durable message text, referenced by quote_source_id; raw tool output is never quoted as
   speech and becomes a verb with detail_text. Whether only one participant is waiting while the
   others keep working is computed from the projection, never written by hand.
+  The same projection has one coordinator activity row, even when the coordinator is the parent
+  assistant or a dedicated model rather than a participant (DL-138). That row identifies
+  sender_kind coordinator and its coordinator_run_ref, takes state and verb from the coordinator
+  run and attempt records and the same EP-128 stream, and uses the same state values. It has no
+  participant_id unless the coordinator is also a participant; its live_message_id binds the
+  coordinator message of EP-129. The coordinator lane reads this row, never an invented participant
+  status.
   Live helper text (DL-137, 2026-09-27): while the participant is writing a message, the projection
   carries live_message_id, the collaboration_message_id allocated to that message in progress
   (EP-129), and the lane shows the streamed text as CWR-040 specifies. The projection never holds
@@ -2344,6 +2375,7 @@ gui_classification_reason: The card's lanes, decision sentence and run view team
 depends_on: [CWR-003, EP-128, EP-129]
 unblocks: [CWR-019, CWR-040]
 acceptance_criteria:
+  - A nonparticipant coordinator has a derived activity row with its own state, verb and live_message_id.
   - The projection is recomputable from existing records and is never stored or emitted.
   - state takes only the eight listed values.
   - Tool subject statuses are consumed from EP-128 without redefinition.
@@ -2362,11 +2394,13 @@ node_compile_hint:
   mode: collaborative_runtime_contract
   create_worknodes: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 7.3, 7.4"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-21"
   - "Plans/Decision_Log.md DL-137 (card p14, E-31)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json sha256:33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5 p14"
 preserved_exact_tokens:
+  - "coordinator_run_ref"
   - "participant activity projection"
   - "working | using_tools | waiting_on | needs_you | being_checked | retrying | done | failed"
   - "quote_source_id"
@@ -2407,11 +2441,16 @@ canonical_text: >-
   when the vote is tied, with no new command. cmd.chat.plan.build_with_crew, owned by
   Plans/Assistant_Plan_Runtime.md, is produced by the Crew sheet in Build With Crew mode and never
   decomposes into cmd.collaboration.start followed by a separate build.
-  cmd.review.send_findings_to_agent writes a fix request built from the selected findings into the
-  source thread's empty composer buffer and never sends it (DL-125); nothing runs until the user
-  presses Send. It returns ComposerBufferResult, refuses composer_not_empty when the buffer already
-  holds text, and records the findings' lineage (the run and its finding ids) in the message
-  metadata, never in the text. Two commands are added (DL-130). cmd.chat_room.end ends a Chat Room
+  cmd.review.send_findings_to_agent has tagged source_kind review_findings or taught_rule_check
+  (DL-138). The review_findings variant keeps the selected findings, collaboration_run_id and
+  currentness check of DL-125. The taught_rule_check variant names the finished reply_message_id
+  and nonempty missed_teaching_refs, each with memory_id and normalized_fact_sha256 as the
+  included rule version, whose stored check
+  outcome on that reply is failed (AMS-053); it carries no invented review run or finding ids.
+  Both variants write an editable fix request into the source thread's empty composer buffer, return
+  ComposerBufferResult, refuse composer_not_empty when that buffer holds text, and put source lineage
+  in message metadata, never in the text. They never send the draft, start a run or repair the reply;
+  only the user's later Send submits it. Two commands are added (DL-130). cmd.chat_room.end ends a Chat Room
   that is running, waiting or paused, with ChatRoomEndRequest and ChatRoomEndResult: the room takes
   no further rounds or messages, the run settles completed, and promotion of existing messages stays
   allowed; it is distinct from cmd.collaboration.cancel, which settles cancelled.
@@ -2427,6 +2466,7 @@ gui_classification_reason: Card, run view and sheet controls dispatch these revi
 depends_on: [CWR-020, CWR-022]
 unblocks: []
 acceptance_criteria:
+  - The taught_rule_check source variant names a finished reply and failed included-rule checks, requires no review run or finding ids, and only fills an empty composer.
   - cmd.collaboration.open accepts only the three targets and an optional focus.
   - Reconfigure is refused on a completed, cancelled or failed run.
   - accept_stale_target is accepted only while target_pack_stale holds.
@@ -2448,6 +2488,7 @@ node_compile_hint:
   mode: collaborative_command_contract
   create_worknodes: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138, question 18)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 7.9 (G-30 DEST-03), 8.15"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-23 (NOW part: REV-1..REV-4), B-CW-24 (NOW part: N-9, N-10, REV-12)"
   - "Plans/Decision_Log.md DL-125 (card p07, E-07), DL-130 (card p15, E-32)"
@@ -2455,6 +2496,11 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-12 and B-CW-23 (REV-5), B-CW-24 (N-1, N-8)"
   - "Plans/UI_Command_Catalog.md UCC-169 (the wonderer_workspace surface) and UCC-171 (the source surfaces of cmd.brainstorm.research_lead)"
 preserved_exact_tokens:
+  - "source_kind"
+  - "review_findings"
+  - "taught_rule_check"
+  - "reply_message_id"
+  - "missed_teaching_refs"
   - "cmd.collaboration.open"
   - "card | run_view | activity_detail"
   - "cmd.collaboration.reconfigure"
@@ -2503,15 +2549,19 @@ canonical_text: >-
   alters them.
   The time and cost limits a definition sets (time_limit_seconds and cost_limit) are that run's own
   limits and override the general run limit for it, whether wider or narrower (DL-131): the
-  run-envelope wall-clock default of Plans/Run_Modes.md does not end such a run early. token_limit,
-  concurrency, the executionLimits ceilings and the permission ceiling keep the narrowing rule of
-  section 2.4, and the card's meta line shows the run's own limit. The definition stores no
+  run-envelope wall-clock default of Plans/Run_Modes.md does not end such a run early. A hard
+  budget or ceiling, including a Plan budget, always caps the effective run limit: a request for
+  $6 with $3 left on the Plan stops at $3, and the sheet states "you asked for $6, this Plan allows $3"
+  (DL-138). token_limit, concurrency, the executionLimits ceilings and the permission ceiling keep
+  the narrowing rule of section 2.4, and the card's meta line shows the effective cap beside the
+  requested run limit. The definition stores no
   substitution policy that could let a stand-in start (CWR-034).
-gui_related: false
-gui_classification_reason: This unit is the record shape behind the sheets; the sheets themselves are CWR-018 and the kind units.
+gui_related: true
+gui_classification_reason: The committed record drives the sheet's requested and effective limit disclosure, as well as the underlying run limits.
 depends_on: [CWR-018]
 unblocks: []
 acceptance_criteria:
+  - A run limit may replace the general run limit but cannot exceed a hard budget; disclose requested and effective amounts.
   - Every sheet choice is recoverable from the committed definition revision.
   - stuck_policy never swaps, skips or waives a participant without a user action.
   - shared_notes_policy uses the notebook scopes and no parallel store.
@@ -2528,12 +2578,14 @@ node_compile_hint:
   mode: collaborative_configuration_contract
   create_worknodes: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 8.0 (G-29), 8.1 (G-29), 8.3 (G-29), 8.4 (G-29), 8.5"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-15 (NOW part)"
   - "Plans/Decision_Log.md DL-131 (card p16, E-33), DL-121 (card p03, E-03)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json sha256:4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f p16, p03"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-15 (WAIT part)"
 preserved_exact_tokens:
+  - "you asked for $6, this Plan allows $3"
   - "stuck_policy"
   - "shared_notes_policy"
   - "shared_space | private_per_participant"
@@ -2571,11 +2623,15 @@ canonical_text: >-
   level that decides, in the order ACD-484 owns: the chat's own override (general.interaction.chat-eli5,
   the existing per-conversation setting of Plans/Settings_System.md) if it has one,
   otherwise the project default, otherwise the app default (general.interaction.eli5-default). The
-  project default needs a project scope on general.interaction.eli5-default, which is a Settings
-  follow-up outside this document. Choosing a value in the disclosure is not view state: for this
+  project default uses the project scope on general.interaction.eli5-default registered by
+  Plans/Settings_System.md SSYS-028 (DL-138). Choosing a value in the disclosure is not view state: for this
   chat it dispatches cmd.chat.eli5.set with on, off or inherit, where inherit follows the project
-  default (the command and its values are the catalog's, UCC-175), and at the project or app level
-  it is a Settings transaction, never a command minted here.
+  default (the command and its values are the catalog's, UCC-175), and changing the project default
+  is an ordinary Project Settings transaction. The retained All chats edit requires a Settings-owned
+  app-default transaction, whose persistence route is unresolved against SSYS-002 (SSYS-028,
+  pldg-20260927-001-wand-collab-workflows q-035). Until the owner resolves that conflict, the All chats
+  edit stays disabled with the Settings owner's reason and dispatches no app-wide write; the app fallback
+  remains the bundled off value. No command or global Settings writer is minted here.
 gui_related: true
 gui_classification_reason: This unit classifies card, sheet and run view interactions as view or draft state for the command census.
 depends_on: [CWR-020]
@@ -2583,7 +2639,8 @@ unblocks: []
 acceptance_criteria:
   - None of the listed interactions has a command ID.
   - The stashed Crew draft is restored on return, cancel or enable and dropped when both sheets close.
-  - Opening or closing the ELI5 disclosure dispatches nothing; choosing this chat's value dispatches cmd.chat.eli5.set, and choosing the project or app value is a Settings transaction.
+  - Opening or closing the ELI5 disclosure dispatches nothing; choosing this chat's value dispatches cmd.chat.eli5.set and changing the project default uses its Settings transaction; the retained All chats edit stays disabled while its Settings contract is unresolved in ledger001 q-035.
+  - The project ELI5 default uses the existing general.interaction.eli5-default setting at project scope (SSYS-028).
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: command_minted_for_view_toggle
@@ -2597,6 +2654,7 @@ node_compile_hint:
   mode: collaborative_command_contract
   create_worknodes: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138, question 25)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 7.1 (G-19), 8.0 (G-12), 8.2 (G-27), 8.15"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-25 (NOW part)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-25 (WAIT part: the ELI5 disclosure)"
@@ -2881,24 +2939,32 @@ canonical_text: >-
   (CWR-017): canon adds no wand row for either.
   CrewAutoSetRequest names its scope, closed as `project | thread` (DL-120, 2026-09-27): the Crew
   Auto sheet's primary sends project, which commits the rules and the team and turns Crew Auto on
-  for the project; a chat's Crew Auto check sends thread, which sets only that chat's override of
-  the project value. Turning Crew Auto on for the project leaves one line in the chat where it was
-  turned on, worded for the project (DL-135, card p11, option A): Crew Auto is on for this project. The
+  for the project; a chat's Crew Auto check sends thread, which writes only that chat thread's
+  crew_auto_override, true or false, while null or absence inherits the project value. Turning Crew
+  Auto on for the project leaves one line only in the chat where the user turned it on, worded for
+  the project (DL-135, DL-138): Crew Auto is on for this project. A change in project Settings adds
+  no line to a chat, and a chat whose override is off adds no line. The
   note is owned by this document. It records the setting change and is not a run, a card, an
   Activity entry or Usage; its Change control opens the Crew Auto sheet through
   cmd.chat.crew_auto.open_config from the crew_auto_receipt surface. Saving rules while Crew Auto
   is already on for the project, and changing one chat's check, add no note.
+  When untouched on-by-default Crew Auto first starts a Crew for the project, that run leaves one
+  line with a link to Crew Auto settings…; it does not require a confirmation sheet before Start
+  (DL-138). This first-run line reports the automatic run and is distinct from the line that reports
+  the user turning the project setting on in a chat.
 gui_related: true
 gui_classification_reason: This unit fixes the Multi-Agent menu rows, the Crew Auto commit and the entry points of Review and BrainStorm.
 depends_on: [CWR-004, CWR-021]
 unblocks: []
 acceptance_criteria:
+  - A Settings change and an overridden-off chat add no Crew Auto is on for this project line.
   - The Multi-Agent submenu shows Crew Auto settings… under the Crew Auto check and keeps Manage Defaults….
   - Crew Auto settings… dispatches cmd.chat.crew_auto.open_config and never changes the check state.
   - One activation of the Crew Auto primary dispatches exactly one cmd.chat.crew_auto.set carrying the rules and the team.
   - Review and BrainStorm have no wand rows in canon.
   - Turning Crew Auto on for the project leaves exactly one Crew Auto is on for this project line in that chat and creates no run or card.
   - A chat's check sends scope thread and never changes the project value.
+  - The first automatic Crew under the factory-on default leaves one settings link after Start and requires no confirmation sheet.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: crew_auto_split_commit
@@ -2911,6 +2977,7 @@ node_compile_hint:
   mode: crew_protocol_contract
   create_worknodes: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138)"
   - "Plans/Decision_Log.md DL-119 (card p01, E-01)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json sha256:4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f p01"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de section 8.2 (D-3, G-27), 8.15"
@@ -2920,6 +2987,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json sha256:33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5 p11 (answered 2026-09-27T21:37:48Z)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-08 (E-15 part), B-CW-18, B-CW-24 (REV-10 crew_auto_receipt)"
 preserved_exact_tokens:
+  - "crew_auto_override"
   - "Crew Auto settings…"
   - "Manage Defaults…"
   - "cmd.chat.crew_auto.open_config"
@@ -3027,7 +3095,8 @@ canonical_text: >-
   streamed frame. A message in progress that does not finish, because its attempt is cancelled,
   fails, times out or is replaced, leaves the lane and is never quoted; the lane then shows the
   participant's outcome and its last complete quote, if it has one (EP-131). The lane's state and
-  verb still come from the participant activity projection, streamed words never change the verb,
+  verb come from the activity projection's participant or coordinator row (CWR-030); streamed
+  words never change the verb,
   and raw tool output is never shown as the helper's words. A provider tier that reports no
   streaming events shows the helper's message whole when it lands and never pseudo-streams it.
 gui_related: true
@@ -3035,6 +3104,7 @@ gui_classification_reason: This unit defines the live text a person sees in a co
 depends_on: [CWR-030, EP-129, EP-130, EP-131, ACD-470]
 unblocks: []
 acceptance_criteria:
+  - The coordinator lane reads the coordinator activity row, including when the coordinator is not a participant.
   - A lane of a participant that is writing shows its message in progress, and its text only grows until the message lands or is discarded.
   - The landed message is written once and its text equals the last streamed frame.
   - A message in progress that does not finish leaves the lane and is never quoted.
@@ -3054,11 +3124,13 @@ node_compile_hint:
   mode: collaborative_runtime_contract
   create_worknodes: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 7.3, 7.4"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-22, B-CW-21"
   - "Plans/Decision_Log.md DL-137 (card p14, E-31)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json sha256:33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5 p14"
 preserved_exact_tokens:
+  - "coordinator row"
   - "message in progress"
   - "word by word"
   - "never a second record"

@@ -64,3 +64,35 @@ from the design spec are `dec-009` (section 8.9) and `dec-010` (section 8.7, G-3
 `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md` (SHA-256
 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`). Nothing in `Plans/UI_Command_Catalog.md` or
 `Plans/Wiring_Matrix.md` was edited.
+
+## Owner follow-up authority, 2026-09-29
+
+Jared approved all 29 recommended answers in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c`. DL-138 records the decision. This authorization supersedes the older operating restriction against settling unanswered cards for only the numbered follow-ups assigned to this ledger. It authorizes owner prose now, then typed companions after the separate phase release. No registry admission, runtime execution, shard/index generation or governance seal is inferred.
+
+## APR-011 run-owner confirmation, 2026-09-29
+
+The Assistant Plan Runtime owner confirms under DL-138 that ExecutionOccurrenceSummary is reconstructed from exact plan_run_id and approved Plan version/hash joined to durable work, To-Do and adherence facts used by AssistantPlanProgressProjector. APR-011 names steps_built, steps_total and the fail-closed historical-source rule. This is a Plans contract, not runtime evidence.
+
+## Landed findings archive for DL-138 witness
+
+The prior `findings.md` from origin/main `1a501f3341` is preserved byte-for-byte at `Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/source_shards/findings-through-main-1a501f3341.md`, SHA-256 `43ef95c9d6769ad9300fa15f211a832df9d8f64157c7a6df7c4fc7c09850d9be`. Active findings now contain only the DL-138 records, while all historical ledger record and queue streams remain. This records the resume boundary for the full `--base origin/main` compile witness.
+
+## Storage owner scope, 2026-09-29
+
+The Part B lead assigned this ledger the narrow `Plans/storage-plan.md` prose for DL-138 questions 7 and 9. SP-306 preserves the existing execution_schedule physical family/key while versioning the logical grace value; SP-323 binds the project pause physical key, existing retention class and no-event boundary. JSON companions remain held until the separate phase. No runtime or Event Authority admission is claimed.
+
+## Released typed companion phase, 2026-09-29
+
+The lead explicitly released this ledger’s bounded schema, fixture and registry companion files after the owner prose compile witnesses passed. The static contract validator result is `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/part-b-bsd-scheduling-contracts.json sha256:1d8bb7ea8c52f1cf808ad7e79e2c555e3f17c712742ee09efa82e578dcff7ff0`. This is shape and fixture evidence only, not native writer, restart, dispatch or EventRecord execution evidence. The unregistered `runtime.automation_pause_changed` family remains under DL-093 admission and Scheduling q-006 stays open.
+
+## Blind compile review cycle 1 — source-preserving corrections
+
+Defined the held-before-execution summary branch from retained Scheduling hold/closure facts and the bound Plan, with execution_started false, zero built steps and null actual execution bounds; no admitted run means a null plan_run_id. Kept missing history unavailable. Reconciled APR-011 and single-fault schema fixtures. Corrected the active findings physical pause key to SP-323; event admission q-006 stays open.
+
+Review source: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger003-cycle1/findings.jsonl sha256:1b167ca2cb4669332a61e546875cbdca80d136fd7f877038f26e0579911dc86b`. Event `evt-022`, correction `cor-026`. These are fidelity repairs under the accepted answers; they create no runtime evidence or governance seal.
+
+## DL-138 final compile review disposition
+
+DL-138 prose and companion compile reviewed through the two-cycle cap; every finding is dispositioned in Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/validation/blind_review_cycle2.json. Required deterministic checks pass except the explicitly allowed governance coverage errors and normal assistant checker exit 1 with errors empty. Open owner questions remain recorded; no native runtime or governance seal is claimed.
+
+Event `evt-023`. Raw review source: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger003-cycle2/findings.jsonl`; SHA-256 `0fc68a96183f9d948ccb7a68cc92044ca83ad48c653040ffbd950d8971716bd0`.

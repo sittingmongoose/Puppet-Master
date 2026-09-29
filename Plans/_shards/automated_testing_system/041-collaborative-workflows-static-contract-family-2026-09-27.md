@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5425-L5516
+Source lines: L5425-L5518
 
-Source SHA256: `e02058f00d1765b4befb41a1f47505e9f1c9df99fb754d825ba06753a084d05d`
+Source SHA256: `2b02322a32fc054957efa8bac3e82e77bd336091340e32287303f58c1d27e337`
 
 ---
 
@@ -28,9 +28,9 @@ canonical_text: >-
   live_message_id, the helper message in progress of Plans/Executor_Protocol.md EP-129 (DL-137), the
   team preset of CWR-039, and the request and result of every collaborative command, including
   cmd.chat_room.end and cmd.brainstorm.research_lead (CWR-031, DL-130) and ComposerBufferResult. It
-  ships 95 positive fixtures and 116 negative fixtures, each negative mutating one named positive so
-  that it fails for
-  one named constraint. The negatives prove that a definition cannot store a substitution policy,
+  originally shipped 95 positive fixtures and 116 negative fixtures. The DL-138 companion edition
+  contains 98 positive fixtures and 128 negative fixtures, each negative mutating one named positive
+  so that it fails for one named constraint. The negatives prove that a definition cannot store a substitution policy,
   carry another kind's fields, give Review a specialist or give Grill Me a Persona; that a Crew
   Auto admission cannot omit its crew_auto_revision and cmd.collaboration.start cannot admit Build
   With Crew; that a run carries stop_reason exactly when it is cancelled, from the closed set of
@@ -42,8 +42,10 @@ canonical_text: >-
   commands; that only needs_you carries a decision; that an activity projection cannot hold
   streamed text or keep live_message_id once done or failed; that a message in progress cannot be a
   user or system message, cannot lack a participant's slot and attempt, and cannot carry text, a
-  sequence or recipients; that Send Findings cannot send; that a
-  substantiated lead cannot lack evidence; that CrewAutoSetRequest cannot omit its scope or name one
+  sequence or recipients; that a coordinator activity row has its run reference even without a
+  participant row; that Send Findings cannot send, that its taught_rule_check source carries the
+  saved reply_message_id and missed_teaching_refs without Review identifiers, and that its result
+  records typed lineage only in metadata; that a substantiated lead cannot lack evidence; that CrewAutoSetRequest cannot omit its scope or name one
   outside project | thread (Plans/Collaborative_Workflows.md CWR-038), that scope project comes only from the
   Crew Auto sheet and carries the rules and the team, and that scope thread comes only from a chat's
   check and carries neither; that turning Crew Auto on for the project, from the Crew Auto sheet,

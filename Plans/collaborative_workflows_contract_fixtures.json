@@ -2428,6 +2428,78 @@
         "correlation_id": "corr-0040",
         "created_at": "2026-09-27T12:00:00Z"
       }
+    },
+    {
+      "name": "activity_nonparticipant_coordinator",
+      "definition": "ParticipantActivity",
+      "value": {
+        "schema_id": "pm.collaboration.participant_activity_projection.v1",
+        "schema_version": "1.0.0",
+        "state": "using_tools",
+        "verb": "Coordinating helpers",
+        "detail_text": "cargo test export",
+        "since": "2026-09-27T12:00:00Z",
+        "sender_kind": "coordinator",
+        "coordinator_run_ref": "crun-crew-0001"
+      }
+    },
+    {
+      "name": "send_missed_taught_rules_request",
+      "definition": "ReviewSendFindingsRequest",
+      "value": {
+        "schema_id": "pm.collaboration.review_send_findings_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.review.send_findings_to_agent",
+        "command_instance_id": "ci-rule-01",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "chat_rule_check",
+        "correlation_id": "corr-0025",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0025",
+        "causation_id": null,
+        "source_kind": "taught_rule_check",
+        "reply_message_id": "msg-600",
+        "missed_teaching_refs": [
+          {
+            "memory_id": "teach-0007",
+            "normalized_fact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ]
+      }
+    },
+    {
+      "name": "composer_buffer_taught_rule_check_draft",
+      "definition": "ComposerBufferResult",
+      "value": {
+        "schema_id": "pm.collaboration.composer_buffer_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.review.send_findings_to_agent",
+        "command_instance_id": "ci-rule-01",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0025"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "composer_buffer_ref": "composer:thread:01",
+        "sent": false,
+        "message_metadata_lineage": {
+          "reply_message_id": "msg-600",
+          "missed_teaching_refs": [
+            {
+              "memory_id": "teach-0007",
+              "normalized_fact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+          ]
+        }
+      }
     }
   ],
   "invalid": [
@@ -3492,6 +3564,126 @@
       "reason": "Route success is not enablement; the check changes only through cmd.chat.crew_auto.set (CWR-038).",
       "patch": {
         "enabled_after": true
+      }
+    },
+    {
+      "name": "coordinator_activity_missing_run_ref",
+      "definition": "ParticipantActivity",
+      "base_valid": "activity_nonparticipant_coordinator",
+      "rejects_for": "coordinator activity requires coordinator_run_ref",
+      "reason": "coordinator activity requires coordinator_run_ref",
+      "remove": [
+        "coordinator_run_ref"
+      ]
+    },
+    {
+      "name": "participant_activity_missing_participant_id",
+      "definition": "ParticipantActivity",
+      "base_valid": "activity_using_tools",
+      "rejects_for": "participant activity requires participant_id",
+      "reason": "participant activity requires participant_id",
+      "remove": [
+        "participant_id"
+      ]
+    },
+    {
+      "name": "rule_check_request_with_review_run",
+      "definition": "ReviewSendFindingsRequest",
+      "base_valid": "send_missed_taught_rules_request",
+      "rejects_for": "taught_rule_check forbids review run ID",
+      "reason": "taught_rule_check forbids review run ID",
+      "patch": {
+        "collaboration_run_id": "crun-review-0001"
+      }
+    },
+    {
+      "name": "rule_check_request_empty_missed_refs",
+      "definition": "ReviewSendFindingsRequest",
+      "base_valid": "send_missed_taught_rules_request",
+      "rejects_for": "missed_teaching_refs minItems 1",
+      "reason": "missed_teaching_refs minItems 1",
+      "patch": {
+        "missed_teaching_refs": []
+      }
+    },
+    {
+      "name": "rule_check_request_missing_reply",
+      "definition": "ReviewSendFindingsRequest",
+      "base_valid": "send_missed_taught_rules_request",
+      "rejects_for": "taught_rule_check requires reply_message_id",
+      "reason": "taught_rule_check requires reply_message_id",
+      "remove": [
+        "reply_message_id"
+      ]
+    },
+    {
+      "name": "review_request_with_rule_reply",
+      "definition": "ReviewSendFindingsRequest",
+      "base_valid": "send_findings_request",
+      "rejects_for": "review_findings forbids reply_message_id",
+      "reason": "review_findings forbids reply_message_id",
+      "patch": {
+        "reply_message_id": "msg-600"
+      }
+    },
+    {
+      "name": "rule_check_result_sent",
+      "definition": "ComposerBufferResult",
+      "base_valid": "composer_buffer_taught_rule_check_draft",
+      "rejects_for": "draft result sent const false",
+      "reason": "draft result sent const false",
+      "patch": {
+        "sent": true
+      }
+    },
+    {
+      "name": "rule_check_result_without_version",
+      "definition": "ComposerBufferResult",
+      "base_valid": "composer_buffer_taught_rule_check_draft",
+      "rejects_for": "missed teaching ref requires normalized_fact_sha256",
+      "reason": "missed teaching ref requires normalized_fact_sha256",
+      "remove": [
+        "message_metadata_lineage.missed_teaching_refs.0.normalized_fact_sha256"
+      ]
+    },
+    {
+      "name": "room_end_request_without_run",
+      "definition": "ChatRoomEndRequest",
+      "base_valid": "room_end_request",
+      "rejects_for": "room end request requires collaboration_run_id",
+      "reason": "room end request requires collaboration_run_id",
+      "remove": [
+        "collaboration_run_id"
+      ]
+    },
+    {
+      "name": "room_end_result_cancelled",
+      "definition": "ChatRoomEndResult",
+      "base_valid": "room_end_result",
+      "rejects_for": "committed room end result must be completed",
+      "reason": "committed room end result must be completed",
+      "patch": {
+        "run_state_after": "cancelled"
+      }
+    },
+    {
+      "name": "lead_research_request_without_lead",
+      "definition": "BrainstormLeadResearchRequest",
+      "base_valid": "lead_research_request",
+      "rejects_for": "lead research requires lead_id",
+      "reason": "lead research requires lead_id",
+      "remove": [
+        "lead_id"
+      ]
+    },
+    {
+      "name": "lead_research_result_without_evidence",
+      "definition": "BrainstormLeadResearchResult",
+      "base_valid": "lead_research_result_substantiated",
+      "rejects_for": "substantiated lead requires evidence",
+      "reason": "substantiated lead requires evidence",
+      "patch": {
+        "evidence_refs": []
       }
     }
   ]

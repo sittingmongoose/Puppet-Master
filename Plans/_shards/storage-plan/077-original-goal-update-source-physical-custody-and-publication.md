@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24303-L26379
+Source lines: L24303-L26392
 
-Source SHA256: `2539d01abe327f3b03f5c11f30648fa88a100a23a7232f9f193bf9ce1039c63f`
+Source SHA256: `354348a85edc4cc54de98e1b424104cc92418378295ab3f9c786655cc7fdddf2`
 
 ---
 
@@ -981,6 +981,14 @@ SP-306 supplies the original native redb custody for APR-017/SQR-011. CV-348's s
 | `plan_cancel_source_origin` / `StorageSourceOrigin` | `plan_cancel_source_origin.v1:{hex(storage_instance_id)}:{hex(issued_physical_key)}:{issued_physical_sha256}` | `RP-AUTHORITY-INDEFINITE` | immutable original source lineage, including original compact run anchor |
 | `assistant_plan_run_retirement` / `StorageRunRetirementReceipt` | `assistant_plan_run_retirement.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(thread_id)}:{hex(plan_run_id)}` | `RP-AUTHORITY-INDEFINITE` | original atomic redb compaction receipt and source lineage; no full Run body or history |
 
+DL-138 adds `grace_seconds` to the logical `pm.execution.schedule.v2` value for the existing
+`execution_schedule` family. Its physical family and `execution_schedule.v1` key above stay the same; the
+versioned `StorageExecutionSchedule` schema, offline resource digest and registry field census must accept the
+new logical version together before any v2 write. A v1 read uses its previously effective default grace through
+an explicit versioned migration, preserving the original source bytes and audit lineage until that migration
+commits. A missing or corrupt old schedule is not repaired by guessing its grace. This logical version change
+adds no eleventh family, new key, retention policy, runtime proof or EventRecord.
+
 Plans/assistant_plan_cancel_contracts/physical-families.json declares exact original redb families/keys/wrappers for the four records, original schedule-to-execution correlation, original source origins, both original effects, original cancellation result and runtime retirement receipt. Logical IDs are lower-case hex of exact UTF-8, never normalized or extracted by prefix guess. Each mutable original source has a monotonically increasing source_revision in its wrapper, starting at 1 at genuine absent-key native birth and advancing by one per actual mutation. This technical revision supports exact CAS and ABA rejection independently of Plan document version, schedule revision, and PlanRun epoch.
 
 Before any original mutation, the actual owner authenticates the whole prior physical value and origin. The owner compares whole bytes/hash, schema/key/storage scope, source_revision and actual current ownership; permitted field changes are derived independently from the actual original operation. The new source and its immutable SourceOrigin publish atomically. The origin names the exact original issuer, operation/transaction, previous whole physical hash (null only for actual proven absent-key birth), new whole physical hash, source revision and causation. An origin is not accepted from a public caller and cannot be minted later to authenticate a preexisting or copied record.
@@ -1025,7 +1033,9 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: Original Plan cancellation physical custody and existing class assignments. Exactly ten
   canonical non-rebuildable original families use complete source/wrapper schemas, exact keys, whole-value
-  hashes and mandatory coherent backup.
+  hashes and mandatory coherent backup. DL-138 gives the existing execution_schedule family a versioned
+  pm.execution.schedule.v2 logical value with persisted grace_seconds under its unchanged physical key; v1
+  reads use an explicit migration and preserve original audit lineage.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -1042,6 +1052,7 @@ acceptance_criteria:
   logical fields.
 - Every physical/hash/selection codec is exact; unsupported representability refuses the route without
   a product bound or alternate codec.
+- The existing execution_schedule family persists grace_seconds in pm.execution.schedule.v2 without a new physical key or family; v1 migration preserves source lineage and fails closed on missing source.
 validation_surfaces:
 - Plans/assistant_plan_cancel_contracts/physical-families.json
 - Plans/assistant_plan_cancel_custody.schema.json
@@ -1061,6 +1072,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-039
 - Plans/Decision_Log.md#DL-045
 - Plans/Decision_Log.md#DL-047
+- "Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 7"
+preserved_exact_tokens: [pm.execution.schedule.v2, grace_seconds, execution_schedule.v1]
 negative_constraints:
 - No public command, event, Goal or Plan lifecycle expansion, peer owner or fabricated original effect.
 - No native field redaction, numeric coercion, new retention policy, full runtime archive or automatic

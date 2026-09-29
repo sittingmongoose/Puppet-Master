@@ -2136,12 +2136,11 @@
     },
     "ParticipantActivity": {
       "type": "object",
-      "description": "The participant activity projection of CWR-030: derived on read, never persisted, emitted or replayed. It references the EP-128 stream vocabulary and never redefines it. live_message_id points at a message in progress and never carries its text; streamed words never change the verb (DL-137). The schema_id names the projection shape only.",
+      "description": "The participant activity projection of CWR-030: derived on read, never persisted, emitted or replayed. It references the EP-128 stream vocabulary and never redefines it. live_message_id points at a message in progress and never carries its text; streamed words never change the verb (DL-137). The schema_id names the projection shape only. DL-138 adds a coordinator activity row even when the coordinator is not a participant.",
       "additionalProperties": false,
       "required": [
         "schema_id",
         "schema_version",
-        "participant_id",
         "state",
         "verb",
         "since"
@@ -2178,6 +2177,16 @@
         },
         "since": {
           "$ref": "#/$defs/utc_timestamp"
+        },
+        "sender_kind": {
+          "enum": [
+            "participant",
+            "coordinator"
+          ],
+          "description": "Absent is the legacy participant row; coordinator rows name their run even when there is no participant row."
+        },
+        "coordinator_run_ref": {
+          "$ref": "#/$defs/non_empty_string"
         }
       },
       "allOf": [
@@ -2220,6 +2229,31 @@
           "then": {
             "properties": {
               "live_message_id": false
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "sender_kind": {
+                "const": "coordinator"
+              }
+            },
+            "required": [
+              "sender_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "coordinator_run_ref"
+            ]
+          },
+          "else": {
+            "required": [
+              "participant_id"
+            ],
+            "properties": {
+              "coordinator_run_ref": false
             }
           }
         }
@@ -6589,7 +6623,7 @@
     },
     "ReviewSendFindingsRequest": {
       "type": "object",
-      "description": "Typed request of cmd.review.send_findings_to_agent (sections 10 and 11).",
+      "description": "cmd.review.send_findings_to_agent fills a draft from review findings or a taught-rule check; it never sends (CWR-031, AMS-053, DL-138).",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -6604,11 +6638,7 @@
         "created_at",
         "permission_snapshot_id",
         "idempotency_key",
-        "causation_id",
-        "collaboration_run_id",
-        "expected_revision",
-        "expected_currentness_hash",
-        "finding_ids"
+        "causation_id"
       ],
       "properties": {
         "schema_id": {
@@ -6674,10 +6704,61 @@
           },
           "uniqueItems": true,
           "minItems": 1
+        },
+        "source_kind": {
+          "enum": [
+            "review_findings",
+            "taught_rule_check"
+          ],
+          "description": "Absent means legacy review_findings."
+        },
+        "reply_message_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "missed_teaching_refs": {
+          "$ref": "#/$defs/missed_teaching_refs"
         }
       },
       "x-primary-identity-fields": [
         "command_instance_id"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "source_kind": {
+                "const": "taught_rule_check"
+              }
+            },
+            "required": [
+              "source_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "reply_message_id",
+              "missed_teaching_refs"
+            ],
+            "properties": {
+              "collaboration_run_id": false,
+              "expected_revision": false,
+              "expected_currentness_hash": false,
+              "finding_ids": false
+            }
+          },
+          "else": {
+            "required": [
+              "collaboration_run_id",
+              "expected_revision",
+              "expected_currentness_hash",
+              "finding_ids"
+            ],
+            "properties": {
+              "reply_message_id": false,
+              "missed_teaching_refs": false
+            }
+          }
+        }
       ]
     },
     "finding_lineage": {
@@ -6703,7 +6784,7 @@
     },
     "ComposerBufferResult": {
       "type": "object",
-      "description": "cmd.review.send_findings_to_agent fills the source thread's empty composer buffer with a fix request, records the lineage in message metadata and never in the text, and refuses composer_not_empty when the buffer holds text (CWR-031, DL-125).",
+      "description": "The existing command fills an empty composer only; review findings or saved missed taught-rule checks supply metadata lineage. Nothing is sent or executed (CWR-031, AMS-053, DL-138).",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -6818,6 +6899,9 @@
               "$ref": "#/$defs/finding_lineage"
             },
             {
+              "$ref": "#/$defs/taught_rule_lineage"
+            },
+            {
               "type": "null"
             }
           ]
@@ -6891,7 +6975,9 @@
                 "$ref": "#/$defs/non_empty_string"
               },
               "message_metadata_lineage": {
-                "$ref": "#/$defs/finding_lineage"
+                "not": {
+                  "type": "null"
+                }
               }
             }
           },
@@ -9365,6 +9451,47 @@
           }
         }
       ]
+    },
+    "MissedTeachingRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "memory_id",
+        "normalized_fact_sha256"
+      ],
+      "properties": {
+        "memory_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "normalized_fact_sha256": {
+          "$ref": "#/$defs/sha256_hex"
+        }
+      },
+      "description": "The included taught-rule version the saved rule check marked missed; same pair as assistant memory IncludedTeachingRef."
+    },
+    "missed_teaching_refs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/MissedTeachingRef"
+      }
+    },
+    "taught_rule_lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reply_message_id",
+        "missed_teaching_refs"
+      ],
+      "properties": {
+        "reply_message_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "missed_teaching_refs": {
+          "$ref": "#/$defs/missed_teaching_refs"
+        }
+      }
     }
   }
 }

@@ -1,17 +1,23 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-004-wand-memory-plan-usage",
-  "updated_at_utc": "2026-09-27T23:40:00+00:00",
-  "status": "pass",
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "status": "pass_except_deferred_governance_coverage",
   "summary": {
-    "events": 8,
-    "design_atoms": 13,
-    "decisions": 10,
-    "open_questions": 5,
+    "events": 12,
+    "design_atoms": 18,
+    "decisions": 15,
+    "open_questions": 0,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "compile_queue_items": 15
+    "compile_queue_items": 20
   },
-  "notes": "G4 NOW and WAIT prose compiled; companions written; AMS-053 compiled by G46; blind review cycle 1: R-01..R-03 repaired; lead pass: q-010 ruled (DESIGN-SPEC §8.10), q-011..q-013 fixed, q-008 fixed in part; open: q-006, q-007, q-008, q-009, q-014.",
-  "errors": []
+  "notes": "DL-138 prose and companion compile reviewed through the two-cycle cap; every finding is dispositioned in Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage/validation/blind_review_cycle2.json. Required deterministic checks pass except the explicitly allowed governance coverage errors and normal assistant checker exit 1 with errors empty. Open owner questions remain recorded; no native runtime or governance seal is claimed.",
+  "errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Assistant_Plan_Runtime.md', 'Plans/Back_Seat_Driver.md', 'Plans/Collaborative_Workflows.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Assistant_Plan_Runtime.md', 'Plans/Back_Seat_Driver.md', 'Plans/Collaborative_Workflows.md', 'Plans/Personas.md', 'Plans/assistant-memory-subsystem.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Assistant_Plan_Runtime.md', 'Plans/Back_Seat_Driver.md', 'Plans/Collaborative_Workflows.md', 'Plans/assistant-memory-subsystem.md']"
+  ],
+  "last_event_id": "evt-012",
+  "validator_status": "fail"
 }

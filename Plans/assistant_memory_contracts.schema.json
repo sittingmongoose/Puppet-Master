@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/assistant_memory/1.0.0/assistant_memory_contracts.schema.json",
   "title": "Assistant memory static contract schemas",
-  "description": "The owner schema Plans/Commands_System.md names for Plans/assistant-memory-subsystem.md. Closed record shapes written by the 2026-09-27 wand-modules compile (ledger pldg-20260927-004-wand-memory-plan-usage): MemoryExportRequest for cmd.chat.memory.export (AMS-052, CS-085); MemoryExportPayload, what that request hands the artifact owner (the ArtifactExportResult itself stays the artifact owner's), with gist and taught-rule entries that carry the three stored verification_state values and pointer-only EvidenceRefs (section 3.3, AMS-006, AMS-014, AMS-047); and ReplyIncludedTeachings, the included_teaching_ids fragment a reply's canonical usage/context record carries (AMS-051). That fragment does not define the record, and no field here states that a rule was followed (DL-116). The Teach request and result definitions the Commands_System.md tables point at in this file (TeachCaptureRequest, TeachConfirmRequest, TeachCancelRequest, TeachRevokeRequest, TeachLockRequest, MemoryRoute and their results) are not authored yet. Static schema and fixture consistency only; no runtime, storage, provider, security, visual or performance claim.",
+  "description": "Assistant memory contract shapes for AMS-052/053 and DL-138. Memory export is read-only and artifact-owner routed; Teach confirm, lock, and revoke are explicit user commands. Reply context records inclusion and independent saved rule-check outcomes. Static schema and fixture consistency only; no runtime, storage, provider, security, visual or performance claim. Teach capture/cancel/route contracts remain separate follow-up work.",
   "oneOf": [
     {
       "$ref": "#/$defs/MemoryExportRequest"
@@ -12,6 +12,27 @@
     },
     {
       "$ref": "#/$defs/ReplyIncludedTeachings"
+    },
+    {
+      "$ref": "#/$defs/TeachRevokeRequest"
+    },
+    {
+      "$ref": "#/$defs/TeachRevokeResult"
+    },
+    {
+      "$ref": "#/$defs/TeachLockRequest"
+    },
+    {
+      "$ref": "#/$defs/TeachLockResult"
+    },
+    {
+      "$ref": "#/$defs/TeachConfirmRequest"
+    },
+    {
+      "$ref": "#/$defs/TeachConfirmResult"
+    },
+    {
+      "$ref": "#/$defs/ArtifactExportResult"
     }
   ],
   "$defs": {
@@ -525,14 +546,15 @@
       }
     },
     "ReplyIncludedTeachings": {
-      "description": "AMS-051: the included_teaching_ids fragment on a reply's canonical usage/context record, keyed by the reply's message_id. It records inclusion only; an empty list means no taught rule was included. It has no field for following, because inclusion never establishes it (DL-116).",
+      "description": "AMS-051/053: a reply usage/context fragment saves included teaching versions and rule_check_outcomes. An included rule is Followed only if its saved check passed; failed is Missed and could_not_run gives no tick (DL-116, DL-138).",
       "type": "object",
       "additionalProperties": false,
       "required": [
         "schema_id",
         "message_id",
         "thread_id",
-        "included_teaching_ids"
+        "included_teaching_ids",
+        "rule_check_outcomes"
       ],
       "properties": {
         "schema_id": {
@@ -550,6 +572,737 @@
           "items": {
             "$ref": "#/$defs/IncludedTeachingRef"
           }
+        },
+        "rule_check_outcomes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/RuleCheckOutcome"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "included_teaching_ids": {
+                "minItems": 1
+              }
+            },
+            "required": [
+              "included_teaching_ids"
+            ]
+          },
+          "then": {
+            "properties": {
+              "rule_check_outcomes": {
+                "minItems": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "rule_check_outcomes": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "TeachRevokeRequest": {
+      "description": "User turns off exactly one current taught rule; old versions do not reactivate (ACD-481, DL-138).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "project_id",
+        "thread_id",
+        "memory_id",
+        "expected_revision"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.teach_revoke_request.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.teach.revoke"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "memory_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "TeachRevokeResult": {
+      "description": "TeachRevokeResult is the typed command receipt, with refusal reason on noncommit.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "committed",
+        "status",
+        "receipt_ref",
+        "error_reason",
+        "memory_id",
+        "revoked_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.teach_revoke_result.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.teach.revoke"
+        },
+        "committed": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "committed",
+            "refused"
+          ]
+        },
+        "receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "memory_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "revoked_at": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/utc_timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "committed": {
+                "const": true
+              }
+            },
+            "required": [
+              "committed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "committed"
+              },
+              "error_reason": {
+                "type": "null"
+              },
+              "receipt_ref": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "status": {
+                "const": "refused"
+              },
+              "error_reason": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "committed": {
+                "const": true
+              }
+            },
+            "required": [
+              "committed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "revoked_at": {
+                "$ref": "#/$defs/utc_timestamp"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "revoked_at": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "TeachLockRequest": {
+      "description": "User locks or unlocks exactly one current taught rule (ACD-481, DL-138).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "project_id",
+        "thread_id",
+        "memory_id",
+        "expected_revision",
+        "locked"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.teach_lock_request.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.teach.set_lock"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "memory_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "locked": {
+          "type": "boolean"
+        }
+      }
+    },
+    "TeachLockResult": {
+      "description": "TeachLockResult is the typed command receipt, with refusal reason on noncommit.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "committed",
+        "status",
+        "receipt_ref",
+        "error_reason",
+        "memory_id",
+        "locked"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.teach_lock_result.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.teach.set_lock"
+        },
+        "committed": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "committed",
+            "refused"
+          ]
+        },
+        "receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "memory_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "locked": {
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "committed": {
+                "const": true
+              }
+            },
+            "required": [
+              "committed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "committed"
+              },
+              "error_reason": {
+                "type": "null"
+              },
+              "receipt_ref": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "status": {
+                "const": "refused"
+              },
+              "error_reason": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "TeachConfirmRequest": {
+      "description": "User confirms a Teach capture, choosing scope, privacy, lock state and conflict disposition (ACD-477/481, DL-138).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "project_id",
+        "thread_id",
+        "capture_id",
+        "scope",
+        "public_safe",
+        "locked",
+        "conflict_resolution"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.teach_confirm_request.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.teach.confirm"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "capture_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope": {
+          "enum": [
+            "thread",
+            "project",
+            "user"
+          ]
+        },
+        "public_safe": {
+          "type": "boolean"
+        },
+        "locked": {
+          "type": "boolean"
+        },
+        "conflict_resolution": {
+          "oneOf": [
+            {
+              "const": "keep_both"
+            },
+            {
+              "type": "string",
+              "pattern": "^replace:.+$"
+            }
+          ]
+        },
+        "supersedes_memory_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "user"
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "public_safe": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "conflict_resolution": {
+                "type": "string",
+                "pattern": "^replace:.+$"
+              }
+            },
+            "required": [
+              "conflict_resolution"
+            ]
+          },
+          "then": {
+            "required": [
+              "supersedes_memory_id"
+            ]
+          },
+          "else": {
+            "properties": {
+              "supersedes_memory_id": false
+            }
+          }
+        }
+      ]
+    },
+    "TeachConfirmResult": {
+      "description": "TeachConfirmResult is the typed command receipt, with refusal reason on noncommit.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "committed",
+        "status",
+        "receipt_ref",
+        "error_reason",
+        "memory_id",
+        "locked"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.teach_confirm_result.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.teach.confirm"
+        },
+        "committed": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "committed",
+            "refused"
+          ]
+        },
+        "receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "memory_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "locked": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "committed": {
+                "const": true
+              }
+            },
+            "required": [
+              "committed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "committed"
+              },
+              "error_reason": {
+                "type": "null"
+              },
+              "receipt_ref": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "status": {
+                "const": "refused"
+              },
+              "error_reason": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "committed": {
+                "const": true
+              }
+            },
+            "required": [
+              "committed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "memory_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "locked": {
+                "type": "boolean"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "memory_id": {
+                "type": "null"
+              },
+              "locked": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ArtifactExportResult": {
+      "description": "Read-only artifact-owner result for MemoryExportRequest; scope is echoed for the Memory or taught-rules Export action (AMS-052, DL-138).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "scope",
+        "committed",
+        "status",
+        "artifact_ref",
+        "error_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.artifact_export_result.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.export"
+        },
+        "scope": {
+          "$ref": "#/$defs/export_scope"
+        },
+        "committed": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "committed",
+            "refused"
+          ]
+        },
+        "artifact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "committed": {
+                "const": true
+              }
+            },
+            "required": [
+              "committed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "committed"
+              },
+              "artifact_ref": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "error_reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "status": {
+                "const": "refused"
+              },
+              "artifact_ref": {
+                "type": "null"
+              },
+              "error_reason": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "RuleCheckOutcome": {
+      "description": "Saved outcome for one included taught-rule version on one completed reply (AMS-053, DL-138).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "memory_id",
+        "normalized_fact_sha256",
+        "outcome"
+      ],
+      "properties": {
+        "memory_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "normalized_fact_sha256": {
+          "$ref": "#/$defs/sha256_hex"
+        },
+        "outcome": {
+          "enum": [
+            "passed",
+            "failed",
+            "could_not_run"
+          ]
         }
       }
     }

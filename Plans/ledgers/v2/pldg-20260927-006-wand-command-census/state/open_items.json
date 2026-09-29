@@ -1,15 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-006-wand-command-census",
-  "updated_at_utc": "2026-09-28T00:30:00+00:00",
-  "open_questions": [
-    "q-013",
-    "q-014",
-    "q-015",
-    "q-017",
-    "q-018",
-    "q-019"
-  ],
+  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "open_questions": [],
   "answered_questions": [
     "q-001",
     "q-002",
@@ -23,10 +16,38 @@
     "q-010",
     "q-011",
     "q-012",
-    "q-016"
+    "q-013",
+    "q-014",
+    "q-015",
+    "q-016",
+    "q-017",
+    "q-018",
+    "q-019"
   ],
   "open_blockers": [],
   "deferred_questions": [],
   "deferred_items": [],
-  "not_landed": []
+  "not_landed": [
+    "Reviewed DL-138 compile is ready for the required landing checks."
+  ],
+  "last_event_id": "evt-022",
+  "pending_companions": [],
+  "historical_findings_archive": {
+    "path": "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/source_shards/findings-through-main-1a501f3341.md",
+    "sha256": "a30f22647301961923d1e5d3a01c5b709c9fc768c38046b700b5e3c503a851bf",
+    "base_commit": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c"
+  },
+  "completed_companion_followups": [
+    "#14 Crew Auto default/applicability and thread-metadata description in existing inventory ID.",
+    "#25 project ELI5 scope and precedence in existing inventory ID.",
+    "Current PMConcept7 generated outputs rebuilt; integrator reports build check0 and tour7/7."
+  ],
+  "external_open_questions": [
+    {
+      "ledger_id": "pldg-20260927-001-wand-collab-workflows",
+      "question_id": "q-035",
+      "owner": "Plans/Settings_System.md",
+      "scope": "All chats ELI5 edit only; project and chat scopes remain compiled"
+    }
+  ]
 }

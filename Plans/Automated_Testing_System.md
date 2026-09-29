@@ -5442,9 +5442,9 @@ canonical_text: >-
   live_message_id, the helper message in progress of Plans/Executor_Protocol.md EP-129 (DL-137), the
   team preset of CWR-039, and the request and result of every collaborative command, including
   cmd.chat_room.end and cmd.brainstorm.research_lead (CWR-031, DL-130) and ComposerBufferResult. It
-  ships 95 positive fixtures and 116 negative fixtures, each negative mutating one named positive so
-  that it fails for
-  one named constraint. The negatives prove that a definition cannot store a substitution policy,
+  originally shipped 95 positive fixtures and 116 negative fixtures. The DL-138 companion edition
+  contains 98 positive fixtures and 128 negative fixtures, each negative mutating one named positive
+  so that it fails for one named constraint. The negatives prove that a definition cannot store a substitution policy,
   carry another kind's fields, give Review a specialist or give Grill Me a Persona; that a Crew
   Auto admission cannot omit its crew_auto_revision and cmd.collaboration.start cannot admit Build
   With Crew; that a run carries stop_reason exactly when it is cancelled, from the closed set of
@@ -5456,8 +5456,10 @@ canonical_text: >-
   commands; that only needs_you carries a decision; that an activity projection cannot hold
   streamed text or keep live_message_id once done or failed; that a message in progress cannot be a
   user or system message, cannot lack a participant's slot and attempt, and cannot carry text, a
-  sequence or recipients; that Send Findings cannot send; that a
-  substantiated lead cannot lack evidence; that CrewAutoSetRequest cannot omit its scope or name one
+  sequence or recipients; that a coordinator activity row has its run reference even without a
+  participant row; that Send Findings cannot send, that its taught_rule_check source carries the
+  saved reply_message_id and missed_teaching_refs without Review identifiers, and that its result
+  records typed lineage only in metadata; that a substantiated lead cannot lack evidence; that CrewAutoSetRequest cannot omit its scope or name one
   outside project | thread (Plans/Collaborative_Workflows.md CWR-038), that scope project comes only from the
   Crew Auto sheet and carries the rules and the team, and that scope thread comes only from a chat's
   check and carries neither; that turning Crew Auto on for the project, from the Crew Auto sheet,
@@ -5597,7 +5599,7 @@ unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
-  The scheduling suite proves the project-wide Pause all automations switch of SQR-018 (DL-136) against
+  The required scheduling suite must prove the project-wide Pause all automations switch of SQR-018 (DL-136) against
   server-owned records. With the switch on, no scheduled message, scheduled build, window resume or quota resume in
   the project dispatches, each refusal records the failed clause project_automation_paused, and a scheduled message
   whose send time arrives is held with that clause. A dispatch decided before cmd.runtime.automation_pause.set
@@ -5618,6 +5620,7 @@ canonical_text: >-
   and no Settings value stores the switch. These are acceptance obligations only; every command row stays
   handler_unavailable in the catalog, and its controls render disabled with command_not_registered, until its
   catalog, event and wiring rows close.
+  DL-138 adds explicit durability and admission assertions: restart reads the saved project pause record and its user_stop_epoch unchanged; repeated absolute-value requests neither advance the epoch nor emit again; a non-user clear returns permission_denied; and while runtime.automation_pause_changed lacks its separate Event Authority admission, an attempted event publication reports missing_event_registration and appends zero EventRecord objects. Turning the switch off re-evaluates each held occurrence under its recorded missed policy at most once, without replaying completed work. The static companion pair may validate these request/result shapes, but these runtime assertions remain NOT_RUN until a runtime executes them.
 gui_related: true
 gui_classification_reason: The held reason and the switch's own line are visible outcomes the checks read from painted output.
 split_recommended: false
@@ -5628,6 +5631,9 @@ acceptance_criteria:
   - "No check passes on a client timer, a page-local flag or a dispatch count."
   - "A check proves that turning the switch on leaves every schedule, quota consent and per-run latch unchanged."
   - "A check proves that a user's Send now and Build act while the switch is on and leave it on."
+  - "Restart preserves the stored pause and epoch; repeated sets are idempotent and non-user clears are refused."
+  - "An unregistered automation-pause event appends zero EventRecord objects and reports missing_event_registration."
+  - "Runtime assertions remain NOT_RUN; schema validation is static companion evidence only."
 validation_surfaces:
   - node tests/scheduling-verify.mjs
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -5643,9 +5649,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-138"
   - "Plans/Scheduling_and_Quota_Resume.md#SQR-018"
   - "Plans/Decision_Log.md#DL-136"
 preserved_exact_tokens:
+  - "DL-138"
+  - "missing_event_registration"
+  - "NOT_RUN"
   - "project_automation_paused"
   - "cmd.runtime.automation_pause.set"
   - "runtime.automation_pause_changed"

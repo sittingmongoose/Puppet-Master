@@ -1,0 +1,39 @@
+{
+  "ledger_id": "pldg-20260927-005-wand-chat-gui-contract",
+  "cycle": 1,
+  "review_source": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger005-cycle1/findings.jsonl",
+  "review_source_sha256": "63a1be47cb298983309c3c249627273b4499bfd073dc02b03c4bf3785a6f515c",
+  "reviewed_base": "1a501f334128f88bf94191dd1dd3fdd0b3a5c24c",
+  "finding_count": 4,
+  "dispositions": [
+    {
+      "finding_id": "R-01",
+      "unit": "SSYS-028",
+      "severity": "blocking",
+      "state": "pending_owner",
+      "disposition": "Same unresolved ELI5 owner choice as ledger001 R03; asynchronous question pending."
+    },
+    {
+      "finding_id": "R-02",
+      "unit": "DL-138",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Same approved-but-outstanding Event Authority obligation repair as ledger004 R04."
+    },
+    {
+      "finding_id": "R-03",
+      "unit": "F3-571",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Added F3571 composer Reviewing exception while retaining confirmed mappings."
+    },
+    {
+      "finding_id": "R-04",
+      "unit": "DL-138",
+      "severity": "should_fix",
+      "state": "repaired",
+      "disposition": "Marked all-answers atom GUI-related with typography/control/layout classification."
+    }
+  ],
+  "status": "repairs_pending_recheck"
+}
