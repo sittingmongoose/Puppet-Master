@@ -1,15 +1,19 @@
 {
-  "status": "pass",
-  "exact_copy_hash_bindings_verified": 65,
-  "source_freeze_bindings_verified": 84,
-  "json_files_parsed": 98,
-  "publication_bytes": 1960158,
-  "credential_scan": "0 findings; rerun including final Luna adjudication",
+  "status": "pass; immutable artifact bindings verified; ongoing slot state changed after snapshot",
+  "exact_copy_hash_bindings_verified": 68,
+  "source_freeze_bindings_verified": 86,
+  "json_files_parsed": 102,
+  "publication_bytes": 1653058,
+  "credential_scan": "0 findings; rerun after final reviews and nested native thread projection removal",
   "offline_machinery_tests": {
     "count": 7,
     "result": "pass",
     "note": "initial compact export lacked three dependencies; pinned exports added and final rerun passed"
   },
   "canonical_governance_checks": "not applicable; report-only changes",
-  "semantic_review": "not performed by publisher"
+  "semantic_review": "not performed by publisher",
+  "mutable_source_changed_after_snapshot": [
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/slots.json"
+  ],
+  "whitespace_check": "Three original candidate reports retain EOF blank lines; exact output bytes intentionally preserved. No authored whitespace error."
 }
