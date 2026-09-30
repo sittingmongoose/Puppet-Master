@@ -1,0 +1,1 @@
+Initial isolation checkpoint. Historical branch verified once at 6a7bb6bf275a0169ea0062e52dd786ca34a24926. Historical lab baseline captured: 8,311 files, 2,025,997,108 bytes. Native M/Z/L aliases resolved from installed runtime; route binding and independent checks in progress.

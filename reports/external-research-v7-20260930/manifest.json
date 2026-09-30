@@ -1,0 +1,49 @@
+{
+  "campaign_id": "external-research-v7-20260930",
+  "accepted_start_epoch": 1790777206,
+  "accepted_start_utc": "2026-09-30T14:06:46+00:00",
+  "deadline_epoch": 1790820406,
+  "deadline_utc": "2026-10-01T02:06:46+00:00",
+  "branch": "research/external-research-v7-20260930",
+  "worktree": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930",
+  "historical_head": "6a7bb6bf275a0169ea0062e52dd786ca34a24926",
+  "newer_work_checked_once": true,
+  "ceilings": {
+    "elapsed_hours": 12,
+    "candidate_starts": 144,
+    "occupied_slot_hours": 48,
+    "family_active": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "generated_candidate_stop": 3000000,
+    "helper_starts": 72,
+    "generated_helper_stop": 1500000
+  },
+  "reserves": {
+    "candidate_fraction": 0.2,
+    "closeout_seconds": 3600
+  },
+  "helpers": [
+    {
+      "id": "operator",
+      "model": "gpt-6.1-sol",
+      "effort": "medium"
+    },
+    {
+      "id": "developer",
+      "model": "gpt-6.1-sol",
+      "effort": "high"
+    },
+    {
+      "id": "evaluation",
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh"
+    }
+  ],
+  "runtime_usage_unknown_fields": [
+    "native_children_uncaptured_usage",
+    "unexposed_generated_tokens"
+  ]
+}
