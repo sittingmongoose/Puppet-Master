@@ -49,7 +49,7 @@ partial run.
 
 The recorded `commit` is the commit the baseline was taken at, and it has to be a commit of `main`:
 rule 2 applies only while that commit is an ancestor of the landing's base (see "Only against a
-current baseline" below). The nightly runbook records at `origin/main` before it commits the
+current baseline" below). The runbook below records at the newly pushed `main` before it commits the
 snapshot, so the commit it names is `main`'s. The first baseline, of 2026-09-21, named its branch's
 own first commit `b29eab7b99`, because the script that records a baseline had to exist in the tree
 that recorded it; the rebase at landing left that commit off `main` (it landed as `2c527ce17f`), so
@@ -69,7 +69,7 @@ Failures are grouped into buckets of `check | subcheck | error | path`. A bucket
 `max_fingerprints_per_bucket` entries lists every fingerprint, so a genuinely new failure inside it
 is named. A larger bucket lists none and is matched by its count instead, because the three largest
 buckets hold 27,700 of the 28,128 plan-migration findings and writing them all out would make a file
-that is refreshed on a schedule megabytes long. `fingerprints: null` in a bucket means count-only.
+that is refreshed after Plans landings megabytes long. `fingerprints: null` in a bucket means count-only.
 
 ## What the match can and cannot see
 
@@ -256,7 +256,7 @@ records `exported` beside `reported` and `sampled`, and the complete rows as `ex
 `buckets`, which still holds the printed rows of every subcheck. A landing that keys the subcheck from
 its own export, or in which it prints every failure, compares with `export_buckets`. A landing whose
 export falls back compares its printed sample with the printed `buckets`, sample with sample, exactly
-as before. The baseline recorded at `792d2fb8b1` has no exports. Until the next nightly refresh, the
+as before. The baseline recorded at `792d2fb8b1` has no exports. Until the next refresh after a Plans landing, the
 PRD contracts (1,240), which it holds only a sample of, keep the truncated rule as a baseline sample;
 audit-closure (201) keeps it after the refresh too, because it has no complete export. The refresh
 records the PRD contracts from their export.
@@ -380,9 +380,9 @@ only if it names a file of the branch's; otherwise it is reported as new.
 
 Rule 2 applies only while the baseline is current: the commit `baseline.json` names is an ancestor
 of the base, the branch's rebase target (`--base`, `origin/main` at landing), and no more than seven
-days older than it by committer time (`git show -s --format=%ct` of each commit). The nightly
-refresh keeps it within a day, and seven days cover a run of failed nights without turning every
-landing red. When it is current, the summary's second line says so and gives the age; `--json`
+days older than it by committer time (`git show -s --format=%ct` of each commit). Refreshing after
+each Plans landing keeps the baseline tied to canon changes; the seven-day limit still applies
+between refreshes. When it is current, the summary's second line says so and gives the age; `--json`
 carries the finding as `baseline_currency`: both commits, `ancestor`, `age_days`, `max_age_days`,
 `rule_two_applies` and the reason.
 
@@ -427,10 +427,9 @@ the two timeout rows read as new failures and lifted two subcheck totals from 0 
 
 A baseline is never recorded from a run in which a subcheck timed out: `--record-baseline` exits 3
 and writes nothing, because a baseline that says a subcheck passed, or failed once, when it never
-finished would mislead every landing after it. Rerun with a larger `--subcheck-timeout-seconds`. The
-nightly refresh reruns with a larger bound the same night rather than skipping. A skipped refresh
-leaves an older baseline, which rule 2 compares against until it is more than seven days older than
-the base; from then on rule 2 is off for every landing until the baseline is re-recorded.
+finished would mislead every landing after it. Rerun with a larger `--subcheck-timeout-seconds`. For
+the refresh after a Plans landing, complete that retry before committing the follow-up and releasing
+the landing lock. The older baseline remains in place; rule 2 applies only while it is no more than seven days older than the base.
 
 ## Which paths count as the branch's
 
@@ -475,20 +474,20 @@ someone names it. The seventh, the
 tree that records a baseline; the runbook below does that. The baseline records what it was taken
 with, in `untracked_inputs`.
 
-## Refreshing it: the nightly runbook
+## Refreshing it after a Plans landing
 
-The refresh belongs with the nightly migration snapshot. There is no cron entry, no systemd timer and
-no workflow with a schedule on this machine, so it runs as a Claude scheduled task against `main`,
-nightly, whether or not anything landed. Never per landing: a baseline refreshed to make a landing
-pass excuses exactly the failure it was meant to show.
+After a landing that changes any `Plans/` path passes its landing check and pushes `main`, the
+landing agent keeps the same landing lock and refreshes the migration snapshot and baseline as one
+separate follow-up commit. A landing with no `Plans/` paths refreshes neither artifact. Never
+refresh the baseline to make a landing pass: that excuses exactly the failure it was meant to show.
 
-Working directory: `~/pm-worktrees/nightly-plans`, a worktree on the VM's local disk, never the
-shared checkout. The snapshot writes a new tracked run directory, which is why it cannot run where
-branches land.
+Working directory: `~/pm-worktrees/snapshot-$(date -u +%Y%m%d)`, a full worktree on the VM's local
+disk at the newly pushed `main`, never the shared checkout. The snapshot writes a new tracked run
+directory, which is why it cannot run where branches land.
 
-    cd ~/pm-worktrees/nightly-plans
+    cd ~/pm-worktrees/snapshot-$(date -u +%Y%m%d)
     git fetch origin
-    git checkout -B plans/nightly-$(date -u +%Y%m%d) origin/main
+    git checkout -B plans/snapshot-$(date -u +%Y%m%d) origin/main
     git sparse-checkout disable
     ln -sfn /mnt/Cursor/PuppetMaster-Evidence/tests/agent_packet_restrictions \
             tests/agent_packet_restrictions
@@ -498,8 +497,11 @@ branches land.
         --supersedes-run-id "$(python3 -c "import json;print(json.load(open('Plans/.plan_migration/current_run.json'))['run_id'])")"
     python3 scripts/pm-landing-check.py --record-baseline
     git add Plans/.plan_migration reports/landing-checks/baseline.json
-    git commit -m "nightly: refresh the plan-migration snapshot and the landing-check baseline"
+    git commit -m "plans: refresh the plan-migration snapshot and the landing-check baseline"
     git push -u origin HEAD
+
+Land that separate commit through the ordinary fast-forward, shard-check, landing-check, main-push
+and worktree-removal procedure while holding the same landing lock; release it afterward.
 
 Four things that make the difference between a good baseline and a misleading one:
 
@@ -508,19 +510,18 @@ Four things that make the difference between a good baseline and a misleading on
 - The symlink, because `json_syntax` reads 16 raw captures underneath it. It is the one check input
   that stays untracked: it points at raw evidence, which is never committed here.
 - `--record-baseline` after the snapshot, not before, so the baseline describes the snapshot the
-  next day's landings will be checked against; and before the commit, so the commit it names is
+  later landings will be checked against; and before the commit, so the commit it names is
   `origin/main` itself, which rule 2 needs on the history of every later base.
 - Both files in one commit, so the baseline and the run it describes never disagree.
 
 Takes about ten minutes, plus the exports of the subchecks that print only a sample (see "Subchecks
-keyed from their export"), which the baseline records so that the next day's landings can key those
+keyed from their export"), which the baseline records so that later landings can key those
 subchecks. The run also ends at a new `current_run.json`, so the next landing check validates the new
 snapshot rather than the one it replaced.
 
-If `--record-baseline` refuses with exit 3 because a subcheck timed out, rerun it the same night with
-a larger `--subcheck-timeout-seconds`, for example `--subcheck-timeout-seconds 1200`; never skip the
-night, because a skipped refresh leaves an older baseline and rule 2 compares against it, and after
-seven days without a refresh rule 2 is off for every landing.
+If `--record-baseline` refuses with exit 3 because a subcheck timed out, rerun it with a larger
+`--subcheck-timeout-seconds`, for example `--subcheck-timeout-seconds 1200`, before committing the
+follow-up and releasing the landing lock.
 
 ## Related branch
 
