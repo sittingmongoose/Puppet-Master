@@ -833,5 +833,14 @@
   ],
   "pause_guard_checkpoint": "ops/restart-mz.json",
   "pause_guard_pid": 58287,
-  "restart_warning": "Backend restart may terminate native operator parents. Detached guardian preserves interrupted state and never starts or restarts Goals."
+  "restart_warning": "Backend restart may terminate native operator parents. Detached guardian preserves interrupted state and never starts or restarts Goals.",
+  "pause_final_state": {
+    "observed_epoch": 1790782489.246806,
+    "active_owned_leases": 0,
+    "new_starts_after_pause": 0,
+    "guard_finished": true,
+    "watcher_exit_code": 0,
+    "guard_receipt": "ops/restart-mz-guard.json",
+    "resume_requires_explicit_user_instruction": true
+  }
 }
