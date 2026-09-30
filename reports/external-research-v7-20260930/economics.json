@@ -35,7 +35,7 @@
     "usage_completeness": "unknown; native children and unexposed output unknown",
     "source": "supervisor final rollup; zero-active safety receipt binds lifecycle only"
   },
-  "assessment_update_utc": "2026-09-30T16:46:19.684929+00:00",
+  "assessment_update_utc": "2026-09-30T17:35:37.328046+00:00",
   "T01": {
     "control_aggregate_total_seconds_including_setup_waits_cleanup": 719.4490000000001,
     "control_aggregate_reported_output_tokens": 43540,
@@ -72,9 +72,15 @@
       "total_seconds_including_setup_waits_cleanup": 811.242,
       "reported_output_tokens": 59561
     },
-    "quality": "unassessed",
+    "quality": "both quality failure; capped current certification partial, material coverage complete",
     "efficiency_claim": false
   },
-  "review_economics": "independent reviewers did not inspect costs; publisher reports receipt timing separately from their quality judgments",
-  "evaluator_budget_compliance": "not established; C028 summary records possible20minute overrun; not erased"
+  "review_economics": "evaluators did not inspect candidate economics; receipt timings remain a separate publisher observation",
+  "evaluator_budget_compliance": "C028 stage1 possible20minute overrun; C028 phase2 final freeze54.088638s over cap; C041 current finalsave1338.528707s exceeds1200s; no compliance claim",
+  "preservation_update": {
+    "T02": "no demonstrated saved source-supported temporal loss; acquisition semantics unknown",
+    "T06": "available artifacts retained; acquisition-to-final unassessed",
+    "T01": "complete staged history; no measured preservation benefit",
+    "T09": "partial; uncaptured source-lead/snippet validation unresolved"
+  }
 }

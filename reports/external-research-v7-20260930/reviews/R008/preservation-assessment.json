@@ -1,0 +1,3988 @@
+{
+  "schema": "external-research-preservation-assessment.v1",
+  "case_id": "C028",
+  "report_id": "R008",
+  "stage": 2,
+  "saved_utc": "2026-09-30T17:24:32.987465+00:00",
+  "report_sha256": "d2b4132166e420b8fb1ea7861d0d0cd41a1dac55a1947cb79e21211ddaf70df1",
+  "complete_coverage": false,
+  "coverage_label": "partial",
+  "verdict": "partial_preservation_assessment_no_pass",
+  "current_grade_unchanged": "quality failure",
+  "old_current_artifacts_immutable": true,
+  "frozen_stage1_pins": {
+    "current-report.md": "d2b4132166e420b8fb1ea7861d0d0cd41a1dac55a1947cb79e21211ddaf70df1",
+    "current-assessment.json": "8f254b5000dc72e74234fdc5480a4609b9e9997ec3558b4b91bcb9575131350b",
+    "current-assessment.md": "468a02ec9adea0fdfa75c4ac1d35d0f393389304e6d30a875b4350cc039465f1"
+  },
+  "stage1_budget_record_preserved": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_reasoning_effort": "xhigh",
+    "effective_model": "unknown; runtime introspection unavailable",
+    "context": "fresh subagent fork:none; no candidate history/private mapping/economics read",
+    "agent": "grade_discovery_pair",
+    "requested_review_budget_minutes": 20,
+    "timing_limit": "Exact agent start time unavailable; review ended after16:36UTC. Staging prepared16:13:46UTC, so requested20minute limit may have been exceeded; do not assume budget compliance."
+  },
+  "phase2_review_budget": {
+    "requested_minutes": 20,
+    "requested_responses": 120,
+    "started_utc": "2026-09-30T17:05:10+00:00",
+    "saved_utc": "2026-09-30T17:24:32.987465+00:00",
+    "wall_seconds_to_save": 1162.987465,
+    "response_count_exact": null,
+    "response_count_reason": "No instrumented harness response receipt; no invented count.",
+    "effective_runtime_model": "unknown",
+    "requested_model": "gpt-6.1-sol",
+    "requested_reasoning": "xhigh",
+    "overrun_at_save": false,
+    "final_freeze_utc": "2026-09-30T17:26:04.088638+00:00",
+    "wall_seconds_to_freeze": 1254.088638,
+    "overrun_at_freeze": true,
+    "overrun_seconds": 54.088637999999946
+  },
+  "history_binding": {
+    "scope_sha256": "6386d5b95f70fc6fbc54146b3a1382a0aa1577f88b91a5f21a07cc722a4946d2",
+    "manifest_sha256": "60ac0257c18347c6bdc5f4cde17f3d5855fa1eea6d1162b72d87a9e52b44f492",
+    "unlock_receipt_sha256": "4fa37797b8f9fb6e5ea28de4421ca569283c10b0efe58ac44a7c99b19b2dde0b",
+    "trace_sha256_metadata_only": "843f2d375965cb9fead1f6f8c6e3cb9bb6a265434482f1187e3c229b6ee02ea2",
+    "versions": 14,
+    "read_metadata": 7,
+    "fetch_captures": 16
+  },
+  "acquisition_assessment": {
+    "notes_is_source_index_not_atomic_fact_ledger": true,
+    "semantic_acquisition_evidence": "Complete saved report versions establish candidate statements. Primary checks determine bounded support; source/index exposure cannot establish acquisition of omitted schema content.",
+    "final_report_substantive_loss_in_available_versions": "None demonstrated: R007 only corrected fetch count; R008 appended F10-F17 and corrected typo/count. This is bounded to reconstructed completed versions, not proof of all lifetime research preservation.",
+    "temporarily_lost_notes_restored": true,
+    "final_source_index_semantically_restored": true,
+    "R007_title_narrowing": null,
+    "verified_and_lost_supported_fact_count_demonstrated": 0,
+    "absence_inference": "No absent schema fact is called globally absent. Not-demonstrated-acquired is restricted to admitted histories."
+  },
+  "artifact_versions": [
+    {
+      "tool": "write_file",
+      "call_id": "call_01a0f2df782074f1ad173b4199ce27a0",
+      "completed_at": "2026-09-30T15:12:53.399613Z",
+      "path": "out/report.md",
+      "trace_line": 178,
+      "reconstruction": "exact completed Write input",
+      "file": "artifact-versions/V001.txt",
+      "sha256": "56f9743ba4e8c0c9f24130749d23352ab6a003beb7b3469d673f8c4136768bb1",
+      "bytes": 13549,
+      "pin_verified": true,
+      "delta_lines": null
+    },
+    {
+      "tool": "edit_file",
+      "call_id": "call_01a0f2e036eb74c2b3e75cafab58f344",
+      "completed_at": "2026-09-30T15:13:57.209324Z",
+      "path": "out/report.md",
+      "trace_line": 185,
+      "reconstruction": "exact completed Edit applied to prior completed artifact",
+      "file": "artifact-versions/V002.txt",
+      "sha256": "c276304f6dbf60e6cc15eb300f7284a04155129df8b0f5259479d7190f3e2f50",
+      "bytes": 29457,
+      "pin_verified": true,
+      "delta_lines": 112,
+      "exact_delta": "--- \n\n+++ \n\n@@ -94,0 +95,109 @@\n\n+\n+### F-10 — Rate and usage limits: consumption-based delays plus 429s; paging differs per endpoint (Obligation)\n+\n+Azure DevOps Services throttles by consumption, not just request count: personal usage exceeding ~200× a typical user within a sliding five-minute window triggers per-request delays (milliseconds up to 30 seconds), stopping within five minutes once consumption drops; significant delays also raise email and in-product warnings. Separately, blocked requests return HTTP 429 (`TF400733`-family messages). Paging is endpoint-specific: some endpoints use `$top`/`$skip` (policy evaluations, iteration changes), others use `x-ms-continuationtoken` response headers.\n+\n+- Evidence: [Rate and usage limits](https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits?view=azure-devops) (updated 2026-07-31; git commit `3e3ebeeb`); 429/`TF400733` wording and continuation-token behavior corroborated at snippet level by independent implementer notes (secondary).\n+- Implication: a desktop companion that polls or fans out 2N content reads (F-03) must implement backoff on 429/`Retry-After`, prefer manual refresh plus narrow queries over aggressive polling, and page every list call to completion instead of assuming one page. Hitting delays should be surfaced honestly (\"provider is throttling; data may be partial\") per the brief's honesty requirement.\n+- Transfer limits: exact per-endpoint paging mechanics (including reported `nextSkip`/`nextTop` shapes on iteration changes) were not verified against primary response schemas (see U-02).\n+\n+### F-11 — Pull-request payload shape: list vs get differ; some parameters are inert (Capability)\n+\n+`GET pullrequests/{id}` supports `includeCommits` and `includeWorkItemRefs`, while `$skip`, `$top`, and `maxCommentLength` are documented as \"Not used\" on that operation — a trap for a thin plan that assumes generic OData paging everywhere. List operations truncate long text (e.g., descriptions capped in list responses, per independent implementer notes at snippet level).\n+\n+- Evidence: [Pull Requests - Get Pull Request](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.1) (REST API 7.1; doc updated 2025-03-18; git commit `cb0d0b30`).\n+- Implication (simpler implementation): fetch the single-PR GET with the needed `include*` flags rather than stitching list responses; never pass `$skip`/`$top` to the single-PR GET.\n+- Transfer limits: description-truncation length in list responses is secondary-only (see U-02).\n+\n+## Competitor and best-practice findings\n+\n+### F-12 — GitKraken Desktop: the closest direct competitor pattern (Capability + Decision)\n+\n+GitKraken Desktop integrates Azure DevOps alongside GitHub/GitLab/Bitbucket: remote avatars on the commit graph, clone from the ADO repository list, SSH-key setup, and in-app create/view of pull requests including adding reviewers; PR templates are supported for Azure DevOps. Two cautionary details surfaced: if the PR form does not populate, the fix is to verify the remote URL and integration domain; and GitLens's changelog records real bugs where Azure PR payloads carried repository links pointing at another organization or server, fixed by building links from the *configured* organization — plus fork-head correlation failures when Azure leaves clone fields empty.\n+\n+- Evidence: [gitkraken-desktop-docs `azure-devops.md`](https://github.com/gitkraken/gitkraken-desktop-docs/blob/HEAD/gitkraken-desktop/azure-devops.md) and [Pull Requests with GitKraken Desktop](https://help.gitkraken.com/gitkraken-desktop/pull-requests/) (both snippet level; full-page fetch returned navigation chrome, not body text — see scheduling record); GitLens changelog fork-link fixes (snippet level).\n+- Implication: Review Desk's \"explicitly selected organization, project and repository\" framing is a genuine differentiator against multi-provider clients — it sidesteps the cross-org link-confusion bug class by construction. Adopt the defensive rule anyway: never trust organization/server segments embedded in PR payloads; always render from the user's selected context.\n+- Transfer limits: snippet-level evidence only; feature parity claims (templates, reviewer add) are vendor documentation, not independently verified behavior.\n+\n+### F-13 — SmartGit and the desktop-Git-client field (Decision)\n+\n+SmartGit advertises Azure DevOps/Bitbucket/GitHub/GitLab integrations for creating and resolving PRs and review comments, with one license usable across machines and OSes; vendor comparisons against it stress dated UI, weak high-DPI/dark-mode support, and no in-app PR templates (its Distributed Review add-on is a separate product that does not speak provider PRs).\n+\n+- Evidence: SourceForge comparison pages and GitKraken-vs-SmartGit vendor pages (all snippet level; vendor-authored comparisons are adversarial by nature).\n+- Implication: the competitive bar for Review Desk is narrow but clear — provider-native PR semantics (iterations, evaluations, statuses) rendered readably, with modern display behavior. Matching SmartGit's breadth is unnecessary; exceeding its Azure-specific depth is the opportunity.\n+- Transfer limits: entirely secondary, partly vendor-adversarial evidence; no hands-on evaluation was performed (**UNEXECUTED**).\n+\n+### F-14 — vscode-pr-azdo: a directly transferable iteration-comparison UX (Capability)\n+\n+This open-source VS Code extension for Azure DevOps PRs implements exactly the brief's \"compare the selected version with earlier work\" interaction: selecting iteration 3 alone compares it with iteration 2; selecting iterations 2–4 compares iteration 4 with iteration 1; gaps in a selection are auto-included; with no selection it falls back to the latest iteration; the files tree, the open diff, and new-comment metadata all follow the selected range; and iteration diffs use immutable provider content without touching the local checkout or worktree.\n+\n+- Evidence: [vinaychandra/vscode-pr-azdo](https://github.com/vinaychandra/vscode-pr-azdo) (snippet level; full-page fetch returned navigation chrome — see scheduling record; underlying iteration/content APIs it builds on are primary-verified in F-01–F-03).\n+- Implication: this range-selection model is the best observed answer to the brief's version-comparison requirement and fits a read-only client perfectly (immutable content, no checkout mutation). Recommend adopting its semantics, including the explicit no-selection fallback and gap auto-inclusion.\n+- Transfer limits: behavior described in the project's own docs, not verified by execution (**UNEXECUTED**); VS Code extension UX may need adaptation for a desktop companion.\n+\n+### F-15 — Stale-context handling: re-validate the head before presenting or acting (Obligation)\n+\n+Independent review-tooling practices converge on one rule: the PR head can move at any time, so re-fetch the live PR head SHA before presenting a review as current, and stop rather than present stale content as fresh. Related patterns: cache each resource by (provider, repository, PR, head SHA) and cancel stale in-flight requests; keep comment positions diff-relative with enough original metadata to deep-link.\n+\n+- Evidence: community practice snippets (opencoworkai review prompt: \"Fresh-head only … if it differs … stop without posting a stale review\"; strand docs: cache-by-head-SHA with stale cancellation). Secondary only.\n+- Implication: this is the concrete mechanism for the brief's \"keep the selected review context clear as the pull request changes\" — pin the view to (iteration id, head SHA), banner when the live PR has moved past the pinned selection, and never silently re-point the selection. \"Selected iteration 3 of now-5\" must read exactly that way.\n+- Transfer limits: community practice, not provider contract; exact head-SHA field on the PR payload was not primary-verified in this session (see U-02).\n+\n+### F-16 — Present descriptions as context, never as contract (Decision)\n+\n+Review practice treats PR titles/descriptions as prose written before the final push that routinely goes stale mid-review (\"the diff is what you are reviewing\"). Review rounds change the diff while the description silently mis-frames later rounds unless updated.\n+\n+- Evidence: community practice snippets (multiple independent sources). Secondary only.\n+- Implication: Review Desk should display the description together with its staleness caveat (authored-at vs latest-iteration-at) rather than as authoritative summary — a direct application of the brief's honesty requirement. This is also an improvement opportunity, not just defect avoidance: a \"description may predate N newer iterations\" hint is cheap and genuinely useful.\n+- Transfer limits: presentation guidance from community practice; no provider semantics involved.\n+\n+### F-17 — Reference implementations and cautionary bugs worth mining (Capability)\n+\n+The ecosystem contains working read paths Review Desk can learn from without executing them: the `azure-devops-node-api` SDK and Azure CLI (`az repos pr`, `az devops invoke`) encode working call shapes for iterations, policies, and threads; several MCP servers wrap the same endpoints. One cautionary bug is directly relevant: an MCP `vote_pull_request` implementation silently demoted required reviewers to optional because it did not preserve `IdentityRefWithVote.isRequired` — the exact flag F-07 relies on for display.\n+\n+- Evidence: snippet-level references to SDK/CLI/MCP usage and the `vote_pull_request` issue (secondary; no code was executed).\n+- Implication (simpler implementation): when in doubt about a call shape, consult the SDK/CLI spelling first — it is cheaper than re-deriving from REST docs. And any code path touching reviewer objects must round-trip `isRequired`, even in a read-only client (cached copies, view models).\n+- Transfer limits: no reference code was read or executed in this session (**UNEXECUTED**); the bug report is about a write path the brief excludes, cited only for the `isRequired` handling lesson.\n+\n+## Supported obligations vs optional capabilities vs product decisions\n+\n+| # | Item | Class | Basis |\n+|---|------|-------|-------|\n+| Explicit `api-version` per call; pin preview versions knowingly | Obligation | F-09, F-04 |\n+| Auth via a currently supported mechanism (Entra for new Services apps; PAT/Windows auth where OAuth is unavailable) | Obligation | F-08 |\n+| Read-only credential scopes; no mutation calls | Obligation | Brief + F-08 |\n+| Honest incomplete/unavailable-data explanation (throttle, permission, version skew, not-applicable) | Obligation | Brief + F-04, F-05, F-10 |\n+| Pinned, labeled review context (iteration + head) with moved-head banner | Obligation | Brief + F-01, F-15 |\n+| Backoff on 429/delay; page all list calls | Obligation | F-10 |\n+| Iteration-range comparison UI | Capability | F-02, F-14 |\n+| Required-vs-optional blocking display per policy | Capability | F-04, F-06 |\n+| Not-applicable policy display (second evaluations call) | Capability | F-04 |\n+| Per-iteration vs per-PR status distinction | Capability | F-05 |\n+| Reviewer votes + required/optional display | Capability | F-07 |\n+| Diff computation location (client-side vs list-only vs on-demand) and cache policy | Decision | F-03, F-14, F-15 |\n+| Polling vs manual refresh cadence | Decision | F-10 |\n+| Description-staleness presentation | Decision | F-16 |\n+| Competitive positioning (depth over breadth) | Decision | F-12, F-13 |\n+\n+## Plan implications\n+\n+No plan is admitted in this plan-blind task (only `inputs/brief.md`), so there are no plan implications to record. A thin plan for this brief would most likely miss, in priority order: the metadata-only nature of iteration changes (F-02), the evaluations artifact-id construction and preview version (F-04), status-vs-evaluation duality (F-05), Required-vs-Optional blocking semantics (F-06), and the Entra/PAT/Server auth matrix (F-08).\n+\n+## Unresolved areas and proposed validation (all UNEXECUTED)\n+\n+- **U-01 — Exact status/state enums.** Policy-evaluation `status` values (secondary sources suggest `approved`/`queued`/`running`/`rejected`/`broken`) and PR-status `state` values were not captured from primary response schemas. Proposed validation (**UNEXECUTED**): read the full Evaluations Get and Pull Request Statuses List/Create reference bodies, including Sampleschapters and linked model definitions.\n+- **U-02 — Paging and payload minutiae.** Per-endpoint continuation (`x-ms-continuationtoken` vs `$skip`/`$top` vs reported `nextSkip`/`nextTop`), list-response truncation lengths, the live head-SHA field name, Policy Configurations schemas, and Threads API versioning were corroborated only at snippet level. Proposed validation (**UNEXECUTED**): read the corresponding primary reference pages end to end and record one example response per endpoint.\n+- **U-03 — Server (on-premises) compatibility floor.** The minimum Azure DevOps Server version supporting iterations, iteration changes, evaluations, and statuses endpoints, and iteration behavior under force-push/history rewrite. Proposed validation (**UNEXECUTED**): read the REST API version index's Server-compatibility table and the Server-moniker variants of the reference pages.\n+- **U-04 — Large-object behavior.** Iteration-changes truncation/count limits, Items API size caps, binary and LFS handling, and any diff-size guidance. Proposed validation (**UNEXECUTED**): read Git limits documentation and the Items List/batch reference, including error responses.\n+- **U-05 — Reviewer vote mapping.** The integer vote scale and the semantics of group-reviewer votes. Proposed validation (**UNEXECUTED**): read the `IdentityRefWithVote` model definition and reviewer-vote documentation end to end.\n+- **U-06 — Current-user identity resolution.** Matching the signed-in user by identity id/descriptor via connection data (snippet-level only). Proposed validation (**UNEXECUTED**): read the Connection Data and Identities/Graph reference pages.\n+- **U-07 — Minimum scope set.** The least-privilege scope combination covering iterations, changes, items, evaluations, statuses, reviewers, and policy configuration reads. Proposed validation (**UNEXECUTED**): cross-check each endpoint's documented Scopes section (several reference bodies were truncated at the Scopes section during fetch) and confirm against the OAuth scope matrix.\n+- **U-08 — Competitor depth.** GitKraken/SmartGit/vscode-pr-azdo behavior rests on snippet-level evidence because full-page fetches of GitHub HTML returned navigation chrome instead of article bodies. Proposed validation (**UNEXECUTED**): re-read those pages through raw-content URLs and, for behavior claims, hands-on evaluation.\n+\n+## Costs and coverage\n+\n+- External research in this session: 12 search queries and 16 page reads (exact sequence in `scheduling.json`; sources and versions in `acquisition.json`). No external writes were made; no credentials were used; no endpoints were executed.\n+- Wall-clock time was not instrumented with a timer in this environment (shell execution is unavailable); all work completed inside the session's fixed budget. Counts above are the complete usage record.\n+- Coverage: the full brief was researched — versions (F-01–F-03, F-14), checks/policies (F-04–F-07), auth (F-08), compatibility (F-09–F-10), honesty and context stability (F-15–F-16), competitors and implementation choices (F-12–F-14, F-17). Unvisited and dead-end areas are recorded as U-01–U-08 and in `scheduling.json`; nothing material was silently dropped.\n+- Conditions and uncertainty: findings marked \"snippet level\" rest on search-result excerpts, not full-page reads, and carry lower confidence — they are labeled wherever used. Preview API versions and retirement dates reflect documentation current as of the observed update stamps and can change.\n+"
+    },
+    {
+      "tool": "edit_file",
+      "call_id": "call_01a0f2e1357876c5806e8949f127e953",
+      "completed_at": "2026-09-30T15:14:02.422031Z",
+      "path": "out/report.md",
+      "trace_line": 192,
+      "reconstruction": "exact completed Edit applied to prior completed artifact",
+      "file": "artifact-versions/V003.txt",
+      "sha256": "e0f08fd99c9512c4cb8f1e6a07a522148a112e097a056b27c1750c182988e1ae",
+      "bytes": 29457,
+      "pin_verified": true,
+      "delta_lines": 5,
+      "exact_delta": "--- \n\n+++ \n\n@@ -188 +188 @@\n\n-- **U-01 — Exact status/state enums.** Policy-evaluation `status` values (secondary sources suggest `approved`/`queued`/`running`/`rejected`/`broken`) and PR-status `state` values were not captured from primary response schemas. Proposed validation (**UNEXECUTED**): read the full Evaluations Get and Pull Request Statuses List/Create reference bodies, including Sampleschapters and linked model definitions.\n+- **U-01 — Exact status/state enums.** Policy-evaluation `status` values (secondary sources suggest `approved`/`queued`/`running`/`rejected`/`broken`) and PR-status `state` values were not captured from primary response schemas. Proposed validation (**UNEXECUTED**): read the full Evaluations Get and Pull Request Statuses List/Create reference bodies, including sample chapters and linked model definitions."
+    },
+    {
+      "tool": "write_file",
+      "call_id": "call_01a0f2e141467111bda6473814a1ad1c",
+      "completed_at": "2026-09-30T15:14:29.80108Z",
+      "path": "out/acquisition.json",
+      "trace_line": 199,
+      "reconstruction": "exact completed Write input",
+      "file": "artifact-versions/V004.txt",
+      "sha256": "fcd45c6aa0b15f185521d2597bc82534626a1b7825bf98b0c88460589a63df10",
+      "bytes": 13609,
+      "pin_verified": true,
+      "json_valid": true,
+      "top_level_keys": [
+        "acquisition_method",
+        "admitted_input",
+        "artifact",
+        "case",
+        "evidence_discipline",
+        "external_writes",
+        "finding_sources",
+        "queries",
+        "reads",
+        "sources",
+        "task"
+      ],
+      "delta_lines": null
+    },
+    {
+      "tool": "edit_file",
+      "call_id": "call_01a0f2e1e50a72a99cf1e689acbe5c49",
+      "completed_at": "2026-09-30T15:15:12.348503Z",
+      "path": "out/report.md",
+      "trace_line": 210,
+      "reconstruction": "exact completed Edit applied to prior completed artifact",
+      "file": "artifact-versions/V005.txt",
+      "sha256": "d2b4132166e420b8fb1ea7861d0d0cd41a1dac55a1947cb79e21211ddaf70df1",
+      "bytes": 29457,
+      "pin_verified": true,
+      "delta_lines": 5,
+      "exact_delta": "--- \n\n+++ \n\n@@ -199 +199 @@\n\n-- External research in this session: 12 search queries and 16 page reads (exact sequence in `scheduling.json`; sources and versions in `acquisition.json`). No external writes were made; no credentials were used; no endpoints were executed.\n+- External research in this session: 14 search queries and 16 page reads (exact sequence in `scheduling.json`; sources and versions in `acquisition.json`). No external writes were made; no credentials were used; no endpoints were executed."
+    },
+    {
+      "tool": "write_file",
+      "call_id": "call_01a0f2e1e95371a6ae6444fc7b380145",
+      "completed_at": "2026-09-30T15:15:12.353621Z",
+      "path": "out/scheduling.json",
+      "trace_line": 212,
+      "reconstruction": "exact completed Write input",
+      "file": "artifact-versions/V006.txt",
+      "sha256": "7abbf0122986e3c4e257a17e6568fffb44866c3174b93ca9aa3f587c895baa40",
+      "bytes": 8577,
+      "pin_verified": true,
+      "json_valid": true,
+      "top_level_keys": [
+        "actual_sequence",
+        "artifact",
+        "budget_note",
+        "case",
+        "coverage_note",
+        "dead_ends_and_opportunities",
+        "environment_limits",
+        "task",
+        "usage_totals"
+      ],
+      "delta_lines": null
+    },
+    {
+      "tool": "edit_file",
+      "call_id": "call_01a0f2e260fb74f18941b98604f399a5",
+      "completed_at": "2026-09-30T15:15:19.95892Z",
+      "path": "out/scheduling.json",
+      "trace_line": 219,
+      "reconstruction": "exact completed Edit applied to prior completed artifact",
+      "file": "artifact-versions/V007.txt",
+      "sha256": "30f6b1d0f80e6b33cc484ba4691716d2a18b10e9401ec6e0a68aa5671266b1e2",
+      "bytes": 8557,
+      "pin_verified": true,
+      "json_valid": true,
+      "top_level_keys": [
+        "actual_sequence",
+        "artifact",
+        "budget_note",
+        "case",
+        "coverage_note",
+        "dead_ends_and_opportunities",
+        "environment_limits",
+        "task",
+        "usage_totals"
+      ],
+      "delta_lines": 5
+    },
+    {
+      "tool": "write_file",
+      "call_id": "call_01a0f2e2bd0f73a5b4e4986e6e3d8429",
+      "completed_at": "2026-09-30T15:16:09.81017Z",
+      "path": "out/acquisition.json",
+      "trace_line": 241,
+      "reconstruction": "exact completed Write input",
+      "file": "artifact-versions/V008.txt",
+      "sha256": "984bc1e3cf194159cf9f88d72baf231aaf063ce05b9e5c8b40fb15adcb52c3d2",
+      "bytes": 13609,
+      "pin_verified": true,
+      "json_valid": true,
+      "top_level_keys": [
+        "artifact",
+        "case",
+        "task",
+        "admitted_input",
+        "acquisition_method",
+        "evidence_discipline",
+        "external_writes",
+        "queries",
+        "reads",
+        "sources",
+        "finding_sources"
+      ],
+      "delta_lines": 5
+    },
+    {
+      "tool": "write_file",
+      "call_id": "call_01a0f2e3501574a8ba541434e3a70ac4",
+      "completed_at": "2026-09-30T15:16:20.315925Z",
+      "path": "out/acquisition.json",
+      "trace_line": 248,
+      "reconstruction": "exact completed Write input",
+      "file": "artifact-versions/V009.txt",
+      "sha256": "4a5152c678e9c65f6f3a34bf5f9d1f5158542dc2d9ede61fb796161de6219d3a",
+      "bytes": 583,
+      "pin_verified": true,
+      "json_valid": false,
+      "parse_error": "Expecting value: line 10 column 1 (char 583)",
+      "delta_lines": 13
+    },
+    {
+      "tool": "edit_file",
+      "call_id": "call_01a0f2e36ce170ccb58ad1e1522336c7",
+      "completed_at": "2026-09-30T15:16:31.622801Z",
+      "path": "out/acquisition.json",
+      "trace_line": 255,
+      "reconstruction": "exact completed Edit applied to prior completed artifact",
+      "file": "artifact-versions/V010.txt",
+      "sha256": "7312191fcef51b1f43cac7f6ab1fa6b61df11b9ae05c874a34e73103d7086b49",
+      "bytes": 2616,
+      "pin_verified": true,
+      "json_valid": false,
+      "parse_error": "Expecting value: line 26 column 1 (char 2616)",
+      "delta_lines": 19
+    },
+    {
+      "tool": "edit_file",
+      "call_id": "call_01a0f2e388ee77ed87146f1eeab98aae",
+      "completed_at": "2026-09-30T15:16:41.295694Z",
+      "path": "out/acquisition.json",
+      "trace_line": 262,
+      "reconstruction": "exact completed Edit applied to prior completed artifact",
+      "file": "artifact-versions/V011.txt",
+      "sha256": "5b76a910b366dd419e98defd220e15e7b36c4ddb1da7b09c3620bc9596db4c50",
+      "bytes": 6030,
+      "pin_verified": true,
+      "json_valid": false,
+      "parse_error": "Expecting value: line 44 column 1 (char 6030)",
+      "delta_lines": 21
+    },
+    {
+      "tool": "edit_file",
+      "call_id": "call_01a0f2e3ad3270a58da91e3440481fb7",
+      "completed_at": "2026-09-30T15:17:05.662188Z",
+      "path": "out/acquisition.json",
+      "trace_line": 267,
+      "reconstruction": "exact completed Edit applied to prior completed artifact",
+      "file": "artifact-versions/V012.txt",
+      "sha256": "87c793da470c04453a57fa1f2ad85b1d1651c1e4a48ff874ac40f1b40e1525b6",
+      "bytes": 14549,
+      "pin_verified": true,
+      "json_valid": true,
+      "top_level_keys": [
+        "artifact",
+        "case",
+        "task",
+        "admitted_input",
+        "acquisition_method",
+        "evidence_discipline",
+        "external_writes",
+        "queries",
+        "reads",
+        "sources",
+        "finding_sources"
+      ],
+      "delta_lines": 53
+    },
+    {
+      "tool": "write_file",
+      "call_id": "call_01a0f2e419d771fd89dff712cda9e482",
+      "completed_at": "2026-09-30T15:17:12.156344Z",
+      "path": "out/scheduling.json",
+      "trace_line": 278,
+      "reconstruction": "exact completed Write input",
+      "file": "artifact-versions/V013.txt",
+      "sha256": "70f8796906dc3369115bfd17ee5ea05c106a2df04af1dfe81c283c73c56da5ac",
+      "bytes": 682,
+      "pin_verified": true,
+      "json_valid": false,
+      "parse_error": "Expecting value: line 9 column 1 (char 682)",
+      "delta_lines": 12
+    },
+    {
+      "tool": "edit_file",
+      "call_id": "call_01a0f2e4527077d598a0568804237074",
+      "completed_at": "2026-09-30T15:17:43.82307Z",
+      "path": "out/scheduling.json",
+      "trace_line": 288,
+      "reconstruction": "exact completed Edit applied to prior completed artifact",
+      "file": "artifact-versions/V014.txt",
+      "sha256": "42131cabaad65e70792c1a4a378581d2ed54ff49f26a498d8d02917a2065bb9a",
+      "bytes": 8885,
+      "pin_verified": true,
+      "json_valid": true,
+      "top_level_keys": [
+        "artifact",
+        "case",
+        "task",
+        "usage_totals",
+        "budget_note",
+        "coverage_note",
+        "actual_sequence",
+        "dead_ends_and_opportunities",
+        "environment_limits"
+      ],
+      "delta_lines": 46
+    }
+  ],
+  "reads": [
+    {
+      "tool": "read_file",
+      "call_id": "call_01a0f2dd17487142a3c0f6cc9cf8a1c6",
+      "completed_at": "2026-09-30T15:09:31.330909Z",
+      "path": "TASK.md",
+      "trace_line": 17,
+      "bounded_locator": {},
+      "semantic_inference": "exposure only; acquisition/source grounding unknown until independent preservation assessment",
+      "assessment": "exposure_only_no_semantic_credit"
+    },
+    {
+      "tool": "read_file",
+      "call_id": "call_01a0f2dd1d91716287b407049e3b1dd7",
+      "completed_at": "2026-09-30T15:09:33.728362Z",
+      "path": "inputs/brief.md",
+      "trace_line": 22,
+      "bounded_locator": {},
+      "semantic_inference": "exposure only; acquisition/source grounding unknown until independent preservation assessment",
+      "assessment": "exposure_only_no_semantic_credit"
+    },
+    {
+      "tool": "read_file",
+      "call_id": "call_01a0f2e281f471fdb7d0165b389ceb6b",
+      "completed_at": "2026-09-30T15:15:26.462143Z",
+      "path": "out/report.md",
+      "trace_line": 224,
+      "bounded_locator": {
+        "limit": 30
+      },
+      "semantic_inference": "exposure only; acquisition/source grounding unknown until independent preservation assessment",
+      "assessment": "exposure_only_no_semantic_credit"
+    },
+    {
+      "tool": "read_file",
+      "call_id": "call_01a0f2e28ff976289daefbb5bd5620f5",
+      "completed_at": "2026-09-30T15:15:30.635302Z",
+      "path": "out/acquisition.json",
+      "trace_line": 230,
+      "bounded_locator": {
+        "limit": 5
+      },
+      "semantic_inference": "exposure only; acquisition/source grounding unknown until independent preservation assessment",
+      "assessment": "exposure_only_no_semantic_credit"
+    },
+    {
+      "tool": "read_file",
+      "call_id": "call_01a0f2e2921075df8a17356bdd17814a",
+      "completed_at": "2026-09-30T15:15:30.638131Z",
+      "path": "out/scheduling.json",
+      "trace_line": 231,
+      "bounded_locator": {
+        "limit": 5
+      },
+      "semantic_inference": "exposure only; acquisition/source grounding unknown until independent preservation assessment",
+      "assessment": "exposure_only_no_semantic_credit"
+    },
+    {
+      "tool": "read_file",
+      "call_id": "call_01a0f2e40f1e75c5aec006f64b4a4801",
+      "completed_at": "2026-09-30T15:17:08.316834Z",
+      "path": "out/acquisition.json",
+      "trace_line": 273,
+      "bounded_locator": {
+        "limit": 15,
+        "offset": 85
+      },
+      "semantic_inference": "exposure only; acquisition/source grounding unknown until independent preservation assessment",
+      "assessment": "exposure_only_no_semantic_credit"
+    },
+    {
+      "tool": "read_file",
+      "call_id": "call_01a0f2e4b1de7130bfa95318347e4233",
+      "completed_at": "2026-09-30T15:17:50.356925Z",
+      "path": "out/scheduling.json",
+      "trace_line": 294,
+      "bounded_locator": {
+        "limit": 12,
+        "offset": 42
+      },
+      "semantic_inference": "exposure only; acquisition/source grounding unknown until independent preservation assessment",
+      "assessment": "exposure_only_no_semantic_credit"
+    }
+  ],
+  "captures": [
+    {
+      "file": "source-exposure/X001.txt",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/list?view=azure-devops-rest-7.1",
+      "sha256": "90b2fa8a4e605137f940237ac2af9de26dd1b6360e674f965eb9bc204d547138",
+      "bytes": 4770,
+      "completed_at": "2026-09-30T15:10:36.362417Z",
+      "trace_line": 64,
+      "call_id": "call_01a0f2de0ad375ed99b77eb6098b4fcb",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "Iteration list URI/includeCommits/version/vso.code prefix",
+      "semantic_preservation": "Retained F02; model fields not visible.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X002.txt",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/evaluations/list?view=azure-devops-rest-7.1",
+      "sha256": "72a87d6f57eed35b5bb4652b363da19edf0b9e0c154b4f642561aaf1d432371b",
+      "bytes": 4761,
+      "completed_at": "2026-09-30T15:10:36.6335Z",
+      "trace_line": 67,
+      "call_id": "call_01a0f2de0d4c74dd85eb8d986b563750",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "CodeReview artifact/preview/includeNotApplicable/topskip",
+      "semantic_preservation": "Retained F07; source tail scope/enums/config not captured.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X003.txt",
+      "url": "https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-request-status?view=azure-devops",
+      "sha256": "f0dca0db0360179b5e25fa3807e52d4dbea0eb15b339f4df31929a54a3bcd1bb",
+      "bytes": 4749,
+      "completed_at": "2026-09-30T15:10:36.900711Z",
+      "trace_line": 70,
+      "call_id": "call_01a0f2de0fd774dfbfa4524f5da28085",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "Status workflow extensibility/external signoff/optional block",
+      "semantic_preservation": "Retained F05; concrete states/iteration conditions outside capture.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X004.txt",
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/how-to/call-rest-api?view=azure-devops",
+      "sha256": "ddd9b2f069b36525edc3a3596447fa42a70fa83cc5e52c26bc8127cb533adb6d",
+      "bytes": 4750,
+      "completed_at": "2026-09-30T15:10:37.291268Z",
+      "trace_line": 73,
+      "call_id": "call_01a0f2de127f76fabda1ad56e61e12f8",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "REST URLstructure/explicitversion",
+      "semantic_preservation": "Retained F09; compatibility table from uncaptured snippets.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X005.txt",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1",
+      "sha256": "4a129113d8f64b98d0d1efc505c0a5fc10dc1d67b4d48067951616c9f12dbb1f",
+      "bytes": 4776,
+      "completed_at": "2026-09-30T15:10:52.23907Z",
+      "trace_line": 92,
+      "call_id": "call_01a0f2de495a71f298f6bb41c0b2cf96",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "Iteration1/sourcepush identity and compareTo0 commoncommit",
+      "semantic_preservation": "Retained F01/F03; source/target/common roles and completion response outside capture.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X006.txt",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.1",
+      "sha256": "9e2d8dc24732ca2c6ae89a1a0ae98e175131161ac93aaa022a259b69d29f3d7f",
+      "bytes": 4772,
+      "completed_at": "2026-09-30T15:10:52.49286Z",
+      "trace_line": 95,
+      "call_id": "call_01a0f2de4bd3717081a9eb6098515826",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "PR GET include options and unusedskip/top/maxCommentLength",
+      "semantic_preservation": "Retained F04; lifecycle model tail absent.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X007.txt",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-statuses/list?view=azure-devops-rest-7.1",
+      "sha256": "1351c5194569a898bd2309940c8d6e73f025c52e919bfb67f980cc77c0e601e5",
+      "bytes": 4770,
+      "completed_at": "2026-09-30T15:10:52.789787Z",
+      "trace_line": 98,
+      "call_id": "call_01a0f2de4e3c73698edfac946588c71e",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "PR-statusURI/vso.code/vso.code_status readwrite",
+      "semantic_preservation": "Retained F06; report invents readsubset in F12; enums absent.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X008.txt",
+      "url": "https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops",
+      "sha256": "9f69779769f3f9812a8b9b440d6194ec37536cbcbfff04af6c24e574e89fef1a",
+      "bytes": 4785,
+      "completed_at": "2026-09-30T15:10:53.014761Z",
+      "trace_line": 101,
+      "call_id": "call_01a0f2de51057180879e78d274124534",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "Entra alternatives/leastprivilegePAT/globalPATstop2026-12-01",
+      "semantic_preservation": "Retained F08; fallback qualification broader than PAT-obsolete wording.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X009.txt",
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits?view=azure-devops",
+      "sha256": "a1bc5124e4f231e1e10984aadd6ff23347d3e8004f726894153c0d5d2b2aaebf",
+      "bytes": 4750,
+      "completed_at": "2026-09-30T15:11:05.939631Z",
+      "trace_line": 120,
+      "call_id": "call_01a0f2de8166771e805cf2daff05f672",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "Services global consumption200x/5min/delayms-30s/warnings",
+      "semantic_preservation": "Retained F15; successful200RetryAfter and429 details below cutoff.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X010.txt",
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/oauth?view=azure-devops",
+      "sha256": "e55a21e59d34d94787345c03e68d27c11d8b6df71d62000325806c0741e43d5b",
+      "bytes": 4762,
+      "completed_at": "2026-09-30T15:11:06.155834Z",
+      "trace_line": 123,
+      "call_id": "call_01a0f2de839670ff8bd73be83840e88a",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "ADO OAuth deprecated/no newregs/Services-only/Serverfallback",
+      "semantic_preservation": "Retained F08; no executed auth.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X011.txt",
+      "url": "https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops",
+      "sha256": "9cd1fdfcb6027672188921a9b08e794cc7024633696db269a5c67464a4e3deda",
+      "bytes": 4745,
+      "completed_at": "2026-09-30T15:11:06.371218Z",
+      "trace_line": 126,
+      "call_id": "call_01a0f2de858e771badf7321dc3893b44",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "Branch policies purpose and admin configuration prerequisites",
+      "semantic_preservation": "Retained policy topic; Required/Optional/reset semantics outside capture.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X012.txt",
+      "url": "https://github.com/vinaychandra/vscode-pr-azdo",
+      "sha256": "463335622be6059198ac9fce0e3fd9feddbedaf3d1d10dbc8e26bc8d69a49059",
+      "bytes": 4699,
+      "completed_at": "2026-09-30T15:11:07.142638Z",
+      "trace_line": 129,
+      "call_id": "call_01a0f2de87b7736a99ea11aea9b70e32",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "GitHub navigation chrome only",
+      "semantic_preservation": "No usable README body; F14 acquisition from uncaptured snippets unknown.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X013.txt",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/get?view=azure-devops-rest-7.1",
+      "sha256": "09d231b400bc73291f1ee95a73dae5cdc479e5f2e8fe1d4309aeb4400752a6f7",
+      "bytes": 4751,
+      "completed_at": "2026-09-30T15:11:18.139466Z",
+      "trace_line": 144,
+      "call_id": "call_01a0f2deb21d71a793b4f273869a4b68",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "ItemsURI/versiondescriptor/resolveLfs option and download/format",
+      "semantic_preservation": "Retained F11; LFS-only pointer qualification below cutoff, report broadens.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X014.txt",
+      "url": "https://github.com/gitkraken/gitkraken-desktop-docs/blob/HEAD/gitkraken-desktop/azure-devops.md",
+      "sha256": "ab4c6bbd1e562185b12380304ec503fd924606fb7a7aac808f91211c7cd60ea1",
+      "bytes": 4749,
+      "completed_at": "2026-09-30T15:11:18.923559Z",
+      "trace_line": 147,
+      "call_id": "call_01a0f2deb485772ebc332bc3d34c8a1d",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "GitHub navigation chrome only",
+      "semantic_preservation": "No usable vendor article body; F12 acquisition from uncaptured snippets unknown.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X015.txt",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-reviewers/list?view=azure-devops-rest-7.1",
+      "sha256": "60f865da5b7077a91ce40d226a391336b9bdbdf9cd6d350c3522cab865de6657",
+      "bytes": 4769,
+      "completed_at": "2026-09-30T15:11:19.189856Z",
+      "trace_line": 150,
+      "call_id": "call_01a0f2deb6ba707ba3f4edf234638ca7",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "ReviewersURI/vso.code, response type only",
+      "semantic_preservation": "Retained endpoint; vote scale/group model absent, acquired via uncaptured snippet unknown.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    },
+    {
+      "file": "source-exposure/X016.txt",
+      "url": "https://github.com/ivoyant-eng/agnusai/blob/HEAD/docs/blog/08-azure-diff-problem-and-myers.md",
+      "sha256": "9f928d77cec6843cf11ebc12891e3ede6e68344ad0d2e1a76a9e69dd4b2c1164",
+      "bytes": 4747,
+      "completed_at": "2026-09-30T15:11:23.643959Z",
+      "trace_line": 155,
+      "call_id": "call_01a0f2deca6f73ba922a17f3816e0c93",
+      "kind": "completed native web_fetch visible output; potentially partial/error capture; no semantic validation",
+      "pin_verified": true,
+      "visible_content_assessed": "GitHub navigation chrome only",
+      "semantic_preservation": "No usable author blog body; F02 corroboration acquisition from uncaptured snippets unknown.",
+      "candidate_capture_complete": false,
+      "semantic_acquisition": "only report/notes subset, independently grounded; fetch receipt alone not acquisition"
+    }
+  ],
+  "source_leads": [
+    {
+      "id": "S-01",
+      "saved_source_entry": {
+        "id": "S-01",
+        "type": "primary REST reference",
+        "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/list?view=azure-devops-rest-7.1",
+        "version": "REST API 7.1; doc updated 2025-03-18; git commit cb0d0b30",
+        "access": "full fetch (truncated tail); seq 5"
+      },
+      "used_by_findings": [
+        "F-01"
+      ],
+      "history_capture": [
+        "source-exposure/X001.txt"
+      ],
+      "candidate_exposure_body": "visible_partial_primary",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "A001"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "includeCommits and integer iteration retained; hasMoreCommits and three commit roles below capture boundary, no demonstrated semantic acquisition.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-02",
+      "saved_source_entry": {
+        "id": "S-02",
+        "type": "primary REST reference",
+        "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/evaluations/list?view=azure-devops-rest-7.1",
+        "version": "Policy API 7.1-preview.1; doc updated 2025-03-18; git commit cb0d0b30",
+        "access": "full fetch (truncated tail); seq 6"
+      },
+      "used_by_findings": [
+        "F-04"
+      ],
+      "history_capture": [
+        "source-exposure/X002.txt"
+      ],
+      "candidate_exposure_body": "visible_partial_primary",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "A003"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Exact artifact template/preview/topskip/includeNotApplicable retained. False two-call requirement derived from one-call include option; enum/config tails not acquired in available semantic records.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-03",
+      "saved_source_entry": {
+        "id": "S-03",
+        "type": "primary conceptual",
+        "url": "https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-request-status?view=azure-devops",
+        "version": "doc updated 2026-05-07; git commit 1eeaa8de",
+        "access": "full fetch (truncated tail); seq 7"
+      },
+      "used_by_findings": [
+        "F-05"
+      ],
+      "history_capture": [
+        "source-exposure/X003.txt"
+      ],
+      "candidate_exposure_body": "visible_partial_primary",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "statusconcept"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Status extensibility and optional gate retained; iteration-specific addressing/enums remain unresolved; concept capture stops at prerequisites.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-04",
+      "saved_source_entry": {
+        "id": "S-04",
+        "type": "primary conceptual",
+        "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/how-to/call-rest-api?view=azure-devops",
+        "version": "doc updated 2026-07-23; git commit b7e60d58",
+        "access": "full fetch (truncated tail); seq 8"
+      },
+      "used_by_findings": [
+        "F-09"
+      ],
+      "history_capture": [
+        "source-exposure/X004.txt"
+      ],
+      "candidate_exposure_body": "visible_partial_primary",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "rest"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Selected lead used by listed findings; demonstrated saved report subset retained. Source-supported content bounded by linked primary checks; uncaptured snippet acquisition remains unknown.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-05",
+      "saved_source_entry": {
+        "id": "S-05",
+        "type": "primary REST reference",
+        "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1",
+        "version": "REST API 7.1; doc updated 2025-03-18; git commit cb0d0b30",
+        "access": "full fetch (truncated tail); seq 13"
+      },
+      "used_by_findings": [
+        "F-02"
+      ],
+      "history_capture": [
+        "source-exposure/X005.txt"
+      ],
+      "candidate_exposure_body": "visible_partial_primary",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "changes"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Selected lead used by listed findings; demonstrated saved report subset retained. Source-supported content bounded by linked primary checks; uncaptured snippet acquisition remains unknown.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-06",
+      "saved_source_entry": {
+        "id": "S-06",
+        "type": "primary REST reference",
+        "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.1",
+        "version": "REST API 7.1; doc updated 2025-03-18; git commit cb0d0b30",
+        "access": "full fetch (truncated tail); seq 14"
+      },
+      "used_by_findings": [
+        "F-11"
+      ],
+      "history_capture": [
+        "source-exposure/X006.txt"
+      ],
+      "candidate_exposure_body": "visible_partial_primary",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "pr",
+        "prlist"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Selected lead used by listed findings; demonstrated saved report subset retained. Source-supported content bounded by linked primary checks; uncaptured snippet acquisition remains unknown.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-07",
+      "saved_source_entry": {
+        "id": "S-07",
+        "type": "primary REST reference",
+        "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-statuses/list?view=azure-devops-rest-7.1",
+        "version": "REST API 7.1; doc updated 2025-03-18; git commit cb0d0b30",
+        "access": "full fetch (truncated tail); seq 15"
+      },
+      "used_by_findings": [
+        "F-05"
+      ],
+      "history_capture": [
+        "source-exposure/X007.txt"
+      ],
+      "candidate_exposure_body": "visible_partial_primary",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "A002"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Selected lead used by listed findings; demonstrated saved report subset retained. Source-supported content bounded by linked primary checks; uncaptured snippet acquisition remains unknown.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-08",
+      "saved_source_entry": {
+        "id": "S-08",
+        "type": "primary conceptual",
+        "url": "https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops",
+        "version": "doc updated 2026-09-21; git commit 371d6ac9",
+        "access": "full fetch (truncated tail); seq 16"
+      },
+      "used_by_findings": [
+        "F-08"
+      ],
+      "history_capture": [
+        "source-exposure/X008.txt"
+      ],
+      "candidate_exposure_body": "visible_partial_primary",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "pat"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Selected lead used by listed findings; demonstrated saved report subset retained. Source-supported content bounded by linked primary checks; uncaptured snippet acquisition remains unknown.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-09",
+      "saved_source_entry": {
+        "id": "S-09",
+        "type": "discarded",
+        "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/work/iterations/list?view=azure-devops-rest-7.1",
+        "version": "n/a",
+        "access": "unused lead (Work iterations API; wrong area)"
+      },
+      "used_by_findings": [],
+      "history_capture": [],
+      "candidate_exposure_body": "not_captured",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "work"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Discarded correctly as Work-area team iterations. Saved lead plus independent Microsoft URI proves routing, not candidate snippet contents.",
+      "unused_lead": true
+    },
+    {
+      "id": "S-10",
+      "saved_source_entry": {
+        "id": "S-10",
+        "type": "primary conceptual",
+        "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits?view=azure-devops",
+        "version": "doc updated 2026-07-31; git commit 3e3ebeeb",
+        "access": "full fetch (truncated tail); seq 21"
+      },
+      "used_by_findings": [
+        "F-10"
+      ],
+      "history_capture": [
+        "source-exposure/X009.txt"
+      ],
+      "candidate_exposure_body": "visible_partial_primary",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "rate"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Selected lead used by listed findings; demonstrated saved report subset retained. Source-supported content bounded by linked primary checks; uncaptured snippet acquisition remains unknown.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-11",
+      "saved_source_entry": {
+        "id": "S-11",
+        "type": "primary conceptual",
+        "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/oauth?view=azure-devops",
+        "version": "doc updated 2026-05-07; git commit 1eeaa8de",
+        "access": "full fetch (truncated tail); seq 22"
+      },
+      "used_by_findings": [
+        "F-08"
+      ],
+      "history_capture": [
+        "source-exposure/X010.txt"
+      ],
+      "candidate_exposure_body": "visible_partial_primary",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "oauth"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Selected lead used by listed findings; demonstrated saved report subset retained. Source-supported content bounded by linked primary checks; uncaptured snippet acquisition remains unknown.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-12",
+      "saved_source_entry": {
+        "id": "S-12",
+        "type": "primary conceptual",
+        "url": "https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops",
+        "version": "doc updated 2026-07-17; git commit 6a113fb3",
+        "access": "full fetch (truncated tail); seq 23"
+      },
+      "used_by_findings": [
+        "F-06"
+      ],
+      "history_capture": [
+        "source-exposure/X011.txt"
+      ],
+      "candidate_exposure_body": "visible_partial_primary",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "policy",
+        "A003"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Selected lead used by listed findings; demonstrated saved report subset retained. Source-supported content bounded by linked primary checks; uncaptured snippet acquisition remains unknown.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-13",
+      "saved_source_entry": {
+        "id": "S-13",
+        "type": "secondary implementation docs",
+        "url": "https://github.com/vinaychandra/vscode-pr-azdo",
+        "version": "unversioned; observed 2026-09-30",
+        "access": "search snippet only (seq 9); full fetch seq 24 returned chrome, not body"
+      },
+      "used_by_findings": [
+        "F-14"
+      ],
+      "history_capture": [
+        "source-exposure/X012.txt"
+      ],
+      "candidate_exposure_body": "navigation_only",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "range"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Saved capture chrome only; final detailed range UX independently supported by owner README; candidate acquisition from uncaptured snippets unknown.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-14",
+      "saved_source_entry": {
+        "id": "S-14",
+        "type": "primary REST reference",
+        "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/get?view=azure-devops-rest-7.1",
+        "version": "REST API 7.1; doc updated 2025-03-18; git commit cb0d0b30",
+        "access": "full fetch (truncated tail); seq 27"
+      },
+      "used_by_findings": [
+        "F-03"
+      ],
+      "history_capture": [
+        "source-exposure/X013.txt"
+      ],
+      "candidate_exposure_body": "visible_partial_primary",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "items"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Selected lead used by listed findings; demonstrated saved report subset retained. Source-supported content bounded by linked primary checks; uncaptured snippet acquisition remains unknown.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-15",
+      "saved_source_entry": {
+        "id": "S-15",
+        "type": "secondary vendor docs",
+        "url": "https://github.com/gitkraken/gitkraken-desktop-docs/blob/HEAD/gitkraken-desktop/azure-devops.md",
+        "version": "unversioned; observed 2026-09-30",
+        "access": "search snippet only (seq 25); full fetch seq 28 returned chrome, not body"
+      },
+      "used_by_findings": [
+        "F-12"
+      ],
+      "history_capture": [
+        "source-exposure/X014.txt"
+      ],
+      "candidate_exposure_body": "navigation_only",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "gk"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Saved capture chrome only; vendor capabilities independently checked; candidate asserts selected-context prevents link bugs by construction without mechanism proof.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-16",
+      "saved_source_entry": {
+        "id": "S-16",
+        "type": "primary REST reference",
+        "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-reviewers/list?view=azure-devops-rest-7.1",
+        "version": "REST API 7.1; doc updated 2025-03-18; git commit cb0d0b30",
+        "access": "full fetch (truncated tail); seq 29"
+      },
+      "used_by_findings": [
+        "F-07"
+      ],
+      "history_capture": [
+        "source-exposure/X015.txt"
+      ],
+      "candidate_exposure_body": "visible_partial_primary",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "reviewers"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Selected lead used by listed findings; demonstrated saved report subset retained. Source-supported content bounded by linked primary checks; uncaptured snippet acquisition remains unknown.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-17",
+      "saved_source_entry": {
+        "id": "S-17",
+        "type": "secondary implementer analysis",
+        "url": "https://github.com/ivoyant-eng/agnusai/blob/HEAD/docs/blog/08-azure-diff-problem-and-myers.md",
+        "version": "unversioned; observed 2026-09-30",
+        "access": "search snippet only (seq 9); full fetch seq 30 returned chrome, not body"
+      },
+      "used_by_findings": [
+        "F-02"
+      ],
+      "history_capture": [
+        "source-exposure/X016.txt"
+      ],
+      "candidate_exposure_body": "navigation_only",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "agnus",
+        "changes",
+        "items",
+        "review"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Saved capture chrome only; original author postmortem validates metadata point, but universal2N claim repeats implementation estimate and misses one-sided/cached cases.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-18",
+      "saved_source_entry": {
+        "id": "S-18",
+        "type": "primary index (snippet)",
+        "url": "https://learn.microsoft.com/uk-ua/rest/api/azure/devops/?view=azure-devops-rest-7.2",
+        "version": "REST API index; observed 2026-09-30",
+        "access": "search snippet only (seq 4)"
+      },
+      "used_by_findings": [
+        "F-09"
+      ],
+      "history_capture": [],
+      "candidate_exposure_body": "not_captured",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "version"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Selected lead used by listed findings; demonstrated saved report subset retained. Source-supported content bounded by linked primary checks; uncaptured snippet acquisition remains unknown.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-19",
+      "saved_source_entry": {
+        "id": "S-19",
+        "type": "secondary implementer note",
+        "url": "https://github.com/tfsaggregator/aggregator-cli/issues/71",
+        "version": "unversioned; observed 2026-09-30",
+        "access": "search snippet only (seq 20)"
+      },
+      "used_by_findings": [
+        "F-10"
+      ],
+      "history_capture": [],
+      "candidate_exposure_body": "not_captured",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "ratereport",
+        "rate"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Historical issue quotes Microsoft rate docs; not independently measured rate behavior.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-20",
+      "saved_source_entry": {
+        "id": "S-20",
+        "type": "secondary implementer note",
+        "url": "https://github.com/ivegamsft/capacity-planning-dashboard/blob/HEAD/.agents/skills/azure-devops-rest/SKILL.md",
+        "version": "unversioned; observed 2026-09-30",
+        "access": "search snippet only (seq 10)"
+      },
+      "used_by_findings": [
+        "F-10"
+      ],
+      "history_capture": [],
+      "candidate_exposure_body": "not_captured",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [],
+      "lead_authority_audit": "partial_unvalidated",
+      "preservation": "Selected lead used by listed findings; demonstrated saved report subset retained. Source-supported content bounded by linked primary checks; uncaptured snippet acquisition remains unknown.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-21",
+      "saved_source_entry": {
+        "id": "S-21",
+        "type": "secondary vendor docs",
+        "url": "https://help.gitkraken.com/gitkraken-desktop/pull-requests/",
+        "version": "unversioned; observed 2026-09-30",
+        "access": "search snippet only (seq 25)"
+      },
+      "used_by_findings": [
+        "F-12"
+      ],
+      "history_capture": [],
+      "candidate_exposure_body": "not_captured",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "gkpr"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Selected lead used by listed findings; demonstrated saved report subset retained. Source-supported content bounded by linked primary checks; uncaptured snippet acquisition remains unknown.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-22",
+      "saved_source_entry": {
+        "id": "S-22",
+        "type": "secondary changelog",
+        "url": "https://github.com/gitkraken/vscode-gitlens/blob/HEAD/CHANGELOG.md",
+        "version": "unversioned; observed 2026-09-30",
+        "access": "search snippet only (seq 25)"
+      },
+      "used_by_findings": [
+        "F-12"
+      ],
+      "history_capture": [],
+      "candidate_exposure_body": "not_captured",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "gitlens"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Current owner changelog supports link construction fix; release/commit absent, fork empty-field exact condition remains unresolved.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-23",
+      "saved_source_entry": {
+        "id": "S-23",
+        "type": "secondary comparison (vendor-adjacent)",
+        "url": "https://sourceforge.net/software/compare/GitKraken-vs-SmartGit-vs-Tower/",
+        "version": "unversioned; observed 2026-09-30",
+        "access": "search snippet only (seq 11)"
+      },
+      "used_by_findings": [
+        "F-13"
+      ],
+      "history_capture": [],
+      "candidate_exposure_body": "not_captured",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [],
+      "lead_authority_audit": "partial_unvalidated",
+      "preservation": "Adversarial comparison lead; no independently validated SmartGit display/template comparison. No semantic credit from source list alone.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-24",
+      "saved_source_entry": {
+        "id": "S-24",
+        "type": "secondary comparison (vendor-authored)",
+        "url": "https://www.gitkraken.com/compare/gitkraken-vs-smartgit",
+        "version": "unversioned; observed 2026-09-30",
+        "access": "search snippet only (seq 11)"
+      },
+      "used_by_findings": [
+        "F-13"
+      ],
+      "history_capture": [],
+      "candidate_exposure_body": "not_captured",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [],
+      "lead_authority_audit": "partial_unvalidated",
+      "preservation": "Vendor-adversarial comparison cannot establish competitor behavior; primary vendor partial features were checked in stage1, absence/display judgments unresolved.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-25",
+      "saved_source_entry": {
+        "id": "S-25",
+        "type": "secondary community practice",
+        "url": "https://github.com/opencoworkai/open-codesign/blob/HEAD/.github/prompts/codex-pr-review.md",
+        "version": "unversioned; observed 2026-09-30",
+        "access": "search snippet only (seq 12)"
+      },
+      "used_by_findings": [
+        "F-15",
+        "F-16"
+      ],
+      "history_capture": [],
+      "candidate_exposure_body": "not_captured",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "freshhead"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Specific GitHub posting freshness rule retained but expanded to presentation obligation; newly located source does not prove candidate saw full body.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-26",
+      "saved_source_entry": {
+        "id": "S-26",
+        "type": "secondary community practice",
+        "url": "https://github.com/danielss-dev/strand/blob/HEAD/docs/pull-request-improvements.md",
+        "version": "unversioned; observed 2026-09-30",
+        "access": "search snippet only (seq 12)"
+      },
+      "used_by_findings": [
+        "F-15"
+      ],
+      "history_capture": [],
+      "candidate_exposure_body": "not_captured",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "strand"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Cache resource/head/cancellation practice retained; proposal-vs-implementation and provider-native anchor warning narrowed away. Candidate original snippet unavailable.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-27",
+      "saved_source_entry": {
+        "id": "S-27",
+        "type": "secondary community practice",
+        "url": "https://github.com/lustefaniak/prbar/blob/HEAD/Sources/PRBar/Resources/prompts/system-base.md",
+        "version": "unversioned; observed 2026-09-30",
+        "access": "search snippet only (seq 12)"
+      },
+      "used_by_findings": [
+        "F-16"
+      ],
+      "history_capture": [],
+      "candidate_exposure_body": "not_captured",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "prbar"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Single original prompt supports stale prose practice; multiple-source convergence/frequency unsupported, authored-timestamp cheap hint ungrounded in provider payload.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-28",
+      "saved_source_entry": {
+        "id": "S-28",
+        "type": "secondary issue report",
+        "url": "https://github.com/microsoft/azure-devops-mcp/issues/1287",
+        "version": "unversioned; observed 2026-09-30",
+        "access": "search snippet only (seq 19)"
+      },
+      "used_by_findings": [
+        "F-17"
+      ],
+      "history_capture": [],
+      "candidate_exposure_body": "not_captured",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [
+        "mcpissue"
+      ],
+      "lead_authority_audit": "bounded_checked",
+      "preservation": "Required reviewer bug retained with write-path transfer caveat; first-hand report on official repo is bounded not API oracle.",
+      "unused_lead": false
+    },
+    {
+      "id": "S-29",
+      "saved_source_entry": {
+        "id": "S-29",
+        "type": "secondary implementer note",
+        "url": "https://github.com/jacobatchley/boardwalk",
+        "version": "unversioned; observed 2026-09-30",
+        "access": "search snippet only (seq 19)"
+      },
+      "used_by_findings": [
+        "F-17"
+      ],
+      "history_capture": [],
+      "candidate_exposure_body": "not_captured",
+      "semantic_acquisition_rule": "No credit from index/read alone; saved report statements are candidate semantic records and independently checked only to bounded content. Missing snippets stay unknown.",
+      "independent_checks": [],
+      "lead_authority_audit": "partial_unvalidated",
+      "preservation": "README fetched independently but exact current-user identity claim not found; lead-only, no source-supported identity acquisition credit.",
+      "unused_lead": false
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "R008-C001",
+      "statement": "Case/card/date/input are plan-blind; sources independently selected; generic research method",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 3
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "brief"
+      ],
+      "preservation_class": "self_report_unvalidated",
+      "source_grounding_reason": "Identity/input pins match; header unavoidably reveals control cue. Independence/acquisition sequence cannot be authenticated from report alone.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C002",
+      "statement": "Full brief covered and mutations outside scope",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 7
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "brief"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Scope statement matches brief; actual completeness assessed below and does not follow from topic headings.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C003",
+      "statement": "Findings have independent IDs and exact URL/version locators; tests are UNEXECUTED; failed search not absence",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 11
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "IDs and clear unexecuted labels verified; F13/F15-F17 have vague source attributions without exact URLs, so locator promise is incomplete.",
+      "current_rescore": false,
+      "material_failure_id": "R008-standalone-citations"
+    },
+    {
+      "claim_id": "R008-C004",
+      "statement": "Iterations1=source head at creation and new pushes create iterations",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 21
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "changes",
+        "A001",
+        "statusconcept",
+        "pr"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Normal iteration-enabled behavior supported; >100000 modified-file/no-iterations exception and supportsIterations omitted.",
+      "current_rescore": false,
+      "material_failure_id": "C028-iteration-support-omitted"
+    },
+    {
+      "claim_id": "R008-C005",
+      "statement": "List returns iterations and includeCommits attaches commits",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 21
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "A001"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Supported API7.1 operation; hasMoreCommits condition not carried to output.",
+      "current_rescore": false,
+      "material_failure_id": "R008-commit-completeness-omitted"
+    },
+    {
+      "claim_id": "R008-C006",
+      "statement": "Iteration ID is PR-scoped integer selector, not SHA",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 24
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "A001",
+        "changes"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Correct identity distinction.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C007",
+      "statement": "Force-push numbering not verified; U03 proposed",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 25
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "review",
+        "A001"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Honest limit, not false fact; primary force-push update preservation is an undeveloped available lead.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C008",
+      "statement": "Changes returns path/change-type metadata, no unified diff hunks",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 29
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "changes"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Response/schema support metadata-only comparison; does not assert corpus-wide lack of every diff API.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C009",
+      "statement": "compareTo0=common commit; explicit iteration pair; top/skip pagination",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 29
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "changes"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Exact documented options verified.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C010",
+      "statement": "Compare can use file-list or build diff content; GitHub single-call assumption risky",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 32
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "changes",
+        "items",
+        "brief"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Useful options; no exhaustive assertion that all provider alternatives were excluded.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C011",
+      "statement": "Large PR behavior not verified",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 33
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "changes",
+        "statusconcept"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Honest limitation; page limits and iteration-disabled condition remain relevant omissions.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C012",
+      "statement": "Items gets versioned content with includeContent and descriptors",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 37
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "items"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Documented operation and options verified.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C013",
+      "statement": "Every file diff needs at least two content reads; PR-wide diff always2N reads",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 37
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "contradicted",
+      "primary_check_refs": [
+        "items",
+        "changes",
+        "review"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "True for uncached two-existing-blob naive GET strategy, not lower bound: additions/deletions have one content side, identical/cached content need fewer reads.",
+      "current_rescore": false,
+      "material_failure_id": "R008-universal-2N"
+    },
+    {
+      "claim_id": "R008-C014",
+      "statement": "Client-side diff/cache offline, file-list default/on-demand, investigate server patch UNEXECUTED",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 40
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "items",
+        "changes",
+        "brief"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Valid optional implementation decisions; no executed patch path is claimed.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C015",
+      "statement": "Cache(repository,path,commit) is safe immutable blob identity",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 40
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "items",
+        "range",
+        "brief"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Commit-based content identity supported; organization/server context, fork repository and access-loss handling qualify universal safety.",
+      "current_rescore": false,
+      "material_failure_id": "R008-cache-identity-narrowed"
+    },
+    {
+      "claim_id": "R008-C016",
+      "statement": "LFS/binary/size caps remain unverified",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 41
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "items"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Honest unexecuted scope; resolveLfs is documented but not semantically developed.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C017",
+      "statement": "CodeReview artifact template, top/skip, includeNotApplicable exclusion and7.1-preview.1",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 45
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "A003"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Exact artifact/version/parameters preserved.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C018",
+      "statement": "false means applicable view; true must be a second call for non-applicable view",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 48
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "A003"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "A second call is optional: true includes both families and client can partition. It is not required to enumerate non-applicable policies.",
+      "current_rescore": false,
+      "material_failure_id": "R008-second-evaluations-call"
+    },
+    {
+      "claim_id": "R008-C019",
+      "statement": "Preview dependency is compatibility risk",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 48
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "versionrules",
+        "version"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Correct per-endpoint qualification.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C020",
+      "statement": "Project-name artifact acceptance and exact eval enum unverified",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 49
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "A003",
+        "cli",
+        "projects"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Honest uncertainty; template uses id and primary CLI/uuid can resolve it. Enum is already documented and remains current omission.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C021",
+      "statement": "External statuses separate from policy evaluations; optional iteration status; policy/reset can gate completion",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 53
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "A002",
+        "A003",
+        "statusconcept"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Supported distinct resources and configured status policy.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C022",
+      "statement": "GET pullRequests/{id}/statuses lists PR statuses",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 53
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "A002",
+        "statusconcept"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Pinned X021 also gives exact URI; dedicated iteration URI not carried in current report.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C023",
+      "statement": "Two check families; no-status cannot mean passed; resets make old iteration status irrelevant to latest code",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 56
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "statusconcept",
+        "A002",
+        "A003",
+        "brief"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Correct central distinction; exact state semantics still missing.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C024",
+      "statement": "Status enums and per-iteration/per-PR addressing not captured",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 57
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "A002"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Explicit current incompleteness; source availability is not completed acquisition.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C025",
+      "statement": "Policy types include reviewers/build/status/comments/work items/merge strategies",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 61
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "policy"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Listed policy families supported.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C026",
+      "statement": "Required build validation gates completion; Optional reports without gating",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 61
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "policy",
+        "A003"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Correct conditional enforcement semantics; bypass permissions mean no universal unoverrideable Complete-button guarantee.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C027",
+      "statement": "Minimum-reviewer policies commonly reset votes on push",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 61
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "policy"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Reset is configurable, not universal/default or frequency established. Required final-iteration approvals and reset variants differ.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C028",
+      "statement": "Explain blocking mode/configuration; failing Optional differs from Required",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 64
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "A003",
+        "policy",
+        "brief"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Good brief-fit interpretation; exact visual alarm/grouping optional.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C029",
+      "statement": "Full configuration schema was not read; lives in separate Configurations API",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 65
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "A003",
+        "config"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Historical read claim gated; evaluations already embeds full PolicyConfiguration including isEnabled/isBlocking/settings/type. Extra configuration call need not be required.",
+      "current_rescore": false,
+      "material_failure_id": "R008-embedded-config-unused"
+    },
+    {
+      "claim_id": "R008-C030",
+      "statement": "Reviewers GET returns IdentityRefWithVote, vote and required flags",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 69
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "reviewers"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Exact model and read surface supported.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C031",
+      "statement": "Group reviewers resolve via group membership",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 69
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "reviewers"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Member roll-up/votedFor documented; separate group-membership queries not established as necessary.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C032",
+      "statement": "Display required unvoted reviewer; no vote mutation UI",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 72
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "reviewers",
+        "brief"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Supported display-only capability and brief scope.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C033",
+      "statement": "Vote mapping unverified; identity ID/descriptor safer than email",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 73
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "reviewers"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Mapping and descriptor uniqueness are primary documented; matches-by-ID is sensible; cross-resource identifier caveats still need care.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C034",
+      "statement": "Entra OAuth/MI/SP preferred; PAT fallback with least privilege/short lifetime",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 77
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "auth",
+        "pat"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Current recommendations verified; desktop delegated Entra is scenario-specific, not managed identity on arbitrary desktop.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C035",
+      "statement": "All existing global PATs stop working2026-12-01",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 79
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "pat"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Current primary page explicitly confirms exact date.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C036",
+      "statement": "Azure DevOps OAuth deprecated/no new registrations; new apps use Entra",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 80
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "oauth"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Important note matches.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C037",
+      "statement": "OAuth Services only; Server client libraries/Windows auth/PAT",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 81
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "auth",
+        "oauth"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Correct deployment split.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C038",
+      "statement": "Least privilege vso.code read/vso.code_status read-write; scopes inherit",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 82
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "A002",
+        "oauth"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Documented scope examples supported.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C039",
+      "statement": "Existing account choice must be checked; PAT-only is already obsolete for new Services apps",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 85
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "auth",
+        "pat",
+        "brief"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Entra preferred and ADO-OAuth unavailable to new registrations; org-scoped PATs remain supported fallback, so PAT-only is not automatically API-inapplicable.",
+      "current_rescore": false,
+      "material_failure_id": "R008-pat-obsolete-strength"
+    },
+    {
+      "claim_id": "R008-C040",
+      "statement": "Read-only scopes make no-provider-mutation promise credential-enforceable",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 85
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "A002",
+        "oauth",
+        "brief"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Read scope can constrain calls; vso.code_status grants writes and auth choice alone does not prove no mutation. Existing account permissions may remain broader.",
+      "current_rescore": false,
+      "material_failure_id": "R008-readonly-credential-strength"
+    },
+    {
+      "claim_id": "R008-C041",
+      "statement": "Minimum call-by-call scopes not verified",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 86
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "A001",
+        "A002",
+        "A003",
+        "items",
+        "reviewers"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Honest follow-up; central Git/policy reads list vso.code in primary docs.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C042",
+      "statement": "Explicit api-version every request; resource-specific preview; Server compatibility matrix",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 90
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "rest",
+        "version",
+        "A003"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Correct version/scope fit without global stable version claim.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C043",
+      "statement": "Pin per endpoint and explain version-vs-permission unavailable reasons",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 93
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "version",
+        "rest",
+        "brief"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Reasonable recommendation; definitive diagnosis requires evidence.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C044",
+      "statement": "Lowest Server supporting each endpoint not established",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 94
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V001.txt",
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V001.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "version"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Honest limitation; general matrix is not an endpoint-specific floor.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C045",
+      "statement": "Consumption >200x typical sliding5min, delay ms-30s, stops after drop, warnings/email",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 98
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "rate"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Core numerical conditions verified; shared-resource pressure also triggers delay.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C046",
+      "statement": "Blocked calls429/TF400733; top/skip vs continuation headers per endpoint",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 98
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "rate",
+        "changes",
+        "A003",
+        "config"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Supported signals and multiple pager dialects.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C047",
+      "statement": "2N fanout client must back off429/Retry-After, manual/narrow refresh preferred, page every list",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 101
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "rate",
+        "changes",
+        "A003",
+        "brief"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Responsible proposals;2N premise overgeneralized, and some lists are unpaged; Retry-After on200 should delay next request, not retry completed request.",
+      "current_rescore": false,
+      "material_failure_id": "C028-rate-success-delay-omitted"
+    },
+    {
+      "claim_id": "R008-C048",
+      "statement": "Provider throttling can make data partial",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 101
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "rate",
+        "brief"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Failed/incomplete retrieval can be partial; delayed successful response is not inherently incomplete.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C049",
+      "statement": "Exact nextSkip/nextTop not primary-verified",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 102
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "changes"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Honest unresolved contract; available primary fields remain undeveloped.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C050",
+      "statement": "Single PR GET includeCommits/includeWorkItemRefs;skip/top/maxCommentLength unused",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 106
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "pr"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Exact useful/inert parameter distinctions verified.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C051",
+      "statement": "List responses truncate descriptions",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 106
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "prlist"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Primary List introduction documents400-symbol truncation; useful finding beyond reference.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C052",
+      "statement": "Single PR GET simpler than stitching lists; omit inert arguments",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 109
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "pr",
+        "prlist"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Valid optional implementation simplification; not tested performance result.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C053",
+      "statement": "Truncation length secondary-only/unverified",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 110
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "prlist"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Conservative label, but primary source directly supplies length. Not a provider falsehood.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C054",
+      "statement": "GitKraken Azure integrations: avatars, clone repo list, SSH setup, create/view PR/add reviewers",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 116
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "gk"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Vendor primary docs verified; no execution or feature-depth benchmark.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C055",
+      "statement": "ADO PR templates supported; missing form fix via remote URL/domain",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 116
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "gkpr",
+        "gk"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Vendor primary docs verify exact capabilities/troubleshooting.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C056",
+      "statement": "GitLens fixed cross-org/server payload links with configured org",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 116
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "gitlens"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Official changelog confirms but currently in Unreleased; not proof of shipped release.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C057",
+      "statement": "Fork-head correlation fix when Azure clone fields empty",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 116
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "unresolved",
+      "primary_check_refs": [
+        "gitlens"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Exact issue/release absent in carrier; inspected changelog corroborates related link fixes only, not this precise failure.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C058",
+      "statement": "Selected organization/project/repo differentiates and prevents link confusion by construction",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 119
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "unsupported",
+      "primary_check_refs": [
+        "brief",
+        "gk",
+        "gitlens"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Context selection alone does not stop code trusting an embedded cross-org payload link; vendor client also configures organization.",
+      "current_rescore": false,
+      "material_failure_id": "R008-context-selection-immunity"
+    },
+    {
+      "claim_id": "R008-C059",
+      "statement": "Render links from selected context, validate organization/server segments",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 119
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "gitlens",
+        "brief"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Supported defensive lesson; must also respect legitimate fork/source repository identity and URI encoding.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C060",
+      "statement": "Snippet/vendor-doc feature parity is not executed behavior",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 120
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "gk",
+        "gkpr"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Correct transfer limit; source owner documentation is primary for documented feature claim.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C061",
+      "statement": "SmartGit integrates four hosts for PR/comments; license usable across machines/OS",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 124
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "smartgit",
+        "smartgitolder"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Vendor indexed text supports; live redirect lacks full historical prose, report pins no version.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C062",
+      "statement": "Dated UI/weakHiDPI-darkmode/no PR templates asserted by competitors",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 124
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "unresolved",
+      "primary_check_refs": [
+        "smartgit",
+        "smartgitolder"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Exact adversarial pages not cited; no hands-on test. Vendor documents light/dark themes, but no measured weakness or template absence established.",
+      "current_rescore": false,
+      "material_failure_id": "R008-competitor-unsupported-comparison"
+    },
+    {
+      "claim_id": "R008-C063",
+      "statement": "Distributed Reviews separate product and no provider PRs",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 124
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "distributed"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Add-on has its own Git-stored metadata and license option; vendor says part of download. Absolute incompatibility is not proven by silence.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C064",
+      "statement": "Depth over breadth and modern display exceeds SmartGit opportunity",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 127
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "brief",
+        "smartgit"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Product positioning choice; superiority/depth baseline not measured.",
+      "current_rescore": false,
+      "material_failure_id": "R008-competitor-superiority"
+    },
+    {
+      "claim_id": "R008-C065",
+      "statement": "Secondary/adversarial evidence; no hands-on evaluation executed",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 128
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Clear label prevents execution claim; exact sourcing remains deficient and acquisition deferred.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C066",
+      "statement": "Extension iteration3vs2,2-4vs1,gaps included,no selection latest",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 132
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "range"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "All exact selection conventions independently verified in owner's README.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C067",
+      "statement": "Files tree/open diff/new-comment context follow range; immutable content without checkout mutation",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 132
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "range"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Documented implementation behavior; no executed validation.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C068",
+      "statement": "Range model best observed and recommended including gap/fallback",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 135
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "range",
+        "brief"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Useful optional UX; best is editorial limited to observed field, not comparative proof.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C069",
+      "statement": "Behavior docs, UNEXECUTED, desktop adaptation needed",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 136
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "range"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Correct transfer limit.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C070",
+      "statement": "Independent practices converge on fresh-head refetch/cancellation/cache/deep-link rule",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 140
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "unresolved",
+      "primary_check_refs": [
+        "openreview",
+        "pr",
+        "range"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Exact OpenCoworkAI quotation/Strand source unidentified; inspected workflow does not authenticate attribution. Sensible proposal is not independently verified convergence.",
+      "current_rescore": false,
+      "material_failure_id": "R008-community-convergence"
+    },
+    {
+      "claim_id": "R008-C071",
+      "statement": "Pin iteration/head; moved-head banner; never silently repoint; selected3of5",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 143
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "brief",
+        "A001",
+        "changes"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Strong brief-fit proposal; refetch frequency/stop behavior product choices.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C072",
+      "statement": "Live head field unverified",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 144
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "pr",
+        "A001"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Honest uncertainty; lastMergeSourceCommit is merge snapshot and sourceRefCommit is iteration-specific, not interchangeable live head.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C073",
+      "statement": "PR descriptions routinely become stale; multiple sources agree diff is review object",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 148
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "unresolved",
+      "primary_check_refs": [
+        "pr",
+        "review"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Description and changes can differ, but frequency and unnamed consensus unsupported by exact primary attributions.",
+      "current_rescore": false,
+      "material_failure_id": "R008-description-consensus"
+    },
+    {
+      "claim_id": "R008-C074",
+      "statement": "Show description authored-at vs latest iteration and N-newer hint cheaply",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 151
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "pr",
+        "A001",
+        "brief"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Optional useful presentation idea, but generic PR payload does not give description-authored/updated timestamp or history count, so exact cheap computability not established.",
+      "current_rescore": false,
+      "material_failure_id": "R008-description-age-data"
+    },
+    {
+      "claim_id": "R008-C075",
+      "statement": "Community guidance, not provider semantics",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 152
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Correct classification prevents mandate, but attribution still unresolved.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C076",
+      "statement": "Node SDK/CLI and MCPs expose working read paths for iterations/policies/threads",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 156
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "gitapi",
+        "policyapi",
+        "cli",
+        "mcpissue"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Official SDK/CLI read methods and issue tool usage verified; no execution proof claimed.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C077",
+      "statement": "MCP vote path demoted required reviewers by omitting isRequired",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 156
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "mcpissue"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Firsthand official-repository issue confirms report; issue is closed and write path outside brief.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C078",
+      "statement": "Consult SDK/CLI call spelling simpler than derivation",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 159
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "gitapi",
+        "policyapi",
+        "cli"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Useful optional recommendation, no measured cost advantage.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C079",
+      "statement": "Every cached/view-model reviewer path must roundtrip isRequired in read-only client",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 159
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "reviewers",
+        "mcpissue",
+        "brief"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Preserve flag for honest display; read-only cache transforms are not REST write roundtrips and exact architecture is product choice.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C080",
+      "statement": "No reference code read/executed in candidate session; bug lesson limited to flag handling",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 160
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "unresolved",
+      "primary_check_refs": [
+        "mcpissue"
+      ],
+      "preservation_class": "self_report_unvalidated",
+      "source_grounding_reason": "Appropriate current caveat; acquisition assertion reserved for history.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C081",
+      "statement": "Table obligations explicit versions/auth/read-only/honesty/pinnedcontext/backoff/paging",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 166
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "brief",
+        "versionrules",
+        "auth",
+        "rate"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Core brief/version/auth constraints supported; mandatory moved-head banner, credential restriction and page-all mechanics stronger than provider/brief.",
+      "current_rescore": false,
+      "material_failure_id": "R008-obligation-inflation"
+    },
+    {
+      "claim_id": "R008-C082",
+      "statement": "Optional range/grouping/non-applicable/iteration-status/reviewers capabilities",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 173
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "changes",
+        "A003",
+        "A002",
+        "reviewers"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Valid capabilities; parenthetical second call is unnecessary and exact iteration-status semantics unresolved.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C083",
+      "statement": "Diff/cache/polling/description/positioning remain decisions",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 177
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "brief"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Correct product-choice categories; empirical support assessed separately.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C084",
+      "statement": "No plan supplied; priority list of hypothetical thin-plan misses",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 184
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "brief"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "No claim of actual plan defect; priority is editorial.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C085",
+      "statement": "U01 exact eval/status enums not captured; proposed schemas reads UNEXECUTED",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 188
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V003.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "A002",
+        "A003"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Valid proposal; central enums including both notApplicable meanings remain uncompleted.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C086",
+      "statement": "U02 paging/head field/config/thread details unresolved; proposed endpoint reads UNEXECUTED",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 189
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "changes",
+        "pr",
+        "A003",
+        "threads"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Valid proposals; several facts primary-documented but not incorporated.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C087",
+      "statement": "U03 endpoint Server floors/force-push unresolved; proposed compatibility check UNEXECUTED",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 190
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "version",
+        "review"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Valid proposal; no executed floor/history test asserted.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C088",
+      "statement": "U04 large-object/count/binary/LFS guidance unresolved; proposed docs reads UNEXECUTED",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 191
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "limits",
+        "items",
+        "review"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Valid follow-up, not false assertion of absence.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C089",
+      "statement": "U05 vote scale/group votes unresolved; proposed model read UNEXECUTED",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 192
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "reviewers"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Valid proposal; exact scale/group roll-up directly documented and current report lacks them.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C090",
+      "statement": "U06 current-user connection/graph identity unresolved; proposed read UNEXECUTED",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 193
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "reviewers"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Valid follow-up; descriptor unique field alone does not verify all matching routes.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C091",
+      "statement": "U07 least-privilege endpoint matrix unresolved; proposed crosscheck UNEXECUTED",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 194
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "A001",
+        "A002",
+        "A003",
+        "items"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Valid proposal; no claim that an exact matrix is already complete.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C092",
+      "statement": "U08 competitor depth snippet-level; proposed raw/hands-on review UNEXECUTED",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 195
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "qualified",
+      "primary_check_refs": [
+        "range",
+        "gk",
+        "smartgit"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Valid scope limit; evaluator independently verified identifiable primary sources, not candidate hands-on.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C093",
+      "statement": "14searches16reads exact scheduling/acquisition record; no writes/credentials/API executions",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 199
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V005.txt",
+      "frozen_stage1_outcome": "unresolved",
+      "primary_check_refs": [],
+      "preservation_class": "self_report_unvalidated",
+      "source_grounding_reason": "Runtime/acquisition assertions history-gated; report self-counts are not economic measurement.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C094",
+      "statement": "Wall-clock uninstrumented/shell unavailable/fixed budget complete",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 200
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "unresolved",
+      "primary_check_refs": [],
+      "preservation_class": "self_report_unvalidated",
+      "source_grounding_reason": "Cannot authenticate current-only; cost/latency remain unassessed.",
+      "current_rescore": false,
+      "material_failure_id": null
+    },
+    {
+      "claim_id": "R008-C095",
+      "statement": "Full brief researched and nothing material silently dropped",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 201
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "unsupported",
+      "primary_check_refs": [
+        "brief",
+        "A001",
+        "A002",
+        "A003"
+      ],
+      "preservation_class": "qualified_or_incorrect_derivation_retained",
+      "source_grounding_reason": "Topic breadth exists, but central native state meanings, commit identities and dedicated iteration-status addressing are incomplete; U-list honesty does not constitute completed coverage.",
+      "current_rescore": false,
+      "material_failure_id": "C028-full-brief-overclaim"
+    },
+    {
+      "claim_id": "R008-C096",
+      "statement": "Snippet claims lower-confidence labeled; retirement/version may change",
+      "final_locator": {
+        "path": "current-report.md",
+        "line": 202
+      },
+      "saved_versions_with_exact_final_line": [
+        "artifact-versions/V002.txt",
+        "artifact-versions/V003.txt",
+        "artifact-versions/V005.txt"
+      ],
+      "earliest_exact_carrier": "artifact-versions/V002.txt",
+      "frozen_stage1_outcome": "supported",
+      "primary_check_refs": [
+        "pat",
+        "versionrules"
+      ],
+      "preservation_class": "supported_content_retained",
+      "source_grounding_reason": "Correct epistemic/temporal caveat; labels do not replace source support.",
+      "current_rescore": false,
+      "material_failure_id": null
+    }
+  ],
+  "facets": [
+    {
+      "id": "AZR-01",
+      "frozen_current_coverage": "partial",
+      "history_disposition": "Iteration integer and list are demonstrated, sourceRefCommit/targetRefCommit/commonRefCommit and dedicated iteration-status route not demonstrated acquired; capture tails exclude them. Final omission is not draft loss.",
+      "primary_check_refs": [
+        "A001",
+        "A002"
+      ],
+      "not_a_current_rescore": true
+    },
+    {
+      "id": "AZR-02",
+      "frozen_current_coverage": "partial",
+      "history_disposition": "Both signal families and empty-not-pass preserved. Complete native status/evaluation vocabularies not demonstrated acquired. Saved source-list leads could have developed them; source exposure does not prove learned semantics.",
+      "primary_check_refs": [
+        "A002",
+        "A003",
+        "statusconcept"
+      ],
+      "not_a_current_rescore": true
+    },
+    {
+      "id": "AZR-03",
+      "frozen_current_coverage": "full",
+      "history_disposition": "Exact CodeReview template demonstrated in captured primary and preserved. GUID supported independently by official implementation; extra Projects lookup not inherent obligation. R008 leaves project-name acceptance unresolved honestly.",
+      "primary_check_refs": [
+        "A003",
+        "cli",
+        "projects"
+      ],
+      "not_a_current_rescore": true
+    },
+    {
+      "id": "AZR-04",
+      "frozen_current_coverage": "partial",
+      "history_disposition": "R007 report already contains isBlocking/isEnabled and retains both; independent primary confirms, candidate full model exposure unavailable. R008 retains Required/Optional but no isEnabled; no proof earlier acquired and lost.",
+      "primary_check_refs": [
+        "A003",
+        "policy"
+      ],
+      "not_a_current_rescore": true
+    },
+    {
+      "id": "AZR-05",
+      "frozen_current_coverage": "full",
+      "history_disposition": "Git7.1 and policy7.1-preview.1 visibly acquired and retained. Global stable/preview rule source transfer remains weaker than endpoint contract.",
+      "primary_check_refs": [
+        "A001",
+        "A002",
+        "A003"
+      ],
+      "not_a_current_rescore": true
+    },
+    {
+      "id": "AZR-06",
+      "frozen_current_coverage": "partial",
+      "history_disposition": "topskip/includeNotApplicable visibly acquired and retained; completion mechanics and one-call inclusion strategy inadequately developed. R008 extra second-call rule is a derivation issue, not source loss.",
+      "primary_check_refs": [
+        "A003"
+      ],
+      "not_a_current_rescore": true
+    }
+  ],
+  "unreviewed_scope": [
+    {
+      "type": "independent_original_lead_body_validation_incomplete",
+      "source_ids": [
+        "S-20",
+        "S-23",
+        "S-24",
+        "S-29"
+      ],
+      "reason": "These exact original lead bodies/versions were not independently verified within this phase; associated provider claims have bounded primary checks where recorded. No all-lead pass claimed."
+    },
+    {
+      "type": "candidate_search_snippet_semantics_unavailable",
+      "scope": "Every source recorded as snippet-only without a fetched content body",
+      "reason": "Search results are not admitted in history captures. Source titles and candidate notes are not proof of source-supported acquisition."
+    },
+    {
+      "type": "runtime_and_negative_actions_unvalidated",
+      "scope": "shell limitation, elapsed budget, no hidden reads/no writes/no subagents/no execution",
+      "reason": "Completed artifact/read/fetch subset is not full conversation or tool-call inventory; cannot prove negative activity or exact elapsed candidate runtime."
+    }
+  ],
+  "reused_independent_primary_checks": {
+    "brief": {
+      "path": "inputs/brief.md",
+      "locator": "Complete brief",
+      "authority": "frozen product brief"
+    },
+    "A001": {
+      "path": "inputs/sources/A001.txt",
+      "locator": "GitPullRequestIteration; GitStatusState; IterationReason",
+      "authority": "frozen Microsoft API 7.1"
+    },
+    "A002": {
+      "path": "inputs/sources/A002.txt",
+      "locator": "URI; iterationId; GitStatusState",
+      "authority": "frozen Microsoft API 7.1"
+    },
+    "A003": {
+      "path": "inputs/sources/A003.txt",
+      "locator": "URI parameters; Security; PolicyConfiguration; PolicyEvaluationStatus",
+      "authority": "frozen Microsoft Policy API 7.1-preview.1"
+    },
+    "changes": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1",
+      "locator": "URI Parameters; examples; GitPullRequestIterationChanges",
+      "authority": "Microsoft API 7.1"
+    },
+    "reviewers": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-reviewers/list?view=azure-devops-rest-7.1",
+      "locator": "IdentityRefWithVote, vote/isRequired/votedFor/descriptor",
+      "authority": "Microsoft API 7.1"
+    },
+    "items": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/get?view=azure-devops-rest-7.1",
+      "locator": "URI Parameters; response media types; FileContentMetadata",
+      "authority": "Microsoft API 7.1"
+    },
+    "diffs": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/diffs/get?view=azure-devops-rest-7.1",
+      "locator": "URI Parameters; GitCommitDiffs.allChangesIncluded",
+      "authority": "Microsoft API 7.1"
+    },
+    "pr": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.1",
+      "locator": "URI Parameters; GitPullRequest fields; PullRequestStatus; PullRequestAsyncStatus",
+      "authority": "Microsoft API 7.1"
+    },
+    "prlist": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests?view=azure-devops-rest-7.1",
+      "locator": "Operation introduction: description truncated to 400 symbols",
+      "authority": "Microsoft API 7.1"
+    },
+    "threads": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-threads/list?view=azure-devops-rest-7.1",
+      "locator": "URI Parameters; CommentIterationContext; CommentThreadStatus; CommentTrackingCriteria",
+      "authority": "Microsoft API 7.1"
+    },
+    "auth": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops",
+      "locator": "Services/Server availability; methods by scenario; web/desktop row; FAQ",
+      "authority": "Microsoft current guidance"
+    },
+    "pat": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops",
+      "locator": "Important global PAT retirement; Use a PAT; least privilege",
+      "authority": "Microsoft current guidance"
+    },
+    "oauth": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/oauth?view=azure-devops",
+      "locator": "Important; Server note; scope considerations; FAQ API coverage",
+      "authority": "Microsoft current guidance"
+    },
+    "rest": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/how-to/call-rest-api?view=azure-devops",
+      "locator": "URL structure; Response codes; API versioning",
+      "authority": "Microsoft current guidance"
+    },
+    "version": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/?view=azure-devops-rest-7.2",
+      "locator": "Server-to-REST compatibility table; API-version format",
+      "authority": "Microsoft REST reference"
+    },
+    "versionrules": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rest-api-versioning?view=azure-devops",
+      "locator": "Guidelines; preview deactivation after release; header/query version",
+      "authority": "Microsoft guidance"
+    },
+    "config": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/configurations/list?view=azure-devops-rest-7.1",
+      "locator": "Introduction legacy scope warning; URI Parameters; PolicyConfiguration",
+      "authority": "Microsoft API 7.1"
+    },
+    "policy": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops",
+      "locator": "minimum reviewers; Require comment resolution; Build validation policy requirement/expiration; Status checks; Automatically include reviewers",
+      "authority": "Microsoft product documentation"
+    },
+    "statusconcept": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-request-status?view=azure-devops",
+      "locator": "Iteration status; >100000 modified-file exception; Status policy; applicability options",
+      "authority": "Microsoft product documentation"
+    },
+    "limits": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/repos/git/limits?view=azure-devops",
+      "locator": "Repository size; Push size; LFS objects; Path length",
+      "authority": "Microsoft product documentation"
+    },
+    "rate": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits?view=azure-devops",
+      "locator": "Global consumption limit; TSTUs; Best practices; API client experience",
+      "authority": "Microsoft Services documentation"
+    },
+    "review": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/repos/git/review-pull-requests?view=azure-devops",
+      "locator": "Review changes (added/deleted pane, size thresholds, force-push); Vote on PR changes",
+      "authority": "Microsoft product documentation"
+    },
+    "hooks": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/service-hooks/events?view=azure-devops",
+      "locator": "Pull request created/updated/commented-on",
+      "authority": "Microsoft event documentation"
+    },
+    "projects": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/core/projects/get?view=azure-devops-rest-7.1",
+      "locator": "TeamProject.id string(uuid)",
+      "authority": "Microsoft API 7.1"
+    },
+    "cli": {
+      "url": "https://raw.githubusercontent.com/Azure/azure-devops-cli-extension/master/azure-devops/azext_devops/dev/repos/pull_request.py",
+      "locator": "list_pr_policies, lines 570-589: project_id=pr.repository.project.id",
+      "authority": "Microsoft/Azure official implementation"
+    },
+    "gitapi": {
+      "url": "https://raw.githubusercontent.com/microsoft/azure-devops-node-api/master/api/GitApi.ts",
+      "locator": "IGitApi; getPullRequestIterationChanges; getPullRequestIterationStatuses",
+      "authority": "Microsoft SDK implementation; live master"
+    },
+    "policyapi": {
+      "url": "https://raw.githubusercontent.com/microsoft/azure-devops-node-api/master/api/PolicyApi.ts",
+      "locator": "getPolicyEvaluations, lines 359-400; explicit top/skip; 7.2-preview.1",
+      "authority": "Microsoft SDK implementation; live master"
+    },
+    "sdkreadme": {
+      "url": "https://raw.githubusercontent.com/microsoft/azure-devops-node-api/master/README.md",
+      "locator": "Authentication/getPersonalAccessTokenHandler; APIs; Server matrix",
+      "authority": "Microsoft SDK project documentation"
+    },
+    "range": {
+      "url": "https://raw.githubusercontent.com/vinaychandra/vscode-pr-azdo/master/README.md",
+      "locator": "Show Iterations, lines 31-32",
+      "authority": "Implementation owner's current documentation; no execution"
+    },
+    "gk": {
+      "url": "https://raw.githubusercontent.com/gitkraken/gitkraken-desktop-docs/master/gitkraken-desktop/azure-devops.md",
+      "locator": "Integration capabilities; troubleshooting missing PR form, lines 165-175",
+      "authority": "Vendor primary documentation"
+    },
+    "gkpr": {
+      "url": "https://help.gitkraken.com/gitkraken-desktop/pull-requests/",
+      "locator": "How pull request templates work, lines 175-189",
+      "authority": "Vendor primary documentation"
+    },
+    "gitlens": {
+      "url": "https://raw.githubusercontent.com/gitkraken/vscode-gitlens/main/CHANGELOG.md",
+      "locator": "Unreleased fixes #5839/#5840/#5842/#5836; live changing file",
+      "authority": "Implementation owner's changelog; unreleased"
+    },
+    "smartgit": {
+      "url": "https://www.smartgit.dev/",
+      "locator": "Platform integration; supported OS; no comparative display-quality measurement",
+      "authority": "Vendor primary documentation"
+    },
+    "smartgitolder": {
+      "url": "https://www.syntevo.com/smartgit/",
+      "locator": "Search-indexed vendor text: integrations, license across machines, light/dark themes; live redirects",
+      "authority": "Vendor historical indexed text; version not pinned"
+    },
+    "distributed": {
+      "url": "https://www.smartgit.dev/features/distributed-reviews/",
+      "locator": "Part of SmartGit Download; Local/offline reviewing; metadata in Git",
+      "authority": "Vendor primary documentation"
+    },
+    "mcpissue": {
+      "url": "https://github.com/microsoft/azure-devops-mcp/issues/1287",
+      "locator": "Summary/Repro/Root cause; opened 2026-05-26, closed via #1289",
+      "authority": "Firsthand issue in official repository; not normative API contract"
+    },
+    "lfs": {
+      "url": "https://devblogs.microsoft.com/devops/announcing-git-lfs-on-all-vso-git-repos/",
+      "locator": "2015-10-01 announcement",
+      "authority": "Microsoft historical announcement; current guarantee not established"
+    },
+    "rename": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/organizations/projects/rename-project?view=azure-devops",
+      "locator": "Results of rename; old/new URLs continue; cached client failure; Git remotes",
+      "authority": "Microsoft product documentation"
+    },
+    "openreview": {
+      "url": "https://raw.githubusercontent.com/OpenCoworkAI/open-cowork/main/.github/workflows/codex-pr-review.yml",
+      "locator": "Reviewed workflow; exact quoted Fresh-head source not identified",
+      "authority": "Named project repository; exact claim unresolved"
+    }
+  },
+  "phase2_source_checks": {
+    "freshhead": {
+      "url": "https://raw.githubusercontent.com/opencoworkai/open-codesign/HEAD/.github/prompts/codex-pr-review.md",
+      "authority": "original project review prompt; primary for its own practice, not Azure API",
+      "version": "HEAD observed 2026-09-30; no candidate commit pin",
+      "locator": "Fresh-head only, line155; posting guard lines178-190",
+      "result": "Refetch and stop if changed before GitHub review posting; does not itself establish universal read-only presentation obligation."
+    },
+    "strand": {
+      "url": "https://raw.githubusercontent.com/danielss-dev/strand/HEAD/docs/pull-request-improvements.md",
+      "authority": "original author product proposal and stated implementation update",
+      "version": "Research2026-07-13, update2026-07-14; HEAD observed2026-09-30",
+      "locator": "Introduction lines2-17; Performance and data contract lines250-271",
+      "result": "Proposes per-resource provider/repository/PR/head cache and cancellation on selection changes. Thread anchors should use provider line/start-line/side rather than deprecated diff-relative positions; candidate loses this qualification."
+    },
+    "prbar": {
+      "url": "https://raw.githubusercontent.com/lustefaniak/prbar/HEAD/Sources/PRBar/Resources/prompts/system-base.md",
+      "authority": "original project prompt; primary for own review guidance",
+      "version": "HEAD observed2026-09-30, unpinned",
+      "locator": "PR title and description lines34-40",
+      "result": "One project treats prose as context and accepts stale descriptions; not multi-source consensus or measured frequency; no Azure description-authored timestamp contract."
+    },
+    "mcp1245": {
+      "url": "https://github.com/microsoft/azure-devops-mcp/issues/1245",
+      "authority": "firsthand issue on official repository; bounded report, not normative API",
+      "version": "Opened2026-05-11, closed via1246; MCP2.5.0, SDK15.1.2, Node22",
+      "locator": "Summary, Versions, Reproduction; malformed Project/RepoName identifier versus GUID",
+      "result": "Reports createPullRequest null and getBranches null failure for malformed slash identifier; original issue supports specific pitfall, not all SDK reads null-versus-throw."
+    },
+    "ubiquex": {
+      "url": "https://github.com/ubiquex/ubiquex/commit/cd90a65f4cb4122c97ecc4ee9948865dc2394832",
+      "authority": "original implementation commit; primary for own acceptance model",
+      "version": "immutable commit cd90a65f4cb4122c97ecc4ee9948865dc2394832",
+      "locator": "ApprovingReviewers comments and vote==10 filter",
+      "result": "Only10 is this project acceptance rule. Native vote5 is approved with suggestions; provider branch-policy approval behavior cannot be inferred from this filter."
+    },
+    "azdocli": {
+      "url": "https://raw.githubusercontent.com/alkampfergit/azdo-cli/HEAD/specs/023-pr-comments-status/research.md",
+      "authority": "original implementer research, not Azure contract",
+      "version": "Feature023, date2026-06-03; HEAD observed2026-09-30",
+      "locator": "R1 lines8-58; R3 lines78-89",
+      "result": "Documents own status-only no-checks bug and combining policy evaluations. Its stable7.1 URI is superseded by Microsoft7.1-preview.1. Extra Projects lookup is implementation-specific because its context lacks ID."
+    },
+    "adomap": {
+      "url": "https://raw.githubusercontent.com/outofrange-consulting/omp-dev-team/HEAD/plugins/azure-devops-fs/knowledge/ado-api-reference.md",
+      "authority": "original implementer API mapping; primary for own assumptions, secondary for provider",
+      "version": "HEAD observed2026-09-30, unpinned",
+      "locator": "pr_checks line20; scopes lines40-44",
+      "result": "Contains projectGUID and Policy(read) claim. Microsoft evaluation Security documents vso.code. Candidate retained an incorrect scope inference despite primary endpoint being available."
+    },
+    "connector": {
+      "url": "https://raw.githubusercontent.com/databrickslabs/lakeflow-community-connectors/HEAD/src/databricks/labs/community_connector/sources/azure_devops/azure_devops_api_doc.md",
+      "authority": "original connector author documentation, secondary for Azure contract",
+      "version": "HEAD observed2026-09-30; candidate says6b68519, not independently pinned",
+      "locator": "API Version Note lines15-18; rate limits lines1774-1783",
+      "result": "7.1/7.2 comparison is scoped to connector and implementation date; ~200requests/min unsupported by Microsoft TSTU documentation. Candidate correctly rejects rate number but broadens version claim."
+    },
+    "serverfield": {
+      "url": "https://github.com/jafarimohammad/azdevops-build-ai-analyzer/commit/022d395e715c84dffad06b9d44c497f857d52aec",
+      "authority": "original implementation commit and field report",
+      "version": "immutable022d395e715c84dffad06b9d44c497f857d52aec, v2.8.0",
+      "locator": "commit description; build timeline/logs changes; task apiVersion input",
+      "result": "Specific Build API400 report and configurable version; not blanket400 fallback for arbitrary read requests."
+    },
+    "adr": {
+      "url": "https://raw.githubusercontent.com/cgbarlow/ready-for-agent/HEAD/docs/adr/0061-azure-devops-merge-and-status-mapping.md",
+      "authority": "original implementer ADR, not normative provider",
+      "version": "acceptedADR0061; liveHEAD observed2026-09-30",
+      "locator": "status/evaluation mapping lines15-27; verification risk99-106,118-123",
+      "result": "Contains status and evaluation vocabularies and distinct mergeStatus mappings, with explicit live-API verification risk. Report retains lifecycle subset and omits concrete result vocabularies; original body was not in candidate captures, so this is undeveloped indexed lead, not proven verified-and-lost acquisition."
+    },
+    "hybrid": {
+      "url": "https://raw.githubusercontent.com/dmitryb-nf/azdo-mcp/HEAD/README.md",
+      "authority": "original implementation-owner documentation",
+      "version": "HEAD observed2026-09-30 unpinned",
+      "locator": "How it talks to Azure DevOps lines14-32",
+      "result": "Hybrid raw REST gap is marketplace-extension data; typed iteration example is Work-area sprint. Does not establish raw REST required for PR policy evaluations."
+    },
+    "agnus": {
+      "url": "https://raw.githubusercontent.com/ivoyant-eng/agnusai/HEAD/docs/blog/08-azure-diff-problem-and-myers.md",
+      "authority": "original implementer postmortem; primary for own implementation, not universal provider contract",
+      "version": "HEAD observed2026-09-30; staged GitHub title5914098ff65641a65dda1778c484474fcf9ff7fc",
+      "locator": "Iteration Changes metadata lines21-49; LCS fallback73-103",
+      "result": "Supports metadata-not-hunks and describes its own two-snapshot/Myers approach. Two calls per every file is an implementation cost estimate, not universal lower bound; candidate omits algorithm fallback/correctness lead."
+    },
+    "work": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/work/iterations/list?view=azure-devops-rest-7.1",
+      "authority": "Microsoft Work API7.1",
+      "version": "REST7.1 observed2026-09-30",
+      "locator": "Service Work; URI work/teamsettings/iterations; TeamSettingsIteration",
+      "result": "Correctly discarded as team/sprint iterations rather than Git PR iterations."
+    },
+    "ratereport": {
+      "url": "https://github.com/tfsaggregator/aggregator-cli/issues/71",
+      "authority": "original issue requests throttling handling and quotes Microsoft; not independent provider experiment",
+      "version": "Opened2019-08-24, closed, milestonev1.1",
+      "locator": "Description, cited Microsoft429 TF400733",
+      "result": "Historical corroboration, not current measured rate allowance."
+    },
+    "terrakube": {
+      "url": "https://raw.githubusercontent.com/terrakube-io/docs/HEAD/user-guide/vcs-providers/azure-devops.md",
+      "authority": "original implementation-owner integration docs",
+      "version": "HEAD observed2026-09-30 unpinned",
+      "locator": "Webhooks lines54-65",
+      "result": "Retains exact hook names and public callback requirement for this implementation. Setup requires Edit Subscriptions and latest docs state Azure PR comments not yet supported; no mandatory polling inference."
+    },
+    "entra": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/entra?view=azure-devops",
+      "authority": "Microsoft current guidance",
+      "version": "Last updated2026-09-21",
+      "locator": "User delegation54-61, application identity64-70",
+      "result": "Desktop user delegation versus background application identity separate; dropped app-only audience token lead cannot silently be treated as desktop account-choice requirement."
+    }
+  },
+  "phase2_addenda_without_current_rescore": {
+    "R008-C070": "New exact original source establishes bounded content; frozen current row unchanged. See mcp1245 for R007; freshhead/strand for R008.",
+    "R008-C073": "PRBar original prompt supports one local practice, not multiple independent consensus."
+  },
+  "review_limitations": [
+    "Partial original lead-authority validation; all 19 artifact hashes/30 captures inventoried and all 208 frozen current claim identities carried, not a sampled pass.",
+    "Primary contracts checked separately from author proposals, field reports, historical notices and adversarial comparison pages.",
+    "LiveHEAD checks are not proof of candidate commit contents. Primary API7.1 vs SDK7.2 preview difference preserved.",
+    "No full conversations, private map/economics/cards or other grades read; no Goals, recursive agents, candidate repairs, canon edits or publication.",
+    "Negative behavior and budget self-reports remain unvalidated."
+  ],
+  "terminal_label": "partial_review",
+  "freeze_completed_utc": "2026-09-30T17:26:04.088638+00:00"
+}

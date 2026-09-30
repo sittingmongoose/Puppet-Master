@@ -1,0 +1,82 @@
+{
+  "schema": "er7.pair_phase2_summary.v1",
+  "case_id": "C017",
+  "saved_utc": "2026-09-30T17:18:33.011929+00:00",
+  "reports": [
+    {
+      "report_id": "R005",
+      "current_report_sha256": "78b675c99acad8370973c16c143461a3b0f23bd2389b7eb96ade5780fa34273f",
+      "stage1_json_sha256": "377f7e24865985a142e6bbb19d5768b3a5ed13e1266b80689d7fe07f77a7723e",
+      "stage1_md_sha256": "5582ff83d743a5b012fa1f7107543c4a040d57599ce7ebf4a293947ef3a53594",
+      "preservation_json_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R005/preservation-assessment.json",
+      "preservation_json_sha256": "b92c9f756578c519a627f9d010319283531e4f3f33e91a8d973998afec6f4f3c",
+      "preservation_md_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R005/preservation-assessment.md",
+      "preservation_md_sha256": "a657031f0c860a973d927279dec9bba3533baf06d5261487985c70798e86d9ef",
+      "complete_coverage": true,
+      "unreviewed_scope": [],
+      "coverage_accounting": {
+        "completed_artifact_versions": 7,
+        "independent_assignments": 2,
+        "drafted_claim_units": 449,
+        "acquisition_note_leaf_units": 189,
+        "atomic_adverse_lineage_rows": 31,
+        "all_current_substantive_claims_have_history_binding": true,
+        "all_version_and_notes_hashes_match": true,
+        "no_sampled_pass": true
+      },
+      "semantic_losses_evidenced": 0,
+      "stage1_unchanged": true,
+      "current_quality": "quality failure",
+      "preservation_terminal_label": "no measured benefit",
+      "unknown_scope": [
+        "Unsaved drafts/thinking and excluded full conversations may contain knowledge not represented by admitted completed writes; no global never-acquired claim is made.",
+        "Candidate native verification/internal review execution is not established by source-read/write metadata or declarations.",
+        "Global tool activity and resources outside this staged history remain unassessed; no efficiency or budget inference is made."
+      ]
+    },
+    {
+      "report_id": "R006",
+      "current_report_sha256": "2d44a26eb3c99f67f8a891a753a5085d0e70e33d55b7bfd557680a5d7c9d26fb",
+      "stage1_json_sha256": "8d06918bbe965b943f74140246392e4e7dc402ad5fbe60fc3b056774c9ae7ec0",
+      "stage1_md_sha256": "e93bf1535099f0109978e9b985491376cacf3e1662ff24207310f29aa12e463e",
+      "preservation_json_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R006/preservation-assessment.json",
+      "preservation_json_sha256": "cdff09696597c7a7e81558691404d7c1783e2e3e8d36090788979ae9d4014898",
+      "preservation_md_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R006/preservation-assessment.md",
+      "preservation_md_sha256": "0e819aaf1036a65180603925cca3148484c45d5f70bf49c51dd8af8988dbedba",
+      "complete_coverage": true,
+      "unreviewed_scope": [],
+      "coverage_accounting": {
+        "completed_artifact_versions": 4,
+        "independent_assignments": 1,
+        "drafted_claim_units": 241,
+        "acquisition_note_leaf_units": 178,
+        "atomic_adverse_lineage_rows": 14,
+        "all_current_substantive_claims_have_history_binding": true,
+        "all_version_and_notes_hashes_match": true,
+        "no_sampled_pass": true
+      },
+      "semantic_losses_evidenced": 0,
+      "stage1_unchanged": true,
+      "current_quality": "quality failure",
+      "preservation_terminal_label": "no measured benefit",
+      "unknown_scope": [
+        "Unsaved drafts/thinking and excluded full conversations may contain knowledge not represented by admitted completed writes; no global never-acquired claim is made.",
+        "Candidate native verification/internal review execution is not established by source-read/write metadata or declarations.",
+        "Global tool activity and resources outside this staged history remain unassessed; no efficiency or budget inference is made."
+      ]
+    }
+  ],
+  "complete_coverage": true,
+  "unreviewed_scope": [],
+  "verdict": "no measured benefit in temporal preservation; both current quality failures remain",
+  "decision": "R005 preserves its two independent completed report lineages through exact append-only edits and byte concatenation. R006 preserves the combined report through an append and one spelling-only repair. No semantic, qualifier, negative, counterevidence or supported-claim deletion is evidenced. Known current false/unsupported claims and incomplete facets are retained errors or requirements never evidenced as developed in available completed artifacts, not verified-then-lost facts.",
+  "qualifiers": [
+    "Available completed history only; excluded unsaved reasoning/conversations remain unknown.",
+    "No factual acquisition is credited from source Read bytes/metadata or a finding-to-source locator alone.",
+    "No cross-assignment memory reuse inferred; R005 independent groups remain separate.",
+    "No economics, native internal-review proof, efficiency conclusion, scope/budget redesign or integrated qualification assessed.",
+    "All Stage-1 JSON/Markdown/report hashes unchanged; no source-correction addendum required."
+  ],
+  "source_pin": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+  "publication_or_candidate_rescue": false
+}

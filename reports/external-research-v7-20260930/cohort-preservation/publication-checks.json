@@ -1,0 +1,19 @@
+{
+  "checked_utc": "2026-09-30T17:36:49.415590+00:00",
+  "status": "pass",
+  "exact_copy_hashes_verified": 26,
+  "projection_hashes_verified": 1,
+  "source_bindings_verified": 45,
+  "prior_current_grade_hashes": "all R003\u2013R008 readout pins match unchanged published reports/JSON/Markdown; R001/R002 untouched",
+  "C041_certification": "partial after20minute finalsave overrun; material coverage complete; no dropped material scope",
+  "C028_phase2": "partial; missinglead/snippet validation and54.088638s finalfreeze overrun retained",
+  "candidate_starts_by_publisher": 0,
+  "admission_count_unchanged": 19,
+  "json_files_parsed": 188,
+  "publication_bytes": 17775531,
+  "credential_regex_findings": 0,
+  "entrypoint_links_broken": 0,
+  "holdout_private_audit": "status projection only; explicit allowlist checked; private aid/key/facet/source details excluded",
+  "verification": "hash/read-only import validation; no new code-behavior change requiring further candidate or native tests",
+  "canonical_governance_checks": "not applicable; reports only"
+}

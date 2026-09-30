@@ -1,0 +1,12 @@
+{
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/holdout-v2-preparation-audit.json",
+  "source_sha256": "7752ce53dfdc520d0abbe84a52a3e87f0c7d0244efd3269325984e61fdf20014",
+  "projection": "status fields only; full audit, source-fact aid, evaluation dimensions, source selections and all private omission keys remain excluded",
+  "reviewer": "/root/luna_adjudication",
+  "created_utc": "2026-09-30T17:20:14.329580+00:00",
+  "decision": "ACCEPT_PREPARATION_ONLY_EXECUTION_HELD",
+  "native_execution": "held; preparation is not scored research or candidate launch qualification",
+  "candidate_starts": 0,
+  "final_holdout_executions": 0,
+  "private_audit_publication": "excluded through holdout closure"
+}

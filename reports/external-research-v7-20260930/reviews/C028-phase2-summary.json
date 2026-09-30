@@ -1,0 +1,104 @@
+{
+  "schema": "external-research-pair-preservation-summary.v1",
+  "case_id": "C028",
+  "stage": 2,
+  "saved_utc": "2026-09-30T17:24:32.987465+00:00",
+  "complete_coverage": false,
+  "verdict": "partial_pair_no_preservation_pass",
+  "current_grade_rescored": false,
+  "findings": [
+    "No substantive report finding deletion demonstrated within available completed version chain.",
+    "Both have important unacquired or undeveloped schema content and retained incorrect inferences; do not infer semantic acquisition from read counts.",
+    "R008 temporary note carrier truncations restored, not final semantic loss.",
+    "Novel original-source practices and conditions assessed independently; no union-as-gold assumption."
+  ],
+  "report_bindings": {
+    "R007": {
+      "report_sha256": "b80a7669fef0485f08d0465a09f58847321552a02ed7f81ef8850029e3659cf2",
+      "preservation_json_sha256": "855bb3d62ebaeeaf84b5da6ab6e4eb836ef6d408cd669de521a306dfc883fefb",
+      "preservation_md_sha256": "7bbcee5bf0ee5de4818b829d429a31580dd5a47f24a00b719bf5fcbf77d65dbb",
+      "frozen_current_pins": {
+        "current-report.md": "b80a7669fef0485f08d0465a09f58847321552a02ed7f81ef8850029e3659cf2",
+        "current-assessment.json": "850e1bb75715adde734b715b285a089b2928415b40fc5e7e9a8fc1240a98f91d",
+        "current-assessment.md": "626dc2942e7a06e57fad6dde16359937c633accd7a1a376290a893ad6926f544"
+      },
+      "verdict": "partial_preservation_assessment_no_pass"
+    },
+    "R008": {
+      "report_sha256": "d2b4132166e420b8fb1ea7861d0d0cd41a1dac55a1947cb79e21211ddaf70df1",
+      "preservation_json_sha256": "b527f0721c65c1cb7584f59cde55baced24a6634ccb2b412d5704220add35c29",
+      "preservation_md_sha256": "3d8312a71be9a3b81515065a92f1f7df2529b53cda7e5339fe6a75fda4032655",
+      "frozen_current_pins": {
+        "current-report.md": "d2b4132166e420b8fb1ea7861d0d0cd41a1dac55a1947cb79e21211ddaf70df1",
+        "current-assessment.json": "8f254b5000dc72e74234fdc5480a4609b9e9997ec3558b4b91bcb9575131350b",
+        "current-assessment.md": "468a02ec9adea0fdfa75c4ac1d35d0f393389304e6d30a875b4350cc039465f1"
+      },
+      "verdict": "partial_preservation_assessment_no_pass"
+    }
+  },
+  "unreviewed_scope": {
+    "R007": [
+      {
+        "type": "independent_original_lead_body_validation_incomplete",
+        "source_ids": [
+          "S-05",
+          "S-06",
+          "S-13b",
+          "S-15",
+          "S-17",
+          "S-21",
+          "S-25",
+          "S-27",
+          "S-29",
+          "S-30",
+          "S-37"
+        ],
+        "reason": "These exact original lead bodies/versions were not independently verified within this phase; associated provider claims have bounded primary checks where recorded. No all-lead pass claimed."
+      },
+      {
+        "type": "candidate_search_snippet_semantics_unavailable",
+        "scope": "Every source recorded as snippet-only without a fetched content body",
+        "reason": "Search results are not admitted in history captures. Source titles and candidate notes are not proof of source-supported acquisition."
+      },
+      {
+        "type": "runtime_and_negative_actions_unvalidated",
+        "scope": "shell limitation, elapsed budget, no hidden reads/no writes/no subagents/no execution",
+        "reason": "Completed artifact/read/fetch subset is not full conversation or tool-call inventory; cannot prove negative activity or exact elapsed candidate runtime."
+      }
+    ],
+    "R008": [
+      {
+        "type": "independent_original_lead_body_validation_incomplete",
+        "source_ids": [
+          "S-20",
+          "S-23",
+          "S-24",
+          "S-29"
+        ],
+        "reason": "These exact original lead bodies/versions were not independently verified within this phase; associated provider claims have bounded primary checks where recorded. No all-lead pass claimed."
+      },
+      {
+        "type": "candidate_search_snippet_semantics_unavailable",
+        "scope": "Every source recorded as snippet-only without a fetched content body",
+        "reason": "Search results are not admitted in history captures. Source titles and candidate notes are not proof of source-supported acquisition."
+      },
+      {
+        "type": "runtime_and_negative_actions_unvalidated",
+        "scope": "shell limitation, elapsed budget, no hidden reads/no writes/no subagents/no execution",
+        "reason": "Completed artifact/read/fetch subset is not full conversation or tool-call inventory; cannot prove negative activity or exact elapsed candidate runtime."
+      }
+    ]
+  },
+  "budget": {
+    "started_utc": "2026-09-30T17:05:10+00:00",
+    "saved_utc": "2026-09-30T17:24:32.987465+00:00",
+    "elapsed_to_save_seconds": 1162.987465,
+    "requested_seconds": 1200,
+    "actual_effective_runtime_and_responses": "unknown; no invented counts",
+    "wall_seconds_to_final_freeze": 1254.088638,
+    "overrun_seconds": 54.088637999999946,
+    "overrun_at_freeze": true
+  },
+  "freeze_completed_utc": "2026-09-30T17:26:04.088638+00:00",
+  "frozen_current_before_after_match": true
+}

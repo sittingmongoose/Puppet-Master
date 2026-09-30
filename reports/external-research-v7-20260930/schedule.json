@@ -3,7 +3,7 @@
   "status": "resumed ongoing partial campaign",
   "deadline_epoch": 1790820406,
   "deadline_utc": "2026-10-01T02:06:46+00:00",
-  "max_simultaneous_helpers": 24,
+  "max_simultaneous_helpers": 23,
   "helper_start_ceiling": 72,
   "family_caps": {
     "M": 2,
@@ -56,14 +56,25 @@
       "R007",
       "R008"
     ],
-    "current_pending": [
+    "current_partial_certification": [
       "R011",
       "R012"
     ],
-    "saved_history_complete": [
+    "current_pending": [],
+    "saved_history_complete_available_scope": [
       "R001",
-      "R002"
+      "R002",
+      "R003",
+      "R004",
+      "R005",
+      "R006"
     ],
-    "native_admissions": "all M/Z held; L quarantined; no new starts caused by publication"
-  }
+    "saved_history_partial": [
+      "R007",
+      "R008"
+    ],
+    "native_admissions": "all held; common runtime2 unfrozen; L quarantined; no new starts caused by publication"
+  },
+  "preservation_cohort_utc": "2026-09-30T17:35:37.328046+00:00",
+  "helper_override": "latest user resume permits23 simultaneous helpers; 72starts/token ceilings unchanged"
 }

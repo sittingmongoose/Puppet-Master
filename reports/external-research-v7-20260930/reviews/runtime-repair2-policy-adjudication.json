@@ -1,0 +1,170 @@
+{
+  "schema": "er7.final_repair2_policy_adjudication.v1",
+  "reviewer": "/root/luna_adjudication",
+  "created_utc": "2026-09-30T16:53:42.939354+00:00",
+  "campaign_id": "external-research-v7-20260930",
+  "verdict": "YES_BOUNDED_COMPLETION_OF_EXISTING_REPAIR2_ONLY",
+  "runtime_acceptance": false,
+  "native_launch_authorized_by_this_document_alone": false,
+  "policy_answer": {
+    "legitimate": true,
+    "reason": "One narrowly scoped completion/refinement of the still-unqualified, never-execution-frozen, never-native-admitted repair2 remains inside that existing final repair phase. The partial source snapshot is a preserved development checkpoint, not a third repair allowance or an executed repair2 failure. The supported Z tool-boundary design addresses the same unresolved credential/confinement launch boundary.",
+    "interpretation_limit": "CAMPAIGN does not define a repair-version counter by every intermediate source edit. Section6 describes diagnosis, narrow repair, independent checking, freeze, then retest. This judgment distinguishes bounded prequalification development checkpoints from successive frozen repair/retest versions; it is not permission for unlimited iterations before a nominal freeze.",
+    "counter_rule": "Initial hardening stays repair1. This common successor stays repair2, with no reset, renaming to a new adapter budget, provider substitution or repair3. All task starts, elapsed time and development costs remain charged to the original campaign.",
+    "contrast_with_completed_L_adjudication": "Luna repair2 had already been independently accepted and actually activated two native Goals before its new failure. The common M/Z partial repair2 has not reached those states. The earlier Luna NO therefore remains intact."
+  },
+  "chronology": [
+    {
+      "stage": "Initial live-source review",
+      "utc": "2026-09-30T14:34:40.794721+00:00",
+      "status": "HOLD",
+      "record_sha256": "fad6d3b8754952c64d8603512521b87da92a34f7f8eae954013c7a06a3cb553b",
+      "meaning": "No coherent frozen source set or hashes approved; owners were already editing. This is initial prequalification development, not a separately accepted common repair version."
+    },
+    {
+      "stage": "Common repair1 accepted",
+      "utc": "2026-09-30T14:47:15.854824+00:00",
+      "status": "accepted",
+      "record_sha256": "311e898147e46439c31738f4d3ab42dabe5bd8dea67833ef858588959edbbeb3",
+      "meaning": "Exact immutable M/Z boundary approved for offline machinery only; per-job native binding still required."
+    },
+    {
+      "stage": "Common repair1 execution freeze",
+      "utc": "2026-09-30T14:47:51.181850+00:00",
+      "version": "harness-v1-repair1",
+      "record_sha256": "34f8bab5adfc08744b28fe3a0dd3b3d616cd345cd09e9d2919f4984c883408ef",
+      "meaning": "One accepted common execution version: dev/harness-v1-frozen and ops-frozen-v1."
+    },
+    {
+      "stage": "Common repair1 privacy hold",
+      "utc": "2026-09-30T16:32:32.591478+00:00",
+      "status": "all_frozen_v1_MZ_launch_blocked",
+      "record_sha256": "00c3a6313ae34c620d1292ac64eb37f36dcc5ef66c6f99193222243d020e3f51",
+      "meaning": "Outer host filesystem readability was proved with no credential contents read. Candidate native Read/Bash credential access was not qualified; historical actual access remains unknown. All dependent v1 admissions held."
+    },
+    {
+      "stage": "Partial common repair2 checkpoint",
+      "record_sha256": "ce801ca3988e4f598a79aa3e3cb4ee2da5489d3cf5d04e4e71c65fae00853059",
+      "status": "unresolved-not-qualified-no-admissions",
+      "repair_number": 2,
+      "native_apps_started": 0,
+      "candidate_goals_started": 0,
+      "all17_snapshot_pins_match": true,
+      "meaning": "Six offline checks pass, but necessary native host-auth state remains visible. namespace_command fails closed. No acceptance freeze or ops-frozen-v2 exists; no native repair2 retest/canary or candidate admission occurred."
+    },
+    {
+      "stage": "Independent supported Z design",
+      "record_sha256": "7f24b0cb372cda05e8bbefa36bf40a6f470c37e485e9df4e037cdbd2f8c09d90",
+      "native_goals_started": 0,
+      "meaning": "Static exact-selected-runtime evidence supports native allowlisting of bounded model-visible MCP names. It does not implement or qualify the boundary."
+    }
+  ],
+  "preserve_partial_author_statement": {
+    "author": "/root/delivery_methods_resume",
+    "original_status": "unresolved-not-qualified-no-admissions",
+    "original_snapshot_sha256": "ce801ca3988e4f598a79aa3e3cb4ee2da5489d3cf5d04e4e71c65fae00853059",
+    "original_source_sha256": "ad4c4608a0b585e925566fae1ea40de974781429ebf636d02dc1c77a94b52ca3",
+    "original_README_sha256": "c03342b5aba73fce3109ae2c3df99f8f1c18c6ac375874734052c5d7cc16488d",
+    "instruction": "Keep the partial snapshot, its source/evidence files, initial offline development failure, costs and unresolved README unchanged. A completion record must explicitly cite them and say the new supported control closes the previously unproved boundary; do not rewrite the author as having qualified it."
+  },
+  "exact_supported_control_binding": {
+    "selected_installed_Z_bundle": "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs",
+    "selected_installed_Z_sha256": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+    "selected_mode": "build, inherited from actual frozen run_goal path",
+    "source_evidence": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/auth-boundary-design-v1/selected-runtime-controls.json",
+    "source_evidence_sha256": "7f24b0cb372cda05e8bbefa36bf40a6f470c37e485e9df4e037cdbd2f8c09d90",
+    "controls": {
+      "session_create_schema_byte": 439428,
+      "session_resume_schema_byte": 439843,
+      "stdio_MCP_schema_byte": 422571,
+      "builtin_exact_allowlist_registration_byte": 10462582,
+      "MCP_exact_allowlist_registration_byte": 10551742,
+      "model_visible_MCP_name_generation_byte": 10551262,
+      "runtime_MCP_config_passes_allowlist_byte": 10879818
+    },
+    "important_correction": "First design evidence e0f1af... inspected current app/resources bundle b1df2ef..., which differs from the frozen selected backup CLI. Preserve that evidence as initial discovery only. selected-runtime-controls.json provides the corresponding controls on the exact selected app.backup-3.11.2.6792 bundle e9f1868..., so no executable upgrade is presumed."
+  },
+  "single_remaining_final_repair2_contract": [
+    "One bounded completion of this same credential/tool-confinement boundary, within remaining original campaign helper/time/token/start/reserve limits. Preserve all repair1 failures and partial repair2 costs. Do not rebuild the entire harness or open a new adapter/method budget.",
+    "Preserve the exact selected official Z app.backup-3.11.2.6792 executable and native mode build, GLM5.3Flash/Max family binding, native session/create and native Goal entry, selected existing subscription/provider, retry/backoff and billing. Existing native host authenticates normally outside the model-tool process namespace; no replacement account, auth proxy or credential contents in tools.",
+    "Use supported session toolAllowlist with exact model-visible MCP names only. Enforce exclusion of every native filesystem/shell/delegation/browser/automation surface and every unapproved MCP tool at both registration paths. Bind the full advertised tool inventory; no implicit default tools or wildcard additions. If required native Goal status machinery is inaccessible under these supported controls, remain held rather than invent a bypass.",
+    "Provide a small credential-free, bounded MCP filesystem/tool namespace with only admitted read-only input/source snapshots, isolated writable outputs and clean explicitly declared environment. Reject path traversal, symlink escapes, proc/fd access to the auth host and unadmitted history/evaluator paths. Tools may Read/Write/Fetch and execute only declared mechanical commands under the existing task caps; no arbitrary host shell or semantic Sol service.",
+    "Deterministic offline checks and a supported no-inference tool-inventory/startup inspection must prove confinement, exact allowlist propagation and required task capability before independent final source acceptance. Use synthetic sentinel evidence and path booleans; never read, copy, hash or publish credential contents. A safe namespace/tool boundary is a prerequisite for any candidate canary.",
+    "Submit one final coherent repair2 source/dependency manifest for independent review and acceptance, then create its immutable execution freeze. Preserve the partial checkpoint instead of modifying its recorded hashes. Once final repair2 is frozen for native retest, no source hot patches, successive repair3, post-failure prompt/carrier fixes or extra repair-probe chain.",
+    "Run at most one fresh native canary per independently qualified affected route, each prospectively capped at 8 minutes / 64 responses including setup, native waits and cleanup. Each uses an ordinary canonical family lease, counts as a candidate start/occupied time/token usage, and records effective model/Max, native Goal identity, bounded tool behavior, outputs and native quiescence. No canary loop; an unsafe/unqualified route gets none.",
+    "If a final frozen repair2 canary/retest fails, retain it, all costs and unknown usage and mark that affected route unresolved. Do not fix and retest again in this tranche, restore unsafe repair1, relabel the failure as unstarted or borrow another family quota. This contract grants no extra service-repeat or repair allowance.",
+    "Z qualification does not qualify M. M stays held unless its own supported credential/tool boundary is proved within this same bounded final completion before acceptance. Do not infer M controls from Z schemas or run an M canary merely because Z passes.",
+    "Bind any subsequent eligible jobs to exact accepted repair2 hashes and prospectively reviewed task cards. Model-visible tool surface changes must be disclosed and held fixed within matched control/treatment; they do not preserve historical tool-surface comparability by assertion. If required task scope is unsupported, hold that job rather than narrowing its scope after failure.",
+    "L remains held under the completed Luna adjudication. This Z/common-boundary completion grants no L repair3, native start or source/control substitution; any independently qualified separate route still requires its own unexhausted authorization and exact review. Z acceptance never carries across to M or L."
+  ],
+  "current_disposition": "All unsafe v1 and unqualified partial-v2 admissions remain held now. The policy permits preparation of this final repair2 only. Independent exact-source acceptance plus successful bounded native qualification is still required before research resumes. Continue remaining evaluation/publication while it is prepared. M remains held unless separately qualified within the permitted common final completion; L remains held under its separate exhausted-repair adjudication.",
+  "no_count_or_state_rewrite": {
+    "native_goals_started_by_this_review": 0,
+    "native_threads_started_by_this_review": 0,
+    "model_calls_by_this_review": 0,
+    "original_goal_counts_changed": false,
+    "original_lease_counts_changed": false,
+    "original_costs_or_failure_records_changed": false,
+    "native_credential_contents_read": false,
+    "implementation_edits": 0,
+    "recursively_spawned_helpers": 0,
+    "written_paths": [
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/runtime-repair2-policy-adjudication.json",
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/runtime-repair2-policy-adjudication.md"
+    ]
+  },
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/packet/Puppet_Master_External_Research_Parallel_Campaign_v7/CAMPAIGN.md",
+      "sha256": "f813f953ee7e2504b8dd95be5a17ca4a9071f022ebf6ae4ad0afb8b04938bc80"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/launch-gate-v1.json",
+      "sha256": "fad6d3b8754952c64d8603512521b87da92a34f7f8eae954013c7a06a3cb553b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/launch-gate-v2-mz.json",
+      "sha256": "311e898147e46439c31738f4d3ab42dabe5bd8dea67833ef858588959edbbeb3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/harness-v1-frozen/FREEZE.json",
+      "sha256": "34f8bab5adfc08744b28fe3a0dd3b3d616cd345cd09e9d2919f4984c883408ef"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/runtime-auth-hold-addendum-v1.json",
+      "sha256": "00c3a6313ae34c620d1292ac64eb37f36dcc5ef66c6f99193222243d020e3f51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-repair-v2/review-snapshot.json",
+      "sha256": "ce801ca3988e4f598a79aa3e3cb4ee2da5489d3cf5d04e4e71c65fae00853059"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-repair-v2/README.md",
+      "sha256": "c03342b5aba73fce3109ae2c3df99f8f1c18c6ac375874734052c5d7cc16488d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-repair-v2/isolation.py",
+      "sha256": "ad4c4608a0b585e925566fae1ea40de974781429ebf636d02dc1c77a94b52ca3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-repair-v2/offline-checks.json",
+      "sha256": "b28183d2184c37329ff4720152c72f4dbd8aaac9fb0ebc6d0ba921c01c7c5843"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-repair-v2/v1-privacy-proof.json",
+      "sha256": "623630357277cbd4d291069913bf8e06990ed162376ad20cf3d57d0c586159f7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-repair-v2/nested-bwrap-proof.json",
+      "sha256": "f36be20fde54e932814e45dab1c06c341cdba585180699f16e59252b2363104b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/auth-boundary-design-v1/supported-controls.json",
+      "sha256": "e0f1afbbf2bb223c3b3fbdc945d4ac678c5b86a342a808bf26cb0cb86dac322d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/auth-boundary-design-v1/selected-runtime-controls.json",
+      "sha256": "7f24b0cb372cda05e8bbefa36bf40a6f470c37e485e9df4e037cdbd2f8c09d90"
+    }
+  ]
+}

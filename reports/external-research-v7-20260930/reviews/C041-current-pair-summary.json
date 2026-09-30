@@ -1,0 +1,67 @@
+{
+  "schema": "er7.current_pair_summary.v1",
+  "case_id": "C041",
+  "stage": "current_only",
+  "frozen_utc": "2026-09-30T17:08:40.528707+00:00",
+  "reports": {
+    "R011": {
+      "verdict": "quality failure",
+      "complete_coverage": false,
+      "material_coverage_complete": true,
+      "assessment_status": "partial certification: final consistency validation/save exceeded the 20-minute cap; all material current artifacts and assigned facets were nevertheless read and adjudicated",
+      "report_sha256": "b0866759263b91aa1fe982edbc9c3cfcaa70bc90d2ff3501b9a1ce6e70ed110a",
+      "assessment_json_sha256": "691346b0b6d36f58554c476af7b212c55598dca2082e77a8ed5dc46e7a456134",
+      "assessment_md_sha256": "a6f51d5f8f3b9dd5f87f8505838846e0d3f0583353618ee065fba0b0470cc820",
+      "current_artifact_set_sha256": "fd612da1d19081142b868f1b802d130f2061298b1741b522769f90c4d917f238",
+      "claim_records": 140,
+      "source_assertion_families": 84,
+      "facet_coverage": {
+        "OME05-C01": "full",
+        "OME05-C02": "partial",
+        "OME05-C03": "full",
+        "OME05-C04": "partial",
+        "OME05-C05": "partial",
+        "OME05-C06": "partial"
+      },
+      "unreviewed_scope": [],
+      "elapsed_seconds_at_final_save": 1338.528707
+    },
+    "R012": {
+      "verdict": "quality failure",
+      "complete_coverage": false,
+      "material_coverage_complete": true,
+      "assessment_status": "partial certification: final consistency validation/save exceeded the 20-minute cap; all material current artifacts and assigned facets were nevertheless read and adjudicated",
+      "report_sha256": "18349e1b6eb33bc2091dc11e9d7779263abc1f600bc156f13536b8f7eb0beda2",
+      "assessment_json_sha256": "12f2e48644437d2af2ed2066284e1be4e8a43da9d18b3ab53ded735e0ed3a7d2",
+      "assessment_md_sha256": "6d450a61e68e986c8f00c3546656ce87af66b3928ce16d7bfc8f45a94e180788",
+      "current_artifact_set_sha256": "0a346577caf4852725ae35bad6f8aaa9fc1572a274ee09af93dd0e387bd86c09",
+      "claim_records": 186,
+      "source_assertion_families": 85,
+      "facet_coverage": {
+        "OME05-C01": "full",
+        "OME05-C02": "partial",
+        "OME05-C03": "full",
+        "OME05-C04": "partial",
+        "OME05-C05": "partial",
+        "OME05-C06": "partial"
+      },
+      "unreviewed_scope": [],
+      "elapsed_seconds_at_final_save": 1338.528707
+    }
+  },
+  "complete_coverage": false,
+  "verdict": "quality failure",
+  "comparison": "Both current artifact sets fail quality. R012 makes additional scoped negative-check machinery visible but preserves material false absence/force/association assertions and introduces an inconsistent composition formula. No supported quality improvement or same-quality efficiency claim is established.",
+  "source_universe": "S003 0.5 normative capture, 896 lines, SHA-256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+  "history_unlocked": false,
+  "economics": "unassessed; no cost/history/treatment disclosure used",
+  "limits": [
+    "Current artifacts expose method/control/treatment and seed/job references unavoidably.",
+    "Initial filename-only broad inventory exposed excluded path names; no excluded contents read.",
+    "Original-seed correspondence and runtime assertions remain unresolved missing-input conditions.",
+    "Requested gpt-6.1-sol/xhigh; effective runtime identity/effort unknown.",
+    "Initial drafts saved within 20-minute cap at 19m51s. Final consistency repair/save exceeded the cap; partial certification recorded. No scope was dropped."
+  ],
+  "material_coverage_complete": true,
+  "assessment_status": "partial certification: final save after 20-minute cap; no material scope unreviewed"
+}

@@ -1,0 +1,90 @@
+{
+  "schema": "er7.phase2_pair_summary.v1",
+  "pair": [
+    "R003",
+    "R004"
+  ],
+  "stage": "available_temporal_preservation",
+  "saved_utc": "2026-09-30T17:12:46.082628+00:00",
+  "reviews": [
+    {
+      "review_id": "R003",
+      "preservation_json_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R003/preservation-assessment.json",
+      "preservation_json_sha256": "69951aeba1ab2dd941c11d6f6edc47100008031263eda17e084e8fb281fd3dd8",
+      "preservation_md_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R003/preservation-assessment.md",
+      "preservation_md_sha256": "b5fb257d5792857226ee19e27eeeea79263de8870f9be6a3a46db51b568b780a",
+      "phase1_unchanged_hashes": {
+        "current-report.md": "0766ca8ab919425a20e1cfe1e7f1dc7f434516498e98879da3c657143e45a49c",
+        "current-assessment.json": "47682e7dfe5664b8c971ecf8270df4b695452c198e1067d6cb8d78cdef9baef9",
+        "current-assessment.md": "f5e9c907bf5efd7300d82d967127e6c110bb4bcd51a7274b1255c5363e186fed"
+      },
+      "all_phase1_report_json_md_unchanged": true,
+      "available_completed_versions": 2,
+      "available_completed_reads": 6,
+      "available_material_claim_rows_assessed": 97,
+      "eligible_facets_assessed": 6,
+      "complete_available_history_coverage": true,
+      "complete_acquisition_to_final_coverage": false,
+      "citation_repairs": 1,
+      "observed_material_semantic_losses": 0,
+      "observed_material_semantic_narrowings": 0,
+      "current_verdict_unchanged": "quality failure",
+      "preservation_terminal_label": "unassessed",
+      "semantic_acquisition": "unknown; notes absent"
+    },
+    {
+      "review_id": "R004",
+      "preservation_json_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R004/preservation-assessment.json",
+      "preservation_json_sha256": "44efd3fc0d42b46e690459246f5f2a57acf9c476559aa45b84d893145b9bb9f0",
+      "preservation_md_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R004/preservation-assessment.md",
+      "preservation_md_sha256": "e114e5cf196a53e7d2e1a718fcc1f7bcfee58e59280c4ae9de353b6b176af363",
+      "phase1_unchanged_hashes": {
+        "current-report.md": "63a691f616a80fe707c15b750292f09ab4f3a530dc6eb43288aa0c2c59481485",
+        "current-assessment.json": "e006a1d038d1c4818e819f8ab0ea02a3f2ea610c9eef401ed785c9ced9cd5022",
+        "current-assessment.md": "35af8cd6bf9d74d9942fb005c947070708c95cea8af648df1d15a1658231dce2"
+      },
+      "all_phase1_report_json_md_unchanged": true,
+      "available_completed_versions": 1,
+      "available_completed_reads": 8,
+      "available_material_claim_rows_assessed": 93,
+      "eligible_facets_assessed": 6,
+      "complete_available_history_coverage": true,
+      "complete_acquisition_to_final_coverage": false,
+      "citation_repairs": 0,
+      "observed_material_semantic_losses": 0,
+      "observed_material_semantic_narrowings": 0,
+      "current_verdict_unchanged": "quality failure",
+      "preservation_terminal_label": "unassessed",
+      "semantic_acquisition": "unknown; notes absent"
+    }
+  ],
+  "complete_available_history_coverage": true,
+  "complete_acquisition_to_final_coverage": false,
+  "observed_available_output_result": "All material meaning and governing qualifiers in available completed artifacts are retained into the frozen current reports. R003 has one citation-only repair; R004 has no draft-to-draft transition and exact native Write-to-current byte retention.",
+  "acquisition_status": "unknown for both; actual acquisition notes absent",
+  "no_never_acquired_inference": true,
+  "read_metadata_semantics": "exposure only, not proof of source-supported acquisition",
+  "current_grade_policy": "Original current-only JSON/Markdown/report hashes verified before and after. Both quality-failure verdicts are immutable. No history union, candidate rescue or regrading.",
+  "terminal_label": "unassessed",
+  "terminal_scope": "Acquisition-to-final preservation, efficiency and integrated qualification remain unassessed; available artifact retention is supported within its expressly limited scope.",
+  "unknown_or_unreviewable_scope": [
+    "Pre-artifact semantic acquisition, verification and rejected/undeveloped leads",
+    "Any non-completed draft or unstaged reasoning",
+    "Visual rendering/actual reader execution/performance",
+    "Economics/method identities/efficiency"
+  ],
+  "access_audit": {
+    "full_native_conversations_read": false,
+    "private_map_read": false,
+    "method_cards_read": false,
+    "other_grades_read": false,
+    "economics_read": false,
+    "only_assigned_staged_histories_read": true,
+    "recursive_helpers_spawned": false,
+    "goals_created": false,
+    "candidate_reports_modified": false,
+    "current_assessments_modified": false
+  },
+  "runtime_binding": "Host accepted requested gpt-6.1-sol/xhigh for same evaluator; effective runtime identity not independently exposed.",
+  "source_pin": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+}
