@@ -1,0 +1,425 @@
+{
+  "schema": "er7.current.assessment.v1",
+  "reviewer": {
+    "role": "fresh independent GPT-6.1 Sol Extra High verifier",
+    "identity": "/root/z_final_canary_independent",
+    "runtime": "host-only; no candidate authoring/runtime repair/dispatch/Goal creation"
+  },
+  "review_started_utc": "2026-09-30T18:01:31+00:00",
+  "saved_utc": "2026-09-30T18:05:44.606264+00:00",
+  "review_budget": {
+    "max_minutes": 20,
+    "max_responses": 120
+  },
+  "scope": "Exactly ONE viewer-integration consideration from pinned S003, plus separately assessed inert boundary/carrier obligations; not full OME research, screening or method qualification.",
+  "report": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/frozen-output/out/report.md",
+    "sha256": "50413c60728dc05656154ff19e5f7de013377c7d6e67f0a7ec4a32d22652fc25"
+  },
+  "input_pins": {
+    "TASK": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/workspace/TASK.md",
+      "sha256": "be7f378b800921bac67ba1eca9eb865230ce09e574de88a32556e0f96878f24f"
+    },
+    "S003": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/workspace/inputs/sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "logical_lines": 896,
+      "newline_count": 895
+    },
+    "protocol": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/private/EVALUATION_PROTOCOL.md",
+      "sha256": "f0427cc8d1495e368b8b79cb9ead18cc65d4b0b2e8b509e338b86923ee5b1e15"
+    }
+  },
+  "stage_access": {
+    "read_only_current_report_task_source_protocol": true,
+    "acquisition_history_native_economics_prior_grades_accessed": false,
+    "staged_enforcement": "Operator froze outputs; evaluator followed prompt-only semantic-first access restriction. No prior grades, case key or candidate conversation supplied."
+  },
+  "material_claims": [
+    {
+      "claim_id": "C01",
+      "report_lines": [
+        4,
+        6
+      ],
+      "claim": "Conforming readers SHOULD make users aware of more than one image and SHOULD NOT default to the first image.",
+      "source_lines": [
+        271,
+        272
+      ],
+      "outcome": "supported",
+      "reason": "Direct normative reader guidance; modal force preserved."
+    },
+    {
+      "claim_id": "C02",
+      "report_lines": [
+        6,
+        8
+      ],
+      "claim": "Reader MAY use OME/series as valid display groups and MAY offer image choice.",
+      "source_lines": [
+        273,
+        274
+      ],
+      "outcome": "supported",
+      "reason": "Both are permissions, not compulsory picker requirements."
+    },
+    {
+      "claim_id": "C03",
+      "report_lines": [
+        8,
+        10
+      ],
+      "claim": "Viewer must fall back to consecutive groups starting 0 when series and plate are absent.",
+      "source_lines": [
+        261,
+        270
+      ],
+      "outcome": "qualified",
+      "reason": "Source states image-location logic and a MUST on storage layout. Enumeration is a sensible derived integration behavior, but wording must is stronger than a separately stated reader requirement. Report does not claim a universal reader MUST and later explicitly preserves SHOULD/MAY; no contrary architecture mandate."
+    },
+    {
+      "claim_id": "C04",
+      "report_lines": [
+        9,
+        10
+      ],
+      "claim": "Consecutive paths 0/, 1/, 2/ and exactly one multiscale group per OME-XML Image in order.",
+      "source_lines": [
+        268,
+        270
+      ],
+      "outcome": "supported",
+      "reason": "Exact starting index, one-to-one mapping and ordering match source."
+    },
+    {
+      "claim_id": "C05",
+      "report_lines": [
+        13,
+        18
+      ],
+      "claim": "Exact reader locators at 271\u2013274 and storage-rule locator 268\u2013270.",
+      "source_lines": [
+        268,
+        274
+      ],
+      "outcome": "supported",
+      "reason": "All line references resolve to the claimed rule in pinned primary capture; quote formatting changes no meaning."
+    },
+    {
+      "claim_id": "C06",
+      "report_lines": [
+        19,
+        19
+      ],
+      "claim": "Conforming group uses bioformats2raw.layout value 3.",
+      "source_lines": [
+        254,
+        256
+      ],
+      "outcome": "supported",
+      "reason": "Exact value and key match source."
+    },
+    {
+      "claim_id": "C07",
+      "report_lines": [
+        20,
+        20
+      ],
+      "claim": "series paths ordered like Image elements in OME/METADATA.ome.xml if provided.",
+      "source_lines": [
+        264,
+        267
+      ],
+      "outcome": "supported",
+      "reason": "Conditional qualifier preserved; source also requires paths as strings."
+    },
+    {
+      "claim_id": "C08",
+      "report_lines": [
+        23,
+        24
+      ],
+      "claim": "Source pin, byte count 36980, line count 896.",
+      "source_lines": [],
+      "outcome": "supported",
+      "reason": "Independent SHA-256 and byte count match. Python splitlines gives 896 logical lines; wc -l gives 895 newline bytes because final line has no newline."
+    },
+    {
+      "claim_id": "C09",
+      "report_lines": [
+        23,
+        23
+      ],
+      "claim": "Only S003 used.",
+      "source_lines": [],
+      "outcome": "unresolved",
+      "reason": "Runtime/source-use assertion cannot be checked from stage-1 report and source; deferred to separately saved acquisition/native review."
+    },
+    {
+      "claim_id": "C10",
+      "report_lines": [
+        25,
+        27
+      ],
+      "claim": "Capture identifies OME-Zarr Final Community Group Report, 8 September 2026; released version 0.5 and stated URL.",
+      "source_lines": [
+        1,
+        8,
+        25,
+        27
+      ],
+      "outcome": "supported",
+      "reason": "Claim is about exact pinned capture, not independent current-web verification."
+    },
+    {
+      "claim_id": "C11",
+      "report_lines": [
+        27,
+        28
+      ],
+      "claim": "OME-Zarr Metadata version 0.5 under ome namespace, locator 150\u2013156.",
+      "source_lines": [
+        150,
+        161
+      ],
+      "outcome": "qualified",
+      "reason": "Namespace/version location supported at 153\u2013155, but literal 0.5 is at 161, outside the report citation. Correct fact with incomplete exact locator."
+    },
+    {
+      "claim_id": "C12",
+      "report_lines": [
+        29,
+        30
+      ],
+      "claim": "Section 2.2.3 Details is transitional bioformats2raw.layout, locator 254\u2013275.",
+      "source_lines": [
+        175,
+        181,
+        254,
+        275
+      ],
+      "outcome": "supported",
+      "reason": "Section identification is accurate."
+    },
+    {
+      "claim_id": "C13",
+      "report_lines": [
+        33,
+        35
+      ],
+      "claim": "Applies to layout value 3 multi-image collections, not plain single-image hierarchy; bioformats2raw conversion is an example.",
+      "source_lines": [
+        78,
+        117,
+        175,
+        190,
+        256
+      ],
+      "outcome": "supported",
+      "reason": "Correct scoped compatibility finding; not a claim about all OME-Zarr images."
+    },
+    {
+      "claim_id": "C14",
+      "report_lines": [
+        36,
+        37
+      ],
+      "claim": "Reader guidance SHOULD/MAY rather than MUST; no compulsory picker, first-only default discouraged.",
+      "source_lines": [
+        271,
+        275
+      ],
+      "outcome": "supported",
+      "reason": "No picker MUST appears. A picker is only one optional way to surface multiple images."
+    },
+    {
+      "claim_id": "C15",
+      "report_lines": [
+        38,
+        40
+      ],
+      "claim": "Plate takes precedence; use plate-defined image locations rather than series.",
+      "source_lines": [
+        204,
+        206,
+        261,
+        263
+      ],
+      "outcome": "supported",
+      "reason": "Plate priority preserved. Matching series SHOULD be supplied for plate-unaware tools is counterevidence to deleting/forbidding series, but report makes no such claim."
+    },
+    {
+      "claim_id": "C16",
+      "report_lines": [
+        41,
+        44
+      ],
+      "claim": "Transitional metadata intended for future removal, added in 0.4 for wild datasets, future explicit replacement.",
+      "source_lines": [
+        60,
+        64,
+        180,
+        181
+      ],
+      "outcome": "supported",
+      "reason": "All source temporal conditions retained without a promised replacement date."
+    },
+    {
+      "claim_id": "C17",
+      "report_lines": [
+        44,
+        45
+      ],
+      "claim": "Treat behavior as compatibility for existing 0.4/0.5, subject to change.",
+      "source_lines": [
+        25,
+        27,
+        60,
+        64,
+        180,
+        181
+      ],
+      "outcome": "qualified",
+      "reason": "Reasonable proposed scope based on introduction in 0.4/current capture 0.5; does not independently establish that all 0.4 metadata syntax is identical to 0.5."
+    },
+    {
+      "claim_id": "C18",
+      "report_lines": [
+        47,
+        50
+      ],
+      "claim": "Propose a local 0.5 layout3 fixture with OME/series listing at least two images.",
+      "source_lines": [
+        175,
+        190,
+        254,
+        267
+      ],
+      "outcome": "supported",
+      "reason": "Valid explicitly UNEXECUTED proposal grounded in collection layout; no fixture-existence assertion."
+    },
+    {
+      "claim_id": "C19",
+      "report_lines": [
+        50,
+        52
+      ],
+      "claim": "Proposed checks: multiple-image UI and each series entry selectable/renders.",
+      "source_lines": [
+        271,
+        274
+      ],
+      "outcome": "supported",
+      "reason": "Valid possible implementation validation, not a claim that the specification mandates a picker."
+    },
+    {
+      "claim_id": "C20",
+      "report_lines": [
+        52,
+        53
+      ],
+      "claim": "Proposed check: remove series and enumerate 0,1,... rather than only0.",
+      "source_lines": [
+        268,
+        274
+      ],
+      "outcome": "qualified",
+      "reason": "Proposal needs consecutively numbered fixture groups and no plate; these are implicit in the described collection, but would need making explicit in execution. It is unexecuted, not falsely claimed evidence."
+    },
+    {
+      "claim_id": "C21",
+      "report_lines": [
+        53,
+        54
+      ],
+      "claim": "No fixture built or viewer run; validation has not been executed.",
+      "source_lines": [],
+      "outcome": "unresolved",
+      "reason": "Explicitly no executed validation is claimed; actual runtime behavior deferred to native review. No source can establish the actor history at stage1."
+    }
+  ],
+  "assigned_facets": [
+    {
+      "facet": "one concrete standalone source-supported viewer consideration",
+      "coverage": "full",
+      "claims": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C17"
+      ]
+    },
+    {
+      "facet": "exact source locator and applicable source/version",
+      "coverage": "full",
+      "claims": [
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C10",
+        "C11",
+        "C12"
+      ]
+    },
+    {
+      "facet": "applicability limits",
+      "coverage": "full",
+      "claims": [
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C17"
+      ]
+    },
+    {
+      "facet": "one explicitly UNEXECUTED proposed validation",
+      "coverage": "full",
+      "claims": [
+        "C18",
+        "C19",
+        "C20",
+        "C21"
+      ]
+    }
+  ],
+  "complete_coverage": true,
+  "unreviewed_scope": [
+    "Actual source-read inventory, no fixture/viewer execution, source-only behavior; deferred to stage2/native evidence.",
+    "Native schemas/model/Goal lifecycle/tool boundary/quiescence/output fidelity; separate mechanical gate.",
+    "All OME facets beyond assigned ONE consideration; inapplicable by predeclared TASK scope, not denominator reduction.",
+    "Full research-quality/efficiency comparison; not assigned."
+  ],
+  "unresolved_matters": [
+    "C09 only-source-used runtime assertion",
+    "C21 actor-history assertion"
+  ],
+  "novelty": "Useful supported bounded finding; useful novelty against a whole-case key is unassessed and no key was used.",
+  "material_failure_identities": [],
+  "qualifications": [
+    "C03 integration-mandate wording",
+    "C11 incomplete version literal locator",
+    "C17 cross-version compatibility inference",
+    "C20 implicit test-fixture conditions"
+  ],
+  "blinding_limitations": [
+    "Task and path name reveal this is a Z runtime canary; no treatment/economics/prior grades or candidate conversation read.",
+    "Primary input is a frozen capture, so document publication metadata is accepted as capture content rather than verified live-web fact."
+  ],
+  "current_report_verdict": "supported bounded finding with qualifications",
+  "tiny_report_quality_verdict": "passed_with_qualifications",
+  "full_research_quality_win": false,
+  "source_fit": "Good for the one assigned consideration.",
+  "plan_fit": "No product canon supplied or modified; no Plans-fit claim made.",
+  "standalone_coherence": "Complete ONE-finding report with source pin, modal qualifications, plate precedence, transitional scope and explicitly unexecuted test. The fallback wording is a derived integration choice and is qualified above."
+}

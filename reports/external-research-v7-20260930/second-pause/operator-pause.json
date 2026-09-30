@@ -1,0 +1,128 @@
+{
+  "schema": "er7.second_restart_pause.v1",
+  "campaign_id": "external-research-v7-20260930",
+  "epoch": 1790791702.7623308,
+  "user_pause_utc": "2026-09-30T18:07UTC",
+  "operator": "/root/dispatch_mz_resume",
+  "no_new_admissions": true,
+  "no_existing_goal_restarts": true,
+  "requires_explicit_user_resume": true,
+  "original_deadline_epoch": 1790820406,
+  "accounting": {
+    "candidate_admissions": 20,
+    "occupied_slot_seconds": 9340.536205530167,
+    "remaining_committed_slot_seconds": 0,
+    "reported_generated_tokens_lower_bound": 366778,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": []
+  },
+  "active_owned_leases": [],
+  "identifiable_own_group_checks": [
+    {
+      "identified_owned_pgid": 148297,
+      "present": false
+    },
+    {
+      "identified_owned_pgid": 148298,
+      "present": false
+    },
+    {
+      "identified_owned_pgid": 148301,
+      "present": false
+    }
+  ],
+  "sibling": "untouched/not inspected/not killed",
+  "canary": {
+    "job_id": "z-runtime2-ome-useful-canary-r1",
+    "terminal_native_goal_status": "complete",
+    "self_qualification": "passed",
+    "independent_runtime_qualification": "pending stage2; current verdict saved before native/history; no productive authority from selfpass",
+    "effective_model": "GLM-5.3-Flash",
+    "effective_effort": "max",
+    "session_id": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8",
+    "whole_outputs": "frozen-output/out;5requiredallpresent",
+    "privateclient": "excluded entirely, never read by operator",
+    "usage_completeness": "unknown; partial native meters only"
+  },
+  "references": {
+    "ops/slots.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/slots.json",
+      "sha256": "67b8197962ab390f3a5d858047ed5d97341ead5069499034ff219e9d1083024c"
+    },
+    "ops/mz-ready-resume.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/mz-ready-resume.json",
+      "sha256": "0f174b3d871b7a5835745ee9df88295a65dc3b9ed9bd7099017eaaaab908808e"
+    },
+    "ops/mz-evaluation-ready.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/mz-evaluation-ready.json",
+      "sha256": "201b7993970e13268841b675b657d661d028e3b7df15659eb2e9e6667b8f87ab"
+    },
+    "ops/mz-safety-hold.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/mz-safety-hold.json",
+      "sha256": "1fc70d0c51d86f9243ce5780de6acfe8b607afe3ae9b401038e18e1e2aa1ff5d"
+    },
+    "ops/mz-resume-artifacts.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/mz-resume-artifacts.json",
+      "sha256": "83665a03fae7013543d7ca785d560739c6cd7b0e8860b27b0e882e46df0c695b"
+    },
+    "dev/runtime-boundary-final-repair2/FREEZE.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/FREEZE.json",
+      "sha256": "eb0c97ee748afa3cee832a87501c92e0b30a5e5b67e6541ac6bbc00edbbd5625"
+    },
+    "staging-canary-final2/spec-runtime-bound.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/spec-runtime-bound.json",
+      "sha256": "0c78baeb7ce385c69bc63bbc88b90c788de5e602f27f40918ba562a0217ffaf9"
+    },
+    "staging-canary-final2/host-admission.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/host-admission.json",
+      "sha256": "957c05f243bd2127f10b8aeaf3c8b9cd0895390846c0f601297ff8e942ddca1a"
+    },
+    "staging-canary-final2/attempt-runtime-bound.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/attempt-runtime-bound.json",
+      "sha256": "54252a42f25391aeda27e146ce5f49fca19f9a1b596d2c281293549ca50b8eac"
+    },
+    "staging-canary-final2/canary-attempt/native/receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/native/receipt.json",
+      "sha256": "1c563d1c086bb08d05df75e0025c125025a5bd831bd29f75ed2edee4931aad79"
+    },
+    "staging-canary-final2/canary-attempt/output-integrity.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/output-integrity.json",
+      "sha256": "23324d44a8b465f8b8af558a03511f2ad1b35fac3c8be5d7c163040407097844"
+    },
+    "staging-canary-final2/canary-attempt/evaluation-ready.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/evaluation-ready.json",
+      "sha256": "6167a82906e61886e2e94eeef9ac8c3b8a3642aaa5772291cf84bd26f5fdc749"
+    },
+    "staging-canary-final2/canary-attempt/stage2-unlock.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/stage2-unlock.json",
+      "sha256": "595faa6c4314931495d524be2f9ebadcde1c152c75accd02e30027611b23b269"
+    },
+    "evaluation/reviews/z-final-canary-v2/current-assessment.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v2/current-assessment.json",
+      "sha256": "bb35da244f476f8b23875017087d10daf0c99e8cb519da1427b8fff5dc2a71a8"
+    }
+  },
+  "ready_config_directories": [
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v2",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-integrated-z-v2",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1"
+  ],
+  "resume_rules": [
+    "Keep20start history/deadline/144starts/48occupiedhours/3Mreportedoutput and20percentreserve; no renewed budget",
+    "Noadmissions whilePAUSED evenif independentreviewPASS",
+    "Explicitresume then inspect ONLY identifiableown state once",
+    "M/L remainunsafeheld absent newauthority; oldunsafeZruntime never reuse",
+    "Canaryindependentproof still required before any productiveZjob plus exact productiveconfig gates",
+    "Failedfrozencanary exhausts finitecommonrepair2; nofix/restartv3",
+    "NoSol semanticcandidate research/rescue; preserve everyoriginalfailure/artifact",
+    "Continue candidateonly readyZ work independently after validgates; no wave/publishwait"
+  ]
+}

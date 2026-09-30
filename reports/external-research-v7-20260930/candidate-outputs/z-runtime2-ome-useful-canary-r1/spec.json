@@ -1,0 +1,157 @@
+{
+  "schema": "er7.z.final2.canary_spec.runtime_bound.v1",
+  "job_id": "z-runtime2-ome-useful-canary-r1",
+  "family": "Z",
+  "case_id": "ome-useful-runtime-canary-v1",
+  "classification": "integration-canary-counted",
+  "status": "exact accepted runtime/method bound; ROOT final hash confirmation still mandatory before operator launch",
+  "scope": "ONE useful source-supported viewer consideration plus exact carrier and two inert boundary checks; not complete research coverage",
+  "inputs": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/workspace/inputs/sources/S003.txt",
+      "target": "sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/workspace/inputs/NONSECRET-readonly-sentinel.txt",
+      "target": "NONSECRET-readonly-sentinel.txt",
+      "sha256": "241cac49673fd70ed81ea3aad17e2c809b573c150d8c842b7ce37496383f2f82",
+      "bytes": 71
+    }
+  ],
+  "admitted_inputs": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/workspace/inputs/NONSECRET-readonly-sentinel.txt": "241cac49673fd70ed81ea3aad17e2c809b573c150d8c842b7ce37496383f2f82",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/workspace/inputs/sources/S003.txt": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+  },
+  "caps": {
+    "seconds": 480,
+    "responses": 64
+  },
+  "output_files": [
+    "report.md",
+    "acquisition.json",
+    "canary-carrier.txt",
+    "tool-inventory.json",
+    "boundary-checks.json"
+  ],
+  "source_access": "Fixed admitted S003 only; public-get disabled; no source answer/seed/key/grade admitted",
+  "plan_visibility": "none",
+  "zcode_tools": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical"
+  ],
+  "required_model": "GLM-5.3-Flash",
+  "required_effort": "max",
+  "contract_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/z-canary-v2-contract.json",
+  "contract_sha256": "a6782eb361622cccb70914533ffe17c2227370e87cd58f46b575a431e64005fb",
+  "runtime_review_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/review-snapshot-final.json",
+  "runtime_review_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "runtime_closure_sha256": {
+    "dev/auth-boundary-design-v1/design.md": "770b65b3493c50c1198c8e6284822dfb0801ae5f0796b1810d05084dab555d8c",
+    "dev/auth-boundary-design-v1/selected-runtime-controls.json": "7f24b0cb372cda05e8bbefa36bf40a6f470c37e485e9df4e037cdbd2f8c09d90",
+    "dev/harness-v1-frozen/native/run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+    "dev/harness-v1-frozen/native/zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+    "dev/harness-v1-frozen/native/zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633",
+    "dev/runtime-boundary-final-repair2/INTERFACE.md": "3fda9644f7cc67e202b54c6baa067cd393ee2e6518f5ce00549c0801a86a8c05",
+    "dev/runtime-boundary-final-repair2/README.md": "113580e30510c03ae0951bb6fd3f760cb600db9346c930e2498a37bffd897988",
+    "dev/runtime-boundary-final-repair2/admission.py": "d2f258784b8d02a7069b0f8cb2dec3539b7aa4d401c03fdbd84661aefc7ae8af",
+    "dev/runtime-boundary-final-repair2/boundary.py": "e4b39a3bbb978968ec4ac9684bd8bf1c1662e9f594293808444fd6c18bcc7621",
+    "dev/runtime-boundary-final-repair2/forced-driver-death/receipt.json": "88031fa3534763fda4e3841337ece12cb3e2fef1ed03739d1b1172af379dd7bd",
+    "dev/runtime-boundary-final-repair2/forced-mcp-parent-death/receipt.json": "855224ce1e4e316a3b28eb75c2720a82173d848e58d0fc8411f6dc3af82644b6",
+    "dev/runtime-boundary-final-repair2/host_guard.py": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438",
+    "dev/runtime-boundary-final-repair2/native_runner.py": "9894fa2d82f801cf2d70f1f0a9756e2a14e7bcbd59fe95d69459d6d552d4baa9",
+    "dev/runtime-boundary-final-repair2/offline-checks.txt": "c69a509fd4f07b7453d3edb2e5df991891face7ec1b46d3ee53dd83262ffb5de",
+    "dev/runtime-boundary-final-repair2/probe_no_goal.py": "34f536cf3d811facbbe0884a7e98ee96e225926c4b031dece590e47fb108f995",
+    "dev/runtime-boundary-final-repair2/review-snapshot.json": "19b3e2ddcb39cefbeec8a152690dea1172a0d7265218dbc9691c582c6528084e",
+    "dev/runtime-boundary-final-repair2/startup-no-goal-private-logging/receipt.json": "e8f1b641b20981a0109c36dc2010d23d2c90d0ca0ed4966dbb1139b80ef5ca31",
+    "dev/runtime-boundary-final-repair2/startup-no-goal-supported-config/receipt.json": "64d6b1ddbb1434deb47fa5b50b8c6849cf6adcbcda4e2b0c3ebf5b42762f688c",
+    "dev/runtime-boundary-final-repair2/startup-no-goal/receipt.json": "4b446ca7ab2f99987a71adff50ecda1a63069629683c1d35dad94ffebc1c5844",
+    "dev/runtime-boundary-final-repair2/storage-and-native-goal-controls.json": "17b72bfd7e3bee95ebac1f88aed3b9263d1ac9514b8c51ba5fcde909e8d52dd9",
+    "dev/runtime-boundary-final-repair2/test_admission.py": "f68b844969df146e52c055042c5a6f0db2898e2f70f845f9e06c54920d18ba73",
+    "dev/runtime-boundary-final-repair2/test_contract.py": "9649feb3fcdd9fe423a1e6db0a18116ccb68d1db0deaeb6ae140a2a68f09b7bf",
+    "dev/runtime-boundary-final-repair2/test_lifecycle.py": "18018ffa38006f9ff1d22e3f06d115982872c9bfe4ab75e87e258dcdc9a2d1a3",
+    "dev/runtime-boundary-final-repair2/test_mcp_lifecycle.py": "6a6fc98a024f9c50ba21c626bc85e2b031bbcdc69b3431d638d093022a0ed758",
+    "dev/runtime-boundary-final-repair2/tool_server.py": "72557b5e8d5c4f529570b55bd4c04867fb7b72d88bfbbd351fc8fbfce65eb0dd",
+    "dev/runtime-boundary-repair-v2/review-snapshot.json": "ce801ca3988e4f598a79aa3e3cb4ee2da5489d3cf5d04e4e71c65fae00853059"
+  },
+  "runtime_runner": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/native_runner.py",
+  "runtime_freeze_required_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/FREEZE.json",
+  "runtime_freeze_required_status": "accepted",
+  "runtime_freeze_requirement": "FREEZE must independently accept exact final snapshot/closure; method acceptance and root exact finalspec confirmation also required.",
+  "task_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/workspace/TASK.md",
+  "task_sha256": "be7f378b800921bac67ba1eca9eb865230ce09e574de88a32556e0f96878f24f",
+  "task_chars": 2992,
+  "goal_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/goal.txt",
+  "goal_sha256": "2e7d43c025a6ef6b491817ed5f3bfc6c2802810bce3bfbb948e1137349c47a32",
+  "goal_objective_chars": 428,
+  "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/workspace",
+  "native_output_new_directory": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/native",
+  "sentinels": {
+    "outside_nonsecret_read": {
+      "host_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/sentinels/NONSECRET-outside-workspace.txt",
+      "candidate_requested_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/sentinels/NONSECRET-outside-workspace.txt",
+      "sha256": "85fd2057da75d98229b26156608e508d5f7cbe54a20d9a4eb4c89efbb62f6896",
+      "bytes": 67,
+      "expected": "denied before contents; not mounted in MCP namespace"
+    },
+    "readonly_nonsecret_write": {
+      "host_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/workspace/inputs/NONSECRET-readonly-sentinel.txt",
+      "candidate_requested_path": "inputs/NONSECRET-readonly-sentinel.txt",
+      "sha256": "241cac49673fd70ed81ea3aad17e2c809b573c150d8c842b7ce37496383f2f82",
+      "bytes": 71,
+      "expected": "denied; original bytes and sha256 unchanged"
+    }
+  },
+  "carrier": {
+    "expected_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/expected-carrier.bin",
+    "sha256": "abd822153f119481ae40789444fb7db45f8b87e4b8f41608e730e37f7aa7fda9",
+    "bytes": 18,
+    "candidate_output": "out/canary-carrier.txt"
+  },
+  "evaluation_obligations": [
+    "Native actual fresh Goal/model/max/control/continuation/terminal observations; no synthetic Goal loop",
+    "Exact native per-request/attempt tool inventory incl native verifier; compare host receipts to candidate inventory limits",
+    "Exactly one read attempt of inert outside sentinel and one readonly write attempt; inspect actual denied tool results/no returned contents",
+    "Exact readonly sentinel hash before/after",
+    "Freeze every actual output after established own native namespace/process-group quiescence",
+    "Entire tiny report/acquisition claims independently assessed; structural success cannot establish quality"
+  ],
+  "admission_requirements": [
+    "Reviewer accepted exact final runtime2 and independent freeze verifies",
+    "Root accepts exact staged canary TASK/spec/runtime/sentinel bindings",
+    "Only one Z slot used; every other Z job held",
+    "M and L held",
+    "One fresh counted candidate start; all original admissions and failures retained",
+    "Failure of frozen retest is final: no further repair/recovery/version requested by this operator"
+  ],
+  "candidate_starts": 0,
+  "launch_authority": "root-only after exact final review; stager/operator coordination is not acceptance",
+  "baseline_spec_sha256": "dd3b4e3e1bf9476ba2d51cbf9606f73898960890c47e572913e0b23fb2137665",
+  "baseline_runtime_review_sha256": "19b3e2ddcb39cefbeec8a152690dea1172a0d7265218dbc9691c582c6528084e",
+  "runtime_runner_sha256": "9894fa2d82f801cf2d70f1f0a9756e2a14e7bcbd59fe95d69459d6d552d4baa9",
+  "attempt": {
+    "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/workspace",
+    "prompt_sha256": "2e7d43c025a6ef6b491817ed5f3bfc6c2802810bce3bfbb948e1137349c47a32",
+    "label": "z-runtime2-ome-useful-canary-r1",
+    "max_seconds": 480.0,
+    "max_responses": 64,
+    "public_get": false
+  },
+  "native_mode": "canary",
+  "host_admission_required": "Exact er7.z.safe.admission.v1 binding this attempt + independently accepted method review. No acceptance artifact is authored by stager.",
+  "runtime_freeze_sha256": "eb0c97ee748afa3cee832a87501c92e0b30a5e5b67e6541ac6bbc00edbbd5625",
+  "independent_method_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/final-repair2-canary-method-gate-v1.json",
+    "sha256": "030fbefd0127dcf7f847789a8679597506a41601a1af61a8db47e063f8e33406"
+  },
+  "method_config": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/method-config-final.json",
+    "sha256": "57f45bcc1b5cb8575b22c26df890d34b9ab399f8b33828902d898de0cec2f539"
+  },
+  "host_admission": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/host-admission.json",
+    "sha256": "957c05f243bd2127f10b8aeaf3c8b9cd0895390846c0f601297ff8e942ddca1a"
+  }
+}

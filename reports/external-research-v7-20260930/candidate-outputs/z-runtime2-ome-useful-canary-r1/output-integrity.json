@@ -1,0 +1,75 @@
+{
+  "schema": "er7.final2.canary_integrity.v1",
+  "job_id": "z-runtime2-ome-useful-canary-r1",
+  "epoch": 1790791261.3800383,
+  "files": {
+    "report.md": {
+      "sha256": "50413c60728dc05656154ff19e5f7de013377c7d6e67f0a7ec4a32d22652fc25",
+      "bytes": 3809
+    },
+    "tool-inventory.json": {
+      "sha256": "ace5a931b4e1945ad1efe9166ea2369725e163fd8227b78cdf1f084ca02363d2",
+      "bytes": 1789
+    },
+    "canary-carrier.txt": {
+      "sha256": "abd822153f119481ae40789444fb7db45f8b87e4b8f41608e730e37f7aa7fda9",
+      "bytes": 18
+    },
+    "acquisition.json": {
+      "sha256": "966b0a6b2a4621bfeed60e44b7af6c1d3826fbbe19ee1c951eb48b550c7697b1",
+      "bytes": 2153
+    },
+    "boundary-checks.json": {
+      "sha256": "bca93f0eca2f348df77f35bad37f8720f4c7001a9aa2f938ac31e47762998299",
+      "bytes": 1659
+    }
+  },
+  "missing_required_outputs": [],
+  "extra_workspace_outputs": {
+    ".zcode/config.json": {
+      "sha256": "0c6057ae3a23041b3827349cccf35136f6fd7887e81d52d95713e1a8f1b72a5e",
+      "bytes": 834
+    }
+  },
+  "sanitized_native_artifacts": {
+    "receipt.json": {
+      "sha256": "1c563d1c086bb08d05df75e0025c125025a5bd831bd29f75ed2edee4931aad79",
+      "bytes": 156734
+    },
+    "zcode-stderr.omitted.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "session-tool-contract.json": {
+      "sha256": "7661b782e4f8f4eea3d2b187720e53d318dede9e971cec28cf2338e13d3e7d61",
+      "bytes": 2123
+    },
+    "progress.jsonl": {
+      "sha256": "bb9a53d5ea51136860b1bd3a6bb63162ecd672ed5c2956605231d8642827c5a0",
+      "bytes": 384
+    },
+    "usage-events.jsonl": {
+      "sha256": "3c0987b5c37471143da3aae396c51caea71592f7f4071f70f4f5b75d4b2276c2",
+      "bytes": 2262
+    },
+    "zcode-stdout.redacted.jsonl": {
+      "sha256": "59918b317c90910614fa49a31a0ec092426821a21de643940eebd33a32e7cd6c",
+      "bytes": 6411277
+    },
+    "host-process.json": {
+      "sha256": "5dfc3694eb2abd10ed8387ce4802a12cf8be879778b970fe22900079d69e6744",
+      "bytes": 56
+    }
+  },
+  "private_client": "excluded entirely; original runtimeprivate state not read by operator",
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "basis": "native receipt establishes own host/MCP quiescence; owned runner PGID148297 absent",
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/native/receipt.json",
+    "native_receipt_sha256": "1c563d1c086bb08d05df75e0025c125025a5bd831bd29f75ed2edee4931aad79",
+    "owned_driver_pgid": 148297
+  },
+  "semantic_quality": "unassessed",
+  "runtime_self_qualification": "passed"
+}

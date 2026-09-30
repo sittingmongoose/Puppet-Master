@@ -1,0 +1,256 @@
+{
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/frozen-output/sanitized-native/receipt.json",
+  "source_sha256": "1c563d1c086bb08d05df75e0025c125025a5bd831bd29f75ed2edee4931aad79",
+  "projection": "exact selected non-conversation fields; cleanup projections/raw stdout/privateclient excluded",
+  "app": "zcode",
+  "fresh_session": true,
+  "requested_model": "GLM-5.3-Flash",
+  "requested_effort": "max",
+  "native_goal_entry": "unchanged session/goal set and native automatic continuation/verifier",
+  "host_auth": "existing desktop Coding Plan registry projected in memory; not mounted in MCP child",
+  "canary_qualification": "passed",
+  "admission_mode": "canary",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "accepted_method_sha256": "57f45bcc1b5cb8575b22c26df890d34b9ab399f8b33828902d898de0cec2f539",
+  "session_id": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8",
+  "provider_id": "builtin:zai-coding-plan",
+  "model_id": "GLM-5.3-Flash",
+  "effort_effective": "max",
+  "tool_allowlist": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical"
+  ],
+  "goal_submitted_utc": "2026-09-30T17:55:28.470910+00:00",
+  "goal_target_id": "target_muoeok17_d3943f39-e9f8-4d41-adcd-65b33cac8456",
+  "goal_started_turn": true,
+  "stop_reason": "goal_complete",
+  "goal_status_final": "complete",
+  "end_utc": "2026-09-30T17:59:12.527490+00:00",
+  "elapsed_seconds": 228.0,
+  "native_responses": 5,
+  "request_status_counts": {
+    "model_request_completed": 5
+  },
+  "usage_totals": {
+    "inputTokens": 47183,
+    "outputTokens": 9968,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 22208,
+    "cacheWriteTokens": 0,
+    "totalTokens": 57151
+  },
+  "usage_requests_with_delta": 4,
+  "turn_terminals": [
+    {
+      "version": 1,
+      "eventId": "45fd5d86-d0b4-4860-ad2f-0c9d1dce4728",
+      "eventSeq": 3,
+      "occurredAt": 1790790928815,
+      "sessionId": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8",
+      "turnId": "turn_6aeb3694-1078-417d-93ba-0757bade8948",
+      "kind": "turn.terminal",
+      "status": "success",
+      "resultType": "success",
+      "durationMs": 0,
+      "tokenCount": 0,
+      "toolCallCount": 0
+    },
+    {
+      "version": 1,
+      "eventId": "cabee97d-3527-4b21-9894-979217bbb077",
+      "eventSeq": 7578,
+      "occurredAt": 1790791132143,
+      "sessionId": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8",
+      "turnId": "turn_e743bd76-83e0-41ff-9645-3a55274f9c2a",
+      "kind": "turn.terminal",
+      "status": "success",
+      "resultType": "success",
+      "durationMs": 203144,
+      "tokenCount": 57151,
+      "toolCallCount": 9
+    }
+  ],
+  "tool_starts": {
+    "mcp__pm_boundary__write_file": 6,
+    "mcp__pm_boundary__read_file": 3
+  },
+  "native_process_returncode": 0,
+  "native_process_group_remaining": [],
+  "own_process_group_absent": true,
+  "native_quiescent": true,
+  "native_quiescence_basis": "fresh host reaped plus dedicated process group absent; server teardown bounds active native work",
+  "quiescence_groups": {
+    "148298": [],
+    "148301": []
+  },
+  "inventory_check": {
+    "rows": [
+      {
+        "request_id": "f23d61f9-4ae0-4649-90e1-d6ff73c4453b",
+        "attempt": 1,
+        "session_id": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8",
+        "model": "GLM-5.3-Flash",
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical"
+        ],
+        "duplicate_request_attempt": false,
+        "status": "exact-allowed-subset"
+      },
+      {
+        "request_id": "83960aee-a6af-437c-b8c9-f3de492afd7d",
+        "attempt": 1,
+        "session_id": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8",
+        "model": "GLM-5.3-Flash",
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical"
+        ],
+        "duplicate_request_attempt": false,
+        "status": "exact-allowed-subset"
+      },
+      {
+        "request_id": "ae43216b-5c62-42a6-9ffa-f712682ed4b5",
+        "attempt": 1,
+        "session_id": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8",
+        "model": "GLM-5.3-Flash",
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical"
+        ],
+        "duplicate_request_attempt": false,
+        "status": "exact-allowed-subset"
+      },
+      {
+        "request_id": "2382570a-5fab-4344-92eb-cd540a519d06",
+        "attempt": 1,
+        "session_id": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8",
+        "model": "GLM-5.3-Flash",
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical"
+        ],
+        "duplicate_request_attempt": false,
+        "status": "exact-allowed-subset"
+      },
+      {
+        "request_id": "ece4c581-84f7-4022-9f03-df45ba8e56bb",
+        "attempt": 1,
+        "session_id": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8",
+        "model": "GLM-5.3-Flash",
+        "tool_names": [],
+        "duplicate_request_attempt": false,
+        "status": "exact-allowed-subset"
+      }
+    ],
+    "expected": [
+      "mcp__pm_boundary__read_file",
+      "mcp__pm_boundary__write_file",
+      "mcp__pm_boundary__mechanical"
+    ],
+    "telemetry_request_statuses": {
+      "f23d61f9-4ae0-4649-90e1-d6ff73c4453b": "model_request_completed",
+      "83960aee-a6af-437c-b8c9-f3de492afd7d": "model_request_completed",
+      "ae43216b-5c62-42a6-9ffa-f712682ed4b5": "model_request_completed",
+      "2382570a-5fab-4344-92eb-cd540a519d06": "model_request_completed",
+      "ece4c581-84f7-4022-9f03-df45ba8e56bb": "model_request_completed"
+    },
+    "missing_request_ids": [],
+    "unreported_request_ids": [],
+    "missing_request_attempts": [],
+    "unreported_request_attempts": [],
+    "native_model_status_events": [
+      {
+        "requestId": "f23d61f9-4ae0-4649-90e1-d6ff73c4453b",
+        "attempt": 1,
+        "status": "model_request_started",
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan",
+        "sessionId": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8"
+      },
+      {
+        "requestId": "f23d61f9-4ae0-4649-90e1-d6ff73c4453b",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan",
+        "sessionId": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8"
+      },
+      {
+        "requestId": "83960aee-a6af-437c-b8c9-f3de492afd7d",
+        "attempt": 1,
+        "status": "model_request_started",
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan",
+        "sessionId": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8"
+      },
+      {
+        "requestId": "83960aee-a6af-437c-b8c9-f3de492afd7d",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan",
+        "sessionId": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8"
+      },
+      {
+        "requestId": "ae43216b-5c62-42a6-9ffa-f712682ed4b5",
+        "attempt": 1,
+        "status": "model_request_started",
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan",
+        "sessionId": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8"
+      },
+      {
+        "requestId": "ae43216b-5c62-42a6-9ffa-f712682ed4b5",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan",
+        "sessionId": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8"
+      },
+      {
+        "requestId": "2382570a-5fab-4344-92eb-cd540a519d06",
+        "attempt": 1,
+        "status": "model_request_started",
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan",
+        "sessionId": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8"
+      },
+      {
+        "requestId": "2382570a-5fab-4344-92eb-cd540a519d06",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan",
+        "sessionId": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8"
+      },
+      {
+        "requestId": "ece4c581-84f7-4022-9f03-df45ba8e56bb",
+        "attempt": 1,
+        "status": "model_request_started",
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan",
+        "sessionId": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8"
+      },
+      {
+        "requestId": "ece4c581-84f7-4022-9f03-df45ba8e56bb",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan",
+        "sessionId": "sess_3371b76e-1171-4c8c-b711-0d845b134ac8"
+      }
+    ],
+    "verified": true,
+    "effort_proof": "mandatory native session/read max identity; unchanged native Goal verifier same defaultModelRef",
+    "scope": "Exact request-ID set including started/unfinished/failed/verifier IDs; distinct attempt records required. No row-count substitute."
+  },
+  "shared_native_metadata_changed_paths": [],
+  "startup_cleanup_elapsed_seconds": 229.858,
+  "component_outcome": "passed"
+}

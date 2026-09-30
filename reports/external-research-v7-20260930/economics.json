@@ -82,5 +82,35 @@
     "T06": "available artifacts retained; acquisition-to-final unassessed",
     "T01": "complete staged history; no measured preservation benefit",
     "T09": "partial; uncaptured source-lead/snippet validation unresolved"
+  },
+  "second_pause_accounting": {
+    "candidate_admissions": 20,
+    "occupied_slot_seconds": 9340.536205530167,
+    "remaining_committed_slot_seconds": 0,
+    "reported_generated_tokens_lower_bound": 366778,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": []
+  },
+  "known_actual_native_goals_at_second_pause": 18,
+  "native_canary": {
+    "whole_seconds_including_setup_waits_cleanup": 229.858,
+    "native_completion_seconds": 228.0,
+    "usage": {
+      "inputTokens": 47183,
+      "outputTokens": 9968,
+      "reasoningTokens": 0,
+      "cacheReadTokens": 22208,
+      "cacheWriteTokens": 0,
+      "totalTokens": 57151
+    },
+    "meter_completeness": "unknown",
+    "qualification": "self-pass; independent native proof pending",
+    "same_quality_efficiency_win": false
   }
 }

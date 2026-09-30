@@ -1,0 +1,26 @@
+{
+  "schema": "er7.final2.canary_ready.v1",
+  "epoch": 1790791261.3829765,
+  "job_id": "z-runtime2-ome-useful-canary-r1",
+  "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/frozen-output/out",
+  "frozen_sanitized_native": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/frozen-output/sanitized-native",
+  "output_integrity": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/output-integrity.json",
+  "output_integrity_sha256": "23324d44a8b465f8b8af558a03511f2ad1b35fac3c8be5d7c163040407097844",
+  "spec": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/spec-runtime-bound.json",
+  "spec_sha256": "0c78baeb7ce385c69bc63bbc88b90c788de5e602f27f40918ba562a0217ffaf9",
+  "TASK": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/workspace/TASK.md",
+  "TASK_sha256": "be7f378b800921bac67ba1eca9eb865230ce09e574de88a32556e0f96878f24f",
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/workspace/inputs/sources/S003.txt",
+  "source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "basis": "native receipt establishes own host/MCP quiescence; owned runner PGID148297 absent",
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/native/receipt.json",
+    "native_receipt_sha256": "1c563d1c086bb08d05df75e0025c125025a5bd831bd29f75ed2edee4931aad79",
+    "owned_driver_pgid": 148297
+  },
+  "review_order": "current report semantic first; runtime/history only after current verdict frozen",
+  "native_self_pass": "not independent qualification",
+  "productive_jobs": "held pending independent actual canary proof"
+}

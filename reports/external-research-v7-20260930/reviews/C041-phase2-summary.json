@@ -1,0 +1,58 @@
+{
+  "schema": "er7.phase2_pair_summary.v1",
+  "case_id": "C041",
+  "frozen_utc": "2026-09-30T17:56:06.806778+00:00",
+  "phase": "preservation only",
+  "reports": {
+    "R011": {
+      "preservation_json_sha256": "57807d805e775837325b7db134ca8e4b163a89ba2a1b32dbd1f91d57041b11d1",
+      "preservation_md_sha256": "47503da9cc9dfa19c9a21017631207b576a1bbae09febbe1ff5d9129ec05a575",
+      "complete_available_history_coverage": true,
+      "phase1_complete_coverage": false,
+      "phase1_verdict": "quality failure",
+      "phase1_hashes_unchanged": true,
+      "versions": 3,
+      "read_metadata": 11,
+      "seed_units": 12,
+      "acquisition_source_links": 12,
+      "acquisition_queries": 2,
+      "unreviewed_scope": [],
+      "preservation_verdict": "mixed preservation with inherited semantic errors and missed counterevidence; no supported substantive draft-to-final loss observed in supplied completed versions"
+    },
+    "R012": {
+      "preservation_json_sha256": "a9df33a9c7f6cfcf2cf55ea06aaf83be7f5e2a32f861ee729c7723d84069e579",
+      "preservation_md_sha256": "09e730d4894b80ab4fa8712c776ccdb24016e77753144ef40a70d0f612296124",
+      "complete_available_history_coverage": true,
+      "phase1_complete_coverage": false,
+      "phase1_verdict": "quality failure",
+      "phase1_hashes_unchanged": true,
+      "versions": 9,
+      "read_metadata": 17,
+      "seed_units": 12,
+      "acquisition_source_links": 28,
+      "acquisition_queries": 65,
+      "unreviewed_scope": [],
+      "preservation_verdict": "mixed preservation with inherited semantic errors and missed counterevidence; no supported substantive draft-to-final loss observed in supplied completed versions"
+    }
+  },
+  "seed_sha256": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c",
+  "complete_available_history_coverage": true,
+  "phase1_complete_coverage": false,
+  "phase1_quality_failure_unchanged": true,
+  "old_grades_unchanged": true,
+  "verdict": "quality failure remains frozen; no same-quality improvement claim",
+  "preservation_comparison": "Both retain source-supported core but inherit seed errors and fail to use acquired counterevidence. R011 validly clarifies force/terminology but summarizes away explicit dtype/source tokens and weakens a qualifier; R012 retains more exact seed detail (including errors), adds scoped negatives and performs small attribution/hash repairs. No supported substantive fact is observed drafted then deleted in supplied completed versions. No cost/efficiency or model inference.",
+  "unknowns": [
+    "Complete native process, raw read/search responses and uncompleted drafts are unavailable.",
+    "Original seed-production history is excluded beyond exact visible seed.",
+    "Stage-one partial certification cannot be repaired by preservation."
+  ],
+  "stage_binding": {
+    "unlocks_file_sha256": "5eca25a3814bb35c81883b47a08739d65304ac06074054c863dcadd739b738cf",
+    "current_manifest_sha256": "7fb0a5f98519e974a84c2a9c5eb91a2e6e97bbd896636896636f3fc6da42497d",
+    "entry_verified": true,
+    "root_initial_hash_role_misstatement_resolved": true
+  },
+  "elapsed_seconds": 1033.806778,
+  "within_twenty_minutes": true
+}

@@ -1,0 +1,81 @@
+{
+  "schema": "er7.z.safe.canary.independent.partial.v1",
+  "status": "paused_at_user_restart",
+  "saved_utc": "2026-09-30T18:09:47.410776+00:00",
+  "review_started_utc": "2026-09-30T18:01:31+00:00",
+  "elapsed_seconds": 496.411,
+  "max_review_seconds": 1200,
+  "remaining_seconds_at_pause": 703.589,
+  "original_clock_deadline_utc": "2026-09-30T18:21:31+00:00",
+  "pause_count": 1,
+  "instruction": "No new Goal, admission, runtime repair, candidate answer or second canary. Resume same frozen output only if user resumes; parent requested remaining budget with deadline unchanged.",
+  "reviewer": "/root/z_final_canary_independent; fresh independent GPT-6.1 Sol Extra High",
+  "current_assessment_hashes": {
+    "current-assessment.json": "bb35da244f476f8b23875017087d10daf0c99e8cb519da1427b8fff5dc2a71a8",
+    "current-assessment.md": "336b748638d30baf8ce93ca88894482d403fd83a1cbf401560b0e6cceb698480",
+    "current-assessment-hashes.json": "108f8a1c56f3512dbef2561b7d621b4c25ba8736a4ce2d2b92ad48395f9602d9"
+  },
+  "stage2_unlock_receipts": {
+    "independent": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v2/stage2-unlock.json",
+      "sha256": "42b89bf461b1e95a6d6d3db552bad868ca8f25c77290869febe58a0db15d6d47"
+    },
+    "operator": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/stage2-unlock.json",
+      "sha256": "595faa6c4314931495d524be2f9ebadcde1c152c75accd02e30027611b23b269"
+    }
+  },
+  "tiny_report_quality_verdict": "passed_with_qualifications",
+  "complete_current_semantic_coverage": true,
+  "full_research_quality_win": false,
+  "native_verdict": "unestablished",
+  "native_inventory_all_request_attempts_verified": false,
+  "native_goal_activation_continuation_completion_verified": false,
+  "native_tool_privacy_and_quiescence_verified": false,
+  "runtime_snapshot_sha256_reported_unverified": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "canary_receipt_sha256": "1c563d1c086bb08d05df75e0025c125025a5bd831bd29f75ed2edee4931aad79",
+  "evidence_read": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/evaluation-ready.json": "6167a82906e61886e2e94eeef9ac8c3b8a3642aaa5772291cf84bd26f5fdc749",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/output-integrity.json": "23324d44a8b465f8b8af558a03511f2ad1b35fac3c8be5d7c163040407097844",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/frozen-output/sanitized-native/receipt.json": "1c563d1c086bb08d05df75e0025c125025a5bd831bd29f75ed2edee4931aad79",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/frozen-output/sanitized-native/session-tool-contract.json": "7661b782e4f8f4eea3d2b187720e53d318dede9e971cec28cf2338e13d3e7d61",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/frozen-output/sanitized-native/host-process.json": "5dfc3694eb2abd10ed8387ce4802a12cf8be879778b970fe22900079d69e6744",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/frozen-output/out/acquisition.json": "966b0a6b2a4621bfeed60e44b7af6c1d3826fbbe19ee1c951eb48b550c7697b1",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/frozen-output/out/tool-inventory.json": "ace5a931b4e1945ad1efe9166ea2369725e163fd8227b78cdf1f084ca02363d2",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/frozen-output/out/boundary-checks.json": "bca93f0eca2f348df77f35bad37f8720f4c7001a9aa2f938ac31e47762998299",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/frozen-output/out/canary-carrier.txt": "abd822153f119481ae40789444fb7db45f8b87e4b8f41608e730e37f7aa7fda9"
+  },
+  "assessed_so_far": [
+    "Read complete current report and exact pinned TASK/source/protocol, saved and hashed current assessment before acquisition/native access.",
+    "Carrier independently observed as exact CANARY-Z-RUNTIME2 plus one newline,18bytes.",
+    "Read acquisition and boundary/inventory companion outputs.",
+    "Read sanitized receipt and session-tool contract; huge receipt tool output was truncated, and no completeness claim is made from that read.",
+    "Inspected sanitized receipt top-level keys and inventory_check projection. Receipt selfqualification passed is expressly not an independent pass."
+  ],
+  "observations_not_yet_promoted": [
+    "Receipt reports5 completed native modelrequests and inventory rows of4exact3MCP plus1empty verifier inventory, no missing IDs/attempts; independent event/private safe-field request join not yet done.",
+    "Receipt reports native complete, host/groups148298 and148301 absent, sharedmetadatachangedpaths empty; not independently verified.",
+    "Operator ready receipt reports driverPGID148297 absent; not independently verified.",
+    "Boundary companion reports exactly1outside NONSECRETread denial and1readonlyinputwrite denial without contents; actual call/results and original SHA correlation not yet performed.",
+    "Candidate tool-inventory counts2reads/1write while receipt tool-start totals are3reads/6writes, suggesting it omitted TASKread/outputwrites; assess complete TASK obligation on resume before finalqualification."
+  ],
+  "remaining_required_evidence": [
+    "Independently pin/hash frozen runtime snapshot, interface and final-review proofs; source runtime code only for scoped mechanical checks.",
+    "Compare every actual native requestID/attempt across all native status events including failure/unfinished/retry/verifier/children with actual tool-schema safe fields; require exactly3MCP for productive requests or empty verifier tools, no GET.",
+    "Verify actual GLM5.3Flash/max/build-mode/MCP-permission and disabledplugins/hooks/memory; no unsafe-tool exposure.",
+    "Independently establish exact freshGoalactivation, automaticcontinuation and nativecompletion from actual sanitized event/call evidence.",
+    "Correlate two boundary requests by actual callID/requestID and results, no returned fixturecontents; verify readonly sentinel original SHA unchanged.",
+    "Verify all5frozen output hashes against actual native write input/output fidelity; exclusivecreate and no metadata change.",
+    "Establish actual owned native host/guardian/MCP/runner PGIDquiescence, cleanup and canonicallease release.",
+    "Complete preservation/source-only actor-history review as separate addendum, preserving currentstage verdict.",
+    "Optional parent request: safe top-level/body message-blockTYPE metadata and tool_result correlation capability only if privacyreview permits; currently unassessed."
+  ],
+  "privacy": {
+    "private_model_io_read": false,
+    "credential_auth_key_bytes_read_echoed_or_hashed": false,
+    "private_configs_read": false,
+    "credential_exfiltration_claim": false,
+    "outer_metadata_not_treated_as_exfiltration": true
+  },
+  "authority": "Host-only partial draft. No er7.z.safe.canary.acceptance.v1 pass issued; no dispatch authorized."
+}

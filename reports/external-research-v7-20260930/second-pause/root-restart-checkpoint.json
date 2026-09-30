@@ -1,0 +1,139 @@
+{
+  "schema": "er7.restart_checkpoint.second_pause.v1",
+  "campaign": "external-research-v7-20260930",
+  "status": "paused-user-requested-restart",
+  "paused_epoch": 1790791864.3547063,
+  "campaign_start": 1790777206,
+  "fixed_deadline": 1790820406,
+  "pause_counts_toward_elapsed_budget": true,
+  "candidate_admissions": 20,
+  "actual_native_goal_activations": 18,
+  "active_owned_candidate_leases": {
+    "M": 0,
+    "Z": 0,
+    "L": 0
+  },
+  "occupied_candidate_seconds": 9340.536,
+  "known_candidate_generated_output_lower_bound": 366778,
+  "unknown_usage": "Native children/cancelled/unexposed usage stays unknown; parent/helper generated output unknown.",
+  "ops_checkpoint": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/pause-second-restart.json",
+    "sha256": "62ddc6a6040aeff48bdd5023af8258d99fc2854cd57c44fe35d7e663299a917d"
+  },
+  "last_published_commit": "7f7d56b968f7ae5f73ef01d1c4ec7942c228eaa9",
+  "publication_worktree": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930",
+  "branch": "research/external-research-v7-20260930",
+  "candidate_caps": {
+    "M": 2,
+    "Z": 2,
+    "L": 2
+  },
+  "helper_capacity_user_override": 23,
+  "helper_total_start_ceiling": 72,
+  "runtime": {
+    "snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+    "freeze_sha256": "eb0c97ee748afa3cee832a87501c92e0b30a5e5b67e6541ac6bbc00edbbd5625",
+    "status": "Z final repair2 frozen and ONE native canary completed; independent actual native qualification pending safe reviewer checkpoint. M/L held. No commonruntime source edits or second canary."
+  },
+  "canary": {
+    "job_id": "z-runtime2-ome-useful-canary-r1",
+    "outputs_frozen": true,
+    "native_goal_complete": true,
+    "native_and_owned_processes_quiescent": true,
+    "readiness_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/evaluation-ready.json",
+    "readiness_sha256": "6167a82906e61886e2e94eeef9ac8c3b8a3642aaa5772291cf84bd26f5fdc749",
+    "independent_review_owner": "z_final_canary_independent",
+    "gate_status": "PENDING; automatic receipt is insufficient",
+    "independent_current_verdict": "passed_with_qualifications for tiny ONEfinding only, no fullresearchqualitywin",
+    "independent_native_gate": "UNESTABLISHED; no er7.z.safe.canary.acceptance.v1 pass issued",
+    "current_assessment_sha256": "bb35da244f476f8b23875017087d10daf0c99e8cb519da1427b8fff5dc2a71a8",
+    "current_assessment_md_sha256": "336b748638d30baf8ce93ca88894482d403fd83a1cbf401560b0e6cceb698480"
+  },
+  "ready_method_gates": [
+    "evaluation/reviews/z-safe-methods-v2/initial-acceptances.json",
+    "evaluation/reviews/z-safe-methods-v2/repo-acceptances.json"
+  ],
+  "pending_method_work": {
+    "T03T13": "finite methodrepair1 checkpoint by z_preservation_delivery_methods, originale1602 HELD synthetic correction defects preserved; reviewauth_boundary_design pending repairedbytes",
+    "T04T05": "MCP correlation unavailable in sanitized native lifecycle; originalhypothesesheld, substantive extended-menu replacements draft bydelivery_methods_resume",
+    "GETcapture": "draft bounded safeprojector/parser byrepo_cases_resume; rawmodelIO read stillBANNED until independentprivacyprojectorgate",
+    "Integrated": "six diagnosticcases/24stages preparedmethods-integrated-z-v2; reviewluna_adjudication checkpoint; exactdynamicperstage bindings/actualcapture/canary/OMEeligibility gates stillheld",
+    "OMEintegratedscope": "rootcreatedprivate7briefderivedfacet scopekey24a184...adbb beforeintegratedoutputs; independentreviewpending, nofactualkey/sourceS003reuse"
+  },
+  "latest_frozen_grading": [
+    "grading/C041-phase2-summary.json",
+    "grading/C017-phase2-summary.json",
+    "grading/C028-phase2-summary.json",
+    "grading/R003-R004-phase2-summary.json"
+  ],
+  "resume_order": [
+    "Require explicit user resume; keep SAME deadline/budgets/campaign ID.",
+    "Reconcile own checkpoint/leases only; no sibling kills, newfetch or historical rescans.",
+    "Finish same frozen canary independent native gate with existing review remaining budget, no semantic rescore of saved currentgrade.",
+    "If qualified: resume rolling Z queue acceptedexactconfigs (T07 noGET first; capture-dependentjobs afterindependentcapturegate); keepM/Lholds andsharedcaps.",
+    "Finish finite method repairs/replacementdrafts/6integratedcontracts; no commonfrozenruntime changes and no secondcanary.",
+    "Continue sourcegrounded independent grading and batchpublication; preserve originals/failures/unknown usage."
+  ],
+  "safety": "No canonical Plans/ledgers/governance/WorkNodes/main merges/unrelated edits. No credential/key bytes in candidate contexts or publication.",
+  "helpers_requested": "All active helpers asked to stop after durable checkpoint within2min; no newtasks/admissions afterpause except bounded pausepublication housekeeping.",
+  "helper_checkpoints": {
+    "methods-z-write-receipts-v2/HANDOFF.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/HANDOFF.json",
+      "sha256": "db0d30f1d4a8773224ae4294187318dbffb332d42fa40dd089c382da4fa8f6b8"
+    },
+    "methods-z-preservation-delivery-v2/CHECKPOINT.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v2/CHECKPOINT.json",
+      "sha256": "9a975f6ddea1e1eb242585790b1ac7e69734c1bc12c585e1b6cd0072cd10fc21"
+    },
+    "dev/z-mcp-acquisition-capture-v1/PAUSED_CHECKPOINT.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/z-mcp-acquisition-capture-v1/PAUSED_CHECKPOINT.json",
+      "sha256": "cc9dedc9ca99c4cebbc70bcf3e8cea017fae5b8c910a20aae58c0ae494fece9a"
+    },
+    "grading/canary-final2/review-checkpoint.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/canary-final2/review-checkpoint.json",
+      "sha256": "2b7d090c7e97a9e6d89c12e1e90fd787a34b5fce77e1b0e6fbe40a969f49800a"
+    },
+    "evaluation/reviews/z-final-canary-v2/native-assessment.partial.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v2/native-assessment.partial.json",
+      "sha256": "8f08f032f9e0ea20015375153acc43bf857967762ca59da25475ba4a85884190"
+    },
+    "evaluation/reviews/z-preservation-delivery-methods-v2/restart-checkpoint.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-preservation-delivery-methods-v2/restart-checkpoint.json",
+      "sha256": "fd8fc1612490da1f7826da1ab359ab672729ae2dbaee7bd6c9e893db7161cacd"
+    },
+    "evaluation/reviews/z-preservation-delivery-methods-v2/review.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-preservation-delivery-methods-v2/review.json",
+      "sha256": "c750ac517b3e384a7e7aa964e2e3f1f27e3dcedadcff7c91ad980a2dc3cefcb3"
+    }
+  },
+  "review_remaining_clock": {
+    "z_final_canary_independent": {
+      "elapsed_seconds": 496.411,
+      "remaining_seconds_at_pause": 703.589,
+      "fixed_task_deadline_utc": "2026-09-30T18:21:31Z",
+      "pause_counts": true,
+      "if_expired_on_resume": "Preserve partial terminal task; do not reset its clock. Any further scope needs distinct prospective bounded task within original campaign ceiling and explicit prior-cost accounting."
+    },
+    "z_preservation_delivery_methods_repair1": {
+      "remaining_seconds_upper_bound_at_checkpoint": 138.06,
+      "first_unrecorded_interval_unknown": true,
+      "pause_counts": true
+    },
+    "delivery_methods_resume_extended_menu": {
+      "elapsed_seconds": 549.9,
+      "remaining_seconds_at_checkpoint": 650.1,
+      "fixed_task_deadline_utc": "2026-09-30T18:20:20Z",
+      "pause_counts": true
+    },
+    "repo_cases_resume_capture": {
+      "remaining": "unknown; do not silently reset task clock",
+      "pause_counts": true
+    }
+  },
+  "helper_start_ledger_lines": 58,
+  "helper_start_count_conservative_last_reconciled": 47,
+  "helper_start_events_added_after_reconciliation": 8,
+  "helper_start_unknown_omissions": true,
+  "all_nonpublication_helper_work": "Stopped and file-backed checkpointed; integrated gate finalcheckpoint still pending acknowledgement",
+  "updated_epoch": 1790791978.6677845
+}

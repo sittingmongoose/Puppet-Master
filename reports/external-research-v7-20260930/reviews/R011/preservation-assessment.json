@@ -1,0 +1,2485 @@
+{
+  "schema": "er7.preservation_assessment.v2",
+  "case_id": "C041",
+  "report_id": "R011",
+  "stage": "preservation_only_after_authorized_partial_current",
+  "started_utc": "2026-09-30T17:38:53+00:00",
+  "frozen_utc": "2026-09-30T17:56:06.806778+00:00",
+  "elapsed_seconds": 1033.806778,
+  "deadline_utc": "2026-09-30T17:58:53+00:00",
+  "complete_coverage": true,
+  "coverage_scope": "All supplied exact seed units, acquisition-note keys/reads/queries/source links, completed artifact versions and all version differences; source-supported content independently adjudicated against admitted S003. This is available-history coverage, not complete native-conversation/process observability.",
+  "unreviewed_scope": [],
+  "unavailable_scope": [
+    "Full native conversations and raw read/search response bodies, search execution logs, failed/uncompleted drafts, independent native execution/network audit.",
+    "Original seed-production attempt history beyond the exact candidate-visible seed is not supplied.",
+    "Zarr/OME-XML/UDUNITS/WebGateway/Tools implementation source bodies not admitted.",
+    "Economics/model/cost/method mappings are excluded; no such inference made."
+  ],
+  "phase1": {
+    "verdict_unchanged": "quality failure",
+    "complete_coverage_unchanged": false,
+    "oldgrade_hash_before": {
+      "current-assessment.json": "691346b0b6d36f58554c476af7b212c55598dca2082e77a8ed5dc46e7a456134",
+      "current-assessment.md": "a6f51d5f8f3b9dd5f87f8505838846e0d3f0583353618ee065fba0b0470cc820",
+      "current-report.md": "b0866759263b91aa1fe982edbc9c3cfcaa70bc90d2ff3501b9a1ce6e70ed110a",
+      "current-artifact-set.json": "fd612da1d19081142b868f1b802d130f2061298b1741b522769f90c4d917f238",
+      "verification.json": "a6d9244f2a96c5e22c8e8105c11a3448ba8e76d7fde163e5c7b1b95d3030d8d1"
+    },
+    "oldgrade_hash_after": {
+      "current-assessment.json": "691346b0b6d36f58554c476af7b212c55598dca2082e77a8ed5dc46e7a456134",
+      "current-assessment.md": "a6f51d5f8f3b9dd5f87f8505838846e0d3f0583353618ee065fba0b0470cc820",
+      "current-report.md": "b0866759263b91aa1fe982edbc9c3cfcaa70bc90d2ff3501b9a1ce6e70ed110a",
+      "current-artifact-set.json": "fd612da1d19081142b868f1b802d130f2061298b1741b522769f90c4d917f238",
+      "verification.json": "a6d9244f2a96c5e22c8e8105c11a3448ba8e76d7fde163e5c7b1b95d3030d8d1"
+    },
+    "all_before_after_equal": true,
+    "promoted_or_rescored": false,
+    "phase1_timing_limit": "Final save after 20-minute cap; partial certification remains unchanged."
+  },
+  "reviewer": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "xhigh",
+    "effective_runtime_introspection": "unknown",
+    "recursive_helpers": false,
+    "Goals": false
+  },
+  "stage_authority": {
+    "history_scope_sha256": "c4a9607002940e3647481ca05aa80fe9fef0f410e2a17e2796bd84aa0fad1703",
+    "unlock_receipt_sha256": "869de8a076fce70781f5e02e0d0f741d40b215eb4bddbc6f97d7c8475620fe0f",
+    "unlocked_utc": "2026-09-30T17:37:52.703389+00:00",
+    "unlock_binds_saved_partial_current": true,
+    "host_unlocks_file_sha256": "5eca25a3814bb35c81883b47a08739d65304ac06074054c863dcadd739b738cf",
+    "host_manifest_sha256": "7fb0a5f98519e974a84c2a9c5eb91a2e6e97bbd896636896636f3fc6da42497d",
+    "host_manifest_receipt_entry": "5eca25a3814bb35c81883b47a08739d65304ac06074054c863dcadd739b738cf",
+    "host_manifest_entry_matches_actual": true,
+    "communication_binding_failure": "Root initially described 496932... as partial-history-unlocks.json hash; clarified it was an earlier MANIFEST edition, not receipt file hash. Actual receipt entry is stable and matches current MANIFEST; no unauthorized mutation inferred."
+  },
+  "source_pin": {
+    "handle": "S003",
+    "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "bytes": 36980,
+    "lines": 896,
+    "version": "0.5 capture-only"
+  },
+  "seed_sha256": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c",
+  "seed_hash_matches": true,
+  "history_hashes": {
+    "candidate_seed.json": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c",
+    "HISTORY_SCOPE.json": "c4a9607002940e3647481ca05aa80fe9fef0f410e2a17e2796bd84aa0fad1703",
+    "assignment-001/manifest.json": "1f2c0936a5b239d4df5517101a127214dabc1a71609913d17035a12bfe4dc8f1",
+    "assignment-001/acquisition.json": "fae4f2919325154a236a26c7cbf0dab68cf192683530ebccb3b726cfd98138a3",
+    "assignment-001/artifact-versions/V003.txt": "a6d9244f2a96c5e22c8e8105c11a3448ba8e76d7fde163e5c7b1b95d3030d8d1",
+    "assignment-001/artifact-versions/V001.txt": "b0866759263b91aa1fe982edbc9c3cfcaa70bc90d2ff3501b9a1ce6e70ed110a",
+    "assignment-001/artifact-versions/V002.txt": "fae4f2919325154a236a26c7cbf0dab68cf192683530ebccb3b726cfd98138a3"
+  },
+  "history_manifest": {
+    "versions": 3,
+    "read_metadata_count": 11,
+    "source_exposure_captures": 0,
+    "trace_sha256_claim": "381107baf7c20ce77f8bbd2450eb854c44f3f49a59e4f15eff2687d9ac5fa585",
+    "actual_acquisition_note_hash": "fae4f2919325154a236a26c7cbf0dab68cf192683530ebccb3b726cfd98138a3",
+    "reads_establish": "Exposure only; process not semantic acquisition. Written factual content is independently source-validated.",
+    "completed_read_metadata": [
+      {
+        "tool": "read_file",
+        "call_id": "call_01a0f31a0201773ebdc61b1a7ae94874",
+        "completed_at": "2026-09-30T16:16:03.909944Z",
+        "path": "TASK.md",
+        "trace_line": 17
+      },
+      {
+        "tool": "read_file",
+        "call_id": "call_01a0f31a103177baa4d9a8d662ca30a7",
+        "completed_at": "2026-09-30T16:16:09.698977Z",
+        "path": "inputs/TASK.md",
+        "trace_line": 26
+      },
+      {
+        "tool": "read_file",
+        "call_id": "call_01a0f31a171c76c39ca2cd4e145fcbcf",
+        "completed_at": "2026-09-30T16:16:09.700671Z",
+        "path": "inputs/plan/Viewer.md",
+        "trace_line": 27
+      },
+      {
+        "tool": "read_file",
+        "call_id": "call_01a0f31a128e76558fbdb3de82b846c8",
+        "completed_at": "2026-09-30T16:16:09.702041Z",
+        "path": "inputs/catalog.json",
+        "trace_line": 28
+      },
+      {
+        "tool": "read_file",
+        "call_id": "call_01a0f31a0e12736d8adeedba6fe25170",
+        "completed_at": "2026-09-30T16:16:09.703594Z",
+        "path": "inputs/brief.md",
+        "trace_line": 29
+      },
+      {
+        "tool": "read_file",
+        "call_id": "call_01a0f31a14ac73a9909dd77583ad9769",
+        "completed_at": "2026-09-30T16:16:09.709988Z",
+        "path": "inputs/sources/S003.txt",
+        "trace_line": 30
+      },
+      {
+        "tool": "read_file",
+        "call_id": "call_01a0f31a194f74e0a5d34360a0e2b488",
+        "completed_at": "2026-09-30T16:16:09.717144Z",
+        "path": "inputs/candidate_seed.json",
+        "trace_line": 31
+      },
+      {
+        "tool": "read_file",
+        "call_id": "call_01a0f31a279b71929ac24b0592aad2de",
+        "completed_at": "2026-09-30T16:16:13.924618Z",
+        "path": "inputs/sources/S003.txt",
+        "trace_line": 37
+      },
+      {
+        "tool": "read_file",
+        "call_id": "call_01a0f32089de704b83a94a0253e9c978",
+        "completed_at": "2026-09-30T16:23:12.795709Z",
+        "path": "out/report.md",
+        "trace_line": 106
+      },
+      {
+        "tool": "read_file",
+        "call_id": "call_01a0f3208e1a75bfbb589dac443db8ca",
+        "completed_at": "2026-09-30T16:23:12.798416Z",
+        "path": "out/verification.json",
+        "trace_line": 107
+      },
+      {
+        "tool": "read_file",
+        "call_id": "call_01a0f3208c4072e684462cee42574f73",
+        "completed_at": "2026-09-30T16:23:12.800571Z",
+        "path": "out/acquisition.json",
+        "trace_line": 108
+      }
+    ]
+  },
+  "version_coverage": [
+    {
+      "tool": "write_file",
+      "call_id": "call_01a0f31dd10672a4abfbe40489026fc0",
+      "completed_at": "2026-09-30T16:22:21.316377Z",
+      "path": "out/report.md",
+      "trace_line": 84,
+      "reconstruction": "exact completed Write input",
+      "file": "artifact-versions/V001.txt",
+      "sha256": "b0866759263b91aa1fe982edbc9c3cfcaa70bc90d2ff3501b9a1ce6e70ed110a",
+      "bytes": 32650,
+      "actual_sha256": "b0866759263b91aa1fe982edbc9c3cfcaa70bc90d2ff3501b9a1ce6e70ed110a",
+      "hash_matches": true,
+      "reviewed_all_bytes": true,
+      "semantic_review_method": "Compared every byte to already completely reviewed latest artifact plus every unique version difference; acquisition notes independently read in full.",
+      "complete_diff": null,
+      "transition_assessment": "First completed version of this path; no prior completed artifact supplied."
+    },
+    {
+      "tool": "write_file",
+      "call_id": "call_01a0f31fd1fb7318afebf66e29cf5f35",
+      "completed_at": "2026-09-30T16:22:43.433698Z",
+      "path": "out/acquisition.json",
+      "trace_line": 91,
+      "reconstruction": "exact completed Write input",
+      "file": "artifact-versions/V002.txt",
+      "sha256": "fae4f2919325154a236a26c7cbf0dab68cf192683530ebccb3b726cfd98138a3",
+      "bytes": 4417,
+      "actual_sha256": "fae4f2919325154a236a26c7cbf0dab68cf192683530ebccb3b726cfd98138a3",
+      "hash_matches": true,
+      "reviewed_all_bytes": true,
+      "semantic_review_method": "Compared every byte to already completely reviewed latest artifact plus every unique version difference; acquisition notes independently read in full.",
+      "complete_diff": null,
+      "transition_assessment": "First completed version of this path; no prior completed artifact supplied."
+    },
+    {
+      "tool": "write_file",
+      "call_id": "call_01a0f320236271c69f82dba4a582d1e7",
+      "completed_at": "2026-09-30T16:23:09.096273Z",
+      "path": "out/verification.json",
+      "trace_line": 98,
+      "reconstruction": "exact completed Write input",
+      "file": "artifact-versions/V003.txt",
+      "sha256": "a6d9244f2a96c5e22c8e8105c11a3448ba8e76d7fde163e5c7b1b95d3030d8d1",
+      "bytes": 6843,
+      "actual_sha256": "a6d9244f2a96c5e22c8e8105c11a3448ba8e76d7fde163e5c7b1b95d3030d8d1",
+      "hash_matches": true,
+      "reviewed_all_bytes": true,
+      "semantic_review_method": "Compared every byte to already completely reviewed latest artifact plus every unique version difference; acquisition notes independently read in full.",
+      "complete_diff": null,
+      "transition_assessment": "First completed version of this path; no prior completed artifact supplied."
+    }
+  ],
+  "latest_versions_match_frozen_final": {
+    "out/report.md": true,
+    "out/acquisition.json": true,
+    "out/verification.json": true
+  },
+  "seed_relative_decisions": [
+    {
+      "seed_id": "U001",
+      "seed_locator": "history/candidate_seed.json#/findings/0/body",
+      "seed_body_sha256": "36cf9e0a9a041e29b9c60baf60f2cc5263f180bf89f84cd69e23fdb3e32d22f7",
+      "seed_body_characters": 1274,
+      "complete_seed_body_reviewed": true,
+      "source_assertion_ids": [
+        "S01",
+        "S10",
+        "S81"
+      ],
+      "source_validation": [
+        {
+          "id": "S01",
+          "evidence": "S003:1-8,25-27,818; actual source SHA/bytes/896 lines",
+          "reason": "The admitted bytes identify the 0.5 capture and the report source pin matches. Neither live latest nor implementation versions are imported."
+        },
+        {
+          "id": "S10",
+          "evidence": "S003:56-66,868-888",
+          "reason": "Transitional support force varies by metadata. All prose is normative except explicit non-normative material/examples/notes; absence of uppercase MUST alone does not remove force. Comments are forbidden in actual JSON."
+        },
+        {
+          "id": "S81",
+          "evidence": "current reports/verification JSON; excluded candidate seed not admitted",
+          "reason": "Source substance can be checked now; exact matches, preservation, removed/added candidate content, and true absence of candidate false dismissals require the unadmitted seed/history. This is a missing-input condition, not proof the comparison claims are false."
+        }
+      ],
+      "seed_relative_preservation": "qualified retention",
+      "reason": "Scope/identities/status vocabulary are retained. Neither verifier establishes that every product-side MUST in the seed is literally a source MUST; the seed itself blends source force and derived product rules.",
+      "current_counterparts": [
+        "verification.json#/dispositions/0"
+      ]
+    },
+    {
+      "seed_id": "U002",
+      "seed_locator": "history/candidate_seed.json#/findings/1/body",
+      "seed_body_sha256": "ecb8ec0abea4c47494d92c9eb7e12768ff60d8dcad1ce02afd65408209e91c7a",
+      "seed_body_characters": 1951,
+      "complete_seed_body_reviewed": true,
+      "source_assertion_ids": [
+        "S02",
+        "S03",
+        "S05",
+        "S07",
+        "S74"
+      ],
+      "source_validation": [
+        {
+          "id": "S02",
+          "evidence": "S003:67-72",
+          "reason": "Version 3 is explicit. Parsing/decoding support is necessary to the proposed viewer."
+        },
+        {
+          "id": "S03",
+          "evidence": "S003:87-100",
+          "reason": "These storage and hierarchy statements match the capture."
+        },
+        {
+          "id": "S05",
+          "evidence": "S003:70-72,116-117,438-439",
+          "reason": "Labels MUST use one of eight named integer dtypes. This is a restriction of the Zarr data-type surface. Reading the complete capture does not remove this counterevidence. Codecs, grids, key encodings and transformers have no further restriction observed here; the all-features/no-disallowance/dtypes conclusion is too broad."
+        },
+        {
+          "id": "S07",
+          "evidence": "S003:149-165",
+          "reason": "Explicit metadata namespace and placement. Legacy-layout reinterpretation is not authorized by these 0.5 rules."
+        },
+        {
+          "id": "S74",
+          "evidence": "S003:813-820; complete S003:1-896; brief.md:5; Viewer.md:9",
+          "reason": "The pointer section contains no implementation requirements or measured interop/performance results. Holding real tool interoperability unresolved is correct and is not an incompatibility finding. The source does contain an Implementations heading."
+        }
+      ],
+      "seed_relative_preservation": "derived incorrectly",
+      "reason": "Core storage/metadata/geometry summary is retained; both affirm the seeded no-disallowance/unbounded-dtype conclusion despite integer-only labels. Scoped search/full-read claims do not repair that counterevidence.",
+      "current_counterparts": [
+        "verification.json#/dispositions/1"
+      ]
+    },
+    {
+      "seed_id": "U003",
+      "seed_locator": "history/candidate_seed.json#/findings/2/body",
+      "seed_body_sha256": "8605c3387f87e40ff02fc2a6cab50a181874397cad0a17993d0985a2d1908c46",
+      "seed_body_characters": 2661,
+      "complete_seed_body_reviewed": true,
+      "source_assertion_ids": [
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ],
+      "source_validation": [
+        {
+          "id": "S05",
+          "evidence": "S003:70-72,116-117,438-439",
+          "reason": "Labels MUST use one of eight named integer dtypes. This is a restriction of the Zarr data-type surface. Reading the complete capture does not remove this counterevidence. Codecs, grids, key encodings and transformers have no further restriction observed here; the all-features/no-disallowance/dtypes conclusion is too broad."
+        },
+        {
+          "id": "S06",
+          "evidence": "S003:73-77; brief.md:5; Viewer.md:9",
+          "reason": "Remote capability is a format possibility and outside the admitted product boundary, not malformed format input."
+        },
+        {
+          "id": "S07",
+          "evidence": "S003:149-165",
+          "reason": "Explicit metadata namespace and placement. Legacy-layout reinterpretation is not authorized by these 0.5 rules."
+        },
+        {
+          "id": "S08",
+          "evidence": "S003:155-156; Viewer.md:7,11",
+          "reason": "Consistency is mandatory; hard failure versus clearly qualified recovery is a product policy. No specified remediation was found in the complete source."
+        },
+        {
+          "id": "S09",
+          "evidence": "S003:25-27,155-156; brief.md:3; Viewer.md:5,9",
+          "reason": "The product is 0.5. The source release/draft statements support a version boundary; they are not a universal source MUST that forbids every other version to every reader."
+        },
+        {
+          "id": "S10",
+          "evidence": "S003:56-66,868-888",
+          "reason": "Transitional support force varies by metadata. All prose is normative except explicit non-normative material/examples/notes; absence of uppercase MUST alone does not remove force. Comments are forbidden in actual JSON."
+        },
+        {
+          "id": "S11",
+          "evidence": "S003:200,462,524,528,538,557-560,810-812",
+          "reason": "The named keys match; new camelCase naming is a recommendation with existing exceptions. Applying it to a private viewer store is a proposed extension, not an OME mandate."
+        }
+      ],
+      "seed_relative_preservation": "qualified retention",
+      "reason": "Version/namespace, local product boundary, keywords/transitional rules and literal key names survive. Broad no-disallowance survives incorrectly. R012 editorial wording correction is outside the seed U003 body; U009 contains the editorial error.",
+      "current_counterparts": [
+        "verification.json#/dispositions/2"
+      ]
+    },
+    {
+      "seed_id": "U004",
+      "seed_locator": "history/candidate_seed.json#/findings/3/body",
+      "seed_body_sha256": "cb33f216ef25c45ce768de1d85ace5807cd517ae0f73e21f206309f0041fada2",
+      "seed_body_characters": 11901,
+      "complete_seed_body_reviewed": true,
+      "source_assertion_ids": [
+        "S12",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S21",
+        "S23",
+        "S24",
+        "S25",
+        "S26",
+        "S28",
+        "S30",
+        "S34",
+        "S35",
+        "S77"
+      ],
+      "source_validation": [
+        {
+          "id": "S12",
+          "evidence": "S003:78-148,175-275,204-206,262",
+          "reason": "The three described shapes and plate precedence are supported. plate -> collection -> multiscales sniffing is a reasonable product synthesis, not a single source MUST or proof that these exhaust arbitrary Zarr containers."
+        },
+        {
+          "id": "S16",
+          "evidence": "S003:118-129,125-127,740-750",
+          "reason": "The plate and well contracts and intervening row hierarchy are explicit."
+        },
+        {
+          "id": "S17",
+          "evidence": "S003:128-129,530-549,641-739",
+          "reason": "Rows/columns are fully enumerated even when no wells are defined. The sparse example and SHOULD NOT empty groups match."
+        },
+        {
+          "id": "S18",
+          "evidence": "S003:552-560",
+          "reason": "Exact path form, no additional leading/trailing directories, required index fields and agreement are supported."
+        },
+        {
+          "id": "S19",
+          "evidence": "S003:193-206,243-275",
+          "reason": "Conforming collection layout is 3; series is optional but constrained when supplied. The no-series/no-plate numbered fallback is supported. XML existence is SHOULD, with MetadataOnly constraints when supplied."
+        },
+        {
+          "id": "S21",
+          "evidence": "S003:271-275; Viewer.md:5,11",
+          "reason": "SHOULD awareness and MAY choices are explicit. Elevating awareness for this product acceptance is reasonable. It is not a universal source MUST/minimum-conformance proof without allowance for a reasoned SHOULD exception."
+        },
+        {
+          "id": "S23",
+          "evidence": "S003:437-440; Viewer.md:5",
+          "reason": "The container is not itself an image but contains label images. A separate primary-image/overlay presentation is sensible product policy. The source does not literally prohibit listing label images as images or showing them standalone."
+        },
+        {
+          "id": "S24",
+          "evidence": "S003:28-44,124-128,542-560",
+          "reason": "No dedicated row metadata contract exists in the complete capture. Metadata determines identities; an exclusive prohibition on directory scanning is not stated."
+        },
+        {
+          "id": "S25",
+          "evidence": "S003:518-529,744-750,753-808",
+          "reason": "Unique nonnegative IDs, optional acquisitions block, conditional acquisition field and matching ID are supported. Paths identify fields within wells."
+        },
+        {
+          "id": "S26",
+          "evidence": "S003:518-529,748-750; Viewer.md:5",
+          "reason": "Composite keys are a product derivation. The source condition is multiple acquisitions performed, not explicitly list length. The proposed detection policy must retain its assumption and cannot weaken actual required matching."
+        },
+        {
+          "id": "S28",
+          "evidence": "S003:81,93-94,299-308",
+          "reason": "The list, path relativity, order and arbitrary names match. No numeric-folder or fixed reduction formula is authorized."
+        },
+        {
+          "id": "S30",
+          "evidence": "S003:168,173-174,299-307; Viewer.md:7,11",
+          "reason": "Unique names, rank/order and array dimension_names matching are explicit; refusal or item-scoped recovery are product behaviors."
+        },
+        {
+          "id": "S34",
+          "evidence": "complete S003:1-896; brief.md:3; Viewer.md:7,11",
+          "reason": "The capture supplies format rules and no implementation timing/threading mechanism. The product itself requires responsive background reads/cancellation; no measured performance was established."
+        },
+        {
+          "id": "S35",
+          "evidence": "Viewer.md:7,11; S003:156,173-174,256,306-312,426-430,438-455,553-560,748-750",
+          "reason": "The individual structural violations map to format rules. Crash avoidance/item-scoped explanation follows the plan. Exact message catalog and blanket every-event policy are product choices."
+        },
+        {
+          "id": "S77",
+          "evidence": "S003:262-275,542-560,744-750",
+          "reason": "No explicit scanning prohibition is supplied; labeling it inference is accurate. Even inferred metadata authority does not forbid auxiliary scanning if the final identity/order remains validated."
+        }
+      ],
+      "seed_relative_preservation": "qualified retention",
+      "reason": "Metadata order/rank/path/plate/well/acquisition and failure facts survive. Seed source-MUST versus product derivation distinctions are mixed. R011 explicitly clarifies sniff-order and label-list exclusion; both label directory-scan nonconformance as inference. This narrows overstatements while retaining valid metadata authority.",
+      "current_counterparts": [
+        "verification.json#/dispositions/3"
+      ]
+    },
+    {
+      "seed_id": "U005",
+      "seed_locator": "history/candidate_seed.json#/findings/4/body",
+      "seed_body_sha256": "5e17b952f26c19dd6993b9e8759313befb688da1a26e33e553f8b9d93a8ec17f",
+      "seed_body_characters": 13750,
+      "complete_seed_body_reviewed": true,
+      "source_assertion_ids": [
+        "S38",
+        "S39",
+        "S44",
+        "S45",
+        "S46",
+        "S49",
+        "S50",
+        "S52",
+        "S61",
+        "S62",
+        "S65",
+        "S69",
+        "S70",
+        "S79"
+      ],
+      "source_validation": [
+        {
+          "id": "S38",
+          "evidence": "S003:168-174,299-303",
+          "reason": "Recommended type/unit fields can be missing in contexts that remain conforming; however multiscales requires 2 or 3 entries of type:space. Blanket MUST-tolerate-any-missing/unknown type ignores that more specific constraint. The permitted null/custom extra axis is not proof that every spatial axis may be null."
+        },
+        {
+          "id": "S39",
+          "evidence": "S003:81,168-174,299-303",
+          "reason": "This assertion family is referenced in broad seed verification but not explicitly recoverable as a standalone R011 assertion; excluded seed comparison remains unresolved. It is not charged as this R011 material failure."
+        },
+        {
+          "id": "S44",
+          "evidence": "S003:427-430",
+          "reason": "RGB format and meanings of min/max/start/end are expressly stated. No gamma/family registry or explicit out-of-dtype-range rule is supplied, which is a narrower supported absence."
+        },
+        {
+          "id": "S45",
+          "evidence": "S003:427-430; Viewer.md:9",
+          "reason": "Presence/format constraints do not prove the proposed initial rendering policy or dtype-range rejection. Malformed color not satisfying six hex digits is supported; extending malformed status to unspecified window policies conflates specification silence and input invalidity."
+        },
+        {
+          "id": "S46",
+          "evidence": "S003:426,456-466",
+          "reason": "For intensity-channel defaults the source supplies no alternative omero block. A blanket all-rendering/no-embedded-display-defaults claim overlooks image-label colors and the reader SHOULD display them even if omero is absent."
+        },
+        {
+          "id": "S49",
+          "evidence": "S003:293,314-316",
+          "reason": "This rule applies to all supplied transform vectors, not just the time axis example. Correct function notation within each list is translation after scale."
+        },
+        {
+          "id": "S50",
+          "evidence": "S003:293,311,315",
+          "reason": "This assertion family is referenced in broad seed verification but not explicitly recoverable as a standalone R011 assertion; excluded seed comparison remains unresolved. It is not charged as this R011 material failure."
+        },
+        {
+          "id": "S52",
+          "evidence": "S003:877-883; example S003:320-387",
+          "reason": "R011 expressly replaces normative-example terminology with informative example at report line 116 and verification /clarifications; the superseded seed wording is not retained as its current assertion."
+        },
+        {
+          "id": "S61",
+          "evidence": "S003:432-435,454-455",
+          "reason": "Usually modifies equal dimensions/transformations, not the preceding same-coordinate-system relationship. Rephrasing this as usually same system weakens the association/registration premise."
+        },
+        {
+          "id": "S62",
+          "evidence": "S003:106-108,875-878",
+          "reason": "Lowercase should remains recommended normative language; overview placement alone is not an exception. It is a SHOULD, not a geometric equality MUST. The report may propose explicit broadcast checks."
+        },
+        {
+          "id": "S65",
+          "evidence": "S003:456-460",
+          "reason": "image-label SHOULD be present; it SHOULD contain colors and version. Values are MUST array/string when supplied. Treating keys as unconditional MUST merely because image-label exists is stronger than source."
+        },
+        {
+          "id": "S69",
+          "evidence": "S003:432-433,472-474; Viewer.md:5,11",
+          "reason": "R011 does not explicitly require relative-source identity resolution before overlay. R012 explicitly confines source.image to provenance and not overlay relocation, losing declared association when parent/default and explicit source differ. A conforming truthful unsupported result is acceptable; attaching by parent/shape without association validation is not established."
+        },
+        {
+          "id": "S70",
+          "evidence": "S003:438-439,462-469",
+          "reason": "Both preserve categorical/integer/label-value/nearest-neighbor ideas. Neither covers uint64/int64 IDs above exact binary64 range or declares an exact supported ID range, nor tests scrambled sparse IDs. This is an assigned coverage omission, not an assertion that arbitrary interpolation is specified in the source."
+        },
+        {
+          "id": "S79",
+          "evidence": "Viewer.md:5,7,9,11; brief.md:3-5",
+          "reason": "Core metadata/geometry/failure extensions fit the plan; interop FLAG is appropriate. Mandatory property legends/full pyramid metadata UI/particular fallback rendering overreach additional-capability review. Background responsiveness is required by the plan, not measured format implementation evidence."
+        }
+      ],
+      "seed_relative_preservation": "derived incorrectly",
+      "reason": "Both affirm this mixed unit rather than rejecting its invalid assertions: blanket untyped tolerance, initial-rendering mandate, no semantics beyond field presence, mandatory image-label.version, scale∘translate notation, provenance-only source association and mandatory UI content. R011 fixes informative-example terminology and qualifies omero interpretation, but does not specifically flag the seed formula/source-association errors. R012 largely reproduces them.",
+      "current_counterparts": [
+        "verification.json#/dispositions/4"
+      ]
+    },
+    {
+      "seed_id": "U006",
+      "seed_locator": "history/candidate_seed.json#/findings/5/body",
+      "seed_body_sha256": "c968d73bac9701f4d557884eb83912db6d62b734eed931dc71916af0b46bed0f",
+      "seed_body_characters": 3507,
+      "complete_seed_body_reviewed": true,
+      "source_assertion_ids": [
+        "S13",
+        "S21",
+        "S32",
+        "S41",
+        "S45",
+        "S49",
+        "S60",
+        "S65",
+        "S67",
+        "S79",
+        "S85"
+      ],
+      "source_validation": [
+        {
+          "id": "S13",
+          "evidence": "brief.md:5; Viewer.md:9; S003:60-64",
+          "reason": "The brief/plan require read-only behavior. No viewer write obligation was found in the complete source; optional writing statements do not require mutation during reading."
+        },
+        {
+          "id": "S21",
+          "evidence": "S003:271-275; Viewer.md:5,11",
+          "reason": "SHOULD awareness and MAY choices are explicit. Elevating awareness for this product acceptance is reasonable. It is not a universal source MUST/minimum-conformance proof without allowance for a reasoned SHOULD exception."
+        },
+        {
+          "id": "S32",
+          "evidence": "S003:317-319,375-397; Viewer.md:5,9",
+          "reason": "Metadata fields are SHOULD on the data, not compulsory reader UI fields. Selection heuristic is a product decision; every selected level must use its own geometry."
+        },
+        {
+          "id": "S41",
+          "evidence": "S003:426-430",
+          "reason": "Required data fields, RGB six-hex format, and window min/max/start/end meaning match. Reader initialization details need interpretation beyond field presence."
+        },
+        {
+          "id": "S45",
+          "evidence": "S003:427-430; Viewer.md:9",
+          "reason": "Presence/format constraints do not prove the proposed initial rendering policy or dtype-range rejection. Malformed color not satisfying six hex digits is supported; extending malformed status to unspecified window policies conflates specification silence and input invalidity."
+        },
+        {
+          "id": "S49",
+          "evidence": "S003:293,314-316",
+          "reason": "This rule applies to all supplied transform vectors, not just the time axis example. Correct function notation within each list is translation after scale."
+        },
+        {
+          "id": "S60",
+          "evidence": "S003:438-439,454-455",
+          "reason": "Exact dtype set and count requirement match. Integer type admission does not itself establish lossless host-number representation."
+        },
+        {
+          "id": "S65",
+          "evidence": "S003:456-460",
+          "reason": "image-label SHOULD be present; it SHOULD contain colors and version. Values are MUST array/string when supplied. Treating keys as unconditional MUST merely because image-label exists is stronger than source."
+        },
+        {
+          "id": "S67",
+          "evidence": "S003:461-471; Viewer.md:9",
+          "reason": "Color behavior is recommended, not universal mandatory styling. Fallback and property legend are product proposals; required legend/property UI is not necessary to the stated aligned-overlay acceptance."
+        },
+        {
+          "id": "S79",
+          "evidence": "Viewer.md:5,7,9,11; brief.md:3-5",
+          "reason": "Core metadata/geometry/failure extensions fit the plan; interop FLAG is appropriate. Mandatory property legends/full pyramid metadata UI/particular fallback rendering overreach additional-capability review. Background responsiveness is required by the plan, not measured format implementation evidence."
+        },
+        {
+          "id": "S85",
+          "evidence": "actual final verification/check objects and report lists",
+          "reason": "The JSON contains 12 seed-unit records; R011 10 supported plus 2 clarified, R012 7 qualified plus 5 confirmed, R012 30 negative records, 2 replacements, 4 additions, 4 non-findings. Other counts (e.g. eight SHOULD recommendations versus nine dot-separated groups) depend on undocumented grouping and are not evidence of semantic completeness."
+        }
+      ],
+      "seed_relative_preservation": "qualified retention",
+      "reason": "Ten grouped obligation statements plus recommendation/options/decision lists survive substantively. Read-only is correctly tied to the product; backend support limits remain explicit. Some initial-rendering and UI force overstatements are inherited.",
+      "current_counterparts": [
+        "verification.json#/dispositions/5"
+      ]
+    },
+    {
+      "seed_id": "U007",
+      "seed_locator": "history/candidate_seed.json#/findings/6/body",
+      "seed_body_sha256": "94bc91e3ea7a9447d9aa0d2705055931e6b0c7f56c71c736a2168d83f872434b",
+      "seed_body_characters": 2396,
+      "complete_seed_body_reviewed": true,
+      "source_assertion_ids": [
+        "S79",
+        "S85"
+      ],
+      "source_validation": [
+        {
+          "id": "S79",
+          "evidence": "Viewer.md:5,7,9,11; brief.md:3-5",
+          "reason": "Core metadata/geometry/failure extensions fit the plan; interop FLAG is appropriate. Mandatory property legends/full pyramid metadata UI/particular fallback rendering overreach additional-capability review. Background responsiveness is required by the plan, not measured format implementation evidence."
+        },
+        {
+          "id": "S85",
+          "evidence": "actual final verification/check objects and report lists",
+          "reason": "The JSON contains 12 seed-unit records; R011 10 supported plus 2 clarified, R012 7 qualified plus 5 confirmed, R012 30 negative records, 2 replacements, 4 additions, 4 non-findings. Other counts (e.g. eight SHOULD recommendations versus nine dot-separated groups) depend on undocumented grouping and are not evidence of semantic completeness."
+        }
+      ],
+      "seed_relative_preservation": "qualified retention",
+      "reason": "All twelve plan-sentence dispositions have counterparts. Interop remains FLAG, read-only/boundaries remain KEEP, and metadata/calibration/failures remain extensions. Required legends/properties/panel detail still exceed source/plan necessity.",
+      "current_counterparts": [
+        "verification.json#/dispositions/6"
+      ]
+    },
+    {
+      "seed_id": "U008",
+      "seed_locator": "history/candidate_seed.json#/findings/7/body",
+      "seed_body_sha256": "b2ffc3c4bf92d1a9e10e75113981fe04f0c12bf3e4661282d95bedff8bccd967",
+      "seed_body_characters": 1394,
+      "complete_seed_body_reviewed": true,
+      "source_assertion_ids": [
+        "S05",
+        "S33",
+        "S35",
+        "S45",
+        "S55",
+        "S59",
+        "S76"
+      ],
+      "source_validation": [
+        {
+          "id": "S05",
+          "evidence": "S003:70-72,116-117,438-439",
+          "reason": "Labels MUST use one of eight named integer dtypes. This is a restriction of the Zarr data-type surface. Reading the complete capture does not remove this counterevidence. Codecs, grids, key encodings and transformers have no further restriction observed here; the all-features/no-disallowance/dtypes conclusion is too broad."
+        },
+        {
+          "id": "S33",
+          "evidence": "S003:70-72,99-100; Viewer.md:7,11",
+          "reason": "A declared reader limit with named failure is valid; it is not evidence that those format inputs are forbidden."
+        },
+        {
+          "id": "S35",
+          "evidence": "Viewer.md:7,11; S003:156,173-174,256,306-312,426-430,438-455,553-560,748-750",
+          "reason": "The individual structural violations map to format rules. Crash avoidance/item-scoped explanation follows the plan. Exact message catalog and blanket every-event policy are product choices."
+        },
+        {
+          "id": "S45",
+          "evidence": "S003:427-430; Viewer.md:9",
+          "reason": "Presence/format constraints do not prove the proposed initial rendering policy or dtype-range rejection. Malformed color not satisfying six hex digits is supported; extending malformed status to unspecified window policies conflates specification silence and input invalidity."
+        },
+        {
+          "id": "S55",
+          "evidence": "S003:285-289,308-312",
+          "reason": "Binary dtype/byte order/storage encoding are underspecified, but vector dimensionality and multiscale vector-length constraints are supplied. No dtype/shape rule whatsoever is too broad if it discards those constraints. Unsupported handling is a valid capability limit."
+        },
+        {
+          "id": "S59",
+          "evidence": "S003:441-442; Viewer.md:9",
+          "reason": "SHOULD listing permits reasoned exceptions. Additional scan/discovery policy is a product choice and cannot become format invalidity solely from being unlisted."
+        },
+        {
+          "id": "S76",
+          "evidence": "complete S003:1-896; report and negative-check limits",
+          "reason": "Scoping a search does not make a missed paraphrase/source restriction absent. Many narrow absence conclusions are corroborated by this independent full read; negative clauses with actual counterevidence remain false despite scope disclaimers."
+        }
+      ],
+      "seed_relative_preservation": "qualified retention",
+      "reason": "Viewer limitation, malformed and product-out-of-scope tiers survive; neither invents execution. R012 explicitly adds specification-silence versus missing-input distinction. Declared taxonomy still inherits overbroad dtype generality and unspecified window-invalidity treatment.",
+      "current_counterparts": [
+        "verification.json#/dispositions/7"
+      ]
+    },
+    {
+      "seed_id": "U009",
+      "seed_locator": "history/candidate_seed.json#/findings/8/body",
+      "seed_body_sha256": "202d754f55edc5bc13b5d02dd58561dc589a4ea01c9ee24cbc8d11e92c1f734a",
+      "seed_body_characters": 2268,
+      "complete_seed_body_reviewed": true,
+      "source_assertion_ids": [
+        "S15",
+        "S20",
+        "S26",
+        "S27",
+        "S29",
+        "S31",
+        "S38",
+        "S43",
+        "S44",
+        "S54",
+        "S55",
+        "S56",
+        "S61",
+        "S62",
+        "S64",
+        "S73",
+        "S78"
+      ],
+      "source_validation": [
+        {
+          "id": "S15",
+          "evidence": "S003:388-397,869-878",
+          "reason": "The prose/pseudocode is present, including a chunk-size alternative in a comment. Lack of RFC keywords is true but does not by itself make prose non-normative. A picker/fallback policy is reasonable; keyword absence is not a force test."
+        },
+        {
+          "id": "S20",
+          "evidence": "S003:175-275; complete S003:1-896",
+          "reason": "The source gives the required value, not a rationale or alternate-value registry. This is scoped to this capture."
+        },
+        {
+          "id": "S26",
+          "evidence": "S003:518-529,748-750; Viewer.md:5",
+          "reason": "Composite keys are a product derivation. The source condition is multiple acquisitions performed, not explicitly list length. The proposed detection policy must retain its assumption and cannot weaken actual required matching."
+        },
+        {
+          "id": "S27",
+          "evidence": "S003:523-525,538-541,561-595",
+          "reason": "Definitions give different scopes: per acquisition versus across all wells. Example field_count=4 with each acquisition maximumfieldcount=2 is useful counterevidence to an indistinguishable-semantics reading. Display-only treatment is a permissible product proposal, not source necessity."
+        },
+        {
+          "id": "S29",
+          "evidence": "S003:305-307",
+          "reason": "Highest resolution is an explicit gloss. No exact voxel-count formula is supplied. A flag-without-reorder sanity policy is a proposal, not an additional malformed-format criterion proved by this source."
+        },
+        {
+          "id": "S31",
+          "evidence": "S003:174,827",
+          "reason": "Both passages exist; the detailed array zarr.json rule is stronger implementation guidance than the summary history wording. There is no evidence requiring an extra duplicate field in axes."
+        },
+        {
+          "id": "S38",
+          "evidence": "S003:168-174,299-303",
+          "reason": "Recommended type/unit fields can be missing in contexts that remain conforming; however multiscales requires 2 or 3 entries of type:space. Blanket MUST-tolerate-any-missing/unknown type ignores that more specific constraint. The permitted null/custom extra axis is not proof that every spatial axis may be null."
+        },
+        {
+          "id": "S43",
+          "evidence": "S003:403,426-430",
+          "reason": "The length comment exists; the required-field prose states no separate length MUST. Explicit overlap degradation is a proposed policy."
+        },
+        {
+          "id": "S44",
+          "evidence": "S003:427-430",
+          "reason": "RGB format and meanings of min/max/start/end are expressly stated. No gamma/family registry or explicit out-of-dtype-range rule is supplied, which is a narrower supported absence."
+        },
+        {
+          "id": "S54",
+          "evidence": "S003:277-278,311; complete S003:1-896",
+          "reason": "No explicit origin anchoring beyond coordinate spaces/offset is supplied. Declaring an image-frame assumption is valid; it is not a source guarantee."
+        },
+        {
+          "id": "S55",
+          "evidence": "S003:285-289,308-312",
+          "reason": "Binary dtype/byte order/storage encoding are underspecified, but vector dimensionality and multiscale vector-length constraints are supplied. No dtype/shape rule whatsoever is too broad if it discards those constraints. Unsupported handling is a valid capability limit."
+        },
+        {
+          "id": "S56",
+          "evidence": "S003:293,314-316,368-374",
+          "reason": "Example absence is supported. General multi-axis composition is specified by the same sequential/global-after rules; missing example is not grounds to dismiss that rule as unresolved."
+        },
+        {
+          "id": "S61",
+          "evidence": "S003:432-435,454-455",
+          "reason": "Usually modifies equal dimensions/transformations, not the preceding same-coordinate-system relationship. Rephrasing this as usually same system weakens the association/registration premise."
+        },
+        {
+          "id": "S62",
+          "evidence": "S003:106-108,875-878",
+          "reason": "Lowercase should remains recommended normative language; overview placement alone is not an exception. It is a SHOULD, not a geometric equality MUST. The report may propose explicit broadcast checks."
+        },
+        {
+          "id": "S64",
+          "evidence": "S003:308,454-455,432-433",
+          "reason": "There is no literal precedence sentence. A label must implement its own multiscales coordinate mapping, and that mapping cannot be silently replaced by the parent. Reports preserve an own-transform verification policy, but overstate uncertainty if they dismiss this requirement."
+        },
+        {
+          "id": "S73",
+          "evidence": "S003:459-460,550-551,751-752",
+          "reason": "No independent field vocabulary enumeration is supplied. A string must identify the schema/spec version, not merely be any string. Displaying unknown values is a product policy; a universal never-gate rule is not source-derived."
+        },
+        {
+          "id": "S78",
+          "evidence": "S003:93-94",
+          "reason": "R011 line 140 calls by the by the verified; exact S003 L93-94 is defined by / by the. This is a nonmaterial exact-text error."
+        }
+      ],
+      "seed_relative_preservation": "qualified retention",
+      "reason": "All thirteen source-conflict/uncertainty topics have counterparts. R012 adds row-discovery and mixed-version-remediation items; R011 retains the wrong editorial exact wording and R012 corrects it. General composition is specified even without a multi-axis worked example; additional uncertainty cannot replace that rule.",
+      "current_counterparts": [
+        "verification.json#/dispositions/8"
+      ]
+    },
+    {
+      "seed_id": "U010",
+      "seed_locator": "history/candidate_seed.json#/findings/9/body",
+      "seed_body_sha256": "29bc4266ae3a8461abd4bec0dfcb2aa689d5a53b5db4631285c1f684a878846c",
+      "seed_body_characters": 1047,
+      "complete_seed_body_reviewed": true,
+      "source_assertion_ids": [
+        "S74",
+        "S75",
+        "S76"
+      ],
+      "source_validation": [
+        {
+          "id": "S74",
+          "evidence": "S003:813-820; complete S003:1-896; brief.md:5; Viewer.md:9",
+          "reason": "The pointer section contains no implementation requirements or measured interop/performance results. Holding real tool interoperability unresolved is correct and is not an incompatibility finding. The source does contain an Implementations heading."
+        },
+        {
+          "id": "S76",
+          "evidence": "complete S003:1-896; report and negative-check limits",
+          "reason": "Scoping a search does not make a missed paraphrase/source restriction absent. Many narrow absence conclusions are corroborated by this independent full read; negative clauses with actual counterevidence remain false despite scope disclaimers."
+        }
+      ],
+      "seed_relative_preservation": "correctly retained",
+      "reason": "Actual reader interop/performance/tolerance remains unavailable in this S003-only scope. Both preserve the distinction between scope limitation and incompatibility. R012 N-03 adds a false broader no-tool-names/versions assertion; that is not present in the seed U010.",
+      "current_counterparts": [
+        "verification.json#/dispositions/9"
+      ]
+    },
+    {
+      "seed_id": "U011",
+      "seed_locator": "history/candidate_seed.json#/findings/10/body",
+      "seed_body_sha256": "5aec988daf98343277721a3aa2ac773f33b5b3191e29cb40b864a596e92b2526",
+      "seed_body_characters": 1799,
+      "complete_seed_body_reviewed": true,
+      "source_assertion_ids": [
+        "S57",
+        "S80"
+      ],
+      "source_validation": [
+        {
+          "id": "S57",
+          "evidence": "S003:293,311,315; report proposal locators",
+          "reason": "Both preserve valid UNEXECUTED translation proposals, but neither gives a nonzero-offset worked expectation that could expose reversal/omission. No fixture or execution is required to credit a valid proposal; assigned full facet needs a concrete check."
+        },
+        {
+          "id": "S80",
+          "evidence": "Viewer.md:5-11; S003 rules cited above; current report proposal lists",
+          "reason": "All are current proposals, not test execution. Missing filesets/execution logs do not make the proposals false. Their seed-relative sameness/verbatim preservation cannot be established without excluded seed/history."
+        }
+      ],
+      "seed_relative_preservation": "correctly retained",
+      "reason": "All nine UNEXECUTED proposal families survive. R011 relabels them PV-1..PV-9 and summarizes; R012 keeps V1..V9 and normalizes prose/arrow glyphs. These are semantic coverage preservation, not verbatim byte preservation and not execution evidence. Translation is proposed but no concrete nonzero-offset expectation is developed.",
+      "current_counterparts": [
+        "verification.json#/dispositions/10"
+      ]
+    },
+    {
+      "seed_id": "U012",
+      "seed_locator": "history/candidate_seed.json#/findings/11/body",
+      "seed_body_sha256": "1d7b219b427d9d86d80b557c30e2bb7acca4474aec44145fe8edc7fea4ae3b2c",
+      "seed_body_characters": 1581,
+      "complete_seed_body_reviewed": true,
+      "source_assertion_ids": [
+        "S83",
+        "S84"
+      ],
+      "source_validation": [
+        {
+          "id": "S83",
+          "evidence": "adjudications S05,S38,S44,S65,S69,S70,S79; all six prospective facets",
+          "reason": "The reports retain material source overstatements and omissions. Self-attested perfect support/full scope is not established by counting 12 units or 30 negative checks."
+        },
+        {
+          "id": "S84",
+          "evidence": "S003:1-896",
+          "reason": "The semantic source section/range index resolves. This does not prove every conclusion cited to a broad range."
+        }
+      ],
+      "seed_relative_preservation": "qualified retention",
+      "reason": "Section/range citation index survives by summary in R011 and an expanded index in R012. R012 adds Citing L815-820; seed U009 already mentions Citing but U012 omits its exact locator. The blanket all-supported closing claim is inherited rather than validated.",
+      "current_counterparts": [
+        "verification.json#/dispositions/11"
+      ]
+    }
+  ],
+  "source_supported_acquisition_inventory": [
+    {
+      "id": "S01",
+      "assertion": "S003 identity/version/bytes/line count",
+      "outcome": "supported",
+      "evidence": "S003:1-8,25-27,818; actual source SHA/bytes/896 lines",
+      "reason": "The admitted bytes identify the 0.5 capture and the report source pin matches. Neither live latest nor implementation versions are imported.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S02",
+      "assertion": "Zarr v3 foundation",
+      "outcome": "supported",
+      "evidence": "S003:67-72",
+      "reason": "Version 3 is explicit. Parsing/decoding support is necessary to the proposed viewer.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S03",
+      "assertion": "Zarr groups, per-level arrays, zarr.json attributes, chunks",
+      "outcome": "supported",
+      "evidence": "S003:87-100",
+      "reason": "These storage and hierarchy statements match the capture.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S04",
+      "assertion": "All Zarr features may be used unless explicitly disallowed",
+      "outcome": "supported",
+      "evidence": "S003:70-72",
+      "reason": "The qualifier is part of the rule and must survive.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S05",
+      "assertion": "No Zarr-feature disallowance; data types wholly unbounded",
+      "outcome": "contradicted",
+      "evidence": "S003:70-72,116-117,438-439",
+      "reason": "Labels MUST use one of eight named integer dtypes. This is a restriction of the Zarr data-type surface. Reading the complete capture does not remove this counterevidence. Codecs, grids, key encodings and transformers have no further restriction observed here; the all-features/no-disallowance/dtypes conclusion is too broad.",
+      "preservation_category": "derived incorrectly / inherited or introduced unsupported assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S06",
+      "assertion": "Local/HTTP/object-storage generality versus local product boundary",
+      "outcome": "supported",
+      "evidence": "S003:73-77; brief.md:5; Viewer.md:9",
+      "reason": "Remote capability is a format possibility and outside the admitted product boundary, not malformed format input.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S07",
+      "assertion": "attributes.ome and string version in zarr.json",
+      "outcome": "supported",
+      "evidence": "S003:149-165",
+      "reason": "Explicit metadata namespace and placement. Legacy-layout reinterpretation is not authorized by these 0.5 rules.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S08",
+      "assertion": "Hierarchy-consistent metadata version and mixed-version reader policy",
+      "outcome": "supported",
+      "evidence": "S003:155-156; Viewer.md:7,11",
+      "reason": "Consistency is mandatory; hard failure versus clearly qualified recovery is a product policy. No specified remediation was found in the complete source.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S09",
+      "assertion": "Only 0.5 product admission; other versions/drafts best-effort or refusal",
+      "outcome": "qualified",
+      "evidence": "S003:25-27,155-156; brief.md:3; Viewer.md:5,9",
+      "reason": "The product is 0.5. The source release/draft statements support a version boundary; they are not a universal source MUST that forbids every other version to every reader.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S10",
+      "assertion": "RFC2119 force, transitional reading/writing, normative exceptions, JSON comments",
+      "outcome": "supported",
+      "evidence": "S003:56-66,868-888",
+      "reason": "Transitional support force varies by metadata. All prose is normative except explicit non-normative material/examples/notes; absence of uppercase MUST alone does not remove force. Comments are forbidden in actual JSON.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S11",
+      "assertion": "Literal identifiers/key spelling and camelCase recommendation",
+      "outcome": "supported",
+      "evidence": "S003:200,462,524,528,538,557-560,810-812",
+      "reason": "The named keys match; new camelCase naming is a recommendation with existing exceptions. Applying it to a private viewer store is a proposed extension, not an OME mandate.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S12",
+      "assertion": "Three described fileset shapes and precedence",
+      "outcome": "qualified",
+      "evidence": "S003:78-148,175-275,204-206,262",
+      "reason": "The three described shapes and plate precedence are supported. plate -> collection -> multiscales sniffing is a reasonable product synthesis, not a single source MUST or proof that these exhaust arbitrary Zarr containers.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S13",
+      "assertion": "Read-only/source-unchanged/session-local display state",
+      "outcome": "supported",
+      "evidence": "brief.md:5; Viewer.md:9; S003:60-64",
+      "reason": "The brief/plan require read-only behavior. No viewer write obligation was found in the complete source; optional writing statements do not require mutation during reading.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S14",
+      "assertion": "Thin plan omits plate/collection/series and multiple multiscales details",
+      "outcome": "supported",
+      "evidence": "Viewer.md:1-11",
+      "reason": "The full 11-line fixture lacks the named mechanisms. It does name images and pyramid levels; absence of these specific layout details is the supported scope.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S15",
+      "assertion": "Multiple multiscales name choice and first fallback",
+      "outcome": "qualified",
+      "evidence": "S003:388-397,869-878",
+      "reason": "The prose/pseudocode is present, including a chunk-size alternative in a comment. Lack of RFC keywords is true but does not by itself make prose non-normative. A picker/fallback policy is reasonable; keyword absence is not a force test.",
+      "preservation_category": "derived incorrectly / inherited or introduced unsupported assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S16",
+      "assertion": "HCS plate/row/well/field hierarchy",
+      "outcome": "supported",
+      "evidence": "S003:118-129,125-127,740-750",
+      "reason": "The plate and well contracts and intervening row hierarchy are explicit.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S17",
+      "assertion": "Full physical row/column definitions; sparse present wells; empty-group recommendation",
+      "outcome": "supported",
+      "evidence": "S003:128-129,530-549,641-739",
+      "reason": "Rows/columns are fully enumerated even when no wells are defined. The sparse example and SHOULD NOT empty groups match.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S18",
+      "assertion": "Well path row/column indices all agree and are zero based",
+      "outcome": "supported",
+      "evidence": "S003:552-560",
+      "reason": "Exact path form, no additional leading/trailing directories, required index fields and agreement are supported.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S19",
+      "assertion": "Collection layout value 3, series ordering, numbered fallback, OME-XML correspondence",
+      "outcome": "supported",
+      "evidence": "S003:193-206,243-275",
+      "reason": "Conforming collection layout is 3; series is optional but constrained when supplied. The no-series/no-plate numbered fallback is supported. XML existence is SHOULD, with MetadataOnly constraints when supplied.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S20",
+      "assertion": "No explanation of numeric layout value 3",
+      "outcome": "supported",
+      "evidence": "S003:175-275; complete S003:1-896",
+      "reason": "The source gives the required value, not a rationale or alternate-value registry. This is scoped to this capture.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S21",
+      "assertion": "Reader multiplicity awareness versus first-image-only behavior",
+      "outcome": "qualified",
+      "evidence": "S003:271-275; Viewer.md:5,11",
+      "reason": "SHOULD awareness and MAY choices are explicit. Elevating awareness for this product acceptance is reasonable. It is not a universal source MUST/minimum-conformance proof without allowance for a reasoned SHOULD exception.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S22",
+      "assertion": "Case-sensitive alphanumeric unique row/column/field paths",
+      "outcome": "supported",
+      "evidence": "S003:533-537,546-549,746-748",
+      "reason": "The identifier constraints and collision recommendation match. Exact identifier resolution is a sound derivation.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S23",
+      "assertion": "Labels group is a container; exclude label contents from primary image list",
+      "outcome": "qualified",
+      "evidence": "S003:437-440; Viewer.md:5",
+      "reason": "The container is not itself an image but contains label images. A separate primary-image/overlay presentation is sensible product policy. The source does not literally prohibit listing label images as images or showing them standalone.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S24",
+      "assertion": "No dedicated row metadata section/key; metadata-driven discovery",
+      "outcome": "qualified",
+      "evidence": "S003:28-44,124-128,542-560",
+      "reason": "No dedicated row metadata contract exists in the complete capture. Metadata determines identities; an exclusive prohibition on directory scanning is not stated.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S25",
+      "assertion": "Acquisition IDs and conditional field acquisition association",
+      "outcome": "supported",
+      "evidence": "S003:518-529,744-750,753-808",
+      "reason": "Unique nonnegative IDs, optional acquisitions block, conditional acquisition field and matching ID are supported. Paths identify fields within wells.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S26",
+      "assertion": "Composite selection identity and >1 metadata-entry acquisition policy",
+      "outcome": "qualified",
+      "evidence": "S003:518-529,748-750; Viewer.md:5",
+      "reason": "Composite keys are a product derivation. The source condition is multiple acquisitions performed, not explicitly list length. The proposed detection policy must retain its assumption and cannot weaken actual required matching.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S27",
+      "assertion": "Plate/acquisition display hints and aggregate-versus-per-acquisition counts",
+      "outcome": "qualified",
+      "evidence": "S003:523-525,538-541,561-595",
+      "reason": "Definitions give different scopes: per acquisition versus across all wells. Example field_count=4 with each acquisition maximumfieldcount=2 is useful counterevidence to an indistinguishable-semantics reading. Display-only treatment is a permissible product proposal, not source necessity.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S28",
+      "assertion": "datasets and axes required; group-relative paths; metadata highest-resolution-first order; arbitrary names",
+      "outcome": "supported",
+      "evidence": "S003:81,93-94,299-308",
+      "reason": "The list, path relativity, order and arbitrary names match. No numeric-folder or fixed reduction formula is authorized.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S29",
+      "assertion": "Largest ordering gloss and voxel-count sanity proposal",
+      "outcome": "qualified",
+      "evidence": "S003:305-307",
+      "reason": "Highest resolution is an explicit gloss. No exact voxel-count formula is supplied. A flag-without-reorder sanity policy is a proposal, not an additional malformed-format criterion proved by this source.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S30",
+      "assertion": "Rank and dimension_names identity, mismatches not silently remapped",
+      "outcome": "supported",
+      "evidence": "S003:168,173-174,299-307; Viewer.md:7,11",
+      "reason": "Unique names, rank/order and array dimension_names matching are explicit; refusal or item-scoped recovery are product behaviors.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S31",
+      "assertion": "dimension_names normative locator versus history wording",
+      "outcome": "supported",
+      "evidence": "S003:174,827",
+      "reason": "Both passages exist; the detailed array zarr.json rule is stronger implementation guidance than the summary history wording. There is no evidence requiring an extra duplicate field in axes.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S32",
+      "assertion": "Pyramid name/type/downsampling metadata and appropriate-level policy",
+      "outcome": "qualified",
+      "evidence": "S003:317-319,375-397; Viewer.md:5,9",
+      "reason": "Metadata fields are SHOULD on the data, not compulsory reader UI fields. Selection heuristic is a product decision; every selected level must use its own geometry.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S33",
+      "assertion": "Unsupported codecs/chunks can be explained per item/level",
+      "outcome": "supported",
+      "evidence": "S003:70-72,99-100; Viewer.md:7,11",
+      "reason": "A declared reader limit with named failure is valid; it is not evidence that those format inputs are forbidden.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S34",
+      "assertion": "No prescribed threading/cache/performance/error mechanism; responsive cancellation outcome",
+      "outcome": "supported",
+      "evidence": "complete S003:1-896; brief.md:3; Viewer.md:7,11",
+      "reason": "The capture supplies format rules and no implementation timing/threading mechanism. The product itself requires responsive background reads/cancellation; no measured performance was established.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S35",
+      "assertion": "Malformed/unavailable input feedback taxonomy and no silent skips",
+      "outcome": "qualified",
+      "evidence": "Viewer.md:7,11; S003:156,173-174,256,306-312,426-430,438-455,553-560,748-750",
+      "reason": "The individual structural violations map to format rules. Crash avoidance/item-scoped explanation follows the plan. Exact message catalog and blanket every-event policy are product choices.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S36",
+      "assertion": "Axes composition/rank/order and optional dimensions",
+      "outcome": "supported",
+      "evidence": "S003:81,96-97,167-174,299-303",
+      "reason": "2-5 rank, 2-3 spatial axes, optional time and channel/null/custom slot, order corresponding to the arrays, and SHOULD zyx are explicit. Names alone cannot identify semantic axes.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S37",
+      "assertion": "Absent dimensions versus length-one dimensions; supported navigation range",
+      "outcome": "qualified",
+      "evidence": "S003:173-174,299-303; Viewer.md:5",
+      "reason": "Both reports discuss axis-driven relevance, but neither explicitly distinguishes absent time/channel/z from present singleton axes or supplies an exact supported navigation range. This is a coverage omission, not a claim that such fixtures were executed.",
+      "preservation_category": "acquired but undeveloped",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S38",
+      "assertion": "Missing/null/custom type and unit tolerance",
+      "outcome": "qualified",
+      "evidence": "S003:168-174,299-303",
+      "reason": "Recommended type/unit fields can be missing in contexts that remain conforming; however multiscales requires 2 or 3 entries of type:space. Blanket MUST-tolerate-any-missing/unknown type ignores that more specific constraint. The permitted null/custom extra axis is not proof that every spatial axis may be null.",
+      "preservation_category": "derived incorrectly / inherited or introduced unsupported assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S39",
+      "assertion": "Position-only semantic classification or innermost-plane rule",
+      "outcome": "unresolved",
+      "evidence": "S003:81,168-174,299-303",
+      "reason": "This assertion family is referenced in broad seed verification but not explicitly recoverable as a standalone R011 assertion; excluded seed comparison remains unresolved. It is not charged as this R011 material failure.",
+      "preservation_category": "derived incorrectly / inherited or introduced unsupported assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true,
+      "phase2_seed_resolution": "Exact seed U005 contains the position-inference/formula assertion. VRF-05 affirms U005 subject to listed clarifications, which do not identify these errors. This resolves seed correspondence only and does not edit phase1."
+    },
+    {
+      "id": "S40",
+      "assertion": "Space/time units vocabulary; no channel-unit list",
+      "outcome": "supported",
+      "evidence": "S003:170-172,330-334",
+      "reason": "Only space/time lists are supplied. This does not prohibit meaningful channel/custom metadata or justify a universal assertion that channel scale can never matter.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S41",
+      "assertion": "omero optional; channels/color/window field constraints",
+      "outcome": "supported",
+      "evidence": "S003:426-430",
+      "reason": "Required data fields, RGB six-hex format, and window min/max/start/end meaning match. Reader initialization details need interpretation beyond field presence.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S42",
+      "assertion": "omero active/coefficient/family/inverted/label/rdefs/defaultT/defaultZ/model example siblings",
+      "outcome": "qualified",
+      "evidence": "S003:401-423,426-430,877-883",
+      "reason": "The siblings occur in the example; required-field prose does not require them. Best-effort initialization is a sensible proposal, not proof of actual reader behavior.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S43",
+      "assertion": "omero channel length matching occurs as example comment",
+      "outcome": "supported",
+      "evidence": "S003:403,426-430",
+      "reason": "The length comment exists; the required-field prose states no separate length MUST. Explicit overlap degradation is a proposed policy.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S44",
+      "assertion": "No normative color/window semantics beyond field presence",
+      "outcome": "contradicted",
+      "evidence": "S003:427-430",
+      "reason": "RGB format and meanings of min/max/start/end are expressly stated. No gamma/family registry or explicit out-of-dtype-range rule is supplied, which is a narrower supported absence.",
+      "preservation_category": "derived incorrectly / inherited or introduced unsupported assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S45",
+      "assertion": "Reader MUST apply particular initial contrast limits/colors; out-of-dtype-range/start>end automatically malformed",
+      "outcome": "unsupported",
+      "evidence": "S003:427-430; Viewer.md:9",
+      "reason": "Presence/format constraints do not prove the proposed initial rendering policy or dtype-range rejection. Malformed color not satisfying six hex digits is supported; extending malformed status to unspecified window policies conflates specification silence and input invalidity.",
+      "preservation_category": "derived incorrectly / inherited or introduced unsupported assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S46",
+      "assertion": "Absent omero leaves all rendering state with no embedded defaults",
+      "outcome": "qualified",
+      "evidence": "S003:426,456-466",
+      "reason": "For intensity-channel defaults the source supplies no alternative omero block. A blanket all-rendering/no-embedded-display-defaults claim overlooks image-label colors and the reader SHOULD display them even if omero is absent.",
+      "preservation_category": "derived incorrectly / inherited or introduced unsupported assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S47",
+      "assertion": "General transforms sequential; identity/translation/scale and binary paths",
+      "outcome": "supported",
+      "evidence": "S003:276-293",
+      "reason": "Vocabulary, sequential list order and vector/path alternatives are explicit. Image transform lists have narrower types than this general vocabulary.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S48",
+      "assertion": "Dataset transform restrictions and fallback factors",
+      "outcome": "supported",
+      "evidence": "S003:308-313",
+      "reason": "Exactly one scale, at most one translation after scale, matching vector length, physical/time scale or relative fallback, and default 1 without downsampling are explicit.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S49",
+      "assertion": "Global transforms after dataset transforms; outer-after-inner composition",
+      "outcome": "supported",
+      "evidence": "S003:293,314-316",
+      "reason": "This rule applies to all supplied transform vectors, not just the time axis example. Correct function notation within each list is translation after scale.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S50",
+      "assertion": "Scale∘translate formula for a scale-before-translation list",
+      "outcome": "unresolved",
+      "evidence": "S003:293,311,315",
+      "reason": "This assertion family is referenced in broad seed verification but not explicitly recoverable as a standalone R011 assertion; excluded seed comparison remains unresolved. It is not charged as this R011 material failure.",
+      "preservation_category": "derived incorrectly / inherited or introduced unsupported assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true,
+      "phase2_seed_resolution": "Exact seed U005 contains the position-inference/formula assertion. VRF-05 affirms U005 subject to listed clarifications, which do not identify these errors. This resolves seed correspondence only and does not edit phase1."
+    },
+    {
+      "id": "S51",
+      "assertion": "Worked 5D example values and voxel arithmetic",
+      "outcome": "supported",
+      "evidence": "S003:320-387",
+      "reason": "Given scales [1,1,.5,.5,.5], [1,1,1,1,1], [1,1,2,2,2] and global [.1,1,1,1,1], the reported .1 ms/.5 micrometer level-zero voxel sizes are correct. This zero-translation example does not test offsets or reversed scale/translation order.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S52",
+      "assertion": "Worked calibration is a normative example",
+      "outcome": "supported",
+      "evidence": "S003:877-883; example S003:320-387",
+      "reason": "R011 expressly replaces normative-example terminology with informative example at report line 116 and verification /clarifications; the superseded seed wording is not retained as its current assertion.",
+      "preservation_category": "valid repair correctly retained",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S53",
+      "assertion": "Unknown units/calibration and channel-never-physical claim",
+      "outcome": "qualified",
+      "evidence": "S003:170-174,310-311",
+      "reason": "Avoid inventing units; disclose unknown calibration. Unit absence alone does not change every provided scale into a proved relative factor. Channel index display is a sensible choice, but the universal never-meaningful-scale statement lacks source support.",
+      "preservation_category": "derived incorrectly / inherited or introduced unsupported assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S54",
+      "assertion": "Origin lacks explicit anchoring; image-group-frame assumption",
+      "outcome": "qualified",
+      "evidence": "S003:277-278,311; complete S003:1-896",
+      "reason": "No explicit origin anchoring beyond coordinate spaces/offset is supplied. Declaring an image-frame assumption is valid; it is not a source guarantee.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S55",
+      "assertion": "Binary transform encoding gaps and vector-length counterevidence",
+      "outcome": "qualified",
+      "evidence": "S003:285-289,308-312",
+      "reason": "Binary dtype/byte order/storage encoding are underspecified, but vector dimensionality and multiscale vector-length constraints are supplied. No dtype/shape rule whatsoever is too broad if it discards those constraints. Unsupported handling is a valid capability limit.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S56",
+      "assertion": "No multi-axis global worked example; composition beyond time unresolved",
+      "outcome": "qualified",
+      "evidence": "S003:293,314-316,368-374",
+      "reason": "Example absence is supported. General multi-axis composition is specified by the same sequential/global-after rules; missing example is not grounds to dismiss that rule as unresolved.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S57",
+      "assertion": "Concrete translation-sensitive calibration validation",
+      "outcome": "qualified",
+      "evidence": "S003:293,311,315; report proposal locators",
+      "reason": "Both preserve valid UNEXECUTED translation proposals, but neither gives a nonzero-offset worked expectation that could expose reversal/omission. No fixture or execution is required to credit a valid proposal; assigned full facet needs a concrete check.",
+      "preservation_category": "acquired but undeveloped",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S58",
+      "assertion": "Labels hierarchy, labels paths, arbitrary names and intermediate folders",
+      "outcome": "supported",
+      "evidence": "S003:102-117,437-453",
+      "reason": "Container declaration/list/path discovery and arbitrary names are supported. Intermediate groups may exist and MUST NOT carry metadata.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S59",
+      "assertion": "All labels SHOULD be listed; unlisted scan policy",
+      "outcome": "qualified",
+      "evidence": "S003:441-442; Viewer.md:9",
+      "reason": "SHOULD listing permits reasoned exceptions. Additional scan/discovery policy is a product choice and cannot become format invalidity solely from being unlisted.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S60",
+      "assertion": "Labels multiscales, same source level count and eight integer dtypes",
+      "outcome": "supported",
+      "evidence": "S003:438-439,454-455",
+      "reason": "Exact dtype set and count requirement match. Integer type admission does not itself establish lossless host-number representation.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S61",
+      "assertion": "Label same-coordinate-system relation versus usually dimensions/transforms",
+      "outcome": "qualified",
+      "evidence": "S003:432-435,454-455",
+      "reason": "Usually modifies equal dimensions/transformations, not the preceding same-coordinate-system relationship. Rephrasing this as usually same system weakens the association/registration premise.",
+      "preservation_category": "derived incorrectly / inherited or introduced unsupported assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S62",
+      "assertion": "Same-or-one label dimensions and source force",
+      "outcome": "qualified",
+      "evidence": "S003:106-108,875-878",
+      "reason": "Lowercase should remains recommended normative language; overview placement alone is not an exception. It is a SHOULD, not a geometric equality MUST. The report may propose explicit broadcast checks.",
+      "preservation_category": "derived incorrectly / inherited or introduced unsupported assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S63",
+      "assertion": "Same-index levels, broadcast and own transforms with divergence warning",
+      "outcome": "qualified",
+      "evidence": "S003:106-108,308,432-455; Viewer.md:11",
+      "reason": "Reasonable rendering policy if source identity and physical mapping are resolved. Equal counts do not independently prove same-index geometry, and warning does not establish aligned overlay validity.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S64",
+      "assertion": "Label-versus-parent transform precedence wholly unspecified",
+      "outcome": "qualified",
+      "evidence": "S003:308,454-455,432-433",
+      "reason": "There is no literal precedence sentence. A label must implement its own multiscales coordinate mapping, and that mapping cannot be silently replaced by the parent. Reports preserve an own-transform verification policy, but overstate uncertainty if they dismiss this requirement.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S65",
+      "assertion": "image-label object and colors/version field force",
+      "outcome": "contradicted",
+      "evidence": "S003:456-460",
+      "reason": "image-label SHOULD be present; it SHOULD contain colors and version. Values are MUST array/string when supplied. Treating keys as unconditional MUST merely because image-label exists is stronger than source.",
+      "preservation_category": "derived incorrectly / inherited or introduced unsupported assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S66",
+      "assertion": "Colors/properties key by integer label-value; rgba values/alpha",
+      "outcome": "supported",
+      "evidence": "S003:461-471",
+      "reason": "Color/property entries identify labels by value, with rgba four integers 0..255 and alpha opacity. Array order is not categorical identity.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S67",
+      "assertion": "Reader SHOULD use specified colors; fallback palette/legend/property UI",
+      "outcome": "qualified",
+      "evidence": "S003:461-471; Viewer.md:9",
+      "reason": "Color behavior is recommended, not universal mandatory styling. Fallback and property legend are product proposals; required legend/property UI is not necessary to the stated aligned-overlay acceptance.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S68",
+      "assertion": "Source.image relative path and ../../ default",
+      "outcome": "supported",
+      "evidence": "S003:467,472-474",
+      "reason": "Source is optional, image key is optional; supplied image must be a relative path to a Zarr image group. Source metadata identifies original image, not an arbitrary cosmetic string.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S69",
+      "assertion": "Resolve associated source before overlay; provenance-only restriction",
+      "outcome": "qualified",
+      "evidence": "S003:432-433,472-474; Viewer.md:5,11",
+      "reason": "R011 does not explicitly require relative-source identity resolution before overlay. R012 explicitly confines source.image to provenance and not overlay relocation, losing declared association when parent/default and explicit source differ. A conforming truthful unsupported result is acceptable; attaching by parent/shape without association validation is not established.",
+      "preservation_category": "acquired but undeveloped",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S70",
+      "assertion": "Sparse/large exact categorical IDs and resampling",
+      "outcome": "qualified",
+      "evidence": "S003:438-439,462-469",
+      "reason": "Both preserve categorical/integer/label-value/nearest-neighbor ideas. Neither covers uint64/int64 IDs above exact binary64 range or declares an exact supported ID range, nor tests scrambled sparse IDs. This is an assigned coverage omission, not an assertion that arbitrary interpolation is specified in the source.",
+      "preservation_category": "acquired but undeveloped",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S71",
+      "assertion": "No explicit interpolation/nearest/resampling algorithm",
+      "outcome": "supported",
+      "evidence": "complete S003:1-896; S003:434-435,438-439,462-469",
+      "reason": "No named algorithm is supplied. Identity-preserving categorical rendering is a sound consequence; nearest-neighbor is one defensible product policy, not the uniquely required algorithm.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S72",
+      "assertion": "Label worked colors/properties/source example",
+      "outcome": "supported",
+      "evidence": "S003:475-514",
+      "reason": "Example values 0/1, rgba [0,0,128,128]/[0,128,0,128], alpha/color explanation, properties and relative source match. Example is informative.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S73",
+      "assertion": "Schema version-string vocabularies and accept-any-string policy",
+      "outcome": "qualified",
+      "evidence": "S003:459-460,550-551,751-752",
+      "reason": "No independent field vocabulary enumeration is supplied. A string must identify the schema/spec version, not merely be any string. Displaying unknown values is a product policy; a universal never-gate rule is not source-derived.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S74",
+      "assertion": "Implementation pointer and lack of actual reader performance/interop evidence",
+      "outcome": "supported",
+      "evidence": "S003:813-820; complete S003:1-896; brief.md:5; Viewer.md:9",
+      "reason": "The pointer section contains no implementation requirements or measured interop/performance results. Holding real tool interoperability unresolved is correct and is not an incompatibility finding. The source does contain an Implementations heading.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S76",
+      "assertion": "Literal-search results imply universal absence",
+      "outcome": "qualified",
+      "evidence": "complete S003:1-896; report and negative-check limits",
+      "reason": "Scoping a search does not make a missed paraphrase/source restriction absent. Many narrow absence conclusions are corroborated by this independent full read; negative clauses with actual counterevidence remain false despite scope disclaimers.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S77",
+      "assertion": "Directory-scan prohibition replacement",
+      "outcome": "qualified",
+      "evidence": "S003:262-275,542-560,744-750",
+      "reason": "No explicit scanning prohibition is supplied; labeling it inference is accurate. Even inferred metadata authority does not forbid auxiliary scanning if the final identity/order remains validated.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S78",
+      "assertion": "Editorial duplicated wording at L93-L94",
+      "outcome": "contradicted",
+      "evidence": "S003:93-94",
+      "reason": "R011 line 140 calls by the by the verified; exact S003 L93-94 is defined by / by the. This is a nonmaterial exact-text error.",
+      "preservation_category": "inherited nonmaterial exact-text error retained",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S79",
+      "assertion": "Plan mapping KEEP/EXTEND/FLAG and optional capability review",
+      "outcome": "qualified",
+      "evidence": "Viewer.md:5,7,9,11; brief.md:3-5",
+      "reason": "Core metadata/geometry/failure extensions fit the plan; interop FLAG is appropriate. Mandatory property legends/full pyramid metadata UI/particular fallback rendering overreach additional-capability review. Background responsiveness is required by the plan, not measured format implementation evidence.",
+      "preservation_category": "derived incorrectly / inherited or introduced unsupported assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S80",
+      "assertion": "Validation proposals V1-V9 are UNEXECUTED and appropriate",
+      "outcome": "supported",
+      "evidence": "Viewer.md:5-11; S003 rules cited above; current report proposal lists",
+      "reason": "All are current proposals, not test execution. Missing filesets/execution logs do not make the proposals false. Their seed-relative sameness/verbatim preservation cannot be established without excluded seed/history.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S81",
+      "assertion": "Original candidate U001-U012 comparison/dispositions/absence of false dismissals",
+      "outcome": "unresolved",
+      "evidence": "current reports/verification JSON; excluded candidate seed not admitted",
+      "reason": "Source substance can be checked now; exact matches, preservation, removed/added candidate content, and true absence of candidate false dismissals require the unadmitted seed/history. This is a missing-input condition, not proof the comparison claims are false.",
+      "preservation_category": "seed comparison now available; see all 12 seed rows",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S82",
+      "assertion": "Candidate acquisition reads/searches/denied attempts/no execution/native Goal/budgets/costs",
+      "outcome": "unresolved",
+      "evidence": "current artifact assertions; acquisition/history not admitted",
+      "reason": "The current report can label proposals unexecuted. Actual tool actions, budget compliance, exact tool inventory, no charges and no execution cannot be independently audited from normative S003. No runtime or economics inference is made.",
+      "preservation_category": "unresolved process assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S83",
+      "assertion": "Perfect coverage/support/no unsupported assertions/no invented obligations",
+      "outcome": "contradicted",
+      "evidence": "adjudications S05,S38,S44,S65,S69,S70,S79; all six prospective facets",
+      "reason": "The reports retain material source overstatements and omissions. Self-attested perfect support/full scope is not established by counting 12 units or 30 negative checks.",
+      "preservation_category": "derived incorrectly / inherited or introduced unsupported assertion",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S84",
+      "assertion": "Source-line index ranges",
+      "outcome": "supported",
+      "evidence": "S003:1-896",
+      "reason": "The semantic source section/range index resolves. This does not prove every conclusion cited to a broad range.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    },
+    {
+      "id": "S85",
+      "assertion": "Numbers of dispositions/clarifications/additions/checks",
+      "outcome": "qualified",
+      "evidence": "actual final verification/check objects and report lists",
+      "reason": "The JSON contains 12 seed-unit records; R011 10 supported plus 2 clarified, R012 7 qualified plus 5 confirmed, R012 30 negative records, 2 replacements, 4 additions, 4 non-findings. Other counts (e.g. eight SHOULD recommendations versus nine dot-separated groups) depend on undocumented grouping and are not evidence of semantic completeness.",
+      "preservation_category": "source-supported core retained with stated qualifications",
+      "phase1_adjudication_is_frozen_reference_not_rescore": true
+    }
+  ],
+  "acquisition_source_links": [
+    {
+      "locator": "history/assignment-001/acquisition.json#/finding_to_source_links/0",
+      "actual_assertion": {
+        "candidate_id": "U001",
+        "locators": [
+          "catalog.json: case_id/view_lines/aliases",
+          "S003 L6/L8/L818 uri",
+          "S003 L57-59/L868-888 conformance",
+          "Viewer.md L3 fixture",
+          "brief L3-5"
+        ],
+        "sources": [
+          "S003"
+        ],
+        "verification_id": "VRF-01"
+      },
+      "source_assertion_ids": [
+        "S01",
+        "S10",
+        "S81"
+      ],
+      "semantic_status": "source-supported core",
+      "reason": "Scope/identities/status vocabulary are retained. Neither verifier establishes that every product-side MUST in the seed is literally a source MUST; the seed itself blends source force and derived product rules.",
+      "execution_validation": "No raw read/search response or complete native conversation supplied; content-to-source grounding is assessed independently."
+    },
+    {
+      "locator": "history/assignment-001/acquisition.json#/finding_to_source_links/1",
+      "actual_assertion": {
+        "candidate_id": "U002",
+        "locators": [
+          "S003 L68-72/L87-100 Zarr/groups",
+          "S003 L150-165 ome/version",
+          "S003 L70-72 unbounded (complete-read)",
+          "S003 L813-814 Tools pointer",
+          "Viewer.md L5-11 plan shape"
+        ],
+        "sources": [
+          "S003"
+        ],
+        "verification_id": "VRF-02"
+      },
+      "source_assertion_ids": [
+        "S02",
+        "S03",
+        "S05",
+        "S07",
+        "S74"
+      ],
+      "semantic_status": "mixed/qualified",
+      "reason": "Core storage/metadata/geometry summary is retained; both affirm the seeded no-disallowance/unbounded-dtype conclusion despite integer-only labels. Scoped search/full-read claims do not repair that counterevidence.",
+      "execution_validation": "No raw read/search response or complete native conversation supplied; content-to-source grounding is assessed independently."
+    },
+    {
+      "locator": "history/assignment-001/acquisition.json#/finding_to_source_links/2",
+      "actual_assertion": {
+        "candidate_id": "U003",
+        "locators": [
+          "S003 L68-72",
+          "S003 L73-77",
+          "S003 L150-165",
+          "S003 L57-66/L872-888",
+          "S003 L25-27",
+          "S003 L810-812 + key spellings L200/L462/L524/L528/L538/L557-560"
+        ],
+        "sources": [
+          "S003"
+        ],
+        "verification_id": "VRF-03"
+      },
+      "source_assertion_ids": [
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ],
+      "semantic_status": "mixed/qualified",
+      "reason": "Version/namespace, local product boundary, keywords/transitional rules and literal key names survive. Broad no-disallowance survives incorrectly. R012 editorial wording correction is outside the seed U003 body; U009 contains the editorial error.",
+      "execution_validation": "No raw read/search response or complete native conversation supplied; content-to-source grounding is assessed independently."
+    },
+    {
+      "locator": "history/assignment-001/acquisition.json#/finding_to_source_links/3",
+      "actual_assertion": {
+        "candidate_id": "U004",
+        "locators": [
+          "S003 L82-148 shapes",
+          "S003 L175-275 collections",
+          "S003 L204-206/L262 precedence",
+          "S003 L271-275 readers",
+          "S003 L388-397 fallback",
+          "S003 L552-560/L744-750 HCS",
+          "S003 L93-94/L173-174/L299-319 navigation",
+          "Viewer.md L5/L7/L11"
+        ],
+        "sources": [
+          "S003"
+        ],
+        "verification_id": "VRF-04"
+      },
+      "source_assertion_ids": [
+        "S12",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S21",
+        "S23",
+        "S24",
+        "S25",
+        "S26",
+        "S28",
+        "S30",
+        "S34",
+        "S35",
+        "S77"
+      ],
+      "semantic_status": "source-supported core",
+      "reason": "Metadata order/rank/path/plate/well/acquisition and failure facts survive. Seed source-MUST versus product derivation distinctions are mixed. R011 explicitly clarifies sniff-order and label-list exclusion; both label directory-scan nonconformance as inference. This narrows overstatements while retaining valid metadata authority.",
+      "execution_validation": "No raw read/search response or complete native conversation supplied; content-to-source grounding is assessed independently."
+    },
+    {
+      "locator": "history/assignment-001/acquisition.json#/finding_to_source_links/4",
+      "actual_assertion": {
+        "candidate_id": "U005",
+        "locators": [
+          "S003 L81/L96-97/L168-174/L299-303 axes",
+          "S003 L399-430 omero",
+          "S003 L277-293/L308-316/L320-387 transforms",
+          "S003 L102-117/L432-514 labels",
+          "Viewer.md L5/L11"
+        ],
+        "sources": [
+          "S003"
+        ],
+        "verification_id": "VRF-05"
+      },
+      "source_assertion_ids": [
+        "S38",
+        "S39",
+        "S44",
+        "S45",
+        "S46",
+        "S49",
+        "S50",
+        "S52",
+        "S61",
+        "S62",
+        "S65",
+        "S69",
+        "S70",
+        "S79"
+      ],
+      "semantic_status": "mixed/qualified",
+      "reason": "Both affirm this mixed unit rather than rejecting its invalid assertions: blanket untyped tolerance, initial-rendering mandate, no semantics beyond field presence, mandatory image-label.version, scale∘translate notation, provenance-only source association and mandatory UI content. R011 fixes informative-example terminology and qualifies omero interpretation, but does not specifically flag the seed formula/source-association errors. R012 largely reproduces them.",
+      "execution_validation": "No raw read/search response or complete native conversation supplied; content-to-source grounding is assessed independently."
+    },
+    {
+      "locator": "history/assignment-001/acquisition.json#/finding_to_source_links/5",
+      "actual_assertion": {
+        "candidate_id": "U006",
+        "locators": [
+          "S003 MUST families L65-66/L93-94/L150-176/L204-206/L256-316/L426-455/L552-560/L744-750",
+          "S003 SHOULD/MAY L128-129/L169-172/L272-275/L303/L317-319/L461/L523-541",
+          "Viewer.md L9 review gate"
+        ],
+        "sources": [
+          "S003"
+        ],
+        "verification_id": "VRF-06"
+      },
+      "source_assertion_ids": [
+        "S13",
+        "S21",
+        "S32",
+        "S41",
+        "S45",
+        "S49",
+        "S60",
+        "S65",
+        "S67",
+        "S79",
+        "S85"
+      ],
+      "semantic_status": "mixed/qualified",
+      "reason": "Ten grouped obligation statements plus recommendation/options/decision lists survive substantively. Read-only is correctly tied to the product; backend support limits remain explicit. Some initial-rendering and UI force overstatements are inherited.",
+      "execution_validation": "No raw read/search response or complete native conversation supplied; content-to-source grounding is assessed independently."
+    },
+    {
+      "locator": "history/assignment-001/acquisition.json#/finding_to_source_links/6",
+      "actual_assertion": {
+        "candidate_id": "U007",
+        "locators": [
+          "Viewer.md L5/L7/L9/L11 each sentence",
+          "S003 L70-77/L813-814 boundaries"
+        ],
+        "sources": [
+          "S003"
+        ],
+        "verification_id": "VRF-07"
+      },
+      "source_assertion_ids": [
+        "S79",
+        "S85"
+      ],
+      "semantic_status": "mixed/qualified",
+      "reason": "All twelve plan-sentence dispositions have counterparts. Interop remains FLAG, read-only/boundaries remain KEEP, and metadata/calibration/failures remain extensions. Required legends/properties/panel detail still exceed source/plan necessity.",
+      "execution_validation": "No raw read/search response or complete native conversation supplied; content-to-source grounding is assessed independently."
+    },
+    {
+      "locator": "history/assignment-001/acquisition.json#/finding_to_source_links/7",
+      "actual_assertion": {
+        "candidate_id": "U008",
+        "locators": [
+          "S003 L70-72/L285-289 limitations",
+          "S003 L156/L173-174/L299-312/L426-455/L553-560/L748-750 malformed",
+          "S003 L25-27/L73-77/L257-260 out-of-scope",
+          "brief L5/Viewer.md L9/L11"
+        ],
+        "sources": [
+          "S003"
+        ],
+        "verification_id": "VRF-08"
+      },
+      "source_assertion_ids": [
+        "S05",
+        "S33",
+        "S35",
+        "S45",
+        "S55",
+        "S59",
+        "S76"
+      ],
+      "semantic_status": "mixed/qualified",
+      "reason": "Viewer limitation, malformed and product-out-of-scope tiers survive; neither invents execution. R012 explicitly adds specification-silence versus missing-input distinction. Declared taxonomy still inherits overbroad dtype generality and unspecified window-invalidity treatment.",
+      "execution_validation": "No raw read/search response or complete native conversation supplied; content-to-source grounding is assessed independently."
+    },
+    {
+      "locator": "history/assignment-001/acquisition.json#/finding_to_source_links/8",
+      "actual_assertion": {
+        "candidate_id": "U009",
+        "locators": [
+          "S003 L93-94/L174-vs-L827/L301-vs-L169/L306/L310-311/L315/L368-374/L388-397/L403/L419-423/L433/L106-108/L459-460/L550-551/L751-752/L200/L256/L748-749/L285-289/L524-525/L538-539/L70-72/L813-820"
+        ],
+        "sources": [
+          "S003"
+        ],
+        "verification_id": "VRF-09"
+      },
+      "source_assertion_ids": [
+        "S15",
+        "S20",
+        "S26",
+        "S27",
+        "S29",
+        "S31",
+        "S38",
+        "S43",
+        "S44",
+        "S54",
+        "S55",
+        "S56",
+        "S61",
+        "S62",
+        "S64",
+        "S73",
+        "S78"
+      ],
+      "semantic_status": "mixed/qualified",
+      "reason": "All thirteen source-conflict/uncertainty topics have counterparts. R012 adds row-discovery and mixed-version-remediation items; R011 retains the wrong editorial exact wording and R012 corrects it. General composition is specified even without a multi-axis worked example; additional uncertainty cannot replace that rule.",
+      "execution_validation": "No raw read/search response or complete native conversation supplied; content-to-source grounding is assessed independently."
+    },
+    {
+      "locator": "history/assignment-001/acquisition.json#/finding_to_source_links/9",
+      "actual_assertion": {
+        "candidate_id": "U010",
+        "locators": [
+          "brief L5 research goal",
+          "assignment L5 S003-only",
+          "S003 L813-814 Tools (complete-read: no implementation section)",
+          "Viewer.md L9 interoperate"
+        ],
+        "sources": [
+          "S003"
+        ],
+        "verification_id": "VRF-10"
+      },
+      "source_assertion_ids": [
+        "S74",
+        "S75",
+        "S76"
+      ],
+      "semantic_status": "source-supported core",
+      "reason": "Actual reader interop/performance/tolerance remains unavailable in this S003-only scope. Both preserve the distinction between scope limitation and incompatibility. R012 N-03 adds a false broader no-tool-names/versions assertion; that is not present in the seed U010.",
+      "execution_validation": "No raw read/search response or complete native conversation supplied; content-to-source grounding is assessed independently."
+    },
+    {
+      "locator": "history/assignment-001/acquisition.json#/finding_to_source_links/10",
+      "actual_assertion": {
+        "candidate_id": "U011",
+        "locators": [
+          "assignment L5 no-fetch (UNEXECUTED basis)",
+          "VRF-04/VRF-05 scope mapping"
+        ],
+        "sources": [
+          "S003"
+        ],
+        "verification_id": "VRF-11"
+      },
+      "source_assertion_ids": [
+        "S57",
+        "S80"
+      ],
+      "semantic_status": "mixed/qualified",
+      "reason": "All nine UNEXECUTED proposal families survive. R011 relabels them PV-1..PV-9 and summarizes; R012 keeps V1..V9 and normalizes prose/arrow glyphs. These are semantic coverage preservation, not verbatim byte preservation and not execution evidence. Translation is proposed but no concrete nonzero-offset expectation is developed.",
+      "execution_validation": "No raw read/search response or complete native conversation supplied; content-to-source grounding is assessed independently."
+    },
+    {
+      "locator": "history/assignment-001/acquisition.json#/finding_to_source_links/11",
+      "actual_assertion": {
+        "candidate_id": "U012",
+        "locators": [
+          "S003 full index ranges L25-27/L57-148/L150-319/L320-514/L516-808/L810-888"
+        ],
+        "sources": [
+          "S003"
+        ],
+        "verification_id": "VRF-12"
+      },
+      "source_assertion_ids": [
+        "S83",
+        "S84"
+      ],
+      "semantic_status": "mixed/qualified",
+      "reason": "Section/range citation index survives by summary in R011 and an expanded index in R012. R012 adds Citing L815-820; seed U009 already mentions Citing but U012 omits its exact locator. The blanket all-supported closing claim is inherited rather than validated.",
+      "execution_validation": "No raw read/search response or complete native conversation supplied; content-to-source grounding is assessed independently."
+    }
+  ],
+  "acquisition_query_inventory": [
+    {
+      "locator": "history/assignment-001/acquisition.json#/queries/0",
+      "actual_claim": {
+        "interpretation": "Search result only; used for inventory, never for absence/presence of spec statements.",
+        "mode": "regex",
+        "pattern": ".",
+        "tool": "search"
+      },
+      "source_assertion_ids": [
+        "S76",
+        "S81"
+      ],
+      "semantic_status": "Inventory/recovery purpose stated; exact execution/result bodies not supplied",
+      "process_status": "read metadata plus written notes do not authenticate actual regex query semantics."
+    },
+    {
+      "locator": "history/assignment-001/acquisition.json#/queries/1",
+      "actual_claim": {
+        "interpretation": "Search result only; used to recover full U004/U005 bodies from long JSON lines, never for absence/presence.",
+        "mode": "regex",
+        "pattern": "3\\.5",
+        "tool": "search"
+      },
+      "source_assertion_ids": [
+        "S76",
+        "S81"
+      ],
+      "semantic_status": "Inventory/recovery purpose stated; exact execution/result bodies not supplied",
+      "process_status": "read metadata plus written notes do not authenticate actual regex query semantics."
+    }
+  ],
+  "acquisition_remaining_keys_assessment": [
+    {
+      "key": "acquisition_notes",
+      "value": "S003-only bounded assignment. No live fetching, no code execution, no filesets opened. Searches prove only search results, never absence (V-FOLLOWON-1 repair). Absence-adjacent statements grounded in complete sequential read of S003 L1-896.",
+      "assessment": "Source/plan/seed identities and pins match where corresponding bytes supplied; actual read/search/no-execution/process claims are self-reported and limited by missing raw conversation. Budget/cost/model claims are not assessed."
+    },
+    {
+      "key": "budget",
+      "value": {
+        "elapsed_seconds": 900,
+        "parent_responses": 96
+      },
+      "assessment": "Source/plan/seed identities and pins match where corresponding bytes supplied; actual read/search/no-execution/process claims are self-reported and limited by missing raw conversation. Budget/cost/model claims are not assessed."
+    },
+    {
+      "key": "case_id",
+      "value": "ome-normative-dev-v1",
+      "assessment": "Source/plan/seed identities and pins match where corresponding bytes supplied; actual read/search/no-execution/process claims are self-reported and limited by missing raw conversation. Budget/cost/model claims are not assessed."
+    },
+    {
+      "key": "execution_evidence",
+      "value": "none",
+      "assessment": "Source/plan/seed identities and pins match where corresponding bytes supplied; actual read/search/no-execution/process claims are self-reported and limited by missing raw conversation. Budget/cost/model claims are not assessed."
+    },
+    {
+      "key": "live_external_fetching",
+      "value": false,
+      "assessment": "Source/plan/seed identities and pins match where corresponding bytes supplied; actual read/search/no-execution/process claims are self-reported and limited by missing raw conversation. Budget/cost/model claims are not assessed."
+    },
+    {
+      "key": "method",
+      "value": "source-grounded verification with V-FOLLOWON-1 repair: complete sequential read, no absence from search, no numeric patches",
+      "assessment": "Source/plan/seed identities and pins match where corresponding bytes supplied; actual read/search/no-execution/process claims are self-reported and limited by missing raw conversation. Budget/cost/model claims are not assessed."
+    },
+    {
+      "key": "reads",
+      "value": [
+        {
+          "lines": "1-896 in two windows (1-500, 500-896)",
+          "method": "read_file",
+          "path": "inputs/sources/S003.txt"
+        },
+        {
+          "lines": "all",
+          "method": "read_file",
+          "path": "inputs/brief.md"
+        },
+        {
+          "lines": "all",
+          "method": "read_file",
+          "path": "inputs/TASK.md"
+        },
+        {
+          "lines": "all",
+          "method": "read_file",
+          "path": "inputs/catalog.json"
+        },
+        {
+          "lines": "all",
+          "method": "read_file",
+          "path": "inputs/plan/Viewer.md"
+        },
+        {
+          "lines": "all (U004/U005 long lines via search-full-line return)",
+          "method": "read_file+search",
+          "path": "inputs/candidate_seed.json"
+        }
+      ],
+      "assessment": "Source/plan/seed identities and pins match where corresponding bytes supplied; actual read/search/no-execution/process claims are self-reported and limited by missing raw conversation. Budget/cost/model claims are not assessed."
+    },
+    {
+      "key": "selected_sources",
+      "value": [
+        {
+          "bytes": 36980,
+          "handle": "S003",
+          "lines": 896,
+          "uri": "https://ngff.openmicroscopy.org/0.5/",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        }
+      ],
+      "assessment": "Source/plan/seed identities and pins match where corresponding bytes supplied; actual read/search/no-execution/process claims are self-reported and limited by missing raw conversation. Budget/cost/model claims are not assessed."
+    },
+    {
+      "key": "task_card",
+      "value": "t14-m-ome-negative-screen-v1-control",
+      "assessment": "Source/plan/seed identities and pins match where corresponding bytes supplied; actual read/search/no-execution/process claims are self-reported and limited by missing raw conversation. Budget/cost/model claims are not assessed."
+    }
+  ],
+  "trajectories": [
+    {
+      "id": "P01",
+      "category": "correctly retained",
+      "title": "Versioned metadata admission",
+      "seed_locator": "U003/U004",
+      "source_evidence": "S003:68-69,150-156",
+      "reason": "Zarr v3, attributes.ome, explicit 0.5 product boundary and hierarchy consistency survive both finals; no supported version-admission fact is deleted."
+    },
+    {
+      "id": "P02",
+      "category": "correctly retained",
+      "title": "Declared arrays/axis identity and pyramid order",
+      "seed_locator": "U004/U005/U006",
+      "source_evidence": "S003:93-94,168,173-174,299-308",
+      "reason": "Group-relative declared paths, largest/highest-resolution first, arbitrary names, rank/order and dimension_names survive. No fixed numbered-folder or factor-of-two policy is introduced."
+    },
+    {
+      "id": "P03",
+      "category": "acquired but undeveloped",
+      "title": "Absent versus singleton dimensions",
+      "seed_locator": "U005",
+      "source_evidence": "S003:173-174,299-303",
+      "reason": "Optional-axis and rank premises are present, but neither seed nor any completed verifier version develops absent-vs-present-length-one control identity. This is not a draft-to-final loss."
+    },
+    {
+      "id": "P04",
+      "category": "derived incorrectly",
+      "title": "Overbroad untyped tolerance and position inference",
+      "seed_locator": "U005",
+      "source_evidence": "S003:169,173-174,299-303",
+      "reason": "The seed has both type:space composition requirements and missing-type/position inference. Both verifiers affirm this mixture without resolving the specific 2/3-space constraint. The error predates these verifier drafts."
+    },
+    {
+      "id": "P05",
+      "category": "correctly retained",
+      "title": "Per-level scale/translation and global-after-dataset rule",
+      "seed_locator": "U005/U006/U009",
+      "source_evidence": "S003:293,308-316",
+      "reason": "Correct source rule and sample scale arithmetic are present in seed and both finals. Semantic preservation of this rule does not validate the contradictory notation also in seed/R012."
+    },
+    {
+      "id": "P06",
+      "category": "derived incorrectly",
+      "title": "Within-list composition notation",
+      "seed_locator": "U005",
+      "source_evidence": "S003:293,311,315",
+      "reason": "The seed already writes global(scale∘translate) ∘ perLevel(scale∘translate). R012 carries it unchanged into V002 and every later report. R011 omits the formula but affirms U005 composition/arithmetic, leaving the unsupported seed notation unflagged. It is not a new R012 invention or a proved valid formula lost from R011."
+    },
+    {
+      "id": "P07",
+      "category": "acquired but undeveloped",
+      "title": "Concrete nonzero-translation expected result",
+      "seed_locator": "U005/U011",
+      "source_evidence": "S003:293,311,315",
+      "reason": "Translation order and valid UNEXECUTED V5 proposals are acquired. No seed or available completed report develops a nonzero-offset worked expectation capable of catching reversal/offset omission. Missing execution fixtures do not invalidate the proposals."
+    },
+    {
+      "id": "P08",
+      "category": "qualified narrowing",
+      "title": "Multi-axis composition treated as unresolved because no worked example",
+      "seed_locator": "U009 item5/U005",
+      "source_evidence": "S003:293,314-316,368-374",
+      "reason": "Absence of another worked example is true; the generic composition rule is still specified. R012 N-25 limit says multi-axis behavior beyond time unresolved; R011 unresolved-area list also includes multi-axis composition. This additional uncertainty weakens a supported general rule rather than documenting a measured implementation gap."
+    },
+    {
+      "id": "P09",
+      "category": "correctly retained",
+      "title": "Units and truthful unknown calibration",
+      "seed_locator": "U005",
+      "source_evidence": "S003:170-174,310-311",
+      "reason": "Both retain unknown/no-unit disclosure and no invented units. Unit absence alone proving relative rather than physical scale and channel-never-meaningful scaling remain overstatements inherited from seed, not new supported findings."
+    },
+    {
+      "id": "P10",
+      "category": "correctly retained",
+      "title": "Label discovery/count/integer categorical premises",
+      "seed_locator": "U005/U006",
+      "source_evidence": "S003:102-117,438-455,462-469",
+      "reason": "Intermediate folders, declared label paths, multiscales, equal level count, integer categorical values and label-value identity survive semantically. R011 summarizes rather than rendering all exact dtype tokens."
+    },
+    {
+      "id": "P11",
+      "category": "acquired but undeveloped",
+      "title": "64-bit exact categorical identity",
+      "seed_locator": "U005",
+      "source_evidence": "S003:438-439,462-469",
+      "reason": "The seed names uint64/int64 and labels by integer value. R012 retains all eight dtype spellings; R011 final report contains none of those spellings. Neither develops binary64 precision avoidance/exact supported range or sparse/scrambled ID checks. The source premise is acquired; its required identity implications remain undeveloped."
+    },
+    {
+      "id": "P12",
+      "category": "derived incorrectly",
+      "title": "Label source association restricted to provenance",
+      "seed_locator": "U005",
+      "source_evidence": "S003:432-433,472-474",
+      "reason": "The seed already says follow source.image only to annotate provenance, not relocate overlay. R012 retains that rule; R011 summarizes provenance rules under SUPPORTED without identifying the association defect. No correct source-resolution requirement is observed earlier and then lost."
+    },
+    {
+      "id": "P13",
+      "category": "qualified narrowing",
+      "title": "Label coordinate-system and lower-case should force",
+      "seed_locator": "U005/U009 item8",
+      "source_evidence": "S003:106-108,432-433,875-878",
+      "reason": "Seed quotes the same-coordinate-system relationship but doubts force because overview/usually. R012 repeats this and N-26; R011 compresses it to usually same system, moving the qualifier from shapes/transforms to the coordinate-system relation. Source lower-case should is normative recommended force, not force-free overview prose."
+    },
+    {
+      "id": "P14",
+      "category": "derived incorrectly",
+      "title": "image-label colors/version SHOULD upgraded to key-presence MUST",
+      "seed_locator": "U005",
+      "source_evidence": "S003:456-460",
+      "reason": "Seed explicitly makes version string MUST be present; both finals affirm it. This is inherited force error, not valid optional-field content correctly rejected."
+    },
+    {
+      "id": "P15",
+      "category": "correctly retained",
+      "title": "Recommended label palette and categorical resampling policy",
+      "seed_locator": "U005/U006",
+      "source_evidence": "S003:438-439,461-471",
+      "reason": "Reader SHOULD specified colors, value-keyed lookup, rgba/alpha, optional properties/source and categorical/noninterpolating policy survive. Nearest-neighbor is correctly presented as a product choice; mandatory legends/property presentation remains an unsupported elevation."
+    },
+    {
+      "id": "P16",
+      "category": "derived incorrectly",
+      "title": "No Zarr-feature disallowance despite acquired integer-only labels",
+      "seed_locator": "U002/U003/U005/U008/U009",
+      "source_evidence": "S003:70-72,438-439",
+      "reason": "The seed contains both the no-disallowance conclusion and integer-only label restriction. Both verifiers preserve both without resolving the inconsistency; R012 N-01 scopes searches but still falsely confirms the negative. This is acquired counterevidence left unused, not inaccessible evidence."
+    },
+    {
+      "id": "P17",
+      "category": "derived incorrectly",
+      "title": "No color/window semantics beyond presence",
+      "seed_locator": "U005/U009",
+      "source_evidence": "S003:427-430",
+      "reason": "Seed includes six-hex RGB and then denies semantics beyond presence. Both affirm the denial despite available meanings/format constraints; R012 N-15 also acknowledges RGB then confirms the broad absence. No gamma/registry rule is the narrower supported absence."
+    },
+    {
+      "id": "P18",
+      "category": "derived incorrectly",
+      "title": "Absent omero implies no embedded display defaults universally",
+      "seed_locator": "U005",
+      "source_evidence": "S003:426,456-466",
+      "reason": "Intensity defaults are a legitimate product question. The blanket assertion ignores independently supplied image-label colors. R012 adds N-16 scoped confirmation; neither repairs the overbreadth."
+    },
+    {
+      "id": "P19",
+      "category": "correctly retained",
+      "title": "Actual implementations unavailable versus incompatibility",
+      "seed_locator": "U002/U009/U010",
+      "source_evidence": "S003:813-820; complete admitted capture",
+      "reason": "The source Tools pointer and absence of measured reader behavior are preserved. Unopened implementation evidence is outside the admitted source set, not a supported fact removed by the verifier."
+    },
+    {
+      "id": "P20",
+      "category": "introduced unsupported assertion",
+      "title": "No tool names or versions in source",
+      "seed_locator": "not in seed; R012 N-03",
+      "source_evidence": "S003:175-275,375-382",
+      "reason": "R012 negative-checks counterevidence claims no tool names/versions although its own acquisition keyword version inventory records skimage 0.16.1 at L379 and seed U004 mentions skimage. bioformats2raw is also ubiquitous. This new negative is directly counterevidenced within acquired content."
+    },
+    {
+      "id": "P21",
+      "category": "correctly retained",
+      "title": "Read-only, local scope and item-scoped truthful unsupported behavior",
+      "seed_locator": "U003/U004/U007/U008",
+      "source_evidence": "brief.md:3-5; Viewer.md:7,9,11",
+      "reason": "Both keep source-unchanged/session-local, explain undisplayable data, and separate product boundary from format nonconformance. No unsupported input is proved malformed merely because a fileset was not supplied."
+    },
+    {
+      "id": "P22",
+      "category": "valid repair",
+      "title": "Derived opening/listing rules versus literal source MUST",
+      "seed_locator": "U004",
+      "source_evidence": "S003:204-206,262,437-440",
+      "reason": "R011 expressly classifies plate-first synthesis and labels exclusion as derivations. Both soften directory-scan nonconformance to inference. This is valid provenance/force correction and not false rejection of metadata authority; auxiliary scanning still is not explicitly prohibited."
+    },
+    {
+      "id": "P23",
+      "category": "valid repair",
+      "title": "Informative example terminology",
+      "seed_locator": "U005",
+      "source_evidence": "S003:877-883",
+      "reason": "R011 corrects normative example to informative in V001 report and V003 verification. R012 preserves normative example in V002..V008. The source numbers are valid in both; correcting force does not discard arithmetic."
+    },
+    {
+      "id": "P24",
+      "category": "valid repair",
+      "title": "Editorial exact wording",
+      "seed_locator": "U009 item12",
+      "source_evidence": "S003:93-94",
+      "reason": "R012 corrects by the by the to defined by / by the, already in V001 report and later negative record. R011 calls the seeded wrong wording verified. The source behavior is unchanged; this is an exact-text repair only."
+    },
+    {
+      "id": "P25",
+      "category": "correctly retained",
+      "title": "All nine UNEXECUTED proposal families",
+      "seed_locator": "U011",
+      "source_evidence": "Viewer.md:5-11; source rules above",
+      "reason": "Both preserve proposal coverage and UNEXECUTED qualification. R011 PV reindexing and R012 glyph/prose normalization mean neither claim should be read as exact seed-byte reproduction. No actual execution result is acquired."
+    },
+    {
+      "id": "P26",
+      "category": "acquired but undeveloped",
+      "title": "Useful source counterevidence versus nominal full verification",
+      "seed_locator": "U002-U010",
+      "source_evidence": "S003:1-896",
+      "reason": "No unsupported seed unit is rejected as a unit; all twelve are positively dispositioned. Several useful corrections occur, but integer restriction, explicit color/window meanings, association and precise optionality fail to constrain those approvals. This is missed counterevidence/false approval, not an observed wholesale false dismissal of a supported seed unit."
+    }
+  ],
+  "exact_token_survival": [
+    {
+      "token": "uint8",
+      "seed_occurrences": 2,
+      "final_report_occurrences": 0,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    },
+    {
+      "token": "int8",
+      "seed_occurrences": 3,
+      "final_report_occurrences": 0,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    },
+    {
+      "token": "uint16",
+      "seed_occurrences": 1,
+      "final_report_occurrences": 0,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    },
+    {
+      "token": "int16",
+      "seed_occurrences": 2,
+      "final_report_occurrences": 0,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    },
+    {
+      "token": "uint32",
+      "seed_occurrences": 1,
+      "final_report_occurrences": 0,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    },
+    {
+      "token": "int32",
+      "seed_occurrences": 2,
+      "final_report_occurrences": 0,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    },
+    {
+      "token": "uint64",
+      "seed_occurrences": 1,
+      "final_report_occurrences": 0,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    },
+    {
+      "token": "int64",
+      "seed_occurrences": 2,
+      "final_report_occurrences": 0,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    },
+    {
+      "token": "source.image",
+      "seed_occurrences": 2,
+      "final_report_occurrences": 0,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    },
+    {
+      "token": "../../",
+      "seed_occurrences": 3,
+      "final_report_occurrences": 0,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    },
+    {
+      "token": "scale∘translate",
+      "seed_occurrences": 2,
+      "final_report_occurrences": 0,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    },
+    {
+      "token": "label-value",
+      "seed_occurrences": 3,
+      "final_report_occurrences": 1,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    },
+    {
+      "token": "dimension_names",
+      "seed_occurrences": 12,
+      "final_report_occurrences": 8,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    },
+    {
+      "token": "0.1",
+      "seed_occurrences": 3,
+      "final_report_occurrences": 2,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    },
+    {
+      "token": "UNEXECUTED",
+      "seed_occurrences": 12,
+      "final_report_occurrences": 16,
+      "interpretation": "Literal rendering comparison, not a semantic score. Substring counts (e.g. int64 includes uint64) are disclosed. R011 summary references do not render all seed tokens; R012 preserves both valid and invalid tokens."
+    }
+  ],
+  "seed_supported_fact_loss_findings": {
+    "drafted_then_lost_supported_fact": "None observed across available completed Write/Edit versions. R012 V001 is a prefix that expands; later edits repair attribution/hash tokens. R011 supplies only one report version.",
+    "verified_then_lost_supported_fact": "None proven. Full native conversations/uncompleted drafts and independent verification process are unavailable.",
+    "seed_to_summary_narrowing": "R011 omits explicit dtype spellings and source.image/default relative-path tokens, and moves usually to same system; implicit locators do not restore literal standalone detail. Most other seed substance is summarized rather than deleted from an earlier verifier draft.",
+    "never_acquired_within_allowed_set": "Actual implementation behavior absent from admitted S003/available history; external implementation evidence never supplied. This cannot be treated as a lost acquired fact.",
+    "acquired_but_undeveloped": "Exact uint64/int64 identity implications, absent/singleton distinctions, concrete offset test expectations and correct explicit label source association."
+  },
+  "false_dismissal_assessment": "No supported seed unit is rejected wholesale: all twelve receive positive dispositions. Valid force/editorial repairs preserve underlying supported substance. Specific supported restrictions/semantics are narrowed or denied within those approvals; missed counterevidence/false approval is the principal observed failure.",
+  "new_history_resolution_addendum": [
+    "Seed U005 confirms composition notation and source-association defects existed before these verifier outputs. They are inherited errors, not new R012 inventions; R011 broad positive verification does not specifically correct them.",
+    "R011 informative-example clarification and R012 exact editorial correction are genuine valid repairs.",
+    "R012 N-03 no-tool-names/versions assertion is newly introduced in negative-checks, contradicted by both admitted S003 and its own acquired version inventory.",
+    "R012 earlier wrong hash and broader search-attribution assertions are visibly corrected before final; they are not current assertions.",
+    "These observations refine seed/preservation attribution only; frozen phase1 files, limits and quality-failure verdict remain unchanged."
+  ],
+  "preservation_verdict": "mixed preservation with inherited semantic errors and missed counterevidence; no supported substantive draft-to-final loss observed in supplied completed versions",
+  "verdict": "quality failure remains frozen; preservation only",
+  "same_quality_or_efficiency_claim": "unassessed and not established",
+  "limitations": [
+    "Current/frozen history documents inherently expose method/control/treatment and seed/job references; these unavoidable labels are not used to infer economics or model performance.",
+    "Read metadata counts and written acquisition notes do not establish source-supported acquisition without independent semantic checks.",
+    "All 3/9 completed versions and 12 seed bodies were covered through exact whole-file comparisons plus every unique difference; no sampled version claim.",
+    "The stage-one partial flag cannot be repaired or promoted by this stage."
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "task": "One useful bounded OME runtime canary",
+  "primary_source": {
+    "path": "inputs/sources/S003.txt",
+    "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "bytes": 36980,
+    "total_lines": 896,
+    "document": "OME-Zarr specification, Final Community Group Report, 8 September 2026 (version 0.5, https://ngff.openmicroscopy.org/0.5/), as identified from the capture itself"
+  },
+  "source_reads_actually_used": [
+    {
+      "tool": "mcp__pm_boundary__read_file",
+      "arguments": {
+        "path": "inputs/sources/S003.txt",
+        "line_start": null,
+        "line_count": null
+      },
+      "returned": "lines 1-896 (entire capture returned by a single read)",
+      "purpose": "identify ONE viewer-integration consideration and preserve its surrounding conditions"
+    }
+  ],
+  "other_source_reads": [],
+  "read_exposure_vs_supported_acquisition": {
+    "read_exposure": "The single read returned the full 896-line capture, so text well beyond the finding was exposed; that exposure was incidental context only and no content outside this capture was accessed.",
+    "supported_acquisition": "The finding is affirmatively supported by specific lines of this capture: lines 268-275 (conforming-reader requirements) with conditioning text at lines 175-181, 256, 262-267 and 60-64. Exposure of the whole file does not by itself certify those specific lines as the finding's basis; the line-level locators below do."
+  },
+  "finding_to_source_link": {
+    "finding": "Viewers of a bioformats2raw.layout multi-image collection should not default to opening only the first image; use the OME group's series attribute when present, else enumerate consecutively numbered groups from 0.",
+    "source_path": "inputs/sources/S003.txt",
+    "primary_locator": "line 272",
+    "supporting_locators": ["lines 271-275", "lines 268-270", "line 256", "lines 262-267", "lines 180-181", "lines 60-64"]
+  },
+  "external_sources_used": "none",
+  "uncertainty": "Document title, date and version strings are quoted from the capture; no external verification against the live specification was performed or permitted."
+}
