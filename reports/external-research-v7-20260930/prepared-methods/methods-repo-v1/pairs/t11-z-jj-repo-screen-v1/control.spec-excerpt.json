@@ -1,0 +1,51 @@
+{
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/control.spec.json",
+  "source_sha256": "19835e379adf73b633e97bec68792070b4870734c52ac5b324bd50ba361dc44f",
+  "projection": "exact retained fields; duplicated large input metadata summarized with counts and hash references",
+  "fields": {
+    "job_id": "t11-z-jj-repo-screen-v1-control",
+    "method": "T11",
+    "arm": "control",
+    "family": "Z",
+    "case_id": "jj-repo-dev-v1",
+    "kind": "component",
+    "scope": "Both question families in the complete admitted brief and bounded official public source universe. Independent evidence selection.",
+    "inputs_metadata": {
+      "count": 1131,
+      "exact_field_sha256": "186d7eca53fc623fe15ef3ebf345921e14cbe57a9af2f0e98ea58afb0fc77564",
+      "source_file_hash": "bound in enclosing source_sha256",
+      "full_manifest": "prepared-methods/evaluation/exports/jj-repo-dev-v1/MANIFEST.sha256.json",
+      "note": "duplicated per-arm input metadata omitted; full source file remains private and hash-bound"
+    },
+    "admitted_inputs_metadata": {
+      "count": 1131,
+      "exact_field_sha256": "ab6951e5f09739ec1ba90abf8ecf91961192dd50940a4e6d2c571ae543de9b46",
+      "source_file_hash": "bound in enclosing source_sha256",
+      "full_manifest": "prepared-methods/evaluation/exports/jj-repo-dev-v1/MANIFEST.sha256.json",
+      "note": "duplicated per-arm input metadata omitted; full source file remains private and hash-bound"
+    },
+    "caps": {
+      "seconds": 900,
+      "responses": 96
+    },
+    "output_files": [
+      "report.md",
+      "acquisition.json",
+      "navigation.json",
+      "evidence-chains.json",
+      "repository-map.json"
+    ],
+    "source_access": "Same frozen public JJ tree at 67c2ae0a9e3e445f034a456b299e3f37c4dc4b93, all 68 issue bodies created 2024-08-01..2024-10-02, all 624 reachable commit patches dated since 2024-07-01, plus read-only official jj-vcs/jj repository/docs/issues/PR/commit/API URLs for missing links. No other repositories or Puppet-Master answer reports. No third-party execution.",
+    "plan_visibility": "Plan-blind integration product brief only; no canon, historical union, keys or other outputs.",
+    "evaluation_obligations": "Independent evaluator checks every material current assertion and omission against frozen primary sources; version fit, unsupported claims, useful novel findings, counterevidence, mechanism/integration constraints, full assigned scope and unfinished leads. Grade current report before acquired/history artifacts. Include all cold setup and within-Goal map build costs separately.",
+    "zcode_tools": [
+      "Read",
+      "Write",
+      "Bash",
+      "WebFetch",
+      "WebSearch"
+    ],
+    "method_instruction": "Use documentation and issue-text summaries as your primary investigation approach. Choose relevant issues yourself, read their descriptions and summarize source-supported lessons with version/status qualifications. You may inspect implementation or tests when you judge necessary; there is no required chain workflow. Read inputs/brief.md and inputs/TASK.md and investigate both question families. Select relevant evidence yourself. Deliver a complete current report of approximately five to eight material findings; state exact source versions/locators, supporting mechanism, conditions, counterevidence, integration implications, limitations and unresolved areas. Propose validation as UNEXECUTED. Also write acquisition.json (actual URLs/files/versions/queries/reads and finding links), navigation.json (chronological actual navigation events, elapsed times when known, effort or missing measurements honestly unknown, unresolved/unvisited areas), evidence-chains.json (any chains actually followed, with issue status/capture date, fix commit, code and test paths/lines, version fit, missing links; empty chains are allowed if none followed), and repository-map.json (a built map when the assigned method calls for one; otherwise a JSON record saying not built). The same five output filenames and substantive obligations apply to both arms. Do not execute/build/install third-party source/tests. Use only this Goal's model; no semantic helpers. Do not invent measured timing or test execution.",
+    "feedback_contract": "No case-specific semantic hints or evaluator answers; ordinary self-correction in this same bounded Goal only."
+  }
+}

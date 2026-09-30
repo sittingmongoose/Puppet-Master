@@ -1,0 +1,37 @@
+{
+  "source_supported_acquisition": "unassessed; candidate records are self-reports",
+  "source_exposure": "unassessed",
+  "temporal_preservation": "unassessed; current review must freeze first",
+  "exact_rendering": "copied output bytes hash verified; no semantic equivalence inferred",
+  "native_completion_seconds_including_waits": 446.6,
+  "total_seconds_including_setup_waits_cleanup": 446.868,
+  "cleanup_seconds_only": null,
+  "reported_usage": {
+    "token_usage_events": 15,
+    "prompt_tokens": 792990,
+    "last_cumulative": {
+      "outputTokens": 26635,
+      "promptTokens": 792990,
+      "totalTokens": 819625
+    },
+    "turns_started": 1,
+    "turns_completed": [
+      {
+        "turnId": "01a0f319-f534-7e3e-8097-3cae1112918b",
+        "terminal": "completed",
+        "reason": null,
+        "durationMs": 444338,
+        "usage": null
+      }
+    ],
+    "inputTokens": 792990,
+    "outputTokens": 26635,
+    "reasoningTokens": 13230,
+    "cacheReadTokens": 710318,
+    "cacheWriteTokens": 0,
+    "cachedTokens": 710318
+  },
+  "generated_completeness": "unknown; native children/cancelled work may be omitted",
+  "quality": "unassessed; independent R011/R012 pending",
+  "runtime_safety": "inherited v1 qualification withdrawn; auth-readable boundary proved without content reads"
+}

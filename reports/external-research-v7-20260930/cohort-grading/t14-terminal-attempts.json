@@ -1,0 +1,90 @@
+[
+  {
+    "job_id": "t14-m-ome-negative-screen-v1-control",
+    "arm": "control",
+    "receipt": "candidate-outputs/t14-m-ome-negative-screen-v1-control/native-receipt-excerpt.json",
+    "structural_complete": true,
+    "semantic_quality": "unassessed",
+    "metrics": {
+      "source_supported_acquisition": "unassessed; candidate records are self-reports",
+      "source_exposure": "unassessed",
+      "temporal_preservation": "unassessed; current review must freeze first",
+      "exact_rendering": "copied output bytes hash verified; no semantic equivalence inferred",
+      "native_completion_seconds_including_waits": 446.6,
+      "total_seconds_including_setup_waits_cleanup": 446.868,
+      "cleanup_seconds_only": null,
+      "reported_usage": {
+        "token_usage_events": 15,
+        "prompt_tokens": 792990,
+        "last_cumulative": {
+          "outputTokens": 26635,
+          "promptTokens": 792990,
+          "totalTokens": 819625
+        },
+        "turns_started": 1,
+        "turns_completed": [
+          {
+            "turnId": "01a0f319-f534-7e3e-8097-3cae1112918b",
+            "terminal": "completed",
+            "reason": null,
+            "durationMs": 444338,
+            "usage": null
+          }
+        ],
+        "inputTokens": 792990,
+        "outputTokens": 26635,
+        "reasoningTokens": 13230,
+        "cacheReadTokens": 710318,
+        "cacheWriteTokens": 0,
+        "cachedTokens": 710318
+      },
+      "generated_completeness": "unknown; native children/cancelled work may be omitted",
+      "quality": "unassessed; independent R011/R012 pending",
+      "runtime_safety": "inherited v1 qualification withdrawn; auth-readable boundary proved without content reads"
+    }
+  },
+  {
+    "job_id": "t14-m-ome-negative-screen-v1-treatment",
+    "arm": "treatment",
+    "receipt": "candidate-outputs/t14-m-ome-negative-screen-v1-treatment/native-receipt-excerpt.json",
+    "structural_complete": true,
+    "semantic_quality": "unassessed",
+    "metrics": {
+      "source_supported_acquisition": "unassessed; candidate records are self-reports",
+      "source_exposure": "unassessed",
+      "temporal_preservation": "unassessed; current review must freeze first",
+      "exact_rendering": "copied output bytes hash verified; no semantic equivalence inferred",
+      "native_completion_seconds_including_waits": 810.7,
+      "total_seconds_including_setup_waits_cleanup": 811.242,
+      "cleanup_seconds_only": null,
+      "reported_usage": {
+        "token_usage_events": 44,
+        "prompt_tokens": 4106940,
+        "last_cumulative": {
+          "outputTokens": 59561,
+          "promptTokens": 4106940,
+          "totalTokens": 4166501
+        },
+        "turns_started": 1,
+        "turns_completed": [
+          {
+            "turnId": "01a0f31b-666a-713b-87f6-4b6f203edf3d",
+            "terminal": "completed",
+            "reason": null,
+            "durationMs": 808683,
+            "usage": null
+          }
+        ],
+        "inputTokens": 4106940,
+        "outputTokens": 59561,
+        "reasoningTokens": 11496,
+        "cacheReadTokens": 3939835,
+        "cacheWriteTokens": 0,
+        "cachedTokens": 3939835
+      },
+      "generated_completeness": "unknown; native children/cancelled work may be omitted",
+      "quality": "unassessed; independent R011/R012 pending",
+      "runtime_safety": "inherited v1 qualification withdrawn; auth-readable boundary proved without content reads"
+    }
+  }
+]

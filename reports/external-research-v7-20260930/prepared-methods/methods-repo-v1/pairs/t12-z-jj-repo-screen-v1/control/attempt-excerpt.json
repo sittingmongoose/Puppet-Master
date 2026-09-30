@@ -1,0 +1,83 @@
+{
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control/attempt.json",
+  "source_sha256": "4ebbd91bca0d2e038428423d17bb59971c4722cea06d93481b9a9f4aa205fcf3",
+  "projection": "exact retained fields; duplicated large input metadata summarized with counts and hash references",
+  "fields": {
+    "schema": "er7.attempt.v1",
+    "status": "prepared-not-started",
+    "spec": {
+      "job_id": "t12-z-jj-repo-screen-v1-control",
+      "method": "T12",
+      "arm": "control",
+      "family": "Z",
+      "case_id": "jj-repo-dev-v1",
+      "kind": "component",
+      "scope": "Both question families in the complete admitted brief and bounded official public source universe. Independent evidence selection.",
+      "inputs_metadata": {
+        "count": 1132,
+        "exact_field_sha256": "7b1fda60f67d6ed6189510549208fa8640e9e3d7f20be10eb0c547ba7bd0b5ac",
+        "source_file_hash": "bound in enclosing source_sha256",
+        "full_manifest": "prepared-methods/evaluation/exports/jj-repo-dev-v1/MANIFEST.sha256.json",
+        "note": "duplicated per-arm input metadata omitted; full source file remains private and hash-bound"
+      },
+      "admitted_inputs_metadata": {
+        "count": 1132,
+        "exact_field_sha256": "99ee9ee48d178ac4c31caf023a9f08958776998307dd5827c5f02a6d450e8b70",
+        "source_file_hash": "bound in enclosing source_sha256",
+        "full_manifest": "prepared-methods/evaluation/exports/jj-repo-dev-v1/MANIFEST.sha256.json",
+        "note": "duplicated per-arm input metadata omitted; full source file remains private and hash-bound"
+      },
+      "caps": {
+        "seconds": 900,
+        "responses": 96
+      },
+      "output_files": [
+        "report.md",
+        "acquisition.json",
+        "navigation.json",
+        "evidence-chains.json",
+        "repository-map.json"
+      ],
+      "source_access": "Same frozen public JJ tree at 67c2ae0a9e3e445f034a456b299e3f37c4dc4b93, all 68 issue bodies created 2024-08-01..2024-10-02, all 624 reachable commit patches dated since 2024-07-01, plus read-only official jj-vcs/jj repository/docs/issues/PR/commit/API URLs for missing links. No other repositories or Puppet-Master answer reports. No third-party execution.",
+      "plan_visibility": "Plan-blind integration product brief only; no canon, historical union, keys or other outputs.",
+      "evaluation_obligations": "Independent evaluator checks every material current assertion and omission against frozen primary sources; version fit, unsupported claims, useful novel findings, counterevidence, mechanism/integration constraints, full assigned scope and unfinished leads. Grade current report before acquired/history artifacts. Include all cold setup and within-Goal map build costs separately.",
+      "zcode_tools": [
+        "Read",
+        "Write",
+        "Bash",
+        "WebFetch",
+        "WebSearch"
+      ],
+      "method_instruction": "Start with the official documentation in inputs/repository/docs and navigate from its explanations to implementation paths as needed, using ordinary text searches and ad-hoc source reads. Use your usual documentation-led navigation. Do not build or use a generated repository map in this arm. Read inputs/brief.md and inputs/TASK.md and investigate both question families. Select relevant evidence yourself. Deliver a complete current report of approximately five to eight material findings; state exact source versions/locators, supporting mechanism, conditions, counterevidence, integration implications, limitations and unresolved areas. Propose validation as UNEXECUTED. Also write acquisition.json (actual URLs/files/versions/queries/reads and finding links), navigation.json (chronological actual navigation events, elapsed times when known, effort or missing measurements honestly unknown, unresolved/unvisited areas), evidence-chains.json (any chains actually followed, with issue status/capture date, fix commit, code and test paths/lines, version fit, missing links; empty chains are allowed if none followed), and repository-map.json (a built map when the assigned method calls for one; otherwise a JSON record saying not built). The same five output filenames and substantive obligations apply to both arms. Do not execute/build/install third-party source/tests. Use only this Goal's model; no semantic helpers. Do not invent measured timing or test execution.",
+      "feedback_contract": "No case-specific semantic hints or evaluator answers; ordinary self-correction in this same bounded Goal only."
+    },
+    "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control/workspace",
+    "goal_file": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control/goal.txt",
+    "input_manifest_metadata": {
+      "count": 1132,
+      "exact_field_sha256": "77d1e7e1dd55b2ab87e02e14cfc2395f04a5511ad5995af3df4095b593715383",
+      "source_file_hash": "bound in enclosing source_sha256",
+      "full_manifest": "prepared-methods/evaluation/exports/jj-repo-dev-v1/MANIFEST.sha256.json",
+      "note": "duplicated per-arm input metadata omitted; full source file remains private and hash-bound"
+    },
+    "task_sha256": "4d9885b81ed79f76c476718799b64e0d22736c743282f1c71c8add0c4e48d58f",
+    "goal_sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "harness_files": {
+      "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+      "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+      "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+    },
+    "native_files": {
+      "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+      "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+      "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+      "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+    },
+    "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+    "operator_files": {
+      "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+      "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+    },
+    "filesystem_isolation": "separate copies; read-only input modes; launch requires operator namespace isolation"
+  }
+}

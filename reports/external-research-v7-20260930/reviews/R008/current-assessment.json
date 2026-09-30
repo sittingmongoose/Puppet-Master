@@ -1,0 +1,1948 @@
+{
+  "schema": "er7.current_assessment.v1",
+  "case_id": "C028",
+  "report_id": "R008",
+  "stage": "current_only",
+  "report_sha256": "d2b4132166e420b8fb1ea7861d0d0cd41a1dac55a1947cb79e21211ddaf70df1",
+  "saved_utc": "2026-09-30T16:37:24.424768+00:00",
+  "reviewer_runtime": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_reasoning_effort": "xhigh",
+    "effective_model": "unknown; runtime introspection unavailable",
+    "context": "fresh subagent fork:none; no candidate history/private mapping/economics read",
+    "agent": "grade_discovery_pair",
+    "requested_review_budget_minutes": 20,
+    "timing_limit": "Exact agent start time unavailable; review ended after16:36UTC. Staging prepared16:13:46UTC, so requested20minute limit may have been exceeded; do not assume budget compliance."
+  },
+  "input_pins": {
+    "brief_sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+    "source_universe_sha256": "505fae05b9f42781687e3236eea226a19cda1b7c7434415441e2caebb2ba6399",
+    "case_manifest_sha256": "460b9c0a7ed0f4d25c86170d0f633e367db0368ed7a00e9f0929cd904c0351db",
+    "prospective_key_sha256": "bb1dd95eee458ae9667b23554f5453bb3988d46fafe825ebb960a77cf1928274",
+    "manifest_path": "inputs/MANIFEST.sha256.json",
+    "manifest_entries_verified": 35,
+    "hash_failures": []
+  },
+  "eligibility": {
+    "artifact_identity": "verified against stage.current_source_sha256",
+    "complete_final_report_available": true,
+    "source_availability": "all35 manifest entries present and hash-matched",
+    "freeze_time": "stage prepared2026-09-30T16:13:46Z; staged source pins unchanged",
+    "semantic_review_interpretable": true,
+    "structural_failure": false,
+    "carrier_limitation": "Some competitor/community/implementation attributions lack exact URLs."
+  },
+  "complete_coverage": true,
+  "coverage_definition": "Every material current assertion is inventoried and assigned a decision, including claims whose exact source or historical provenance is unresolved. Every six prospective eligible facets is assessed. This means assessment completeness, not report correctness or source acquisition completeness.",
+  "claims": [
+    {
+      "id": "R008-C001",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 3
+      },
+      "statement": "Case/card/date/input are plan-blind; sources independently selected; generic research method",
+      "outcome": "qualified",
+      "evidence": [
+        "brief"
+      ],
+      "reason": "Identity/input pins match; header unavoidably reveals control cue. Independence/acquisition sequence cannot be authenticated from report alone.",
+      "material_failure_id": null,
+      "kind": "self_report"
+    },
+    {
+      "id": "R008-C002",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 7
+      },
+      "statement": "Full brief covered and mutations outside scope",
+      "outcome": "qualified",
+      "evidence": [
+        "brief"
+      ],
+      "reason": "Scope statement matches brief; actual completeness assessed below and does not follow from topic headings.",
+      "material_failure_id": null,
+      "kind": "scope_claim"
+    },
+    {
+      "id": "R008-C003",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 11
+      },
+      "statement": "Findings have independent IDs and exact URL/version locators; tests are UNEXECUTED; failed search not absence",
+      "outcome": "qualified",
+      "evidence": [],
+      "reason": "IDs and clear unexecuted labels verified; F13/F15-F17 have vague source attributions without exact URLs, so locator promise is incomplete.",
+      "material_failure_id": "R008-standalone-citations",
+      "kind": "carrier"
+    },
+    {
+      "id": "R008-C004",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 21
+      },
+      "statement": "Iterations1=source head at creation and new pushes create iterations",
+      "outcome": "qualified",
+      "evidence": [
+        "changes",
+        "A001",
+        "statusconcept",
+        "pr"
+      ],
+      "reason": "Normal iteration-enabled behavior supported; >100000 modified-file/no-iterations exception and supportsIterations omitted.",
+      "material_failure_id": "C028-iteration-support-omitted",
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C005",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 21
+      },
+      "statement": "List returns iterations and includeCommits attaches commits",
+      "outcome": "supported",
+      "evidence": [
+        "A001"
+      ],
+      "reason": "Supported API7.1 operation; hasMoreCommits condition not carried to output.",
+      "material_failure_id": "R008-commit-completeness-omitted",
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C006",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 24
+      },
+      "statement": "Iteration ID is PR-scoped integer selector, not SHA",
+      "outcome": "supported",
+      "evidence": [
+        "A001",
+        "changes"
+      ],
+      "reason": "Correct identity distinction.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C007",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 25
+      },
+      "statement": "Force-push numbering not verified; U03 proposed",
+      "outcome": "qualified",
+      "evidence": [
+        "review",
+        "A001"
+      ],
+      "reason": "Honest limit, not false fact; primary force-push update preservation is an undeveloped available lead.",
+      "material_failure_id": null,
+      "kind": "unresolved_scope"
+    },
+    {
+      "id": "R008-C008",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 29
+      },
+      "statement": "Changes returns path/change-type metadata, no unified diff hunks",
+      "outcome": "supported",
+      "evidence": [
+        "changes"
+      ],
+      "reason": "Response/schema support metadata-only comparison; does not assert corpus-wide lack of every diff API.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C009",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 29
+      },
+      "statement": "compareTo0=common commit; explicit iteration pair; top/skip pagination",
+      "outcome": "supported",
+      "evidence": [
+        "changes"
+      ],
+      "reason": "Exact documented options verified.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C010",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 32
+      },
+      "statement": "Compare can use file-list or build diff content; GitHub single-call assumption risky",
+      "outcome": "qualified",
+      "evidence": [
+        "changes",
+        "items",
+        "brief"
+      ],
+      "reason": "Useful options; no exhaustive assertion that all provider alternatives were excluded.",
+      "material_failure_id": null,
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C011",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 33
+      },
+      "statement": "Large PR behavior not verified",
+      "outcome": "qualified",
+      "evidence": [
+        "changes",
+        "statusconcept"
+      ],
+      "reason": "Honest limitation; page limits and iteration-disabled condition remain relevant omissions.",
+      "material_failure_id": null,
+      "kind": "unresolved_scope"
+    },
+    {
+      "id": "R008-C012",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 37
+      },
+      "statement": "Items gets versioned content with includeContent and descriptors",
+      "outcome": "supported",
+      "evidence": [
+        "items"
+      ],
+      "reason": "Documented operation and options verified.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C013",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 37
+      },
+      "statement": "Every file diff needs at least two content reads; PR-wide diff always2N reads",
+      "outcome": "contradicted",
+      "evidence": [
+        "items",
+        "changes",
+        "review"
+      ],
+      "reason": "True for uncached two-existing-blob naive GET strategy, not lower bound: additions/deletions have one content side, identical/cached content need fewer reads.",
+      "material_failure_id": "R008-universal-2N",
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C014",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 40
+      },
+      "statement": "Client-side diff/cache offline, file-list default/on-demand, investigate server patch UNEXECUTED",
+      "outcome": "supported",
+      "evidence": [
+        "items",
+        "changes",
+        "brief"
+      ],
+      "reason": "Valid optional implementation decisions; no executed patch path is claimed.",
+      "material_failure_id": null,
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C015",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 40
+      },
+      "statement": "Cache(repository,path,commit) is safe immutable blob identity",
+      "outcome": "qualified",
+      "evidence": [
+        "items",
+        "range",
+        "brief"
+      ],
+      "reason": "Commit-based content identity supported; organization/server context, fork repository and access-loss handling qualify universal safety.",
+      "material_failure_id": "R008-cache-identity-narrowed",
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C016",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 41
+      },
+      "statement": "LFS/binary/size caps remain unverified",
+      "outcome": "qualified",
+      "evidence": [
+        "items"
+      ],
+      "reason": "Honest unexecuted scope; resolveLfs is documented but not semantically developed.",
+      "material_failure_id": null,
+      "kind": "unresolved_scope"
+    },
+    {
+      "id": "R008-C017",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 45
+      },
+      "statement": "CodeReview artifact template, top/skip, includeNotApplicable exclusion and7.1-preview.1",
+      "outcome": "supported",
+      "evidence": [
+        "A003"
+      ],
+      "reason": "Exact artifact/version/parameters preserved.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C018",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 48
+      },
+      "statement": "false means applicable view; true must be a second call for non-applicable view",
+      "outcome": "qualified",
+      "evidence": [
+        "A003"
+      ],
+      "reason": "A second call is optional: true includes both families and client can partition. It is not required to enumerate non-applicable policies.",
+      "material_failure_id": "R008-second-evaluations-call",
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C019",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 48
+      },
+      "statement": "Preview dependency is compatibility risk",
+      "outcome": "supported",
+      "evidence": [
+        "versionrules",
+        "version"
+      ],
+      "reason": "Correct per-endpoint qualification.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C020",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 49
+      },
+      "statement": "Project-name artifact acceptance and exact eval enum unverified",
+      "outcome": "qualified",
+      "evidence": [
+        "A003",
+        "cli",
+        "projects"
+      ],
+      "reason": "Honest uncertainty; template uses id and primary CLI/uuid can resolve it. Enum is already documented and remains current omission.",
+      "material_failure_id": null,
+      "kind": "unresolved_scope"
+    },
+    {
+      "id": "R008-C021",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 53
+      },
+      "statement": "External statuses separate from policy evaluations; optional iteration status; policy/reset can gate completion",
+      "outcome": "supported",
+      "evidence": [
+        "A002",
+        "A003",
+        "statusconcept"
+      ],
+      "reason": "Supported distinct resources and configured status policy.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C022",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 53
+      },
+      "statement": "GET pullRequests/{id}/statuses lists PR statuses",
+      "outcome": "supported",
+      "evidence": [
+        "A002",
+        "statusconcept"
+      ],
+      "reason": "Pinned X021 also gives exact URI; dedicated iteration URI not carried in current report.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C023",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 56
+      },
+      "statement": "Two check families; no-status cannot mean passed; resets make old iteration status irrelevant to latest code",
+      "outcome": "supported",
+      "evidence": [
+        "statusconcept",
+        "A002",
+        "A003",
+        "brief"
+      ],
+      "reason": "Correct central distinction; exact state semantics still missing.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C024",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 57
+      },
+      "statement": "Status enums and per-iteration/per-PR addressing not captured",
+      "outcome": "qualified",
+      "evidence": [
+        "A002"
+      ],
+      "reason": "Explicit current incompleteness; source availability is not completed acquisition.",
+      "material_failure_id": null,
+      "kind": "unresolved_scope"
+    },
+    {
+      "id": "R008-C025",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 61
+      },
+      "statement": "Policy types include reviewers/build/status/comments/work items/merge strategies",
+      "outcome": "supported",
+      "evidence": [
+        "policy"
+      ],
+      "reason": "Listed policy families supported.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C026",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 61
+      },
+      "statement": "Required build validation gates completion; Optional reports without gating",
+      "outcome": "supported",
+      "evidence": [
+        "policy",
+        "A003"
+      ],
+      "reason": "Correct conditional enforcement semantics; bypass permissions mean no universal unoverrideable Complete-button guarantee.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C027",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 61
+      },
+      "statement": "Minimum-reviewer policies commonly reset votes on push",
+      "outcome": "qualified",
+      "evidence": [
+        "policy"
+      ],
+      "reason": "Reset is configurable, not universal/default or frequency established. Required final-iteration approvals and reset variants differ.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C028",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 64
+      },
+      "statement": "Explain blocking mode/configuration; failing Optional differs from Required",
+      "outcome": "supported",
+      "evidence": [
+        "A003",
+        "policy",
+        "brief"
+      ],
+      "reason": "Good brief-fit interpretation; exact visual alarm/grouping optional.",
+      "material_failure_id": null,
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C029",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 65
+      },
+      "statement": "Full configuration schema was not read; lives in separate Configurations API",
+      "outcome": "qualified",
+      "evidence": [
+        "A003",
+        "config"
+      ],
+      "reason": "Historical read claim gated; evaluations already embeds full PolicyConfiguration including isEnabled/isBlocking/settings/type. Extra configuration call need not be required.",
+      "material_failure_id": "R008-embedded-config-unused",
+      "kind": "unresolved_scope"
+    },
+    {
+      "id": "R008-C030",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 69
+      },
+      "statement": "Reviewers GET returns IdentityRefWithVote, vote and required flags",
+      "outcome": "supported",
+      "evidence": [
+        "reviewers"
+      ],
+      "reason": "Exact model and read surface supported.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C031",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 69
+      },
+      "statement": "Group reviewers resolve via group membership",
+      "outcome": "qualified",
+      "evidence": [
+        "reviewers"
+      ],
+      "reason": "Member roll-up/votedFor documented; separate group-membership queries not established as necessary.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C032",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 72
+      },
+      "statement": "Display required unvoted reviewer; no vote mutation UI",
+      "outcome": "supported",
+      "evidence": [
+        "reviewers",
+        "brief"
+      ],
+      "reason": "Supported display-only capability and brief scope.",
+      "material_failure_id": null,
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C033",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 73
+      },
+      "statement": "Vote mapping unverified; identity ID/descriptor safer than email",
+      "outcome": "qualified",
+      "evidence": [
+        "reviewers"
+      ],
+      "reason": "Mapping and descriptor uniqueness are primary documented; matches-by-ID is sensible; cross-resource identifier caveats still need care.",
+      "material_failure_id": null,
+      "kind": "unresolved_scope"
+    },
+    {
+      "id": "R008-C034",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 77
+      },
+      "statement": "Entra OAuth/MI/SP preferred; PAT fallback with least privilege/short lifetime",
+      "outcome": "supported",
+      "evidence": [
+        "auth",
+        "pat"
+      ],
+      "reason": "Current recommendations verified; desktop delegated Entra is scenario-specific, not managed identity on arbitrary desktop.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C035",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 79
+      },
+      "statement": "All existing global PATs stop working2026-12-01",
+      "outcome": "supported",
+      "evidence": [
+        "pat"
+      ],
+      "reason": "Current primary page explicitly confirms exact date.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C036",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 80
+      },
+      "statement": "Azure DevOps OAuth deprecated/no new registrations; new apps use Entra",
+      "outcome": "supported",
+      "evidence": [
+        "oauth"
+      ],
+      "reason": "Important note matches.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C037",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 81
+      },
+      "statement": "OAuth Services only; Server client libraries/Windows auth/PAT",
+      "outcome": "supported",
+      "evidence": [
+        "auth",
+        "oauth"
+      ],
+      "reason": "Correct deployment split.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C038",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 82
+      },
+      "statement": "Least privilege vso.code read/vso.code_status read-write; scopes inherit",
+      "outcome": "supported",
+      "evidence": [
+        "A002",
+        "oauth"
+      ],
+      "reason": "Documented scope examples supported.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C039",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 85
+      },
+      "statement": "Existing account choice must be checked; PAT-only is already obsolete for new Services apps",
+      "outcome": "qualified",
+      "evidence": [
+        "auth",
+        "pat",
+        "brief"
+      ],
+      "reason": "Entra preferred and ADO-OAuth unavailable to new registrations; org-scoped PATs remain supported fallback, so PAT-only is not automatically API-inapplicable.",
+      "material_failure_id": "R008-pat-obsolete-strength",
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C040",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 85
+      },
+      "statement": "Read-only scopes make no-provider-mutation promise credential-enforceable",
+      "outcome": "qualified",
+      "evidence": [
+        "A002",
+        "oauth",
+        "brief"
+      ],
+      "reason": "Read scope can constrain calls; vso.code_status grants writes and auth choice alone does not prove no mutation. Existing account permissions may remain broader.",
+      "material_failure_id": "R008-readonly-credential-strength",
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C041",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 86
+      },
+      "statement": "Minimum call-by-call scopes not verified",
+      "outcome": "qualified",
+      "evidence": [
+        "A001",
+        "A002",
+        "A003",
+        "items",
+        "reviewers"
+      ],
+      "reason": "Honest follow-up; central Git/policy reads list vso.code in primary docs.",
+      "material_failure_id": null,
+      "kind": "unresolved_scope"
+    },
+    {
+      "id": "R008-C042",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 90
+      },
+      "statement": "Explicit api-version every request; resource-specific preview; Server compatibility matrix",
+      "outcome": "supported",
+      "evidence": [
+        "rest",
+        "version",
+        "A003"
+      ],
+      "reason": "Correct version/scope fit without global stable version claim.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C043",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 93
+      },
+      "statement": "Pin per endpoint and explain version-vs-permission unavailable reasons",
+      "outcome": "supported",
+      "evidence": [
+        "version",
+        "rest",
+        "brief"
+      ],
+      "reason": "Reasonable recommendation; definitive diagnosis requires evidence.",
+      "material_failure_id": null,
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C044",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 94
+      },
+      "statement": "Lowest Server supporting each endpoint not established",
+      "outcome": "qualified",
+      "evidence": [
+        "version"
+      ],
+      "reason": "Honest limitation; general matrix is not an endpoint-specific floor.",
+      "material_failure_id": null,
+      "kind": "unresolved_scope"
+    },
+    {
+      "id": "R008-C045",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 98
+      },
+      "statement": "Consumption >200x typical sliding5min, delay ms-30s, stops after drop, warnings/email",
+      "outcome": "supported",
+      "evidence": [
+        "rate"
+      ],
+      "reason": "Core numerical conditions verified; shared-resource pressure also triggers delay.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C046",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 98
+      },
+      "statement": "Blocked calls429/TF400733; top/skip vs continuation headers per endpoint",
+      "outcome": "supported",
+      "evidence": [
+        "rate",
+        "changes",
+        "A003",
+        "config"
+      ],
+      "reason": "Supported signals and multiple pager dialects.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C047",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 101
+      },
+      "statement": "2N fanout client must back off429/Retry-After, manual/narrow refresh preferred, page every list",
+      "outcome": "qualified",
+      "evidence": [
+        "rate",
+        "changes",
+        "A003",
+        "brief"
+      ],
+      "reason": "Responsible proposals;2N premise overgeneralized, and some lists are unpaged; Retry-After on200 should delay next request, not retry completed request.",
+      "material_failure_id": "C028-rate-success-delay-omitted",
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C048",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 101
+      },
+      "statement": "Provider throttling can make data partial",
+      "outcome": "qualified",
+      "evidence": [
+        "rate",
+        "brief"
+      ],
+      "reason": "Failed/incomplete retrieval can be partial; delayed successful response is not inherently incomplete.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C049",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 102
+      },
+      "statement": "Exact nextSkip/nextTop not primary-verified",
+      "outcome": "qualified",
+      "evidence": [
+        "changes"
+      ],
+      "reason": "Honest unresolved contract; available primary fields remain undeveloped.",
+      "material_failure_id": null,
+      "kind": "unresolved_scope"
+    },
+    {
+      "id": "R008-C050",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 106
+      },
+      "statement": "Single PR GET includeCommits/includeWorkItemRefs;skip/top/maxCommentLength unused",
+      "outcome": "supported",
+      "evidence": [
+        "pr"
+      ],
+      "reason": "Exact useful/inert parameter distinctions verified.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C051",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 106
+      },
+      "statement": "List responses truncate descriptions",
+      "outcome": "supported",
+      "evidence": [
+        "prlist"
+      ],
+      "reason": "Primary List introduction documents400-symbol truncation; useful finding beyond reference.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C052",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 109
+      },
+      "statement": "Single PR GET simpler than stitching lists; omit inert arguments",
+      "outcome": "supported",
+      "evidence": [
+        "pr",
+        "prlist"
+      ],
+      "reason": "Valid optional implementation simplification; not tested performance result.",
+      "material_failure_id": null,
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C053",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 110
+      },
+      "statement": "Truncation length secondary-only/unverified",
+      "outcome": "qualified",
+      "evidence": [
+        "prlist"
+      ],
+      "reason": "Conservative label, but primary source directly supplies length. Not a provider falsehood.",
+      "material_failure_id": null,
+      "kind": "unresolved_scope"
+    },
+    {
+      "id": "R008-C054",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 116
+      },
+      "statement": "GitKraken Azure integrations: avatars, clone repo list, SSH setup, create/view PR/add reviewers",
+      "outcome": "supported",
+      "evidence": [
+        "gk"
+      ],
+      "reason": "Vendor primary docs verified; no execution or feature-depth benchmark.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C055",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 116
+      },
+      "statement": "ADO PR templates supported; missing form fix via remote URL/domain",
+      "outcome": "supported",
+      "evidence": [
+        "gkpr",
+        "gk"
+      ],
+      "reason": "Vendor primary docs verify exact capabilities/troubleshooting.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C056",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 116
+      },
+      "statement": "GitLens fixed cross-org/server payload links with configured org",
+      "outcome": "supported",
+      "evidence": [
+        "gitlens"
+      ],
+      "reason": "Official changelog confirms but currently in Unreleased; not proof of shipped release.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C057",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 116
+      },
+      "statement": "Fork-head correlation fix when Azure clone fields empty",
+      "outcome": "unresolved",
+      "evidence": [
+        "gitlens"
+      ],
+      "reason": "Exact issue/release absent in carrier; inspected changelog corroborates related link fixes only, not this precise failure.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C058",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 119
+      },
+      "statement": "Selected organization/project/repo differentiates and prevents link confusion by construction",
+      "outcome": "unsupported",
+      "evidence": [
+        "brief",
+        "gk",
+        "gitlens"
+      ],
+      "reason": "Context selection alone does not stop code trusting an embedded cross-org payload link; vendor client also configures organization.",
+      "material_failure_id": "R008-context-selection-immunity",
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C059",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 119
+      },
+      "statement": "Render links from selected context, validate organization/server segments",
+      "outcome": "qualified",
+      "evidence": [
+        "gitlens",
+        "brief"
+      ],
+      "reason": "Supported defensive lesson; must also respect legitimate fork/source repository identity and URI encoding.",
+      "material_failure_id": null,
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C060",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 120
+      },
+      "statement": "Snippet/vendor-doc feature parity is not executed behavior",
+      "outcome": "supported",
+      "evidence": [
+        "gk",
+        "gkpr"
+      ],
+      "reason": "Correct transfer limit; source owner documentation is primary for documented feature claim.",
+      "material_failure_id": null,
+      "kind": "source_fit"
+    },
+    {
+      "id": "R008-C061",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 124
+      },
+      "statement": "SmartGit integrates four hosts for PR/comments; license usable across machines/OS",
+      "outcome": "qualified",
+      "evidence": [
+        "smartgit",
+        "smartgitolder"
+      ],
+      "reason": "Vendor indexed text supports; live redirect lacks full historical prose, report pins no version.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C062",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 124
+      },
+      "statement": "Dated UI/weakHiDPI-darkmode/no PR templates asserted by competitors",
+      "outcome": "unresolved",
+      "evidence": [
+        "smartgit",
+        "smartgitolder"
+      ],
+      "reason": "Exact adversarial pages not cited; no hands-on test. Vendor documents light/dark themes, but no measured weakness or template absence established.",
+      "material_failure_id": "R008-competitor-unsupported-comparison",
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C063",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 124
+      },
+      "statement": "Distributed Reviews separate product and no provider PRs",
+      "outcome": "qualified",
+      "evidence": [
+        "distributed"
+      ],
+      "reason": "Add-on has its own Git-stored metadata and license option; vendor says part of download. Absolute incompatibility is not proven by silence.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C064",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 127
+      },
+      "statement": "Depth over breadth and modern display exceeds SmartGit opportunity",
+      "outcome": "qualified",
+      "evidence": [
+        "brief",
+        "smartgit"
+      ],
+      "reason": "Product positioning choice; superiority/depth baseline not measured.",
+      "material_failure_id": "R008-competitor-superiority",
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C065",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 128
+      },
+      "statement": "Secondary/adversarial evidence; no hands-on evaluation executed",
+      "outcome": "qualified",
+      "evidence": [],
+      "reason": "Clear label prevents execution claim; exact sourcing remains deficient and acquisition deferred.",
+      "material_failure_id": null,
+      "kind": "source_fit"
+    },
+    {
+      "id": "R008-C066",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 132
+      },
+      "statement": "Extension iteration3vs2,2-4vs1,gaps included,no selection latest",
+      "outcome": "supported",
+      "evidence": [
+        "range"
+      ],
+      "reason": "All exact selection conventions independently verified in owner's README.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C067",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 132
+      },
+      "statement": "Files tree/open diff/new-comment context follow range; immutable content without checkout mutation",
+      "outcome": "supported",
+      "evidence": [
+        "range"
+      ],
+      "reason": "Documented implementation behavior; no executed validation.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C068",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 135
+      },
+      "statement": "Range model best observed and recommended including gap/fallback",
+      "outcome": "qualified",
+      "evidence": [
+        "range",
+        "brief"
+      ],
+      "reason": "Useful optional UX; best is editorial limited to observed field, not comparative proof.",
+      "material_failure_id": null,
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C069",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 136
+      },
+      "statement": "Behavior docs, UNEXECUTED, desktop adaptation needed",
+      "outcome": "supported",
+      "evidence": [
+        "range"
+      ],
+      "reason": "Correct transfer limit.",
+      "material_failure_id": null,
+      "kind": "source_fit"
+    },
+    {
+      "id": "R008-C070",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 140
+      },
+      "statement": "Independent practices converge on fresh-head refetch/cancellation/cache/deep-link rule",
+      "outcome": "unresolved",
+      "evidence": [
+        "openreview",
+        "pr",
+        "range"
+      ],
+      "reason": "Exact OpenCoworkAI quotation/Strand source unidentified; inspected workflow does not authenticate attribution. Sensible proposal is not independently verified convergence.",
+      "material_failure_id": "R008-community-convergence",
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C071",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 143
+      },
+      "statement": "Pin iteration/head; moved-head banner; never silently repoint; selected3of5",
+      "outcome": "supported",
+      "evidence": [
+        "brief",
+        "A001",
+        "changes"
+      ],
+      "reason": "Strong brief-fit proposal; refetch frequency/stop behavior product choices.",
+      "material_failure_id": null,
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C072",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 144
+      },
+      "statement": "Live head field unverified",
+      "outcome": "qualified",
+      "evidence": [
+        "pr",
+        "A001"
+      ],
+      "reason": "Honest uncertainty; lastMergeSourceCommit is merge snapshot and sourceRefCommit is iteration-specific, not interchangeable live head.",
+      "material_failure_id": null,
+      "kind": "unresolved_scope"
+    },
+    {
+      "id": "R008-C073",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 148
+      },
+      "statement": "PR descriptions routinely become stale; multiple sources agree diff is review object",
+      "outcome": "unresolved",
+      "evidence": [
+        "pr",
+        "review"
+      ],
+      "reason": "Description and changes can differ, but frequency and unnamed consensus unsupported by exact primary attributions.",
+      "material_failure_id": "R008-description-consensus",
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C074",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 151
+      },
+      "statement": "Show description authored-at vs latest iteration and N-newer hint cheaply",
+      "outcome": "qualified",
+      "evidence": [
+        "pr",
+        "A001",
+        "brief"
+      ],
+      "reason": "Optional useful presentation idea, but generic PR payload does not give description-authored/updated timestamp or history count, so exact cheap computability not established.",
+      "material_failure_id": "R008-description-age-data",
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C075",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 152
+      },
+      "statement": "Community guidance, not provider semantics",
+      "outcome": "supported",
+      "evidence": [],
+      "reason": "Correct classification prevents mandate, but attribution still unresolved.",
+      "material_failure_id": null,
+      "kind": "source_fit"
+    },
+    {
+      "id": "R008-C076",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 156
+      },
+      "statement": "Node SDK/CLI and MCPs expose working read paths for iterations/policies/threads",
+      "outcome": "supported",
+      "evidence": [
+        "gitapi",
+        "policyapi",
+        "cli",
+        "mcpissue"
+      ],
+      "reason": "Official SDK/CLI read methods and issue tool usage verified; no execution proof claimed.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C077",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 156
+      },
+      "statement": "MCP vote path demoted required reviewers by omitting isRequired",
+      "outcome": "supported",
+      "evidence": [
+        "mcpissue"
+      ],
+      "reason": "Firsthand official-repository issue confirms report; issue is closed and write path outside brief.",
+      "material_failure_id": null,
+      "kind": "factual"
+    },
+    {
+      "id": "R008-C078",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 159
+      },
+      "statement": "Consult SDK/CLI call spelling simpler than derivation",
+      "outcome": "qualified",
+      "evidence": [
+        "gitapi",
+        "policyapi",
+        "cli"
+      ],
+      "reason": "Useful optional recommendation, no measured cost advantage.",
+      "material_failure_id": null,
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C079",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 159
+      },
+      "statement": "Every cached/view-model reviewer path must roundtrip isRequired in read-only client",
+      "outcome": "qualified",
+      "evidence": [
+        "reviewers",
+        "mcpissue",
+        "brief"
+      ],
+      "reason": "Preserve flag for honest display; read-only cache transforms are not REST write roundtrips and exact architecture is product choice.",
+      "material_failure_id": null,
+      "kind": "recommendation"
+    },
+    {
+      "id": "R008-C080",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 160
+      },
+      "statement": "No reference code read/executed in candidate session; bug lesson limited to flag handling",
+      "outcome": "unresolved",
+      "evidence": [
+        "mcpissue"
+      ],
+      "reason": "Appropriate current caveat; acquisition assertion reserved for history.",
+      "material_failure_id": null,
+      "kind": "self_report"
+    },
+    {
+      "id": "R008-C081",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 166
+      },
+      "statement": "Table obligations explicit versions/auth/read-only/honesty/pinnedcontext/backoff/paging",
+      "outcome": "qualified",
+      "evidence": [
+        "brief",
+        "versionrules",
+        "auth",
+        "rate"
+      ],
+      "reason": "Core brief/version/auth constraints supported; mandatory moved-head banner, credential restriction and page-all mechanics stronger than provider/brief.",
+      "material_failure_id": "R008-obligation-inflation",
+      "kind": "classification"
+    },
+    {
+      "id": "R008-C082",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 173
+      },
+      "statement": "Optional range/grouping/non-applicable/iteration-status/reviewers capabilities",
+      "outcome": "qualified",
+      "evidence": [
+        "changes",
+        "A003",
+        "A002",
+        "reviewers"
+      ],
+      "reason": "Valid capabilities; parenthetical second call is unnecessary and exact iteration-status semantics unresolved.",
+      "material_failure_id": null,
+      "kind": "classification"
+    },
+    {
+      "id": "R008-C083",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 177
+      },
+      "statement": "Diff/cache/polling/description/positioning remain decisions",
+      "outcome": "supported",
+      "evidence": [
+        "brief"
+      ],
+      "reason": "Correct product-choice categories; empirical support assessed separately.",
+      "material_failure_id": null,
+      "kind": "classification"
+    },
+    {
+      "id": "R008-C084",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 184
+      },
+      "statement": "No plan supplied; priority list of hypothetical thin-plan misses",
+      "outcome": "supported",
+      "evidence": [
+        "brief"
+      ],
+      "reason": "No claim of actual plan defect; priority is editorial.",
+      "material_failure_id": null,
+      "kind": "plan_fit"
+    },
+    {
+      "id": "R008-C085",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 188
+      },
+      "statement": "U01 exact eval/status enums not captured; proposed schemas reads UNEXECUTED",
+      "outcome": "qualified",
+      "evidence": [
+        "A002",
+        "A003"
+      ],
+      "reason": "Valid proposal; central enums including both notApplicable meanings remain uncompleted.",
+      "material_failure_id": null,
+      "kind": "unexecuted_proposal"
+    },
+    {
+      "id": "R008-C086",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 189
+      },
+      "statement": "U02 paging/head field/config/thread details unresolved; proposed endpoint reads UNEXECUTED",
+      "outcome": "qualified",
+      "evidence": [
+        "changes",
+        "pr",
+        "A003",
+        "threads"
+      ],
+      "reason": "Valid proposals; several facts primary-documented but not incorporated.",
+      "material_failure_id": null,
+      "kind": "unexecuted_proposal"
+    },
+    {
+      "id": "R008-C087",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 190
+      },
+      "statement": "U03 endpoint Server floors/force-push unresolved; proposed compatibility check UNEXECUTED",
+      "outcome": "qualified",
+      "evidence": [
+        "version",
+        "review"
+      ],
+      "reason": "Valid proposal; no executed floor/history test asserted.",
+      "material_failure_id": null,
+      "kind": "unexecuted_proposal"
+    },
+    {
+      "id": "R008-C088",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 191
+      },
+      "statement": "U04 large-object/count/binary/LFS guidance unresolved; proposed docs reads UNEXECUTED",
+      "outcome": "qualified",
+      "evidence": [
+        "limits",
+        "items",
+        "review"
+      ],
+      "reason": "Valid follow-up, not false assertion of absence.",
+      "material_failure_id": null,
+      "kind": "unexecuted_proposal"
+    },
+    {
+      "id": "R008-C089",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 192
+      },
+      "statement": "U05 vote scale/group votes unresolved; proposed model read UNEXECUTED",
+      "outcome": "qualified",
+      "evidence": [
+        "reviewers"
+      ],
+      "reason": "Valid proposal; exact scale/group roll-up directly documented and current report lacks them.",
+      "material_failure_id": null,
+      "kind": "unexecuted_proposal"
+    },
+    {
+      "id": "R008-C090",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 193
+      },
+      "statement": "U06 current-user connection/graph identity unresolved; proposed read UNEXECUTED",
+      "outcome": "qualified",
+      "evidence": [
+        "reviewers"
+      ],
+      "reason": "Valid follow-up; descriptor unique field alone does not verify all matching routes.",
+      "material_failure_id": null,
+      "kind": "unexecuted_proposal"
+    },
+    {
+      "id": "R008-C091",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 194
+      },
+      "statement": "U07 least-privilege endpoint matrix unresolved; proposed crosscheck UNEXECUTED",
+      "outcome": "qualified",
+      "evidence": [
+        "A001",
+        "A002",
+        "A003",
+        "items"
+      ],
+      "reason": "Valid proposal; no claim that an exact matrix is already complete.",
+      "material_failure_id": null,
+      "kind": "unexecuted_proposal"
+    },
+    {
+      "id": "R008-C092",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 195
+      },
+      "statement": "U08 competitor depth snippet-level; proposed raw/hands-on review UNEXECUTED",
+      "outcome": "qualified",
+      "evidence": [
+        "range",
+        "gk",
+        "smartgit"
+      ],
+      "reason": "Valid scope limit; evaluator independently verified identifiable primary sources, not candidate hands-on.",
+      "material_failure_id": null,
+      "kind": "unexecuted_proposal"
+    },
+    {
+      "id": "R008-C093",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 199
+      },
+      "statement": "14searches16reads exact scheduling/acquisition record; no writes/credentials/API executions",
+      "outcome": "unresolved",
+      "evidence": [],
+      "reason": "Runtime/acquisition assertions history-gated; report self-counts are not economic measurement.",
+      "material_failure_id": null,
+      "kind": "self_report"
+    },
+    {
+      "id": "R008-C094",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 200
+      },
+      "statement": "Wall-clock uninstrumented/shell unavailable/fixed budget complete",
+      "outcome": "unresolved",
+      "evidence": [],
+      "reason": "Cannot authenticate current-only; cost/latency remain unassessed.",
+      "material_failure_id": null,
+      "kind": "self_report"
+    },
+    {
+      "id": "R008-C095",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 201
+      },
+      "statement": "Full brief researched and nothing material silently dropped",
+      "outcome": "unsupported",
+      "evidence": [
+        "brief",
+        "A001",
+        "A002",
+        "A003"
+      ],
+      "reason": "Topic breadth exists, but central native state meanings, commit identities and dedicated iteration-status addressing are incomplete; U-list honesty does not constitute completed coverage.",
+      "material_failure_id": "C028-full-brief-overclaim",
+      "kind": "scope_claim"
+    },
+    {
+      "id": "R008-C096",
+      "report_locator": {
+        "path": "current-report.md",
+        "line": 202
+      },
+      "statement": "Snippet claims lower-confidence labeled; retirement/version may change",
+      "outcome": "supported",
+      "evidence": [
+        "pat",
+        "versionrules"
+      ],
+      "reason": "Correct epistemic/temporal caveat; labels do not replace source support.",
+      "material_failure_id": null,
+      "kind": "source_fit"
+    }
+  ],
+  "facets": [
+    {
+      "id": "AZR-01",
+      "coverage": "partial",
+      "outcome": "qualified",
+      "report_locator": "F01/F05/F15",
+      "evidence": [
+        "A001",
+        "A002"
+      ],
+      "decision": "Iteration integer identity retained, but dedicated /iterations/{iterationId}/statuses URI and sourceRefCommit/targetRefCommit/commonRefCommit roles are absent. R008 acknowledges addressing unresolved; R007 implies coverage via PR statuses alone.",
+      "material_failure_id": "C028-iteration-identity-scope-incomplete"
+    },
+    {
+      "id": "AZR-02",
+      "coverage": "partial",
+      "outcome": "unsupported",
+      "report_locator": "F04-F06/U01",
+      "evidence": [
+        "A002",
+        "A003",
+        "statusconcept"
+      ],
+      "decision": "Two check families are distinguished, but complete native state enums, pending/error/unknown treatment and the two scopes of notApplicable are omitted. U01 is a valid UNEXECUTED proposal, not completed current semantics.",
+      "material_failure_id": "C028-native-state-semantics-omitted"
+    },
+    {
+      "id": "AZR-03",
+      "coverage": "full",
+      "outcome": "supported",
+      "report_locator": "F04",
+      "evidence": [
+        "A003",
+        "cli",
+        "projects"
+      ],
+      "decision": "Exact CodeReview template preserved and path-name acceptance not transferred into artifact. Project-name acceptance correctly left unverified. No GUID-only overclaim."
+    },
+    {
+      "id": "AZR-04",
+      "coverage": "partial",
+      "outcome": "qualified",
+      "report_locator": "F06/F04/U02",
+      "evidence": [
+        "A003",
+        "policy"
+      ],
+      "decision": "Required/Optional result separation supported, but isEnabled context and embedded full configuration are undeveloped."
+    },
+    {
+      "id": "AZR-05",
+      "coverage": "full",
+      "outcome": "supported",
+      "report_locator": "F04/F09",
+      "evidence": [
+        "A001",
+        "A002",
+        "A003"
+      ],
+      "decision": "Git7.1 versus evaluations7.1-preview.1 preserved. R007 global7.2-stability assertion assessed separately; no reduction of facet."
+    },
+    {
+      "id": "AZR-06",
+      "coverage": "partial",
+      "outcome": "qualified",
+      "report_locator": "F04/F10/U02",
+      "evidence": [
+        "A003"
+      ],
+      "decision": "Options retained; mandatory second true-call unnecessary because true response includes applicable and non-applicable. Exact paging remains unresolved.",
+      "material_failure_id": "R008-second-evaluations-call"
+    }
+  ],
+  "unreviewed_scope": [],
+  "unresolved_matters": [
+    {
+      "claim_id": "R008-C057",
+      "statement": "Fork-head correlation fix when Azure clone fields empty",
+      "reason": "Exact issue/release absent in carrier; inspected changelog corroborates related link fixes only, not this precise failure."
+    },
+    {
+      "claim_id": "R008-C062",
+      "statement": "Dated UI/weakHiDPI-darkmode/no PR templates asserted by competitors",
+      "reason": "Exact adversarial pages not cited; no hands-on test. Vendor documents light/dark themes, but no measured weakness or template absence established."
+    },
+    {
+      "claim_id": "R008-C070",
+      "statement": "Independent practices converge on fresh-head refetch/cancellation/cache/deep-link rule",
+      "reason": "Exact OpenCoworkAI quotation/Strand source unidentified; inspected workflow does not authenticate attribution. Sensible proposal is not independently verified convergence."
+    },
+    {
+      "claim_id": "R008-C073",
+      "statement": "PR descriptions routinely become stale; multiple sources agree diff is review object",
+      "reason": "Description and changes can differ, but frequency and unnamed consensus unsupported by exact primary attributions."
+    },
+    {
+      "claim_id": "R008-C080",
+      "statement": "No reference code read/executed in candidate session; bug lesson limited to flag handling",
+      "reason": "Appropriate current caveat; acquisition assertion reserved for history."
+    },
+    {
+      "claim_id": "R008-C093",
+      "statement": "14searches16reads exact scheduling/acquisition record; no writes/credentials/API executions",
+      "reason": "Runtime/acquisition assertions history-gated; report self-counts are not economic measurement."
+    },
+    {
+      "claim_id": "R008-C094",
+      "statement": "Wall-clock uninstrumented/shell unavailable/fixed budget complete",
+      "reason": "Cannot authenticate current-only; cost/latency remain unassessed."
+    }
+  ],
+  "omitted_scope": [
+    "Native status-state and policy-evaluation-state semantic mapping including distinct notApplicable scopes",
+    "Dedicated selected-iteration status addressing",
+    "Distinct source/target/common-ref commit roles",
+    "Iteration-disabled/huge-PR compatibility condition",
+    "Exact per-endpoint completion contract and conditional successful200 Retry-After delay"
+  ],
+  "discovery": {
+    "breadth": "Broad brief-based discovery; provider correctness, compatibility, auth, performance and UI options examined. Topic coverage is stronger than completed state semantics.",
+    "bounded_reference": "A001-A003 and six facets are omission anchors only; supported novelty beyond them credited.",
+    "useful_supported_novelty": [
+      "Metadata-only changed-file response",
+      "Inert single-PR GET parameters and list-description truncation",
+      "Global PAT retirement2026-12-01 and Azure DevOps OAuth registration closure",
+      "Extension exact iteration-range/no-selection/gap behavior",
+      "GitKraken documented Azure features/templates",
+      "Official GitLens cross-org link fix, currently unreleased",
+      "Firsthand MCP isRequired-loss issue, closed/write-path transfer limited",
+      "Optional pinned context and on-demand content comparisons"
+    ],
+    "unused_leads": [
+      "Full response schemas; native enums; embedded PolicyConfiguration; dedicated iteration statuses; vote scale/group roll-up; primary list-description limit; full competitor sources"
+    ],
+    "temporal_narrowing": "Cannot distinguish never acquired, undeveloped, lost or retained without frozen history. Current explicit U-items record incomplete semantics only.",
+    "unfounded_absence": [
+      "Competitor no-template/no-provider-PR and comparative display weakness not proven by exact primary evidence."
+    ],
+    "source_exposure_vs_acquisition": "Staged truncated X captures are not evidence of semantic acquisition; evaluator's independent primary verification does not rescue candidate research."
+  },
+  "source_checks": {
+    "brief": {
+      "path": "inputs/brief.md",
+      "locator": "Complete brief",
+      "authority": "frozen product brief"
+    },
+    "A001": {
+      "path": "inputs/sources/A001.txt",
+      "locator": "GitPullRequestIteration; GitStatusState; IterationReason",
+      "authority": "frozen Microsoft API 7.1"
+    },
+    "A002": {
+      "path": "inputs/sources/A002.txt",
+      "locator": "URI; iterationId; GitStatusState",
+      "authority": "frozen Microsoft API 7.1"
+    },
+    "A003": {
+      "path": "inputs/sources/A003.txt",
+      "locator": "URI parameters; Security; PolicyConfiguration; PolicyEvaluationStatus",
+      "authority": "frozen Microsoft Policy API 7.1-preview.1"
+    },
+    "changes": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1",
+      "locator": "URI Parameters; examples; GitPullRequestIterationChanges",
+      "authority": "Microsoft API 7.1"
+    },
+    "reviewers": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-reviewers/list?view=azure-devops-rest-7.1",
+      "locator": "IdentityRefWithVote, vote/isRequired/votedFor/descriptor",
+      "authority": "Microsoft API 7.1"
+    },
+    "items": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/get?view=azure-devops-rest-7.1",
+      "locator": "URI Parameters; response media types; FileContentMetadata",
+      "authority": "Microsoft API 7.1"
+    },
+    "diffs": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/diffs/get?view=azure-devops-rest-7.1",
+      "locator": "URI Parameters; GitCommitDiffs.allChangesIncluded",
+      "authority": "Microsoft API 7.1"
+    },
+    "pr": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.1",
+      "locator": "URI Parameters; GitPullRequest fields; PullRequestStatus; PullRequestAsyncStatus",
+      "authority": "Microsoft API 7.1"
+    },
+    "prlist": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests?view=azure-devops-rest-7.1",
+      "locator": "Operation introduction: description truncated to 400 symbols",
+      "authority": "Microsoft API 7.1"
+    },
+    "threads": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-threads/list?view=azure-devops-rest-7.1",
+      "locator": "URI Parameters; CommentIterationContext; CommentThreadStatus; CommentTrackingCriteria",
+      "authority": "Microsoft API 7.1"
+    },
+    "auth": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops",
+      "locator": "Services/Server availability; methods by scenario; web/desktop row; FAQ",
+      "authority": "Microsoft current guidance"
+    },
+    "pat": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops",
+      "locator": "Important global PAT retirement; Use a PAT; least privilege",
+      "authority": "Microsoft current guidance"
+    },
+    "oauth": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/oauth?view=azure-devops",
+      "locator": "Important; Server note; scope considerations; FAQ API coverage",
+      "authority": "Microsoft current guidance"
+    },
+    "rest": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/how-to/call-rest-api?view=azure-devops",
+      "locator": "URL structure; Response codes; API versioning",
+      "authority": "Microsoft current guidance"
+    },
+    "version": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/?view=azure-devops-rest-7.2",
+      "locator": "Server-to-REST compatibility table; API-version format",
+      "authority": "Microsoft REST reference"
+    },
+    "versionrules": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rest-api-versioning?view=azure-devops",
+      "locator": "Guidelines; preview deactivation after release; header/query version",
+      "authority": "Microsoft guidance"
+    },
+    "config": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/configurations/list?view=azure-devops-rest-7.1",
+      "locator": "Introduction legacy scope warning; URI Parameters; PolicyConfiguration",
+      "authority": "Microsoft API 7.1"
+    },
+    "policy": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops",
+      "locator": "minimum reviewers; Require comment resolution; Build validation policy requirement/expiration; Status checks; Automatically include reviewers",
+      "authority": "Microsoft product documentation"
+    },
+    "statusconcept": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-request-status?view=azure-devops",
+      "locator": "Iteration status; >100000 modified-file exception; Status policy; applicability options",
+      "authority": "Microsoft product documentation"
+    },
+    "limits": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/repos/git/limits?view=azure-devops",
+      "locator": "Repository size; Push size; LFS objects; Path length",
+      "authority": "Microsoft product documentation"
+    },
+    "rate": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits?view=azure-devops",
+      "locator": "Global consumption limit; TSTUs; Best practices; API client experience",
+      "authority": "Microsoft Services documentation"
+    },
+    "review": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/repos/git/review-pull-requests?view=azure-devops",
+      "locator": "Review changes (added/deleted pane, size thresholds, force-push); Vote on PR changes",
+      "authority": "Microsoft product documentation"
+    },
+    "hooks": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/service-hooks/events?view=azure-devops",
+      "locator": "Pull request created/updated/commented-on",
+      "authority": "Microsoft event documentation"
+    },
+    "projects": {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/core/projects/get?view=azure-devops-rest-7.1",
+      "locator": "TeamProject.id string(uuid)",
+      "authority": "Microsoft API 7.1"
+    },
+    "cli": {
+      "url": "https://raw.githubusercontent.com/Azure/azure-devops-cli-extension/master/azure-devops/azext_devops/dev/repos/pull_request.py",
+      "locator": "list_pr_policies, lines 570-589: project_id=pr.repository.project.id",
+      "authority": "Microsoft/Azure official implementation"
+    },
+    "gitapi": {
+      "url": "https://raw.githubusercontent.com/microsoft/azure-devops-node-api/master/api/GitApi.ts",
+      "locator": "IGitApi; getPullRequestIterationChanges; getPullRequestIterationStatuses",
+      "authority": "Microsoft SDK implementation; live master"
+    },
+    "policyapi": {
+      "url": "https://raw.githubusercontent.com/microsoft/azure-devops-node-api/master/api/PolicyApi.ts",
+      "locator": "getPolicyEvaluations, lines 359-400; explicit top/skip; 7.2-preview.1",
+      "authority": "Microsoft SDK implementation; live master"
+    },
+    "sdkreadme": {
+      "url": "https://raw.githubusercontent.com/microsoft/azure-devops-node-api/master/README.md",
+      "locator": "Authentication/getPersonalAccessTokenHandler; APIs; Server matrix",
+      "authority": "Microsoft SDK project documentation"
+    },
+    "range": {
+      "url": "https://raw.githubusercontent.com/vinaychandra/vscode-pr-azdo/master/README.md",
+      "locator": "Show Iterations, lines 31-32",
+      "authority": "Implementation owner's current documentation; no execution"
+    },
+    "gk": {
+      "url": "https://raw.githubusercontent.com/gitkraken/gitkraken-desktop-docs/master/gitkraken-desktop/azure-devops.md",
+      "locator": "Integration capabilities; troubleshooting missing PR form, lines 165-175",
+      "authority": "Vendor primary documentation"
+    },
+    "gkpr": {
+      "url": "https://help.gitkraken.com/gitkraken-desktop/pull-requests/",
+      "locator": "How pull request templates work, lines 175-189",
+      "authority": "Vendor primary documentation"
+    },
+    "gitlens": {
+      "url": "https://raw.githubusercontent.com/gitkraken/vscode-gitlens/main/CHANGELOG.md",
+      "locator": "Unreleased fixes #5839/#5840/#5842/#5836; live changing file",
+      "authority": "Implementation owner's changelog; unreleased"
+    },
+    "smartgit": {
+      "url": "https://www.smartgit.dev/",
+      "locator": "Platform integration; supported OS; no comparative display-quality measurement",
+      "authority": "Vendor primary documentation"
+    },
+    "smartgitolder": {
+      "url": "https://www.syntevo.com/smartgit/",
+      "locator": "Search-indexed vendor text: integrations, license across machines, light/dark themes; live redirects",
+      "authority": "Vendor historical indexed text; version not pinned"
+    },
+    "distributed": {
+      "url": "https://www.smartgit.dev/features/distributed-reviews/",
+      "locator": "Part of SmartGit Download; Local/offline reviewing; metadata in Git",
+      "authority": "Vendor primary documentation"
+    },
+    "mcpissue": {
+      "url": "https://github.com/microsoft/azure-devops-mcp/issues/1287",
+      "locator": "Summary/Repro/Root cause; opened 2026-05-26, closed via #1289",
+      "authority": "Firsthand issue in official repository; not normative API contract"
+    },
+    "lfs": {
+      "url": "https://devblogs.microsoft.com/devops/announcing-git-lfs-on-all-vso-git-repos/",
+      "locator": "2015-10-01 announcement",
+      "authority": "Microsoft historical announcement; current guarantee not established"
+    },
+    "rename": {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/organizations/projects/rename-project?view=azure-devops",
+      "locator": "Results of rename; old/new URLs continue; cached client failure; Git remotes",
+      "authority": "Microsoft product documentation"
+    },
+    "openreview": {
+      "url": "https://raw.githubusercontent.com/OpenCoworkAI/open-cowork/main/.github/workflows/codex-pr-review.yml",
+      "locator": "Reviewed workflow; exact quoted Fresh-head source not identified",
+      "authority": "Named project repository; exact claim unresolved"
+    }
+  },
+  "material_failure_identities": [
+    "R008-standalone-citations",
+    "C028-iteration-support-omitted",
+    "R008-commit-completeness-omitted",
+    "R008-universal-2N",
+    "R008-cache-identity-narrowed",
+    "R008-second-evaluations-call",
+    "R008-embedded-config-unused",
+    "R008-pat-obsolete-strength",
+    "R008-readonly-credential-strength",
+    "C028-rate-success-delay-omitted",
+    "R008-context-selection-immunity",
+    "R008-competitor-unsupported-comparison",
+    "R008-competitor-superiority",
+    "R008-community-convergence",
+    "R008-description-consensus",
+    "R008-description-age-data",
+    "R008-obligation-inflation",
+    "C028-full-brief-overclaim",
+    "C028-iteration-identity-scope-incomplete",
+    "C028-native-state-semantics-omitted"
+  ],
+  "plan_fit": {
+    "admitted_plan": false,
+    "brief_fit": "Read-only/no provider mutation preserved. Optional UI/implementation choices occasionally promoted to mandatory obligations. No actual canonical plan defects claimed or repaired."
+  },
+  "blinding_limitations": [
+    "Verbatim report header exposes treatment/control card wording and method cues; opaque assignment therefore not fully blinded.",
+    "Staged union includes native capture path/session cues and captures from both outputs; acquisition/history never opened.",
+    "Primary live docs/repos can drift: staged API7.1 pins preserved; SDK master/GitLens Unreleased findings qualified; source metadata stamps may differ from live page presentation."
+  ],
+  "access_breaches": [],
+  "history_unlocked": false,
+  "economics": "unassessed",
+  "preservation": "unassessed; parent may unlock only after saved stage1 receipts",
+  "native_execution": "no tests executed by evaluator; candidate no-execution assertion not authenticated",
+  "current_report_verdict": "quality failure",
+  "verdict_reason": "Useful broad discoveries, but central result-state semantics and iteration scope incomplete; universal2N lower bound, context-selection immunity and mandatory second evaluation call overstate support. Unresolved competitor/community claims limit standalone reliability.",
+  "review_limitations": "Exact opaque secondary attributions and acquisition/runtime self-reports receive unresolved decisions rather than assumed support or fabricated source attribution. Current report is fully inventoried; source checking did not authenticate history or every source-version claim lacking locators. No sampled pass.",
+  "terminal_label": "quality failure"
+}

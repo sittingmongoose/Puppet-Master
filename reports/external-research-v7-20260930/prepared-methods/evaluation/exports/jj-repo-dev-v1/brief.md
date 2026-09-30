@@ -1,0 +1,7 @@
+# Workspace-aware local version-control companion
+
+We are exploring a desktop companion for developers and local coding agents that uses Jujutsu as its version-control engine. A project can have several workspaces, with people editing files while an agent works elsewhere. The companion would show status and history in the background, offer change/rebase actions, stream command progress into a small panel, and help recover after interruption or workspace changes. Users should understand what was saved, what changed on disk, and what remains unresolved.
+
+Investigate Jujutsu v0.22.0 as a concrete implementation reference. Determine what the companion must learn before promising safe observation and useful recovery. Focus on two coherent question families: (1) observing and changing repository/workspace state while edits or other workspaces exist; (2) command completion, interrupted progress delivery, and recovery of workspace state. Find implementation constraints, relevant failure histories, useful safeguards and simpler design choices. Derive your own questions from these goals and choose the relevant source paths/issues yourself.
+
+We are considering this integration; no completed design or implementation is supplied. Explain transfer limits instead of assuming a command-line project's behavior proves our GUI will behave safely. The pinned version is intentional; this is not a claim about the latest release.

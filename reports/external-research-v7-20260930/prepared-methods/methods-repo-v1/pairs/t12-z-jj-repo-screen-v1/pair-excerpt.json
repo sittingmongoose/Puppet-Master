@@ -1,0 +1,59 @@
+{
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/pair.json",
+  "source_sha256": "986a0811eb752707ebd7194ca83bece44c6d3655f18aa982e455933f3165c6e3",
+  "projection": "exact retained fields; duplicated large input metadata summarized with counts and hash references",
+  "fields": {
+    "schema": "er7.method_pair.v1",
+    "pair_id": "t12-z-jj-repo-screen-v1",
+    "method": "T12",
+    "family": "Z",
+    "case_id": "jj-repo-dev-v1",
+    "status": "prepared-not-reviewed-not-started",
+    "changed_variables": [
+      "Documentation-led navigation versus deterministic local module/symbol/test-map navigation"
+    ],
+    "held_fixed": [
+      "Exact shared source bytes/access",
+      "Full brief/task obligations",
+      "Model family/front end/Max effort",
+      "900 seconds/96 responses per arm including retries/self-correction",
+      "Equal final artifacts/evaluation",
+      "No tests or third-party source execution",
+      "No case answer list or plan exposure"
+    ],
+    "caps_per_arm": {
+      "seconds": 900,
+      "responses": 96
+    },
+    "attempts": [
+      {
+        "job_id": "t12-z-jj-repo-screen-v1-control",
+        "arm": "control",
+        "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control",
+        "spec": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control.spec.json"
+      },
+      {
+        "job_id": "t12-z-jj-repo-screen-v1-treatment",
+        "arm": "treatment",
+        "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment",
+        "spec": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment.spec.json"
+      }
+    ],
+    "input_sha256_metadata": {
+      "count": 1132,
+      "exact_field_sha256": "6ec7033cd8aac28a7948f9bd00968442acc754c9656c5fee32df293f47bfed69",
+      "source_file_hash": "bound in enclosing source_sha256",
+      "full_manifest": "prepared-methods/evaluation/exports/jj-repo-dev-v1/MANIFEST.sha256.json",
+      "note": "duplicated per-arm input metadata omitted; full source file remains private and hash-bound"
+    },
+    "source_unique_bytes": 24121949,
+    "versions": {
+      "prepare_pairs.py": "a8ccfd792b7b608fdb5e20bdf448b1ddaecbf9f5c85c6642dab8b567a4b7d470",
+      "repo_map_tool.py": "1e77cbce376b649cb40b24bf2dc58201bf7a41b86eff2a830cf24befd27306ec"
+    },
+    "review_required": "Independent review of exact mechanics/cards/tool and paired boundary before dispatch. Author cannot grade this method.",
+    "order": "Operator chooses reproducible randomized/counterbalanced launch order, records simultaneous family/account/sibling occupancy.",
+    "setup_accounting": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/private/jj-repo-dev-v1-acquisition",
+    "interpretability": "One bounded development comparison per method; no unit/offline check counted as a comparison."
+  }
+}

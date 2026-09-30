@@ -1,0 +1,84 @@
+{
+  "schema": "er7.resume_repo_gate_offline.v1",
+  "reviewer": "/root/method_gate_resume",
+  "created_utc": "2026-09-30T16:23:24.387718+00:00",
+  "candidate_starts": 0,
+  "third_party_execution": false,
+  "source_integrity": {
+    "manifest_sha256": "6aef9692d7f2fefccee3c9746b46138eadb154b205ce3b8e67b91e8b715e53bf",
+    "files": 1130,
+    "repository_files": 431,
+    "exact_tree_and_manifest": true
+  },
+  "pairs": [
+    {
+      "pair": "t11-z-jj-repo-screen-v1",
+      "pair_sha256": "0b7f1bdea5182b649bf14cd9eac3b37811c0e311f7043aa138d2e3422bd0cda7",
+      "equal_bindings": true,
+      "all_pinned_inputs_verified": true,
+      "caps": [
+        900,
+        96
+      ]
+    },
+    {
+      "pair": "t12-z-jj-repo-screen-v1",
+      "pair_sha256": "986a0811eb752707ebd7194ca83bece44c6d3655f18aa982e455933f3165c6e3",
+      "equal_bindings": true,
+      "all_pinned_inputs_verified": true,
+      "caps": [
+        900,
+        96
+      ]
+    }
+  ],
+  "attempts": {
+    "methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/control": {
+      "spec_sha256": "19835e379adf73b633e97bec68792070b4870734c52ac5b324bd50ba361dc44f",
+      "attempt_sha256": "ae560d12c763dee110072a5711a5164527252a9616c9dd12da08d89593fea95e",
+      "task_sha256": "76a07c9b1324ae70a4d03dce542600276532a2c2e97700b8f7b5d8c3ef282f4d",
+      "goal_sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "input_count": 1131,
+      "dry_run": "passed"
+    },
+    "methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/treatment": {
+      "spec_sha256": "9a9d1ee020430d5cb771a1ce8c9ab8da0a4d01c7247d40fbb2abacd9a48469b6",
+      "attempt_sha256": "8b450bcbb8846fe7616247e4490a96123cc1f9baede6123635db58740400ddd1",
+      "task_sha256": "36f31ac658fe16e847498b6a5f521a9871186436b91e23c9949cda033f3ea71f",
+      "goal_sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "input_count": 1131,
+      "dry_run": "passed"
+    },
+    "methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control": {
+      "spec_sha256": "66aca20baa3a1bcb84a05144a210b0abb64992a6f69784e5585cde7966024b39",
+      "attempt_sha256": "4ebbd91bca0d2e038428423d17bb59971c4722cea06d93481b9a9f4aa205fcf3",
+      "task_sha256": "4d9885b81ed79f76c476718799b64e0d22736c743282f1c71c8add0c4e48d58f",
+      "goal_sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "input_count": 1132,
+      "dry_run": "passed"
+    },
+    "methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment": {
+      "spec_sha256": "53cb905f0163786e7ea3c6d805f9bd6f861eb6657fc4d916a0c4bc603a8947d4",
+      "attempt_sha256": "7fb5b94eab581fbb59608aa1e108452a9338d191f99919acd18a594e037c5cdb",
+      "task_sha256": "5f3226e6ce6212dd1de50c3d2d0e676e9d6632a3952b6f412a211bd5cb795468",
+      "goal_sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "input_count": 1132,
+      "dry_run": "passed"
+    }
+  },
+  "map": {
+    "files": 426,
+    "test_paths": 97,
+    "lexical_symbols": 5893,
+    "deterministic_excluding_measured_elapsed": true,
+    "index_seconds": [
+      0.4939246189996993,
+      0.5099928439994983
+    ]
+  },
+  "elapsed_seconds": 3.6889850069992463,
+  "limitations": [
+    "Mechanics only; no candidate semantic grade.",
+    "History completeness under review until author full-ancestry proof or prospectively qualified scope."
+  ]
+}

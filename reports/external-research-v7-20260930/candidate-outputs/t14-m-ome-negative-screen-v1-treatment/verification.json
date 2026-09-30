@@ -1,0 +1,193 @@
+{
+  "schema": "t14.negative_screen.verification.v1",
+  "case_id": "ome-normative-dev-v1",
+  "task_card": "t14-m-ome-negative-screen-v1-treatment",
+  "method": "Independent re-read of every candidate unit against S003 (capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de, 896 lines) and Viewer.md (11 lines). Positive citations checked line-by-line; every absence assertion re-checked by scoped searches recorded in out/negative-checks.json. A failed search proves only that search (see each N-ID limits field). Dispute unresolved where evidence is insufficient.",
+  "disposition_vocabulary": {
+    "confirmed": "all material claims verify against cited lines with no correction",
+    "confirmed_with_qualification": "claims verify subject to a narrowed scope, added limit, or wording correction noted in reasons",
+    "corrected": "a material claim required replacement (see replacements)",
+    "unresolved": "insufficient evidence inside admitted scope to confirm or deny"
+  },
+  "verified_findings": [
+    {
+      "candidate_id": "U001",
+      "candidate_title": "Report header / scope / conventions / status vocabulary",
+      "disposition": "confirmed",
+      "reasons": ["Source scope (S003 only, 896 lines, ngff.openmicroscopy.org/0.5), plan/brief identities, whole-brief both-groups coverage, S003 L57-59 + L868-888 conformance pointers, and status vocabulary all match admitted inputs on re-read."],
+      "evidence": ["inputs/catalog.json (896 lines, sha256)", "S003 L1-8", "S003 L57-59", "S003 L868-888", "Viewer.md L1-11", "inputs/brief.md"],
+      "independent_findings": ["report header + §0"],
+      "negative_checks": []
+    },
+    {
+      "candidate_id": "U002",
+      "candidate_title": "1. Executive summary",
+      "disposition": "confirmed_with_qualification",
+      "reasons": ["On-disk contract summary (zarr.json L68-72/L87-100, ome version L150-165, typed keys) verifies. Plan-shape compatibility plus unnamed-obligations list verifies against §§3-4 re-checks. Unbounded-Zarr sentence verifies subject to N-01 scoped-absence qualification (no disallowance found by recorded searches, not a paraphrase-free proof). Tools-pointer/interoperability-unevidenced claims verify subject to N-02/N-03/N-24 scoped qualifications. UNEXECUTED label preserved."],
+      "evidence": ["S003 L68-72", "S003 L87-100", "S003 L150-165", "S003 L813-814", "Viewer.md L5-11"],
+      "independent_findings": ["F-01", "F-08", "F-20", "F-21", "F-27", "F-29", "F-32", "F-35", "§1", "§9"],
+      "negative_checks": ["N-01", "N-02", "N-03", "N-24"]
+    },
+    {
+      "candidate_id": "U003",
+      "candidate_title": "2. Governing conditions and reading rules",
+      "disposition": "confirmed_with_qualification",
+      "reasons": ["All six governing rules verify: Zarr v3 L68-72; location-agnostic L73-77 narrowed by Viewer.md L9; ome namespace/version L150-165; RFC2119/transitional/normative fencing L57-66/L868-888; release status L25-27; camelCase L810-812 with literally-matched keys (field_count L538/L595, rowIndex/columnIndex L557-560, label-value L462, starttime/endtime L528, maximumfieldcount L524, bioformats2raw.layout L200). Qualification: none material; see N-28 for the L93-94 wrap wording used in §2.6 (no semantic change)."],
+      "evidence": ["S003 L25-27", "S003 L57-66", "S003 L68-77", "S003 L150-165", "S003 L200", "S003 L462", "S003 L524", "S003 L528", "S003 L538", "S003 L557-560", "S003 L810-812", "S003 L868-888"],
+      "independent_findings": ["F-01", "F-02", "F-03", "F-04", "F-05", "F-06"],
+      "negative_checks": ["N-01", "N-28"]
+    },
+    {
+      "candidate_id": "U004",
+      "candidate_title": "3. Group 1 — Opening, listing/selecting, multiresolution navigation",
+      "disposition": "confirmed_with_qualification",
+      "reasons": ["§3.1 image-open mechanics (L87-100), three shapes (L82-100/L118-148/L175-275), plate precedence (L204-206/L262), read-only compatibility (N-04) verify. §3.2 discovery table verifies cell-by-cell: multi-multiscales L388-397 (force uncertain, N-08); HCS chain L125-129/L532-560/L641-750; bioformats2raw L193-275 incl. reader SHOULD/MAY L271-275; labels exclusion L437-438; identifier MUSTs L533-549/L746-748; version gating L150-156. §3.3 acquisition identity L520-529/L748-750/L763-803 and display hints L538-541 verify; trigger ambiguity recorded (N-22). §3.4 pyramid obligations L93-94/L173-174/L299-319/L375-397 verify; largest-metric gap recorded (N-10). §3.5 responsiveness has no source mechanism in recorded searches (N-11) and failure taxonomy correctly derives MUSTs + Viewer.md L7/L11. Qualifications: (a) 'directory enumeration without metadata is non-conforming' is inference, not an explicit MUST (N-29, see replacements); (b) all 'unexplained/no/never' phrasings are narrowed to recorded-search scope (N-05/N-06/N-07/N-08/N-09/N-10/N-11)."],
+      "evidence": ["S003 L82-175", "S003 L175-275", "S003 L299-319", "S003 L388-397", "S003 L516-560", "S003 L641-752", "S003 L753-803", "Viewer.md L5/L7/L11", "brief L3/L5"],
+      "independent_findings": ["F-07", "F-08", "F-09", "F-10", "F-11", "F-12", "F-13", "F-14", "F-15", "F-16", "F-17", "F-18", "F-19", "F-20", "F-21", "F-22", "F-23", "F-24"],
+      "negative_checks": ["N-04", "N-05", "N-06", "N-07", "N-08", "N-09", "N-10", "N-11", "N-22", "N-23", "N-27", "N-29"]
+    },
+    {
+      "candidate_id": "U005",
+      "candidate_title": "4. Group 2 — Channel/time/plane, coordinates, label overlays",
+      "disposition": "confirmed_with_qualification",
+      "reasons": ["§4.1 axes rank/composition/order/names/type/unit (L81/L96-97/L168-174/L299-303) and lenient untyped-axis rule verify; null-type tension (L301 vs L169) and dimension_names conflict (L174 vs L827) both confirmed present. §4.2 omero MUSTs L426-430 vs example-only siblings L401-423 verifies via example-block-only searches (N-13); length-mismatch comment-only status (L403, N-14), no window semantics (N-15), absent-omero product decision (N-16), and axis-derived plane relevance verify. §4.3 transform vocabulary L279-293, per-level L308-312, global L314-316, worked example L320-387, and details-panel derivation verify; origin (N-17), binary-path (N-18), and multi-axis-example (N-25) gaps recorded. §4.4 label discovery L102-112/L437-453, contract L116-117/L438-455, 'usually'/broadcast alignment L106-108/L432-435, image-label L456-514, and plan mapping verify; precedence (N-20), interpolation silence (N-21), version vocabularies (N-19), and broadcast-force (N-26) gaps recorded. Qualification: every 'no/never/unspecified/unstated' narrowed to recorded-search scope; nearest-neighbor labeled explicitly as product decision."],
+      "evidence": ["S003 L81", "S003 L96-97", "S003 L102-117", "S003 L168-174", "S003 L277-293", "S003 L299-303", "S003 L308-387", "S003 L399-430", "S003 L432-514", "S003 L827", "Viewer.md L5"],
+      "independent_findings": ["F-25", "F-26", "F-27", "F-28", "F-29", "F-30", "F-31", "F-32", "F-33", "F-34", "F-35", "F-36"],
+      "negative_checks": ["N-12", "N-13", "N-14", "N-15", "N-16", "N-17", "N-18", "N-19", "N-20", "N-21", "N-25", "N-26"]
+    },
+    {
+      "candidate_id": "U006",
+      "candidate_title": "5. Obligations vs options vs product decisions",
+      "disposition": "confirmed",
+      "reasons": ["10 MUST obligations, 8 SHOULD recommendations, 5 MAY option groups, and 12 product decisions all re-derive from the §§3-4 evidence above with correct locators; read-side-silence item correctly qualified by N-04 in this report's §5.1 item 10. No obligation added or removed."],
+      "evidence": ["S003 sections per §§3-4 (see U004/U005 evidence)", "Viewer.md L9/L11"],
+      "independent_findings": ["§5.1", "§5.2", "§5.3", "§5.4"],
+      "negative_checks": ["N-04"]
+    },
+    {
+      "candidate_id": "U007",
+      "candidate_title": "6. Plan disposition (sentence-by-sentence, Viewer.md)",
+      "disposition": "confirmed",
+      "reasons": ["All 12 dispositions (EXTEND×6 incl. failure taxonomy, KEEP×4 with constraints, FLAG×1 for real-tool interop, acceptance KEEP-with-raised-bar) match the independent §3-§4 gap analysis on re-read. Interop FLAG correctly re-qualified by N-02/N-03/N-24; background-reads KEEP correctly re-qualified by N-11; all EXTENDs carry exact S003 locators."],
+      "evidence": ["Viewer.md L5", "Viewer.md L7", "Viewer.md L9", "Viewer.md L11", "S003 (per finding)"],
+      "independent_findings": ["§6 (P-01..P-12)"],
+      "negative_checks": ["N-02", "N-03", "N-11", "N-24"]
+    },
+    {
+      "candidate_id": "U008",
+      "candidate_title": "7. Unsupported-input limitations",
+      "disposition": "confirmed_with_qualification",
+      "reasons": ["Three-tier taxonomy (viewer_limitation / malformed / out-of-scope-by-boundary) verifies with correct S003 locators for every item and correct plan-acceptance grounding (Viewer.md L7/L11). Qualification: this report adds the missing-input-behavior vs absence-of-source-evidence distinction (§7) and narrows 'underspecified/unbounded' phrasings to recorded-search scope (N-01/N-18); no taxonomy item changed."],
+      "evidence": ["S003 L25-27", "S003 L70-77", "S003 L156", "S003 L173-174", "S003 L256", "S003 L285-312", "S003 L426-430", "S003 L438-455", "S003 L553-560", "S003 L748-750", "Viewer.md L7/L9/L11", "brief L5"],
+      "independent_findings": ["§7"],
+      "negative_checks": ["N-01", "N-18"]
+    },
+    {
+      "candidate_id": "U009",
+      "candidate_title": "8. Counterevidence, uncertainty, and unresolved areas",
+      "disposition": "confirmed_with_qualification",
+      "reasons": ["All 13 items re-confirmed present in S003 with correct locators and sound adopted readings (lenient axis types, L174-over-L827, voxel-count sanity without reorder, unit-paired scales, image-frame origin, outer∘inner composition, only-stated-rule fallback, overlap-degrade omero, best-effort rdefs, warn-on-divergence labels, accept-and-display versions, accept-only-3 layout, >1-entry acquisitions, unsupported binary-path, display-hints field counts, unbounded-Zarr risk). Qualifications: item 12 editorial wording corrected ('by by the' wrap, N-28); item 13 Tools/Citing 'carry no requirements' narrowed to recorded-search scope (N-02); whole-format risk 'unresolved inside this source' re-qualified by N-24 limits."],
+      "evidence": ["S003 L62", "S003 L70-72", "S003 L93-94", "S003 L106-108", "S003 L174", "S003 L200", "S003 L256", "S003 L285-289", "S003 L301", "S003 L306", "S003 L310-316", "S003 L368-397", "S003 L403", "S003 L419-423", "S003 L433", "S003 L459-460", "S003 L524-525", "S003 L538-539", "S003 L550-551", "S003 L748-752", "S003 L813-814", "S003 L827"],
+      "independent_findings": ["§8 items 1-13"],
+      "negative_checks": ["N-02", "N-07", "N-08", "N-10", "N-14", "N-15", "N-17", "N-18", "N-19", "N-20", "N-22", "N-23", "N-24", "N-25", "N-26", "N-28"]
+    },
+    {
+      "candidate_id": "U010",
+      "candidate_title": "9. Reader-implementation research: what this source cannot supply",
+      "disposition": "confirmed_with_qualification",
+      "reasons": ["Core claim verifies: L813-814 is a two-line unresolvable pointer in a no-fetch assignment and the recorded tolerance/performance/caching/error/thread/background/interop searches return no hits (N-02/N-24). Consequences (a)-(c) correctly follow as scope limitation, not incompatibility. Qualification: keyword misses prove only those searches (N-24 limits); the independent full L813-820 read corroborates the absence of requirements text there."],
+      "evidence": ["S003 L813-820", "brief L5", "Viewer.md L9"],
+      "independent_findings": ["§9"],
+      "negative_checks": ["N-02", "N-03", "N-24"]
+    },
+    {
+      "candidate_id": "U011",
+      "candidate_title": "10. Proposed validation (all UNEXECUTED)",
+      "disposition": "confirmed",
+      "reasons": ["No-execution statement is true (no filesets opened, no code run, no fetch; see acquisition.json execution_evidence). All 9 proposals (V1-V9 incl. out-of-scope V9) are valid unsupported-input/malformed-input/conformance checks within the brief and are preserved verbatim in coverage as UNEXECUTED in this report's §10. No execution evidence invented."],
+      "evidence": ["N-30 (no execution evidence)", "§§3-4 findings (proposal grounding)"],
+      "independent_findings": ["§10 V1-V9"],
+      "negative_checks": ["N-30"]
+    },
+    {
+      "candidate_id": "U012",
+      "candidate_title": "11. Source-line index (primary locators)",
+      "disposition": "confirmed",
+      "reasons": ["Every locator range re-checked against S003 reads: storage, layout, names/order, dims, chunks, labels overview, HCS, ome namespace, axes, transitional, comments, bioformats2raw (all sub-ranges), transforms, multiscales (all sub-ranges incl. example L320-387 and multi-choice L388-397), omero, labels/image-label, plate (all sub-ranges), well, naming, implementations pointer, citing (candidate omits the L815-820 citing locator — added in this report's §11 without changing any claim), version history, conformance, release status. All resolve."],
+      "evidence": ["S003 L1-896 (two-window read)"],
+      "independent_findings": ["§11"],
+      "negative_checks": []
+    }
+  ],
+  "replacements": [
+    {
+      "id": "RPL-01",
+      "location": "U004 §3.2 counterevidence (row discovery)",
+      "candidate_text": "directory enumeration without metadata is non-conforming discovery",
+      "replacement": "rows are discoverable via plate.rows + plate.wells[].path (S003 L542-560); no row-metadata section or row-group key was found in the recorded whole-capture row search (N-09). Treating metadata-less directory enumeration as non-conforming is a sound inference from the metadata-driven definitions, not an explicit MUST in S003.",
+      "reason": "Negative-screen repair (V-FOLLOWON-1): no explicit prohibiting sentence was found; an inference must not be presented as a quoted prohibition. Dispute left as documented inference (N-29)."
+    },
+    {
+      "id": "RPL-02",
+      "location": "U009 item 12 / U003 §2.6 context (editorial artifact L93-94)",
+      "candidate_text": "Editorial duplicate 'by the by the' (S003 L93-94)",
+      "replacement": "Editorial line-wrap repetition 'defined by / by the' (i.e. 'by by the') at S003 L93-94",
+      "reason": "Exact-text correction from the recorded 'by the' search: L93 ends 'defined by' and L94 begins 'by the'. No semantic effect in either wording (N-28)."
+    }
+  ],
+  "additions": [
+    {
+      "id": "ADD-01",
+      "title": "Applicability and transfer limits (§0)",
+      "content": "Single-source bound (0.5 capture only; no transfer to other versions/drafts/live site/Zarr text/OME-XML/UDUNITS-2/tool outputs); Zarr v3 external dependency; local-only narrowing as product decision; no execution evidence; negative-screen limit (keyword miss proves only that search).",
+      "reason": "Required by assignment (applicability/transfer limits) and absent as a consolidated section in the candidate."
+    },
+    {
+      "id": "ADD-02",
+      "title": "Missing-input behavior vs absence-of-source evidence (§7 lead)",
+      "content": "Explicit distinction: missing/undecodable/out-of-contract input behavior (plan acceptance) vs specification silence (product decision + caveat). Conflation recorded as defect; none found in candidate taxonomy.",
+      "reason": "Required by execution instruction; candidate taxonomy is compatible but does not state the distinction."
+    },
+    {
+      "id": "ADD-03",
+      "title": "Citing locator in source-line index (§11)",
+      "content": "citing L815-820 added alongside implementations pointer L813-814.",
+      "reason": "Completeness: candidate index cites Tools but not the adjacent Citing section that N-02 also clears."
+    },
+    {
+      "id": "ADD-04",
+      "title": "Coverage, dead ends, costs, novelty (§12)",
+      "content": "Whole-brief/plan/candidate coverage attestation, dead-end search inventory, unsupported-assertion/false-dismissal accounting, conditions/source-fit/novelty statement, and honest elapsed/usage costs (query/read inventory; no metering tool available).",
+      "reason": "Required by evaluation obligations; candidate has no consolidated costs/coverage section."
+    }
+  ],
+  "non_findings": [
+    {
+      "id": "NF-01",
+      "claim_considered": "A corpus-wide denial that S003 contains any paraphrased implementation, performance, or interoperability guidance under any wording",
+      "verdict": "not_a_finding (unresolved by design)",
+      "reason": "Recorded keyword searches (tolerance/performance/caching/error/thread/background/interop/profile/scan/crash) return no hits, but a paraphrased sentence using none of those terms would not be caught. Per method boundary, the report claims only the scoped searches plus the corroborating full L813-820 read, and leaves paraphrase-free denial unresolved (N-24)."
+    },
+    {
+      "id": "NF-02",
+      "claim_considered": "A corpus-wide denial that S003 disallows any Zarr feature under any paraphrase",
+      "verdict": "not_a_finding (scoped confirmation only)",
+      "reason": "Recorded 'disallow' search finds only L72 itself and the full-text reads found no prohibition sentence, but paraphrase-free denial is not claimed. Report states only the scoped result (N-01)."
+    },
+    {
+      "id": "NF-03",
+      "claim_considered": "Directory enumeration without metadata violates an explicit S003 MUST",
+      "verdict": "not_a_finding (inference, see RPL-01/N-29)",
+      "reason": "No explicit prohibiting sentence found; retained only as documented inference from metadata-driven discovery definitions."
+    },
+    {
+      "id": "NF-04",
+      "claim_considered": "Any benchmark-specific numeric patch or re-scoring of the candidate",
+      "verdict": "not_a_finding (method boundary)",
+      "reason": "Method boundary forbids benchmark-specific numeric patches; this verification repairs V-FOLLOWON-1 (absence-assertion scoping) only, in this method only."
+    }
+  ],
+  "unresolved_areas": ["§8 items 1-15 (see report); each left unresolved inside S003 rather than denied"],
+  "validation_status": "All V1-V9 preserved as UNEXECUTED; no execution evidence exists or is claimed (N-30).",
+  "overall": "Candidate verifies: 12/12 units confirmed (7 with recorded qualifications, 0 corrected on material format obligations). Two minor replacements (RPL-01 inference labeling, RPL-02 editorial wording), four additions (ADD-01..ADD-04), four explicit non-findings (NF-01..NF-04). No obligation added or removed; no false dismissal found."
+}

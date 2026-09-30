@@ -10,20 +10,45 @@
       74
     ],
     "eligible_facets": 6,
-    "preservation": "unassessed",
-    "economics_qualification": "no same-quality win"
+    "preservation": "saved-history assessed; acquisition-to-final unassessed",
+    "economics_qualification": "no same-quality win",
+    "saved_history_preservation": "no demonstrated saved source-supported temporal loss; all available history reviewed",
+    "acquisition_to_final_preservation": "unassessed; acquisition semantics unknown",
+    "preservation_summary": "reviews/first-pair-preservation-summary.json"
   },
   {
     "method": "T06",
     "family": "Z",
-    "assessment": "unassessed",
-    "current_outputs_frozen": true
+    "assessment": "quality failure",
+    "current_outputs_frozen": true,
+    "independent_current_review_complete": true,
+    "all_material_claims_reviewed": true,
+    "all_six_eligible_facets_evaluated": true,
+    "preservation": "unassessed",
+    "economics_qualification": "no same-quality efficiency win",
+    "runtime_safety": "inherited M/Z v1 safe-harness qualification withdrawn; historical artifacts retained",
+    "reviews": [
+      "R003",
+      "R004"
+    ],
+    "summary": "reviews/R003-R004-current-only-summary.json"
   },
   {
     "method": "T01",
     "family": "M",
-    "assessment": "unassessed",
-    "aggregate_control_preserves_original_capped_opening": true
+    "assessment": "quality failure",
+    "aggregate_control_preserves_original_capped_opening": true,
+    "independent_current_review_complete": true,
+    "all_material_claims_reviewed": true,
+    "all_six_eligible_facets_evaluated": true,
+    "preservation": "unassessed",
+    "economics_qualification": "no same-quality efficiency win",
+    "runtime_safety": "inherited M/Z v1 safe-harness qualification withdrawn; historical artifacts retained",
+    "reviews": [
+      "R005",
+      "R006"
+    ],
+    "summary": "reviews/C017-current-summary.json"
   },
   {
     "method": "T08",
@@ -31,7 +56,7 @@
     "assessment": "infrastructure-limited",
     "launch_admissions": 4,
     "native_goal_starts": 2,
-    "adapter_finite_repairs": "two recorded versions exhausted; prospective carrier alternative unadjudicated"
+    "adapter_finite_repairs": "two recorded versions exhausted; final independent carrier adjudication NO launch authority; L remains quarantined"
   },
   {
     "method": "T03",
@@ -44,10 +69,21 @@
   {
     "method": "T09",
     "family": "M",
-    "assessment": "unassessed",
+    "assessment": "quality failure",
     "current_outputs_frozen": true,
     "semantic_review": "pending; no efficiency win claimed",
-    "structural_status": "complete"
+    "structural_status": "complete",
+    "independent_current_review_complete": true,
+    "all_material_claims_reviewed": true,
+    "all_six_eligible_facets_evaluated": true,
+    "preservation": "unassessed",
+    "economics_qualification": "no same-quality efficiency win",
+    "runtime_safety": "inherited M/Z v1 safe-harness qualification withdrawn; historical artifacts retained",
+    "reviews": [
+      "R007",
+      "R008"
+    ],
+    "summary": "reviews/C028-current-summary.json"
   },
   {
     "method": "T13",
@@ -56,5 +92,61 @@
     "current_outputs_frozen": true,
     "semantic_review": "pending; no efficiency win claimed",
     "structural_status": "required outputs missing"
+  },
+  {
+    "method": "T14",
+    "family": "M",
+    "assessment": "unassessed",
+    "native_goal_complete_both": true,
+    "structural_outputs_complete_both": true,
+    "independent_current_review": "pending R011/R012",
+    "preservation": "unassessed",
+    "same_quality_efficiency_win": false,
+    "runtime_safety": "historical inherited v1 qualification withdrawn"
+  },
+  {
+    "method": "T07",
+    "instance": "prepared resume prospective cards",
+    "assessment": "unassessed",
+    "candidate_executions": 0,
+    "machinery": "accepted preparation only",
+    "native_admissions": "held; independently accepted runtime/rebind required",
+    "inventory": "cohort-grading/prepared-method-inventory.json"
+  },
+  {
+    "method": "T08",
+    "instance": "prepared resume prospective cards",
+    "assessment": "unassessed",
+    "candidate_executions": 0,
+    "machinery": "accepted preparation only",
+    "native_admissions": "held; independently accepted runtime/rebind required",
+    "inventory": "cohort-grading/prepared-method-inventory.json"
+  },
+  {
+    "method": "T10",
+    "instance": "prepared resume prospective cards",
+    "assessment": "unassessed",
+    "candidate_executions": 0,
+    "machinery": "accepted preparation only",
+    "native_admissions": "held; independently accepted runtime/rebind required",
+    "inventory": "cohort-grading/prepared-method-inventory.json"
+  },
+  {
+    "method": "T11",
+    "instance": "prepared resume prospective cards",
+    "assessment": "unassessed",
+    "candidate_executions": 0,
+    "machinery": "accepted preparation only",
+    "native_admissions": "held; independently accepted runtime/rebind required",
+    "inventory": "cohort-grading/prepared-method-inventory.json"
+  },
+  {
+    "method": "T12",
+    "instance": "prepared resume prospective cards",
+    "assessment": "unassessed",
+    "candidate_executions": 0,
+    "machinery": "accepted preparation only",
+    "native_admissions": "held; independently accepted runtime/rebind required",
+    "inventory": "cohort-grading/prepared-method-inventory.json"
   }
 ]

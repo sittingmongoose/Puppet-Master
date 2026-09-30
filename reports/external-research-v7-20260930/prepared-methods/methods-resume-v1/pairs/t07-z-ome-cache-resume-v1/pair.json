@@ -1,0 +1,72 @@
+{
+  "schema": "er7.method_pair.v1",
+  "pair_id": "t07-z-ome-cache-resume-v1",
+  "method": "T07",
+  "family": "Z",
+  "case_id": "ome-normative-dev-v1",
+  "status": "prepared-not-reviewed-not-started",
+  "attempts": [
+    {
+      "job_id": "t07-z-ome-cache-resume-v1-control",
+      "arm": "control",
+      "assignment_id": "control",
+      "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control",
+      "spec": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control.spec.json"
+    },
+    {
+      "job_id": "t07-z-ome-cache-resume-v1-treatment",
+      "arm": "treatment",
+      "assignment_id": "treatment",
+      "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment",
+      "spec": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment.spec.json"
+    }
+  ],
+  "changed_variables": [
+    "Two cold local acquisition/parses versus first cold parse followed by immutable warm reuse."
+  ],
+  "held_fixed": [
+    "Same complete source/case/two-question scope",
+    "Same prior Q1 workload",
+    "900s96/Max effort",
+    "Actual local acquisition/parse measured, network fetches zero",
+    "Full output/semantic evaluation"
+  ],
+  "caps": {
+    "t07-z-ome-cache-resume-v1-control": {
+      "seconds": 900,
+      "responses": 96
+    },
+    "t07-z-ome-cache-resume-v1-treatment": {
+      "seconds": 900,
+      "responses": 96
+    }
+  },
+  "versions": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/prepare_resume.py": "131bdc7b841b0d53f4aaa829c3dcf13ad56735a0b5b3700ccc05dcab71e08ea9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/dependency_selector.py": "b4e056e6a741e6130510fe8608ee58bc49f8c9be7f2fadfe0d5faded7e04df20",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/mechanics.py": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/topology.py": "7284a6f71d49aace1b0f9141c896ac5fd644e0c18f492eb06b7b49dab8c7739e",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/harness-v1-frozen/workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+  },
+  "independent_review_required": true,
+  "configuration_provenance": "New M/Z configuration after independent L-route quarantine; no silent family replacement.",
+  "L_history": "All unused L cards and failed L receipts retained; no third carrier repair authorized.",
+  "balance_limit": "First-screen balance constrained by unavailable L route; M/Z results do not establish L behavior.",
+  "candidate_starts_by_preparation": 0,
+  "measurement_status": "No executed comparison claimed.",
+  "postprocess": {
+    "control_counts": {
+      "local_acquisitions": 2,
+      "parses": 2,
+      "hits": 0
+    },
+    "treatment_counts": {
+      "local_acquisitions": 1,
+      "parses": 1,
+      "hits": 1
+    },
+    "required": "Check exact Q1/Q2 view bytes, command trace, dependency/hash and immutable cache bytes; counts alone are not proof.",
+    "cost": "Include copying/preparation, Q1 cold and Q2 warm, cache creation/read, native reads, all corrections and starts. No network savings."
+  }
+}

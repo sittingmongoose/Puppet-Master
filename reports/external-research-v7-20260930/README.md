@@ -1,6 +1,6 @@
 # External research optimization campaign v7
 
-Authorized September 30, 2026. Isolated exploratory research for Puppet Master’s Planning Wizard; this branch contains campaign reports only. This is a resumed, partial ongoing cohort. T02 has independent current quality failures; no same-quality efficiency win is established.
+Authorized September 30, 2026. Isolated exploratory research for Puppet Master’s Planning Wizard; this branch contains campaign reports only. This is a resumed, partial ongoing cohort. T01/T02/T06/T09 have eight independently reviewed current reports, all quality failures; no same-quality efficiency win is established.
 
 - [Results](RESULTS.md)
 - [Methods](methods.json)
@@ -18,3 +18,5 @@ Native candidates are limited to two Muse 1.3 Contributor Max, two GLM 5.3 Flash
 Frozen resume evidence: [source hashes](cohort-evidence/source-freeze.json), [native lifecycle and phase metrics](cohort-evidence/terminal-attempts.json), [T03 finalization proof](cohort-evidence/t03-finalization.json). Historical pause checkpoints remain evidence, while [CHECKPOINT](CHECKPOINT.md) describes resumed state.
 
 New Z launches are held after an independent credential-readability boundary probe; [failure details](FAILURES.md) retain historical outputs and the precise limits of the evidence.
+
+Reviewed cohort: [current comparisons](comparisons.json), [available first-pair preservation](reviews/first-pair-preservation-summary.json), [T14 completed artifacts](cohort-grading/t14-terminal-attempts.json), [accepted preparation inventory](cohort-grading/prepared-method-inventory.json), [hash bindings](cohort-grading/source-freeze.json). All new M/Z admissions remain held; L remains quarantined.

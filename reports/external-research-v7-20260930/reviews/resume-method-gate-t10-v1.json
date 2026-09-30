@@ -1,0 +1,49 @@
+{
+  "schema": "er7.method_launch_review.v1",
+  "review_id": "resume-method-gate-t10-v1",
+  "status": "accepted",
+  "acceptance_scope": "Exact prospective T10-M brief-only method cards and bindings; unchanged separately accepted M runtime, operator quota, native configuration/integrity receipts still apply. This does not accept a runtime repair.",
+  "reviewer": "/root/method_gate_resume",
+  "created_utc": "2026-09-30T16:31:14.145802+00:00",
+  "blocking_findings": [],
+  "method": "T10",
+  "pair_id": "t10-m-azure-discovery-resume-v1",
+  "reviewed_files": {
+    "methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/pair.json": "c2b2cccc06420c2549dafa7c479b532caaf0d19cfaf69e5c2ec2a56d74e3dcbf",
+    "methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/treatment.spec.json": "11aeff584ab7f3c593531ff246dbf8c06a808696cafdc8f3a1f4f8bfed08f01f",
+    "methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control.spec.json": "783f80521cd33b4c5ab522e0b926b4fc97639e05904f4fe2d4569ffe760329c8",
+    "methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/treatment/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/treatment/attempt.json": "6524079e8ab4927fd2993eac2d87e705525d038a50c344975f3a932a5b059ea8",
+    "methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control/attempt.json": "cd857558c887a644772991e1d63368ad274f3a0d2d94c4c56500c859d8b94891",
+    "methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control/workspace/TASK.md": "3ab5549a33ec23c2a0e56d1ccaa0e04e59ed438c4d94d0fd43e9adadd2d1949f",
+    "methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control/workspace/inputs/brief.md": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+    "methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/treatment/workspace/TASK.md": "85f8aace249b7fd0611e97547ff32189098ea4f9a044d7cd8f4556ae25d6ff92",
+    "methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/treatment/workspace/inputs/brief.md": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+    "methods-resume-v1/prepare_resume.py": "131bdc7b841b0d53f4aaa829c3dcf13ad56735a0b5b3700ccc05dcab71e08ea9",
+    "methods-resume-v1/dependency_selector.py": "b4e056e6a741e6130510fe8608ee58bc49f8c9be7f2fadfe0d5faded7e04df20",
+    "methods-resume-v1/budget_guard.py": "9e870636dae31aa92bf2b3409a5f0b810b30e2f11f38de21fccd6b9c7ec55e25",
+    "methods-resume-v1/test_resume.py": "dbdcdd78aaeb107ce3bda0084932a3e9630634a9b6b1c16399c70f1b61e02d4b",
+    "methods-resume-v1/README.md": "d2354acedc5a8ee525b17f11beaea8dc02deaa216ca23a6ce928e1242a068dbd",
+    "methods-resume-v1/offline-checks.txt": "632f22c998b2adc9cf1f5d2e20cd3b46dd8c1449f2b731be430eb73bf2cd6be6"
+  },
+  "review_request_sha256": "3c83c8800fe8e964b9114b8d5eb24188eb0856dc91bf8f7ef7506d72d012879c",
+  "checks": [
+    "All exact requested file pins and two prepared attempts strictverify pass.",
+    "Both runtime commands dry-run without a native Goal.",
+    "Same sole 1009-byte product brief; no evaluator keys, supplied discoveries, source list, plan, findings, grades or other candidate history.",
+    "Only competitor-focused versus competitor-plus-analogous-component source-selection policy changes.",
+    "Same entire brief scope, public primary-source/read-only access, M family/Max obligation,900s96 caps and report/acquisition/scheduling outputs.",
+    "No answers or benchmark-specific factual hints added."
+  ],
+  "required_reporting": [
+    "Dispatch through separately accepted unchanged M runtime only while root/operator confirm its availability and no safety hold. Any runtime repair or tool-policy change requires prospective exact rebind.",
+    "Requested/effective Muse1.3Contributor Max, native Goal identity/status/quiescence and shared campaign M cap2 lease must be recorded.",
+    "Record reproducible order, overlapping account/sibling load, all startup/service waits/cleanup and actual tool availability/failures.",
+    "All current material claims and full brief including unvisited/deadends independently evaluated before historical acquisition inspection; plain prompt acceptance is not semantic qualification.",
+    "Preserve prior T10/L failures and all fresh starts/latency/cost; no fresh-case/holdout claim for this development brief."
+  ],
+  "candidate_starts_by_review": 0,
+  "candidate_answers_keys_grades_read": false,
+  "credential_contents_read": false
+}

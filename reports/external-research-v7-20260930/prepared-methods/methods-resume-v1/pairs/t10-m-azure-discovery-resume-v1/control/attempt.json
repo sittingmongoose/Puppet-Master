@@ -1,0 +1,73 @@
+{
+  "schema": "er7.attempt.v1",
+  "status": "prepared-not-started",
+  "spec": {
+    "job_id": "t10-m-azure-discovery-resume-v1-control",
+    "method": "T10",
+    "arm": "control",
+    "family": "M",
+    "case_id": "azure-review-dev-v1",
+    "scope": "Entire admitted product brief; independently discover useful external unknowns.",
+    "inputs": [
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/azure-review-dev-v1/brief.md",
+        "target": "brief.md"
+      }
+    ],
+    "admitted_inputs": [
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/azure-review-dev-v1/brief.md",
+        "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607"
+      }
+    ],
+    "caps": {
+      "seconds": 900,
+      "responses": 96
+    },
+    "output_files": [
+      "report.md",
+      "acquisition.json",
+      "scheduling.json"
+    ],
+    "source_access": "Public external search and read-only primary-source/repository inspection; no supplied external source list. Local access only the isolated workspace.",
+    "plan_visibility": "Plan-blind: only brief.md is admitted; no plan/spec/key/history.",
+    "evaluation_obligations": "All material claims, full assigned scope including unvisited/dead-end areas, unsupported assertions, false dismissals, conditions, source fit, novelty, complete elapsed and usage costs.",
+    "zcode_tools": [
+      "Read",
+      "Write",
+      "Bash",
+      "WebFetch",
+      "WebSearch"
+    ],
+    "method_instruction": "Search primarily for whole-product competitors; inspect implementation evidence where available. Select sources yourself and record search sequence, selection reasons and unresolved areas in scheduling.json. Deliver a standalone current report with complete independent finding identities, exact evidence locators and source versions, applicability/transfer limits, plan implications where a plan is admitted, unresolved areas and proposed validation labeled UNEXECUTED. Also write acquisition.json recording selected source URLs/versions, queries/reads and finding-to-source links; do not invent access or execution evidence. Source choice and interpretation are your own. A failed search proves only that search result, not absence."
+  },
+  "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control/workspace",
+  "goal_file": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control/goal.txt",
+  "input_manifest": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/azure-review-dev-v1/brief.md",
+      "target": "brief.md",
+      "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+      "bytes": 1009
+    }
+  ],
+  "task_sha256": "3ab5549a33ec23c2a0e56d1ccaa0e04e59ed438c4d94d0fd43e9adadd2d1949f",
+  "goal_sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+  "harness_files": {
+    "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+    "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+    "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+  },
+  "native_files": {
+    "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+    "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+    "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+    "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+  },
+  "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+  "operator_files": {
+    "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+    "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+  },
+  "filesystem_isolation": "separate copies; read-only input modes; launch requires operator namespace isolation"
+}

@@ -1,0 +1,181 @@
+{
+  "schema": "er7.current_only_pair_summary.v1",
+  "pair": [
+    "R003",
+    "R004"
+  ],
+  "stage": "current_only",
+  "saved_utc": "2026-09-30T16:32:28.138011+00:00",
+  "reviews": [
+    {
+      "review_id": "R003",
+      "report_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R003/current-report.md",
+      "report_sha256": "0766ca8ab919425a20e1cfe1e7f1dc7f434516498e98879da3c657143e45a49c",
+      "assessment_json_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R003/current-assessment.json",
+      "assessment_json_sha256": "47682e7dfe5664b8c971ecf8270df4b695452c198e1067d6cb8d78cdef9baef9",
+      "assessment_md_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R003/current-assessment.md",
+      "assessment_md_sha256": "f5e9c907bf5efd7300d82d967127e6c110bb4bcd51a7274b1255c5363e186fed",
+      "frozen_utc": "2026-09-30T16:32:28.084696+00:00",
+      "complete_coverage": true,
+      "unreviewed_scope": [],
+      "terminal_label": "quality failure",
+      "claim_rows": 97,
+      "claim_outcomes": {
+        "supported": 80,
+        "unresolved": 1,
+        "contradicted": 3,
+        "qualified": 11,
+        "unsupported": 2
+      },
+      "facets": [
+        {
+          "facet_id": "OME05-C01",
+          "coverage": "full",
+          "source_outcome": "supported"
+        },
+        {
+          "facet_id": "OME05-C02",
+          "coverage": "partial",
+          "source_outcome": "contradicted"
+        },
+        {
+          "facet_id": "OME05-C03",
+          "coverage": "full",
+          "source_outcome": "supported"
+        },
+        {
+          "facet_id": "OME05-C04",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        },
+        {
+          "facet_id": "OME05-C05",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        },
+        {
+          "facet_id": "OME05-C06",
+          "coverage": "partial",
+          "source_outcome": "supported"
+        }
+      ],
+      "material_failure_identities": [
+        "R003-CHANNEL_COUNT_AXES_ONLY",
+        "R003-LABEL_SHAPE_MUST",
+        "R003-WINDOW_SEMANTICS",
+        "R003-OLDER_TOOLING_ZARR2",
+        "R003-IMAGE_LABEL_MAY_DOWNGRADE",
+        "R003-FACET-C02",
+        "R003-FACET-C04",
+        "R003-FACET-C05",
+        "R003-FACET-C06",
+        "R003-CONDITION_FORCE",
+        "R003-NORMATIVE_SELECTION_QUALIFIER",
+        "R003-ALIGNMENT_POLICY_SCOPE"
+      ]
+    },
+    {
+      "review_id": "R004",
+      "report_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R004/current-report.md",
+      "report_sha256": "63a691f616a80fe707c15b750292f09ab4f3a530dc6eb43288aa0c2c59481485",
+      "assessment_json_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R004/current-assessment.json",
+      "assessment_json_sha256": "e006a1d038d1c4818e819f8ab0ea02a3f2ea610c9eef401ed785c9ced9cd5022",
+      "assessment_md_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R004/current-assessment.md",
+      "assessment_md_sha256": "35af8cd6bf9d74d9942fb005c947070708c95cea8af648df1d15a1658231dce2",
+      "frozen_utc": "2026-09-30T16:32:28.115574+00:00",
+      "complete_coverage": true,
+      "unreviewed_scope": [],
+      "terminal_label": "quality failure",
+      "claim_rows": 93,
+      "claim_outcomes": {
+        "supported": 76,
+        "unresolved": 1,
+        "contradicted": 5,
+        "unsupported": 2,
+        "qualified": 9
+      },
+      "facets": [
+        {
+          "facet_id": "OME05-C01",
+          "coverage": "full",
+          "source_outcome": "qualified"
+        },
+        {
+          "facet_id": "OME05-C02",
+          "coverage": "partial",
+          "source_outcome": "supported"
+        },
+        {
+          "facet_id": "OME05-C03",
+          "coverage": "partial",
+          "source_outcome": "supported"
+        },
+        {
+          "facet_id": "OME05-C04",
+          "coverage": "partial",
+          "source_outcome": "supported"
+        },
+        {
+          "facet_id": "OME05-C05",
+          "coverage": "partial",
+          "source_outcome": "contradicted"
+        },
+        {
+          "facet_id": "OME05-C06",
+          "coverage": "partial",
+          "source_outcome": "supported"
+        }
+      ],
+      "material_failure_identities": [
+        "R004-PARITY_IS_ALIGNMENT",
+        "R004-LABEL_SHAPE_GUARANTEE",
+        "R004-ALL_METADATA_OME",
+        "R004-ALL_LAYOUT_GRID_MANDATE",
+        "R004-STRICT_PARSER_MANDATE",
+        "R004-ONLY_WORKED_EXAMPLES",
+        "R004-FACET-C02",
+        "R004-FACET-C03",
+        "R004-FACET-C04",
+        "R004-FACET-C05",
+        "R004-FACET-C06",
+        "R004-COMPLETENESS_ASSERTION",
+        "R004-LABEL_PRIMARY_LIST_POLICY"
+      ]
+    }
+  ],
+  "assessment_frozen_before_history_unlock": true,
+  "acquisition_history_accessed": false,
+  "private_map_or_cards_accessed": false,
+  "candidate_conversations_accessed": false,
+  "economics_accessed_or_assessed": false,
+  "other_grades_or_history_accessed": false,
+  "aggregate_complete_coverage": true,
+  "aggregate_unreviewed_scope": [],
+  "aggregate_terminal_label": "quality failure",
+  "comparison": "Both reports fail current quality on material source/qualifier errors and incomplete eligible facets. No winner, preservation result, same-quality efficiency win, or integrated qualification is inferred. Counts describe inventory and facet coverage, not a scalar quality score.",
+  "shared_current_gaps": [
+    "No explicit absent-vs-present-singleton navigation distinction",
+    "No concrete asymmetric numeric transform check",
+    "No exact uint64/int64 identity/range/refusal or categorical-preserving resampling safeguards",
+    "Relative source association is exposed but not established as an authoritative pre-overlay gate"
+  ],
+  "distinct_failures": {
+    "R003": [
+      "Channel count incorrectly assigned to axes alone",
+      "Singleton label shape promoted to hard MUST",
+      "Unverified window data/display range semantics and historical v2 tooling claim"
+    ],
+    "R004": [
+      "Label level-count parity substituted for geometry registration",
+      "All node metadata generalized into attributes.ome",
+      "Universal grid/all-layout and strict-parser mandates presented without product qualification"
+    ]
+  },
+  "limitations": [
+    "Evidence universe is one frozen 896-line normative capture; actual reader/tool prevalence and performance are unavailable.",
+    "Both headers disclose condition/repetition/task cues; full treatment identities, method cards, conversations, economics and history remain closed.",
+    "Host accepted gpt-6.1-sol/xhigh spawn binding; effective runtime identity not independently exposed.",
+    "The independent evaluator assessed one coherent pair; no recursive helpers or model-agreement oracle used."
+  ],
+  "next_stage_control": "This file binds saved stage-1 assessment hashes. Host may separately unlock acquisition/history only after preserving these hashes and unlock receipt; no original assessment is to be silently revised."
+}

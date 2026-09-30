@@ -1,0 +1,40 @@
+{
+  "schema": "er7.output_integrity.v1",
+  "files": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/treatment/workspace/out/acquisition.json",
+      "target": "out/acquisition.json",
+      "sha256": "80a8f3d18672349103bcea275f94aeafa6447d5fa6e605105eca6776d1801785",
+      "bytes": 19976
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/treatment/workspace/out/negative-checks.json",
+      "target": "out/negative-checks.json",
+      "sha256": "fa8c0a1ed3a0ee9df4d6d6608762e7c47fac718193462d6fc068427631ebae5f",
+      "bytes": 34238
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/treatment/workspace/out/report.md",
+      "target": "out/report.md",
+      "sha256": "18349e1b6eb33bc2091dc11e9d7779263abc1f600bc156f13536b8f7eb0beda2",
+      "bytes": 58840
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/treatment/workspace/out/verification.json",
+      "target": "out/verification.json",
+      "sha256": "c6f0499e7b4f065d6ff538d92827b4dbb634fab838e86160dd0f8f5824e6ad18",
+      "bytes": 18594
+    }
+  ],
+  "missing_required_outputs": [],
+  "structural_complete": true,
+  "semantic_quality": "not evaluated",
+  "native_quiescence": "established in native/receipt.json",
+  "native_receipt_sha256": "a0a57cc80ff4c1930a28975748cf7f0bb11b9770d2a3d7971e8fc6a0f964f3ec",
+  "stable_output_hashes": {
+    "acquisition.json": "80a8f3d18672349103bcea275f94aeafa6447d5fa6e605105eca6776d1801785",
+    "negative-checks.json": "fa8c0a1ed3a0ee9df4d6d6608762e7c47fac718193462d6fc068427631ebae5f",
+    "report.md": "18349e1b6eb33bc2091dc11e9d7779263abc1f600bc156f13536b8f7eb0beda2",
+    "verification.json": "c6f0499e7b4f065d6ff538d92827b4dbb634fab838e86160dd0f8f5824e6ad18"
+  }
+}

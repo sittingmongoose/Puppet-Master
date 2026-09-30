@@ -1,0 +1,33 @@
+{
+  "schema": "er7.output_integrity.v1",
+  "files": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/control/workspace/out/acquisition.json",
+      "target": "out/acquisition.json",
+      "sha256": "fae4f2919325154a236a26c7cbf0dab68cf192683530ebccb3b726cfd98138a3",
+      "bytes": 4417
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/control/workspace/out/report.md",
+      "target": "out/report.md",
+      "sha256": "b0866759263b91aa1fe982edbc9c3cfcaa70bc90d2ff3501b9a1ce6e70ed110a",
+      "bytes": 32650
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/control/workspace/out/verification.json",
+      "target": "out/verification.json",
+      "sha256": "a6d9244f2a96c5e22c8e8105c11a3448ba8e76d7fde163e5c7b1b95d3030d8d1",
+      "bytes": 6843
+    }
+  ],
+  "missing_required_outputs": [],
+  "structural_complete": true,
+  "semantic_quality": "not evaluated",
+  "native_quiescence": "established in native/receipt.json",
+  "native_receipt_sha256": "6823fcc76c41163873064cc61eeaabbdc1ef208b3c3ea4dee5468e5e7fc23f00",
+  "stable_output_hashes": {
+    "acquisition.json": "fae4f2919325154a236a26c7cbf0dab68cf192683530ebccb3b726cfd98138a3",
+    "report.md": "b0866759263b91aa1fe982edbc9c3cfcaa70bc90d2ff3501b9a1ce6e70ed110a",
+    "verification.json": "a6d9244f2a96c5e22c8e8105c11a3448ba8e76d7fde163e5c7b1b95d3030d8d1"
+  }
+}

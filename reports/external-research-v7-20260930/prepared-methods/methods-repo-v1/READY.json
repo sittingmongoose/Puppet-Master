@@ -1,0 +1,64 @@
+{
+  "schema": "er7.repo_preparation_ready.v1",
+  "status": "prepared-awaiting-independent-method-review",
+  "case_id": "jj-repo-dev-v1",
+  "case_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/CASE_FREEZE.json",
+  "files": {
+    "prepare_pairs.py": "a8ccfd792b7b608fdb5e20bdf448b1ddaecbf9f5c85c6642dab8b567a4b7d470",
+    "repo_map_tool.py": "1e77cbce376b649cb40b24bf2dc58201bf7a41b86eff2a830cf24befd27306ec",
+    "acquire_case.py": "60de9a0ffe08e3c63542b2f3df1004481837dc2dbc16c9508219f7cb38cc14c0",
+    "check_boundaries.py": "9926f4460928aa742ffc7d066c7152bbb51bbfb13dd05721d7d4303c955ac3f9",
+    "boundary-receipt.json": "96e3045e68ec06eb3a61bc82a8f79f85c07ac2d2d2be4c2753c8b8235eeae443",
+    "CASE_FREEZE.json": "234c4811a9c033aa1602b74f51f7b0483f50407695b060a5e4d3eb2ba3d9936a",
+    "README.md": "33b0ad1c694a44d0ec6caccc8cc2947b7bf68ccc9510f1c662187f42c07ed031"
+  },
+  "pairs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/pair.json",
+      "sha256": "0b7f1bdea5182b649bf14cd9eac3b37811c0e311f7043aa138d2e3422bd0cda7",
+      "attempts": [
+        {
+          "job_id": "t11-z-jj-repo-screen-v1-control",
+          "arm": "control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/control",
+          "spec": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/control.spec.json"
+        },
+        {
+          "job_id": "t11-z-jj-repo-screen-v1-treatment",
+          "arm": "treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/treatment",
+          "spec": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/treatment.spec.json"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/pair.json",
+      "sha256": "986a0811eb752707ebd7194ca83bece44c6d3655f18aa982e455933f3165c6e3",
+      "attempts": [
+        {
+          "job_id": "t12-z-jj-repo-screen-v1-control",
+          "arm": "control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control",
+          "spec": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control.spec.json"
+        },
+        {
+          "job_id": "t12-z-jj-repo-screen-v1-treatment",
+          "arm": "treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment",
+          "spec": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment.spec.json"
+        }
+      ]
+    }
+  ],
+  "reviewer": "/root/method_gate_resume",
+  "author": "/root/repo_cases_resume",
+  "candidate_starts": 0,
+  "candidate_grades": 0,
+  "prospective_eligibility": "Private source inventory and eligibility frozen before dispatch; author cannot grade this method",
+  "history_completeness_proof": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/private/jj-repo-dev-v1-acquisition/HISTORY_COMPLETENESS_PROOF.json",
+    "sha256": "ac81a4d13e9ae0325af789ca24af82757cd936096f8a3798b2827ebc515ac0df"
+  },
+  "operator": "ops/mz_dispatch.py --attempt <each pair arm attempt path>",
+  "source_setup_costs": "evaluation/private/jj-repo-dev-v1-acquisition/SETUP_COSTS.json plus SETUP_COSTS_SUPPLEMENT.json"
+}

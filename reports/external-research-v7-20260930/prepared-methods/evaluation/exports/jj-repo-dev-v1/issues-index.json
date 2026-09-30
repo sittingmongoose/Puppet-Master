@@ -1,0 +1,689 @@
+{
+  "selection": "Every issue created 2024-08-01..2024-10-02 in jj-vcs/jj, all states/labels, sorted created ascending",
+  "query": "https://api.github.com/search/issues?q=repo%3Ajj-vcs%2Fjj+is%3Aissue+created%3A2024-08-01..2024-10-02&sort=created&order=asc&per_page=100&page=1",
+  "total_count": 68,
+  "issues": [
+    {
+      "number": 4190,
+      "title": "FR: Add `--reversed` option to `op log`",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-01T08:20:13Z",
+      "updated_at": "2025-01-12T02:03:15Z",
+      "file": "issues/4190.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4190",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4190/comments"
+    },
+    {
+      "number": 4207,
+      "title": "`ui.merge-editor = \"vscode\"` doesn't work by default on Windows",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-04T01:38:42Z",
+      "updated_at": "2024-10-12T21:44:35Z",
+      "file": "issues/4207.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4207",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4207/comments"
+    },
+    {
+      "number": 4210,
+      "title": "FR: Automatically delete all lines below (and including) a \"scissor line\" in description buffers",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-04T13:07:16Z",
+      "updated_at": "2024-12-24T14:46:54Z",
+      "file": "issues/4210.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4210",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4210/comments"
+    },
+    {
+      "number": 4216,
+      "title": "draft_commit_description template does not show branches on current change",
+      "state_at_capture": "open",
+      "created_at": "2024-08-05T15:12:45Z",
+      "updated_at": "2024-08-08T17:44:50Z",
+      "file": "issues/4216.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4216",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4216/comments"
+    },
+    {
+      "number": 4219,
+      "title": "FR: Switch from RUST_LOG to JJ_LOG ",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-05T16:52:11Z",
+      "updated_at": "2024-12-17T00:51:36Z",
+      "file": "issues/4219.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4219",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4219/comments"
+    },
+    {
+      "number": 4220,
+      "title": "docs: Branches page refers to a merge command",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-05T17:03:27Z",
+      "updated_at": "2024-08-06T01:20:38Z",
+      "file": "issues/4220.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4220",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4220/comments"
+    },
+    {
+      "number": 4222,
+      "title": "Weird corner-case issue with .gitignore in git init'ed repos",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-05T22:51:50Z",
+      "updated_at": "2024-08-08T14:05:47Z",
+      "file": "issues/4222.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4222",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4222/comments"
+    },
+    {
+      "number": 4234,
+      "title": "Please upgrade git2 to 0.19.x",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-07T19:13:56Z",
+      "updated_at": "2024-08-20T17:15:20Z",
+      "file": "issues/4234.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4234",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4234/comments"
+    },
+    {
+      "number": 4238,
+      "title": "FR: Better support the edit workflow",
+      "state_at_capture": "open",
+      "created_at": "2024-08-08T05:52:23Z",
+      "updated_at": "2026-03-12T02:59:17Z",
+      "file": "issues/4238.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4238",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4238/comments"
+    },
+    {
+      "number": 4239,
+      "title": "Broken pipe when running `jj rebase 2>&1 | head` causes stale working copy",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-08T06:20:50Z",
+      "updated_at": "2024-09-22T14:02:22Z",
+      "file": "issues/4239.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4239",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4239/comments"
+    },
+    {
+      "number": 4258,
+      "title": "FR: unsquash with multiple parents/children",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-13T04:17:24Z",
+      "updated_at": "2024-08-14T06:43:25Z",
+      "file": "issues/4258.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4258",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4258/comments"
+    },
+    {
+      "number": 4260,
+      "title": "FR: `jj bookmark track` without needing to specify remote",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-13T08:58:44Z",
+      "updated_at": "2025-12-13T01:53:19Z",
+      "file": "issues/4260.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4260",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4260/comments"
+    },
+    {
+      "number": 4276,
+      "title": "tabs break rendering in diff-editor",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-15T14:04:49Z",
+      "updated_at": "2024-08-15T14:17:08Z",
+      "file": "issues/4276.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4276",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4276/comments"
+    },
+    {
+      "number": 4280,
+      "title": "`jj git push -c @` results in `Error: Remote rejected the update of some refs (do you have permission to push to [\"refs/heads/push-ntrnrmqmtyxm\"]?)`",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-15T17:38:44Z",
+      "updated_at": "2024-08-21T21:52:27Z",
+      "file": "issues/4280.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4280",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4280/comments"
+    },
+    {
+      "number": 4293,
+      "title": "`jj git fetch` succeeds in pulling a non-existent branch name",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-16T19:06:13Z",
+      "updated_at": "2024-09-21T13:09:26Z",
+      "file": "issues/4293.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4293",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4293/comments"
+    },
+    {
+      "number": 4305,
+      "title": "FR: make `diff --git` use relative paths",
+      "state_at_capture": "open",
+      "created_at": "2024-08-19T16:27:50Z",
+      "updated_at": "2024-08-20T17:22:38Z",
+      "file": "issues/4305.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4305",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4305/comments"
+    },
+    {
+      "number": 4311,
+      "title": "FR: Support overlaying backends",
+      "state_at_capture": "open",
+      "created_at": "2024-08-20T17:42:58Z",
+      "updated_at": "2024-08-20T17:42:58Z",
+      "file": "issues/4311.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4311",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4311/comments"
+    },
+    {
+      "number": 4323,
+      "title": "FR: Equivalent to `git ls-files`?",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-22T20:13:54Z",
+      "updated_at": "2024-08-22T21:42:08Z",
+      "file": "issues/4323.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4323",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4323/comments"
+    },
+    {
+      "number": 4329,
+      "title": "jj git fetch downloads branches with names uppercased",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-23T18:04:51Z",
+      "updated_at": "2024-08-26T16:40:16Z",
+      "file": "issues/4329.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4329",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4329/comments"
+    },
+    {
+      "number": 4330,
+      "title": "Rebasing a duplicated change results in an empty change",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-23T22:47:15Z",
+      "updated_at": "2024-08-23T22:50:01Z",
+      "file": "issues/4330.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4330",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4330/comments"
+    },
+    {
+      "number": 4333,
+      "title": "Error: invalid or unknown remote ssh hostkey (when using /etc/ssh/ssh_known_hosts)",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-24T18:30:23Z",
+      "updated_at": "2025-05-20T13:25:04Z",
+      "file": "issues/4333.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4333",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4333/comments"
+    },
+    {
+      "number": 4342,
+      "title": "FR: Allow renaming of existing workspaces",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-25T15:48:05Z",
+      "updated_at": "2024-09-17T02:35:37Z",
+      "file": "issues/4342.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4342",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4342/comments"
+    },
+    {
+      "number": 4349,
+      "title": "git submodules in colocated repos create weird phantom file creations/deletions",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-27T17:31:18Z",
+      "updated_at": "2025-12-08T06:56:04Z",
+      "file": "issues/4349.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4349",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4349/comments"
+    },
+    {
+      "number": 4351,
+      "title": "Don't introduce new redundant ancestor merges when auto-rebasing",
+      "state_at_capture": "open",
+      "created_at": "2024-08-27T23:08:04Z",
+      "updated_at": "2024-09-05T17:09:59Z",
+      "file": "issues/4351.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4351",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4351/comments"
+    },
+    {
+      "number": 4352,
+      "title": "Abandoning thousands of commits runs out of memory",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-28T02:39:52Z",
+      "updated_at": "2024-08-28T23:59:23Z",
+      "file": "issues/4352.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4352",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4352/comments"
+    },
+    {
+      "number": 4357,
+      "title": "Could use a full example of how to pass templates to cli args",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-29T01:39:27Z",
+      "updated_at": "2024-09-21T22:19:51Z",
+      "file": "issues/4357.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4357",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4357/comments"
+    },
+    {
+      "number": 4358,
+      "title": "FR: error out when creating branches with @ in the name",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-29T11:44:06Z",
+      "updated_at": "2025-02-21T02:03:48Z",
+      "file": "issues/4358.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4358",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4358/comments"
+    },
+    {
+      "number": 4359,
+      "title": "`jj log --no-graph` shouldn't print multiple revs on same output line",
+      "state_at_capture": "closed",
+      "created_at": "2024-08-29T13:19:30Z",
+      "updated_at": "2024-08-29T13:32:15Z",
+      "file": "issues/4359.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4359",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4359/comments"
+    },
+    {
+      "number": 4376,
+      "title": "FR: adjust colors for custom rev-sets",
+      "state_at_capture": "open",
+      "created_at": "2024-09-03T22:02:14Z",
+      "updated_at": "2024-09-04T15:52:48Z",
+      "file": "issues/4376.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4376",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4376/comments"
+    },
+    {
+      "number": 4386,
+      "title": "SSH login with gpg keycard backed ssh key and pinentry-curses for pin fails",
+      "state_at_capture": "open",
+      "created_at": "2024-09-04T18:53:40Z",
+      "updated_at": "2025-07-04T13:22:01Z",
+      "file": "issues/4386.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4386",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4386/comments"
+    },
+    {
+      "number": 4387,
+      "title": "FR: Gerrit support",
+      "state_at_capture": "open",
+      "created_at": "2024-09-04T23:55:53Z",
+      "updated_at": "2026-09-03T17:36:36Z",
+      "file": "issues/4387.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4387",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4387/comments"
+    },
+    {
+      "number": 4388,
+      "title": "FR: Pushing and fetching arbitrary refs",
+      "state_at_capture": "open",
+      "created_at": "2024-09-04T23:56:55Z",
+      "updated_at": "2026-09-20T04:01:02Z",
+      "file": "issues/4388.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4388",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4388/comments"
+    },
+    {
+      "number": 4394,
+      "title": "Test failure in the last release (0.21.0)",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-05T07:46:31Z",
+      "updated_at": "2024-09-05T20:16:39Z",
+      "file": "issues/4394.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4394",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4394/comments"
+    },
+    {
+      "number": 4395,
+      "title": "FR: merge tool edit conflict marker as 3-way",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-05T09:18:50Z",
+      "updated_at": "2024-09-05T16:24:27Z",
+      "file": "issues/4395.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4395",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4395/comments"
+    },
+    {
+      "number": 4396,
+      "title": "Panic when running `jj st`: `must have one more adds than removes`",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-05T15:18:11Z",
+      "updated_at": "2024-09-05T15:24:24Z",
+      "file": "issues/4396.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4396",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4396/comments"
+    },
+    {
+      "number": 4406,
+      "title": "JJ seems to ignore configuration on MacOS",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-06T13:33:43Z",
+      "updated_at": "2024-11-21T00:36:44Z",
+      "file": "issues/4406.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4406",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4406/comments"
+    },
+    {
+      "number": 4414,
+      "title": "FR: empty commit message should be a no-op",
+      "state_at_capture": "open",
+      "created_at": "2024-09-06T22:15:20Z",
+      "updated_at": "2026-02-16T15:44:01Z",
+      "file": "issues/4414.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4414",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4414/comments"
+    },
+    {
+      "number": 4423,
+      "title": "hosed jj repo after hard-reboot.",
+      "state_at_capture": "open",
+      "created_at": "2024-09-08T20:38:30Z",
+      "updated_at": "2026-08-25T22:59:15Z",
+      "file": "issues/4423.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4423",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4423/comments"
+    },
+    {
+      "number": 4431,
+      "title": "FR: jj undo should print what operation is being undone",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-10T18:39:17Z",
+      "updated_at": "2024-09-15T12:11:34Z",
+      "file": "issues/4431.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4431",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4431/comments"
+    },
+    {
+      "number": 4434,
+      "title": "FR: git fetch should fetch --all-remotes by default?",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-11T07:13:33Z",
+      "updated_at": "2024-10-08T07:11:06Z",
+      "file": "issues/4434.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4434",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4434/comments"
+    },
+    {
+      "number": 4436,
+      "title": "FR: workspaces should also be collocated in --colocate mode",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-11T10:51:00Z",
+      "updated_at": "2026-09-17T14:09:59Z",
+      "file": "issues/4436.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4436",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4436/comments"
+    },
+    {
+      "number": 4438,
+      "title": "FR: send-emails support",
+      "state_at_capture": "open",
+      "created_at": "2024-09-11T17:32:38Z",
+      "updated_at": "2026-04-13T13:39:36Z",
+      "file": "issues/4438.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4438",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4438/comments"
+    },
+    {
+      "number": 4446,
+      "title": "Managed to checkout hidden change, escalated into panic",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-12T14:41:32Z",
+      "updated_at": "2024-09-13T10:32:55Z",
+      "file": "issues/4446.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4446",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4446/comments"
+    },
+    {
+      "number": 4451,
+      "title": "FR: Command for resetting change ID",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-13T01:26:14Z",
+      "updated_at": "2025-08-14T17:48:36Z",
+      "file": "issues/4451.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4451",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4451/comments"
+    },
+    {
+      "number": 4458,
+      "title": "FR: `jj config unset [OPTIONS] <--user|--repo> <NAME>`",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-13T09:15:39Z",
+      "updated_at": "2024-10-30T05:50:17Z",
+      "file": "issues/4458.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4458",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4458/comments"
+    },
+    {
+      "number": 4465,
+      "title": "Panic in `jj op show` on \"reconcile divergent operations\"",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-14T13:40:17Z",
+      "updated_at": "2025-06-12T00:27:10Z",
+      "file": "issues/4465.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4465",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4465/comments"
+    },
+    {
+      "number": 4468,
+      "title": "FR: when abandoning the working copy, use the same children for the new change",
+      "state_at_capture": "open",
+      "created_at": "2024-09-14T18:19:06Z",
+      "updated_at": "2025-09-13T11:31:30Z",
+      "file": "issues/4468.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4468",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4468/comments"
+    },
+    {
+      "number": 4473,
+      "title": "`jj squash --keep-emptied` does not copy the description of the source commit",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-15T12:37:25Z",
+      "updated_at": "2024-09-17T09:49:49Z",
+      "file": "issues/4473.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4473",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4473/comments"
+    },
+    {
+      "number": 4488,
+      "title": "failed to authenticate SSH session",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-17T07:52:53Z",
+      "updated_at": "2025-12-03T16:28:29Z",
+      "file": "issues/4488.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4488",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4488/comments"
+    },
+    {
+      "number": 4493,
+      "title": "jj gets stuck at the last step of `jj git import`",
+      "state_at_capture": "open",
+      "created_at": "2024-09-17T15:10:13Z",
+      "updated_at": "2024-09-18T07:41:03Z",
+      "file": "issues/4493.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4493",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4493/comments"
+    },
+    {
+      "number": 4499,
+      "title": "`jj new` and `jj rebase` commit order does not produce",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-18T01:51:09Z",
+      "updated_at": "2025-01-10T15:38:29Z",
+      "file": "issues/4499.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4499",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4499/comments"
+    },
+    {
+      "number": 4501,
+      "title": "--no-pager doesn't work with `help` subcommand.",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-19T01:38:42Z",
+      "updated_at": "2024-10-12T13:17:14Z",
+      "file": "issues/4501.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4501",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4501/comments"
+    },
+    {
+      "number": 4502,
+      "title": "FR: Keybinding discoverability in jj split",
+      "state_at_capture": "open",
+      "created_at": "2024-09-19T05:33:04Z",
+      "updated_at": "2024-09-19T15:27:09Z",
+      "file": "issues/4502.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4502",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4502/comments"
+    },
+    {
+      "number": 4503,
+      "title": "FR: Examples of using `jj log --template` for ad-hoc and scripting",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-19T09:23:02Z",
+      "updated_at": "2024-09-19T11:34:06Z",
+      "file": "issues/4503.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4503",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4503/comments"
+    },
+    {
+      "number": 4504,
+      "title": "FR: a git commit -v equivalent?",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-19T12:54:18Z",
+      "updated_at": "2024-09-19T12:55:31Z",
+      "file": "issues/4504.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4504",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4504/comments"
+    },
+    {
+      "number": 4508,
+      "title": "On a machine with many cores, snapshotting large repos is very CPU-intensive",
+      "state_at_capture": "open",
+      "created_at": "2024-09-20T00:01:07Z",
+      "updated_at": "2025-10-13T02:04:31Z",
+      "file": "issues/4508.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4508",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4508/comments"
+    },
+    {
+      "number": 4509,
+      "title": "`jj file untrack foo~` fails",
+      "state_at_capture": "open",
+      "created_at": "2024-09-20T10:02:36Z",
+      "updated_at": "2026-08-15T06:20:47Z",
+      "file": "issues/4509.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4509",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4509/comments"
+    },
+    {
+      "number": 4514,
+      "title": "`jj log` changes behaviour if a revision has a description vs not",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-20T23:11:17Z",
+      "updated_at": "2024-09-22T20:51:22Z",
+      "file": "issues/4514.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4514",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4514/comments"
+    },
+    {
+      "number": 4533,
+      "title": "Split behavior differs when using diff editor and passing path",
+      "state_at_capture": "closed",
+      "created_at": "2024-09-25T12:57:07Z",
+      "updated_at": "2024-09-27T11:33:07Z",
+      "file": "issues/4533.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4533",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4533/comments"
+    },
+    {
+      "number": 4544,
+      "title": "Rebasing (and some other operations) is confusing for hidden commits",
+      "state_at_capture": "open",
+      "created_at": "2024-09-27T02:55:09Z",
+      "updated_at": "2024-09-28T06:55:47Z",
+      "file": "issues/4544.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4544",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4544/comments"
+    },
+    {
+      "number": 4545,
+      "title": "FR: Option to skip snapshotting-before-commands with automatic snapshots",
+      "state_at_capture": "open",
+      "created_at": "2024-09-27T03:47:18Z",
+      "updated_at": "2024-11-28T21:46:42Z",
+      "file": "issues/4545.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4545",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4545/comments"
+    },
+    {
+      "number": 4548,
+      "title": "FR: have `jj diff` not show diffs in certain files (e.g. lockfiles) by default",
+      "state_at_capture": "open",
+      "created_at": "2024-09-28T22:43:22Z",
+      "updated_at": "2024-09-30T04:31:35Z",
+      "file": "issues/4548.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4548",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4548/comments"
+    },
+    {
+      "number": 4549,
+      "title": "FR/RFC: allow edit/diff/merge-tools to have warnings or be explicitly disallowed",
+      "state_at_capture": "open",
+      "created_at": "2024-09-29T05:05:05Z",
+      "updated_at": "2024-09-30T08:22:41Z",
+      "file": "issues/4549.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4549",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4549/comments"
+    },
+    {
+      "number": 4554,
+      "title": "FR: 'default()' revset function for the configured default revset",
+      "state_at_capture": "open",
+      "created_at": "2024-09-30T16:57:14Z",
+      "updated_at": "2026-05-31T16:52:42Z",
+      "file": "issues/4554.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4554",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4554/comments"
+    },
+    {
+      "number": 4555,
+      "title": "FR: GitHub integration",
+      "state_at_capture": "open",
+      "created_at": "2024-09-30T18:53:56Z",
+      "updated_at": "2026-05-28T10:52:25Z",
+      "file": "issues/4555.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4555",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4555/comments"
+    },
+    {
+      "number": 4559,
+      "title": "FR: Ignored files re-appear and get lost when switching to different branches",
+      "state_at_capture": "closed",
+      "created_at": "2024-10-01T18:33:27Z",
+      "updated_at": "2024-10-01T23:46:24Z",
+      "file": "issues/4559.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4559",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4559/comments"
+    },
+    {
+      "number": 4561,
+      "title": "`sign-all=true` doesn't sign commits authored by someone else",
+      "state_at_capture": "closed",
+      "created_at": "2024-10-02T09:27:46Z",
+      "updated_at": "2025-02-16T06:11:47Z",
+      "file": "issues/4561.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4561",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4561/comments"
+    },
+    {
+      "number": 4564,
+      "title": "Pushing bookmarks belonging to a dirty linage",
+      "state_at_capture": "open",
+      "created_at": "2024-10-02T15:22:53Z",
+      "updated_at": "2024-10-02T16:32:49Z",
+      "file": "issues/4564.json",
+      "url": "https://github.com/jj-vcs/jj/issues/4564",
+      "comments_url": "https://api.github.com/repos/jj-vcs/jj/issues/4564/comments"
+    }
+  ],
+  "captured_utc": "2026-09-30",
+  "boundary": "Body/status captured now, not reconstructed release-time state. Comments/followups not in this local capture; both arms may read official public URLs."
+}

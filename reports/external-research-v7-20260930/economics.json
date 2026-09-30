@@ -22,7 +22,8 @@
     "treatment_whole_seconds": 631.354,
     "control_reported_output": 35463,
     "treatment_reported_output": 28567,
-    "quality": "unassessed; no efficiency win claimed"
+    "quality": "both quality failure; treatment lower elapsed observed, no same-quality speedup claim",
+    "current_summary": "reviews/R003-R004-current-only-summary.json"
   },
   "as_of_utc": "2026-09-30T16:24:47.383306+00:00",
   "same_quality_efficiency_claim": false,
@@ -33,5 +34,47 @@
     "occupied_slot_seconds": 9003.527,
     "usage_completeness": "unknown; native children and unexposed output unknown",
     "source": "supervisor final rollup; zero-active safety receipt binds lifecycle only"
-  }
+  },
+  "assessment_update_utc": "2026-09-30T16:46:19.684929+00:00",
+  "T01": {
+    "control_aggregate_total_seconds_including_setup_waits_cleanup": 719.4490000000001,
+    "control_aggregate_reported_output_tokens": 43540,
+    "treatment_total_seconds_including_setup_waits_cleanup": 358.751,
+    "treatment_reported_output_tokens": 24996,
+    "control_assignments": 2,
+    "treatment_assignments": 1,
+    "original_capped_control_opening_preserved": true,
+    "native_completion_opening_seconds": null,
+    "aggregation": "sum actual two control assignments; not just completed display, no cap-reset rescue",
+    "quality": "both quality failure; unequal inventories/failure identities do not establish equal quality",
+    "efficiency_claim": false,
+    "usage_completeness": "unknown; figures exposed only"
+  },
+  "T09": {
+    "control": {
+      "total_seconds_including_setup_waits_cleanup": 533.128,
+      "reported_output_tokens": 33741
+    },
+    "treatment": {
+      "total_seconds_including_setup_waits_cleanup": 419.061,
+      "reported_output_tokens": 25003
+    },
+    "quality": "both quality failure despite useful supported novelty",
+    "efficiency_claim": false,
+    "preservation": "unassessed"
+  },
+  "T14": {
+    "control": {
+      "total_seconds_including_setup_waits_cleanup": 446.868,
+      "reported_output_tokens": 26635
+    },
+    "treatment": {
+      "total_seconds_including_setup_waits_cleanup": 811.242,
+      "reported_output_tokens": 59561
+    },
+    "quality": "unassessed",
+    "efficiency_claim": false
+  },
+  "review_economics": "independent reviewers did not inspect costs; publisher reports receipt timing separately from their quality judgments",
+  "evaluator_budget_compliance": "not established; C028 summary records possible20minute overrun; not erased"
 }

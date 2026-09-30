@@ -1,0 +1,90 @@
+{
+  "schema": "er7.method_launch_review.v1",
+  "review_id": "resume-method-gate-t12-v1",
+  "status": "blocked_launch_runtime",
+  "method_machinery_status": "accepted",
+  "acceptance_scope": "Exact prospective repository method cards, source manifest and deterministic map mechanics accepted. Candidate launch against inherited frozen runtime is blocked by ZG-AUTH-01.",
+  "reviewer": "/root/method_gate_resume",
+  "created_utc": "2026-09-30T16:27:41.202298+00:00",
+  "method": "T12",
+  "pair_id": "t12-z-jj-repo-screen-v1",
+  "blocking_findings": [
+    {
+      "id": "ZG-AUTH-01",
+      "severity": "blocking-runtime",
+      "boundary": "ops-frozen-v1/isolation.py",
+      "summary": "The exact frozen Z namespace permits reading native credential JSON and the certificate private key under ~/.zcode/v2.",
+      "evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/z-auth-readability-v1.json",
+        "sha256": "69572524136efae2fc0dcfa59dab8f50dd00fb456659e5a076cca5c06dfe8b00"
+      },
+      "request": "Prepare a finite new runtime/isolation version that keeps candidate tool access from native authentication material and private runtime history; preserve old versions, starts, waits and costs. Independently test the exact new bytes before dependent Z dispatch.",
+      "scope": "Inherited runtime only; repository source/cards/map need no case-specific repair."
+    }
+  ],
+  "reviewed_files": {
+    "methods-repo-v1/prepare_pairs.py": "a8ccfd792b7b608fdb5e20bdf448b1ddaecbf9f5c85c6642dab8b567a4b7d470",
+    "methods-repo-v1/repo_map_tool.py": "1e77cbce376b649cb40b24bf2dc58201bf7a41b86eff2a830cf24befd27306ec",
+    "methods-repo-v1/acquire_case.py": "60de9a0ffe08e3c63542b2f3df1004481837dc2dbc16c9508219f7cb38cc14c0",
+    "methods-repo-v1/check_boundaries.py": "9926f4460928aa742ffc7d066c7152bbb51bbfb13dd05721d7d4303c955ac3f9",
+    "methods-repo-v1/CASE_FREEZE.json": "234c4811a9c033aa1602b74f51f7b0483f50407695b060a5e4d3eb2ba3d9936a",
+    "methods-repo-v1/READY.json": "f0d310cfbbe5a4d02d0abb0c51dd02fa6fe2a46fa935127fdda5a18319056824",
+    "methods-repo-v1/boundary-receipt.json": "96e3045e68ec06eb3a61bc82a8f79f85c07ac2d2d2be4c2753c8b8235eeae443",
+    "evaluation/exports/jj-repo-dev-v1/MANIFEST.sha256.json": "6aef9692d7f2fefccee3c9746b46138eadb154b205ce3b8e67b91e8b715e53bf",
+    "evaluation/exports/jj-repo-dev-v1/PIN.json": "6cb6112d93cdecd21d5e9a57db5f878b1afac553012e99f008e0c4102a503342",
+    "evaluation/exports/jj-repo-dev-v1/brief.md": "6455c54d08627a6669c8f176a5cfb1e1c23578a183f3e606addadcf59eefff36",
+    "evaluation/exports/jj-repo-dev-v1/TASK.md": "85f1d348299d9cb65e568d459f188713a592550ccd92624d46b5c494d25ff117",
+    "evaluation/exports/jj-repo-dev-v1/catalog.json": "edd0fdb850724199cdf5a7153053d26664704dba07fae418f29e7f5014f7e7a3",
+    "evaluation/exports/jj-repo-dev-v1/issues-index.json": "6a6e593591ccd033b424101f2470effebc2cfd433dc97bb345e555dafac726d6",
+    "evaluation/exports/jj-repo-dev-v1/history-index.json": "e8330e80a540d4432e33843436ac76c255c879661e57d7b1f818554efd544d60",
+    "methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/pair.json": "986a0811eb752707ebd7194ca83bece44c6d3655f18aa982e455933f3165c6e3",
+    "methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control.spec.json": "66aca20baa3a1bcb84a05144a210b0abb64992a6f69784e5585cde7966024b39",
+    "methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control/attempt.json": "4ebbd91bca0d2e038428423d17bb59971c4722cea06d93481b9a9f4aa205fcf3",
+    "methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control/workspace/TASK.md": "4d9885b81ed79f76c476718799b64e0d22736c743282f1c71c8add0c4e48d58f",
+    "methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment.spec.json": "53cb905f0163786e7ea3c6d805f9bd6f861eb6657fc4d916a0c4bc603a8947d4",
+    "methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment/attempt.json": "7fb5b94eab581fbb59608aa1e108452a9338d191f99919acd18a594e037c5cdb",
+    "methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment/workspace/TASK.md": "5f3226e6ce6212dd1de50c3d2d0e676e9d6632a3952b6f412a211bd5cb795468"
+  },
+  "checks": [
+    "Both arms strict input/launch dry-run verification pass; no native Goal launched.",
+    "Same complete pinned source bytes, admitted access, both brief question families, five output files, 900 seconds and 96 responses.",
+    "No candidate answers, evaluator key contents or grades read. Private eligibility/source inventory remain outside candidate inputs.",
+    "431 tracked repository files pinned; source manifest has exact export membership.",
+    "Full nonshallow ancestry checked with since-as-filter: exact 624 eligible IDs match exported history.",
+    "Issue inventory mechanically selected without semantic filtering; source status/capture versus release time disclosed.",
+    "426 text files mapped with 97 test paths and 5893 lexical symbols; deterministic apart from measured time; bad file hash rejected.",
+    "Treatment is candidate-built lexical repository map navigation; both arms receive same tool bytes, use differs.",
+    "Production and evaluation/private hidden in exact frozen Z namespace; native authentication material is readable and blocks dispatch."
+  ],
+  "offline_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/t11-t12-offline-v1.json",
+    "sha256": "69b51a48d6b40f47f4f86fd33ec7ea87327310a90931574962bd66c31f0e8535"
+  },
+  "resolved_findings": [
+    {
+      "id": "RSCOPE-01",
+      "resolution": "Full ancestry retrieval proved frozen date-eligible commit set exactly complete; source/card bytes unchanged.",
+      "proof_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/private/jj-repo-dev-v1-acquisition/HISTORY_COMPLETENESS_PROOF.json",
+      "proof_sha256": "ac81a4d13e9ae0325af789ca24af82757cd936096f8a3798b2827ebc515ac0df",
+      "extra_setup_cost_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/private/jj-repo-dev-v1-acquisition/SETUP_COSTS_SUPPLEMENT.json",
+      "extra_setup_cost_sha256": "4c0750ce838dd8fe180beb868cfadfe346ef6e750d51fefc87f3117be52881e9"
+    }
+  ],
+  "required_reporting": [
+    "Use a new accepted isolation/runtime boundary before launch, then regenerate/bind affected attempt runtime hashes prospectively.",
+    "Record runtime requested/effective GLM-5.3-Flash and Max, native status/quiescence, common Z cap2 lease, randomized/counterbalanced order and concurrent/sibling load per actual job.",
+    "Include original source setup 16.687698076s plus 4.550186870s completeness fetch = 21.237884946s measured setup; preparation time unknown, supervisory effort separate.",
+    "Map first-use runs inside treatment original Goal and counts within 900s; reviewer offline map time is development overhead, not a candidate saving.",
+    "No reuse/break-even claim from one cold map screen alone; preserve all waits and failed attempts.",
+    "Independent semantic review must cover all material assertions and full assigned brief scope before historical/acquisition inspection."
+  ],
+  "interpretability_limits": [
+    "Method machinery review is neither an observed candidate run nor a method comparison.",
+    "The bound T12 control uses documentation-led ad hoc navigation; conclusions must name that actual control."
+  ],
+  "candidate_starts_by_review": 0,
+  "candidate_answers_keys_grades_read": false,
+  "credential_contents_read": false
+}

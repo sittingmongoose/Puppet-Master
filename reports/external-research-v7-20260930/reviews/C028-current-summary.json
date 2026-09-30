@@ -1,0 +1,67 @@
+{
+  "schema": "er7.current_pair_summary.v1",
+  "case_id": "C028",
+  "report_ids": [
+    "R007",
+    "R008"
+  ],
+  "stage": "current_only",
+  "both_frozen_before_history": true,
+  "history_unlocked": false,
+  "complete_coverage": true,
+  "unreviewed_scope": [],
+  "claims_reviewed": {
+    "R007": 112,
+    "R008": 96
+  },
+  "prospective_facets_each": 6,
+  "verdicts": {
+    "R007": "quality failure",
+    "R008": "quality failure"
+  },
+  "terminal_label": "quality failure",
+  "same_quality_efficiency_win": false,
+  "economics": "unassessed",
+  "preservation": "unassessed",
+  "comparison": "Both current reports make useful supported discoveries beyond the bounded three-source reference, but neither completes native result-state semantics or selected-iteration status addressing. R007 has more exact provider details and more unsupported mandates/errors; R008 adds auth-retirement and implementation/competitor breadth while retaining opaque community attributions and numerical/UI overstatements. These different failure identities do not establish equal quality or a method improvement.",
+  "common_failures": [
+    "C028-native-state-semantics-omitted",
+    "C028-iteration-identity-scope-incomplete",
+    "C028-iteration-support-omitted",
+    "C028-rate-success-delay-omitted"
+  ],
+  "R007_high_material_failures": [
+    "R007-policy-scope",
+    "R007-missing-scope-diagnosis",
+    "R007-evaluation-age-proof",
+    "R007-rename-identity",
+    "R007-sdk-preview-gap",
+    "R007-standalone-citations"
+  ],
+  "R008_high_material_failures": [
+    "R008-universal-2N",
+    "R008-context-selection-immunity",
+    "R008-second-evaluations-call",
+    "R008-standalone-citations",
+    "C028-full-brief-overclaim"
+  ],
+  "review_limitations": [
+    "Exact non-pinned secondary/community attributions remain unresolved, not assumed true.",
+    "Historical acquisition, costs, sequence and source preservation were not opened.",
+    "Verbatim headers expose treatment/control cues; no private mapping/economic identities read.",
+    "Live upstream repository/metadata drift qualified; API7.1 staged pins verified."
+  ],
+  "assessment_hashes": {
+    "R007": {
+      "json": "850e1bb75715adde734b715b285a089b2928415b40fc5e7e9a8fc1240a98f91d",
+      "md": "626dc2942e7a06e57fad6dde16359937c633accd7a1a376290a893ad6926f544"
+    },
+    "R008": {
+      "json": "8f254b5000dc72e74234fdc5480a4609b9e9997ec3558b4b91bcb9575131350b",
+      "md": "468a02ec9adea0fdfa75c4ac1d35d0f393389304e6d30a875b4350cc039465f1"
+    }
+  },
+  "history_policy": "Only parent may unlock history after binding these frozen hashes; unresolved judgments are current-only and must not be silently revised after history.",
+  "saved_utc": "2026-09-30T16:37:24.424768+00:00",
+  "review_budget_compliance": "not established; possible20minute overrun"
+}

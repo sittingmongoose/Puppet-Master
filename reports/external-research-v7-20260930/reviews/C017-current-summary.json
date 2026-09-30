@@ -1,0 +1,160 @@
+{
+  "schema": "er7.pair_current_summary.v1",
+  "case_id": "C017",
+  "stage": "current_only",
+  "saved_utc": "2026-09-30T16:36:07.135920+00:00",
+  "reports": [
+    {
+      "report_id": "R005",
+      "report_sha256": "78b675c99acad8370973c16c143461a3b0f23bd2389b7eb96ade5780fa34273f",
+      "current_assessment_json": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R005/current-assessment.json",
+      "current_assessment_json_sha256": "377f7e24865985a142e6bbb19d5768b3a5ed13e1266b80689d7fe07f77a7723e",
+      "current_assessment_md": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R005/current-assessment.md",
+      "current_assessment_md_sha256": "5582ff83d743a5b012fa1f7107543c4a040d57599ce7ebf4a293947ef3a53594",
+      "complete_coverage": true,
+      "unreviewed_scope": [],
+      "verdict": "quality failure",
+      "facet_coverage": [
+        {
+          "id": "OME05-C01",
+          "coverage": "full",
+          "decision": "Version/namespace distinction and hierarchy consistency are explicit; compatibility failures are explained rather than silently reinterpreted."
+        },
+        {
+          "id": "OME05-C02",
+          "coverage": "partial",
+          "decision": "Rank/order/unique names/dimension_names and absent-axis controls are covered. Explicit absent-dimension versus length-one dimension navigation behavior is not specified."
+        },
+        {
+          "id": "OME05-C03",
+          "coverage": "full",
+          "decision": "Group-relative declared paths, largest-first order, per-level transforms and missing-level handling are covered. Reader selection heuristics remain proposals."
+        },
+        {
+          "id": "OME05-C04",
+          "coverage": "partial",
+          "decision": "Sequential dataset then multiscales transforms, scale before translation and unknown/relative calibration are covered. There is no concrete numeric check combining offsets and group transforms that exposes reversed composition."
+        },
+        {
+          "id": "OME05-C05",
+          "coverage": "partial",
+          "decision": "Discovery paths, permitted nesting, parity and transform-aware geometry are covered. But deep source.image resolution is expressly left unresolved and a source-association check before overlay is not made concrete; passing a link and displaying it is not a resolved association contract."
+        },
+        {
+          "id": "OME05-C06",
+          "coverage": "partial",
+          "decision": "Integer dtypes and label-value keyed metadata are stated; neither report specifies exact uint64/int64 identity preservation or an exact supported range, nor categorical resampling that avoids creating IDs. Palette SHOULD is correctly not a universal styling MUST."
+        }
+      ],
+      "material_failure_identities": [
+        "R005-E01",
+        "R005-E02",
+        "R005-E03",
+        "R005-E10",
+        "R005-E12",
+        "R005-E15",
+        "R005-E16",
+        "R005-E17",
+        "R005-E18",
+        "R005-E19",
+        "R005-E22",
+        "R005-E24",
+        "R005-E26"
+      ],
+      "inventory_rows": 449,
+      "atomic_adverse_rows": 29
+    },
+    {
+      "report_id": "R006",
+      "report_sha256": "2d44a26eb3c99f67f8a891a753a5085d0e70e33d55b7bfd557680a5d7c9d26fb",
+      "current_assessment_json": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R006/current-assessment.json",
+      "current_assessment_json_sha256": "8d06918bbe965b943f74140246392e4e7dc402ad5fbe60fc3b056774c9ae7ec0",
+      "current_assessment_md": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R006/current-assessment.md",
+      "current_assessment_md_sha256": "e93bf1535099f0109978e9b985491376cacf3e1662ff24207310f29aa12e463e",
+      "complete_coverage": true,
+      "unreviewed_scope": [],
+      "verdict": "quality failure",
+      "facet_coverage": [
+        {
+          "id": "OME05-C01",
+          "coverage": "full",
+          "decision": "Version/namespace distinction and hierarchy consistency are explicit; compatibility failures are explained rather than silently reinterpreted."
+        },
+        {
+          "id": "OME05-C02",
+          "coverage": "partial",
+          "decision": "Rank/order/unique names/dimension_names and absent-axis controls are covered. Explicit absent-dimension versus length-one dimension navigation behavior is not specified."
+        },
+        {
+          "id": "OME05-C03",
+          "coverage": "full",
+          "decision": "Group-relative declared paths, largest-first order, per-level transforms and missing-level handling are covered. Reader selection heuristics remain proposals."
+        },
+        {
+          "id": "OME05-C04",
+          "coverage": "partial",
+          "decision": "Sequential dataset then multiscales transforms, scale before translation and unknown/relative calibration are covered. There is no concrete numeric check combining offsets and group transforms that exposes reversed composition."
+        },
+        {
+          "id": "OME05-C05",
+          "coverage": "full",
+          "decision": "Declared labels paths including intermediates, equal level count, relative source.image/default resolution and mismatch flagging plus geometry-risk warning/fallback are explicit. No equal-shape shortcut establishes registration; supported overlay geometry remains a capability policy."
+        },
+        {
+          "id": "OME05-C06",
+          "coverage": "partial",
+          "decision": "Integer dtypes and label-value keyed metadata are stated; neither report specifies exact uint64/int64 identity preservation or an exact supported range, nor categorical resampling that avoids creating IDs. Palette SHOULD is correctly not a universal styling MUST."
+        }
+      ],
+      "material_failure_identities": [
+        "R006-E06",
+        "R006-E07",
+        "R006-E13"
+      ],
+      "inventory_rows": 241,
+      "atomic_adverse_rows": 14
+    }
+  ],
+  "complete_coverage": true,
+  "verdict": "quality failure",
+  "current_only_comparison": "Both reports preserve substantial version/namespace, axes/dimension_names, pyramid ordering and transform rules. Both lack an offset-sensitive numeric transform oracle and exact categorical precision/resampling treatment; singleton-vs-absent dimension behavior is not made explicit. R006 more directly specifies label source-image resolution/mismatch and geometry fallback. R005 has materially incorrect normative force/reader-policy derivations, well.version mandatory-presence error and capability/conformance conflation. R006 has two false unit vocabulary counts (source 26 space, 23 time; report 25 and 19). Neither earns a same-quality pass.",
+  "source_support": [
+    {
+      "file": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R005/inputs/sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "lines": [
+        167,
+        174
+      ]
+    },
+    {
+      "file": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R005/inputs/sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "lines": [
+        293,
+        315
+      ]
+    },
+    {
+      "file": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R005/inputs/sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "lines": [
+        438,
+        474
+      ]
+    },
+    {
+      "file": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R005/inputs/sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "lines": [
+        751,
+        752
+      ]
+    }
+  ],
+  "qualification": "Current semantic comparison only; no acquisition preservation, cost, latency, treatment interpretation or integrated qualification adjudicated. Visible embedded labels/budgets are a recorded blinding limitation. Faster incomplete output cannot establish a quality win.",
+  "history_unlocked": false,
+  "history_unlock_performed_by_reviewer": false,
+  "economics_assessed": false,
+  "candidate_rescue_or_rewriting": false
+}

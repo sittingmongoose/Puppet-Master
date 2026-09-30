@@ -1,0 +1,85 @@
+{
+  "schema": "er7.resume_discovery_cache_offline.v1",
+  "reviewer": "/root/method_gate_resume",
+  "created_utc": "2026-09-30T16:34:47.119267+00:00",
+  "checks": {
+    "T08": {
+      "request_sha256": "d77094efb99c54b5283aa33668e0c663a2059908de65f19edda2823547320dd5",
+      "pair_sha256": "91f4796f636ecc84251339c42c39d26f4f13644b943db677735b62a3090762be",
+      "strict_verify": "passed",
+      "command_dry_run": "passed",
+      "equal_bindings": true,
+      "inputs": 1
+    },
+    "T07": {
+      "request_sha256": "f242b92c2a33dc7d59e96eb7ad7f8025d23e5d9a810ff8c21aedb3eec7c8949f",
+      "pair_sha256": "08c2e6de7c24cd3d3b54b57a56ee74235649cea5bbf7094b80e5a1b960a810ec",
+      "strict_verify": "passed",
+      "command_dry_run": "passed",
+      "equal_bindings": true,
+      "inputs": 7,
+      "offline_cli_equivalent_mechanics": {
+        "counts": {
+          "control": {
+            "counts": [
+              2,
+              2,
+              0,
+              0
+            ],
+            "cold_seconds": 0.004987847999473161,
+            "warm_seconds": 0.0,
+            "events": [
+              {
+                "key": "a82f9599af3a4f248628ccfebe0ade11aa86ef9e6d6b3075f87b756f489fb535",
+                "cache_hit": false,
+                "elapsed_seconds": 0.002697636999982933,
+                "source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+                "network_fetch": false
+              },
+              {
+                "key": "a82f9599af3a4f248628ccfebe0ade11aa86ef9e6d6b3075f87b756f489fb535",
+                "cache_hit": false,
+                "elapsed_seconds": 0.0022902109994902276,
+                "source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+                "network_fetch": false
+              }
+            ]
+          },
+          "treatment": {
+            "counts": [
+              1,
+              1,
+              1,
+              0
+            ],
+            "cold_seconds": 0.004245125000124972,
+            "warm_seconds": 0.0017227830003321287,
+            "events": [
+              {
+                "key": "a82f9599af3a4f248628ccfebe0ade11aa86ef9e6d6b3075f87b756f489fb535",
+                "cache_hit": false,
+                "elapsed_seconds": 0.004245125000124972,
+                "source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+                "network_fetch": false
+              },
+              {
+                "key": "a82f9599af3a4f248628ccfebe0ade11aa86ef9e6d6b3075f87b756f489fb535",
+                "cache_hit": true,
+                "elapsed_seconds": 0.0017227830003321287,
+                "source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+                "network_fetch": false
+              }
+            ]
+          }
+        },
+        "equal_complete_source_views": true,
+        "view_semantic_hash": "6647f94cc7e7140ec26f6a28b4b74a34b49bf922de12c9d8901e5888a3522d6f",
+        "candidate_cost": "not measured; offline reviewer mechanics only"
+      }
+    }
+  },
+  "candidate_starts": 0,
+  "semantic_grading": false,
+  "auth_contents_read": false
+}

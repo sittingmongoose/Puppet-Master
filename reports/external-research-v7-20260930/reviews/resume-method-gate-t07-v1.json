@@ -1,0 +1,74 @@
+{
+  "schema": "er7.method_launch_review.v1",
+  "review_id": "resume-method-gate-t07-v1",
+  "status": "blocked_launch_runtime",
+  "method_machinery_status": "accepted",
+  "acceptance_scope": "Exact prospective cards, inputs and experiment mechanics only. Common inherited M/Z credential exposure holds launch until a separately accepted finite runtime2 and prospective exact job rebind.",
+  "reviewer": "/root/method_gate_resume",
+  "created_utc": "2026-09-30T16:36:21.475462+00:00",
+  "method": "T07",
+  "pair_id": "t07-z-ome-cache-resume-v1",
+  "reviewed_files": {
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/pair.json": "08c2e6de7c24cd3d3b54b57a56ee74235649cea5bbf7094b80e5a1b960a810ec",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment.spec.json": "86d760bb3712c665c0ef9ca42a8df6820350ee867e4cab30dea7d9b1b8bac1c4",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control.spec.json": "256f104c7a981432afa803407a05e7f603a4d6577d5c6df9e917e11d975023aa",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/attempt.json": "4d918e1df1b07b2dae42560bcc295b871e7899e4444bfff4fdf806f81ecd7ae1",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/attempt.json": "8d7d7fc0ce018375b8e1b5ec994bc80885d974eca647f8be16072ddf2d27545b",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/TASK.md": "ef786e2ffe96c1b19c44fd86585300d035016607914b3e7c86b7f323251dd238",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/inputs/mechanics.py": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/inputs/catalog.json": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/inputs/TASK.md": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/inputs/source_dependency.json": "0b2b9cb7f75ca18c860b0724c990486520cc186e1d72d95eeb10fb886f950cd6",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/inputs/sources/S003.txt": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/inputs/plan/Viewer.md": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/TASK.md": "6d97df1da038169a1473faaf22e004e79ce1d4687530125a1cc706c50cb15da3",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/inputs/mechanics.py": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/inputs/catalog.json": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/inputs/TASK.md": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/inputs/source_dependency.json": "0b2b9cb7f75ca18c860b0724c990486520cc186e1d72d95eeb10fb886f950cd6",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/inputs/sources/S003.txt": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/inputs/plan/Viewer.md": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+    "methods-resume-v1/prepare_resume.py": "131bdc7b841b0d53f4aaa829c3dcf13ad56735a0b5b3700ccc05dcab71e08ea9",
+    "methods-resume-v1/dependency_selector.py": "b4e056e6a741e6130510fe8608ee58bc49f8c9be7f2fadfe0d5faded7e04df20"
+  },
+  "review_request_sha256": "f242b92c2a33dc7d59e96eb7ad7f8025d23e5d9a810ff8c21aedb3eec7c8949f",
+  "blocking_findings": [
+    {
+      "id": "ZG-AUTH-01",
+      "summary": "Inherited Z candidate namespace exposes authentication JSON and certificate private key as readable.",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/runtime-auth-hold-addendum-v1.json",
+      "evidence_sha256": "00c3a6313ae34c620d1292ac64eb37f36dcc5ef66c6f99193222243d020e3f51",
+      "scope": "Common runtime; no method-specific source/prompt repair requested."
+    }
+  ],
+  "checks": [
+    "All exact requested pins pass; both attempts strictverify and native command dry-run succeed without starting a Goal.",
+    "Both arms900s96, full assigned scope, model/Max obligation, same source access, output files and independent full-scope evaluation.",
+    "No candidate outputs, semantic keys or grades read; no answer list or premium case hints supplied.",
+    "Seven exact shared frozen inputs; scopes Q1/Q2 cover complete source/brief serially; initial caches absent in both prepared attempts.",
+    "Only --reuse in each actual Q acquisition command differs; cold Q1 counted in both, treatmentwarm Q2 includes actual cache read.",
+    "Independent deterministic execution yields control2reads2parses0hits vs treatment1read1parse1hit, network fetches0; full source views equal exact parse.",
+    "Cache dependency binds source hash/version/permissions/parser/settings/applicability/corpus-membership/negative-scope; existing targeted cold/warm/invalidation test passes."
+  ],
+  "offline_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/t08-t07-offline-v1.json",
+    "sha256": "0cca48a2369cbab8d8dcbe287f155b1502dddb775524457a0cfc49fd89f7d287"
+  },
+  "required_reporting": [
+    "Use accepted safe runtime2 and verify exact job/runtime/input binding before any actual dispatch.",
+    "Record native model/effort/status/quiescence, own shared Z cap2 lease, reproducible order and simultaneous account/sibling occupancy.",
+    "Preserve original failed route versions/start/wait/correction costs; report development-case status and no L inference.",
+    "Assess every current material claim and full assigned scope including omissions/deadends before acquired/historical records; no method win without matched quality/economics.",
+    "After native quiescence check complete Q1/Q2 view bytes and meanings against deterministic parse of pinnedsource, cache/dependency hashes and actual native CLI traces. Candidate-authored counters alone are insufficient.",
+    "Count all native extraReads separately; CLI cache counts do not measure total research acquisition.",
+    "Report copying/preparation,Q1cold,Q2warm,cachecreation/read,starts/corrections/servicewaits. No network-savings claim from localread/parse workload.",
+    "Targeted invalidation unittest first selector used wrong class name (review command error, no campaign failure); corrected test1passes."
+  ],
+  "candidate_starts_by_review": 0,
+  "candidate_answers_keys_grades_read": false,
+  "credential_contents_read": false
+}

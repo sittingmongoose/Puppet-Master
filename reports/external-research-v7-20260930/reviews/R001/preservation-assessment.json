@@ -1,0 +1,3052 @@
+{
+  "schema": "er7.preservation_assessment.v1",
+  "review_id": "R001",
+  "stage": "phase2_preservation",
+  "assessment_status": "complete for all supplied artifact history and admitted source units; semantic acquisition unassessed",
+  "reviewer": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_reasoning_effort": "xhigh",
+    "fresh_fork": "none",
+    "spawn_request_accepted": true,
+    "effective_model_and_reasoning_introspection": "unknown",
+    "role": "independent source-grounded preservation evaluator",
+    "recursive_helpers_used": false
+  },
+  "started_utc": "2026-09-30T16:18:00Z",
+  "completed_utc": "2026-09-30T16:37:03.669466+00:00",
+  "authority": {
+    "protocol_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/private/EVALUATION_PROTOCOL.md",
+    "protocol_sha256": "f0427cc8d1495e368b8b79cb9ead18cc65d4b0b2e8b509e338b86923ee5b1e15",
+    "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R001/inputs/sources/S003.txt",
+    "source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "source_authority": "Frozen normative OME-Zarr 0.5 capture, self-described Final Community Group Report 8 September 2026; no live authority substitution",
+    "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "case_manifest_sha256": "43564ebb344d6c535357ea05065100b01a32afc15e69fcbc724f6b67f4cec8f4",
+    "eligibility_sha256": "1dbb0006ccbc12ad4b31eb1c52e3e2e30abf304fcffb2f3938e0609079c42531"
+  },
+  "stage1_freeze": {
+    "frozen_file_sha256": {
+      "current-report.md": "6e302aa3cae223ea41e99f6862644f524695fe36f661b50edcf22ab1aedf4895",
+      "current-assessment.json": "ad9f6c6b2846a4aae8e785a5ddd3c5db6e384a50f94687a46bf4027e6d3bff92",
+      "current-assessment.md": "d414bdb34c4a2588785a6b73f310cb1ba321ce27785a9fed1927a00723b8a9e2"
+    },
+    "all_hashes_match_receipt_and_stage": true,
+    "original_assessments_read": false,
+    "original_assessments_modified": false,
+    "original_semantic_grades_changed": false,
+    "current_report_grade": "preserved; not reassessed or replaced",
+    "receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R001/history-unlock-receipt.json",
+    "receipt_sha256": "75c8ea823ae231324e340e1875c329835a9ac286b34bd53eabc5e5f74834e568",
+    "unlocked_utc": "2026-09-30T16:16:34.632540+00:00",
+    "source_correction_addenda": [],
+    "note": "Independent phase2 source observations below do not retroactively repair omissions or alter any frozen phase1 score.",
+    "independent_phase2_observations": "Source-status observations are evaluated independently; because frozen judgments were not read, no claim is made that these are newly discovered versus phase1. No current grade correction/addendum is applied."
+  },
+  "history": {
+    "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R001/history/manifest.json",
+    "manifest_sha256": "5e66133546a3c444502c35eac9976eb83c06abf7070512489a1a824b7e91bb2e",
+    "trace_sha256_as_manifest_metadata_only": "854017e3b688b6a21b4f513fb12b53dace7b78515be07538525b2de63fee0eea",
+    "raw_trace_read": false,
+    "completed_artifact_versions": [
+      {
+        "tool": "write_file",
+        "call_id": "call_01a0f2cac18777de9e10bd796ab90f54",
+        "completed_at": "2026-09-30T14:52:37.774813Z",
+        "path": "out/report.md",
+        "trace_line": 53,
+        "reconstruction": "exact completed Write input",
+        "file": "artifact-versions/V001.txt",
+        "sha256": "6e302aa3cae223ea41e99f6862644f524695fe36f661b50edcf22ab1aedf4895",
+        "bytes": 46314,
+        "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R001/history/artifact-versions/V001.txt",
+        "hash_verified": true,
+        "bytes_verified": true,
+        "line_count": 529
+      }
+    ],
+    "final_version_byte_identical_to_current": true,
+    "complete_read_metadata_entries": 9,
+    "source_read_metadata_entries": 3,
+    "read_metadata_semantics": "exposure only; no inference of semantic acquisition, reading extent or verification",
+    "semantic_acquisition_notes_present": false,
+    "semantic_acquisition_status": "unknown",
+    "completed_source_exposure": [],
+    "all_version_diffs": []
+  },
+  "coverage": {
+    "complete_coverage": true,
+    "scope_of_complete_coverage": "Every material assertion in the supplied complete saved Write/Edit artifacts and all admitted S003 source units; repeated identical statements consolidated by semantic cluster and exact retained span equality. This does not claim acquisition coverage, quality pass or unavailable earlier history coverage.",
+    "source_read_spans": [
+      [
+        1,
+        896
+      ]
+    ],
+    "artifact_initial_read_spans": [
+      [
+        1,
+        529
+      ]
+    ],
+    "all_subsequent_versions_reviewed_by_full_equality_and_complete_changed_hunks": true,
+    "report_section_spans": [
+      [
+        1,
+        16
+      ],
+      [
+        19,
+        39
+      ],
+      [
+        43,
+        69
+      ],
+      [
+        73,
+        93
+      ],
+      [
+        95,
+        123
+      ],
+      [
+        125,
+        139
+      ],
+      [
+        141,
+        172
+      ],
+      [
+        174,
+        190
+      ],
+      [
+        194,
+        223
+      ],
+      [
+        225,
+        252
+      ],
+      [
+        254,
+        297
+      ],
+      [
+        299,
+        341
+      ],
+      [
+        345,
+        393
+      ],
+      [
+        397,
+        423
+      ],
+      [
+        427,
+        440
+      ],
+      [
+        444,
+        468
+      ],
+      [
+        472,
+        482
+      ],
+      [
+        486,
+        507
+      ],
+      [
+        511,
+        529
+      ]
+    ],
+    "eligible_facets_assessed": 6,
+    "material_inventory_cluster_count": 51,
+    "atomic_decision_count": 118,
+    "omitted_from_review": [],
+    "unavailable_scope": [
+      "Semantic acquisition/verification notes before writing",
+      "Source-read result extents or content in metadata-only history",
+      "Earlier uncompleted/unrecorded drafts",
+      "Actual external reader implementation evidence outside admitted source"
+    ],
+    "partial_sampling": false,
+    "source_unit_inventory": [
+      {
+        "source_spans": [
+          [
+            1,
+            55
+          ]
+        ],
+        "inventory_rows": [
+          "P01",
+          "P02"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            56,
+            66
+          ]
+        ],
+        "inventory_rows": [
+          "P03",
+          "P04"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            67,
+            77
+          ]
+        ],
+        "inventory_rows": [
+          "P05",
+          "P06"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            78,
+            117
+          ]
+        ],
+        "inventory_rows": [
+          "P08",
+          "P18",
+          "P21",
+          "P29",
+          "P31"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            118,
+            148
+          ]
+        ],
+        "inventory_rows": [
+          "P09"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            149,
+            165
+          ]
+        ],
+        "inventory_rows": [
+          "P07"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            166,
+            174
+          ]
+        ],
+        "inventory_rows": [
+          "P20",
+          "P22",
+          "P28"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            175,
+            191
+          ]
+        ],
+        "inventory_rows": [
+          "P15"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            192,
+            253
+          ]
+        ],
+        "inventory_rows": [
+          "P15",
+          "P16"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            254,
+            275
+          ]
+        ],
+        "inventory_rows": [
+          "P15",
+          "P16",
+          "P17"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            276,
+            293
+          ]
+        ],
+        "inventory_rows": [
+          "P25",
+          "P27"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            294,
+            319
+          ]
+        ],
+        "inventory_rows": [
+          "P18",
+          "P19",
+          "P20",
+          "P21",
+          "P26",
+          "P27"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            320,
+            387
+          ]
+        ],
+        "inventory_rows": [
+          "P27",
+          "P28"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            388,
+            397
+          ]
+        ],
+        "inventory_rows": [
+          "P18"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            398,
+            425
+          ]
+        ],
+        "inventory_rows": [
+          "P23",
+          "P24"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            426,
+            430
+          ]
+        ],
+        "inventory_rows": [
+          "P23",
+          "P24"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            431,
+            442
+          ]
+        ],
+        "inventory_rows": [
+          "P29",
+          "P30",
+          "P31"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            443,
+            474
+          ]
+        ],
+        "inventory_rows": [
+          "P29",
+          "P30",
+          "P31",
+          "P32",
+          "P33"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            475,
+            514
+          ]
+        ],
+        "inventory_rows": [
+          "P32",
+          "P33"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            515,
+            560
+          ]
+        ],
+        "inventory_rows": [
+          "P10",
+          "P11",
+          "P12",
+          "P13"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            561,
+            739
+          ]
+        ],
+        "inventory_rows": [
+          "P09",
+          "P11"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            740,
+            752
+          ]
+        ],
+        "inventory_rows": [
+          "P13",
+          "P14"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            753,
+            808
+          ]
+        ],
+        "inventory_rows": [
+          "P14"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            809,
+            812
+          ]
+        ],
+        "inventory_rows": [
+          "P34"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            813,
+            820
+          ]
+        ],
+        "inventory_rows": [
+          "P01",
+          "P36"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            821,
+            866
+          ]
+        ],
+        "inventory_rows": [
+          "P02",
+          "P20"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            867,
+            888
+          ]
+        ],
+        "inventory_rows": [
+          "P03"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      },
+      {
+        "source_spans": [
+          [
+            889,
+            896
+          ]
+        ],
+        "inventory_rows": [
+          "P03",
+          "P36"
+        ],
+        "scope_decision": "reviewed; material rules/examples/qualifications mapped to claim clusters; frontmatter/editor/copyright/citation/index text creates no additional viewer finding",
+        "semantic_acquisition": "unknown",
+        "temporal_check": "source-supported drafted content retained; absence in draft is not evidence of never acquired"
+      }
+    ],
+    "all_nonempty_material_report_lines_mapped_to_inventory": true,
+    "unmapped_material_report_lines": [],
+    "all_896_source_lines_mapped_to_source_units": true
+  },
+  "material_claim_inventory": [
+    {
+      "id": "P01",
+      "title": "Frozen capture authority, scope and pins",
+      "current_report_spans": [
+        [
+          3,
+          15
+        ],
+        [
+          36,
+          39
+        ],
+        [
+          472,
+          482
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          1,
+          27
+        ],
+        [
+          813,
+          820
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "The admitted capture is the 0.5 specification, 896 lines; both brief groups share one S003-only bounded assignment."
+        },
+        {
+          "status": "qualified",
+          "decision": "No-live-fetch/no-execution self-descriptions are retained; supplied artifact/read metadata does not establish every native action. Validation remains designated UNEXECUTED."
+        },
+        {
+          "status": "supported",
+          "decision": "Plan and brief are product authority; the Tools pointer supplies no actual reader code, behavior, benchmarks or real-fileset results."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P02",
+      "title": "Release, draft compatibility and future migration",
+      "current_report_spans": [
+        [
+          62,
+          64
+        ],
+        [
+          438,
+          439
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          25,
+          27
+        ],
+        [
+          821,
+          866
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Current released edition is 0.5; migrations are promised, not supplied in this capture; 0.5.0/0.5.1/0.5.2 history entries are correctly quoted."
+        },
+        {
+          "status": "qualified",
+          "decision": "Draft-written data will not necessarily be supported, a weaker condition than categorically unsupported. Only-0.5 admission is a product boundary; the source does not say 0.5 is the only version ever released."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P03",
+      "title": "Normative, example and RFC boundaries",
+      "current_report_spans": [
+        [
+          12,
+          15
+        ],
+        [
+          56,
+          61
+        ],
+        [
+          143,
+          143
+        ],
+        [
+          275,
+          279
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          56,
+          66
+        ],
+        [
+          867,
+          888
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "RFC vocabulary and lowercase readability are established; all text is normative except explicit non-normative sections, examples and notes."
+        },
+        {
+          "status": "supported",
+          "decision": "JSON comments shown for clarity MUST NOT enter real JSON."
+        },
+        {
+          "status": "qualified",
+          "decision": "A diagram/comment/example can illustrate a supported rule, but examples cannot independently impose universal reader UI or rendering obligations. Descriptive normative text also binds; uppercase keywords are not the sole source of requirements."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P04",
+      "title": "Transitional metadata context",
+      "current_report_spans": [
+        [
+          56,
+          59
+        ],
+        [
+          91,
+          93
+        ],
+        [
+          366,
+          367
+        ],
+        [
+          381,
+          385
+        ],
+        [
+          417,
+          420
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          60,
+          64
+        ],
+        [
+          175,
+          181
+        ],
+        [
+          398,
+          400
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "bioformats2raw.layout and omero are transitional; future removal and usually optional writing are captured."
+        },
+        {
+          "status": "qualified",
+          "decision": "The general statement that implementations may be expected MUST or encouraged SHOULD is contextual; it does not impose unconditional reading of every transitional field."
+        },
+        {
+          "status": "supported",
+          "decision": "Read-only and session-local behavior comes from the brief/plan, not a source requirement to write data."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P05",
+      "title": "Zarr v3 substrate and allowed features",
+      "current_report_spans": [
+        [
+          21,
+          35
+        ],
+        [
+          45,
+          48
+        ],
+        [
+          77,
+          81
+        ],
+        [
+          429,
+          436
+        ],
+        [
+          466,
+          468
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          68,
+          72
+        ],
+        [
+          87,
+          100
+        ],
+        [
+          438,
+          439
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Zarr v3 is required; codecs, grids, key encodings, data types and transformers may be used unless explicitly disallowed; array decoding depends on Zarr array metadata."
+        },
+        {
+          "status": "supported",
+          "decision": "The admitted capture does not provide the external Zarr specification or codec implementation coverage. Backend limits need truthful product handling."
+        },
+        {
+          "status": "qualified",
+          "decision": "Label arrays are an explicit integer-dtype restriction, so whole-capture claims that no disallowance exists are false; general intensity-image encodings remain broadly admitted."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P06",
+      "title": "Local versus remote format and product boundary",
+      "current_report_spans": [
+        [
+          49,
+          51
+        ],
+        [
+          418,
+          420
+        ],
+        [
+          437,
+          440
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          73,
+          77
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Hierarchy can be local, HTTP or object storage; local-only reading is an explicit product scope choice. Editing/export/clinical interpretation remain outside the brief."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P07",
+      "title": "Metadata namespace and version consistency",
+      "current_report_spans": [
+        [
+          52,
+          55
+        ],
+        [
+          114,
+          117
+        ],
+        [
+          349,
+          351
+        ],
+        [
+          433,
+          434
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          149,
+          165
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Metadata resides in attributes.ome in zarr.json, version is a string, and versions MUST agree within a hierarchy."
+        },
+        {
+          "status": "supported",
+          "decision": "Missing namespace/version and inconsistent hierarchy require admission validation or an explicit unsupported outcome within the product promise."
+        },
+        {
+          "status": "qualified",
+          "decision": "Hard failure versus subtree rejection or caveated best effort and message wording are product decisions; version!=0.5 is outside the brief, not proof of intrinsic malformedness for all OME versions."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P08",
+      "title": "Image group and per-level array identity",
+      "current_report_spans": [
+        [
+          77,
+          90
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          145,
+          160
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          78,
+          100
+        ],
+        [
+          294,
+          300
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Images are groups and levels separate arrays; multiscales metadata belongs to groups, decoding metadata to each array."
+        },
+        {
+          "status": "supported",
+          "decision": "Single image, HCS and transitional collections are materially distinct entry shapes. Label container itself is not an image; contained label images are images."
+        },
+        {
+          "status": "qualified",
+          "decision": "A required sniffing order beyond plate-over-collection and a particular image-list UI are derived product designs, not additional source algorithms."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P09",
+      "title": "HCS hierarchy and empty groups",
+      "current_report_spans": [
+        [
+          82,
+          90
+        ],
+        [
+          100,
+          109
+        ],
+        [
+          375,
+          377
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          118,
+          148
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "HCS requires plate, row and well groups above field images; well and plate implement their specifications."
+        },
+        {
+          "status": "supported",
+          "decision": "Empty rows/wells SHOULD NOT be present; recommendation does not prove none can occur. Sparse metadata lists differ from dense grid inference."
+        },
+        {
+          "status": "qualified",
+          "decision": "No-crash handling and empty-item listing are product policies retained as such, not specified native reader behavior."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P10",
+      "title": "Plate rows and columns",
+      "current_report_spans": [
+        [
+          100,
+          113
+        ],
+        [
+          358,
+          360
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          530,
+          549
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Every physical row/column is listed, including empty ones. Names are alphanumeric, case-sensitive and unique within the list; collision avoidance is SHOULD."
+        },
+        {
+          "status": "supported",
+          "decision": "Case-folding or guessed dense well expansion loses declared identity. Retain exact spelling on a local filesystem."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P11",
+      "title": "Plate well paths and indices",
+      "current_report_spans": [
+        [
+          100,
+          103
+        ],
+        [
+          184,
+          190
+        ],
+        [
+          358,
+          360
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          552,
+          560
+        ],
+        [
+          641,
+          739
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Well paths are exactly row/column without extra leading/trailing directories; rowIndex and columnIndex are 0-based and must agree with the path."
+        },
+        {
+          "status": "supported",
+          "decision": "Sparse example C/5 and D/7 illustrates that wells are not row×column expansion; no fabricated empty-well images."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P12",
+      "title": "Plate acquisition metadata",
+      "current_report_spans": [
+        [
+          127,
+          139
+        ],
+        [
+          374,
+          375
+        ],
+        [
+          461,
+          465
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          518,
+          529
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "acquisitions MAY be present; ids MUST be unique nonnegative integers; names and positive maximumfieldcount SHOULD be present; description and integer epoch start/end MAY be present."
+        },
+        {
+          "status": "qualified",
+          "decision": "Displaying names/counts/times and acquisition-aware UI grouping are justified choices, not source-mandated presentation. No timestamp unit beyond epoch integer is asserted."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P13",
+      "title": "Plate and well version/count hints",
+      "current_report_spans": [
+        [
+          133,
+          139
+        ],
+        [
+          374,
+          375
+        ],
+        [
+          459,
+          465
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          538,
+          551
+        ],
+        [
+          751,
+          752
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "plate.version MUST be a string; well.version SHOULD be present with string value; field_count/name are SHOULD fields with conditional type restrictions."
+        },
+        {
+          "status": "qualified",
+          "decision": "Accept-and-display when version vocabularies are not specified is a product proposal; treating well.version presence as universally required exceeds its SHOULD."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P14",
+      "title": "Well image identity and acquisition linkage",
+      "current_report_spans": [
+        [
+          127,
+          139
+        ],
+        [
+          187,
+          190
+        ],
+        [
+          358,
+          360
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          740,
+          808
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "well.images MUST enumerate all fields; paths must be alphanumeric, case-sensitive and unique. If multiple acquisitions were performed, an integer acquisition must match a plate id."
+        },
+        {
+          "status": "qualified",
+          "decision": "The exact trigger is performed acquisitions, not necessarily only metadata-list length. A >1-entry heuristic is a retained, explicitly proposed interpretation, not source proof."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P15",
+      "title": "Collection layout and plate precedence",
+      "current_report_spans": [
+        [
+          85,
+          90
+        ],
+        [
+          101,
+          109
+        ],
+        [
+          118,
+          123
+        ],
+        [
+          361,
+          362
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          175,
+          206
+        ],
+        [
+          254,
+          275
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "bioformats2raw.layout identifies multi-image collections; required layout value is 3. If plate metadata is present it takes precedence; mixed plate/image collections are unavailable at present."
+        },
+        {
+          "status": "qualified",
+          "decision": "Quoted prose value 3 does not establish JSON string type. Numeric JSON examples show 3; accepting numeric/string alternatives is a product compatibility proposal, not an established source inconsistency."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P16",
+      "title": "Series list, fallback and OME-XML correspondence",
+      "current_report_spans": [
+        [
+          101,
+          109
+        ],
+        [
+          361,
+          362
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          243,
+          270
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "OME group MAY contain series; entries are string image paths, ordered like OME-XML Images if provided. With no series and no plate, images use consecutive groups starting 0, one image per series/index."
+        },
+        {
+          "status": "supported",
+          "decision": "OME/METADATA.ome.xml SHOULD be present; when supplied it must use OME-XML MetadataOnly rather than BinData, BinaryOnly or TiffData; minimum specification MAY be used."
+        },
+        {
+          "status": "qualified",
+          "decision": "Missing optional XML is not by itself universal inability to display. Full XML semantics or fixture interoperability cannot be established from this capture."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P17",
+      "title": "Multi-image reader choices",
+      "current_report_spans": [
+        [
+          101,
+          109
+        ],
+        [
+          371,
+          373
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          271,
+          275
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Readers SHOULD expose multiplicity and SHOULD NOT silently open only the first image; MAY use series, show all or choose, and ignore other root groups."
+        },
+        {
+          "status": "qualified",
+          "decision": "SHOULD is not a universal MUST. Required multiplicity awareness can follow the product discovery promise, but a flat qualified list is not inherently incapable of HCS identity."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P18",
+      "title": "Multiscales entries, datasets and paths",
+      "current_report_spans": [
+        [
+          99,
+          101
+        ],
+        [
+          145,
+          172
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          294,
+          308
+        ],
+        [
+          317,
+          319
+        ],
+        [
+          388,
+          397
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "multiscales is a list of dictionaries, each with axes and datasets. Each level path is group-relative and ordering largest/highest resolution to smallest, not numeric/lexicographic names."
+        },
+        {
+          "status": "supported",
+          "decision": "Levels share dimensionality <=5 matching axes count and order; each carries its own coordinateTransformations."
+        },
+        {
+          "status": "qualified",
+          "decision": "name/type/downscaling metadata SHOULD be provided; displaying them is product UI. Selection among entries by name/first fallback has illustrative guidance, not a fixed universal viewport algorithm."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P19",
+      "title": "Pyramid reduction and available-level handling",
+      "current_report_spans": [
+        [
+          147,
+          172
+        ],
+        [
+          164,
+          169
+        ],
+        [
+          409,
+          410
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          93,
+          100
+        ],
+        [
+          304,
+          316
+        ],
+        [
+          336,
+          397
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Metadata order and each level geometry defeat numeric-folder assumptions, fixed factor-two or isotropic reduction assumptions. Missing declared levels cannot be silently invented."
+        },
+        {
+          "status": "qualified",
+          "decision": "Ordering sanity metric based on total voxel count is a product heuristic, not normative resolution definition. Responsiveness, fallback and unsupported level policy derive from the plan."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P20",
+      "title": "Axis names, rank and dimension_names",
+      "current_report_spans": [
+        [
+          198,
+          223
+        ],
+        [
+          352,
+          354
+        ],
+        [
+          446,
+          449
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          81,
+          81
+        ],
+        [
+          166,
+          174
+        ],
+        [
+          299,
+          307
+        ],
+        [
+          825,
+          827
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Axis names are arbitrary but MUST be unique; axes length equals array rank, 2..5; dimension_names MUST be in each level array zarr.json and match axes names."
+        },
+        {
+          "status": "supported",
+          "decision": "The history one-liner saying dimension_names in axes is less precise than the explicit array-zarr.json requirement; preserve the actual field placement."
+        },
+        {
+          "status": "qualified",
+          "decision": "Generic best-effort positional inference for missing/custom types is a product policy and cannot manufacture validated semantic axes."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P21",
+      "title": "Axis composition and order",
+      "current_report_spans": [
+        [
+          198,
+          223
+        ],
+        [
+          250,
+          252
+        ],
+        [
+          352,
+          354
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          96,
+          97
+        ],
+        [
+          169,
+          174
+        ],
+        [
+          300,
+          303
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "2 or 3 space axes, at most one time and one channel/null/custom axis; order parallels array dimensions and time then channel/custom then space."
+        },
+        {
+          "status": "supported",
+          "decision": "Stacking spatial zyx order is SHOULD in the stated anisotropic case; arbitrary names cannot alone determine semantic t/c/z."
+        },
+        {
+          "status": "qualified",
+          "decision": "Two innermost spatial axes as an invariant plane rule is not universally established. Missing dimension and length-one present dimension are different; custom/null types need a truthful explicit policy."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P22",
+      "title": "Optional type, units and controls",
+      "current_report_spans": [
+        [
+          211,
+          223
+        ],
+        [
+          250,
+          252
+        ],
+        [
+          286,
+          290
+        ],
+        [
+          496,
+          497
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          169,
+          172
+        ],
+        [
+          301,
+          303
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Axis type and physical unit are SHOULD metadata; custom type strings are allowed and multiscales also mentions null/custom. Missing/unknown units must not become invented physical calibration."
+        },
+        {
+          "status": "supported",
+          "decision": "No time/channel axis warrants no such dimension slider; a present length-one axis is still present, not proof of absence."
+        },
+        {
+          "status": "qualified",
+          "decision": "Refusal, generic slider, raw-unit display, conversion/rounding and fallback behavior are product decisions. Intensity/channel compositing semantics for custom axes are not given."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P23",
+      "title": "OMERO presence and required fields",
+      "current_report_spans": [
+        [
+          227,
+          249
+        ],
+        [
+          363,
+          363
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          398,
+          430
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "omero is optional; if present channels is required, each entry color is six hex RGB digits and window requires min/max/start/end."
+        },
+        {
+          "status": "supported",
+          "decision": "Example-only active/coefficient/family/inverted/label/rdefs/id/name are not independently mandatory; WebGateway semantics are outside the capture."
+        },
+        {
+          "status": "qualified",
+          "decision": "Mandatory metadata fields do not imply MUST apply initial color/window or require all example hints. Honoring them is a reasonable product proposal; malformed color is not unspecified because a six-hex-digit requirement exists."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P24",
+      "title": "OMERO length, defaults and error qualifications",
+      "current_report_spans": [
+        [
+          232,
+          249
+        ],
+        [
+          455,
+          456
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          401,
+          425
+        ],
+        [
+          426,
+          430
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "channels matching c extent appears in an example comment; absence of a normative match rule is correctly qualified. Absent omero leaves initial contrast/color/T/Z to product choice."
+        },
+        {
+          "status": "supported",
+          "decision": "No captured gamma/family registry, crash policy or fully defined window-out-of-range behavior; proposals stay unexecuted."
+        },
+        {
+          "status": "qualified",
+          "decision": "Claiming every out-of-range window or start>end is a source-proven malformed case goes beyond captured type/presence rules."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P25",
+      "title": "General transformations",
+      "current_report_spans": [
+        [
+          259,
+          261
+        ],
+        [
+          293,
+          297
+        ],
+        [
+          463,
+          463
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          276,
+          293
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Transforms are an ordered list with required type; general types identity, translation and scale. Translation/scale may use float lists or a container binary path. Apply sequentially."
+        },
+        {
+          "status": "supported",
+          "decision": "The capture does not define full binary-vector dtype/shape/endianness/resolution behavior; support-or-truthful-decline is a product boundary."
+        },
+        {
+          "status": "qualified",
+          "decision": "Table header appearing after rows is capture formatting, not evidence of semantic loss or contradiction."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P26",
+      "title": "Per-level calibrated mapping",
+      "current_report_spans": [
+        [
+          262,
+          268
+        ],
+        [
+          286,
+          297
+        ],
+        [
+          355,
+          357
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          308,
+          313
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Image transforms only scale/translation; exactly one scale; at most one translation after scale. Vectors match axes length."
+        },
+        {
+          "status": "supported",
+          "decision": "Scale is physical size/duration when known; otherwise current-to-first resolution factor, default 1 without downsampling. Translation is physical offset."
+        },
+        {
+          "status": "supported",
+          "decision": "No uniform factor, zero-origin or identical-level mapping may be invented; missing/invalid transforms require truthful handling."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P27",
+      "title": "Global composition and coordinate examples",
+      "current_report_spans": [
+        [
+          269,
+          290
+        ],
+        [
+          450,
+          453
+        ],
+        [
+          498,
+          499
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          293,
+          316
+        ],
+        [
+          320,
+          387
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Optional image-level transforms obey dataset rules and apply after the dataset list. Reported example vectors and 0.1 time multiplication are present."
+        },
+        {
+          "status": "qualified",
+          "decision": "Composition needs listed scale-then-translation, followed by global transforms. Conventional function notation scale∘translate reverses the inner order; prose and executable arithmetic must agree."
+        },
+        {
+          "status": "qualified",
+          "decision": "The supplied reports have no worked nonzero-offset dataset-plus-global arithmetic oracle; validation proposals are retained but not evidence of execution or verified preservation."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P28",
+      "title": "Details panel and calibration uncertainty",
+      "current_report_spans": [
+        [
+          256,
+          297
+        ],
+        [
+          407,
+          408
+        ],
+        [
+          450,
+          453
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          167,
+          174
+        ],
+        [
+          308,
+          319
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Axis names, dimensions, units and composed coordinates are evidence-grounded topics required by the product promise; missing units/relative factors remain explicit."
+        },
+        {
+          "status": "qualified",
+          "decision": "Exact panel layout, cursor/view-center display, transform vectors, voxel sizes, pyramid method display and image-group-origin wording are proposed UI policy. Unit presence alone does not prove a scale value is physically calibrated."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P29",
+      "title": "Label container, paths and intermediate groups",
+      "current_report_spans": [
+        [
+          301,
+          308
+        ],
+        [
+          364,
+          365
+        ],
+        [
+          500,
+          502
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          102,
+          117
+        ],
+        [
+          431,
+          442
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "labels container is nested beside original levels; is not itself an image; contains label images with arbitrary names."
+        },
+        {
+          "status": "supported",
+          "decision": "ome.labels path array MUST exist; exhaustive listing is SHOULD. Intermediate groups are allowed and MUST NOT contain metadata."
+        },
+        {
+          "status": "qualified",
+          "decision": "Directory guessing alone is insufficient for declared association, but exclusively forbidding unlisted discovery exceeds SHOULD exhaustiveness."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P30",
+      "title": "Integer label data and categorical keys",
+      "current_report_spans": [
+        [
+          309,
+          337
+        ],
+        [
+          364,
+          365
+        ],
+        [
+          500,
+          502
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          434,
+          439
+        ],
+        [
+          454,
+          471
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Label dtype list is uint8/int8/uint16/int16/uint32/int32/uint64/int64. Values denote categorical labels. Color/property objects key by integer label-value; order is not category identity."
+        },
+        {
+          "status": "supported",
+          "decision": "Label image must implement multiscales and have same number of dataset levels as the original."
+        },
+        {
+          "status": "qualified",
+          "decision": "Exact integer preservation requires range-safe decoding/lookup; uint64/int64 listings alone are not an exact binary64 range contract. Resampling that creates IDs violates categorical identity even when interpolation policy is product-chosen."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P31",
+      "title": "Label registration and size-one dimensions",
+      "current_report_spans": [
+        [
+          314,
+          341
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          106,
+          108
+        ],
+        [
+          432,
+          433
+        ],
+        [
+          454,
+          455
+        ],
+        [
+          472,
+          474
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Labels share coordinate system, usually dimensions/transforms; same-or-one overview supports irrelevant dimensions. Each label has its own multiscales geometry and equal level count."
+        },
+        {
+          "status": "qualified",
+          "decision": "Equal counts or shapes alone do not establish registration or source identity; broadcast/mismatch rejection and resampling choices need coherent validated geometry."
+        },
+        {
+          "status": "supported",
+          "decision": "Nearest neighbor/category-preserving display is a defensible derived policy; S003 does not prescribe a named universal interpolation algorithm."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P32",
+      "title": "image-label optionality and palette recommendation",
+      "current_report_spans": [
+        [
+          324,
+          338
+        ],
+        [
+          373,
+          374
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          456,
+          466
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "image-label SHOULD be present; colors and version SHOULD be present, with conditional array/string constraints. Readers SHOULD use declared colors."
+        },
+        {
+          "status": "supported",
+          "decision": "Color entries MUST have integer label-value; optional rgba is four integers 0..255, fourth alpha/opacity; extra keys allowed. Worked 0/1 colors are informative examples."
+        },
+        {
+          "status": "qualified",
+          "decision": "Treating colors/version presence or honoring palette as unconditional MUST overstates SHOULD. Fallback palette, toggle/opacity UI, blending and property visibility are product choices."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P33",
+      "title": "Label properties and source association",
+      "current_report_spans": [
+        [
+          327,
+          333
+        ],
+        [
+          338,
+          341
+        ],
+        [
+          459,
+          460
+        ],
+        [
+          500,
+          502
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          467,
+          474
+        ],
+        [
+          493,
+          508
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "properties and source MAY exist; properties entries each require integer label-value and may differ in keys. source must be an object, image if present a relative string path to a Zarr image group; default is ../../."
+        },
+        {
+          "status": "qualified",
+          "decision": "The relative source reference cannot be reduced to annotation only or assumed always the containment parent. Resolve actual source identity before overlaying when provided; deeper intermediate nesting matters."
+        },
+        {
+          "status": "qualified",
+          "decision": "The ../../ default is an explicit normative sentence at S003 L474, not merely an example. A source-proven default should not be dismissed as nonbinding only because the same token occurs in JSON samples."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P34",
+      "title": "Exact key spellings and naming convention",
+      "current_report_spans": [
+        [
+          65,
+          69
+        ],
+        [
+          376,
+          377
+        ],
+        [
+          464,
+          465
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          809,
+          812
+        ],
+        [
+          518,
+          560
+        ],
+        [
+          462,
+          474
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "CamelCase is a source naming recommendation with historical exceptions. Literal field_count, maximumfieldcount, rowIndex, columnIndex, label-value, starttime/endtime, bioformats2raw.layout must survive."
+        },
+        {
+          "status": "qualified",
+          "decision": "Source naming conventions do not impose a naming standard on the unrelated session store; session-storage design is product policy."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P35",
+      "title": "Performance, cancellation and item-scoped messages",
+      "current_report_spans": [
+        [
+          174,
+          190
+        ],
+        [
+          411,
+          414
+        ],
+        [
+          427,
+          440
+        ],
+        [
+          504,
+          505
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          68,
+          100
+        ],
+        [
+          271,
+          275
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Background reads, cancellation, no-freeze acceptance and understandable per-item feedback are product requirements in the brief/plan. S003 gives no threading/cache/prefetch algorithm, performance budget or error strings."
+        },
+        {
+          "status": "qualified",
+          "decision": "Format violations, optional absence, product capability limits and extra groups need distinct treatment; a list headed cannot display must not imply optional omissions necessarily prevent display."
+        },
+        {
+          "status": "supported",
+          "decision": "No synthetic fixture, profiling result or crash-freedom execution is demonstrated by these reports."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P36",
+      "title": "Implementation evidence and external dependencies",
+      "current_report_spans": [
+        [
+          36,
+          39
+        ],
+        [
+          466,
+          468
+        ],
+        [
+          472,
+          482
+        ],
+        [
+          506,
+          507
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          52,
+          59
+        ],
+        [
+          68,
+          72
+        ],
+        [
+          170,
+          172
+        ],
+        [
+          257,
+          260
+        ],
+        [
+          424,
+          425
+        ],
+        [
+          813,
+          820
+        ],
+        [
+          895,
+          896
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "External standards/tools pointers do not supply actual reader implementations. Native interoperability, converter quirks, codec distributions and tolerance/performance behavior remain unresolved in the one-source scope."
+        },
+        {
+          "status": "qualified",
+          "decision": "Untested interoperability is not a finding of incompatibility. MetadataOnly, WebGateway, UDUNITS and Zarr details beyond capture remain unresolved, not invented mandates."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P37",
+      "title": "Explicit uncertainty and counterevidence inventory",
+      "current_report_spans": [
+        [
+          118,
+          123
+        ],
+        [
+          136,
+          139
+        ],
+        [
+          170,
+          172
+        ],
+        [
+          218,
+          223
+        ],
+        [
+          239,
+          249
+        ],
+        [
+          285,
+          297
+        ],
+        [
+          314,
+          341
+        ],
+        [
+          444,
+          468
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          25,
+          27
+        ],
+        [
+          93,
+          108
+        ],
+        [
+          169,
+          174
+        ],
+        [
+          256,
+          275
+        ],
+        [
+          293,
+          319
+        ],
+        [
+          398,
+          474
+        ],
+        [
+          518,
+          560
+        ],
+        [
+          813,
+          866
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Arbitrary names, variable axes, optional OMERO, sparse plates, per-level geometry, optional/global translations, units SHOULD, unlisted labels and acquisitions counter fixed-position/dense/numeric-folder assumptions."
+        },
+        {
+          "status": "qualified",
+          "decision": "Claims to refute thin-plan assumptions must be read as risks: the thin fixture does not itself assert one-image, tczyx, factor-two, dense plates or zero-origin assumptions."
+        },
+        {
+          "status": "supported",
+          "decision": "No listed uncertainty or relevant counterevidence is deleted from saved history to final. Capture gaps remain visibly unresolved."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P38",
+      "title": "Plan disposition, optional capability and product review",
+      "current_report_spans": [
+        [
+          387,
+          393
+        ],
+        [
+          397,
+          423
+        ]
+      ],
+      "admitted_source_spans": [],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Each thin-plan sentence has a retained mapping: opening/listing, canvas, controls, overlays, calibrated details, pyramid choice, responsiveness, failures, interoperability, read-only boundary and acceptance."
+        },
+        {
+          "status": "qualified",
+          "decision": "Derived product proposals require explicit review; source conformance does not automatically mandate a particular tree, legend, panel content, fallback policy or all possible reader capabilities."
+        },
+        {
+          "status": "supported",
+          "decision": "The reports remain standalone proposals and research artifacts, not canonical Puppet Master specifications or executed WorkNodes."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P39",
+      "title": "Proposed validation and execution status",
+      "current_report_spans": [
+        [
+          486,
+          507
+        ]
+      ],
+      "admitted_source_spans": [],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "All V1..V9 in R001 and V1..V7 in R002 are explicitly UNEXECUTED. Discovery, schema/negative, axes/control, transform/unit, labels, performance and read-only topics are covered as proposals."
+        },
+        {
+          "status": "qualified",
+          "decision": "Fixture absence does not make a proposal a false executed result; proposed checks do not prove current runtime correctness, exact preservation, quality or efficiency."
+        },
+        {
+          "status": "supported",
+          "decision": "No validation proposal is removed between completed saved versions and final reports."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P40",
+      "title": "Source locator index and closing completeness claims",
+      "current_report_spans": [
+        [
+          511,
+          529
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          1,
+          896
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "The indexes retain principal source sections and exact field locators; headings/index restatements carry no additional discovered empirical execution."
+        },
+        {
+          "status": "qualified",
+          "decision": "Index coverage and whole-brief self-descriptions do not prove every emitted assertion true or every eligible facet fully developed; specific unsupported statements remain independently visible."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final; qualifications/errors separately identified",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "E01",
+      "title": "Retained source/derivation limitation",
+      "current_report_spans": [
+        [
+          21,
+          35
+        ],
+        [
+          45,
+          48
+        ],
+        [
+          430,
+          430
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          68,
+          72
+        ],
+        [
+          438,
+          439
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "contradicted",
+          "decision": "The source does not fully determine the on-disk contract without the referenced Zarr standard; the repeated no-disallowance-anywhere claim ignores explicit label integer dtypes. These errors are retained byte-for-byte, not supported acquisition."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "source error, ambiguous derivation or undeveloped lead retained; not edit-induced loss",
+      "verification_history": "unknown"
+    },
+    {
+      "id": "E02",
+      "title": "Retained source/derivation limitation",
+      "current_report_spans": [
+        [
+          102,
+          103
+        ],
+        [
+          399,
+          401
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          437,
+          440
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "unsupported",
+          "decision": "Labels container not itself an image does not forbid browsing contained label images as primary items. The source-level MUST NOT exclusion is unsupported and retained."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "source error, ambiguous derivation or undeveloped lead retained; not edit-induced loss",
+      "verification_history": "unknown"
+    },
+    {
+      "id": "E03",
+      "title": "Retained source/derivation limitation",
+      "current_report_spans": [
+        [
+          232,
+          238
+        ],
+        [
+          363,
+          363
+        ],
+        [
+          372,
+          377
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          317,
+          319
+        ],
+        [
+          426,
+          430
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "unsupported",
+          "decision": "Metadata field presence and writer SHOULD metadata do not create MUST initial rendering or SHOULD reader panel display obligations. Product proposals are reasonable only as product proposals; current normative overclaims are retained."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "source error, ambiguous derivation or undeveloped lead retained; not edit-induced loss",
+      "verification_history": "unknown"
+    },
+    {
+      "id": "E04",
+      "title": "Retained source/derivation limitation",
+      "current_report_spans": [
+        [
+          272,
+          279
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          293,
+          315
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "qualified",
+          "decision": "The prose says apply scale then translation then global transforms, but conventional scale∘translate notation reverses each local order; the example is called normative despite being an example. Ambiguity is retained; no nonzero-offset arithmetic oracle resolves it."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "source error, ambiguous derivation or undeveloped lead retained; not edit-induced loss",
+      "verification_history": "unknown"
+    },
+    {
+      "id": "E05",
+      "title": "Retained source/derivation limitation",
+      "current_report_spans": [
+        [
+          208,
+          208
+        ],
+        [
+          215,
+          220
+        ],
+        [
+          288,
+          290
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          81,
+          81
+        ],
+        [
+          169,
+          174
+        ],
+        [
+          301,
+          303
+        ],
+        [
+          310,
+          310
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "qualified",
+          "decision": "Unit presence alone cannot identify physical-vs-relative scale; channel axes need not be categorically declared incapable of coordinate mapping. Innermost-plane and positional slider assumptions remain caveated product ideas rather than validated universal semantics."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "source error, ambiguous derivation or undeveloped lead retained; not edit-induced loss",
+      "verification_history": "unknown"
+    },
+    {
+      "id": "E06",
+      "title": "Retained source/derivation limitation",
+      "current_report_spans": [
+        [
+          328,
+          333
+        ],
+        [
+          338,
+          341
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          472,
+          474
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "contradicted",
+          "decision": "source.image only annotates provenance and must not relocate overlay is not grounded in the source-image path contract. Resolve association before overlaying; this semantic narrowing exists already in V001 and cannot be attributed to later editing."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "source error, ambiguous derivation or undeveloped lead retained; not edit-induced loss",
+      "verification_history": "unknown"
+    },
+    {
+      "id": "E07",
+      "title": "Retained source/derivation limitation",
+      "current_report_spans": [
+        [
+          324,
+          328
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          456,
+          460
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "qualified",
+          "decision": "image-label, colors and version have SHOULD-presence language; conditional MUST constrains values. Universal version-presence wording is too strong and survives unchanged."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "source error, ambiguous derivation or undeveloped lead retained; not edit-induced loss",
+      "verification_history": "unknown"
+    },
+    {
+      "id": "E08",
+      "title": "Retained source/derivation limitation",
+      "current_report_spans": [
+        [
+          137,
+          139
+        ],
+        [
+          170,
+          172
+        ],
+        [
+          376,
+          377
+        ],
+        [
+          438,
+          439
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          306,
+          306
+        ],
+        [
+          748,
+          750
+        ],
+        [
+          810,
+          812
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "qualified",
+          "decision": "Acquisition-list-length trigger, voxel-count ordering sanity metric, own-session-store CamelCase and exclusion of extended XML are proposed policies, not source-established obligations. Local source/brief does not settle all these product choices."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "source error, ambiguous derivation or undeveloped lead retained; not edit-induced loss",
+      "verification_history": "unknown"
+    },
+    {
+      "id": "E09",
+      "title": "Retained source/derivation limitation",
+      "current_report_spans": [
+        [
+          12,
+          15
+        ],
+        [
+          528,
+          529
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          1,
+          896
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "contradicted",
+          "decision": "The all-findings-source-supported closing assertion and all-keywords-source-own declaration are too broad given retained overclaims. A perfect temporal byte match does not validate them."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "source error, ambiguous derivation or undeveloped lead retained; not edit-induced loss",
+      "verification_history": "unknown"
+    },
+    {
+      "id": "P41",
+      "title": "Read-only guarantee and session settings",
+      "current_report_spans": [
+        [
+          91,
+          93
+        ],
+        [
+          366,
+          367
+        ],
+        [
+          417,
+          420
+        ],
+        [
+          504,
+          505
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          60,
+          64
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "Source files unchanged and session-local viewing settings are direct brief/plan requirements; reading optional transitional metadata does not require writing."
+        },
+        {
+          "status": "qualified",
+          "decision": "Byte-identical source-file and no-write tests are UNEXECUTED proposals; source silence about viewing mutations is not evidence of an actual read-only implementation."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "present in complete saved artifact",
+      "temporal_outcome": "retained in final",
+      "verification_history": "no semantic verification notes supplied"
+    },
+    {
+      "id": "P42",
+      "title": "Additional unresolved product and security leads",
+      "current_report_spans": [
+        [
+          387,
+          393
+        ],
+        [
+          466,
+          482
+        ],
+        [
+          506,
+          507
+        ]
+      ],
+      "admitted_source_spans": [
+        [
+          73,
+          77
+        ],
+        [
+          305,
+          306
+        ],
+        [
+          552,
+          560
+        ],
+        [
+          745,
+          750
+        ],
+        [
+          813,
+          814
+        ]
+      ],
+      "atomic_decisions": [
+        {
+          "status": "supported",
+          "decision": "The admitted source supplies no actual-tool, fixture-performance, accessibility, color-vision, local-symlink/path-traversal/decompression/XML-hardening, or telemetry implementation evidence."
+        },
+        {
+          "status": "qualified",
+          "decision": "R002 identifies security/accessibility/telemetry as unresolved product leads rather than tested findings or format mandates; R001 leaves actual implementations unresolved without developing those extra leads. Neither pattern establishes never-acquired knowledge."
+        }
+      ],
+      "semantic_acquisition": "unknown",
+      "visible_drafting": "unresolved limits present; R002 extra product leads present",
+      "temporal_outcome": "retained in final; no source-supported lead dropped",
+      "verification_history": "unknown"
+    }
+  ],
+  "eligible_facet_preservation": [
+    {
+      "id": "OME05-C01",
+      "title": "Versioned metadata admission",
+      "admitted_source_spans": [
+        [
+          68,
+          69
+        ],
+        [
+          149,
+          156
+        ]
+      ],
+      "inventory_rows": [
+        "P02",
+        "P05",
+        "P07"
+      ],
+      "history_to_current": "Zarr v3, attributes.ome, string version and hierarchy consistency are visibly drafted and retained. Non-0.5 compatibility policy remains explicit product boundary; no previous legacy reinterpretation draft is supplied.",
+      "semantic_acquisition": "unknown",
+      "never_acquired": "not established",
+      "acquired_but_undeveloped": "not established; only drafted leads observable",
+      "drafted_then_lost": false,
+      "verified_then_lost": "unassessable without verification/acquisition notes",
+      "correctly_retained_source_content": true
+    },
+    {
+      "id": "OME05-C02",
+      "title": "Axis-to-array identity",
+      "admitted_source_spans": [
+        [
+          81,
+          81
+        ],
+        [
+          167,
+          174
+        ],
+        [
+          299,
+          303
+        ]
+      ],
+      "inventory_rows": [
+        "P20",
+        "P21",
+        "P22"
+      ],
+      "history_to_current": "Variable rank, arbitrary unique names, ordered identity and dimension_names are retained. Absent-vs-present-length-one is not fully exercised in an explicit report acceptance example; unsafe semantic inference remains a policy risk rather than proven historical loss.",
+      "semantic_acquisition": "unknown",
+      "never_acquired": "not established",
+      "acquired_but_undeveloped": "not established; only drafted leads observable",
+      "drafted_then_lost": false,
+      "verified_then_lost": "unassessable without verification/acquisition notes",
+      "correctly_retained_source_content": true
+    },
+    {
+      "id": "OME05-C03",
+      "title": "Declared pyramid selection",
+      "admitted_source_spans": [
+        [
+          93,
+          100
+        ],
+        [
+          304,
+          316
+        ]
+      ],
+      "inventory_rows": [
+        "P18",
+        "P19"
+      ],
+      "history_to_current": "Declared relative paths, order and per-level transforms are retained. No complete nonnumeric/nonuniform/missing-level fixture result exists; proposals stay UNEXECUTED. Any partial development was present in initial draft.",
+      "semantic_acquisition": "unknown",
+      "never_acquired": "not established",
+      "acquired_but_undeveloped": "not established; only drafted leads observable",
+      "drafted_then_lost": false,
+      "verified_then_lost": "unassessable without verification/acquisition notes",
+      "correctly_retained_source_content": true
+    },
+    {
+      "id": "OME05-C04",
+      "title": "Composed coordinate calibration",
+      "admitted_source_spans": [
+        [
+          170,
+          174
+        ],
+        [
+          293,
+          316
+        ]
+      ],
+      "inventory_rows": [
+        "P25",
+        "P26",
+        "P27",
+        "P28"
+      ],
+      "history_to_current": "Dataset then global transform ordering and unit/relative caveats are visibly drafted and retained. Neither report supplies a worked nonzero dataset+global translation arithmetic oracle; no such correct draft was lost.",
+      "semantic_acquisition": "unknown",
+      "never_acquired": "not established",
+      "acquired_but_undeveloped": "not established; only drafted leads observable",
+      "drafted_then_lost": false,
+      "verified_then_lost": "unassessable without verification/acquisition notes",
+      "correctly_retained_source_content": true
+    },
+    {
+      "id": "OME05-C05",
+      "title": "Associated label discovery and registration",
+      "admitted_source_spans": [
+        [
+          431,
+          455
+        ],
+        [
+          472,
+          474
+        ]
+      ],
+      "inventory_rows": [
+        "P29",
+        "P31",
+        "P33"
+      ],
+      "history_to_current": "Paths, own multiscales, equal level count and relative source metadata survive. Explicit non-parent/deeper-nesting source association resolution is incomplete; R001 annotative-only narrowing and R002 parent-only wording already exist in first complete version, not later loss.",
+      "semantic_acquisition": "unknown",
+      "never_acquired": "not established",
+      "acquired_but_undeveloped": "not established; only drafted leads observable",
+      "drafted_then_lost": false,
+      "verified_then_lost": "unassessable without verification/acquisition notes",
+      "correctly_retained_source_content": true
+    },
+    {
+      "id": "OME05-C06",
+      "title": "Categorical label identity",
+      "admitted_source_spans": [
+        [
+          434,
+          439
+        ],
+        [
+          461,
+          471
+        ]
+      ],
+      "inventory_rows": [
+        "P30",
+        "P32",
+        "P33"
+      ],
+      "history_to_current": "Integer types and integer label-value keys survive. Exact uint64/int64 range protection and order-independent sparse-ID lookup are incompletely developed. R001 has nearest-neighbor categorical rationale; R002 leaves interpolation as product choice without full identity-preserving contract. No valid earlier precision/lookup draft is present.",
+      "semantic_acquisition": "unknown",
+      "never_acquired": "not established",
+      "acquired_but_undeveloped": "not established; only drafted leads observable",
+      "drafted_then_lost": false,
+      "verified_then_lost": "unassessable without verification/acquisition notes",
+      "correctly_retained_source_content": true
+    }
+  ],
+  "temporal_transitions": [
+    {
+      "id": "T01",
+      "transition": "V001 -> frozen current",
+      "classification": "exact byte retention",
+      "source_supported_loss": false,
+      "qualifier_loss": false,
+      "counterevidence_loss": false,
+      "reason": "Only complete saved Write is byte-identical to final report. Earlier unrecorded acquisition/drafting is unknown. Retained unsupported statements remain unsupported."
+    }
+  ],
+  "preservation_findings": {
+    "visible_source_supported_drafted_content": "retained",
+    "source_supported_loss_count": 0,
+    "actual_qualifier_condition_loss_count": 0,
+    "counterevidence_loss_count": 0,
+    "exact_rendering": "R001 V001 exactly current; R002 V005 exactly current with all four edit transitions reconstructed and hashed. Exact bytes do not establish semantic correctness.",
+    "drafted_then_lost_supported_content": [],
+    "verified_then_lost_content": "unknown, no semantic verification notes",
+    "never_acquired_content": "unknown, cannot infer from missing notes or Read metadata",
+    "acquired_but_undeveloped_content": "unknown; only source-grounded drafted leads identified",
+    "undeveloped_visible_leads": [
+      "Label source-image association under deeper intermediate nesting and explicit non-parent references",
+      "Exact large signed/unsigned integer range preservation and keyed sparse-ID palette/property lookup",
+      "Concrete nonzero-offset dataset-plus-global calibration oracle",
+      "Explicit absent-versus-present-length-one navigation cases"
+    ],
+    "retained_qualifications": [
+      "S003-only scope and real-reader evidence absence",
+      "Optional OMERO and example-only hints",
+      "Unknown/missing units and relative scale caveats",
+      "SHOULD label-list exhaustiveness and optional image-label/properties/source",
+      "Variable axes/arbitrary paths/nonuniform level geometry",
+      "UNEXECUTED validation and product-owned performance/error UX"
+    ],
+    "retained_source_or_derivation_errors": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09"
+    ],
+    "new_supported_findings_added_by_edits": [],
+    "new_qualifications_added_by_edits": []
+  },
+  "conclusion": {
+    "temporal_preservation": "No demonstrated source-supported temporal loss in supplied completed artifact history",
+    "acquisition_preservation": "unassessed because semantic acquisition is unknown",
+    "final_semantic_quality": "Frozen phase1 grade remains unchanged; retention includes independent source/derivation defects and incomplete facets",
+    "efficiency_or_method_win": "unassessed; no treatment/economics supplied"
+  },
+  "access_and_blinding": {
+    "private_map_read": false,
+    "method_cards_read": false,
+    "economics_read": false,
+    "candidate_full_conversations_read": false,
+    "other_grades_read": false,
+    "original_grade_contents_read": false,
+    "access_breach_detected": false,
+    "limitations": [
+      "Format and self-description may partially reveal structure; R001 embeds a task-card token in the allowed report header. No private map or method interpretation was used.",
+      "first-pair.json is an earlier preparation descriptor with history_unlocked false; per-case later stage and receipts are authoritative for the explicit unlock.",
+      "No effective-model introspection endpoint is available in the permitted review context."
+    ]
+  }
+}

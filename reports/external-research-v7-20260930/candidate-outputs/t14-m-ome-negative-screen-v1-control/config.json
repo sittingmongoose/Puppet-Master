@@ -1,0 +1,122 @@
+{
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/control/attempt.json",
+  "source_sha256": "b8a44f776d3964c9ca62ca93004d62d304b81dde51bd645c508e04cf54a34697",
+  "spec": {
+    "job_id": "t14-m-ome-negative-screen-v1-control",
+    "method": "T14",
+    "arm": "control",
+    "family": "M",
+    "case_id": "ome-normative-dev-v1",
+    "scope": "Independently verify all frozen candidate seed findings against admitted evidence and plan.",
+    "inputs": [
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+        "target": "brief.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/TASK.md",
+        "target": "TASK.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/catalog.json",
+        "target": "catalog.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/sources/S003.txt",
+        "target": "sources/S003.txt"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/plan/Viewer.md",
+        "target": "plan/Viewer.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/t02-control-first-seed.json",
+        "target": "candidate_seed.json"
+      }
+    ],
+    "admitted_inputs": [
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+        "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/TASK.md",
+        "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/catalog.json",
+        "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/sources/S003.txt",
+        "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/plan/Viewer.md",
+        "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/t02-control-first-seed.json",
+        "sha256": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c"
+      }
+    ],
+    "caps": {
+      "seconds": 900,
+      "responses": 96
+    },
+    "output_files": [
+      "report.md",
+      "acquisition.json",
+      "verification.json"
+    ],
+    "source_access": "Only admitted frozen source captures; no live external fetching.",
+    "plan_visibility": "Admitted thin plan visible; no evaluator keys or historical outputs.",
+    "evaluation_obligations": "All material claims, full assigned scope including unvisited/dead-end areas, unsupported assertions, false dismissals, conditions, source fit, novelty, complete elapsed and usage costs.",
+    "zcode_tools": [
+      "Read",
+      "Write",
+      "Bash"
+    ],
+    "method_instruction": "Perform normal source-grounded verification and report all finding dispositions and reasons. Deliver a standalone current report with complete independent finding identities, exact evidence locators and source versions, applicability/transfer limits, plan implications where a plan is admitted, unresolved areas and proposed validation labeled UNEXECUTED. Also write acquisition.json recording selected source URLs/versions, queries/reads and finding-to-source links; do not invent access or execution evidence. Source choice and interpretation are your own. A failed search proves only that search result, not absence."
+  },
+  "input_manifest": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+      "target": "brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/TASK.md",
+      "target": "TASK.md",
+      "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+      "bytes": 1367
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/catalog.json",
+      "target": "catalog.json",
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/sources/S003.txt",
+      "target": "sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/plan/Viewer.md",
+      "target": "plan/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/t02-control-first-seed.json",
+      "target": "candidate_seed.json",
+      "sha256": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c",
+      "bytes": 49549
+    }
+  ],
+  "prepared_status": "prepared-not-started",
+  "status_note": "creation-time prepared status; terminal native receipt is lifecycle authority"
+}

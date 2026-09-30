@@ -1,0 +1,562 @@
+[
+  {
+    "method": "T07",
+    "review_status": "blocked_launch_runtime",
+    "acceptance_scope": "Exact prospective cards, inputs and experiment mechanics only. Common inherited M/Z credential exposure holds launch until a separately accepted finite runtime2 and prospective exact job rebind.",
+    "candidate_executions": 0,
+    "native_launch": "held: inherited runtime credential boundary unqualified; new accepted runtime and prospective rebind required",
+    "items": [
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/pair.json",
+        "sha256": "08c2e6de7c24cd3d3b54b57a56ee74235649cea5bbf7094b80e5a1b960a810ec",
+        "published": "prepared-methods/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/pair.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment.spec.json",
+        "sha256": "86d760bb3712c665c0ef9ca42a8df6820350ee867e4cab30dea7d9b1b8bac1c4",
+        "published": "prepared-methods/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment.spec.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control.spec.json",
+        "sha256": "256f104c7a981432afa803407a05e7f603a4d6577d5c6df9e917e11d975023aa",
+        "published": "prepared-methods/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control.spec.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/goal.txt",
+        "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+        "published": "prepared-methods/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/goal.txt"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/attempt.json",
+        "sha256": "4d918e1df1b07b2dae42560bcc295b871e7899e4444bfff4fdf806f81ecd7ae1",
+        "published": "prepared-methods/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/attempt.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/goal.txt",
+        "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+        "published": "prepared-methods/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/goal.txt"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/attempt.json",
+        "sha256": "8d7d7fc0ce018375b8e1b5ec994bc80885d974eca647f8be16072ddf2d27545b",
+        "published": "prepared-methods/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/attempt.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/TASK.md",
+        "sha256": "ef786e2ffe96c1b19c44fd86585300d035016607914b3e7c86b7f323251dd238",
+        "published": "prepared-methods/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/TASK.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/inputs/mechanics.py",
+        "sha256": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/inputs/brief.md",
+        "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/inputs/catalog.json",
+        "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/inputs/TASK.md",
+        "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/inputs/source_dependency.json",
+        "sha256": "0b2b9cb7f75ca18c860b0724c990486520cc186e1d72d95eeb10fb886f950cd6",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/inputs/sources/S003.txt",
+        "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/control/workspace/inputs/plan/Viewer.md",
+        "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/TASK.md",
+        "sha256": "6d97df1da038169a1473faaf22e004e79ce1d4687530125a1cc706c50cb15da3",
+        "published": "prepared-methods/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/TASK.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/inputs/mechanics.py",
+        "sha256": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/inputs/brief.md",
+        "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/inputs/catalog.json",
+        "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/inputs/TASK.md",
+        "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/inputs/source_dependency.json",
+        "sha256": "0b2b9cb7f75ca18c860b0724c990486520cc186e1d72d95eeb10fb886f950cd6",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/inputs/sources/S003.txt",
+        "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t07-z-ome-cache-resume-v1/treatment/workspace/inputs/plan/Viewer.md",
+        "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/prepare_resume.py",
+        "sha256": "131bdc7b841b0d53f4aaa829c3dcf13ad56735a0b5b3700ccc05dcab71e08ea9",
+        "published": "prepared-methods/methods-resume-v1/prepare_resume.py"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/dependency_selector.py",
+        "sha256": "b4e056e6a741e6130510fe8608ee58bc49f8c9be7f2fadfe0d5faded7e04df20",
+        "published": "prepared-methods/methods-resume-v1/dependency_selector.py"
+      }
+    ]
+  },
+  {
+    "method": "T08",
+    "review_status": "blocked_launch_runtime",
+    "acceptance_scope": "Exact prospective cards, inputs and experiment mechanics only. Common inherited M/Z credential exposure holds launch until a separately accepted finite runtime2 and prospective exact job rebind.",
+    "candidate_executions": 0,
+    "native_launch": "held: inherited runtime credential boundary unqualified; new accepted runtime and prospective rebind required",
+    "items": [
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/pair.json",
+        "sha256": "91f4796f636ecc84251339c42c39d26f4f13644b943db677735b62a3090762be",
+        "published": "prepared-methods/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/pair.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/treatment.spec.json",
+        "sha256": "d7c3fe7b2182c7a44630b2d6db0c062a9e48d6d2af89efae1d74b5a0671d45a7",
+        "published": "prepared-methods/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/treatment.spec.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/control.spec.json",
+        "sha256": "e0584c9f59ad5400b87de272c5243db7d8aa6ba8d0118ca4097568945e0ca556",
+        "published": "prepared-methods/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/control.spec.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/treatment/goal.txt",
+        "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+        "published": "prepared-methods/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/treatment/goal.txt"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/treatment/attempt.json",
+        "sha256": "4bb8ab48c3ad43e2180f63379a9a593b7f8451a2f2cbb3c191c0372c3e2e346b",
+        "published": "prepared-methods/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/treatment/attempt.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/control/goal.txt",
+        "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+        "published": "prepared-methods/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/control/goal.txt"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/control/attempt.json",
+        "sha256": "1a2ec21d4ffda990d128968119e1cfa8e48620eae6fa9c7ae2fb9160ac454a40",
+        "published": "prepared-methods/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/control/attempt.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/control/workspace/TASK.md",
+        "sha256": "6acdc0127ddfe7726cbfa92d05f9e3dc9741c708e98ad088ca271e80f0ad56ee",
+        "published": "prepared-methods/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/control/workspace/TASK.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/control/workspace/inputs/brief.md",
+        "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/treatment/workspace/TASK.md",
+        "sha256": "13ef0c910d198d389aa5a87292a79f8e86ec2a0dc6eccf37b058aeae173ebc72",
+        "published": "prepared-methods/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/treatment/workspace/TASK.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/treatment/workspace/inputs/brief.md",
+        "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/prepare_resume.py",
+        "sha256": "131bdc7b841b0d53f4aaa829c3dcf13ad56735a0b5b3700ccc05dcab71e08ea9",
+        "published": "prepared-methods/methods-resume-v1/prepare_resume.py"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/dependency_selector.py",
+        "sha256": "b4e056e6a741e6130510fe8608ee58bc49f8c9be7f2fadfe0d5faded7e04df20",
+        "published": "prepared-methods/methods-resume-v1/dependency_selector.py"
+      }
+    ]
+  },
+  {
+    "method": "T10",
+    "review_status": "accepted",
+    "acceptance_scope": "Exact prospective T10-M brief-only method cards and bindings; unchanged separately accepted M runtime, operator quota, native configuration/integrity receipts still apply. This does not accept a runtime repair.",
+    "candidate_executions": 0,
+    "native_launch": "held: inherited runtime credential boundary unqualified; new accepted runtime and prospective rebind required",
+    "items": [
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/pair.json",
+        "sha256": "c2b2cccc06420c2549dafa7c479b532caaf0d19cfaf69e5c2ec2a56d74e3dcbf",
+        "published": "prepared-methods/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/pair.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/treatment.spec.json",
+        "sha256": "11aeff584ab7f3c593531ff246dbf8c06a808696cafdc8f3a1f4f8bfed08f01f",
+        "published": "prepared-methods/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/treatment.spec.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control.spec.json",
+        "sha256": "783f80521cd33b4c5ab522e0b926b4fc97639e05904f4fe2d4569ffe760329c8",
+        "published": "prepared-methods/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control.spec.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/treatment/goal.txt",
+        "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+        "published": "prepared-methods/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/treatment/goal.txt"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/treatment/attempt.json",
+        "sha256": "6524079e8ab4927fd2993eac2d87e705525d038a50c344975f3a932a5b059ea8",
+        "published": "prepared-methods/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/treatment/attempt.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control/goal.txt",
+        "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+        "published": "prepared-methods/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control/goal.txt"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control/attempt.json",
+        "sha256": "cd857558c887a644772991e1d63368ad274f3a0d2d94c4c56500c859d8b94891",
+        "published": "prepared-methods/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control/attempt.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control/workspace/TASK.md",
+        "sha256": "3ab5549a33ec23c2a0e56d1ccaa0e04e59ed438c4d94d0fd43e9adadd2d1949f",
+        "published": "prepared-methods/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control/workspace/TASK.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/control/workspace/inputs/brief.md",
+        "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/treatment/workspace/TASK.md",
+        "sha256": "85f8aace249b7fd0611e97547ff32189098ea4f9a044d7cd8f4556ae25d6ff92",
+        "published": "prepared-methods/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/treatment/workspace/TASK.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/pairs/t10-m-azure-discovery-resume-v1/treatment/workspace/inputs/brief.md",
+        "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+        "publication": "private source/input; metadata pin only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/prepare_resume.py",
+        "sha256": "131bdc7b841b0d53f4aaa829c3dcf13ad56735a0b5b3700ccc05dcab71e08ea9",
+        "published": "prepared-methods/methods-resume-v1/prepare_resume.py"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/dependency_selector.py",
+        "sha256": "b4e056e6a741e6130510fe8608ee58bc49f8c9be7f2fadfe0d5faded7e04df20",
+        "published": "prepared-methods/methods-resume-v1/dependency_selector.py"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/budget_guard.py",
+        "sha256": "9e870636dae31aa92bf2b3409a5f0b810b30e2f11f38de21fccd6b9c7ec55e25",
+        "published": "prepared-methods/methods-resume-v1/budget_guard.py"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/test_resume.py",
+        "sha256": "dbdcdd78aaeb107ce3bda0084932a3e9630634a9b6b1c16399c70f1b61e02d4b",
+        "published": "prepared-methods/methods-resume-v1/test_resume.py"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/README.md",
+        "sha256": "d2354acedc5a8ee525b17f11beaea8dc02deaa216ca23a6ce928e1242a068dbd",
+        "published": "prepared-methods/methods-resume-v1/README.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/offline-checks.txt",
+        "sha256": "632f22c998b2adc9cf1f5d2e20cd3b46dd8c1449f2b731be430eb73bf2cd6be6",
+        "published": "prepared-methods/methods-resume-v1/offline-checks.txt"
+      }
+    ]
+  },
+  {
+    "method": "T11",
+    "review_status": "blocked_launch_runtime",
+    "acceptance_scope": "Exact prospective repository method cards, source manifest and deterministic map mechanics accepted. Candidate launch against inherited frozen runtime is blocked by ZG-AUTH-01.",
+    "candidate_executions": 0,
+    "native_launch": "held: inherited runtime credential boundary unqualified; new accepted runtime and prospective rebind required",
+    "items": [
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/prepare_pairs.py",
+        "sha256": "a8ccfd792b7b608fdb5e20bdf448b1ddaecbf9f5c85c6642dab8b567a4b7d470",
+        "published": "prepared-methods/methods-repo-v1/prepare_pairs.py"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/repo_map_tool.py",
+        "sha256": "1e77cbce376b649cb40b24bf2dc58201bf7a41b86eff2a830cf24befd27306ec",
+        "published": "prepared-methods/methods-repo-v1/repo_map_tool.py"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/acquire_case.py",
+        "sha256": "60de9a0ffe08e3c63542b2f3df1004481837dc2dbc16c9508219f7cb38cc14c0",
+        "published": "prepared-methods/methods-repo-v1/acquire_case.py"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/check_boundaries.py",
+        "sha256": "9926f4460928aa742ffc7d066c7152bbb51bbfb13dd05721d7d4303c955ac3f9",
+        "published": "prepared-methods/methods-repo-v1/check_boundaries.py"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/CASE_FREEZE.json",
+        "sha256": "234c4811a9c033aa1602b74f51f7b0483f50407695b060a5e4d3eb2ba3d9936a",
+        "published": "prepared-methods/methods-repo-v1/CASE_FREEZE.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/READY.json",
+        "sha256": "f0d310cfbbe5a4d02d0abb0c51dd02fa6fe2a46fa935127fdda5a18319056824",
+        "published": "prepared-methods/methods-repo-v1/READY.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/boundary-receipt.json",
+        "sha256": "96e3045e68ec06eb3a61bc82a8f79f85c07ac2d2d2be4c2753c8b8235eeae443",
+        "published": "prepared-methods/methods-repo-v1/boundary-receipt.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/jj-repo-dev-v1/MANIFEST.sha256.json",
+        "sha256": "6aef9692d7f2fefccee3c9746b46138eadb154b205ce3b8e67b91e8b715e53bf",
+        "published": "prepared-methods/evaluation/exports/jj-repo-dev-v1/MANIFEST.sha256.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/jj-repo-dev-v1/PIN.json",
+        "sha256": "6cb6112d93cdecd21d5e9a57db5f878b1afac553012e99f008e0c4102a503342",
+        "published": "prepared-methods/evaluation/exports/jj-repo-dev-v1/PIN.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/jj-repo-dev-v1/brief.md",
+        "sha256": "6455c54d08627a6669c8f176a5cfb1e1c23578a183f3e606addadcf59eefff36",
+        "published": "prepared-methods/evaluation/exports/jj-repo-dev-v1/brief.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/jj-repo-dev-v1/TASK.md",
+        "sha256": "85f1d348299d9cb65e568d459f188713a592550ccd92624d46b5c494d25ff117",
+        "published": "prepared-methods/evaluation/exports/jj-repo-dev-v1/TASK.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/jj-repo-dev-v1/catalog.json",
+        "sha256": "edd0fdb850724199cdf5a7153053d26664704dba07fae418f29e7f5014f7e7a3",
+        "publication": "large source index excluded; private exact hash locator only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/jj-repo-dev-v1/issues-index.json",
+        "sha256": "6a6e593591ccd033b424101f2470effebc2cfd433dc97bb345e555dafac726d6",
+        "published": "prepared-methods/evaluation/exports/jj-repo-dev-v1/issues-index.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/jj-repo-dev-v1/history-index.json",
+        "sha256": "e8330e80a540d4432e33843436ac76c255c879661e57d7b1f818554efd544d60",
+        "publication": "large source index excluded; private exact hash locator only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/pair.json",
+        "sha256": "0b7f1bdea5182b649bf14cd9eac3b37811c0e311f7043aa138d2e3422bd0cda7",
+        "published": "prepared-methods/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/pair-excerpt.json",
+        "publication": "compact exact-field projection; full original hash remains in review"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/control.spec.json",
+        "sha256": "19835e379adf73b633e97bec68792070b4870734c52ac5b324bd50ba361dc44f",
+        "published": "prepared-methods/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/control.spec-excerpt.json",
+        "publication": "compact exact-field projection; full original hash remains in review"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/control/attempt.json",
+        "sha256": "ae560d12c763dee110072a5711a5164527252a9616c9dd12da08d89593fea95e",
+        "published": "prepared-methods/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/control/attempt-excerpt.json",
+        "publication": "compact exact-field projection; full original hash remains in review"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/control/goal.txt",
+        "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+        "published": "prepared-methods/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/control/goal.txt"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/control/workspace/TASK.md",
+        "sha256": "76a07c9b1324ae70a4d03dce542600276532a2c2e97700b8f7b5d8c3ef282f4d",
+        "published": "prepared-methods/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/control/workspace/TASK.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/treatment.spec.json",
+        "sha256": "9a9d1ee020430d5cb771a1ce8c9ab8da0a4d01c7247d40fbb2abacd9a48469b6",
+        "published": "prepared-methods/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/treatment.spec-excerpt.json",
+        "publication": "compact exact-field projection; full original hash remains in review"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/treatment/attempt.json",
+        "sha256": "8b450bcbb8846fe7616247e4490a96123cc1f9baede6123635db58740400ddd1",
+        "published": "prepared-methods/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/treatment/attempt-excerpt.json",
+        "publication": "compact exact-field projection; full original hash remains in review"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/treatment/goal.txt",
+        "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+        "published": "prepared-methods/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/treatment/goal.txt"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/treatment/workspace/TASK.md",
+        "sha256": "36f31ac658fe16e847498b6a5f521a9871186436b91e23c9949cda033f3ea71f",
+        "published": "prepared-methods/methods-repo-v1/pairs/t11-z-jj-repo-screen-v1/treatment/workspace/TASK.md"
+      }
+    ]
+  },
+  {
+    "method": "T12",
+    "review_status": "blocked_launch_runtime",
+    "acceptance_scope": "Exact prospective repository method cards, source manifest and deterministic map mechanics accepted. Candidate launch against inherited frozen runtime is blocked by ZG-AUTH-01.",
+    "candidate_executions": 0,
+    "native_launch": "held: inherited runtime credential boundary unqualified; new accepted runtime and prospective rebind required",
+    "items": [
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/prepare_pairs.py",
+        "sha256": "a8ccfd792b7b608fdb5e20bdf448b1ddaecbf9f5c85c6642dab8b567a4b7d470",
+        "published": "prepared-methods/methods-repo-v1/prepare_pairs.py"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/repo_map_tool.py",
+        "sha256": "1e77cbce376b649cb40b24bf2dc58201bf7a41b86eff2a830cf24befd27306ec",
+        "published": "prepared-methods/methods-repo-v1/repo_map_tool.py"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/acquire_case.py",
+        "sha256": "60de9a0ffe08e3c63542b2f3df1004481837dc2dbc16c9508219f7cb38cc14c0",
+        "published": "prepared-methods/methods-repo-v1/acquire_case.py"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/check_boundaries.py",
+        "sha256": "9926f4460928aa742ffc7d066c7152bbb51bbfb13dd05721d7d4303c955ac3f9",
+        "published": "prepared-methods/methods-repo-v1/check_boundaries.py"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/CASE_FREEZE.json",
+        "sha256": "234c4811a9c033aa1602b74f51f7b0483f50407695b060a5e4d3eb2ba3d9936a",
+        "published": "prepared-methods/methods-repo-v1/CASE_FREEZE.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/READY.json",
+        "sha256": "f0d310cfbbe5a4d02d0abb0c51dd02fa6fe2a46fa935127fdda5a18319056824",
+        "published": "prepared-methods/methods-repo-v1/READY.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/boundary-receipt.json",
+        "sha256": "96e3045e68ec06eb3a61bc82a8f79f85c07ac2d2d2be4c2753c8b8235eeae443",
+        "published": "prepared-methods/methods-repo-v1/boundary-receipt.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/jj-repo-dev-v1/MANIFEST.sha256.json",
+        "sha256": "6aef9692d7f2fefccee3c9746b46138eadb154b205ce3b8e67b91e8b715e53bf",
+        "published": "prepared-methods/evaluation/exports/jj-repo-dev-v1/MANIFEST.sha256.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/jj-repo-dev-v1/PIN.json",
+        "sha256": "6cb6112d93cdecd21d5e9a57db5f878b1afac553012e99f008e0c4102a503342",
+        "published": "prepared-methods/evaluation/exports/jj-repo-dev-v1/PIN.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/jj-repo-dev-v1/brief.md",
+        "sha256": "6455c54d08627a6669c8f176a5cfb1e1c23578a183f3e606addadcf59eefff36",
+        "published": "prepared-methods/evaluation/exports/jj-repo-dev-v1/brief.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/jj-repo-dev-v1/TASK.md",
+        "sha256": "85f1d348299d9cb65e568d459f188713a592550ccd92624d46b5c494d25ff117",
+        "published": "prepared-methods/evaluation/exports/jj-repo-dev-v1/TASK.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/jj-repo-dev-v1/catalog.json",
+        "sha256": "edd0fdb850724199cdf5a7153053d26664704dba07fae418f29e7f5014f7e7a3",
+        "publication": "large source index excluded; private exact hash locator only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/jj-repo-dev-v1/issues-index.json",
+        "sha256": "6a6e593591ccd033b424101f2470effebc2cfd433dc97bb345e555dafac726d6",
+        "published": "prepared-methods/evaluation/exports/jj-repo-dev-v1/issues-index.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/jj-repo-dev-v1/history-index.json",
+        "sha256": "e8330e80a540d4432e33843436ac76c255c879661e57d7b1f818554efd544d60",
+        "publication": "large source index excluded; private exact hash locator only"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/pair.json",
+        "sha256": "986a0811eb752707ebd7194ca83bece44c6d3655f18aa982e455933f3165c6e3",
+        "published": "prepared-methods/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/pair-excerpt.json",
+        "publication": "compact exact-field projection; full original hash remains in review"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control.spec.json",
+        "sha256": "66aca20baa3a1bcb84a05144a210b0abb64992a6f69784e5585cde7966024b39",
+        "published": "prepared-methods/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control.spec-excerpt.json",
+        "publication": "compact exact-field projection; full original hash remains in review"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control/attempt.json",
+        "sha256": "4ebbd91bca0d2e038428423d17bb59971c4722cea06d93481b9a9f4aa205fcf3",
+        "published": "prepared-methods/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control/attempt-excerpt.json",
+        "publication": "compact exact-field projection; full original hash remains in review"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control/goal.txt",
+        "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+        "published": "prepared-methods/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control/goal.txt"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control/workspace/TASK.md",
+        "sha256": "4d9885b81ed79f76c476718799b64e0d22736c743282f1c71c8add0c4e48d58f",
+        "published": "prepared-methods/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/control/workspace/TASK.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment.spec.json",
+        "sha256": "53cb905f0163786e7ea3c6d805f9bd6f861eb6657fc4d916a0c4bc603a8947d4",
+        "published": "prepared-methods/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment.spec-excerpt.json",
+        "publication": "compact exact-field projection; full original hash remains in review"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment/attempt.json",
+        "sha256": "7fb5b94eab581fbb59608aa1e108452a9338d191f99919acd18a594e037c5cdb",
+        "published": "prepared-methods/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment/attempt-excerpt.json",
+        "publication": "compact exact-field projection; full original hash remains in review"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment/goal.txt",
+        "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+        "published": "prepared-methods/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment/goal.txt"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment/workspace/TASK.md",
+        "sha256": "5f3226e6ce6212dd1de50c3d2d0e676e9d6632a3952b6f412a211bd5cb795468",
+        "published": "prepared-methods/methods-repo-v1/pairs/t12-z-jj-repo-screen-v1/treatment/workspace/TASK.md"
+      }
+    ]
+  }
+]

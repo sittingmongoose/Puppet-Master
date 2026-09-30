@@ -1,0 +1,5037 @@
+{
+  "schema": "er7.current_assessment.v1",
+  "review_id": "R003",
+  "stage": "current_only",
+  "frozen_utc": "2026-09-30T16:32:28.084696+00:00",
+  "reviewer": {
+    "role": "independent source-grounded evaluator",
+    "requested_model": "gpt-6.1-sol",
+    "requested_reasoning_effort": "xhigh",
+    "spawn_binding": "Host confirmed accepted explicit model=gpt-6.1-sol reasoning_effort=xhigh fork_turns=none for /root/grade_z_pair.",
+    "effective_runtime_independently_exposed": false
+  },
+  "report_sha256": "0766ca8ab919425a20e1cfe1e7f1dc7f434516498e98879da3c657143e45a49c",
+  "input_pins": {
+    "README.md": "a6a9ef62b54fa3b56ee47637b8cbe23033d13cea710181b048bea996afa02c98",
+    "TASK.md": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+    "brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "catalog.json": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+    "plan/Viewer.md": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+    "sources/S003.txt": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+  },
+  "case_manifest_sha256": "43564ebb344d6c535357ea05065100b01a32afc15e69fcbc724f6b67f4cec8f4",
+  "eligibility_sha256": "1dbb0006ccbc12ad4b31eb1c52e3e2e30abf304fcffb2f3938e0609079c42531",
+  "protocol_sha256": "f0427cc8d1495e368b8b79cb9ead18cc65d4b0b2e8b509e338b86923ee5b1e15",
+  "stage0": {
+    "artifact_identity": "pass",
+    "all_manifest_pins_match": true,
+    "report_stage_pin_matches": true,
+    "eligibility_stage_pin_matches": true,
+    "source_available": true,
+    "source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "source_lines_read": [
+      1,
+      896
+    ],
+    "carrier_complete": true,
+    "structural_failures": [],
+    "source_pins_scope": "Frozen capture only; no live currency claim.",
+    "freeze_receipt": "stage.json prepared_utc 2026-09-30T15:14:14.149307+00:00, acquisition_unlocked=false observed."
+  },
+  "complete_coverage": true,
+  "unreviewed_scope": [],
+  "coverage_definition": "Every current material assertion assessed below, with duplicates grouped under shared atomic rows and all six eligible facets assessed; complete review does not mean complete/correct candidate output.",
+  "claim_assessments": [
+    {
+      "claim_id": "R003-IDENTITY",
+      "report_locators": [
+        {
+          "start_line": 3,
+          "end_line": 3
+        },
+        {
+          "start_line": 14,
+          "end_line": 14
+        },
+        {
+          "start_line": 242,
+          "end_line": 242
+        }
+      ],
+      "assertion": "The admitted source is the captured OME-Zarr 0.5 Final Community Group Report dated 8 September 2026, 36,980 bytes and 896 lines, with the printed SHA-256 and 0.5 URL.",
+      "claim_kind": "source_identity",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 1,
+              "end_line": 10
+            }
+          ]
+        },
+        {
+          "file": "inputs/catalog.json",
+          "line_ranges": [
+            {
+              "start_line": 5,
+              "end_line": 20
+            }
+          ]
+        }
+      ],
+      "reason": "Independently computed bytes, lines, digest and manifest pins match. This validates the frozen capture identity, not external currency.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-CASE_SCOPE",
+      "report_locators": [
+        {
+          "start_line": 5,
+          "end_line": 8
+        },
+        {
+          "start_line": 17,
+          "end_line": 17
+        }
+      ],
+      "assertion": "The report addresses both brief-derived groups using the thin plan and brief; the task card is not format evidence.",
+      "claim_kind": "scope",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/TASK.md",
+          "line_ranges": [
+            {
+              "start_line": 3,
+              "end_line": 11
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 3,
+              "end_line": 11
+            }
+          ]
+        },
+        {
+          "file": "inputs/brief.md",
+          "line_ranges": [
+            {
+              "start_line": 3,
+              "end_line": 5
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-PROCEDURAL",
+      "report_locators": [
+        {
+          "start_line": 14,
+          "end_line": 14
+        },
+        {
+          "start_line": 18,
+          "end_line": 18
+        },
+        {
+          "start_line": 214,
+          "end_line": 214
+        },
+        {
+          "start_line": 242,
+          "end_line": 242
+        }
+      ],
+      "assertion": "No live fetch, outside source consultation, external writes or execution occurred; execution was not authorized.",
+      "claim_kind": "process_declaration",
+      "source_outcome": "unresolved",
+      "support": [
+        {
+          "file": "inputs/TASK.md",
+          "line_ranges": [
+            {
+              "start_line": 3,
+              "end_line": 5
+            }
+          ]
+        }
+      ],
+      "reason": "These are candidate process declarations. Current artifact has no claimed executed results; history/process is inaccessible at stage 1, so actual actions and authorization cannot be independently verified.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-NORMATIVITY",
+      "report_locators": [
+        {
+          "start_line": 16,
+          "end_line": 16
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "RFC 2119 governs conformance; all text is normative except explicitly non-normative sections, examples and notes.",
+      "claim_kind": "source_interpretation",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 57,
+              "end_line": 59
+            },
+            {
+              "start_line": 869,
+              "end_line": 888
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-CONDITIONS_PROMISE",
+      "report_locators": [
+        {
+          "start_line": 16,
+          "end_line": 16
+        }
+      ],
+      "assertion": "Conditional obligations are always reported with their governing conditions intact.",
+      "claim_kind": "self_completeness_claim",
+      "source_outcome": "contradicted",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 426,
+              "end_line": 430
+            },
+            {
+              "start_line": 456,
+              "end_line": 474
+            }
+          ]
+        }
+      ],
+      "reason": "Not universally fulfilled: hard-obligation treatment of label shape and MAY categorization of image-label weaken or alter governing force; detailed rows identify the failures.",
+      "governing_conditions": [],
+      "false_factual_claim": true,
+      "material_failure_identity": "R003-CONDITION_FORCE"
+    },
+    {
+      "claim_id": "R003-ZARR3",
+      "report_locators": [
+        {
+          "start_line": 24,
+          "end_line": 24
+        },
+        {
+          "start_line": 37,
+          "end_line": 37
+        },
+        {
+          "start_line": 89,
+          "end_line": 89
+        },
+        {
+          "start_line": 164,
+          "end_line": 164
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 189,
+          "end_line": 189
+        },
+        {
+          "start_line": 208,
+          "end_line": 208
+        }
+      ],
+      "assertion": "OME-Zarr 0.5 uses the Zarr v3 substrate.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 68,
+              "end_line": 69
+            },
+            {
+              "start_line": 831,
+              "end_line": 833
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-ZARR_FEATURES",
+      "report_locators": [
+        {
+          "start_line": 24,
+          "end_line": 24
+        },
+        {
+          "start_line": 189,
+          "end_line": 189
+        }
+      ],
+      "assertion": "Codecs, chunk grids, chunk key encodings, data types and storage transformers may be used unless explicitly disallowed.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 70,
+              "end_line": 72
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [
+        "Unless explicitly disallowed by this specification."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-STORAGE",
+      "report_locators": [
+        {
+          "start_line": 37,
+          "end_line": 37
+        },
+        {
+          "start_line": 89,
+          "end_line": 89
+        },
+        {
+          "start_line": 96,
+          "end_line": 96
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        },
+        {
+          "start_line": 194,
+          "end_line": 194
+        }
+      ],
+      "assertion": "The hierarchy may be local, HTTP or object storage; local-only is a compatible product boundary.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 73,
+              "end_line": 77
+            }
+          ]
+        },
+        {
+          "file": "inputs/brief.md",
+          "line_ranges": [
+            {
+              "start_line": 3,
+              "end_line": 5
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 9,
+              "end_line": 9
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-SAME_METADATA",
+      "report_locators": [
+        {
+          "start_line": 37,
+          "end_line": 37
+        }
+      ],
+      "assertion": "Local files should use the same OME metadata interpretation as remotely stored hierarchies.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 73,
+              "end_line": 77
+            },
+            {
+              "start_line": 152,
+              "end_line": 156
+            }
+          ]
+        }
+      ],
+      "reason": "Compatible inference about storage-independent metadata semantics; does not establish any particular remote reader implementation.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-OME_NAMESPACE",
+      "report_locators": [
+        {
+          "start_line": 24,
+          "end_line": 24
+        },
+        {
+          "start_line": 39,
+          "end_line": 39
+        },
+        {
+          "start_line": 89,
+          "end_line": 89
+        },
+        {
+          "start_line": 164,
+          "end_line": 164
+        }
+      ],
+      "assertion": "OME metadata resides in zarr.json attributes.ome.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 149,
+              "end_line": 154
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-VERSION_STRING",
+      "report_locators": [
+        {
+          "start_line": 24,
+          "end_line": 24
+        },
+        {
+          "start_line": 39,
+          "end_line": 39
+        },
+        {
+          "start_line": 164,
+          "end_line": 164
+        }
+      ],
+      "assertion": "OME metadata version is a string inside the ome namespace.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 155,
+              "end_line": 155
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-VERSION_CONSISTENT",
+      "report_locators": [
+        {
+          "start_line": 24,
+          "end_line": 24
+        },
+        {
+          "start_line": 39,
+          "end_line": 39
+        },
+        {
+          "start_line": 89,
+          "end_line": 89
+        },
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 164,
+          "end_line": 164
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 222,
+          "end_line": 222
+        }
+      ],
+      "assertion": "The version MUST be consistent across the hierarchy; mixed versions can be detected as a violation.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 156,
+              "end_line": 156
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-TRANSITION_POLICY",
+      "report_locators": [
+        {
+          "start_line": 41,
+          "end_line": 41
+        },
+        {
+          "start_line": 95,
+          "end_line": 95
+        },
+        {
+          "start_line": 120,
+          "end_line": 120
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        }
+      ],
+      "assertion": "Transitional metadata is intended for future removal; reading may be MUST/SHOULD while writing is usually MAY, compatible with a read-only viewer.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 60,
+              "end_line": 64
+            }
+          ]
+        },
+        {
+          "file": "inputs/brief.md",
+          "line_ranges": [
+            {
+              "start_line": 5,
+              "end_line": 5
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 9,
+              "end_line": 9
+            }
+          ]
+        }
+      ],
+      "reason": "The report preserves the general policy without asserting an actual per-key reader MUST.",
+      "governing_conditions": [
+        "Support force is key-dependent; writing is usually, not universally, optional."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-TRANSITION_KEYS",
+      "report_locators": [
+        {
+          "start_line": 41,
+          "end_line": 41
+        },
+        {
+          "start_line": 55,
+          "end_line": 55
+        },
+        {
+          "start_line": 120,
+          "end_line": 120
+        },
+        {
+          "start_line": 151,
+          "end_line": 151
+        }
+      ],
+      "assertion": "bioformats2raw.layout and omero are transitional interoperability surfaces.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 175,
+              "end_line": 181
+            },
+            {
+              "start_line": 398,
+              "end_line": 400
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-JSON_COMMENTS",
+      "report_locators": [
+        {
+          "start_line": 43,
+          "end_line": 43
+        },
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 164,
+          "end_line": 164
+        }
+      ],
+      "assertion": "JSON example comments are clarity aids and MUST NOT occur in format JSON objects.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 65,
+              "end_line": 66
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-JSON_READER_POLICY",
+      "report_locators": [
+        {
+          "start_line": 43,
+          "end_line": 43
+        },
+        {
+          "start_line": 172,
+          "end_line": 172
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        },
+        {
+          "start_line": 233,
+          "end_line": 233
+        },
+        {
+          "start_line": 93,
+          "end_line": 93
+        }
+      ],
+      "assertion": "Strict parsing is sufficient; tolerating/rejecting invalid inputs and error messages are product choices rather than a universal specified reader rejection rule.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 65,
+              "end_line": 66
+            },
+            {
+              "start_line": 271,
+              "end_line": 275
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 7,
+              "end_line": 11
+            }
+          ]
+        }
+      ],
+      "reason": "Supported by complete source review: prohibition applies to data objects; no general mandatory reader rejection policy is supplied.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-DRAFT_CAVEAT",
+      "report_locators": [
+        {
+          "start_line": 45,
+          "end_line": 45
+        },
+        {
+          "start_line": 94,
+          "end_line": 94
+        },
+        {
+          "start_line": 172,
+          "end_line": 172
+        },
+        {
+          "start_line": 195,
+          "end_line": 195
+        },
+        {
+          "start_line": 237,
+          "end_line": 237
+        }
+      ],
+      "assertion": "Released version is 0.5 and editor-draft data is not necessarily supported.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 25,
+              "end_line": 27
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-HISTORY_052",
+      "report_locators": [
+        {
+          "start_line": 45,
+          "end_line": 45
+        },
+        {
+          "start_line": 108,
+          "end_line": 108
+        },
+        {
+          "start_line": 195,
+          "end_line": 195
+        }
+      ],
+      "assertion": "History includes 0.5.2 on 2025-01-10 clarifying mandatory dimension_names.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 825,
+              "end_line": 827
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-LAYOUT_FAMILIES",
+      "report_locators": [
+        {
+          "start_line": 25,
+          "end_line": 25
+        },
+        {
+          "start_line": 53,
+          "end_line": 60
+        },
+        {
+          "start_line": 90,
+          "end_line": 90
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        },
+        {
+          "start_line": 218,
+          "end_line": 218
+        },
+        {
+          "start_line": 238,
+          "end_line": 238
+        }
+      ],
+      "assertion": "The capture describes standalone multiscale images, transitional collections and plate/row/well/FOV hierarchies.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 78,
+              "end_line": 148
+            },
+            {
+              "start_line": 175,
+              "end_line": 275
+            },
+            {
+              "start_line": 515,
+              "end_line": 560
+            },
+            {
+              "start_line": 740,
+              "end_line": 752
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-IMAGE_GROUP",
+      "report_locators": [
+        {
+          "start_line": 39,
+          "end_line": 39
+        },
+        {
+          "start_line": 53,
+          "end_line": 53
+        }
+      ],
+      "assertion": "Images are groups, each resolution level a separate array; multiscales is group metadata and omero is optional.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 87,
+              "end_line": 100
+            },
+            {
+              "start_line": 295,
+              "end_line": 298
+            },
+            {
+              "start_line": 426,
+              "end_line": 426
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-ARBITRARY_NAMES",
+      "report_locators": [
+        {
+          "start_line": 26,
+          "end_line": 26
+        },
+        {
+          "start_line": 53,
+          "end_line": 53
+        },
+        {
+          "start_line": 83,
+          "end_line": 83
+        }
+      ],
+      "assertion": "Resolution-array names and axis names are arbitrary; names alone cannot determine level order or semantic axes.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 81,
+              "end_line": 81
+            },
+            {
+              "start_line": 93,
+              "end_line": 94
+            },
+            {
+              "start_line": 302,
+              "end_line": 302
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-DIMENSIONS",
+      "report_locators": [
+        {
+          "start_line": 26,
+          "end_line": 26
+        },
+        {
+          "start_line": 53,
+          "end_line": 53
+        },
+        {
+          "start_line": 75,
+          "end_line": 75
+        },
+        {
+          "start_line": 83,
+          "end_line": 83
+        },
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 108,
+          "end_line": 108
+        },
+        {
+          "start_line": 165,
+          "end_line": 165
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 217,
+          "end_line": 217
+        }
+      ],
+      "assertion": "Image rank is 2–5, with optional time/channel dimensions; pure two-space images are valid.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 296,
+              "end_line": 302
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-AXIS_UNIQUE",
+      "report_locators": [
+        {
+          "start_line": 108,
+          "end_line": 108
+        },
+        {
+          "start_line": 165,
+          "end_line": 165
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "Axis name is mandatory and unique.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 168,
+              "end_line": 168
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-AXIS_TYPE",
+      "report_locators": [
+        {
+          "start_line": 53,
+          "end_line": 53
+        },
+        {
+          "start_line": 75,
+          "end_line": 75
+        },
+        {
+          "start_line": 83,
+          "end_line": 83
+        },
+        {
+          "start_line": 108,
+          "end_line": 108
+        },
+        {
+          "start_line": 128,
+          "end_line": 128
+        },
+        {
+          "start_line": 152,
+          "end_line": 152
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "General axes type is SHOULD; multiscales constrains two/three space axes and optional time plus channel/null/custom; semantic mapping should use metadata rather than conventional names.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 169,
+              "end_line": 169
+            },
+            {
+              "start_line": 301,
+              "end_line": 303
+            }
+          ]
+        }
+      ],
+      "reason": "The broader general-axis optionality is constrained by multiscales rules; arbitrary spatial names still require a display-plane policy.",
+      "governing_conditions": [
+        "For multiscales, S003:301-302 imposes specific type counts/order."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-AXIS_ORDER",
+      "report_locators": [
+        {
+          "start_line": 26,
+          "end_line": 26
+        },
+        {
+          "start_line": 53,
+          "end_line": 53
+        },
+        {
+          "start_line": 75,
+          "end_line": 75
+        },
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 165,
+          "end_line": 165
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "Axis order equals array order: time, channel/custom, space; stacked anisotropic zyx spatial ordering is SHOULD.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 302,
+              "end_line": 303
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [
+        "Time/channel are optional; zyx recommendation applies to the described three-space stack."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-AXIS_RANK",
+      "report_locators": [
+        {
+          "start_line": 26,
+          "end_line": 26
+        },
+        {
+          "start_line": 75,
+          "end_line": 76
+        },
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 108,
+          "end_line": 108
+        },
+        {
+          "start_line": 165,
+          "end_line": 165
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "Axes length matches array rank; levels share dimension count/order and cannot exceed five.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 173,
+              "end_line": 173
+            },
+            {
+              "start_line": 300,
+              "end_line": 300
+            },
+            {
+              "start_line": 307,
+              "end_line": 307
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-DIMENSION_NAMES",
+      "report_locators": [
+        {
+          "start_line": 26,
+          "end_line": 26
+        },
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 108,
+          "end_line": 108
+        },
+        {
+          "start_line": 151,
+          "end_line": 151
+        },
+        {
+          "start_line": 153,
+          "end_line": 153
+        },
+        {
+          "start_line": 165,
+          "end_line": 165
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 222,
+          "end_line": 222
+        }
+      ],
+      "assertion": "Each level array MUST include dimension_names matching axes names.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 174,
+              "end_line": 174
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-UNITS",
+      "report_locators": [
+        {
+          "start_line": 27,
+          "end_line": 27
+        },
+        {
+          "start_line": 108,
+          "end_line": 108
+        },
+        {
+          "start_line": 114,
+          "end_line": 114
+        },
+        {
+          "start_line": 153,
+          "end_line": 153
+        },
+        {
+          "start_line": 156,
+          "end_line": 156
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 192,
+          "end_line": 192
+        },
+        {
+          "start_line": 221,
+          "end_line": 221
+        }
+      ],
+      "assertion": "Units are SHOULD metadata, recommended enumerated UDUNITS-2 space/time strings; absent units cannot justify invented physical calibration.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "qualified",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 170,
+              "end_line": 172
+            },
+            {
+              "start_line": 310,
+              "end_line": 310
+            }
+          ]
+        }
+      ],
+      "reason": "The statement that units are drawn from the lists is qualified: both presence and listed values are SHOULD, not unconditional MUST.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-MULTISCALES_LIST",
+      "report_locators": [
+        {
+          "start_line": 73,
+          "end_line": 73
+        },
+        {
+          "start_line": 81,
+          "end_line": 81
+        }
+      ],
+      "assertion": "multiscales is a list, each entry describing a multiscale image; multiple entries are representable.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 295,
+              "end_line": 299
+            },
+            {
+              "start_line": 388,
+              "end_line": 389
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-DATASET_PATHS",
+      "report_locators": [
+        {
+          "start_line": 26,
+          "end_line": 26
+        },
+        {
+          "start_line": 76,
+          "end_line": 76
+        },
+        {
+          "start_line": 90,
+          "end_line": 90
+        },
+        {
+          "start_line": 166,
+          "end_line": 166
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 225,
+          "end_line": 225
+        }
+      ],
+      "assertion": "Each multiscales entry contains datasets; every path is relative to the current group and listed highest-resolution to lowest.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 304,
+              "end_line": 307
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-LEVEL_PICK",
+      "report_locators": [
+        {
+          "start_line": 81,
+          "end_line": 81
+        },
+        {
+          "start_line": 83,
+          "end_line": 83
+        },
+        {
+          "start_line": 91,
+          "end_line": 91
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        },
+        {
+          "start_line": 189,
+          "end_line": 189
+        },
+        {
+          "start_line": 193,
+          "end_line": 193
+        }
+      ],
+      "assertion": "The pyramid level selection heuristic for the view is a product choice; chunk-size suggestion occurs in pseudocode commentary.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 304,
+              "end_line": 307
+            },
+            {
+              "start_line": 388,
+              "end_line": 397
+            }
+          ]
+        }
+      ],
+      "reason": "No view-resolution heuristic is normatively prescribed by the admitted capture.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-NAMED_SELECTION_FORCE",
+      "report_locators": [
+        {
+          "start_line": 81,
+          "end_line": 81
+        },
+        {
+          "start_line": 180,
+          "end_line": 180
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        },
+        {
+          "start_line": 235,
+          "end_line": 235
+        }
+      ],
+      "assertion": "The entire named-multiscale selection/fallback paragraph is informative guidance solely because it lacks RFC 2119 keywords.",
+      "claim_kind": "source_interpretation",
+      "source_outcome": "qualified",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 388,
+              "end_line": 397
+            },
+            {
+              "start_line": 869,
+              "end_line": 888
+            }
+          ]
+        }
+      ],
+      "reason": "The optional user chooser follows can; the capture does not identify the preceding prose as non-normative, and conformance explicitly includes descriptive assertions. Pseudocode is illustrative. A universal informative-only conclusion is ungrounded.",
+      "governing_conditions": [],
+      "false_factual_claim": false,
+      "material_failure_identity": "R003-NORMATIVE_SELECTION_QUALIFIER"
+    },
+    {
+      "claim_id": "R003-TRANSFORM_SERIES",
+      "report_locators": [
+        {
+          "start_line": 77,
+          "end_line": 77
+        },
+        {
+          "start_line": 110,
+          "end_line": 110
+        },
+        {
+          "start_line": 153,
+          "end_line": 153
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "Every dataset has coordinateTransformations mapping that level data coordinates to physical coordinates.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 277,
+              "end_line": 281
+            },
+            {
+              "start_line": 308,
+              "end_line": 308
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-ALLOWED_TYPES",
+      "report_locators": [
+        {
+          "start_line": 77,
+          "end_line": 77
+        },
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 166,
+          "end_line": 166
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "In multiscales only scale and translation are allowed.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 309,
+              "end_line": 309
+            },
+            {
+              "start_line": 313,
+              "end_line": 313
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-ONE_SCALE",
+      "report_locators": [
+        {
+          "start_line": 27,
+          "end_line": 27
+        },
+        {
+          "start_line": 77,
+          "end_line": 77
+        },
+        {
+          "start_line": 110,
+          "end_line": 110
+        },
+        {
+          "start_line": 166,
+          "end_line": 166
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "Each dataset transformation list has exactly one scale.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 310,
+              "end_line": 310
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-SCALE_MEANING",
+      "report_locators": [
+        {
+          "start_line": 110,
+          "end_line": 110
+        },
+        {
+          "start_line": 113,
+          "end_line": 113
+        },
+        {
+          "start_line": 115,
+          "end_line": 115
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 206,
+          "end_line": 206
+        },
+        {
+          "start_line": 232,
+          "end_line": 232
+        }
+      ],
+      "assertion": "Per-axis scale represents physical pixel/time size when available; otherwise resolution-to-first scaling with 1.0 if no downsampling.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 310,
+              "end_line": 310
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-TRANSLATION",
+      "report_locators": [
+        {
+          "start_line": 77,
+          "end_line": 77
+        },
+        {
+          "start_line": 110,
+          "end_line": 110
+        },
+        {
+          "start_line": 166,
+          "end_line": 166
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 180,
+          "end_line": 180
+        },
+        {
+          "start_line": 221,
+          "end_line": 221
+        }
+      ],
+      "assertion": "At most one optional translation follows scale and shifts the physical origin.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 311,
+              "end_line": 311
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-TRANSFORM_LENGTH",
+      "report_locators": [
+        {
+          "start_line": 27,
+          "end_line": 27
+        },
+        {
+          "start_line": 77,
+          "end_line": 77
+        },
+        {
+          "start_line": 110,
+          "end_line": 110
+        },
+        {
+          "start_line": 166,
+          "end_line": 166
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "Scale and translation vector lengths equal axes length, including any present channel/time axes.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 312,
+              "end_line": 312
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-TRANSFORM_ORDER",
+      "report_locators": [
+        {
+          "start_line": 78,
+          "end_line": 78
+        },
+        {
+          "start_line": 110,
+          "end_line": 110
+        },
+        {
+          "start_line": 113,
+          "end_line": 113
+        },
+        {
+          "start_line": 153,
+          "end_line": 153
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 221,
+          "end_line": 221
+        },
+        {
+          "start_line": 225,
+          "end_line": 225
+        }
+      ],
+      "assertion": "Transforms apply sequentially; optional multiscales-wide transforms obey the same rules and apply after dataset transforms.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 293,
+              "end_line": 293
+            },
+            {
+              "start_line": 314,
+              "end_line": 316
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-GEOMETRY_COMPOSITION",
+      "report_locators": [
+        {
+          "start_line": 113,
+          "end_line": 113
+        },
+        {
+          "start_line": 153,
+          "end_line": 153
+        },
+        {
+          "start_line": 156,
+          "end_line": 156
+        }
+      ],
+      "assertion": "Effective scale and origin must include dataset and group transforms in order.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 293,
+              "end_line": 293
+            },
+            {
+              "start_line": 308,
+              "end_line": 316
+            }
+          ]
+        }
+      ],
+      "reason": "Correct inferred mapping; shorthand origin=compose(scale,translation) must include group scaling of dataset offsets as the preceding composition rule states.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-CALIBRATION_AMBIGUITY",
+      "report_locators": [
+        {
+          "start_line": 115,
+          "end_line": 115
+        },
+        {
+          "start_line": 206,
+          "end_line": 206
+        },
+        {
+          "start_line": 232,
+          "end_line": 232
+        }
+      ],
+      "assertion": "A vector may mix physical and relative scale factors across axes; the capture does not encode per-axis availability explicitly or fully explain how to establish that availability.",
+      "claim_kind": "unresolved_area",
+      "source_outcome": "qualified",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 310,
+              "end_line": 310
+            },
+            {
+              "start_line": 336,
+              "end_line": 374
+            }
+          ]
+        }
+      ],
+      "reason": "Qualified: S003 supplies the per-axis rule, so mixed entries do not make transform arithmetic undefined. Missing declarations can leave physical interpretation uncertain; the report wording overstates absence of all interpretation rules.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-UNKNOWN_UNIT_UI",
+      "report_locators": [
+        {
+          "start_line": 27,
+          "end_line": 27
+        },
+        {
+          "start_line": 114,
+          "end_line": 114
+        },
+        {
+          "start_line": 153,
+          "end_line": 153
+        },
+        {
+          "start_line": 156,
+          "end_line": 156
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        },
+        {
+          "start_line": 221,
+          "end_line": 221
+        }
+      ],
+      "assertion": "UI should expose an unknown/no-unit state and avoid claiming known physical units when absent.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 170,
+              "end_line": 172
+            },
+            {
+              "start_line": 310,
+              "end_line": 310
+            }
+          ]
+        },
+        {
+          "file": "inputs/brief.md",
+          "line_ranges": [
+            {
+              "start_line": 3,
+              "end_line": 3
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 5,
+              "end_line": 5
+            }
+          ]
+        }
+      ],
+      "reason": "Supported proposal; absent unit does not erase numeric coordinate transform structure.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-PLANE_GEOMETRY",
+      "report_locators": [
+        {
+          "start_line": 116,
+          "end_line": 116
+        },
+        {
+          "start_line": 152,
+          "end_line": 152
+        }
+      ],
+      "assertion": "Spatial plane spacing must use transform scale; zyx is recommended rather than universally mandatory.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 303,
+              "end_line": 303
+            },
+            {
+              "start_line": 310,
+              "end_line": 310
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-MULTISCALES_DESCRIPTORS",
+      "report_locators": [
+        {
+          "start_line": 79,
+          "end_line": 79
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "name, downscaling type and metadata fields are SHOULD.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 317,
+              "end_line": 319
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-B2RAW_LAYOUT",
+      "report_locators": [
+        {
+          "start_line": 55,
+          "end_line": 55
+        },
+        {
+          "start_line": 167,
+          "end_line": 167
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "Transitional collection wrapper carries bioformats2raw.layout at the top; the conforming value is 3.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "qualified",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 175,
+              "end_line": 193
+            },
+            {
+              "start_line": 200,
+              "end_line": 200
+            },
+            {
+              "start_line": 256,
+              "end_line": 256
+            }
+          ]
+        }
+      ],
+      "reason": "Source prose quotes 3, while examples encode numeric 3. The report quotes the prose but does not resolve numeric/string representation; it must not be interpreted as proof of string-only admission.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-OME_XML",
+      "report_locators": [
+        {
+          "start_line": 55,
+          "end_line": 55
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 191,
+          "end_line": 191
+        }
+      ],
+      "assertion": "Collection OME/METADATA.ome.xml is SHOULD; when supplied it MUST obey OME-XML and use MetadataOnly instead of BinData/BinaryOnly/TiffData.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 257,
+              "end_line": 260
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [
+        "Sidecar provision is SHOULD; its listed conformance conditions govern a supplied sidecar."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-PLATE_PRECEDENCE",
+      "report_locators": [
+        {
+          "start_line": 56,
+          "end_line": 56
+        },
+        {
+          "start_line": 90,
+          "end_line": 90
+        },
+        {
+          "start_line": 167,
+          "end_line": 167
+        },
+        {
+          "start_line": 218,
+          "end_line": 218
+        }
+      ],
+      "assertion": "Plate metadata takes precedence over b2raw and defines image locations; image collections cannot currently be mixed with plates.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 204,
+              "end_line": 206
+            },
+            {
+              "start_line": 262,
+              "end_line": 263
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-SERIES",
+      "report_locators": [
+        {
+          "start_line": 57,
+          "end_line": 57
+        },
+        {
+          "start_line": 67,
+          "end_line": 67
+        },
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 167,
+          "end_line": 167
+        },
+        {
+          "start_line": 180,
+          "end_line": 180
+        },
+        {
+          "start_line": 218,
+          "end_line": 218
+        }
+      ],
+      "assertion": "Optional OME series is a string-path list; its order must match OME-XML Image order if the XML is provided; readers MAY use it.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 243,
+              "end_line": 243
+            },
+            {
+              "start_line": 264,
+              "end_line": 267
+            },
+            {
+              "start_line": 273,
+              "end_line": 273
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [
+        "series is optional; XML-order comparison requires supplied XML."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-POSITIONAL_COLLECTION",
+      "report_locators": [
+        {
+          "start_line": 58,
+          "end_line": 58
+        },
+        {
+          "start_line": 90,
+          "end_line": 90
+        },
+        {
+          "start_line": 167,
+          "end_line": 167
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 218,
+          "end_line": 218
+        }
+      ],
+      "assertion": "Without series and plate, multiscales image groups are consecutive from 0, with one OME-XML Image per group in matching order.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 268,
+              "end_line": 270
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [
+        "No series and no plate."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-READER_MULTI",
+      "report_locators": [
+        {
+          "start_line": 25,
+          "end_line": 25
+        },
+        {
+          "start_line": 64,
+          "end_line": 69
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        }
+      ],
+      "assertion": "Collection readers SHOULD surface multiple images and SHOULD NOT default to only the first.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 271,
+              "end_line": 272
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [
+        "Paragraph belongs to transitional collection reader conformance."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-READER_OPTIONS",
+      "report_locators": [
+        {
+          "start_line": 67,
+          "end_line": 67
+        },
+        {
+          "start_line": 69,
+          "end_line": 69
+        },
+        {
+          "start_line": 180,
+          "end_line": 180
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        }
+      ],
+      "assertion": "Collection readers MAY use series, show all or offer choices, and ignore other root groups; listing UI details remain product choices.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 273,
+              "end_line": 275
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-DISCOVERY_ALGORITHM",
+      "report_locators": [
+        {
+          "start_line": 69,
+          "end_line": 69
+        },
+        {
+          "start_line": 90,
+          "end_line": 90
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        },
+        {
+          "start_line": 218,
+          "end_line": 218
+        }
+      ],
+      "assertion": "Proposed discovery follows plate wells/fields, else b2raw series or consecutive groups, else standalone images; exhaustive labels discovery may additionally walk directories.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 204,
+              "end_line": 206
+            },
+            {
+              "start_line": 261,
+              "end_line": 275
+            },
+            {
+              "start_line": 441,
+              "end_line": 442
+            },
+            {
+              "start_line": 552,
+              "end_line": 560
+            },
+            {
+              "start_line": 744,
+              "end_line": 750
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 5,
+              "end_line": 11
+            }
+          ]
+        }
+      ],
+      "reason": "Supported proposed algorithm and fixtures. Directory walking for unlisted labels is a product choice, not an absolute source requirement.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-HCS_HIERARCHY",
+      "report_locators": [
+        {
+          "start_line": 25,
+          "end_line": 25
+        },
+        {
+          "start_line": 60,
+          "end_line": 60
+        },
+        {
+          "start_line": 168,
+          "end_line": 168
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 238,
+          "end_line": 238
+        }
+      ],
+      "assertion": "HCS hierarchy requires image->well->row->plate with well/plate specs; empty well rows and wells SHOULD NOT occur.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 119,
+              "end_line": 129
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-PLATE_REQUIRED",
+      "report_locators": [
+        {
+          "start_line": 60,
+          "end_line": 60
+        },
+        {
+          "start_line": 168,
+          "end_line": 168
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "Plate requires columns, rows, version and wells lists with required value types.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 530,
+              "end_line": 551
+            },
+            {
+              "start_line": 552,
+              "end_line": 560
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-PLATE_ROWS_COLUMNS",
+      "report_locators": [
+        {
+          "start_line": 60,
+          "end_line": 60
+        },
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 168,
+          "end_line": 168
+        }
+      ],
+      "assertion": "All physical rows/columns must be defined even if wells absent; names are alphanumeric case-sensitive unique strings; avoid filesystem case collisions is SHOULD.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 530,
+              "end_line": 549
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-WELL_IDENTITY",
+      "report_locators": [
+        {
+          "start_line": 60,
+          "end_line": 60
+        },
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 168,
+          "end_line": 168
+        }
+      ],
+      "assertion": "Plate well path is exactly row/column with no extra dirs; zero-based rowIndex/columnIndex and path agree.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 552,
+              "end_line": 560
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-ACQUISITIONS",
+      "report_locators": [
+        {
+          "start_line": 60,
+          "end_line": 60
+        },
+        {
+          "start_line": 168,
+          "end_line": 168
+        },
+        {
+          "start_line": 180,
+          "end_line": 180
+        }
+      ],
+      "assertion": "Optional acquisitions have unique nonnegative integer IDs; fields in multi-acquisition wells identify a matching acquisition.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 518,
+              "end_line": 529
+            },
+            {
+              "start_line": 744,
+              "end_line": 750
+            }
+          ]
+        }
+      ],
+      "reason": "The report shorthand wells refer is interpreted through its following explicit per-image acquisition rule.",
+      "governing_conditions": [
+        "acquisitions optional; image acquisition required if multiple acquisitions performed."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-WELL_IMAGES",
+      "report_locators": [
+        {
+          "start_line": 60,
+          "end_line": 60
+        },
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 168,
+          "end_line": 168
+        }
+      ],
+      "assertion": "Well images list includes fields with case-sensitive unique alphanumeric paths; well schema version is SHOULD.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 744,
+              "end_line": 752
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-PLATE_OPTIONALS",
+      "report_locators": [
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 180,
+          "end_line": 180
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        }
+      ],
+      "assertion": "Summary groups plate/well name, field_count and version under SHOULD; optional acquisition description/starttime/endtime fields are MAY.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "qualified",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 518,
+              "end_line": 541
+            },
+            {
+              "start_line": 751,
+              "end_line": 752
+            }
+          ]
+        }
+      ],
+      "reason": "Summary grouping must not turn mandatory plate.version into SHOULD; earlier dedicated row correctly states mandatory plate.version.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-HCS_CAPABILITY_REVIEW",
+      "report_locators": [
+        {
+          "start_line": 182,
+          "end_line": 182
+        },
+        {
+          "start_line": 238,
+          "end_line": 238
+        }
+      ],
+      "assertion": "Whether to support HCS/collections in v1 or detect and explain unsupported layouts needs explicit product review.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/brief.md",
+          "line_ranges": [
+            {
+              "start_line": 3,
+              "end_line": 5
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 9,
+              "end_line": 9
+            }
+          ]
+        },
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 118,
+              "end_line": 129
+            },
+            {
+              "start_line": 272,
+              "end_line": 272
+            }
+          ]
+        }
+      ],
+      "reason": "Compatible limitation and capability decision, preserving the thin plan review boundary.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-OMERO_OPTIONAL",
+      "report_locators": [
+        {
+          "start_line": 28,
+          "end_line": 28
+        },
+        {
+          "start_line": 123,
+          "end_line": 123
+        },
+        {
+          "start_line": 125,
+          "end_line": 125
+        },
+        {
+          "start_line": 151,
+          "end_line": 151
+        },
+        {
+          "start_line": 170,
+          "end_line": 170
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 180,
+          "end_line": 180
+        },
+        {
+          "start_line": 204,
+          "end_line": 204
+        }
+      ],
+      "assertion": "omero is optional; when present it requires channels.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 398,
+              "end_line": 400
+            },
+            {
+              "start_line": 426,
+              "end_line": 426
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [
+        "When omero is present."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-OMERO_COLOR",
+      "report_locators": [
+        {
+          "start_line": 28,
+          "end_line": 28
+        },
+        {
+          "start_line": 124,
+          "end_line": 124
+        },
+        {
+          "start_line": 151,
+          "end_line": 151
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 204,
+          "end_line": 204
+        }
+      ],
+      "assertion": "Each omero channel requires a six-hex-digit RGB color string.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 427,
+              "end_line": 427
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [
+        "A channel dictionary in present omero."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-OMERO_WINDOW_FIELDS",
+      "report_locators": [
+        {
+          "start_line": 28,
+          "end_line": 28
+        },
+        {
+          "start_line": 124,
+          "end_line": 124
+        },
+        {
+          "start_line": 151,
+          "end_line": 151
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 204,
+          "end_line": 204
+        }
+      ],
+      "assertion": "Each omero channel requires window with min, max, start, end.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 428,
+              "end_line": 430
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [
+        "A channel dictionary in present omero."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-WINDOW_MEANING",
+      "report_locators": [
+        {
+          "start_line": 124,
+          "end_line": 124
+        }
+      ],
+      "assertion": "min/max are data range while start/end are display window.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "unsupported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 428,
+              "end_line": 430
+            },
+            {
+              "start_line": 411,
+              "end_line": 415
+            },
+            {
+              "start_line": 424,
+              "end_line": 425
+            }
+          ]
+        }
+      ],
+      "reason": "Capture calls min/max minimum/maximum values of the window; it does not establish data-range vs display-window distinction. Later limitation admits semantics unverified but does not supersede this factual parenthetical.",
+      "governing_conditions": [],
+      "false_factual_claim": false,
+      "material_failure_identity": "R003-WINDOW_SEMANTICS"
+    },
+    {
+      "claim_id": "R003-OMERO_EXAMPLE_FIELDS",
+      "report_locators": [
+        {
+          "start_line": 28,
+          "end_line": 28
+        },
+        {
+          "start_line": 125,
+          "end_line": 126
+        },
+        {
+          "start_line": 152,
+          "end_line": 152
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        },
+        {
+          "start_line": 190,
+          "end_line": 190
+        },
+        {
+          "start_line": 204,
+          "end_line": 204
+        },
+        {
+          "start_line": 234,
+          "end_line": 234
+        }
+      ],
+      "assertion": "rdefs/defaultT/defaultZ/model and other convenient fields and channel-length correspondence occur in the example, not the mandatory field floor.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 401,
+              "end_line": 430
+            },
+            {
+              "start_line": 877,
+              "end_line": 883
+            }
+          ]
+        }
+      ],
+      "reason": "Example contents and hints are exposed; algorithmic/default/count guarantees are not established by the captured normative paragraph.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-CHANNEL_COUNT_AXES_ONLY",
+      "report_locators": [
+        {
+          "start_line": 128,
+          "end_line": 128
+        },
+        {
+          "start_line": 151,
+          "end_line": 151
+        }
+      ],
+      "assertion": "Channel count and identity must always be derivable from axes alone; derive channel count from axes rather than omero.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "contradicted",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 167,
+              "end_line": 174
+            },
+            {
+              "start_line": 301,
+              "end_line": 307
+            }
+          ]
+        }
+      ],
+      "reason": "axes provides names/types/order and rank, not lengths or individual channel identities. Array shape is needed for counts; nonstandard/null axes require explicit policy. The proposed sole-axes rule is not supported.",
+      "governing_conditions": [],
+      "false_factual_claim": true,
+      "material_failure_identity": "R003-CHANNEL_COUNT_AXES_ONLY"
+    },
+    {
+      "claim_id": "R003-RENDER_DEFAULTS",
+      "report_locators": [
+        {
+          "start_line": 125,
+          "end_line": 125
+        },
+        {
+          "start_line": 128,
+          "end_line": 128
+        },
+        {
+          "start_line": 151,
+          "end_line": 152
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        },
+        {
+          "start_line": 234,
+          "end_line": 234
+        },
+        {
+          "start_line": 236,
+          "end_line": 236
+        }
+      ],
+      "assertion": "Missing omero/rdefs and metadata-count mismatch need explicit fallback rendering/initial selection/robustness policies.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 301,
+              "end_line": 301
+            },
+            {
+              "start_line": 403,
+              "end_line": 403
+            },
+            {
+              "start_line": 419,
+              "end_line": 430
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 5,
+              "end_line": 5
+            },
+            {
+              "start_line": 9,
+              "end_line": 9
+            }
+          ]
+        }
+      ],
+      "reason": "Valid unexecuted product decisions; no default palette/initial index/count mismatch policy is prescribed.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-LABEL_HIERARCHY",
+      "report_locators": [
+        {
+          "start_line": 132,
+          "end_line": 132
+        },
+        {
+          "start_line": 169,
+          "end_line": 169
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "labels group is an image child beside resolution arrays; intermediate groups are allowed and MUST have no metadata; label image names are arbitrary.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 437,
+              "end_line": 440
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-LABEL_LIST",
+      "report_locators": [
+        {
+          "start_line": 69,
+          "end_line": 69
+        },
+        {
+          "start_line": 132,
+          "end_line": 132
+        },
+        {
+          "start_line": 169,
+          "end_line": 169
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "labels group requires a labels path-array; all label images SHOULD be listed, not universally MUST-listed.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 441,
+              "end_line": 442
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [
+        "Presence of the associated labels-group structure."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-LABEL_INTEGER",
+      "report_locators": [
+        {
+          "start_line": 29,
+          "end_line": 29
+        },
+        {
+          "start_line": 135,
+          "end_line": 135
+        },
+        {
+          "start_line": 154,
+          "end_line": 154
+        },
+        {
+          "start_line": 169,
+          "end_line": 169
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 220,
+          "end_line": 220
+        },
+        {
+          "start_line": 222,
+          "end_line": 222
+        }
+      ],
+      "assertion": "Label pixels must use one of uint8/int8/uint16/int16/uint32/int32/uint64/int64.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 438,
+              "end_line": 439
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-LABEL_MULTISCALES",
+      "report_locators": [
+        {
+          "start_line": 29,
+          "end_line": 29
+        },
+        {
+          "start_line": 136,
+          "end_line": 136
+        },
+        {
+          "start_line": 145,
+          "end_line": 145
+        },
+        {
+          "start_line": 154,
+          "end_line": 155
+        },
+        {
+          "start_line": 169,
+          "end_line": 169
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 205,
+          "end_line": 205
+        },
+        {
+          "start_line": 220,
+          "end_line": 220
+        }
+      ],
+      "assertion": "Label images implement multiscales and have the same number of levels as the original unlabeled image.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 454,
+              "end_line": 455
+            }
+          ]
+        }
+      ],
+      "reason": "Same level count does not establish matched shapes, transforms or source-image identity; parent wording must follow resolved original source.",
+      "governing_conditions": [
+        "Relative to the original unlabeled image, not automatically any containing primary group."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-LABEL_SHAPE_FORCE",
+      "report_locators": [
+        {
+          "start_line": 29,
+          "end_line": 29
+        },
+        {
+          "start_line": 137,
+          "end_line": 137
+        },
+        {
+          "start_line": 154,
+          "end_line": 155
+        },
+        {
+          "start_line": 220,
+          "end_line": 220
+        },
+        {
+          "start_line": 134,
+          "end_line": 134
+        }
+      ],
+      "assertion": "Label dimensions must equal image dimensions or one where irrelevant, listed as a hard obligation; overlay code must broadcast singleton axes.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "contradicted",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 106,
+              "end_line": 108
+            },
+            {
+              "start_line": 877,
+              "end_line": 888
+            }
+          ]
+        }
+      ],
+      "reason": "The cited layout comment says should, not must, and is explanatory hierarchy material. It cannot establish a hard shape requirement or universal reader broadcasting mandate. Broadcasting may be a supported capability choice after registration checks.",
+      "governing_conditions": [],
+      "false_factual_claim": true,
+      "material_failure_identity": "R003-LABEL_SHAPE_MUST"
+    },
+    {
+      "claim_id": "R003-IMAGE_LABEL_RECOMMENDATION",
+      "report_locators": [
+        {
+          "start_line": 138,
+          "end_line": 138
+        },
+        {
+          "start_line": 141,
+          "end_line": 141
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 180,
+          "end_line": 180
+        },
+        {
+          "start_line": 140,
+          "end_line": 140
+        }
+      ],
+      "assertion": "image-label and its colors/version are SHOULD, with conditional MUST value types; the optional-capabilities summary also calls the whole block MAY.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "qualified",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 456,
+              "end_line": 460
+            }
+          ]
+        }
+      ],
+      "reason": "SHOULD is not MAY. Dedicated soft-obligation text is correct, but the unqualified MAY list downgrades the force without supersession.",
+      "governing_conditions": [],
+      "false_factual_claim": false,
+      "material_failure_identity": "R003-IMAGE_LABEL_MAY_DOWNGRADE"
+    },
+    {
+      "claim_id": "R003-COLOR_ID",
+      "report_locators": [
+        {
+          "start_line": 138,
+          "end_line": 138
+        },
+        {
+          "start_line": 142,
+          "end_line": 142
+        },
+        {
+          "start_line": 169,
+          "end_line": 169
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "Colors entries key on integer label-value; rgba is optional but must be four integers 0–255, with alpha opacity; additional keys allowed.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 461,
+              "end_line": 466
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [
+        "When color entries or rgba are supplied."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-COLOR_READER_SHOULD",
+      "report_locators": [
+        {
+          "start_line": 29,
+          "end_line": 29
+        },
+        {
+          "start_line": 142,
+          "end_line": 142
+        },
+        {
+          "start_line": 154,
+          "end_line": 154
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "Readers SHOULD use specified label colors; absent rgba/color metadata requires a product fallback choice.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 461,
+              "end_line": 466
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-COLOR_EXAMPLE",
+      "report_locators": [
+        {
+          "start_line": 142,
+          "end_line": 142
+        }
+      ],
+      "assertion": "Worked label example treats alpha 128 as about 50 percent opacity.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 483,
+              "end_line": 491
+            },
+            {
+              "start_line": 513,
+              "end_line": 514
+            }
+          ]
+        }
+      ],
+      "reason": "Supported as description of the example, not a mandated exact blending algorithm.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-LABEL_PROPERTIES",
+      "report_locators": [
+        {
+          "start_line": 143,
+          "end_line": 143
+        },
+        {
+          "start_line": 180,
+          "end_line": 180
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        }
+      ],
+      "assertion": "Optional properties provide arbitrary per-label metadata and need not share keys; surfacing them is a product decision.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 467,
+              "end_line": 471
+            },
+            {
+              "start_line": 493,
+              "end_line": 505
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-LABEL_SOURCE",
+      "report_locators": [
+        {
+          "start_line": 138,
+          "end_line": 138
+        },
+        {
+          "start_line": 143,
+          "end_line": 143
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        }
+      ],
+      "assertion": "Optional source object identifies original image; optional image field is a relative path defaulting to ../../.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 467,
+              "end_line": 467
+            },
+            {
+              "start_line": 472,
+              "end_line": 474
+            }
+          ]
+        }
+      ],
+      "reason": "Matches the admitted captured source at the cited locators.",
+      "governing_conditions": [
+        "source is optional; if supplied it must be an object; image field is optional but supplied value must be relative path string."
+      ],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-LABEL_REGISTRATION",
+      "report_locators": [
+        {
+          "start_line": 29,
+          "end_line": 29
+        },
+        {
+          "start_line": 145,
+          "end_line": 145
+        },
+        {
+          "start_line": 154,
+          "end_line": 155
+        },
+        {
+          "start_line": 205,
+          "end_line": 205
+        },
+        {
+          "start_line": 225,
+          "end_line": 225
+        }
+      ],
+      "assertion": "Matching transforms/shapes cannot be assumed from level parity; overlay geometry should be verified per level with explicit mismatch handling.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 433,
+              "end_line": 433
+            },
+            {
+              "start_line": 454,
+              "end_line": 455
+            },
+            {
+              "start_line": 308,
+              "end_line": 315
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 11,
+              "end_line": 11
+            }
+          ]
+        }
+      ],
+      "reason": "Useful supported inference. Source says usually matching dimensions/transforms. Saying all of S003:433 is non-normative because descriptive is too broad, but the non-universal usually qualifier correctly defeats assumed transform equality.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-ALIGNMENT_EQUALITY_POLICY",
+      "report_locators": [
+        {
+          "start_line": 155,
+          "end_line": 155
+        }
+      ],
+      "assertion": "Aligned overlays are defined as verified equality of per-level transforms/dimensions.",
+      "claim_kind": "product_choice",
+      "source_outcome": "qualified",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 433,
+              "end_line": 433
+            },
+            {
+              "start_line": 454,
+              "end_line": 455
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 5,
+              "end_line": 5
+            },
+            {
+              "start_line": 11,
+              "end_line": 11
+            }
+          ]
+        }
+      ],
+      "reason": "Equality is a conservative proposed support policy, not necessary registration in general; differently sampled coordinate-compatible labels can align. Also conflicts with its own singleton-broadcast proposal unless equality is qualified.",
+      "governing_conditions": [],
+      "false_factual_claim": false,
+      "material_failure_identity": "R003-ALIGNMENT_POLICY_SCOPE"
+    },
+    {
+      "claim_id": "R003-FAILURE_SURFACE",
+      "report_locators": [
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 162,
+          "end_line": 169
+        }
+      ],
+      "assertion": "Listed missing names/metadata, duplicate names, rank/order mismatch, transform type/count/order/length violations, collection/XML ordering errors, plate/well identity errors and invalid label values are detectable conformance conditions.",
+      "claim_kind": "validation_condition",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 65,
+              "end_line": 66
+            },
+            {
+              "start_line": 155,
+              "end_line": 156
+            },
+            {
+              "start_line": 168,
+              "end_line": 174
+            },
+            {
+              "start_line": 256,
+              "end_line": 270
+            },
+            {
+              "start_line": 300,
+              "end_line": 315
+            },
+            {
+              "start_line": 438,
+              "end_line": 474
+            },
+            {
+              "start_line": 530,
+              "end_line": 560
+            },
+            {
+              "start_line": 744,
+              "end_line": 752
+            }
+          ]
+        }
+      ],
+      "reason": "Correct conditional checklist except independently assessed quoted layout representation and empty-datasets addition.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-EMPTY_DATASETS",
+      "report_locators": [
+        {
+          "start_line": 166,
+          "end_line": 166
+        }
+      ],
+      "assertion": "Empty datasets is specifically a sourced conformance violation.",
+      "claim_kind": "validation_condition",
+      "source_outcome": "qualified",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 297,
+              "end_line": 308
+            }
+          ]
+        }
+      ],
+      "reason": "Source requires datasets list describing arrays, but supplies no explicit list minItems constraint. Empty lists are unusable for this viewer; classify rejection as admission/product policy rather than pretend the cited ordering sentence expressly forbids empty lists.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-AVAILABILITY_ABSENCES",
+      "report_locators": [
+        {
+          "start_line": 170,
+          "end_line": 170
+        }
+      ],
+      "assertion": "Missing declared level arrays and optional/recommended metadata should produce explicit degradation; absence of omero/image-label is not a hard schema violation.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 304,
+              "end_line": 308
+            },
+            {
+              "start_line": 426,
+              "end_line": 426
+            },
+            {
+              "start_line": 456,
+              "end_line": 460
+            },
+            {
+              "start_line": 257,
+              "end_line": 257
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 7,
+              "end_line": 7
+            },
+            {
+              "start_line": 11,
+              "end_line": 11
+            }
+          ]
+        }
+      ],
+      "reason": "Supported product policy. Missing XML and image-label can depart from SHOULD recommendations; not equivalent to violating MUST.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-WRITE_BOUNDARY",
+      "report_locators": [
+        {
+          "start_line": 95,
+          "end_line": 96
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        }
+      ],
+      "assertion": "Read-only/local-session display settings and exclusion of edit/export/remote are compatible; no specific reader duty to write is imposed in this capture.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 60,
+              "end_line": 64
+            },
+            {
+              "start_line": 73,
+              "end_line": 77
+            }
+          ]
+        },
+        {
+          "file": "inputs/brief.md",
+          "line_ranges": [
+            {
+              "start_line": 5,
+              "end_line": 5
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 9,
+              "end_line": 9
+            }
+          ]
+        }
+      ],
+      "reason": "Negative assertion checked against complete capture.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-PERFORMANCE_LIMIT",
+      "report_locators": [
+        {
+          "start_line": 30,
+          "end_line": 30
+        },
+        {
+          "start_line": 92,
+          "end_line": 92
+        },
+        {
+          "start_line": 182,
+          "end_line": 182
+        },
+        {
+          "start_line": 189,
+          "end_line": 189
+        },
+        {
+          "start_line": 193,
+          "end_line": 193
+        },
+        {
+          "start_line": 223,
+          "end_line": 223
+        }
+      ],
+      "assertion": "Background I/O, cancellation, responsiveness, memory/performance targets and error UX are engineering requirements, not captured OME format rules.",
+      "claim_kind": "scope_limitation",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 7,
+              "end_line": 7
+            },
+            {
+              "start_line": 11,
+              "end_line": 11
+            }
+          ]
+        },
+        {
+          "file": "inputs/brief.md",
+          "line_ranges": [
+            {
+              "start_line": 3,
+              "end_line": 3
+            }
+          ]
+        },
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 70,
+              "end_line": 72
+            },
+            {
+              "start_line": 388,
+              "end_line": 397
+            }
+          ]
+        }
+      ],
+      "reason": "Complete captured source reviewed. It names chunk features and gives a chunk-size hint but no measured performance, cancellation or UX requirement.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-IMPLEMENTATIONS_LIMIT",
+      "report_locators": [
+        {
+          "start_line": 30,
+          "end_line": 30
+        },
+        {
+          "start_line": 94,
+          "end_line": 94
+        },
+        {
+          "start_line": 188,
+          "end_line": 188
+        },
+        {
+          "start_line": 231,
+          "end_line": 231
+        }
+      ],
+      "assertion": "Implementations section contains only See Tools; actual reader compatibility/prevalence cannot be established within admitted source universe.",
+      "claim_kind": "scope_limitation",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 813,
+              "end_line": 814
+            }
+          ]
+        },
+        {
+          "file": "inputs/brief.md",
+          "line_ranges": [
+            {
+              "start_line": 5,
+              "end_line": 5
+            }
+          ]
+        },
+        {
+          "file": "inputs/TASK.md",
+          "line_ranges": [
+            {
+              "start_line": 5,
+              "end_line": 5
+            }
+          ]
+        }
+      ],
+      "reason": "Correct limitation rather than a false factual finding.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-EXTERNAL_REFERENCES_LIMIT",
+      "report_locators": [
+        {
+          "start_line": 189,
+          "end_line": 192
+        },
+        {
+          "start_line": 194,
+          "end_line": 194
+        }
+      ],
+      "assertion": "Full Zarr v3 schemas/I/O/codecs, OMERO algorithms, OME-XML validation, unit conversions and remote-access rules are absent from the capture.",
+      "claim_kind": "scope_limitation",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 68,
+              "end_line": 77
+            },
+            {
+              "start_line": 170,
+              "end_line": 172
+            },
+            {
+              "start_line": 257,
+              "end_line": 260
+            },
+            {
+              "start_line": 424,
+              "end_line": 430
+            }
+          ]
+        }
+      ],
+      "reason": "Complete source review confirms these references are not complete included specifications. Metadata examples do not establish schema grammar.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-PLATE_EXAMPLE_OMISSION",
+      "report_locators": [
+        {
+          "start_line": 31,
+          "end_line": 31
+        },
+        {
+          "start_line": 201,
+          "end_line": 201
+        }
+      ],
+      "assertion": "Plate examples omit mandatory plate.version; well examples omit recommended well.version.",
+      "claim_kind": "counterevidence",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 550,
+              "end_line": 551
+            },
+            {
+              "start_line": 563,
+              "end_line": 640
+            },
+            {
+              "start_line": 643,
+              "end_line": 739
+            },
+            {
+              "start_line": 751,
+              "end_line": 752
+            },
+            {
+              "start_line": 756,
+              "end_line": 808
+            }
+          ]
+        }
+      ],
+      "reason": "Checked complete example objects: outer ome.version exists, nested plate/well version does not.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-EXAMPLE_INHERITANCE",
+      "report_locators": [
+        {
+          "start_line": 201,
+          "end_line": 201
+        }
+      ],
+      "assertion": "Expect real files to inherit example omissions.",
+      "claim_kind": "risk_hypothesis",
+      "source_outcome": "qualified",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 563,
+              "end_line": 739
+            },
+            {
+              "start_line": 756,
+              "end_line": 808
+            }
+          ]
+        }
+      ],
+      "reason": "Plausible hypothesis/risk, not observed writer behavior or prevalence; no admitted actual files support it.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-NAMING_EXACT",
+      "report_locators": [
+        {
+          "start_line": 202,
+          "end_line": 202
+        }
+      ],
+      "assertion": "camelCase guidance coexists with legacy field_count/maximumfieldcount; parse exact keys and do not case-normalize case-sensitive identities.",
+      "claim_kind": "plan_implication",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 524,
+              "end_line": 524
+            },
+            {
+              "start_line": 538,
+              "end_line": 538
+            },
+            {
+              "start_line": 535,
+              "end_line": 535
+            },
+            {
+              "start_line": 547,
+              "end_line": 547
+            },
+            {
+              "start_line": 557,
+              "end_line": 557
+            },
+            {
+              "start_line": 809,
+              "end_line": 812
+            }
+          ]
+        }
+      ],
+      "reason": "Supported source inconsistency and compatibility inference; broader metadata parser choice is a proposal.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-CAPITALIZATION_NOISE",
+      "report_locators": [
+        {
+          "start_line": 203,
+          "end_line": 203
+        }
+      ],
+      "assertion": "Mixed uppercase/lowercase keyword use contradicts conformance boilerplate and renders it noise.",
+      "claim_kind": "source_interpretation",
+      "source_outcome": "qualified",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 57,
+              "end_line": 59
+            },
+            {
+              "start_line": 156,
+              "end_line": 156
+            },
+            {
+              "start_line": 174,
+              "end_line": 174
+            },
+            {
+              "start_line": 302,
+              "end_line": 302
+            },
+            {
+              "start_line": 875,
+              "end_line": 878
+            }
+          ]
+        }
+      ],
+      "reason": "Presence of uppercase and lowercase usage does not prove the boilerplate inconsistent; it can mean keywords are not invariably uppercase. The source explicitly permits descriptive conformance, so calling that sentence noise overstates the evidence.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-INDEX_QUIRK",
+      "report_locators": [
+        {
+          "start_line": 207,
+          "end_line": 207
+        }
+      ],
+      "assertion": "Index refers HCS to 2.2.3, while dedicated HCS hierarchy is 1.2; index navigation can mislead about owner section.",
+      "claim_kind": "counterevidence",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 118,
+              "end_line": 129
+            },
+            {
+              "start_line": 274,
+              "end_line": 274
+            },
+            {
+              "start_line": 891,
+              "end_line": 891
+            }
+          ]
+        }
+      ],
+      "reason": "Supported narrow observation. Not evidence that all index entries are unreliable.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-OLDER_TOOLING_V2",
+      "report_locators": [
+        {
+          "start_line": 208,
+          "end_line": 208
+        }
+      ],
+      "assertion": "Older 0.3/0.4 tooling writes Zarr v2 layouts.",
+      "claim_kind": "format_assertion",
+      "source_outcome": "unsupported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 831,
+              "end_line": 848
+            }
+          ]
+        }
+      ],
+      "reason": "Admitted source records the 0.5.0 switch to v3 but supplies neither those earlier specifications nor actual writer behavior. Blanket historical tooling assertion exceeds evidence.",
+      "governing_conditions": [],
+      "false_factual_claim": false,
+      "material_failure_identity": "R003-OLDER_TOOLING_ZARR2"
+    },
+    {
+      "claim_id": "R003-VALIDATION_DESIGN",
+      "report_locators": [
+        {
+          "start_line": 155,
+          "end_line": 155
+        },
+        {
+          "start_line": 212,
+          "end_line": 225
+        }
+      ],
+      "assertion": "Proposed fixtures cover 2D/5D, collections with/without series and plate precedence, dense/sparse HCS, label metadata/parity/dtype variants, group-plus-dataset calibration, missing units, malformed metadata and large-pyramid performance; expected checks remain UNEXECUTED.",
+      "claim_kind": "unexecuted_test_proposal",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 156,
+              "end_line": 156
+            },
+            {
+              "start_line": 174,
+              "end_line": 174
+            },
+            {
+              "start_line": 204,
+              "end_line": 206
+            },
+            {
+              "start_line": 269,
+              "end_line": 269
+            },
+            {
+              "start_line": 294,
+              "end_line": 319
+            },
+            {
+              "start_line": 426,
+              "end_line": 426
+            },
+            {
+              "start_line": 438,
+              "end_line": 466
+            },
+            {
+              "start_line": 518,
+              "end_line": 560
+            },
+            {
+              "start_line": 641,
+              "end_line": 750
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 7,
+              "end_line": 7
+            },
+            {
+              "start_line": 11,
+              "end_line": 11
+            }
+          ]
+        }
+      ],
+      "reason": "Valid design proposals; they are not test results. Broadcast rule force and count-only calibration/precision limitations remain separately assessed.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-UNRESOLVED_DESIGN",
+      "report_locators": [
+        {
+          "start_line": 229,
+          "end_line": 238
+        }
+      ],
+      "assertion": "Open real-tool, reader-error, channel metadata mismatch, named-multiscale, fallback rendering, future version policy and HCS scope decisions are acknowledged.",
+      "claim_kind": "unresolved_area",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 25,
+              "end_line": 27
+            },
+            {
+              "start_line": 170,
+              "end_line": 170
+            },
+            {
+              "start_line": 271,
+              "end_line": 275
+            },
+            {
+              "start_line": 388,
+              "end_line": 430
+            },
+            {
+              "start_line": 461,
+              "end_line": 466
+            },
+            {
+              "start_line": 813,
+              "end_line": 814
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 9,
+              "end_line": 9
+            }
+          ]
+        }
+      ],
+      "reason": "Legitimate open areas. Acknowledgment does not repair separately emitted unsupported factual assertions or eligible-facet omissions.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-CITATION_CONVENTION",
+      "report_locators": [
+        {
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "assertion": "S003, Viewer.md and brief.md line citations identify admitted source and planning-input line numbers.",
+      "claim_kind": "source_locator_convention",
+      "source_outcome": "supported",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 1,
+              "end_line": 896
+            }
+          ]
+        },
+        {
+          "file": "inputs/plan/Viewer.md",
+          "line_ranges": [
+            {
+              "start_line": 1,
+              "end_line": 11
+            }
+          ]
+        },
+        {
+          "file": "inputs/brief.md",
+          "line_ranges": [
+            {
+              "start_line": 1,
+              "end_line": 5
+            }
+          ]
+        }
+      ],
+      "reason": "Line counts and locator targets independently checked; exact per-claim support is recorded in each row.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    },
+    {
+      "claim_id": "R003-VERSION_CHECK_COST",
+      "report_locators": [
+        {
+          "start_line": 24,
+          "end_line": 24
+        }
+      ],
+      "assertion": "Hierarchy version validation is a cheap check.",
+      "claim_kind": "engineering_cost_assertion",
+      "source_outcome": "qualified",
+      "support": [
+        {
+          "file": "inputs/sources/S003.txt",
+          "line_ranges": [
+            {
+              "start_line": 155,
+              "end_line": 156
+            }
+          ]
+        }
+      ],
+      "reason": "Consistency rule is well-defined, but validating a whole hierarchy entails metadata discovery/reads. The source provides no cost or performance evidence. Cheap is an unmeasured engineering expectation, not an established source property.",
+      "governing_conditions": [],
+      "false_factual_claim": false
+    }
+  ],
+  "eligible_facet_coverage": [
+    {
+      "facet_id": "OME05-C01",
+      "coverage": "full",
+      "report_locators": [
+        {
+          "start_line": 24,
+          "end_line": 24
+        },
+        {
+          "start_line": 39,
+          "end_line": 39
+        },
+        {
+          "start_line": 89,
+          "end_line": 89
+        },
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 164,
+          "end_line": 164
+        },
+        {
+          "start_line": 208,
+          "end_line": 208
+        },
+        {
+          "start_line": 222,
+          "end_line": 222
+        }
+      ],
+      "evidence": [
+        "S003:68-69",
+        "S003:152-156"
+      ],
+      "reason": "Identifies v3 and attributes.ome version admission, explicit container/version validation and mixed-version negative fixture. Older-tooling factual overreach is separately recorded.",
+      "omitted_subscope": [],
+      "source_outcome": "supported"
+    },
+    {
+      "facet_id": "OME05-C02",
+      "coverage": "partial",
+      "report_locators": [
+        {
+          "start_line": 53,
+          "end_line": 53
+        },
+        {
+          "start_line": 75,
+          "end_line": 75
+        },
+        {
+          "start_line": 83,
+          "end_line": 83
+        },
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 108,
+          "end_line": 108
+        },
+        {
+          "start_line": 128,
+          "end_line": 128
+        },
+        {
+          "start_line": 151,
+          "end_line": 153
+        },
+        {
+          "start_line": 165,
+          "end_line": 165
+        },
+        {
+          "start_line": 217,
+          "end_line": 217
+        },
+        {
+          "start_line": 225,
+          "end_line": 225
+        }
+      ],
+      "evidence": [
+        "S003:168-174",
+        "S003:300-307"
+      ],
+      "reason": "Covers rank/order/unique names/dimension_names and axis-driven controls, but does not explicitly distinguish absent vs length-one navigation dimensions; axes-alone channel count is false and arbitrary spatial axes still lack display-plane admission policy.",
+      "omitted_subscope": [
+        "Absent dimensions versus present singleton dimensions in controls",
+        "Exact channel counts from array shape mapped through validated axes"
+      ],
+      "failure_identity": "R003-FACET-C02",
+      "source_outcome": "contradicted"
+    },
+    {
+      "facet_id": "OME05-C03",
+      "coverage": "full",
+      "report_locators": [
+        {
+          "start_line": 26,
+          "end_line": 26
+        },
+        {
+          "start_line": 76,
+          "end_line": 78
+        },
+        {
+          "start_line": 83,
+          "end_line": 83
+        },
+        {
+          "start_line": 100,
+          "end_line": 100
+        },
+        {
+          "start_line": 110,
+          "end_line": 113
+        },
+        {
+          "start_line": 166,
+          "end_line": 166
+        },
+        {
+          "start_line": 170,
+          "end_line": 170
+        },
+        {
+          "start_line": 225,
+          "end_line": 225
+        }
+      ],
+      "evidence": [
+        "S003:93-94",
+        "S003:304-316"
+      ],
+      "reason": "Declared arbitrary paths/order and each level geometry are authoritative; relative paths and unavailable declared arrays are identified with explicit degradation/error policy. No fixed reduction factor is proposed.",
+      "omitted_subscope": [],
+      "source_outcome": "supported"
+    },
+    {
+      "facet_id": "OME05-C04",
+      "coverage": "partial",
+      "report_locators": [
+        {
+          "start_line": 110,
+          "end_line": 116
+        },
+        {
+          "start_line": 153,
+          "end_line": 153
+        },
+        {
+          "start_line": 156,
+          "end_line": 156
+        },
+        {
+          "start_line": 221,
+          "end_line": 221
+        },
+        {
+          "start_line": 225,
+          "end_line": 225
+        }
+      ],
+      "evidence": [
+        "S003:170",
+        "S003:293",
+        "S003:308-315"
+      ],
+      "reason": "Correct order/composition, offsets, missing-unit and relative-factor treatment. Test proposal compares hand-composed values but provides no concrete noncommuting numeric case that would necessarily expose reversed group/dataset order or omitted offsets.",
+      "omitted_subscope": [
+        "Concrete asymmetric numeric coordinate check exposing reversed composition and missing translations"
+      ],
+      "failure_identity": "R003-FACET-C04",
+      "source_outcome": "qualified"
+    },
+    {
+      "facet_id": "OME05-C05",
+      "coverage": "partial",
+      "report_locators": [
+        {
+          "start_line": 132,
+          "end_line": 145
+        },
+        {
+          "start_line": 154,
+          "end_line": 155
+        },
+        {
+          "start_line": 169,
+          "end_line": 169
+        },
+        {
+          "start_line": 220,
+          "end_line": 220
+        },
+        {
+          "start_line": 225,
+          "end_line": 225
+        }
+      ],
+      "evidence": [
+        "S003:437-474"
+      ],
+      "reason": "Discovery, intermediate groups, level parity and geometry verification are covered; relative source field is mentioned but not made the authoritative resolved association before overlay. Parent/equality language plus hard singleton shape assertion narrows or misstates association/geometry.",
+      "omitted_subscope": [
+        "Explicit resolution of source.image/default relative to the label group before association",
+        "Alternate original image and intermediate hierarchy association fixture",
+        "Explicit supported/unsupported geometry scope consistent with singleton broadcasting"
+      ],
+      "failure_identity": "R003-FACET-C05",
+      "source_outcome": "qualified"
+    },
+    {
+      "facet_id": "OME05-C06",
+      "coverage": "partial",
+      "report_locators": [
+        {
+          "start_line": 135,
+          "end_line": 135
+        },
+        {
+          "start_line": 138,
+          "end_line": 138
+        },
+        {
+          "start_line": 142,
+          "end_line": 143
+        },
+        {
+          "start_line": 169,
+          "end_line": 169
+        },
+        {
+          "start_line": 178,
+          "end_line": 178
+        },
+        {
+          "start_line": 220,
+          "end_line": 220
+        }
+      ],
+      "evidence": [
+        "S003:438-439",
+        "S003:461-471"
+      ],
+      "reason": "Integer dtype list, label-value-keyed metadata and SHOULD palette force are retained. No exact uint64/int64 decoding/lookup range, refusal policy, or categorical-safe resampling is specified.",
+      "omitted_subscope": [
+        "Sparse/non-positional ID lookup check",
+        "IDs above binary64 exact-integer range or explicit exact supported range/refusal",
+        "Resampling/interpolation that cannot create new category IDs"
+      ],
+      "failure_identity": "R003-FACET-C06",
+      "source_outcome": "supported"
+    }
+  ],
+  "omitted_scope": [
+    {
+      "facet_id": "OME05-C02",
+      "subscope": [
+        "Absent dimensions versus present singleton dimensions in controls",
+        "Exact channel counts from array shape mapped through validated axes"
+      ]
+    },
+    {
+      "facet_id": "OME05-C04",
+      "subscope": [
+        "Concrete asymmetric numeric coordinate check exposing reversed composition and missing translations"
+      ]
+    },
+    {
+      "facet_id": "OME05-C05",
+      "subscope": [
+        "Explicit resolution of source.image/default relative to the label group before association",
+        "Alternate original image and intermediate hierarchy association fixture",
+        "Explicit supported/unsupported geometry scope consistent with singleton broadcasting"
+      ]
+    },
+    {
+      "facet_id": "OME05-C06",
+      "subscope": [
+        "Sparse/non-positional ID lookup check",
+        "IDs above binary64 exact-integer range or explicit exact supported range/refusal",
+        "Resampling/interpolation that cannot create new category IDs"
+      ]
+    }
+  ],
+  "current_assertion_scope": {
+    "explicitly_superseded_assertions": [],
+    "unexecuted_tests": "All section 10 fixtures/checks are proposals; no results asserted.",
+    "unavoidable_history_exposure": "Header exposes control-r1/Z task token; no earlier revisions or acquisition materials embedded. Process statements refer to author actions but supply no transcripts."
+  },
+  "useful_supported_novelty": [
+    {
+      "id": "R003-N01",
+      "description": "Transitional collection discovery precedence/series/XML order and HCS row/column/well identity go beyond six-facet key.",
+      "report_locators": [
+        {
+          "start_line": 55,
+          "end_line": 60
+        },
+        {
+          "start_line": 90,
+          "end_line": 90
+        }
+      ],
+      "support": [
+        "S003:204-275",
+        "S003:530-560",
+        "S003:744-752"
+      ]
+    },
+    {
+      "id": "R003-N02",
+      "description": "Nested plate.version examples omit a mandatory field; nested well.version examples omit a SHOULD field.",
+      "report_locators": [
+        {
+          "start_line": 201,
+          "end_line": 201
+        }
+      ],
+      "support": [
+        "S003:550-551",
+        "S003:563-739",
+        "S003:751-808"
+      ]
+    },
+    {
+      "id": "R003-N03",
+      "description": "Optional omero mandatory floor is separated from example defaults and channel-count mismatch is raised as product robustness policy.",
+      "report_locators": [
+        {
+          "start_line": 123,
+          "end_line": 126
+        },
+        {
+          "start_line": 234,
+          "end_line": 234
+        }
+      ],
+      "support": [
+        "S003:401-430"
+      ]
+    },
+    {
+      "id": "R003-N04",
+      "description": "Explicit source-scope limits for real implementations, Zarr schemas, OMERO algorithms and performance avoid fabricated research results.",
+      "report_locators": [
+        {
+          "start_line": 188,
+          "end_line": 195
+        }
+      ],
+      "support": [
+        "S003:68-77",
+        "S003:424-425",
+        "S003:813-814"
+      ]
+    }
+  ],
+  "material_failures": [
+    {
+      "failure_identity": "R003-CHANNEL_COUNT_AXES_ONLY",
+      "kind": "false_factual_plan_implication",
+      "severity": "high",
+      "claim_ids": [
+        "R003-CHANNEL_COUNT_AXES_ONLY"
+      ]
+    },
+    {
+      "failure_identity": "R003-LABEL_SHAPE_MUST",
+      "kind": "incorrect_normative_force",
+      "severity": "high",
+      "claim_ids": [
+        "R003-LABEL_SHAPE_FORCE"
+      ]
+    },
+    {
+      "failure_identity": "R003-WINDOW_SEMANTICS",
+      "kind": "unsupported_semantic_assertion",
+      "severity": "medium",
+      "claim_ids": [
+        "R003-WINDOW_MEANING"
+      ]
+    },
+    {
+      "failure_identity": "R003-OLDER_TOOLING_ZARR2",
+      "kind": "unsupported_historical_implementation_assertion",
+      "severity": "medium",
+      "claim_ids": [
+        "R003-OLDER_TOOLING_V2"
+      ]
+    },
+    {
+      "failure_identity": "R003-IMAGE_LABEL_MAY_DOWNGRADE",
+      "kind": "lost_requirement_qualifier",
+      "severity": "medium",
+      "claim_ids": [
+        "R003-IMAGE_LABEL_RECOMMENDATION"
+      ]
+    },
+    {
+      "failure_identity": "R003-FACET-C02",
+      "kind": "partial_eligible_facet",
+      "severity": "high"
+    },
+    {
+      "failure_identity": "R003-FACET-C04",
+      "kind": "partial_eligible_facet",
+      "severity": "medium"
+    },
+    {
+      "failure_identity": "R003-FACET-C05",
+      "kind": "partial_eligible_facet",
+      "severity": "high"
+    },
+    {
+      "failure_identity": "R003-FACET-C06",
+      "kind": "partial_eligible_facet",
+      "severity": "high"
+    },
+    {
+      "failure_identity": "R003-CONDITION_FORCE",
+      "kind": "overstated_self_qualification",
+      "severity": "medium",
+      "claim_ids": [
+        "R003-CONDITIONS_PROMISE"
+      ]
+    },
+    {
+      "failure_identity": "R003-NORMATIVE_SELECTION_QUALIFIER",
+      "kind": "unsupported_normativity_qualifier",
+      "severity": "medium",
+      "claim_ids": [
+        "R003-NAMED_SELECTION_FORCE"
+      ]
+    },
+    {
+      "failure_identity": "R003-ALIGNMENT_POLICY_SCOPE",
+      "kind": "incoherent_or_narrow_support_policy",
+      "severity": "medium",
+      "claim_ids": [
+        "R003-ALIGNMENT_EQUALITY_POLICY"
+      ]
+    }
+  ],
+  "unresolved_matters": [
+    "Candidate process/no-fetch/no-execution provenance not verifiable from current-only inputs; no history accessed.",
+    "Named-selection prose lacks an explicit informative marker in the capture; absence of uppercase RFC keywords alone does not settle normative status.",
+    "Frozen source gives no empirical real-writer/tool or performance data."
+  ],
+  "blinding_limitations": [
+    "Header contains t06-z-ome-dev1-control-r1, an unavoidable condition/repetition cue. No private treatment map, method cards, conversations, economics or other grades were read.",
+    "One coherent pair reviewed in one evaluator context: judgments independently source-grounded; no model agreement used.",
+    "Host requested model/effort binding confirmed; effective runtime is not independently exposed."
+  ],
+  "current_report_verdict": {
+    "terminal_label": "quality failure",
+    "reason": "Complete current-only review finds material incorrect/unsupported claims and four partially covered eligible facets. Two eligible facets are full; remaining omissions are not excused by report length or unexecuted-test status.",
+    "candidate_scope_complete": false,
+    "supported_improvement_or_efficiency": "unassessed; history/economics withheld"
+  },
+  "counts": {
+    "material_claim_rows": 97,
+    "source_outcomes": {
+      "supported": 80,
+      "unresolved": 1,
+      "contradicted": 3,
+      "qualified": 11,
+      "unsupported": 2
+    },
+    "eligible_facets": 6,
+    "facet_outcomes": {
+      "full": 2,
+      "partial": 4
+    }
+  },
+  "false_claims": [
+    {
+      "claim_id": "R003-CONDITIONS_PROMISE",
+      "report_locators": [
+        {
+          "start_line": 16,
+          "end_line": 16
+        }
+      ],
+      "assertion": "Conditional obligations are always reported with their governing conditions intact.",
+      "reason": "Not universally fulfilled: hard-obligation treatment of label shape and MAY categorization of image-label weaken or alter governing force; detailed rows identify the failures."
+    },
+    {
+      "claim_id": "R003-CHANNEL_COUNT_AXES_ONLY",
+      "report_locators": [
+        {
+          "start_line": 128,
+          "end_line": 128
+        },
+        {
+          "start_line": 151,
+          "end_line": 151
+        }
+      ],
+      "assertion": "Channel count and identity must always be derivable from axes alone; derive channel count from axes rather than omero.",
+      "reason": "axes provides names/types/order and rank, not lengths or individual channel identities. Array shape is needed for counts; nonstandard/null axes require explicit policy. The proposed sole-axes rule is not supported."
+    },
+    {
+      "claim_id": "R003-LABEL_SHAPE_FORCE",
+      "report_locators": [
+        {
+          "start_line": 29,
+          "end_line": 29
+        },
+        {
+          "start_line": 137,
+          "end_line": 137
+        },
+        {
+          "start_line": 154,
+          "end_line": 155
+        },
+        {
+          "start_line": 220,
+          "end_line": 220
+        },
+        {
+          "start_line": 134,
+          "end_line": 134
+        }
+      ],
+      "assertion": "Label dimensions must equal image dimensions or one where irrelevant, listed as a hard obligation; overlay code must broadcast singleton axes.",
+      "reason": "The cited layout comment says should, not must, and is explanatory hierarchy material. It cannot establish a hard shape requirement or universal reader broadcasting mandate. Broadcasting may be a supported capability choice after registration checks."
+    }
+  ],
+  "qualified_assertions": [
+    "R003-UNITS",
+    "R003-NAMED_SELECTION_FORCE",
+    "R003-CALIBRATION_AMBIGUITY",
+    "R003-B2RAW_LAYOUT",
+    "R003-PLATE_OPTIONALS",
+    "R003-IMAGE_LABEL_RECOMMENDATION",
+    "R003-ALIGNMENT_EQUALITY_POLICY",
+    "R003-EMPTY_DATASETS",
+    "R003-EXAMPLE_INHERITANCE",
+    "R003-CAPITALIZATION_NOISE",
+    "R003-VERSION_CHECK_COST"
+  ],
+  "source_exposure_vs_meaning": "Titles, example fields, index entries and by-reference Zarr capabilities are exposure only unless governing captured prose supports the emitted meaning; relevant distinctions are explicit in rows.",
+  "history_accessed": false,
+  "economics_assessed": false,
+  "no_candidate_rescue": "Frozen report bytes unchanged; evaluator wrote assessments only.",
+  "inventory_audit": {
+    "total_report_lines": 242,
+    "claim_mapped_line_count": 137,
+    "unmapped_material_lines": [],
+    "nonmaterial_format_or_heading_lines": [
+      1,
+      2,
+      4,
+      9,
+      10,
+      11,
+      12,
+      13,
+      19,
+      20,
+      21,
+      22,
+      23,
+      32,
+      33,
+      34,
+      35,
+      36,
+      38,
+      40,
+      42,
+      44,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      61,
+      62,
+      63,
+      70,
+      71,
+      72,
+      74,
+      80,
+      82,
+      84,
+      85,
+      86,
+      87,
+      88,
+      97,
+      98,
+      99,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      109,
+      111,
+      112,
+      117,
+      118,
+      119,
+      121,
+      122,
+      127,
+      129,
+      130,
+      131,
+      133,
+      139,
+      144,
+      146,
+      147,
+      148,
+      149,
+      150,
+      157,
+      158,
+      159,
+      160,
+      161,
+      171,
+      173,
+      174,
+      175,
+      176,
+      177,
+      179,
+      181,
+      183,
+      184,
+      185,
+      186,
+      187,
+      196,
+      197,
+      198,
+      199,
+      200,
+      209,
+      210,
+      211,
+      226,
+      227,
+      228,
+      239,
+      240,
+      241
+    ],
+    "all_report_text_read": true,
+    "all_admitted_source_text_read": true,
+    "all_eligible_facet_ids_assessed": [
+      "OME05-C01",
+      "OME05-C02",
+      "OME05-C03",
+      "OME05-C04",
+      "OME05-C05",
+      "OME05-C06"
+    ],
+    "source_denominator_not_reduced": true,
+    "comment": "Physical-line audit supplements semantic atomic inventory; a mapped line can have several independently assessed assertions."
+  }
+}

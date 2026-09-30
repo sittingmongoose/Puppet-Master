@@ -1,0 +1,58 @@
+{
+  "schema": "er7.method_launch_review.v1",
+  "review_id": "resume-method-gate-t08-v1",
+  "status": "blocked_launch_runtime",
+  "method_machinery_status": "accepted",
+  "acceptance_scope": "Exact prospective cards, inputs and experiment mechanics only. Common inherited M/Z credential exposure holds launch until a separately accepted finite runtime2 and prospective exact job rebind.",
+  "reviewer": "/root/method_gate_resume",
+  "created_utc": "2026-09-30T16:36:21.473276+00:00",
+  "method": "T08",
+  "pair_id": "t08-z-ome-discovery-resume-v1",
+  "reviewed_files": {
+    "methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/pair.json": "91f4796f636ecc84251339c42c39d26f4f13644b943db677735b62a3090762be",
+    "methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/treatment.spec.json": "d7c3fe7b2182c7a44630b2d6db0c062a9e48d6d2af89efae1d74b5a0671d45a7",
+    "methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/control.spec.json": "e0584c9f59ad5400b87de272c5243db7d8aa6ba8d0118ca4097568945e0ca556",
+    "methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/treatment/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/treatment/attempt.json": "4bb8ab48c3ad43e2180f63379a9a593b7f8451a2f2cbb3c191c0372c3e2e346b",
+    "methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/control/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/control/attempt.json": "1a2ec21d4ffda990d128968119e1cfa8e48620eae6fa9c7ae2fb9160ac454a40",
+    "methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/control/workspace/TASK.md": "6acdc0127ddfe7726cbfa92d05f9e3dc9741c708e98ad088ca271e80f0ad56ee",
+    "methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/control/workspace/inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/treatment/workspace/TASK.md": "13ef0c910d198d389aa5a87292a79f8e86ec2a0dc6eccf37b058aeae173ebc72",
+    "methods-resume-v1/pairs/t08-z-ome-discovery-resume-v1/treatment/workspace/inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "methods-resume-v1/prepare_resume.py": "131bdc7b841b0d53f4aaa829c3dcf13ad56735a0b5b3700ccc05dcab71e08ea9",
+    "methods-resume-v1/dependency_selector.py": "b4e056e6a741e6130510fe8608ee58bc49f8c9be7f2fadfe0d5faded7e04df20"
+  },
+  "review_request_sha256": "d77094efb99c54b5283aa33668e0c663a2059908de65f19edda2823547320dd5",
+  "blocking_findings": [
+    {
+      "id": "ZG-AUTH-01",
+      "summary": "Inherited Z candidate namespace exposes authentication JSON and certificate private key as readable.",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/runtime-auth-hold-addendum-v1.json",
+      "evidence_sha256": "00c3a6313ae34c620d1292ac64eb37f36dcc5ef66c6f99193222243d020e3f51",
+      "scope": "Common runtime; no method-specific source/prompt repair requested."
+    }
+  ],
+  "checks": [
+    "All exact requested pins pass; both attempts strictverify and native command dry-run succeed without starting a Goal.",
+    "Both arms900s96, full assigned scope, model/Max obligation, same source access, output files and independent full-scope evaluation.",
+    "No candidate outputs, semantic keys or grades read; no answer list or premium case hints supplied.",
+    "Sole shared product brief is plan-blind; no source list, captured findings, supplied family denominator or key admitted.",
+    "Treatment derives relevant families from the brief, protects every family initial external query/available primary inspection within first half of same budget, preserves deadends/unavailable/unvisited status.",
+    "Only coverage-first scheduling policy differs from ordinary adaptive discovery."
+  ],
+  "offline_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/t08-t07-offline-v1.json",
+    "sha256": "0cca48a2369cbab8d8dcbe287f155b1502dddb775524457a0cfc49fd89f7d287"
+  },
+  "required_reporting": [
+    "Use accepted safe runtime2 and verify exact job/runtime/input binding before any actual dispatch.",
+    "Record native model/effort/status/quiescence, own shared Z cap2 lease, reproducible order and simultaneous account/sibling occupancy.",
+    "Preserve original failed route versions/start/wait/correction costs; report development-case status and no L inference.",
+    "Assess every current material claim and full assigned scope including omissions/deadends before acquired/historical records; no method win without matched quality/economics.",
+    "Record actual schedule and coverage, not just claimed family counts."
+  ],
+  "candidate_starts_by_review": 0,
+  "candidate_answers_keys_grades_read": false,
+  "credential_contents_read": false
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "er7.repo_mechanics_check.v1",
+  "status": "passed",
+  "pairs": [
+    {
+      "pair": "t11-z-jj-repo-screen-v1",
+      "pair_sha256": "0b7f1bdea5182b649bf14cd9eac3b37811c0e311f7043aa138d2e3422bd0cda7",
+      "equal_bindings": true,
+      "attempt_verification": "passed"
+    },
+    {
+      "pair": "t12-z-jj-repo-screen-v1",
+      "pair_sha256": "986a0811eb752707ebd7194ca83bece44c6d3655f18aa982e455933f3165c6e3",
+      "equal_bindings": true,
+      "attempt_verification": "passed"
+    }
+  ],
+  "map_files": 426,
+  "map_structural_determinism": "identical excluding measured indexing_seconds",
+  "test_paths": 97,
+  "symbol_records": 5893,
+  "offline_map_seconds": [
+    0.5676174339996578,
+    0.861443758999485
+  ],
+  "wrong_hash_rejected": true,
+  "elapsed_seconds": 2.3773101639999368,
+  "third_party_execution": false,
+  "candidate_starts": 0,
+  "comparison_count": 0,
+  "scope": "Experiment mechanics only; no semantic grading or repository tests executed."
+}

@@ -1,0 +1,212 @@
+{
+  "schema": "t14.negative_screen.acquisition.v1",
+  "case_id": "ome-normative-dev-v1",
+  "task_card": "t14-m-ome-negative-screen-v1-treatment",
+  "source_scope_note": "Only admitted frozen source captures; no live external fetching. Plan visibility: admitted thin plan visible; no evaluator keys or historical outputs.",
+  "selected_sources": [
+    {
+      "handle": "S003",
+      "file": "inputs/sources/S003.txt",
+      "uri": "https://ngff.openmicroscopy.org/0.5/",
+      "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "lines": 896,
+      "role": "sole normative evidence source (OME-Zarr 0.5 frozen capture, Final Community Group Report 8 September 2026)",
+      "access": "local frozen read only; no network fetch performed or authorized"
+    },
+    {
+      "handle": "PLAN",
+      "file": "inputs/plan/Viewer.md",
+      "uri": "local-fixture",
+      "version": "admitted-thin-plan-11-lines",
+      "bytes": null,
+      "lines": 11,
+      "role": "plan under review (disposition target only, not format evidence)",
+      "access": "local frozen read only"
+    },
+    {
+      "handle": "BRIEF",
+      "file": "inputs/brief.md",
+      "uri": "local-fixture",
+      "version": "admitted-brief",
+      "lines": 5,
+      "role": "coverage scope definition (whole brief, both assignment groups)",
+      "access": "local frozen read only"
+    },
+    {
+      "handle": "CAND",
+      "file": "inputs/candidate_seed.json",
+      "uri": "local-fixture",
+      "version": "er7.candidate_report_seed.v1 source_job t02-m-ome-dev1-control-r1",
+      "role": "frozen candidate findings under verification (U001-U012); treated as claims, not evidence",
+      "access": "local frozen read only"
+    }
+  ],
+  "rejected_sources": [
+    {
+      "candidate": "live https://ngff.openmicroscopy.org/0.5/ fetch",
+      "reason": "explicitly disallowed: admitted input paths list only the frozen S003.txt capture; TASK.md and inputs/TASK.md forbid live fetching for this bounded assignment"
+    },
+    {
+      "candidate": "Zarr v3 specification text, OME-XML, UDUNITS-2, OMERO WebGateway docs, Tools/readers",
+      "reason": "out of admitted scope; S003 references them but their text was not admitted. Claims about their content are recorded as unresolved, not fetched."
+    },
+    {
+      "candidate": "evaluator files, answer keys, historical grades, campaign reports, other attempts, credentials",
+      "reason": "explicitly forbidden by TASK.md; never searched, listed, or read"
+    }
+  ],
+  "queries_and_reads": [
+    {
+      "id": "R-01",
+      "kind": "read",
+      "target": "TASK.md",
+      "result": "task card t14-m-ome-negative-screen-v1-treatment; out/report.md, out/acquisition.json, out/verification.json, out/negative-checks.json required"
+    },
+    {
+      "id": "R-02",
+      "kind": "read",
+      "target": "inputs/brief.md (L1-5)",
+      "result": "Slide Scout read-only local browser; find images, multiresolution by channel/time/plane, label overlays, calibrated coordinates, responsive, explain undisplayable data"
+    },
+    {
+      "id": "R-03",
+      "kind": "read",
+      "target": "inputs/TASK.md (L1-11)",
+      "result": "whole-brief scope within S003 only; task-card instructions are not format evidence; two assignment groups aggregate to full scope"
+    },
+    {
+      "id": "R-04",
+      "kind": "read",
+      "target": "inputs/catalog.json",
+      "result": "S003 sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de, 36980 bytes, 896 lines, uri https://ngff.openmicroscopy.org/0.5/"
+    },
+    {
+      "id": "R-05",
+      "kind": "read",
+      "target": "inputs/sources/S003.txt L1-500",
+      "result": "header, conformance, storage, images, HCS, ome namespace, axes, bioformats2raw, transforms, multiscales, omero, labels through L500"
+    },
+    {
+      "id": "R-06",
+      "kind": "read",
+      "target": "inputs/sources/S003.txt L500-896",
+      "result": "image-label example remainder, plate, well, naming, implementations pointer L813-814, citing, version history, conformance L868-888"
+    },
+    {
+      "id": "R-07",
+      "kind": "read",
+      "target": "inputs/plan/Viewer.md (L1-11)",
+      "result": "thin fixture: open/list, canvas pan/zoom, channel/time/plane, overlays, details panel, level choice, background reads, failure messages, read-only local, acceptance"
+    },
+    {
+      "id": "R-08",
+      "kind": "read+search",
+      "target": "inputs/candidate_seed.json (U001-U012)",
+      "result": "12 units recovered in full via line reads plus targeted searches for U004/U005 tails (patterns responsive, 4.4 regex); all bodies verified present"
+    }
+  ],
+  "keyword_searches": [
+    {"pattern": "disallow", "mode": "literal", "scope": "S003 whole capture (896 lines)", "hits": ["L72"], "note": "only the L70-72 'unless explicitly disallowed' sentence itself"},
+    {"pattern": "Tools", "mode": "literal", "scope": "S003 whole capture", "hits": ["L814"], "note": "'See Tools.' pointer only"},
+    {"pattern": "Implementations", "mode": "literal", "scope": "S003 whole capture", "hits": ["L42 TOC", "L61 transitional", "L813 heading"], "note": "no implementation requirements text"},
+    {"pattern": "origin", "mode": "literal", "scope": "S003 whole capture", "hits": ["L105 original/0 (substring)", "L110 original (substring)", "L311 offset from the origin", "L435/L437/L455/L472 original (substrings)"], "note": "sole origin-definition sentence is L311 itself"},
+    {"pattern": "largest", "mode": "literal", "scope": "S003 whole capture", "hits": ["L306"], "note": "sole ordering sentence; no metric"},
+    {"pattern": "smallest", "mode": "literal", "scope": "S003 whole capture", "hits": ["L306"], "note": "same sole sentence"},
+    {"pattern": "MUST be ordered from largest", "mode": "literal", "scope": "S003 whole capture", "hits": ["L306"], "note": "confirms uniqueness of ordering rule"},
+    {"pattern": "writ", "mode": "literal-substring", "scope": "S003 whole capture", "hits": ["L26 data written (editor draft)", "L62-63 writing usually optional (transitional)"], "note": "no viewer write requirement"},
+    {"pattern": "thread", "mode": "literal", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "background", "mode": "literal", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "gamma", "mode": "literal", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "interpolat", "mode": "literal-substring", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "nearest", "mode": "literal", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "resampl", "mode": "literal-substring", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "dimension_names", "mode": "literal", "scope": "S003 whole capture", "hits": ["L174 normative array zarr.json", "L827 history 'in axes'"], "note": "conflict pair; exactly two occurrences"},
+    {"pattern": "channel", "mode": "literal-substring", "scope": "S003 whole capture", "hits": ["L97", "L169", "L296", "L301", "L302", "L331", "L381 multichannel", "L399", "L403", "L426", "L427", "L428"], "note": "no 'Units for channel' sentence; length rule only L403 comment"},
+    {"pattern": "family", "mode": "literal", "scope": "S003 whole capture", "hits": ["L408 example only"], "note": "example-block only"},
+    {"pattern": "rdefs", "mode": "literal", "scope": "S003 whole capture", "hits": ["L419 example only"], "note": "example-block only"},
+    {"pattern": "active", "mode": "literal", "scope": "S003 whole capture", "hits": ["L405 example only"], "note": "example-block only"},
+    {"pattern": "coefficient", "mode": "literal", "scope": "S003 whole capture", "hits": ["L406 example only"], "note": "example-block only"},
+    {"pattern": "inverted", "mode": "literal", "scope": "S003 whole capture", "hits": ["L409 example only"], "note": "example-block only"},
+    {"pattern": "defaultT", "mode": "literal", "scope": "S003 whole capture", "hits": ["L420 example only"], "note": "example-block only"},
+    {"pattern": "usually", "mode": "literal", "scope": "S003 whole capture", "hits": ["L62 transitional", "L433 label alignment"], "note": "label 'usually' confirmed; no other qualifier"},
+    {"pattern": "version", "mode": "literal-substring", "scope": "S003 whole capture", "hits": ["L5", "L7", "L25-26", "L69", "L155-156", "L161", "L199", "L212", "L249", "L325", "L379 (skimage 0.16.1)", "L447", "L459-460 image-label", "L481", "L550-551 plate", "L568", "L648", "L751-752 well", "L761", "L793", "L866"], "note": "version vocabularies are 'MUST be a string' only; no value enumerations"},
+    {"pattern": "unit", "mode": "literal-substring", "scope": "S003 whole capture", "hits": ["L3/L23 Community (substrings)", "L170-172 unit rule + space/time lists", "L310-311 physical units", "L330/L332-334 example units", "L370 comment", "L842 history"], "note": "no channel-unit list"},
+    {"pattern": "UDUNITS", "mode": "literal", "scope": "S003 whole capture", "hits": ["L170"], "note": "sole UDUNITS reference"},
+    {"pattern": "micrometer", "mode": "literal", "scope": "S003 whole capture", "hits": ["L171 list", "L332-334 example", "L341/L351/L361 comments"], "note": "space-unit membership confirmed"},
+    {"pattern": "row", "mode": "literal-substring", "scope": "S003 whole capture", "hits": ["L124-128 hierarchy", "L134-148 sketch", "L224 rowIndex", "L229 rows", "L542-560 rows/rowIndex definitions", "L562", "L597", "L607-633 examples", "L698", "L726-733 examples", "L845 history"], "note": "no row-metadata section or row zarr.json key"},
+    {"pattern": "reader", "mode": "literal-substring", "scope": "S003 whole capture", "hits": ["L271 conforming readers (collections)", "L461 conforming readers (labels)"], "note": "exactly two reader sentences"},
+    {"pattern": "tolerance", "mode": "literal", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "performance", "mode": "literal", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "cach", "mode": "literal-substring", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "error", "mode": "literal-substring", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "codec", "mode": "literal-substring", "scope": "S003 whole capture", "hits": ["L70"], "note": "only the unbounded-features sentence"},
+    {"pattern": "chunk", "mode": "literal-substring", "scope": "S003 whole capture", "hits": ["L70", "L92", "L396 comment", "L851 history"], "note": "no performance/caching rule"},
+    {"pattern": "out-of-range", "mode": "literal", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "binary", "mode": "literal", "scope": "S003 whole capture", "hits": ["L286 translation", "L289 scale"], "note": "sole binary-path sentences; no dtype/shape text"},
+    {"pattern": "dtype", "mode": "literal", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "endian", "mode": "literal-substring", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "shape", "mode": "literal", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "profile", "mode": "literal", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "null", "mode": "literal", "scope": "S003 whole capture", "hits": ["L301"], "note": "sole null-type sentence"},
+    {"pattern": "metric", "mode": "literal-substring", "scope": "S003 whole capture", "hits": ["L296 volumetric (substring only)"], "note": "no ordering-metric sentence"},
+    {"pattern": "interoperat", "mode": "literal-substring", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "window", "mode": "literal", "scope": "S003 whole capture", "hits": ["L411 example", "L428-430 normative MUSTs"], "note": "no semantics beyond field presence"},
+    {"pattern": "color", "mode": "literal-substring", "scope": "S003 whole capture", "hits": ["L407 example", "L422 model color", "L427 normative", "L457-468 image-label colors", "L483 example"], "note": "omero color semantics = presence + 6-hex format only"},
+    {"pattern": "bioformats2raw.layout", "mode": "literal", "scope": "S003 whole capture", "hits": ["L34 TOC", "L64", "L175-176", "L185", "L193", "L200", "L204", "L213", "L256", "L839 history"], "note": "value 3 unexplained; exactly these occurrences"},
+    {"pattern": "applied after", "mode": "literal", "scope": "S003 whole capture", "hits": ["L315"], "note": "sole composition sentence"},
+    {"pattern": "for example", "mode": "literal", "scope": "S003 whole capture", "hits": ["L316", "L879"], "note": "confirms example-fencing vocabulary"},
+    {"pattern": "non-normative", "mode": "literal", "scope": "S003 whole capture", "hits": ["L878"], "note": "sole non-normative fencing sentence"},
+    {"pattern": "If only one multiscale", "mode": "literal", "scope": "S003 whole capture", "hits": ["L388"], "note": "confirms multi-multiscales passage location"},
+    {"pattern": "Citing", "mode": "literal", "scope": "S003 whole capture", "hits": ["L43 TOC", "L815 heading"], "note": "citing section carries no requirements"},
+    {"pattern": "scan", "mode": "literal-substring", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "crash", "mode": "literal", "scope": "S003 whole capture", "hits": [], "note": "no-hit"},
+    {"pattern": "remote", "mode": "literal", "scope": "S003 whole capture", "hits": [], "note": "no-hit (location-agnosticism uses 'web server / object storage' L73-77)"},
+    {"pattern": "by the", "mode": "literal", "scope": "S003 whole capture", "hits": ["L68", "L94 (wrap of L93 'defined by')", "L281", "L302", "L461"], "note": "L93-94 artifact is 'defined by / by the' wrap"},
+    {"pattern": "MUST NOT contain metadata", "mode": "literal", "scope": "S003 whole capture", "hits": ["L440"], "note": "sole intermediate-folder metadata sentence"},
+    {"pattern": "MUST NOT be included", "mode": "literal", "scope": "S003 whole capture", "hits": ["L66"], "note": "JSON-comments rule"},
+    {"pattern": "series", "mode": "literal-substring", "scope": "S003 whole capture", "hits": ["L176", "L183-184", "L187", "L243", "L250", "L263", "L265-266", "L268", "L270", "L273", "L277 series of transformations"], "note": "full collection-discovery block confirmed"},
+    {"pattern": "acquisition", "mode": "literal-substring", "scope": "S003 whole capture", "hits": ["L234", "L518-529 block", "L561", "L570", "L641", "L650", "L654", "L748-750 trigger+MUST", "L754", "L765-777 examples", "L786", "L797-801 examples"], "note": "trigger sentence L748-749 confirmed; no clarifier found"},
+    {"pattern": "field_count", "mode": "literal", "scope": "S003 whole capture", "hits": ["L228 example", "L538-539 rule", "L595/L696 examples"], "note": "no further semantics beyond L538-539"},
+    {"pattern": "maximumfieldcount", "mode": "literal", "scope": "S003 whole capture", "hits": ["L524-525 rule", "L573/L579/L653 examples"], "note": "no cross-reference to field_count"},
+    {"pattern": "plate", "mode": "literal", "scope": "inputs/plan/Viewer.md (11 lines)", "hits": [], "note": "plan names no fileset shapes (supports N-05)"},
+    {"pattern": "image", "mode": "literal-substring", "scope": "inputs/plan/Viewer.md (11 lines)", "hits": ["L5 open/list/select/canvas/overlays", "L7 large reads/failures", "L11 discovery/navigation/overlays"], "note": "confirms plan's flat image language vs F-11/F-15 gaps"},
+    {"pattern": "4.4", "mode": "regex", "scope": "inputs/candidate_seed.json", "hits": ["U004 body (3.x refs)", "U005 body (full 4.4 label section recovered)"], "note": "recovery query for truncated U005 tail; returned full bodies"}
+  ],
+  "finding_to_source_links": [
+    {"findings": ["F-01"], "sources": ["S003 L68-72"], "link_kind": "normative MUST/MAY"},
+    {"findings": ["F-02"], "sources": ["S003 L73-77", "Viewer.md L9"], "link_kind": "format permission narrowed by plan boundary"},
+    {"findings": ["F-03", "F-17"], "sources": ["S003 L150-165"], "link_kind": "normative MUST + example"},
+    {"findings": ["F-04"], "sources": ["S003 L57-66", "S003 L868-888"], "link_kind": "conformance rules"},
+    {"findings": ["F-05"], "sources": ["S003 L25-27"], "link_kind": "release status"},
+    {"findings": ["F-06"], "sources": ["S003 L810-812 plus key lines L200/L462/L524/L528/L538/L557-560"], "link_kind": "naming convention + literal key occurrences"},
+    {"findings": ["F-07"], "sources": ["S003 L87-100"], "link_kind": "layout + decoding rule"},
+    {"findings": ["F-08"], "sources": ["S003 L82-100", "S003 L118-148", "S003 L175-275", "Viewer.md L5"], "link_kind": "three shape definitions + plan gap"},
+    {"findings": ["F-09"], "sources": ["S003 L60-64", "S003 L26", "Viewer.md L9"], "link_kind": "absence-of-requirement (N-04) + plan boundary"},
+    {"findings": ["F-10"], "sources": ["S003 L388-397"], "link_kind": "unstated-force rule (N-08)"},
+    {"findings": ["F-11"], "sources": ["S003 L125-129", "S003 L516-739", "S003 L741-752"], "link_kind": "normative HCS discovery chain"},
+    {"findings": ["F-12"], "sources": ["S003 L175-275"], "link_kind": "normative transitional collection rules"},
+    {"findings": ["F-13"], "sources": ["S003 L271-275"], "link_kind": "normative reader SHOULD/MAY"},
+    {"findings": ["F-14"], "sources": ["S003 L533-549", "S003 L746-748"], "link_kind": "normative identifier MUSTs"},
+    {"findings": ["F-15"], "sources": ["S003 L437-438"], "link_kind": "normative exclusion"},
+    {"findings": ["F-16"], "sources": ["S003 L124-148", "S003 L542-560"], "link_kind": "presence (plate.rows) + scoped absence of row section (N-09)"},
+    {"findings": ["F-18", "F-19"], "sources": ["S003 L518-560", "S003 L744-752"], "link_kind": "normative acquisition/well rules + ambiguity (N-22/N-23)"},
+    {"findings": ["F-20"], "sources": ["S003 L93-94", "S003 L299-307"], "link_kind": "normative order + scoped absence of metric (N-10)"},
+    {"findings": ["F-21"], "sources": ["S003 L173-174", "S003 L827"], "link_kind": "normative rule + conflicting history entry"},
+    {"findings": ["F-22"], "sources": ["S003 L317-319", "S003 L375-382", "Viewer.md L5"], "link_kind": "SHOULD metadata + plan heuristic gap"},
+    {"findings": ["F-23"], "sources": ["Viewer.md L7/L11", "brief L3"], "link_kind": "plan/brief outcome requirement; no source mechanism (N-11)"},
+    {"findings": ["F-24"], "sources": ["S003 MUST sections (see report)", "Viewer.md L7/L11"], "link_kind": "derived failure taxonomy from MUSTs + plan acceptance"},
+    {"findings": ["F-25"], "sources": ["S003 L81", "S003 L96-97", "S003 L168", "S003 L173-174", "S003 L299-303"], "link_kind": "normative axes rules"},
+    {"findings": ["F-26"], "sources": ["S003 L169-172", "S003 L301"], "link_kind": "SHOULD/MAY rules + scoped absences (N-12)"},
+    {"findings": ["F-27", "F-28"], "sources": ["S003 L399-430", "S003 L877-883"], "link_kind": "normative MUSTs + example-only siblings (N-13/N-14/N-15/N-16)"},
+    {"findings": ["F-29", "F-30", "F-31"], "sources": ["S003 L277-293", "S003 L308-316", "S003 L320-387"], "link_kind": "normative transform rules + worked example + scoped absences (N-17/N-18/N-25)"},
+    {"findings": ["F-32", "F-33", "F-34", "F-35", "F-36"], "sources": ["S003 L102-117", "S003 L432-514", "Viewer.md L5/L11"], "link_kind": "normative label rules + example + scoped absences (N-19/N-20/N-21/N-26)"},
+    {"findings": ["V1-V9"], "sources": [], "link_kind": "UNEXECUTED proposals; no source or execution evidence claimed (N-30)"}
+  ],
+  "execution_evidence": {
+    "filesets_opened": 0,
+    "code_executed": false,
+    "network_fetches": 0,
+    "note": "No execution was authorized or performed. All validation is UNEXECUTED. This file records only frozen reads and local searches; it invents no access or execution evidence."
+  }
+}

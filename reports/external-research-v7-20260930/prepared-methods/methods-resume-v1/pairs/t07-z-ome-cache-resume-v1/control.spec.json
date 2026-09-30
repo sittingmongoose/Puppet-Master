@@ -1,0 +1,89 @@
+{
+  "job_id": "t07-z-ome-cache-resume-v1-control",
+  "method": "T07",
+  "arm": "control",
+  "family": "Z",
+  "case_id": "ome-normative-dev-v1",
+  "scope": "Entire admitted case assignment and source corpus.",
+  "inputs": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+      "target": "brief.md"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/TASK.md",
+      "target": "TASK.md"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/catalog.json",
+      "target": "catalog.json"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/sources/S003.txt",
+      "target": "sources/S003.txt"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/plan/Viewer.md",
+      "target": "plan/Viewer.md"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/mechanics.py",
+      "target": "mechanics.py"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/bindings/t07-l-ome-cache-screen-v1/source_dependency.json",
+      "target": "source_dependency.json"
+    }
+  ],
+  "admitted_inputs": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/TASK.md",
+      "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/catalog.json",
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/plan/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/mechanics.py",
+      "sha256": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/bindings/t07-l-ome-cache-screen-v1/source_dependency.json",
+      "sha256": "0b2b9cb7f75ca18c860b0724c990486520cc186e1d72d95eeb10fb886f950cd6"
+    }
+  ],
+  "caps": {
+    "seconds": 900,
+    "responses": 96
+  },
+  "output_files": [
+    "report.md",
+    "acquisition.json",
+    "acquisition-counters.json",
+    "source-views/Q1.json",
+    "source-views/Q2.json"
+  ],
+  "source_access": "Only admitted frozen source captures; no live external fetching.",
+  "plan_visibility": "Admitted thin plan visible; no evaluator keys or historical outputs.",
+  "evaluation_obligations": "All material claims, full assigned scope including unvisited/dead-end areas, unsupported assertions, false dismissals, conditions, source fit, novelty, complete elapsed and usage costs.",
+  "zcode_tools": [
+    "Read",
+    "Write",
+    "Bash"
+  ],
+  "method_instruction": "Answer two question scopes in order: Q1 opening/listing/selecting images and multiresolution navigation; Q2 channel/time/plane display, calibrated coordinates and label overlays. For EACH scope first actually run the exact acquisition command (replace Q with Q1 then Q2): python3 inputs/mechanics.py acquire --source inputs/sources/S003.txt --dependency inputs/source_dependency.json --cache out/source-cache --counters out/acquisition-counters.json --output out/source-views/Q.json. Read that complete source view and interpret the question independently; no prior semantic answers or external source lists are cached. Do not bypass or edit the source acquisition counters. Local acquisition and parsing are the tested workload, not network downloads. Deliver a standalone current report with complete independent finding identities, exact evidence locators and source versions, applicability/transfer limits, plan implications where a plan is admitted, unresolved areas and proposed validation labeled UNEXECUTED. Also write acquisition.json recording selected source URLs/versions, queries/reads and finding-to-source links; do not invent access or execution evidence. Source choice and interpretation are your own. A failed search proves only that search result, not absence.",
+  "candidate_instructions": "Before Q1 confirm out/source-cache does not exist; do not prepopulate. Run Q1 then Q2 serially. Record actual command invocation and native extra reads in acquisition.json. Warm reuse includes the same actual Q1 cold work. Read both complete generated source views. No prior semantic answer reuse or external fetch claims."
+}

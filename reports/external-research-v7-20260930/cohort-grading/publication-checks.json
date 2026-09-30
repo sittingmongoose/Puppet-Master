@@ -1,0 +1,23 @@
+{
+  "checked_utc": "2026-09-30T16:51:04.847799+00:00",
+  "status": "pass",
+  "exact_copy_hashes_verified": 105,
+  "exact_field_projection_hashes_verified": 10,
+  "source_hash_bindings_verified": 127,
+  "source_changed_after_snapshot": [],
+  "json_files_parsed": 172,
+  "publication_bytes": 5655647,
+  "credential_regex_findings": 0,
+  "entrypoint_links_broken": 0,
+  "original_R001_R002_current_grade_hashes": "verified unchanged against preservation summary",
+  "new_current_review_coverage": "six frozen full claim/facet reviews; all quality failure",
+  "T14_outputs": "hash verified; semantic grading pending",
+  "offline_machinery_tests": {
+    "count": 7,
+    "result": "pass"
+  },
+  "prepared_method_tests": "exact independent read-only offline receipts/reviews; preparation only; lab-layout scripts not launched from report",
+  "governance_checks": "not applicable; report-only changes",
+  "native_starts_by_publisher": 0,
+  "whitespace_check": "Four frozen current-report/review files retain original EOF blank lines; exact hash-bound bytes preserved. No authored whitespace failures."
+}

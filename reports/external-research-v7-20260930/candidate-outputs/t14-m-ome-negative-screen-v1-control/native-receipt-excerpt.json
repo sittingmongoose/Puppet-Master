@@ -1,0 +1,68 @@
+{
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/control/native/receipt.json",
+  "source_sha256": "6823fcc76c41163873064cc61eeaabbdc1ef208b3c3ea4dee5468e5e7fc23f00",
+  "projection": "selected exact lifecycle/model/usage fields; native conversations remain private",
+  "schema": "er6.goal_receipt.v1",
+  "label": "t14-m-ome-negative-screen-v1-control",
+  "app": "muse",
+  "native_goal_entry": "/goal via MSP goal/set",
+  "prompt_bytes": 250,
+  "prompt_sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+  "objective_sha256": "7a4b29cff9c5491b0f0e337a9fdba91289419045d0929b20b27477ea33b7afab",
+  "caps": {
+    "seconds": 900.0,
+    "responses": 96
+  },
+  "start_utc": "2026-09-30T16:15:59.350389+00:00",
+  "fresh_session": true,
+  "session_id": "01a0f319-f4b4-7bc1-948b-36bdc9580115",
+  "model_id": "muse-spark-1.3-contributor",
+  "provider_id": "meta",
+  "effort_ack": "accepted",
+  "effort_effective": "max",
+  "goal_submitted_utc": "2026-09-30T16:15:59.796226+00:00",
+  "goal_ack": {
+    "commandId": "01a0f319-f534-7e3e-8097-3cae1112918b",
+    "status": "accepted",
+    "turnId": "01a0f319-f534-7e3e-8097-3cae1112918b"
+  },
+  "stop_reason": "goal_complete",
+  "goal_status_final": "complete",
+  "end_utc": "2026-09-30T16:23:25.907782+00:00",
+  "elapsed_seconds": 446.6,
+  "native_responses": 15,
+  "counters": {
+    "token_usage_events": 15,
+    "prompt_tokens": 792990,
+    "last_cumulative": {
+      "outputTokens": 26635,
+      "promptTokens": 792990,
+      "totalTokens": 819625
+    },
+    "turns_started": 1,
+    "turns_completed": [
+      {
+        "turnId": "01a0f319-f534-7e3e-8097-3cae1112918b",
+        "terminal": "completed",
+        "reason": null,
+        "durationMs": 444338,
+        "usage": null
+      }
+    ],
+    "inputTokens": 792990,
+    "outputTokens": 26635,
+    "reasoningTokens": 13230,
+    "cacheReadTokens": 710318,
+    "cacheWriteTokens": 0,
+    "cachedTokens": 710318
+  },
+  "native_process_returncode": 0,
+  "own_process_group_absent": true,
+  "native_quiescent": true,
+  "startup_cleanup_elapsed_seconds": 446.868,
+  "caps_include_setup_and_cleanup": true,
+  "receipt_written_utc": "2026-09-30T16:23:26.032309+00:00",
+  "namespace_process_returncode": 0,
+  "namespace_exited": true,
+  "quiescence_basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "er7.preservation_pair_summary.v1",
+  "review_ids": [
+    "R001",
+    "R002"
+  ],
+  "phase": 2,
+  "completed_utc": "2026-09-30T16:37:03.679770+00:00",
+  "scope": "Opaque frozen first screening pair; all complete saved artifacts and admitted S003 source units, no treatment/economics",
+  "phase1_original_judgments_read": false,
+  "phase1_original_scores_changed": false,
+  "assessment_artifacts": [
+    {
+      "review_id": "R001",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R001/preservation-assessment.json",
+      "sha256": "c419d97ef19f95b23eda91fbdd85469c5fc7c1c5692662aa414654caaed3aeeb"
+    },
+    {
+      "review_id": "R001",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R001/preservation-assessment.md",
+      "sha256": "d7f8d89c354c81fa45ffdee368d2ea71bc906b58aa0ffbee2a91121694203185"
+    },
+    {
+      "review_id": "R002",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R002/preservation-assessment.json",
+      "sha256": "aafdb6f6fe095b06aa2e83680756e8f5d93c961ea4f6d5994291754d071f8267"
+    },
+    {
+      "review_id": "R002",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R002/preservation-assessment.md",
+      "sha256": "bb1944239891af31cfd065196224719dc4b13e353a797fc76fb670c33674d929"
+    }
+  ],
+  "comparative_findings": {
+    "R001": "One complete Write, byte-identical to final: all drafted support, qualifiers, counterevidence, proposals and errors retained. No observable revision-stage loss; earlier acquisition remains unknown.",
+    "R002": "One complete Write plus four complete Edits, final V005 byte-identical to current. All edits qualify/correct unsupported source mandates while retaining grounded content. No supported qualifier/condition/counterevidence deleted.",
+    "shared": "Neither semantic acquisition nor verification is documented. Both have retained source/derivation issues and incompletely developed label association, exact integer identity, and concrete nonzero coordinate validation. History presence does not repair current omissions.",
+    "no_temporal_loss_is_not": "A semantic quality pass, source-supported acquisition proof, or method/efficiency win."
+  },
+  "counts": {
+    "completed_artifact_versions": 6,
+    "reviewed_edit_transitions": 4,
+    "source_supported_temporal_losses": 0,
+    "actual_qualifier_condition_losses": 0,
+    "counterevidence_losses": 0,
+    "eligible_facets_per_report": 6,
+    "material_inventory_clusters_per_report": 51,
+    "atomic_source_decisions_per_report": 118
+  },
+  "completeness": {
+    "all_available_history_reviewed": true,
+    "all_material_report_lines_mapped": true,
+    "all_admitted_source_units_reviewed": true,
+    "sampled": false,
+    "acquisition_semantics": "unknown",
+    "unavailable_scope": [
+      "Semantic acquisition/verification notes",
+      "Source-read result content/extents",
+      "Earlier unsaved/uncompleted drafts",
+      "Out-of-scope live implementations/native runtime economics"
+    ]
+  },
+  "conclusion": "No demonstrated source-supported temporal loss for either frozen artifact corpus. R002 revisions improve qualification; both acquisition-to-final preservation and efficiency remain unassessed. Frozen phase1 semantic grades remain unchanged.",
+  "blindness_limits": [
+    "R001 allowed report header exposes a task-card token; format blinding may be incomplete.",
+    "Requested gpt-6.1-sol/xhigh accepted; effective runtime introspection unknown."
+  ],
+  "prohibited_inputs_read": [],
+  "publication_or_canonical_write": false,
+  "frozen_phase1_hashes": {
+    "R001": {
+      "current-report.md": "6e302aa3cae223ea41e99f6862644f524695fe36f661b50edcf22ab1aedf4895",
+      "current-assessment.json": "ad9f6c6b2846a4aae8e785a5ddd3c5db6e384a50f94687a46bf4027e6d3bff92",
+      "current-assessment.md": "d414bdb34c4a2588785a6b73f310cb1ba321ce27785a9fed1927a00723b8a9e2"
+    },
+    "R002": {
+      "current-report.md": "3e06a68962e80a553689ef747578adf7929ca49029c41e7d272e94e390f03e13",
+      "current-assessment.json": "a4c1025cceb37a97fa7d6ef81affe92c9d58711fc5a502eaba5d8df30779539c",
+      "current-assessment.md": "91ff83cf9ec29f18663cf82a726ce32f94477e57cc5270d42c53fbd1927cfe97"
+    }
+  }
+}

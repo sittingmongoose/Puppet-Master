@@ -43,5 +43,27 @@
     "new_mz_starts_held": true,
     "source": "cohort-evidence/mz-safety-hold.json",
     "T14_treatment": "already native Goal complete and released before stop instruction; none interrupted"
+  },
+  "grading_cohort_utc": "2026-09-30T16:46:19.685825+00:00",
+  "grading_coverage": {
+    "current_complete": [
+      "R001",
+      "R002",
+      "R003",
+      "R004",
+      "R005",
+      "R006",
+      "R007",
+      "R008"
+    ],
+    "current_pending": [
+      "R011",
+      "R012"
+    ],
+    "saved_history_complete": [
+      "R001",
+      "R002"
+    ],
+    "native_admissions": "all M/Z held; L quarantined; no new starts caused by publication"
   }
 }
