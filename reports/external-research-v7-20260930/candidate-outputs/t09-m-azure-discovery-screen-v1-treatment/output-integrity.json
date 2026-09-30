@@ -1,0 +1,33 @@
+{
+  "schema": "er7.output_integrity.v1",
+  "files": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/workspace/out/acquisition.json",
+      "target": "out/acquisition.json",
+      "sha256": "210fad3e89c6e270fa35a7b86956e0165cd35125d71bd7422d0d9d2d66c07148",
+      "bytes": 14553
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/workspace/out/report.md",
+      "target": "out/report.md",
+      "sha256": "b80a7669fef0485f08d0465a09f58847321552a02ed7f81ef8850029e3659cf2",
+      "bytes": 23768
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/workspace/out/scheduling.json",
+      "target": "out/scheduling.json",
+      "sha256": "e4c0ca334b9d78f07b77c292fa4962e769f93c8f7f21e644876e8b0f9e7f5e94",
+      "bytes": 7120
+    }
+  ],
+  "missing_required_outputs": [],
+  "structural_complete": true,
+  "semantic_quality": "not evaluated",
+  "native_quiescence": "established in native/receipt.json",
+  "native_receipt_sha256": "a61418de7c1769275d0c7957fe6154a49f0943fe22a38fa24c3bd74c6f134209",
+  "stable_output_hashes": {
+    "acquisition.json": "210fad3e89c6e270fa35a7b86956e0165cd35125d71bd7422d0d9d2d66c07148",
+    "report.md": "b80a7669fef0485f08d0465a09f58847321552a02ed7f81ef8850029e3659cf2",
+    "scheduling.json": "e4c0ca334b9d78f07b77c292fa4962e769f93c8f7f21e644876e8b0f9e7f5e94"
+  }
+}

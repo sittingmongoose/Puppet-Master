@@ -1,0 +1,40 @@
+{
+  "schema": "er7.candidate_case.v1",
+  "case_id": "ome-normative-dev-v1",
+  "source_scope": "Fixed admitted source S003 only; no live fetching for this component case.",
+  "sources": [
+    {
+      "handle": "S003",
+      "file": "sources/S003.txt",
+      "original_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "original_bytes": 36980,
+      "view_kind": "original_bytes",
+      "view_parser": null,
+      "view_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "view_bytes": 36980,
+      "view_lines": 896,
+      "aliases": [
+        {
+          "source_id": "SRC-2b11c54af373e1979af8cbb3",
+          "uri": "https://ngff.openmicroscopy.org/0.5/",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        {
+          "source_id": "SRC-e59af1d3eedfb618a7ce766f",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        {
+          "source_id": "SRC-bf327c82f5ee6b5d1b754d8c",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        {
+          "source_id": "SRC-da65296ca0490aebb780c237",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        }
+      ]
+    }
+  ]
+}

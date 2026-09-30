@@ -19,7 +19,8 @@
     },
     "generated_candidate_stop": 3000000,
     "helper_starts": 72,
-    "generated_helper_stop": 1500000
+    "generated_helper_stop": 1500000,
+    "simultaneous_helpers": 24
   },
   "reserves": {
     "candidate_fraction": 0.2,
@@ -45,5 +46,7 @@
   "runtime_usage_unknown_fields": [
     "native_children_uncaptured_usage",
     "unexposed_generated_tokens"
-  ]
+  ],
+  "publication_status": "resumed ongoing partial cohort",
+  "publication_as_of_utc": "2026-09-30T16:24:47.383306+00:00"
 }

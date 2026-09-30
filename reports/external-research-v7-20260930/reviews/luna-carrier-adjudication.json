@@ -1,0 +1,306 @@
+{
+  "schema": "er7.luna_carrier_policy_adjudication.v1",
+  "reviewer": "/root/luna_adjudication",
+  "created_utc": "2026-09-30T16:14:53.974324+00:00",
+  "campaign_id": "external-research-v7-20260930",
+  "status": "adjudicated-no-launch-authority",
+  "verdict": "NO",
+  "question": "May a new no-terminal-LF Goal carrier, with the exact accepted ops-luna-v2 runner unchanged, recover the L path under the exhausted two-successive-repair policy?",
+  "answer": {
+    "allowed_under_current_tranche": false,
+    "authorized_native_probe_or_dispatch": false,
+    "carrier_would_require_runner_code_change_to_pass_observed_equality_case": false,
+    "carrier_identity_case": "Removing the sole final LF yields exactly the objective returned by both historical native activations. This is an observed byte comparison, not a prospective runtime test.",
+    "classification": "A third failure-driven compatibility repair to the same L launch method/boundary. It need not be an adapter-code version3, but changing the carrier does not reset the method/adapter repair cap.",
+    "policy_interpretation": "CAMPAIGN section1 explicitly puts carriers and prompts inside repair scope. Section6 caps successive repair versions per method/adapter, rather than per changed source-code file. Relabeling this same failure repair as a fresh carrier experiment would evade that finite limit.",
+    "qualification": "Neither the packet nor the accepted reviews grant an exception for presentation-only input fixes after repair2. A new identifier/prospective contract preserves history but does not itself confer an extra repair allowance."
+  },
+  "policy_refs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/packet/Puppet_Master_External_Research_Parallel_Campaign_v7/CAMPAIGN.md",
+      "lines": [
+        13
+      ],
+      "rule": "Prompt and output-carrier fixes are included in experiment repair scope; independent review is required."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/packet/Puppet_Master_External_Research_Parallel_Campaign_v7/CAMPAIGN.md",
+      "lines": [
+        95
+      ],
+      "rule": "Two successive repair versions per method/adapter; only the specified cooled-down service-interrupted repeat is additional."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/packet/Puppet_Master_External_Research_Parallel_Campaign_v7/CAMPAIGN.md",
+      "lines": [
+        83,
+        87
+      ],
+      "rule": "The capped-job/new-size-or-limit provision and service-repeat/cooldown provisions do not describe this string-identity harness failure."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/packet/Puppet_Master_External_Research_Parallel_Campaign_v7/CAMPAIGN.md",
+      "lines": [
+        55,
+        95,
+        99
+      ],
+      "rule": "Mark the repeatedly failing variant unresolved; quarantine only dependent jobs; preserve historical attempts and keep unrelated lanes working."
+    }
+  ],
+  "accepted_version_bindings": {
+    "ops/LUNA_FREEZE.json": {
+      "version": "luna-v1-repair1",
+      "sha256": "14f39555e61257ec8bbf92fc56af4fc4c11f07a90cca1d05d1659612d3738b09",
+      "status": "accepted",
+      "all_reviewed_dependency_pins_match": true,
+      "reviewed_files": {
+        "ops/luna_goal.py": "df117ed42f913147716d03edfb59b7528b334ffc2f1195a35d5ca5de057bc5fe",
+        "ops/isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+        "ops/slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+        "ops/test_luna_goal.py": "703cf8a54cd26b07584489c655641ffe677383822d8157316715a526c34f9d0e",
+        "dev/harness-v1/workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+      }
+    },
+    "ops-luna-v2/LUNA_FREEZE.json": {
+      "version": "luna-v2-repair2",
+      "sha256": "fb492f0651011d78ee4589e6a6138cd12b8147e7222f3d62ea9146c5fe7dc82e",
+      "status": "accepted",
+      "all_reviewed_dependency_pins_match": true,
+      "reviewed_files": {
+        "ops-luna-v2/initialize_only.py": "40020ee3efbfa270e0d997c76c6a69bf913d9d27495c21e8dbb04ba891619ef6",
+        "ops-luna-v2/isolation.py": "8c01ab28dd3482a9130305312be691e62eb4ac70bda34559a5f73a339680e7cd",
+        "ops-luna-v2/luna_goal.py": "9ee0b2548d2db705d30332cb39ac32a2357636652ba8519542de9454e92204ff",
+        "ops-luna-v2/slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+        "ops-luna-v2/test_identity_copy.py": "c4c7a0078403ee31b719d00bcd411858da5a962ffde02ad0b98328bbe11d093b",
+        "ops-luna-v2/test_luna_goal.py": "703cf8a54cd26b07584489c655641ffe677383822d8157316715a526c34f9d0e",
+        "dev/harness-v1/workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+      }
+    }
+  },
+  "native_controls": {
+    "installed_binary_version": "codex-cli 0.159.2",
+    "installed_binary_path": "/home/sittingmongoose/.codex/packages/standalone/releases/0.159.2-x86_64-unknown-linux-musl/bin/codex",
+    "installed_binary_sha256": "1748767b230ebfc3d4ab7e4e254920d0c0ad9691fd8c11f190e7d44511a4a92e",
+    "version_check_only_no_app_server_started": true,
+    "goal_api": "Installed ThreadGoalSetParams accepts threadId, objective, status and tokenBudget; get/clear act on the thread goal. Both r2 traces prove that the activation itself started an automatic native turn before any host turn/start was reached.",
+    "local_turn_start_contract": "TurnStartParams.ts lines27-28 explicitly describes steering an already-active turn; lines89-91 also distinguish a new turn from one being steered. Therefore turn/start steering is supported by this exact installed contract; it is not an invented control.",
+    "explicit_steer_contract": "Installed TurnSteerParams.ts requires expectedTurnId matching the active turn. The accepted runner uses turn/start, not that preconditioned API.",
+    "unchanged_runner_limit": "luna_goal.py lines159-165 sets the Goal once, verifies exact identity, then issues one turn/start. It does not obtain or require the auto-started turn ID before turn/start and does not verify that the returned ID equals that earlier turn. The r2 failed executions never reached this branch.",
+    "duplicate_goal_claim": "The runner contains one initial thread/goal/set with objective; its cleanup status-only call does not specify a replacement objective. No second initial Goal is evident in these traces.",
+    "duplicate_turn_claim": "Local schema establishes an active-turn steering path, but not that the turn is still active at the subsequent call. Because the exact runner has no active-turn precondition and this branch has no executed receipt here, absence of an additional host-created turn is unqualified. This does not assert the control must duplicate a turn.",
+    "official_source": {
+      "url": "https://learn.chatgpt.com/docs/app-server",
+      "accessed_utc_date": "2026-09-30",
+      "summary": "Official documentation confirms persisted native goal set/get/clear; a new objective resets goal accounting. It separately documents turn/steer with expectedTurnId and no new turn/started notification. The installed TurnStartParams is the version-specific evidence for implicit turn/start steering."
+    }
+  },
+  "historical_byte_and_lifecycle_observations": [
+    {
+      "job_id": "t08-l-ome-discovery-screen-v4-control.r2",
+      "thread_id": "01a0f2db-6d1e-73a3-a9e6-f49b603485a5",
+      "effective_model": "gpt-6-luna",
+      "effective_effort": "max",
+      "error": "native Goal receipt mismatch",
+      "raw_goal_bytes": 250,
+      "returned_goal_bytes": 249,
+      "raw_goal_sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "returned_goal_sha256": "3ae911f1b5f033b3972ff74d72ae82ff33d3bc6a80970b8675df3f76eaf23e87",
+      "difference": "Exactly one terminal LF removed; all other bytes match",
+      "turns_started": [
+        {
+          "line": 11,
+          "turn_id": "01a0f2db-6e39-7152-9605-5ec41e2ff206"
+        }
+      ],
+      "turns_completed_count": 0,
+      "host_turn_start_reached": false,
+      "final_goal_status": "budgetLimited",
+      "original_native_quiescent": false,
+      "original_own_process_group_absent": true
+    },
+    {
+      "job_id": "t08-l-ome-discovery-screen-v4-treatment.r2",
+      "thread_id": "01a0f2db-6d59-7070-a53a-1051ed090776",
+      "effective_model": "gpt-6-luna",
+      "effective_effort": "max",
+      "error": "native Goal receipt mismatch",
+      "raw_goal_bytes": 250,
+      "returned_goal_bytes": 249,
+      "raw_goal_sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "returned_goal_sha256": "3ae911f1b5f033b3972ff74d72ae82ff33d3bc6a80970b8675df3f76eaf23e87",
+      "difference": "Exactly one terminal LF removed; all other bytes match",
+      "turns_started": [
+        {
+          "line": 11,
+          "turn_id": "01a0f2db-6e76-7831-8041-5d938588a0c9"
+        }
+      ],
+      "turns_completed_count": 0,
+      "host_turn_start_reached": false,
+      "final_goal_status": "budgetLimited",
+      "original_native_quiescent": false,
+      "original_own_process_group_absent": true
+    }
+  ],
+  "preservation": {
+    "original_L_admissions": 4,
+    "actual_native_goal_starts": 2,
+    "reported_output_tokens_lower_bound": 428,
+    "missing_usage": "Unknown for unexposed/cancelled/native-child work. No exact generated-token compliance claim.",
+    "quiescence": "Independent release-proof acceptance is in luna-v4-quiescence-reconciliation.json. It does not rewrite either original false-quiescence receipt, turn the executed Goals into unstarted work, qualify research, or authorize another repair.",
+    "all_original_inputs_receipts_logs_versions_unchanged": true
+  },
+  "disposition": {
+    "L_dependent_lane": "Remains quarantined/infrastructure-limited under this unchanged policy. Do not dispatch the no-LF carrier, a version3 adapter, or a compensating canary.",
+    "other_lanes": "Continue eligible M/Z and independent offline/evaluation work under the same campaign ID, deadline, envelope, reserve and slot quotas.",
+    "bounded_safe_prospective_execution_contract": null,
+    "contract_reason": "No launch contract is issued because the finite repair policy has no remaining allowance for this recovery. Static technical plausibility is recorded for future explicit policy decisions only."
+  },
+  "review_scope": {
+    "native_goal_starts_by_reviewer": 0,
+    "native_thread_starts_by_reviewer": 0,
+    "native_turns_by_reviewer": 0,
+    "adapter_changes": 0,
+    "candidate_answer_text_read": false,
+    "candidate_answer_keys_read": false,
+    "scored_grades_read": false,
+    "failure_trace_access": "Parsed lifecycle, RPC-result key shapes, IDs and usage fields only; no candidate semantic messages exposed.",
+    "reviewer_tests": "Read-only byte comparisons and accepted-pin verification; no native execution tests.",
+    "written_paths": [
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/luna-carrier-adjudication.json",
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/luna-carrier-adjudication.md"
+    ],
+    "canonical_or_publication_edits": false
+  },
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/packet/Puppet_Master_External_Research_Parallel_Campaign_v7/CAMPAIGN.md",
+      "sha256": "f813f953ee7e2504b8dd95be5a17ca4a9071f022ebf6ae4ad0afb8b04938bc80"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/restart-l.json",
+      "sha256": "69cd0565d582889df98c45c1b42e44a2e1d5c4d2e53ac0fc41f0992616277061"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-luna-v2/REPAIR.json",
+      "sha256": "7c54e6f72d25317eed1bac34681cd4741ea2cdf5bf9d7bdf693bb9e677b064cb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-luna-v2/LUNA_FREEZE.json",
+      "sha256": "fb492f0651011d78ee4589e6a6138cd12b8147e7222f3d62ea9146c5fe7dc82e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/LUNA_FREEZE.json",
+      "sha256": "14f39555e61257ec8bbf92fc56af4fc4c11f07a90cca1d05d1659612d3738b09"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-luna-v2/luna_goal.py",
+      "sha256": "9ee0b2548d2db705d30332cb39ac32a2357636652ba8519542de9454e92204ff"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-luna-v2/isolation.py",
+      "sha256": "8c01ab28dd3482a9130305312be691e62eb4ac70bda34559a5f73a339680e7cd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-luna-v2/slot_ledger.py",
+      "sha256": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/types/v2/TurnStartParams.ts",
+      "sha256": "18a8492238c2b7476d1db5a96ec4dd57df6eb49e05e49f13820eb9298c412dfa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/types/v2/TurnStartResponse.ts",
+      "sha256": "974c520197188b7399836fda0ef1b11e43df618d25295463d2e229e1efa88ffd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/types/v2/TurnSteerParams.ts",
+      "sha256": "df6283cc3dbc264b40a372806a2e3e0ec2d834b6584c1a8a4576116064f04e4e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/types/v2/TurnSteerResponse.ts",
+      "sha256": "b77bae04f63621580d71aecab4c19c9dcd8d9147be1c4b07fe809dcaf584212b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/types/v2/ThreadGoalSetParams.ts",
+      "sha256": "5178dc0788b66e0cbfd935ef6464c581a2a3e155e2733fbe52c0d43e72b8bd17"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/types/v2/ThreadGoalSetResponse.ts",
+      "sha256": "6139f86a712bda46d773f9bae3092aa45a1c78d15b9a93d081650a2413dec9b5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/types/v2/ThreadGoalGetParams.ts",
+      "sha256": "e1ae9159cda0aab46e3c98c8bc623ee6ffcf65fbadd0e42968722110ea30873f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/types/v2/ThreadGoalGetResponse.ts",
+      "sha256": "de3fab4cecfa07addd9aeadc8f8d548707f05a12ac91cc90412a1658ae038586"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/types/v2/ThreadGoalClearParams.ts",
+      "sha256": "fd897540ed17861a0a1ab7d40c33c8ecde827dcf7ed4396215ff4187da5e4c93"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/types/v2/ThreadGoalClearResponse.ts",
+      "sha256": "66db3d13739db5ab70b0ea953cb570301d570f765eeb039feee9ad24ee3b0939"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/types/v2/ThreadGoal.ts",
+      "sha256": "c06ffa09651d4cc7f66dc6c0c2ea8f94551c10c1837aa3f73b7b66def1faaf7c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/types/v2/ThreadGoalStatus.ts",
+      "sha256": "5250124cee5771e27211537b1a0a35e7363f3ba170908e316691682b87b9d663"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/route-binding.json",
+      "sha256": "78445ac8505b0824cbda2e2943a3774aec0d7604048f2e1e917f3e5e9cb3c4af"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/launch-gate-v2-l.json",
+      "sha256": "4ea112e97eeb6c38c368f290683b43994f54fc02382bdcc6e1039067927f1bb8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/launch-gate-v2-l.md",
+      "sha256": "4eecb6bb8159ad974672ba493e1c9bfc1d3f36ce6a9e750546468c08d0edfdcb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/launch-gate-v3-l.json",
+      "sha256": "e7394cb526e82e3b0dd0dbcf33e6f844e63a3eece270bb7e131ea63c8ad8b18e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/launch-gate-v3-l.md",
+      "sha256": "66bcd7f85e234d2d588dd53e26ef066da4e6affa3f5c2c9c6da518855f4a8d5f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/luna-v4-quiescence-reconciliation.json",
+      "sha256": "bbc6494c06f1ddd802e48561adfa15d51a6beb33b2ad1a137e3a36fb5a1ffab5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v4/control/native/receipt.json",
+      "sha256": "5cdc341241c03aa00d82a3228f655d3f1cc33275bdf219e80928b46905cb066f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v4/treatment/native/receipt.json",
+      "sha256": "b91347315bb9f15b76cbcec8e8dc6268556a83c0fcde220c130d562954c3ba18"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v4/control/native/native.jsonl",
+      "sha256": "597ee48c6c1067484e5eaa5b268f892e19fdbb683e947fcea73491b729fc5433"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v4/treatment/native/native.jsonl",
+      "sha256": "3795f67fcf88e4ae7c86f4f326ee6fb1803d6c4018bd9dfb6ead618978307c2d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v4/control/goal.txt",
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v4/treatment/goal.txt",
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54"
+    }
+  ]
+}

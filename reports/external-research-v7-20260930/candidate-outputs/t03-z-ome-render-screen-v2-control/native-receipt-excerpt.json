@@ -1,0 +1,51 @@
+{
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control/native/receipt.json",
+  "source_sha256": "d15fca5d5f614581743a34d65fd134f17238c02c7ad24e4642cc38253b49e17a",
+  "projection": "exact selected fields; omitted fields remain private",
+  "schema": "er6.goal_receipt.v1",
+  "label": "t03-z-ome-render-screen-v2-control",
+  "app": "zcode",
+  "native_goal_entry": "/goal via app-server session/goal set",
+  "prompt_bytes": 250,
+  "prompt_sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+  "objective_sha256": "7a4b29cff9c5491b0f0e337a9fdba91289419045d0929b20b27477ea33b7afab",
+  "caps": {
+    "seconds": 900.0,
+    "responses": 96
+  },
+  "start_utc": "2026-09-30T15:14:00.536690+00:00",
+  "fresh_session": true,
+  "session_id": "sess_c383b639-048b-4259-9593-d84c41180062",
+  "model_id": "GLM-5.3-Flash",
+  "provider_id": "builtin:zai-coding-plan",
+  "effort_effective": "max",
+  "goal_submitted_utc": "2026-09-30T15:14:04.477230+00:00",
+  "stop_reason": "cap_seconds_whole_assignment",
+  "native_responses": 8,
+  "cleanup_actions": [
+    {
+      "method": "session/goal",
+      "result_omitted": "native thread/read projection excluded; full original receipt remains hash-bound private",
+      "omitted_result_sha256": "f98dc552829732121c75a5df8b458bb9f55d0944cd28ab2a436bd0c1afc1647c"
+    },
+    {
+      "method": "session/stop",
+      "result": {}
+    },
+    {
+      "method": "session/close",
+      "result": {
+        "closed": true
+      }
+    }
+  ],
+  "native_process_returncode": 0,
+  "own_process_group_absent": true,
+  "native_quiescent": true,
+  "startup_cleanup_elapsed_seconds": 872.4,
+  "caps_include_setup_and_cleanup": true,
+  "receipt_written_utc": "2026-09-30T15:28:32.757402+00:00",
+  "namespace_process_returncode": 1,
+  "namespace_exited": true,
+  "quiescence_basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+}

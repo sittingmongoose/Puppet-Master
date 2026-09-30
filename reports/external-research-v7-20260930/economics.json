@@ -1,12 +1,12 @@
 {
   "as_of_epoch": 1790782093.6996675,
-  "counted_launch_admissions": 15,
-  "known_native_goal_starts": 13,
+  "counted_launch_admissions": 19,
+  "known_native_goal_starts": 17,
   "pre_goal_failures": 2,
-  "occupied_slot_seconds_as_of_snapshot": 6995.347436666489,
-  "reported_candidate_output_tokens_lower_bound": 229088,
-  "generated_output_completeness": "unknown; native children/cancellation and unexposed fields retained unknown",
-  "parent_sol_usage": "reported separately; generated component unknown",
+  "occupied_slot_seconds_as_of_snapshot": 8625.780723571777,
+  "reported_candidate_output_tokens_lower_bound": 297249,
+  "generated_output_completeness": "unknown; all figures partial, native children/cancellation/unexposed fields retained unknown",
+  "parent_sol_usage": "includes input; generated component unknown",
   "helper_generated_tokens": null,
   "candidate_fees": null,
   "unknown_usage_is_not_zero": true,
@@ -23,5 +23,8 @@
     "control_reported_output": 35463,
     "treatment_reported_output": 28567,
     "quality": "unassessed; no efficiency win claimed"
-  }
+  },
+  "as_of_utc": "2026-09-30T16:24:47.383306+00:00",
+  "same_quality_efficiency_claim": false,
+  "new_terminal_attempt_metrics": "cohort-evidence/terminal-attempts.json"
 }

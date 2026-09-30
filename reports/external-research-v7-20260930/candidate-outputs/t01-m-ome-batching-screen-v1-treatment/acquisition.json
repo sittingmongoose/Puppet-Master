@@ -1,0 +1,222 @@
+{
+  "case_id": "ome-normative-dev-v1",
+  "task_card": "t01-m-ome-batching-screen-v1-treatment",
+  "scope_note": "Both brief groups as one coherent task. Fixed admitted source S003 only; no live external fetching. Thin plan Viewer.md only.",
+  "sources_selected": [
+    {
+      "handle": "S003",
+      "admitted_file": "inputs/sources/S003.txt",
+      "catalog": "inputs/catalog.json",
+      "primary_uri": "https://ngff.openmicroscopy.org/0.5/",
+      "primary_source_id": "SRC-2b11c54af373e1979af8cbb3",
+      "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "original_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "view_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "original_bytes": 36980,
+      "view_bytes": 36980,
+      "view_lines": 896,
+      "view_kind": "original_bytes",
+      "in_capture_identity": "OME-Zarr specification, Final Community Group Report 8 September 2026, This version https://ngff.openmicroscopy.org/0.5/, released 0.5",
+      "aliases_not_selected_as_independent_evidence": [
+        {
+          "source_id": "SRC-e59af1d3eedfb618a7ce766f",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        {
+          "source_id": "SRC-bf327c82f5ee6b5d1b754d8c",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        {
+          "source_id": "SRC-da65296ca0490aebb780c237",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        }
+      ],
+      "selection_reason": "Only admitted frozen source capture per TASK.md and catalog.json; no source choice beyond fixed scope."
+    }
+  ],
+  "plan_selected": {
+    "admitted_file": "inputs/plan/Viewer.md",
+    "note": "Deliberately thin synthetic fixture per Viewer.md:3; used only for plan implications/disposition, never as format evidence."
+  },
+  "brief_inputs_read": [
+    "inputs/brief.md",
+    "inputs/TASK.md",
+    "inputs/catalog.json"
+  ],
+  "queries": [],
+  "query_note": "No external queries performed. No web search, no web fetch, no live spec/tool/docs retrieval. Per inputs/TASK.md:5-6 and task card, live fetching was out of scope. A non-search proves nothing about absence.",
+  "reads": [
+    {
+      "path": "TASK.md",
+      "lines": "1-30",
+      "purpose": "Task card: scope, admitted paths, artifacts, budget, method boundary."
+    },
+    {
+      "path": "inputs/brief.md",
+      "lines": "1-5",
+      "purpose": "Product brief: read-only local 0.5 browser duties and out-of-scope boundary."
+    },
+    {
+      "path": "inputs/TASK.md",
+      "lines": "1-11",
+      "purpose": "Assignment: S003-only scope, thin plan, groups 1+2, citation and UNEXECUTED rules."
+    },
+    {
+      "path": "inputs/catalog.json",
+      "lines": "1-40",
+      "purpose": "Source integrity: handle S003, sha256, bytes/lines, URIs/versions/aliases."
+    },
+    {
+      "path": "inputs/sources/S003.txt",
+      "lines": "1-500",
+      "purpose": "Normative capture part 1: storage, images, HCS layout, metadata, axes, bioformats2raw.layout, transforms, multiscales, omero, labels."
+    },
+    {
+      "path": "inputs/sources/S003.txt",
+      "lines": "501-896",
+      "purpose": "Normative capture part 2: image-label example, plate, well, naming, tools pointer, version history, conformance."
+    },
+    {
+      "path": "inputs/plan/Viewer.md",
+      "lines": "1-11",
+      "purpose": "Thin plan fixture: open/list/navigate/display/overlay/responsiveness/failure-handling intent."
+    }
+  ],
+  "finding_to_source": {
+    "F-01": {
+      "group": 1,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:68-77", "S003.txt:82-89", "S003.txt:831-833"]
+    },
+    "F-02": {
+      "group": 1,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:65-66", "S003.txt:150-165"]
+    },
+    "F-03": {
+      "group": 1,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:91-100", "S003.txt:304-307"]
+    },
+    "F-04": {
+      "group": 1,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:298", "S003.txt:317-319", "S003.txt:375-382", "S003.txt:388-397"]
+    },
+    "F-05": {
+      "group": 1,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:60-64", "S003.txt:176-191", "S003.txt:193-206", "S003.txt:243-275"]
+    },
+    "F-06": {
+      "group": 1,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:516-560", "S003.txt:561-640", "S003.txt:641-739"]
+    },
+    "F-07": {
+      "group": 1,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:118-148", "S003.txt:740-808"]
+    },
+    "F-08": {
+      "group": 1,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:81", "S003.txt:96-98", "S003.txt:174", "S003.txt:300-303", "S003.txt:307", "S003.txt:825-827"]
+    },
+    "F-09": {
+      "group": 1,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:25-27", "S003.txt:273-275", "S003.txt:306", "S003.txt:308-313", "S003.txt:877-888"],
+      "note": "Norm silence on level heuristic/responsiveness; positive duties come from brief/plan, recorded in report."
+    },
+    "F-10": {
+      "group": 2,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:167-173"]
+    },
+    "F-11": {
+      "group": 2,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:277-293"]
+    },
+    "F-12": {
+      "group": 2,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:308-316", "S003.txt:320-374"]
+    },
+    "F-13": {
+      "group": 2,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:96-98", "S003.txt:301-303", "S003.txt:403-423"]
+    },
+    "F-14": {
+      "group": 2,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:60-64", "S003.txt:399-430", "S003.txt:828-830"]
+    },
+    "F-15": {
+      "group": 2,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:102-108", "S003.txt:110", "S003.txt:432-453"]
+    },
+    "F-16": {
+      "group": 2,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:112-117", "S003.txt:454-455"]
+    },
+    "F-17": {
+      "group": 2,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:456-474", "S003.txt:475-514"]
+    },
+    "F-18": {
+      "group": 2,
+      "source_handle": "S003",
+      "source_version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "locators": ["S003.txt:25-27", "S003.txt:60-64", "S003.txt:70-72", "S003.txt:275", "S003.txt:442", "S003.txt:461"],
+      "note": "Norm permissions plus brief/plan read-only and explanation duties; see report for brief/plan locators."
+    }
+  },
+  "execution_evidence": {
+    "code_executed": false,
+    "filesets_opened": false,
+    "network_accessed": false,
+    "tools_inspected": false,
+    "detail": "No execution performed. All proposed validation in out/report.md is labeled UNEXECUTED. No access or execution evidence invented."
+  },
+  "method_boundary_compliance": {
+    "streaming_delivery_adapter": "not researched, per method boundary",
+    "grouping": "small/medium only: 18 findings (F-01..F-09 group 1, F-10..F-18 group 2); no large parameter sweep"
+  },
+  "artifacts": [
+    "out/report.md",
+    "out/acquisition.json"
+  ],
+  "costs": {
+    "external_queries": 0,
+    "external_writes": 0,
+    "local_reads": 7,
+    "validation_runs": 0,
+    "elapsed_note": "Completed within the 900s / 96-response native Goal budget; no instrumented elapsed clock available in this run, so no fabricated elapsed seconds are reported."
+  }
+}

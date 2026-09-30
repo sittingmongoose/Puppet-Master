@@ -1,0 +1,59 @@
+{
+  "existing_attempt": "t03-z-ome-render-screen-v2-treatment",
+  "new_candidate_starts": 0,
+  "watcher": {
+    "job_id": "t03-z-ome-render-screen-v2-treatment",
+    "watcher_pid": 50223,
+    "started_epoch": 1790781225.6695862,
+    "argv": [
+      "python3",
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/mechanics.py",
+      "retain",
+      "--source",
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/treatment/workspace/out/versions",
+      "--retained",
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/retained-versions/t03-z-ome-render-screen-v2-treatment",
+      "--watch-seconds",
+      "930",
+      "--stop-file",
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/retention-stop/t03-z-ome-render-screen-v2-treatment"
+    ],
+    "retained": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/retained-versions/t03-z-ome-render-screen-v2-treatment",
+    "stop_file": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/retention-stop/t03-z-ome-render-screen-v2-treatment",
+    "exit_code": 0,
+    "ended_epoch": 1790782116.6750205
+  },
+  "stages": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/frozen/b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d/mechanics.py",
+        "retain",
+        "--source",
+        "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/treatment/workspace/out/versions",
+        "--retained",
+        "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/retained-versions/t03-z-ome-render-screen-v2-treatment"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/frozen/b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d/mechanics.py",
+        "render",
+        "--source",
+        "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/retained-versions/t03-z-ome-render-screen-v2-treatment",
+        "--report",
+        "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/t03-restart-finalization/report.md",
+        "--history",
+        "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/t03-restart-finalization/history.json"
+      ],
+      "exit_code": 1
+    }
+  ],
+  "exact_bytes_match": {
+    "report.md": false,
+    "history.json": false
+  },
+  "semantic_quality": "not evaluated"
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "er7.output_integrity.v1",
+  "files": [],
+  "missing_required_outputs": [
+    "report.md",
+    "acquisition.json",
+    "decisions.json",
+    "history.json"
+  ],
+  "structural_complete": false,
+  "semantic_quality": "not evaluated",
+  "native_quiescence": "established in native/receipt.json",
+  "native_receipt_sha256": "fb792425117e539739a9667d3700419634d2702027b5425cd0b9592f0f59695c",
+  "stable_output_hashes": {}
+}

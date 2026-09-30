@@ -1,0 +1,13 @@
+{
+  "candidate_started": false,
+  "probe": "existence/read-access booleans only; no file content reads",
+  "checks": {
+    "credentials_path_exists": true,
+    "credentials_readable": true,
+    "certificate_private_key_readable": true,
+    "campaign_private_visible": false,
+    "production_visible": false,
+    "own_input_visible": true
+  },
+  "isolation_sha256": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95"
+}

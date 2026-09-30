@@ -1,0 +1,29 @@
+{
+  "source_supported_acquisition": "unassessed; candidate acquisition records are self-reports",
+  "source_exposure": "deferred history staging; no semantic judgment",
+  "temporal_preservation": "unassessed; current-first stage required",
+  "exact_rendering": "byte hashes verified for copied artifacts; no semantic equivalence inference",
+  "native_completion_seconds_including_waits": null,
+  "total_seconds_including_setup_waits_cleanup": 420.291,
+  "cleanup_seconds_only": null,
+  "cleanup_note": "startup+cleanup aggregate exposed; separate cleanup not exposed",
+  "native_responses": 14,
+  "reported_usage": {
+    "token_usage_events": 14,
+    "prompt_tokens": 559155,
+    "last_cumulative": {
+      "outputTokens": 25078,
+      "promptTokens": 559155,
+      "totalTokens": 584233
+    },
+    "turns_started": 1,
+    "turns_completed": [],
+    "inputTokens": 559155,
+    "outputTokens": 25078,
+    "reasoningTokens": 5605,
+    "cacheReadTokens": 491325,
+    "cacheWriteTokens": 0,
+    "cachedTokens": 491325
+  },
+  "generated_completeness": "unknown; native children/cancelled output may be omitted"
+}

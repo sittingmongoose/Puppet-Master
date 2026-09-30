@@ -1,0 +1,132 @@
+{
+  "schema": "t01-m-ome-batching-screen-v1.acquisition.v1",
+  "case_id": "ome-normative-dev-v1",
+  "control": "control-display",
+  "assignment_group": "2: Channel/time/plane display, coordinate details, associated label overlays",
+  "created_utc": "2026-09-30",
+  "source_scope": "Fixed admitted source S003 only; no live fetching for this component case.",
+  "no_live_fetching_per": "inputs/TASK.md:5",
+  "sources_selected": [
+    {
+      "handle": "S003",
+      "local_file": "inputs/sources/S003.txt",
+      "primary_uri": "https://ngff.openmicroscopy.org/0.5/",
+      "primary_source_id": "SRC-2b11c54af373e1979af8cbb3",
+      "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "original_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "view_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "original_bytes": 36980,
+      "view_bytes": 36980,
+      "view_lines": 896,
+      "view_kind": "original_bytes",
+      "document_version": "OME-Zarr 0.5, Final Community Group Report 8 September 2026",
+      "catalog_locators": "inputs/catalog.json:5-39",
+      "identity_locators": "inputs/sources/S003.txt:3-8,25-27",
+      "read_coverage": "full file, lines 1-896, via local read tool",
+      "selection_reason": "Only admitted primary-source capture for this bounded assignment; used for all display/coordinate/label obligations and for full-source qualifications."
+    }
+  ],
+  "sources_considered_not_selected": [
+    {
+      "item": "Live OME-Zarr specification site / Tools / OMERO WebGateway docs / UDUNITS-2 / Zarr v3 spec / example filesets",
+      "reason_not_selected": "Outside admitted input paths; live external fetching explicitly prohibited for this component case.",
+      "evidence": "inputs/TASK.md:5; TASK.md source-access"
+    }
+  ],
+  "plan_and_brief_inputs": [
+    {
+      "file": "inputs/brief.md",
+      "use": "Brief display clauses and product boundary",
+      "locators": "inputs/brief.md:3-5"
+    },
+    {
+      "file": "inputs/plan/Viewer.md",
+      "use": "Admitted thin plan; gap/disposition analysis only, not format evidence",
+      "locators": "inputs/plan/Viewer.md:3-11"
+    },
+    {
+      "file": "inputs/TASK.md",
+      "use": "Assignment groups and no-live-fetching boundary",
+      "locators": "inputs/TASK.md:3-9"
+    },
+    {
+      "file": "inputs/catalog.json",
+      "use": "Source versions, hashes, aliases",
+      "locators": "inputs/catalog.json:5-39"
+    }
+  ],
+  "reads_performed": [
+    {
+      "path": "TASK.md",
+      "kind": "local task card",
+      "external": false
+    },
+    {
+      "path": "inputs/brief.md",
+      "kind": "local brief",
+      "external": false
+    },
+    {
+      "path": "inputs/TASK.md",
+      "kind": "local assignment",
+      "external": false
+    },
+    {
+      "path": "inputs/catalog.json",
+      "kind": "local catalog",
+      "external": false
+    },
+    {
+      "path": "inputs/sources/S003.txt",
+      "kind": "local frozen source capture, full 896-line read in two windows",
+      "external": false
+    },
+    {
+      "path": "inputs/plan/Viewer.md",
+      "kind": "local thin plan",
+      "external": false
+    }
+  ],
+  "external_queries": [],
+  "external_writes": [],
+  "code_executions": [],
+  "finding_to_source": {
+    "D-01": [{ "source": "S003", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "lines": "81,96-98,140-145,296-302,307" }],
+    "D-02": [{ "source": "S003", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "lines": "96-98,302-303" }],
+    "D-03": [{ "source": "S003", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "lines": "167-174,825-827" }],
+    "D-04": [{ "source": "S003", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "lines": "276-293,308-313,336-366" }],
+    "D-05": [{ "source": "S003", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "lines": "314-316,368-374" }],
+    "D-06": [{ "source": "S003", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "lines": "310-312" }],
+    "D-07": [{ "source": "S003", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "lines": "60-64,398-430,828-830" }],
+    "D-08": [{ "source": "S003", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "lines": "317,388-397" }],
+    "D-09": [{ "source": "S003", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "lines": "102-114,437-453" }],
+    "D-10": [{ "source": "S003", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "lines": "70-72,106-108,116-117,432-440,454-455" }],
+    "D-11": [{ "source": "S003", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "lines": "454-514" }],
+    "D-12": [{ "source": "S003", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "lines": "25-27,68-77,87-100,150-165" }],
+    "D-13": [{ "source": "S003", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "lines": "120-148,193-275,538-551,744-752,810-812" }]
+  },
+  "conventions_applied": [
+    "RFC 2119 keywords per S003.txt:57-59,872-878",
+    "Transitional metadata rule per S003.txt:60-64",
+    "JSON comments MUST NOT per S003.txt:65-66",
+    "Normative vs examples/notes per S003.txt:877-888"
+  ],
+  "validation": {
+    "executed": false,
+    "items": ["V-01", "V-02", "V-03", "V-04", "V-05", "V-06", "V-07"],
+    "label": "UNEXECUTED",
+    "reason": "Frozen-source-only assignment; no admitted filesets for execution and no execution permission evidence."
+  },
+  "costs": {
+    "external_query_count": 0,
+    "external_write_count": 0,
+    "code_execution_count": 0,
+    "local_file_read_count": 6,
+    "elapsed_budget": "450 elapsed seconds; 48 parent responses (host-owned clock; not estimated here)"
+  },
+  "integrity_notes": [
+    "No access or execution evidence invented; acquisition records only local reads actually performed.",
+    "No absent-format claims derived from unvisited live sources.",
+    "Finding identities D-01..D-13 are independent to this control-display report."
+  ]
+}

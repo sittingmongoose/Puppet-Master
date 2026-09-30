@@ -1,0 +1,22 @@
+{
+  "schema": "er7.output_integrity.v1",
+  "files": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control/workspace/out/observations.md",
+      "target": "out/observations.md",
+      "sha256": "b9eb4826d930a12dd2ef864ba6ac00d18e8f6c258a224cab8ba66e1cf5efa256",
+      "bytes": 14331
+    }
+  ],
+  "missing_required_outputs": [
+    "report.md",
+    "acquisition.json"
+  ],
+  "structural_complete": false,
+  "semantic_quality": "not evaluated",
+  "native_quiescence": "established in native/receipt.json",
+  "native_receipt_sha256": "d15fca5d5f614581743a34d65fd134f17238c02c7ad24e4642cc38253b49e17a",
+  "stable_output_hashes": {
+    "observations.md": "b9eb4826d930a12dd2ef864ba6ac00d18e8f6c258a224cab8ba66e1cf5efa256"
+  }
+}

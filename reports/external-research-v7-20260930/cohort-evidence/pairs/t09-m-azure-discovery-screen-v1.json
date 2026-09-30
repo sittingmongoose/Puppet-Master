@@ -1,0 +1,47 @@
+{
+  "schema": "er7.method_pair.v1",
+  "pair_id": "t09-m-azure-discovery-screen-v1",
+  "method": "T09",
+  "status": "prepared-not-reviewed-not-started",
+  "case_id": "azure-discovery-dev-v1",
+  "family": "M",
+  "applicability": "Brief-only independent source discovery; policy is the named variable.",
+  "changed_variables": [
+    "Research scheduling/query/source-selection policy only."
+  ],
+  "held_fixed": [
+    "Exact brief bytes",
+    "Source access",
+    "Plan blindness",
+    "Model/front end/effort",
+    "Elapsed/response caps",
+    "Output/evaluation obligations"
+  ],
+  "caps_per_arm": {
+    "seconds": 900,
+    "responses": 96
+  },
+  "source_unique_bytes": 1009,
+  "input_sha256": {
+    "brief.md": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607"
+  },
+  "order": "control/treatment prepared together; operator records actual randomized order/load",
+  "versions": {
+    "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56"
+  },
+  "review_required": "Independent review_gate before launch; no semantic case answers supplied.",
+  "attempts": [
+    {
+      "job_id": "t09-m-azure-discovery-screen-v1-control",
+      "arm": "control",
+      "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control",
+      "spec": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control.spec.json"
+    },
+    {
+      "job_id": "t09-m-azure-discovery-screen-v1-treatment",
+      "arm": "treatment",
+      "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment",
+      "spec": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment.spec.json"
+    }
+  ]
+}

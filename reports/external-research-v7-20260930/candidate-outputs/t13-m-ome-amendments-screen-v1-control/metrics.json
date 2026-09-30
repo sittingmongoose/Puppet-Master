@@ -1,0 +1,37 @@
+{
+  "source_supported_acquisition": "unassessed; candidate acquisition records are self-reports",
+  "source_exposure": "deferred history staging; no semantic judgment",
+  "temporal_preservation": "unassessed; current-first stage required",
+  "exact_rendering": "byte hashes verified for copied artifacts; no semantic equivalence inference",
+  "native_completion_seconds_including_waits": 344.6,
+  "total_seconds_including_setup_waits_cleanup": 344.833,
+  "cleanup_seconds_only": null,
+  "cleanup_note": "startup+cleanup aggregate exposed; separate cleanup not exposed",
+  "native_responses": 9,
+  "reported_usage": {
+    "token_usage_events": 9,
+    "prompt_tokens": 401214,
+    "last_cumulative": {
+      "outputTokens": 5847,
+      "promptTokens": 401214,
+      "totalTokens": 407061
+    },
+    "turns_started": 1,
+    "turns_completed": [
+      {
+        "turnId": "01a0f314-927e-7103-a140-585e6e1e7e6c",
+        "terminal": "failed",
+        "reason": "model stream idle timeout after 180000ms",
+        "durationMs": 343983,
+        "usage": null
+      }
+    ],
+    "inputTokens": 401214,
+    "outputTokens": 5847,
+    "reasoningTokens": 3844,
+    "cacheReadTokens": 354297,
+    "cacheWriteTokens": 0,
+    "cachedTokens": 354297
+  },
+  "generated_completeness": "unknown; native children/cancelled output may be omitted"
+}

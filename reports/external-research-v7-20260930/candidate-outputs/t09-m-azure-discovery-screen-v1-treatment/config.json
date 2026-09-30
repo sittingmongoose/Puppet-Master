@@ -1,0 +1,54 @@
+{
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/attempt.json",
+  "source_sha256": "5ba1d98ef1e3021cf1f6267f60f1118b07f27f19656166979a64f6bd509bc76f",
+  "spec": {
+    "job_id": "t09-m-azure-discovery-screen-v1-treatment",
+    "method": "T09",
+    "arm": "treatment",
+    "family": "M",
+    "case_id": "azure-discovery-dev-v1",
+    "scope": "Entire admitted product brief; independently discover useful external unknowns.",
+    "inputs": [
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/azure-discovery-dev-v1/brief.md",
+        "target": "brief.md"
+      }
+    ],
+    "admitted_inputs": [
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/azure-discovery-dev-v1/brief.md",
+        "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607"
+      }
+    ],
+    "caps": {
+      "seconds": 900,
+      "responses": 96
+    },
+    "output_files": [
+      "report.md",
+      "acquisition.json",
+      "scheduling.json"
+    ],
+    "source_access": "Public external search and read-only primary-source/repository inspection; no supplied external source list. Local access only the isolated workspace.",
+    "plan_visibility": "Plan-blind: only brief.md is admitted; no plan/spec/key/history.",
+    "evaluation_obligations": "All material claims, full assigned scope including unvisited/dead-end areas, unsupported assertions, false dismissals, conditions, source fit, novelty, complete elapsed and usage costs.",
+    "zcode_tools": [
+      "Read",
+      "Write",
+      "Bash",
+      "WebFetch",
+      "WebSearch"
+    ],
+    "method_instruction": "Derive research questions from promises and assumptions in the brief before searching. Probe missing/malformed/versioned/reordered inputs, recovery, size and latency constraints, plus simpler alternatives and positive improvement opportunities. Choose actual sources yourself; questions are hypotheses, not facts. Record question-to-query-to-evidence links and dead ends in scheduling.json. Deliver a standalone current report with complete independent finding identities, exact evidence locators and source versions, applicability/transfer limits, plan implications where a plan is admitted, unresolved areas and proposed validation labeled UNEXECUTED. Also write acquisition.json recording selected source URLs/versions, queries/reads and finding-to-source links; do not invent access or execution evidence. Source choice and interpretation are your own. A failed search proves only that search result, not absence."
+  },
+  "input_manifest": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/azure-discovery-dev-v1/brief.md",
+      "target": "brief.md",
+      "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+      "bytes": 1009
+    }
+  ],
+  "prepared_status": "prepared-not-started",
+  "status_note": "prepared status is creation-time only; native receipt is terminal authority"
+}

@@ -1,0 +1,78 @@
+{
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/native/receipt.json",
+  "source_sha256": "3b7b947519346e3202b42e0998660c33378730c80ba608c462d93a5cb8970588",
+  "projection": "exact selected fields; omitted fields remain private",
+  "schema": "er6.goal_receipt.v1",
+  "label": "t09-m-azure-discovery-screen-v1-control",
+  "app": "muse",
+  "native_goal_entry": "/goal via MSP goal/set",
+  "prompt_bytes": 250,
+  "prompt_sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+  "objective_sha256": "7a4b29cff9c5491b0f0e337a9fdba91289419045d0929b20b27477ea33b7afab",
+  "caps": {
+    "seconds": 900.0,
+    "responses": 96
+  },
+  "start_utc": "2026-09-30T15:09:24.507837+00:00",
+  "fresh_session": true,
+  "session_id": "01a0f2dd-0035-7e53-8faf-de7567fa8532",
+  "model_id": "muse-spark-1.3-contributor",
+  "provider_id": "meta",
+  "effort_ack": "accepted",
+  "effort_effective": "max",
+  "goal_submitted_utc": "2026-09-30T15:09:25.052810+00:00",
+  "goal_ack": {
+    "commandId": "01a0f2dd-00bc-7457-9c48-e62db62fa22a",
+    "status": "accepted",
+    "turnId": "01a0f2dd-00bc-7457-9c48-e62db62fa22a"
+  },
+  "stop_reason": "goal_complete",
+  "goal_status_final": "complete",
+  "end_utc": "2026-09-30T15:18:17.194071+00:00",
+  "elapsed_seconds": 532.7,
+  "native_responses": 40,
+  "counters": {
+    "token_usage_events": 40,
+    "prompt_tokens": 2930009,
+    "last_cumulative": {
+      "outputTokens": 33741,
+      "promptTokens": 2930009,
+      "totalTokens": 2963750
+    },
+    "turns_started": 1,
+    "turns_completed": [
+      {
+        "turnId": "01a0f2dd-00bc-7457-9c48-e62db62fa22a",
+        "terminal": "completed",
+        "reason": null,
+        "durationMs": 530638,
+        "usage": null
+      }
+    ],
+    "inputTokens": 2930009,
+    "outputTokens": 33741,
+    "reasoningTokens": 5265,
+    "cacheReadTokens": 2811447,
+    "cacheWriteTokens": 0,
+    "cachedTokens": 2811447
+  },
+  "cleanup_actions": [
+    {
+      "method": "goal/pause",
+      "error": "goal/pause rejected: {'code': -32030, 'data': {'commandId': '01a0f2e5-1f6b-78b2-8c85-2ce4f73558d0', 'kind': 'commandRejected', 'reason': 'invalid_goal_state', 'retryable': False}, 'message': 'goal/pause command 01a0f2e5-1f6b-78b2-8c85-2ce4f73558d0 rejected: invalid_goal_state'}"
+    },
+    {
+      "method": "turn/interrupt",
+      "error": "turn/interrupt rejected: {'code': -32030, 'data': {'commandId': '01a0f2e5-1f6b-7bf5-8d42-32e906f26e2e', 'kind': 'commandRejected', 'reason': 'missing_run', 'retryable': False}, 'message': 'turn/interrupt command 01a0f2e5-1f6b-7bf5-8d42-32e906f26e2e rejected: missing_run'}"
+    }
+  ],
+  "native_process_returncode": 0,
+  "own_process_group_absent": true,
+  "native_quiescent": true,
+  "startup_cleanup_elapsed_seconds": 533.128,
+  "caps_include_setup_and_cleanup": true,
+  "receipt_written_utc": "2026-09-30T15:18:17.473277+00:00",
+  "namespace_process_returncode": 0,
+  "namespace_exited": true,
+  "quiescence_basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+}

@@ -1,0 +1,78 @@
+{
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/native/receipt.json",
+  "source_sha256": "2b4b037ccecc20736975a2bca376bfd8a3070755ef6d669a79dc5828c08c7c62",
+  "projection": "exact selected fields; omitted fields remain private",
+  "schema": "er6.goal_receipt.v1",
+  "label": "t01-m-ome-batching-screen-v1-control-display",
+  "app": "muse",
+  "native_goal_entry": "/goal via MSP goal/set",
+  "prompt_bytes": 250,
+  "prompt_sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+  "objective_sha256": "7a4b29cff9c5491b0f0e337a9fdba91289419045d0929b20b27477ea33b7afab",
+  "caps": {
+    "seconds": 450.0,
+    "responses": 48
+  },
+  "start_utc": "2026-09-30T15:06:50.135776+00:00",
+  "fresh_session": true,
+  "session_id": "01a0f2da-a62f-7180-8b57-018d01cf5f62",
+  "model_id": "muse-spark-1.3-contributor",
+  "provider_id": "meta",
+  "effort_ack": "accepted",
+  "effort_effective": "max",
+  "goal_submitted_utc": "2026-09-30T15:06:50.922188+00:00",
+  "goal_ack": {
+    "commandId": "01a0f2da-a6aa-7f82-9837-1cb764d0f147",
+    "status": "accepted",
+    "turnId": "01a0f2da-a6aa-7f82-9837-1cb764d0f147"
+  },
+  "stop_reason": "goal_complete",
+  "goal_status_final": "complete",
+  "end_utc": "2026-09-30T15:11:49.017957+00:00",
+  "elapsed_seconds": 298.9,
+  "native_responses": 11,
+  "counters": {
+    "token_usage_events": 11,
+    "prompt_tokens": 423638,
+    "last_cumulative": {
+      "outputTokens": 18462,
+      "promptTokens": 423638,
+      "totalTokens": 442100
+    },
+    "turns_started": 1,
+    "turns_completed": [
+      {
+        "turnId": "01a0f2da-a6aa-7f82-9837-1cb764d0f147",
+        "terminal": "completed",
+        "reason": null,
+        "durationMs": 296941,
+        "usage": null
+      }
+    ],
+    "inputTokens": 423638,
+    "outputTokens": 18462,
+    "reasoningTokens": 5947,
+    "cacheReadTokens": 369514,
+    "cacheWriteTokens": 0,
+    "cachedTokens": 369514
+  },
+  "cleanup_actions": [
+    {
+      "method": "goal/pause",
+      "error": "goal/pause rejected: {'code': -32030, 'data': {'commandId': '01a0f2df-331b-7abc-8bd8-ed05e3e763ef', 'kind': 'commandRejected', 'reason': 'invalid_goal_state', 'retryable': False}, 'message': 'goal/pause command 01a0f2df-331b-7abc-8bd8-ed05e3e763ef rejected: invalid_goal_state'}"
+    },
+    {
+      "method": "turn/interrupt",
+      "error": "turn/interrupt rejected: {'code': -32030, 'data': {'commandId': '01a0f2df-331b-7941-98af-c352e6e0b6d8', 'kind': 'commandRejected', 'reason': 'missing_run', 'retryable': False}, 'message': 'turn/interrupt command 01a0f2df-331b-7941-98af-c352e6e0b6d8 rejected: missing_run'}"
+    }
+  ],
+  "native_process_returncode": 0,
+  "own_process_group_absent": true,
+  "native_quiescent": true,
+  "startup_cleanup_elapsed_seconds": 299.158,
+  "caps_include_setup_and_cleanup": true,
+  "receipt_written_utc": "2026-09-30T15:11:49.125820+00:00",
+  "namespace_process_returncode": 0,
+  "namespace_exited": true,
+  "quiescence_basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+}

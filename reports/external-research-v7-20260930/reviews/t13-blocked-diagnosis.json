@@ -1,0 +1,407 @@
+{
+  "schema": "er7.bounded_blocked_diagnosis.v1",
+  "reviewer": "/root/luna_adjudication",
+  "created_utc": "2026-09-30T16:26:37.587733+00:00",
+  "campaign_id": "external-research-v7-20260930",
+  "scope": "T13 M OME amendments screen v1 control and treatment only; separate from completed Luna policy adjudication",
+  "status": "diagnosed-native-terminal-cause-deeper-causality-unknown",
+  "classification": {
+    "primary_observed_terminal_failure": "Native model/service transport stream idle timeout",
+    "primary_evidence_strength": "Proved for both arms by turn/completed native events: terminal failed; error.kind=modelError; retryable=true; message=model stream idle timeout after 180000ms. Each is immediately followed by Goal blocked at percentComplete0.",
+    "deeper_primary_cause": "Unknown. The receipts do not identify account hold, provider outage, exact retry history, or why the stream idled.",
+    "secondary_observed_obstacle": "Native Bash sandbox process failed to create a bubblewrap namespace",
+    "secondary_evidence_strength": "Proved by one failed Bash tool in control and two in treatment, with process status1 and the same namespace-permission error. The error describes this execution environment; it does not establish a machine-wide kernel setting.",
+    "secondary_origin": "Unclassified native-tool/isolation boundary. No adapter or isolation code was inspected in this bounded task, so responsibility is not assigned to host harness, native configuration, or kernel policy.",
+    "causal_link_between_bash_failure_timeout_and_missing_outputs": "Unknown. Failed Bash calls preceded the timeout by several minutes. Sequence alone does not establish that the sandbox error caused the later stream timeout or all missing artifacts.",
+    "candidate_refusal_or_semantic_failure": "Not established. The observed MSP item stream contains no final assistant refusal/answer item. No candidate reasoning text or substantive source results were inspected.",
+    "contract_ambiguity": "Visible on both task cards: line9 excludes historical outputs while line11 explicitly admits inputs/candidate_seed.json, and line13 requires seed verification. This could be clarified, but there is no terminal candidate statement proving refusal on that ground.",
+    "harness_failure": "Not proved by null driver/operator errors or missing outputs. Both host drivers exited0 after a native blocked outcome; native errors are independently present.",
+    "method_outcome": "Both original arms remain failed/incomplete; research-quality comparison unassessed and infrastructure-limited. Goal percent0 does not erase the 9/15 observed native responses or imply no work occurred."
+  },
+  "prospective_generic_prompt_clarification": {
+    "causal_remedy_established": false,
+    "permissible_as_method_repair1": "Potentially legitimate within the campaign ordinary generic-prompt repair authority if T13 has its first repair allowance available and a separately authored new version receives independent exact-card review. This task does not establish the repair ledger or accept/launch such a version.",
+    "requirements_for_separate_author": [
+      "Clarify in both arms that the explicitly admitted workspace inputs/candidate_seed.json is an authorized current-campaign candidate-produced seed to be independently verified, with the source-job/frozen-output hash provenance bound; it is the named exception to the prohibition on unadmitted historical/campaign outputs.",
+      "Retain prohibitions on evaluator keys, grades, other attempts, unadmitted reports, outside-private-path access and semantic Sol assistance. Do not add any missed case facts or source conclusions.",
+      "Keep full source scope, exact admitted bytes and seed provenance, requested native family/model/Max effort, matched caps, evaluation obligations and named control/treatment distinction fixed; do not trim the task after seeing failure.",
+      "Use new prospective card/spec/attempt identities, record method repair1 candidly if that allowance is used, bind hashes and obtain independent exact-version review before any admission. Original Goals, prompts, outputs, clocks and errors stay terminal and unchanged.",
+      "Assess the confirmed Bash namespace obstacle separately with bounded generic offline boundary checks and independent review under the applicable adapter repair budget. A seed-wording edit cannot be reported as resolving it or the stream timeout.",
+      "If the packet service-interrupted-repeat allowance is unused, a new repeat after an appropriate route cooldown may be considered separately. Keep native provider backoff/retry policy, billing, permission controls, quotas, all costs and the global deadline unchanged; no immediate replacement loop."
+    ],
+    "launch_authorized_by_this_review": false,
+    "old_goal_rescue_authorized": false
+  },
+  "shared_dependency_limits": {
+    "T14": "No T14 outcome, card or candidate text was read. Shared seed identity alone does not establish shared causality. Do not label T14 blocked/refusing/harness-limited from this diagnosis; inspect a blocked version separately if one occurs.",
+    "publisher_wording": "Report the proved native stream timeout and preceding Bash namespace errors with deeper/shared cause unknown; do not publish seed rejection or a repaired harness cause as proved."
+  },
+  "preservation": {
+    "original_candidate_goal_starts": 2,
+    "original_costs_retained": true,
+    "original_receipts_traces_cards_outputs_untouched": true,
+    "reported_generated_output_lower_bound": 10144,
+    "reported_usage_limit": "Per-arm exposed counters are preserved without adding reasoning/cache/input components to generated output. Native child/cancelled/missing usage stays unknown.",
+    "quiescence": "Both originals report native_quiescent=true and own_process_group_absent=true. This review changes no lease or lifecycle state."
+  },
+  "observations": [
+    {
+      "arm": "control",
+      "job_id": "t13-m-ome-amendments-screen-v1-control",
+      "session_id": "01a0f314-91d3-7df1-8f8a-42f76b7aaade",
+      "model_id": "muse-spark-1.3-contributor",
+      "provider_id": "meta",
+      "effort_effective": "max",
+      "caps": {
+        "seconds": 900.0,
+        "responses": 96
+      },
+      "fresh_session": true,
+      "native_stop_reason": "goal_blocked",
+      "goal_status_final": "blocked",
+      "driver_error": null,
+      "operator_error": null,
+      "driver_exit_code": 0,
+      "terminal_turn": {
+        "line": 97,
+        "emitted_at_ms": 1790784950851,
+        "turn_id": "01a0f314-927e-7103-a140-585e6e1e7e6c",
+        "terminal": "failed",
+        "reason": "model stream idle timeout after 180000ms",
+        "error": {
+          "kind": "modelError",
+          "message": "model stream idle timeout after 180000ms",
+          "retryable": true
+        },
+        "duration_ms": 343983
+      },
+      "goal_state_events": [
+        {
+          "line": 9,
+          "emitted_at_ms": 1790784606860,
+          "status": "active",
+          "percent_complete": 0
+        },
+        {
+          "line": 98,
+          "emitted_at_ms": 1790784950869,
+          "status": "blocked",
+          "percent_complete": 0
+        }
+      ],
+      "native_bash_failures": [
+        {
+          "line": 40,
+          "emitted_at_ms": 1790784623399,
+          "tool": "bash",
+          "status": "failed",
+          "failure_reason": "process exited with status 1",
+          "visible_error": "bwrap: No permissions to create new namespace, likely because the kernel does not allow non-privileged user namespaces. See <https://deb.li/bubblewrap> or <file:///usr/share/doc/bubblewrap/README.Debian.gz>.\n"
+        }
+      ],
+      "completed_item_kind_counts_metadata_only": {
+        "toolCall": 17,
+        "reminderChild": 7,
+        "reasoning": 4
+      },
+      "final_assistant_item_count": 0,
+      "missing_required_outputs": [
+        "report.md",
+        "acquisition.json",
+        "verification.json"
+      ],
+      "structural_complete": false,
+      "native_quiescent": true,
+      "own_process_group_absent": true,
+      "reported_usage_and_native_response_counts": {
+        "token_usage_events": 9,
+        "prompt_tokens": 401214,
+        "last_cumulative": {
+          "outputTokens": 5847,
+          "promptTokens": 401214,
+          "totalTokens": 407061
+        },
+        "turns_started": 1,
+        "turns_completed": [
+          {
+            "turnId": "01a0f314-927e-7103-a140-585e6e1e7e6c",
+            "terminal": "failed",
+            "reason": "model stream idle timeout after 180000ms",
+            "durationMs": 343983,
+            "usage": null
+          }
+        ],
+        "inputTokens": 401214,
+        "outputTokens": 5847,
+        "reasoningTokens": 3844,
+        "cacheReadTokens": 354297,
+        "cacheWriteTokens": 0,
+        "cachedTokens": 354297
+      },
+      "native_responses": 9,
+      "native_elapsed_seconds": 344.6,
+      "setup_cleanup_elapsed_seconds": 344.833,
+      "usage_completeness": "unknown; native children/cancellation may be incompletely metered",
+      "candidate_seed_admission": {
+        "source_locator_from_spec_only": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/t02-control-first-seed.json",
+        "target": "candidate_seed.json",
+        "sha256_from_spec_only": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c",
+        "seed_contents_read_by_reviewer": false
+      },
+      "cleanup_actions_from_original_receipt": [
+        {
+          "method": "goal/pause",
+          "error": "goal/pause rejected: {'code': -32030, 'data': {'commandId': '01a0f319-d2a2-708d-bb62-d6993d2290cb', 'kind': 'commandRejected', 'reason': 'invalid_goal_state', 'retryable': False}, 'message': 'goal/pause command 01a0f319-d2a2-708d-bb62-d6993d2290cb rejected: invalid_goal_state'}"
+        },
+        {
+          "method": "turn/interrupt",
+          "error": "turn/interrupt rejected: {'code': -32030, 'data': {'commandId': '01a0f319-d2a2-7c63-9a7a-e73b4a26bf55', 'kind': 'commandRejected', 'reason': 'missing_run', 'retryable': False}, 'message': 'turn/interrupt command 01a0f319-d2a2-7c63-9a7a-e73b4a26bf55 rejected: missing_run'}"
+        }
+      ]
+    },
+    {
+      "arm": "treatment",
+      "job_id": "t13-m-ome-amendments-screen-v1-treatment",
+      "session_id": "01a0f314-918a-72c2-a8a9-d512185dabe3",
+      "model_id": "muse-spark-1.3-contributor",
+      "provider_id": "meta",
+      "effort_effective": "max",
+      "caps": {
+        "seconds": 900.0,
+        "responses": 96
+      },
+      "fresh_session": true,
+      "native_stop_reason": "goal_blocked",
+      "goal_status_final": "blocked",
+      "driver_error": null,
+      "operator_error": null,
+      "driver_exit_code": 0,
+      "terminal_turn": {
+        "line": 111,
+        "emitted_at_ms": 1790784972630,
+        "turn_id": "01a0f314-9223-7a41-b540-4bde3c4dc7be",
+        "terminal": "failed",
+        "reason": "model stream idle timeout after 180000ms",
+        "error": {
+          "kind": "modelError",
+          "message": "model stream idle timeout after 180000ms",
+          "retryable": true
+        },
+        "duration_ms": 365853
+      },
+      "goal_state_events": [
+        {
+          "line": 9,
+          "emitted_at_ms": 1790784606768,
+          "status": "active",
+          "percent_complete": 0
+        },
+        {
+          "line": 112,
+          "emitted_at_ms": 1790784972683,
+          "status": "blocked",
+          "percent_complete": 0
+        }
+      ],
+      "native_bash_failures": [
+        {
+          "line": 46,
+          "emitted_at_ms": 1790784630901,
+          "tool": "bash",
+          "status": "failed",
+          "failure_reason": "process exited with status 1",
+          "visible_error": "bwrap: No permissions to create new namespace, likely because the kernel does not allow non-privileged user namespaces. See <https://deb.li/bubblewrap> or <file:///usr/share/doc/bubblewrap/README.Debian.gz>.\n"
+        },
+        {
+          "line": 53,
+          "emitted_at_ms": 1790784645676,
+          "tool": "bash",
+          "status": "failed",
+          "failure_reason": "process exited with status 1",
+          "visible_error": "bwrap: No permissions to create new namespace, likely because the kernel does not allow non-privileged user namespaces. See <https://deb.li/bubblewrap> or <file:///usr/share/doc/bubblewrap/README.Debian.gz>.\n"
+        }
+      ],
+      "completed_item_kind_counts_metadata_only": {
+        "toolCall": 20,
+        "reminderChild": 7,
+        "reasoning": 3
+      },
+      "final_assistant_item_count": 0,
+      "missing_required_outputs": [
+        "report.md",
+        "acquisition.json",
+        "decisions.json",
+        "history.json"
+      ],
+      "structural_complete": false,
+      "native_quiescent": true,
+      "own_process_group_absent": true,
+      "reported_usage_and_native_response_counts": {
+        "token_usage_events": 15,
+        "prompt_tokens": 716881,
+        "last_cumulative": {
+          "outputTokens": 4297,
+          "promptTokens": 716881,
+          "totalTokens": 721178
+        },
+        "turns_started": 1,
+        "turns_completed": [
+          {
+            "turnId": "01a0f314-9223-7a41-b540-4bde3c4dc7be",
+            "terminal": "failed",
+            "reason": "model stream idle timeout after 180000ms",
+            "durationMs": 365853,
+            "usage": null
+          }
+        ],
+        "inputTokens": 716881,
+        "outputTokens": 4297,
+        "reasoningTokens": 2524,
+        "cacheReadTokens": 653870,
+        "cacheWriteTokens": 0,
+        "cachedTokens": 653870
+      },
+      "native_responses": 15,
+      "native_elapsed_seconds": 366.5,
+      "setup_cleanup_elapsed_seconds": 366.787,
+      "usage_completeness": "unknown; native children/cancellation may be incompletely metered",
+      "candidate_seed_admission": {
+        "source_locator_from_spec_only": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/t02-control-first-seed.json",
+        "target": "candidate_seed.json",
+        "sha256_from_spec_only": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c",
+        "seed_contents_read_by_reviewer": false
+      },
+      "cleanup_actions_from_original_receipt": [
+        {
+          "method": "goal/pause",
+          "error": "goal/pause rejected: {'code': -32030, 'data': {'commandId': '01a0f31a-283f-7837-a54a-4a806e23eeec', 'kind': 'commandRejected', 'reason': 'invalid_goal_state', 'retryable': False}, 'message': 'goal/pause command 01a0f31a-283f-7837-a54a-4a806e23eeec rejected: invalid_goal_state'}"
+        },
+        {
+          "method": "turn/interrupt",
+          "error": "turn/interrupt rejected: {'code': -32030, 'data': {'commandId': '01a0f31a-2840-78c1-90eb-560a4b66c81e', 'kind': 'commandRejected', 'reason': 'missing_run', 'retryable': False}, 'message': 'turn/interrupt command 01a0f31a-2840-78c1-90eb-560a4b66c81e rejected: missing_run'}"
+        }
+      ]
+    }
+  ],
+  "review_scope": {
+    "whole_conversation_text_read": false,
+    "candidate_reasoning_text_read": false,
+    "candidate_seed_contents_read": false,
+    "candidate_source_fact_research_performed": false,
+    "candidate_grades_or_answer_keys_read": false,
+    "native_access": "Streamed metadata kind/line projections, terminal native errors and Goal states, failed-tool error text only; no successful-tool source bodies or reasoning summaries.",
+    "native_process_or_goal_launches": 0,
+    "original_file_or_state_mutations": 0,
+    "recursive_helpers": 0,
+    "written_paths": [
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/t13-blocked-diagnosis.json",
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/t13-blocked-diagnosis.md"
+    ]
+  },
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/packet/Puppet_Master_External_Research_Parallel_Campaign_v7/CAMPAIGN.md",
+      "sha256": "f813f953ee7e2504b8dd95be5a17ca4a9071f022ebf6ae4ad0afb8b04938bc80"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/pair.json",
+      "sha256": "088d8f92daade34288e85ccbd60f1128b57b5de467c5784ef27d940335909d8e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control.spec.json",
+      "sha256": "64db79fc5b6c9d1e6d3e296b70bd2e6331782c0f2e71d4516f6ea2ff58d905f4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment.spec.json",
+      "sha256": "7314081e43a226dcb53a97ce7067be244dc07bc86dbf5c7fc165486fabafc289"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/workspace/TASK.md",
+      "sha256": "df03413bbea4ba7026842b82b9fbde75d2c397dbad9dc6d70fd6194c262a972f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/attempt.json",
+      "sha256": "78845a3ae561fa456af1826377ebf45b30cd1763afc8e7ef218ecd2e4e0188e0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/goal.txt",
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/native/receipt.json",
+      "sha256": "a5973e4a03303388475a5a7a525559e6ba91c00f085110969e62e5eb03456dde"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/native/muse-msp.jsonl",
+      "sha256": "88db74b05d8e19782d70f92b4ee716fff5856b8ae859cad1ae9588bcbb69d7f1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/native/muse-stderr.log",
+      "sha256": "499be04a2f7719f49bde44f4fe3eff958ac2e6f6b27b13056c974356b14dc970"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/operator-receipt.json",
+      "sha256": "a483be6cafc9978cf94a8491a74d452368ed06c57cb14454f93cca8097fd81c0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/boundary-receipt.json",
+      "sha256": "e1265be8e405aba7fe3d76deee570ed94f19ee3c08d9ff704758ad46058be4a6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/output-integrity.json",
+      "sha256": "45ae57956d02f893b6f363b9020b396184fb73788e65cadf4bfedc2ee4c14fc0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/driver.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/driver-process.json",
+      "sha256": "1db542c137afc5006d8c9f7176acb8104b945143aca77f8d40c1d76125a2204c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/workspace/TASK.md",
+      "sha256": "e938ca5e1b1d613b448e7c5cd4f3a7a58267cd200d5d184e5d13bb1a3f24cffa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/attempt.json",
+      "sha256": "9aae051ada5c6b021a4d92a87b4a188858af51b2c3511bc32de5ffb30a7664c4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/goal.txt",
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/native/receipt.json",
+      "sha256": "fb792425117e539739a9667d3700419634d2702027b5425cd0b9592f0f59695c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/native/muse-msp.jsonl",
+      "sha256": "c406d30c6a5b80343acc135d10298c195ba477fd565f217bc15d3b38dc339a83"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/native/muse-stderr.log",
+      "sha256": "499be04a2f7719f49bde44f4fe3eff958ac2e6f6b27b13056c974356b14dc970"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/operator-receipt.json",
+      "sha256": "fd69ad5e46639507a253946ad35974708129dd03b24636a5ac616b006116ac0b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/boundary-receipt.json",
+      "sha256": "fd1cf7aa119b2353da3063ffec55790dd37acf3e3ebe0d2e7484298754b9b427"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/output-integrity.json",
+      "sha256": "335ed94b6155a02fb3aafb5e5d786be60523ee3b16e30766f704b6396a8a5f09"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/driver.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/driver-process.json",
+      "sha256": "e57d0062e2830316b231835b3b2b13f1fd6d92aec0694c147702b30738409c68"
+    }
+  ]
+}

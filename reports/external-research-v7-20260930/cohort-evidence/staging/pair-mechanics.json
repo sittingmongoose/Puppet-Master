@@ -1,0 +1,54 @@
+[
+  {
+    "pair_id": "t01-m-ome-batching-screen-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/pair.json",
+    "sha256": "34e98248ad9b0c136489fa590d45b90db8a41a7ed6c40cfa0768444362eabc96",
+    "declared_source_unique_bytes": 42313,
+    "declared_cumulative_admitted_bytes": 126939,
+    "caps": {
+      "t01-m-ome-batching-screen-v1-control-opening": {
+        "seconds": 450,
+        "responses": 48
+      },
+      "t01-m-ome-batching-screen-v1-control-display": {
+        "seconds": 450,
+        "responses": 48
+      },
+      "t01-m-ome-batching-screen-v1-treatment": {
+        "seconds": 900,
+        "responses": 96
+      }
+    },
+    "note": "admitted source/brief bytes, not total discovered source content or native input-token usage"
+  },
+  {
+    "pair_id": "t09-m-azure-discovery-screen-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/pair.json",
+    "sha256": "ddd516823c3cc5545fa326be48364c0f7ebb6103b0be4323ca4d3c7bb2b820fe",
+    "declared_source_unique_bytes": 1009,
+    "declared_cumulative_admitted_bytes": null,
+    "caps": {
+      "seconds": 900,
+      "responses": 96
+    },
+    "note": "admitted source/brief bytes, not total discovered source content or native input-token usage"
+  },
+  {
+    "pair_id": "t03-z-ome-render-screen-v2",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/pair.json",
+    "sha256": "47f4d9b3e8d56ac95a5332f409e3eba37cda3474f943fdf7201d56467cf44677",
+    "declared_source_unique_bytes": 59190,
+    "declared_cumulative_admitted_bytes": 101503,
+    "caps": {
+      "t03-z-ome-render-screen-v2-control": {
+        "seconds": 900,
+        "responses": 96
+      },
+      "t03-z-ome-render-screen-v2-treatment": {
+        "seconds": 900,
+        "responses": 96
+      }
+    },
+    "note": "admitted source/brief bytes, not total discovered source content or native input-token usage"
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "schema": "er7.topology_aggregate.v1",
+  "pair_id": "t01-m-ome-batching-screen-v1",
+  "all_assigned_control_jobs": [
+    {
+      "job_id": "t01-m-ome-batching-screen-v1-control-opening",
+      "report_sha256": "b2787274713eeb8c6c35cf4b54673487d1c261c109227cbaffaa9a3065c5ac58",
+      "report_bytes": 68950,
+      "native_stop_reason": "cap_seconds_whole_assignment",
+      "structural_complete": true,
+      "scope": "Opening a fileset, listing/selecting images, and navigating multiresolution data. Other group is independently assigned; use full source for qualifications.",
+      "semantic_rewrite": false
+    },
+    {
+      "job_id": "t01-m-ome-batching-screen-v1-control-display",
+      "report_sha256": "e48b100e8ca66625545301f32bfe484bd1a3ea4fefbbc5b54d145eb148326f8c",
+      "report_bytes": 34635,
+      "native_stop_reason": "goal_complete",
+      "structural_complete": true,
+      "scope": "Channel/time/plane display, coordinate details, and associated label overlays. Other group is independently assigned; use full source for qualifications.",
+      "semantic_rewrite": false
+    }
+  ],
+  "report_sha256": "ee46456cc6bc54766069e7e23115b24ac7a1fe64b710fb66a9c061e677923b8c",
+  "aggregation": "All source report bodies concatenated verbatim; only mechanical assignment/status headings added.",
+  "evaluation": "Entire sum of both declared scopes; capped or missing assignments cannot be dropped."
+}

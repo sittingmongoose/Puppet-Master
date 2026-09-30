@@ -1,0 +1,74 @@
+{
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/native/receipt.json",
+  "source_sha256": "0afbed3179a3140faed781428115001282b3278f96ace882d30af919252378c9",
+  "projection": "exact selected fields; omitted fields remain private",
+  "schema": "er6.goal_receipt.v1",
+  "label": "t01-m-ome-batching-screen-v1-control-opening",
+  "app": "muse",
+  "native_goal_entry": "/goal via MSP goal/set",
+  "prompt_bytes": 250,
+  "prompt_sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+  "objective_sha256": "7a4b29cff9c5491b0f0e337a9fdba91289419045d0929b20b27477ea33b7afab",
+  "caps": {
+    "seconds": 450.0,
+    "responses": 48
+  },
+  "start_utc": "2026-09-30T14:58:32.837898+00:00",
+  "fresh_session": true,
+  "session_id": "01a0f2d3-0e8a-7bd0-80b5-7c54f0c60da6",
+  "model_id": "muse-spark-1.3-contributor",
+  "provider_id": "meta",
+  "effort_ack": "accepted",
+  "effort_effective": "max",
+  "goal_submitted_utc": "2026-09-30T14:58:33.474942+00:00",
+  "goal_ack": {
+    "commandId": "01a0f2d3-0f82-7892-8ae9-dda9e42b7be2",
+    "status": "accepted",
+    "turnId": "01a0f2d3-0f82-7892-8ae9-dda9e42b7be2"
+  },
+  "stop_reason": "cap_seconds_whole_assignment",
+  "native_responses": 14,
+  "counters": {
+    "token_usage_events": 14,
+    "prompt_tokens": 559155,
+    "last_cumulative": {
+      "outputTokens": 25078,
+      "promptTokens": 559155,
+      "totalTokens": 584233
+    },
+    "turns_started": 1,
+    "turns_completed": [],
+    "inputTokens": 559155,
+    "outputTokens": 25078,
+    "reasoningTokens": 5605,
+    "cacheReadTokens": 491325,
+    "cacheWriteTokens": 0,
+    "cachedTokens": 491325
+  },
+  "cleanup_actions": [
+    {
+      "method": "goal/pause",
+      "result": {
+        "commandId": "01a0f2d9-75a6-7df5-85f2-dbad93407276",
+        "status": "accepted"
+      }
+    },
+    {
+      "method": "turn/interrupt",
+      "result": {
+        "commandId": "01a0f2d9-75a6-7e22-ae8a-1ca6cff09977",
+        "status": "accepted",
+        "turnId": "01a0f2d3-0f82-7892-8ae9-dda9e42b7be2"
+      }
+    }
+  ],
+  "native_process_returncode": 0,
+  "own_process_group_absent": true,
+  "native_quiescent": true,
+  "startup_cleanup_elapsed_seconds": 420.291,
+  "caps_include_setup_and_cleanup": true,
+  "receipt_written_utc": "2026-09-30T15:05:33.006721+00:00",
+  "namespace_process_returncode": 1,
+  "namespace_exited": true,
+  "quiescence_basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+}

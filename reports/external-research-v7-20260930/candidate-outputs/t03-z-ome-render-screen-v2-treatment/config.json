@@ -1,0 +1,124 @@
+{
+  "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/treatment/attempt.json",
+  "source_sha256": "853d01f6cfd2a9c134d316d0741cfcd3b3003c922cc58ca547e610550b0a1eca",
+  "spec": {
+    "job_id": "t03-z-ome-render-screen-v2-treatment",
+    "method": "T03",
+    "arm": "treatment",
+    "family": "Z",
+    "case_id": "ome-normative-dev-v1",
+    "scope": "Entire admitted case assignment and source corpus.",
+    "inputs": [
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+        "target": "brief.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/TASK.md",
+        "target": "TASK.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/catalog.json",
+        "target": "catalog.json"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/sources/S003.txt",
+        "target": "sources/S003.txt"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/plan/Viewer.md",
+        "target": "plan/Viewer.md"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/mechanics.py",
+        "target": "mechanics.py"
+      }
+    ],
+    "admitted_inputs": [
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+        "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/TASK.md",
+        "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/catalog.json",
+        "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/sources/S003.txt",
+        "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/plan/Viewer.md",
+        "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d"
+      },
+      {
+        "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/mechanics.py",
+        "sha256": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d"
+      }
+    ],
+    "caps": {
+      "seconds": 900,
+      "responses": 96
+    },
+    "output_files": [
+      "report.md",
+      "acquisition.json",
+      "history.json",
+      "versions_manifest.json"
+    ],
+    "source_access": "Only admitted frozen source captures; no live external fetching.",
+    "plan_visibility": "Admitted thin plan visible; no evaluator keys or historical outputs.",
+    "evaluation_obligations": "All material claims, full assigned scope including unvisited/dead-end areas, unsupported assertions, false dismissals, conditions, source fit, novelty, complete elapsed and usage costs.",
+    "zcode_tools": [
+      "Read",
+      "Write",
+      "Bash"
+    ],
+    "method_instruction": "Write each complete finding version as one JSON file in out/versions/ named <id>.<version:04d>.json. Fields: id (stable alphanumeric/underscore/hyphen), version (consecutive integer from1), previous_sha256 (null for1, otherwise SHA256 of the exact preceding version file bytes), state (current|unresolved|rejected), body (complete standalone Markdown finding including conditions, source locators, implications, uncertainty and proposed validation), validation (optional list of {status:\"UNEXECUTED\",text:\"UNEXECUTED ...\"} or {status:\"executed\",text,execution_evidence}). Every revision is a WHOLE finding, not a patch; retain earlier files unchanged. Write complete versions atomically using a temporary file outside versions then rename. After research run: python3 inputs/mechanics.py render --source out/versions --report out/report.md --history out/history.json. Do not rewrite the rendered report. The host separately retains valid version snapshots during your Goal; this is not a native Write submission protocol or acknowledgement. Deliver a standalone current report with complete independent finding identities, exact evidence locators and source versions, applicability/transfer limits, plan implications where a plan is admitted, unresolved areas and proposed validation labeled UNEXECUTED. Also write acquisition.json recording selected source URLs/versions, queries/reads and finding-to-source links; do not invent access or execution evidence. Source choice and interpretation are your own. A failed search proves only that search result, not absence.",
+    "candidate_instructions": "At completion write versions_manifest.json listing all version filenames and exact SHA256s."
+  },
+  "input_manifest": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+      "target": "brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/TASK.md",
+      "target": "TASK.md",
+      "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+      "bytes": 1367
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/catalog.json",
+      "target": "catalog.json",
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/sources/S003.txt",
+      "target": "sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/plan/Viewer.md",
+      "target": "plan/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/mechanics.py",
+      "target": "mechanics.py",
+      "sha256": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+      "bytes": 16877
+    }
+  ],
+  "prepared_status": "prepared-not-started",
+  "status_note": "prepared status is creation-time only; native receipt is terminal authority"
+}

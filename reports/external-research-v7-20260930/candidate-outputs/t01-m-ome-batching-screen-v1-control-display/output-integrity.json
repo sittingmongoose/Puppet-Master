@@ -1,0 +1,26 @@
+{
+  "schema": "er7.output_integrity.v1",
+  "files": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/workspace/out/acquisition.json",
+      "target": "out/acquisition.json",
+      "sha256": "8cfd2ae809a88a49927373b1b6333edfcfccdd63321d8a6e24c3ba5f0877b2d3",
+      "bytes": 7067
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/workspace/out/report.md",
+      "target": "out/report.md",
+      "sha256": "e48b100e8ca66625545301f32bfe484bd1a3ea4fefbbc5b54d145eb148326f8c",
+      "bytes": 34635
+    }
+  ],
+  "missing_required_outputs": [],
+  "structural_complete": true,
+  "semantic_quality": "not evaluated",
+  "native_quiescence": "established in native/receipt.json",
+  "native_receipt_sha256": "2b4b037ccecc20736975a2bca376bfd8a3070755ef6d669a79dc5828c08c7c62",
+  "stable_output_hashes": {
+    "acquisition.json": "8cfd2ae809a88a49927373b1b6333edfcfccdd63321d8a6e24c3ba5f0877b2d3",
+    "report.md": "e48b100e8ca66625545301f32bfe484bd1a3ea4fefbbc5b54d145eb148326f8c"
+  }
+}

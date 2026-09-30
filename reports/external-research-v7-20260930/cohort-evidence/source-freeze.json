@@ -1,0 +1,765 @@
+{
+  "as_of_utc": "2026-09-30T16:24:47.383306+00:00",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/staging-resume-v1/MANIFEST.sha256.json": {
+      "sha256": "f11b2d6f58dd4bd87298d05b09a8bdf26ef3386da5bea7ac2f1ff0474553982a",
+      "bytes": 40171
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/staging-resume-v1/accounting.json": {
+      "sha256": "a4a77a50dd3dc32c5cbde323b423d8646fb067b0e3bf022f44c0caa4086b65c7",
+      "bytes": 36738
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/staging-resume-v1/verification.json": {
+      "sha256": "ce60228cffc1ed89591f72ed7db2ea84c3a1b8a01643b173a36ffc70f34ae01d",
+      "bytes": 7876
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/staging-resume-v1/pair-mechanics.json": {
+      "sha256": "b8120065ea311b5b4fdbaf68fc4da6d9d582fcdc3203c69c59eba076b9260e73",
+      "bytes": 2076
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/staging-resume-v1/pairs.json": {
+      "sha256": "84dda7e2eac81c7f55132819ec7ab2fca275eec310ddea5a7019b6b031a89586",
+      "bytes": 1630
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/staging-resume-v1/resume-boundary-accounting.json": {
+      "sha256": "270d817b8b62f1b047999c9a4d4d9518ea9f82342c3475beeaa8dc39dd3ee765",
+      "bytes": 35321
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/pair.json": {
+      "sha256": "34e98248ad9b0c136489fa590d45b90db8a41a7ed6c40cfa0768444362eabc96",
+      "bytes": 4002
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/attempt.json": {
+      "sha256": "f402239f7357b0e0e69c97674a4ac7f01d21e54de5dec04341b3d5b9358d3356",
+      "bytes": 7196
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/goal.txt": {
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/workspace/TASK.md": {
+      "sha256": "0c93adc939f1adc6dd149e499da9cca1d6259581cb40cb22ed7ef4ca5e8d5033",
+      "bytes": 3061
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/output-integrity.json": {
+      "sha256": "c690ea432422b7946cdc2ef18b2a0a0cf774a183b181e7a1d8f4b13a8c83b652",
+      "bytes": 1588
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/native/receipt.json": {
+      "sha256": "0afbed3179a3140faed781428115001282b3278f96ace882d30af919252378c9",
+      "bytes": 3130
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/workspace/out/acquisition.json": {
+      "sha256": "a9fd3cc5aa10ed76066a0cdf7b70f775c86cd7b141c61480c1880504218a95cf",
+      "bytes": 3670
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/workspace/out/report.md": {
+      "sha256": "b2787274713eeb8c6c35cf4b54673487d1c261c109227cbaffaa9a3065c5ac58",
+      "bytes": 68950
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/attempt.json": {
+      "sha256": "e2b0c6f37c14b4e21908f140c4183674e3182b13ba75351f93c656e70de893c0",
+      "bytes": 7193
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/goal.txt": {
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/workspace/TASK.md": {
+      "sha256": "2e9f2135682dac38579d2296b892a0788871e6e6876d1aee3d1a04655e259fd9",
+      "bytes": 3058
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/output-integrity.json": {
+      "sha256": "a19ae77e147eaad335574fb5ed70338ce0dc9fab9ec55da0abce2f6c9ee1fe0f",
+      "bytes": 1187
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/native/receipt.json": {
+      "sha256": "2b4b037ccecc20736975a2bca376bfd8a3070755ef6d669a79dc5828c08c7c62",
+      "bytes": 3945
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/workspace/out/acquisition.json": {
+      "sha256": "8cfd2ae809a88a49927373b1b6333edfcfccdd63321d8a6e24c3ba5f0877b2d3",
+      "bytes": 7067
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/workspace/out/report.md": {
+      "sha256": "e48b100e8ca66625545301f32bfe484bd1a3ea4fefbbc5b54d145eb148326f8c",
+      "bytes": 34635
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment/attempt.json": {
+      "sha256": "2c14e7373e1b6c6d495b195a034687b84060c4d1be37f70acdb08e857f6167f8",
+      "bytes": 7175
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment/goal.txt": {
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment/workspace/TASK.md": {
+      "sha256": "66eed55e0b81b939e00b44626840c76d40337cbc09dbbf1539e90f2ddb493ffa",
+      "bytes": 3090
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment/output-integrity.json": {
+      "sha256": "ce251387dc8c8f90a243593d44386459bde6712365623d21b907fc627f07fa8d",
+      "bytes": 1175
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment/native/receipt.json": {
+      "sha256": "5fa1f748c69d4d718461eecf667cd4d9afc5ca6e5bc0f0b9621b5b22d5555b17",
+      "bytes": 3619
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment/workspace/out/acquisition.json": {
+      "sha256": "c410896e5f6c5eb49974175c6d34c86d363042b33c7ab27a546537f265c5c829",
+      "bytes": 9522
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment/workspace/out/report.md": {
+      "sha256": "2d44a26eb3c99f67f8a891a753a5085d0e70e33d55b7bfd557680a5d7c9d26fb",
+      "bytes": 46280
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/aggregate-control-report.md": {
+      "sha256": "ee46456cc6bc54766069e7e23115b24ac7a1fe64b710fb66a9c061e677923b8c",
+      "bytes": 103858
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/aggregate-control-integrity.json": {
+      "sha256": "0ea75e33032b850e804126991d14938c8a8ad93a9475e40203ddc246ff929cad",
+      "bytes": 1415
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/pair.json": {
+      "sha256": "ddd516823c3cc5545fa326be48364c0f7ebb6103b0be4323ca4d3c7bb2b820fe",
+      "bytes": 1891
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/attempt.json": {
+      "sha256": "b122e67593a9316c5a03026974ff50367805795b2c897c0296fa5e8b40338756",
+      "bytes": 4233
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/goal.txt": {
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/workspace/TASK.md": {
+      "sha256": "7dbe6913354e0380662583cd14faca7bb4f64115a43e0a161614679a5f6cb198",
+      "bytes": 2906
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/output-integrity.json": {
+      "sha256": "408e71f2f8bbe288af1e3f3df3eec4056f8b891c838d87945477b3549175f6c2",
+      "bytes": 1598
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/native/receipt.json": {
+      "sha256": "3b7b947519346e3202b42e0998660c33378730c80ba608c462d93a5cb8970588",
+      "bytes": 3936
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/workspace/out/acquisition.json": {
+      "sha256": "87c793da470c04453a57fa1f2ad85b1d1651c1e4a48ff874ac40f1b40e1525b6",
+      "bytes": 14549
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/workspace/out/report.md": {
+      "sha256": "d2b4132166e420b8fb1ea7861d0d0cd41a1dac55a1947cb79e21211ddaf70df1",
+      "bytes": 29457
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/attempt.json": {
+      "sha256": "5ba1d98ef1e3021cf1f6267f60f1118b07f27f19656166979a64f6bd509bc76f",
+      "bytes": 4419
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/goal.txt": {
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/workspace/TASK.md": {
+      "sha256": "aafd3af6ea8ad89fa99eed7131eea7877de005ab567fd46526aed3327d0e4a42",
+      "bytes": 3086
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/output-integrity.json": {
+      "sha256": "b6ad3c5118912e597f837407c1f34073f1a5ec62c9a912cb30125973b7dc75df",
+      "bytes": 1604
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/native/receipt.json": {
+      "sha256": "a61418de7c1769275d0c7957fe6154a49f0943fe22a38fa24c3bd74c6f134209",
+      "bytes": 3942
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/workspace/out/acquisition.json": {
+      "sha256": "210fad3e89c6e270fa35a7b86956e0165cd35125d71bd7422d0d9d2d66c07148",
+      "bytes": 14553
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/workspace/out/report.md": {
+      "sha256": "b80a7669fef0485f08d0465a09f58847321552a02ed7f81ef8850029e3659cf2",
+      "bytes": 23768
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/pair.json": {
+      "sha256": "47f4d9b3e8d56ac95a5332f409e3eba37cda3474f943fdf7201d56467cf44677",
+      "bytes": 5112
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control/attempt.json": {
+      "sha256": "9a3322c89f66935be0d3311edc971565a0526dbb24130840f5c3d046ed573df6",
+      "bytes": 6914
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control/goal.txt": {
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control/workspace/TASK.md": {
+      "sha256": "8a4fa70efadb6ca20cc1b14acb06ff1821e785a69b03a247d53a047a43e92a37",
+      "bytes": 2895
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control/output-integrity.json": {
+      "sha256": "91063ae07844eb22f2fbea27a07705da2d7d5f538ce9e4415b469b7672cff842",
+      "bytes": 811
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control/native/receipt.json": {
+      "sha256": "d15fca5d5f614581743a34d65fd134f17238c02c7ad24e4642cc38253b49e17a",
+      "bytes": 247986
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control/workspace/out/observations.md": {
+      "sha256": "b9eb4826d930a12dd2ef864ba6ac00d18e8f6c258a224cab8ba66e1cf5efa256",
+      "bytes": 14331
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/treatment/attempt.json": {
+      "sha256": "853d01f6cfd2a9c134d316d0741cfcd3b3003c922cc58ca547e610550b0a1eca",
+      "bytes": 8587
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/treatment/goal.txt": {
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/treatment/workspace/TASK.md": {
+      "sha256": "b84beb9b91ca06fa0d905d1ea002ba3e6d75e4b4371c202d0731805f5cdc14d5",
+      "bytes": 3929
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/treatment/output-integrity.json": {
+      "sha256": "24716483a899d864203912232d9b187866a4bb580fc78795ba908214e6a186d1",
+      "bytes": 441
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/treatment/native/receipt.json": {
+      "sha256": "48d0226fe263231aa6d9e7c80dc81e42a3d3d70a7e6b5b3aef60c390b5c46746",
+      "bytes": 127210
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/pair.json": {
+      "sha256": "088d8f92daade34288e85ccbd60f1128b57b5de467c5784ef27d940335909d8e",
+      "bytes": 3787
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/attempt.json": {
+      "sha256": "78845a3ae561fa456af1826377ebf45b30cd1763afc8e7ef218ecd2e4e0188e0",
+      "bytes": 8246
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/goal.txt": {
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/workspace/TASK.md": {
+      "sha256": "df03413bbea4ba7026842b82b9fbde75d2c397dbad9dc6d70fd6194c262a972f",
+      "bytes": 2946
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/output-integrity.json": {
+      "sha256": "45ae57956d02f893b6f363b9020b396184fb73788e65cadf4bfedc2ee4c14fc0",
+      "bytes": 416
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/native/receipt.json": {
+      "sha256": "a5973e4a03303388475a5a7a525559e6ba91c00f085110969e62e5eb03456dde",
+      "bytes": 3648
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/attempt.json": {
+      "sha256": "9aae051ada5c6b021a4d92a87b4a188858af51b2c3511bc32de5ffb30a7664c4",
+      "bytes": 8915
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/goal.txt": {
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/workspace/TASK.md": {
+      "sha256": "e938ca5e1b1d613b448e7c5cd4f3a7a58267cd200d5d184e5d13bb1a3f24cffa",
+      "bytes": 3601
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/output-integrity.json": {
+      "sha256": "335ed94b6155a02fb3aafb5e5d786be60523ee3b16e30766f704b6396a8a5f09",
+      "bytes": 433
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/native/receipt.json": {
+      "sha256": "fb792425117e539739a9667d3700419634d2702027b5425cd0b9592f0f59695c",
+      "bytes": 3656
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/t03-restart-finalization/receipt.json": {
+      "sha256": "21e8f3ab7985ec972419f579501dcc55b134b9dc51ff9b55ed45a99d08700184",
+      "bytes": 2713
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/implementation-manifest.json": {
+      "sha256": "2f72a684c0222cc742237224254da667d6630cd5e22a1a10066849615040979d",
+      "bytes": 1665
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/aggregate_t01.py": {
+      "sha256": "b859ab37aec8b6b253e47a88201a5f6343b8701c49397ea0532b50b959657631",
+      "bytes": 3213
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/cards.py": {
+      "sha256": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+      "bytes": 9512
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/mechanics.py": {
+      "sha256": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+      "bytes": 16877
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/prepare_methods.py": {
+      "sha256": "112bac2993eb0fdd308cf64684d98da921e27cca61f76391decd7310c17b1d0e",
+      "bytes": 14677
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/test_mechanics.py": {
+      "sha256": "a7bcc9c3a77a01de85b4af77f0931d99f308ac0872636f6f181388d367271115",
+      "bytes": 4865
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/test_methods.py": {
+      "sha256": "7c7bea10b2286d3fc6a658ed54fac6ca4a33db564b57b1b0ca2ecad134610f1d",
+      "bytes": 4043
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/root-t13-t14-card-acceptance.json": {
+      "sha256": "a24a2993d01c3a4dff64020130cf60c10cfc292c19a686e9312deb7b124e382f",
+      "bytes": 2674
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/slots.json": {
+      "sha256": "4cb1212178a24c67de5dc91eb9065c2aee1c8f3c0f8dcae6ce24c06a68a4b352",
+      "bytes": 37598
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/dependency_tool.py": {
+      "sha256": "695ea8e772a8027390fe08b18417b2b0d8fb8405916de2a9b1525f1807422221",
+      "bytes": 4258
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/repo_map_tool.py": {
+      "sha256": "1e77cbce376b649cb40b24bf2dc58201bf7a41b86eff2a830cf24befd27306ec",
+      "bytes": 2860
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/seed_report.py": {
+      "sha256": "28b2cba63ed77e9b417ce84b347c80dae6c89421e1b77b2e56094f8f2c9595f1",
+      "bytes": 2353
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/catalog.json": {
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/luna-carrier-adjudication.json": {
+      "sha256": "33ec738c151a3f942fd6b9008d1e875aede4690b8e1b3637a61f91a04d368080",
+      "bytes": 18461
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/luna-carrier-adjudication.md": {
+      "sha256": "fdbcdbcc4e0983f53081920cc390c244db8ccda2123df4deef162f0a37c7baf0",
+      "bytes": 3810
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/t13-blocked-diagnosis.json": {
+      "sha256": "6b640dd0494e16001bc2c45c4fb3da182a85b8617ea132dc7a19f64a03da2920",
+      "bytes": 22507
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/t13-blocked-diagnosis.md": {
+      "sha256": "6f0023a48e6572e57ddc15f4f0c71d455b83d1fec822db2a0c20bb8ad62d7c1a",
+      "bytes": 3860
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/z-auth-readability-v1.json": {
+      "sha256": "69572524136efae2fc0dcfa59dab8f50dd00fb456659e5a076cca5c06dfe8b00",
+      "bytes": 434
+    }
+  },
+  "copies": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/staging-resume-v1/accounting.json",
+      "published": "cohort-evidence/staging/accounting.json",
+      "sha256": "a4a77a50dd3dc32c5cbde323b423d8646fb067b0e3bf022f44c0caa4086b65c7",
+      "bytes": 36738
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/staging-resume-v1/verification.json",
+      "published": "cohort-evidence/staging/verification.json",
+      "sha256": "ce60228cffc1ed89591f72ed7db2ea84c3a1b8a01643b173a36ffc70f34ae01d",
+      "bytes": 7876
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/staging-resume-v1/pair-mechanics.json",
+      "published": "cohort-evidence/staging/pair-mechanics.json",
+      "sha256": "b8120065ea311b5b4fdbaf68fc4da6d9d582fcdc3203c69c59eba076b9260e73",
+      "bytes": 2076
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/staging-resume-v1/pairs.json",
+      "published": "cohort-evidence/staging/pairs.json",
+      "sha256": "84dda7e2eac81c7f55132819ec7ab2fca275eec310ddea5a7019b6b031a89586",
+      "bytes": 1630
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/staging-resume-v1/resume-boundary-accounting.json",
+      "published": "cohort-evidence/staging/resume-boundary-accounting.json",
+      "sha256": "270d817b8b62f1b047999c9a4d4d9518ea9f82342c3475beeaa8dc39dd3ee765",
+      "bytes": 35321
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/staging-resume-v1/MANIFEST.sha256.json",
+      "published": "cohort-evidence/staging/MANIFEST.sha256.json",
+      "sha256": "f11b2d6f58dd4bd87298d05b09a8bdf26ef3386da5bea7ac2f1ff0474553982a",
+      "bytes": 40171
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/pair.json",
+      "published": "cohort-evidence/pairs/t01-m-ome-batching-screen-v1.json",
+      "sha256": "34e98248ad9b0c136489fa590d45b90db8a41a7ed6c40cfa0768444362eabc96",
+      "bytes": 4002
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/goal.txt",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-control-opening/goal.txt",
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/workspace/TASK.md",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-control-opening/TASK.md",
+      "sha256": "0c93adc939f1adc6dd149e499da9cca1d6259581cb40cb22ed7ef4ca5e8d5033",
+      "bytes": 3061
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/output-integrity.json",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-control-opening/output-integrity.json",
+      "sha256": "c690ea432422b7946cdc2ef18b2a0a0cf774a183b181e7a1d8f4b13a8c83b652",
+      "bytes": 1588
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/workspace/out/acquisition.json",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-control-opening/acquisition.json",
+      "sha256": "a9fd3cc5aa10ed76066a0cdf7b70f775c86cd7b141c61480c1880504218a95cf",
+      "bytes": 3670
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/workspace/out/report.md",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-control-opening/report.md",
+      "sha256": "b2787274713eeb8c6c35cf4b54673487d1c261c109227cbaffaa9a3065c5ac58",
+      "bytes": 68950
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/goal.txt",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-control-display/goal.txt",
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/workspace/TASK.md",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-control-display/TASK.md",
+      "sha256": "2e9f2135682dac38579d2296b892a0788871e6e6876d1aee3d1a04655e259fd9",
+      "bytes": 3058
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/output-integrity.json",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-control-display/output-integrity.json",
+      "sha256": "a19ae77e147eaad335574fb5ed70338ce0dc9fab9ec55da0abce2f6c9ee1fe0f",
+      "bytes": 1187
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/workspace/out/acquisition.json",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-control-display/acquisition.json",
+      "sha256": "8cfd2ae809a88a49927373b1b6333edfcfccdd63321d8a6e24c3ba5f0877b2d3",
+      "bytes": 7067
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/workspace/out/report.md",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-control-display/report.md",
+      "sha256": "e48b100e8ca66625545301f32bfe484bd1a3ea4fefbbc5b54d145eb148326f8c",
+      "bytes": 34635
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment/goal.txt",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-treatment/goal.txt",
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment/workspace/TASK.md",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-treatment/TASK.md",
+      "sha256": "66eed55e0b81b939e00b44626840c76d40337cbc09dbbf1539e90f2ddb493ffa",
+      "bytes": 3090
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment/output-integrity.json",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-treatment/output-integrity.json",
+      "sha256": "ce251387dc8c8f90a243593d44386459bde6712365623d21b907fc627f07fa8d",
+      "bytes": 1175
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment/workspace/out/acquisition.json",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-treatment/acquisition.json",
+      "sha256": "c410896e5f6c5eb49974175c6d34c86d363042b33c7ab27a546537f265c5c829",
+      "bytes": 9522
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment/workspace/out/report.md",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-treatment/report.md",
+      "sha256": "2d44a26eb3c99f67f8a891a753a5085d0e70e33d55b7bfd557680a5d7c9d26fb",
+      "bytes": 46280
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/aggregate-control-report.md",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-aggregate-control/report.md",
+      "sha256": "ee46456cc6bc54766069e7e23115b24ac7a1fe64b710fb66a9c061e677923b8c",
+      "bytes": 103858
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/aggregate-control-integrity.json",
+      "published": "candidate-outputs/t01-m-ome-batching-screen-v1-aggregate-control/output-integrity.json",
+      "sha256": "0ea75e33032b850e804126991d14938c8a8ad93a9475e40203ddc246ff929cad",
+      "bytes": 1415
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/pair.json",
+      "published": "cohort-evidence/pairs/t09-m-azure-discovery-screen-v1.json",
+      "sha256": "ddd516823c3cc5545fa326be48364c0f7ebb6103b0be4323ca4d3c7bb2b820fe",
+      "bytes": 1891
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/goal.txt",
+      "published": "candidate-outputs/t09-m-azure-discovery-screen-v1-control/goal.txt",
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/workspace/TASK.md",
+      "published": "candidate-outputs/t09-m-azure-discovery-screen-v1-control/TASK.md",
+      "sha256": "7dbe6913354e0380662583cd14faca7bb4f64115a43e0a161614679a5f6cb198",
+      "bytes": 2906
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/output-integrity.json",
+      "published": "candidate-outputs/t09-m-azure-discovery-screen-v1-control/output-integrity.json",
+      "sha256": "408e71f2f8bbe288af1e3f3df3eec4056f8b891c838d87945477b3549175f6c2",
+      "bytes": 1598
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/workspace/out/acquisition.json",
+      "published": "candidate-outputs/t09-m-azure-discovery-screen-v1-control/acquisition.json",
+      "sha256": "87c793da470c04453a57fa1f2ad85b1d1651c1e4a48ff874ac40f1b40e1525b6",
+      "bytes": 14549
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/workspace/out/report.md",
+      "published": "candidate-outputs/t09-m-azure-discovery-screen-v1-control/report.md",
+      "sha256": "d2b4132166e420b8fb1ea7861d0d0cd41a1dac55a1947cb79e21211ddaf70df1",
+      "bytes": 29457
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/goal.txt",
+      "published": "candidate-outputs/t09-m-azure-discovery-screen-v1-treatment/goal.txt",
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/workspace/TASK.md",
+      "published": "candidate-outputs/t09-m-azure-discovery-screen-v1-treatment/TASK.md",
+      "sha256": "aafd3af6ea8ad89fa99eed7131eea7877de005ab567fd46526aed3327d0e4a42",
+      "bytes": 3086
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/output-integrity.json",
+      "published": "candidate-outputs/t09-m-azure-discovery-screen-v1-treatment/output-integrity.json",
+      "sha256": "b6ad3c5118912e597f837407c1f34073f1a5ec62c9a912cb30125973b7dc75df",
+      "bytes": 1604
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/workspace/out/acquisition.json",
+      "published": "candidate-outputs/t09-m-azure-discovery-screen-v1-treatment/acquisition.json",
+      "sha256": "210fad3e89c6e270fa35a7b86956e0165cd35125d71bd7422d0d9d2d66c07148",
+      "bytes": 14553
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/workspace/out/report.md",
+      "published": "candidate-outputs/t09-m-azure-discovery-screen-v1-treatment/report.md",
+      "sha256": "b80a7669fef0485f08d0465a09f58847321552a02ed7f81ef8850029e3659cf2",
+      "bytes": 23768
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/pair.json",
+      "published": "cohort-evidence/pairs/t03-z-ome-render-screen-v2.json",
+      "sha256": "47f4d9b3e8d56ac95a5332f409e3eba37cda3474f943fdf7201d56467cf44677",
+      "bytes": 5112
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control/goal.txt",
+      "published": "candidate-outputs/t03-z-ome-render-screen-v2-control/goal.txt",
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control/workspace/TASK.md",
+      "published": "candidate-outputs/t03-z-ome-render-screen-v2-control/TASK.md",
+      "sha256": "8a4fa70efadb6ca20cc1b14acb06ff1821e785a69b03a247d53a047a43e92a37",
+      "bytes": 2895
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control/output-integrity.json",
+      "published": "candidate-outputs/t03-z-ome-render-screen-v2-control/output-integrity.json",
+      "sha256": "91063ae07844eb22f2fbea27a07705da2d7d5f538ce9e4415b469b7672cff842",
+      "bytes": 811
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control/workspace/out/observations.md",
+      "published": "candidate-outputs/t03-z-ome-render-screen-v2-control/observations.md",
+      "sha256": "b9eb4826d930a12dd2ef864ba6ac00d18e8f6c258a224cab8ba66e1cf5efa256",
+      "bytes": 14331
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/treatment/goal.txt",
+      "published": "candidate-outputs/t03-z-ome-render-screen-v2-treatment/goal.txt",
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/treatment/workspace/TASK.md",
+      "published": "candidate-outputs/t03-z-ome-render-screen-v2-treatment/TASK.md",
+      "sha256": "b84beb9b91ca06fa0d905d1ea002ba3e6d75e4b4371c202d0731805f5cdc14d5",
+      "bytes": 3929
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/treatment/output-integrity.json",
+      "published": "candidate-outputs/t03-z-ome-render-screen-v2-treatment/output-integrity.json",
+      "sha256": "24716483a899d864203912232d9b187866a4bb580fc78795ba908214e6a186d1",
+      "bytes": 441
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/pair.json",
+      "published": "cohort-evidence/pairs/t13-m-ome-amendments-screen-v1.json",
+      "sha256": "088d8f92daade34288e85ccbd60f1128b57b5de467c5784ef27d940335909d8e",
+      "bytes": 3787
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/goal.txt",
+      "published": "candidate-outputs/t13-m-ome-amendments-screen-v1-control/goal.txt",
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/workspace/TASK.md",
+      "published": "candidate-outputs/t13-m-ome-amendments-screen-v1-control/TASK.md",
+      "sha256": "df03413bbea4ba7026842b82b9fbde75d2c397dbad9dc6d70fd6194c262a972f",
+      "bytes": 2946
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/output-integrity.json",
+      "published": "candidate-outputs/t13-m-ome-amendments-screen-v1-control/output-integrity.json",
+      "sha256": "45ae57956d02f893b6f363b9020b396184fb73788e65cadf4bfedc2ee4c14fc0",
+      "bytes": 416
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/goal.txt",
+      "published": "candidate-outputs/t13-m-ome-amendments-screen-v1-treatment/goal.txt",
+      "sha256": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+      "bytes": 250
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/workspace/TASK.md",
+      "published": "candidate-outputs/t13-m-ome-amendments-screen-v1-treatment/TASK.md",
+      "sha256": "e938ca5e1b1d613b448e7c5cd4f3a7a58267cd200d5d184e5d13bb1a3f24cffa",
+      "bytes": 3601
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/output-integrity.json",
+      "published": "candidate-outputs/t13-m-ome-amendments-screen-v1-treatment/output-integrity.json",
+      "sha256": "335ed94b6155a02fb3aafb5e5d786be60523ee3b16e30766f704b6396a8a5f09",
+      "bytes": 433
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/t03-restart-finalization/receipt.json",
+      "published": "cohort-evidence/t03-finalization.json",
+      "sha256": "21e8f3ab7985ec972419f579501dcc55b134b9dc51ff9b55ed45a99d08700184",
+      "bytes": 2713
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/aggregate_t01.py",
+      "published": "machinery/methods-v1/aggregate_t01.py",
+      "sha256": "b859ab37aec8b6b253e47a88201a5f6343b8701c49397ea0532b50b959657631",
+      "bytes": 3213
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/cards.py",
+      "published": "machinery/methods-v1/cards.py",
+      "sha256": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+      "bytes": 9512
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/mechanics.py",
+      "published": "machinery/methods-v1/mechanics.py",
+      "sha256": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+      "bytes": 16877
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/prepare_methods.py",
+      "published": "machinery/methods-v1/prepare_methods.py",
+      "sha256": "112bac2993eb0fdd308cf64684d98da921e27cca61f76391decd7310c17b1d0e",
+      "bytes": 14677
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/test_mechanics.py",
+      "published": "machinery/methods-v1/test_mechanics.py",
+      "sha256": "a7bcc9c3a77a01de85b4af77f0931d99f308ac0872636f6f181388d367271115",
+      "bytes": 4865
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/test_methods.py",
+      "published": "machinery/methods-v1/test_methods.py",
+      "sha256": "7c7bea10b2286d3fc6a658ed54fac6ca4a33db564b57b1b0ca2ecad134610f1d",
+      "bytes": 4043
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/implementation-manifest.json",
+      "published": "machinery/methods-v1/implementation-manifest.json",
+      "sha256": "2f72a684c0222cc742237224254da667d6630cd5e22a1a10066849615040979d",
+      "bytes": 1665
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/root-t13-t14-card-acceptance.json",
+      "published": "reviews/root-t13-t14-card-acceptance.json",
+      "sha256": "a24a2993d01c3a4dff64020130cf60c10cfc292c19a686e9312deb7b124e382f",
+      "bytes": 2674
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/dependency_tool.py",
+      "published": "machinery/methods-v1/dependency_tool.py",
+      "sha256": "695ea8e772a8027390fe08b18417b2b0d8fb8405916de2a9b1525f1807422221",
+      "bytes": 4258
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/repo_map_tool.py",
+      "published": "machinery/methods-v1/repo_map_tool.py",
+      "sha256": "1e77cbce376b649cb40b24bf2dc58201bf7a41b86eff2a830cf24befd27306ec",
+      "bytes": 2860
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/seed_report.py",
+      "published": "machinery/methods-v1/seed_report.py",
+      "sha256": "28b2cba63ed77e9b417ce84b347c80dae6c89421e1b77b2e56094f8f2c9595f1",
+      "bytes": 2353
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/catalog.json",
+      "published": "cohort-evidence/ome-normative-dev-v1-source-identities.json",
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/luna-carrier-adjudication.json",
+      "published": "reviews/luna-carrier-adjudication.json",
+      "sha256": "33ec738c151a3f942fd6b9008d1e875aede4690b8e1b3637a61f91a04d368080",
+      "bytes": 18461
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/luna-carrier-adjudication.md",
+      "published": "reviews/luna-carrier-adjudication.md",
+      "sha256": "fdbcdbcc4e0983f53081920cc390c244db8ccda2123df4deef162f0a37c7baf0",
+      "bytes": 3810
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/t13-blocked-diagnosis.json",
+      "published": "reviews/t13-blocked-diagnosis.json",
+      "sha256": "6b640dd0494e16001bc2c45c4fb3da182a85b8617ea132dc7a19f64a03da2920",
+      "bytes": 22507
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/t13-blocked-diagnosis.md",
+      "published": "reviews/t13-blocked-diagnosis.md",
+      "sha256": "6f0023a48e6572e57ddc15f4f0c71d455b83d1fec822db2a0c20bb8ad62d7c1a",
+      "bytes": 3860
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/z-auth-readability-v1.json",
+      "published": "reviews/z-auth-readability-v1.json",
+      "sha256": "69572524136efae2fc0dcfa59dab8f50dd00fb456659e5a076cca5c06dfe8b00",
+      "bytes": 434
+    }
+  ],
+  "staging_contract": "Verify consumed stager-manifest entries; do not publish sealed keys/raw sources/full native conversations",
+  "semantic_assessments": "Only final notified independent assessments may be added; no unfinished grader files copied"
+}

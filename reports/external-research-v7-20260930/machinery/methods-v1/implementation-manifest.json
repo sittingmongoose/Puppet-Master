@@ -1,0 +1,29 @@
+{
+  "schema": "er7.methods_implementation.v1",
+  "files": {
+    "aggregate_t01.py": "b859ab37aec8b6b253e47a88201a5f6343b8701c49397ea0532b50b959657631",
+    "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+    "dependency_tool.py": "695ea8e772a8027390fe08b18417b2b0d8fb8405916de2a9b1525f1807422221",
+    "incremental.py": "6b231a36a857b115cf3a2c05a366a30ef9464eb8c73e05fc4ed75288f57e27f7",
+    "mechanics.py": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+    "prepare_l_repair.py": "0b1c6c762b5403691c0bd51a03a5d19ec111038b28ff0ebeecfa6e2780bd2784",
+    "prepare_methods.py": "112bac2993eb0fdd308cf64684d98da921e27cca61f76391decd7310c17b1d0e",
+    "rebind_l_operator.py": "104b461cf9553a94c9b0c671fc56128049f2f71d6134c7042c44b8a4ed1b93e5",
+    "rebind_t03.py": "928be2af3f46656abef9d402e9ba20f2c6a421c526a61ec35c34f725bfb93712",
+    "repo_map_tool.py": "1e77cbce376b649cb40b24bf2dc58201bf7a41b86eff2a830cf24befd27306ec",
+    "repo_methods.py": "cce327aa1244a11ab00e2b095431999158337990e79a0c063373ab902881ec77",
+    "seed_report.py": "28b2cba63ed77e9b417ce84b347c80dae6c89421e1b77b2e56094f8f2c9595f1",
+    "test_mechanics.py": "a7bcc9c3a77a01de85b4af77f0931d99f308ac0872636f6f181388d367271115",
+    "test_methods.py": "7c7bea10b2286d3fc6a658ed54fac6ca4a33db564b57b1b0ca2ecad134610f1d",
+    "topology.py": "7284a6f71d49aace1b0f9141c896ac5fd644e0c18f492eb06b7b49dab8c7739e"
+  },
+  "offline_tests": {
+    "count": 7,
+    "result": "pass",
+    "scored_method_comparisons": 0
+  },
+  "candidate_starts_by_method_build": 0,
+  "canonical_writes": 0,
+  "private_keys_read": 0,
+  "native_launch_owner": "operators only"
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "case_id": "C017",
+    "reports": [
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R005",
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R006"
+    ],
+    "source_universe": [
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R005/inputs/source-universe.json",
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R006/inputs/source-universe.json"
+    ],
+    "status": "ready current-only"
+  },
+  {
+    "case_id": "C028",
+    "reports": [
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R007",
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R008"
+    ],
+    "source_universe": [
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R007/inputs/source-universe.json",
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R008/inputs/source-universe.json"
+    ],
+    "status": "ready current-only"
+  },
+  {
+    "case_id": "C039",
+    "reports": [
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R009",
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R010"
+    ],
+    "source_universe": [
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R009/inputs/source-universe.json",
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/grading/R010/inputs/source-universe.json"
+    ],
+    "status": "structural failure pair; missing final reports"
+  }
+]

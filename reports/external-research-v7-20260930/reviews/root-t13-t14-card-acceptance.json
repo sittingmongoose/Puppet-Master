@@ -1,0 +1,28 @@
+{
+  "schema": "er7.root_card_review.v1",
+  "reviewer": "root independent of card/machinery author",
+  "epoch": 1790784572.620774,
+  "decision": "accepted",
+  "scope": "T13/T14 prospective bounded prompt methods on unchanged independently accepted frozen M machinery",
+  "caveats": [
+    "T14 tests explicit scoped negative-check records beyond an already source-grounded control; not a claim that historical V-FOLLOWON implementation is repaired.",
+    "T13 fixed first T02 control seed selected before scores, not best-of or Sol answer.",
+    "Current reports graded before history/seed preservation."
+  ],
+  "files": {
+    "methods-v1/pairs/t13-m-ome-amendments-screen-v1/pair.json": "088d8f92daade34288e85ccbd60f1128b57b5de467c5784ef27d940335909d8e",
+    "methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment.spec.json": "7314081e43a226dcb53a97ce7067be244dc07bc86dbf5c7fc165486fabafc289",
+    "methods-v1/pairs/t13-m-ome-amendments-screen-v1/control.spec.json": "64db79fc5b6c9d1e6d3e296b70bd2e6331782c0f2e71d4516f6ea2ff58d905f4",
+    "methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/workspace/TASK.md": "df03413bbea4ba7026842b82b9fbde75d2c397dbad9dc6d70fd6194c262a972f",
+    "methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/workspace/inputs/TASK.md": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+    "methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/workspace/TASK.md": "e938ca5e1b1d613b448e7c5cd4f3a7a58267cd200d5d184e5d13bb1a3f24cffa",
+    "methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/workspace/inputs/TASK.md": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+    "methods-v1/pairs/t14-m-ome-negative-screen-v1/pair.json": "4fb5071e5f6221fc62be769be7eaf8f1b6b13efc579bb5355ac3a09dcb97589b",
+    "methods-v1/pairs/t14-m-ome-negative-screen-v1/treatment.spec.json": "6d59da34faa7f2a9f3442cad1681ae11afb8c23dfd0811e53a17ceccde22eb61",
+    "methods-v1/pairs/t14-m-ome-negative-screen-v1/control.spec.json": "7f8a0a89ec8bfe7f93e9d172bd1f8cc3f78d869c99eca55ff8b8589d0f89d656",
+    "methods-v1/pairs/t14-m-ome-negative-screen-v1/control/workspace/TASK.md": "038d1f6a6c7c902214a6098fe45e2d164830059268f3a0fd3bbfbeae1fc56777",
+    "methods-v1/pairs/t14-m-ome-negative-screen-v1/control/workspace/inputs/TASK.md": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+    "methods-v1/pairs/t14-m-ome-negative-screen-v1/treatment/workspace/TASK.md": "642a49bc820d01d1aaf04d78fc11e712d35ef56278a31b4d5281fa8c0701cc45",
+    "methods-v1/pairs/t14-m-ome-negative-screen-v1/treatment/workspace/inputs/TASK.md": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9"
+  }
+}
