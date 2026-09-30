@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-003-wand-scheduling",
-  "updated_at_utc": "2026-09-29T23:40:34+00:00",
+  "updated_at_utc": "2026-09-30T00:04:45+00:00",
   "authority": "Live Plans are canon; this ledger is source lineage only.",
   "scope": "DL-138 approved owner prose and released typed companions; historical G2/G3 compile remains source lineage.",
   "negative_constraints": [
@@ -21,5 +21,5 @@
     "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/part-b-bsd-scheduling-contracts.json sha256:1d8bb7ea8c52f1cf808ad7e79e2c555e3f17c712742ee09efa82e578dcff7ff0"
   ],
   "next_action": "Land this reviewed compile; retain open owner questions and request the designated Plans agent reseal separately.",
-  "last_event_id": "evt-023"
+  "last_event_id": "evt-024"
 }

@@ -353,8 +353,8 @@
         "Plans/Scheduling_and_Quota_Resume.md"
       ],
       "created_at_utc": "2026-09-27T19:15:00+00:00",
-      "last_event_id": "evt-023",
-      "last_updated_at_utc": "2026-09-29T23:40:34+00:00",
+      "last_event_id": "evt-024",
+      "last_updated_at_utc": "2026-09-30T00:04:45+00:00",
       "ledger_id": "pldg-20260927-003-wand-scheduling",
       "notes": "DL-138 compiles the approved 2026-09-29 answers, including the two NieR font faces, with current owner prose and source-preserving historical findings archives. Prose, companions and blind review complete; governance seal not requested. 1 question(s) remain open: q-006. No runtime execution or buildability claim.",
       "phase": "compiled_with_open_owner_questions",
@@ -377,7 +377,8 @@
         "blind_review": "closed_at_two_cycle_cap",
         "assistant_contract_check": "normal_exit_1_errors_empty",
         "settings_and_concept_companions": "Inventory valid; PM7 build check passed and tour 7/7.",
-        "claim_boundary": "Static compile checks and two blind reviews complete. Landing pending; governance not requested and native runtime not proven."
+        "claim_boundary": "Static compile checks and two blind reviews complete. Landing pending; governance not requested and native runtime not proven.",
+        "storage_registry_count_pins": "direct_registry_validation_pass; full_tree_landing_recheck_pending"
       }
     },
     {
@@ -1837,5 +1838,5 @@
       "updated_at_utc": "2026-07-04T00:47:25Z"
     }
   ],
-  "updated_at_utc": "2026-09-29T23:40:35.037855+00:00"
+  "updated_at_utc": "2026-09-30T00:04:45.836456+00:00"
 }

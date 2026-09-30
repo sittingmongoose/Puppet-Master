@@ -41,3 +41,9 @@ Review source: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-2026092
 DL-138 prose and companion compile reviewed through the two-cycle cap; every finding is dispositioned in Plans/ledgers/v2/pldg-20260927-003-wand-scheduling/validation/blind_review_cycle2.json. Required deterministic checks pass except the explicitly allowed governance coverage errors and normal assistant checker exit 1 with errors empty. Open owner questions remain recorded; no native runtime or governance seal is claimed.
 
 Event `evt-023`. Raw review source: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/review-packets/ledger003-cycle2/findings.jsonl`; SHA-256 `0fc68a96183f9d948ccb7a68cc92044ca83ad48c653040ffbd950d8971716bd0`.
+
+## Landing companion census repair
+
+Completed the ordinary SP-323/DL-138 storage admission companion pins after the first landing check exposed their omission: 296 families, 276 materialized, 253 later_gui_or_feature_projection. The other tiers/statuses, 27 retention policies and critical/MVP memberships are unchanged. Direct registry validation reports zero data or census failures. No protected governance artifact was refreshed; event-family admission q-006 remains open. The full-tree landing check must be rerun.
+
+Event `evt-024`, correction `cor-028`. The handoff section 6 step 4 authorizes gate-pin companions; `Plans/storage-plan.md` requires the readiness census to track recorded family changes. Evidence: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/part-b-count-repair/focused-census.json sha256:1debb6fbe13f70ca1b4a8b3df75ff16de14f84759f3f3eecb3eedc022153363e`.

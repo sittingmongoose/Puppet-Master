@@ -760,16 +760,18 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # become 274 and 19. The family count, the retention-policy count and the tiers are unchanged.
 # Re-pinned 2026-09-27 for SP-322: application_update_check_schedule adds one materialized
 # later_gui_or_feature_projection family. Retention policies and critical/MVP memberships are unchanged.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 295
+# Re-pinned 2026-09-30 for SP-323/DL-138: project_automation_pause adds one materialized
+# later_gui_or_feature_projection family. Retention policies and critical/MVP memberships are unchanged.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 296
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 275,
+    "materialized": 276,
     "deferred_not_build_blocking": 19,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 40,
-    "later_gui_or_feature_projection": 252,
+    "later_gui_or_feature_projection": 253,
     "migration_only": 3,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [

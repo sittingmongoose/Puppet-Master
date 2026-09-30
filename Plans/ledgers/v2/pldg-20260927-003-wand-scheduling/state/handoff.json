@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260927-003-wand-scheduling",
-  "updated_at_utc": "2026-09-29T23:40:34+00:00",
-  "last_event_id": "evt-023",
+  "updated_at_utc": "2026-09-30T00:04:45+00:00",
+  "last_event_id": "evt-024",
   "canonical_plan_targets": [
     "Plans/Scheduling_and_Quota_Resume.md"
   ],
@@ -30,7 +30,8 @@
     "blind_review": "closed_at_two_cycle_cap",
     "assistant_contract_check": "normal_exit_1_errors_empty",
     "settings_and_concept_companions": "Inventory valid; PM7 build check passed and tour 7/7.",
-    "claim_boundary": "Static compile checks and two blind reviews complete. Landing pending; governance not requested and native runtime not proven."
+    "claim_boundary": "Static compile checks and two blind reviews complete. Landing pending; governance not requested and native runtime not proven.",
+    "storage_registry_count_pins": "direct_registry_validation_pass; full_tree_landing_recheck_pending"
   },
   "planned_owner_docs": [
     "Plans/Scheduling_and_Quota_Resume.md",
@@ -45,7 +46,7 @@
   },
   "current_phase": "compiled_with_open_owner_questions",
   "cursor": {
-    "last_event_id": "evt-023",
+    "last_event_id": "evt-024",
     "next_action": "Land this reviewed compile; retain open owner questions and request the designated Plans agent reseal separately."
   },
   "source_refs": [
