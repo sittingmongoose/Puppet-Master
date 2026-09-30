@@ -249,6 +249,14 @@ def canonical(value: Any) -> str:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
 
 
+def display_path(path: Path, root: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return str(resolved.relative_to(root.resolve()))
+    except ValueError:
+        return str(resolved)
+
+
 # ---------------------------------------------------------------------------- running the checks
 
 
@@ -1474,6 +1482,7 @@ def main() -> int:
     baseline_path = Path(args.baseline)
     if not baseline_path.is_absolute():
         baseline_path = root / baseline_path
+    baseline_label = display_path(baseline_path, root)
 
     sparse = sparse_paths(root)
     if sparse and not args.allow_sparse:
@@ -1588,7 +1597,7 @@ def main() -> int:
                              [item for key in sorted(exported) for item in exported[key]])
         baseline_path.parent.mkdir(parents=True, exist_ok=True)
         baseline_path.write_text(json.dumps(doc, indent=1, sort_keys=True) + "\n", encoding="utf-8")
-        print(f"pm-landing-check: baseline written to {baseline_path.relative_to(root)} at commit {commit}")
+        print(f"pm-landing-check: baseline written to {baseline_label} at commit {commit}")
         for check in CHECKS:
             entry = doc["checks"][check]
             print(f"  {check:24s} {entry['status']:5s} {entry['failure_total']:7d} failures "
@@ -1768,7 +1777,7 @@ def main() -> int:
         if not rule_two:
             for line in stale_baseline_notice(currency):
                 print(line)
-        print(f"pm-landing-check: baseline {baseline_path.relative_to(root)} recorded at "
+        print(f"pm-landing-check: baseline {baseline_label} recorded at "
               f"{str(baseline.get('commit'))[:12]}; this checkout is at {commit[:12]}")
         if rule_two:
             print(f"  the baseline is current, so rule 2 applies: {currency['reason']}")
