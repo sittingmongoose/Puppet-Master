@@ -1,0 +1,21 @@
+{
+  "schema": "er7.launch_freeze.v1",
+  "version": "harness-v1-repair1",
+  "frozen_utc": "2026-09-30T14:47:51.181850+00:00",
+  "files": {
+    "dev/harness-v1/native/muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+    "dev/harness-v1/native/run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+    "dev/harness-v1/native/zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+    "dev/harness-v1/native/zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633",
+    "dev/harness-v1/review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf",
+    "dev/harness-v1/run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+    "dev/harness-v1/workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+    "ops/isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+    "ops/mz_dispatch.py": "edb4e51210dfee36281c3ad8bc1947dff7614be8ec65433abf312e307fccf117",
+    "ops/slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+  },
+  "review_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/launch-gate-v2-mz.json",
+  "review_sha256": "311e898147e46439c31738f4d3ab42dabe5bd8dea67833ef858588959edbbeb3",
+  "reviewer": "/root/review_gate",
+  "status": "accepted"
+}

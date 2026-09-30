@@ -1,3 +1,27 @@
 {
-  "status": "preparing_initial_dispatch"
+  "as_of_epoch": 1790782093.6996675,
+  "status": "paused_by_user",
+  "new_admissions": false,
+  "active_owned_candidates": [
+    {
+      "job_id": "t03-z-ome-render-screen-v2-treatment",
+      "family": "Z",
+      "admitted_epoch": 1790781239.2491007,
+      "cap_seconds": 900,
+      "hard_release_deadline_epoch": 1790782199.2491007
+    },
+    {
+      "job_id": "t03-z-ome-render-screen-v2-control",
+      "family": "Z",
+      "admitted_epoch": 1790781240.4190722,
+      "cap_seconds": 900,
+      "hard_release_deadline_epoch": 1790782200.4190722
+    }
+  ],
+  "family_active": {
+    "M": 0,
+    "Z": 2,
+    "L": 0
+  },
+  "sibling_occupancy": "unknown; untouched"
 }

@@ -1,0 +1,49 @@
+{
+  "schema": "er7.boundary_receipt.v1",
+  "job_id": "t02-m-ome-dev1-control-r1",
+  "lease_id": "t02-m-ome-dev1-control-r1",
+  "driver_exit_code": 0,
+  "driver_pid": 19887,
+  "driver_elapsed_seconds_including_setup_and_cleanup": 265.062,
+  "native_session_id": "01a0f2c9-d991-7803-96ba-fd22f199f249",
+  "native_stop_reason": "goal_complete",
+  "native_goal_status": "complete",
+  "driver_error": null,
+  "requested_model": "muse-spark-1.3-contributor",
+  "requested_effort": "max",
+  "effective_model": "muse-spark-1.3-contributor",
+  "effective_effort": "max",
+  "usage_reported": {
+    "token_usage_events": 9,
+    "prompt_tokens": 306551,
+    "last_cumulative": {
+      "outputTokens": 16340,
+      "promptTokens": 306551,
+      "totalTokens": 322891
+    },
+    "turns_started": 1,
+    "turns_completed": [
+      {
+        "turnId": "01a0f2c9-da2c-7729-8dc7-e0dc3fd573c5",
+        "terminal": "completed",
+        "reason": null,
+        "durationMs": 262246,
+        "usage": null
+      }
+    ],
+    "inputTokens": 306551,
+    "outputTokens": 16340,
+    "reasoningTokens": 2764,
+    "cacheReadTokens": 255496,
+    "cacheWriteTokens": 0,
+    "cachedTokens": 255496
+  },
+  "generated_output_tokens": 16340,
+  "generated_output_completeness": "unknown; native children/cancellation may be incompletely metered",
+  "native_quiescence": "established isolated PID namespace exit",
+  "native_quiescent": true,
+  "native_receipt_sha256": "f9115cad8c06e8fa404c48c374d53a924662d237fff2f4a4c9590c05525496e5",
+  "slot_release_authorized_by_wrapper": false,
+  "output_integrity": "not frozen",
+  "semantic_quality": "not evaluated"
+}

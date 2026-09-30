@@ -1,0 +1,19 @@
+{
+  "schema": "er7.output_integrity.v1",
+  "files": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/attempts/t02-m-ome-dev1-treatment-r1/workspace/out/report.md",
+      "target": "out/report.md",
+      "sha256": "3e06a68962e80a553689ef747578adf7929ca49029c41e7d272e94e390f03e13",
+      "bytes": 51632
+    }
+  ],
+  "missing_required_outputs": [],
+  "structural_complete": true,
+  "semantic_quality": "not evaluated",
+  "native_quiescence": "established in native/receipt.json",
+  "native_receipt_sha256": "30ba464a92bbe0393b6122ee034bb54d374085f0992c590ed51253b77b3840a2",
+  "stable_output_hashes": {
+    "report.md": "3e06a68962e80a553689ef747578adf7929ca49029c41e7d272e94e390f03e13"
+  }
+}

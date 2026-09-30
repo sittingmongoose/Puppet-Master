@@ -1,0 +1,1092 @@
+{
+  "schema": "er7.methods_restart_checkpoint.v1",
+  "written_utc": "2026-09-30T15:24:57.786027+00:00",
+  "status": "PAUSED_BY_USER_FOR_CODEX_RESTART",
+  "campaign_id": "external-research-v7-20260930",
+  "no_new_jobs_authorized_during_pause": true,
+  "method_build_candidate_starts": 0,
+  "canonical_writes": 0,
+  "ready_and_historical_pair_paths": [
+    {
+      "method": "T01",
+      "family": "M",
+      "pair_id": "t01-m-ome-batching-screen-v1",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/pair.json",
+      "sha256": "34e98248ad9b0c136489fa590d45b90db8a41a7ed6c40cfa0768444362eabc96",
+      "version_pins": {
+        "prepare_methods.py": "112bac2993eb0fdd308cf64684d98da921e27cca61f76391decd7310c17b1d0e",
+        "mechanics.py": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56"
+      },
+      "attempts": [
+        {
+          "job_id": "t01-m-ome-batching-screen-v1-control-opening",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening",
+          "caps": {
+            "seconds": 450,
+            "responses": 48
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+          },
+          "task_sha256": "0c93adc939f1adc6dd149e499da9cca1d6259581cb40cb22ed7ef4ca5e8d5033",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+            "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+            "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": true,
+          "frozen_output_exists": true,
+          "lease_present": true,
+          "lease_released": true
+        },
+        {
+          "job_id": "t01-m-ome-batching-screen-v1-control-display",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display",
+          "caps": {
+            "seconds": 450,
+            "responses": 48
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+          },
+          "task_sha256": "2e9f2135682dac38579d2296b892a0788871e6e6876d1aee3d1a04655e259fd9",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+            "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+            "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": true,
+          "frozen_output_exists": true,
+          "lease_present": true,
+          "lease_released": true
+        },
+        {
+          "job_id": "t01-m-ome-batching-screen-v1-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+          },
+          "task_sha256": "66eed55e0b81b939e00b44626840c76d40337cbc09dbbf1539e90f2ddb493ffa",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+            "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+            "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": true,
+          "frozen_output_exists": true,
+          "lease_present": true,
+          "lease_released": true
+        }
+      ]
+    },
+    {
+      "method": "T03",
+      "family": "Z",
+      "pair_id": "t03-z-ome-render-screen-v1",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v1/pair.json",
+      "sha256": "f5e04ee7d5fc56bfbdebd87bbfbcdb9d3cc7414bd677c315e20103130aa88d6a",
+      "version_pins": {
+        "prepare_methods.py": "112bac2993eb0fdd308cf64684d98da921e27cca61f76391decd7310c17b1d0e",
+        "mechanics.py": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56"
+      },
+      "attempts": [
+        {
+          "job_id": "t03-z-ome-render-screen-v1-control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v1/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+          },
+          "task_sha256": "7b7854ab26e31a2fd8c2c25c523bd55f131f496f6c08c8ac961ea19ed7d29428",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+            "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+            "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        },
+        {
+          "job_id": "t03-z-ome-render-screen-v1-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v1/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+          },
+          "task_sha256": "4121682302b60bed1c6fad15d7acfc97c315ca024ced633cafc7f198d9f9e7b9",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+            "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+            "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        }
+      ]
+    },
+    {
+      "method": "T03",
+      "family": "Z",
+      "pair_id": "t03-z-ome-render-screen-v2",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/pair.json",
+      "sha256": "47f4d9b3e8d56ac95a5332f409e3eba37cda3474f943fdf7201d56467cf44677",
+      "version_pins": {
+        "prepare_methods.py": "112bac2993eb0fdd308cf64684d98da921e27cca61f76391decd7310c17b1d0e",
+        "mechanics.py": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+        "rebind_t03.py": "928be2af3f46656abef9d402e9ba20f2c6a421c526a61ec35c34f725bfb93712"
+      },
+      "attempts": [
+        {
+          "job_id": "t03-z-ome-render-screen-v2-control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+          },
+          "task_sha256": "8a4fa70efadb6ca20cc1b14acb06ff1821e785a69b03a247d53a047a43e92a37",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+            "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+            "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": true,
+          "frozen_output_exists": false,
+          "lease_present": true,
+          "lease_released": false
+        },
+        {
+          "job_id": "t03-z-ome-render-screen-v2-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+          },
+          "task_sha256": "b84beb9b91ca06fa0d905d1ea002ba3e6d75e4b4371c202d0731805f5cdc14d5",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+            "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+            "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": true,
+          "frozen_output_exists": false,
+          "lease_present": true,
+          "lease_released": false
+        }
+      ]
+    },
+    {
+      "method": "T07",
+      "family": "L",
+      "pair_id": "t07-l-ome-cache-screen-v1",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t07-l-ome-cache-screen-v1/pair.json",
+      "sha256": "0131126a906b61be9e244fcdfe1c66ca9d620040cab23672d61d28a1e9a2403f",
+      "version_pins": {
+        "prepare_methods.py": "112bac2993eb0fdd308cf64684d98da921e27cca61f76391decd7310c17b1d0e",
+        "mechanics.py": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56"
+      },
+      "attempts": [
+        {
+          "job_id": "t07-l-ome-cache-screen-v1-control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t07-l-ome-cache-screen-v1/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "df117ed42f913147716d03edfb59b7528b334ffc2f1195a35d5ca5de057bc5fe"
+          },
+          "task_sha256": "dd1427998bce21b179c6d836d482ff553c08ea9572c56dd007182b78aadc9395",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        },
+        {
+          "job_id": "t07-l-ome-cache-screen-v1-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t07-l-ome-cache-screen-v1/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "df117ed42f913147716d03edfb59b7528b334ffc2f1195a35d5ca5de057bc5fe"
+          },
+          "task_sha256": "a89043ca94a43cd1609b1916dc358427cd0a969641f8e47739820182408eb13e",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        }
+      ]
+    },
+    {
+      "method": "T07",
+      "family": "L",
+      "pair_id": "t07-l-ome-cache-screen-v2",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t07-l-ome-cache-screen-v2/pair.json",
+      "sha256": "33b38149680f00db25daa18b5f496df02b7c9e4e43e0191257bcd5bf9a2094aa",
+      "version_pins": {
+        "prepare_methods.py": "112bac2993eb0fdd308cf64684d98da921e27cca61f76391decd7310c17b1d0e",
+        "mechanics.py": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+        "rebind_l_operator.py": "104b461cf9553a94c9b0c671fc56128049f2f71d6134c7042c44b8a4ed1b93e5"
+      },
+      "attempts": [
+        {
+          "job_id": "t07-l-ome-cache-screen-v2-control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t07-l-ome-cache-screen-v2/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-luna-v2",
+          "operator_files": {
+            "isolation.py": "8c01ab28dd3482a9130305312be691e62eb4ac70bda34559a5f73a339680e7cd",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "9ee0b2548d2db705d30332cb39ac32a2357636652ba8519542de9454e92204ff"
+          },
+          "task_sha256": "edc968b1ed389efe7ec20e38df0de48bbce2c69aa36b7ec7755cc9fef72f10a2",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        },
+        {
+          "job_id": "t07-l-ome-cache-screen-v2-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t07-l-ome-cache-screen-v2/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-luna-v2",
+          "operator_files": {
+            "isolation.py": "8c01ab28dd3482a9130305312be691e62eb4ac70bda34559a5f73a339680e7cd",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "9ee0b2548d2db705d30332cb39ac32a2357636652ba8519542de9454e92204ff"
+          },
+          "task_sha256": "b88d1f78861793d25b8c69ca5aabe4ae54c1ec0700ef496945f5a326c60e0fc6",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        }
+      ]
+    },
+    {
+      "method": "T08",
+      "family": "L",
+      "pair_id": "t08-l-ome-discovery-screen-v1",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v1/pair.json",
+      "sha256": "13c885e0570c368343c2c586ed1cd1eccc07ea4207164eb96e5c599498167f32",
+      "version_pins": {
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56"
+      },
+      "attempts": [
+        {
+          "job_id": "t08-l-ome-discovery-screen-v1-control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v1/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": null,
+          "operator_files": {},
+          "task_sha256": "c5c5a4575a956b36b48acecdbc6f4d2dd6d74af6bbca4cc5d59227d8176e6301",
+          "harness_files": {
+            "source_index.py": "6b7c81aa5064d0c76aae7cec72bf1c91f7b3465296ec8dd23529f89f1f2ec9a3",
+            "workspaces.py": "3b98efe9abfd14d626369be7a8316b557a2d63c0172c12594133dba54b4ee928",
+            "run_attempt.py": "f14d16b5517df178f97f0a3f3031eaeb00966229971e1292ad13466cc27700fb",
+            "test_boundaries.py": "20a6075566806de0b9d83de2740bf13bfdb85549de216c2304f88b63a85b0f6f"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "3e1acb6d72da077520fb6d87016a7a50272ef68e3d3fc4e3a6b8b91788a9813b",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        },
+        {
+          "job_id": "t08-l-ome-discovery-screen-v1-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v1/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": null,
+          "operator_files": {},
+          "task_sha256": "0980417d8a20dfb77a5a1ab1775b1aa4f999fba583af886a05a36370ecf4e922",
+          "harness_files": {
+            "source_index.py": "6b7c81aa5064d0c76aae7cec72bf1c91f7b3465296ec8dd23529f89f1f2ec9a3",
+            "workspaces.py": "3b98efe9abfd14d626369be7a8316b557a2d63c0172c12594133dba54b4ee928",
+            "run_attempt.py": "f14d16b5517df178f97f0a3f3031eaeb00966229971e1292ad13466cc27700fb",
+            "test_boundaries.py": "20a6075566806de0b9d83de2740bf13bfdb85549de216c2304f88b63a85b0f6f"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "3e1acb6d72da077520fb6d87016a7a50272ef68e3d3fc4e3a6b8b91788a9813b",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        }
+      ]
+    },
+    {
+      "method": "T08",
+      "family": "L",
+      "pair_id": "t08-l-ome-discovery-screen-v2",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v2/pair.json",
+      "sha256": "da287434d63af845086a57a940bd7a17b50ea69386c4d36bec28dd0b42843ef1",
+      "version_pins": {
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56"
+      },
+      "attempts": [
+        {
+          "job_id": "t08-l-ome-discovery-screen-v2-control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v2/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": null,
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "37ccf47fb90ed54956801327c83ea4d3f5c564023d4a5414830ce4dcfcea9364",
+            "luna_goal.py": "f683d1bbfc75961e5be9835bd1f8c48eabebd225ff2e22cc9e48773d2165c02c"
+          },
+          "task_sha256": "bdd810474fe153a1f387c79e1a2193827d48cf9353f58df3a39d497efeab7125",
+          "harness_files": {
+            "workspaces.py": "5466748ed8bf15423ad1dd3efce140e9d745b27d171e1293ba4cd4c7c828f865"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        },
+        {
+          "job_id": "t08-l-ome-discovery-screen-v2-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v2/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": null,
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "37ccf47fb90ed54956801327c83ea4d3f5c564023d4a5414830ce4dcfcea9364",
+            "luna_goal.py": "f683d1bbfc75961e5be9835bd1f8c48eabebd225ff2e22cc9e48773d2165c02c"
+          },
+          "task_sha256": "cd8689dbeafd3b7f6c5555d9606f9dd98ed5f4a3635c631f29882d7039dd7646",
+          "harness_files": {
+            "workspaces.py": "5466748ed8bf15423ad1dd3efce140e9d745b27d171e1293ba4cd4c7c828f865"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        }
+      ]
+    },
+    {
+      "method": "T08",
+      "family": "L",
+      "pair_id": "t08-l-ome-discovery-screen-v3",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v3/pair.json",
+      "sha256": "785149ea7e3e041032cbfa38ef620a8d2ee800a22588d43b05e2c77566ccbbe6",
+      "version_pins": {
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56"
+      },
+      "attempts": [
+        {
+          "job_id": "t08-l-ome-discovery-screen-v3-control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v3/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "df117ed42f913147716d03edfb59b7528b334ffc2f1195a35d5ca5de057bc5fe"
+          },
+          "task_sha256": "ea27eb85708b5d97eb952404f0b22e6330a12c497ce4a02d8025eb2f0c596f2a",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": true,
+          "lease_present": true,
+          "lease_released": true
+        },
+        {
+          "job_id": "t08-l-ome-discovery-screen-v3-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v3/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "df117ed42f913147716d03edfb59b7528b334ffc2f1195a35d5ca5de057bc5fe"
+          },
+          "task_sha256": "0d3db824b5a6c52591b161b7c2958b2dcff7710863d0cd38ab393928de0b7da2",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": true,
+          "lease_present": true,
+          "lease_released": true
+        }
+      ]
+    },
+    {
+      "method": "T08",
+      "family": "L",
+      "pair_id": "t08-l-ome-discovery-screen-v4",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v4/pair.json",
+      "sha256": "3598591bafa4de9826c73ac0c661a6017311ebf0659404c1adbc2ad772e19c8f",
+      "version_pins": {},
+      "attempts": [
+        {
+          "job_id": "t08-l-ome-discovery-screen-v4-control.r2",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v4/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-luna-v2",
+          "operator_files": {
+            "isolation.py": "8c01ab28dd3482a9130305312be691e62eb4ac70bda34559a5f73a339680e7cd",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "9ee0b2548d2db705d30332cb39ac32a2357636652ba8519542de9454e92204ff"
+          },
+          "task_sha256": "051e23f6e39e973cfc817bba7a68f09b420dcc2802f57c730d3f4f4f2e36b9fc",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": true,
+          "lease_released": true
+        },
+        {
+          "job_id": "t08-l-ome-discovery-screen-v4-treatment.r2",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v4/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-luna-v2",
+          "operator_files": {
+            "isolation.py": "8c01ab28dd3482a9130305312be691e62eb4ac70bda34559a5f73a339680e7cd",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "9ee0b2548d2db705d30332cb39ac32a2357636652ba8519542de9454e92204ff"
+          },
+          "task_sha256": "53f2fe6fb13c8489824d84b910150a1c56690334f07f2ba4e4d2420c7a935c1c",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": true,
+          "lease_released": true
+        }
+      ]
+    },
+    {
+      "method": "T09",
+      "family": "M",
+      "pair_id": "t09-m-azure-discovery-screen-v1",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/pair.json",
+      "sha256": "ddd516823c3cc5545fa326be48364c0f7ebb6103b0be4323ca4d3c7bb2b820fe",
+      "version_pins": {
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56"
+      },
+      "attempts": [
+        {
+          "job_id": "t09-m-azure-discovery-screen-v1-control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+          },
+          "task_sha256": "7dbe6913354e0380662583cd14faca7bb4f64115a43e0a161614679a5f6cb198",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+            "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+            "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": true,
+          "frozen_output_exists": true,
+          "lease_present": true,
+          "lease_released": true
+        },
+        {
+          "job_id": "t09-m-azure-discovery-screen-v1-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+          },
+          "task_sha256": "aafd3af6ea8ad89fa99eed7131eea7877de005ab567fd46526aed3327d0e4a42",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+            "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+            "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": true,
+          "frozen_output_exists": true,
+          "lease_present": true,
+          "lease_released": true
+        }
+      ]
+    },
+    {
+      "method": "T10",
+      "family": "L",
+      "pair_id": "t10-l-azure-discovery-screen-v1",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t10-l-azure-discovery-screen-v1/pair.json",
+      "sha256": "7c1955d5bc729694de8b75f0f6abad56d9d40b4c78bbe92613ddf9518da6dfd8",
+      "version_pins": {
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56"
+      },
+      "attempts": [
+        {
+          "job_id": "t10-l-azure-discovery-screen-v1-control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t10-l-azure-discovery-screen-v1/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "df117ed42f913147716d03edfb59b7528b334ffc2f1195a35d5ca5de057bc5fe"
+          },
+          "task_sha256": "b5909917470a46eb353e105cb954a510cfad1056567ec21f5935be0233f5b6f2",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        },
+        {
+          "job_id": "t10-l-azure-discovery-screen-v1-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t10-l-azure-discovery-screen-v1/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "df117ed42f913147716d03edfb59b7528b334ffc2f1195a35d5ca5de057bc5fe"
+          },
+          "task_sha256": "3dad96be5e32831466d8604563ae204bac9c3b8a8535961ccbccfb97c032cd8a",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        }
+      ]
+    },
+    {
+      "method": "T10",
+      "family": "L",
+      "pair_id": "t10-l-azure-discovery-screen-v2",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t10-l-azure-discovery-screen-v2/pair.json",
+      "sha256": "91905b0eae290f32b8494224fb48df978406e7dd5060ce5696a283ca32e3afeb",
+      "version_pins": {
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+        "rebind_l_operator.py": "104b461cf9553a94c9b0c671fc56128049f2f71d6134c7042c44b8a4ed1b93e5"
+      },
+      "attempts": [
+        {
+          "job_id": "t10-l-azure-discovery-screen-v2-control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t10-l-azure-discovery-screen-v2/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-luna-v2",
+          "operator_files": {
+            "isolation.py": "8c01ab28dd3482a9130305312be691e62eb4ac70bda34559a5f73a339680e7cd",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "9ee0b2548d2db705d30332cb39ac32a2357636652ba8519542de9454e92204ff"
+          },
+          "task_sha256": "cc929ba7f43111abe7da38f275a38f6da48873ed8413f930d3fb0d33547b0a7f",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        },
+        {
+          "job_id": "t10-l-azure-discovery-screen-v2-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t10-l-azure-discovery-screen-v2/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-luna-v2",
+          "operator_files": {
+            "isolation.py": "8c01ab28dd3482a9130305312be691e62eb4ac70bda34559a5f73a339680e7cd",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "9ee0b2548d2db705d30332cb39ac32a2357636652ba8519542de9454e92204ff"
+          },
+          "task_sha256": "87218bf215371066188411c8f44245aba6b2b8d2a30b435d707e3caba52b797f",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        }
+      ]
+    },
+    {
+      "method": "T13",
+      "family": "M",
+      "pair_id": "t13-m-ome-amendments-screen-v1",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/pair.json",
+      "sha256": "088d8f92daade34288e85ccbd60f1128b57b5de467c5784ef27d940335909d8e",
+      "version_pins": {
+        "prepare_methods.py": "112bac2993eb0fdd308cf64684d98da921e27cca61f76391decd7310c17b1d0e",
+        "mechanics.py": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56"
+      },
+      "attempts": [
+        {
+          "job_id": "t13-m-ome-amendments-screen-v1-control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+          },
+          "task_sha256": "df03413bbea4ba7026842b82b9fbde75d2c397dbad9dc6d70fd6194c262a972f",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+            "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+            "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        },
+        {
+          "job_id": "t13-m-ome-amendments-screen-v1-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+          },
+          "task_sha256": "e938ca5e1b1d613b448e7c5cd4f3a7a58267cd200d5d184e5d13bb1a3f24cffa",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+            "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+            "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        }
+      ]
+    },
+    {
+      "method": "T14",
+      "family": "L",
+      "pair_id": "t14-l-ome-negative-screen-v1",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-l-ome-negative-screen-v1/pair.json",
+      "sha256": "e83e76b1932c6e532ed61600f690477e5524fea10713908af978b98dc893d830",
+      "version_pins": {
+        "prepare_methods.py": "112bac2993eb0fdd308cf64684d98da921e27cca61f76391decd7310c17b1d0e",
+        "mechanics.py": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56"
+      },
+      "attempts": [
+        {
+          "job_id": "t14-l-ome-negative-screen-v1-control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-l-ome-negative-screen-v1/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "df117ed42f913147716d03edfb59b7528b334ffc2f1195a35d5ca5de057bc5fe"
+          },
+          "task_sha256": "423841f53961cb7631d71c26b0609a85ee6a81f1d869968228a31ce925a05e5b",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        },
+        {
+          "job_id": "t14-l-ome-negative-screen-v1-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-l-ome-negative-screen-v1/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "df117ed42f913147716d03edfb59b7528b334ffc2f1195a35d5ca5de057bc5fe"
+          },
+          "task_sha256": "f32c1655038eb29b1304f3685767aa85d163db1835a5d0c55f92aa2c6e7cb568",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        }
+      ]
+    },
+    {
+      "method": "T14",
+      "family": "L",
+      "pair_id": "t14-l-ome-negative-screen-v2",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-l-ome-negative-screen-v2/pair.json",
+      "sha256": "d95e27d881fa47007ab95e54197128113c03d42f9b4660c98cb35f9a65085321",
+      "version_pins": {
+        "prepare_methods.py": "112bac2993eb0fdd308cf64684d98da921e27cca61f76391decd7310c17b1d0e",
+        "mechanics.py": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+        "rebind_l_operator.py": "104b461cf9553a94c9b0c671fc56128049f2f71d6134c7042c44b8a4ed1b93e5"
+      },
+      "attempts": [
+        {
+          "job_id": "t14-l-ome-negative-screen-v2-control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-l-ome-negative-screen-v2/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-luna-v2",
+          "operator_files": {
+            "isolation.py": "8c01ab28dd3482a9130305312be691e62eb4ac70bda34559a5f73a339680e7cd",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "9ee0b2548d2db705d30332cb39ac32a2357636652ba8519542de9454e92204ff"
+          },
+          "task_sha256": "f969771dfc171dd1396110577dc24d3e4db3fd40d01c732270f81476910b4351",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        },
+        {
+          "job_id": "t14-l-ome-negative-screen-v2-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-l-ome-negative-screen-v2/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-luna-v2",
+          "operator_files": {
+            "isolation.py": "8c01ab28dd3482a9130305312be691e62eb4ac70bda34559a5f73a339680e7cd",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+            "luna_goal.py": "9ee0b2548d2db705d30332cb39ac32a2357636652ba8519542de9454e92204ff"
+          },
+          "task_sha256": "eaa1a24b718c481c1cb9d5c877035abd5d37c7c2ca59bfe7b25464c54afc205a",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+          },
+          "native_files": {},
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        }
+      ]
+    },
+    {
+      "method": "T14",
+      "family": "M",
+      "pair_id": "t14-m-ome-negative-screen-v1",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/pair.json",
+      "sha256": "4fb5071e5f6221fc62be769be7eaf8f1b6b13efc579bb5355ac3a09dcb97589b",
+      "version_pins": {
+        "prepare_methods.py": "112bac2993eb0fdd308cf64684d98da921e27cca61f76391decd7310c17b1d0e",
+        "mechanics.py": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+        "cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56"
+      },
+      "attempts": [
+        {
+          "job_id": "t14-m-ome-negative-screen-v1-control",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/control",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+          },
+          "task_sha256": "038d1f6a6c7c902214a6098fe45e2d164830059268f3a0fd3bbfbeae1fc56777",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+            "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+            "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        },
+        {
+          "job_id": "t14-m-ome-negative-screen-v1-treatment",
+          "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/treatment",
+          "caps": {
+            "seconds": 900,
+            "responses": 96
+          },
+          "operator_code": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+          "operator_files": {
+            "isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+            "slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+          },
+          "task_sha256": "642a49bc820d01d1aaf04d78fc11e712d35ef56278a31b4d5281fa8c0701cc45",
+          "harness_files": {
+            "workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+            "run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+            "review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf"
+          },
+          "native_files": {
+            "zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+            "muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+            "run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+            "zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+          },
+          "dispatch_record_exists": false,
+          "frozen_output_exists": false,
+          "lease_present": false,
+          "lease_released": false
+        }
+      ]
+    }
+  ],
+  "missing_or_pending": {
+    "T11_T12": "Raw public pinned repository safe export/PIN and independent eligibility missing; repo_methods.py/repo_map_tool.py implemented, no cards prepared/no jobs. eval_cases capacity error observed.",
+    "T13": "M verifier amendment pair prepared from FIRST prospectively fixed M T02 control-r1 frozen report, mechanically all bytes retained in12 Markdown blocks. Specific independent card review required before launch.",
+    "T14": "M pure policy pair prepared at pairs/t14-m-ome-negative-screen-v1, NOT authorized and NOT launched; L versions unstarted/quarantined.",
+    "T15": "Actual candidate baseline card prepared at pairs/t15-l-ome-reuse-screen-v1/baseline-contract.json; no native baseline launched. Controlled after-plan eligibility/export missing. Pair requires actual frozen candidate witnesses, never Sol-authored comparisons.",
+    "T16": "DAG at pairs/t16-m-azure-topology-screen-v1/topology.json: control5 stages versus treatment3;2700 aggregate candidate seconds/192responses per arm; plan-blind initial duties and fresh independent same-family candidate review; whole-case3600elapsed/5400slotseconds. First-stage cards prepared, no jobs.",
+    "T04_T05": "Receiver/structural receipt route-local UNREADY; protocol-prerequisites.json records conditions. No synthetic completedWrite or receipt-read substitute.",
+    "L": "Runtime quarantined after actual Goal receipt failures. Further carrier trimming and supported turn/start steering are prospectively UNADJUDICATED; no further jobs/repairs approved."
+  },
+  "stable_implementation": {
+    "mechanics_sha256": "b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d",
+    "mechanics_original_read_only": true,
+    "mechanics_frozen_copy": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/frozen/b938cb47ca3233d333588ab406123ce8a5a36309e5877c00a7ecf58de5b0917d/mechanics.py",
+    "offline_checks": "7 meaningful machinery tests passed; not scored comparisons",
+    "manifest": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/implementation-manifest.json"
+  },
+  "completed_mechanical_work": {
+    "T01_aggregate": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/aggregate-control-report.md",
+    "T01_aggregate_sha256": "ee46456cc6bc54766069e7e23115b24ac7a1fe64b710fb66a9c061e677923b8c",
+    "T01_note": "Both assigned controls body bytes concatenated verbatim; opening cap450 retained, display completion retained; all assigned scope denominator. Sent eval_cases/root.",
+    "candidate_seed": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/t02-control-first-seed.json",
+    "candidate_seed_sha256": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c"
+  },
+  "restart_rule": "Remain paused until user resumes; original deadline/resource ceilings/failed attempts persist. Operators own terminal cleanup/quiescence; this checkpoint does not authorize slot release or launches."
+}

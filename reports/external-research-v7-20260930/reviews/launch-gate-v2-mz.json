@@ -1,0 +1,68 @@
+{
+  "schema": "er7.launch_review.v2",
+  "review_id": "launch-gate-v2-mz",
+  "status": "accepted",
+  "verdict": "PASS_FOR_FROZEN_MZ_BOUNDARY",
+  "reviewer": "/root/review_gate",
+  "created_utc": "2026-09-30T14:47:15.854824+00:00",
+  "blocking_findings": [],
+  "reviewed_files": {
+    "dev/harness-v1/native/muse_goal_driver.py": "e05da6909f3496bbfa99143548b12ea20eb64b5118672922e41b3e53e6b7f552",
+    "dev/harness-v1/native/run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+    "dev/harness-v1/native/zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+    "dev/harness-v1/native/zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633",
+    "dev/harness-v1/review_gate.py": "0a64cbee77668445329160c54e2aa6a86327c151036425aa4cf5c42de00b84bf",
+    "dev/harness-v1/run_attempt.py": "fec873a6fafebc7741bdabc10bb65e056c120642fa824e0543c8eeb7e89a043d",
+    "dev/harness-v1/workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee",
+    "ops/isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+    "ops/mz_dispatch.py": "edb4e51210dfee36281c3ad8bc1947dff7614be8ec65433abf312e307fccf117",
+    "ops/slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+  },
+  "approved_runtime_paths": {
+    "harness": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/harness-v1-frozen",
+    "operator": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1",
+    "shared_slot_state": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/slots.json",
+    "shared_slot_lock": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/slots.lock"
+  },
+  "immutable_copy_verified": true,
+  "tests": {
+    "frozen_workspace_boundaries": {
+      "passed": 11,
+      "candidate_started": false
+    },
+    "shared_slot_ledger": {
+      "passed": 4,
+      "candidate_started": false
+    },
+    "bubblewrap_namespace_probe": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/isolation-offline-v2-corrected/result.json",
+      "sha256": "818eff6fc8c67a8c2995b4a8fa76ff5ed7065623f2fa2595c857e890aaa8ab62",
+      "all_checks": true,
+      "candidate_started": false
+    }
+  },
+  "supplemental_reviewed_files": {
+    "dev/harness-v1-frozen/source_index.py": "6b7c81aa5064d0c76aae7cec72bf1c91f7b3465296ec8dd23529f89f1f2ec9a3",
+    "dev/harness-v1-frozen/test_boundaries.py": "60e946dd9736043550dcd21931c3a285ac8c18930feaea1407266b2e73750a67",
+    "ops/test_slot_ledger.py": "fbb56e3e369591cce6c39b059d4ca8bc34830f8a0106dc8986b9c563e202f112"
+  },
+  "original_findings_record": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/launch-gate-v1.json",
+  "resolved_findings": [
+    "LG01 M/Z now launched inside PID/mount namespace",
+    "LG02 outer watchdog uses original lease deadline; native RPC/setup/execution share clock and cleanup reserves last30seconds",
+    "LG03 structured native+namespace exit needed for freeze/release; outputs checked stable before/during copy",
+    "LG04 numbered heading locators offline test passes",
+    "LG05 admitted path/hash whitelist and parent symlink rejection",
+    "LG07 cleanup allowance reserved; immutable shared quotas and overdue leases block admission",
+    "Post-Popen failure cleanup guaranteed; absence of prePopen intent is the only no-start fallback"
+  ],
+  "limits": [
+    "Offline boundary acceptance, no native route/candidate semantic quality pass. Does not count as a method comparison.",
+    "All starts across M/Z/L use canonical ops/slots.json and M2Z2L2 pool. Native internal behavior is reported separately.",
+    "Native requested/effective model+Max receipts still required per actual job. Unexpected binding invalidates a cell.",
+    "Native usage may be incomplete, especially during cleanup/cancellation; raw traces retained and incomplete meters remain unknown.",
+    "Existing native subscription login remains runtime-internal; no credential contents were read or published by this review.",
+    "Do not edit the accepted runtime bytes. A repair needs a new finite version and new acceptance.",
+    "Method cards and exact admitted source/task hashes must pass launch verification; this accepts machinery only."
+  ]
+}

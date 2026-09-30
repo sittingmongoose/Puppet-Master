@@ -1,0 +1,79 @@
+{
+  "schema": "er7.launch_review.v2",
+  "review_id": "launch-gate-v2-l",
+  "status": "accepted",
+  "verdict": "PASS_FOR_FROZEN_L_BOUNDARY_AND_T08_V3",
+  "reviewer": "/root/review_gate",
+  "created_utc": "2026-09-30T14:50:42.762908+00:00",
+  "blocking_findings": [],
+  "reviewed_files": {
+    "ops/luna_goal.py": "df117ed42f913147716d03edfb59b7528b334ffc2f1195a35d5ca5de057bc5fe",
+    "ops/isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+    "ops/slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+    "ops/test_luna_goal.py": "703cf8a54cd26b07584489c655641ffe677383822d8157316715a526c34f9d0e",
+    "dev/harness-v1/workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+  },
+  "approved_pair": "t08-l-ome-discovery-screen-v3",
+  "approved_card_files": {
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v3/pair.json": "785149ea7e3e041032cbfa38ef620a8d2ee800a22588d43b05e2c77566ccbbe6",
+    "methods-v1/cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v3/control.spec.json": "0f6946c0031b9bdb07e89b81a5517ec92cfe39c21ca943e7d21d7ac0747f07f8",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v3/control/attempt.json": "5308ef071759094af615add7ab2d848e30dcb58154ddce91f1b2828d55720ef2",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v3/control/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v3/control/workspace/TASK.md": "ea27eb85708b5d97eb952404f0b22e6330a12c497ce4a02d8025eb2f0c596f2a",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v3/control/workspace/inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v3/treatment.spec.json": "ba107aee1ba239031ab0b9ca082a9eab16ff59a7cfbac27460e42a3f60c331ce",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v3/treatment/attempt.json": "fcbb314815cec6db31bd60bf800765c74338f4c502a028254f64b1e30c04bce6",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v3/treatment/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v3/treatment/workspace/TASK.md": "0d3db824b5a6c52591b161b7c2958b2dcff7710863d0cd38ab393928de0b7da2",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v3/treatment/workspace/inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a"
+  },
+  "native_candidate_goals_started_by_review": 0,
+  "canonical_slot_state": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/slots.json",
+  "canonical_slot_lock": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/slots.lock",
+  "source_snapshot": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/luna-code-snapshot-v1",
+  "immutable_execution_originals": true,
+  "tests": {
+    "L_protocol_tests": 5,
+    "shared_ledger_tests": 4,
+    "workspace_boundary_tests": 11,
+    "namespace_probe": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/isolation-offline-v2-corrected/result.json",
+    "namespace_probe_sha256": "818eff6fc8c67a8c2995b4a8fa76ff5ed7065623f2fa2595c857e890aaa8ab62",
+    "native_goals_started": 0
+  },
+  "matched_pair_check": {
+    "same_brief_sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "only_admitted_input": "brief.md",
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "caps_per_arm": {
+      "seconds": 900,
+      "responses": 96
+    },
+    "named_variable": "Research scheduling/query/source-selection policy",
+    "shared_obligations": [
+      "report.md",
+      "acquisition.json",
+      "scheduling.json"
+    ],
+    "same_other_spec_fields": true
+  },
+  "resolved_initial_findings": [
+    "Fresh standalone thread and native Goal with effective model/Max receipts",
+    "L RPC frame flood cannot reset absolute call expiry; event drain bounded256",
+    "Partially constructed RPC tracked; uncertainty retains occupied lease",
+    "Structured stoppednative+ownnamespace/processabsence proof mirrored and required by freeze/release",
+    "HOME/CODEX_HOME unchanged; history/evaluators/production masked; perattempt minimal native config",
+    "Actual dependency hashes checked before admission; unrelated M/Z code is excluded from L gate"
+  ],
+  "limits": [
+    "Launch only with --attempt matching the prospectively reviewed prepared card. The optional no-attempt CLI path is outside this acceptance.",
+    "900s whole admission-through-cleanup clock reserves its final30s for shutdown; native request/response observations and waits consume that same clock.",
+    "Native identity/source/output fidelity must be checked on each actual job. This is offline machinery and prospective comparison acceptance, no semantic or native-quality pass, no method count.",
+    "Both L jobs use the same canonical M2Z2L2 ledger as M/Z; no independent family-local registry.",
+    "Native-auth files remain intrinsic to the existing subscription runtime; no credential contents are part of input or publication.",
+    "Usage incomplete for native children/cancelled responses remains unknown.",
+    "Prepared v1/v2 were never launched; v3 is prospective preparation after source pins changed, not a rescued scored attempt.",
+    "Any change to accepted code requires a versioned repair and new independent review."
+  ]
+}

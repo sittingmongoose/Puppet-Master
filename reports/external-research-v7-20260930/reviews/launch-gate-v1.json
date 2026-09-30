@@ -1,0 +1,82 @@
+{
+  "schema": "er7.launch_review.v1",
+  "review_id": "launch-gate-v1",
+  "created_utc": "2026-09-30T14:34:40.794721+00:00",
+  "verdict": "HOLD",
+  "reviewer_role": "independent narrow launch-boundary reviewer; no candidate authoring or grades",
+  "scope": [
+    "dev/harness-v1",
+    "ops/isolation.py",
+    "ops/luna_goal.py",
+    "ops/slot_ledger.py"
+  ],
+  "native_candidate_goals_started_by_review": 0,
+  "limitations": [
+    "Initial reads were of live in-progress sources. Owners began repairing during review; observations describe initial inspected snippets, not a coherent approved frozen source set. No hashes approved.",
+    "No semantic candidate quality claim; machinery review does not count as a method comparison."
+  ],
+  "findings": [
+    {
+      "id": "LG01",
+      "owner": "development2 / dispatch_mz",
+      "status": "blocking",
+      "claim": "M/Z launch has no filesystem namespace boundary",
+      "evidence": "Initial run_attempt.py launches subprocess.Popen(cmd) where cmd is native/run_goal.py, with no namespace_command; native Host/Protocol launch installed binaries directly. Task text and read-only input modes do not hide evaluator/history files."
+    },
+    {
+      "id": "LG02",
+      "owner": "dispatch_mz",
+      "status": "blocking",
+      "claim": "M/Z fixed whole clock excludes setup and RPC calls can overrun remaining wall cap",
+      "evidence": "Initial run_goal.py assigns t0 only after initialize/model/session/effort calls; Z sleeps and session/read(timeout45) occur before cap evaluation. Admission does not pass an absolute deadline."
+    },
+    {
+      "id": "LG03",
+      "owner": "development2 / dispatch_mz / dispatch_l",
+      "status": "blocking",
+      "claim": "Output freezing and slot release do not require sufficient quiescence evidence",
+      "evidence": "Initial freeze() records operator must independently establish but copies anyway. Initial slot_ledger.release() admits any truthy object. M/Z Host.close and Protocol.close stop their process without joined log writers or native inactive+idle evidence."
+    },
+    {
+      "id": "LG04",
+      "owner": "development2",
+      "status": "blocking",
+      "claim": "Source index omits numbered normative headings",
+      "evidence": "Initial source_index.py handles Markdown/HTML headings and code symbols only; numbered text such as 2. Scope and 2.1. Conditions has no locator."
+    },
+    {
+      "id": "LG05",
+      "owner": "development2",
+      "status": "blocking",
+      "claim": "Input admission lacks a source hash allowlist and rejects only leaf symlinks",
+      "evidence": "Initial copy_inputs() checks raw.is_symlink() only and does not consume an admitted_inputs path/hash allowlist; a symlinked parent bypasses this check."
+    },
+    {
+      "id": "LG06",
+      "owner": "dispatch_l",
+      "status": "blocking",
+      "claim": "L RPC.call timeout can be defeated by a continuous event stream",
+      "evidence": "Initial call() loops frames.get(timeout=max(.01,end-monotonic())) without checking end expiry; events continue indefinitely after deadline."
+    },
+    {
+      "id": "LG07",
+      "owner": "dispatch_mz",
+      "status": "blocking",
+      "claim": "Aggregate occupied-slot admission does not reserve charged bounded cleanup",
+      "evidence": "Initial acquire commits research seconds only, although native cap shutdown performs additional waits. Cleanup counts in occupied-slot campaign ceiling."
+    },
+    {
+      "id": "LG08",
+      "owner": "dispatch_l",
+      "status": "review-required",
+      "claim": "L constructor failure after process start could be mistaken for server_not_started",
+      "evidence": "run() assigns rpc only after RPC constructor returns; finally uses server_not_started when rpc is None. Constructor owns opened files, Popen, reader startup without internal rollback."
+    }
+  ],
+  "requirements": [
+    "freeze a coherent repair source set and provide hash manifest before re-review",
+    "at most two successive repair versions in this tranche",
+    "approve only exact source/dependency hashes after deterministic offline checks",
+    "retain all original defects and unusable attempts"
+  ]
+}

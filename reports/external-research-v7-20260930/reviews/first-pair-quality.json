@@ -1,0 +1,234 @@
+{
+  "schema": "er7.first_pair_quality.v1",
+  "phase": "stage_1_frozen_before_history",
+  "saved_utc": "2026-09-30T15:16:32.066198+00:00",
+  "neutral_report_ids": [
+    "R001",
+    "R002"
+  ],
+  "frozen_assessment_hashes": {
+    "R001": {
+      "current-report.md": "6e302aa3cae223ea41e99f6862644f524695fe36f661b50edcf22ab1aedf4895",
+      "current-assessment.json": "ad9f6c6b2846a4aae8e785a5ddd3c5db6e384a50f94687a46bf4027e6d3bff92",
+      "current-assessment.md": "d414bdb34c4a2588785a6b73f310cb1ba321ce27785a9fed1927a00723b8a9e2"
+    },
+    "R002": {
+      "current-report.md": "3e06a68962e80a553689ef747578adf7929ca49029c41e7d272e94e390f03e13",
+      "current-assessment.json": "a4c1025cceb37a97fa7d6ef81affe92c9d58711fc5a502eaba5d8df30779539c",
+      "current-assessment.md": "91ff83cf9ec29f18663cf82a726ce32f94477e57cc5270d42c53fbd1927cfe97"
+    }
+  },
+  "complete_current_coverage": true,
+  "reports": {
+    "R001": {
+      "verdict": "quality failure",
+      "assessment_complete": true,
+      "all_six_eligible_facets_reviewed": true,
+      "full_facets": [
+        "OME05-C01",
+        "OME05-C03"
+      ],
+      "partial_facets": [
+        "OME05-C02",
+        "OME05-C04",
+        "OME05-C05",
+        "OME05-C06"
+      ],
+      "omitted_facets": [],
+      "unreviewed_scope": []
+    },
+    "R002": {
+      "verdict": "quality failure",
+      "assessment_complete": true,
+      "all_six_eligible_facets_reviewed": true,
+      "full_facets": [
+        "OME05-C01",
+        "OME05-C03"
+      ],
+      "partial_facets": [
+        "OME05-C02",
+        "OME05-C04",
+        "OME05-C05",
+        "OME05-C06"
+      ],
+      "omitted_facets": [],
+      "unreviewed_scope": []
+    }
+  },
+  "comparison": {
+    "relative_current_quality": "R002 is more careful about several source-to-reader modality boundaries, but both have material failures and neither passes the whole assigned scope.",
+    "shared_material_gaps": [
+      {
+        "identity": "axis_presence_vs_extent",
+        "detail": "Validated axis metadata is discussed, but absent dimensions versus explicitly present length-one dimensions is not fully stated.",
+        "report_locators": {
+          "R001": [
+            "L198-223"
+          ],
+          "R002": [
+            "L326-349"
+          ]
+        },
+        "source_locator": "S003:L168-174,L299-303"
+      },
+      {
+        "identity": "translated_coordinate_oracle",
+        "detail": "Both discuss dataset then global composition, but worked/proposed numerical examples have no noncommuting translated offsets. R001 additionally uses internally reversed composition notation.",
+        "report_locators": {
+          "R001": [
+            "L269-297",
+            "L490-499"
+          ],
+          "R002": [
+            "L438-451",
+            "L837-840"
+          ]
+        },
+        "source_locator": "S003:L293,L308-316"
+      },
+      {
+        "identity": "original_image_association",
+        "detail": "Both fail to require original source-image identity resolution before overlay. R001 explicitly treats source.image only as provenance; R002 calls target parent and later wrongly dismisses the explicit default as an example.",
+        "report_locators": {
+          "R001": [
+            "L328-341"
+          ],
+          "R002": [
+            "L537-540",
+            "L765-768"
+          ]
+        },
+        "source_locator": "S003:L432-433,L472-474"
+      },
+      {
+        "identity": "exact_categorical_identity",
+        "detail": "Both enumerate integer label dtypes and metadata but omit exact large/sparse integer decode/lookup/range-refusal handling. R001 proposes noninterpolating labels; R002 leaves resampling a product choice without a categorical-preservation constraint.",
+        "report_locators": {
+          "R001": [
+            "L309-333",
+            "L500-502"
+          ],
+          "R002": [
+            "L496-560",
+            "L845-849"
+          ]
+        },
+        "source_locator": "S003:L438-439,L461-474"
+      }
+    ],
+    "R002_improvements_over_R001": [
+      {
+        "identity": "Zarr_restriction_exception",
+        "detail": "R002 correctly identifies label integer restrictions instead of R001 globally claiming there is no disallowance in the capture.",
+        "report_locators": {
+          "R001": [
+            "L33-35",
+            "L45-48"
+          ],
+          "R002": [
+            "L78-88"
+          ]
+        },
+        "source_locator": "S003:L70-72,L438-439"
+      },
+      {
+        "identity": "label_standalone_scope",
+        "detail": "R002 correctly treats standalone label browsing as a product choice; R001 falsely prohibits listing labels as primary images.",
+        "report_locators": {
+          "R001": [
+            "L102"
+          ],
+          "R002": [
+            "L174"
+          ]
+        },
+        "source_locator": "S003:L437-440"
+      },
+      {
+        "identity": "producer_recommendations_vs_reader_UI",
+        "detail": "R002 leaves descriptive field display and multiple-multiscale UI chiefly to product decisions; R001 repeatedly promotes producer SHOULD metadata fields into reader display requirements.",
+        "report_locators": {
+          "R001": [
+            "L156-160",
+            "L369-377"
+          ],
+          "R002": [
+            "L239-246",
+            "L269-280"
+          ]
+        },
+        "source_locator": "S003:L317-319,L388-397,L523-525,L538-541"
+      },
+      {
+        "identity": "optional_label_metadata_presence",
+        "detail": "R002 correctly states main-text SHOULD presence of colors/version; R001 calls image-label.version mandatory presence, although R002 later collapses these modalities in its uncertainty summary.",
+        "report_locators": {
+          "R001": [
+            "L324-328"
+          ],
+          "R002": [
+            "L522-526",
+            "L755-756"
+          ]
+        },
+        "source_locator": "S003:L456-460"
+      }
+    ],
+    "R002_additional_failures": [
+      {
+        "identity": "invented_layout_string_type_conflict",
+        "detail": "R002 interprets quoted prose value3 as a mandatory JSON string and an unresolved conflict with numeric examples; quotation alone does not establish that datatype.",
+        "report_locators": [
+          "L180-181",
+          "L776-780"
+        ],
+        "source_locator": "S003:L200,L213,L256"
+      },
+      {
+        "identity": "same_index_cross_level_geometry",
+        "detail": "R002 proposes retaining the same logical index through levels, which may not preserve physical position when scales/offsets differ.",
+        "report_locators": [
+          "L386-391"
+        ],
+        "source_locator": "S003:L308-316"
+      },
+      {
+        "identity": "explicit_default_nonnormative",
+        "detail": "R002 incorrectly calls source.image default../../ an example-only value and narrows conformance to surrounding keywords despite normative descriptive assertions.",
+        "report_locators": [
+          "L765-768"
+        ],
+        "source_locator": "S003:L472-474,L867-888"
+      },
+      {
+        "identity": "exact_acquisition_example_value",
+        "detail": "R002 reports second well example ids0/3; captured values are1/3.",
+        "report_locators": [
+          "L235-237"
+        ],
+        "source_locator": "S003:L795-803"
+      }
+    ],
+    "aggregation_note": "Claim-row counts differ with decomposition and are not used as a quality ranking or tolerance. Facet totals are only the six prospective eligible facets, not a universal finding denominator. Complete_coverage means all assertions/facets checked, even for quality failure.",
+    "terminal_label": "quality failure",
+    "scope_qualification": "Exploratory retired development-case pair only; no independent fresh-case or candidate internal-review qualification follows."
+  },
+  "preservation": {
+    "status": "unassessed",
+    "reason": "Frozen acquisition/history is still locked. No previous grades or notes were supplied; absence of notes can leave acquisition/preservation unknown. Source bytes read is not proof that a semantic fact was acquired."
+  },
+  "economics": {
+    "status": "unassessed",
+    "reason": "Treatment identity, costs and latency have not been disclosed; no same-quality efficiency claim is made."
+  },
+  "blinding": {
+    "histories_accessed": false,
+    "prior_grades_accessed": false,
+    "private_map_accessed": false,
+    "economic_data_accessed": false,
+    "limitations": [
+      "R001 embeds task-card identifier at line3; recorded without interpreting treatment identity",
+      "Required repo index and filename-only protocol location lookup did not supply case evidence"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{"kind": "helper_start", "id": "operator", "binding": {"model": "gpt-6.1-sol", "effort": "medium"}}
+{"kind": "helper_start", "id": "developer", "binding": {"model": "gpt-6.1-sol", "effort": "high"}}
+{"kind": "helper_start", "id": "evaluation", "binding": {"model": "gpt-6.1-sol", "effort": "xhigh"}}
+{"kind": "helper_failure", "id": "operator", "classification": "transport/service", "reason": "Selected model is at capacity", "generated_tokens": null}
+{"kind": "helper_continuation", "id": "operator", "binding": {"model": "gpt-6.1-sol", "effort": "medium"}, "reason": "same-model retry after helper task capacity error", "new_helper_start": false}
+{"kind": "helper_start", "id": "dispatch_mz", "binding": {"model": "gpt-6.1-sol", "effort": "medium"}, "epoch": 1790778801.0139565, "reason": "additional parallel capacity and recovery after user steering interruption", "reported_output_tokens": null}
+{"kind": "helper_start", "id": "dispatch_l", "binding": {"model": "gpt-6.1-sol", "effort": "medium"}, "epoch": 1790778801.014054, "reason": "additional parallel capacity and recovery after user steering interruption", "reported_output_tokens": null}
+{"kind": "helper_start", "id": "development2", "binding": {"model": "gpt-6.1-sol", "effort": "high"}, "epoch": 1790778801.014108, "reason": "additional parallel capacity and recovery after user steering interruption", "reported_output_tokens": null}
+{"kind": "helper_start", "id": "review_gate", "binding": {"model": "gpt-6.1-sol", "effort": "xhigh"}, "epoch": 1790778801.0141373, "reason": "additional parallel capacity and recovery after user steering interruption", "reported_output_tokens": null}
+{"kind": "helper_start", "id": "method_build", "binding": {"model": "gpt-6.1-sol", "effort": "high"}, "epoch": 1790778801.0141575, "reason": "additional parallel capacity and recovery after user steering interruption", "reported_output_tokens": null}
+{"kind": "helper_start", "id": "eval_cases", "binding": {"model": "gpt-6.1-sol", "effort": "xhigh"}, "epoch": 1790778801.0141764, "reason": "additional parallel capacity and recovery after user steering interruption", "reported_output_tokens": null}
+{"epoch": 1790779288.3105872, "kind": "helper_failure", "id": "development2", "classification": "transport/service", "reason": "Selected model is at capacity", "reported_output_tokens": null}
+{"epoch": 1790779288.3106472, "kind": "helper_task_start", "id": "development2", "binding": {"model": "gpt-6.1-sol", "effort": "high"}, "reason": "same-model follow-up after capacityerror", "reported_output_tokens": null}
+{"kind": "helper_failure", "id": "eval_cases", "epoch": 1790779396.4289846, "classification": "transport/service", "reason": "Selected model is at capacity", "reported_output_tokens": null, "action": "bounded same-model follow-up after cooldown; no substitution"}

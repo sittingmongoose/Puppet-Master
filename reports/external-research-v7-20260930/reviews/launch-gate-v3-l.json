@@ -1,0 +1,81 @@
+{
+  "schema": "er7.launch_review.v3",
+  "review_id": "launch-gate-v3-l-startup-repair2",
+  "status": "accepted",
+  "reviewer": "/root/review_gate",
+  "created_utc": "2026-09-30T15:06:31.778309+00:00",
+  "blocking_findings": [],
+  "reviewed_files": {
+    "ops-luna-v2/initialize_only.py": "40020ee3efbfa270e0d997c76c6a69bf913d9d27495c21e8dbb04ba891619ef6",
+    "ops-luna-v2/isolation.py": "8c01ab28dd3482a9130305312be691e62eb4ac70bda34559a5f73a339680e7cd",
+    "ops-luna-v2/luna_goal.py": "9ee0b2548d2db705d30332cb39ac32a2357636652ba8519542de9454e92204ff",
+    "ops-luna-v2/slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+    "ops-luna-v2/test_identity_copy.py": "c4c7a0078403ee31b719d00bcd411858da5a962ffde02ad0b98328bbe11d093b",
+    "ops-luna-v2/test_luna_goal.py": "703cf8a54cd26b07584489c655641ffe677383822d8157316715a526c34f9d0e",
+    "dev/harness-v1/workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+  },
+  "approved_pair": "t08-l-ome-discovery-screen-v4",
+  "approved_card_files": {
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v4/pair.json": "3598591bafa4de9826c73ac0c661a6017311ebf0659404c1adbc2ad772e19c8f",
+    "methods-v1/cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+    "methods-v1/prepare_l_repair.py": "0b1c6c762b5403691c0bd51a03a5d19ec111038b28ff0ebeecfa6e2780bd2784",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v4/control.spec.json": "6e31675e874304a29c67c0a74ac283b60417dc0b2e9b20191af400c2670702ea",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v4/control/attempt.json": "64e2556d37a32bfe5ccc3fef0ad0f55b4bf94a4369e9b8f563802d08a5fb8be4",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v4/control/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v4/control/workspace/TASK.md": "051e23f6e39e973cfc817bba7a68f09b420dcc2802f57c730d3f4f4f2e36b9fc",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v4/control/workspace/inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v4/treatment.spec.json": "4084e66881f081b475b5a1ce8f1e59851f4e587434edb3f2764fa97c5979fe7d",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v4/treatment/attempt.json": "4a6a974fc1d422eb4a27d08775d4e3cd71b8f4d8132d5fb6e3c0cdb39a134406",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v4/treatment/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v4/treatment/workspace/TASK.md": "53f2fe6fb13c8489824d84b910150a1c56690334f07f2ba4e4d2420c7a935c1c",
+    "methods-v1/pairs/t08-l-ome-discovery-screen-v4/treatment/workspace/inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a"
+  },
+  "repair_scope": "Only installation_id read-only bind replaced by identical writable private copy; initialize client version marker2. Original code and auth/retry/model/effort settings preserved.",
+  "independent_startup_probe": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/luna-startup-v2-own-native/initialize-receipt.json",
+    "sha256": "0cd35da57405d2c46190113bad7885cae54633a988cecc317cf2b92aa83e2442",
+    "status": "passed",
+    "native_goal_activated": false,
+    "candidate_threads_started": 0,
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "elapsed_seconds": 1.5,
+    "own_process_group_absent": true
+  },
+  "offline_tests": {
+    "passed": 6,
+    "identity_copy_not_hardlink_and_original_unchanged": true
+  },
+  "original_accepted_pins_preserved": {
+    "ops/luna_goal.py": "df117ed42f913147716d03edfb59b7528b334ffc2f1195a35d5ca5de057bc5fe",
+    "ops/isolation.py": "77d0e46cca69ec154aa8538afe1be061b3797d827989b9ac38d26813e9ef3c95",
+    "ops/slot_ledger.py": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7",
+    "ops/test_luna_goal.py": "703cf8a54cd26b07584489c655641ffe677383822d8157316715a526c34f9d0e",
+    "dev/harness-v1/workspaces.py": "229f9638d26ca794d98c24d555aea17d623772e75301281b7d76a5437f061eee"
+  },
+  "first_failed_admissions_preserved": {
+    "t08-l-ome-discovery-screen-v3-control": {
+      "status": "infrastructure_error",
+      "released_epoch": 1790779907.0029514,
+      "reported_output_tokens": null,
+      "admitted_epoch": 1790779906.3848898
+    },
+    "t08-l-ome-discovery-screen-v3-treatment": {
+      "status": "infrastructure_error",
+      "released_epoch": 1790779907.004025,
+      "reported_output_tokens": null,
+      "admitted_epoch": 1790779906.398833
+    }
+  },
+  "generated_usage_of_failed_admissions": "unknown where not exposed; no exact token-compliance claim",
+  "canonical_slot_state": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/slots.json",
+  "canonical_slot_lock": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/slots.lock",
+  "finite_version": "Second successive adapter repair version in this tranche.",
+  "limits": [
+    "Initialize/catalog establishes startup and supported requested binding. Each fresh thread/Goal still requires effective model/Max receipt and quiescence/output checks.",
+    "T08v4 .r2 is new prospectively bounded work; both v3 failed admissions stay counted.",
+    "Launch requires exact matching --attempt and canonical M2Z2L2 pool.",
+    "No candidate answers, case-specific sources/keys or grades read.",
+    "Native-auth contents remain internal; no credentials read or published by review."
+  ]
+}

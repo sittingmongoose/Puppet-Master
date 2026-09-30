@@ -1,6 +1,27 @@
 {
-  "candidate_starts": 0,
-  "occupied_slot_seconds": 0,
-  "generated_tokens": null,
-  "usage_status": "unknown_until_native_capture"
+  "as_of_epoch": 1790782093.6996675,
+  "counted_launch_admissions": 15,
+  "known_native_goal_starts": 13,
+  "pre_goal_failures": 2,
+  "occupied_slot_seconds_as_of_snapshot": 6995.347436666489,
+  "reported_candidate_output_tokens_lower_bound": 229088,
+  "generated_output_completeness": "unknown; native children/cancellation and unexposed fields retained unknown",
+  "parent_sol_usage": "reported separately; generated component unknown",
+  "helper_generated_tokens": null,
+  "candidate_fees": null,
+  "unknown_usage_is_not_zero": true,
+  "T02": {
+    "control_whole_seconds": 265.061,
+    "treatment_whole_seconds": 338.88,
+    "control_reported_output": 16340,
+    "treatment_reported_output": 21010,
+    "quality": "both qualityfailure; no efficiency win"
+  },
+  "T06": {
+    "control_whole_seconds": 859.241,
+    "treatment_whole_seconds": 631.354,
+    "control_reported_output": 35463,
+    "treatment_reported_output": 28567,
+    "quality": "unassessed; no efficiency win claimed"
+  }
 }

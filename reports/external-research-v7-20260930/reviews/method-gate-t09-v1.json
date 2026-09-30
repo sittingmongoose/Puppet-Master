@@ -1,0 +1,39 @@
+{
+  "schema": "er7.method_launch_review.v1",
+  "review_id": "method-gate-t09-v1",
+  "status": "accepted",
+  "acceptance_scope": "Prospective methodcard/mechanics only; accepted actual runtime and each native/outputreceipt additionally required",
+  "reviewer": "/root/review_gate",
+  "created_utc": "2026-09-30T15:11:57.697611+00:00",
+  "blocking_findings": [],
+  "pair_id": "t09-m-azure-discovery-screen-v1",
+  "method": "T09",
+  "reviewed_files": {
+    "methods-v1/pairs/t09-m-azure-discovery-screen-v1/pair.json": "ddd516823c3cc5545fa326be48364c0f7ebb6103b0be4323ca4d3c7bb2b820fe",
+    "methods-v1/cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+    "methods-v1/pairs/t09-m-azure-discovery-screen-v1/control.spec.json": "78e5bfe3f247131611ece652d9c6a295266c5fed127bc3873007d4b05d57875a",
+    "methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/attempt.json": "b122e67593a9316c5a03026974ff50367805795b2c897c0296fa5e8b40338756",
+    "methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/workspace/TASK.md": "7dbe6913354e0380662583cd14faca7bb4f64115a43e0a161614679a5f6cb198",
+    "methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/workspace/inputs/brief.md": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+    "methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment.spec.json": "70e22239706ce802b5b41e0b8f29bd47cb6634ae4d973d899634d1f6eff91772",
+    "methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/attempt.json": "5ba1d98ef1e3021cf1f6267f60f1118b07f27f19656166979a64f6bd509bc76f",
+    "methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/workspace/TASK.md": "aafd3af6ea8ad89fa99eed7131eea7877de005ab567fd46526aed3327d0e4a42",
+    "methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/workspace/inputs/brief.md": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607"
+  },
+  "checks": [
+    "Both exact prepared cells strictverify pass900s96",
+    "Same briefonly1009bytes, no sourcewinner/plan/key/history input",
+    "Only controlordinaryresearch vs treatmentbriefderivedassumptionquestion policy differs",
+    "No direct semantic answer guidance in methodinstructions"
+  ],
+  "required_reporting": [
+    "Record order/accountload/servicewaits and full cost",
+    "Assess all current assertions/fullbriefscope/novelty/deadends before history",
+    "No improvement claim before matched quality/economics evaluation"
+  ],
+  "candidate_starts_by_review": 0,
+  "candidate_answers_keys_grades_read": false,
+  "L_runtime_quarantined": false
+}

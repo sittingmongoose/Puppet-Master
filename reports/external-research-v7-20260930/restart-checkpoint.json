@@ -1,0 +1,834 @@
+{
+  "campaign_id": "external-research-v7-20260930",
+  "status": "paused_by_user_for_codex_restart",
+  "paused_epoch": 1790782008.4514725,
+  "paused_utc": "2026-09-30T15:26:48.451473+00:00",
+  "original_deadline_epoch": 1790820406,
+  "deadline_not_reset": true,
+  "native_candidate_caps": {
+    "M": 2,
+    "Z": 2,
+    "L": 2
+  },
+  "admission_policy": "NO NEW JOBS until explicit user resume; existing external jobs may finish under original caps",
+  "helper_limit_request": "User approved raise to16; actual runtime update not verified; two fresh reviewer spawns rejected at9",
+  "candidate_launch_admissions": 15,
+  "live_leases": {
+    "t03-z-ome-render-screen-v2-treatment": {
+      "family": "Z",
+      "admitted_epoch": 1790781239.2491007,
+      "cap_seconds": 900,
+      "cleanup_seconds": 60,
+      "hard_release_deadline_epoch": 1790782199.2491007,
+      "released_epoch": null,
+      "pid": 50291,
+      "status": "starting",
+      "reported_output_tokens": null,
+      "reserve_admission": false,
+      "usage_completeness": "unknown",
+      "own_active_by_family_before_admission": {
+        "M": 1,
+        "Z": 0,
+        "L": 2
+      },
+      "sibling_account_load": "unknown; untouched",
+      "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/treatment",
+      "operator_pid": 50291,
+      "model_requested": "GLM-5.3-Flash",
+      "effort_requested": "max"
+    },
+    "t03-z-ome-render-screen-v2-control": {
+      "family": "Z",
+      "admitted_epoch": 1790781240.4190722,
+      "cap_seconds": 900,
+      "cleanup_seconds": 60,
+      "hard_release_deadline_epoch": 1790782200.4190722,
+      "released_epoch": null,
+      "pid": 50387,
+      "status": "starting",
+      "reported_output_tokens": null,
+      "reserve_admission": false,
+      "usage_completeness": "unknown",
+      "own_active_by_family_before_admission": {
+        "M": 1,
+        "Z": 1,
+        "L": 2
+      },
+      "sibling_account_load": "unknown; untouched",
+      "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control",
+      "operator_pid": 50387,
+      "model_requested": "GLM-5.3-Flash",
+      "effort_requested": "max"
+    }
+  },
+  "slots_snapshot": {
+    "schema": "er7.slot_ledger.v1",
+    "campaign_id": "external-research-v7-20260930",
+    "jobs": {
+      "t02-m-ome-dev1-control-r1": {
+        "family": "M",
+        "admitted_epoch": 1790779709.1883001,
+        "cap_seconds": 900,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790780669.1883001,
+        "released_epoch": 1790779974.4708283,
+        "pid": 19877,
+        "status": "frozen-for-independent-evaluation",
+        "reported_output_tokens": 16340,
+        "reserve_admission": false,
+        "usage_completeness": "unknown; native children/cancelled output meters may be omitted",
+        "own_active_by_family_before_admission": {
+          "M": 0,
+          "Z": 0,
+          "L": 0
+        },
+        "sibling_account_load": "unknown; untouched",
+        "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/attempts/t02-m-ome-dev1-control-r1",
+        "operator_pid": 19877,
+        "model_requested": "muse-spark-1.3-contributor",
+        "effort_requested": "max",
+        "effective_model": "muse-spark-1.3-contributor",
+        "effective_effort": "max",
+        "native_session_id": "01a0f2c9-d991-7803-96ba-fd22f199f249",
+        "live_usage_reported": {
+          "cacheReadTokens": 90436,
+          "cacheWriteTokens": 0,
+          "cachedTokens": 90436,
+          "inputTokens": 122733,
+          "outputTokens": 1011,
+          "reasoningTokens": 109
+        },
+        "live_usage_observed_epoch": 1790779938.607254,
+        "usage_reported": {
+          "token_usage_events": 9,
+          "prompt_tokens": 306551,
+          "last_cumulative": {
+            "outputTokens": 16340,
+            "promptTokens": 306551,
+            "totalTokens": 322891
+          },
+          "turns_started": 1,
+          "turns_completed": [
+            {
+              "turnId": "01a0f2c9-da2c-7729-8dc7-e0dc3fd573c5",
+              "terminal": "completed",
+              "reason": null,
+              "durationMs": 262246,
+              "usage": null
+            }
+          ],
+          "inputTokens": 306551,
+          "outputTokens": 16340,
+          "reasoningTokens": 2764,
+          "cacheReadTokens": 255496,
+          "cacheWriteTokens": 0,
+          "cachedTokens": 255496
+        },
+        "operator_error": null,
+        "quiescence": {
+          "native_quiescent": true,
+          "own_process_group_absent": true,
+          "native_receipt": "attempts/t02-m-ome-dev1-control-r1/native/receipt.json",
+          "native_receipt_sha256": "f9115cad8c06e8fa404c48c374d53a924662d237fff2f4a4c9590c05525496e5",
+          "basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+        }
+      },
+      "t02-m-ome-dev1-treatment-r1": {
+        "family": "M",
+        "admitted_epoch": 1790779710.3732014,
+        "cap_seconds": 900,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790780670.3732014,
+        "released_epoch": 1790780049.477276,
+        "pid": 19954,
+        "status": "frozen-for-independent-evaluation",
+        "reported_output_tokens": 21010,
+        "reserve_admission": false,
+        "usage_completeness": "unknown; native children/cancelled output meters may be omitted",
+        "own_active_by_family_before_admission": {
+          "M": 1,
+          "Z": 0,
+          "L": 0
+        },
+        "sibling_account_load": "unknown; untouched",
+        "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/attempts/t02-m-ome-dev1-treatment-r1",
+        "operator_pid": 19954,
+        "model_requested": "muse-spark-1.3-contributor",
+        "effort_requested": "max",
+        "effective_model": "muse-spark-1.3-contributor",
+        "effective_effort": "max",
+        "native_session_id": "01a0f2c9-dd75-7fb2-b2a0-6da07246c237",
+        "live_usage_reported": {
+          "cacheReadTokens": 155302,
+          "cacheWriteTokens": 0,
+          "cachedTokens": 155302,
+          "inputTokens": 189322,
+          "outputTokens": 1266,
+          "reasoningTokens": 524
+        },
+        "live_usage_observed_epoch": 1790779938.6065402,
+        "usage_reported": {
+          "token_usage_events": 19,
+          "prompt_tokens": 869771,
+          "last_cumulative": {
+            "outputTokens": 21010,
+            "promptTokens": 869771,
+            "totalTokens": 890781
+          },
+          "turns_started": 1,
+          "turns_completed": [
+            {
+              "turnId": "01a0f2c9-de0f-7b8b-9b86-1b69a341eb97",
+              "terminal": "completed",
+              "reason": null,
+              "durationMs": 336876,
+              "usage": null
+            }
+          ],
+          "inputTokens": 869771,
+          "outputTokens": 21010,
+          "reasoningTokens": 5044,
+          "cacheReadTokens": 771201,
+          "cacheWriteTokens": 0,
+          "cachedTokens": 771201
+        },
+        "operator_error": null,
+        "quiescence": {
+          "native_quiescent": true,
+          "own_process_group_absent": true,
+          "native_receipt": "attempts/t02-m-ome-dev1-treatment-r1/native/receipt.json",
+          "native_receipt_sha256": "30ba464a92bbe0393b6122ee034bb54d374085f0992c590ed51253b77b3840a2",
+          "basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+        }
+      },
+      "t06-z-ome-dev1-control-r1": {
+        "family": "Z",
+        "admitted_epoch": 1790779711.559406,
+        "cap_seconds": 900,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790780671.559406,
+        "released_epoch": 1790780571.0389826,
+        "pid": 19984,
+        "status": "frozen-for-independent-evaluation",
+        "reported_output_tokens": 35463,
+        "reserve_admission": false,
+        "usage_completeness": "unknown; native children/cancelled output meters may be omitted",
+        "own_active_by_family_before_admission": {
+          "M": 2,
+          "Z": 0,
+          "L": 0
+        },
+        "sibling_account_load": "unknown; untouched",
+        "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/attempts/t06-z-ome-dev1-control-r1",
+        "operator_pid": 19984,
+        "model_requested": "GLM-5.3-Flash",
+        "effort_requested": "max",
+        "effective_model": "GLM-5.3-Flash",
+        "effective_effort": "max",
+        "native_session_id": "sess_5ae04024-1242-4f90-a85a-2e3b75de75c1",
+        "live_usage_reported": {
+          "outputTokens": 509,
+          "inputTokens": 18726,
+          "cacheReadTokens": 11072,
+          "cacheWriteTokens": 0,
+          "reasoningTokens": 0
+        },
+        "live_usage_observed_epoch": 1790779938.605493,
+        "usage_reported": {
+          "inputTokens": 291271,
+          "outputTokens": 35463,
+          "reasoningTokens": 0,
+          "cacheReadTokens": 236352,
+          "cacheWriteTokens": 0,
+          "totalTokens": 326734
+        },
+        "operator_error": null,
+        "quiescence": {
+          "native_quiescent": true,
+          "own_process_group_absent": true,
+          "native_receipt": "attempts/t06-z-ome-dev1-control-r1/native/receipt.json",
+          "native_receipt_sha256": "8a13e3d99daa09be8a0e6aa961d36b95327355418247ca2c8dbf07364fad7d70",
+          "basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+        }
+      },
+      "t06-z-ome-dev1-treatment-r1": {
+        "family": "Z",
+        "admitted_epoch": 1790779712.7106817,
+        "cap_seconds": 900,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790780672.7106817,
+        "released_epoch": 1790780344.2840478,
+        "pid": 20007,
+        "status": "frozen-for-independent-evaluation",
+        "reported_output_tokens": 28567,
+        "reserve_admission": false,
+        "usage_completeness": "unknown; native children/cancelled output meters may be omitted",
+        "own_active_by_family_before_admission": {
+          "M": 2,
+          "Z": 1,
+          "L": 0
+        },
+        "sibling_account_load": "unknown; untouched",
+        "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/attempts/t06-z-ome-dev1-treatment-r1",
+        "operator_pid": 20007,
+        "model_requested": "GLM-5.3-Flash",
+        "effort_requested": "max",
+        "effective_model": "GLM-5.3-Flash",
+        "effective_effort": "max",
+        "native_session_id": "sess_ab4e4f1a-5d55-4b9a-b32a-e4b9ba081c0d",
+        "live_usage_reported": {
+          "outputTokens": 768,
+          "inputTokens": 43370,
+          "cacheReadTokens": 27456,
+          "cacheWriteTokens": 0,
+          "reasoningTokens": 0
+        },
+        "live_usage_observed_epoch": 1790779938.6906788,
+        "usage_reported": {
+          "inputTokens": 236642,
+          "outputTokens": 28567,
+          "reasoningTokens": 0,
+          "cacheReadTokens": 189376,
+          "cacheWriteTokens": 0,
+          "totalTokens": 265209
+        },
+        "operator_error": null,
+        "quiescence": {
+          "native_quiescent": true,
+          "own_process_group_absent": true,
+          "native_receipt": "attempts/t06-z-ome-dev1-treatment-r1/native/receipt.json",
+          "native_receipt_sha256": "2e627e93bf3539c82b5287cc8ad24961fe6ddcd77f37f97062da7d42321fbf2b",
+          "basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+        }
+      },
+      "t08-l-ome-discovery-screen-v3-control": {
+        "family": "L",
+        "admitted_epoch": 1790779906.3848898,
+        "cap_seconds": 900,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790780866.3848898,
+        "released_epoch": 1790779907.0029514,
+        "pid": 21997,
+        "status": "infrastructure_error",
+        "reported_output_tokens": null,
+        "reserve_admission": false,
+        "usage_completeness": "unknown",
+        "own_active_by_family_before_admission": {
+          "M": 2,
+          "Z": 2,
+          "L": 0
+        },
+        "sibling_account_load": "unknown; untouched",
+        "quiescence": {
+          "own_server_exit_code": 1,
+          "own_server_pid": 21998,
+          "own_process_group_absent": true,
+          "native_quiescent": true
+        }
+      },
+      "t08-l-ome-discovery-screen-v3-treatment": {
+        "family": "L",
+        "admitted_epoch": 1790779906.398833,
+        "cap_seconds": 900,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790780866.398833,
+        "released_epoch": 1790779907.004025,
+        "pid": 21996,
+        "status": "infrastructure_error",
+        "reported_output_tokens": null,
+        "reserve_admission": false,
+        "usage_completeness": "unknown",
+        "own_active_by_family_before_admission": {
+          "M": 2,
+          "Z": 2,
+          "L": 1
+        },
+        "sibling_account_load": "unknown; untouched",
+        "quiescence": {
+          "own_server_exit_code": 1,
+          "own_server_pid": 22001,
+          "own_process_group_absent": true,
+          "native_quiescent": true
+        }
+      },
+      "t01-m-ome-batching-screen-v1-treatment": {
+        "family": "M",
+        "admitted_epoch": 1790780311.5959523,
+        "cap_seconds": 900,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790781271.5959523,
+        "released_epoch": 1790780670.5709078,
+        "pid": 34016,
+        "status": "frozen-for-independent-evaluation",
+        "reported_output_tokens": 24996,
+        "reserve_admission": false,
+        "usage_completeness": "unknown; native children/cancelled output meters may be omitted",
+        "own_active_by_family_before_admission": {
+          "M": 0,
+          "Z": 2,
+          "L": 0
+        },
+        "sibling_account_load": "unknown; untouched",
+        "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment",
+        "operator_pid": 34016,
+        "model_requested": "muse-spark-1.3-contributor",
+        "effort_requested": "max",
+        "native_session_id": "01a0f2d3-09a6-7001-bf18-87f3bcbfaed1",
+        "effective_model": "muse-spark-1.3-contributor",
+        "effective_effort": "max",
+        "native_goal_status": "active",
+        "usage_reported": {
+          "token_usage_events": 12,
+          "prompt_tokens": 550486,
+          "last_cumulative": {
+            "outputTokens": 24996,
+            "promptTokens": 550486,
+            "totalTokens": 575482
+          },
+          "turns_started": 1,
+          "turns_completed": [
+            {
+              "turnId": "01a0f2d3-0a30-7379-bec3-b04738f871b6",
+              "terminal": "completed",
+              "reason": null,
+              "durationMs": 356070,
+              "usage": null
+            }
+          ],
+          "inputTokens": 550486,
+          "outputTokens": 24996,
+          "reasoningTokens": 7964,
+          "cacheReadTokens": 484443,
+          "cacheWriteTokens": 0,
+          "cachedTokens": 484443
+        },
+        "operator_error": null,
+        "quiescence": {
+          "native_quiescent": true,
+          "own_process_group_absent": true,
+          "native_receipt": "methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment/native/receipt.json",
+          "native_receipt_sha256": "5fa1f748c69d4d718461eecf667cd4d9afc5ca6e5bc0f0b9621b5b22d5555b17",
+          "basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+        }
+      },
+      "t01-m-ome-batching-screen-v1-control-opening": {
+        "family": "M",
+        "admitted_epoch": 1790780312.754942,
+        "cap_seconds": 450,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790780822.754942,
+        "released_epoch": 1790780733.2759364,
+        "pid": 34360,
+        "status": "frozen-for-independent-evaluation",
+        "reported_output_tokens": 25078,
+        "reserve_admission": false,
+        "usage_completeness": "unknown; native children/cancelled output meters may be omitted",
+        "own_active_by_family_before_admission": {
+          "M": 1,
+          "Z": 2,
+          "L": 0
+        },
+        "sibling_account_load": "unknown; untouched",
+        "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening",
+        "operator_pid": 34360,
+        "model_requested": "muse-spark-1.3-contributor",
+        "effort_requested": "max",
+        "native_session_id": "01a0f2d3-0e8a-7bd0-80b5-7c54f0c60da6",
+        "effective_model": "muse-spark-1.3-contributor",
+        "effective_effort": "max",
+        "native_goal_status": "active",
+        "usage_reported": {
+          "token_usage_events": 14,
+          "prompt_tokens": 559155,
+          "last_cumulative": {
+            "outputTokens": 25078,
+            "promptTokens": 559155,
+            "totalTokens": 584233
+          },
+          "turns_started": 1,
+          "turns_completed": [],
+          "inputTokens": 559155,
+          "outputTokens": 25078,
+          "reasoningTokens": 5605,
+          "cacheReadTokens": 491325,
+          "cacheWriteTokens": 0,
+          "cachedTokens": 491325
+        },
+        "operator_error": null,
+        "quiescence": {
+          "native_quiescent": true,
+          "own_process_group_absent": true,
+          "native_receipt": "methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/native/receipt.json",
+          "native_receipt_sha256": "0afbed3179a3140faed781428115001282b3278f96ace882d30af919252378c9",
+          "basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+        }
+      },
+      "t01-m-ome-batching-screen-v1-control-display": {
+        "family": "M",
+        "admitted_epoch": 1790780810.0127606,
+        "cap_seconds": 450,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790781320.0127606,
+        "released_epoch": 1790781109.3965297,
+        "pid": 44065,
+        "status": "frozen-for-independent-evaluation",
+        "reported_output_tokens": 18462,
+        "reserve_admission": false,
+        "usage_completeness": "unknown; native children/cancelled output meters may be omitted",
+        "own_active_by_family_before_admission": {
+          "M": 0,
+          "Z": 0,
+          "L": 0
+        },
+        "sibling_account_load": "unknown; untouched",
+        "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display",
+        "operator_pid": 44065,
+        "model_requested": "muse-spark-1.3-contributor",
+        "effort_requested": "max",
+        "usage_reported": {
+          "token_usage_events": 11,
+          "prompt_tokens": 423638,
+          "last_cumulative": {
+            "outputTokens": 18462,
+            "promptTokens": 423638,
+            "totalTokens": 442100
+          },
+          "turns_started": 1,
+          "turns_completed": [
+            {
+              "turnId": "01a0f2da-a6aa-7f82-9837-1cb764d0f147",
+              "terminal": "completed",
+              "reason": null,
+              "durationMs": 296941,
+              "usage": null
+            }
+          ],
+          "inputTokens": 423638,
+          "outputTokens": 18462,
+          "reasoningTokens": 5947,
+          "cacheReadTokens": 369514,
+          "cacheWriteTokens": 0,
+          "cachedTokens": 369514
+        },
+        "operator_error": null,
+        "effective_model": "muse-spark-1.3-contributor",
+        "effective_effort": "max",
+        "native_session_id": "01a0f2da-a62f-7180-8b57-018d01cf5f62",
+        "quiescence": {
+          "native_quiescent": true,
+          "own_process_group_absent": true,
+          "native_receipt": "methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/native/receipt.json",
+          "native_receipt_sha256": "2b4b037ccecc20736975a2bca376bfd8a3070755ef6d669a79dc5828c08c7c62",
+          "basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+        }
+      },
+      "t08-l-ome-discovery-screen-v4-control.r2": {
+        "family": "L",
+        "admitted_epoch": 1790780860.3338668,
+        "cap_seconds": 900,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790781820.3338668,
+        "released_epoch": 1790781439.9654574,
+        "pid": 44533,
+        "status": "infrastructure_error_reconciled",
+        "reported_output_tokens": 225,
+        "reserve_admission": false,
+        "usage_completeness": "unknown; cancelled work/native children incompletely metered",
+        "own_active_by_family_before_admission": {
+          "M": 1,
+          "Z": 0,
+          "L": 0
+        },
+        "sibling_account_load": "unknown; untouched",
+        "thread_id": "01a0f2db-6d1e-73a3-a9e6-f49b603485a5",
+        "model_effective": "gpt-6-luna",
+        "effort_effective": "max",
+        "quiescence_pending": {
+          "own_server_exit_code": 0,
+          "own_server_pid": 44535,
+          "own_process_group_absent": true,
+          "native_quiescent": false
+        },
+        "passive_trace_usage": {
+          "total": {
+            "totalTokens": 15396,
+            "inputTokens": 15171,
+            "cachedInputTokens": 11008,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 225,
+            "reasoningOutputTokens": 89
+          },
+          "last": {
+            "totalTokens": 15396,
+            "inputTokens": 15171,
+            "cachedInputTokens": 11008,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 225,
+            "reasoningOutputTokens": 89
+          },
+          "modelContextWindow": 258400
+        },
+        "passive_response_count": 1,
+        "passive_native_trace_sha256": "597ee48c6c1067484e5eaa5b268f892e19fdbb683e947fcea73491b729fc5433",
+        "quiescence": {
+          "native_quiescent": true,
+          "own_process_group_absent": true,
+          "basis": "own fresh standalone native Goal has budgetLimited receipt, own bubblewrap PID namespace/server exited0 and own PGID absent; no live runtime can continue or write",
+          "review_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/luna-v4-quiescence-reconciliation.json",
+          "review_sha256": "bbc6494c06f1ddd802e48561adfa15d51a6beb33b2ad1a137e3a36fb5a1ffab5",
+          "original_receipt_sha256": "5cdc341241c03aa00d82a3228f655d3f1cc33275bdf219e80928b46905cb066f"
+        }
+      },
+      "t08-l-ome-discovery-screen-v4-treatment.r2": {
+        "family": "L",
+        "admitted_epoch": 1790780860.367188,
+        "cap_seconds": 900,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790781820.367188,
+        "released_epoch": 1790781440.172816,
+        "pid": 44534,
+        "status": "infrastructure_error_reconciled",
+        "reported_output_tokens": 203,
+        "reserve_admission": false,
+        "usage_completeness": "unknown; cancelled work/native children incompletely metered",
+        "own_active_by_family_before_admission": {
+          "M": 1,
+          "Z": 0,
+          "L": 1
+        },
+        "sibling_account_load": "unknown; untouched",
+        "thread_id": "01a0f2db-6d59-7070-a53a-1051ed090776",
+        "model_effective": "gpt-6-luna",
+        "effort_effective": "max",
+        "quiescence_pending": {
+          "own_server_exit_code": 0,
+          "own_server_pid": 44561,
+          "own_process_group_absent": true,
+          "native_quiescent": false
+        },
+        "passive_trace_usage": {
+          "total": {
+            "totalTokens": 15382,
+            "inputTokens": 15179,
+            "cachedInputTokens": 11008,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 203,
+            "reasoningOutputTokens": 65
+          },
+          "last": {
+            "totalTokens": 15382,
+            "inputTokens": 15179,
+            "cachedInputTokens": 11008,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 203,
+            "reasoningOutputTokens": 65
+          },
+          "modelContextWindow": 258400
+        },
+        "passive_response_count": 1,
+        "passive_native_trace_sha256": "3795f67fcf88e4ae7c86f4f326ee6fb1803d6c4018bd9dfb6ead618978307c2d",
+        "quiescence": {
+          "native_quiescent": true,
+          "own_process_group_absent": true,
+          "basis": "own fresh standalone native Goal has budgetLimited receipt, own bubblewrap PID namespace/server exited0 and own PGID absent; no live runtime can continue or write",
+          "review_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/luna-v4-quiescence-reconciliation.json",
+          "review_sha256": "bbc6494c06f1ddd802e48561adfa15d51a6beb33b2ad1a137e3a36fb5a1ffab5",
+          "original_receipt_sha256": "b91347315bb9f15b76cbcec8e8dc6268556a83c0fcde220c130d562954c3ba18"
+        }
+      },
+      "t09-m-azure-discovery-screen-v1-control": {
+        "family": "M",
+        "admitted_epoch": 1790780964.4059017,
+        "cap_seconds": 900,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790781924.4059017,
+        "released_epoch": 1790781497.7579389,
+        "pid": 45915,
+        "status": "frozen-for-independent-evaluation",
+        "reported_output_tokens": 33741,
+        "reserve_admission": false,
+        "usage_completeness": "unknown; native children/cancelled output meters may be omitted",
+        "own_active_by_family_before_admission": {
+          "M": 1,
+          "Z": 0,
+          "L": 2
+        },
+        "sibling_account_load": "unknown; untouched",
+        "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/control",
+        "operator_pid": 45915,
+        "model_requested": "muse-spark-1.3-contributor",
+        "effort_requested": "max",
+        "usage_reported": {
+          "token_usage_events": 40,
+          "prompt_tokens": 2930009,
+          "last_cumulative": {
+            "outputTokens": 33741,
+            "promptTokens": 2930009,
+            "totalTokens": 2963750
+          },
+          "turns_started": 1,
+          "turns_completed": [
+            {
+              "turnId": "01a0f2dd-00bc-7457-9c48-e62db62fa22a",
+              "terminal": "completed",
+              "reason": null,
+              "durationMs": 530638,
+              "usage": null
+            }
+          ],
+          "inputTokens": 2930009,
+          "outputTokens": 33741,
+          "reasoningTokens": 5265,
+          "cacheReadTokens": 2811447,
+          "cacheWriteTokens": 0,
+          "cachedTokens": 2811447
+        },
+        "operator_error": null,
+        "effective_model": "muse-spark-1.3-contributor",
+        "effective_effort": "max",
+        "native_session_id": "01a0f2dd-0035-7e53-8faf-de7567fa8532",
+        "quiescence": {
+          "native_quiescent": true,
+          "own_process_group_absent": true,
+          "native_receipt": "methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/native/receipt.json",
+          "native_receipt_sha256": "3b7b947519346e3202b42e0998660c33378730c80ba608c462d93a5cb8970588",
+          "basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+        }
+      },
+      "t03-z-ome-render-screen-v2-treatment": {
+        "family": "Z",
+        "admitted_epoch": 1790781239.2491007,
+        "cap_seconds": 900,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790782199.2491007,
+        "released_epoch": null,
+        "pid": 50291,
+        "status": "starting",
+        "reported_output_tokens": null,
+        "reserve_admission": false,
+        "usage_completeness": "unknown",
+        "own_active_by_family_before_admission": {
+          "M": 1,
+          "Z": 0,
+          "L": 2
+        },
+        "sibling_account_load": "unknown; untouched",
+        "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/treatment",
+        "operator_pid": 50291,
+        "model_requested": "GLM-5.3-Flash",
+        "effort_requested": "max"
+      },
+      "t03-z-ome-render-screen-v2-control": {
+        "family": "Z",
+        "admitted_epoch": 1790781240.4190722,
+        "cap_seconds": 900,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790782200.4190722,
+        "released_epoch": null,
+        "pid": 50387,
+        "status": "starting",
+        "reported_output_tokens": null,
+        "reserve_admission": false,
+        "usage_completeness": "unknown",
+        "own_active_by_family_before_admission": {
+          "M": 1,
+          "Z": 1,
+          "L": 2
+        },
+        "sibling_account_load": "unknown; untouched",
+        "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t03-z-ome-render-screen-v2/control",
+        "operator_pid": 50387,
+        "model_requested": "GLM-5.3-Flash",
+        "effort_requested": "max"
+      },
+      "t09-m-azure-discovery-screen-v1-treatment": {
+        "family": "M",
+        "admitted_epoch": 1790781378.6924536,
+        "cap_seconds": 900,
+        "cleanup_seconds": 60,
+        "hard_release_deadline_epoch": 1790782338.6924536,
+        "released_epoch": 1790781797.9769542,
+        "pid": 51551,
+        "status": "frozen-for-independent-evaluation",
+        "reported_output_tokens": 25003,
+        "reserve_admission": false,
+        "usage_completeness": "unknown; native children/cancelled output meters may be omitted",
+        "own_active_by_family_before_admission": {
+          "M": 1,
+          "Z": 2,
+          "L": 2
+        },
+        "sibling_account_load": "unknown; untouched",
+        "attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment",
+        "operator_pid": 51551,
+        "model_requested": "muse-spark-1.3-contributor",
+        "effort_requested": "max",
+        "usage_reported": {
+          "token_usage_events": 28,
+          "prompt_tokens": 1570203,
+          "last_cumulative": {
+            "outputTokens": 25003,
+            "promptTokens": 1570203,
+            "totalTokens": 1595206
+          },
+          "turns_started": 1,
+          "turns_completed": [
+            {
+              "turnId": "01a0f2e3-5307-7899-87c8-32faad60774a",
+              "terminal": "completed",
+              "reason": null,
+              "durationMs": 416201,
+              "usage": null
+            }
+          ],
+          "inputTokens": 1570203,
+          "outputTokens": 25003,
+          "reasoningTokens": 4570,
+          "cacheReadTokens": 1474923,
+          "cacheWriteTokens": 0,
+          "cachedTokens": 1474923
+        },
+        "operator_error": null,
+        "effective_model": "muse-spark-1.3-contributor",
+        "effective_effort": "max",
+        "native_session_id": "01a0f2e3-5285-70e2-aebd-83c450951a93",
+        "quiescence": {
+          "native_quiescent": true,
+          "own_process_group_absent": true,
+          "native_receipt": "methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/native/receipt.json",
+          "native_receipt_sha256": "a61418de7c1769275d0c7957fe6154a49f0943fe22a38fa24c3bd74c6f134209",
+          "basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+        }
+      }
+    }
+  },
+  "paths": {
+    "lab": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930",
+    "publication_worktree": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930",
+    "branch": "research/external-research-v7-20260930",
+    "ops_mz_restart": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/restart-mz.json",
+    "ops_l_restart": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/restart-l.json",
+    "method_restart": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/RESTART_CHECKPOINT.json",
+    "graded_current": [
+      "grading/R001",
+      "grading/R002"
+    ],
+    "ungraded_current": [
+      "grading/R003",
+      "grading/R004"
+    ]
+  },
+  "resume_rules": [
+    "Read this checkpoint plus ops/restart-mz.json ops/restart-l.json methods-v1/RESTART_CHECKPOINT.json first",
+    "Reconcile only identifiable owned sessions and original caps; never duplicate prior admissions",
+    "Keep original start/deadline/144-start/48-slot-hour/3M reported-output ceilings and reserve",
+    "L route quarantined; no third adapter code repair authorized; carrier/schema alternative UNADJUDICATED",
+    "Current assessments for R001/R002 frozen before history; both qualityfailure; preservation/economics unassessed",
+    "R003/R004 source/current staged, no independent grader admitted yet due helper-thread cap",
+    "Continue ready M/Z lanes on user resume; source-ground keys unavailable to candidates; no Sol scored research/rescue",
+    "Fresh reviewer contexts required; do not inherit prior grades into next reviewer",
+    "T14M cards prepared but unstarted and not authorized for dispatch before pause",
+    "T11/T12 repo source/eligibility and T15 controlled plan prereqs unresolved; final holdout untouched",
+    "Only publisher writes Git worktree; allcanon/ledgers/governance/main remain outside scope"
+  ]
+}

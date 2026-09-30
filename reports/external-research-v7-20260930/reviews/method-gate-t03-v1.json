@@ -1,0 +1,18 @@
+{
+  "schema": "er7.method_launch_review.v1",
+  "review_id": "method-gate-t03-v1",
+  "status": "hold",
+  "reviewer": "/root/review_gate",
+  "created_utc": "2026-09-30T15:11:57.697611+00:00",
+  "pair_id": "t03-z-ome-render-screen-v1",
+  "blocking_findings": [
+    {
+      "id": "T03RET01",
+      "claim": "Retained snapshots live under rebound writable attempt",
+      "evidence": "watch_template writes ATTEMPT/retained-versions and stopfile under ATTEMPT. MZ namespace rebinds full attempt writable, so outsideworkspace is insufficient host-private boundary."
+    }
+  ],
+  "pair_sha256": "f5e04ee7d5fc56bfbdebd87bbfbcdb9d3cc7414bd677c315e20103130aa88d6a",
+  "candidate_starts_by_review": 0,
+  "resolution": "Prospective unstartedv2 places snapshots/stop file in hidden managementops tree; core code unchanged."
+}

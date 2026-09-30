@@ -1,0 +1,32 @@
+{
+  "schema": "er7.boundary_receipt.v1",
+  "job_id": "t06-z-ome-dev1-treatment-r1",
+  "lease_id": "t06-z-ome-dev1-treatment-r1",
+  "driver_exit_code": 0,
+  "driver_pid": 20018,
+  "driver_elapsed_seconds_including_setup_and_cleanup": 631.356,
+  "native_session_id": "sess_ab4e4f1a-5d55-4b9a-b32a-e4b9ba081c0d",
+  "native_stop_reason": "goal_complete",
+  "native_goal_status": "complete",
+  "driver_error": null,
+  "requested_model": "GLM-5.3-Flash",
+  "requested_effort": "max",
+  "effective_model": "GLM-5.3-Flash",
+  "effective_effort": "max",
+  "usage_reported": {
+    "inputTokens": 236642,
+    "outputTokens": 28567,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 189376,
+    "cacheWriteTokens": 0,
+    "totalTokens": 265209
+  },
+  "generated_output_tokens": 28567,
+  "generated_output_completeness": "unknown; native children/cancellation may be incompletely metered",
+  "native_quiescence": "established isolated PID namespace exit",
+  "native_quiescent": true,
+  "native_receipt_sha256": "2e627e93bf3539c82b5287cc8ad24961fe6ddcd77f37f97062da7d42321fbf2b",
+  "slot_release_authorized_by_wrapper": false,
+  "output_integrity": "not frozen",
+  "semantic_quality": "not evaluated"
+}

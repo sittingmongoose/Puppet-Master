@@ -1,0 +1,92 @@
+{
+  "schema": "er7.native_quiescence_reconciliation_review.v1",
+  "reviewer": "/root/review_gate",
+  "created_utc": "2026-09-30T15:15:20.983486+00:00",
+  "status": "release-proof-accepted",
+  "scope": "Only lifecycle/identity/usage metadata; no candidate answer text, keys or grades read",
+  "jobs": {
+    "t08-l-ome-discovery-screen-v4-control.r2": {
+      "arm": "control",
+      "thread_id": "01a0f2db-6d1e-73a3-a9e6-f49b603485a5",
+      "original_receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v4/control/native/receipt.json",
+      "original_receipt_sha256": "5cdc341241c03aa00d82a3228f655d3f1cc33275bdf219e80928b46905cb066f",
+      "original_receipt_native_quiescent": false,
+      "original_preclose_thread_status": {
+        "type": "active",
+        "activeFlags": []
+      },
+      "stopped_goal_status": "budgetLimited",
+      "own_server_pid": 44535,
+      "own_server_exit_code": 0,
+      "own_group_absent_original_and_current": true,
+      "native_goal_activated": true,
+      "turns_started_count": 1,
+      "turn_terminal_count": 0,
+      "unique_native_responses": 1,
+      "captured_response_usage": [
+        {
+          "totalTokens": 15396,
+          "inputTokens": 15171,
+          "cachedInputTokens": 11008,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 225,
+          "reasoningOutputTokens": 89
+        }
+      ],
+      "raw_trace_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v4/control/native/native.jsonl",
+      "raw_trace_sha256": "597ee48c6c1067484e5eaa5b268f892e19fdbb683e947fcea73491b729fc5433",
+      "usage_completeness": "partial captured response data only; uncaptured/cancelled/nativechild usage remains unknown",
+      "reconciliation_quiescence": {
+        "native_quiescent": true,
+        "own_process_group_absent": true,
+        "basis": "own fresh standalone native Goal has budgetLimited receipt, own bubblewrap PID namespace/server exited0 and own PGID absent; no live runtime can continue or write"
+      }
+    },
+    "t08-l-ome-discovery-screen-v4-treatment.r2": {
+      "arm": "treatment",
+      "thread_id": "01a0f2db-6d59-7070-a53a-1051ed090776",
+      "original_receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v4/treatment/native/receipt.json",
+      "original_receipt_sha256": "b91347315bb9f15b76cbcec8e8dc6268556a83c0fcde220c130d562954c3ba18",
+      "original_receipt_native_quiescent": false,
+      "original_preclose_thread_status": {
+        "type": "active",
+        "activeFlags": []
+      },
+      "stopped_goal_status": "budgetLimited",
+      "own_server_pid": 44561,
+      "own_server_exit_code": 0,
+      "own_group_absent_original_and_current": true,
+      "native_goal_activated": true,
+      "turns_started_count": 1,
+      "turn_terminal_count": 0,
+      "unique_native_responses": 1,
+      "captured_response_usage": [
+        {
+          "totalTokens": 15382,
+          "inputTokens": 15179,
+          "cachedInputTokens": 11008,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 203,
+          "reasoningOutputTokens": 65
+        }
+      ],
+      "raw_trace_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t08-l-ome-discovery-screen-v4/treatment/native/native.jsonl",
+      "raw_trace_sha256": "3795f67fcf88e4ae7c86f4f326ee6fb1803d6c4018bd9dfb6ead618978307c2d",
+      "usage_completeness": "partial captured response data only; uncaptured/cancelled/nativechild usage remains unknown",
+      "reconciliation_quiescence": {
+        "native_quiescent": true,
+        "own_process_group_absent": true,
+        "basis": "own fresh standalone native Goal has budgetLimited receipt, own bubblewrap PID namespace/server exited0 and own PGID absent; no live runtime can continue or write"
+      }
+    }
+  },
+  "native_goal_starts": 2,
+  "originals_unchanged": true,
+  "judgment": "Each lease may be released through a separate reconciliation evidence record; original false quiescence receipt is preserved. Original error and failed trial remain infrastructure-limited. No rerun/adapterversion3 authorized by this review.",
+  "limits": [
+    "Own namespace termination establishes localnative quiescence despite the stale preclose active projection.",
+    "Captured output/reasoning usage is recorded separately, never summed twice; missing native usage unknown.",
+    "All4Ladmissions remain counted; twov4GoALS truly started. No conversion to unstarted/noGoal.",
+    "Release must use current reconciliation proof, not rewrite original receipts or clocks."
+  ]
+}

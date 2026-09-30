@@ -1,0 +1,41 @@
+{
+  "schema": "er7.method_launch_review.v1",
+  "review_id": "method-gate-t10-v2",
+  "status": "accepted",
+  "acceptance_scope": "Prospective methodcard/mechanics only; accepted actual runtime and each native/outputreceipt additionally required",
+  "reviewer": "/root/review_gate",
+  "created_utc": "2026-09-30T15:11:57.697611+00:00",
+  "blocking_findings": [],
+  "pair_id": "t10-l-azure-discovery-screen-v2",
+  "method": "T10",
+  "reviewed_files": {
+    "methods-v1/pairs/t10-l-azure-discovery-screen-v2/pair.json": "91905b0eae290f32b8494224fb48df978406e7dd5060ce5696a283ca32e3afeb",
+    "methods-v1/cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+    "methods-v1/rebind_l_operator.py": "104b461cf9553a94c9b0c671fc56128049f2f71d6134c7042c44b8a4ed1b93e5",
+    "methods-v1/pairs/t10-l-azure-discovery-screen-v2/control.spec.json": "4bb4e167c752ea733e04f457c789e468c2bf1c614aa464b007e82545a2b62a6b",
+    "methods-v1/pairs/t10-l-azure-discovery-screen-v2/control/attempt.json": "538235d3836d1e3eb8817269ef318080740a6ffe7eb7fc04349e2ae0c46cade5",
+    "methods-v1/pairs/t10-l-azure-discovery-screen-v2/control/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-v1/pairs/t10-l-azure-discovery-screen-v2/control/workspace/TASK.md": "cc929ba7f43111abe7da38f275a38f6da48873ed8413f930d3fb0d33547b0a7f",
+    "methods-v1/pairs/t10-l-azure-discovery-screen-v2/control/workspace/inputs/brief.md": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+    "methods-v1/pairs/t10-l-azure-discovery-screen-v2/treatment.spec.json": "bf28e7204232e4da0f1945a177dccabaac4b89442b70568e3af405e4c49f7bcb",
+    "methods-v1/pairs/t10-l-azure-discovery-screen-v2/treatment/attempt.json": "d89e22f102d888390196d518899fd0945b791fcd238420f1ebf3f61d1bf79629",
+    "methods-v1/pairs/t10-l-azure-discovery-screen-v2/treatment/goal.txt": "e74923a916eea80d6de9fb283649f27284d1fb7c525b2211fedb5bc9d76d2b54",
+    "methods-v1/pairs/t10-l-azure-discovery-screen-v2/treatment/workspace/TASK.md": "87218bf215371066188411c8f44245aba6b2b8d2a30b435d707e3caba52b797f",
+    "methods-v1/pairs/t10-l-azure-discovery-screen-v2/treatment/workspace/inputs/brief.md": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607"
+  },
+  "checks": [
+    "Both exact prepared cells strictverify pass900s96 with ops-luna-v2 pins",
+    "Same briefonly1009bytes/sourceaccess/planblindness/outputobligations",
+    "Only directwholecompetitor vs componentanalogy source-selection policy differs",
+    "No sourcewinner/evaluator key or substantive answer in prompts"
+  ],
+  "required_reporting": [
+    "L route currently quarantined after actual v4Goalreceipt failure; method acceptance does not authorize L launch or further adapter version",
+    "Record actual queries/readseq/selection and transfer limits; hypothesis/family labels are not external facts",
+    "Independent check all current claims/fullassignedbrief/novelty/deadends; economics after quality",
+    "Record order/accountload/servicewaits and complete occupiedcost"
+  ],
+  "candidate_starts_by_review": 0,
+  "candidate_answers_keys_grades_read": false,
+  "L_runtime_quarantined": true
+}
