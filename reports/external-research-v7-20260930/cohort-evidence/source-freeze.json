@@ -348,6 +348,18 @@
     "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/z-auth-readability-v1.json": {
       "sha256": "69572524136efae2fc0dcfa59dab8f50dd00fb456659e5a076cca5c06dfe8b00",
       "bytes": 434
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/mz-safety-hold.json": {
+      "sha256": "1fc70d0c51d86f9243ce5780de6acfe8b607afe3ae9b401038e18e1e2aa1ff5d",
+      "bytes": 1514
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/m-auth-readability-v1.json": {
+      "sha256": "3bb34c85e176a7baeb1c29cade8f034c0919e94e23eae1d9a8b1506639d11302",
+      "bytes": 384
+    },
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/runtime-auth-hold-addendum-v1.json": {
+      "sha256": "00c3a6313ae34c620d1292ac64eb37f36dcc5ef66c6f99193222243d020e3f51",
+      "bytes": 1694
     }
   },
   "copies": [
@@ -758,6 +770,24 @@
       "published": "reviews/z-auth-readability-v1.json",
       "sha256": "69572524136efae2fc0dcfa59dab8f50dd00fb456659e5a076cca5c06dfe8b00",
       "bytes": 434
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/mz-safety-hold.json",
+      "published": "cohort-evidence/mz-safety-hold.json",
+      "sha256": "1fc70d0c51d86f9243ce5780de6acfe8b607afe3ae9b401038e18e1e2aa1ff5d",
+      "bytes": 1514
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/m-auth-readability-v1.json",
+      "published": "reviews/m-auth-readability-v1.json",
+      "sha256": "3bb34c85e176a7baeb1c29cade8f034c0919e94e23eae1d9a8b1506639d11302",
+      "bytes": 384
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/runtime-auth-hold-addendum-v1.json",
+      "published": "reviews/runtime-auth-hold-addendum-v1.json",
+      "sha256": "00c3a6313ae34c620d1292ac64eb37f36dcc5ef66c6f99193222243d020e3f51",
+      "bytes": 1694
     }
   ],
   "staging_contract": "Verify consumed stager-manifest entries; do not publish sealed keys/raw sources/full native conversations",

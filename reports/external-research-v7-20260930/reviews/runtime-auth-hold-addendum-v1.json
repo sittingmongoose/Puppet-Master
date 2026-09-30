@@ -1,0 +1,33 @@
+{
+  "schema": "er7.runtime_hold_addendum.v1",
+  "created_utc": "2026-09-30T16:32:32.591478+00:00",
+  "reviewer": "/root/method_gate_resume",
+  "status": "all_frozen_v1_MZ_launch_blocked",
+  "affected_methods": [
+    "T10",
+    "T08",
+    "T07",
+    "T11",
+    "T12",
+    "any other M/Z candidate bound to inherited frozen-v1 isolation"
+  ],
+  "method_card_acceptances": "Remain machinery-only; no acceptance authorizes dispatch against a held runtime.",
+  "blocking_findings": [
+    {
+      "id": "MG-AUTH-01",
+      "summary": "Exact inherited M namespace exposes ~/.config/muse/auth.json as readable to model tool context.",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/m-auth-readability-v1.json",
+      "evidence_sha256": "3bb34c85e176a7baeb1c29cade8f034c0919e94e23eae1d9a8b1506639d11302"
+    },
+    {
+      "id": "ZG-AUTH-01",
+      "summary": "Exact inherited Z namespace exposes native credential JSON and certificate private key as readable.",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/resume-gates/z-auth-readability-v1.json",
+      "evidence_sha256": "69572524136efae2fc0dcfa59dab8f50dd00fb456659e5a076cca5c06dfe8b00"
+    }
+  ],
+  "requested_next_boundary": "Supported credential-safe finite new runtime2, exact independently reviewed bytes and prospective job rebind before any canary/dispatch. No permission/provider/backoff bypass.",
+  "credential_contents_read": false,
+  "candidate_starts": 0,
+  "historical_exposure": "Readability exposure proved; no evidence of model credential reads has been reviewed, access remains unknown."
+}

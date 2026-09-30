@@ -1,0 +1,25 @@
+{
+  "schema": "er7.mz_safety_hold.v1",
+  "epoch": 1790785941.9870791,
+  "reason": "root confirmed no-content exact frozen M auth.json readable probe; independent gate confirmed inherited Z auth/certkey readable",
+  "new_mz_starts_held": true,
+  "active_owned_jobs": [],
+  "requested_stop_job": "t14-m-ome-negative-screen-v1-treatment",
+  "stop_disposition": "already native goal_complete and released before stop instruction; no active process stopped",
+  "released_epoch": 1790785865.1297987,
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/treatment/native/receipt.json",
+    "native_receipt_sha256": "a0a57cc80ff4c1930a28975748cf7f0bb11b9770d2a3d7971e8fc6a0f964f3ec",
+    "basis": "bubblewrap --unshare-pid --die-with-parent namespace exited"
+  },
+  "original_receipt_hashes": {
+    "methods-v1/pairs/t14-m-ome-negative-screen-v1/treatment/native/receipt.json": "a0a57cc80ff4c1930a28975748cf7f0bb11b9770d2a3d7971e8fc6a0f964f3ec",
+    "methods-v1/pairs/t14-m-ome-negative-screen-v1/treatment/operator-receipt.json": "5cca5964b15d4be90fc88def26794fa1e07679018e7fa5fa2fe26fc881f3181f",
+    "methods-v1/pairs/t14-m-ome-negative-screen-v1/treatment/output-integrity.json": "278c88e75aada843b68ab68f78521714e4e0857dcd1ff94ff7955f2495655d93"
+  },
+  "candidate_starts": 19,
+  "sibling": "untouched",
+  "source_credential_contents_read": false
+}
