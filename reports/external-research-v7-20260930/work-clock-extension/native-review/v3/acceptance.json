@@ -1,0 +1,17 @@
+{
+  "schema": "er7.z.safe.canary.acceptance.v1",
+  "verdict": "passed",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "canary_receipt_sha256": "1c563d1c086bb08d05df75e0025c125025a5bd831bd29f75ed2edee4931aad79",
+  "native_inventory_all_request_attempts_verified": true,
+  "native_goal_activation_continuation_completion_verified": true,
+  "native_tool_privacy_and_quiescence_verified": true,
+  "reviewer": "codex-z-native-v3",
+  "assessment_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/assessment.json",
+  "assessment_sha256": "ad8a42f27c79f6bcb8a9cafcf130bbc1165ff6a71f8d9499f869648e91057ade",
+  "scope": "historical SAME frozen canary actual native qualification only",
+  "productive_context_control_required": true,
+  "productive_dispatch_hold": true,
+  "dispatch_authorization": "none",
+  "terminal_utc": "2026-10-01T18:31:42.896277+00:00"
+}

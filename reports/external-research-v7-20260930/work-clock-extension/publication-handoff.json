@@ -1,6 +1,6 @@
 {
   "status": "ACTIVE; continuing publisher available for next frozen cohort",
-  "as_of_utc": "2026-10-01T18:15:24.352746+00:00",
+  "as_of_utc": "2026-10-01T18:39:39.366416+00:00",
   "deadline_edt": "October 1,2026 9:29:01 p.m. EDT",
   "authority_sha256": "ca4afed46dc1218bd449b3ef34f67f6c6245efbbbc73bb66e86d592102d36567",
   "candidate_admissions": 20,
@@ -10,7 +10,7 @@
   "known_conservative_helper_events": 65,
   "known_helper_headroom": 7,
   "unknown_usage_not_zero": true,
-  "next_publication": "exact frozen native-v3/capture-v2 reviews then admitted frozen candidate cohort",
+  "next_publication": "exact frozen capture-v2/host-release review then actually admitted frozen candidates",
   "private_publication_exclusions": [
     "auth/config",
     "keys",
@@ -18,5 +18,39 @@
     "candidate conversations",
     "large corpora"
   ],
-  "previous_published_head": "e7b698a5d273c990799999ed2ca48f3ead7a3683"
+  "previous_published_head": "e7b698a5d273c990799999ed2ca48f3ead7a3683",
+  "native_v3_status": "historical three checks passed; prospective context isolation/dispatch hold",
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/acceptance.json",
+      "sha256": "4c99c392b317b25453e2ac15a4db642f36f8539fe8b7ce1702b480b22990dd8e",
+      "publication_path": "work-clock-extension/native-review/v3/acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/assessment.json",
+      "sha256": "ad8a42f27c79f6bcb8a9cafcf130bbc1165ff6a71f8d9499f869648e91057ade",
+      "publication_path": "work-clock-extension/native-review/v3/assessment.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/assessment.md",
+      "sha256": "6e5e08c8cb427f532393b2ea461de7125e919baaa666e2c9b615144867a4d26b",
+      "publication_path": "work-clock-extension/native-review/v3/assessment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v2/resumed-native-acceptance.json",
+      "sha256": "05e86a7f14d6522ce541659a8fe10d04d4db256eca74fe95524c11284618ec77",
+      "publication_path": "work-clock-extension/native-review/v2/resumed-native-acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v2/resumed-native-assessment.json",
+      "sha256": "e417675a5bf87418fc71654393da70cf627358916737bbeaf995e8af0e1e7369",
+      "publication_path": "work-clock-extension/native-review/v2/resumed-native-assessment.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v2/resumed-native-assessment.md",
+      "sha256": "f5a3b7571218b7792bdad53c65cbc88f7baad1b1d87d99ca217b80c1095d6720",
+      "publication_path": "work-clock-extension/native-review/v2/resumed-native-assessment.md"
+    }
+  ],
+  "helper_headroom_as_of": "prior explicit root65-event snapshot; newer starts unknown until root rollup"
 }

@@ -1,0 +1,14 @@
+{
+  "schema": "er7.z.safe.canary.acceptance.v1",
+  "verdict": "unestablished",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "canary_receipt_sha256": "1c563d1c086bb08d05df75e0025c125025a5bd831bd29f75ed2edee4931aad79",
+  "native_inventory_all_request_attempts_verified": true,
+  "native_goal_activation_continuation_completion_verified": true,
+  "native_tool_privacy_and_quiescence_verified": false,
+  "reviewer": "/root/resume_native_gate",
+  "assessment_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v2/resumed-native-assessment.json",
+  "assessment_sha256": "e417675a5bf87418fc71654393da70cf627358916737bbeaf995e8af0e1e7369",
+  "terminal_reason": "Within-budget freeze not achieved: final assembly guard rejected elapsed continuation exceeding the existing 703.589 active seconds. No PASS artifact was written. No further evidence review after cutoff.",
+  "dispatch_authorization": false
+}

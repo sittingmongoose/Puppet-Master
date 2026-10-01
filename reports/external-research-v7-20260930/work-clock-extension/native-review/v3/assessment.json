@@ -1,0 +1,148 @@
+{
+  "schema": "er7.z.canary.native.assessment.v3",
+  "verdict": "passed",
+  "reviewer": "codex-z-native-v3",
+  "independent_new_task": true,
+  "same_total_campaign_envelope": true,
+  "prior_capped_and_unestablished_records_immutable": true,
+  "scope": "Historical exact unchanged final-repair2 canary; no candidate semantic rescore, launch, Goal, runtime repair or dispatch authorization",
+  "native_inventory_all_request_attempts_verified": true,
+  "native_goal_activation_continuation_completion_verified": true,
+  "native_tool_privacy_and_quiescence_verified": true,
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "FREEZE_sha256": "eb0c97ee748afa3cee832a87501c92e0b30a5e5b67e6541ac6bbc00edbbd5625",
+  "canary_receipt_sha256": "1c563d1c086bb08d05df75e0025c125025a5bd831bd29f75ed2edee4931aad79",
+  "clock": {
+    "first_work_utc": "2026-10-01T18:11:52+00:00",
+    "terminal_utc": "2026-10-01T18:31:42.896277+00:00",
+    "active_seconds": 1190.896,
+    "max_active_seconds": 1200,
+    "user_pause_seconds_in_this_task": 0,
+    "cap_responses": 120,
+    "response_usage_exact": "not exposed; fewer than120 observed responses",
+    "generated_token_cost": "unknown; not exposed",
+    "prior_review_costs_not_reset": true
+  },
+  "actual_proof": {
+    "all26_closure_and_bundle_and3_process_dependencies_match": true,
+    "native_request_attempt_pairs": 5,
+    "native_status_events": 10,
+    "research_tool_requests": 4,
+    "empty_tool_verifier_requests": 1,
+    "all_observed_attempts_started_completed": true,
+    "native_elapsed_seconds": 228.0,
+    "native_responses": 5,
+    "fresh_create_empty_history_no_parent_no_target": true,
+    "native_started_turn": true,
+    "native_automatic_continuation_source_metadata": true,
+    "native_goal_continuation_completed_event": true,
+    "same_target_complete_before_cleanup": true,
+    "five_output_inputs_receipts_frozen_bytes_verified": true,
+    "two_inert_denials_no_content": true,
+    "owned_pgids_absent": [
+      148297,
+      148298,
+      148301
+    ],
+    "no_hook_lifecycle_observed": true,
+    "no_agentsMd_global_instructions_or_auto_memory_markers_in_all5_logical_requests": true,
+    "candidate_auth_key_route": "MCP child empty-root namespace, cleared env, workspace-only path capabilities; host provider registry stays outside candidate tools. Host authentication is expected and not a privacy failure.",
+    "shared_metadata_no_change": "Pinned receipt producer reports []; frozen inspected source compares file metadata before/after. Original maps unavailable; no independent historical-map reconstruction claimed."
+  },
+  "effective_startup": [
+    {
+      "event": "bootstrap.app.startup.started",
+      "fields": {
+        "resume": false,
+        "hasInjectedModelAdapter": false
+      }
+    },
+    {
+      "event": "bootstrap.app.startup.config.completed",
+      "fields": {
+        "configSourceEnv": true,
+        "configSourceProject": true,
+        "configSourceUser": true
+      }
+    },
+    {
+      "event": "bootstrap.app.startup.plugins.completed",
+      "fields": {
+        "pluginCount": 0,
+        "enabledPluginCount": 0,
+        "hookCount": 0,
+        "commandRootCount": 0,
+        "skillRootCount": 0,
+        "mcpServerCount": 0
+      }
+    },
+    {
+      "event": "bootstrap.app.startup.runtime_config.completed",
+      "fields": {
+        "memoryEnabled": false,
+        "memoryUse": false,
+        "memoryExtractionEnabled": true,
+        "runtimeFeatureBrowserUse": false,
+        "runtimeFeatureNodeRepl": false,
+        "mcpEnabled": true,
+        "mode": "build"
+      }
+    }
+  ],
+  "qualifications": [
+    "Historical canary privacy is qualified for observed effective execution, not a blanket claim that every optional runtime feature is false.",
+    "memoryExtractionEnabled=true is observed. memoryUse=false plus memoryEnabled=false and inspected XL read gate prevent inherited memory index loading; extraction is not falsely classified as memory-use.",
+    "hookCount=0 in plugin startup describes plugin hooks, not global hooks. No global-hooks-disabled assertion; no actual hook lifecycle or extra/child provider attempt observed.",
+    "Subagent disabled flag is requested; effective flag not directly echoed. No Agent/Task/coordination tools or extra model attempts were admitted/observed.",
+    "Strict safe Boolean markers cover source-defined instruction rendering in all full logical request.messages plus body.system. Native body.messages/sdkMessages are omitted/non-arrays; their absence alone was never used as context proof.",
+    "No universal credential-value absence assertion. No actual auth/config/header/credential values inspected, echoed or hashed.",
+    "An early read of sanitized receipt exposed embedded candidate prose in tool output; it was not used for semantic findings, scores or native qualification. Subsequent receipt/transcript access used structural projections only."
+  ],
+  "prospective_hold": {
+    "productive_dispatch": "HOLD until independent exact future context-control/method binding is accepted",
+    "reason": "Unchanged source automatically discovers HOME/.zcode/AGENTS.md. Current metadata-only stat shows it exists with mtime2026-10-01T01:07:19Z, after theSep30canary. Historical absence of rendered instructions does not close the future route.",
+    "minimal_generic_fix": "Prospectively bind a new empty per-attempt HOME and controlled ancestor instruction roots/environment via independently reviewed operator/method configuration. Keep existing absolute authorized provider registry/auth route. App-server strict create schema has no userInstructions input; internal priorityFiles=[] cannot be invented as a supported RPC parameter. Require actual source-defined instruction-marker absence and user-config projection in every new attempt. No frozen source hotpatch or second canary is authorized here."
+  },
+  "public_GET": "Not admitted or invoked in this canary; 4th-tool actual qualification remains unknown and must be checked on each admitted productive GET attempt.",
+  "semantic_scores": "preserved unchanged; no findings assessed",
+  "evidence_pins": {
+    "safe-observations.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/safe-observations.json",
+      "sha256": "1bfbb87b0b85d497e9e19ea74fd9af16e70923b8c9957c08a47dfaf108de3c0a"
+    },
+    "structural-observations.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/structural-observations.json",
+      "sha256": "90caf8bc73468817e0a6278f8f4d211bd17993d18792d970cf797a4b38f6a65f"
+    },
+    "source-excerpts.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/source-excerpts.json",
+      "sha256": "6c73d8bc8874ea5879f5b3b1b744e1e3938dd7a5b9a2275205a5845044850410"
+    },
+    "observe.py": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/observe.py",
+      "sha256": "020e697520abb69c73965ee064ae27825bd071108a78b836394f863c7f3a444d"
+    },
+    "structural.py": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/structural.py",
+      "sha256": "32c97bdc8df41d6ba28bc75a77d1d4599e350ca46fcb087649ad88c328909ab4"
+    },
+    "projection-authorization.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/projection-authorization.json",
+      "sha256": "77f6fa7001594afd66e3f1ab3ca3bca759fbc9f552423762c0def36340fe1a13"
+    },
+    "projection-authorization2.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/projection-authorization2.json",
+      "sha256": "bd4af47020cad2f99eb0422e89e83b580ab2d72aa6153d1cb296a6c604c3f594"
+    },
+    "projection-authorization3.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/projection-authorization3.json",
+      "sha256": "80d94a8afcb4732d6c564589f03cfb3b90bec9cd6b93decc9a88d3f7d2900b0a"
+    },
+    "projection-authorization4.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/projection-authorization4.json",
+      "sha256": "422c2376751b6b63376a92c20f35ecabdaba588d6f8ef15daf1e9916a4ed6188"
+    }
+  },
+  "private_projection_policy": "Exact event bool/int/enums established and synthetically tested before private-log read; no raw private log dump/hash/copy, arbitrary message/context/auth/header/config/error string output",
+  "dispatch_authorization": "none"
+}
