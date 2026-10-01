@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5331-L26422
+Source lines: L5331-L26425
 
-Source SHA256: `16f5497643873fe32d53b55fea77156b10eb75df5a75cd21b178348a9aa60611`
+Source SHA256: `b736820447eba84072c609db2a772aa2344069730c5b1b0ee52a845267a71ec4`
 
 ---
 
@@ -10293,7 +10293,8 @@ canonical_text: >-
   Live terminal rendering follows the Section 15 terminal-core architecture: high-frequency
   mutable grid, native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer
   ingestion and processing, while DOM/React/webview-style document-UI terminal cores are
-  non-ship.
+  non-ship. On the web GUI, the terminal grid is drawn as a fixed, reused set of visible page-text
+  rows updated by diff (DL-139, SMPFS-072 web exception).
 gui_related: true
 gui_classification_reason: >-
   This unit constrains terminal rendering architecture and excludes non-ship web-style
@@ -10319,6 +10320,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0128"
+- "Plans/Decision_Log.md#DL-139 (web terminal answer, 2026-10-01)"
 preserved_exact_tokens:
 - "Section 15 terminal-core architecture"
 - "high-frequency mutable grid"
@@ -10329,7 +10331,8 @@ preserved_exact_tokens:
 - "off-UI-thread PTY/buffer ingestion"
 negative_constraints:
 - "DOM/React/webview-style document-UI terminal cores are non-ship."
-compatibility_only_notes: []
+compatibility_only_notes:
+- "DL-139 web exception: reused visible page-text rows fed by the Rust terminal grid are not a document-UI terminal core; they ship only after the heavy-output speed tests."
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:

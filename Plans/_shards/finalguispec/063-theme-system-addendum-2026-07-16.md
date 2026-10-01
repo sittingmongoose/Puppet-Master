@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29602-L30634
+Source lines: L29605-L30640
 
-Source SHA256: `16f5497643873fe32d53b55fea77156b10eb75df5a75cd21b178348a9aa60611`
+Source SHA256: `b736820447eba84072c609db2a772aa2344069730c5b1b0ee52a845267a71ec4`
 
 ---
 
@@ -439,7 +439,8 @@ canonical_text: >-
   the parallax offset variables continue to operate. The backdrop-filter budget is enumerated
   and closed: two glass-theme blurs (app shell and floating chat), three friendly-theme blurs
   (title bar, status bar, bottom panel), and two settings-modal blurs (the bloom backdrop
-  scrim and, under glass, the bloom and project-settings modal slabs). Effects the concept
+  scrim and, under glass, the bloom and project-settings modal slabs), plus the setup-popup sheet blur that DL-139
+  admits on the Skia GPU path only (F3-566). Effects the concept
   builds with mix-blend-mode or mask-composite, such as the glass pane sheen and gradient
   hairline rings, are either renderable natively by the toolkit or precomputed into baked
   assets.
@@ -451,7 +452,7 @@ unblocks: []
 acceptance_criteria:
 - "No color-mix() or alpha-scaling calc() color derivation survives to runtime; per-variant precomputed values replace them at build time."
 - "All theme fonts are bundled locally and cloudscapes are baked as pre-blurred bitmaps per background mode, with depth parallax layers baked separately."
-- "The backdrop-filter budget is closed at two glass blurs, three friendly blurs, and two settings-modal blurs, and no surface adds a blur outside that enumeration."
+- "The backdrop-filter budget is closed at two glass blurs, three friendly blurs, two settings-modal blurs, and the DL-139 setup-popup sheet blur on the Skia GPU path, and no surface adds a blur outside that enumeration."
 - "mix-blend-mode and mask-composite effects are renderable natively or precomputed into baked assets."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -469,6 +470,7 @@ source_lineage:
 - "Plans/FinalGUISpec.md:1035"
 - "Plans/FinalGUISpec.md:7699"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- "Plans/Decision_Log.md#DL-139 (setup-popup sheet blur admitted on the Skia GPU path, 2026-10-01)"
 preserved_exact_tokens:
 - "color-mix()"
 - "backdrop-filter"
@@ -478,7 +480,8 @@ negative_constraints:
 - "No arbitrary-content backdrop blur; no SVG filters; no runtime color math."
 compatibility_only_notes:
 - "Slint portability: this unit is the family-wide remediation contract; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "DL-139 opens the closed budget by exactly one entry, the setup-popup sheet blur on the Skia GPU path, replacing the 2026-09-27 outcome of DL-114 that kept it closed."
 owner_boundary_notes:
 - "The precomputed-color constraint phrasing aligns with PWIZ-019 in Plans/Planning_Wizard.md; that unit remains owner of the embedded-chat surface it constrains."
 owner_hints:

@@ -213,7 +213,7 @@ Native desktop targets Windows, Linux, and macOS through the Slint Winit backend
 
 #### Skia renderer extensions (DL-139)
 
-Puppet Master extends Slint's Skia renderer with its own code; F3-582 owns the contract. The extensions add, as `.slint` properties drawn by Skia: element blur; backdrop blur of what is drawn underneath an element; gradient and alpha masks; blend modes; saturate, contrast, and brightness filters; ClearType text on Windows; and selectable rich text (`StyledText`) whose selection the application can read and set. ClearType reads the Windows font-smoothing settings, gives Skia surfaces the screen's subpixel layout, draws glyphs with subpixel edging, and falls back to grayscale for text in fading or cached layers, text being scaled or rotated, and transparent windows. macOS keeps grayscale text; Linux subpixel text needs more work in Skia's FreeType setup and follows after Windows. On the CPU path backdrop blur is not drawn and frosted surfaces draw solid in their own fill; the other effects still draw. The extensions are written to upstream quality, offered to Slint against slint-ui/slint#612, #2066, and #5748, and carried as a Cargo `[patch]` of Slint's crates until merged; each Slint upgrade re-applies and re-checks them. "Slint portability" notes elsewhere in this spec that ban blur, backdrop blur, masks, blend modes, or filter effects only because stock Slint could not draw them no longer bind for these effects (DL-139); their other guidance (precomputed colours, pre-blurred wallpaper images, opaque surfaces) remains a performance option. Design rules that limit blur for their own reasons, such as DL-114, F3-566, and F3-431, stay in force. Motion that Slint lacks but that needs no renderer work, such as multi-step keyframes, stepped easing, and path draw-on, is built from Slint animations, `animation-tick()`, and timers rather than from these extensions.
+Puppet Master extends Slint's Skia renderer with its own code; F3-582 owns the contract. The extensions add, as `.slint` properties drawn by Skia: element blur; backdrop blur of what is drawn underneath an element; gradient and alpha masks; blend modes; saturate, contrast, and brightness filters; ClearType text on Windows; and selectable rich text (`StyledText`) whose selection the application can read and set. ClearType reads the Windows font-smoothing settings, gives Skia surfaces the screen's subpixel layout, draws glyphs with subpixel edging, and falls back to grayscale for text in fading or cached layers, text being scaled or rotated, and transparent windows. macOS keeps grayscale text; Linux subpixel text needs more work in Skia's FreeType setup and follows after Windows. On the CPU path backdrop blur is not drawn and frosted surfaces draw solid in their own fill; the other effects still draw. The extensions are written to upstream quality, offered to Slint against slint-ui/slint#612, #2066, and #5748, and carried as a Cargo `[patch]` of Slint's crates until merged; each Slint upgrade re-applies and re-checks them. "Slint portability" notes elsewhere in this spec that ban blur, backdrop blur, masks, blend modes, or filter effects only because stock Slint could not draw them no longer bind for these effects (DL-139); their other guidance (precomputed colours, pre-blurred wallpaper images, opaque surfaces) remains a performance option. Setup popups (the sheets of F3-566) take DL-114's extra blur: frosted glass on the GPU path and solid on the CPU raster, with the scrim a flat tint; F3-431's blur budget admits that sheet blur and nothing more. Motion that Slint lacks but that needs no renderer work, such as multi-step keyframes, stepped easing, and path draw-on, is built from Slint animations, `animation-tick()`, and timers rather than from these extensions.
 
 ### 2.3 Web/WASM GUI Contract
 
@@ -3068,7 +3068,7 @@ The GUI must never visually "jump" or "flicker" when background data updates arr
 
 ### 11.3 Terminal-Specific Anti-Flickering
 
-- Live terminal rendering follows the Section 15 terminal-core architecture: terminal output is a high-frequency mutable grid, DOM/React/webview-style document-UI terminal cores are non-ship, and the core centers native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing.
+- Live terminal rendering follows the Section 15 terminal-core architecture: terminal output is a high-frequency mutable grid, DOM/React/webview-style document-UI terminal cores are non-ship, and the core centers native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing. The web GUI's terminal (DL-139) draws the same Rust terminal grid as a fixed, reused set of visible page-text rows updated by diff; it never adds one element per output line or treats output as a growing document, and it ships only after passing the heavy-output speed tests.
 - Bounded terminal transcript or plain-log projections may expose a visible row window in `VecModel`/`ListView`, but those projections are derived views rather than the live terminal core.
 - When output arrives rapidly, throttle GUI projection updates to max 30fps and batch rows arriving within 33ms; PTY/buffer ingestion and diff computation remain off the UI thread.
 - Ring buffers stay in Rust; the GUI holds only the visible transcript or plain-log projection window.
@@ -15613,7 +15613,8 @@ canonical_text: >-
   Live terminal rendering follows the Section 15 terminal-core architecture: high-frequency
   mutable grid, native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer
   ingestion and processing, while DOM/React/webview-style document-UI terminal cores are
-  non-ship.
+  non-ship. On the web GUI, the terminal grid is drawn as a fixed, reused set of visible page-text
+  rows updated by diff (DL-139, SMPFS-072 web exception).
 gui_related: true
 gui_classification_reason: >-
   This unit constrains terminal rendering architecture and excludes non-ship web-style
@@ -15639,6 +15640,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0128"
+- "Plans/Decision_Log.md#DL-139 (web terminal answer, 2026-10-01)"
 preserved_exact_tokens:
 - "Section 15 terminal-core architecture"
 - "high-frequency mutable grid"
@@ -15649,7 +15651,8 @@ preserved_exact_tokens:
 - "off-UI-thread PTY/buffer ingestion"
 negative_constraints:
 - "DOM/React/webview-style document-UI terminal cores are non-ship."
-compatibility_only_notes: []
+compatibility_only_notes:
+- "DL-139 web exception: reused visible page-text rows fed by the Rust terminal grid are not a document-UI terminal core; they ship only after the heavy-output speed tests."
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -30030,7 +30033,8 @@ canonical_text: >-
   the parallax offset variables continue to operate. The backdrop-filter budget is enumerated
   and closed: two glass-theme blurs (app shell and floating chat), three friendly-theme blurs
   (title bar, status bar, bottom panel), and two settings-modal blurs (the bloom backdrop
-  scrim and, under glass, the bloom and project-settings modal slabs). Effects the concept
+  scrim and, under glass, the bloom and project-settings modal slabs), plus the setup-popup sheet blur that DL-139
+  admits on the Skia GPU path only (F3-566). Effects the concept
   builds with mix-blend-mode or mask-composite, such as the glass pane sheen and gradient
   hairline rings, are either renderable natively by the toolkit or precomputed into baked
   assets.
@@ -30042,7 +30046,7 @@ unblocks: []
 acceptance_criteria:
 - "No color-mix() or alpha-scaling calc() color derivation survives to runtime; per-variant precomputed values replace them at build time."
 - "All theme fonts are bundled locally and cloudscapes are baked as pre-blurred bitmaps per background mode, with depth parallax layers baked separately."
-- "The backdrop-filter budget is closed at two glass blurs, three friendly blurs, and two settings-modal blurs, and no surface adds a blur outside that enumeration."
+- "The backdrop-filter budget is closed at two glass blurs, three friendly blurs, two settings-modal blurs, and the DL-139 setup-popup sheet blur on the Skia GPU path, and no surface adds a blur outside that enumeration."
 - "mix-blend-mode and mask-composite effects are renderable natively or precomputed into baked assets."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -30060,6 +30064,7 @@ source_lineage:
 - "Plans/FinalGUISpec.md:1035"
 - "Plans/FinalGUISpec.md:7699"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- "Plans/Decision_Log.md#DL-139 (setup-popup sheet blur admitted on the Skia GPU path, 2026-10-01)"
 preserved_exact_tokens:
 - "color-mix()"
 - "backdrop-filter"
@@ -30069,7 +30074,8 @@ negative_constraints:
 - "No arbitrary-content backdrop blur; no SVG filters; no runtime color math."
 compatibility_only_notes:
 - "Slint portability: this unit is the family-wide remediation contract; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "DL-139 opens the closed budget by exactly one entry, the setup-popup sheet blur on the Skia GPU path, replacing the 2026-09-27 outcome of DL-114 that kept it closed."
 owner_boundary_notes:
 - "The precomputed-color constraint phrasing aligns with PWIZ-019 in Plans/Planning_Wizard.md; that unit remains owner of the embedded-chat surface it constrains."
 owner_hints:
@@ -38651,8 +38657,8 @@ canonical_text: >-
   sentence, always true for the current settings, the estimate line (never $0.00), Cancel and one
   primary naming a verb, the canonical name and a count; a disabled primary prints its reason, and
   a refused Start replaces the read-back with the refusal and a route to the control that fixes it.
-  A sheet whose changes apply at once shows only Done. Every sheet is a solid surface over a flat scrim, with no backdrop blur in any theme: Glass keeps its near-opaque glass-coloured panel, and
-  F3-431's blur budget stays closed (DL-114). Motion (DL-113, DL-115): each theme family moves with
+  A sheet whose changes apply at once shows only Done. Every sheet sits over a flat scrim. On the Skia GPU path a sheet is frosted glass, the extra blur of DL-114 drawn by the Skia renderer extensions (DL-139, F3-582); on the Skia CPU raster it is a solid surface, and Glass keeps its near-opaque glass-coloured panel. The scrim is never blurred, and
+  F3-431's blur budget admits this sheet blur and nothing more (DL-139). Motion (DL-113, DL-115): each theme family moves with
   its own motion personality, aligned with the transcript's motion voices of ACD-475
   (Basic: ink; Friendly: hop; Glass: depth; Retro: type), so a sheet's opening and closing and an
   in-chat card's changes take their family's personality. Where a card takes part in a transcript
@@ -38703,7 +38709,7 @@ acceptance_criteria:
   - "No kind or participant is drawn with initials or letters."
   - "Every wand-module surface uses the theme's own font and no separate display face."
   - "Every surface meets the J-2 minimums in all eight themes."
-  - "No sheet or scrim uses a backdrop blur in any theme."
+  - "A sheet uses a backdrop blur only on the Skia GPU path and is a solid surface on the Skia CPU raster; no scrim uses a backdrop blur in any theme."
   - "Each theme family's sheets and in-chat cards move with that family's motion personality, and a card's transcript beats keep ACD-475's shared timing and order."
   - "With Reduce Motion on, every sheet and card change lands at its end state instantly in every family."
 validation_surfaces:
@@ -38726,6 +38732,7 @@ source_lineage:
   - "IMPACT-REGISTER B-FGS-01, B-FGS-05 (NOW part)"
   - "Plans/Decision_Log.md#DL-109"
   - "Plans/Decision_Log.md#DL-114 (the solid surface, compiled 2026-09-27; IMPACT-REGISTER B-FGS-17, card n05, E-24)"
+  - "Plans/Decision_Log.md#DL-139 (sheet frosted on the Skia GPU path, solid on the CPU raster; owner confirmation 2026-10-01)"
   - "Plans/Decision_Log.md#DL-113 (the per-family motion principle, the lead's ruling of 2026-09-27 on card n04, E-22; the token values stay out of canon, IMPACT-REGISTER B-FGS-19 OUT)"
 preserved_exact_tokens:
   - "DL-138"
@@ -38748,12 +38755,13 @@ negative_constraints:
   - "Do not add a display face or italic voice face."
   - "Do not compress padding or gaps below the J-2 minimums."
   - "Do not change the canon theme font tokens through this unit."
-  - "Do not raise F3-431's blur budget for a sheet or its scrim."
+  - "Do not raise F3-431's blur budget beyond the sheet blur DL-139 admits, and never blur the scrim."
   - "Do not write per-family motion durations or easing values into canon; they are the design foundation's tokens."
   - "Do not change a transcript beat's timing or order per family (ACD-475)."
 stale_retired_dispositions:
   - "2026-09-03 redesign section 10 'one shared modal shell' and 'pops out to a full panel' are superseded for presentation by this unit, F3-569 and ACD-480; the participant-row and per-kind behaviour sentences stay."
   - "Additive Correction v4 'Nothing here authorises a broad restyle' is superseded for the wand modules' surfaces by DL-109 and this unit."
+  - "DL-139 replaces the solid-sheet outcome of DL-114's 2026-09-27 check on the Skia GPU path: once the Skia renderer extensions draw backdrop blur, sheets are frosted there and stay solid on the CPU raster."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -39838,8 +39846,9 @@ canonical_text: >-
   slint-ui/slint#2066, and slint-ui/slint#5748, and carried as a Cargo [patch] of Slint's crates until merged; every
   Slint upgrade re-applies them and re-runs their screenshot checks. Slint-portability notes that ban blur, backdrop
   blur, masks, blend modes, or filter effects only because stock Slint could not draw them no longer bind for these
-  effects; their other guidance remains a performance option, and design rules that limit blur for their own
-  reasons (DL-114, F3-566, F3-431) stay in force. Motion that needs no renderer
+  effects; their other guidance remains a performance option. Setup popups (the sheets of F3-566) take DL-114's extra
+  blur on the GPU path and stay solid on the CPU raster, and F3-431's blur budget admits that sheet blur and nothing
+  more. Motion that needs no renderer
   work, such as multi-step keyframes, stepped easing, and path draw-on, is built from Slint animations,
   animation-tick(), and timers rather than from these extensions.
 gui_related: true
@@ -39852,7 +39861,7 @@ acceptance_criteria:
   - "On Windows with ClearType on, static text over an opaque background draws with subpixel edging in the system's RGB or BGR order; text in fading or cached layers, scaled or rotated text, and transparent windows draw grayscale."
   - "StyledText supports mouse and keyboard selection and copy, and the application can read and set its selection offsets."
   - "The extensions live in a Cargo [patch] of Slint's crates with a recorded upstream issue or pull request for each, and each Slint upgrade re-applies them and re-runs their screenshot checks."
-  - "Slint-portability bans on these effects no longer bind, and the blur limits of DL-114, F3-566 and F3-431 are unchanged."
+  - "Slint-portability bans on these effects no longer bind; sheets are frosted on the GPU path and solid on the CPU raster, and F3-431 admits only that sheet blur."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -39878,7 +39887,7 @@ preserved_exact_tokens:
   - "slint-ui/slint#5748"
 negative_constraints:
   - "Do not draw backdrop blur on the Skia CPU raster; draw those surfaces solid in their own fill."
-  - "Do not treat this unit as reopening the blur limits of DL-114, F3-566 or F3-431."
+  - "Do not widen F3-431's blur budget beyond the sheet blur DL-139 admits."
 compatibility_only_notes: []
 stale_retired_dispositions:
   - "DL-139 lifts Slint-portability bans on blur, backdrop blur, masks, blend modes and filter effects that existed only because stock Slint could not draw them; the individual notes are updated when their units are next edited."
@@ -39908,7 +39917,9 @@ canonical_text: >-
   bind to; one design-token source that generates the Slint theme globals and the CSS custom properties for every
   theme; and the same fixtures run through both interfaces, with screenshots of each. Web animations keep to transform
   and opacity where the design allows, long lists render only their visible rows, and long transcripts are trimmed or
-  kept as page text rather than held in WebAssembly memory. The Slint/WASM canvas web GUI is retired.
+  kept as page text rather than held in WebAssembly memory. The web terminal draws the same Rust terminal grid as a
+  fixed, reused set of visible page-text rows updated by diff (the SMPFS-072 web exception) and ships only after the
+  heavy-output speed tests. The Slint/WASM canvas web GUI is retired.
 gui_related: true
 gui_classification_reason: Defines the technology, rendering, and parity rules of the web GUI.
 split_recommended: false
@@ -39919,6 +39930,7 @@ acceptance_criteria:
   - "The web GUI reaches OS-owned capabilities only through the trusted local daemon and reports the web capability states of the Web Capability Matrix section."
   - "Desktop and web bind the same interface-model crate and the same generated design tokens, and the shared fixtures produce screenshots on both."
   - "Web text is browser-rendered and selectable with the browser's own selection."
+  - "The web terminal renders only its visible rows as reused page-text rows from the Rust terminal grid and passes the heavy-output speed tests before it ships."
   - "Web animations keep to transform and opacity where the design allows, long lists render only their visible rows, and long transcripts are trimmed or kept as page text."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38622-L39815
+Source lines: L38628-L39823
 
-Source SHA256: `16f5497643873fe32d53b55fea77156b10eb75df5a75cd21b178348a9aa60611`
+Source SHA256: `b736820447eba84072c609db2a772aa2344069730c5b1b0ee52a845267a71ec4`
 
 ---
 
@@ -40,8 +40,8 @@ canonical_text: >-
   sentence, always true for the current settings, the estimate line (never $0.00), Cancel and one
   primary naming a verb, the canonical name and a count; a disabled primary prints its reason, and
   a refused Start replaces the read-back with the refusal and a route to the control that fixes it.
-  A sheet whose changes apply at once shows only Done. Every sheet is a solid surface over a flat scrim, with no backdrop blur in any theme: Glass keeps its near-opaque glass-coloured panel, and
-  F3-431's blur budget stays closed (DL-114). Motion (DL-113, DL-115): each theme family moves with
+  A sheet whose changes apply at once shows only Done. Every sheet sits over a flat scrim. On the Skia GPU path a sheet is frosted glass, the extra blur of DL-114 drawn by the Skia renderer extensions (DL-139, F3-582); on the Skia CPU raster it is a solid surface, and Glass keeps its near-opaque glass-coloured panel. The scrim is never blurred, and
+  F3-431's blur budget admits this sheet blur and nothing more (DL-139). Motion (DL-113, DL-115): each theme family moves with
   its own motion personality, aligned with the transcript's motion voices of ACD-475
   (Basic: ink; Friendly: hop; Glass: depth; Retro: type), so a sheet's opening and closing and an
   in-chat card's changes take their family's personality. Where a card takes part in a transcript
@@ -92,7 +92,7 @@ acceptance_criteria:
   - "No kind or participant is drawn with initials or letters."
   - "Every wand-module surface uses the theme's own font and no separate display face."
   - "Every surface meets the J-2 minimums in all eight themes."
-  - "No sheet or scrim uses a backdrop blur in any theme."
+  - "A sheet uses a backdrop blur only on the Skia GPU path and is a solid surface on the Skia CPU raster; no scrim uses a backdrop blur in any theme."
   - "Each theme family's sheets and in-chat cards move with that family's motion personality, and a card's transcript beats keep ACD-475's shared timing and order."
   - "With Reduce Motion on, every sheet and card change lands at its end state instantly in every family."
 validation_surfaces:
@@ -115,6 +115,7 @@ source_lineage:
   - "IMPACT-REGISTER B-FGS-01, B-FGS-05 (NOW part)"
   - "Plans/Decision_Log.md#DL-109"
   - "Plans/Decision_Log.md#DL-114 (the solid surface, compiled 2026-09-27; IMPACT-REGISTER B-FGS-17, card n05, E-24)"
+  - "Plans/Decision_Log.md#DL-139 (sheet frosted on the Skia GPU path, solid on the CPU raster; owner confirmation 2026-10-01)"
   - "Plans/Decision_Log.md#DL-113 (the per-family motion principle, the lead's ruling of 2026-09-27 on card n04, E-22; the token values stay out of canon, IMPACT-REGISTER B-FGS-19 OUT)"
 preserved_exact_tokens:
   - "DL-138"
@@ -137,12 +138,13 @@ negative_constraints:
   - "Do not add a display face or italic voice face."
   - "Do not compress padding or gaps below the J-2 minimums."
   - "Do not change the canon theme font tokens through this unit."
-  - "Do not raise F3-431's blur budget for a sheet or its scrim."
+  - "Do not raise F3-431's blur budget beyond the sheet blur DL-139 admits, and never blur the scrim."
   - "Do not write per-family motion durations or easing values into canon; they are the design foundation's tokens."
   - "Do not change a transcript beat's timing or order per family (ACD-475)."
 stale_retired_dispositions:
   - "2026-09-03 redesign section 10 'one shared modal shell' and 'pops out to a full panel' are superseded for presentation by this unit, F3-569 and ACD-480; the participant-row and per-kind behaviour sentences stay."
   - "Additive Correction v4 'Nothing here authorises a broad restyle' is superseded for the wand modules' surfaces by DL-109 and this unit."
+  - "DL-139 replaces the solid-sheet outcome of DL-114's 2026-09-27 check on the Skia GPU path: once the Skia renderer extensions draw backdrop blur, sheets are frosted there and stay solid on the CPU raster."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```

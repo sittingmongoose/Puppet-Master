@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L39817-L39961
+Source lines: L39825-L39973
 
-Source SHA256: `16f5497643873fe32d53b55fea77156b10eb75df5a75cd21b178348a9aa60611`
+Source SHA256: `b736820447eba84072c609db2a772aa2344069730c5b1b0ee52a845267a71ec4`
 
 ---
 
@@ -32,8 +32,9 @@ canonical_text: >-
   slint-ui/slint#2066, and slint-ui/slint#5748, and carried as a Cargo [patch] of Slint's crates until merged; every
   Slint upgrade re-applies them and re-runs their screenshot checks. Slint-portability notes that ban blur, backdrop
   blur, masks, blend modes, or filter effects only because stock Slint could not draw them no longer bind for these
-  effects; their other guidance remains a performance option, and design rules that limit blur for their own
-  reasons (DL-114, F3-566, F3-431) stay in force. Motion that needs no renderer
+  effects; their other guidance remains a performance option. Setup popups (the sheets of F3-566) take DL-114's extra
+  blur on the GPU path and stay solid on the CPU raster, and F3-431's blur budget admits that sheet blur and nothing
+  more. Motion that needs no renderer
   work, such as multi-step keyframes, stepped easing, and path draw-on, is built from Slint animations,
   animation-tick(), and timers rather than from these extensions.
 gui_related: true
@@ -46,7 +47,7 @@ acceptance_criteria:
   - "On Windows with ClearType on, static text over an opaque background draws with subpixel edging in the system's RGB or BGR order; text in fading or cached layers, scaled or rotated text, and transparent windows draw grayscale."
   - "StyledText supports mouse and keyboard selection and copy, and the application can read and set its selection offsets."
   - "The extensions live in a Cargo [patch] of Slint's crates with a recorded upstream issue or pull request for each, and each Slint upgrade re-applies them and re-runs their screenshot checks."
-  - "Slint-portability bans on these effects no longer bind, and the blur limits of DL-114, F3-566 and F3-431 are unchanged."
+  - "Slint-portability bans on these effects no longer bind; sheets are frosted on the GPU path and solid on the CPU raster, and F3-431 admits only that sheet blur."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -72,7 +73,7 @@ preserved_exact_tokens:
   - "slint-ui/slint#5748"
 negative_constraints:
   - "Do not draw backdrop blur on the Skia CPU raster; draw those surfaces solid in their own fill."
-  - "Do not treat this unit as reopening the blur limits of DL-114, F3-566 or F3-431."
+  - "Do not widen F3-431's blur budget beyond the sheet blur DL-139 admits."
 compatibility_only_notes: []
 stale_retired_dispositions:
   - "DL-139 lifts Slint-portability bans on blur, backdrop blur, masks, blend modes and filter effects that existed only because stock Slint could not draw them; the individual notes are updated when their units are next edited."
@@ -102,7 +103,9 @@ canonical_text: >-
   bind to; one design-token source that generates the Slint theme globals and the CSS custom properties for every
   theme; and the same fixtures run through both interfaces, with screenshots of each. Web animations keep to transform
   and opacity where the design allows, long lists render only their visible rows, and long transcripts are trimmed or
-  kept as page text rather than held in WebAssembly memory. The Slint/WASM canvas web GUI is retired.
+  kept as page text rather than held in WebAssembly memory. The web terminal draws the same Rust terminal grid as a
+  fixed, reused set of visible page-text rows updated by diff (the SMPFS-072 web exception) and ships only after the
+  heavy-output speed tests. The Slint/WASM canvas web GUI is retired.
 gui_related: true
 gui_classification_reason: Defines the technology, rendering, and parity rules of the web GUI.
 split_recommended: false
@@ -113,6 +116,7 @@ acceptance_criteria:
   - "The web GUI reaches OS-owned capabilities only through the trusted local daemon and reports the web capability states of the Web Capability Matrix section."
   - "Desktop and web bind the same interface-model crate and the same generated design tokens, and the shared fixtures produce screenshots on both."
   - "Web text is browser-rendered and selectable with the browser's own selection."
+  - "The web terminal renders only its visible rows as reused page-text rows from the Rust terminal grid and passes the heavy-output speed tests before it ships."
   - "Web animations keep to transform and opacity where the design allows, long lists render only their visible rows, and long transcripts are trimmed or kept as page text."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:

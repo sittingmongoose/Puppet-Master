@@ -1,37 +1,37 @@
 # Shard Index: Plans/Section15_MVP_Promoted_Features_Spec.md
 
-Generated: 2026-09-25T04:17:16Z
+Generated: 2026-10-01T20:14:29Z
 
-Source SHA256: `b1c5b97668b72ef4ed5c51060f1da9b25aebc17d075aa06427e5d25f99d3d6f6`
+Source SHA256: `392c144bb51082c70927de6d00c95e1ccabef12ccf6de00c335a3ae85aba6f04`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `2e889088abe0b63dad820577c2943d98a806033a0742f6541a365317a0fe290a`
-- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L19 `0f5fff39b383178f374eedd868c5f8b15eb36768eebf8b154ad46ba2da52759c`
-- [003 - 1. Canonical shell and surface model](003-1.-canonical-shell-and-surface-model.md) L21-L357 `97f246205ea842d83ce9600523664c9de672fc8a63079875da0acdd9e4e7b36d`
-- [004 - 2. Cross-feature runtime contracts](004-2.-cross-feature-runtime-contracts.md) L358-L438 `c24c7c5b3b1431a9f14a99f0ab5be8ab17a47e9bf3582619dffced36a0c1ea08`
-- [005 - 3. Feature requirements](005-3.-feature-requirements.md) L440-L948 `c3640700f9ff6b1a39470d1fcfb60e7d53c98bb53684cbba8a43a9cd4ca5ecfb`
-- [006 - 4. Command families required by the promoted features](006-4.-command-families-required-by-the-promoted-features.md) L950-L969 `20bd0b34c0bf80cc9e847893ec22a316b5901b1572c2fa21e6a2952f83582f29`
-- [007 - 5. Persistence and restore rules](007-5.-persistence-and-restore-rules.md) L970-L1005 `c92b50ea4964f1caf48e94289d7ec48f475f1b619ea4c20e39f470f52bc3bd6a`
-- [008 - 6. Non-goals and anti-drift rules](008-6.-non-goals-and-anti-drift-rules.md) L1006-L1022 `60ec6d90e5795cf350a11416c934b5dcb8601091256d554d7a51889afa56a37f`
-- [009 - Owner / Consumer Map](009-owner-consumer-map.md) L1024-L1028 `a26e4aae0ffed0cd6f87693d32519f6e9ae052089e4827078ad2a81c342eda8a`
-- [010 - PlanUnits](010-planunits.md) L1030-L8602 `1bfd76c33cadb0d365b9c287247692808a723ebf114b283d15cb31a6c7f117b9`
-- [011 - Migration Coverage](011-migration-coverage.md) L8604-L8614 `b38ac3bd3e745d82b9ee8d764a17aa299273211e6c64fdc4eeaa8f010a325ff0`
-- [012 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L8616-L8702 `63308d005c5ed237b496fe7e9c0c970c95f0e7484e9d1be137592133b7eb8af2`
-- [013 - Browser Program Central-Route Binding Addendum - 2026-09-01](013-browser-program-central-route-binding-addendum-2026-09-01.md) L8704-L8824 `75b64bb67c4cf04f578c61d28724f3df5af93da98a08253a4a5f903752269bb6`
-- [014 - Browser Program contract closure addendum — 2026-08-31](014-browser-program-contract-closure-addendum-2026-08-31.md) L8826-L9074 `cd951a1e3fdea40f272e7796346b2c0bda7cc639ccbdd0224f5ae6cf7bde5008`
-- [015 - Remaining Runtime Onboarding Ownership Addendum (2026-08-14)](015-remaining-runtime-onboarding-ownership-addendum-2026-08-14.md) L9076-L9120 `8ab72ec6d0b58534bfcee8ebbe994315265e6ff11d62d47d46a3682ec87e8d7f`
-- [016 - Runtime Integration Addendum - 2026-08-13](016-runtime-integration-addendum-2026-08-13.md) L9122-L9418 `641e89a79bc3f135e9e065e15f56dad47ff18652d2c4e97b81f1cb02f5360857`
-- [017 - PMConcept7 Home Workspace terminal reconciliation — 2026-08-04](017-pmconcept7-home-workspace-terminal-reconciliation-2026-08-04.md) L9420-L9489 `ecd882441b9f82b0fed72135c48e85757005de1ad1b2c050195cb6c29f88f49f`
-- [018 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](018-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L9491-L10518 `7a1d01378c2f1ba8a5dd7c39d191d633fd7334dc172789cf0f7176abcabe928f`
-- [019 - Central Sole Future Handler Binding Addendum - 2026-09-01](019-central-sole-future-handler-binding-addendum-2026-09-01.md) L10520-L10594 `50ce63b9612c7b920a40fc3e1d55486a8aeff8aa0cb18399ce2bc4560eae13e7`
-- [020 - Additive Correction v4 — Browser Component Currentness At Dispatch (2026-09-03)](020-additive-correction-v4-browser-component-currentness-at-dispatch.md) L10596-L10675 `7cead4e90a092c6a75fea96c524e2cd2a716b7d524a88017cc60e273d3b42258`
-- [021 - Accepted Terminal Research Capabilities — DL-035 (2026-09-09)](021-accepted-terminal-research-capabilities-dl-035-2026-09-09.md) L10678-L11315 `9c58ab24a26d83224d5e5fb30e619bf10f497c37dcce97bfeabef74a0923a911`
-- [022 - Browser Event Contract Admission — 2026-09-10](022-browser-event-contract-admission-2026-09-10.md) L11317-L11359 `e3d970856fc202f18e616c475e8a1b01789afab8de2398bd6220ac66d4fcff31`
-- [023 - Scoped Browser Event Admission — 2026-09-10](023-scoped-browser-event-admission-2026-09-10.md) L11361-L11409 `478eda965867ea838f26d5ad4fb9becce1ec0ba57b92c353bff12f9876d509c0`
-- [024 - Workspace-created event authority — 2026-09-11](024-workspace-created-event-authority-2026-09-11.md) L11411-L11645 `c41d39a7fac3d667a3c48574ba34a49256c57beb28a58302eec2458824635f70`
-- [025 - Workspace-reset event authority — 2026-09-11](025-workspace-reset-event-authority-2026-09-11.md) L11647-L11861 `aacea73eb33ae599ebc42c1d75c38aaef22f8ec080fcd7a142414e2dcadf2d8e`
-- [026 - Browser Program Result Binding - 2026-09-11](026-browser-program-result-binding-2026-09-11.md) L11863-L11898 `bbcffc66ff537770fc2f64380d675d39ba8b39c8cd59fd07823d1ee2ddb7407b`
-- [027 - Terminal workgroup moved — original operation and passive history contract](027-terminal-workgroup-moved-original-operation-and-passive-history-.md) L11900-L12120 `9c7f80be37fe1ab7f7bf12ffe44ff1d2bf55862d6bb13fe85e4a9d9d49d9b6aa`
+- [001 - Preamble](001-preamble.md) L1-L4 `f09c435c206ad1de66700e8d0fc61c5deaddb1c2ec86a70f4db653f61b8430c1`
+- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L19 `aa6c79a050c45ee81ff7d6f1cdd597b7dd9d4537db4d58317840bb3340305827`
+- [003 - 1. Canonical shell and surface model](003-1.-canonical-shell-and-surface-model.md) L21-L357 `457bde6ffb2297ab567f73a55c7102ee21842259d5305c0fd31e0713170da961`
+- [004 - 2. Cross-feature runtime contracts](004-2.-cross-feature-runtime-contracts.md) L358-L438 `3fb92599cc5ad9b470f27538ecfe0c9b4f2c3a4322e12e1cdb1cb5b7d2385971`
+- [005 - 3. Feature requirements](005-3.-feature-requirements.md) L440-L949 `2fab37615a7e0d9032fb04c12482a411b3bee5ba053056882890e8d07c9a0319`
+- [006 - 4. Command families required by the promoted features](006-4.-command-families-required-by-the-promoted-features.md) L951-L970 `52c286e7963d75b389ed34af21a0dd4b9cd5c9f8da7e17c7a7caf0410dc59148`
+- [007 - 5. Persistence and restore rules](007-5.-persistence-and-restore-rules.md) L971-L1006 `48fcabc4f9ed46a46e256173afc1c95c35ee21bf8be9b7e95269d75af1fd2cc4`
+- [008 - 6. Non-goals and anti-drift rules](008-6.-non-goals-and-anti-drift-rules.md) L1007-L1023 `f22067091829c842d469b2a9318759fcd401c931b26488b94bdad480e0f954b9`
+- [009 - Owner / Consumer Map](009-owner-consumer-map.md) L1025-L1029 `a964f8fc998a0d017076349e89517336a698a30d6c695bb05b5480be927b0167`
+- [010 - PlanUnits](010-planunits.md) L1031-L8605 `78ccd0a5c653c9e06dac75372c2abb24132852b79e3b91c2f791147c1eb2f6ed`
+- [011 - Migration Coverage](011-migration-coverage.md) L8607-L8617 `86c71dea1050d66ac90b2669dc43dafed8e7d0e592634c1111a46cd81864394a`
+- [012 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L8619-L8705 `3a1c6c6d7ad1870fc42edc104e5f08cb2dd2e42a4dfc8f305948b60d8dd4b7e8`
+- [013 - Browser Program Central-Route Binding Addendum - 2026-09-01](013-browser-program-central-route-binding-addendum-2026-09-01.md) L8707-L8827 `13ffcbc45e12e19e52d394adb5262f3836b93716754ad90c8629d6a0393847e1`
+- [014 - Browser Program contract closure addendum — 2026-08-31](014-browser-program-contract-closure-addendum-2026-08-31.md) L8829-L9077 `002f7eb242200e7bec6ad69e8b20b4fa3d7f4ce9728ef0437c37aaa05f3a1abe`
+- [015 - Remaining Runtime Onboarding Ownership Addendum (2026-08-14)](015-remaining-runtime-onboarding-ownership-addendum-2026-08-14.md) L9079-L9123 `99759fcccc3615fe107e90322ee2a5522bf881e8ecd62cc1cbe2e7303dd2af56`
+- [016 - Runtime Integration Addendum - 2026-08-13](016-runtime-integration-addendum-2026-08-13.md) L9125-L9421 `35fc8686ffdda04dc86219af488df699c615871ab5032db40ccecd4e1a82701d`
+- [017 - PMConcept7 Home Workspace terminal reconciliation — 2026-08-04](017-pmconcept7-home-workspace-terminal-reconciliation-2026-08-04.md) L9423-L9492 `90f4eaec83fd1cdf8728abfe291a53f69c36f43aa99733dfbfbb19c28c15f2ad`
+- [018 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](018-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L9494-L10521 `6f3d9977135facf4a4603d4d4e177f026e02702dca8fa04db56273c39604ea1d`
+- [019 - Central Sole Future Handler Binding Addendum - 2026-09-01](019-central-sole-future-handler-binding-addendum-2026-09-01.md) L10523-L10597 `bda0e19b9e0192f7f4cb678802ee95cf0c0f78323bf94ab858cd896db75add31`
+- [020 - Additive Correction v4 — Browser Component Currentness At Dispatch (2026-09-03)](020-additive-correction-v4-browser-component-currentness-at-dispatch.md) L10599-L10678 `ef62ddc85452622f98c5150613ff58193427410ee01a2bddee81f96eb189bd5e`
+- [021 - Accepted Terminal Research Capabilities — DL-035 (2026-09-09)](021-accepted-terminal-research-capabilities-dl-035-2026-09-09.md) L10681-L11318 `c369f38b88bea014334ea00f1b79d4e85569b323c17e23b72923fe0f2a29ab38`
+- [022 - Browser Event Contract Admission — 2026-09-10](022-browser-event-contract-admission-2026-09-10.md) L11320-L11362 `d2624c1eae63d241b7852e27d5d7a5a6d91c7a7223e186b31da3a39c7e070c1b`
+- [023 - Scoped Browser Event Admission — 2026-09-10](023-scoped-browser-event-admission-2026-09-10.md) L11364-L11412 `88701ab51f2fc125d467f57eeed4bec71a3f89d6fe564828b356797597ad1ca8`
+- [024 - Workspace-created event authority — 2026-09-11](024-workspace-created-event-authority-2026-09-11.md) L11414-L11648 `157fbf8c554935af1c9e48a1109965fc4d9dd01077cf710750bb5f8d06089619`
+- [025 - Workspace-reset event authority — 2026-09-11](025-workspace-reset-event-authority-2026-09-11.md) L11650-L11864 `e8c6f4f10f82ce5191755528686c6d7b973437e18dfd51386c5a92591a893ac6`
+- [026 - Browser Program Result Binding - 2026-09-11](026-browser-program-result-binding-2026-09-11.md) L11866-L11901 `977334baa4b10dd70033214d63ba266bbc03a3fb00137c177660a02039114c6e`
+- [027 - Terminal workgroup moved — original operation and passive history contract](027-terminal-workgroup-moved-original-operation-and-passive-history-.md) L11903-L12123 `0eb6d2184f0418c7f83e69d122a544b03c8165840bf1b6b5c576eee8ff9c3123`

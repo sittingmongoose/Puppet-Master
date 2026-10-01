@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L2931-L10537
+Source lines: L2935-L10549
 
-Source SHA256: `45c23a65c8b4a3b7f6ceb53a62afe966cbc86ceafb723873edcee4b090ab434e`
+Source SHA256: `62eb58721fa8019f3a67d657690011a7ce772ea73b8e63113629b5acd26a4fae`
 
 ---
 
@@ -7556,18 +7556,21 @@ canonical_text: >-
   (F3-582), written to upstream quality, offered to Slint, carried as a Cargo patch until merged and re-checked with
   every Slint upgrade; on the CPU raster backdrop blur is not drawn and frosted surfaces draw solid. "Slint
   portability" notes that ban blur, backdrop blur, masks, blend modes or filter effects only because stock Slint could
-  not draw them no longer bind for those effects; design rules that limit blur for their own reasons (DL-114, F3-566,
-  F3-431) stay in force until decided separately. The web GUI is a
+  not draw them no longer bind for those effects. Setup popups (the sheets of F3-566) take DL-114's extra blur: frosted
+  glass on the GPU path, solid on the CPU raster, with the scrim a flat tint and F3-431's blur budget opened for this
+  sheet blur only. The web GUI draws the terminal from the same Rust grid as a fixed, reused set of visible page-text
+  rows updated by diff (SMPFS-072 web exception), subject to the heavy-output speed tests. The web GUI is a
   Leptos client drawn with browser elements and CSS and served by the trusted local daemon (F3-583); it replaces the
   Slint/WASM canvas web GUI. Both interfaces bind one shared Rust interface-model crate and one design-token source.
   Jared said: "ok sounds like we are doing custom skia work and only using skia for desktop.  For web, you said we
   should use a browser-native web client, what would you recommend?", then "I told the other thread to drop the
   slint requirements since we are going to do custom code on skia to alleviate the shortcomings.", then "ok go with
   Leptos, draft the decision card and spec edits.  Including the skia change, custom code, dropping FemtoVG then
-  cpu(skia has cpu)." Two readings are recorded for owner confirmation: leaving out Slint's own software renderer is
-  the reading of "dropping FemtoVG then cpu(skia has cpu)", and lifting the Slint-portability bans for the F3-582
-  effects is the reading of "drop the slint requirements". The Slint and Rust version pins, the no-React and
-  no-Tauri rule, the trusted local daemon contract and the in-canvas float-layer name are unchanged.
+  cpu(skia has cpu)." Jared then confirmed in the question form, choosing the recommended option each time: "Yes,
+  Skia only (Recommended)" (Slint's own software renderer goes too), "Yes, lift them now (Recommended)" (the
+  Slint-portability bans), "Frosted on GPU, solid on CPU (Recommended)" (setup popups) and "Reused rows of page text
+  (Recommended)" (web terminal). The Slint and Rust version pins, the no-React and no-Tauri rule, the trusted local
+  daemon contract and the in-canvas float-layer name are unchanged.
 gui_related: true
 gui_classification_reason: Records the owner decision on the desktop renderer set, the visual capabilities added to
   it, and the technology of the web GUI.
@@ -7577,7 +7580,8 @@ unblocks: [F3-582, F3-583]
 acceptance_criteria:
   - "Every live owner and consumer statement of the desktop renderer order names Skia on the GPU then Skia's CPU raster, with FemtoVG and Slint's separate software renderer retired."
   - "The Skia extension set and the Leptos web client each have one owning FinalGUISpec PlanUnit."
-  - "Slint-portability bans on the F3-582 effects no longer bind, while DL-114, F3-566 and F3-431 keep their own blur limits."
+  - "Slint-portability bans on the F3-582 effects no longer bind; setup popups are frosted on the GPU path and solid on the CPU raster, and F3-431 admits only that sheet blur."
+  - "The web terminal follows the SMPFS-072 web exception: reused visible page-text rows from the Rust grid, shipped only after the heavy-output speed tests."
   - "The trusted local daemon contract, web capability states, Slint version pins and the no-React and no-Tauri rule are unchanged."
   - "The three owner answers are preserved verbatim with their source hash."
 validation_surfaces:
@@ -7592,6 +7596,7 @@ implementation_surfaces:
   - Plans/Automated_Testing_System.md
   - Plans/rewrite-tie-in-memo.md
   - Plans/settings_inventory.json
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
   - Plans/00-plans-index.md
 node_compile_hint:
   mode: owner_decision_record
@@ -7599,6 +7604,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261001.md, SHA-256 9ca1e2ab54c77a744d629eb4c6dcc1aa8c9d206c6256efbce8b66230a0961ad6"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/CONFIRMATIONS-20261001.md, SHA-256 104cfdda63686a6abe243b83d1c5863cf92929b755993cd87314cd264e44f83a"
 preserved_exact_tokens:
   - "DL-139"
   - "winit-skia"
@@ -7606,6 +7612,8 @@ preserved_exact_tokens:
   - "Leptos"
   - "FemtoVG"
   - "dropping FemtoVG then cpu(skia has cpu)"
+  - "Frosted on GPU, solid on CPU (Recommended)"
+  - "Reused rows of page text (Recommended)"
 negative_constraints:
   - "Do not compile or ship FemtoVG or Slint's separate software renderer in desktop builds."
   - "Do not use React, Tauri or TypeScript for the web GUI; JavaScript is limited to generated or minimal glue."

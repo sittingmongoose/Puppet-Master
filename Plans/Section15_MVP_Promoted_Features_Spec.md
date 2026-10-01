@@ -649,6 +649,7 @@ Rules:
 - GPU acceleration may improve rendering, but it does not excuse a bad terminal model or transcript architecture
 - a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
 - DOM/React/webview-style terminal rendering architectures that treat terminal output as normal document UI are non-ship for the terminal core; terminal output is a high-frequency mutable grid, and these approaches frequently correlate with flicker, scroll jumps, selection breakage, and input lag.
+- Web GUI exception (DL-139): the Leptos web GUI draws the same Rust terminal grid as a fixed, reused set of visible page-text rows updated by diff. It never adds one element per output line or treats output as a growing document, so it is not a document-style terminal core, and it ships only after passing the heavy-output speed tests.
 - `/document-style` terminal output, thread-coupled PTY parsing, document-level transcript mutation, and unstated failure-mode fallback are non-ship architecture patterns even when wrapped in `/features` language.
 - Terminal core MUST center native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer work, including ingestion and processing, so rendering remains bounded and selection/input stay stable under high-frequency output.
 - Avoid DOM, `/DOM-style`, or `/string-concatenation-style` render models, keep heavy work off the UI thread, throttle high-frequency updates, preserve `/scroll`, selection, cursor, and `/focus/attach` stability during huge-output bursts, and compute selection anchors, search hits, cursor coordinates, and wrapped-line navigation from terminal-model buffer state rather than from painted rows or recycled `/list` `/widgets`; app shell `/layout/chrome` and Slint-style host chrome do not own terminal `/engine` semantics or UI `/reconciliation` of terminal cells.
@@ -5263,6 +5264,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+- "Plans/Decision_Log.md#DL-139 (web terminal answer, 2026-10-01)"
 preserved_exact_tokens:
 - DOM-style
 - document-style
@@ -5279,7 +5281,8 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
-compatibility_only_notes: []
+compatibility_only_notes:
+- "DL-139 web exception: the Leptos web GUI draws the Rust terminal grid as a fixed, reused set of visible page-text rows updated by diff; this is not a DOM-style or line-widget-per-output core, and it ships only after the heavy-output speed tests."
 stale_retired_dispositions: []
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md

@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L1030-L8602
+Source lines: L1031-L8605
 
-Source SHA256: `b1c5b97668b72ef4ed5c51060f1da9b25aebc17d075aa06427e5d25f99d3d6f6`
+Source SHA256: `392c144bb51082c70927de6d00c95e1ccabef12ccf6de00c335a3ae85aba6f04`
 
 ---
 
@@ -4244,6 +4244,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+- "Plans/Decision_Log.md#DL-139 (web terminal answer, 2026-10-01)"
 preserved_exact_tokens:
 - DOM-style
 - document-style
@@ -4260,7 +4261,8 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
-compatibility_only_notes: []
+compatibility_only_notes:
+- "DL-139 web exception: the Leptos web GUI draws the Rust terminal grid as a fixed, reused set of visible page-text rows updated by diff; this is not a DOM-style or line-widget-per-output core, and it ships only after the heavy-output speed tests."
 stale_retired_dispositions: []
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
