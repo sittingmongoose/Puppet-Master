@@ -1,0 +1,33 @@
+{
+  "schema": "er7.z.safe.method.acceptance.v1",
+  "verdict": "accepted",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "method_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-abi-repair1-v1/treatment.method-config.json",
+  "method_config_sha256": "ec9271d5fbfa227fd1a1ddc1521bcc2b7a5f636b31efe16cc97076ec4b83cbd0",
+  "attempt": {
+    "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-abi-repair1-v1/treatment/workspace",
+    "prompt_sha256": "082682685b15b4ca660231fe2b452e054bc1589fbc29cb7299f00e030d63cb82",
+    "label": "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1-abi-repair1",
+    "max_seconds": 1500.0,
+    "max_responses": 160,
+    "public_get": false
+  },
+  "combined_source_audit_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/t03-structural-repeat1.acceptance.json",
+  "combined_source_audit_sha256": "b6cdec973db53af2cc3ca7e8c93ac3d550928587025b5da97010a12273ea62f8",
+  "abi_repair_manifest_sha256": "7a7e9417abe550d1e2e3de7f641271a056d7024449cab746297dfa28d3b6889c",
+  "admission_source_sha256": "d2f258784b8d02a7069b0f8cb2dec3539b7aa4d401c03fdbd84661aefc7ae8af",
+  "dispatcher_source_sha256": "5f25c1d1eed1a9e1794ca4a3cd0698e2cafea4c3d5a2b5d183bbb4007d1d39a9",
+  "acceptance_scope": "Exact source/config/host review ABI only; all separate frozen runtime, queue authority, actual same-frozen canary PASS, context and lifecycle requirements remain mandatory. No launch or native qualification by this certificate.",
+  "source_context_changes": false,
+  "caps": {
+    "seconds": 1500,
+    "responses": 160
+  },
+  "preserved_prior_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/t03-structural-repeat1-treatment.method-acceptance.json",
+    "sha256": "10f344b61e2add53c38dc70485f2bfb95e19871293720709a00d77ab5b83ddf6"
+  },
+  "native_goals_started_by_reviewer": 0,
+  "actual_canary_admission_consumed": false,
+  "generated_tokens": "UNKNOWN"
+}

@@ -1,0 +1,40 @@
+{
+  "schema": "er7.expanded_original_current_review_freeze.v2",
+  "reviews": [
+    {
+      "profile": "R018",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/R018.full-original-current.review.json",
+      "sha256": "6de318a4f75d016cf299d28657a0ed8b67d771edb9654f620230844e42433f93",
+      "literal_units": 296,
+      "index_fragments": 452,
+      "criteria": 8,
+      "scope": "entire original key/125sources assigned; all current literal content assessed; unresolved obligations explicit",
+      "full_quality": "UNASSESSED"
+    },
+    {
+      "profile": "R019",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/R019.full-original-current.review.json",
+      "sha256": "bac95dfd8d3616b877543bfde6af160878e1aef183730d7efd5d2f1dede893f6",
+      "literal_units": 848,
+      "index_fragments": 1214,
+      "criteria": 8,
+      "scope": "entire original key/125sources assigned; all current literal content assessed; unresolved obligations explicit",
+      "full_quality": "UNASSESSED"
+    }
+  ],
+  "source_coverage_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/full-original-source-coverage.current-frozen.v2.json",
+  "source_coverage_sha256": "7e2870cbb825c929c8bdf14b821f45d85bf8b4ba71b91702cc4d331e3a7200a9",
+  "context_judgments_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/current-semantic-governing-contexts.v3.json",
+  "context_judgments_sha256": "a87022a3ba91ee526c51d388ebae224362776d966f50e3608b8ee015b5921999",
+  "original_key_sha256": "d086b69d02a3453101b4c44e3cd636e8880cef8558a7e4d2cd6d9d3146068608",
+  "full_original_quality": "UNASSESSED",
+  "complete_original_coverage": "UNASSESSED_REQUIRED_MATERIAL_OBLIGATIONS_UNRESOLVED",
+  "phase2_opened": false,
+  "phase2_unlock_requires_root_explicit_authorization": true,
+  "all_original_sources_retained_assigned_authenticated": true,
+  "old_scoped_grades_and_costs_unchanged": true,
+  "freeze_epoch": 1790897686.2075398,
+  "actual_wall_seconds_since_original_start": 5941.281203508377,
+  "generated_tokens": "UNKNOWN",
+  "exact_cumulative_harness_responses": "UNKNOWN_NOT_EXPOSED"
+}

@@ -1,0 +1,111 @@
+{
+  "record": "out/acquisition/V001.json",
+  "created": "2026-10-01",
+  "goal": "Complete the research task in TASK.md: research the entire admitted brief, assignment, thin plan and source corpus using only bounded MCP tools, and deliver versioned acquisition records, findings snapshots, rendered reports and final bindings.",
+  "tooling_constraints": [
+    "Only bounded MCP read_file, write_file and mechanical (line_map, render_sections, cache_source) tools; no shell, native Read, arbitrary code, or live fetching (TASK.md:1).",
+    "read_file accepts only paths with allowed prefixes (TASK.md, inputs/..., out/...); root-level paths other than TASK.md are rejected before any existence check (boundary ValueError), so root material besides TASK.md is neither readable nor assertable.",
+    "No directory listing capability exists: directory paths are rejected (ValueError); wildcard paths (inputs/*, inputs/**) are treated as literal names and return file-absent errors; mechanical operations accept only single concrete file paths.",
+    "write_file is immutable (cannot overwrite); corrections require new version names (TASK.md:1).",
+    "File-absent responses (FileNotFoundError) on allowed prefixes establish only that the exact probed path is absent; they are not corpus-wide absence evidence (TASK.md:1)."
+  ],
+  "source_reads": [
+    {
+      "path": "TASK.md",
+      "role": "assignment instrument / method mandate",
+      "sha256": "047e8224db5921b928acf56e219194a19617347a6bac3f290fc960bdca4d3e89",
+      "bytes": 3773,
+      "lines": 7,
+      "read_extent": "full (lines 1-7)",
+      "read_mode": "mcp read_file",
+      "linked_findings": ["F001", "F002", "F005", "F013"]
+    },
+    {
+      "path": "inputs/brief.md",
+      "role": "admitted product brief (Slide Scout)",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905,
+      "lines": 5,
+      "read_extent": "full (lines 1-5)",
+      "read_mode": "mcp read_file",
+      "linked_findings": ["F001", "F003", "F004", "F006", "F008", "F009", "F011", "F014"]
+    }
+  ],
+  "tool_artifacts_created": [
+    {"path": "out/tmp/line_map_task.txt", "note": "mechanical line_map of TASK.md; researcher-created diagnostic, not a source"},
+    {"path": "out/tmp/cache_brief.json", "note": "mechanical cache_source copy of inputs/brief.md; researcher-created diagnostic, not a source"},
+    {"path": "out/tmp/line_map_root.txt (attempted)", "note": "rejected by boundary; no artifact"}
+  ],
+  "finding_links": [
+    {"finding": "F001", "sources": ["TASK.md:1", "inputs/brief.md (existence only)"]},
+    {"finding": "F002", "sources": ["TASK.md:1", "TASK.md:3", "TASK.md:5", "TASK.md:7"]},
+    {"finding": "F003", "sources": ["inputs/brief.md:1", "inputs/brief.md:3", "inputs/brief.md:5"]},
+    {"finding": "F004", "sources": ["inputs/brief.md:3", "inputs/brief.md:5"]},
+    {"finding": "F005", "sources": ["TASK.md:1", "probe log (this record, failed_search_log)"]},
+    {"finding": "F006", "sources": ["inputs/brief.md:5", "TASK.md:1", "probe log (this record)"]},
+    {"finding": "F007", "sources": ["researcher background knowledge only; NO corpus source; verification UNEXECUTED"]},
+    {"finding": "F008", "sources": ["inputs/brief.md:3", "inputs/brief.md:5"]},
+    {"finding": "F009", "sources": ["inputs/brief.md:3", "inputs/brief.md:5"]},
+    {"finding": "F010", "sources": ["TASK.md:1", "inputs/brief.md:3", "inputs/brief.md:5"]},
+    {"finding": "F011", "sources": ["inputs/brief.md:3", "inputs/brief.md:5"]},
+    {"finding": "F012", "sources": ["inputs/brief.md:5", "TASK.md:1", "probe log (this record)"]},
+    {"finding": "F013", "sources": ["TASK.md:1", "TASK.md:5", "inputs/brief.md:5"]},
+    {"finding": "F014", "sources": ["inputs/brief.md:3", "TASK.md:3", "proposed only; all items UNEXECUTED"]}
+  ],
+  "undeveloped_leads": [
+    "A source corpus may exist in inputs/ under file names not among the ~115 probed candidates; cannot be confirmed or excluded with bounded tools (no listing).",
+    "A thin initial plan document may exist under an unprobed name; the brief (inputs/brief.md:5) implies one was part of the case framing.",
+    "A separate assignment document beyond TASK.md may exist under an unprobed name.",
+    "OME-Zarr 0.5 specification verification (normative obligations, sharding, axes/units, omero channel metadata, labels association) — blocked on corpus access; UNEXECUTED.",
+    "Reader implementation support matrix (ome-zarr-py, ome-zarr.js, ngff-zarr) for 0.5/sharding — blocked on corpus access; UNEXECUTED.",
+    "Local OME-Zarr 0.5 sample filesets for calibration/overlay/responsiveness testing — none present in the readable workspace; acquisition UNEXECUTED."
+  ],
+  "coverage_limits": [
+    "No directory listing available; coverage of inputs/ is limited to exactly the probed paths plus the two successful reads.",
+    "No corpus, thin plan, or separate assignment document was read; no content claims are made about them.",
+    "Researcher background knowledge (findings F007, and hypothesis content of F008) is not corpus evidence and was not verified against any source in this workspace.",
+    "Root workspace level beyond TASK.md is not readable; if materials existed there, they could not be detected (boundary rejection occurs before existence check).",
+    "out/ was confirmed empty of prior deliverables by probing; other unprobed out/ paths (if any) were not checked."
+  ],
+  "failed_search_log": {
+    "method": "mcp read_file candidate-path probing",
+    "result_class": "FileNotFoundError (allowed prefix inputs/, file absent) for every path listed below",
+    "paths_probed_under_inputs": [
+      "inputs/manifest.json", "inputs/README.md", "inputs/index.md", "inputs/assignment.md", "inputs/plan.md",
+      "inputs/corpus.md", "inputs/sources.md", "inputs/thin-plan.md", "inputs/assignment.txt", "inputs/corpus/S001.md",
+      "inputs/sources/S001.md", "inputs/corpus/001.md", "inputs/thin_plan.md", "inputs/thinplan.md", "inputs/goal.md",
+      "inputs/research-brief.md", "inputs/papers.md", "inputs/assignment.json", "inputs/plan.json", "inputs/plan-v1.md",
+      "inputs/initial-plan.md", "inputs/ome-zarr-spec.md", "inputs/sources.json", "inputs/corpus.json", "inputs/corpus/index.json",
+      "inputs/plan.txt", "inputs/assignment-v1.md", "inputs/the-plan.md", "inputs/materials.md", "inputs/readings.md",
+      "inputs/corpus/README.md", "inputs/sources/index.md", "inputs/ngff.md", "inputs/zarr.md", "inputs/ome-zarr-0.5.md",
+      "inputs/docs/README.md", "inputs/task.md", "inputs/prompt.md", "inputs/research-plan.md", "inputs/evidence.md",
+      "inputs/texts.md", "inputs/corpus/ome-zarr-0.5.md", "inputs/corpus/spec.md", "inputs/corpus/assignment.md", "inputs/corpus/plan.md",
+      "inputs/docs/assignment.md", "inputs/corpus/ome-zarr-py.md", "inputs/corpus/zarr.md", "inputs/instructions.md", "inputs/slide-scout-corpus.md",
+      "inputs/source-corpus.md", "inputs/s00.md", "inputs/src-01.md", "inputs/r01.md", "inputs/n001.md",
+      "inputs/src01.md", "inputs/sketch.md", "inputs/draft.md", "inputs/proposal.md", "inputs/approach.md",
+      "inputs/design.md", "inputs/admitted/brief.md", "inputs/admitted/assignment.md", "inputs/exhibits/exhibit-a.md", "inputs/exhibits/001.md",
+      "inputs/data.md", "inputs/ome-ngff.md", "inputs/ngff-spec.md", "inputs/zarr-spec.md", "inputs/ome-zarr-py.md",
+      "inputs/references.md", "inputs/bibliography.md", "inputs/toc.md", "inputs/contents.md", "inputs/citations.md",
+      "inputs/corpus.txt", "inputs/sources.txt", "inputs/readme.md", "inputs/readme.txt", "inputs/00-readme.md",
+      "inputs/readers.md", "inputs/implementations.md", "inputs/vitessce.md", "inputs/napari.md", "inputs/viewer.md",
+      "inputs/requirements.md", "inputs/user-stories.md", "inputs/backlog.md", "inputs/scope.md", "inputs/mission.md",
+      "inputs/sources/V001.md", "inputs/corpus/V001.md", "inputs/V001.md", "inputs/SRC001.md", "inputs/plan-V001.md",
+      "inputs/.manifest.json", "inputs/.index.json", "inputs/refs/index.md", "inputs/library/index.md", "inputs/MANIFEST.md",
+      "inputs/index.json", "inputs/assignment/assignment.md", "inputs/plan/plan.md", "inputs/sources/README.md", "inputs/records/index.md",
+      "inputs/pack/index.md", "inputs/state.json", "inputs/context.md", "inputs/assignment.rst", "inputs/plan.mdx",
+      "inputs/files.json", "inputs/source-list.json", "inputs/corpus.html", "inputs/sources.ndjson", "inputs/corpus.ndjson",
+      "inputs/S001.md", "inputs/s01.md", "inputs/paper-001.md", "inputs/source-001.md", "inputs/doc-01.md",
+      "inputs/plan.md.txt"
+    ],
+    "literal_wildcard_probes": ["inputs/* (read_file and mechanical: literal path, file absent)", "inputs/** (mechanical line_map: literal path, file absent)"],
+    "boundary_rejected_probes": {
+      "note": "rejected before existence check; no evidence about presence or absence",
+      "paths": ["brief.md (root)", "plan.md (root)", "assignment.md (root)", "corpus.md (root)", "README.md (root)", "* (root)", "./inputs/*", "inputs (directory)", "inputs/ (directory)"]
+    },
+    "out_probes": {
+      "note": "FileNotFoundError (allowed prefix out/, file absent) — confirms out/ starts without prior deliverables",
+      "paths": ["out/report.md", "out/acquisition.json", "out/findings/V001.json", "out/reports/V001.md", "out/final/V001.json", "out/manifest.json"]
+    },
+    "successful_reads": ["TASK.md", "inputs/brief.md"]
+  }
+}

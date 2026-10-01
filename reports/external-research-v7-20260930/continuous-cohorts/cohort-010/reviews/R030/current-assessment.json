@@ -1,0 +1,2272 @@
+{
+  "schema": "er7.current_assessment.v1",
+  "phase": 1,
+  "report_id": "R030",
+  "case_id": "C072",
+  "report_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/current-report.md",
+  "report_sha256": "87bc024aa70ecf7f5e51d0eebc07c606b58cc76c17171d31d6f028e8aaa15c20",
+  "stage_sha256": "62a240e1ee743f3ecdb41ca7e466c1e437aaeafc9a280bad3999d993bff961e8",
+  "manifest_sha256": "4a0845a75e52d6c365489c13deff57c4bf91666358f18d41cb3b702fbe3e4cf9",
+  "input_pin": {
+    "tag": "v0.22.0",
+    "commit": "67c2ae0a9e3e445f034a456b299e3f37c4dc4b93",
+    "original_manifest_sha256": "6aef9692d7f2fefccee3c9746b46138eadb154b205ce3b8e67b91e8b715e53bf",
+    "original_inputs_files": 1131,
+    "source_counts": {
+      "repository_files": 431,
+      "raw_commit_patches": 624,
+      "issue_bodies": 68
+    },
+    "whole_source_and_all_ordered_transport_independently_reconstructed": true,
+    "verification_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-current-grading-v6/R030/reconstruction-verification.json",
+    "verification_sha256": "16cfc8f789b85fcd6220ac204185b82114716ec8ce8d3ff2afcaa8a1760e1fae"
+  },
+  "reviewer": {
+    "id": "repo-current-grading-v6",
+    "actual_generated_usage": "UNKNOWN",
+    "actual_start_epoch": 1790892059.8490512,
+    "current_response_counter": 33,
+    "response_counter_basis": "Reviewer tool-response checkpoint counter, conservatively counted from own explicit execution capsules",
+    "freeze_epoch": 1790895553.6153486,
+    "elapsed_wall_seconds": 3493.766297340393,
+    "own_deadline_epoch": 1790902859.8490512
+  },
+  "scope_provenance": "Independent literal TASK/brief/six prospective family decomposition shared by exact-identical source hashes; ROOT_SCOPE_CLARIFICATION.json SHA59156426db1b004c7a91f3cc4737e129e4a116588103f15d1f3927b1b50423eb admitted at this current stage. No old evaluator subdivision or grade.",
+  "required_scope_sha256": "231e5fcd2189fe92be8256b78ac71e4dafc73659667099b4587e7aa98f80a8df",
+  "complete_coverage": true,
+  "assessment_completeness": "Every material report assertion and all actual asked/shared obligations assessed, including all six prospective opportunity families and sixteen independent literal-criterion rows; no sampling, inherited 22-key or unasked-opportunity penalty. Review completeness is distinct from report quality.",
+  "claim_count": 61,
+  "claim_outcomes": {
+    "supported": 39,
+    "unresolved": 2,
+    "qualified": 18,
+    "contradicted": 1,
+    "unsupported": 1
+  },
+  "material_claims": [
+    {
+      "id": "C001",
+      "report_line_start": 3,
+      "report_line_end": 3,
+      "material_assertion": "Pin/date/manifest/original line convention and capture-time issue qualification",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Exact admitted manifests and source reconstruction agree. Issue capture is distinct from release truth.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/PIN.json",
+          "sha256": "6cb6112d93cdecd21d5e9a57db5f878b1afac553012e99f008e0c4102a503342",
+          "line_start": 1,
+          "line_end": 5,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues-index.json",
+          "sha256": "6a6e593591ccd033b424101f2470effebc2cfd433dc97bb345e555dafac726d6",
+          "line_start": 687,
+          "line_end": 689,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C002",
+      "report_line_start": 5,
+      "report_line_end": 5,
+      "material_assertion": "Product context and both coherent original families investigated",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Matches original brief; seven findings span both goals.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/brief.md",
+          "sha256": "6455c54d08627a6669c8f176a5cfb1e1c23578a183f3e606addadcf59eefff36",
+          "line_start": 1,
+          "line_end": 7,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C003",
+      "report_line_start": 7,
+      "report_line_end": 7,
+      "material_assertion": "Map-assisted bounded reads, one comments GET, mechanical successes/errors; no execution",
+      "current_role": "candidate method self-report",
+      "source_outcome": "unresolved",
+      "assessment": "Actual acquisition/map/mechanical/native operations are locked; their self-reports receive no credit. Every emitted current source claim is independently checked.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/TASK.md",
+          "sha256": "85f1d348299d9cb65e568d459f188713a592550ccd92624d46b5c494d25ff117",
+          "line_start": 3,
+          "line_end": 7,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C004",
+      "report_line_start": 7,
+      "report_line_end": 7,
+      "material_assertion": "Five PNGs unviewed and validation proposals unexecuted",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Explicit visual gap and proposal labels preserve source limits; no runtime result established.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/PIN.json",
+          "sha256": "6cb6112d93cdecd21d5e9a57db5f878b1afac553012e99f008e0c4102a503342",
+          "line_start": 1,
+          "line_end": 441,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/TASK.md",
+          "sha256": "85f1d348299d9cb65e568d459f188713a592550ccd92624d46b5c494d25ff117",
+          "line_start": 7,
+          "line_end": 7,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C005",
+      "report_line_start": 13,
+      "report_line_end": 14,
+      "material_assertion": "Freshness detection and update-stale source locators",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "All named pinned definitions/functions exist at the stated ranges.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 2214,
+          "line_end": 2268,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/commands/workspace/update_stale.rs",
+          "sha256": "d97bb464e4d0f2857ae571731925744acc40e0e705245f93b244b168d0289ad5",
+          "line_start": 43,
+          "line_end": 175,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/working_copy.rs",
+          "sha256": "7f7f8f8a8b6c2570a1171f51bc10ee23cb7f960ee754ad210f0de8e9592c2f40",
+          "line_start": 98,
+          "line_end": 118,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C006",
+      "report_line_start": 15,
+      "report_line_end": 15,
+      "material_assertion": "WC records last updated operation, tree equality fast path, four ancestor-based freshness branches/messages",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Exact source confirms every named branch/direction and missing-op hint.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1595,
+          "line_end": 1597,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 2234,
+          "line_end": 2268,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1560,
+          "line_end": 1598,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C007",
+      "report_line_start": 15,
+      "report_line_end": 15,
+      "material_assertion": "Update-stale snapshots known WC op, merges and checks old tree before update/finish",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Precise command sequence and concurrent-tree guard are present.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/commands/workspace/update_stale.rs",
+          "sha256": "d97bb464e4d0f2857ae571731925744acc40e0e705245f93b244b168d0289ad5",
+          "line_start": 43,
+          "line_end": 108,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C008",
+      "report_line_start": 15,
+      "report_line_end": 15,
+      "material_assertion": "Any unreadable operation object builds recovery commit",
+      "current_role": "current assertion",
+      "source_outcome": "qualified",
+      "assessment": "Only ObjectNotFound of the recorded WC operation selects recovery; other OpStoreError variants propagate. Loadable workspace/current repo/tree state remain required.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/commands/workspace/update_stale.rs",
+          "sha256": "d97bb464e4d0f2857ae571731925744acc40e0e705245f93b244b168d0289ad5",
+          "line_start": 110,
+          "line_end": 175,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1895,
+          "line_end": 1907,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": "R030-F1-unreadable-operation-trigger"
+    },
+    {
+      "id": "C009",
+      "report_line_start": 15,
+      "report_line_end": 15,
+      "material_assertion": "Recovery resets prior-tree assumptions",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Recover clears cached file states/old tree and resets metadata to target without touching physical files; report does not claim arbitrary store recovery.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/working_copy.rs",
+          "sha256": "7f7f8f8a8b6c2570a1171f51bc10ee23cb7f960ee754ad210f0de8e9592c2f40",
+          "line_start": 113,
+          "line_end": 118,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1553,
+          "line_end": 1557,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1895,
+          "line_end": 1907,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C010",
+      "report_line_start": 16,
+      "report_line_end": 16,
+      "material_assertion": "Tree identity can be Fresh despite old/divergent operation ids; SiblingOperation internal-error branch",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Useful exact counterevidence. Materialized/desired tree identity is the fast path, not operation recency alone.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 2234,
+          "line_end": 2268,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/working-copy.md",
+          "sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62",
+          "line_start": 94,
+          "line_end": 100,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1583,
+          "line_end": 1590,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C011",
+      "report_line_start": 17,
+      "report_line_end": 17,
+      "material_assertion": "After foreign WC update every command fails until update-stale",
+      "current_role": "current assertion",
+      "source_outcome": "contradicted",
+      "assessment": "Ordinary snapshot requires the relevant mismatch/relation, but ignores/historical operation reads and no-snapshot command paths may still run. Same-tree update remains Fresh by the preceding counterevidence.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 424,
+          "line_end": 438,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 897,
+          "line_end": 916,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 2234,
+          "line_end": 2268,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/commands/operation/log.rs",
+          "sha256": "107072a1028383c2338211b151fe5d54d7d7158161b843314ce5426edd528484",
+          "line_start": 81,
+          "line_end": 100,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": "R030-F1-every-command-fails"
+    },
+    {
+      "id": "C012",
+      "report_line_start": 17,
+      "report_line_end": 17,
+      "material_assertion": "Companion detects stale/reuses snapshot-merge recovery; first writable command must anticipate stale",
+      "current_role": "integration proposal",
+      "source_outcome": "supported",
+      "assessment": "Useful derived guidance within the precise command conditions.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/commands/workspace/update_stale.rs",
+          "sha256": "d97bb464e4d0f2857ae571731925744acc40e0e705245f93b244b168d0289ad5",
+          "line_start": 43,
+          "line_end": 108,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1572,
+          "line_end": 1582,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C013",
+      "report_line_start": 19,
+      "report_line_end": 20,
+      "material_assertion": "Repo concurrency lock-free; op-head and no-read simple-op-head source locators",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Primary design/trait source supplies the stated scope. Declared actual unread depths remain unassessed acquisition.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/technical/concurrency.md",
+          "sha256": "464ac73e5bead50a401ba00340c7fd9c837ee92ca39e2131f3f66af5a5025b5c",
+          "line_start": 35,
+          "line_end": 38,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/op_heads_store.rs",
+          "sha256": "4de9db047c0ddcc8fd98ed108b0301a466429f22a7f38d1f813493e2e10b4909",
+          "line_start": 31,
+          "line_end": 138,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C014",
+      "report_line_start": 21,
+      "report_line_end": 21,
+      "material_assertion": "Loaded repo fixed during command, completed op parent, next normal command three-way merges divergence; empty head-marker ordering",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Direct design and exact head store implement these semantics. Head contents are empty by design.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/technical/concurrency.md",
+          "sha256": "464ac73e5bead50a401ba00340c7fd9c837ee92ca39e2131f3f66af5a5025b5c",
+          "line_start": 80,
+          "line_end": 127,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/simple_op_heads_store.rs",
+          "sha256": "30755eb32a63d29b57a93fb3858f9e1a3c5abdd13f05dae103817cb387965825",
+          "line_start": 58,
+          "line_end": 92,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C015",
+      "report_line_start": 21,
+      "report_line_end": 21,
+      "material_assertion": "Optional de-duplication lock, ancestor filter and remaining-head merges",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Pinned resolver confirms the conditional one-head shortcut and multi-head merge; no universal runtime guarantee.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/op_heads_store.rs",
+          "sha256": "4de9db047c0ddcc8fd98ed108b0301a466429f22a7f38d1f813493e2e10b4909",
+          "line_start": 52,
+          "line_end": 56,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/op_heads_store.rs",
+          "sha256": "4de9db047c0ddcc8fd98ed108b0301a466429f22a7f38d1f813493e2e10b4909",
+          "line_start": 63,
+          "line_end": 138,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C016",
+      "report_line_start": 21,
+      "report_line_end": 21,
+      "material_assertion": "Bad-locking source test simulates machines and asserts both child commits survive",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Full relevant test source establishes intended assertion, not an executed guarantee.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/tests/test_bad_locking.rs",
+          "sha256": "23daa5cd550d294ef540ff8ed4a9823fc719bfd257d7192e78cd645aa6310d13",
+          "line_start": 103,
+          "line_end": 190,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C017",
+      "report_line_start": 22,
+      "report_line_end": 22,
+      "material_assertion": "Git backend known corruption and distributed-FS/colocated untested caveat",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Docs explicitly carve out both limits.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/technical/concurrency.md",
+          "sha256": "464ac73e5bead50a401ba00340c7fd9c837ee92ca39e2131f3f66af5a5025b5c",
+          "line_start": 51,
+          "line_end": 61,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C018",
+      "report_line_start": 23,
+      "report_line_end": 23,
+      "material_assertion": "Embedder competes with CLI, must resolve divergent views on load, colocated default only hypothetical",
+      "current_role": "integration proposal",
+      "source_outcome": "qualified",
+      "assessment": "Useful derived constraint. The proposed companion default is not supplied design, and embedding alone does not implement automatic merge unless caller uses the correct path.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/technical/concurrency.md",
+          "sha256": "464ac73e5bead50a401ba00340c7fd9c837ee92ca39e2131f3f66af5a5025b5c",
+          "line_start": 80,
+          "line_end": 114,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/op_heads_store.rs",
+          "sha256": "4de9db047c0ddcc8fd98ed108b0301a466429f22a7f38d1f813493e2e10b4909",
+          "line_start": 63,
+          "line_end": 138,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/brief.md",
+          "sha256": "6455c54d08627a6669c8f176a5cfb1e1c23578a183f3e606addadcf59eefff36",
+          "line_start": 7,
+          "line_end": 7,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C019",
+      "report_line_start": 25,
+      "report_line_end": 26,
+      "material_assertion": "One WC advisory lock, temp-file state writes and pending-checkout TODO indicate no resume record",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Pinned lock/state wrappers and three unimplemented marker comments directly support these facts. Platform wait behavior stays explicitly unresolved in report.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1607,
+          "line_end": 1631,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 660,
+          "line_end": 706,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1693,
+          "line_end": 1702,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1861,
+          "line_end": 1863,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1917,
+          "line_end": 1955,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/lock.rs",
+          "sha256": "ba1763e5730e9c7232b883a6a0280abf45b0fb1e42ec403a22689d37755eb934",
+          "line_start": 15,
+          "line_end": 21,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C020",
+      "report_line_start": 27,
+      "report_line_end": 27,
+      "material_assertion": "Re-read tree/checkout state after lock captures old ids; finish writes dirty tree then changed op/name checkout",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Exact state sequence confirms this, including two-store non-atomic gap.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1607,
+          "line_end": 1631,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1932,
+          "line_end": 1955,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C021",
+      "report_line_start": 27,
+      "report_line_end": 27,
+      "material_assertion": "Two persist Windows TODOs and checkout proto operation/name fields",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "One write uses mapped errors, checkout write unwrap can panic; Windows open-reader TODO exists at both locations.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1567,
+          "line_end": 1572,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 694,
+          "line_end": 705,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1693,
+          "line_end": 1702,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C022",
+      "report_line_start": 27,
+      "report_line_end": 27,
+      "material_assertion": "Interruption during file materialization before finish can leave physical files ahead of recorded tree; no resumable marker",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Check_out materializes before dirty-state finish and pending marker is only TODO. This is a possible boundary, not every interruption.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1861,
+          "line_end": 1875,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1932,
+          "line_end": 1955,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C023",
+      "report_line_start": 28,
+      "report_line_end": 28,
+      "material_assertion": "Lock re-read closes state TOCTOU; parent materialization still races; lock wait/fail semantics unknown to candidate",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Source re-read and create_parent_dirs caveat agree. Evaluator Unix flock blocks, but candidate access omission remains legitimate unresolved depth.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1607,
+          "line_end": 1631,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 427,
+          "line_end": 435,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/lock/unix.rs",
+          "sha256": "6665c72f51598bf7b41dfeb2138448613c1a4e159ff60f1dda1f187d12570206",
+          "line_start": 29,
+          "line_end": 47,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C024",
+      "report_line_start": 29,
+      "report_line_end": 29,
+      "material_assertion": "Crashed checkout requires re-snapshot/reconciliation and state-file deletion should not be blind repair",
+      "current_role": "integration proposal",
+      "source_outcome": "qualified",
+      "assessment": "Useful caution; recorded tree is durable baseline rather than proof files currently match. Freshness classification alone compares stored tree ids, so actual file drift needs snapshot and cannot universally imply stale.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1861,
+          "line_end": 1875,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 2234,
+          "line_end": 2268,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1602,
+          "line_end": 1641,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C025",
+      "report_line_start": 31,
+      "report_line_end": 32,
+      "material_assertion": "Snapshot parallel scan, mtime filter and possible worker/source panics",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Source contains parallel directory iteration and read_dir/write_tree unwraps. This establishes potential panic paths, not every old #4396 trigger at pin.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 795,
+          "line_end": 906,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 934,
+          "line_end": 958,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C026",
+      "report_line_start": 33,
+      "report_line_end": 33,
+      "material_assertion": "Sparse/fsmonitor intersection, stat type/mtime/size gating, immediate blobs and delayed dirty state finish",
+      "current_role": "current assertion",
+      "source_outcome": "qualified",
+      "assessment": "Core sequence is supported, but stat equality alone is insufficient: mtime must also precede own_mtime. Blob/tree writes occur before finish, which does not establish fsync durability.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 120,
+          "line_end": 142,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 817,
+          "line_end": 822,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 712,
+          "line_end": 722,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1134,
+          "line_end": 1185,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1932,
+          "line_end": 1955,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C027",
+      "report_line_start": 33,
+      "report_line_end": 33,
+      "material_assertion": "write_tree/read_dir unwrap can panic; CLI changed-tree transaction rewrites WC and rebases",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Exact unwraps and conditional transaction exist. Backend errors/data races are not executed here.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 889,
+          "line_end": 902,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 934,
+          "line_end": 948,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1611,
+          "line_end": 1641,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C028",
+      "report_line_start": 34,
+      "report_line_end": 34,
+      "material_assertion": "Any crash mid-snapshot is harmless orphan objects/unchanged state/no corruption, making observation commands safe",
+      "current_role": "current assertion",
+      "source_outcome": "unsupported",
+      "assessment": "Before a completed TreeState scan, in-memory state may be unchanged on disk. This does not prove backend writes crash-durable or safety of the whole observation pipeline: snapshot_working_copy commits before WC finish, and colocated Git import/export adds other effects. The docs explicitly acknowledge backend corruption.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 897,
+          "line_end": 942,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1611,
+          "line_end": 1641,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 712,
+          "line_end": 722,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1932,
+          "line_end": 1955,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/technical/concurrency.md",
+          "sha256": "464ac73e5bead50a401ba00340c7fd9c837ee92ca39e2131f3f66af5a5025b5c",
+          "line_start": 51,
+          "line_end": 61,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": "R030-F4-unconditional-snapshot-crash-safety"
+    },
+    {
+      "id": "C029",
+      "report_line_start": 34,
+      "report_line_end": 34,
+      "material_assertion": "#4396 historical 0.20/0.21 snapshot panic and #4508 many-core cost",
+      "current_role": "historical issue reports",
+      "source_outcome": "supported",
+      "assessment": "Issue bodies substantiate historical reports. Current closed reason alone does not explain #4396; the report does not directly prove a current malformed-marker panic from an unread invariant.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4396.json",
+          "sha256": "00967c17d1d3746e4dfb012dcc5b0a86aa0d52266199991420a0afb617dd2f50",
+          "line_start": 1,
+          "line_end": 76,
+          "version": "capture 2026-09-30; not release-time state"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4508.json",
+          "sha256": "7574413e1681fc1e3c15cd306399095b9c722e312ae8bbfe77275df262e934cb",
+          "line_start": 1,
+          "line_end": 99,
+          "version": "capture 2026-09-30; not release-time state"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C030",
+      "report_line_start": 34,
+      "report_line_end": 34,
+      "material_assertion": "Using #4396 as current malformed-marker panic counterevidence",
+      "current_role": "current transfer from historical report",
+      "source_outcome": "qualified",
+      "assessment": "Official closure comment2332006042 links duplicate2611; frozen patch3133534 guards malformed term counts and pinned malformed-marker test expects None. Other read_dir/write_tree panic sites remain, so do not erase all panic risk or inflate this historical trigger.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-current-grading-v6/R028/eval-only-source-addendum/issues-4396-comments.json",
+          "sha256": "c507e1055ad0044b25d33b64173d46fb92d86dae044e2056c6967abee06d5a57",
+          "locator": "entire primary JSON; material ids/dates specified in assessment",
+          "public_url": "https://api.github.com/repos/jj-vcs/jj/issues/4396/comments?per_page=100",
+          "version": "dated primary comments/PR, retrieved 2026-10-01, EVAL-only",
+          "candidate_acquisition_credit": false
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/commit-patches/3133534b323cea968d3e2ff91a5446998a9374a1.patch",
+          "sha256": "bed39fc244e57875391aaca69f015d65bed319d42e3ed3a8f5e6ce171db28480",
+          "line_start": 1,
+          "line_end": 71,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/conflicts.rs",
+          "sha256": "907b5a819f1799df8d54520ecc2c7dbd6a10b0b4296aa4976ccad5748f4db2be",
+          "line_start": 476,
+          "line_end": 481,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/tests/test_conflicts.rs",
+          "sha256": "65c70e3de949be04e231359ded61a299606bf7e6d2da247d6b108da48a1e29a7",
+          "line_start": 752,
+          "line_end": 771,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 934,
+          "line_end": 948,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C031",
+      "report_line_start": 35,
+      "report_line_end": 35,
+      "material_assertion": "Long-lived TreeState/caller snapshot options permit embedding; survive panics; snapshot dominant recurring cost",
+      "current_role": "integration proposal",
+      "source_outcome": "qualified",
+      "assessment": "Embedding is feasible and caller owns options, but a live tree state is not a live repo view. Dominant cost is attributed workload evidence, not a universal measured property; recover/reload after panic requires validation.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/working_copy.rs",
+          "sha256": "7f7f8f8a8b6c2570a1171f51bc10ee23cb7f960ee754ad210f0de8e9592c2f40",
+          "line_start": 186,
+          "line_end": 227,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/technical/concurrency.md",
+          "sha256": "464ac73e5bead50a401ba00340c7fd9c837ee92ca39e2131f3f66af5a5025b5c",
+          "line_start": 80,
+          "line_end": 83,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4508.json",
+          "sha256": "7574413e1681fc1e3c15cd306399095b9c722e312ae8bbfe77275df262e934cb",
+          "line_start": 1,
+          "line_end": 99,
+          "version": "capture 2026-09-30; not release-time state"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4545.json",
+          "sha256": "a6f9011c0ebda172ab04e2edcae10945a464556b871f2824e8f811351c1d0ae6",
+          "line_start": 1,
+          "line_end": 88,
+          "version": "capture 2026-09-30; not release-time state"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C032",
+      "report_line_start": 37,
+      "report_line_end": 38,
+      "material_assertion": "Snapshot-before-command default and config/source locators",
+      "current_role": "current assertion",
+      "source_outcome": "qualified",
+      "assessment": "Most usual commands snapshot conditionally; not every command or mutating path. No changed tree need not create a new snapshot operation.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/working-copy.md",
+          "sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62",
+          "line_start": 10,
+          "line_end": 27,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 366,
+          "line_end": 386,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1550,
+          "line_end": 1641,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/commands/operation/abandon.rs",
+          "sha256": "9d8c2bfcc0cb1dc3bb7441fe08d0af9f9ca1775483be4f44139ece662a7a0a0e",
+          "line_start": 47,
+          "line_end": 61,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C033",
+      "report_line_start": 39,
+      "report_line_end": 39,
+      "material_assertion": "Auto-track/ignore and #4545 exact cost, jj-new stale and absent Watchman trigger reports",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Faithful body attribution and pinned auto-track/size options. Referenced #4028 and old fsmonitor blob stay unconfirmed unless separately sourced.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/working-copy.md",
+          "sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62",
+          "line_start": 15,
+          "line_end": 27,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/working-copy.md",
+          "sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62",
+          "line_start": 60,
+          "line_end": 75,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4545.json",
+          "sha256": "a6f9011c0ebda172ab04e2edcae10945a464556b871f2824e8f811351c1d0ae6",
+          "line_start": 1,
+          "line_end": 88,
+          "version": "capture 2026-09-30; not release-time state"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 761,
+          "line_end": 790,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C034",
+      "report_line_start": 40,
+      "report_line_end": 40,
+      "material_assertion": "Ignore-working-copy fine for pure readers and Watchman external dependency",
+      "current_role": "current assertion",
+      "source_outcome": "qualified",
+      "assessment": "Ignoring WC avoids its snapshot/update, but ordinary head resolution can still create a reconciliation operation. At-op=@ does not alone disable snapshots. Readers are not universally repository-nonmutating. Watchman dependency is explicit source.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 424,
+          "line_end": 485,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/commands/operation/log.rs",
+          "sha256": "107072a1028383c2338211b151fe5d54d7d7158161b843314ce5426edd528484",
+          "line_start": 41,
+          "line_end": 45,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 761,
+          "line_end": 790,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": "R030-F5-observation-mode-qualifier-loss"
+    },
+    {
+      "id": "C035",
+      "report_line_start": 41,
+      "report_line_end": 41,
+      "material_assertion": "Do not ignore WC everywhere; long-lived library/change feed or accept cost; configure tracking/size",
+      "current_role": "integration proposal",
+      "source_outcome": "qualified",
+      "assessment": "Useful proposals with clearly visible knobs. Changes must reload fixed repo state, and size cap limits newly tracked files rather than all artifact commits.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/working_copy.rs",
+          "sha256": "7f7f8f8a8b6c2570a1171f51bc10ee23cb7f960ee754ad210f0de8e9592c2f40",
+          "line_start": 186,
+          "line_end": 227,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/technical/concurrency.md",
+          "sha256": "464ac73e5bead50a401ba00340c7fd9c837ee92ca39e2131f3f66af5a5025b5c",
+          "line_start": 80,
+          "line_end": 83,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1550,
+          "line_end": 1609,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C036",
+      "report_line_start": 43,
+      "report_line_end": 44,
+      "material_assertion": "#4239 fix/order and progress/cleanup source locators",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Sources at pin and dated official thread/patch support intended reordering; actual GET self-report not credited.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4239.json",
+          "sha256": "1f47a5da278ef981bde5e474a800b692ce72ea3a53f6c91408bfa975b127c795",
+          "line_start": 1,
+          "line_end": 130,
+          "version": "capture 2026-09-30; not release-time state"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-current-grading-v6/R028/eval-only-source-addendum/issues-4239-timeline.json",
+          "sha256": "ebdf5d3a099ea7153d66e7b828490b324bfb8373acc039b741045bb9dd8175d7",
+          "locator": "entire primary JSON; material ids/dates specified in assessment",
+          "public_url": "https://api.github.com/repos/jj-vcs/jj/issues/4239/timeline?per_page=100",
+          "version": "dated primary comments/PR, retrieved 2026-10-01, EVAL-only",
+          "candidate_acquisition_credit": false
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/commit-patches/76f40e5990db2981e7c86986c8af98f22edaccc9.patch",
+          "sha256": "9710b6108cf70350dddf76dcf4c182c56cc1622332fc559a33f58bdd706eea56",
+          "line_start": 43,
+          "line_end": 63,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1757,
+          "line_end": 1771,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/progress.rs",
+          "sha256": "3747f662ea359d1dd1cdd2b0712e4d901ea0ab9c0cf7afa9668694913006ef63",
+          "line_start": 19,
+          "line_end": 93,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cleanup_guard.rs",
+          "sha256": "383311c42fc4346fb7bd8d0bee07278a78ff0c29fbe571e9147ddda276a5b891",
+          "line_start": 13,
+          "line_end": 126,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C037",
+      "report_line_start": 45,
+      "report_line_end": 45,
+      "material_assertion": "Historical reporting broken pipe before WC update; maintainer residual inconsistency and pinned reorder",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Exact issue/primary comments and patch give the causal history. Pinned comment/order corroborates fix, not an executed reproduction.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4239.json",
+          "sha256": "1f47a5da278ef981bde5e474a800b692ce72ea3a53f6c91408bfa975b127c795",
+          "line_start": 1,
+          "line_end": 130,
+          "version": "capture 2026-09-30; not release-time state"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-current-grading-v6/R028/eval-only-source-addendum/issues-4239-timeline.json",
+          "sha256": "ebdf5d3a099ea7153d66e7b828490b324bfb8373acc039b741045bb9dd8175d7",
+          "locator": "entire primary JSON; material ids/dates specified in assessment",
+          "public_url": "https://api.github.com/repos/jj-vcs/jj/issues/4239/timeline?per_page=100",
+          "version": "dated primary comments/PR, retrieved 2026-10-01, EVAL-only",
+          "candidate_acquisition_credit": false
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/commit-patches/76f40e5990db2981e7c86986c8af98f22edaccc9.patch",
+          "sha256": "9710b6108cf70350dddf76dcf4c182c56cc1622332fc559a33f58bdd706eea56",
+          "line_start": 43,
+          "line_end": 63,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1757,
+          "line_end": 1771,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C038",
+      "report_line_start": 46,
+      "report_line_end": 46,
+      "material_assertion": "Snapshot 30Hz/250ms delay; Git bar cursor guard; Unix signal drain/re-raise and second fatal",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Precise constants and handler branches match all facts. The handoff is UnixDatagram; informal self-pipe terminology does not change the mechanism.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/progress.rs",
+          "sha256": "3747f662ea359d1dd1cdd2b0712e4d901ea0ab9c0cf7afa9668694913006ef63",
+          "line_start": 19,
+          "line_end": 93,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/progress.rs",
+          "sha256": "3747f662ea359d1dd1cdd2b0712e4d901ea0ab9c0cf7afa9668694913006ef63",
+          "line_start": 112,
+          "line_end": 113,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/progress.rs",
+          "sha256": "3747f662ea359d1dd1cdd2b0712e4d901ea0ab9c0cf7afa9668694913006ef63",
+          "line_start": 166,
+          "line_end": 214,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cleanup_guard.rs",
+          "sha256": "383311c42fc4346fb7bd8d0bee07278a78ff0c29fbe571e9147ddda276a5b891",
+          "line_start": 65,
+          "line_end": 114,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C039",
+      "report_line_start": 46,
+      "report_line_end": 46,
+      "material_assertion": "Non-Unix no signal-time cleanup, guards do not cover listed fatal signals/broken pipes",
+      "current_role": "current assertion",
+      "source_outcome": "qualified",
+      "assessment": "Correct scope for CleanupGuard signal registration; normal Drop remains on non-Unix. BrokenPipe is separately recognized/gracefully handled by command_error, so absence in this signal set is not absence of EPIPE handling.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cleanup_guard.rs",
+          "sha256": "383311c42fc4346fb7bd8d0bee07278a78ff0c29fbe571e9147ddda276a5b891",
+          "line_start": 39,
+          "line_end": 46,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cleanup_guard.rs",
+          "sha256": "383311c42fc4346fb7bd8d0bee07278a78ff0c29fbe571e9147ddda276a5b891",
+          "line_start": 90,
+          "line_end": 126,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/command_error.rs",
+          "sha256": "ed9f35aa9360681316bf0f27daafb1cbd7993f57264979a8c85be25f69c7dc31",
+          "line_start": 223,
+          "line_end": 229,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/command_error.rs",
+          "sha256": "ed9f35aa9360681316bf0f27daafb1cbd7993f57264979a8c85be25f69c7dc31",
+          "line_start": 712,
+          "line_end": 750,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C040",
+      "report_line_start": 47,
+      "report_line_end": 47,
+      "material_assertion": "Prefer in-process callbacks to terminal UX; recovery cannot depend on guard cosmetics",
+      "current_role": "integration proposal",
+      "source_outcome": "qualified",
+      "assessment": "Concrete proposal. The cited progress guard is cosmetic, but CleanupGuard itself accepts arbitrary callbacks; no source proves every cleanup guard is only cosmetic. Recovery remains conditional.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/progress.rs",
+          "sha256": "3747f662ea359d1dd1cdd2b0712e4d901ea0ab9c0cf7afa9668694913006ef63",
+          "line_start": 56,
+          "line_end": 63,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/working_copy.rs",
+          "sha256": "7f7f8f8a8b6c2570a1171f51bc10ee23cb7f960ee754ad210f0de8e9592c2f40",
+          "line_start": 226,
+          "line_end": 227,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cleanup_guard.rs",
+          "sha256": "383311c42fc4346fb7bd8d0bee07278a78ff0c29fbe571e9147ddda276a5b891",
+          "line_start": 29,
+          "line_end": 46,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/commands/workspace/update_stale.rs",
+          "sha256": "d97bb464e4d0f2857ae571731925744acc40e0e705245f93b244b168d0289ad5",
+          "line_start": 145,
+          "line_end": 175,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C041",
+      "report_line_start": 49,
+      "report_line_end": 50,
+      "material_assertion": "Multi-workspace sources, omissions and rename/silent-skip/Git-gap locators",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Named current code/docs exist; actual incomplete reading depth remains locked, not credited.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/working-copy.md",
+          "sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62",
+          "line_start": 78,
+          "line_end": 100,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/working_copy.rs",
+          "sha256": "7f7f8f8a8b6c2570a1171f51bc10ee23cb7f960ee754ad210f0de8e9592c2f40",
+          "line_start": 49,
+          "line_end": 50,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/working_copy.rs",
+          "sha256": "7f7f8f8a8b6c2570a1171f51bc10ee23cb7f960ee754ad210f0de8e9592c2f40",
+          "line_start": 110,
+          "line_end": 111,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1877,
+          "line_end": 1879,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1545,
+          "line_end": 1549,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C042",
+      "report_line_start": 51,
+      "report_line_end": 51,
+      "material_assertion": "Finish_transaction immutable/hidden/abandoned workspace commit means physical checkout of fresh child in each workspace",
+      "current_role": "current assertion",
+      "source_outcome": "qualified",
+      "assessment": "It creates a new child/set_wc_commit in shared repo views for affected immutable workspace commits; actual filesystem update later applies only to current workspace. Hidden or abandoned is not synonymous with configured immutable.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1714,
+          "line_end": 1771,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": "R030-F7-view-versus-filesystem-checkout"
+    },
+    {
+      "id": "C043",
+      "report_line_start": 51,
+      "report_line_end": 51,
+      "material_assertion": "Deleted/forgotten repo-side workspace skips snapshot or absent current-WC checkout",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Exact optional-WC guards confirm this silent path. Disk files can remain after forgetting.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1545,
+          "line_end": 1549,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1762,
+          "line_end": 1769,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/working-copy.md",
+          "sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62",
+          "line_start": 90,
+          "line_end": 92,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C044",
+      "report_line_start": 51,
+      "report_line_end": 51,
+      "material_assertion": "Locked WC rename exists/applied at finish; #4342 prepin closure means public command present",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Trait/pending state alone would not prove public command; evaluator directly verifies pinned rename implementation and full source patch.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/working_copy.rs",
+          "sha256": "7f7f8f8a8b6c2570a1171f51bc10ee23cb7f960ee754ad210f0de8e9592c2f40",
+          "line_start": 110,
+          "line_end": 111,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1877,
+          "line_end": 1879,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1946,
+          "line_end": 1952,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/commands/workspace/rename.rs",
+          "sha256": "be6d3e326408ee9ac004b05a68dc72beae3803437c80638710992cf9ce48b2fd",
+          "line_start": 23,
+          "line_end": 78,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/commit-patches/412ef36259426d8d7a8bc33bf076922f2a801c18.patch",
+          "sha256": "12994fcbaae4bede93ed6e91ba65923c291ecb260311147ffcd7388a0b1dd265",
+          "line_start": 101,
+          "line_end": 184,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4342.json",
+          "sha256": "d45a015ba6b063129d46c036ac9ba32f91c91aa6d047df3adeeeb5afed754680",
+          "line_start": 1,
+          "line_end": 99,
+          "version": "capture 2026-09-30; not release-time state"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C045",
+      "report_line_start": 51,
+      "report_line_end": 51,
+      "material_assertion": "#4436 no secondary .git/tool problems, capture closure2026, pin-era gap",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Body and pinned add/shared-repo initializer establish the implementation limit independently of later closed state.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4436.json",
+          "sha256": "2939a2223ea17385ed89d208acb48c2e52a29f4144f679be274721382201ea2b",
+          "line_start": 1,
+          "line_end": 99,
+          "version": "capture 2026-09-30; not release-time state"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/commands/workspace/add.rs",
+          "sha256": "0d5a2e5a18851f126f4cc8311dc1c738a86c38e8b26a67438682b02e2fdf8345",
+          "line_start": 109,
+          "line_end": 118,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/workspace.rs",
+          "sha256": "bb2796db350fa8d3d1c508d1baff77ae252b2e7b1791a11da316184ec8c7ac20",
+          "line_start": 345,
+          "line_end": 377,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C046",
+      "report_line_start": 52,
+      "report_line_end": 52,
+      "material_assertion": "Forget changes repo state without deleting disk files; silent-skip window",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Direct docs and snapshot optional-WC branch confirm this conditional gap.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/working-copy.md",
+          "sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62",
+          "line_start": 90,
+          "line_end": 92,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1545,
+          "line_end": 1549,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C047",
+      "report_line_start": 53,
+      "report_line_end": 53,
+      "material_assertion": "Model per-workspace view, surface stale, do not assume secondary Git visibility",
+      "current_role": "integration proposal",
+      "source_outcome": "supported",
+      "assessment": "Useful source-grounded decisions, conditional on whether desired tree changed; no guarantee every other workspace is stale.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/working-copy.md",
+          "sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62",
+          "line_start": 78,
+          "line_end": 100,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 2234,
+          "line_end": 2268,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4436.json",
+          "sha256": "2939a2223ea17385ed89d208acb48c2e52a29f4144f679be274721382201ea2b",
+          "line_start": 1,
+          "line_end": 99,
+          "version": "capture 2026-09-30; not release-time state"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C048",
+      "report_line_start": 56,
+      "report_line_end": 56,
+      "material_assertion": "QF1 mapping across F1/F2/F3/F5/F7",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "These findings materially address observation/workspace/concurrent-state goal; current qualifications remain assessed above.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/brief.md",
+          "sha256": "6455c54d08627a6669c8f176a5cfb1e1c23578a183f3e606addadcf59eefff36",
+          "line_start": 3,
+          "line_end": 5,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C049",
+      "report_line_start": 57,
+      "report_line_end": 57,
+      "material_assertion": "QF2 mapping and #4423 unreadable view, #4493 no-progress import hang, #4396 historical panic",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "All three bodies support the attributed historical symptoms. #4493 on0.21 is not a verified current hang; #4396 has a pinned parser fix.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/brief.md",
+          "sha256": "6455c54d08627a6669c8f176a5cfb1e1c23578a183f3e606addadcf59eefff36",
+          "line_start": 3,
+          "line_end": 5,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4423.json",
+          "sha256": "d72a14271fb697217917eef42baab65eff836b63acdca7ba9393ca5658cfda64",
+          "line_start": 1,
+          "line_end": 76,
+          "version": "capture 2026-09-30; not release-time state"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4493.json",
+          "sha256": "eb345827295e0dc6797e4300e19ef57a96f32f7549e862e7cfa75c2888061fcd",
+          "line_start": 1,
+          "line_end": 88,
+          "version": "capture 2026-09-30; not release-time state"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4396.json",
+          "sha256": "00967c17d1d3746e4dfb012dcc5b0a86aa0d52266199991420a0afb617dd2f50",
+          "line_start": 1,
+          "line_end": 76,
+          "version": "capture 2026-09-30; not release-time state"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/commit-patches/3133534b323cea968d3e2ff91a5446998a9374a1.patch",
+          "sha256": "bed39fc244e57875391aaca69f015d65bed319d42e3ed3a8f5e6ce171db28480",
+          "line_start": 1,
+          "line_end": 71,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C050",
+      "report_line_start": 57,
+      "report_line_end": 57,
+      "material_assertion": "#4423 no automated repair; route to backup/op-log repair rather than deletion",
+      "current_role": "integration proposal",
+      "source_outcome": "qualified",
+      "assessment": "No guaranteed arbitrary corrupted-store repair established. Op log has explicit no-repo-load triage, and op abandon can repair some corrupted state; source/report body do not prove global absence of every automated route. Backup guidance remains useful.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/commands/operation/log.rs",
+          "sha256": "107072a1028383c2338211b151fe5d54d7d7158161b843314ce5426edd528484",
+          "line_start": 81,
+          "line_end": 100,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/commands/operation/abandon.rs",
+          "sha256": "9d8c2bfcc0cb1dc3bb7441fe08d0af9f9ca1775483be4f44139ece662a7a0a0e",
+          "line_start": 47,
+          "line_end": 61,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/commands/workspace/update_stale.rs",
+          "sha256": "d97bb464e4d0f2857ae571731925744acc40e0e705245f93b244b168d0289ad5",
+          "line_start": 145,
+          "line_end": 175,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4423.json",
+          "sha256": "d72a14271fb697217917eef42baab65eff836b63acdca7ba9393ca5658cfda64",
+          "line_start": 1,
+          "line_end": 76,
+          "version": "capture 2026-09-30; not release-time state"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C051",
+      "report_line_start": 60,
+      "report_line_end": 60,
+      "material_assertion": "Five PNGs unviewed, no visual claims",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "All bytes remain retained/reconstructed; visual interpretation SOURCE UNKNOWN without image-dependent semantic verdict.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/PIN.json",
+          "sha256": "6cb6112d93cdecd21d5e9a57db5f878b1afac553012e99f008e0c4102a503342",
+          "line_start": 1,
+          "line_end": 441,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C052",
+      "report_line_start": 61,
+      "report_line_end": 61,
+      "material_assertion": "Declared unread full patches, sources, issue bodies/comments and read ranges",
+      "current_role": "candidate method/source-gap self-report",
+      "source_outcome": "unresolved",
+      "assessment": "Actual candidate read depth remains locked. Do not credit reports from acquisition artifacts or punish unasked exhaustive source census; all current emitted claims independently checked.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/TASK.md",
+          "sha256": "85f1d348299d9cb65e568d459f188713a592550ccd92624d46b5c494d25ff117",
+          "line_start": 3,
+          "line_end": 7,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/history-index.json",
+          "sha256": "e8330e80a540d4432e33843436ac76c255c879661e57d7b1f818554efd544d60",
+          "line_start": 1,
+          "line_end": 4376,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C053",
+      "report_line_start": 62,
+      "report_line_end": 62,
+      "material_assertion": "FileLock wait/fail/stale-lock behavior unresolved to candidate",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "Honest source limit; evaluator Unix flock blocks but does not retroactively grant acquisition/read coverage.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/lock/unix.rs",
+          "sha256": "6665c72f51598bf7b41dfeb2138448613c1a4e159ff60f1dda1f187d12570206",
+          "line_start": 29,
+          "line_end": 47,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/lock.rs",
+          "sha256": "ba1763e5730e9c7232b883a6a0280abf45b0fb1e42ec403a22689d37755eb934",
+          "line_start": 15,
+          "line_end": 21,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C054",
+      "report_line_start": 63,
+      "report_line_end": 63,
+      "material_assertion": "PR4517 exact diff not fetched; attribution inferred from comments/pin",
+      "current_role": "current assertion",
+      "source_outcome": "supported",
+      "assessment": "The explicit gap is legitimate. Evaluator original frozen patch and primary PR metadata establish source support with no candidate access credit.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/commit-patches/76f40e5990db2981e7c86986c8af98f22edaccc9.patch",
+          "sha256": "9710b6108cf70350dddf76dcf4c182c56cc1622332fc559a33f58bdd706eea56",
+          "line_start": 1,
+          "line_end": 63,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-current-grading-v6/R028/eval-only-source-addendum/pulls-4517.json",
+          "sha256": "bfa8e02edd83ce7939e511b21df4e84d1dfc45c866f63791b4b6b6c21b9e136d",
+          "locator": "entire primary JSON; material ids/dates specified in assessment",
+          "public_url": "https://api.github.com/repos/jj-vcs/jj/pulls/4517",
+          "version": "dated primary comments/PR, retrieved 2026-10-01, EVAL-only",
+          "candidate_acquisition_credit": false
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-current-grading-v6/R028/eval-only-source-addendum/issues-4239-timeline.json",
+          "sha256": "ebdf5d3a099ea7153d66e7b828490b324bfb8373acc039b741045bb9dd8175d7",
+          "locator": "entire primary JSON; material ids/dates specified in assessment",
+          "public_url": "https://api.github.com/repos/jj-vcs/jj/issues/4239/timeline?per_page=100",
+          "version": "dated primary comments/PR, retrieved 2026-10-01, EVAL-only",
+          "candidate_acquisition_credit": false
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C055",
+      "report_line_start": 66,
+      "report_line_end": 66,
+      "material_assertion": "UNEXECUTED kill-mid-checkout Fresh/Stale matrix and guaranteed lossless convergence",
+      "current_role": "UNEXECUTED validation proposal",
+      "source_outcome": "qualified",
+      "assessment": "Useful proposal; exact kill boundary/partial files/loadability determine result. Desired stored tree equality can be Fresh despite physical drift, and no universal no-data-loss recovery follows.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 2234,
+          "line_end": 2268,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1861,
+          "line_end": 1875,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/commands/workspace/update_stale.rs",
+          "sha256": "d97bb464e4d0f2857ae571731925744acc40e0e705245f93b244b168d0289ad5",
+          "line_start": 43,
+          "line_end": 175,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C056",
+      "report_line_start": 67,
+      "report_line_end": 67,
+      "material_assertion": "UNEXECUTED concurrent new in workspaces, divergence merge and WC commits survive",
+      "current_role": "UNEXECUTED validation proposal",
+      "source_outcome": "qualified",
+      "assessment": "Tests intended operation-view merge behavior; deliberately coordinate overlap and distinguish shared commit records from physical files. No result executed.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/tests/test_bad_locking.rs",
+          "sha256": "23daa5cd550d294ef540ff8ed4a9823fc719bfd257d7192e78cd645aa6310d13",
+          "line_start": 103,
+          "line_end": 190,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/docs/working-copy.md",
+          "sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62",
+          "line_start": 94,
+          "line_end": 100,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C057",
+      "report_line_start": 68,
+      "report_line_end": 68,
+      "material_assertion": "UNEXECUTED reporting EPIPE no-stale regression at pin",
+      "current_role": "UNEXECUTED validation proposal",
+      "source_outcome": "qualified",
+      "assessment": "Valid path test; force report timing/EPIPE and successful checkout, since ordinary head pipeline alone does not guarantee relevant output write failure.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04",
+          "line_start": 1757,
+          "line_end": 1771,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/command_error.rs",
+          "sha256": "ed9f35aa9360681316bf0f27daafb1cbd7993f57264979a8c85be25f69c7dc31",
+          "line_start": 712,
+          "line_end": 750,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C058",
+      "report_line_start": 69,
+      "report_line_end": 69,
+      "material_assertion": "UNEXECUTED Windows kill/persist-interference expects no state corruption",
+      "current_role": "UNEXECUTED validation proposal",
+      "source_outcome": "qualified",
+      "assessment": "Valid risk investigation, not established crash safety. Checkout persist unwrap and open-reader TODO can panic; define process-termination and file-locker conditions precisely.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1693,
+          "line_end": 1702,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 1932,
+          "line_end": 1955,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C059",
+      "report_line_start": 70,
+      "report_line_end": 70,
+      "material_assertion": "UNEXECUTED malformed marker expected #4396-style current worker panic",
+      "current_role": "UNEXECUTED validation proposal",
+      "source_outcome": "qualified",
+      "assessment": "Not an executed false result. Pinned guard and malformed-marker test reject that known term-count defect; test should assert safe parsing and separately inject real read_dir/write_tree faults.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/conflicts.rs",
+          "sha256": "907b5a819f1799df8d54520ecc2c7dbd6a10b0b4296aa4976ccad5748f4db2be",
+          "line_start": 476,
+          "line_end": 481,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/tests/test_conflicts.rs",
+          "sha256": "65c70e3de949be04e231359ded61a299606bf7e6d2da247d6b108da48a1e29a7",
+          "line_start": 752,
+          "line_end": 771,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/commit-patches/3133534b323cea968d3e2ff91a5446998a9374a1.patch",
+          "sha256": "bed39fc244e57875391aaca69f015d65bed319d42e3ed3a8f5e6ce171db28480",
+          "line_start": 1,
+          "line_end": 71,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 934,
+          "line_end": 948,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C060",
+      "report_line_start": 71,
+      "report_line_end": 71,
+      "material_assertion": "UNEXECUTED Watchman/default snapshot timing before SLA promise",
+      "current_role": "UNEXECUTED validation proposal",
+      "source_outcome": "supported",
+      "assessment": "Appropriate empirical validation proposal with attributed workload baseline; external service behavior and version remain explicit.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/issues/4545.json",
+          "sha256": "a6f9011c0ebda172ab04e2edcae10945a464556b871f2824e8f811351c1d0ae6",
+          "line_start": 1,
+          "line_end": 88,
+          "version": "capture 2026-09-30; not release-time state"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/local_working_copy.rs",
+          "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4",
+          "line_start": 761,
+          "line_end": 790,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    },
+    {
+      "id": "C061",
+      "report_line_start": 74,
+      "report_line_end": 74,
+      "material_assertion": "CLI source does not prove hypothetical GUI safety; process/lock/watch/failure delivery changes require validation",
+      "current_role": "integration transfer limit",
+      "source_outcome": "supported",
+      "assessment": "Faithful original transfer-limit ask. Source claims about guards and pipeline remain conditional rather than completed GUI proof.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/brief.md",
+          "sha256": "6455c54d08627a6669c8f176a5cfb1e1c23578a183f3e606addadcf59eefff36",
+          "line_start": 7,
+          "line_end": 7,
+          "version": "frozen original criterion/source metadata or dated bounded ancestry"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/lib/src/working_copy.rs",
+          "sha256": "7f7f8f8a8b6c2570a1171f51bc10ee23cb7f960ee754ad210f0de8e9592c2f40",
+          "line_start": 186,
+          "line_end": 227,
+          "version": "v0.22.0 pinned tree"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/inputs/repository/cli/src/cleanup_guard.rs",
+          "sha256": "383311c42fc4346fb7bd8d0bee07278a78ff0c29fbe571e9147ddda276a5b891",
+          "line_start": 65,
+          "line_end": 126,
+          "version": "v0.22.0 pinned tree"
+        }
+      ],
+      "failure_identity": null
+    }
+  ],
+  "eligible_facets": [
+    {
+      "id": "observation_effects",
+      "coverage": "partial",
+      "assessment": "Snapshot/config/cost constraints found; safe-reader and snapshot crash conclusions overgeneralize.",
+      "opportunity_only_not_separate_mandatory_findings": true
+    },
+    {
+      "id": "workspace_state",
+      "coverage": "partial",
+      "assessment": "Freshness/shared view/rename/forget and secondary Git gap covered; every-command-fails and all-workspace physical-checkout scopes inaccurate.; Repo/working-copy locks, distributed/backend caveats and materialization TOCTOU source limits developed.",
+      "opportunity_only_not_separate_mandatory_findings": true
+    },
+    {
+      "id": "completion_and_delivery",
+      "coverage": "full",
+      "assessment": "#4239 intended fix, progress throttling and limited signal cleanup concretely supported, with no runtime guarantee.",
+      "opportunity_only_not_separate_mandatory_findings": true
+    },
+    {
+      "id": "recovery",
+      "coverage": "partial",
+      "assessment": "Useful stale/missing-op/no-resume mechanism; unreadable-op universal trigger and safe-observation crash boundary weakened.",
+      "opportunity_only_not_separate_mandatory_findings": true
+    },
+    {
+      "id": "failure_history",
+      "coverage": "partial",
+      "assessment": "Relevant bodies and source-order fix present; historical/parser-fix counterevidence and open-body absence qualifications recorded.; Capture/release separation good; #4396 pinned fix is important counterevidence to malformed-marker proposal, not a proved current historical panic.",
+      "opportunity_only_not_separate_mandatory_findings": true
+    },
+    {
+      "id": "integration_transfer",
+      "coverage": "partial",
+      "assessment": "Useful proposals and strong final caveat; core safe-observation and file-effect statements need correction.; Source/image gaps preserved; useful pending-checkout and vanished-workspace novelty assessed.",
+      "opportunity_only_not_separate_mandatory_findings": true
+    }
+  ],
+  "required_scope": [
+    {
+      "id": "scope_and_pin",
+      "family": "shared",
+      "requirement": "Target Jujutsu v0.22.0 at pinned commit; exact report identity and complete original source universe",
+      "criterion_locator": "TASK.md:3-5; brief.md:5-7; PIN.json:1-5",
+      "coverage": "full",
+      "assessment": "Exact full original corpus/pin and image restrictions respected."
+    },
+    {
+      "id": "two_coherent_families",
+      "family": "shared",
+      "requirement": "Five to eight coherent material findings across observing/changing state and completion/interruption/recovery",
+      "criterion_locator": "TASK.md:3; brief.md:5",
+      "coverage": "full",
+      "assessment": "Seven coherent findings across both original families, with explicit mappings."
+    },
+    {
+      "id": "exact_locators_and_versions",
+      "family": "shared",
+      "requirement": "Every material assertion has exact frozen-file lines or public locator and a version; qualify earlier/follow-up code",
+      "criterion_locator": "TASK.md:3-5",
+      "coverage": "partial",
+      "assessment": "Precise source locators broadly supplied; unreadable-op and view/filesystem scopes lose material conditions."
+    },
+    {
+      "id": "evidence_roles",
+      "family": "shared",
+      "requirement": "Distinguish documentation, issue body/current status, commits, pinned implementation and test intent; test source is not execution",
+      "criterion_locator": "TASK.md:3-7",
+      "coverage": "full",
+      "assessment": "Historical body/comment/pinned source/test intent and unexecuted proposal roles distinguished."
+    },
+    {
+      "id": "temporal_and_missing_links",
+      "family": "shared",
+      "requirement": "Capture-time issue edits/status do not reconstruct release truth; bounded missing ancestry/comments stay unresolved",
+      "criterion_locator": "TASK.md:5; eligibility temporal_rule and chain_rule",
+      "coverage": "partial",
+      "assessment": "Capture/release separation good; #4396 pinned fix is important counterevidence to malformed-marker proposal, not a proved current historical panic."
+    },
+    {
+      "id": "observation_effects",
+      "family": "QF1",
+      "requirement": "Determine when background observation snapshots/updates shared repository and working copy and how options/conditions constrain safe refresh",
+      "criterion_locator": "brief.md:3-5; eligibility observation_effects",
+      "coverage": "partial",
+      "assessment": "Snapshot/config/cost constraints found; safe-reader and snapshot crash conclusions overgeneralize."
+    },
+    {
+      "id": "workspace_state",
+      "family": "QF1",
+      "requirement": "Explain separately named workspaces, shared history/per-workspace files and concurrent people/agents where material to claims",
+      "criterion_locator": "brief.md:3-5; eligibility workspace_state",
+      "coverage": "partial",
+      "assessment": "Freshness/shared view/rename/forget and secondary Git gap covered; every-command-fails and all-workspace physical-checkout scopes inaccurate."
+    },
+    {
+      "id": "concurrent_mutation_limits",
+      "family": "QF1",
+      "requirement": "Check claimed guards and transfers against concurrent repo changes, colocated Git, working-copy transitions and human edits",
+      "criterion_locator": "brief.md:3-5; eligibility workspace_state and observation_effects",
+      "coverage": "full",
+      "assessment": "Repo/working-copy locks, distributed/backend caveats and materialization TOCTOU source limits developed."
+    },
+    {
+      "id": "completion_and_delivery",
+      "family": "QF2",
+      "requirement": "Distinguish durable operation and working-copy transition from streamed/received output; check failure ordering/interruption limits",
+      "criterion_locator": "brief.md:3-5; eligibility completion_and_delivery",
+      "coverage": "full",
+      "assessment": "#4239 intended fix, progress throttling and limited signal cleanup concretely supported, with no runtime guarantee."
+    },
+    {
+      "id": "recovery",
+      "family": "QF2",
+      "requirement": "Explain useful recovery controls, stale/missing-operation and operation-history limits, and what remains unresolved",
+      "criterion_locator": "brief.md:3-7; eligibility recovery",
+      "coverage": "partial",
+      "assessment": "Useful stale/missing-op/no-resume mechanism; unreadable-op universal trigger and safe-observation crash boundary weakened."
+    },
+    {
+      "id": "failure_history",
+      "family": "both",
+      "requirement": "Source-ground selected relevant issue histories and distinct fix/test chains; no inference of fix absence from title/closed state",
+      "criterion_locator": "brief.md:5; eligibility failure_history and chain_rule",
+      "coverage": "partial",
+      "assessment": "Relevant bodies and source-order fix present; historical/parser-fix counterevidence and open-body absence qualifications recorded."
+    },
+    {
+      "id": "mechanism_and_counterevidence",
+      "family": "both",
+      "requirement": "Check every emitted mechanism, conditional, rejected/non-finding rationale and counterevidence, including exact identifiers/numbers/negation",
+      "criterion_locator": "TASK.md:3; PROTOCOL Stage 1",
+      "coverage": "partial",
+      "assessment": "All claims assessed; several core safety conclusions exceed source conditions."
+    },
+    {
+      "id": "integration_transfer",
+      "family": "both",
+      "requirement": "Derive concrete safeguards/decisions/simpler alternatives while repository mechanism does not prove a hypothetical GUI/runtime",
+      "criterion_locator": "brief.md:3-7; eligibility integration_transfer",
+      "coverage": "partial",
+      "assessment": "Useful proposals and strong final caveat; core safe-observation and file-effect statements need correction."
+    },
+    {
+      "id": "unexecuted_validation",
+      "family": "shared",
+      "requirement": "No build/test execution; runtime checks are proposals clearly marked UNEXECUTED and assess their logic without calling them executed facts",
+      "criterion_locator": "TASK.md:7; PROTOCOL Stage 1",
+      "coverage": "full",
+      "assessment": "Six proposals explicitly unexecuted and individually assessed rather than treated as native outcomes."
+    },
+    {
+      "id": "unresolved_and_novelty",
+      "family": "shared",
+      "requirement": "Record source gaps, useful supported novelty and explicitly unvisited leads; no narrowed denominator or carrier-based semantic pass",
+      "criterion_locator": "TASK.md:3-5; eligibility coverage_rule; PROTOCOL Stage 1",
+      "coverage": "full",
+      "assessment": "Source/image gaps preserved; useful pending-checkout and vanished-workspace novelty assessed."
+    },
+    {
+      "id": "standalone_current_report",
+      "family": "shared",
+      "requirement": "Assess complete CURRENT material assertions and eligible facets, source/plan fit and coherence without acquisition/history rescue",
+      "criterion_locator": "PROTOCOL Stage 1",
+      "coverage": "partial",
+      "assessment": "Complete coherent deliverable; material safety guarantees prevent quality acceptance."
+    }
+  ],
+  "report_material_line_coverage": {
+    "material_lines": 44,
+    "covered_material_lines": 44,
+    "uncovered_material_lines": []
+  },
+  "material_failure_identities": [
+    "R030-F1-every-command-fails",
+    "R030-F1-unreadable-operation-trigger",
+    "R030-F4-unconditional-snapshot-crash-safety",
+    "R030-F5-observation-mode-qualifier-loss",
+    "R030-F7-view-versus-filesystem-checkout"
+  ],
+  "novelty": {
+    "supported_useful": [
+      "Tree-identity freshness shortcut even with older/divergent operation ids",
+      "Unimplemented pending_checkout markers and Windows persist TODOs",
+      "Vanished/forgotten workspace silent snapshot skip",
+      "Progress throttling and narrow signal-time guard design"
+    ],
+    "not_supported": [
+      "Universal harmless snapshot-crash/observation safety",
+      "Recovery for every unreadable operation",
+      "Every-command-fails staleness rule",
+      "Physical checkout in every affected workspace"
+    ]
+  },
+  "omitted_or_unreviewed_scope": {
+    "reviewer_material_claims": [],
+    "reviewer_required_facets": [],
+    "source_png_visuals": "Five exact raw/base64 source images preserved; visual interpretation remains SOURCE UNKNOWN under admitted text-only guard; no image-dependent claim credited.",
+    "candidate_unvisited_sources": "Declared leads and reading-depth gaps stay explicit; every emitted claim independently source-assessed. No exhaustive source/issue census assigned.",
+    "candidate_acquisition_history": "Locked; actual method, reads, GETs, mechanical operations and native execution not assessed or credited."
+  },
+  "unresolved_matters": [
+    "No runtime validation of six proposals",
+    "Platform lock behavior explicitly unread by candidate",
+    "Exact historical malformed-marker trigger is fixed at pin, while other source unwrap paths remain",
+    "General crash durability or data-loss-free recovery not established",
+    "All hypothetical GUI safeguards remain proposals",
+    "Actual candidate source acquisition, operations and runtime outcomes remain UNKNOWN",
+    "Raw PNG visual interpretation unavailable under text-only guard"
+  ],
+  "blinding_limitations": [
+    "Verbatim report heading/case exposes unavoidable treatment/task-style cue; not used to grade.",
+    "Embedded out/acquisition/history/map/economic references retained verbatim but their files not opened."
+  ],
+  "evaluator_addenda": {
+    "role": "Official missing primary sources frozen before decision, EVAL-only; no candidate acquisition credit, feedback or rescue.",
+    "files": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-current-grading-v6/R028/eval-only-source-addendum/issues-4239-timeline.json",
+        "sha256": "ebdf5d3a099ea7153d66e7b828490b324bfb8373acc039b741045bb9dd8175d7",
+        "url": "https://api.github.com/repos/jj-vcs/jj/issues/4239/timeline?per_page=100"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-current-grading-v6/R028/eval-only-source-addendum/pulls-4517.json",
+        "sha256": "bfa8e02edd83ce7939e511b21df4e84d1dfc45c866f63791b4b6b6c21b9e136d",
+        "url": "https://api.github.com/repos/jj-vcs/jj/pulls/4517"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-current-grading-v6/R028/eval-only-source-addendum/issues-4396-comments.json",
+        "sha256": "c507e1055ad0044b25d33b64173d46fb92d86dae044e2056c6967abee06d5a57",
+        "url": "https://api.github.com/repos/jj-vcs/jj/issues/4396/comments?per_page=100"
+      }
+    ]
+  },
+  "current_report_verdict": "quality failure",
+  "verdict_reason": "The report gives useful precise freshness, no-resume and progress constraints, but its claim that observation snapshots are harmless across crashes is not established by the source. It also broadens recovery from ObjectNotFound to unreadable operations, says every command must fail after foreign updates, and confuses shared-view child commits with physical checkout in every workspace. These affect the brief\u2019s safe-observation and disk-recovery promises.",
+  "native_delivery": "Exact frozen standalone report present and interpretable; no native-runtime proof admitted",
+  "source_unknown_is_not_native_failure": true,
+  "history_accessed": false,
+  "phase2_unlocked": false,
+  "candidate_economics": "Unassessed; source/cost/acquisition artifacts remain locked."
+}

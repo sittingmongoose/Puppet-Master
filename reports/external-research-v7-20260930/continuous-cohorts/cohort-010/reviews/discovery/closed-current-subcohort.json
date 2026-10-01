@@ -1,0 +1,1146 @@
+{
+  "schema": "ER7.closed-exact-current-subcohort.v1",
+  "closed_utc": "2026-10-01T23:33:29.080488+00:00",
+  "closed_report_ids": [
+    "R032",
+    "R033"
+  ],
+  "authority": "Explicit parent task closes exact admitted CURRENT R032/R033 only; sole stager positive admission used. No retrospective expansion.",
+  "reports": [
+    {
+      "report_id": "R032",
+      "stage": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R032/stage.json",
+        "bytes": 989,
+        "sha256": "f64ee1604fc21e3f10a2efe071c415392fb8d96d87c0e5f7b2842e6cb5bdfda1"
+      },
+      "input_manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R032/MANIFEST.json",
+        "bytes": 719,
+        "sha256": "c5cae7ded9674ce2a4819106127f41b400c6e0710af7db0f3757a3c11ba171d8"
+      },
+      "all_positive_manifest_byte_pins": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R032/PROTOCOL.md",
+          "bytes": 6471,
+          "sha256": "f0427cc8d1495e368b8b79cb9ead18cc65d4b0b2e8b509e338b86923ee5b1e15"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R032/current-report.md",
+          "bytes": 24842,
+          "sha256": "48a01fd9f6de07fb3696f628d796d28db9f8a8e74519374571cccac2b3a56215"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R032/eligibility.json",
+          "bytes": 6513,
+          "sha256": "24a184eaa0375dd6c0a42426abdb577bf9747ecaed7a8835f982ec391ae5adbb"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R032/inputs/brief.md",
+          "bytes": 905,
+          "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R032/primary-reference-addendum/ADDENDUM.json",
+          "bytes": 682,
+          "sha256": "4449a75b23f14b57267e01d8a17c6550cf35c25fa3c10216577aee30973ccb6c"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R032/primary-reference-addendum/ORIGINAL_MANIFEST.sha256.json",
+          "bytes": 513,
+          "sha256": "43564ebb344d6c535357ea05065100b01a32afc15e69fcbc724f6b67f4cec8f4"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R032/primary-reference-addendum/sources/S003.txt",
+          "bytes": 36980,
+          "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        }
+      ],
+      "current_companions": [],
+      "no_missing_required_current_companions": true,
+      "plan_admitted": false,
+      "original_broad_key": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R032/eligibility.json",
+        "sha256": "24a184eaa0375dd6c0a42426abdb577bf9747ecaed7a8835f982ec391ae5adbb",
+        "facets": [
+          {
+            "id": "F01",
+            "name": "Fileset image discovery and navigation",
+            "source_ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+              "line": 3
+            },
+            "brief_scope_locator": "Scientists should be able to find images within a fileset",
+            "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+          },
+          {
+            "id": "F02",
+            "name": "Multiresolution display and channel/time/plane selection",
+            "source_ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+              "line": 3
+            },
+            "brief_scope_locator": "inspect multiresolution images by channel, time point and plane",
+            "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+          },
+          {
+            "id": "F03",
+            "name": "Associated label image overlays",
+            "source_ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+              "line": 3
+            },
+            "brief_scope_locator": "overlay associated label images",
+            "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+          },
+          {
+            "id": "F04",
+            "name": "Correctly calibrated coordinates",
+            "source_ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+              "line": 3
+            },
+            "brief_scope_locator": "read correctly calibrated coordinates",
+            "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+          },
+          {
+            "id": "F05",
+            "name": "Responsiveness while opening large saved datasets",
+            "source_ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+              "line": 3
+            },
+            "brief_scope_locator": "remain responsive while opening large saved datasets",
+            "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+          },
+          {
+            "id": "F06",
+            "name": "Unsupported-data explanation and compatibility boundaries",
+            "source_ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+              "line": 3
+            },
+            "brief_scope_locator": "clearly explain data it cannot display",
+            "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+          },
+          {
+            "id": "F07",
+            "name": "Local read-only product boundary and transfer from actual implementations",
+            "source_ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+              "line": 5
+            },
+            "brief_scope_locator": "local filesystem reading; Source files must remain unchanged; actual reader implementations",
+            "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+          }
+        ],
+        "denominator": 7,
+        "source_reference_nonexhaustive": true
+      },
+      "decision_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/decision-freeze-manifest.json",
+        "sha256": "908c9e29abc6671370dd53efad5b3761723b4df29dab35fe8a7f0b831b6f059c",
+        "freeze_utc": "2026-10-01T23:22:37.859676+00:00",
+        "file_pins": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/claim-map.json",
+            "bytes": 696917,
+            "sha256": "799db9a577046c10824e26544e48f84ffcac3bcd05e15ca44885d339451bb596"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/claim-map.md",
+            "bytes": 200654,
+            "sha256": "3edd87a43145430490f542cf3130e3b053b49c11a36c6fc8bb6206e93872e2b8"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/counterevidence-and-novelty.json",
+            "bytes": 31332,
+            "sha256": "f1243a5395b8b07552f7fb70f23b04eb4c0ff9832a1cca11bb30d6d29fc762a7"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/counterevidence-and-novelty.md",
+            "bytes": 3047,
+            "sha256": "2dd1af138ce3a1a4ee08322487feb93e9f42bc8a042db2ab06b59c39c714b61b"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/current-assessment.json",
+            "bytes": 832906,
+            "sha256": "1179d4c0694d79ce35e71922d5f5912d5d881bf9c6eda0b95c97a2b195dda158"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/current-assessment.md",
+            "bytes": 2520,
+            "sha256": "38397364cfad6266aeadb33a5933284723a8a3797cf42a76854f38833b902b66"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/facet-conditions.json",
+            "bytes": 100635,
+            "sha256": "241659798f82ed9e698a3680de48032378c4fe849254402404ada8504c984ed9"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/facet-conditions.md",
+            "bytes": 7711,
+            "sha256": "32b61a1f62ce45a381b7a85e7fd40cba3027284b92592d740132462ffce2b4d1"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/full-coverage.json",
+            "bytes": 3901,
+            "sha256": "07f227d24d5eca83abdcc5908619feedd5ad6aea639157180cc05c0031920a15"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/full-coverage.md",
+            "bytes": 1909,
+            "sha256": "732d609b6edbd9cac58901e85168e3eda6aa0c89b991a3c6d06b4a44529f9c40"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/intake-verification.json",
+            "bytes": 4002,
+            "sha256": "09261d4fa2ee30f43264ab1484c156a9eeb0cdab44ffa07524541d0402e53c01"
+          }
+        ]
+      },
+      "current_assessment_json": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/current-assessment.json",
+        "sha256": "1179d4c0694d79ce35e71922d5f5912d5d881bf9c6eda0b95c97a2b195dda158"
+      },
+      "current_assessment_md": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/current-assessment.md",
+        "sha256": "38397364cfad6266aeadb33a5933284723a8a3797cf42a76854f38833b902b66"
+      },
+      "claim_count": 162,
+      "all_material_claims_classified": true,
+      "all_nonblank_report_statements_accounted_for": true,
+      "nonblank_statement_count": 111,
+      "all_seven_original_facets_assessed": true,
+      "atomic_condition_count": 21,
+      "complete_coverage": true,
+      "candidate_facet_coverage": {
+        "F01": "FULL",
+        "F02": "FULL",
+        "F03": "FULL",
+        "F04": "FULL",
+        "F05": "PARTIAL",
+        "F06": "FULL",
+        "F07": "FULL"
+      },
+      "unreviewed_claims": [],
+      "omitted_assigned_facets": [],
+      "unresolved_source_scope_retained": [
+        "R032-C001",
+        "R032-C005",
+        "R032-C006",
+        "R032-C109",
+        "R032-C126",
+        "R032-C139",
+        "R032-C140",
+        "R032-C141",
+        "R032-C142",
+        "R032-C143",
+        "R032-C144",
+        "R032-C147",
+        "R032-C148",
+        "R032-C160",
+        "R032-C162"
+      ],
+      "unresolved_external_semantics": [
+        "R032-C109",
+        "R032-C126",
+        "R032-C162"
+      ],
+      "unresolved_native_operations": [
+        "R032-C001",
+        "R032-C005",
+        "R032-C006",
+        "R032-C139",
+        "R032-C140",
+        "R032-C141",
+        "R032-C142",
+        "R032-C143",
+        "R032-C144",
+        "R032-C147",
+        "R032-C148",
+        "R032-C160"
+      ],
+      "material_failure_ids": [
+        "R032-E01-SEPARATOR",
+        "R032-E02-CONVERSION-MANDATE",
+        "R032-E03-OVERLAY-CONDITIONS",
+        "R032-E04-SINGLETON-DIMENSION",
+        "R032-E05-PLATE-MATRIX",
+        "R032-E06-ECOSYSTEM-LAG",
+        "R032-E07-HCS-STATUS",
+        "R032-E08-BF2RAW-OMERO",
+        "R032-E09-VERSION-PREVALENCE"
+      ],
+      "original_current_verdict_unchanged": "QUALITY_FAILURE",
+      "validation": "All proposed tests remain UNEXECUTED; no absent execution fixture counted as factual failure.",
+      "native_capture_delivery_freshness": "UNKNOWN",
+      "same_quality_speed_or_cost_win": "UNASSESSED_NONE_CLAIMED",
+      "blinding_limitations": [
+        "Current report task-card headers unavoidably expose control/treatment strings; these are recorded without using them in semantic decisions. No separate candidate workflow, acquisition, scheduling, costs, old grade, seed, or private native proof was read.",
+        "Separately admitted old Azure source-only metadata incidentally exposed historical path/id labels before sanitization was corrected. Those paths were never followed; Azure-original-v2 replaced the metadata. No historical candidate contents or grades were opened."
+      ]
+    },
+    {
+      "report_id": "R033",
+      "stage": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R033/stage.json",
+        "bytes": 989,
+        "sha256": "9e7a4fcdf67f77ebc47cc3db31e5e20fedf495bf2a3b99f94f0e7932ef361481"
+      },
+      "input_manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R033/MANIFEST.json",
+        "bytes": 719,
+        "sha256": "cd6a5acf5b1fcf5e5f4d13d2cd4856d51a99f42d5989b8c227dcae6195b7a3be"
+      },
+      "all_positive_manifest_byte_pins": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R033/PROTOCOL.md",
+          "bytes": 6471,
+          "sha256": "f0427cc8d1495e368b8b79cb9ead18cc65d4b0b2e8b509e338b86923ee5b1e15"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R033/current-report.md",
+          "bytes": 25886,
+          "sha256": "1b116e65d1e19cd47993f99a5680c5f9a1243e577deedfe80d31f843a48f4156"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R033/eligibility.json",
+          "bytes": 6513,
+          "sha256": "24a184eaa0375dd6c0a42426abdb577bf9747ecaed7a8835f982ec391ae5adbb"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R033/inputs/brief.md",
+          "bytes": 905,
+          "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R033/primary-reference-addendum/ADDENDUM.json",
+          "bytes": 682,
+          "sha256": "4449a75b23f14b57267e01d8a17c6550cf35c25fa3c10216577aee30973ccb6c"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R033/primary-reference-addendum/ORIGINAL_MANIFEST.sha256.json",
+          "bytes": 513,
+          "sha256": "43564ebb344d6c535357ea05065100b01a32afc15e69fcbc724f6b67f4cec8f4"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R033/primary-reference-addendum/sources/S003.txt",
+          "bytes": 36980,
+          "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        }
+      ],
+      "current_companions": [],
+      "no_missing_required_current_companions": true,
+      "plan_admitted": false,
+      "original_broad_key": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R033/eligibility.json",
+        "sha256": "24a184eaa0375dd6c0a42426abdb577bf9747ecaed7a8835f982ec391ae5adbb",
+        "facets": [
+          {
+            "id": "F01",
+            "name": "Fileset image discovery and navigation",
+            "source_ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+              "line": 3
+            },
+            "brief_scope_locator": "Scientists should be able to find images within a fileset",
+            "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+          },
+          {
+            "id": "F02",
+            "name": "Multiresolution display and channel/time/plane selection",
+            "source_ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+              "line": 3
+            },
+            "brief_scope_locator": "inspect multiresolution images by channel, time point and plane",
+            "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+          },
+          {
+            "id": "F03",
+            "name": "Associated label image overlays",
+            "source_ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+              "line": 3
+            },
+            "brief_scope_locator": "overlay associated label images",
+            "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+          },
+          {
+            "id": "F04",
+            "name": "Correctly calibrated coordinates",
+            "source_ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+              "line": 3
+            },
+            "brief_scope_locator": "read correctly calibrated coordinates",
+            "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+          },
+          {
+            "id": "F05",
+            "name": "Responsiveness while opening large saved datasets",
+            "source_ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+              "line": 3
+            },
+            "brief_scope_locator": "remain responsive while opening large saved datasets",
+            "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+          },
+          {
+            "id": "F06",
+            "name": "Unsupported-data explanation and compatibility boundaries",
+            "source_ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+              "line": 3
+            },
+            "brief_scope_locator": "clearly explain data it cannot display",
+            "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+          },
+          {
+            "id": "F07",
+            "name": "Local read-only product boundary and transfer from actual implementations",
+            "source_ref": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+              "line": 5
+            },
+            "brief_scope_locator": "local filesystem reading; Source files must remain unchanged; actual reader implementations",
+            "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+          }
+        ],
+        "denominator": 7,
+        "source_reference_nonexhaustive": true
+      },
+      "decision_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R033/decision-freeze-manifest.json",
+        "sha256": "fb749b25f830c42601812fce68d5cf9e86dac32777c66a55142f4f775aaa6fa7",
+        "freeze_utc": "2026-10-01T23:22:37.965847+00:00",
+        "file_pins": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R033/claim-map.json",
+            "bytes": 653198,
+            "sha256": "3bbc4625a9fbd1032bed65e086bd2189a3a578c2181b32c4702f604c86575990"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R033/claim-map.md",
+            "bytes": 192276,
+            "sha256": "ac125dd04a166da47853d714fcbce97110da36388e3f95c69f4231b0e900c323"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R033/counterevidence-and-novelty.json",
+            "bytes": 17049,
+            "sha256": "32439d95139c24c7c663a401a9b81facf6be520ddd1aa6950fccb550f5be5a82"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R033/counterevidence-and-novelty.md",
+            "bytes": 2252,
+            "sha256": "180fab2cf4616aeacab0feda3f3a2a7af8e54cf142a01ce90d435c42995e8b1c"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R033/current-assessment.json",
+            "bytes": 770202,
+            "sha256": "868dd8c44fdd2896ba62b0291eac9fba3281e4c7bf2805edb589ccad38069861"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R033/current-assessment.md",
+            "bytes": 2410,
+            "sha256": "96371c28274d8ffe291e9bcd54cccdc7fbb6c69c1b474088d8e095d744de42e1"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R033/facet-conditions.json",
+            "bytes": 96451,
+            "sha256": "a1b6a8c9299118ec83b8647075244496ef09d841e4c3bf7f7a9d1a79681e8721"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R033/facet-conditions.md",
+            "bytes": 7595,
+            "sha256": "3face5eff1dae1d8bb47919c35124a98417bc95da95492cd30765d7d1588c03c"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R033/full-coverage.json",
+            "bytes": 3829,
+            "sha256": "83de1caffbe194d1f2f9898d9e51c33e153369043084bdcf8fb791b2c477949c"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R033/full-coverage.md",
+            "bytes": 1799,
+            "sha256": "991c6a95f179c2fc1e99df45c0b72ac70d4b71c69c89a287e3ff4016ec8c76b3"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R033/intake-verification.json",
+            "bytes": 4002,
+            "sha256": "10f8ab1b9cd859a33098e3c0949813fa9c2ea7ab42f50032128e3af905405fda"
+          }
+        ]
+      },
+      "current_assessment_json": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R033/current-assessment.json",
+        "sha256": "868dd8c44fdd2896ba62b0291eac9fba3281e4c7bf2805edb589ccad38069861"
+      },
+      "current_assessment_md": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R033/current-assessment.md",
+        "sha256": "96371c28274d8ffe291e9bcd54cccdc7fbb6c69c1b474088d8e095d744de42e1"
+      },
+      "claim_count": 144,
+      "all_material_claims_classified": true,
+      "all_nonblank_report_statements_accounted_for": true,
+      "nonblank_statement_count": 105,
+      "all_seven_original_facets_assessed": true,
+      "atomic_condition_count": 21,
+      "complete_coverage": true,
+      "candidate_facet_coverage": {
+        "F01": "FULL",
+        "F02": "FULL",
+        "F03": "FULL",
+        "F04": "FULL",
+        "F05": "PARTIAL",
+        "F06": "FULL",
+        "F07": "FULL"
+      },
+      "unreviewed_claims": [],
+      "omitted_assigned_facets": [],
+      "unresolved_source_scope_retained": [
+        "R033-C001",
+        "R033-C004",
+        "R033-C005",
+        "R033-C079",
+        "R033-C083",
+        "R033-C093",
+        "R033-C100",
+        "R033-C112",
+        "R033-C125",
+        "R033-C126",
+        "R033-C127",
+        "R033-C128",
+        "R033-C129",
+        "R033-C136",
+        "R033-C137",
+        "R033-C141",
+        "R033-C143"
+      ],
+      "unresolved_external_semantics": [
+        "R033-C079",
+        "R033-C093",
+        "R033-C100",
+        "R033-C143"
+      ],
+      "unresolved_native_operations": [
+        "R033-C001",
+        "R033-C004",
+        "R033-C005",
+        "R033-C083",
+        "R033-C112",
+        "R033-C125",
+        "R033-C126",
+        "R033-C127",
+        "R033-C128",
+        "R033-C129",
+        "R033-C136",
+        "R033-C137",
+        "R033-C141"
+      ],
+      "material_failure_ids": [
+        "R033-E01-SCALE-FALLBACK-CONDITION",
+        "R033-E02-SCENE-VERSION-ATTRIBUTION",
+        "R033-E03-SHARD-RATIO",
+        "R033-E04-MISSING-CHUNKS"
+      ],
+      "original_current_verdict_unchanged": "QUALITY_FAILURE",
+      "validation": "All proposed tests remain UNEXECUTED; no absent execution fixture counted as factual failure.",
+      "native_capture_delivery_freshness": "UNKNOWN",
+      "same_quality_speed_or_cost_win": "UNASSESSED_NONE_CLAIMED",
+      "blinding_limitations": [
+        "Current report task-card headers unavoidably expose control/treatment strings; these are recorded without using them in semantic decisions. No separate candidate workflow, acquisition, scheduling, costs, old grade, seed, or private native proof was read.",
+        "Separately admitted old Azure source-only metadata incidentally exposed historical path/id labels before sanitization was corrected. Those paths were never followed; Azure-original-v2 replaced the metadata. No historical candidate contents or grades were opened."
+      ]
+    }
+  ],
+  "all_current_decisions_precede_phase2": true,
+  "sampling_or_case_scope_narrowing": false,
+  "original_verdicts_unchanged": true,
+  "future_current_admission_to_this_subcohort": "PROHIBITED_AFTER_CLOSURE/PHASE2; separate fresh graders required",
+  "source_only_preparation": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/LOG-source-preparation-freeze.json",
+      "sha256": "5579499cf0337d30e9f277b2305e58850d957140381da82fca7d289de79d6bdb",
+      "all_pinned_preparation_artifacts_unchanged": true,
+      "file_pins": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/LOG-full-scope-preparation.json",
+          "expected_sha256": "18a35b2f9589dac19f1c6cf782cd58ac20dd49c5e5dd87bc499a426db3373c01",
+          "actual_sha256": "18a35b2f9589dac19f1c6cf782cd58ac20dd49c5e5dd87bc499a426db3373c01",
+          "unchanged": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/LOG-full-scope-preparation.md",
+          "expected_sha256": "6122191900ece6e3cfb23bd0ca65e207ed9d248f9679a88b8b784c4390ef8f1b",
+          "actual_sha256": "6122191900ece6e3cfb23bd0ca65e207ed9d248f9679a88b8b784c4390ef8f1b",
+          "unchanged": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/LOG-source-basis.json",
+          "expected_sha256": "bb720d343de0de3024d95b4f306ae1d4586695633c56c50bdb15fadf317d298a",
+          "actual_sha256": "bb720d343de0de3024d95b4f306ae1d4586695633c56c50bdb15fadf317d298a",
+          "unchanged": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/LOG-source-basis.md",
+          "expected_sha256": "e0054531810f76143440e1cc69607530fc7893d4b58c18fc8f9c219b3c49f989",
+          "actual_sha256": "e0054531810f76143440e1cc69607530fc7893d4b58c18fc8f9c219b3c49f989",
+          "unchanged": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/LOG-baseline-navigation.json",
+          "expected_sha256": "91390eabff61f0612c9a09c25d0f792cf3b2ca0ca140a24f1ff1f66c4a5d0d37",
+          "actual_sha256": "91390eabff61f0612c9a09c25d0f792cf3b2ca0ca140a24f1ff1f66c4a5d0d37",
+          "unchanged": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/LOG-original-facet-ids.json",
+          "expected_sha256": "82700130c36407c291000aff37817d065897762964b6ece3e0ddd57c1ba96ea8",
+          "actual_sha256": "82700130c36407c291000aff37817d065897762964b6ece3e0ddd57c1ba96ea8",
+          "unchanged": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/source-intake-verification.json",
+          "expected_sha256": "e8b384e180c909f2ca8c2349f4614b762226fa91e72076857928cb9315340e68",
+          "actual_sha256": "e8b384e180c909f2ca8c2349f4614b762226fa91e72076857928cb9315340e68",
+          "unchanged": true
+        }
+      ],
+      "current_admission": "NONE_IN_THIS_CLOSED_SUBCOHORT_FOR_AZURE_OR_LOG"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/discovery-source-preparation-freeze.json",
+      "sha256": "4083537b934694eb20fe611da4cee76fd636dd0ab1c0eddca4c03866f7f328fe",
+      "all_pinned_preparation_artifacts_unchanged": true,
+      "file_pins": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/OME-broad-original-source-basis.json",
+          "expected_sha256": "87b480bc83e5f9083a57258ed7127292e11a34fc6d08eaeddf6dd85d31f1ab16",
+          "actual_sha256": "87b480bc83e5f9083a57258ed7127292e11a34fc6d08eaeddf6dd85d31f1ab16",
+          "unchanged": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/OME-broad-original-source-basis.md",
+          "expected_sha256": "042ac7857de1ba4df95f532c478a8c3b406e28401034bf268248ae9b309ba8db",
+          "actual_sha256": "042ac7857de1ba4df95f532c478a8c3b406e28401034bf268248ae9b309ba8db",
+          "unchanged": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/OME-broad-original-source-intake-verification.json",
+          "expected_sha256": "1fb6580a6446e25db363a82c65fc3ea2692508bd0b60dc1c9687a9aa31de5ebd",
+          "actual_sha256": "1fb6580a6446e25db363a82c65fc3ea2692508bd0b60dc1c9687a9aa31de5ebd",
+          "unchanged": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/Azure-original-v2-source-basis.json",
+          "expected_sha256": "4e6bc55a6dcb21983fc700120b65f8e9d89619c1a044c3d9e1f31b09c7c0f3bb",
+          "actual_sha256": "4e6bc55a6dcb21983fc700120b65f8e9d89619c1a044c3d9e1f31b09c7c0f3bb",
+          "unchanged": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/Azure-original-v2-source-basis.md",
+          "expected_sha256": "d96dd9582a5f735aab183c92a1eafe5aaa3f252c22de5e01490f96c3ddcc864d",
+          "actual_sha256": "d96dd9582a5f735aab183c92a1eafe5aaa3f252c22de5e01490f96c3ddcc864d",
+          "unchanged": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/Azure-original-v2-source-intake-verification.json",
+          "expected_sha256": "3175c0f8d677171b7882014b9fc8f41d14301b8ee30c949a5e8454ca0971c309",
+          "actual_sha256": "3175c0f8d677171b7882014b9fc8f41d14301b8ee30c949a5e8454ca0971c309",
+          "unchanged": true
+        }
+      ],
+      "current_admission": "NONE_IN_THIS_CLOSED_SUBCOHORT_FOR_AZURE_OR_LOG"
+    }
+  ],
+  "future_T16_LOG_outputs": "UNADMITTED_DEFERRED_UNREVIEWED; not semantic/infrastructure/pause failures. Preparation unchanged.",
+  "evaluator_only_primary_source_addendum": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/FREEZE.json",
+    "sha256": "8b3723647530f3771bf995f1b61cf768ed942f28d7aac41d8f84ae35816cb3b2",
+    "frozen_utc": "2026-10-01T23:09:07.008503+00:00",
+    "all_source_and_projection_byte_pins": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/CAPTURE.json",
+        "bytes": 59630,
+        "sha256": "198d28625f68a943a3e75a51b74b99baa377c150837d1c3792688e2325edb619"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E001.body",
+        "bytes": 32266,
+        "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E001.txt",
+        "bytes": 32266,
+        "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E002.body",
+        "bytes": 1340,
+        "sha256": "21a126a3e515333dba2ccb29ba07a5f8868110845ad363a14238ecd62163b079"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E002.txt",
+        "bytes": 1340,
+        "sha256": "21a126a3e515333dba2ccb29ba07a5f8868110845ad363a14238ecd62163b079"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E003.body",
+        "bytes": 158591,
+        "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E003.txt",
+        "bytes": 36474,
+        "sha256": "aa0687d55c12086c1cf3f925b97086875ed0a890be06c64b1adffab7e035158c"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E004.body",
+        "bytes": 638,
+        "sha256": "6506d5a9b8f97a310f190b8a2e93f3c0eea2134d7e6961d36161d7d82c47e02f"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E004.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E005.body",
+        "bytes": 693,
+        "sha256": "9c343b6ed3f7828d604be3c78795143a18ae4658b0b5e5f51080fef022f3ab04"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E005.txt",
+        "bytes": 693,
+        "sha256": "9c343b6ed3f7828d604be3c78795143a18ae4658b0b5e5f51080fef022f3ab04"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E006.body",
+        "bytes": 13892,
+        "sha256": "dca16cb6cd4238af2dfe62ed803b5e8f05098c875a88ed8d897028ed99f3afdf"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E006.txt",
+        "bytes": 1969,
+        "sha256": "64eae4f8dcf2ff7216907e0f2dc27621013751d0590f0475f1ed4e251dfc60df"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E007.body",
+        "bytes": 33345,
+        "sha256": "7fbba82ad60affaa9e9d2937103cbaf6b5998fe0f98926ab348dfe7f3a53b733"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E007.txt",
+        "bytes": 4395,
+        "sha256": "db8896a71d169a332f1147d90d5b1276288ae17bb2a91f16d2aa5209bbb040c5"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E008.body",
+        "bytes": 24834,
+        "sha256": "ab2de8158b3836436af387e28dfa1f7c1bb256d004f12958525ca34dabe479aa"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E008.txt",
+        "bytes": 4557,
+        "sha256": "6121c9f5b24c3e6a44935b06d408b83e15dc738fb2f1704771c4b50b82f60d77"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E009.body",
+        "bytes": 28657,
+        "sha256": "cd46de4e88d48f6de41c6677dd5f9ee5ee8b570d5e044f9d014b9ce5cbb16a24"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E009.txt",
+        "bytes": 4428,
+        "sha256": "cf7dd1ad9c220b5089f56665173a4210c79cba9349ee8f1687046b5cb1e08e90"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E010.body",
+        "bytes": 5234,
+        "sha256": "ba15255a230be7590cf8e75b54e141dbfa7781f88490a07c03d99164ab11979f"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E010.txt",
+        "bytes": 5234,
+        "sha256": "ba15255a230be7590cf8e75b54e141dbfa7781f88490a07c03d99164ab11979f"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E011.body",
+        "bytes": 2148,
+        "sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E011.txt",
+        "bytes": 2350,
+        "sha256": "fe7b7af83f2bfe43a02fbcd66ffced2d0fc04450448b66197aca7dd6c9017e85"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E012.body",
+        "bytes": 4462,
+        "sha256": "e2b6135a8d325b7db4eb76dd2d3ca4e92d2d25d215045a6351d8264c8110cb03"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E012.txt",
+        "bytes": 4462,
+        "sha256": "e2b6135a8d325b7db4eb76dd2d3ca4e92d2d25d215045a6351d8264c8110cb03"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E013.body",
+        "bytes": 17046,
+        "sha256": "e2aa55d49bd871d397a4a4a5d76784b7380201250fe69d1bda9a37b7c3b278d1"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E013.txt",
+        "bytes": 19908,
+        "sha256": "4fa7fb0140c82b66f8b5356f1b7fa4786343d3068916c3fcfd0ad2ee31a069b6"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E014.body",
+        "bytes": 17656,
+        "sha256": "ef784d6848fba5fb8d872ca918b0b0a1a21cf4020f7998529aafe4043736fafa"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E014.txt",
+        "bytes": 20524,
+        "sha256": "1f8446b90a500f1cb1f4bf51ea3190516a8324403845dcc332bfe13ebaaf9987"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E015.body",
+        "bytes": 16689,
+        "sha256": "02804231037e7c583aaca6c1580f9fcf57dab7f44f5956b8a59cc37e1d5a57a8"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E015.txt",
+        "bytes": 19551,
+        "sha256": "b6b7aabaf9152f7a57a23bc360197ab961a79c0b2a4dc9136a40baed93160694"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E016.body",
+        "bytes": 3470,
+        "sha256": "097349f9d3b485fc389ce854a002e9e2efcf420add326dd9a4e15322bb1bc870"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E016.txt",
+        "bytes": 3470,
+        "sha256": "097349f9d3b485fc389ce854a002e9e2efcf420add326dd9a4e15322bb1bc870"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E017.body",
+        "bytes": 5754,
+        "sha256": "2fe1f23beb8037fc5ca2a6b564475befdeae24087befb4a7adf8a82d2af68f18"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E017.txt",
+        "bytes": 5754,
+        "sha256": "2fe1f23beb8037fc5ca2a6b564475befdeae24087befb4a7adf8a82d2af68f18"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E018.body",
+        "bytes": 82849,
+        "sha256": "58b0070e4a7199e1daf8963e9f95e372bb77ec01fbc769d3ff45e450b92d6200"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E018.table.json",
+        "bytes": 35783,
+        "sha256": "fdcce39b62ece7f2af96dcadf5d0f4726e83e8e7ee775137aade17c6316ff01c"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E018.txt",
+        "bytes": 2965,
+        "sha256": "8e1f30f0d8da071b96643303abfe27333a6e3065e3162273721fe9d2103618f9"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E020.body",
+        "bytes": 3513,
+        "sha256": "e36466cc7cfedb111904b453185d692a3c92a8f613d63ceb4957cb6b95323991"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E020.txt",
+        "bytes": 3513,
+        "sha256": "e36466cc7cfedb111904b453185d692a3c92a8f613d63ceb4957cb6b95323991"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E021.body",
+        "bytes": 8255,
+        "sha256": "4015dacefbf69c638e425597041804d3bb3b04ea0360d1900731f65db553d34b"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E021.txt",
+        "bytes": 8255,
+        "sha256": "4015dacefbf69c638e425597041804d3bb3b04ea0360d1900731f65db553d34b"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E022.body",
+        "bytes": 1841,
+        "sha256": "fa65523bc91d5493709bc9bc8a8e79fdb8a7588665deed39c6fd98e72c3ffa08"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E022.txt",
+        "bytes": 1841,
+        "sha256": "fa65523bc91d5493709bc9bc8a8e79fdb8a7588665deed39c6fd98e72c3ffa08"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E023.body",
+        "bytes": 1991,
+        "sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E023.txt",
+        "bytes": 2193,
+        "sha256": "6fe5187a223487dd5b42ddff5a4c840816080a83a5e9a37cad135748e3cc486c"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E024.body",
+        "bytes": 506,
+        "sha256": "679c3eb93df2133dd0646ba9ed847017b0876ba9fccb5aadf9474783fcf6142b"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E024.txt",
+        "bytes": 506,
+        "sha256": "679c3eb93df2133dd0646ba9ed847017b0876ba9fccb5aadf9474783fcf6142b"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E025.body",
+        "bytes": 89897,
+        "sha256": "def334d0fca17cd21f77fecc4b72f9fa0c33d9ecedc16f4970ec7e31a5597c9b"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E025.txt",
+        "bytes": 89897,
+        "sha256": "def334d0fca17cd21f77fecc4b72f9fa0c33d9ecedc16f4970ec7e31a5597c9b"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E026.body",
+        "bytes": 270221,
+        "sha256": "55a7ddb841e78ac5e721e1e32030537d60d2c50a4ed0892e60bd3ca866143c12"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E026.txt",
+        "bytes": 8267,
+        "sha256": "a914a50945ba975e38beeee0ba6bcd9ac4613dfa0fb4bd24d4acc14234503f02"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E027.body",
+        "bytes": 50949,
+        "sha256": "fb61c9a061ea59f3e7886a832bccba5db4e78bd917732a7a37842c84357ab961"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E027.txt",
+        "bytes": 17954,
+        "sha256": "b543ad5ccebcf0d345246bd686a0b557a2d41283087a79c30dd2afacbf246898"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E028.body",
+        "bytes": 614,
+        "sha256": "291f23a16f23b67b5ac56ef867de72db7d02c68a01226e97c0fee93fb749ff0a"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E028.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E029.body",
+        "bytes": 3851,
+        "sha256": "6fa7034e809e59c3c23a34f72c3ffc2a4c2e7bede08ebab1fa50beb4f9bfc48d"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E029.txt",
+        "bytes": 4422,
+        "sha256": "7c20b689e155f581202fe707bc3cd7c6af843a852f6c0c916e0af283633a5c4f"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E030.body",
+        "bytes": 9390,
+        "sha256": "024da6e66e80520b4ef118315ab0a0326c20d422bda786865240a4f2c2afd612"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E030.txt",
+        "bytes": 10531,
+        "sha256": "2cf82e6ee31dc75c26df0094ad647f1dc3214c3e3df2fcb6c8f91d1de41a8115"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E031.body",
+        "bytes": 1229,
+        "sha256": "d3f4d647fdad5281c522ab1277814069dc76d16ac0b28168ddd9a511c48ab22d"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E031.txt",
+        "bytes": 1229,
+        "sha256": "d3f4d647fdad5281c522ab1277814069dc76d16ac0b28168ddd9a511c48ab22d"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E032.body",
+        "bytes": 865,
+        "sha256": "55a2e54ce6baa8900a2c53cef9de0cf21acc671301cbf998b7934a321c5625c2"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E032.txt",
+        "bytes": 865,
+        "sha256": "55a2e54ce6baa8900a2c53cef9de0cf21acc671301cbf998b7934a321c5625c2"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E033.body",
+        "bytes": 87768,
+        "sha256": "11ce2bebd6c46d77d027b33e3604b8d1f531945b27165dd933a3cab0e285deac"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E033.txt",
+        "bytes": 14002,
+        "sha256": "211b69baa62bc5983b71508f27683b86a62a2354c3eecf8cb9769488c3f228a4"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E034.body",
+        "bytes": 178625,
+        "sha256": "8b48ac3697da8e024661bb79afcd498df23127187a5e717a48075439f3a0ea09"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E034.txt",
+        "bytes": 58134,
+        "sha256": "2c2568a5ca38c44a70ce4843f31bb296234f109d26c0e1e86fe7fde97ee5b545"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E035.body",
+        "bytes": 631,
+        "sha256": "47c037e08419fcba811a18488ced9760f27b3ebb4b07c54033391744bc6bb3bb"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E035.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E036.body",
+        "bytes": 6114,
+        "sha256": "eb129f72fdd91e0da5c762b0214ac96a714a562c559fc60c6f688e28644c929d"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E036.txt",
+        "bytes": 6114,
+        "sha256": "eb129f72fdd91e0da5c762b0214ac96a714a562c559fc60c6f688e28644c929d"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E037.body",
+        "bytes": 129734,
+        "sha256": "be0fae25d8de0bb206acedf066afbe793f7071062e60a0f12acf5d68d99e31ab"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E037.txt",
+        "bytes": 34136,
+        "sha256": "62694891ea8c2d04b0fe1539d7b3598cc503173b23b93ae1c7fb87590fca1a13"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E038.body",
+        "bytes": 760,
+        "sha256": "f80146e21d4f8c0bc0dc7d9ebd7f5a1255ec282b23cb9bb4a32a9a6447d73f87"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E038.txt",
+        "bytes": 826,
+        "sha256": "e7b63c851398fb68ade9739046d7431aaef8cb7b1809282275ddfeb85eee3d3e"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E039.body",
+        "bytes": 664,
+        "sha256": "beb54fd85fe518694e12b0e20b320f0e87c849ff046c1fdf58e03c898b85ce7d"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E039.txt",
+        "bytes": 730,
+        "sha256": "e3e1890b2a6e9864b88d26d26f7be7a29374b976ee948e6e58261d14e98442d8"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E040.body",
+        "bytes": 736,
+        "sha256": "2c5aaae9af6b2c617a935a42893fb1eae64cb9a9798f85e2edddb81139ef3f6f"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E040.txt",
+        "bytes": 736,
+        "sha256": "2c5aaae9af6b2c617a935a42893fb1eae64cb9a9798f85e2edddb81139ef3f6f"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E041.body",
+        "bytes": 3674,
+        "sha256": "35eaea1d783e24761b27ddf09137028130ecc153878a9288abaa3c98aa7a8b88"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E041.txt",
+        "bytes": 4039,
+        "sha256": "6bae774a4f859f3472512467b2aa404f1f62617d1c23021014bf1fea988998b1"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E042.body",
+        "bytes": 3766,
+        "sha256": "afabdaa4bf774c7ea8e659af5f237f294e31b5ef5879d13070a515f0f9f569d0"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E042.txt",
+        "bytes": 4131,
+        "sha256": "5adba8e7b946c7e2f4bc7efb6ec6e09ef6cacf4daf20b3e47662e99f781dee45"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E043.body",
+        "bytes": 11407,
+        "sha256": "1c2f5a6f00432d24a945e69b88baeb3108fcf44ea9668c56d0052aab37eac35d"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E043.txt",
+        "bytes": 883,
+        "sha256": "22a6b51b37ae9cc4d942c3f9edcf063e73c876b8fdedbb9f6ec5a30db1b100fa"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E044.body",
+        "bytes": 30198,
+        "sha256": "a4eed1b388f07fbd5de8ca5d50684d92375a5888f9c9894fe8ea484fe5cb5582"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E044.txt",
+        "bytes": 30427,
+        "sha256": "2afb6991ade9de24db2a65674f030bdc4c722c82a36cbdbd49b52bdc48b13bba"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E046.body",
+        "bytes": 503,
+        "sha256": "a907836da5d1d528f30008238a2862891ffa60e63366fe403c732a88e6ab6825"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/current-primary-addendum-v1/sources/E046.txt",
+        "bytes": 503,
+        "sha256": "a907836da5d1d528f30008238a2862891ffa60e63366fe403c732a88e6ab6825"
+      }
+    ],
+    "candidate_report_hashes": {
+      "R032": "48a01fd9f6de07fb3696f628d796d28db9f8a8e74519374571cccac2b3a56215",
+      "R033": "1b116e65d1e19cd47993f99a5680c5f9a1243e577deedfe80d31f843a48f4156"
+    },
+    "independent_public_get_verification_only": true,
+    "candidate_acquisition_credit": false,
+    "cost_assignment": "EVALUATOR_ONLY; native candidate economics not read",
+    "source_gaps": "Failed GETs and source-identity uncertainty remain retained, separately from material semantic errors.",
+    "native_operations": "UNKNOWN"
+  },
+  "locked_inputs": {
+    "phase2": "LOCKED_PENDING_PARENT_UNLOCK_AFTER_FRESH97_100_GRADERS",
+    "candidate_seeds_acquisition_workflow_scheduling_history": "UNREAD",
+    "costs_economics": "UNREAD",
+    "private_native_proof": "UNREAD",
+    "R015_R016": "EXCLUDED_UNOPENED"
+  },
+  "original_limits_unchanged": {
+    "task_limit_receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/task-limit-receipt.json",
+    "task_limit_receipt_sha256": "5a6e05d8bba8a7116cda32bd1146216f405e043ebac38e745ba366e882905807",
+    "actual_start_utc": "2026-10-01T22:02:22+00:00",
+    "prospective_wall_limit_minutes": 180,
+    "prospective_response_limit": 120,
+    "effective_deadline_utc": "2026-10-02T01:02:22+00:00",
+    "reserve_start_utc": "2026-10-02T00:42:22+00:00",
+    "hard_global_deadline_epoch": 1790904541,
+    "hard_global_deadline_utc": "2026-10-02T01:29:01+00:00",
+    "generated_tokens": "UNKNOWN",
+    "actual_harness_response_count": "UNKNOWN",
+    "clock_or_cap_extended": false
+  }
+}

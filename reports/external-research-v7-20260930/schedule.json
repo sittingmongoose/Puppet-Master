@@ -4,7 +4,7 @@
   "deadline_epoch": 1790904541,
   "deadline_utc": "2026-10-02T01:29:01+00:00",
   "max_simultaneous_helpers": 23,
-  "helper_start_ceiling": 96,
+  "helper_start_ceiling": 100,
   "family_caps": {
     "M": 2,
     "Z": 2,
@@ -53,18 +53,17 @@
       "R026",
       "R027",
       "R028",
-      "R029"
-    ],
-    "current_partial_certification": [
-      "R011",
-      "R012"
-    ],
-    "current_pending": [
+      "R029",
       "R030",
       "R031",
       "R032",
       "R033"
     ],
+    "current_partial_certification": [
+      "R011",
+      "R012"
+    ],
+    "current_pending": [],
     "saved_history_complete_available_scope": [
       "R001",
       "R002",
@@ -87,10 +86,11 @@
         "R019"
       ]
     ],
-    "original_expanded_T14_pending": true
+    "original_expanded_T14_pending": true,
+    "expanded_T14_full_quality_coverage": "UNASSESSED due required material source obligations"
   },
   "preservation_cohort_utc": "2026-09-30T17:35:37.328046+00:00",
-  "helper_override": "Explicit user raises helper starts96; simultaneous23 and deadline unchanged",
+  "helper_override": "Explicit user authority100 starts; simultaneous23/deadline unchanged",
   "new_admissions": true,
   "requires_explicit_user_resume": false,
   "pause_receipt": "second-pause/operator-pause.json",
@@ -99,21 +99,21 @@
   "original_wall_deadline_epoch": 1790820406,
   "deadline_edt": "2026-10-01T21:29:01-04:00",
   "extension_authority": "work-clock-extension/authority.json",
-  "publication_as_of_utc": "2026-10-01T23:00:31.131112+00:00",
+  "publication_as_of_utc": "2026-10-01T23:52:33.602175+00:00",
   "new_research_budget_required": false,
   "active_snapshot": {
-    "admissions": 49,
-    "operator_native_goals_pin": 45,
-    "derived_native_goal_lower_bound": 45,
+    "admissions": 53,
+    "operator_native_goals_pin": 49,
+    "derived_native_goal_lower_bound": 49,
     "derived_count_post_pin_explicit_activation_labels": [],
     "derived_count_basis": "Operator native counter plus explicit slot-ledger activation flags for admissions strictly after operator pin epoch; never traverse native receipts",
-    "operator_epoch": 1790895567.8666403,
-    "operator_staleness_seconds": 60.65068483352661,
-    "occupied_slot_seconds": 33845.01707100868,
-    "committed_remaining_seconds": 2375.0300776958466,
+    "operator_epoch": 1790898731.956193,
+    "operator_staleness_seconds": 2.391634702682495,
+    "occupied_slot_seconds": 37930.71948885918,
+    "committed_remaining_seconds": 908.328706741333,
     "active_by_family": {
       "M": 0,
-      "Z": 2,
+      "Z": 1,
       "L": 0
     },
     "active_caps": {
@@ -122,22 +122,23 @@
       "L": 2
     },
     "M_L": "held original repair cap; no implicit route reopening",
-    "generated_output_lower_bound": 1513704,
+    "generated_output_lower_bound": 1646504,
     "generated_output_complete": false,
     "true_headroom": null,
     "warning": 2400000,
     "output_stop": 3000000,
     "start_cap": 144,
     "slot_seconds_cap": 172800,
-    "Z_slot_seconds_before_final_hour_upper_bound": 10624.965349674225,
+    "Z_slot_seconds_before_final_hour_upper_bound": 4413.304344654083,
     "Z_clock_capacity_basis": "At most2Zslots, M/Lheld, stops routine admission before protected final hour; queue/service delays only lower realized capacity",
-    "remaining_admission_starts": 95,
+    "remaining_admission_starts": 91,
     "reserve_starts_at_least": 19,
-    "uncommitted_slot_seconds_remaining": 136579.95285129547,
-    "reserve_slot_seconds_at_least": 27315.990570259095
+    "uncommitted_slot_seconds_remaining": 133960.9518043995,
+    "reserve_slot_seconds_at_least": 26792.1903608799
   },
-  "snapshot_source": "continuous-cohorts/cohort-009/observed-accountant-snapshot.json",
+  "snapshot_source": "continuous-cohorts/cohort-010/observed-accountant-snapshot.json",
   "snapshot_is_live_current": false,
   "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json",
-  "native_inclusive_cap_verification": "UNESTABLISHED source-only8403cbcf review; no actual native qualification credit"
+  "native_inclusive_cap_verification": "UNESTABLISHED source-only8403cbcf review; no actual native qualification credit",
+  "helper100_extension_authority": "continuous-cohorts/cohort-010/helper100-authority.json"
 }

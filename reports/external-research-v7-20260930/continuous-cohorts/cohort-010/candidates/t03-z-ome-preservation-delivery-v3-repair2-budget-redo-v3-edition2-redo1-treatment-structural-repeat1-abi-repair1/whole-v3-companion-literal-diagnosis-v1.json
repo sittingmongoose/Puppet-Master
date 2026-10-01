@@ -1,0 +1,36 @@
+{
+  "epoch": 1790897808.8770182,
+  "elapsed_seconds": 0.2533535690017743,
+  "accepted_companion_passed": false,
+  "terminal_python_error_class": "ValueError",
+  "accepted_source_exact_literal_reason": "immutable file required",
+  "input_permission_metadata": [
+    {
+      "target": "brief.md",
+      "mode": "0o664",
+      "matches_expected_sha256": true
+    },
+    {
+      "target": "TASK.md",
+      "mode": "0o664",
+      "matches_expected_sha256": true
+    },
+    {
+      "target": "catalog.json",
+      "mode": "0o664",
+      "matches_expected_sha256": true
+    },
+    {
+      "target": "sources/S003.txt",
+      "mode": "0o664",
+      "matches_expected_sha256": true
+    },
+    {
+      "target": "plan/Viewer.md",
+      "mode": "0o664",
+      "matches_expected_sha256": true
+    }
+  ],
+  "no_body_value_or_raw_error_copy_hash_output": true,
+  "original_source_outputs_unchanged": true
+}

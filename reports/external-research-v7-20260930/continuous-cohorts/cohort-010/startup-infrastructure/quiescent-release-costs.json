@@ -1,0 +1,31 @@
+{
+  "observed_epoch": 1790895872.0899692,
+  "source_slot_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/slots.json",
+    "sha256": "40b70e075a88f486c8fee04826e3c509acc4c89ee9234d987a223c3221bc420d"
+  },
+  "rows": [
+    {
+      "label": "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control-structural-repeat1",
+      "admitted_epoch": 1790895240.3413086,
+      "released_epoch": 1790895634.452367,
+      "literal_status": "pre-native-metadata-infrastructure-failure",
+      "charged_slot_seconds": 394.11105847358704,
+      "observed_native_goal_activation_flag": false,
+      "reported_output_tokens": null
+    },
+    {
+      "label": "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1",
+      "admitted_epoch": 1790895271.7234194,
+      "released_epoch": 1790895634.5447292,
+      "literal_status": "pre-native-metadata-infrastructure-failure",
+      "charged_slot_seconds": 362.8213098049164,
+      "observed_native_goal_activation_flag": false,
+      "reported_output_tokens": null
+    }
+  ],
+  "charged_slot_seconds_total": 756.9323682785034,
+  "usage_completeness": "unknown; zero observed Goals does not imply zero usage",
+  "release_owner": "sole operator only",
+  "failure_kind": "root relayed pre-native admission review-binding metadata failure; not semantic assessment"
+}

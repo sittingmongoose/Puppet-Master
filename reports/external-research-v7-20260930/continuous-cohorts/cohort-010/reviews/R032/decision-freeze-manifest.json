@@ -1,0 +1,71 @@
+{
+  "schema": "independent-current-decision-freeze-v1",
+  "freeze_utc": "2026-10-01T23:22:37.859676+00:00",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/claim-map.json",
+      "bytes": 696917,
+      "sha256": "799db9a577046c10824e26544e48f84ffcac3bcd05e15ca44885d339451bb596"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/claim-map.md",
+      "bytes": 200654,
+      "sha256": "3edd87a43145430490f542cf3130e3b053b49c11a36c6fc8bb6206e93872e2b8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/counterevidence-and-novelty.json",
+      "bytes": 31332,
+      "sha256": "f1243a5395b8b07552f7fb70f23b04eb4c0ff9832a1cca11bb30d6d29fc762a7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/counterevidence-and-novelty.md",
+      "bytes": 3047,
+      "sha256": "2dd1af138ce3a1a4ee08322487feb93e9f42bc8a042db2ab06b59c39c714b61b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/current-assessment.json",
+      "bytes": 832906,
+      "sha256": "1179d4c0694d79ce35e71922d5f5912d5d881bf9c6eda0b95c97a2b195dda158"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/current-assessment.md",
+      "bytes": 2520,
+      "sha256": "38397364cfad6266aeadb33a5933284723a8a3797cf42a76854f38833b902b66"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/facet-conditions.json",
+      "bytes": 100635,
+      "sha256": "241659798f82ed9e698a3680de48032378c4fe849254402404ada8504c984ed9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/facet-conditions.md",
+      "bytes": 7711,
+      "sha256": "32b61a1f62ce45a381b7a85e7fd40cba3027284b92592d740132462ffce2b4d1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/full-coverage.json",
+      "bytes": 3901,
+      "sha256": "07f227d24d5eca83abdcc5908619feedd5ad6aea639157180cc05c0031920a15"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/full-coverage.md",
+      "bytes": 1909,
+      "sha256": "732d609b6edbd9cac58901e85168e3eda6aa0c89b991a3c6d06b4a44529f9c40"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/R032/intake-verification.json",
+      "bytes": 4002,
+      "sha256": "09261d4fa2ee30f43264ab1484c156a9eeb0cdab44ffa07524541d0402e53c01"
+    }
+  ],
+  "facet_count": 7,
+  "claim_count": 162,
+  "history_accessed": false,
+  "phase2_authorized": false,
+  "blinding_limitations": [
+    "Current report task-card headers unavoidably expose control/treatment strings; these are recorded without using them in semantic decisions. No separate candidate workflow, acquisition, scheduling, costs, old grade, seed, or private native proof was read.",
+    "Separately admitted old Azure source-only metadata incidentally exposed historical path/id labels before sanitization was corrected. Those paths were never followed; Azure-original-v2 replaced the metadata. No historical candidate contents or grades were opened."
+  ],
+  "full_current_assessment_json_sha256": "1179d4c0694d79ce35e71922d5f5912d5d881bf9c6eda0b95c97a2b195dda158",
+  "full_current_assessment_md_sha256": "38397364cfad6266aeadb33a5933284723a8a3797cf42a76854f38833b902b66"
+}
