@@ -1,0 +1,29 @@
+<!-- Usage redesign (placeholder): the rail with the 13 rooms in canon order and a stage. Room titles and descriptions
+     come from the room fixtures (src/js/05-data.js); icons are filled from the SVG map by PM7_USAGE.injectIcons(). -->
+<div class="pmu-shell" id="pmuApp" data-room="overview">
+  <aside class="pmu-rail" aria-label="Usage rooms">
+    <div class="pmu-brand"><h1>Usage</h1></div>
+    <nav class="pmu-nav" id="pmuNav" aria-label="Usage rooms">
+      <button type="button" class="pmu-navbtn active" data-room="overview" aria-current="page"><span class="pmu-navicon" data-icon="grid" aria-hidden="true"></span><span class="pmu-navtext">Overview</span></button>
+      <button type="button" class="pmu-navbtn" data-room="plans"><span class="pmu-navicon" data-icon="gauge" aria-hidden="true"></span><span class="pmu-navtext">Plans &amp; limits</span></button>
+      <button type="button" class="pmu-navbtn" data-room="costs"><span class="pmu-navicon" data-icon="wallet" aria-hidden="true"></span><span class="pmu-navtext">Costs</span></button>
+      <button type="button" class="pmu-navbtn" data-room="accounts"><span class="pmu-navicon" data-icon="users" aria-hidden="true"></span><span class="pmu-navtext">Accounts</span></button>
+      <button type="button" class="pmu-navbtn" data-room="free"><span class="pmu-navicon" data-icon="spark" aria-hidden="true"></span><span class="pmu-navtext">Free models</span></button>
+      <button type="button" class="pmu-navbtn" data-room="context"><span class="pmu-navicon" data-icon="ring" aria-hidden="true"></span><span class="pmu-navtext">Context</span></button>
+      <button type="button" class="pmu-navbtn" data-room="analytics"><span class="pmu-navicon" data-icon="chart" aria-hidden="true"></span><span class="pmu-navtext">Analytics</span></button>
+      <button type="button" class="pmu-navbtn" data-room="ledger"><span class="pmu-navicon" data-icon="list" aria-hidden="true"></span><span class="pmu-navtext">Ledger</span></button>
+      <button type="button" class="pmu-navbtn" data-room="attention"><span class="pmu-navicon" data-icon="shield" aria-hidden="true"></span><span class="pmu-navtext">Attention</span></button>
+      <button type="button" class="pmu-navbtn" data-room="cache"><span class="pmu-navicon" data-icon="layers" aria-hidden="true"></span><span class="pmu-navtext">Prompt cache</span></button>
+      <button type="button" class="pmu-navbtn" data-room="tools"><span class="pmu-navicon" data-icon="tool" aria-hidden="true"></span><span class="pmu-navtext">Tools</span></button>
+      <button type="button" class="pmu-navbtn" data-room="signals"><span class="pmu-navicon" data-icon="pulse" aria-hidden="true"></span><span class="pmu-navtext">Signals</span></button>
+      <button type="button" class="pmu-navbtn" data-room="authority"><span class="pmu-navicon" data-icon="book" aria-hidden="true"></span><span class="pmu-navtext">Source authority</span></button>
+    </nav>
+  </aside>
+  <section class="pmu-stage" id="pmuStage" aria-labelledby="pmuRoomTitle">
+    <header class="pmu-stagehead">
+      <h2 id="pmuRoomTitle">Current usage</h2>
+      <p class="pmu-roomdesc" id="pmuRoomDesc">Limits, costs, and run pressure at the current pace.</p>
+    </header>
+    <div class="pmu-building" id="pmuBuilding" role="status">The redesigned Usage page is being built. Its rooms, data and actions are connected; the panels come next.</div>
+  </section>
+</div>

@@ -1,0 +1,141 @@
+# Usage redesign
+
+The redesigned Usage page of the Puppet Master concept, built as a layer over the published concept. The review copy is
+`Concepts/UsageTestPMConcept7.html`: `TestOpus5.5PmConcept.html` (the same bytes as `PMConcept7.html`) with the old
+Prism Usage page replaced by the page in `src/`. It is generated. Never hand-edit it, and never hand-edit the Usage page
+inside `PMConcept7.html` either: change `src/` or `tools/usage_layer.py` and rebuild.
+
+Status: generator infrastructure with a placeholder page. The rail lists the 13 rooms in canon order, a room switch
+renders and logs a view action, and every outside contract of the old page is kept. The panels, the board engine, the
+charts, the Accounts room and the NieR styling come in the build phase.
+
+## Layout
+
+```
+Concepts/usage-redesign/
+  README.md
+  tools/usage_layer.py    apply(text, need) -> (text, notes), lint(), syntax_check(text): the one module both publish paths call
+  tools/build_usage.py    build / --check for Concepts/UsageTestPMConcept7.html
+  tools/usage_boot.mjs    headless boot check of the review copy against TestOpus5.5PmConcept.html
+  src/markup.html         the new #panel-usage markup (root: <div class="pmu-shell" id="pmuApp">)
+  src/css/*.css           sorted, concatenated into <style id="pm-usage-css"> (00-base.css: theme tokens only)
+  src/js/*.js             sorted, concatenated into one strict wrapper in <script id="pm-usage-js">
+    00-core.js            helpers, copy lookup t(), STORE, the SVG icon map, state, the command/receipt/event/view-action seam
+    05-data.js            every fixture of the old page's DATA object and the room, detail, storage and widget-id constants, unchanged
+    90-api.js             window.PM7_USAGE (the contract below), the rail, render()
+  src/copy.json           user-facing strings, exposed as window.PM_USAGE_COPY
+```
+
+All `src/js` files share one scope (the layer writes the wrapper), so a top-level name may be declared only once across
+them. New class names use the `pmu-` namespace: the old `pm7u-` rules that stay in shared stylesheets
+(`pm7-architectural-glass-final`, `pm7-t37-contrast`, `pm51-settings-refresh`, `pm6-css-global`) then match nothing.
+
+## Commands
+
+Run from the worktree root.
+
+```
+python3 Concepts/usage-redesign/tools/build_usage.py            # build and write Concepts/UsageTestPMConcept7.html
+python3 Concepts/usage-redesign/tools/build_usage.py --check    # rebuild in memory; byte-compare, markers, removed and kept references
+python3 Concepts/onboarding/opus-5.5/tools/build.py --check     # the published concept must stay untouched: "check ok"
+node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir>     # headless boot check; writes <out-dir>/usage-boot.json
+                                                               # optional: [page-under-test] [reference-page]
+```
+
+`build_usage.py` starts from `build.build_text()` of `Concepts/onboarding/opus-5.5/tools/build.py`, so the base pin
+(`BASE_SHA256`) is enforced there. When `TestOpus5.5PmConcept.html` differs from that fresh build it warns in build
+mode and fails in `--check`. Each build lints `src/` and runs `node --check` on `pm-usage-js`, `pm4-settings-js` and
+`pm-o55-js`. Keep `<out-dir>` outside the repository (for example under `~/PM-Experiments/`). The boot check takes no
+screenshots and deletes its Chrome profiles.
+
+## What the layer does
+
+`usage_layer.apply()` guards every step: each anchor must be found exactly once, and each filtered stylesheet must
+keep its exact rule count, or the build stops.
+
+1. It replaces the `#panel-usage` band (`<div class="page page-usage" id="panel-usage">` ..
+   `</div><!-- page-usage -->`) with the open tag, `<!-- USAGE:BODY:START -->`, `<style id="pm-usage-ctx-css">`, the
+   filtered `pm7-t29-usage-final` and `pm7-t32-final`, `<style id="pm-usage-css">`, `src/markup.html`,
+   `<script id="pm-usage-js">`, `<!-- USAGE:BODY:END -->` and the close tag. `pm7-t31-usage-final`, the old markup and
+   the old Usage script go with the band.
+2. It keeps what the rest of the concept needs from the band's stylesheets. From the T21 stylesheet it keeps the chat
+   context module's rules: 63, plus the context halves of 6 shared rules. From `pm7-t29-usage-final` it keeps the two
+   concept-wide Retro Light rules (`--accent-lime: #2f7a3d`). From `pm7-t32-final` it keeps the global status bar and
+   the Home dashboard chrome: 61 rules, plus 1 rewritten. The kept stylesheets keep their ids and their order, so the
+   cascade is unchanged.
+3. It extracts the chat context module (`window.PM7_CONTEXT`, the Assistant's context ring, popup, details drawer and
+   Compact) from the old Usage script. The module is pinned by sha256 `5fb11527...0c1e` and runs inside a shim. The
+   shim's `command`, `completeCommandReceipt` and `usageEvent` go through `PM7_USAGE`, and its toasts go to
+   `window.toast`. A compaction writes `PM7_USAGE.data.context` and calls `PM7_USAGE.rerender('context')`.
+4. Outside the band, it removes `pm7-t24-usage-readability-and-fit` and filters `pm7-t23-adjustments` (75 rules kept,
+   215 dropped).
+5. It adds the new page's class names to the NieR Mode selector lists in the Settings script: the menu cursor, the
+   chosen brackets, the strip cursor and the page-title decode (`NIER_SELECTOR_PATCHES`, driven by `NIER_NAMES`).
+   Today they carry the placeholder names `.pmu-navbtn`, `.pmu-menurow`, `.pmu-range button`, `#pmuRoomTitle` and
+   `.pmu-brand h1`. The build phase sets the real ones there; an empty list skips that patch.
+
+`lint()` runs on every build. It refuses emoji glyphs, any `:has(` in Usage CSS, `border-left` or
+`border-inline-start` of 2px or more, class names containing `pill`, the banned copy words of opus-5.5 `build.py` in
+`copy.json`, a top-level name declared twice across `src/js`, and any `window` or `document` access in a `*-data.js`
+file.
+
+## Contracts the page keeps
+
+The detail is in `understand/cur-xref.md` section 10 and `DESIGN-INPUTS.md` section 7, both under
+`~/PM-Experiments/usage-redesign-20261001/`.
+
+- `#tab-usage[data-page=usage]` and `.page.page-usage#panel-usage` keep page routing (`PM_PAGES.go('usage')`) working.
+- `window.PM7_USAGE` provides these members:
+  - for the `pm6-js-usage` bridge, which registers 10 actions and 3 subscriptions: `spinRefresh`,
+    `exportJson(kind)`, `data.accounts`, `data.providers`, `rerender(room?)`, `injectIcons`, `setCooldown`,
+    `pm7FlushCooldown` and `appendUsageAttempt`/`appendLedger`, plus `active_account_id`, which the bridge writes;
+  - for the globals' liquid-ink boot: `syncNavInk`;
+  - for NieR Mode's status-bar readout and Pod 042: `data.context.used/.limit`;
+  - for verifiers and the build phase: `state`, `rooms`, `details`, `roomWidgets`, `setRoomDetail`, `selectRoom`,
+    `render`, `refresh`, `projectedAttempts`, `setActiveAccount`, `command`, `completeCommandReceipt`, `usageEvent`,
+    `viewAction`, `command_log`, `receipt_log`, `event_log`, `view_action_log` and `wiring`.
+- The page dispatches the window events `pm:command-dispatch`, `pm:dispatch-receipt`, `pm:usage-event` and
+  `pm:usage-view-action`.
+- `body.pmu-page-active` is set while Usage shows, and Home's `#pm-home-workspace` takes no pointer events then (the old
+  page's rule, kept).
+
+`usage_boot.mjs` checks all of this against `TestOpus5.5PmConcept.html`:
+- no new console errors;
+- `#pmuApp` is present and `#pm7UsageApp` is absent;
+- every `.context-usage` is enhanced, its popup opens, the details drawer opens, and Compact writes
+  `PM7_USAGE.data.context`;
+- the bridge has 10 actions and 3 subscriptions;
+- `PM7_USAGE.data` is identical to the old page's apart from timestamps;
+- the status bar shows, Retro Light's green is right, and Home renders;
+- the rail has its 13 rooms, and a room switch works;
+- the 8 themes and NieR Mode load without errors.
+
+## Publish plan (Proposal B, after Jared approves the review copy)
+
+This is the smallest change to `Concepts/onboarding/opus-5.5/tools/build.py`. The sources stay here.
+
+```python
+sys.path.insert(0, str(CONCEPTS / 'usage-redesign' / 'tools'))
+import usage_layer
+# build_text(), after step 2 (PATCHES) and before step 3 (O55 splice):
+    text, SETTINGS_NOTES['usage'] = usage_layer.apply(text, need)
+# lint_sources():  problems.extend(usage_layer.lint())
+# syntax_check():  problems.extend(usage_layer.syntax_check(built))
+# check():         add 'id="pm7UsageApp"' and 'pm7-t31-usage-final' to the removed list,
+#                  and <!-- USAGE:BODY:START/END --> to the marker loop
+```
+
+- Order matters. The layer runs after the PATCHES loop, because the patch "usage card cta :has restyle" needs the old
+  `.pm7u-card:has(.pm7u-setup-cta)` rule. Deleting that PATCHES entry in the same change is the alternative.
+- The NieR selector patches become plain edits of `src/settings/kit.d/19-nier-parts.js`. The page's NieR CSS can move to
+  a new `src/settings/styles.d/18-nier-usage.css` or stay in the layer, and the old `pm7u` NieR rules can then be
+  pruned.
+- `build_usage.py` then reduces to `build.build_text()` plus the retitle, or it is retired.
+- Then run these in order:
+  1. `build.py --check`;
+  2. `build.py --publish-pm7`;
+  3. `usage_boot.mjs <out-dir> Concepts/PMConcept7.html <pre-publish copy>`, where the pre-publish copy is
+     `TestOpus5.5PmConcept.html` saved before step 2 (the reference page).
+
+  Update the "Where things are" section of `opus-5.5/README.md` and the PM7 publication chain in
+  `pm7-tools/README.md`.
