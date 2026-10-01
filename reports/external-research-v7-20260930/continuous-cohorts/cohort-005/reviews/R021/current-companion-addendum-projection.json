@@ -1,0 +1,24 @@
+{
+  "schema": "er7.current_semantic_companion_addendum.v1",
+  "report_id": "R021",
+  "original_stage_sha256": "29010635812b7ab85578f02876f142fbce8a75c659300c52804addfdef830cda",
+  "current_report_sha256": "3136fd9d07ff7ff6d2edfc71ed0dcc46f90035ea01e4acee62d2476c1103d89f",
+  "semantic_companions": {
+    "findings.json": {
+      "sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+      "bytes": 32557
+    }
+  },
+  "configuration_sha256": "743a57a2a704274d783cf5a9b1108f61ed5adf86ad2a7a35f806f21d07c93578",
+  "output_integrity_sha256": "1d7b2bd1c28c965c0a5468c71a0aaf20a7d673ede9766f5d3b030bb9591defa9",
+  "whole_companion_receipt_sha256": "e0c099b7eaca756c888a128c3279716a3b2267b61ad7b61aaf226564ef8c39d1",
+  "native_receipt_sha256_scalar_binding": "c094ecf5767e235564d9be0b3d60b5a8f6cbc5e08296c609c05af24d3abede0b",
+  "native_receipt_body_read": false,
+  "qualified_final_current_selector": "Flat canonical final findings.json explicitly required by bound configuration and present in qualified frozen final inventory; draft versions excluded from phase1. No versioned Vnnn stream configured or inferred.",
+  "native_context_inventory_qualified": true,
+  "current_only": true,
+  "acquisition_unlocked": false,
+  "all_current_assertions_obligation": "Assess every current finding body and material assertion in this companion together with the bound standalone report and assigned eligibility; no sampling.",
+  "history_versions_excluded": true,
+  "original_stage_unchanged": true
+}

@@ -1,0 +1,84 @@
+{
+  "task": "t08-z-ome-mcp-discovery-v2-repair1-treatment",
+  "record": "scheduling_draft_2_post_protection_window",
+  "predecessor": "out/scheduling-initial.json (immutable)",
+  "successor": "out/scheduling.json (final, to be written once after research completes)",
+  "written_at_phase": "after protection-window sweep AND deepening of favored leads; research essentially complete",
+  "families_status": {
+    "F1_ngff05_image_spec": {
+      "status": "protected+inspected",
+      "external_queries": ["DDG html (challenge page, status 202)", "Bing RSS x2 (canned irrelevant results)", "GitHub repo search q=ome ngff specification multiscales (0 results)", "GitHub repo search q=ome-zarr (270 hits)"],
+      "primary_reads": ["ome/ngff-spec index.md @d9164040 (full 32,266 bytes, sha256 7ca44265...)"],
+      "resolution": "resolved for obligations: Zarr v3 basis; attributes.ome version; multiscales/axes/coordinateTransformations/omero MUST-SHOULD-MAY set; transitional concept",
+      "unresolved": ["0.6 delta not analyzed (0.6 is current released spec)"]
+    },
+    "F2_zarr_storage": {
+      "status": "protected+inspected(partial)",
+      "external_queries": ["DDG html (202)", "Bing html (real SERP 200 but truncated/unusable)", "GitHub repo search q=zarr specification (21 hits)"],
+      "primary_reads": ["zarr-specs docs/v3/core/index.rst @main (70,038 bytes; first ~50KB inspected, sha256 9b3c10dd...)"],
+      "resolution": "zarr.json layout; mandatory array fields; v2->v3 field mapping; consolidated_metadata exception; node-name/case rules; store interface get/get_partial/list_dir",
+      "unresolved": ["tail ~20KB not inspected (data types table, codec list details, stores list, extensions) - explicit large-source lead"]
+    },
+    "F3_fileset_discovery_hcs": {
+      "status": "protected+inspected",
+      "external_queries": ["DDG html (202)", "GitHub repo search q=bioformats2raw (13 hits)"],
+      "primary_reads": ["glencoesoftware/bioformats2raw README.md @master (sha256 363d9931...)", "NGFF 0.5 index.md bf2raw/plate/well/hcs-layout sections (in S01)"],
+      "resolution": "bf2raw.layout=3 transitional; OME/METADATA.ome.xml MetadataOnly; series order rules; numbered groups fallback; plate/well obligations; HCS group chain MUSTs",
+      "unresolved": []
+    },
+    "F4_label_overlay": {
+      "status": "protected+inspected",
+      "external_queries": ["DDG html labels query (202 challenge)"],
+      "primary_reads": ["NGFF 0.5 labels-md section (in S01)", "ome-zarr-py reader.py Label/Labels specs (S15)", "vizarr README (S16)"],
+      "resolution": "labels group rules; integer dtypes MUST; image-label colors/version/properties/source; reader practice in ome-zarr-py",
+      "unresolved": ["vizarr label-overlay support not confirmed from README"]
+    },
+    "F5_axes_units_calibration": {
+      "status": "protected+inspected",
+      "external_queries": ["GitHub repo search q=ome zarr units axes (0 results - recorded)"],
+      "primary_reads": ["NGFF 0.5 axes-md/trafo-md/multiscale-md sections (in S01)", "ome-zarr-py reader.py Multiscales/Axes handling (S15)"],
+      "resolution": "axis order rules; UDUNITS-2 unit lists; exactly-one-scale rule; translation-after-scale; group-level transforms applied after; dimension_names cross-check (0.5.2)",
+      "unresolved": ["custom axis types surface not fully enumerable from read sections"]
+    },
+    "F6_reader_implementations": {
+      "status": "protected+inspected",
+      "external_queries": ["GitHub repo search q=ome-zarr (270 hits, 9 relevant repos identified)"],
+      "primary_reads": ["ome-zarr-py README.rst, pyproject.toml, CHANGELOG.md, releases/latest, ome_zarr/reader.py", "vizarr README.md", "ome-zarr-models-py README.md"],
+      "resolution": "released ome-zarr-py v0.19.2 (2026-09-08); master deps zarr>=3.0.0 + ome-zarr-models>=1.8.1; CHANGELOG stale at 0.11.1 (false-dismissal check via releases API); vizarr client-side zarrita.js+Viv",
+      "unresolved": ["exact dependency set at tag v0.19.2 not fetched (pyproject read at master)", "napari-ome-zarr README not read"]
+    },
+    "F7_large_dataset_performance": {
+      "status": "protected+inspected",
+      "external_queries": ["GitHub repo search q=zarr sharding (8 hits)"],
+      "primary_reads": ["Zarr v3 core (partial: sharding named as partial-decode codec)", "zarr-extensions codecs listing (sharding_indexed dir located)", "bioformats2raw README performance section", "ome-zarr-py reader.py lazy dask loading"],
+      "resolution": "lazy per-level arrays; viewport-irrelevant here but chunk-level reads normative; sharding extension exists; no NGFF chunk-size obligations found in 0.5 text",
+      "unresolved": ["sharding_indexed spec text not read", "RFC-2 not read"]
+    },
+    "F8_validation_unsupported": {
+      "status": "protected+inspected",
+      "external_queries": ["GitHub repo search q=ome-ngff-validator (3 hits)"],
+      "primary_reads": ["ome-ngff-validator README.md @main (sha256 679c3eb9...)", "ngff-spec schemas tree @b5b6337e (12 schema files listed)", "ome-zarr-py reader.py OMERO/Label error paths"],
+      "resolution": "schema-driven web validator + custom schemas param; IDR samples; normative JSON Schemas at pinned commit; graceful-degradation precedents in ome-zarr-py",
+      "unresolved": ["RFC-4 orientation extension not read"]
+    }
+  },
+  "dead_ends_and_unavailable": [
+    {"lead": "html.duckduckgo.com/html search", "result": "status 202 anomaly/CAPTCHA challenge page for all 4 queries", "sha_examples": ["fb720ba0...", "82d8681f...", "5867c139...", "18e8b85f..."], "disposition": "dead-end search route; absence not implied"},
+    {"lead": "mojeek.com search", "result": "200 but JavaScript-required CAPTCHA page", "sha": "7d5cd996...", "disposition": "dead-end search route"},
+    {"lead": "bing.com/search?format=rss", "result": "200 XML but identical canned OmeTV results regardless of query terms", "sha": ["7a612325...", "190f3186..."], "disposition": "dead-end search route (results not responsive to query)"},
+    {"lead": "bing.com/search html", "result": "200 real SERP 291,057 bytes but tool-truncated to first 50KB (CSS/JS only); organic results not visible", "sha": "4762f9c0...", "disposition": "unusable-in-practice lead; large-source record"},
+    {"lead": "raw.githubusercontent.com/ome/ngff/main/0.5/index.md", "result": "404 (specs moved to specifications/0.5 submodule in ome/ngff-spec)", "disposition": "recovered via contents API; recorded"},
+    {"lead": "raw.githubusercontent.com/zarr-developers/zarr-specs/main/docs/v3/core/v3.0.rst", "result": "404 (actual file docs/v3/core/index.rst)", "disposition": "recovered; recorded"},
+    {"lead": "raw.githubusercontent.com/ome/ome-zarr-py/master/README.md", "result": "404 (actual README.rst)", "disposition": "recovered via contents API; recorded"},
+    {"lead": "raw.githubusercontent.com/zarr-developers/zarr-specs/main/docs/v3/sharding/sharding.rst", "result": "404 (sharding spec lives in zarr-developers/zarr-extensions codecs/sharding_indexed)", "disposition": "located via zarr-extensions listing; text not read - open lead"},
+    {"lead": "mechanical cache_source / line_map with remote URL source", "result": "boundary ValueError x2", "disposition": "tool dead-end; line-number locators abandoned in favor of section anchors + sha256"}
+  ],
+  "adaptation_note": "Depth was adapted toward primary normative sources (NGFF 0.5 spec text, Zarr v3 core) and the two most informative readers (ome-zarr-py, vizarr) after general web search proved unavailable; unvisited areas are preserved in 'unresolved' above rather than dropped.",
+  "coverage_log": {
+    "queries_issued": 16,
+    "primary_sources_fetched": 21,
+    "families_meeting_protection_quota": 8,
+    "families_dead_end": 0,
+    "families_unvisited": 0
+  }
+}

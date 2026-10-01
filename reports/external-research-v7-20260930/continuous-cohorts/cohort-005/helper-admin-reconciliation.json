@@ -1,0 +1,39 @@
+{
+  "observed_epoch": 1790888077.7612207,
+  "ledger_rows": 89,
+  "ledger_sha256": "165e99bd77c251a0764bd23cd5bdbbcb6449502623f1e1496ddcf23493080592",
+  "kind_counts": {
+    "helper_start": 17,
+    "helper_failure": 3,
+    "helper_continuation": 1,
+    "helper_task_start": 49,
+    "reconciled_helper_start": 7,
+    "reconciled_helper_task_start": 12
+  },
+  "excluded_failure_ordinals": [
+    4,
+    12,
+    14
+  ],
+  "conservative_continuation_charge_ordinals": [
+    5
+  ],
+  "admin_source_sha256": "9d09f68c7c43e222a76a0558f55005d0bd3d5ab5eeb76028345908cdf1352d05",
+  "admin_originals": [
+    "expired_requirements_audit",
+    "expired_custody_accounting",
+    "expired_closeout_publisher"
+  ],
+  "admin_originals_not_represented": 3,
+  "separately_charged_followup_ordinal": 65,
+  "old58_ledger_rows": {
+    "conservative_nonfailure_events": 55,
+    "failure_rows": 3,
+    "external_admin_starts": 3,
+    "preserved_baseline": 58
+  },
+  "explicit_start_only_lower_bound": 88,
+  "conservative_known_total": 89,
+  "remaining_from96": 7,
+  "formula": "Shared ledger rows - failure-only rows + three unrepresented admin original starts. Retain one explicitly non-start continuation as conservative charge. Ordinal65 admin-named publisher NEW resumed task is distinct."
+}

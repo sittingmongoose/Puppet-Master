@@ -1,0 +1,44 @@
+{
+  "task": "t08-z-ome-mcp-discovery-v2-repair1-control",
+  "phase": "post-research sequence record (immutable draft 2; supersedes nothing, extends draft-01)",
+  "actual_search_read_sequence": [
+    {"step": 1, "tool": "mcp__pm_boundary__read_file", "target": "TASK.md", "result": "9 lines / 3061 bytes fully read; sha256 a4138e0d..."},
+    {"step": 2, "tool": "mcp__pm_boundary__read_file", "target": "inputs/brief.md", "result": "5 lines / 905 bytes fully read; sha256 f4f88fae..."},
+    {"step": 3, "tool": "mcp__pm_boundary__mechanical line_map", "target": "inputs/brief.md", "output": "out/mechanical/brief.line_map.txt"},
+    {"step": 4, "tool": "mcp__pm_boundary__mechanical cache_source", "target": "inputs/brief.md", "output": "out/mechanical/brief.cache.txt"},
+    {"step": 5, "tool": "public_https_get", "urls": ["https://ngff.openmicroscopy.org/0.5/index.html", "https://ngff.openmicroscopy.org/latest/", "https://github.com/ome/ome-zarr-py", "https://github.com/ome/napari-ome-zarr", "https://github.com/hms-dbmi/vizarr"], "result": "all 200; rendered pages boilerplate-heavy; 0.5 spec page revision meta d9164040...; /latest/ redirects to specifications/0.5/"},
+    {"step": 6, "tool": "public_https_get", "urls": ["https://raw.githubusercontent.com/ome/ngff/main/0.5/index.bs", "https://raw.githubusercontent.com/ome/ome-zarr-py/main/README.md", "https://raw.githubusercontent.com/ome/napari-ome-zarr/main/README.md", "https://raw.githubusercontent.com/hms-dbmi/vizarr/main/README.md"], "result": "2x404 (wrong branch/path); napari-ome-zarr and vizarr READMEs fetched fully"},
+    {"step": 7, "tool": "public_https_get", "urls": ["https://api.github.com/repos/ome/ngff/contents/0.5", "https://api.github.com/repos/ome/ome-zarr-py", "https://raw.githubusercontent.com/ome/ome-zarr-py/master/README.md"], "result": "404 + repo meta (default_branch=master) + 404 (README is README.rst)"},
+    {"step": 8, "tool": "public_https_get", "urls": ["https://api.github.com/repos/ome/ngff/contents/", "https://api.github.com/repos/ome/ome-zarr-py/contents/"], "result": "ngff main has specifications/ dir; ome-zarr-py has README.rst + CHANGELOG.md + docs/"},
+    {"step": 9, "tool": "public_https_get", "urls": ["https://api.github.com/repos/ome/ngff/contents/specifications", "https://raw.githubusercontent.com/ome/ome-zarr-py/master/README.rst", "https://raw.githubusercontent.com/ome/ome-zarr-py/master/CHANGELOG.md"], "result": "specifications/ are submodules of ome/ngff-spec (0.1-0.6+dev); ome-zarr-py README + changelog read fully"},
+    {"step": 10, "tool": "public_https_get", "urls": ["https://api.github.com/repos/ome/ngff-spec/git/trees/d9164040dd61b3e4688494de1a58a69251b13f24?recursive=1", "https://raw.githubusercontent.com/ome/ngff/main/specifications/index.md"], "result": "0.5 spec tree file list; main-branch index says current released version is 0.6"},
+    {"step": 11, "tool": "public_https_get", "urls": ["https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/index.md", "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/version_history.md"], "result": "FULL 0.5 spec text (32,266 B) + version history read fully"},
+    {"step": 12, "tool": "public_https_get", "urls": ["https://raw.githubusercontent.com/ome/ngff-spec/main/version_history.md", "https://ngff.openmicroscopy.org/tools/index.html", "https://ome-zarr.readthedocs.io/en/stable/", "https://duckduckgo.com/html/?q=OME-Zarr+viewer+desktop+local"], "result": "0.6 released 2026-09-14 (breaking RFC-5); tools page redirects to resources/tools; ome-zarr-py docs index read; DuckDuckGo DEAD END (202 bot challenge)"},
+    {"step": 13, "tool": "public_https_get", "urls": ["https://ngff.openmicroscopy.org/resources/tools/index.html", "https://raw.githubusercontent.com/ome/ome-zarr-py/master/docs/source/basic/cli_basics.md", "https://raw.githubusercontent.com/ome/ome-zarr-py/master/docs/source/basic/read_image.md", "https://www.mojeek.com/search?q=OME-Zarr+desktop+viewer"], "result": "tools inventory read (truncated tail ~4%); CLI docs read; read_image.md 404 (is .ipynb-backed page, fetched rendered later); Mojeek DEAD END (JS captcha)"},
+    {"step": 14, "tool": "public_https_get", "urls": ["https://ome.github.io/ome-ngff-tools/", "https://ome-zarr.readthedocs.io/en/stable/basic/read_image.html", "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/schemas/image.schema"], "result": "viewer compatibility matrix (truncated after 'multiple multiscales' row); read API docs read; 0.5 image.schema read fully"},
+    {"step": 15, "tool": "public_https_get", "urls": ["https://raw.githubusercontent.com/ome/ome-ngff-tools/main/docs/index.md", "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/schemas/label.schema"], "result": "matrix source is Jekyll template (viewer/feature data not inline); label.schema read fully"},
+    {"step": 16, "tool": "public_https_get", "urls": ["https://raw.githubusercontent.com/ome/ome-ngff-tools/main/_data/features.yml", "https://raw.githubusercontent.com/ome/ome-ngff-tools/main/_data/viewers.yml", "https://api.github.com/repos/ome/ome-ngff-tools/contents/_data", "https://raw.githubusercontent.com/ome/ome-ngff-tools/gh-pages/_data/features.yml"], "result": "4x404: matrix data-file location not found; matrix tail remains unvisited (rendered page truncated at ~50k)"}
+  ],
+  "unavailable_or_deadends": [
+    "https://duckduckgo.com/html/?q=OME-Zarr+viewer+desktop+local - HTTP 202 anomaly/bot challenge; no results obtained",
+    "https://www.mojeek.com/search?q=OME-Zarr+desktop+viewer - HTTP 200 but JavaScript CAPTCHA page; no results obtained",
+    "https://raw.githubusercontent.com/ome/ngff/main/0.5/index.bs - 404 (spec sources moved to ome/ngff-spec submodule)",
+    "https://raw.githubusercontent.com/ome/ome-zarr-py/main/README.md - 404 (default branch is master)",
+    "https://raw.githubusercontent.com/ome/ome-zarr-py/master/README.md - 404 (file is README.rst)",
+    "https://api.github.com/repos/ome/ngff/contents/0.5 - 404 (versions live under specifications/ as submodules)",
+    "https://raw.githubusercontent.com/ome/ome-zarr-py/master/docs/source/basic/read_image.md - 404 (page backed by .ipynb; rendered HTML fetched instead)",
+    "https://raw.githubusercontent.com/ome/ome-ngff-tools/main/_data/features.yml and viewers.yml; api .../contents/_data; gh-pages variant - 404 x4"
+  ],
+  "unvisited_leads": [
+    "Tail of ome-ngff-tools compatibility matrix after the 'multiple multiscales' row (rendered HTML truncated at ~50 KB); data files not located at guessed paths",
+    "https://github.com/jwindhager/ome-ngff-readers-writers/ reader/writer feature survey (linked from tools page, not fetched)",
+    "ngff-zarr (fideus-labs) reader/converter repo; SlicerOMEZarr; ome-zarr-models-py; yaozarrs validators",
+    "RFC-2 (Zarr v3 adoption) and RFC-5 (0.6 transforms/scene) full texts",
+    "Zarr v3 core specification (zarr-specs.readthedocs.io) incl. sharding codecs",
+    "ome-zarr-py advanced/sharding.html and basic/view_images.html doc pages",
+    "bioformats2raw (glencoesoftware) converter repo; NGFF-Converter desktop app",
+    "OpenOrganelle/Janelia dataset ecosystem; MoBIE documentation; Pluot; OMEZarrTileSource; Odon",
+    "Rendered GitHub repo pages for ome-zarr-py/napari-ome-zarr/vizarr were fetched but only partially inspected (boilerplate truncated); superseded by full raw READMEs"
+  ],
+  "coverage_statement": "All five initial families (F1-F5 in scheduling.draft-01.json) were visited and deepened with at least one primary source each. Family F4 (prior-art desktop UX) is covered indirectly via the official tools inventory + compatibility matrix and napari-ome-zarr rather than by fetching napari/MoBIE/OpenOrganelle repos directly (logged as unvisited leads). Two general search-engine queries were attempted and both failed as bot-challenge dead ends; discovery instead proceeded by following authoritative links (tools page, submodules, APIs). No private information was sent to external services; queries contained only public problem terms."
+}

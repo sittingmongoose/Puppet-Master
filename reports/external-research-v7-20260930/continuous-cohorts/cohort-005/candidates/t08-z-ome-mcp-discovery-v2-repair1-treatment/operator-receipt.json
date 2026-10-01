@@ -1,0 +1,23 @@
+{
+  "epoch": 1790887498.2564664,
+  "label": "t08-z-ome-mcp-discovery-v2-repair1-treatment",
+  "status": "failed-or-incomplete-preserved",
+  "native_goal_status": null,
+  "output_integrity_sha256": "cefc612faa564ed0a968970218f9a6af0eb96d6ef028726d2fcb3ffbe861fa8b",
+  "accounting": {
+    "candidate_admissions": 34,
+    "occupied_slot_seconds": 19670.376574277878,
+    "remaining_committed_slot_seconds": 568.0724492073059,
+    "reported_generated_tokens_lower_bound": 841243,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 1,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t05r-z-ome-read-once-related-questions-v1-treatment"
+    ]
+  }
+}

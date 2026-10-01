@@ -1,0 +1,21 @@
+{
+  "epoch": 1790888089.4455621,
+  "label": "t15-z-ome-mcp-reuse-v2-redo1-witness",
+  "status": "failed-or-incomplete-preserved",
+  "native_goal_status": null,
+  "output_integrity_sha256": "53e4851280a1f5ab356dd0b631405363f9d0e929f9e07617c336487cbe1d3523",
+  "accounting": {
+    "candidate_admissions": 35,
+    "occupied_slot_seconds": 20629.369775295258,
+    "remaining_committed_slot_seconds": 0,
+    "reported_generated_tokens_lower_bound": 919158,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": []
+  }
+}

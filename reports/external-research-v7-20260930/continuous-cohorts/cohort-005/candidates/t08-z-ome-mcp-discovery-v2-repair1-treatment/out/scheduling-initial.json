@@ -1,0 +1,107 @@
+{
+  "task": "t08-z-ome-mcp-discovery-v2-repair1-treatment",
+  "record": "initial_scheduling_draft_1",
+  "written_before_any_external_query_or_source_read": true,
+  "derived_from": {
+    "admitted_input": "inputs/brief.md",
+    "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a"
+  },
+  "plan_boundary": "Plan-blind: no plan/spec/key/answer history exists or is used; families derived from the brief alone.",
+  "budget": {
+    "total_elapsed_seconds": 900,
+    "initial_protection_window_seconds": 450,
+    "parent_response_budget": 96,
+    "protection_rule": "Within the first half of elapsed budget, EVERY family below receives at least one legitimate external query (public non-sensitive problem terms) and at least one available primary-source inspection before any favored lead is deepened."
+  },
+  "rules": {
+    "dead_ends": "Unavailable, dead-end, large/non-UTF8 or failed-URL families/leads are recorded, never silently removed. A failed search proves only that search result, not absence.",
+    "adaptation": "After the protection window, depth adapts toward useful leads while preserving unresolved and unvisited status.",
+    "family_caveat": "Families are hypotheses about problem areas relevant to the brief; they are not claims that any external capability or source exists.",
+    "successive_records": "Each successive scheduling record is a separate immutable draft file; the final out/scheduling.json is written exactly once, after research completes, and never overwritten."
+  },
+  "product_context_from_brief": "Slide Scout: read-only desktop browser for local OME-Zarr 0.5 filesets. Find images within a fileset; inspect multiresolution images by channel, time point and plane; overlay associated label images; read correctly calibrated coordinates; stay responsive while opening large saved datasets; clearly explain data it cannot display. Boundary: local filesystem only, source files unchanged, no editing/export/remote/clinical.",
+  "families": [
+    {
+      "id": "F1",
+      "name": "NGFF 0.5 image-format obligations (multiscales, axes, datasets, coordinateTransformations, omero metadata)",
+      "brief_basis": "\"Research the format and actual reader implementations broadly enough to uncover compatibility, correctness ... requirements that a thin initial plan may miss. Distinguish established format obligations from optional capabilities\"",
+      "relevance": "Defines what a conformant local OME-Zarr 0.5 fileset MUST contain vs MAY contain; basis for correctness and for 'explain data it cannot display'.",
+      "first_query_terms": "OME-Zarr NGFF 0.5 specification multiscales axes coordinateTransformations",
+      "candidate_primary_sources": ["https://ngff.openmicroscopy.org/0.5/", "https://github.com/ome/ngff"],
+      "status": "unvisited"
+    },
+    {
+      "id": "F2",
+      "name": "Underlying Zarr storage: v2 vs v3, chunking, dimension_separator, consolidated metadata, codecs/sharding",
+      "brief_basis": "\"local OME-Zarr 0.5 bioimaging filesets\"; \"remain responsive while opening large saved datasets\"",
+      "relevance": "A local filesystem reader must know which Zarr storage versions/layouts NGFF 0.5 requires or permits and what that implies for chunk access on disk.",
+      "first_query_terms": "OME-Zarr 0.5 Zarr v2 v3 dimension_separator consolidated metadata sharding",
+      "candidate_primary_sources": ["https://zarr-specs.readthedocs.io/en/latest/", "https://github.com/zarr-developers/zarr-specs"],
+      "status": "unvisited"
+    },
+    {
+      "id": "F3",
+      "name": "Fileset discovery & plate/well (HCS) layouts: bioformats2raw.layout, OME-METADATA.OME / METADATA.ome.xml, multiple images per fileset",
+      "brief_basis": "\"Scientists should be able to find images within a fileset\"; \"local OME-Zarr 0.5 bioimaging filesets\" (plural images)",
+      "relevance": "Discovery of images inside a fileset (including HCS plates and multi-image stores produced by bioformats2raw) is an explicit product capability.",
+      "first_query_terms": "bioformats2raw.layout OME-METADATA.OME OME-Zarr plate well fileset discovery",
+      "candidate_primary_sources": ["https://github.com/ome/bioformats2raw", "https://ngff.openmicroscopy.org/0.5/"],
+      "status": "unvisited"
+    },
+    {
+      "id": "F4",
+      "name": "Associated label images and overlay (labels .zgroup, image.label, colors/rdef, mask handling)",
+      "brief_basis": "\"overlay associated label images\"",
+      "relevance": "Overlay of label images requires the NGFF labels convention (structure and color metadata) and reader support for linking label images to source images.",
+      "first_query_terms": "OME-NGFF labels image.label overlay colors mask specification",
+      "candidate_primary_sources": ["https://ngff.openmicroscopy.org/0.5/", "https://github.com/ome/ome-zarr-py"],
+      "status": "unvisited"
+    },
+    {
+      "id": "F5",
+      "name": "Axis semantics and calibrated coordinates: axis types, units (micrometer/second/channel), scale & translation transforms, time/plane navigation",
+      "brief_basis": "\"inspect multiresolution images by channel, time point and plane, ... read correctly calibrated coordinates\"",
+      "relevance": "Correct calibration and channel/time/plane navigation depend on NGFF axes types/units and coordinateTransformations; errors here produce wrong physical sizes and wrong plane indexing.",
+      "first_query_terms": "OME-Zarr axes units micrometer coordinateTransformations scale translation time plane",
+      "candidate_primary_sources": ["https://ngff.openmicroscopy.org/0.5/", "https://github.com/ome/ngff"],
+      "status": "unvisited"
+    },
+    {
+      "id": "F6",
+      "name": "Actual reader implementations and their 0.5 compatibility: ome-zarr-py, napari-ome-zarr, vizarr, zarr-js, ome-zarr-models-py",
+      "brief_basis": "\"Research the format and actual reader implementations broadly enough to uncover compatibility ... requirements\"",
+      "relevance": "Existing readers reveal real-world compatibility constraints, optional capabilities, and behaviors a new read-only browser must match or consciously decide on.",
+      "first_query_terms": "ome-zarr-py napari-ome-zarr vizarr OME-Zarr 0.5 reader support",
+      "candidate_primary_sources": ["https://github.com/ome/ome-zarr-py", "https://github.com/hms-dbmi/vizarr", "https://github.com/ome/napari-ome-zarr"],
+      "status": "unvisited"
+    },
+    {
+      "id": "F7",
+      "name": "Responsiveness with large datasets: pyramid level selection, chunk-size guidance, lazy/asynchronous access patterns",
+      "brief_basis": "\"It should remain responsive while opening large saved datasets\"",
+      "relevance": "Multiresolution reading strategy (level choice, chunk granularity, lazy IO) determines desktop responsiveness; format guidance and reader practice inform this.",
+      "first_query_terms": "OME-Zarr multiscales chunk size performance pyramid level lazy loading",
+      "candidate_primary_sources": ["https://zarr-specs.readthedocs.io/en/latest/", "https://github.com/ome/ome-zarr-py"],
+      "status": "unvisited"
+    },
+    {
+      "id": "F8",
+      "name": "Non-conformant or unsupported data: validation tools, common failure modes, graceful explanation",
+      "brief_basis": "\"clearly explain data it cannot display\"",
+      "relevance": "A read-only browser will encounter invalid or partially-supported filesets; validators and reader error paths define what can be detected and reported.",
+      "first_query_terms": "ome-ngff-validator OME-Zarr validation common errors",
+      "candidate_primary_sources": ["https://github.com/ome/ome-ngff-validator", "https://ome.github.io/ome-ngff-validator/"],
+      "status": "unvisited"
+    }
+  ],
+  "coverage_log": [],
+  "family_status_legend": {
+    "unvisited": "no external query and no primary-source inspection yet for this family",
+    "queried": "at least one external query issued",
+    "inspected": "at least one primary source actually retrieved",
+    "protected": "protection-window quota met (>=1 query and >=1 primary-source inspection)",
+    "dead_end": "leads followed produced no usable primary evidence",
+    "unavailable": "candidate source unreachable/oversized/non-UTF8; remains an explicit unresolved lead",
+    "unresolved": "open questions remain after research; carried into final report"
+  }
+}

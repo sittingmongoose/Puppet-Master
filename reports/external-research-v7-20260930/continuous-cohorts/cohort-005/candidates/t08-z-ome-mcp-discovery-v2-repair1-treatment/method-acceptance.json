@@ -1,0 +1,51 @@
+{
+  "schema": "er7.z.safe.method.acceptance.v1",
+  "verdict": "accepted",
+  "review_kind": "independent prospective method machinery/scope only",
+  "reviewer": "/root/method_scope_reviewer",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "method_config_sha256": "456ccbc1c66bc410b2c5a9dd6fab5adb15907086ac014c1d3844abe5c8af93eb",
+  "method_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t08-z-ome-mcp-discovery-v2-repair1-treatment.method-config.json",
+  "attempt": {
+    "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t08-z-ome-mcp-discovery-v2-repair1/treatment/workspace",
+    "prompt_sha256": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa",
+    "label": "t08-z-ome-mcp-discovery-v2-repair1-treatment",
+    "max_seconds": 900.0,
+    "max_responses": 96,
+    "public_get": true
+  },
+  "method": "T08",
+  "pair_id": "t08-z-ome-mcp-discovery-v2-repair1",
+  "reason": "Accepted repair1 protected coverage schedule. Initial scheduling draft is separate from immutable final scheduling.json; originals remain held for their immutable-write contradiction. Families derive from the brief, not a supplied answer list.",
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/t08-z-ome-mcp-discovery-v2-repair1.review-manifest.json",
+      "sha256": "c87acb02dfca7cd9f80f21b64a199bcfedfc4dd80ad479e264dad90cef09917c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-binding-review.json",
+      "sha256": "81e1d4aa6309486a9388e18cb10848f32e4df2db541666f477b8e861ff90aa7f"
+    }
+  ],
+  "checks": {
+    "exact_pins_verified": true,
+    "matched_scope_and_caps_verified": true,
+    "source_permissions_declared": true,
+    "cold_setup_cost_counted": true,
+    "semantic_answers_supplied_by_reviewer": false,
+    "candidate_starts_by_reviewer": 0,
+    "candidate_grades": 0
+  },
+  "native_admission": "HOLD until independent exact runtime FREEZE and real SAME frozen canary PASS. This is not runtime or canary acceptance.",
+  "pre_admission_requirements": [
+    "Recheck every reviewed task/input/prompt/metadata/pair/code/config pin immediately before admission; drift is a new binding, never silently accepted.",
+    "Record randomized/counterbalanced pair order and simultaneous account/sibling occupancy before first arm.",
+    "Use only accepted final runtime productive interface with exact original component caps; no canary cap substitution, old launcher or runtime hotpatch.",
+    "Retain all prior preparation/repair/new binding, cold host mechanics, native setup/retries/continuation/verification/cleanup and prerequisite costs; unknown values remain unknown."
+  ],
+  "result_constraints": [
+    "No machinery acceptance is a semantic quality pass or measured method comparison.",
+    "Complete current report must receive independent source-grounded evaluation before acquisition/history review.",
+    "Actual MCP operation receipts and complete bytes must establish claimed work; candidate operation counters alone are insufficient."
+  ]
+}

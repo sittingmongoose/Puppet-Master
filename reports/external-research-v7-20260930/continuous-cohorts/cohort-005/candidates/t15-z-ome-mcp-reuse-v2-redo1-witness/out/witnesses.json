@@ -1,0 +1,388 @@
+{
+  "instance": "t15-z-ome-mcp-reuse-v2-redo1",
+  "generated": "2026-10-01",
+  "method_note": "Every seed finding F01-F14 in inputs/candidate_seed.json (sha256 8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293) was verified against the whole before-plan inputs/plan/Viewer.md (sha256 d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0) and the complete frozen source inputs/sources/S003.txt (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de, all 896 lines inspected). finding-hashes.json was used only for exact identity hashes; no semantic content was taken from it. semantic_ambiguity=true means part of the finding's meaning is delegated to or defined only outside the admitted corpus; such ambiguity remains unresolved and is carried into report.md. negative_search=true records an in-corpus scan of the whole source for contradicting or absent text; a failed search proves only that search result, not absence.",
+  "witnesses": [
+    {
+      "id": "F01",
+      "status": "verified",
+      "semantic_ambiguity": true,
+      "negative_search": true,
+      "result": "# F01 - Zarr v3 storage basis and breadth of allowed Zarr features (witness: verified)\n\n**Independent finding identity.** OME-Zarr 0.5 is implemented on version 3 of the Zarr specification, and all Zarr features (codecs, chunk grids, chunk key encodings, data types, storage transformers) may be used in a conforming fileset unless explicitly disallowed by the OME-Zarr specification. Chunk files conform to the Zarr array specification and the metadata in each array's zarr.json. The hierarchy may be stored locally, on a web server accessed via HTTP, or in object storage such as S3 or GCS.\n\n**Governing conditions.** Normative for what a conforming fileset may contain: a reader supporting only a subset of Zarr v3 codecs, chunk grids, or data types will encounter conforming files it cannot decode.\n\n**Verification evidence.** S003 frozen capture sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de: lines 67-72 (storage format on Zarr v3; all Zarr features may be used unless explicitly disallowed), lines 73-77 (local, HTTP/web-server, S3/GCS storage), lines 99-100 (chunks conform to Zarr array specification and array zarr.json). Plan mapping: S002:Slice 02 (opens a local OME-Zarr 0.5 fileset), sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006. Negative search over S003 lines 1-896 found no explicit disallowance of any Zarr feature category; this proves only that none exists in this frozen capture.\n\n**Plan implications.** Slice 02 opening a fileset presupposes an embedded Zarr v3 reader; codec-support breadth is a compatibility risk and an explicit product decision. Slice 03 responsiveness rests on chunk-aligned partial reads, which the chunk-file model supports. HTTP/S3 statements transfer only conceptually because the product boundary is local filesystem reading (transfer limit).\n\n**Semantic ambiguity: yes - unresolved.** Zarr v3 semantics are asserted by reference; the Zarr specification is not in the frozen corpus, and which codecs real writer tools emit is unknown from admitted evidence.\n\n**Proposed validation (UNEXECUTED):** obtain a Zarr v3 specification copy and a corpus of real tool-written 0.5 filesets; enumerate actually-emitted codecs/grids/dtypes before fixing the reader's codec support matrix.",
+      "verification_evidence": "S003 (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) lines 67-72, 73-77, 99-100; plan Viewer.md section S002:Slice 02 (sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006); negative search: whole S003 lines 1-896, no Zarr-feature disallowance found (proves only that result).",
+      "dependencies": {
+        "finding_sha256": "19e104b0e540afa1459a1b1c6f95bec89c33749145dec901347f49b491db0ca6",
+        "source_versions": {
+          "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        "permissions": "public frozen exports read-only; no external writes",
+        "plan_owner_hashes": {
+          "S002:Slice 02": "569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006"
+        },
+        "affected_neighbor_hashes": {
+          "S003:Slice 03": "5c018cdc16bab8de49eb3242eb4a0fd72b9533a67e8e2d2751a15d34ab2a700c",
+          "S004:Slice 04": "b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b",
+          "S005:Slice 05": "ffce518dc91423dc22752790baea362b12fe2081fc66a3eb5b362b64b246a36f"
+        },
+        "corpus_membership_sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+        "negative_scope_sha256": "d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0",
+        "applicability": "Entire Slide Scout synthetic brief and OME-Zarr0.5 frozen source S003",
+        "comparison_policy": "source-supported whole-finding-to-thin-plan comparison-v1",
+        "instance_binding": "t15-z-ome-mcp-reuse-v2-redo1:F01"
+      }
+    },
+    {
+      "id": "F02",
+      "status": "verified",
+      "semantic_ambiguity": false,
+      "negative_search": true,
+      "result": "# F02 - Image hierarchy: group layout, arbitrary level names, dimension ordering (witness: verified)\n\n**Independent finding identity.** Each OME-Zarr image is a Zarr group whose group-level attributes live in zarr.json and include multiscales and (optionally) omero. Each multiscale resolution level is a separate Zarr array; array names are arbitrary with ordering defined by the multiscales metadata, though often a sequence starting at 0. Image arrays must be up to 5-dimensional with the time axis before channel before spatial axes. Dimension count is variable between 2 and 5 and axis names are arbitrary. An optional labels group sits at the same level as the resolution arrays and holds a list of label images; label dimensions must equal the corresponding image dimension or be 1 if irrelevant; intermediate folders are permitted and contain no extra metadata; label multiscale arrays support only integer values.\n\n**Governing conditions.** Level ordering comes from metadata, not names: a reader sorting directories lexically or numerically without consulting multiscales.datasets can present pyramids in the wrong order. Time-before-channel-before-space axis order is an obligation on data, reliable only after confirming the axes metadata (see F05, F08).\n\n**Verification evidence.** S003 sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de: lines 87-89 (group with multiscales and omero attributes), 91-94 (separate arrays, arbitrary names, ordering from multiscales metadata), 96-97 (up to 5-D, time before channel before space), 81 (2-5 dimensions, arbitrary axis names), 102-108 (labels group, listing, dimension equality or 1), 110 (intermediate folders, no extra metadata), 116-117 (integer values only); corroborated by line 426 (omero optional). Plan mapping: S002:Slice 02 sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006. Negative search over S003 lines 1-896 found no competing ordering rule; no statement permits inferring level order from array names.\n\n**Plan implications.** Slice 02 fileset opening and listing must be metadata-driven: discover images by groups with multiscales, resolve pyramid levels via datasets[].path order, never infer semantics from folder names. The labels container is the discovery route for overlays (F10).\n\n**Semantic ambiguity: no.** All cited claims are textual and fully determined by the admitted source; open items (behavior for unexpected extra groups outside bioformats2raw collections) are documented gaps, not ambiguous text.\n\n**Proposed validation (UNEXECUTED):** fixture filesets with non-numeric level names and shuffled directory order; assert pyramid order follows multiscales.datasets.",
+      "verification_evidence": "S003 (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) lines 78-117 (esp. 81, 87-94, 96-97, 102-108, 110, 116-117), corroboration line 426; plan Viewer.md section S002:Slice 02 (sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006); negative search: whole S003 lines 1-896, no name-based ordering rule found.",
+      "dependencies": {
+        "finding_sha256": "0d1c306d1550291e7d80a706ba4eb5725c816814e318f96368cd9e1e5d31a927",
+        "source_versions": {
+          "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        "permissions": "public frozen exports read-only; no external writes",
+        "plan_owner_hashes": {
+          "S002:Slice 02": "569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006"
+        },
+        "affected_neighbor_hashes": {
+          "S004:Slice 04": "b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b",
+          "S005:Slice 05": "ffce518dc91423dc22752790baea362b12fe2081fc66a3eb5b362b64b246a36f"
+        },
+        "corpus_membership_sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+        "negative_scope_sha256": "d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0",
+        "applicability": "Entire Slide Scout synthetic brief and OME-Zarr0.5 frozen source S003",
+        "comparison_policy": "source-supported whole-finding-to-thin-plan comparison-v1",
+        "instance_binding": "t15-z-ome-mcp-reuse-v2-redo1:F02"
+      }
+    },
+    {
+      "id": "F03",
+      "status": "verified",
+      "semantic_ambiguity": false,
+      "negative_search": true,
+      "result": "# F03 - High-content screening (HCS) hierarchy: plate, row, well, field of view (witness: verified)\n\n**Independent finding identity.** For HCS datasets, three groups MUST be defined above the images: the group above the images is a well and MUST implement the well specification; the group above the well is a row; the group above the row is a plate that MUST implement the plate specification. A well row group SHOULD NOT be present if there are no images in that row, and a well group SHOULD NOT be present if there are no images in the well. All images in a well are fields of view of the same well. The example hierarchy shows plate zarr.json, row directories, column directories implementing well, and per-field groups implementing multiscales and omero with their own resolution levels and optional labels.\n\n**Governing conditions.** MUST-level: well and plate groups implement their specifications (detail in F11, F12). SHOULD-level: empty rows/wells SHOULD NOT exist, so a conforming fileset may legitimately be sparse; the viewer cannot assume a full rectangular grid.\n\n**Verification evidence.** S003 sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de: lines 119-127 (three groups MUST; well and plate implement their specifications), 121-123 (all images in a well are fields of view), 128-129 (empty rows/wells SHOULD NOT be present), 132-148 (worked hierarchy example). Plan mapping: S002:Slice 02 sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006. Negative search over S003 lines 1-896 found no statement permitting directory scanning as the discovery route for fields, and no requirement that plates be dense.\n\n**Plan implications.** Image discovery inside an HCS fileset must traverse plate, rows, wells, fields, enumerating fields via well.images, not by scanning directories. Sparse plates are expected, not exceptional. Field groups are ordinary multiscale images reusing the normal image pipeline. The thin plan's generic image listing needs a plate-aware presentation (with F11/F12) to satisfy the brief's find-images requirement.\n\n**Semantic ambiguity: no.** Claims are fully determined by admitted source; whether extra intermediate groups under a well are permitted is a documented silence, not ambiguous text.\n\n**Proposed validation (UNEXECUTED):** sparse-plate and multi-field fixtures (mirroring S003 lines 641-739) exercised through the discovery path; assert fields come only from well.images.",
+      "verification_evidence": "S003 (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) lines 118-148 (esp. 120-129, 132-148); plan Viewer.md section S002:Slice 02 (sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006); negative search: whole S003 lines 1-896, no density requirement and no scanning-based discovery rule found.",
+      "dependencies": {
+        "finding_sha256": "a13daa8b0f756ffd361b9fce6d9404d3181cb1d36606fe3ae2daba82d361590b",
+        "source_versions": {
+          "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        "permissions": "public frozen exports read-only; no external writes",
+        "plan_owner_hashes": {
+          "S002:Slice 02": "569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006"
+        },
+        "affected_neighbor_hashes": {
+          "S004:Slice 04": "b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b",
+          "S005:Slice 05": "ffce518dc91423dc22752790baea362b12fe2081fc66a3eb5b362b64b246a36f"
+        },
+        "corpus_membership_sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+        "negative_scope_sha256": "d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0",
+        "applicability": "Entire Slide Scout synthetic brief and OME-Zarr0.5 frozen source S003",
+        "comparison_policy": "source-supported whole-finding-to-thin-plan comparison-v1",
+        "instance_binding": "t15-z-ome-mcp-reuse-v2-redo1:F03"
+      }
+    },
+    {
+      "id": "F04",
+      "status": "verified",
+      "semantic_ambiguity": false,
+      "negative_search": true,
+      "result": "# F04 - OME metadata namespace and version consistency (witness: verified)\n\n**Independent finding identity.** OME-Zarr metadata is stored in the various zarr.json files throughout the hierarchy, under the namespaced key ome inside attributes; the metadata version is a string in the version attribute within the ome namespace. The OME-Zarr Metadata version MUST be consistent within a hierarchy.\n\n**Governing conditions.** MUST: version consistency within one hierarchy. A fileset mixing 0.4 and 0.5 ome.version values is non-conforming; detecting that is legitimate validation the viewer can surface rather than silently guessing semantics.\n\n**Verification evidence.** S003 sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de: lines 152-156 (zarr.json storage, ome namespace in attributes, version string, MUST be consistent within a hierarchy), 157-165 (attributes.ome.version example). Plan mapping: S002:Slice 02 sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006. Negative search over S003 lines 1-896 found no per-node version exception to the hierarchy-wide consistency MUST.\n\n**Plan implications.** The viewer should read attributes.ome.version on every node it opens, treat inconsistency as malformed input with an explanatory message (matching Slice 03 failure feedback and Slice 05 malformed-input acceptance), and use the version to gate 0.5-specific behavior such as the dimension_names obligation (F05).\n\n**Semantic ambiguity: no.** The normative claim is exact; reader behavior for inconsistent versions (reject vs best-effort) is undefined in the corpus and explicitly a product decision, retained as unresolved area U4 rather than ambiguity in the finding's own meaning.\n\n**Proposed validation (UNEXECUTED):** mixed-version fixture (0.4 node inside 0.5 hierarchy); assert the viewer reports a understandable version-mismatch message instead of misrendering.",
+      "verification_evidence": "S003 (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) lines 149-165 (esp. 152-156, 157-165); plan Viewer.md sections S002:Slice 02 (sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006); negative search: whole S003 lines 1-896, no per-node version exception found.",
+      "dependencies": {
+        "finding_sha256": "6b6c3d717bad5b49c062700bf80a078f6a2e2f8240a15c50479d689e6cbf45cc",
+        "source_versions": {
+          "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        "permissions": "public frozen exports read-only; no external writes",
+        "plan_owner_hashes": {
+          "S002:Slice 02": "569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006"
+        },
+        "affected_neighbor_hashes": {
+          "S003:Slice 03": "5c018cdc16bab8de49eb3242eb4a0fd72b9533a67e8e2d2751a15d34ab2a700c",
+          "S005:Slice 05": "ffce518dc91423dc22752790baea362b12fe2081fc66a3eb5b362b64b246a36f"
+        },
+        "corpus_membership_sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+        "negative_scope_sha256": "d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0",
+        "applicability": "Entire Slide Scout synthetic brief and OME-Zarr0.5 frozen source S003",
+        "comparison_policy": "source-supported whole-finding-to-thin-plan comparison-v1",
+        "instance_binding": "t15-z-ome-mcp-reuse-v2-redo1:F04"
+      }
+    },
+    {
+      "id": "F05",
+      "status": "verified",
+      "semantic_ambiguity": true,
+      "negative_search": true,
+      "result": "# F05 - Axes metadata: names, types, units, dimension_names (witness: verified)\n\n**Independent finding identity.** axes is a list of dictionaries describing the dimensions of a physical coordinate space. Each dictionary MUST contain name, with values unique across all name fields; SHOULD contain type, one of space, time, channel, but MAY take other custom string values; SHOULD contain unit, whose value SHOULD be a UDUNITS-2 valid string. Explicit allowed unit vocabularies are enumerated for space axes (angstrom through zettameter) and time axes (attosecond through zettasecond). The length of axes MUST equal the number of dimensions of the arrays holding the image data. The dimension_names attribute MUST be included in the zarr.json of the Zarr array of each multiscale level and MUST match the names in the axes metadata.\n\n**Governing conditions.** MUST: unique names; axes length equals array dimensionality; dimension_names present in array metadata and matching axes. SHOULD (not guaranteed): type and unit present and standard - a conforming file can omit units or use custom axis types.\n\n**Verification evidence.** S003 sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de: lines 167-170 (name MUST/unique, type SHOULD/MAY custom, unit SHOULD/UDUNITS-2), 171 (space unit vocabulary incl. angstrom, micrometer, zettameter), 172 (time unit vocabulary incl. attosecond, zettasecond), 173 (axes length MUST equal array dimensionality), 174 (dimension_names MUST be included and MUST match axes). Plan mapping: S002:Slice 02 sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006. Negative search over S003 lines 1-896 found no other unit vocabulary and no guarantee that units exist.\n\n**Plan implications.** Calibrated coordinates in the details panel are possible only when units exist; absence of units (SHOULD-level) requires a defined fallback such as raw index coordinates labeled uncalibrated - a product decision the thin plan does not make. Channel/time/plane controls classify axes by type with a graceful path for custom types. dimension_names gives a cheap integrity check on level arrays. Slice 03 failure feedback covers data the viewer cannot display.\n\n**Semantic ambiguity: yes - unresolved.** UDUNITS-2 parsing/conversion rules are external to the corpus; display formatting and any unit conversion are unspecified.\n\n**Proposed validation (UNEXECUTED):** unit-present, unit-absent, and custom-type axis fixtures; assert calibrated display, explicit uncalibrated fallback, and non-spatial treatment of unknown types.",
+      "verification_evidence": "S003 (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) lines 166-174 (esp. 168-174); plan Viewer.md section S002:Slice 02 (sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006); negative search: whole S003 lines 1-896, no unit guarantee or alternate vocabulary found.",
+      "dependencies": {
+        "finding_sha256": "156dd07f4fbdc792b5f3a393d8be2d80281fcfd18968bbaaa4b3a69188563536",
+        "source_versions": {
+          "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        "permissions": "public frozen exports read-only; no external writes",
+        "plan_owner_hashes": {
+          "S002:Slice 02": "569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006"
+        },
+        "affected_neighbor_hashes": {
+          "S003:Slice 03": "5c018cdc16bab8de49eb3242eb4a0fd72b9533a67e8e2d2751a15d34ab2a700c",
+          "S005:Slice 05": "ffce518dc91423dc22752790baea362b12fe2081fc66a3eb5b362b64b246a36f"
+        },
+        "corpus_membership_sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+        "negative_scope_sha256": "d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0",
+        "applicability": "Entire Slide Scout synthetic brief and OME-Zarr0.5 frozen source S003",
+        "comparison_policy": "source-supported whole-finding-to-thin-plan comparison-v1",
+        "instance_binding": "t15-z-ome-mcp-reuse-v2-redo1:F05"
+      }
+    },
+    {
+      "id": "F06",
+      "status": "verified",
+      "semantic_ambiguity": true,
+      "negative_search": true,
+      "result": "# F06 - bioformats2raw.layout transitional collections and reader obligations for multi-image filesets (witness: verified)\n\n**Independent finding identity.** Transitional bioformats2raw.layout metadata identifies a group that implicitly describes a series of images, added in v0.4 to specify filesets that already exist in the wild; an upcoming NGFF specification will replace it. Layout: top-level zarr.json with the layout key, an OME group holding series metadata and METADATA.ome.xml, and consecutively numbered image groups 0, 1, ... Conforming groups MUST have value 3 for the bioformats2raw.layout key at the top of the hierarchy and SHOULD have OME-XML in OME/METADATA.ome.xml adhering to the OME-XML specification with <MetadataOnly/> rather than <BinData/>, <BinaryOnly/> or <TiffData/>. If the top-level group is a plate, the plate key MUST also be present, takes precedence, and parsing should follow the plate specification; mixing image collections with plates is not possible. Image-location logic: with plate metadata, images MUST be at the defined locations; series SHOULD be provided for tools unaware of plates; if the OME group has series, it MUST be a list of strings, each a path to an image group, whose order MUST match the order of Image elements in the OME-XML if provided; if no series and no plate, separate multiscales images MUST be stored in consecutively numbered groups starting from 0, each representing exactly one OME-XML Image in the same order. Reader obligations: readers SHOULD make users aware of more than one image (SHOULD NOT default to only opening the first); MAY use series; MAY show all images or offer a choice; MAY ignore other groups or arrays under the root.\n\n**Governing conditions.** MUST: layout value 3; series as string list; order constraints; numbered-groups fallback. SHOULD: surface multiple images rather than silently opening the first; OME-XML details. MAY: presentation choice and ignoring unrelated groups.\n\n**Verification evidence.** S003 sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de: lines 175-181 (transitional status, v0.4 origin, future replacement), 182-191 (layout), 204-206 (plate precedence, no mixing), 243-253 (series example), 255-260 (MUST value 3; OME-XML SHOULD/MUST/MAY), 261-270 (location logic), 271-275 (reader obligations). Plan mapping: S002:Slice 02 sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006; S004:Slice 04 sha256 b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b. Negative search over S003 lines 1-896 found no other collection layout and no exception to the value-3 MUST.\n\n**Plan implications.** Strongest normative support for the brief's find-images requirement and the plan sentence that the app lists the images it finds: a listing UI is not optional, readers SHOULD NOT default to the first image. Real tool output (bioformats2raw) uses this layout, so Slice 04 interop requires it. Detection must check plate before treating a fileset as a series collection (plate precedence).\n\n**Semantic ambiguity: yes - unresolved.** OME-XML content rules reference the external OME-XML specification; the future replacement metadata for this transitional layout is unspecified in the corpus.\n\n**Proposed validation (UNEXECUTED):** run bioformats2raw on a multi-series file; assert the viewer lists all series, honors plate precedence, and shows a choice rather than silently opening series 0.",
+      "verification_evidence": "S003 (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) lines 175-275 (esp. 204-206, 243-253, 255-275); plan Viewer.md sections S002:Slice 02 (sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006), S004:Slice 04 (sha256 b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b); negative search: whole S003 lines 1-896, no alternate collection layout or value-3 exception found.",
+      "dependencies": {
+        "finding_sha256": "032b736ffab127c1e8cfd39bb51a35cfcd855b9dd62a9a1dac1990117efba16d",
+        "source_versions": {
+          "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        "permissions": "public frozen exports read-only; no external writes",
+        "plan_owner_hashes": {
+          "S002:Slice 02": "569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006"
+        },
+        "affected_neighbor_hashes": {
+          "S004:Slice 04": "b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b",
+          "S005:Slice 05": "ffce518dc91423dc22752790baea362b12fe2081fc66a3eb5b362b64b246a36f"
+        },
+        "corpus_membership_sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+        "negative_scope_sha256": "d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0",
+        "applicability": "Entire Slide Scout synthetic brief and OME-Zarr0.5 frozen source S003",
+        "comparison_policy": "source-supported whole-finding-to-thin-plan comparison-v1",
+        "instance_binding": "t15-z-ome-mcp-reuse-v2-redo1:F06"
+      }
+    },
+    {
+      "id": "F07",
+      "status": "verified",
+      "semantic_ambiguity": true,
+      "negative_search": true,
+      "result": "# F07 - coordinateTransformations vocabulary and application order (witness: verified)\n\n**Independent finding identity.** coordinateTransformations describe transformations mapping between coordinate spaces defined by axes, for example mapping a discrete data space of an array to the corresponding physical space. It is a list of dictionaries; each entry MUST contain type, whose value MUST be one of: identity (the default, typically not explicitly defined), translation, or scale. translation and scale each store a vector either inline as translation/scale lists of floats or as binary data at a location in this container via path; the vector length defines the number of dimensions. Transformations in the list are applied sequentially and in order.\n\n**Governing conditions.** MUST: each entry has a valid type. The inline-versus-path alternative is part of the normative field table, so conforming files may store transforms as binary data by path. Sequential application order is normative.\n\n**Verification evidence.** S003 sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de: lines 277-278 (purpose), 279-281 (list of dictionaries, MUST contain type, value from table), 282-283 (identity default), 284-286 (translation: inline list or path; vector length defines dimensions), 287-289 (scale: inline list or path; same rule), 293 (applied sequentially and in order). Plan mapping: S002:Slice 02 sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006. Negative search over S003 lines 1-896 found no other transformation types and no defined binary layout for path-referenced vectors.\n\n**Plan implications.** Correct calibrated coordinates (Slice 02 details panel) require composing dataset-level then group-level transforms (order fixed in F08) as sequential operations: physical = scale applied to index, plus translation, in list order. Supporting only inline arrays and silently misreading path-based transforms would produce wrong coordinates for conforming files; path-form support is a correctness requirement for full conformance, though its practical frequency is unknown (product scoping decision with a documented limitation if deferred).\n\n**Semantic ambiguity: yes - unresolved.** The binary layout (array name, dtype, byte order) of path-referenced transform data is not specified anywhere in the admitted corpus; implementing it requires assumptions or future source work. Retained as unresolved area.\n\n**Proposed validation (UNEXECUTED):** build a path-form transform fixture per the Zarr v3 binary convention; verify coordinate readout matches the inline equivalent before deciding to support path-form.",
+      "verification_evidence": "S003 (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) lines 276-293 (esp. 279-293); plan Viewer.md section S002:Slice 02 (sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006); negative search: whole S003 lines 1-896, no path-form binary layout definition found.",
+      "dependencies": {
+        "finding_sha256": "244878a08553dcf4926ce9e1ee35ad37e7a1bfc091995e3709d84a66d16902c1",
+        "source_versions": {
+          "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        "permissions": "public frozen exports read-only; no external writes",
+        "plan_owner_hashes": {
+          "S002:Slice 02": "569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006"
+        },
+        "affected_neighbor_hashes": {
+          "S004:Slice 04": "b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b",
+          "S005:Slice 05": "ffce518dc91423dc22752790baea362b12fe2081fc66a3eb5b362b64b246a36f"
+        },
+        "corpus_membership_sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+        "negative_scope_sha256": "d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0",
+        "applicability": "Entire Slide Scout synthetic brief and OME-Zarr0.5 frozen source S003",
+        "comparison_policy": "source-supported whole-finding-to-thin-plan comparison-v1",
+        "instance_binding": "t15-z-ome-mcp-reuse-v2-redo1:F07"
+      }
+    },
+    {
+      "id": "F08",
+      "status": "verified",
+      "semantic_ambiguity": false,
+      "negative_search": true,
+      "result": "# F08 - multiscales metadata: pyramid obligations and calibration rules (witness: verified)\n\n**Independent finding identity.** Image metadata lives under the multiscales key in group-level OME-Zarr metadata; an image is 2 to 5 dimensional data with optional time or channel axes, stored in multiple resolutions. Each multiscales dictionary MUST contain axes, of length 2-5 equal to array dimensionality; axes MUST contain 2 or 3 space entries and MAY add one time and one channel or null/custom-type entry; entries MUST be ordered time first, then channel/custom, then space, matching array dimension order; for three spatial axes stacked along z, order SHOULD be zyx. Each dictionary MUST contain datasets, a list describing resolution levels; each dataset MUST contain path relative to the current group, ordered from largest (highest resolution) to smallest; all datasets MUST have the same number of dimensions, not more than 5, matching axes. Each dataset MUST contain coordinateTransformations mapping data coordinates to physical coordinates for that level; transformations MUST only be of type translation or scale; they MUST contain exactly one scale transformation specifying pixel size in physical units or time duration, or, when scaling is unavailable for an axis, the factor versus the first resolution defaulting to 1.0; MAY contain exactly one translation, which MUST be listed after scale; scale and translation array lengths MUST equal the axes length. Each multiscales dictionary MAY contain group-level coordinateTransformations applied to all levels after the dataset-level ones, under the same type/order rules. SHOULD fields: name, type of downscaling method, metadata about the method; a full example with per-level scales and a group-level time scale appears at lines 320-387. When multiple multiscales entries exist, the user can choose by name with the first as fallback (pseudocode lines 388-397).\n\n**Governing conditions.** MUST: axes; datasets; path order largest-to-smallest; exactly one scale per dataset; translation (if any) after scale; length equalities; dimension constraints. SHOULD: zyx spatial order; name/type/metadata fields. MAY: group-level transforms; translation at all.\n\n**Verification evidence.** S003 sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de: lines 295-298 (location and shape), 299-303 (axes rules incl. zyx SHOULD), 304-307 (datasets, path order, dimension rules), 308-313 (coordinateTransformations MUST rules, exactly one scale, default 1.0, translation after scale, length equality), 314-316 (group-level transforms applied after dataset-level), 317-319 (SHOULD name/type/metadata), 320-387 (full example), 388-397 (selection pseudocode). Plan mapping: S002:Slice 02 sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006. Negative search over S003 lines 1-896 found no rule allowing non-scale/translation types in multiscales and no alternative ordering guarantee.\n\n**Plan implications.** The Slice 02 pyramid-level choice must enumerate datasets in listed order (largest first) and pick by view fit/chunk cost; level ordering and count are normative. Physical calibration is always derivable in principle because scale is mandatory (defaulting to 1.0), so the details panel can always compute data-to-physical mapping, composing dataset-level then group-level transforms in order. Multiple named multiscales require a chooser or a documented first-entry fallback. Slice 03 large-read behavior relies on chunk-aligned level reads.\n\n**Semantic ambiguity: no.** The section is fully normative and self-contained in the corpus; handling of non-conforming cases is product work retained as unresolved area U8.\n\n**Proposed validation (UNEXECUTED):** fixture with multiple named multiscales and a group-level transform; assert chooser behavior, fallback, and composed calibration equal expected physical coordinates.",
+      "verification_evidence": "S003 (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) lines 294-397 (esp. 299-319, 320-397); plan Viewer.md sections S002:Slice 02 (sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006); negative search: whole S003 lines 1-896, no additional allowed transform types or ordering rules found.",
+      "dependencies": {
+        "finding_sha256": "8dc57fcea3987cac846e72fb2e7dced64ec4e6ab42c0a3bf866b1a03cfdd05c6",
+        "source_versions": {
+          "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        "permissions": "public frozen exports read-only; no external writes",
+        "plan_owner_hashes": {
+          "S002:Slice 02": "569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006"
+        },
+        "affected_neighbor_hashes": {
+          "S003:Slice 03": "5c018cdc16bab8de49eb3242eb4a0fd72b9533a67e8e2d2751a15d34ab2a700c",
+          "S004:Slice 04": "b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b",
+          "S005:Slice 05": "ffce518dc91423dc22752790baea362b12fe2081fc66a3eb5b362b64b246a36f"
+        },
+        "corpus_membership_sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+        "negative_scope_sha256": "d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0",
+        "applicability": "Entire Slide Scout synthetic brief and OME-Zarr0.5 frozen source S003",
+        "comparison_policy": "source-supported whole-finding-to-thin-plan comparison-v1",
+        "instance_binding": "t15-z-ome-mcp-reuse-v2-redo1:F08"
+      }
+    },
+    {
+      "id": "F09",
+      "status": "verified",
+      "semantic_ambiguity": true,
+      "negative_search": true,
+      "result": "# F09 - omero metadata (transitional): channel rendering hints (witness: verified)\n\n**Independent finding identity.** Transitional rendering information for channels is found under the omero key in group-level metadata. The example structure shows a channels array matching the c dimension size, each channel with color (6 hex digits RGB), label, active, window with min/max/start/end, plus rdefs with defaultT, defaultZ, and model (color or greyscale), and a pointer to the OMERO WebGateway documentation. Normative text: omero is optional, but if present it MUST contain channels, an array of dictionaries describing the channels; each channel dictionary MUST contain color (a string of 6 hexadecimal digits) and MUST contain window, which MUST contain min and max and also start and end.\n\n**Governing conditions.** MUST (conditional on presence): channels; per-channel color and window with min/max/start/end. Optional overall: the whole omero key. The rdefs defaults appear only inside the informative example and their semantics are delegated to the OMERO WebGateway documentation - treat defaultT/defaultZ/model as de-facto conventions, not MUST-level obligations of this specification.\n\n**Verification evidence.** S003 sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de: lines 398-400 (transitional, omero key), 401-425 (example incl. channels, window, rdefs, OMERO WebGateway pointer), 426-430 (optional; MUST channels; MUST color 6 hex; MUST window with min/max and start/end). Plan mapping: S002:Slice 02 sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006. Negative search over S003 lines 1-896 found no normative definition of window semantics beyond field existence and no requirement that channel count match the c axis.\n\n**Plan implications.** Channel visibility controls, channel colors, and sensible initial time/plane selection can be driven by omero when present - directly serving Slice 02 channel controls and the brief's channel inspection requirement - but because the key is optional and transitional, the viewer needs defined fallbacks (e.g., greyscale or a default color cycle, first time point and central plane) as a product decision. Transitional status means future NGFF versions may drop it; the viewer should not build novel semantics on it beyond display hints. Slice 04 interop with real tools requires reading this transitional key.\n\n**Semantic ambiguity: yes - unresolved.** Exact interpretation of window min/max versus start/end and of model is defined in external OMERO documentation not included in the corpus; channel-count mismatch with the actual c axis is a malformed case with no defined handling here.\n\n**Proposed validation (UNEXECUTED):** render a fixture with omero hints and one without; verify fallback path and that window start/end clamp the initial display range sensibly.",
+      "verification_evidence": "S003 (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) lines 398-430 (esp. 424-430); plan Viewer.md section S002:Slice 02 (sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006); negative search: whole S003 lines 1-896, no normative window-semantics definition found.",
+      "dependencies": {
+        "finding_sha256": "91641b04f6440218638beefd71c4a8806f0b4059a9c9f16fbe82720153be5305",
+        "source_versions": {
+          "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        "permissions": "public frozen exports read-only; no external writes",
+        "plan_owner_hashes": {
+          "S002:Slice 02": "569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006"
+        },
+        "affected_neighbor_hashes": {
+          "S004:Slice 04": "b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b",
+          "S005:Slice 05": "ffce518dc91423dc22752790baea362b12fe2081fc66a3eb5b362b64b246a36f"
+        },
+        "corpus_membership_sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+        "negative_scope_sha256": "d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0",
+        "applicability": "Entire Slide Scout synthetic brief and OME-Zarr0.5 frozen source S003",
+        "comparison_policy": "source-supported whole-finding-to-thin-plan comparison-v1",
+        "instance_binding": "t15-z-ome-mcp-reuse-v2-redo1:F09"
+      }
+    },
+    {
+      "id": "F10",
+      "status": "verified",
+      "semantic_ambiguity": true,
+      "negative_search": true,
+      "result": "# F10 - labels and image-label: overlay discovery, dtypes, colors, alignment (witness: verified)\n\n**Independent finding identity.** Label images are pixel-annotation arrays with integer values of custom meaning, stored in a labels group nested within the image group at the same level as the resolution arrays. Label pixels MUST be one of the integer dtypes [uint8, int8, uint16, int16, uint32, int32, uint64, int64]. Intermediate groups between labels and the images are allowed but MUST NOT contain metadata; label image names are arbitrary. The labels group zarr.json MUST contain a labels key whose value is a JSON array of paths to the labeled multiscale image(s); all label images SHOULD be listed; the hierarchy overview also states labels will be listed with the example { labels: [ original/0 ] }. The label image zarr.json MUST implement the multiscales specification, and its datasets MUST have the same number of entries (scale levels) as the original unlabeled image. The label image metadata SHOULD contain image-label, whose colors key MUST be a JSON array of color objects and whose version MUST be a string; conforming readers SHOULD display labels using the specified colors; each colors object MUST contain integer label-value and MAY contain rgba (four integers 0-255, the fourth being alpha); additional keys are allowed. The image-label object MAY contain properties (array of objects each MUST contain integer label-value, plus arbitrary key-value metadata; keys need not be consistent across objects) and source (object; image key MUST be a string relative path to the source Zarr image group, default ../../). Label dimensions must equal the corresponding image dimension or be 1.\n\n**Governing conditions.** MUST: integer dtypes; labels key listing paths; label image implements multiscales with the same level count as the original; label-value integers; rgba values 0-255 when present; source.image a string path when present. SHOULD: all labels listed; image-label present; readers display with specified colors.\n\n**Verification evidence.** S003 sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de: lines 431-437 (label image concept, labels group placement), 438-440 (integer dtype MUST list; intermediates MUST NOT contain metadata; arbitrary names), 441-443 (labels key MUST; all listed SHOULD), 104-105 (listing example), 454-455 (multiscales MUST; equal level count MUST), 456-466 (image-label SHOULD; colors/version MUST; display SHOULD; label-value integer MUST; rgba MAY 0-255; extra keys allowed), 467-474 (properties/source MAY; label-value MUST integer; source.image MUST string, default ../../), 475-514 (example; 50 percent alpha rendering note at 513-514), 106-108 (dimension equality or 1). Plan mapping: S002:Slice 02 sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006. Negative search over S003 lines 1-896 found no float dtype allowance for labels and no guarantee that the labels list is exhaustive.\n\n**Plan implications.** Slice 02 overlay support maps directly onto this machinery: discover overlays via the labels list, align level-for-level (equal level counts are guaranteed), color by colors[].rgba with alpha compositing. Because listing all labels is only SHOULD, a viewer that trusts the list alone can miss labels - a false-dismissal risk; scanning the labels tree as a supplement is a product decision. Non-integer label arrays are non-conforming and can be rejected with a clear message (Slice 03/05 feedback).\n\n**Semantic ambiguity: yes - unresolved.** Rendering semantics when image-label or colors are absent are unspecified; whether rgba needs premultiplication or a specific blend mode is not stated; interaction between label dims of size 1 and per-plane overlay display is left to the implementer.\n\n**Proposed validation (UNEXECUTED):** overlay fixtures with listed-only, unlisted, and missing-image-label labels; verify discovery completeness strategy and alpha compositing appearance.",
+      "verification_evidence": "S003 (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) lines 431-514 plus 102-117 (esp. 104-108, 438-443, 454-474, 513-514); plan Viewer.md section S002:Slice 02 (sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006); negative search: whole S003 lines 1-896, no float-label allowance or exhaustive-list guarantee found.",
+      "dependencies": {
+        "finding_sha256": "4c8b11e9191b1618c5b09275891f31048a7ff123b8f59477df1534ae38ff98c1",
+        "source_versions": {
+          "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        "permissions": "public frozen exports read-only; no external writes",
+        "plan_owner_hashes": {
+          "S002:Slice 02": "569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006"
+        },
+        "affected_neighbor_hashes": {
+          "S004:Slice 04": "b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b",
+          "S005:Slice 05": "ffce518dc91423dc22752790baea362b12fe2081fc66a3eb5b362b64b246a36f"
+        },
+        "corpus_membership_sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+        "negative_scope_sha256": "d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0",
+        "applicability": "Entire Slide Scout synthetic brief and OME-Zarr0.5 frozen source S003",
+        "comparison_policy": "source-supported whole-finding-to-thin-plan comparison-v1",
+        "instance_binding": "t15-z-ome-mcp-reuse-v2-redo1:F10"
+      }
+    },
+    {
+      "id": "F11",
+      "status": "verified",
+      "semantic_ambiguity": false,
+      "negative_search": true,
+      "result": "# F11 - plate metadata: field obligations for HCS navigation (witness: verified)\n\n**Independent finding identity.** The plate dictionary lives under the plate key in the plate group's metadata. Obligations: acquisitions MAY be present; its objects MUST contain id (unique integer >= 0 within the plate) and SHOULD contain name (MUST be string) and maximumfieldcount (MUST be positive integer), MAY contain description, and MAY contain starttime/endtime (MUST be integer epoch timestamps). columns MUST be present as a list; every physical column MUST be defined even if no wells exist in it; each column MUST contain name (string, alphanumeric only, case-sensitive, unique in the list), with care SHOULD be taken to avoid collisions on case-insensitive filesystems. field_count SHOULD be present (value MUST be a positive integer, the maximum fields per view across all wells). name SHOULD be present (string). rows MUST be present with the same naming rules as columns. version MUST be present, a string for the plate specification version. wells MUST be present; each well MUST contain path (string: row name + / + column name, in that order, no extra leading or trailing directories) and both rowIndex and columnIndex (0-based integers into the rows/columns lists); path, rowIndex and columnIndex MUST all refer to the same row/column pair. Worked examples: dense 2x3 plate with two acquisitions (lines 561-640) and a sparse plate with 2 wells in a 12x8 (96-well) grid (lines 641-739).\n\n**Governing conditions.** MUST: columns, rows, version, wells with their field constraints; acquisition id uniqueness; 0-based indices; path shape. SHOULD: field_count, plate name, acquisition name/maximumfieldcount.\n\n**Verification evidence.** S003 sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de: lines 515-517 (plate key), 518-529 (acquisitions), 530-537 (columns), 538-539 (field_count), 540-541 (name), 542-549 (rows), 550-551 (version), 552-560 (wells, path shape, 0-based indices, same-pair rule), 561-640 (dense example), 641-739 (sparse 96-well example with wells C/5 and D/7). Plan mapping: S002:Slice 02 sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006. Negative search over S003 lines 1-896 found no requirement that all wells exist on disk and no defined field-of-view display order.\n\n**Plan implications.** Plate navigation UI (row/column grid, well chooser, field-of-view list) can be built entirely from these fields; the sparse example confirms empty grid cells are normal. The plan's generic image-listing slice needs a plate-aware presentation mode to satisfy the brief's find-images requirement for HCS filesets (with F03 hierarchy and F12 well listing). Name uniqueness plus case-sensitivity caution suggests displaying names verbatim and never case-folding paths.\n\n**Semantic ambiguity: no.** Fully normative in-corpus; nonexistent well paths, field ordering, and acquisition filtering UI are product decisions retained as unresolved areas.\n\n**Proposed validation (UNEXECUTED):** dense and sparse plate fixtures through the navigation UI; assert grid rendering from rows/columns, wells placed by path/rowIndex/columnIndex, and empty cells handled as normal.",
+      "verification_evidence": "S003 (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) lines 515-739 (esp. 518-560, 561-640, 641-739); plan Viewer.md section S002:Slice 02 (sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006); negative search: whole S003 lines 1-896, no well-existence or field-order guarantee found.",
+      "dependencies": {
+        "finding_sha256": "b703f0f875d25f5c08ff2d34f7d11b00252c8cf53bd7112c1bbd0901ef49fd44",
+        "source_versions": {
+          "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        "permissions": "public frozen exports read-only; no external writes",
+        "plan_owner_hashes": {
+          "S002:Slice 02": "569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006"
+        },
+        "affected_neighbor_hashes": {
+          "S004:Slice 04": "b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b",
+          "S005:Slice 05": "ffce518dc91423dc22752790baea362b12fe2081fc66a3eb5b362b64b246a36f"
+        },
+        "corpus_membership_sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+        "negative_scope_sha256": "d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0",
+        "applicability": "Entire Slide Scout synthetic brief and OME-Zarr0.5 frozen source S003",
+        "comparison_policy": "source-supported whole-finding-to-thin-plan comparison-v1",
+        "instance_binding": "t15-z-ome-mcp-reuse-v2-redo1:F11"
+      }
+    },
+    {
+      "id": "F12",
+      "status": "verified",
+      "semantic_ambiguity": false,
+      "negative_search": true,
+      "result": "# F12 - well metadata: enumerating fields of view (witness: verified)\n\n**Independent finding identity.** The well key sits in the attributes of the well group. The well dictionary MUST contain images, a list of JSON objects specifying all fields of view for the well; each image object MUST contain path (string, alphanumeric only, case-sensitive, MUST NOT duplicate any other path in the list); if multiple acquisitions were performed in the plate, each image object MUST also contain acquisition, an integer that MUST match one of the acquisition ids defined in the plate metadata. The well dictionary SHOULD contain version (string). Examples: a well with four fields across two acquisitions (lines 753-784) and a well with two fields in a four-acquisition plate (lines 785-808).\n\n**Governing conditions.** MUST: images list; per-image unique alphanumeric case-sensitive path; acquisition key when the plate has multiple acquisitions, matching a plate acquisition id. SHOULD: version.\n\n**Verification evidence.** S003 sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de: lines 740-743 (well key location), 744-750 (images MUST; path constraints; acquisition MUST match plate ids), 751-752 (version SHOULD), 753-784 (four-field two-acquisition example), 785-808 (two-field four-acquisition example). Plan mapping: S002:Slice 02 sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006. Negative search over S003 lines 1-896 found no alternative field enumeration mechanism and no display-order rule.\n\n**Plan implications.** Field-of-view selection is metadata-driven: enumerate well.images, never directory-scan. Acquisition ids link wells back to plate acquisitions (F11), enabling acquisition-aware filtering if the product wants it. Missing acquisition in a multi-acquisition plate is a detectable non-conformance the viewer can report instead of mislabeling fields (Slice 03/05 feedback).\n\n**Semantic ambiguity: no.** Claims fully determined in-corpus; absent version behavior, intermediate-group traversal for field paths, and display ordering are documented silences retained as unresolved areas.\n\n**Proposed validation (UNEXECUTED):** multi-acquisition well fixtures; assert field list equals well.images, duplicate/missing acquisition detected and reported.",
+      "verification_evidence": "S003 (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) lines 740-808 (esp. 744-752, 753-784, 785-808); plan Viewer.md section S002:Slice 02 (sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006); negative search: whole S003 lines 1-896, no alternate enumeration or ordering rule found.",
+      "dependencies": {
+        "finding_sha256": "ffc7c0ef89f241e9f7ef11ab8e50870d3db652e1b664f0cfc7b5ef08c039c154",
+        "source_versions": {
+          "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        "permissions": "public frozen exports read-only; no external writes",
+        "plan_owner_hashes": {
+          "S002:Slice 02": "569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006"
+        },
+        "affected_neighbor_hashes": {
+          "S004:Slice 04": "b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b",
+          "S005:Slice 05": "ffce518dc91423dc22752790baea362b12fe2081fc66a3eb5b362b64b246a36f"
+        },
+        "corpus_membership_sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+        "negative_scope_sha256": "d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0",
+        "applicability": "Entire Slide Scout synthetic brief and OME-Zarr0.5 frozen source S003",
+        "comparison_policy": "source-supported whole-finding-to-thin-plan comparison-v1",
+        "instance_binding": "t15-z-ome-mcp-reuse-v2-redo1:F12"
+      }
+    },
+    {
+      "id": "F13",
+      "status": "verified",
+      "semantic_ambiguity": false,
+      "negative_search": true,
+      "result": "# F13 - Transitional metadata policy, JSON strictness, and naming style (witness: verified)\n\n**Independent finding identity.** Transitional metadata is added with the intention of removing it in the future; implementations may be expected (MUST) or encouraged (SHOULD) to support reading it, while writing is usually optional (MAY); examples include custom additions later formalized. JSON examples in the document may include comments for clarity, but comments MUST NOT be included in JSON objects. Multi-word keys should use camelCase, though some parts of the specification predate this convention and are to be updated in due course.\n\n**Governing conditions.** MUST: no comments in JSON objects (strict JSON parsing is safe and correct; comment-tolerant parsing is unnecessary and could mask malformed input). Reading transitional metadata (bioformats2raw.layout, omero) is the side writers and readers must expect to need; readers MAY be required (MUST) to read it depending on the metadata.\n\n**Verification evidence.** S003 sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de: lines 60-64 (transitional policy incl. MUST/SHOULD reading, MAY writing), 65-66 (comments in examples only; MUST NOT be included in JSON objects), 809-812 (camelCase style; legacy exceptions to be updated). Plan mapping: S004:Slice 04 sha256 b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b (interop owner); neighbors in map. Negative search over S003 lines 1-896 found no comment-tolerance allowance and no third naming convention.\n\n**Plan implications.** The viewer should use a strict JSON parser for all zarr.json files and surface JSON syntax errors as understandable failures (Slice 03/05). Interop with real tools (Slice 04) requires reading transitional keys, consistent with the transitional policy. Key naming is inconsistent across spec versions (camelCase vs legacy style such as maximumfieldcount appearing lowercase in examples), so lookups must follow the specification strings exactly, not a naming-style assumption.\n\n**Semantic ambiguity: no.** The policy statements are exact in-corpus; the field_count vs maximumfieldcount style discrepancy (spec text vs capture artifact) is a documented source-fidelity question retained as unresolved area U12, not ambiguity in the policy claims themselves.\n\n**Proposed validation (UNEXECUTED):** malformed-JSON fixtures (comments, trailing commas, BOM) through the opener; assert understandable failure messages and no comment-tolerant parsing.",
+      "verification_evidence": "S003 (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) lines 56-66 (esp. 60-66), 809-812; plan Viewer.md section S004:Slice 04 (sha256 b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b); negative search: whole S003 lines 1-896, no comment tolerance or naming third style found.",
+      "dependencies": {
+        "finding_sha256": "a2bf599ade4dfea1e3bdb65d2833fc625bec1afa08962774587326b59ff3abf5",
+        "source_versions": {
+          "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        "permissions": "public frozen exports read-only; no external writes",
+        "plan_owner_hashes": {
+          "S004:Slice 04": "b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b"
+        },
+        "affected_neighbor_hashes": {
+          "S002:Slice 02": "569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006",
+          "S003:Slice 03": "5c018cdc16bab8de49eb3242eb4a0fd72b9533a67e8e2d2751a15d34ab2a700c",
+          "S005:Slice 05": "ffce518dc91423dc22752790baea362b12fe2081fc66a3eb5b362b64b246a36f"
+        },
+        "corpus_membership_sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+        "negative_scope_sha256": "d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0",
+        "applicability": "Entire Slide Scout synthetic brief and OME-Zarr0.5 frozen source S003",
+        "comparison_policy": "source-supported whole-finding-to-thin-plan comparison-v1",
+        "instance_binding": "t15-z-ome-mcp-reuse-v2-redo1:F13"
+      }
+    },
+    {
+      "id": "F14",
+      "status": "verified",
+      "semantic_ambiguity": false,
+      "negative_search": true,
+      "result": "# F14 - Conformance semantics, edition currency, and version history (witness: verified)\n\n**Independent finding identity.** The capture is the OME-Zarr 0.5 Final Community Group Report, 8 September 2026; this/latest/editor versions all resolve to https://ngff.openmicroscopy.org/0.5/. The current released version is 0.5; migration scripts will be provided between numbered versions; data written with the latest changes (an editor's draft) will not necessarily be supported. Requirement keywords MUST/MUST NOT/REQUIRED/SHALL/SHALL NOT/SHOULD/SHOULD NOT/RECOMMENDED/MAY/OPTIONAL follow RFC 2119; all specification text is normative except sections explicitly marked non-normative, examples, and notes. Version history: 0.5.2 (2025-01-10) clarified that dimension_names in axes MUST be included; 0.5.1 (2025-01-10) re-added the improved omero description; 0.5.0 (2024-11-21) introduced Zarr v3 (RFC-2); 0.4.x added bioformats2raw.layout (2022-09-26) and expanded labels; earlier versions trace to 0.1.0 (2020-04-20). The Implementations section says only See Tools, and citing identifies this edition as 0.5 with doi:10.5281/zenodo.4282107.\n\n**Governing conditions.** Normative-text rule lets the reader classify every statement: prose outside examples/notes carries RFC 2119 force. Version history establishes that 0.4-era filesets predate Zarr v3, so a Zarr v3 reader does not automatically read 0.4 filesets.\n\n**Verification evidence.** S003 sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de: lines 3-4 and 5-10 (Final Community Group Report, 8 September 2026; all version URIs 0.5), 24-27 (current released 0.5; migration scripts; editor's draft caveat), 56-59 and 872-874 (RFC 2119 keywords), 877-878 (normative-text rule), 821-866 (version history incl. 0.5.2/0.5.1/0.5.0/0.4.x/0.1.0 entries), 813-814 (Implementations: See Tools), 815-820 (citing, edition 0.5, doi:10.5281/zenodo.4282107). Plan mapping: S002:Slice 02 sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006. Negative search over S003 lines 1-896 found no tool content in Implementations and no post-2026-09-08 entries.\n\n**Plan implications.** The plan's OME-Zarr 0.5 target is pinned to this edition; the viewer should treat ome.version 0.5 as its conformance envelope and decide explicitly (product decision) whether to attempt 0.4 filesets, which would additionally require Zarr v2 support. Editor-draft data may not be supported, so version-gated rejections with messages are legitimate. The SHOULD/MUST/MAY split used throughout F01-F13 is the basis of the obligation-versus-option classification in the report.\n\n**Semantic ambiguity: no.** Fully textual; the empty Implementations pointer and post-capture errata are documented corpus limits retained as unresolved areas.\n\n**Proposed validation (UNEXECUTED):** confirm current published edition and any errata after 2026-09-08 when live access is next permitted; until then treat this capture as the conformance envelope.",
+      "verification_evidence": "S003 (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) lines 1-27 (esp. 3-10, 24-27), 56-59, 809-820 (esp. 813-820), 821-866, 867-878; plan Viewer.md section S002:Slice 02 (sha256 569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006); negative search: whole S003 lines 1-896, no Implementations content or later-version entries found.",
+      "dependencies": {
+        "finding_sha256": "0e0a8df23bd520842ece83b6a621060757f5d16a990ee4d5cc03b6af8bd2761a",
+        "source_versions": {
+          "S003": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        "permissions": "public frozen exports read-only; no external writes",
+        "plan_owner_hashes": {
+          "S002:Slice 02": "569f317fd651ce08911196d023cefd1f8919d1dcebe244c79397337f8c279006"
+        },
+        "affected_neighbor_hashes": {
+          "S004:Slice 04": "b428d46eb272300a5c01144f6b922fbc6f065e3e8b12d4fdaff079121d48407b",
+          "S005:Slice 05": "ffce518dc91423dc22752790baea362b12fe2081fc66a3eb5b362b64b246a36f"
+        },
+        "corpus_membership_sha256": "8a76d84b96be74e22350a8bf5ff462cc4c8902632db1a0cd07db6a663ab9a293",
+        "negative_scope_sha256": "d915f8590cf2c0effff08c02beb14854f48d16b9500cf7c0b222dcc2886df8a0",
+        "applicability": "Entire Slide Scout synthetic brief and OME-Zarr0.5 frozen source S003",
+        "comparison_policy": "source-supported whole-finding-to-thin-plan comparison-v1",
+        "instance_binding": "t15-z-ome-mcp-reuse-v2-redo1:F14"
+      }
+    }
+  ]
+}

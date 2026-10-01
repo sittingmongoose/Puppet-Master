@@ -1,0 +1,61 @@
+{
+  "task": "t08-z-ome-mcp-discovery-v2-repair1-control",
+  "written_once": true,
+  "note": "Final scheduling record, written exactly once after research completed. Successive interim records are the immutable drafts out/scheduling.draft-01.json (initial families, pre-search) and out/scheduling.draft-02.json (post-research sequence). No draft and not this file was ever overwritten.",
+  "admitted_inputs": ["TASK.md", "inputs/brief.md"],
+  "input_inspection": {
+    "TASK.md": "9 lines / 3061 bytes, fully read via mcp__pm_boundary__read_file (sha256 a4138e0d6a4d70a2ae1133ec1985ec3562e73078480597735de74d39dc55ae39)",
+    "inputs/brief.md": "5 lines / 905 bytes, fully read via mcp__pm_boundary__read_file (sha256 f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a); also mechanically mapped via line_map and cached via cache_source to out/mechanical/"
+  },
+  "research_topic": "Slide Scout: read-only desktop browser for local OME-Zarr 0.5 filesets; discovery of format obligations and reader-implementation lessons (compatibility, correctness, navigation, display), distinguishing format obligations from optional/product-decision capabilities",
+  "initial_families": [
+    {"id": "F1", "name": "normative-format-spec", "rationale": "Established format obligations for OME-Zarr (OME-NGFF) 0.5: multiscales, axes, coordinateTransformations, omero channel metadata, label images, HCS well/plate, Zarr storage layer", "status_after_research": "visited; primary sources S1/S2/S6/S7"},
+    {"id": "F2", "name": "reference-reader-implementations", "rationale": "Actual readers reveal parsing quirks, optional-metadata handling, and failure modes", "status_after_research": "visited; ome-zarr-py (S5), napari-ome-zarr (S4), vizarr (S11) plus official tools inventory and viewer matrix (S9)"},
+    {"id": "F3", "name": "validation-and-conversion-tooling", "rationale": "Validators and converters define what real-world filesets look like and what browsers must tolerate", "status_after_research": "partially visited: 0.5 JSON Schemas fetched (S6/S7); validators (ome-ngff-validator, ome-zarr-models-py, yaozarrs) identified via tools page but repos not fetched (unvisited lead); bioformats2raw repo not fetched (unvisited lead)"},
+    {"id": "F4", "name": "prior-art-desktop-ux", "rationale": "Existing local/multiscale viewers show navigation/performance/UX expectations", "status_after_research": "visited indirectly: official tools inventory + compatibility matrix cover desktop viewers (napari, FIJI/BDV, MoBIE, 3D Slicer, QuPath, Odon, syGlass, webKnossos, Vol-E...); napari/MoBIE/OpenOrganelle repos themselves not fetched (unvisited leads)"},
+    {"id": "F5", "name": "version-change-history", "rationale": "0.4 -> 0.5 -> 0.6 changes matter for compatibility", "status_after_research": "visited; S2/S3 (0.5 = Zarr v3; 0.6 released 2026-09-14 with breaking RFC-5 changes)"}
+  ],
+  "actual_search_read_sequence": [
+    {"step": 1, "tool": "mcp__pm_boundary__read_file", "target": "TASK.md", "result": "9 lines / 3061 bytes fully read"},
+    {"step": 2, "tool": "mcp__pm_boundary__read_file", "target": "inputs/brief.md", "result": "5 lines / 905 bytes fully read"},
+    {"step": 3, "tool": "mcp__pm_boundary__mechanical line_map", "target": "inputs/brief.md", "output": "out/mechanical/brief.line_map.txt"},
+    {"step": 4, "tool": "mcp__pm_boundary__mechanical cache_source", "target": "inputs/brief.md", "output": "out/mechanical/brief.cache.txt"},
+    {"step": 5, "tool": "public_https_get", "urls": ["https://ngff.openmicroscopy.org/0.5/index.html", "https://ngff.openmicroscopy.org/latest/", "https://github.com/ome/ome-zarr-py", "https://github.com/ome/napari-ome-zarr", "https://github.com/hms-dbmi/vizarr"], "result": "all HTTP 200; rendered pages boilerplate-heavy; 0.5 spec revision meta d9164040...; /latest/ redirects to specifications/0.5/"},
+    {"step": 6, "tool": "public_https_get", "urls": ["https://raw.githubusercontent.com/ome/ngff/main/0.5/index.bs", "https://raw.githubusercontent.com/ome/ome-zarr-py/main/README.md", "https://raw.githubusercontent.com/ome/napari-ome-zarr/main/README.md", "https://raw.githubusercontent.com/hms-dbmi/vizarr/main/README.md"], "result": "2x404 (wrong branch/path guesses); napari-ome-zarr and vizarr READMEs fetched fully"},
+    {"step": 7, "tool": "public_https_get", "urls": ["https://api.github.com/repos/ome/ngff/contents/0.5", "https://api.github.com/repos/ome/ome-zarr-py", "https://raw.githubusercontent.com/ome/ome-zarr-py/master/README.md"], "result": "404 + repo metadata (default_branch=master) + 404 (README is README.rst)"},
+    {"step": 8, "tool": "public_https_get", "urls": ["https://api.github.com/repos/ome/ngff/contents/", "https://api.github.com/repos/ome/ome-zarr-py/contents/"], "result": "ngff main has specifications/ dir; ome-zarr-py has README.rst + CHANGELOG.md + docs/"},
+    {"step": 9, "tool": "public_https_get", "urls": ["https://api.github.com/repos/ome/ngff/contents/specifications", "https://raw.githubusercontent.com/ome/ome-zarr-py/master/README.rst", "https://raw.githubusercontent.com/ome/ome-zarr-py/master/CHANGELOG.md"], "result": "specifications/ are submodules of ome/ngff-spec (versions 0.1-0.6+dev); ome-zarr-py README + changelog read fully"},
+    {"step": 10, "tool": "public_https_get", "urls": ["https://api.github.com/repos/ome/ngff-spec/git/trees/d9164040dd61b3e4688494de1a58a69251b13f24?recursive=1", "https://raw.githubusercontent.com/ome/ngff/main/specifications/index.md"], "result": "pinned 0.5 spec tree file list (index.md, schemas, examples, tests); main-branch index states current released version is 0.6"},
+    {"step": 11, "tool": "public_https_get", "urls": ["https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/index.md", "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/version_history.md"], "result": "FULL 0.5 normative text (32,266 B) + 0.5.x version history read fully"},
+    {"step": 12, "tool": "public_https_get", "urls": ["https://raw.githubusercontent.com/ome/ngff-spec/main/version_history.md", "https://ngff.openmicroscopy.org/tools/index.html", "https://ome-zarr.readthedocs.io/en/stable/", "https://duckduckgo.com/html/?q=OME-Zarr+viewer+desktop+local"], "result": "0.6 released 2026-09-14 (breaking RFC-5); tools page is a redirect; ome-zarr-py docs index read; DuckDuckGo DEAD END (HTTP 202 bot challenge)"},
+    {"step": 13, "tool": "public_https_get", "urls": ["https://ngff.openmicroscopy.org/resources/tools/index.html", "https://raw.githubusercontent.com/ome/ome-zarr-py/master/docs/source/basic/cli_basics.md", "https://raw.githubusercontent.com/ome/ome-zarr-py/master/docs/source/basic/read_image.md", "https://www.mojeek.com/search?q=OME-Zarr+desktop+viewer"], "result": "official tools inventory read (display tail truncated); CLI docs read; read_image.md 404 (notebook-backed; rendered HTML fetched at step 14); Mojeek DEAD END (JavaScript captcha)"},
+    {"step": 14, "tool": "public_https_get", "urls": ["https://ome.github.io/ome-ngff-tools/", "https://ome-zarr.readthedocs.io/en/stable/basic/read_image.html", "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/schemas/image.schema"], "result": "viewer compatibility matrix read through the 'multiple multiscales' row (page display-truncated after that); read API docs read; 0.5 image.schema read fully"},
+    {"step": 15, "tool": "public_https_get", "urls": ["https://raw.githubusercontent.com/ome/ome-ngff-tools/main/docs/index.md", "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/schemas/label.schema"], "result": "matrix source is a Jekyll template (viewer/feature data not inline); label.schema read fully"},
+    {"step": 16, "tool": "public_https_get", "urls": ["https://raw.githubusercontent.com/ome/ome-ngff-tools/main/_data/features.yml", "https://raw.githubusercontent.com/ome/ome-ngff-tools/main/_data/viewers.yml"], "result": "404 x2"},
+    {"step": 17, "tool": "public_https_get", "urls": ["https://api.github.com/repos/ome/ome-ngff-tools/contents/_data"], "result": "404"},
+    {"step": 18, "tool": "public_https_get", "urls": ["https://raw.githubusercontent.com/ome/ome-ngff-tools/gh-pages/_data/features.yml"], "result": "404; matrix data-file location not found; matrix tail remains unvisited"}
+  ],
+  "unavailable_or_deadends": [
+    "https://duckduckgo.com/html/?q=OME-Zarr+viewer+desktop+local - HTTP 202 anomaly/bot challenge; no search results obtained (proves only that this search attempt failed)",
+    "https://www.mojeek.com/search?q=OME-Zarr+desktop+viewer - HTTP 200 but JavaScript CAPTCHA page; no search results obtained (proves only that this search attempt failed)",
+    "https://raw.githubusercontent.com/ome/ngff/main/0.5/index.bs - 404 (spec sources moved to ome/ngff-spec submodule repo)",
+    "https://raw.githubusercontent.com/ome/ome-zarr-py/main/README.md - 404 (default branch is master)",
+    "https://raw.githubusercontent.com/ome/ome-zarr-py/master/README.md - 404 (file is README.rst)",
+    "https://api.github.com/repos/ome/ngff/contents/0.5 - 404 (versions live under specifications/ as submodules)",
+    "https://raw.githubusercontent.com/ome/ome-zarr-py/master/docs/source/basic/read_image.md - 404 (page backed by .ipynb; rendered HTML fetched instead)",
+    "https://raw.githubusercontent.com/ome/ome-ngff-tools/main/_data/features.yml and viewers.yml; api.github.com/repos/ome/ome-ngff-tools/contents/_data; gh-pages variant - 404 x4 (matrix data files not located)"
+  ],
+  "unvisited_leads": [
+    "Tail of the ome-ngff-tools compatibility matrix after the 'multiple multiscales' row (rendered HTML display-truncated at ~50 KB; data files not found at attempted paths)",
+    "https://github.com/jwindhager/ome-ngff-readers-writers/ reader/writer feature survey (linked from tools page, not fetched)",
+    "ngff-zarr (fideus-labs), SlicerOMEZarr, ome-zarr-models-py, yaozarrs validator repos",
+    "RFC-2 (Zarr v3 adoption) and RFC-5 (0.6 transforms/scene) full texts",
+    "Zarr v3 core specification (zarr-specs.readthedocs.io) incl. sharding codecs",
+    "ome-zarr-py advanced/sharding.html and basic/view_images.html doc pages",
+    "bioformats2raw (glencoesoftware) converter repo; NGFF-Converter desktop app",
+    "OpenOrganelle/Janelia dataset ecosystem; MoBIE documentation; Pluot; OMEZarrTileSource; Odon; napari and Fiji repos directly",
+    "The OME-Zarr 0.4 specification text itself (only secondhand signals fetched)",
+    "Rendered GitHub repo pages for ome-zarr-py/napari-ome-zarr/vizarr were fetched but only partially inspected (boilerplate truncated); superseded by full raw READMEs"
+  ],
+  "coverage_statement": "All five initial families (F1-F5) were visited and deepened with at least one primary source each; family F4 is covered indirectly via the official tools inventory and the viewer compatibility matrix rather than by direct repo fetches (logged above as unvisited leads). Two general search-engine queries were attempted and both failed as bot-challenge dead ends; discovery instead proceeded by following authoritative links (official tools page, spec submodules, repository content APIs). Large/truncated sources are explicitly marked in acquisition.json (truncated_display) and their unvisited portions listed here. No private plan passages were sent to any external service; all queries used public, non-sensitive problem terms only. Every governing workspace byte (TASK.md, inputs/brief.md) was inspected in full; out/ artifacts were verified by their write receipts (byte counts and sha256)."
+}

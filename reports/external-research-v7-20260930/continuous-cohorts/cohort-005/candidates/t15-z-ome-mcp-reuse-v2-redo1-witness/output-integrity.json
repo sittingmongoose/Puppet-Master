@@ -1,0 +1,60 @@
+{
+  "schema": "er7.productive_z.output_integrity.v1",
+  "epoch": 1790888089.443687,
+  "label": "t15-z-ome-mcp-reuse-v2-redo1-witness",
+  "files": {
+    "witnesses.json": {
+      "sha256": "d42bf48bc6260c4e6a72046cfeb114a8f43058e8cd96db595a5f0984ee6599e0",
+      "bytes": 64748
+    }
+  },
+  "missing_required_outputs": [
+    "report.md",
+    "acquisition.json"
+  ],
+  "sanitized_native_artifacts": {
+    "receipt.json": {
+      "sha256": "7de052b005e7857eaba112161991ef712d6a5bef057bee5a2765eba975794737",
+      "bytes": 293327
+    },
+    "host-process.json": {
+      "sha256": "f1cf59c404c2691f64cc0b2bed5f1d09395e174fb602d34f275e2001b3c0ab02",
+      "bytes": 58
+    },
+    "session-tool-contract.json": {
+      "sha256": "cee27d9d4c520a8f6dcf06ca4d19d8154210dffaa5c63fb2ea337d304b3f9311",
+      "bytes": 2258
+    },
+    "progress.jsonl": {
+      "sha256": "f839aa7de1ffee8dfa61c33d9c002335e648c5d09cb4b4161a110212b95bfe3b",
+      "bytes": 174
+    },
+    "usage-events.jsonl": {
+      "sha256": "8f351884b9df4066ae26c38abce4fcc92017124de8cc4ce075759f3bc12b2ef5",
+      "bytes": 3399
+    },
+    "zcode-stdout.redacted.jsonl": {
+      "sha256": "293d0bebf90f84d046eae55c5d3b5184e190e682b69204bb4c2e46f5fc3ebf3c",
+      "bytes": 23132344
+    },
+    "zcode-stderr.omitted.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-redo1-witness/native/receipt.json",
+    "native_receipt_sha256": "7de052b005e7857eaba112161991ef712d6a5bef057bee5a2765eba975794737",
+    "owned_driver_pgid": 1894734,
+    "basis": "sanitized native receipt plus only known own group absence"
+  },
+  "private_client": "excluded entirely; never read",
+  "semantic_quality": "unassessed",
+  "context_observations_sha256": "479e96c0e4df09d6ef92ccbeee430aaae7b22d7b60630439b2cbdfe4c3e966e1",
+  "future_native_context": "qualified",
+  "native_outcome": "failed-or-unestablished",
+  "inventory_verified": false,
+  "method_postrender_delivery": "pending separate measured machinery; no free semantic helper rewrite"
+}

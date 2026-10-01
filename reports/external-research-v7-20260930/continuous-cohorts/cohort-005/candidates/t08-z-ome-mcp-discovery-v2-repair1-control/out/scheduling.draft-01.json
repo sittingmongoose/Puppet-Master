@@ -1,0 +1,50 @@
+{
+  "task": "t08-z-ome-mcp-discovery-v2-repair1-control",
+  "phase": "initial-families (pre-search, immutable draft 1)",
+  "admitted_inputs": ["inputs/brief.md", "TASK.md"],
+  "input_inspection": {
+    "inputs/brief.md": "5 lines, 905 bytes, fully read via mcp__pm_boundary__read_file (sha256 f4f88fae...)",
+    "TASK.md": "9 lines, 3061 bytes, fully read via mcp__pm_boundary__read_file (sha256 a4138e0d...)"
+  },
+  "research_topic": "Slide Scout: read-only desktop browser for local OME-Zarr 0.5 filesets; discovery of format obligations and reader-implementation lessons (compatibility, correctness, navigation, display)",
+  "initial_families": [
+    {
+      "id": "F1",
+      "name": "normative-format-spec",
+      "rationale": "Established format obligations for OME-Zarr (OME-NGFF) 0.5: multiscales, axes, coordinateTransformations, omero channel metadata, label images, HCS well/plate, Zarr storage layer",
+      "candidate_sources": ["https://ngff.openmicroscopy.org/0.5/index.html", "https://ngff.openmicroscopy.org/latest/", "https://github.com/ome/ngff"],
+      "status": "unvisited"
+    },
+    {
+      "id": "F2",
+      "name": "reference-reader-implementations",
+      "rationale": "Actual readers reveal parsing quirks, optional-metadata handling, and failure modes: ome-zarr-py, napari-ome-zarr, vizarr",
+      "candidate_sources": ["https://github.com/ome/ome-zarr-py", "https://github.com/ome/napari-ome-zarr", "https://github.com/hms-dbmi/vizarr"],
+      "status": "unvisited"
+    },
+    {
+      "id": "F3",
+      "name": "validation-and-conversion-tooling",
+      "rationale": "Validators and converters (bioformats2raw, ome-zarr CLI) define what real-world filesets actually look like and what browsers must tolerate",
+      "candidate_sources": ["https://ome-zarr-py.readthedocs.io/en/stable/", "https://github.com/ome/bioformats2raw"],
+      "status": "unvisited"
+    },
+    {
+      "id": "F4",
+      "name": "prior-art-desktop-ux",
+      "rationale": "Existing local/multiscale viewers (napari, Fiji/BigDataViewer, OpenOrganelle) show navigation/performance/UX expectations for large image sets",
+      "candidate_sources": ["https://openorganelle.janelia.org/", "https://github.com/napari/napari"],
+      "status": "unvisited"
+    },
+    {
+      "id": "F5",
+      "name": "version-change-history",
+      "rationale": "0.4 -> 0.5 changes matter for compatibility with filesets written under older/other versions",
+      "candidate_sources": ["https://ngff.openmicroscopy.org/0.5/index.html (changelog/links)", "https://github.com/ome/ngff/releases"],
+      "status": "unvisited"
+    }
+  ],
+  "planned_search_sequence": "Fetch family seed URLs via mcp__pm_boundary__public_https_get, follow promising links from returned text, attempt one public search-engine query for reader/viewer prior art; log every fetch with final URL, status, hash, and dead-end/unavailable status",
+  "areas_left_unvisited_at_draft1": "All external sources; no fetches performed yet",
+  "created_with": "mcp__pm_boundary__write_file (immutable; never overwritten)"
+}

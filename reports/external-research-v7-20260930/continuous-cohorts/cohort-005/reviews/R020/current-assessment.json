@@ -1,0 +1,1578 @@
+{
+  "schema": "er7.current_assessment.v1",
+  "report_id": "R020",
+  "case_id": "C061",
+  "phase": 1,
+  "frozen_at_utc": "2026-10-01T21:02:57.711124+00:00",
+  "reviewer": "GPT-6.1 Sol, user-selected Max; independent evaluator; one coherent fixed-source cohort",
+  "current_artifact_scope": [
+    "current-report.md"
+  ],
+  "report_sha256": "9d43cf6076ddc2aec0b9fb489a7cdb60620c8cccc3885f4d725ce437fcb7575d",
+  "queue_stage_sha256": "ace5f7c8d3404cb21ecac053d100121e7a5cc6a2534f9c653f070f548b127648",
+  "stage_pin_verified": true,
+  "input_pins": {
+    "PROTOCOL.md": "f0427cc8d1495e368b8b79cb9ead18cc65d4b0b2e8b509e338b86923ee5b1e15",
+    "auxiliary-prebound-inputs-v1/ADDENDUM.json": "f1825af35c061606497a9e21748fe839a98f44daf8f8573337f6f908fbb1e9a6",
+    "auxiliary-prebound-inputs-v1/catalog.json": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+    "current-report.md": "9d43cf6076ddc2aec0b9fb489a7cdb60620c8cccc3885f4d725ce437fcb7575d",
+    "eligibility.json": "1dbb0006ccbc12ad4b31eb1c52e3e2e30abf304fcffb2f3938e0609079c42531",
+    "inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "inputs/plan/Viewer.md": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+    "inputs/sources/S003.txt": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+  },
+  "source_locator_root": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R020/inputs/sources/S003.txt",
+  "other_locator_roots": {
+    "Viewer.md": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R020/inputs/plan/Viewer.md",
+    "brief.md": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R020/inputs/brief.md",
+    "catalog.json": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R020/auxiliary-prebound-inputs-v1/catalog.json"
+  },
+  "complete_coverage": true,
+  "coverage_meaning": "Every material current assertion in the supplied report and every eligible facet was reviewed, including all finding bodies, counterevidence, negative claims, proposed fixtures and process attestations. Candidate omissions remain quality failures, not unfinished grading.",
+  "claim_count": 87,
+  "claims": [
+    {
+      "id": "A01",
+      "current_locators": [
+        "current-report.md:3-10"
+      ],
+      "claim": "Single native Goal, task mandate, stable report stream, Q1/Q2 assignment and completion.",
+      "outcome": "unresolved",
+      "evidence_locators": [],
+      "reason": "The current questions are visible. Original TASK and native Goal operations are not admitted; compliance and process cannot be verified in phase 1.",
+      "kind": "process",
+      "material_failure_id": null
+    },
+    {
+      "id": "A02",
+      "current_locators": [
+        "current-report.md:12"
+      ],
+      "claim": "One fixed S003 capture, title/date/version/history, hash, byte and line counts, alias; local read-only brief and excluded capabilities.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:1-10",
+        "S003:25-27",
+        "S003:821-833",
+        "catalog.json:4-20",
+        "brief.md:3-5"
+      ],
+      "reason": "Exact admitted bytes and catalog match. The source is a frozen capture, not a live-page verification.",
+      "kind": "identity",
+      "material_failure_id": null
+    },
+    {
+      "id": "A03",
+      "current_locators": [
+        "current-report.md:14-19"
+      ],
+      "claim": "Two full six-range acquisition phases, twelve identical receipts, initial input reads, no cached substitutes, logs and no executed tests.",
+      "outcome": "unresolved",
+      "evidence_locators": [],
+      "reason": "The twelve claimed operations and withheld acquisition/protocol logs are outside phase-1 access. No execution success is credited.",
+      "kind": "process",
+      "material_failure_id": null
+    },
+    {
+      "id": "A04",
+      "current_locators": [
+        "current-report.md:21"
+      ],
+      "claim": "Evidence/inference/uncertainty labels; RFC keywords may be lowercase; examples and notes are exceptions to general normative text.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:57-59",
+        "S003:869-888"
+      ],
+      "reason": "The stated interpretation framework agrees with the source. Its application to individual findings is assessed separately.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F001a",
+      "current_locators": [
+        "current-report.md:29"
+      ],
+      "claim": "RFC 2119, lowercase usage, exceptions for examples/notes, and prohibition of comments in real JSON.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:57-66",
+        "S003:869-888"
+      ],
+      "reason": "These constraints are explicit; commented multiscales examples cannot be copied verbatim as valid JSON.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F001b",
+      "current_locators": [
+        "current-report.md:29"
+      ],
+      "claim": "Any metadata copied verbatim from the specification examples is malformed.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:65-66",
+        "S003:320-387",
+        "S003:443-453"
+      ],
+      "reason": "This follows for the commented example identified here, not every example: the labels JSON example has no comments. The report should retain that scope.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F002a",
+      "current_locators": [
+        "current-report.md:30"
+      ],
+      "claim": "Released 0.5, promised migrations, and editor-draft support uncertainty.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:25-27"
+      ],
+      "reason": "These are statements of document status, not a guarantee of any native implementation.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F002b",
+      "current_locators": [
+        "current-report.md:30"
+      ],
+      "claim": "History dates and adoption of v3, restored omero description, dimension_names MUST, and dated report header.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:1-10",
+        "S003:825-833"
+      ],
+      "reason": "The stated dates and historical changes are present. Operative array placement is established separately at line 174.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F003",
+      "current_locators": [
+        "current-report.md:31"
+      ],
+      "claim": "Zarr v3; features may be used unless explicitly disallowed; local/HTTP/object-store representations.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:68-77"
+      ],
+      "reason": "The crucial exception to general feature permission is preserved; remote availability is separated from product scope.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F004a",
+      "current_locators": [
+        "current-report.md:35"
+      ],
+      "claim": "Image groups, zarr.json metadata, arbitrary axes and level names, declared ordering, 2–5 dimensions and time/channel/space order.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:79-100",
+        "S003:295-307"
+      ],
+      "reason": "These layout and ordering claims are supported. The later F015 correctly qualifies omero as optional.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F004b",
+      "current_locators": [
+        "current-report.md:35"
+      ],
+      "claim": "Chunks follow each array Zarr specification.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:99-100"
+      ],
+      "reason": "Source support is a reference to Zarr mechanics, not a verified native codec or addressing implementation.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F005a",
+      "current_locators": [
+        "current-report.md:36"
+      ],
+      "claim": "Nested labels container, integer arrays, permitted intermediate folders without additional metadata.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:102-117",
+        "S003:432-440"
+      ],
+      "reason": "Container identity, nesting and integer restriction are supported.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F005b",
+      "current_locators": [
+        "current-report.md:36"
+      ],
+      "claim": "Each label dimension must equal the image dimension or be 1 if irrelevant.",
+      "outcome": "contradicted",
+      "evidence_locators": [
+        "S003:106-108",
+        "S003:877-883"
+      ],
+      "reason": "The cited statement says should, and occurs in the layout example. Promoting it to a mandatory dimension constraint is unsupported. The later normative rule requires equal level count, not universally identical grids.",
+      "kind": "finding",
+      "material_failure_id": "R020-F01"
+    },
+    {
+      "id": "F006",
+      "current_locators": [
+        "current-report.md:37"
+      ],
+      "claim": "Required plate/row/well hierarchy and well/plate specifications; empty rows and wells SHOULD NOT occur.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:118-129"
+      ],
+      "reason": "Modal strength and the empty-group condition are preserved.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F007",
+      "current_locators": [
+        "current-report.md:41"
+      ],
+      "claim": "attributes.ome namespace, string version, hierarchy-consistent version; mixed values are nonconforming.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:149-165"
+      ],
+      "reason": "An explicit mandatory consistency rule provides a valid admission check.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F008",
+      "current_locators": [
+        "current-report.md:45"
+      ],
+      "claim": "Unique required axis names; recommended type/units with custom types; axes rank and per-level dimension_names presence/match.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:166-174",
+        "S003:825-827"
+      ],
+      "reason": "Names, rank and array identity are grounded correctly. Recommended units do not authorize invented calibration.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F009",
+      "current_locators": [
+        "current-report.md:46"
+      ],
+      "claim": "General transformations require a type, allow identity/scale/translation, inline or binary vectors, and list-order application.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:277-293"
+      ],
+      "reason": "General transform types and storage alternatives are distinct from narrower multiscales rules.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F010a",
+      "current_locators": [
+        "current-report.md:47"
+      ],
+      "claim": "Each multiscales dictionary has axes of rank 2–5, two or three spaces and optional time/channel/custom; order matches arrays.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:295-302"
+      ],
+      "reason": "The requirements apply within each multiscales dictionary; no cross-entry universal rank constraint is asserted.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F010b",
+      "current_locators": [
+        "current-report.md:47"
+      ],
+      "claim": "For 3D stacks, spatial order SHOULD be zyx.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:303"
+      ],
+      "reason": "The source adds the condition that yx is the image plane and z the other anisotropic stack axis. The broader wording loses that condition.",
+      "kind": "finding",
+      "material_failure_id": "R020-F02"
+    },
+    {
+      "id": "F010c",
+      "current_locators": [
+        "current-report.md:47"
+      ],
+      "claim": "datasets and group-relative paths are required, highest resolution first; level rank/order matches axes.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:304-307"
+      ],
+      "reason": "Names do not supply ordering and each dictionary has its own axes contract.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F010d",
+      "current_locators": [
+        "current-report.md:47"
+      ],
+      "claim": "Exactly one scale, conditional relative-factor fallback, optional translation after scale, matching vector lengths.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:308-313"
+      ],
+      "reason": "The physical-size rule and absence/inapplicability fallback are preserved; the transform rules exclude identity here.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F010e",
+      "current_locators": [
+        "current-report.md:47"
+      ],
+      "claim": "Optional group transforms use the same rules after dataset transforms; example shared time factor is 0.1 ms.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:314-316",
+        "S003:330-374"
+      ],
+      "reason": "The order and the worked example shared time factor are accurate.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F010f",
+      "current_locators": [
+        "current-report.md:47"
+      ],
+      "claim": "name, downscaling type and method metadata SHOULD be present.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:317-319"
+      ],
+      "reason": "These keys are recommendations rather than admission MUSTs.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F011",
+      "current_locators": [
+        "current-report.md:48"
+      ],
+      "claim": "Physical per-level sizes are normally absolute; relative factors are conditional fallback, with regime ambiguity left open.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:310",
+        "S003:330-374"
+      ],
+      "reason": "The example gives 0.5, 1.0 and 2.0 micrometer level sizes. The report avoids multiplying by the first level size and honestly scopes regime identification uncertainty.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F012",
+      "current_locators": [
+        "current-report.md:49"
+      ],
+      "claim": "Named multiscale choice with first fallback comes from informative pseudocode.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:388-397",
+        "S003:877-883"
+      ],
+      "reason": "The report expressly marks the example as informative; it does not turn its chunk-size comment into pyramid-level guidance.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F013a",
+      "current_locators": [
+        "current-report.md:53"
+      ],
+      "claim": "Transitional collection status, conforming layout value 3, plate precedence and collection/plate exclusivity.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64",
+        "S003:175-181",
+        "S003:204-206",
+        "S003:255-256"
+      ],
+      "reason": "The quoted value follows source wording; numbered examples represent numeric 3. Transitional reader strength must be determined per key.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F013b",
+      "current_locators": [
+        "current-report.md:53"
+      ],
+      "claim": "OME XML is recommended; if supplied it follows OME-XML and MetadataOnly, with minimum specification permitted.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:257-260"
+      ],
+      "reason": "Presence is SHOULD and content constraints are conditional on supplied XML, as this sentence indicates.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F013c",
+      "current_locators": [
+        "current-report.md:53"
+      ],
+      "claim": "Plate locations, optional series string list, XML order if provided, numeric fallback only without series and plate; one image per multiscales group.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:261-270"
+      ],
+      "reason": "Both critical discovery conditions are explicitly retained.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F014",
+      "current_locators": [
+        "current-report.md:54"
+      ],
+      "claim": "Readers SHOULD disclose multiple images and SHOULD NOT silently open first; MAY choose series, all/choice display or ignore unrelated roots.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:271-275"
+      ],
+      "reason": "The report explicitly distinguishes SHOULD/MAY from MUST.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F015a",
+      "current_locators": [
+        "current-report.md:58"
+      ],
+      "claim": "omero optional; conditional channels, color and window fields, with channel-count matching.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:401-403",
+        "S003:426-430"
+      ],
+      "reason": "Required fields and RGB syntax are normative. Array-size matching is shown in the informative example rather than explicitly repeated as a MUST at lines 426–430.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F015b",
+      "current_locators": [
+        "current-report.md:58"
+      ],
+      "claim": "rdefs and other example fields are informative, with fuller semantics in an unadmitted external reference.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:401-425",
+        "S003:877-883"
+      ],
+      "reason": "The report preserves the limit and does not impose a universal initialization algorithm.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F016",
+      "current_locators": [
+        "current-report.md:62"
+      ],
+      "claim": "Integer label types including signed/unsigned 64-bit; metadata-free intermediate groups; required path list, completeness SHOULD; label multiscales and equal level count.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:438-455"
+      ],
+      "reason": "Modal strength and arbitrary hierarchy paths are retained. Equal counts do not prove registration.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F017a",
+      "current_locators": [
+        "current-report.md:63"
+      ],
+      "claim": "image-label and colors/version key presence SHOULD; provided values have mandatory types and keyed IDs, optional RGBA with 0–255 components and alpha.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:456-466"
+      ],
+      "reason": "The nested presence/type distinction is correctly stated; reader palette behavior remains SHOULD.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F017b",
+      "current_locators": [
+        "current-report.md:63"
+      ],
+      "claim": "Optional properties/source, label-value keys, arbitrary nonuniform properties, relative source path and ../../ default.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:467-474"
+      ],
+      "reason": "These are supported metadata facts. A rendering association algorithm is still absent.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F018a",
+      "current_locators": [
+        "current-report.md:67"
+      ],
+      "claim": "Optional acquisitions with unique nonnegative IDs, recommended name/maximumfieldcount and conditional type constraints/timestamps.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:518-529"
+      ],
+      "reason": "Acquisition conditions and types match the source.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F018b",
+      "current_locators": [
+        "current-report.md:67"
+      ],
+      "claim": "Required physical rows/columns including empty ones, exact alphanumeric case-sensitive unique names and recommended filesystem collision avoidance.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:530-549"
+      ],
+      "reason": "The report separates physical plate grid from populated well groups.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F018c",
+      "current_locators": [
+        "current-report.md:67"
+      ],
+      "claim": "Recommended field_count/name; mandatory plate version/wells, row/column path and zero-based index consistency; sparse plate example.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:538-560",
+        "S003:561-739"
+      ],
+      "reason": "Mandatory path/index rules and sparse example are accurately described; examples illustrate rather than create obligations.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F019",
+      "current_locators": [
+        "current-report.md:68"
+      ],
+      "claim": "Required well images with unique alphanumeric paths, acquisition only when multiple plate acquisitions, version recommended with conditional string type.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:740-808"
+      ],
+      "reason": "The plate/well version asymmetry and acquisition condition are preserved.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F020",
+      "current_locators": [
+        "current-report.md:72"
+      ],
+      "claim": "CamelCase convention with exact legacy key exceptions; readers should not normalize key spellings.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:459-470",
+        "S003:524-560",
+        "S003:809-812"
+      ],
+      "reason": "Exact spellings are source facts; preserving them in parsing is a reasonable engineering inference.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F021",
+      "current_locators": [
+        "current-report.md:73"
+      ],
+      "claim": "Index oddities and stray punctuation are minor capture artifacts, with no change to requirements.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:130",
+        "S003:889-892"
+      ],
+      "reason": "The oddities exist. Their origin as conversion artifacts is a plausible inference, not source-proved provenance; treating cross-references cautiously is reasonable.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F022a",
+      "current_locators": [
+        "current-report.md:74"
+      ],
+      "claim": "The capture alone cannot establish which tools exist or implementation behavior.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:175-183",
+        "S003:375-382",
+        "S003:424-425",
+        "S003:813-814"
+      ],
+      "reason": "Real reader tolerance and interop behavior are unverified, but the document does identify bioformats2raw and skimage, including a method/version payload. A blanket implementation-information absence is too broad.",
+      "kind": "finding",
+      "material_failure_id": "R020-F04"
+    },
+    {
+      "id": "F022b",
+      "current_locators": [
+        "current-report.md:74"
+      ],
+      "claim": "Detailed Zarr/OME-XML/OMERO/UDUNITS mechanics, a conformance suite and future collection replacement remain outside this capture.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:68-72",
+        "S003:99-100",
+        "S003:170-181",
+        "S003:257-260",
+        "S003:424-425",
+        "S003:813-896"
+      ],
+      "reason": "A full-source review supports these qualified limits. They are not ecosystem-wide absence claims.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F023a",
+      "current_locators": [
+        "current-report.md:75"
+      ],
+      "claim": "Counterevidence rejects comments, name-based level order, fixed axis names, dense-only plates, required omero, float labels and mandatory well version.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:65-66",
+        "S003:81",
+        "S003:93-94",
+        "S003:128-129",
+        "S003:305-306",
+        "S003:426",
+        "S003:438-439",
+        "S003:550-551",
+        "S003:641-739",
+        "S003:751-752"
+      ],
+      "reason": "Every listed rejection has the stated source basis.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F023b",
+      "current_locators": [
+        "current-report.md:75"
+      ],
+      "claim": "Scale values are not universally absolute; fallback regime is conditional.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:310"
+      ],
+      "reason": "The fallback condition is explicit and not a free choice to reinterpret normal calibrated scale values.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F101a",
+      "current_locators": [
+        "current-report.md:83"
+      ],
+      "claim": "A complete promised image listing should handle plain images, HCS and transitional collections, rather than silently opening the first.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "Viewer.md:5",
+        "S003:79-129",
+        "S003:175-275",
+        "S003:515-808"
+      ],
+      "reason": "The coverage follows the broad product promise. The source has conditional collection obligations and reader recommendations; it does not mandate every UI layout or prominently surfaced list for every conforming reader.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F101b",
+      "current_locators": [
+        "current-report.md:83"
+      ],
+      "claim": "Unrelated root groups may be ignored and label metadata supplies label discovery.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:275",
+        "S003:441-442"
+      ],
+      "reason": "These permissions/paths are supported; discovery breadth still requires an explicit product policy.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F102",
+      "current_locators": [
+        "current-report.md:84"
+      ],
+      "claim": "Drive controls by axes/dimension_names rather than fixed names; report array-identity mismatch.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "Viewer.md:5-11",
+        "S003:81",
+        "S003:166-174",
+        "S003:299-302"
+      ],
+      "reason": "This is a sound source-to-plan implication. It does not fully address absent versus singleton dimensions.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F103",
+      "current_locators": [
+        "current-report.md:85"
+      ],
+      "claim": "Use declared high-to-low levels and per-level geometry, not folder names; multiple named entries use informative choice/fallback.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "Viewer.md:5",
+        "S003:93-94",
+        "S003:304-319",
+        "S003:388-397"
+      ],
+      "reason": "Declared ordering and geometry are correct. Ranking by derived physical size is a proposed policy needing anisotropic/nonuniform handling, and the choice example is informative, as the report acknowledges.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F104",
+      "current_locators": [
+        "current-report.md:86"
+      ],
+      "claim": "Compose dataset scale/translation then group transforms; unit SHOULD means honest uncalibrated display and no invented units.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "Viewer.md:5",
+        "S003:169-172",
+        "S003:293",
+        "S003:308-316"
+      ],
+      "reason": "The reasoning is correct, including optional units and custom types. No concrete numerical offset check is supplied.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F105a",
+      "current_locators": [
+        "current-report.md:87"
+      ],
+      "claim": "Level-count parity and equal-or-singleton dimensions guarantee that level-aligned overlay rendering is sound.",
+      "outcome": "contradicted",
+      "evidence_locators": [
+        "S003:106-108",
+        "S003:432-433",
+        "S003:454-455",
+        "S003:472-474"
+      ],
+      "reason": "Equal counts or dimensions do not establish equal grids, origins or transforms. The source says same dimensions/transforms are usual. Resolve actual association and coordinates before overlaying.",
+      "kind": "finding",
+      "material_failure_id": "R020-F03"
+    },
+    {
+      "id": "F105b",
+      "current_locators": [
+        "current-report.md:87"
+      ],
+      "claim": "Palette use SHOULD, missing image-label permits fallback; source path default and arbitrary keyed properties.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:456-474"
+      ],
+      "reason": "These are correctly qualified format facts and a sensible explicitly proposed rendering fallback.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F105c",
+      "current_locators": [
+        "current-report.md:87"
+      ],
+      "claim": "Unlisted labels violate a completeness SHOULD; tree scanning is a discovery extension.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:441-442"
+      ],
+      "reason": "This is a recommendation gap, not mandatory format failure or a source ban on scanning.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F106",
+      "current_locators": [
+        "current-report.md:88"
+      ],
+      "claim": "omero can seed display; absent metadata needs product defaults, example time/plane hints can be clamped.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "Viewer.md:5",
+        "S003:401-430"
+      ],
+      "reason": "The report treats initial display and clamping as inferences, with external semantics unresolved.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F107",
+      "current_locators": [
+        "current-report.md:89"
+      ],
+      "claim": "Specific mandatory metadata checks can support plan failure feedback; crashes violate the plan rather than a defined source runtime protocol.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "Viewer.md:7-11",
+        "S003:65-66",
+        "S003:156",
+        "S003:173-174",
+        "S003:204-206",
+        "S003:256-270",
+        "S003:300-312",
+        "S003:438-455",
+        "S003:530-560",
+        "S003:744-750"
+      ],
+      "reason": "The enumerated mandatory checks are valid. Explanatory messages are product acceptance behavior, not source-defined crash semantics.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F108a",
+      "current_locators": [
+        "current-report.md:93"
+      ],
+      "claim": "Background IO, caching and cancellation are not source obligations; chunked storage supports a partial-read engineering approach.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "Viewer.md:7",
+        "S003:70-72",
+        "S003:91-100",
+        "S003:1-896"
+      ],
+      "reason": "No source rule specifies threading, cancellation, latency or cache policy; feasibility does not prove performance.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F108b",
+      "current_locators": [
+        "current-report.md:93"
+      ],
+      "claim": "The specification is silent on rendering.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:401-430",
+        "S003:461-466"
+      ],
+      "reason": "It gives rendering metadata and recommended palette behavior. Silence is defensible only for concrete concurrency/cache/rendering algorithms, not rendering as a whole.",
+      "kind": "finding",
+      "material_failure_id": "R020-F05"
+    },
+    {
+      "id": "F108c",
+      "current_locators": [
+        "current-report.md:93"
+      ],
+      "claim": "Exact chunk addressing is unverified here; local scope fits the format, remote support would be a product choice.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "brief.md:5",
+        "S003:68-77",
+        "S003:99-100"
+      ],
+      "reason": "The admitted text refers external Zarr mechanics and supports local representation without extending the brief.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F109",
+      "current_locators": [
+        "current-report.md:94"
+      ],
+      "claim": "Version consistency and draft warnings justify explicit admission; older/v2 compatibility is an unresolved product decision.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:25-27",
+        "S003:60-69",
+        "S003:156",
+        "S003:180-181",
+        "S003:831-833"
+      ],
+      "reason": "The report does not claim the source establishes an earlier Zarr-v2 version history; broader compatibility is left unproved.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F110a",
+      "current_locators": [
+        "current-report.md:95"
+      ],
+      "claim": "Optional sparse HCS/acquisition UI, exact legacy keys, collision warnings, mixed-version detection and collection-size presentation.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:156",
+        "S003:272",
+        "S003:530-560",
+        "S003:641-750",
+        "S003:809-812"
+      ],
+      "reason": "These are useful proposed product improvements with cited constraints; no HCS-specific UI is mandated by the source.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F110b",
+      "current_locators": [
+        "current-report.md:95"
+      ],
+      "claim": "Custom/unlisted unit display and best-effort unlisted label discovery can be explicit product choices.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:169-172",
+        "S003:441-442"
+      ],
+      "reason": "Recommended units and completeness do not require silently inventing units or rejecting all such inputs.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "F111-status",
+      "current_locators": [
+        "current-report.md:97-99",
+        "current-report.md:102",
+        "current-report.md:115"
+      ],
+      "claim": "All validation is proposed and UNEXECUTED, including desk review.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "current-report.md:97-103"
+      ],
+      "reason": "The current status is unambiguous. Actual native test operations remain unverified; no passing product test is credited.",
+      "kind": "test-status",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-P01",
+      "current_locators": [
+        "current-report.md:100"
+      ],
+      "claim": "Proposed positive fixture: 5D with shared time transform.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:320-387",
+        "Viewer.md:11"
+      ],
+      "reason": "A useful, source-compatible UNEXECUTED proposal. No generated fixture, measurement or passing result is asserted.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-P02",
+      "current_locators": [
+        "current-report.md:100"
+      ],
+      "claim": "Proposed positive fixture: 2D/4D variants.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:295-302",
+        "Viewer.md:11"
+      ],
+      "reason": "A useful, source-compatible UNEXECUTED proposal. No generated fixture, measurement or passing result is asserted.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-P03",
+      "current_locators": [
+        "current-report.md:100"
+      ],
+      "claim": "Proposed positive fixture: full plate.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:561-640",
+        "Viewer.md:11"
+      ],
+      "reason": "A useful, source-compatible UNEXECUTED proposal. No generated fixture, measurement or passing result is asserted.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-P04",
+      "current_locators": [
+        "current-report.md:100"
+      ],
+      "claim": "Proposed positive fixture: sparse plate.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:641-739",
+        "Viewer.md:11"
+      ],
+      "reason": "A useful, source-compatible UNEXECUTED proposal. No generated fixture, measurement or passing result is asserted.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-P05",
+      "current_locators": [
+        "current-report.md:100"
+      ],
+      "claim": "Proposed positive fixture: multi-acquisition wells.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:753-808",
+        "Viewer.md:11"
+      ],
+      "reason": "A useful, source-compatible UNEXECUTED proposal. No generated fixture, measurement or passing result is asserted.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-P06",
+      "current_locators": [
+        "current-report.md:100"
+      ],
+      "claim": "Proposed positive fixture: label colors/properties/source.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:443-514",
+        "Viewer.md:11"
+      ],
+      "reason": "A useful, source-compatible UNEXECUTED proposal. No generated fixture, measurement or passing result is asserted.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-P07",
+      "current_locators": [
+        "current-report.md:100"
+      ],
+      "claim": "Proposed positive fixture: bioformats2raw series/XML collection.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:183-270",
+        "Viewer.md:11"
+      ],
+      "reason": "A useful, source-compatible UNEXECUTED proposal. No generated fixture, measurement or passing result is asserted.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-N01",
+      "current_locators": [
+        "current-report.md:101"
+      ],
+      "claim": "Proposed negative fixture: JSON comments.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:65-66",
+        "Viewer.md:7-11"
+      ],
+      "reason": "The cited condition is a genuine mandatory constraint. Explanatory feedback is a product test requirement. The test remains UNEXECUTED.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-N02",
+      "current_locators": [
+        "current-report.md:101"
+      ],
+      "claim": "Proposed negative fixture: mixed versions.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:156",
+        "Viewer.md:7-11"
+      ],
+      "reason": "The cited condition is a genuine mandatory constraint. Explanatory feedback is a product test requirement. The test remains UNEXECUTED.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-N03",
+      "current_locators": [
+        "current-report.md:101"
+      ],
+      "claim": "Proposed negative fixture: missing/mismatched dimension_names.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:174",
+        "Viewer.md:7-11"
+      ],
+      "reason": "The cited condition is a genuine mandatory constraint. Explanatory feedback is a product test requirement. The test remains UNEXECUTED.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-N04",
+      "current_locators": [
+        "current-report.md:101"
+      ],
+      "claim": "Proposed negative fixture: reversed dataset order.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:305-306",
+        "Viewer.md:7-11"
+      ],
+      "reason": "The cited condition is a genuine mandatory constraint. Explanatory feedback is a product test requirement. The test remains UNEXECUTED.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-N05",
+      "current_locators": [
+        "current-report.md:101"
+      ],
+      "claim": "Proposed negative fixture: missing/duplicate scale.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:310",
+        "Viewer.md:7-11"
+      ],
+      "reason": "The cited condition is a genuine mandatory constraint. Explanatory feedback is a product test requirement. The test remains UNEXECUTED.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-N06",
+      "current_locators": [
+        "current-report.md:101"
+      ],
+      "claim": "Proposed negative fixture: translation before scale.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:311",
+        "Viewer.md:7-11"
+      ],
+      "reason": "The cited condition is a genuine mandatory constraint. Explanatory feedback is a product test requirement. The test remains UNEXECUTED.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-N07",
+      "current_locators": [
+        "current-report.md:101"
+      ],
+      "claim": "Proposed negative fixture: wrong vector length.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:312",
+        "Viewer.md:7-11"
+      ],
+      "reason": "The cited condition is a genuine mandatory constraint. Explanatory feedback is a product test requirement. The test remains UNEXECUTED.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-N08",
+      "current_locators": [
+        "current-report.md:101"
+      ],
+      "claim": "Proposed negative fixture: invalid collection layout value.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:256",
+        "Viewer.md:7-11"
+      ],
+      "reason": "The cited condition is a genuine mandatory constraint. Explanatory feedback is a product test requirement. The test remains UNEXECUTED.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-N09",
+      "current_locators": [
+        "current-report.md:101"
+      ],
+      "claim": "Proposed negative fixture: plate/collection mixing.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:204-206",
+        "Viewer.md:7-11"
+      ],
+      "reason": "The cited condition is a genuine mandatory constraint. Explanatory feedback is a product test requirement. The test remains UNEXECUTED.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-N10",
+      "current_locators": [
+        "current-report.md:101"
+      ],
+      "claim": "Proposed negative fixture: noninteger label pixels.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:438-439",
+        "Viewer.md:7-11"
+      ],
+      "reason": "The cited condition is a genuine mandatory constraint. Explanatory feedback is a product test requirement. The test remains UNEXECUTED.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-N11",
+      "current_locators": [
+        "current-report.md:101"
+      ],
+      "claim": "Proposed negative fixture: label level-count mismatch.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:454-455",
+        "Viewer.md:7-11"
+      ],
+      "reason": "The cited condition is a genuine mandatory constraint. Explanatory feedback is a product test requirement. The test remains UNEXECUTED.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-N12",
+      "current_locators": [
+        "current-report.md:101"
+      ],
+      "claim": "Proposed negative fixture: invalid/duplicate names.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:530-549",
+        "Viewer.md:7-11"
+      ],
+      "reason": "The cited condition is a genuine mandatory constraint. Explanatory feedback is a product test requirement. The test remains UNEXECUTED.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-N13",
+      "current_locators": [
+        "current-report.md:101"
+      ],
+      "claim": "Proposed negative fixture: path/index disagreement.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:552-560",
+        "Viewer.md:7-11"
+      ],
+      "reason": "The cited condition is a genuine mandatory constraint. Explanatory feedback is a product test requirement. The test remains UNEXECUTED.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-N14",
+      "current_locators": [
+        "current-report.md:101"
+      ],
+      "claim": "Proposed negative fixture: unknown acquisition reference.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:748-750",
+        "Viewer.md:7-11"
+      ],
+      "reason": "The cited condition is a genuine mandatory constraint. Explanatory feedback is a product test requirement. The test remains UNEXECUTED.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-review",
+      "current_locators": [
+        "current-report.md:102"
+      ],
+      "claim": "Proposed source-to-claim conditional-strength desk review.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:57-59",
+        "S003:869-888"
+      ],
+      "reason": "Useful UNEXECUTED review; it cannot certify conditions already lost in the report.",
+      "kind": "test-proposal",
+      "material_failure_id": null
+    },
+    {
+      "id": "T-interop",
+      "current_locators": [
+        "current-report.md:103"
+      ],
+      "claim": "Real-tool interop is proposed but not tested; no implementation is described in the source.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:175-183",
+        "S003:375-382",
+        "S003:813-814"
+      ],
+      "reason": "No native interop behavior is established. The source nevertheless contains named tool/layout and method/version information; the complete description denial needs qualification. ome-zarr-py is an unverified prospective lead.",
+      "kind": "test-proposal",
+      "material_failure_id": "R020-F04"
+    },
+    {
+      "id": "F112",
+      "current_locators": [
+        "current-report.md:107"
+      ],
+      "claim": "Reader behavior, detailed external mechanics, future metadata and conformance suite remain explicitly open within this capture.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:68-72",
+        "S003:170-181",
+        "S003:257-260",
+        "S003:424-425",
+        "S003:813-896"
+      ],
+      "reason": "The unresolved list is valid when scoped to detailed behavior rather than denying all tool information.",
+      "kind": "finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "A05",
+      "current_locators": [
+        "current-report.md:113-115"
+      ],
+      "claim": "Stable finding index in external logs, repeated reads, TASK retry, permitted-tool compliance, no native/shell/fetch or extra stage.",
+      "outcome": "unresolved",
+      "evidence_locators": [],
+      "reason": "Actual operations and inaccessible logs are not established by current-file self-report. Current IDs are visible and unique.",
+      "kind": "process",
+      "material_failure_id": null
+    },
+    {
+      "id": "A06",
+      "current_locators": [
+        "current-report.md:116"
+      ],
+      "claim": "Conditional language is preserved throughout; all negative assertions and epistemic labels are correct.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:106-108",
+        "S003:303",
+        "S003:432-433",
+        "S003:175-183",
+        "S003:375-382"
+      ],
+      "reason": "Most labels and scoped negatives are careful, but dimension strength, conditional spatial order, overlay guarantee and implementation absence prevent an unqualified attestation.",
+      "kind": "self-assessment",
+      "material_failure_id": "R020-F06"
+    }
+  ],
+  "claim_outcome_counts": {
+    "unresolved": 3,
+    "supported": 72,
+    "qualified": 10,
+    "contradicted": 2
+  },
+  "facets": [
+    {
+      "id": "OME05-C01",
+      "outcome": "full",
+      "current_locators": [
+        "current-report.md:31",
+        "current-report.md:41",
+        "current-report.md:89",
+        "current-report.md:94",
+        "current-report.md:101"
+      ],
+      "source_locators": [
+        "S003:68-69",
+        "S003:149-156"
+      ],
+      "reason": "Version/namespace, hierarchy consistency, strict version checking and invalid-input feedback support explicit admission. Older compatibility is an explicit unresolved choice.",
+      "material_failure_id": null
+    },
+    {
+      "id": "OME05-C02",
+      "outcome": "partial",
+      "current_locators": [
+        "current-report.md:35",
+        "current-report.md:45",
+        "current-report.md:47",
+        "current-report.md:84",
+        "current-report.md:101"
+      ],
+      "source_locators": [
+        "S003:81",
+        "S003:166-174",
+        "S003:299-303"
+      ],
+      "reason": "Array identity, custom names and metadata-driven controls are covered; absent dimensions versus length-one axes and unsupported-role handling are not explicit.",
+      "material_failure_id": "R020-O01"
+    },
+    {
+      "id": "OME05-C03",
+      "outcome": "partial",
+      "current_locators": [
+        "current-report.md:35",
+        "current-report.md:47-49",
+        "current-report.md:85",
+        "current-report.md:101"
+      ],
+      "source_locators": [
+        "S003:93-94",
+        "S003:304-319"
+      ],
+      "reason": "Declared paths/order and per-level geometry are covered. Missing declared-array handling and nonuniform/anisotropic selection policies are not complete.",
+      "material_failure_id": "R020-O02"
+    },
+    {
+      "id": "OME05-C04",
+      "outcome": "partial",
+      "current_locators": [
+        "current-report.md:46-48",
+        "current-report.md:86",
+        "current-report.md:100-101"
+      ],
+      "source_locators": [
+        "S003:169-172",
+        "S003:293",
+        "S003:308-316"
+      ],
+      "reason": "Composition order, offsets and honest unknown units are correct, but no concrete numeric translated point check exposes reversed composition or missing offsets.",
+      "material_failure_id": "R020-O03"
+    },
+    {
+      "id": "OME05-C05",
+      "outcome": "partial",
+      "current_locators": [
+        "current-report.md:36",
+        "current-report.md:62-63",
+        "current-report.md:87",
+        "current-report.md:100-101"
+      ],
+      "source_locators": [
+        "S003:432-474"
+      ],
+      "reason": "Path/default metadata and equal count are present. Actual relative source identity, coordinate registration and explicit refusal of unsupported geometry are not resolved; count/dimensions are incorrectly treated as sufficient.",
+      "material_failure_id": "R020-O04"
+    },
+    {
+      "id": "OME05-C06",
+      "outcome": "partial",
+      "current_locators": [
+        "current-report.md:62-63",
+        "current-report.md:87",
+        "current-report.md:100-101"
+      ],
+      "source_locators": [
+        "S003:438-439",
+        "S003:461-471"
+      ],
+      "reason": "Integer types, keyed metadata and recommended palette use are covered. Exact 64-bit decoding/lookup, supported range refusal, sparse entry ordering and categorical resampling are not addressed.",
+      "material_failure_id": "R020-O05"
+    }
+  ],
+  "facet_count": 6,
+  "facet_outcome_counts": {
+    "full": 1,
+    "partial": 5
+  },
+  "material_failures": [
+    {
+      "id": "R020-F01",
+      "claim_ids": [
+        "F005b"
+      ],
+      "summary": "A label dimension recommendation is promoted to MUST."
+    },
+    {
+      "id": "R020-F02",
+      "claim_ids": [
+        "F010b"
+      ],
+      "summary": "The anisotropic plane/stack condition on zyx ordering is omitted."
+    },
+    {
+      "id": "R020-F03",
+      "claim_ids": [
+        "F105a"
+      ],
+      "summary": "Count/dimension parity is overclaimed as overlay registration."
+    },
+    {
+      "id": "R020-F04",
+      "claim_ids": [
+        "F022a",
+        "T-interop"
+      ],
+      "summary": "A broad implementation-information absence misses tool/layout and method/version counterevidence."
+    },
+    {
+      "id": "R020-F05",
+      "claim_ids": [
+        "F108b"
+      ],
+      "summary": "Silence on rendering is broader than the source permits."
+    },
+    {
+      "id": "R020-F06",
+      "claim_ids": [
+        "A06"
+      ],
+      "summary": "The universal condition-preservation attestation needs qualification."
+    },
+    {
+      "id": "R020-O01",
+      "facet": "OME05-C02",
+      "summary": "Array identity, custom names and metadata-driven controls are covered; absent dimensions versus length-one axes and unsupported-role handling are not explicit."
+    },
+    {
+      "id": "R020-O02",
+      "facet": "OME05-C03",
+      "summary": "Declared paths/order and per-level geometry are covered. Missing declared-array handling and nonuniform/anisotropic selection policies are not complete."
+    },
+    {
+      "id": "R020-O03",
+      "facet": "OME05-C04",
+      "summary": "Composition order, offsets and honest unknown units are correct, but no concrete numeric translated point check exposes reversed composition or missing offsets."
+    },
+    {
+      "id": "R020-O04",
+      "facet": "OME05-C05",
+      "summary": "Path/default metadata and equal count are present. Actual relative source identity, coordinate registration and explicit refusal of unsupported geometry are not resolved; count/dimensions are incorrectly treated as sufficient."
+    },
+    {
+      "id": "R020-O05",
+      "facet": "OME05-C06",
+      "summary": "Integer types, keyed metadata and recommended palette use are covered. Exact 64-bit decoding/lookup, supported range refusal, sparse entry ordering and categorical resampling are not addressed."
+    }
+  ],
+  "omitted_scope": [
+    "OME05-C02: Array identity, custom names and metadata-driven controls are covered; absent dimensions versus length-one axes and unsupported-role handling are not explicit.",
+    "OME05-C03: Declared paths/order and per-level geometry are covered. Missing declared-array handling and nonuniform/anisotropic selection policies are not complete.",
+    "OME05-C04: Composition order, offsets and honest unknown units are correct, but no concrete numeric translated point check exposes reversed composition or missing offsets.",
+    "OME05-C05: Path/default metadata and equal count are present. Actual relative source identity, coordinate registration and explicit refusal of unsupported geometry are not resolved; count/dimensions are incorrectly treated as sufficient.",
+    "OME05-C06: Integer types, keyed metadata and recommended palette use are covered. Exact 64-bit decoding/lookup, supported range refusal, sparse entry ordering and categorical resampling are not addressed."
+  ],
+  "unreviewed_scope": [],
+  "structural_gaps": [
+    "Original TASK and external acquisition/protocol logs are not supplied; current claims about them remain unresolved. No required current companion profile was admitted for this report."
+  ],
+  "unresolved_matters": [
+    "Native Goal, tool reads, read receipts, process independence and execution self-report cannot be verified before a separate explicit phase-2 unlock.",
+    "Actual reader/writer tolerance and interop remain unproved in the fixed corpus.",
+    "Current prose supplies no fixture execution or performance measurement."
+  ],
+  "novelty": [
+    "Accurate conditional relative-scale fallback distinguished from normal absolute physical sizes.",
+    "Mandatory JSON-comment rejection, precise collection discovery conditions and reader SHOULD/MAY distinction.",
+    "Useful sparse HCS, acquisition, exact metadata-key, filesystem collision and plate/well-version observations.",
+    "Careful classification of informative omero defaults and nested image-label key-presence versus type constraints."
+  ],
+  "blinding_limits": [
+    "The report embeds native Goal, repeated-source treatment, Q1/Q2 stage, SELF_REPORT, tool and path cues. These are unavoidable visible data; no mapped history/method/economics files were accessed.",
+    "Parent operational updates exposed some workflow labels/runtime caps for ongoing production; no such labels were used as evidence of semantic quality.",
+    "Earlier current reports in the same coherent case were independently graded in this task; source knowledge is reused only after exact hash agreement."
+  ],
+  "test_status": "All listed tests and desk checks remain UNEXECUTED; native process verification is unresolved.",
+  "source_fit": "Broad and mostly careful use of the complete fixed primary source, with specific condition/absence/registration errors.",
+  "plan_fit": "Useful broad implications within local read-only scope; calibrated/overlay/categorical acceptance remains materially incomplete.",
+  "standalone_coherence": "Complete readable question and finding structure. Referenced acquisition/protocol files are unavailable; the report itself supplies all current findings.",
+  "current_report_verdict": "quality failure",
+  "terminal_label": "quality failure",
+  "comparison_status": "No method or economic comparison is authorized in phase 1."
+}

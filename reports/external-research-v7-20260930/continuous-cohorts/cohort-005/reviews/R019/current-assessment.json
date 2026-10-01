@@ -1,0 +1,2497 @@
+{
+  "schema": "er7.current_assessment.semantic.v1",
+  "report_id": "R019",
+  "case_id": "C061",
+  "intake_alias": "C041eligibility/universe is root-confirmed intakealias;exactsamepins/facets,no denominatorchange",
+  "phase": 1,
+  "frozen_at_utc": "2026-10-01T20:50:45.841653+00:00",
+  "reviewer": {
+    "task": "current-ome-grading-v4",
+    "runtime": "GPT-6.1 Sol;parentrequestedMax",
+    "role": "independentevaluator,nocandidateauthor/rescue",
+    "cost": null
+  },
+  "current_artifact_scope": [
+    "current-report.md",
+    "verification.json",
+    "negative-checks.json"
+  ],
+  "report_sha256": "18349e1b6eb33bc2091dc11e9d7779263abc1f600bc156f13536b8f7eb0beda2",
+  "queue_stage_sha256": "7590bd08fe0bbd3c8863a095015722890a8c29db101202e1396d10ca86c66c44",
+  "stage_pin_verified": true,
+  "input_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R019/MANIFEST.json",
+      "sha256": "e9003b6171d409c73d03d64b447444a8a2eed2e3a2452289627e4ecb5d45fdd7",
+      "bytes": 1036,
+      "lines": 13
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R019/PROTOCOL.md",
+      "sha256": "f0427cc8d1495e368b8b79cb9ead18cc65d4b0b2e8b509e338b86923ee5b1e15",
+      "bytes": 6471,
+      "lines": 33
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R019/current-artifact-set.json",
+      "sha256": "195566d4352390682849cb286cec146f0de4d18a6564dc4f80cdb93776c707d0",
+      "bytes": 1189,
+      "lines": 29
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R019/current-report.md",
+      "sha256": "18349e1b6eb33bc2091dc11e9d7779263abc1f600bc156f13536b8f7eb0beda2",
+      "bytes": 58840,
+      "lines": 203
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R019/eligibility.json",
+      "sha256": "03fd2372eaea03a8b377a9aaea70ee9112677ef8e3655bd7381005ec372b694e",
+      "bytes": 8212,
+      "lines": 143
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R019/inputs/MANIFEST.sha256.json",
+      "sha256": "f1c5402de8bc4bc0ddce71d4f232756d2eb9a1d8a77239bf9578587a66c1a2d1",
+      "bytes": 357,
+      "lines": 6
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R019/inputs/brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905,
+      "lines": 5
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R019/inputs/plan/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498,
+      "lines": 11
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R019/inputs/source-universe.json",
+      "sha256": "931ea25f02ce6c827ad9f18fbed76db24f8c5f8d9f1965aba5b33a9e0f4dd991",
+      "bytes": 251,
+      "lines": 11
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R019/inputs/sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "lines": 896
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R019/negative-checks.json",
+      "sha256": "fa8c0a1ed3a0ee9df4d6d6608762e7c47fac718193462d6fc068427631ebae5f",
+      "bytes": 34238,
+      "lines": 369
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R019/stage.json",
+      "sha256": "7590bd08fe0bbd3c8863a095015722890a8c29db101202e1396d10ca86c66c44",
+      "bytes": 725,
+      "lines": 15
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R019/verification.json",
+      "sha256": "c6f0499e7b4f065d6ff538d92827b4dbb634fab838e86160dd0f8f5824e6ad18",
+      "bytes": 18594,
+      "lines": 193
+    }
+  ],
+  "complete_coverage": true,
+  "coverage_meaning": "Allmaterialcurrentassertionsacross203reportlines/entire193lineverification/entire369line30-checknegativeartifactassessed;all36Ffindings,12decisions/reasons,2replacements,4additions,4nonfindings,all30Nchecksandlimits/counterevidence/adoptedpolicies,all9proposalsand6predeclaredfacets. Relatedatomswithsameoutcomessharerows;actualprocess/externalseedrelationshipexplicitlyunresolved. Nosampling.",
+  "claim_count": 127,
+  "claims": [
+    {
+      "id": "A01",
+      "current_locators": [
+        "current-report.md:3-8",
+        "current-report.md:17",
+        "current-report.md:199"
+      ],
+      "claim": "Fixed S003 0.5 capture identity/hash36980bytes896lines,finalheaderSep8,URLs;11lineplan/read-onlylocalbrief.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:1-10",
+        "S003:25-27",
+        "S003:68-69",
+        "S003:149-165",
+        "Viewer.md:1-11",
+        "brief.md:3-5",
+        "inputs/source-universe.json:/sources"
+      ],
+      "reason": "Exact source/brief/plan pins match; frozen capture only, no live transfer.",
+      "kind": "identity",
+      "material_failure_id": null
+    },
+    {
+      "id": "A02",
+      "current_locators": [
+        "current-report.md:4",
+        "current-report.md:12-13",
+        "current-report.md:20",
+        "current-report.md:152",
+        "current-report.md:176",
+        "current-report.md:194",
+        "current-report.md:200-201",
+        "verification.json:/method",
+        "negative-checks.json:/method_note"
+      ],
+      "claim": "Seed U001-U012 fully reread/verified,task/metadata provenance,methodsearch/tool/read inventory and independence/reuse/execution attestation.",
+      "outcome": "unresolved",
+      "evidence_locators": [],
+      "reason": "External seed/TASK/catalog/acquisition/history not staged or read. Current artifact counts/claims can be assessed, actual execution/provenance and seed preservation cannot.",
+      "kind": "process",
+      "material_failure_id": null
+    },
+    {
+      "id": "A03",
+      "current_locators": [
+        "current-report.md:9",
+        "current-report.md:10-11"
+      ],
+      "claim": "Wholebriefgroup scope;exactcitationconvention;candidate-defined obligation/recommendation/option/productdecision/unsupported/malformed vocabulary.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "brief.md:3-5",
+        "Viewer.md:5-11",
+        "S003:57-59",
+        "S003:868-888"
+      ],
+      "reason": "Topic scope and one-based locators valid. Vocabulary is a report framework, not source quotation; full facet coverage and every claimed sourceforce still checked independently.",
+      "kind": "scope",
+      "material_failure_id": null
+    },
+    {
+      "id": "L01",
+      "current_locators": [
+        "current-report.md:17-19"
+      ],
+      "claim": "Singlecapture only,nootherdraft/version/live/Zarr/OME-XML/UDUNITS/tooltransfer;externalZarr backendcaps;locallimitproduct.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:25-27",
+        "S003:68-77",
+        "S003:170-172",
+        "S003:257-260",
+        "S003:813-814",
+        "Viewer.md:9"
+      ],
+      "reason": "Appropriate applicability limits; backendunsupported errors are product capability limits, not data nonconformance.",
+      "kind": "scope",
+      "material_failure_id": null
+    },
+    {
+      "id": "L02",
+      "current_locators": [
+        "current-report.md:21",
+        "current-report.md:152",
+        "negative-checks.json:/method_note"
+      ],
+      "claim": "Keywordmiss proves onlyscopedresult;paraphrasedcoverage notdenied;insufficient disputes remainunresolved.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "PROTOCOL.md:Stage1",
+        "S003:1-896"
+      ],
+      "reason": "Sound declared evidentiary rule. It does not rescue broader current assertions contradicted by explicit source counterevidence.",
+      "kind": "method_principle",
+      "material_failure_id": null
+    },
+    {
+      "id": "F01a",
+      "current_locators": [
+        "current-report.md:25",
+        "current-report.md:29"
+      ],
+      "claim": "OME isZarrv3,allfeatures mayused unlessdisallowed;backendgracefulfailure.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:68-72",
+        "Viewer.md:7-11"
+      ],
+      "reason": "General incorporation and permission correct; conditional restriction cannot be dropped. Backend capability is product policy.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F01b",
+      "current_locators": [
+        "current-report.md:25",
+        "current-report.md:29",
+        "current-report.md:145",
+        "current-report.md:166"
+      ],
+      "claim": "Codecs/chunkgrids/dtypes/transformers unbounded;nodisallowanceanywhere.",
+      "outcome": "contradicted",
+      "evidence_locators": [
+        "S003:300-307",
+        "S003:438-439",
+        "S003:70-72"
+      ],
+      "reason": "Label pixels restricted to integer types and images to2-5dimensions. No literal disallow keyword outsideL72 does not establish unrestricted dtype/profile; caveat about paraphrases is contradicted by current positive datatype assertion.",
+      "kind": "absence",
+      "material_failure_id": "R019-F01"
+    },
+    {
+      "id": "F02",
+      "current_locators": [
+        "current-report.md:30",
+        "current-report.md:42",
+        "current-report.md:112",
+        "current-report.md:137-138"
+      ],
+      "claim": "Formatlocationagnostic;localreadonly/sessionlocalboundariesKEEP;norequiredsourcewrites.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64",
+        "S003:73-77",
+        "S003:1-896",
+        "brief.md:5",
+        "Viewer.md:9"
+      ],
+      "reason": "Fullsource contains no viewer-write obligation. Remote rejection must be product scope, neverformatnonconformance.",
+      "kind": "plan",
+      "material_failure_id": null
+    },
+    {
+      "id": "F03",
+      "current_locators": [
+        "current-report.md:31",
+        "current-report.md:53",
+        "current-report.md:104",
+        "current-report.md:168"
+      ],
+      "claim": "attributes.ome stringversion hierarchyconsistency;missing/mixedmetadata malformed;harderror/besteffort visiblecaveatproductpolicy.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:149-165",
+        "Viewer.md:7-11"
+      ],
+      "reason": "Metadata requirements and opener consistency gate explicit; recovery not prescribed by source. No silent legacy reinterpretation claimed.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F04",
+      "current_locators": [
+        "current-report.md:32"
+      ],
+      "claim": "RFC2119/transitional/normative exceptions/commentsMUSTNOT;examples/notesfencing.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:57-66",
+        "S003:869-888"
+      ],
+      "reason": "Rules accurate except readersMUST/SHOULD remains conditional mayexpected/encouraged; not every transitional key gains a universal read/apply duty.",
+      "kind": "normativity",
+      "material_failure_id": null
+    },
+    {
+      "id": "F05",
+      "current_locators": [
+        "current-report.md:33"
+      ],
+      "claim": "Released0.5;futuremigrations/editorcaveat;only0.5contractelsebesteffort/reject.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:25-27",
+        "S003:155-161",
+        "Viewer.md:9"
+      ],
+      "reason": "Version facts correct. Product admission boundary is sourcefit/capability policy, not source obligation universalbeyondthisviewer.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F06",
+      "current_locators": [
+        "current-report.md:34"
+      ],
+      "claim": "camelCaserecommendationhistoricalexceptions;literalkeyspellings;bybytheeditorialcorrectionnosemanticeffect.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:93-94",
+        "S003:200",
+        "S003:462",
+        "S003:524",
+        "S003:528",
+        "S003:538",
+        "S003:557-560",
+        "S003:810-812"
+      ],
+      "reason": "All tokens/locators and exact corrected repetition match. CamelCase private-store style remains extension, not prescribed source behavior.",
+      "kind": "exact_text",
+      "material_failure_id": null
+    },
+    {
+      "id": "F07",
+      "current_locators": [
+        "current-report.md:40"
+      ],
+      "claim": "Imagegroup zarr.json withlevelarrays/chunks;Zarrv3decode dependency.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:87-100",
+        "S003:149-156",
+        "S003:426"
+      ],
+      "reason": "Group layout accurate; metadata belongsattributes.ome and omero optional. Actualbackenddecode capability unknown.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F08",
+      "current_locators": [
+        "current-report.md:41",
+        "current-report.md:128"
+      ],
+      "claim": "Threefilesetshapes andrequiredplate-firstsniff/ambiguityreport;thinplanunnamedtopologies.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:82-148",
+        "S003:175-275",
+        "S003:204-206",
+        "S003:262",
+        "Viewer.md:5-11"
+      ],
+      "reason": "Shapes/plateprecedence real andplanomitsnames. Fixed sniffalgorithm/fullHCS breadth is product design requiring review, not a quoted source MUST.",
+      "kind": "plan",
+      "material_failure_id": null
+    },
+    {
+      "id": "F10",
+      "current_locators": [
+        "current-report.md:46",
+        "current-report.md:159"
+      ],
+      "claim": "Namedmultiscales firstfallbackuncertainforce;mandatorybynamepickerasonlystatedrule.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:317",
+        "S003:388-397",
+        "S003:869-888",
+        "Viewer.md:9"
+      ],
+      "reason": "Selection permitted/examplefallback, namesSHOULD; no compulsoryselector formatMUST. AbsenceuppercaseRFCkeyword alone does not defeat descriptivenormativity.",
+      "kind": "product_choice",
+      "material_failure_id": null
+    },
+    {
+      "id": "F11",
+      "current_locators": [
+        "current-report.md:47",
+        "current-report.md:108"
+      ],
+      "claim": "HCSplate/wellfieldpaths/0basedindexconsistency,allphysicalrowscolumns,sparsewells,emptygroupsSHOULDNOT.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:118-129",
+        "S003:530-560",
+        "S003:641-750"
+      ],
+      "reason": "Mandatorymetadataandoptionalemptygroups accurately separated.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F11b",
+      "current_locators": [
+        "current-report.md:47"
+      ],
+      "claim": "Thinflatlistscannotexpressplate/well/fieldidentity;requiredlistingbreadth.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "Viewer.md:5",
+        "Viewer.md:9",
+        "S003:118-148"
+      ],
+      "reason": "Plan lacks explicit identity model; a labeled flatlist can express it, as report itself acknowledges. Breadth is product proposal, not impossibility proof about thin prose.",
+      "kind": "plan",
+      "material_failure_id": null
+    },
+    {
+      "id": "F12",
+      "current_locators": [
+        "current-report.md:48",
+        "current-report.md:109"
+      ],
+      "claim": "layout3/seriespaths/XMLorderelseconsecutivenumberedgroups;MetadataOnly XML/plateprecedence/no mixing.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:193-206",
+        "S003:255-275"
+      ],
+      "reason": "Core rules correct. XMLorder mustmatch ifXMLprovided; consecutivenumbering requiresabsentseries ANDplate. CurrentF12 compression omits theseconditions, elsewhere testsincludeplateprecedence.",
+      "kind": "format",
+      "material_failure_id": "R019-F02"
+    },
+    {
+      "id": "F13",
+      "current_locators": [
+        "current-report.md:49",
+        "current-report.md:116"
+      ],
+      "claim": "ReadersSHOULDdisclosemultiplicity/MAYdisplaychoices;minimumconformingmustneverfirstonly;producttreatSHOULDrequired.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:271-275",
+        "Viewer.md:11"
+      ],
+      "reason": "Product may explicitlychoose stricterdiscoveryacceptance. Minimumformatconformance is overstated: SHOULD permits reasonedexceptions; not a universalMUST.",
+      "kind": "normativity",
+      "material_failure_id": "R019-F03"
+    },
+    {
+      "id": "F14",
+      "current_locators": [
+        "current-report.md:50"
+      ],
+      "claim": "Alphanumericcase-sensitiveuniquenames/paths;avoidcasefolding.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:533-537",
+        "S003:546-549",
+        "S003:746-748"
+      ],
+      "reason": "Normativeidentifierdomainandrecommendcollisionavoidanceaccurate. Resolutionmustpreserveidentity.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F15",
+      "current_locators": [
+        "current-report.md:51",
+        "current-report.md:128"
+      ],
+      "claim": "Labelscontainernotimage⇒labelcontentsMUSTNOTlistedasprimaryimages.",
+      "outcome": "unsupported",
+      "evidence_locators": [
+        "S003:437-440",
+        "S003:273-275",
+        "Viewer.md:5"
+      ],
+      "reason": "Containerisnotimage butcontainsimages. Separateoverlaylisting/exclusionisreasonableUXchoice; source suppliesno prohibitionagainstselectablelabelimages. Report labels inferenceasformatObligation.",
+      "kind": "product_mandate",
+      "material_failure_id": "R019-F04"
+    },
+    {
+      "id": "F16",
+      "current_locators": [
+        "current-report.md:52",
+        "current-report.md:167"
+      ],
+      "claim": "No rowmetadatasection;rowsmetadataauthoritative;metadata-lessscanprohibitioninference.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:28-44",
+        "S003:124-129",
+        "S003:542-560",
+        "S003:268-270"
+      ],
+      "reason": "No distinctrowkeysection. Correctedexplicit-MUSTprohibitionremoved. Scanningcanassistconsecutivenumbereddiscovery, so neverdirectoryaloneispolicyrequiringmetadata validation, not sourceban.",
+      "kind": "replacement",
+      "material_failure_id": null
+    },
+    {
+      "id": "F18",
+      "current_locators": [
+        "current-report.md:57"
+      ],
+      "claim": "Acquisitionidunique>=0,conditionalreference/match/hints;wellacqfieldcompositekey;>1-listentryrequiredpolicy.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:518-529",
+        "S003:744-750",
+        "S003:763-803"
+      ],
+      "reason": "Numeric/reference/hintstrengthscorrect. UIcompositekey/listlengthinterpretationareproductchoices; ambiguousperformedtriggerdoesnotlicenselossofpresentreference.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F19",
+      "current_locators": [
+        "current-report.md:58"
+      ],
+      "claim": "field_count/name/maximumfieldcount displayhints SHOULD;overlapsemanticsunsettled.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:523-525",
+        "S003:538-541"
+      ],
+      "reason": "Contextdiffersplatevsacquisition; noadditionalprecisecountingformula. Presenceoptional/recommended, positiveintegertypesstillapply.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F20",
+      "current_locators": [
+        "current-report.md:62",
+        "current-report.md:106"
+      ],
+      "claim": "Declaredgroup-relativepaths,arbitrarynames,highresfirst,mandatorydatasets/axes/perlevelgeometry;rank/orderagreement.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:93-94",
+        "S003:299-312"
+      ],
+      "reason": "Validauthoritativemetadata/genericgeometryrule,nofixedfolderorfactorassumption. Rankconstraintwithinmultiscalesdatasetlist.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F20b",
+      "current_locators": [
+        "current-report.md:62",
+        "current-report.md:156"
+      ],
+      "claim": "Largestmetricundefined;totalvoxcountwarningwithoutreorder.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:305-307",
+        "Viewer.md:9"
+      ],
+      "reason": "Highestresolutionglossprovided; noexactcountformula. Warningheuristicmayflagvalidnonuniformcoverageandcannotreplacegeometry/declaredorder.",
+      "kind": "product_choice",
+      "material_failure_id": null
+    },
+    {
+      "id": "F21",
+      "current_locators": [
+        "current-report.md:63",
+        "current-report.md:154"
+      ],
+      "claim": "Arraydimension_namesmatchaxes/rank;historyaxeswordingconflict;followoperativesection;skiporrefusemismatch,noremapping.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:173-174",
+        "S003:307",
+        "S003:827",
+        "Viewer.md:11"
+      ],
+      "reason": "Operativeruleandidentity/errorpolicyaccurate.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F22",
+      "current_locators": [
+        "current-report.md:64",
+        "current-report.md:120",
+        "current-report.md:133"
+      ],
+      "claim": "Pyramidname/type/metadataSHOULD;appropriatenessheuristicproduct;selectedtransformsmandatory;backendbadlevelperlevelunsupported.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:317-319",
+        "S003:375-382",
+        "S003:308-315",
+        "Viewer.md:5-11"
+      ],
+      "reason": "Metadatafieldsrecommendedpresence, notmandatoryUIcontent. Correctownlevelgeometry. Missingdeclaredarrayresolutionpolicyremainsexplicitlyunspecified.",
+      "kind": "plan",
+      "material_failure_id": null
+    },
+    {
+      "id": "F23",
+      "current_locators": [
+        "current-report.md:68",
+        "current-report.md:134"
+      ],
+      "claim": "No sourceasync/cancel/cachemechanism;brief/planrequirebackgroundcancelresponsiveoutcome.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:1-896",
+        "brief.md:3",
+        "Viewer.md:7-11"
+      ],
+      "reason": "Fullsourcehasnothreadingorperformancealgorithm. Scalehierarchyrationaleisproductinference, nomeasuredperformance.",
+      "kind": "absence",
+      "material_failure_id": null
+    },
+    {
+      "id": "F24",
+      "current_locators": [
+        "current-report.md:69",
+        "current-report.md:135",
+        "current-report.md:143",
+        "current-report.md:146",
+        "current-report.md:148"
+      ],
+      "claim": "Itemscopednamedfeedback/malformedvsbackendlimitationvsproductscope;no crashes/silent skips/imaginedcalibration.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:156",
+        "S003:173-174",
+        "S003:256",
+        "S003:305-312",
+        "S003:426-455",
+        "S003:553-560",
+        "S003:748-750",
+        "Viewer.md:7-11"
+      ],
+      "reason": "Usefulsource-to-planpolicyandthree-waytaxonomy. Absenceofoptionalkeynotmalformation; windowdtype-range/orderclaimsbelowoverstep. Nosilentskip is reasonablefeedbackpolicy, notexactplanquote.",
+      "kind": "plan",
+      "material_failure_id": null
+    },
+    {
+      "id": "F25",
+      "current_locators": [
+        "current-report.md:75",
+        "current-report.md:105",
+        "current-report.md:130"
+      ],
+      "claim": "Axesrank2-5/2-3space/optionaltimechannelcustom,order/uniqueidentity;controlsabsentifaxisabsent.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:81",
+        "S003:168-174",
+        "S003:299-303",
+        "Viewer.md:5"
+      ],
+      "reason": "Nohardcodedfiveaxes. Absentaxeshandlingexplicit, butlength-oneaxisstillnotdistinguishedfromabsence.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F25b",
+      "current_locators": [
+        "current-report.md:75",
+        "current-report.md:81"
+      ],
+      "claim": "Planealwaysinnermosttwospaceaxes,z-selectorwhenzspaceaxis present.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:81",
+        "S003:301-303"
+      ],
+      "reason": "Reasonabledefaultplanechoice,notuniversalformatmeaning. Spatialnamesarbitrary;zyxonlyconditionalSHOULD. Needvalidatedaxisrole/userchoiceandnonstandardorderingcapability.",
+      "kind": "navigation",
+      "material_failure_id": null
+    },
+    {
+      "id": "F26",
+      "current_locators": [
+        "current-report.md:76",
+        "current-report.md:120",
+        "current-report.md:155"
+      ],
+      "claim": "type/unitSHOULD/customnulluncertainty;untypedsliderspositionlabeled;missing/unknown MUSTtolerate.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:169-174",
+        "S003:301-303"
+      ],
+      "reason": "Lenientlabeledaxis-indexnavigationvalidproductpolicy; nochannelunitlist. GeneralSHOULDabsencecanbeallowed butmultiscalesrequires2-3type:space; alluntypeddataisnotautomaticallyprovenconforming.",
+      "kind": "plan",
+      "material_failure_id": null
+    },
+    {
+      "id": "F27a",
+      "current_locators": [
+        "current-report.md:80"
+      ],
+      "claim": "OptionalomeroMUSTchannels;color6hexRGB;windowminmaxstartend;siblings/rdefsexampleonlybest-effort.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:401-430",
+        "S003:877-881"
+      ],
+      "reason": "Metadataforceandillustrativeoptionaldefaultsaccurate.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F27b",
+      "current_locators": [
+        "current-report.md:80",
+        "current-report.md:110"
+      ],
+      "claim": "Formatobligationinitialcontraststart/endwithinmin/maxandinitialcolor.",
+      "outcome": "unsupported",
+      "evidence_locators": [
+        "S003:426-430",
+        "Viewer.md:5",
+        "Viewer.md:9"
+      ],
+      "reason": "Fieldpresence/types/meaningsaregiven; universalreaderinitializationpolicyisnotquotedMUST. Productcanchooseit explicitly.",
+      "kind": "normativity",
+      "material_failure_id": "R019-F05"
+    },
+    {
+      "id": "F28a",
+      "current_locators": [
+        "current-report.md:81",
+        "current-report.md:160"
+      ],
+      "claim": "Channelslengthcorrespondenceonlycomment;overlapdegradationproposed.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:403",
+        "S003:426-430"
+      ],
+      "reason": "NoextraexplicitlengthMUSTinoperativeblock; truthfuldegradeisproductpolicy.",
+      "kind": "counterevidence",
+      "material_failure_id": null
+    },
+    {
+      "id": "F28b",
+      "current_locators": [
+        "current-report.md:81"
+      ],
+      "claim": "No normativecolor/windowsemanticsbeyondpresence;no gamma/familyregistry/outofrangerule.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:427-430",
+        "S003:1-896"
+      ],
+      "reason": "Specificregistry/outofrangeomissionssupported. RGB6hexandwindowmin/max/start/enddefinitionsaresemanticsbeyondpresence.",
+      "kind": "absence",
+      "material_failure_id": "R019-F06"
+    },
+    {
+      "id": "F28c",
+      "current_locators": [
+        "current-report.md:81",
+        "current-report.md:146"
+      ],
+      "claim": "Outside-dtyperangewindoworstart>enddeclaredmalformedsourceinput.",
+      "outcome": "unsupported",
+      "evidence_locators": [
+        "S003:428-430"
+      ],
+      "reason": "Sourcegivesnocorrespondingdtyperange/orderbound. Areadererror/warning/restrictedcapabilityisproductchoice, cannotclassifyvalid-shapedvaluesformatmalformedfromsourceabsence. Malformed6hexcolorisdifferent,supported.",
+      "kind": "false_rejection",
+      "material_failure_id": "R019-F07"
+    },
+    {
+      "id": "F28d",
+      "current_locators": [
+        "current-report.md:81"
+      ],
+      "claim": "Absentomero⇒noembeddedchanneldefaults;fallbackproduct;2spaceaxesnoplaneslider,timeonlyifpresent.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:426",
+        "S003:301-303",
+        "Viewer.md:5",
+        "Viewer.md:9"
+      ],
+      "reason": "Basechannelrenderfallbackvalid. Othermetadata(e.g.image-labelcolors)canstillprovideoverlayrenderingstate; absencenotuniversalall-display-defaultsdenial.",
+      "kind": "plan",
+      "material_failure_id": null
+    },
+    {
+      "id": "F29a",
+      "current_locators": [
+        "current-report.md:87",
+        "current-report.md:107"
+      ],
+      "claim": "Transformsordered;scale/translationpathvectors;exactlyonescalephysicalorconditionalrelative;translationafter;lengths;groupafterdataset.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:277-293",
+        "S003:308-316"
+      ],
+      "reason": "Allpositiverulesandnegativeconstraintsaccurate. Generalidentitydoesnotreplaceexactlyonescalerequirement.",
+      "kind": "calibration",
+      "material_failure_id": null
+    },
+    {
+      "id": "F29b",
+      "current_locators": [
+        "current-report.md:87"
+      ],
+      "claim": "Formula global(scale∘translate)∘perLevel(scale∘translate) reflectsorderedcomposition.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:293",
+        "S003:311",
+        "S003:315"
+      ],
+      "reason": "Prosegivescorrectscale-then-translation, butunderstandardfunctioncomposition S∘T reversesit; correctinnerisT∘S. Counterexample pixel(3,4),datasetS(2,3),T(5,7),groupS(4,5),T(11,13):listedordergives(55,108);literalS∘T formula(108,230). Thisisevaluatorarithmetic,notexecutedcandidatevalidation. Currentnotation/proseambiguityisamaterialordering/renderingfailure.",
+      "kind": "exact_order",
+      "material_failure_id": "R019-F08"
+    },
+    {
+      "id": "F30a",
+      "current_locators": [
+        "current-report.md:88"
+      ],
+      "claim": "Worked5Dvectorsandlevel0dt.1ms,dc1,xyz.5micrometers.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:330-334",
+        "S003:343",
+        "S003:353",
+        "S003:363",
+        "S003:372"
+      ],
+      "reason": "Exactvalues/arithmeticmatch; exemplary,nouniversalfixedscales.",
+      "kind": "example",
+      "material_failure_id": null
+    },
+    {
+      "id": "F30b",
+      "current_locators": [
+        "current-report.md:88"
+      ],
+      "claim": "Workedcalibrationisnormativeexample.",
+      "outcome": "contradicted",
+      "evidence_locators": [
+        "S003:877-881",
+        "S003:320-387"
+      ],
+      "reason": "Examplesareexplicitlynon-normative; validnumbersdo notsupplynewformatMUST.",
+      "kind": "normativity",
+      "material_failure_id": "R019-F09"
+    },
+    {
+      "id": "F30c",
+      "current_locators": [
+        "current-report.md:88",
+        "current-report.md:132"
+      ],
+      "claim": "Detailsmustshowcomposedcoordinates/voxelunits/extentsandallpyramidfields.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "Viewer.md:5",
+        "S003:170",
+        "S003:308-319"
+      ],
+      "reason": "Correctcalibration/detailneed; extraeveryfielddisplaymandateisreviewableproductcontent,notuniversalformatrequirement.",
+      "kind": "plan",
+      "material_failure_id": null
+    },
+    {
+      "id": "F31a",
+      "current_locators": [
+        "current-report.md:89",
+        "current-report.md:157"
+      ],
+      "claim": "Scale1physicalvsrelativeunknown;no-unitrelativeuncalibrateddisplay;channelaxesnevermeaningfulphysicalscale.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:170-172",
+        "S003:310"
+      ],
+      "reason": "Unitabsencerequiresunknownunit/calibrationdisclosure butdoesnotprovevaluesnecessarilyrelative. Nochannelunitvocabularyisnotproofallchannelaxescannevercarryscale; channel-index-onlyisavaliddeclaredcapabilitychoice.",
+      "kind": "calibration",
+      "material_failure_id": null
+    },
+    {
+      "id": "F31b",
+      "current_locators": [
+        "current-report.md:89",
+        "current-report.md:157"
+      ],
+      "claim": "Originframeundefined;imagegroupframeassumptiondocumented.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:277-278",
+        "S003:311"
+      ],
+      "reason": "Noexplicitoriginframeparameter;productassumptionmustremainvisible,notglobalregistrationproof.",
+      "kind": "counterevidence",
+      "material_failure_id": null
+    },
+    {
+      "id": "F31c",
+      "current_locators": [
+        "current-report.md:89",
+        "current-report.md:145",
+        "current-report.md:164"
+      ],
+      "claim": "Binarypathdtype/shape/endianunknown;backendresolveorunsupportednamedtransform/level.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:285-289",
+        "S003:312"
+      ],
+      "reason": "Binarybyteencodingwidth/layoutunprovided; logicalfloatvectorandaxeslengthrulesprovided. Backendunsupporteddecisionvalid.",
+      "kind": "capability",
+      "material_failure_id": null
+    },
+    {
+      "id": "F31d",
+      "current_locators": [
+        "current-report.md:89",
+        "current-report.md:146"
+      ],
+      "claim": "Missing scale,lengthmismatch,nonS/T,translationbeforeSmalformed andnosilentreinterpretation.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:309-312",
+        "Viewer.md:11"
+      ],
+      "reason": "Exactcardinality/order/typeconstraintsandfeedbackpolicyvalid.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F32",
+      "current_locators": [
+        "current-report.md:93"
+      ],
+      "claim": "Labelslistnestedcontainer/arbitrarypaths/intermediategroupsno metadata;allSHOULD;unlistedscanproductchoice.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:102-117",
+        "S003:437-453"
+      ],
+      "reason": "Sourcekeypresencevslistcompletenessstrengthsandnegativeintermediateconstraintpreserved.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F33",
+      "current_locators": [
+        "current-report.md:94",
+        "current-report.md:111"
+      ],
+      "claim": "Labelmultiscales/samelevelcount/integer8types;peroverlayfailure.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:438-439",
+        "S003:454-455",
+        "Viewer.md:11"
+      ],
+      "reason": "Exactdomainthroughuint64/int64retained. Precision/renderinglookupnotyetproven.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F34a",
+      "current_locators": [
+        "current-report.md:95",
+        "current-report.md:161"
+      ],
+      "claim": "Usuallysamegridvscoordinatesystem;broadcastsingleton;owntransformscheckedparent;warnmismatchratherthanstretch.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:106-108",
+        "S003:432-433",
+        "S003:454-455",
+        "S003:308-315"
+      ],
+      "reason": "Usefulgeometrypolicyseparatescountfromregistration. Equalcountdoesnotguaranteegrid; declaredsourceidentityandunsupportedgeometryrefusalremainnecessaryforpromisedassociatedoverlay.",
+      "kind": "registration",
+      "material_failure_id": null
+    },
+    {
+      "id": "F34b",
+      "current_locators": [
+        "current-report.md:95",
+        "current-report.md:124"
+      ],
+      "claim": "Labels categorical,avoidinterpolatingintensityfilters;nearestneighborproductdecision.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:434-439",
+        "S003:461-471"
+      ],
+      "reason": "Categoricalidentityrationalesupportscategorical-safe resampling; source doesnotmandatespecificnearestalgorithm. Missing exact64bitdecode/range remains.",
+      "kind": "plan",
+      "material_failure_id": null
+    },
+    {
+      "id": "F35a",
+      "current_locators": [
+        "current-report.md:96"
+      ],
+      "claim": "image-labelSHOULD;versionMUSTbepresentwhenimage-labelpresent.",
+      "outcome": "contradicted",
+      "evidence_locators": [
+        "S003:456-460"
+      ],
+      "reason": "Objectandcolors/versionkeypresenceareSHOULD; valueMUSTstringifversionkeyprovided. Reportelevatespresenceandcanfalselyrejectallowedmetadata.",
+      "kind": "format",
+      "material_failure_id": "R019-F10"
+    },
+    {
+      "id": "F35b",
+      "current_locators": [
+        "current-report.md:96",
+        "current-report.md:116",
+        "current-report.md:120"
+      ],
+      "claim": "Integerlabel-valuecolor/propertylookup;optionalRGBA4uint8alpha;paletteSHOULD;extrasallowed;propertiesarbitrary;examples0/1halfblue/green.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:461-471",
+        "S003:483-503",
+        "S003:513-514"
+      ],
+      "reason": "Keyedidentity/valuecolors/propertymeaningsandreaderrecommendationcorrect. Metadataentryordernotidentity.",
+      "kind": "format",
+      "material_failure_id": null
+    },
+    {
+      "id": "F35c",
+      "current_locators": [
+        "current-report.md:96"
+      ],
+      "claim": "Optionalrelative source.image default../../usedonlyprovenance,notoverlayassociation/relocation.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:472-474",
+        "S003:439-440",
+        "Viewer.md:5",
+        "Viewer.md:11"
+      ],
+      "reason": "Relativepath/defaultfactcorrect. Provenance-onlypolicydoesnotresolveactualsourceassociationforintermediategroups/differentorigins; automaticparentoverlayisnotvalidatedbydeclaredsource.",
+      "kind": "registration",
+      "material_failure_id": "R019-F11"
+    },
+    {
+      "id": "F36",
+      "current_locators": [
+        "current-report.md:97",
+        "current-report.md:131"
+      ],
+      "claim": "Planoverlaysrequiremetadata/count/dtype/alignment/colors/propertieslegends/errorsextension.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "Viewer.md:5-11",
+        "S003:437-474"
+      ],
+      "reason": "Corevalidatedassociatedoverlayneedssourceresolution/rangepolicy. Palette/legendbreadthandwarn-onlygeometryareexplicitproductchoices.",
+      "kind": "plan",
+      "material_failure_id": null
+    },
+    {
+      "id": "O01",
+      "current_locators": [
+        "current-report.md:101-112",
+        "verification.json:/verified_findings/5"
+      ],
+      "claim": "TenMUSTobligationsallcorrectlyderivedincludingreadonlyproductboundary.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:68-72",
+        "S003:149-174",
+        "S003:299-316",
+        "S003:426-455",
+        "Viewer.md:9"
+      ],
+      "reason": "Mostformatfamiliesvalid; readerinitialrenderMUSTandlabelpresence/sourceassociationrequirecorrections. Summarycountisinternalcount,nottruthproof.",
+      "kind": "disposition",
+      "material_failure_id": null
+    },
+    {
+      "id": "O02",
+      "current_locators": [
+        "current-report.md:114-120"
+      ],
+      "claim": "SHOULDrecommendations/MAYoptionsvsproductdecisions splitaccurate.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:169-172",
+        "S003:257-275",
+        "S003:303",
+        "S003:317-319",
+        "S003:461",
+        "S003:518-560",
+        "S003:751-752"
+      ],
+      "reason": "PresenceSHOULDdoesnotmandatesurfacingeveryfield; camelCaseprivate-storeextensionexplicit. Allowedtypes/valuesstillconditionalrules; image-labelversionSHOULDmissingfrommandatoryclassification.",
+      "kind": "normativity",
+      "material_failure_id": null
+    },
+    {
+      "id": "O03",
+      "current_locators": [
+        "current-report.md:122-124"
+      ],
+      "claim": "Listingchrome/pickers/heuristics/cache/fallback/versionrecovery/binarysupport/messages/performance/resampling/scanpolicyneedproductreview.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "Viewer.md:9",
+        "S003:1-896"
+      ],
+      "reason": "Well-scopedproductchoices; theirformat-inferenceselsewherestillnotMUST.",
+      "kind": "product_choice",
+      "material_failure_id": null
+    },
+    {
+      "id": "P01",
+      "current_locators": [
+        "current-report.md:128-139",
+        "verification.json:/verified_findings/6"
+      ],
+      "claim": "All12thinplanKEEP/EXTEND/FLAGdispositionssound.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "Viewer.md:5-11",
+        "S003:1-896"
+      ],
+      "reason": "Eachsentenceassessed:localopenrequiresmetadataidentity;canvasvalidgeometry;controlsaxesdriven;associatedoverlay/calibrationrequirements;levelheuristicproduct;backgroundcancel/feedbackplanrequired;interopFLAGunevidenced;readonly/outscope/reviewKEEP;acceptancegrounded. Extraall-HCS/labels-onlyUX/contentmandatesneedreview.",
+      "kind": "plan",
+      "material_failure_id": null
+    },
+    {
+      "id": "T01",
+      "current_locators": [
+        "current-report.md:143-148",
+        "verification.json:/verified_findings/7"
+      ],
+      "claim": "Taxonomydistinguishesmissingdatafromsourcesilenceandnoconflationfound.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "Viewer.md:7-11",
+        "S003:426-430"
+      ],
+      "reason": "Distinctioncorrect,butwindowout-of-rangeclassificationactuallyconflatesunspecifiedformatrulewithmalformation(F28c). Optionalkeys/customtypes/unlistedlabels notautomaticallymalformed.",
+      "kind": "false_rejection",
+      "material_failure_id": "R019-F12"
+    },
+    {
+      "id": "T02",
+      "current_locators": [
+        "current-report.md:147"
+      ],
+      "claim": "OME-XMLbeyondMetadataOnlyisout-of-productboundary.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:257-260",
+        "brief.md:5",
+        "Viewer.md:9"
+      ],
+      "reason": "MetadataOnlyiscollectionXMLconstraint; depthofXMLfeaturecapabilitymaybereviewed. Brief/planoutscopelistdoesnotexplicitlyexcludeallotherXMLreadingandshouldnotbemisquoted.",
+      "kind": "scope",
+      "material_failure_id": null
+    },
+    {
+      "id": "N01",
+      "current_locators": [
+        "negative-checks.json:/checks/0"
+      ],
+      "claim": "No Zarr-feature disallowance is stated anywhere in the capture (re S003 L70-72 'unless explicitly disallowed'). Declaredscope: whole capture, L1-896. Verdict confirmed_within_scope.",
+      "outcome": "contradicted",
+      "evidence_locators": [
+        "S003:70-72",
+        "S003:300-307",
+        "S003:438-439"
+      ],
+      "reason": "Literaldisallow/codec/profilefactsarecorrect,butlabelinteger/rankconstraintscontradictnoexercisedrestrictionandunboundeddtypeinference. Actualread/searchreceiptunresolved. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": "R019-F01"
+    },
+    {
+      "id": "N02",
+      "current_locators": [
+        "negative-checks.json:/checks/1"
+      ],
+      "claim": "§4 'Implementations — See Tools' (L813-814) and §5 Citing (L815-820) carry no implementation requirements; the Tools pointer is the whole implementation text in scope. Declaredscope: whole capture for pointer terms (L1-896); close read L810-820 (naming + implementations + citing). Verdict confirmed_within_scope.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:42-43",
+        "S003:61",
+        "S003:809-820"
+      ],
+      "reason": "Tools/Implementations/Citingpointersectionandnooperationalrequirementsinthesesectionsexact;widerguidancestillbounded. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N03",
+      "current_locators": [
+        "negative-checks.json:/checks/2"
+      ],
+      "claim": "Interoperability with real OME-Zarr 0.5 tool outputs is not evidenced inside S003; the brief's 'actual reader implementations' goal is unresolvable in this scope. Declaredscope: whole capture, L1-896. Verdict confirmed_within_scope.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:177-183",
+        "S003:378-379",
+        "S003:424-425",
+        "S003:813-814"
+      ],
+      "reason": "Nointeroperabilityruntimeproofissupported. Counterevidenceno toolnames/versions/outputs false:Bio-Formats,bioformats2raw,skimage0.16.1,WebGatewayandtypical-layoutsourceinformationexist. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": "R019-F13"
+    },
+    {
+      "id": "N04",
+      "current_locators": [
+        "negative-checks.json:/checks/3"
+      ],
+      "claim": "Nothing in S003 requires a viewer to write; the source never blesses mutating zarr.json/chunks during viewing (read-side silence). Declaredscope: whole capture, L1-896. Verdict confirmed_within_scope.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:26",
+        "S003:60-64",
+        "S003:1-896",
+        "Viewer.md:9"
+      ],
+      "reason": "No viewerwriteobligation;transitionalwritingoptionalnotviewer-mutationblessing. Scopedcompatibilityconclusionvalid. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N05",
+      "current_locators": [
+        "negative-checks.json:/checks/4"
+      ],
+      "claim": "The thin plan names none of the three fileset shapes (single image / HCS plate / bioformats2raw collection). Declaredscope: whole plan, L1-11. Verdict confirmed_within_scope.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "Viewer.md:5-11"
+      ],
+      "reason": "Planomitsnamedplate/collection/multiscale-topologies;genericimagewordingexistsbutdoesnotprovethatonlyaflatlistcanbeused. Exactoperationhitsunknown. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N06",
+      "current_locators": [
+        "negative-checks.json:/checks/5"
+      ],
+      "claim": "The plan has no multi-multiscales concept. Declaredscope: whole plan, L1-11. Verdict confirmed_within_scope.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "Viewer.md:1-11"
+      ],
+      "reason": "No explicitmultiplemultiscaleschoiceconceptinplan;availablepyramidlevelisadifferentconcept. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N07",
+      "current_locators": [
+        "negative-checks.json:/checks/6"
+      ],
+      "claim": "The value '3' of bioformats2raw.layout is unexplained in S003. Declaredscope: whole capture for the key (L1-896); close read §2.2 L175-275. Verdict confirmed_within_scope.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275"
+      ],
+      "reason": "Mandatorylayout3shownwithoutenumerationrationale;acceptonly3producterrorpolicygrounded. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N08",
+      "current_locators": [
+        "negative-checks.json:/checks/7"
+      ],
+      "claim": "The multi-multiscales name/fallback rule (L388-397) carries no RFC 2119 keyword. Declaredscope: passage L388-397 (prose + pseudocode). Verdict confirmed_within_scope.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:388-397",
+        "S003:869-888"
+      ],
+      "reason": "NouppercaseRFCtokensinpassage;descriptive/lowercaseassertionscanbenormative.Examplechoiceforceleftuncertain,nota universalban. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N09",
+      "current_locators": [
+        "negative-checks.json:/checks/8"
+      ],
+      "claim": "Row groups have no metadata section in S003; rows are discoverable only via plate.rows + plate.wells[].path. Declaredscope: whole capture, L1-896 (TOC + all §2.x sections + hierarchy text). Verdict confirmed_within_scope.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:28-44",
+        "S003:124-129",
+        "S003:542-560",
+        "S003:268-270"
+      ],
+      "reason": "No row-keysection;metadataauthoritative.Scanningcanassistdeclarednumberedgroups,notexplicitprohibition. Samecorrectedpolicylimitsretained. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N10",
+      "current_locators": [
+        "negative-checks.json:/checks/9"
+      ],
+      "claim": "'Largest → smallest' dataset ordering (L306) has no metric in S003. Declaredscope: whole capture, L1-896; close read §2.4 L295-319. Verdict confirmed_within_scope.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:305-307"
+      ],
+      "reason": "Highestresolutionglossgiven,butnoexactvoxel-countcomparatorformula;saneheuristiccannotreordermetadata. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N11",
+      "current_locators": [
+        "negative-checks.json:/checks/10"
+      ],
+      "claim": "The source imposes no threading/background/responsiveness mechanism. Declaredscope: whole capture, L1-896. Verdict confirmed_within_scope.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:7-11"
+      ],
+      "reason": "No threaded/cache/perfalgorithm;responsive/canceloutcomefromplan.Negativeliteraltermsindependentlychecked. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N12",
+      "current_locators": [
+        "negative-checks.json:/checks/11"
+      ],
+      "claim": "No channel-unit vocabulary is given in S003. Declaredscope: §2.1 axes L166-174 plus whole-capture unit sweep (L1-896). Verdict confirmed_within_scope.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:170-172",
+        "S003:331"
+      ],
+      "reason": "Space/timeenumerated,channelunitlistabsent;notproofchannelcanneverhavemeaningfulunit/scale.Literalunitlistomitscommunitysubstringhits. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N13",
+      "current_locators": [
+        "negative-checks.json:/checks/12"
+      ],
+      "claim": "omero siblings (active, coefficient, family, inverted, label, rdefs/defaultT/defaultZ/model) are example-only; they appear nowhere in normative MUST text. Declaredscope: §2.5 omero L398-430 (example L401-423, normative L426-430) verified by whole-capture searches (L1-896). Verdict confirmed_within_scope.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:401-430",
+        "S003:877-881"
+      ],
+      "reason": "NamedomerosiblingsoutsideMUSTblockareexamples;label/defaultZ/modelclose-readratherthanindividualsearchnoted.Literalqueryreceiptsunknown. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N14",
+      "current_locators": [
+        "negative-checks.json:/checks/13"
+      ],
+      "claim": "omero.channels-to-channel-extent length correspondence is not a stated MUST; it appears only as the L403 example comment. Declaredscope: §2.5 L398-430 plus whole-capture channel/window/color sweeps. Verdict confirmed_within_scope.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:403",
+        "S003:426-430"
+      ],
+      "reason": "Channelsc-sizecorrespondenceonlyillustrativecomment;best-effortoverlappolicydeclared. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N15",
+      "current_locators": [
+        "negative-checks.json:/checks/14"
+      ],
+      "claim": "No normative color/window semantics exist beyond field presence: no gamma/family registry, no out-of-range rule. Declaredscope: whole capture, L1-896; close read L426-430. Verdict confirmed_within_scope.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:427-430",
+        "S003:1-896"
+      ],
+      "reason": "No gammaregistry/outofrangeboundfound;RGBencodingandwindowmeaningsaresemanticsbeyondpresenceanddtype-rangeinvaliditydoesnotfollow. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": "R019-F06"
+    },
+    {
+      "id": "N16",
+      "current_locators": [
+        "negative-checks.json:/checks/15"
+      ],
+      "claim": "Absent omero, S003 supplies no embedded rendering defaults; all rendering state is a product decision. Declaredscope: §2.5 L398-430 (optionality + MUSTs) plus whole-capture default sweep. Verdict confirmed_within_scope.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:426",
+        "S003:456-466"
+      ],
+      "reason": "Absentomero⇒basechannelrenderdefaultsproduct;otherlabeldisplaymetadata canstillprovideoverlaycolors. Notuniversalnoembeddedrenderstate. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N17",
+      "current_locators": [
+        "negative-checks.json:/checks/16"
+      ],
+      "claim": "The translation 'origin' (L311) is never defined in S003. Declaredscope: whole capture, L1-896. Verdict confirmed_within_scope.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:105",
+        "S003:110",
+        "S003:311",
+        "S003:435",
+        "S003:437",
+        "S003:455",
+        "S003:472-474"
+      ],
+      "reason": "Noexplicitoriginframe definition. OriginhitlistomitsoriginalatL474;notexhaustiveexactlist.Actualsearchreceiptunknown. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N18",
+      "current_locators": [
+        "negative-checks.json:/checks/17"
+      ],
+      "claim": "Binary-path scale/translation (L285-289) has no dtype/shape/endianness rule in S003. Declaredscope: §2.3 L276-293 plus whole-capture dtype/shape sweep (L1-896). Verdict confirmed_within_scope.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:285-289",
+        "S003:312"
+      ],
+      "reason": "Binaryscalarencoding/dtypewidth/endianunprovided;logicalfloatvectorandaxeslengthprovided. Backendunsupportedpolicyappropriate. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N19",
+      "current_locators": [
+        "negative-checks.json:/checks/18"
+      ],
+      "claim": "image-label.version, plate.version, and well.version vocabularies are unspecified beyond 'MUST be a string'. Declaredscope: whole capture, L1-896. Verdict confirmed_within_scope.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:459-460",
+        "S003:550-551",
+        "S003:751-752",
+        "S003:1-896"
+      ],
+      "reason": "Schema-versionvaluevocabulariesnotenumerated. KeypresenceSHOULDforimage-label/well,MUSTplate. Declared27substringhitsdoesnotmatch26case-sensitive/28case-insensitivelineinventory;actualtoolqueryreceiptunknown. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": "R019-F14"
+    },
+    {
+      "id": "N20",
+      "current_locators": [
+        "negative-checks.json:/checks/19"
+      ],
+      "claim": "Whether a label image's own axes/transforms or the parent's govern alignment when both exist is unstated in S003. Declaredscope: §2.6 labels L431-514 plus transform sections §§2.3-2.4. Verdict confirmed_within_scope.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:308-315",
+        "S003:432-455",
+        "S003:472-474"
+      ],
+      "reason": "Ownlabelmultiscalesgeometrymandatory;explicitparent-overrideprecedencealgorithmunprovided. Warn-ondivergencepolicydoesnotreplaceactualsourceassociation. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N21",
+      "current_locators": [
+        "negative-checks.json:/checks/20"
+      ],
+      "claim": "S003 states no interpolation/resampling rule for label overlays. Declaredscope: whole capture, L1-896. Verdict confirmed_within_scope.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:434-439",
+        "S003:461-471",
+        "S003:1-896"
+      ],
+      "reason": "No namedinterpolation/resamplingalgorithm;categorical-safeidentityinferenceandnearestneighborproductpolicyvalid. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N22",
+      "current_locators": [
+        "negative-checks.json:/checks/21"
+      ],
+      "claim": "The 'if multiple acquisitions were performed' trigger (L748-749) is ambiguous; no clarifier found (acquisitions-list length vs referenced-id count). Declaredscope: §2.7-§2.8 L516-808; whole-capture acquisition sweep. Verdict confirmed_within_scope (ambiguity, not denial).",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:518-529",
+        "S003:744-750",
+        "S003:1-896"
+      ],
+      "reason": "Multipleperformedtriggerambiguous,referenceMUSTclear;29acquisition-containinglinesvsclaimed27. Nativehit-returncountunresolved;fullscopeexhaustivenessnotestablished. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": "R019-F14"
+    },
+    {
+      "id": "N23",
+      "current_locators": [
+        "negative-checks.json:/checks/22"
+      ],
+      "claim": "field_count vs maximumfieldcount semantics are not further distinguished beyond their one-sentence definitions. Declaredscope: whole capture, L1-896. Verdict confirmed_within_scope.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:524-525",
+        "S003:538-539",
+        "S003:228",
+        "S003:573",
+        "S003:579",
+        "S003:595",
+        "S003:653",
+        "S003:696"
+      ],
+      "reason": "Definitionsdifferacquisitionvsplatecontext;nodetailedcount/precedencereconciliation. Bothrecommendednotdiscoverykeys. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N24",
+      "current_locators": [
+        "negative-checks.json:/checks/23"
+      ],
+      "claim": "No reader-tolerance, performance, caching, or error-handling behavior is specified anywhere in the capture. Declaredscope: whole capture, L1-896. Verdict confirmed_within_scope.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:271-275",
+        "S003:461",
+        "S003:1-896"
+      ],
+      "reason": "No reader-tolerance/perf/cache/erroralgorithm.Literalnegativequeriesreturnnoneindependently;readerrecommendationsarepositivecounterevidenceaccuratelyseparated. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N25",
+      "current_locators": [
+        "negative-checks.json:/checks/24"
+      ],
+      "claim": "No worked multi-axis global-composition example exists beyond the time-axis case (L368-374). Declaredscope: §2.4 example L320-387 plus whole-capture composition sweep. Verdict confirmed_within_scope.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:293",
+        "S003:315",
+        "S003:320-387"
+      ],
+      "reason": "Sourceexampleonlynontrivialgroup-timeaxis;generalouter-afterinnerruleisexplicitandderivablebeyondtime,notmathematicallyunresolved. No translatednumericexample. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N26",
+      "current_locators": [
+        "negative-checks.json:/checks/25"
+      ],
+      "claim": "Label-alignment 'usually' (L433) plus the overview-only broadcast rule (L106-108) leave normative force uncertain; no stronger alignment MUST found. Declaredscope: §1.1 overview L102-108 plus §2.6 L431-440. Verdict confirmed_within_scope (uncertain force, not denial).",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:106-108",
+        "S003:432-433",
+        "S003:454-455",
+        "S003:875-878"
+      ],
+      "reason": "Usuallyappliessamegrid/transform,notsamecoordinatesystemdescription.Lowercaseshouldcanberecommendationperconformance;geometricequalityMUSTnotgiven. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N27",
+      "current_locators": [
+        "negative-checks.json:/checks/26"
+      ],
+      "claim": "Beyond 'MUST be consistent' (L156), S003 states no mixed-version-hierarchy remediation (hard error vs best-effort). Declaredscope: §2.0 version block L150-165 plus whole-capture version sweep. Verdict confirmed_within_scope.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:25-27",
+        "S003:149-165"
+      ],
+      "reason": "No mandatorymixed-versionremediationalgorithm;consistentversionformatruleclear.Caveat/errorproductpolicy. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N28",
+      "current_locators": [
+        "negative-checks.json:/checks/27"
+      ],
+      "claim": "The L93-94 line-wrap repetition has no semantic effect (editorial artifact, not a second ordering rule). Declaredscope: layout comment L93-94. Verdict confirmed_within_scope.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:93-94",
+        "S003:305-306"
+      ],
+      "reason": "Exactbybythecorrectionandindependentorderingrulevalid,fivebythelinehitsmatch. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N29",
+      "current_locators": [
+        "negative-checks.json:/checks/28"
+      ],
+      "claim": "No explicit S003 sentence prohibits metadata-less directory enumeration for discovery (candidate's 'non-conforming discovery' is inference). Declaredscope: whole capture, L1-896 (discovery definitions §§2.2/2.4/2.7/2.8 + hierarchy §§1.1-1.2). Verdict confirmed_within_scope (inference documented, prohibition not found).",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:268-275",
+        "S003:305-307",
+        "S003:552-560",
+        "S003:744-750"
+      ],
+      "reason": "Explicitscanprohibitionabsent;sourceevenconsecutivenumberedgroupfallback. Metadataauthorityvalid;nonconformingbyscanaloneinterpretationremainspolicy. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "N30",
+      "current_locators": [
+        "negative-checks.json:/checks/29"
+      ],
+      "claim": "No execution evidence exists for any proposed validation: no filesets opened, no code run, no live fetch performed. Declaredscope: this verification session in its entirety. Verdict confirmed (execution negative is directly auditable from the tool-call record).",
+      "outcome": "unresolved",
+      "evidence_locators": [],
+      "reason": "Actualsessiontoolinventory,deniedexecution,no logs/network/filesetscannotbeauditedwithoutlockedacquisition/history. Itisnotphase1strongestauditableproof;UNEXECUTEDlabelsremaincurrent. All queries_reads/counterevidence/limits/report_refs examined; actual native operations deferred.",
+      "kind": "negative_check",
+      "material_failure_id": null
+    },
+    {
+      "id": "Nmeta",
+      "current_locators": [
+        "negative-checks.json:/summary",
+        "negative-checks.json:/schema",
+        "negative-checks.json:/case_id",
+        "negative-checks.json:/method_note"
+      ],
+      "claim": "30of30negativesrechecked,0globalparaphrasedenials,2wordingscorrected,alldisputesleftunresolved.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "negative-checks.json:/checks",
+        "verification.json:/replacements"
+      ],
+      "reason": "30rowsandtworeplacementsinternallypresent. Method/processrecheckingunresolved;datatypeunbounded/no-toolnamescurrentclaimsarebroaderthanscopedmissandhavepositivecounterevidence.",
+      "kind": "companion_summary",
+      "material_failure_id": null
+    },
+    {
+      "id": "VRF01",
+      "current_locators": [
+        "verification.json:/verified_findings/0"
+      ],
+      "claim": "U001 confirmed: all reasons/evidence/independent_findings/negative_checks.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11",
+        "brief.md:3-5"
+      ],
+      "reason": "Source/planidentity/conformancepositivefactsvalid;seedheadercoverage/actualrereadnotverifiable. Underlyingexternalseedrelationshipremainsunresolved.",
+      "kind": "verification_disposition",
+      "material_failure_id": null
+    },
+    {
+      "id": "VRF02",
+      "current_locators": [
+        "verification.json:/verified_findings/1"
+      ],
+      "claim": "U002 confirmed_with_qualification: all reasons/evidence/independent_findings/negative_checks.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11",
+        "brief.md:3-5"
+      ],
+      "reason": "Positiveon-diskmetadatafactsvalid;unboundeddtypeclaimneedsrestrictioncounterevidence(N01);Toolsruntimeabsenceappropriatelylimited. Underlyingexternalseedrelationshipremainsunresolved.",
+      "kind": "verification_disposition",
+      "material_failure_id": null
+    },
+    {
+      "id": "VRF03",
+      "current_locators": [
+        "verification.json:/verified_findings/2"
+      ],
+      "claim": "U003 confirmed_with_qualification: all reasons/evidence/independent_findings/negative_checks.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11",
+        "brief.md:3-5"
+      ],
+      "reason": "Sixgoverningconditionsmostlyvalid;MUST/SHOULDsourceforceanddatatypeconditionsneedqualification;exactkey/editorialcorrectionvalid. Underlyingexternalseedrelationshipremainsunresolved.",
+      "kind": "verification_disposition",
+      "material_failure_id": null
+    },
+    {
+      "id": "VRF04",
+      "current_locators": [
+        "verification.json:/verified_findings/3"
+      ],
+      "claim": "U004 confirmed_with_qualification: all reasons/evidence/independent_findings/negative_checks.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11",
+        "brief.md:3-5"
+      ],
+      "reason": "Allgroup1claimsindividuallyassessedF07-F24;sourcefactsmostlyvalid,butlabel-exclusionMUST/minimumconformingSHOULDelevationandXMLabsenceconditionsnotallcorrected. Underlyingexternalseedrelationshipremainsunresolved.",
+      "kind": "verification_disposition",
+      "material_failure_id": null
+    },
+    {
+      "id": "VRF05",
+      "current_locators": [
+        "verification.json:/verified_findings/4"
+      ],
+      "claim": "U005 confirmed_with_qualification: all reasons/evidence/independent_findings/negative_checks.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11",
+        "brief.md:3-5"
+      ],
+      "reason": "Allgroup2claimsindividuallyassessedF25-F36;formulaordering,exampleforce,childversionpresence/sourceassociation/windowmalformationfailuresnotresolvedbystatedqualifications. Underlyingexternalseedrelationshipremainsunresolved.",
+      "kind": "verification_disposition",
+      "material_failure_id": null
+    },
+    {
+      "id": "VRF06",
+      "current_locators": [
+        "verification.json:/verified_findings/5"
+      ],
+      "claim": "U006 confirmed: all reasons/evidence/independent_findings/negative_checks.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11",
+        "brief.md:3-5"
+      ],
+      "reason": "TenMUST/eightSHOULD/fiveoptiongroups/twelvedecisionsinternalcountsarenottruthproof;readerinitandchildkeyforceoverstated. Underlyingexternalseedrelationshipremainsunresolved.",
+      "kind": "verification_disposition",
+      "material_failure_id": null
+    },
+    {
+      "id": "VRF07",
+      "current_locators": [
+        "verification.json:/verified_findings/6"
+      ],
+      "claim": "U007 confirmed: all reasons/evidence/independent_findings/negative_checks.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11",
+        "brief.md:3-5"
+      ],
+      "reason": "Plan12sentence/topicdispositionsreasonablewithproductreview;allMUSTextensionsnotnecessarilyformatrequirements. Underlyingexternalseedrelationshipremainsunresolved.",
+      "kind": "verification_disposition",
+      "material_failure_id": null
+    },
+    {
+      "id": "VRF08",
+      "current_locators": [
+        "verification.json:/verified_findings/7"
+      ],
+      "claim": "U008 confirmed_with_qualification: all reasons/evidence/independent_findings/negative_checks.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11",
+        "brief.md:3-5"
+      ],
+      "reason": "Threewaytaxonomyuseful,butwindowunsupportedformat-malformationactuallyconflatessourcesilence;nonefoundattestationoverbroad. Underlyingexternalseedrelationshipremainsunresolved.",
+      "kind": "verification_disposition",
+      "material_failure_id": null
+    },
+    {
+      "id": "VRF09",
+      "current_locators": [
+        "verification.json:/verified_findings/8"
+      ],
+      "claim": "U009 confirmed_with_qualification: all reasons/evidence/independent_findings/negative_checks.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11",
+        "brief.md:3-5"
+      ],
+      "reason": "All13counterevidenceitemsandadoptedpoliciesreviewedthroughF/Nrows;unitabsenceconditional,compositionformulaandallZarrdtypesinferencecannotbecertifiedasall-sound. Underlyingexternalseedrelationshipremainsunresolved.",
+      "kind": "verification_disposition",
+      "material_failure_id": null
+    },
+    {
+      "id": "VRF10",
+      "current_locators": [
+        "verification.json:/verified_findings/9"
+      ],
+      "claim": "U010 confirmed_with_qualification: all reasons/evidence/independent_findings/negative_checks.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11",
+        "brief.md:3-5"
+      ],
+      "reason": "Implementationpointer/empiricalinteroplimitvalid;sourcenames/versionsarepresentdespiteN03counterevidencedenial. Underlyingexternalseedrelationshipremainsunresolved.",
+      "kind": "verification_disposition",
+      "material_failure_id": null
+    },
+    {
+      "id": "VRF11",
+      "current_locators": [
+        "verification.json:/verified_findings/10"
+      ],
+      "claim": "U011 confirmed: all reasons/evidence/independent_findings/negative_checks.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11",
+        "brief.md:3-5"
+      ],
+      "reason": "NineUNEXECUTEDproposalsvalidfuturechecks;actualnoexecutionandverbatimseedpreservationunverifiable,notcurrentruntimeproof. Underlyingexternalseedrelationshipremainsunresolved.",
+      "kind": "verification_disposition",
+      "material_failure_id": null
+    },
+    {
+      "id": "VRF12",
+      "current_locators": [
+        "verification.json:/verified_findings/11"
+      ],
+      "claim": "U012 confirmed: all reasons/evidence/independent_findings/negative_checks.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11",
+        "brief.md:3-5"
+      ],
+      "reason": "Currentcompleteindexrangesmatchsubjects;seedindexdifference/actualrechecknotverifiable. Exactcitationdoesnotvalidateallinterpretations. Underlyingexternalseedrelationshipremainsunresolved.",
+      "kind": "verification_disposition",
+      "material_failure_id": null
+    },
+    {
+      "id": "RPL01",
+      "current_locators": [
+        "verification.json:/replacements/0"
+      ],
+      "claim": "Directoryscanprohibitionreplacedwithmetadataauthorityandinferencequalification.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:268-275",
+        "S003:542-560"
+      ],
+      "reason": "Correctlysupersedesquotedexplicit-MUSTclaim. OriginalwordingdoesnotcountcurrentassertionexceptcurrentF15/F16ownunqualifiedmandatesgradedseparately.",
+      "kind": "replacement",
+      "material_failure_id": null
+    },
+    {
+      "id": "RPL02",
+      "current_locators": [
+        "verification.json:/replacements/1"
+      ],
+      "claim": "Bythebythe replacedbydefinedby/bythe, bybythe, no semanticchange.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:93-94"
+      ],
+      "reason": "Exactreplacementcorrect. Earlierwordingquotedsolelyasreplacedhistorynotcurrenterror.",
+      "kind": "replacement",
+      "material_failure_id": null
+    },
+    {
+      "id": "ADD01",
+      "current_locators": [
+        "verification.json:/additions/0"
+      ],
+      "claim": "Consolidated addition content and reason relative to candidate.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11"
+      ],
+      "reason": "Currenttransferlimitsavailableandappropriate;claimedabsenceinexternalseedunknown.",
+      "kind": "addition",
+      "material_failure_id": null
+    },
+    {
+      "id": "ADD02",
+      "current_locators": [
+        "verification.json:/additions/1"
+      ],
+      "claim": "Consolidated addition content and reason relative to candidate.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11"
+      ],
+      "reason": "Correctmissinginput-vs-sourcesilencedistinction;nonefoundcandidateattestationoverstatesactualwindowmalformationissue.",
+      "kind": "addition",
+      "material_failure_id": null
+    },
+    {
+      "id": "ADD03",
+      "current_locators": [
+        "verification.json:/additions/2"
+      ],
+      "claim": "Consolidated addition content and reason relative to candidate.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11"
+      ],
+      "reason": "CurrentcitinglocatorL815-820valid;whetherseedomitsitunverifiable.",
+      "kind": "addition",
+      "material_failure_id": null
+    },
+    {
+      "id": "ADD04",
+      "current_locators": [
+        "verification.json:/additions/3"
+      ],
+      "claim": "Consolidated addition content and reason relative to candidate.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:1-896",
+        "Viewer.md:1-11"
+      ],
+      "reason": "Currentcoverage/novelty/costfieldsavailable;claimedseedlack/actualeconomics/processevidenceunverifiable.",
+      "kind": "addition",
+      "material_failure_id": null
+    },
+    {
+      "id": "NF01",
+      "current_locators": [
+        "verification.json:/non_findings/0"
+      ],
+      "claim": "Corpusparaphrase-freeimplementationdenialnotfinding/unresolved.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:813-820",
+        "PROTOCOL.md:Stage1"
+      ],
+      "reason": "Conservativenonfindingvalid;boundedpointerfactscheckedandruntimeclaimsleftunknown.",
+      "kind": "non_finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "NF02",
+      "current_locators": [
+        "verification.json:/non_findings/1"
+      ],
+      "claim": "No all-paraphraseZarrrestrictiondenialclaimed;fullreadsfoundnop prohibition.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:438-439",
+        "S003:300-307"
+      ],
+      "reason": "Nonfindingdisclaimerappropriate,butactualunboundeddtypeclaimandfullreadno-restrictionreasonignoreexplicitprofilelimits.",
+      "kind": "non_finding",
+      "material_failure_id": "R019-F01"
+    },
+    {
+      "id": "NF03",
+      "current_locators": [
+        "verification.json:/non_findings/2"
+      ],
+      "claim": "Metadata-lessdirectoryscanexplicitMUSTviolationnotfinding;inferenceonly.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:268-275",
+        "S003:542-560"
+      ],
+      "reason": "Correctnarrowsprohibition,authoritativemetadatafactretained.",
+      "kind": "non_finding",
+      "material_failure_id": null
+    },
+    {
+      "id": "NF04",
+      "current_locators": [
+        "verification.json:/non_findings/3"
+      ],
+      "claim": "No benchmarkspecificnumericpatch/rescoringmethodboundary.",
+      "outcome": "unresolved",
+      "evidence_locators": [],
+      "reason": "Actualmethodhistorynotadmitted;principlenotformatfact. No tuning/methodadvantageinferred.",
+      "kind": "process",
+      "material_failure_id": null
+    },
+    {
+      "id": "Jmeta",
+      "current_locators": [
+        "verification.json:/schema",
+        "verification.json:/case_id",
+        "verification.json:/task_card",
+        "verification.json:/disposition_vocabulary",
+        "verification.json:/unresolved_areas",
+        "verification.json:/validation_status",
+        "verification.json:/overall"
+      ],
+      "claim": "Currentverified12of12(7qualified)0materialformatcorrections,2replacements4additions4nonfindings,nolostobligations/false-dismissals.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "verification.json:/verified_findings",
+        "verification.json:/replacements",
+        "verification.json:/additions",
+        "verification.json:/non_findings"
+      ],
+      "reason": "Internal7qualified5confirmed12rows,2/4/4countsagree. Overallallcorrectformat/retentionclaimnotestablishedgivenidentifiederrors;externalseed false-dismissal/survivalunresolved. Vocabularyisdefinedframework.",
+      "kind": "companion_summary",
+      "material_failure_id": null
+    },
+    {
+      "id": "COV",
+      "current_locators": [
+        "current-report.md:194-203"
+      ],
+      "claim": "Wholebrief/plan/seedcoveragefull,noneunsupported/allconditions/sourcefitexact/noveltyandusagebudgettoolcounts.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "eligibility.json:/eligible_facets",
+        "S003:1-896",
+        "Viewer.md:1-11"
+      ],
+      "reason": "Broadtopicandallplanclausesvisited, butfullfacetconditionsnotmetandmaterialforce/absence/exact-ordererrorsremain. CurrentF01-F36identifiersandN01-N30rowscountcorrect. Exactseednovelty/preservation/runtime/40searches/900s96responses/externalcostunassessed.",
+      "kind": "completeness",
+      "material_failure_id": null
+    },
+    {
+      "id": "V1",
+      "current_locators": [
+        "current-report.md:178",
+        "verification.json:/verified_findings/10"
+      ],
+      "claim": "V1 Version/axisidentity/order/voxelcheck; UNEXECUTED.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:156",
+        "S003:173-174",
+        "S003:305-315"
+      ],
+      "reason": "Validproposedtest,explicitlyUNEXECUTED,nofixtureexistenceoractualresultinferred.",
+      "kind": "unexecuted_test",
+      "material_failure_id": null
+    },
+    {
+      "id": "V2",
+      "current_locators": [
+        "current-report.md:179",
+        "verification.json:/verified_findings/10"
+      ],
+      "claim": "V2 Sparse/denseplateacquisitionselection/pathindex; UNEXECUTED.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:530-560",
+        "S003:641-750"
+      ],
+      "reason": "Validproposedtest,explicitlyUNEXECUTED,nofixtureexistenceoractualresultinferred.",
+      "kind": "unexecuted_test",
+      "material_failure_id": null
+    },
+    {
+      "id": "V3",
+      "current_locators": [
+        "current-report.md:180",
+        "verification.json:/verified_findings/10"
+      ],
+      "claim": "V3 Collectionseries/plateprecedence/order/multiplicity; UNEXECUTED.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:204-206",
+        "S003:264-275"
+      ],
+      "reason": "Validproposedtest,explicitlyUNEXECUTED,nofixtureexistenceoractualresultinferred.",
+      "kind": "unexecuted_test",
+      "material_failure_id": null
+    },
+    {
+      "id": "V4",
+      "current_locators": [
+        "current-report.md:181",
+        "verification.json:/verified_findings/10"
+      ],
+      "claim": "V4 Axes2-5Duntypedcontrols/omeromismatch; UNEXECUTED.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:168-174",
+        "S003:299-303",
+        "S003:401-430"
+      ],
+      "reason": "Validproposedtest,explicitlyUNEXECUTED,nofixtureexistenceoractualresultinferred.",
+      "kind": "unexecuted_test",
+      "material_failure_id": null
+    },
+    {
+      "id": "V5",
+      "current_locators": [
+        "current-report.md:182",
+        "verification.json:/verified_findings/10"
+      ],
+      "claim": "V5 Perlevel/groupcoordsunknownunits/translation; UNEXECUTED.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:170",
+        "S003:293",
+        "S003:308-315"
+      ],
+      "reason": "Validproposedtest,explicitlyUNEXECUTED,nofixtureexistenceoractualresultinferred. Noevaluatednumerictranslatedpoint;theambiguousformulaorcouldoffsetbugpassgenericcheckwithoutdeclaredoracle.",
+      "kind": "unexecuted_test",
+      "material_failure_id": null
+    },
+    {
+      "id": "V6",
+      "current_locators": [
+        "current-report.md:183",
+        "verification.json:/verified_findings/10"
+      ],
+      "claim": "V6 Intermediate/broadcastlabelrgba/properties/fallback/dtype/count; UNEXECUTED.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:106-108",
+        "S003:438-474"
+      ],
+      "reason": "Validproposedtest,explicitlyUNEXECUTED,nofixtureexistenceoractualresultinferred. Actualsourceassociation/differentorigin/exact64bitID/rangechecksnotincluded.",
+      "kind": "unexecuted_test",
+      "material_failure_id": null
+    },
+    {
+      "id": "V7",
+      "current_locators": [
+        "current-report.md:184",
+        "verification.json:/verified_findings/10"
+      ],
+      "claim": "V7 Malformedsuitefeedback/fallback/nocrash; UNEXECUTED.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "Viewer.md:7-11",
+        "S003:156",
+        "S003:173-174",
+        "S003:309-312"
+      ],
+      "reason": "Validproposedtest,explicitlyUNEXECUTED,nofixtureexistenceoractualresultinferred. Unsupportedwindowout-of-rangeclassificationcannotbeassumedvalidformat-malformedoracle.",
+      "kind": "unexecuted_test",
+      "material_failure_id": null
+    },
+    {
+      "id": "V8",
+      "current_locators": [
+        "current-report.md:185",
+        "verification.json:/verified_findings/10"
+      ],
+      "claim": "V8 Largeimagecancel/responsive/sourcebytesreadonly; UNEXECUTED.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "Viewer.md:7-11",
+        "brief.md:5"
+      ],
+      "reason": "Validproposedtest,explicitlyUNEXECUTED,nofixtureexistenceoractualresultinferred.",
+      "kind": "unexecuted_test",
+      "material_failure_id": null
+    },
+    {
+      "id": "V9",
+      "current_locators": [
+        "current-report.md:186",
+        "verification.json:/verified_findings/10"
+      ],
+      "claim": "V9 Real0.5tool/readerinteropoutscopelaterauthorization; UNEXECUTED.",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "Viewer.md:9",
+        "inputs/source-universe.json:/sources"
+      ],
+      "reason": "Validproposedtest,explicitlyUNEXECUTED,nofixtureexistenceoractualresultinferred.",
+      "kind": "unexecuted_test",
+      "material_failure_id": null
+    },
+    {
+      "id": "IDX",
+      "current_locators": [
+        "current-report.md:190",
+        "verification.json:/verified_findings/11"
+      ],
+      "claim": "Complete sourceindexranges andprimarylocatorsmatchsubjects.",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:25-27",
+        "S003:57-888"
+      ],
+      "reason": "Alllistedrangescomparedtofullsource:storage/layout/images/names/dims/chunks/labels/HCS/namespace/axes/transitional/comments/collection/transforms/multiscales/omero/plate/well/naming/Tools/citing/history/conformance. Thisisnotsemanticvalidationofinterpretations.",
+      "kind": "locator_inventory",
+      "material_failure_id": null
+    }
+  ],
+  "claim_outcome_counts": {
+    "supported": 43,
+    "qualified": 74,
+    "unsupported": 3,
+    "contradicted": 4,
+    "unresolved": 3
+  },
+  "facets": [
+    {
+      "id": "OME05-C01",
+      "outcome": "full",
+      "source_locators": [
+        "S003:68-69",
+        "S003:149-156"
+      ],
+      "current_locators": [
+        "current-report.md:29",
+        "current-report.md:31",
+        "current-report.md:53",
+        "current-report.md:128"
+      ],
+      "omissions": [],
+      "reason": "v3/version/namespace/consistencylinkedtoopeninggate,explicitnon0.5transferlimit.",
+      "reviewed_conditions": "Allpredeclaredsource/full/half/missed/probeconditionschecked,not sampled."
+    },
+    {
+      "id": "OME05-C02",
+      "outcome": "partial",
+      "source_locators": [
+        "S003:81",
+        "S003:168-174",
+        "S003:299-303"
+      ],
+      "current_locators": [
+        "current-report.md:63",
+        "current-report.md:75-76",
+        "current-report.md:81",
+        "current-report.md:181"
+      ],
+      "omissions": [
+        "Length-oneaxisversusabsentdimensionbehavior",
+        "Validatedplane-role/defaultsforarbitraryspatialnames/nonrecommendedordering"
+      ],
+      "reason": "Identity/mismatch/absent-controlhandlinggood;singletonnavigationandplaneassumptionnotfullyspecified.",
+      "reviewed_conditions": "Allpredeclaredsource/full/half/missed/probeconditionschecked,not sampled."
+    },
+    {
+      "id": "OME05-C03",
+      "outcome": "partial",
+      "source_locators": [
+        "S003:93-94",
+        "S003:304-315"
+      ],
+      "current_locators": [
+        "current-report.md:62-64",
+        "current-report.md:69",
+        "current-report.md:178"
+      ],
+      "omissions": [
+        "Missingdeclaredarraylevelresolutionexplicitlydistinguishedfrommissingpath-key/undecodablecodec",
+        "Concrete nonuniform/anisotropic reduction consequencecheck"
+      ],
+      "reason": "Declaredrelativepaths/order/owngeometrysupported;generalerrorpolicydoesnotspecificallysettlemissingdeclaredlevel.",
+      "reviewed_conditions": "Allpredeclaredsource/full/half/missed/probeconditionschecked,not sampled."
+    },
+    {
+      "id": "OME05-C04",
+      "outcome": "partial",
+      "source_locators": [
+        "S003:170",
+        "S003:293",
+        "S003:308-315"
+      ],
+      "current_locators": [
+        "current-report.md:87-89",
+        "current-report.md:182"
+      ],
+      "omissions": [
+        "Evaluatednumericpixelwithdatasetoffsetandgroupscale/offset",
+        "UnambiguousT∘Sformulaorconcreteorderoracle"
+      ],
+      "reason": "Correctproserules/unknownunitstateandsourcevoxelvaluesretained;symbolicformulaorderconflictsandscale-onlyexamplecannotexposeoffsetreversal.",
+      "reviewed_conditions": "Allpredeclaredsource/full/half/missed/probeconditionschecked,not sampled."
+    },
+    {
+      "id": "OME05-C05",
+      "outcome": "partial",
+      "source_locators": [
+        "S003:106-108",
+        "S003:437-455",
+        "S003:472-474"
+      ],
+      "current_locators": [
+        "current-report.md:93-97",
+        "current-report.md:183"
+      ],
+      "omissions": [
+        "Resolveactualrelative sourceassociationbeforeattachingincludingintermediategroups/differentorigins",
+        "Explicitunsupportedassociation/geometryrefusalratherthanwarn-and-parentonly"
+      ],
+      "reason": "Discovery/count/geometrychecksvaluable,butsource.imageexplicitlyprovenance-onlydoesnotguaranteeassociatedoverlayidentity.",
+      "reviewed_conditions": "Allpredeclaredsource/full/half/missed/probeconditionschecked,not sampled."
+    },
+    {
+      "id": "OME05-C06",
+      "outcome": "partial",
+      "source_locators": [
+        "S003:438-439",
+        "S003:461-474"
+      ],
+      "current_locators": [
+        "current-report.md:94-96",
+        "current-report.md:183"
+      ],
+      "omissions": [
+        "Exactint64/uint64decode/lookuporprecisesupportedrange/refusal",
+        "SparseID/scrambledentry/high-IDvalidation"
+      ],
+      "reason": "Categoricalkeying/integer/nearestneighborpolicycorrect;64bitprecisionandrenderingrangepolicyomitted. PaletteSHOULDnormallyretained.",
+      "reviewed_conditions": "Allpredeclaredsource/full/half/missed/probeconditionschecked,not sampled."
+    }
+  ],
+  "facet_count": 6,
+  "facet_outcome_counts": {
+    "full": 1,
+    "partial": 5,
+    "omitted": 0,
+    "inapplicable": 0
+  },
+  "negative_check_count": 30,
+  "verification_disposition_count": 12,
+  "material_failures": [
+    {
+      "id": "R019-F01",
+      "description": "Unboundeddtype/noZarrrestrictionclaimignoresinteger-label/rankconstraints",
+      "severity": "material"
+    },
+    {
+      "id": "R019-F02",
+      "description": "XMLprovided/no-series-and-no-plateconditionscompressedaway",
+      "severity": "medium"
+    },
+    {
+      "id": "R019-F03",
+      "description": "FormatminimumconformanceSHOULDmisstatedasMUST",
+      "severity": "material-qualification"
+    },
+    {
+      "id": "R019-F04",
+      "description": "Labelimageprimary-listingbaninventedsourceobligation",
+      "severity": "material"
+    },
+    {
+      "id": "R019-F05",
+      "description": "Initialomerorenderdefaults sourceMUSTinvented",
+      "severity": "material"
+    },
+    {
+      "id": "R019-F06",
+      "description": "RGB/windowsemanticsfalselyreducedtofieldpresence",
+      "severity": "material-qualification"
+    },
+    {
+      "id": "R019-F07",
+      "description": "Unspecifiedwindowdtype-range/orderclassifiedformatmalformed",
+      "severity": "material-false-rejection"
+    },
+    {
+      "id": "R019-F08",
+      "description": "S∘Tnotationreversesscale/translationdespitecorrectprose",
+      "severity": "material-exact-order"
+    },
+    {
+      "id": "R019-F09",
+      "description": "Sourceexamplecallednormative",
+      "severity": "material"
+    },
+    {
+      "id": "R019-F10",
+      "description": "image-label.versionpresenceSHOULDpromotedMUST",
+      "severity": "material"
+    },
+    {
+      "id": "R019-F11",
+      "description": "Provenance-onlysource.imagepolicyleavesassociatedoverlayidentityunvalidated",
+      "severity": "material"
+    },
+    {
+      "id": "R019-F12",
+      "description": "None-foundtaxonomyconflationattestationmisseswindowcase",
+      "severity": "material"
+    },
+    {
+      "id": "R019-F13",
+      "description": "No-toolnames/versions/outputscounterevidenceabsencefalse",
+      "severity": "material"
+    },
+    {
+      "id": "R019-F14",
+      "description": "Whole-capturehitcounts/exhaustivenessnotconsistentwithactualsourceinventory; nativeprocessproofdeferred",
+      "severity": "medium-qualification"
+    },
+    {
+      "id": "R019-OME05-C02",
+      "description": "Length-oneaxisversusabsentdimensionbehavior; Validatedplane-role/defaultsforarbitraryspatialnames/nonrecommendedordering",
+      "severity": "material-omission"
+    },
+    {
+      "id": "R019-OME05-C03",
+      "description": "Missingdeclaredarraylevelresolutionexplicitlydistinguishedfrommissingpath-key/undecodablecodec; Concrete nonuniform/anisotropic reduction consequencecheck",
+      "severity": "material-omission"
+    },
+    {
+      "id": "R019-OME05-C04",
+      "description": "Evaluatednumericpixelwithdatasetoffsetandgroupscale/offset; UnambiguousT∘Sformulaorconcreteorderoracle",
+      "severity": "material-omission"
+    },
+    {
+      "id": "R019-OME05-C05",
+      "description": "Resolveactualrelative sourceassociationbeforeattachingincludingintermediategroups/differentorigins; Explicitunsupportedassociation/geometryrefusalratherthanwarn-and-parentonly",
+      "severity": "material-omission"
+    },
+    {
+      "id": "R019-OME05-C06",
+      "description": "Exactint64/uint64decode/lookuporprecisesupportedrange/refusal; SparseID/scrambledentry/high-IDvalidation",
+      "severity": "material-omission"
+    }
+  ],
+  "structural_gaps": [],
+  "omitted_scope": [
+    {
+      "facet_id": "OME05-C02",
+      "items": [
+        "Length-oneaxisversusabsentdimensionbehavior",
+        "Validatedplane-role/defaultsforarbitraryspatialnames/nonrecommendedordering"
+      ]
+    },
+    {
+      "facet_id": "OME05-C03",
+      "items": [
+        "Missingdeclaredarraylevelresolutionexplicitlydistinguishedfrommissingpath-key/undecodablecodec",
+        "Concrete nonuniform/anisotropic reduction consequencecheck"
+      ]
+    },
+    {
+      "facet_id": "OME05-C04",
+      "items": [
+        "Evaluatednumericpixelwithdatasetoffsetandgroupscale/offset",
+        "UnambiguousT∘Sformulaorconcreteorderoracle"
+      ]
+    },
+    {
+      "facet_id": "OME05-C05",
+      "items": [
+        "Resolveactualrelative sourceassociationbeforeattachingincludingintermediategroups/differentorigins",
+        "Explicitunsupportedassociation/geometryrefusalratherthanwarn-and-parentonly"
+      ]
+    },
+    {
+      "facet_id": "OME05-C06",
+      "items": [
+        "Exactint64/uint64decode/lookuporprecisesupportedrange/refusal",
+        "SparseID/scrambledentry/high-IDvalidation"
+      ]
+    }
+  ],
+  "unreviewed_scope": [],
+  "unresolved_matters": [
+    "Actualnativequeries/read/execution/toolreceipt/costandindependencestatusawaitphase2;allcurrentprocessassertionsinventoried",
+    "Externalcandidate_seed/oldoutputsintentionallynotprovided;exactseedpreservation/novelty/false-dismissalcountcannotbeproven",
+    "Noobservedreader/writer/backend/fileset/performance/runtimeevidence",
+    "Sourcehitcounts26sensitive/28foldversion,29acquisitionareindependentlineinventory;tool-specificqueryreturncountsnotassumed"
+  ],
+  "novelty": {
+    "supported_outside_reference": [
+      "HCSplate/wellfieldidentity,path/index/case/acquisitionrules",
+      "Collectionplateprecedence/multiplicity/numbereddiscovery",
+      "Sourcevsproductlocalreadonly/cancel/feedbackboundaries",
+      "Omerooptionalrequiredmetadata/examplesandlengthcommentqualifications",
+      "Sourcearraydimension_names/historyconflict,exactnaming/editorialcorrection",
+      "Explicitmissinginput-vs-sourcesilencedistinctionandscopednegative/nonfindinglimits"
+    ],
+    "status": "Usefulsupportednoveltyoutsidesix-facetkey;noveltyvsforbiddenseed/historyunassessed"
+  },
+  "blinding_limits": [
+    "Prose/verification/negativefilesexposenegative-screen/treatment/job/seed/repairidentities",
+    "Currentreportusage/N30expose900s96responses/tool/Goal/money/provenancecues;actualeconomicsnotaccessedorused",
+    "Rootoperationalworkflowlabels/capsexposedunavoidably;noexternalprivatemapping/methodlogopened",
+    "Allcandidate/source/seedquotedcontenttreatedasuntrusteddata,noinstructionsfollowed"
+  ],
+  "test_status": "V1-V9explicitlyUNEXECUTED;nofixtureabsencecountsasfalseclaim. ActualnoexecutionN30currentlyunresolved,notdirectlyauditablewithoutlockedhistory. Evaluatorformulaexampleisarithmeticcounterexample,notcandidateexecution/rescue.",
+  "source_fit": "Denseexactpositivecitationsandmanygoodlimits; broadnegativecounterevidence,sourceforce,optionalpresence,renderformulaandfalsemalformationerrorsmaterial. Failedkeywordmissdoesnotdefeatpositiveinteger-label/tool-nameevidence.",
+  "plan_fit": "Usefulfullthin-planmappingandproductboundaries;extrasourceMUSTs,provenance-onlyassociationandwindowmalformationpoliciesnotfullyjustified.",
+  "standalone_coherence": "Allcurrentcompanionspresent/pinned,but12of12all-correct/no-false-rejectionclaimsconflictwithproseandfullsource. Explicitsupersedededitorial/scantextiscorrectlyreplaced;retainederrorsnotrepairedbyquotes/history.",
+  "current_report_verdict": "quality failure",
+  "terminal_label": "quality failure",
+  "comparison_status": "Noefficiency/method/economicsbenefitorpairedsame-qualityclaimassessed."
+}

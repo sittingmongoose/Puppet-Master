@@ -1,0 +1,33 @@
+{
+  "schema": "er7.z.safe.method.acceptance.v1",
+  "verdict": "accepted",
+  "reviewer": "deterministic instantiation under independently accepted exact static policy",
+  "method_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-dynamic-t15-t16-v3/instances/witness/t15-z-ome-mcp-reuse-v2-redo1/method-config.json",
+  "method_config_sha256": "e37a635a99972454fa61b2deebff3f4ab8fa2e445836f7b66d908e83ef20c9ab",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "method": "T15",
+  "arm": "control",
+  "attempt": {
+    "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-dynamic-t15-t16-v3/instances/witness/t15-z-ome-mcp-reuse-v2-redo1/witness/workspace",
+    "prompt_sha256": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa",
+    "label": "t15-z-ome-mcp-reuse-v2-redo1-witness",
+    "max_seconds": 600.0,
+    "max_responses": 64,
+    "public_get": false
+  },
+  "mechanical_child_certificate": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-dynamic-t15-t16-v3/instances/witness/t15-z-ome-mcp-reuse-v2-redo1/mechanical-child-certificate.json",
+    "sha256": "e26603fd6d41c44996e45af21ba915947d32c426f0e0bcbfb9c1441fc44bb35c"
+  },
+  "policy": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/dynamic-binding-checker-v4/t15-static-policy.json",
+    "sha256": "9e6eece2eea9e2b15059b5ceed27170b8837818c31af9bbb23c538873dd7854f"
+  },
+  "semantic_review_performed": false,
+  "actual_posthandoff_qualified": false,
+  "native_launch_authorized_by_this_document_alone": false,
+  "conditions": [
+    "Atomic sole-dispatcher whole-case budget recheck, current original case clock and complete measured occupation ledger, shared family cap/resources/deadline, same counted accepted canary/context/runtime required.",
+    "After native completion qualify fresh context, complete current outputs and exact all-input/source/output companions independently; no partial/overrun promotion."
+  ]
+}

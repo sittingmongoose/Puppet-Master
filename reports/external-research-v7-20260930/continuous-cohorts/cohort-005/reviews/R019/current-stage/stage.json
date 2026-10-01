@@ -1,0 +1,15 @@
+{
+  "case_id": "C061",
+  "report_id": "R019",
+  "current_report_sha256": "18349e1b6eb33bc2091dc11e9d7779263abc1f600bc156f13536b8f7eb0beda2",
+  "input_manifest_sha256": "e9003b6171d409c73d03d64b447444a8a2eed2e3a2452289627e4ecb5d45fdd7",
+  "complete_final_report_available": true,
+  "current_only": true,
+  "acquisition_unlocked": false,
+  "current_deliverable_companions": [
+    "verification.json",
+    "negative-checks.json"
+  ],
+  "missing_current_artifacts": [],
+  "unavoidable_format_cues": "Exact deliverable bytes may include embedded prior-work/seed references and method cues; no external seed, acquisition, history, prior assessments, or economics supplied. Full assigned current artifact scope must be assessed."
+}

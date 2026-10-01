@@ -1,0 +1,9 @@
+Frozen cohort005
+
+Snapshot: October 01, 2026, 05:10:14 p.m. EDT.37 admissions,35 recorded native Goal activations,22305.353593349457 occupied seconds,919158 generated output lower bound; completeness unknown. Two T04R redo leases were active then; no later state is inferred. Helper reconciliation records91 known conservative starts against96, leaving5 known events; omissions and true headroom remain unknown. Same-name fresh follow-ups are not deduplicated.
+
+Original T05R treatment is complete/context-qualified and delivered whole; matched original control was also complete. Treatment native timing774.9seconds/11responses/42302reported output is separate from measured whole delivery. Source cache bodies are excluded. T08 both and T15 redo1 witness preserve positive AssignmentCap diagnoses; native Goal terminal statuses remain NULL/unestablished. No pause is recategorized as a candidate failure. All report versions and observed missing outputs remain preserved.
+
+R019 adds full current review of old T14 treatment; R018/cohort004 plus R019 now provide complete additive current T14 pair reviews, both quality failures. Old partial grades remain untouched. R017 maps to T11 treatment, R020 to original T05R control, R021 to T15 redo1 seed; all complete current quality failures. Current semantic findings-companion addendum for R021 is separately projected; history excluded. No source-delivery qualification, source-acquisition success, preservation benefit, replication or same-quality efficiency win is inferred from semantic review completeness.
+
+Exact assessmentJSON/MD, native scalar projections, independent source-addendum receipt metadata and stage manifests are included. Raw source bodies, caches, auth, private configurations, candidate conversations and modelIO are excluded. New root queue/integration preparation is conditional and receives no actual execution credit here.

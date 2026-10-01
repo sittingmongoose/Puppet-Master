@@ -1,0 +1,63 @@
+{
+  "schema": "er7.z.safe.method.config.v1",
+  "attempt": {
+    "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t08-z-ome-mcp-discovery-v2-repair1/control/workspace",
+    "prompt_sha256": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa",
+    "label": "t08-z-ome-mcp-discovery-v2-repair1-control",
+    "max_seconds": 900.0,
+    "max_responses": 96,
+    "public_get": true
+  },
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "runtime_snapshot": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/review-snapshot-final.json",
+  "method": "T08",
+  "pair_id": "t08-z-ome-mcp-discovery-v2-repair1",
+  "arm": "control",
+  "task_sha256": "a4138e0d6a4d70a2ae1133ec1985ec3562e73078480597735de74d39dc55ae39",
+  "input_manifest": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+      "target": "brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905
+    }
+  ],
+  "goal_file": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t08-z-ome-mcp-discovery-v2-repair1/control/goal.txt",
+  "output_files": [
+    "report.md",
+    "acquisition.json",
+    "scheduling.json"
+  ],
+  "source_access": "Candidate-selected public HTTPS GET/search URLs and frozen admitted workspace evidence only.",
+  "plan_visibility": "Plan-blind; no plan/spec/key/answer history.",
+  "model": "GLM-5.3-Flash",
+  "effort": "max",
+  "tool_names": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical",
+    "mcp__pm_boundary__public_https_get"
+  ],
+  "closure_sha256": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/prepare.py": "7e3c57851189a67d1bd713b82f9698945abf82a9c87e52cd86ab8f390d4ec812",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/dependency_selector_v2.py": "fba1f20effdea82305e328c2f7a0f5de7332072ca0aae1da49337417df37be05",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/budget_guard.py": "9e870636dae31aa92bf2b3409a5f0b810b30e2f11f38de21fccd6b9c7ec55e25",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/boundary.py": "e4b39a3bbb978968ec4ac9684bd8bf1c1662e9f594293808444fd6c18bcc7621",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/tool_server.py": "72557b5e8d5c4f529570b55bd4c04867fb7b72d88bfbbd351fc8fbfce65eb0dd",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/native_runner.py": "9894fa2d82f801cf2d70f1f0a9756e2a14e7bcbd59fe95d69459d6d552d4baa9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/host_guard.py": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/bind_final_runtime.py": "68ae6c807425863b57315af7b762a3888c7bea880aac97bcceadf0e279cfd640"
+  },
+  "preserved_attempt_metadata": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t08-z-ome-mcp-discovery-v2-repair1/control/attempt.json",
+    "sha256": "825523c83f1a10b17b6969435cd41dca0bf13d8a40a5e5e76a1e5a6d09f98d2c"
+  },
+  "pair_card": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t08-z-ome-mcp-discovery-v2-repair1/pair.json",
+    "sha256": "4d087760312d0a331ff6b5da23a92946544e6fed37374f736978df9edf8197de"
+  },
+  "configuration_transition": "Initial unexecuted prospective runtime pins retained in attempt/card history. This explicit final host configuration binds the finalized repair2 snapshot; no original attempt output or failure is replaced.",
+  "status": "HOLD: author config only; independent er7.z.safe.method.acceptance.v1 plus runtime/canary gates required",
+  "cost_policy": "All prior preparation/repair/newbinding and future candidate/hostmechanics/setup/retry/cleanup costs remain counted. No executed comparison claimed."
+}

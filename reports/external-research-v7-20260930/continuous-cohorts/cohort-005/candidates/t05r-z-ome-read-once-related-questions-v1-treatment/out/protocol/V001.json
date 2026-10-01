@@ -1,0 +1,49 @@
+{
+  "schema": "er7.protocol_log.v1",
+  "case_id": "ome-normative-dev-v1",
+  "report_version": "V001",
+  "author": "candidate",
+  "default_record_label": "SELF_REPORT",
+  "label_policy": "Every record below is candidate-authored and therefore labeled SELF_REPORT. Tool-returned fields (paths, byte counts, sha256 values) are the only independently tool-exposed evidence; interpretation fields are self-report.",
+  "goal_model": "One fresh native Goal for the entire assignment: setup, read-once source acquisition, Q1 analysis, Q2 analysis (reusing the same read-once context), artifact authoring. Questions answered in order Q1 then Q2 over the same full assignment and corpus.",
+  "entries": [
+    {"seq": 1, "label": "SELF_REPORT", "action": "read", "tool": "mcp__pm_boundary__read_file", "question_ids": [], "target": "TASK.md", "range": "lines 1-40", "result": "task card read; rules internalized (read-once protocol, versioning, namespaces, caps)", "deviation": null},
+    {"seq": 2, "label": "SELF_REPORT", "action": "read", "tool": "mcp__pm_boundary__read_file", "question_ids": [], "target": "inputs/TASK.md", "range": "lines 1-11", "result": "assignment read; both brief-derived groups covered together in this single combined assignment per task card", "deviation": null},
+    {"seq": 3, "label": "SELF_REPORT", "action": "read", "tool": "mcp__pm_boundary__read_file", "question_ids": [], "target": "inputs/brief.md", "range": "lines 1-5", "result": "product brief read", "deviation": null},
+    {"seq": 4, "label": "SELF_REPORT", "action": "read", "tool": "mcp__pm_boundary__read_file", "question_ids": [], "target": "inputs/catalog.json", "range": "lines 1-40", "result": "catalog read; admitted source S003 identity recorded (sha256 5d8b2408...82de, 36980 bytes, 896 lines); no-live-fetch rule noted", "deviation": null},
+    {"seq": 5, "label": "SELF_REPORT", "action": "read", "tool": "mcp__pm_boundary__read_file", "question_ids": [], "target": "inputs/plan/Viewer.md", "range": "lines 1-11", "result": "thin plan read; treated as process fixture, not format evidence", "deviation": null},
+    {"seq": 6, "label": "SELF_REPORT", "action": "cache_source", "tool": "mcp__pm_boundary__mechanical", "question_ids": [], "source": "inputs/sources/S003.txt", "output": "out/cache/S003.txt", "tool_returned": {"bytes": 36980, "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"}, "result": "exact-byte cache created BEFORE model exposure; hash matches catalog identity (source ID S003 / SRC-2b11c54af373e1979af8cbb3); byte copy, not comprehension", "deviation": null},
+    {"seq": 7, "label": "SELF_REPORT", "action": "read", "tool": "mcp__pm_boundary__read_file", "question_ids": ["Q1", "Q2"], "target": "out/cache/S003.txt", "range": "lines 1-150", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "result": "first-read chunk 1/6; hash matches admitted identity", "expansion_reason": null, "deviation": null},
+    {"seq": 8, "label": "SELF_REPORT", "action": "read", "tool": "mcp__pm_boundary__read_file", "question_ids": ["Q1", "Q2"], "target": "out/cache/S003.txt", "range": "lines 151-300", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "result": "first-read chunk 2/6", "expansion_reason": null, "deviation": null},
+    {"seq": 9, "label": "SELF_REPORT", "action": "read", "tool": "mcp__pm_boundary__read_file", "question_ids": ["Q1", "Q2"], "target": "out/cache/S003.txt", "range": "lines 301-450", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "result": "first-read chunk 3/6", "expansion_reason": null, "deviation": null},
+    {"seq": 10, "label": "SELF_REPORT", "action": "read", "tool": "mcp__pm_boundary__read_file", "question_ids": ["Q1", "Q2"], "target": "out/cache/S003.txt", "range": "lines 451-600", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "result": "first-read chunk 4/6", "expansion_reason": null, "deviation": null},
+    {"seq": 11, "label": "SELF_REPORT", "action": "read", "tool": "mcp__pm_boundary__read_file", "question_ids": ["Q1", "Q2"], "target": "out/cache/S003.txt", "range": "lines 601-750", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "result": "first-read chunk 5/6", "expansion_reason": null, "deviation": null},
+    {"seq": 12, "label": "SELF_REPORT", "action": "read", "tool": "mcp__pm_boundary__read_file", "question_ids": ["Q1", "Q2"], "target": "out/cache/S003.txt", "range": "lines 751-896 (146 lines to end of file)", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "result": "first-read chunk 6/6; full 896-line coverage complete, no gaps, no overlaps", "expansion_reason": null, "deviation": null},
+    {"seq": 13, "label": "SELF_REPORT", "action": "analysis", "question_ids": ["Q1"], "result": "Q1 completed from the read-once context: 34 stable findings (F-01..F-34) covering governing requirements, conditions, mechanisms, failure behavior, exceptions, counterevidence and unresolved areas; all cited to out/cache/S003.txt line ranges", "deviation": null},
+    {"seq": 14, "label": "SELF_REPORT", "action": "q2_context_reuse", "question_ids": ["Q2"], "result": "Q2 completed reusing the SAME read-once source context and unchanged cached sources; no second complete expansion performed; no semantic answer cache, prior-arm findings or cross-arm discoveries used (none exist); targeted rereads: 0 (none required)", "expansion_reason": "none — no missing context, governing condition, counterevidence or changed dependency emerged", "deviation": null},
+    {"seq": 15, "label": "SELF_REPORT", "action": "write_artifacts", "question_ids": ["Q1", "Q2"], "targets": ["out/reports/V001.md", "out/acquisition/V001.json", "out/protocol/V001.json", "out/final/V001.json"], "result": "initial immutable versions written; final binding selects report/acquisition/protocol V001", "deviation": null}
+  ],
+  "corrections": [],
+  "compliance_deviations": [],
+  "compliance_checks": [
+    {"rule": "only bounded MCP read_file / write_file / mechanical; no shell, arbitrary code, external fetch, native Read", "status": "compliant", "evidence": "tool set used exactly: read_file (11 calls), mechanical cache_source (1 call), write_file (4 calls)"},
+    {"rule": "only isolated inputs, TASK.md and out namespaces accessed", "status": "compliant", "evidence": "paths touched: TASK.md, inputs/{TASK.md,brief.md,catalog.json,plan/Viewer.md,sources/S003.txt}, out/{cache,reports,acquisition,protocol,final}"},
+    {"rule": "no live GET", "status": "compliant", "evidence": "no fetch operation exists or was attempted; S003 used only via exact-byte cache"},
+    {"rule": "exact-byte cache before exposure; whole source read once; hash verified", "status": "compliant", "evidence": "protocol entries 6-12; 896/896 lines; identical sha256 on cache op and all six chunks, equal to catalog identity"},
+    {"rule": "no extra candidate stage; no invented read records", "status": "compliant", "evidence": "single research pass; acquisition ledger contains only the 12 actual tool calls"},
+    {"rule": "no unexecuted test claimed as executed", "status": "compliant", "evidence": "report section 2.6 marks V-01..V-05 UNEXECUTED; V-05 additionally marked blocked"},
+    {"rule": "immutable versioning; every stream starts V001 and is contiguous; prior versions kept", "status": "compliant", "evidence": "reports/acquisition/protocol all at V001; final binding out/final/V001.json selects exactly these"},
+    {"rule": "no model marker / receiver acknowledgement / feedback read required", "status": "not_applicable", "evidence": "per task card, none required or emitted"}
+  ],
+  "cost_accounting": {
+    "note": "Candidate-side accounting only (SELF_REPORT); host-side quiescence/freeze/selection costs are counted separately by the host and are not observable to the candidate.",
+    "bounded_read_file_calls": 11,
+    "mechanical_calls": 1,
+    "write_file_calls": 4,
+    "source_lines_read": 896,
+    "rereads": 0,
+    "second_full_expansions": 0,
+    "live_fetches": 0,
+    "native_caps": {"time_cap_seconds": 900, "response_cap": 96, "observed_status": "caps not approached; exact host-side counters not visible to candidate"}
+  }
+}

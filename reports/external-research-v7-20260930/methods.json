@@ -94,7 +94,7 @@
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
-    "replacement_actual_status": "T05R control complete/context-source-qualified for current grading; treatment/mechanism comparison pending; original T05 hypothesis untested"
+    "replacement_actual_status": "T05R original both complete; treatment whole delivery measured; control R020 complete current quality failure, treatment semantic review pending"
   },
   {
     "id": "T06",
@@ -155,7 +155,8 @@
     "historical_status": "L quarantined; finite repairs exhausted",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "replacement_actual_status": "Z repair1 both own assignment caps; native Goal terminal NULL; source acquisition unknown; all original failures preserved"
   },
   {
     "id": "T09",
@@ -221,7 +222,8 @@
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
-    "actual_execution_cohort": "continuous-cohorts/cohort-003"
+    "actual_execution_cohort": "continuous-cohorts/cohort-003",
+    "actual_current_status": "original Z control incomplete/unqualified; treatment R017 complete current quality failure; source capture unknown"
   },
   {
     "id": "T12",
@@ -282,7 +284,7 @@
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
-    "additive_review": "R018 full current one-arm review, quality failure; counterpart pending; original partial reviews preserved"
+    "additive_review": "R018/R019 complete current quality failures; original partial capped reviews immutable; native qualification independent"
   },
   {
     "id": "T15",
@@ -302,7 +304,8 @@
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
-    "actual_execution_cohort": "continuous-cohorts/cohort-003"
+    "actual_execution_cohort": "continuous-cohorts/cohort-003",
+    "actual_current_status": "redo1 seed R021 complete current quality failure; witness own assignment cap/native terminal NULL; no reuse benefit established"
   },
   {
     "id": "T16",

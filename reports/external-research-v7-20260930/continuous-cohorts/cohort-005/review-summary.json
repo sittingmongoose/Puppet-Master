@@ -1,0 +1,43 @@
+[
+  {
+    "review": "R017",
+    "report_sha256": "23673c66fbbfa47bc50928a93c153151993154672232835459305bee85c30dbf",
+    "matching_reports": [
+      "continuous-cohorts/cohort-003/candidates/t11-z-jj-repo-safe-v2-s2-treatment/out/report.md"
+    ],
+    "verdict": "quality failure",
+    "complete_coverage": true,
+    "additive_only": true
+  },
+  {
+    "review": "R019",
+    "report_sha256": "18349e1b6eb33bc2091dc11e9d7779263abc1f600bc156f13536b8f7eb0beda2",
+    "matching_reports": [
+      "candidate-outputs/t14-m-ome-negative-screen-v1-treatment/report.md"
+    ],
+    "verdict": "quality failure",
+    "complete_coverage": true,
+    "additive_only": true
+  },
+  {
+    "review": "R020",
+    "report_sha256": "9d43cf6076ddc2aec0b9fb489a7cdb60620c8cccc3885f4d725ce437fcb7575d",
+    "matching_reports": [
+      "continuous-cohorts/cohort-003/candidates/t05r-z-ome-read-once-related-questions-v1-control/out/reports/V001.md"
+    ],
+    "verdict": "quality failure",
+    "complete_coverage": true,
+    "additive_only": true
+  },
+  {
+    "review": "R021",
+    "report_sha256": "3136fd9d07ff7ff6d2edfc71ed0dcc46f90035ea01e4acee62d2476c1103d89f",
+    "matching_reports": [
+      "continuous-cohorts/cohort-003/candidates/t15-z-ome-mcp-reuse-v2-redo1-seed/out/draft-report.md",
+      "continuous-cohorts/cohort-003/candidates/t15-z-ome-mcp-reuse-v2-redo1-seed/out/report.md"
+    ],
+    "verdict": "quality failure",
+    "complete_coverage": true,
+    "additive_only": true
+  }
+]

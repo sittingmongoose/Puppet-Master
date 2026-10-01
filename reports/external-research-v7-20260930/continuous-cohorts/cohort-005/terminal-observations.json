@@ -1,0 +1,87 @@
+[
+  {
+    "label": "t08-z-ome-mcp-discovery-v2-repair1-control",
+    "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-control",
+    "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-control/frozen-output/out",
+    "integrity_sha256": "17ae1d2503853b75cafebd11c0e9b293daaa26d57d53bc3e3949d90f4c7c9ff4",
+    "context_status": "qualified",
+    "native_outcome": "failed-or-unestablished",
+    "inventory_verified": true,
+    "missing_required_outputs": [],
+    "status": "failed-or-incomplete-preserved",
+    "source_qualification": "capped-incomplete-or-unqualified-preserved",
+    "public_get": true,
+    "semantic_quality": "unassessed",
+    "current_before_history": true,
+    "postrender_delivery": "pending separate measured binding",
+    "actual_sourcecapture": "pending accepted post-quiescent capture sample/dedup proof"
+  },
+  {
+    "label": "t08-z-ome-mcp-discovery-v2-repair1-treatment",
+    "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-treatment",
+    "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-treatment/frozen-output/out",
+    "integrity_sha256": "cefc612faa564ed0a968970218f9a6af0eb96d6ef028726d2fcb3ffbe861fa8b",
+    "context_status": "qualified",
+    "native_outcome": "failed-or-unestablished",
+    "inventory_verified": false,
+    "missing_required_outputs": [
+      "report.md",
+      "acquisition.json"
+    ],
+    "status": "failed-or-incomplete-preserved",
+    "source_qualification": "capped-incomplete-or-unqualified-preserved",
+    "public_get": true,
+    "semantic_quality": "unassessed",
+    "current_before_history": true,
+    "postrender_delivery": "pending separate measured binding",
+    "actual_sourcecapture": "pending accepted post-quiescent capture sample/dedup proof"
+  },
+  {
+    "label": "t05r-z-ome-read-once-related-questions-v1-treatment",
+    "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t05r-z-ome-read-once-related-questions-v1-treatment",
+    "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t05r-z-ome-read-once-related-questions-v1-treatment/frozen-output/out",
+    "integrity_sha256": "7b4f85780515624c75237fb62aa58a8702a97cf353e4210c6222c9acb9b34f3f",
+    "context_status": "qualified",
+    "native_outcome": "passed",
+    "inventory_verified": true,
+    "missing_required_outputs": [],
+    "status": "frozen-for-independent-evaluation",
+    "source_qualification": "qualified-current-for-independent-grading",
+    "public_get": false,
+    "semantic_quality": "unassessed",
+    "current_before_history": true,
+    "postrender_delivery": "pending separate measured binding",
+    "actual_sourcecapture": "no GET; frozen admitted source inputs",
+    "whole_companion": {
+      "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t05r-z-ome-read-once-related-questions-v1-treatment/whole-companion-receipt.json",
+      "sha256": "01b3c1f254ceca76bb422728c949d1dcbb1fc0a2e00e4f42a1e47cb32bbc0f87",
+      "all_inputs_preserved": true,
+      "all_output_versions_preserved": true,
+      "source_and_output_immutable": true,
+      "copied_bytes": 139861,
+      "copy_seconds": 0.2844495189929148,
+      "semantic_assessment": "none",
+      "operator_measurement_sha256": "49a73509ccf1761f5eecf57fab0566d44406a4797f8039547ee8492bd23b5344"
+    }
+  },
+  {
+    "label": "t15-z-ome-mcp-reuse-v2-redo1-witness",
+    "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-redo1-witness",
+    "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-redo1-witness/frozen-output/out",
+    "integrity_sha256": "53e4851280a1f5ab356dd0b631405363f9d0e929f9e07617c336487cbe1d3523",
+    "context_status": "qualified",
+    "native_outcome": "failed-or-unestablished",
+    "inventory_verified": false,
+    "missing_required_outputs": [
+      "report.md",
+      "acquisition.json"
+    ],
+    "status": "failed-or-incomplete-preserved",
+    "source_qualification": "capped-incomplete-or-unqualified-preserved",
+    "public_get": false,
+    "semantic_quality": "unassessed",
+    "current_before_history": true,
+    "postrender_delivery": "pending separate measured binding",
+    "actual_sourcecapture": "no GET; frozen admitted source inputs"
+  }
+]

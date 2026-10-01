@@ -1,0 +1,84 @@
+{
+  "schema": "er7.acquisition_ledger.v1",
+  "case_id": "ome-normative-dev-v1",
+  "report_version": "V001",
+  "author": "candidate",
+  "self_report_label": "SELF_REPORT",
+  "admitted_sources": [
+    {
+      "handle": "S003",
+      "admitted_path": "inputs/sources/S003.txt",
+      "cache_path": "out/cache/S003.txt",
+      "description": "OME-Zarr specification, Final Community Group Report, 8 September 2026 (frozen capture)",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "lines": 896,
+      "view_kind": "original_bytes",
+      "source_links": [
+        {"source_id": "SRC-2b11c54af373e1979af8cbb3", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+        {"source_id": "SRC-e59af1d3eedfb618a7ce766f", "uri": "local-capture (origin URL not recorded)", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+        {"source_id": "SRC-bf327c82f5ee6b5d1b754d8c", "uri": "local-capture (origin URL not recorded)", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+        {"source_id": "SRC-da65296ca0490aebb780c237", "uri": "local-capture (origin URL not recorded)", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"}
+      ],
+      "identity_verified": true,
+      "verification_evidence": "mechanical cache_source reported source_sha256 == cache sha256 == catalog original/view sha256; all six read_file chunk responses over out/cache/S003.txt returned the same sha256",
+      "no_live_fetch": true
+    }
+  ],
+  "reads": [
+    {"seq": "R-01", "tool": "mcp__pm_boundary__read_file", "operation": "read_file", "phase": "setup", "question_ids": [], "path": "TASK.md", "line_start": 1, "line_count": 40, "lines_observed": 40, "purpose": "task card: read assignment rules before research", "returned_sha256": "5b43083d67cecbdaecf4981defdbb2cd0f47cc1d8b9485b9cb6e5c65446ae7b8"},
+    {"seq": "R-02", "tool": "mcp__pm_boundary__read_file", "operation": "read_file", "phase": "setup", "question_ids": [], "path": "inputs/TASK.md", "line_start": 1, "line_count": 11, "lines_observed": 11, "purpose": "assignment definition (both groups covered in this single combined assignment)", "returned_sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9"},
+    {"seq": "R-03", "tool": "mcp__pm_boundary__read_file", "operation": "read_file", "phase": "setup", "question_ids": [], "path": "inputs/brief.md", "line_start": 1, "line_count": 5, "lines_observed": 5, "purpose": "product brief", "returned_sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a"},
+    {"seq": "R-04", "tool": "mcp__pm_boundary__read_file", "operation": "read_file", "phase": "setup", "question_ids": [], "path": "inputs/catalog.json", "line_start": 1, "line_count": 40, "lines_observed": 40, "purpose": "source identity and admitted scope", "returned_sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a"},
+    {"seq": "R-05", "tool": "mcp__pm_boundary__read_file", "operation": "read_file", "phase": "setup", "question_ids": [], "path": "inputs/plan/Viewer.md", "line_start": 1, "line_count": 11, "lines_observed": 11, "purpose": "thin plan fixture (process input, not format evidence)", "returned_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d"},
+    {"seq": "M-01", "tool": "mcp__pm_boundary__mechanical", "operation": "cache_source", "phase": "cache", "question_ids": [], "source": "inputs/sources/S003.txt", "output": "out/cache/S003.txt", "purpose": "exact-byte immutable source cache before any model exposure; byte copy, not comprehension", "returned": {"bytes": 36980, "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"}, "matches_catalog_identity": true},
+    {"seq": "R-06", "tool": "mcp__pm_boundary__read_file", "operation": "read_file", "phase": "q1_primary_read", "question_ids": ["Q1", "Q2"], "path": "out/cache/S003.txt", "line_start": 1, "line_count": 150, "lines_observed": "1-150", "purpose": "first read-once coverage of admitted source (spec header, conventions, storage format, images, HCS layout, metadata intro, axes)", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "matches_catalog_identity": true},
+    {"seq": "R-07", "tool": "mcp__pm_boundary__read_file", "operation": "read_file", "phase": "q1_primary_read", "question_ids": ["Q1", "Q2"], "path": "out/cache/S003.txt", "line_start": 151, "line_count": 150, "lines_observed": "151-300", "purpose": "read-once coverage (ome namespace, axes, bioformats2raw.layout, coordinateTransformations, multiscales start)", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "matches_catalog_identity": true},
+    {"seq": "R-08", "tool": "mcp__pm_boundary__read_file", "operation": "read_file", "phase": "q1_primary_read", "question_ids": ["Q1", "Q2"], "path": "out/cache/S003.txt", "line_start": 301, "line_count": 150, "lines_observed": "301-450", "purpose": "read-once coverage (multiscales rules and example, omero, labels, image-label start)", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "matches_catalog_identity": true},
+    {"seq": "R-09", "tool": "mcp__pm_boundary__read_file", "operation": "read_file", "phase": "q1_primary_read", "question_ids": ["Q1", "Q2"], "path": "out/cache/S003.txt", "line_start": 451, "line_count": 150, "lines_observed": "451-600", "purpose": "read-once coverage (image-label details, plate metadata and example)", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "matches_catalog_identity": true},
+    {"seq": "R-10", "tool": "mcp__pm_boundary__read_file", "operation": "read_file", "phase": "q1_primary_read", "question_ids": ["Q1", "Q2"], "path": "out/cache/S003.txt", "line_start": 601, "line_count": 150, "lines_observed": "601-750", "purpose": "read-once coverage (plate examples incl. sparse plate, well metadata start)", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "matches_catalog_identity": true},
+    {"seq": "R-11", "tool": "mcp__pm_boundary__read_file", "operation": "read_file", "phase": "q1_primary_read", "question_ids": ["Q1", "Q2"], "path": "out/cache/S003.txt", "line_start": 751, "line_count": 146, "lines_observed": "751-896", "purpose": "read-once coverage (well examples, naming style, implementations, citing, version history, conformance, references; end of file)", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "matches_catalog_identity": true}
+  ],
+  "read_coverage": {
+    "admitted_source_lines_total": 896,
+    "lines_read_once": 896,
+    "chunk_ranges": ["1-150", "151-300", "301-450", "451-600", "601-750", "751-896"],
+    "gaps": [],
+    "overlaps": [],
+    "rereads": [],
+    "reread_reasons": "none required; Q2 reused the Q1 read-once context with no second full expansion",
+    "whole_source_hash_on_every_read": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+  },
+  "finding_ids": [
+    "F-01", "F-02", "F-03", "F-04", "F-05", "F-06", "F-07", "F-08", "F-09", "F-10",
+    "F-11", "F-12", "F-13", "F-14", "F-15", "F-16", "F-17", "F-18", "F-19", "F-20",
+    "F-21", "F-22", "F-23", "F-24", "F-25", "F-26", "F-27", "F-28", "F-29", "F-30",
+    "F-31", "F-32", "F-33", "F-34"
+  ],
+  "q2_derived_ids": {
+    "plan_dispositions": ["P-01", "P-02", "P-03", "P-04", "P-05", "P-06", "P-07", "P-08"],
+    "engineering_alternatives": ["A-1", "A-2", "A-3", "A-4", "A-5"],
+    "rejected_approaches": ["X-01", "X-02", "X-03", "X-04", "X-05"],
+    "improvements": ["I-01", "I-02", "I-03", "I-04", "I-05", "I-06", "I-07", "I-08", "I-09"],
+    "proposed_validation_unexecuted": ["V-01", "V-02", "V-03", "V-04", "V-05"],
+    "mechanisms": ["M-1", "M-2", "M-3", "M-4"],
+    "counterevidence": ["C-1", "C-2"]
+  },
+  "coverage_limits": [
+    "Single admitted source (S003, OME-Zarr 0.5 spec capture, 896 lines); no other sources admitted or read.",
+    "No live fetching permitted or performed; currency of the capture against the live site is unverified (capture-only version tag).",
+    "Section 4 'Implementations' is content-free in the capture ('See Tools.'): no reader/tool implementation evidence exists in this corpus; the brief's reader-implementation interest is unsatisfiable within scope.",
+    "Zarr v3 specification (chunk key encoding, codecs, chunk grids, storage transformers), UDUNITS-2 vocabulary beyond the enumerated strings, OMERO WebGateway docs, Tools page and migration scripts are external and not captured.",
+    "No code execution, no representative/real filesets available locally; all validation proposals remain UNEXECUTED.",
+    "All negative claims are scoped to this capture only."
+  ],
+  "undeveloped_leads": [
+    "NGFF 'Tools' page contents (reader implementation landscape) — referenced by S003:L813-814, not admitted.",
+    "OMERO WebGateway documentation for omero window/rdefs display semantics — referenced by S003:L424-425.",
+    "Zarr v3 specification details — referenced by S003:L68-72, not captured (normative references list only RFC 2119, L893-896).",
+    "Upcoming NGFF specification replacing bioformats2raw.layout — flagged at S003:L180-181.",
+    "image-label schema version string enumeration — S003:L459-460 leaves values unspecified.",
+    "Migration scripts between numbered spec versions — S003:L25-26."
+  ],
+  "notes": "All read records above are actual tool calls performed in this Goal; none are invented. Chunk R-11 requested 146 lines to end exactly at line 896. Tool-exposed hashes are the only independent confirmations; the narrative fields are candidate-authored (SELF_REPORT)."
+}

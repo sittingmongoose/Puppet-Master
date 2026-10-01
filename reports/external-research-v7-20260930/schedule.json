@@ -41,7 +41,11 @@
       "R013",
       "R014",
       "R015",
-      "R016"
+      "R016",
+      "R017",
+      "R019",
+      "R020",
+      "R021"
     ],
     "current_partial_certification": [
       "R011",
@@ -63,6 +67,12 @@
     "native_admissions": "Zrolling exact rootbound queue; M/Lheld",
     "additive_one_arm_complete": [
       "R018"
+    ],
+    "additive_complete_pairs": [
+      [
+        "R018",
+        "R019"
+      ]
     ]
   },
   "preservation_cohort_utc": "2026-09-30T17:35:37.328046+00:00",
@@ -75,13 +85,13 @@
   "original_wall_deadline_epoch": 1790820406,
   "deadline_edt": "2026-10-01T21:29:01-04:00",
   "extension_authority": "work-clock-extension/authority.json",
-  "publication_as_of_utc": "2026-10-01T20:51:34.636953+00:00",
+  "publication_as_of_utc": "2026-10-01T21:17:44.037416+00:00",
   "new_research_budget_required": false,
   "active_snapshot": {
-    "candidate_admissions": 33,
-    "occupied_slot_seconds": 18402.633721590042,
-    "remaining_committed_slot_seconds": 1047.030165195465,
-    "reported_generated_tokens_lower_bound": 748968,
+    "candidate_admissions": 37,
+    "occupied_slot_seconds": 22305.353593349457,
+    "remaining_committed_slot_seconds": 1444.0161819458008,
+    "reported_generated_tokens_lower_bound": 919158,
     "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
     "active_by_family": {
       "M": 0,
@@ -90,11 +100,11 @@
     },
     "overdue_jobs": [],
     "active_jobs": [
-      "t08-z-ome-mcp-discovery-v2-repair1-control",
-      "t08-z-ome-mcp-discovery-v2-repair1-treatment"
+      "t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-control",
+      "t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-treatment"
     ]
   },
-  "snapshot_source": "continuous-cohorts/cohort-003/observed-continuous-evaluation-ready.json",
+  "snapshot_source": "continuous-cohorts/cohort-005/observed-evaluation-ready.json",
   "snapshot_is_live_current": false,
   "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json"
 }
