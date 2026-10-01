@@ -1,0 +1,326 @@
+[
+  {
+    "method": "T02",
+    "family": "M",
+    "assessment": "quality failure",
+    "interpretable": true,
+    "independent_current_review_complete": true,
+    "claim_rows": [
+      62,
+      74
+    ],
+    "eligible_facets": 6,
+    "preservation": "saved-history assessed; acquisition-to-final unassessed",
+    "economics_qualification": "no same-quality win",
+    "saved_history_preservation": "no demonstrated saved source-supported temporal loss; all available history reviewed",
+    "acquisition_to_final_preservation": "unassessed; acquisition semantics unknown",
+    "preservation_summary": "reviews/first-pair-preservation-summary.json",
+    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+  },
+  {
+    "method": "T06",
+    "family": "Z",
+    "assessment": "quality failure",
+    "current_outputs_frozen": true,
+    "independent_current_review_complete": true,
+    "all_material_claims_reviewed": true,
+    "all_six_eligible_facets_evaluated": true,
+    "preservation": "available-history fully reviewed; acquisition-to-final unassessed because notes absent",
+    "economics_qualification": "no same-quality efficiency win",
+    "runtime_safety": "inherited M/Z v1 safe-harness qualification withdrawn; historical artifacts retained",
+    "reviews": [
+      "R003",
+      "R004"
+    ],
+    "summary": "reviews/R003-R004-current-only-summary.json",
+    "available_history_summary": "reviews/R003-R004-phase2-summary.json",
+    "available_temporal_semantic_losses": 0,
+    "current_grade_unchanged": true,
+    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+  },
+  {
+    "method": "T01",
+    "family": "M",
+    "assessment": "quality failure",
+    "aggregate_control_preserves_original_capped_opening": true,
+    "independent_current_review_complete": true,
+    "all_material_claims_reviewed": true,
+    "all_six_eligible_facets_evaluated": true,
+    "preservation": "no measured benefit in available temporal preservation; complete admitted history coverage",
+    "economics_qualification": "no same-quality efficiency win",
+    "runtime_safety": "inherited M/Z v1 safe-harness qualification withdrawn; historical artifacts retained",
+    "reviews": [
+      "R005",
+      "R006"
+    ],
+    "summary": "reviews/C017-current-summary.json",
+    "available_history_summary": "reviews/C017-phase2-summary.json",
+    "completed_versions_assessed": 11,
+    "drafted_claim_units_assessed": 690,
+    "acquisition_note_leaf_units_assessed": 367,
+    "available_semantic_losses": 0,
+    "unobserved_reasoning": "unknown; no never-acquired inference",
+    "current_grade_unchanged": true,
+    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+  },
+  {
+    "method": "T08",
+    "family": "L",
+    "assessment": "infrastructure-limited",
+    "launch_admissions": 4,
+    "native_goal_starts": 2,
+    "adapter_finite_repairs": "two recorded versions exhausted; final independent carrier adjudication NO launch authority; L remains quarantined",
+    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+  },
+  {
+    "method": "T03",
+    "family": "Z",
+    "assessment": "unassessed",
+    "current_outputs_frozen": true,
+    "semantic_review": "unassessed at terminal closeout; no new evaluation admitted",
+    "structural_status": "required outputs missing",
+    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+  },
+  {
+    "method": "T09",
+    "family": "M",
+    "assessment": "quality failure",
+    "current_outputs_frozen": true,
+    "semantic_review": "quality failure in frozen independent current review",
+    "structural_status": "complete",
+    "independent_current_review_complete": true,
+    "all_material_claims_reviewed": true,
+    "all_six_eligible_facets_evaluated": true,
+    "preservation": "partial pair; no preservation pass",
+    "economics_qualification": "no same-quality efficiency win",
+    "runtime_safety": "inherited M/Z v1 safe-harness qualification withdrawn; historical artifacts retained",
+    "reviews": [
+      "R007",
+      "R008"
+    ],
+    "summary": "reviews/C028-current-summary.json",
+    "available_history_summary": "reviews/C028-phase2-summary.json",
+    "preservation_complete_coverage": false,
+    "unreviewed_lead_and_search_snippet_semantics": "enumerated in frozen summary",
+    "phase2_overrun_seconds": 54.088638,
+    "current_grade_unchanged": true,
+    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+  },
+  {
+    "method": "T13",
+    "family": "M",
+    "assessment": "infrastructure-limited",
+    "current_outputs_frozen": true,
+    "semantic_review": "unassessed at terminal closeout; no new evaluation admitted",
+    "structural_status": "required outputs missing",
+    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+  },
+  {
+    "method": "T14",
+    "family": "M",
+    "assessment": "quality failure",
+    "native_goal_complete_both": true,
+    "structural_outputs_complete_both": true,
+    "independent_current_review": "frozen R011/R012 partial certification",
+    "preservation": "unassessed; history not opened",
+    "same_quality_efficiency_win": false,
+    "runtime_safety": "historical inherited v1 qualification withdrawn",
+    "reviews": [
+      "R011",
+      "R012"
+    ],
+    "current_summary": "reviews/C041-current-pair-summary.json",
+    "complete_coverage": false,
+    "material_coverage_complete": true,
+    "unreviewed_material_scope": [],
+    "final_save_elapsed_seconds": 1338.528707,
+    "assessment_limit": "final consistency validation/save exceeded20minute cap after initial drafts saved19m51s",
+    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "additive_current_review": "R018/R019 full current quality failure; old partial edition immutable; no source-delivery qualification inferred"
+  },
+  {
+    "method": "T07",
+    "instance": "prepared resume prospective cards",
+    "assessment": "unassessed",
+    "candidate_executions": 0,
+    "machinery": "accepted preparation only",
+    "native_admissions": "held pending exact native qualification and operator binding within extended campaign",
+    "inventory": "cohort-grading/prepared-method-inventory.json",
+    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+  },
+  {
+    "method": "T08",
+    "instance": "prepared resume prospective cards",
+    "assessment": "unassessed",
+    "candidate_executions": 0,
+    "machinery": "accepted preparation only",
+    "native_admissions": "held pending exact native qualification and operator binding within extended campaign",
+    "inventory": "cohort-grading/prepared-method-inventory.json",
+    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+  },
+  {
+    "method": "T10",
+    "instance": "prepared resume prospective cards",
+    "assessment": "unassessed",
+    "candidate_executions": 0,
+    "machinery": "accepted preparation only",
+    "native_admissions": "held pending exact native qualification and operator binding within extended campaign",
+    "inventory": "cohort-grading/prepared-method-inventory.json",
+    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+  },
+  {
+    "method": "T11",
+    "instance": "prepared resume prospective cards",
+    "assessment": "unassessed",
+    "candidate_executions": 0,
+    "machinery": "accepted preparation only",
+    "native_admissions": "held pending exact native qualification and operator binding within extended campaign",
+    "inventory": "cohort-grading/prepared-method-inventory.json",
+    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+  },
+  {
+    "method": "T12",
+    "instance": "prepared resume prospective cards",
+    "assessment": "unassessed",
+    "candidate_executions": 0,
+    "machinery": "accepted preparation only",
+    "native_admissions": "held pending exact native qualification and operator binding within extended campaign",
+    "inventory": "cohort-grading/prepared-method-inventory.json",
+    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+  },
+  {
+    "method": "T07",
+    "instance": "actual v2 pair cohort001",
+    "assessment": "quality failure",
+    "native_both_complete": true,
+    "context_qualified": true,
+    "current_before_history": true,
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-001",
+    "independent_current_review_complete": true,
+    "reviews": [
+      "R013",
+      "R014"
+    ],
+    "claim_rows": [
+      87,
+      74
+    ],
+    "all_six_facets_assessed": true,
+    "preservation_mechanism": "pending",
+    "current_summary": "continuous-cohorts/cohort-002/T07-current-pair-summary.json"
+  },
+  {
+    "method": "T15",
+    "instance": "v2 seed only cohort001",
+    "assessment": "unassessed",
+    "native_cap_incomplete": true,
+    "missing_required_outputs": [
+      "report.md",
+      "acquisition.json",
+      "findings.json"
+    ],
+    "source_qualification": "unqualified",
+    "redo": "pending; original preserved",
+    "comparison_complete": false,
+    "cohort": "continuous-cohorts/cohort-001"
+  },
+  {
+    "method": "T10",
+    "instance": "actual v2 pair cohort002",
+    "assessment": "both complete current quality failures",
+    "native_context_inventory_complete": true,
+    "actualGETsource_eligibility": "zero eligible capture sources; semantic acquisition unknown",
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-002",
+    "current_reviews": [
+      "R015",
+      "R016"
+    ],
+    "review_cohort": "continuous-cohorts/cohort-004"
+  },
+  {
+    "method": "T04R",
+    "instance": "actual capped pair cohort002",
+    "assessment": "unassessed",
+    "source_qualification": "unqualified",
+    "current_delivery_complete": false,
+    "comparison_complete": false,
+    "cohort": "continuous-cohorts/cohort-002"
+  },
+  {
+    "method": "T11",
+    "instance": "actual v2-s2 pair cohort003",
+    "assessment": "unassessed",
+    "control": "capped incomplete/unqualified",
+    "treatment": "native/context complete; actualGETsourcecapture pending",
+    "comparison_complete": false,
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-003"
+  },
+  {
+    "method": "T15",
+    "instance": "actual redo1 seed cohort003",
+    "assessment": "unassessed",
+    "native_complete": true,
+    "source_qualification": "qualified-current-for-independent-grading",
+    "matched_comparison": false,
+    "original_seed_preserved": true,
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-003"
+  },
+  {
+    "method": "T05R",
+    "instance": "actual control only cohort003",
+    "assessment": "unassessed",
+    "native_complete": true,
+    "source_qualification": "qualified-current-for-independent-grading",
+    "matched_comparison": false,
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-003"
+  },
+  {
+    "method": "T05R",
+    "instance": "original completed pair",
+    "assessment": "R020/R022 full current quality failures",
+    "native_context_inventory_complete": true,
+    "whole_delivery": "both measured; receipts retained separately",
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-005",
+    "current_reviews": [
+      "R020",
+      "R022"
+    ]
+  },
+  {
+    "method": "T04R",
+    "instance": "budget redo pair",
+    "assessment": "R023/R024 full current quality failures",
+    "whole_delivery": "both measured",
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-006"
+  },
+  {
+    "method": "T03",
+    "instance": "Z preservation redo pair",
+    "assessment": "unassessed",
+    "native_complete": true,
+    "treatment_delivery": "whole measured",
+    "control_delivery": "original combined JSONDecodeError; new whole-only preservation; no original delivery claim",
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-006"
+  }
+]

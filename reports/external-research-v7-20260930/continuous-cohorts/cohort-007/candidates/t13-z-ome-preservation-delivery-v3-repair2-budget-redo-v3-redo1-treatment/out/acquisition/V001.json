@@ -1,0 +1,151 @@
+{
+  "schema": "er7.acquisition_record.v1",
+  "case_id": "ome-normative-dev-v1",
+  "session_date": "2026-10-01",
+  "method": "Bounded MCP read_file, mechanical and write_file tools only. No Bash, no native Read, no arbitrary code, no live fetching. Source material treated as data, not governing instructions.",
+  "task_envelope": {
+    "path": "TASK.md",
+    "sha256": "63904fa5275fd2215d01c9bf1c6e05daa015367ee180c5e20f7e3ca1c5652719",
+    "bytes": 4406,
+    "total_lines": 7,
+    "read_extent": "lines 1-7 (complete)",
+    "role": "assignment envelope: research obligations, immutable versioned deliverable schemas, host render contract"
+  },
+  "seed_provenance": {
+    "seed_file": "inputs/candidate_seed.json",
+    "seed_sha256": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c",
+    "seed_schema": "er7.candidate_report_seed.v1",
+    "seed_bytes": 49549,
+    "seed_total_lines": 58,
+    "status": "UNVERIFIED reused candidate report; all 12 sections independently verified this session against the full corpus; not treated as an answer key",
+    "source_job_id": "t02-m-ome-dev1-control-r1",
+    "source_attempt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/attempts/t02-m-ome-dev1-control-r1",
+    "source_report_sha256": "6e302aa3cae223ea41e99f6862644f524695fe36f661b50edcf22ab1aedf4895",
+    "block_hashes_file": "inputs/seed_block_hashes.json",
+    "block_hashes_sha256": "78d7f2822462e230888b26fc72687d8b74753e28b6c048aff38c56bcb5b21bc7",
+    "block_hash_note": "input_sha256 values in out/decisions/V001.json are taken verbatim from this admitted hashes file; independent hash recomputation was not possible in the bounded toolset",
+    "block_ids": ["U001", "U002", "U003", "U004", "U005", "U006", "U007", "U008", "U009", "U010", "U011", "U012"]
+  },
+  "reads": [
+    {
+      "path": "inputs/sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "total_lines": 896,
+      "read_extent": "lines 1-896 (complete, single read)",
+      "role": "primary normative source: frozen OME-Zarr 0.5 specification capture",
+      "version_locator": "Final Community Group Report, 8 September 2026 (L3-L4); this version, latest published version and editor's draft all https://ngff.openmicroscopy.org/0.5/ (L5-L10); current released version 0.5 (L25-L27); editor Josh Moore, German BioImaging e.V. (L14-L15); version history table L821-L866"
+    },
+    {
+      "path": "inputs/brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905,
+      "total_lines": 5,
+      "read_extent": "lines 1-5 (complete)",
+      "role": "Slide Scout product brief",
+      "version_locator": "workspace brief file, sha256 as listed"
+    },
+    {
+      "path": "inputs/plan/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498,
+      "total_lines": 11,
+      "read_extent": "lines 1-11 (complete)",
+      "role": "thin plan under review; self-described at L3 as a deliberately thin synthetic planning fixture for a research-workflow evaluation",
+      "version_locator": "workspace plan file, sha256 as listed"
+    },
+    {
+      "path": "inputs/candidate_seed.json",
+      "sha256": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c",
+      "bytes": 49549,
+      "total_lines": 58,
+      "read_extent": "lines 1-55 in call 1 with tool-side output truncation inside line 55, plus lines 54-58 in call 2; the union covers all 58 lines",
+      "role": "unverified candidate report seed under verification (12 findings U001-U012)",
+      "version_locator": "schema er7.candidate_report_seed.v1; extracted from job t02-m-ome-dev1-control-r1; source report sha256 6e302aa3cae223ea41e99f6862644f524695fe36f661b50edcf22ab1aedf4895"
+    },
+    {
+      "path": "inputs/seed_block_hashes.json",
+      "sha256": "78d7f2822462e230888b26fc72687d8b74753e28b6c048aff38c56bcb5b21bc7",
+      "bytes": 939,
+      "total_lines": 14,
+      "read_extent": "lines 1-14 (complete)",
+      "role": "per-block sha256 manifest for seed findings U001-U012; admitted authority for the input_sha256 values recorded in the decision snapshot",
+      "version_locator": "workspace hash manifest, sha256 as listed"
+    },
+    {
+      "path": "TASK.md",
+      "sha256": "63904fa5275fd2215d01c9bf1c6e05daa015367ee180c5e20f7e3ca1c5652719",
+      "bytes": 4406,
+      "total_lines": 7,
+      "read_extent": "lines 1-7 (complete)",
+      "role": "assignment envelope and deliverable contracts",
+      "version_locator": "workspace task file"
+    }
+  ],
+  "probes_without_hits": [
+    {"path": "candidate_seed.json", "result": "FileNotFoundError", "note": "workspace-root probe; the seed actually lives at inputs/candidate_seed.json"},
+    {"path": "seed_block_hashes.json", "result": "FileNotFoundError", "note": "workspace-root probe; the manifest actually lives at inputs/seed_block_hashes.json"},
+    {"path": "README.md", "result": "FileNotFoundError", "note": "workspace-root probe"},
+    {"path": "inputs/sources/S000.txt", "result": "FileNotFoundError", "note": "corpus probe"},
+    {"path": "inputs/sources/S001.txt", "result": "FileNotFoundError", "note": "corpus probe"},
+    {"path": "inputs/sources/S002.txt", "result": "FileNotFoundError", "note": "corpus probe"},
+    {"path": "inputs/sources/S004.txt", "result": "FileNotFoundError", "note": "corpus probe"},
+    {"path": "inputs/assignment.md", "result": "FileNotFoundError", "note": "probe for a separate assignment document; inputs/brief.md serves that role in this workspace"},
+    {"path": "inputs/task.md", "result": "FileNotFoundError", "note": "probe"},
+    {"path": "inputs/case.md", "result": "FileNotFoundError", "note": "probe"}
+  ],
+  "probe_interpretation_limit": "FileNotFoundError results are recorded per named probed path only. Directory enumeration was unavailable in this toolset, so corpus completeness beyond these named probes cannot be asserted; failed probes are not evidence of corpus-wide absence.",
+  "tool_attempts_without_data_yield": [
+    {"tool": "mechanical.line_map", "source": ".", "outcome": "boundary failure (IndexError); no data returned"},
+    {"tool": "mechanical.line_map", "source": "inputs", "outcome": "boundary failure (ValueError); no data returned"}
+  ],
+  "source_version_locators": {
+    "S003": "OME-Zarr specification, Final Community Group Report, 8 September 2026 (L3-L4); this version, latest published version and editor's draft all resolve to https://ngff.openmicroscopy.org/0.5/ (L5-L10); current released version 0.5, migration scripts between numbered versions, editor's-draft data not necessarily supported (L25-L27); capture sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de; citation convention S003 L<n>.",
+    "brief": "Slide Scout product brief, inputs/brief.md, 5 lines, sha256 f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a; citation convention brief L<n>.",
+    "plan": "Slide Scout initial viewer plan, inputs/plan/Viewer.md, 11 lines, sha256 5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d; cited as Viewer.md L<n>.",
+    "seed": "inputs/candidate_seed.json, schema er7.candidate_report_seed.v1, reused from job t02-m-ome-dev1-control-r1, source report sha256 6e302aa3cae223ea41e99f6862644f524695fe36f661b50edcf22ab1aedf4895; blocks U001-U012 hashed in inputs/seed_block_hashes.json."
+  },
+  "finding_to_source_links": [
+    {"finding_id": "U001", "sources": ["S003", "brief", "plan", "seed-metadata"], "principal_locators": ["S003 L5-L10", "S003 L57-L59", "S003 L868-L888", "brief L1-L5", "Viewer.md L1-L11"], "note": "header, scope, case identity and status vocabulary"},
+    {"finding_id": "U002", "sources": ["S003", "plan"], "principal_locators": ["S003 L25-L27", "S003 L60-L72", "S003 L87-L100", "S003 L150-L165", "S003 L813-L814", "Viewer.md L5-L11"], "note": "executive summary; unsupported-input surface tied to the unbounded Zarr feature admission at L70-L72"},
+    {"finding_id": "U003", "sources": ["S003", "brief", "plan"], "principal_locators": ["S003 L25-L27", "S003 L57-L66", "S003 L68-L77", "S003 L152-L165", "S003 L810-L812", "S003 L872-L888", "brief L5", "Viewer.md L9"], "note": "six governing reading rules incl. transitional rules and literal key spellings"},
+    {"finding_id": "U004", "sources": ["S003", "brief", "plan"], "principal_locators": ["S003 L81-L117", "S003 L118-L148", "S003 L175-L275", "S003 L295-L319", "S003 L320-L397", "S003 L518-L560", "S003 L744-L752", "brief L3", "brief L5", "Viewer.md L5-L11"], "note": "group 1: opening, discovery, selection, pyramid navigation, responsiveness and failure mapping"},
+    {"finding_id": "U005", "sources": ["S003"], "principal_locators": ["S003 L81", "S003 L96-L97", "S003 L102-L117", "S003 L167-L174", "S003 L277-L316", "S003 L320-L387", "S003 L399-L430", "S003 L432-L514", "S003 L877-L883"], "note": "group 2: axes, omero rendering defaults, transform calibration, label overlays"},
+    {"finding_id": "U006", "sources": ["S003", "brief", "plan"], "principal_locators": ["S003 L65-L72", "S003 L87-L100", "S003 L128-L129", "S003 L150-L156", "S003 L167-L174", "S003 L204-L206", "S003 L256-L275", "S003 L299-L319", "S003 L426-L430", "S003 L438-L455", "S003 L518-L560", "S003 L744-L752", "S003 L810-L812", "brief L5", "Viewer.md L5-L11"], "note": "obligations vs recommendations vs options vs product decisions"},
+    {"finding_id": "U007", "sources": ["plan", "S003"], "principal_locators": ["Viewer.md L5", "Viewer.md L7", "Viewer.md L9", "Viewer.md L11", "S003 L73-L77", "S003 L813-L814"], "note": "sentence-by-sentence plan disposition with KEEP/EXTEND/CONSTRAIN/FLAG outcomes"},
+    {"finding_id": "U008", "sources": ["S003", "brief", "plan"], "principal_locators": ["S003 L25-L27", "S003 L70-L72", "S003 L156", "S003 L173-L174", "S003 L257-L260", "S003 L285-L289", "S003 L299-L312", "S003 L426-L430", "S003 L438-L455", "S003 L553-L560", "S003 L748-L750", "brief L5", "Viewer.md L7", "Viewer.md L9", "Viewer.md L11"], "note": "unsupported-input taxonomy: viewer limitations, malformed input, product boundary"},
+    {"finding_id": "U009", "sources": ["S003"], "principal_locators": ["S003 L93-L94", "S003 L106-L108", "S003 L169-L174", "S003 L200", "S003 L256", "S003 L285-L289", "S003 L301-L315", "S003 L368-L374", "S003 L388-L397", "S003 L403", "S003 L419-L423", "S003 L433", "S003 L459-L460", "S003 L524-L525", "S003 L538-L539", "S003 L550-L551", "S003 L748-L749", "S003 L751-L752", "S003 L813-L814", "S003 L827"], "note": "13 counterevidence, uncertainty and unresolved-area items, all textually confirmed"},
+    {"finding_id": "U010", "sources": ["S003", "brief", "plan"], "principal_locators": ["S003 L813-L814", "brief L5", "Viewer.md L9"], "note": "reader-implementation research gap: pointer-only implementations section"},
+    {"finding_id": "U011", "sources": ["S003", "brief", "plan"], "principal_locators": ["S003 L150-L174", "S003 L175-L275", "S003 L320-L387", "S003 L432-L514", "S003 L516-L808", "brief L3", "Viewer.md L5-L11"], "note": "proposed validation V1-V9, all labeled UNEXECUTED"},
+    {"finding_id": "U012", "sources": ["S003"], "principal_locators": ["S003 L25-L27", "S003 L60-L66", "S003 L68-L148", "S003 L150-L174", "S003 L175-L275", "S003 L277-L293", "S003 L295-L397", "S003 L399-L430", "S003 L432-L514", "S003 L516-L739", "S003 L741-L808", "S003 L810-L814", "S003 L822-L866", "S003 L868-L888"], "note": "source-line index; every locator re-checked during this session"},
+    {"finding_id": "A001", "sources": ["S003", "acquisition-record"], "principal_locators": ["S003 L93-L94", "S003 L169-L174", "S003 L301", "S003 L403", "S003 L433", "S003 L813-L814", "S003 L827"], "note": "independent verification record and corpus scope; reads and probes as recorded in this acquisition file"}
+  ],
+  "undeveloped_leads": [
+    {"lead": "Reader implementations behind the section 4 pointer (S003 L813-L814: 'Implementations / See Tools.')", "why_undeveloped": "the pointer resolves outside the corpus and live fetching is not permitted in this assignment", "what_would_develop": "an authorized fetch of the NGFF tools page, or evaluator-supplied real reader code and filesets"},
+    {"lead": "Binary 'path' form for scale/translation transforms (S003 L285-L289)", "why_undeveloped": "the storage layout of path-referenced vectors is defined by the Zarr v3 specification, which is not in the corpus; dtype/shape/endianness rules are unstated in S003", "what_would_develop": "Zarr v3 specification text or real filesets exercising path-form transforms"},
+    {"lead": "UDUNITS-2 validation semantics for axis units (S003 L170-L172)", "why_undeveloped": "only the space/time vocabulary lists are in the corpus; validator behavior is external and no channel-unit vocabulary exists", "what_would_develop": "a UDUNITS-2 database or an empirical fileset corpus profiling actual unit usage"},
+    {"lead": "OME-XML minimum specification and MetadataOnly constraints (S003 L257-L260)", "why_undeveloped": "the OME-XML specification itself is not in the corpus", "what_would_develop": "OME-XML schema and documentation"},
+    {"lead": "OMERO WebGateway documentation for rdefs field semantics (S003 L424-L425)", "why_undeveloped": "external pointer; the rdefs fields remain example-only within this corpus", "what_would_develop": "OMERO WebGateway documentation"},
+    {"lead": "RFC 2119 normative reference (S003 L896)", "why_undeveloped": "the cited reference document is not in the corpus; standard interpretation of the keyword set is assumed", "what_would_develop": "the RFC 2119 text if confirmation is ever needed"},
+    {"lead": "Existence of corpus files beyond the six read paths and ten probed paths", "why_undeveloped": "no directory-enumeration tool was available and both mechanical line_map attempts failed at the tool boundary", "what_would_develop": "a workspace listing or an admitted manifest of inputs/"},
+    {"lead": "Real-world distribution of Zarr v3 codecs, chunk grids and data types in OME-Zarr 0.5 filesets (the S003 L70-L72 unbounded-feature risk)", "why_undeveloped": "requires an out-of-scope empirical corpus; no implementation requirements exist anywhere in S003", "what_would_develop": "a representative fileset suite; connects to validation proposals V7 and V9"}
+  ],
+  "coverage_limits": [
+    "No live fetch, no code execution and no writes inside inputs/ occurred in this session; every proposed validation remains UNEXECUTED.",
+    "Reader-implementation evidence is absent from the corpus by construction (S003 L813-L814 is a bare pointer); all interoperability statements rest on conformance text alone and are labeled accordingly.",
+    "Corpus completeness beyond the six read paths and ten probed paths is not assertable: no directory enumeration was available, and both mechanical line_map attempts returned tool-boundary errors without data.",
+    "Seed block hashes were taken verbatim from the admitted hashes file; no independent hash recomputation was possible in the bounded toolset.",
+    "One seed read was output-truncated by the reader (call 1, inside line 55); coverage was completed with a second read of lines 54-58, so no seed content was judged from a truncated portion alone.",
+    "Version-history one-liners (S003 L822-L866) were used only as historical context, never as normative overrides; where one conflicts with a normative section (dimension_names, L827 vs L174) the normative section governs and the conflict is recorded."
+  ],
+  "deliverables_authored_this_session": [
+    "out/acquisition/V001.json (this record)",
+    "out/decisions/V001.json (complete decision snapshot: U001-U012 all supported on independent verification; addition A001 supported)",
+    "out/final/V001.json (binding with exactly report, acquisition, research fields; report null pending host render)"
+  ],
+  "notes": [
+    "All twelve seed decisions are 'supported': the independent verification pass found no assertion requiring correction, so no replacement_body values appear in the decision snapshot and no qualified, rejected or unresolved dispositions were needed.",
+    "Per TASK.md, the standalone current report is produced by the declared generic host renderer after native quiescence; no report file was authored by this session and the final binding records report as null per the required initial example.",
+    "First deliverable versions are V001 in every namespace per TASK.md; no corrections were needed, so no V002 or later versions exist yet."
+  ]
+}

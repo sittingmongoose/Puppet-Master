@@ -1,0 +1,19 @@
+{
+  "schema": "er7.operator_malformed_json_metadata_only.v1",
+  "epoch": 1790891527.3530781,
+  "elapsed_seconds": 0.0030158080044202507,
+  "host_label": "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control",
+  "whole_preservation_receipt_sha256": "ac11d3ea7f2086f420f01448b3349ce72d10e2c5c785b953911318fa1610578b",
+  "malformed_jsons": [
+    {
+      "namespace": "out",
+      "declared_filename": "tmp/cache-brief.json",
+      "declared_filename_class": "other_frozen_candidate_output",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905,
+      "error_class": "JSONDecodeError"
+    }
+  ],
+  "bodies_error_text_and_private_receipts_not_output": true,
+  "no_bytes_modified": true
+}

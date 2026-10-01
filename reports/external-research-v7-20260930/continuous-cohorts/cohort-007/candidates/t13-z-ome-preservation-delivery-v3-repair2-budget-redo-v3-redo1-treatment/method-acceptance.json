@@ -1,0 +1,95 @@
+{
+  "schema": "er7.z.safe.method.acceptance.v1",
+  "verdict": "accepted",
+  "reviewer": "/root/budget_release_checker_v4",
+  "created_utc": "2026-10-01T20:23:46.176334+00:00",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "method_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-component-budget-redos-v3/t13/treatment.method-config.json",
+  "method_config_sha256": "ef54282b52106313dc00a2495d99584319407c57643c95cc9f5b921a5fdc6678",
+  "method": "T13",
+  "arm": "treatment",
+  "pair_id": "t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1",
+  "scope": "Independent exact generic budget/newcfg release check; prospective new1500/160 configuration only; no source-quality grade, native launch or actual handoff grant.",
+  "static_audit": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/eval/reviews/budget-release-checker-v4/t13-static-audit-v3.json",
+    "sha256": "f8918aaf8122ecee44968738a6b126d9b4a91ad94d26f08ccbf49755cb339db1"
+  },
+  "method_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-component-budget-redos-v3/t13/MANIFEST.json",
+    "sha256": "d9397059a5f05bee6428a041d06ae325c623da579f3d27c8dd9113d66b795f47"
+  },
+  "checks": {
+    "all_entry_pins": true,
+    "accepted_original_binding_exact": true,
+    "original_acceptance_schema_and_runtime": true,
+    "old_binding_pin": true,
+    "config_schema_native_ABI": true,
+    "task_prompt_exact_budget_only_edit": true,
+    "all_task_prompt_budget_mentions_consistent": true,
+    "task_prompt_pins_readonly": true,
+    "fresh_unreused_attempt_paths_and_labels": true,
+    "exact_native_attempt_alias_and_caps": true,
+    "all_original_config_nonbudget_fields": true,
+    "all_original_binding_nonbudget_fields": true,
+    "binding_identity_and_carriers": true,
+    "model_tools_effort_native_Goal_fixed": true,
+    "full_input_manifest_preserved": true,
+    "safe_unique_input_targets": true,
+    "exclusive_readonly_whole_input_tree": true,
+    "every_original_source_and_copy_hash_size": true,
+    "fresh_empty_out_workspace_only_expected_names": true,
+    "all_old_closure_pins_preserved": true,
+    "every_old_and_new_closure_pin_current": true,
+    "runtime_snapshot_current_and_closed": true,
+    "runtime_whole_closure_and_dependencies": true,
+    "entire_accepted_original_source_closure": true,
+    "whole_input_latest_selector_output_streams_unchanged": true,
+    "budget_redo_meta_consistent": true,
+    "exact_renderer27c0_in_closure": true
+  },
+  "original_config": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t13-z-ome-preservation-delivery-v3-repair2-treatment.method-config.json",
+    "sha256": "30955d06c3f6529095e2cf30d7568d2325fd84fd69ac2877dd472b37f5c3056d"
+  },
+  "original_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/treatment.binding.json",
+    "sha256": "464599caba84655cd592dd325180688f86b1b2ffa7826d4cda71767fcbcee28e"
+  },
+  "whole_companion": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/whole_freeze_delivery_v2.py",
+    "sha256": "7f6f8a2bfc2c50172cc00541238c6951459300f23a0905a2eabe5c779f6ce844",
+    "acceptance_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/whole-companion-v2.acceptance.json",
+    "acceptance_sha256": "25fa83a4bb944655a89f1bed0c20d6b59e9d56c03af9ae68bfc380768b892d7a"
+  },
+  "conditions": [
+    "This accepts only the exact future redo configuration. Root central native operator must separately provide current campaign/helper authority, accepted exact host context/dispatcher and a single-use component admission with the independently passed SAME runtime298f counted canary. The author cannot launch or self-accept.",
+    "Both new arms are prospectively matched at exactly1500seconds/160responses; each native component remains30<S<=1800 and1<=R<=160. No running-budget extension, new stage, source cut, arbitrary old label reuse or hotpatch of an original run is permitted.",
+    "Bind every one of the 7 original preexecution inputs (92801 bytes total for this arm) at their exact target/SHA/size. Source/brief/assignment/plan/questions, admitted seed bytes where present, all original generic obligations, method contrast, GLM-5.3-Flash/max, tools/mechanical enum, no GET, all immutable output streams and latest selectors stay unchanged. Each source/input file remains <=524288 bytes. Task and prompt contain no numeric cap statements and remain byte-identical to originals; native config and card alone specify the new1500/160 caps.",
+    "Immediately before launch, rehash exact config/task/prompt/source/closure/runtime pins; establish this fresh label has never started, inputs and task/prompt are regular single-link read-only files with no symlink ancestors, and out is empty. Any drift requires newly pinned independent review.",
+    "After independent native quiescence, preserve the whole immutable regular/nonlinked output snapshot and EVERY prebound input using exact whole-companion7f6 (accepted review25fa). Bind current sanitized own-component receipt, exact integrity/preflight metadata, exclusive destination and original input SHAs. Preserve128file/16MiB/512KiB output limits and all output versions. A failed/incomplete/context-unknown native attempt stays failed/incomplete.",
+    "Retain original900/96 runs, the failed first T04R budget draft and any later failed preparation without repair or relabel. All original/draft failures, setup, review, native waits/retries/corrections, whole input copy/hash/freeze, delivery and cleanup costs remain separately counted; unknown history remains UNKNOWN. This new budget is an additional prospective variable, never pooled with the original comparison or selected best-of.",
+    "This static byte binding is not source-quality grading, actual native completion/Goal inventory/tool privacy/quiescence evidence or an actual sample semantic grant. Independent current-report semantic assessment must be saved before acquisition/history review. No evaluator keys, prior grades, old outputs or source facts were read or supplied.",
+    "Exact frozen runtime298f plus independently passed SAME counted canary, root campaign resource/work-clock authority, exact single-use operator admission and host context acceptance remain mandatory.",
+    "Whole regular nonlinked immutable output and input snapshots must be independently bound before checker use. Exact renderer is deterministic delivery only, not a quiescence, native Write, receiver ACK or completion proof.",
+    "Highest contiguous final binding must select highest complete report/acquisition/research streams (null report only for T13 treatment, null research only for T13 control); V001 output_files are initial minimum-carrier requirements, never a fixed latest selector.",
+    "Independent current report semantic assessment must be saved before acquisition/history review; no host semantic rewrite or helper-provided research facts.",
+    "Protocol actions remain SELF_REPORT unless independently observed; no count-only claim of reads, cache reuse, comprehension or savings.",
+    "Measure cold preparation, native retries/corrections/cleanup, complete input-companion copy/hash/freeze and final host delivery separately in total user-facing cost; preserve all failed attempts, pauses and development overruns.",
+    "Any subsequent config/script/source drift or changed ABI requires a newly pinned exact review; no new runtime repair or canary authorized.",
+    "Before invoking unchanged exact postrender27c0, independently reviewed wrapper must validate all root/ancestor/out/input paths are regular, nonlinked, immutable and unique JSON keys in every JSON carrier. Renderer itself is not sufficient to establish those preconditions.",
+    "T03 treatment current report bytes must equal the exact current whole id/body section render. T13 treatment must use the original preexecution hash-bound seed companion and explicitly assessed whole decisions; omitted seed decisions remain unconfirmed, rejected content stays historical."
+  ],
+  "native_Goals_started": 0,
+  "runtime_edits": 0,
+  "actual_private_reads": 0,
+  "source_semantic_reads": 0,
+  "candidate_outputs_read": 0,
+  "prior_grades_read": 0,
+  "actual_posthandoff_qualified": false,
+  "actual_sample_semantic_grant": false,
+  "native_launch_authorized_by_this_document_alone": false,
+  "exact_renderer": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/postrender.py",
+    "sha256": "27c0d4dbf102306c3ad085f095c41dd54e0d46a16b55a1ac33de324905f9f91c"
+  }
+}

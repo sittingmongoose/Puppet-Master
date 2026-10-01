@@ -1,0 +1,1207 @@
+{
+  "schema": "er7.current_assessment.v2",
+  "phase": 1,
+  "report_id": "R025",
+  "stage_case_id": "C061",
+  "fixed_case_id": "ome-normative-dev-v1",
+  "reviewer": "Codex independent evaluator /root/normative_current_grading_v5",
+  "runtime_identity": {
+    "requested_protocol_role": "GPT-6.1 Sol Extra High",
+    "actual_model_api_identity": "not exposed to this helper; no assertion of verification",
+    "independence": "Did not author candidate report or method; no prior assessments/history accessed; source/key evaluated independently."
+  },
+  "started_at_utc": "2026-10-01T21:17:58Z",
+  "frozen_at_utc": "2026-10-01T21:53:43.358288Z",
+  "budget_binding": {
+    "active_minutes": 150,
+    "response_cap": 120,
+    "finalization_reserve_minutes": 15,
+    "hard_deadline_utc": "2026-10-01T23:47:58Z",
+    "reserve_begins_no_later_than_utc": "2026-10-01T23:32:58Z",
+    "budget_not_reset": true
+  },
+  "input_pins": {
+    "stage_sha256": "d70fcc49a6ea83f820d0af150b0c1766d9268e3628ccd3114a90dc05562fde39",
+    "manifest_sha256": "63a23ebb07cb0084684109a687872099ac9b9f7c704ea1bd9420b8e5a16b2c89",
+    "current_report_sha256": "ec3395d2fef214bbfcd48e3676db2381a45b680fcb194d9b4f85c359d3863d23",
+    "manifest_checks": [
+      {
+        "path": "PROTOCOL.md",
+        "expected_sha256": "f0427cc8d1495e368b8b79cb9ead18cc65d4b0b2e8b509e338b86923ee5b1e15",
+        "actual_sha256": "f0427cc8d1495e368b8b79cb9ead18cc65d4b0b2e8b509e338b86923ee5b1e15",
+        "matches": true
+      },
+      {
+        "path": "auxiliary-prebound-inputs-v1/ADDENDUM.json",
+        "expected_sha256": "f1825af35c061606497a9e21748fe839a98f44daf8f8573337f6f908fbb1e9a6",
+        "actual_sha256": "f1825af35c061606497a9e21748fe839a98f44daf8f8573337f6f908fbb1e9a6",
+        "matches": true
+      },
+      {
+        "path": "auxiliary-prebound-inputs-v1/catalog.json",
+        "expected_sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+        "actual_sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+        "matches": true
+      },
+      {
+        "path": "current-artifact-set.json",
+        "expected_sha256": "7b58ec393082ee49fff9debe783ff1f6cd8372fb1009c7eeab13c4d527110d21",
+        "actual_sha256": "7b58ec393082ee49fff9debe783ff1f6cd8372fb1009c7eeab13c4d527110d21",
+        "matches": true
+      },
+      {
+        "path": "current-report.md",
+        "expected_sha256": "ec3395d2fef214bbfcd48e3676db2381a45b680fcb194d9b4f85c359d3863d23",
+        "actual_sha256": "ec3395d2fef214bbfcd48e3676db2381a45b680fcb194d9b4f85c359d3863d23",
+        "matches": true
+      },
+      {
+        "path": "eligibility.json",
+        "expected_sha256": "1dbb0006ccbc12ad4b31eb1c52e3e2e30abf304fcffb2f3938e0609079c42531",
+        "actual_sha256": "1dbb0006ccbc12ad4b31eb1c52e3e2e30abf304fcffb2f3938e0609079c42531",
+        "matches": true
+      },
+      {
+        "path": "findings/V001.json",
+        "expected_sha256": "5bbdac74e8e805cd5096beab9cbcc9ec654c0fee5b6df783a74b7ef3ba9e51fd",
+        "actual_sha256": "5bbdac74e8e805cd5096beab9cbcc9ec654c0fee5b6df783a74b7ef3ba9e51fd",
+        "matches": true
+      },
+      {
+        "path": "inputs/brief.md",
+        "expected_sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+        "actual_sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+        "matches": true
+      },
+      {
+        "path": "inputs/plan/Viewer.md",
+        "expected_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+        "actual_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+        "matches": true
+      },
+      {
+        "path": "inputs/sources/S003.txt",
+        "expected_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+        "actual_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+        "matches": true
+      }
+    ],
+    "source_lines": 896,
+    "source_bytes": 36980,
+    "source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+  },
+  "structural_eligibility": {
+    "all_pins_match": true,
+    "complete_standalone_current_carrier": true,
+    "current_semantic_companions": [
+      "findings/V001.json"
+    ],
+    "source_full_read": {
+      "path": "R023/inputs/sources/S003.txt",
+      "ranges": [
+        "1-240",
+        "241-500",
+        "501-740",
+        "741-896"
+      ],
+      "complete": true
+    },
+    "interpretability": "Full current semantic review is interpretable."
+  },
+  "scope": {
+    "assigned_facets": [
+      "OME05-C01",
+      "OME05-C02",
+      "OME05-C03",
+      "OME05-C04",
+      "OME05-C05",
+      "OME05-C06"
+    ],
+    "source_scope": "Entire original S003 frozen normative capture; unchanged full brief and Viewer plan; all material current assertions including novel findings, summaries, dispositions, absences, unresolved claims, proposals and unavoidable method cues.",
+    "key_role": "Non-exhaustive omission aid; every reported factual claim independently compared with S003.",
+    "live_evaluator_sources": [],
+    "denominator_reduced": false,
+    "sampled": false
+  },
+  "evidence_registry": {
+    "E01": {
+      "locator": "S003 L1-10, L25-27",
+      "quote": "Final Community Group Report, 8 September 2026",
+      "context": "This/latest/editor URI is /0.5/; editor-draft data not necessarily supported."
+    },
+    "E02": {
+      "locator": "S003 L56-64",
+      "quote": "Implementations may be expected (MUST) or encouraged (SHOULD) to support the reading of the data",
+      "context": "A general description of possible transitional reading obligations, not a blanket requirement to implement every transitional feature."
+    },
+    "E03": {
+      "locator": "S003 L65-66",
+      "quote": "comments MUST NOT be included in JSON objects."
+    },
+    "E04": {
+      "locator": "S003 L68-72",
+      "quote": "version 3 of the Zarr specification.",
+      "context": "All Zarr features may be used unless expressly disallowed; feature permission is distinct from mandatory support by every reader."
+    },
+    "E05": {
+      "locator": "S003 L70-72",
+      "quote": "unless explicitly disallowed in this specification.",
+      "context": "Permission includes codecs, chunk grids, key encodings, data types, storage transformers. No universal reader-codec support promise is stated."
+    },
+    "E06": {
+      "locator": "S003 L73-81",
+      "quote": "represented here as it would appear locally but could equally be stored on a web server",
+      "context": "Image rank is 2-5; axis names are arbitrary."
+    },
+    "E07": {
+      "locator": "S003 L82-117",
+      "quote": "The name of the array is arbitrary with the ordering defined by",
+      "context": "Illustrated image/labels hierarchy; label dimensions same or 1 appears in diagram comment, not an independent MUST."
+    },
+    "E08": {
+      "locator": "S003 L119-129",
+      "quote": "Three groups MUST be defined above the images:",
+      "context": "Well, row and plate; well/plate implement their specs. Empty row/well groups SHOULD NOT exist."
+    },
+    "E09": {
+      "locator": "S003 L149-156",
+      "quote": "ome in attributes.",
+      "context": "OME metadata in hierarchy zarr.json; version string in ome namespace and consistent within hierarchy."
+    },
+    "E10": {
+      "locator": "S003 L166-169",
+      "quote": "The values MUST be unique across all \"name\" fields.",
+      "context": "Axis name mandatory; type SHOULD and custom string types MAY. Valid custom types do not guarantee a particular reader can render them."
+    },
+    "E11": {
+      "locator": "S003 L170-172",
+      "quote": "SHOULD contain the field \"unit\"",
+      "context": "Recommended UDUNITS-2 strings; absent unit does not establish dimensionless physical coordinates."
+    },
+    "E12": {
+      "locator": "S003 L173-174",
+      "quote": "MUST match the names in the \"axes\" metadata.",
+      "context": "Axis-list length equals image array rank; multiscale-array dimension_names mandatory and matches axes."
+    },
+    "E13": {
+      "locator": "S003 L175-191",
+      "quote": "bioformats2raw internally introduced a wrapping layer.",
+      "context": "Transitional multi-image layout and typical collection hierarchy, not a survey of readers."
+    },
+    "E14": {
+      "locator": "S003 L193-206, L256",
+      "quote": "MUST have the value \"3\"",
+      "context": "Normative prose quotes the value; JSON examples use numeric 3. Plate metadata takes precedence when top-level represents plate; image collections cannot be mixed with plates."
+    },
+    "E15": {
+      "locator": "S003 L257-270",
+      "quote": "If the \"series\" attribute does not exist and no \"plate\" is present:",
+      "context": "Then consecutively numbered groups starting 0; series optional list of string paths ordered as XML Images if XML supplied; XML SHOULD exist and uses MetadataOnly if present."
+    },
+    "E16": {
+      "locator": "S003 L271-275",
+      "quote": "SHOULD make users aware of the presence of more than one image",
+      "context": "MAY show all images or offer choice; MAY use series and ignore extraneous groups. Awareness SHOULD does not require showing all images."
+    },
+    "E17": {
+      "locator": "S003 L276-293",
+      "quote": "The transformations in the list are applied sequentially and in order.",
+      "context": "General transform types include identity default, translation, scale; vectors may be inline or stored via path."
+    },
+    "E18": {
+      "locator": "S003 L295-303",
+      "quote": "MUST contain 2 or 3 entries of \"type:space\"",
+      "context": "2-5 dimensional multiscale; optional one time and one channel/null/custom. Axis order corresponds array order and time, channel/custom, space. Anisotropic zyx is SHOULD."
+    },
+    "E19": {
+      "locator": "S003 L304-307",
+      "quote": "relative to the current zarr group.",
+      "context": "datasets required; path required, group-relative, largest/highest-resolution to smallest; dimensionality and order equal axes."
+    },
+    "E20": {
+      "locator": "S003 L308-313",
+      "quote": "They MUST contain exactly one scale transformation",
+      "context": "Only scale and translation; scale physical size/duration or relative factor when physical scale unavailable/applicable. Optional exactly-one translation follows scale; vectors match axes."
+    },
+    "E21": {
+      "locator": "S003 L310",
+      "quote": "If scaling information is not available or applicable for one of the axes",
+      "context": "Relative-to-first-level factor required in this case, 1 when no downsampling. Relative values alone do not prove physical calibration."
+    },
+    "E22": {
+      "locator": "S003 L314-319",
+      "quote": "are applied after them.",
+      "context": "Optional multiscale-level transform follows dataset transforms, subject to same type/order rules; name,type,metadata SHOULD fields."
+    },
+    "E23": {
+      "locator": "S003 L388-397",
+      "quote": "using the first multiscale as a fallback:",
+      "context": "Named-multiscale selection/pseudocode; informative example, not a universal pyramid-level policy."
+    },
+    "E24": {
+      "locator": "S003 L398-425",
+      "quote": "See the OMERO WebGateway documentation",
+      "context": "Example contains channel label/active/coefficient/family/inverted and rdefs defaultT/defaultZ/model; their guaranteed presence not stated by normative requirements."
+    },
+    "E25": {
+      "locator": "S003 L426-430",
+      "quote": "The \"omero\" metadata is optional, but if present it MUST contain the field \"channels\"",
+      "context": "Each channel color six RGB hex digits and window min/max/start/end; no normative channel-list size equality sentence in capture."
+    },
+    "E26": {
+      "locator": "S003 L432-436",
+      "quote": "usually having the same dimensions and coordinate transformations",
+      "context": "Descriptive normative prose says corresponding label image same coordinate system in segmentation case; usually qualifies dimensions/transforms. It is not marked non-normative merely because it says usually."
+    },
+    "E27": {
+      "locator": "S003 L437-442",
+      "quote": "[uint8, int8, uint16, int16, uint32, int32, uint64, int64].",
+      "context": "Nested labels group, arbitrary label names, permitted metadata-free intermediate groups, declared labels paths; complete listing SHOULD."
+    },
+    "E28": {
+      "locator": "S003 L454-460",
+      "quote": "MUST have the same number of entries (scale levels) as the original unlabeled image.",
+      "context": "Label multiscales required; image-label object and colors/version SHOULD, required types if present."
+    },
+    "E29": {
+      "locator": "S003 L461-466",
+      "quote": "MUST be the integer corresponding to a particular label.",
+      "context": "colors entries keyed by label-value; rgba MAY, four integer 0-255 values if present; readers SHOULD use specified colors, not mandatory universal palette."
+    },
+    "E30": {
+      "locator": "S003 L467-474",
+      "quote": "a string specifying the relative path to a Zarr image group.",
+      "context": "Optional properties objects keyed by integer label-value; optional source.image relative reference, default ../../ because usual nesting. Correct resolution depends on label-group location."
+    },
+    "E31": {
+      "locator": "S003 L475-514",
+      "quote": "50% blue and 50% opacity.",
+      "context": "Example [0,0,128,128]; not evidence of actual viewer execution."
+    },
+    "E32": {
+      "locator": "S003 L518-529",
+      "quote": "greater than or equal to 0 within the context of the plate",
+      "context": "Optional acquisitions list; unique integer ID required. Acquisition name/maximumfieldcount SHOULD; description/start/end MAY with required types."
+    },
+    "E33": {
+      "locator": "S003 L530-560",
+      "quote": "rowIndex and columnIndex MUST be 0-based.",
+      "context": "All physical rows/columns defined even empty; alphanumeric case-sensitive unique names, avoid case-insensitive collisions SHOULD; required columns/rows/version/wells; row/column paths and indices agree."
+    },
+    "E34": {
+      "locator": "S003 L641-739",
+      "quote": "2 wells in a 96 well plate",
+      "context": "Sparse example one acquisition/one field per well; larger grid does not imply all well subgroups populated."
+    },
+    "E35": {
+      "locator": "S003 L741-752",
+      "quote": "specifying all fields of views for a given well.",
+      "context": "well.images list required; fields use unique alphanumeric case-sensitive paths. Each image acquisition ID required if multiple acquisitions and matches plate definition; well version SHOULD."
+    },
+    "E36": {
+      "locator": "S003 L809-820",
+      "quote": "4. Implementations See Tools.",
+      "context": "No reader implementation catalog in capture; bioformats2raw named elsewhere as writer. This edition /0.5/, latest /latest/ also appears in citing section."
+    },
+    "E37": {
+      "locator": "S003 L825-851",
+      "quote": "Clarify that the dimension_names field in axes MUST be included.",
+      "context": "0.5.2 clarification,0.5.1 omero,0.5.0 Zarr v3; pre-0.5 axes/types/transforms/separator history."
+    },
+    "E38": {
+      "locator": "S003 L867-888",
+      "quote": "All of the text of this specification is normative except sections explicitly marked as non-normative, examples, and notes.",
+      "context": "Requirements descriptive and RFC2119; lowercase keywords can carry force. Usually is a qualifier, not an automatic informative marker."
+    },
+    "B01": {
+      "locator": "inputs/brief.md, entire 2 paragraphs",
+      "quote": "local OME-Zarr 0.5 bioimaging filesets.",
+      "context": "Read-only local viewer; discovery, multiresolution axes navigation, associated labels, calibrated coordinates, responsiveness and truthful display limits. Research actual readers broadly; distinguish format obligations, optional capabilities and product decisions."
+    },
+    "P01": {
+      "locator": "inputs/plan/Viewer.md L5",
+      "quote": "time-point and plane selection where relevant",
+      "context": "Image listing, pan/zoom, conditional channel/time/plane controls, optional associated overlays, dimensions/units/coordinates, level choice; detailed metadata rules absent."
+    },
+    "P02": {
+      "locator": "inputs/plan/Viewer.md L7-11",
+      "quote": "Source files remain unchanged; display settings are local to the viewing session.",
+      "context": "Background reads/cancellation, understandable failures, real tools interoperability, additional capability choices explicit review, calibration/alignment/responsiveness acceptance. No concrete fixtures."
+    },
+    "I01": {
+      "locator": "stage.json, MANIFEST.json, eligibility.json, catalog.json",
+      "quote": "Fixed admitted source S003 only; no live fetching for this component case.",
+      "context": "Hash/source bytes/line count independently checked. All six facets assigned. Catalog metadata does not establish actual operations; no semantic companion declared."
+    }
+  },
+  "material_claims": [
+    {
+      "claim_id": "R025-C001",
+      "kind": "identity",
+      "report_locators": [
+        "Report L1-5; findings/report-title-and-evidence-basis.body"
+      ],
+      "claim": "Current report is V001 delivered from TASK.md and brief, with TASK/brief hashes and sizes stated.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "B01",
+        "I01"
+      ],
+      "rationale": "Brief identity matches the intake. TASK.md is not a permitted phase1 file, so its hash/3284-byte/5-line identity and operational use are unresolved. Current V001 carrier is available.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C002",
+      "kind": "operation",
+      "report_locators": [
+        "Report L5-7,L87-93; findings/report-title-and-evidence-basis.body and unresolved-assignment-plan-corpus-locus.body"
+      ],
+      "claim": "Candidate says only TASK/brief were fully read, no other document locatable,137 probes failed, only bounded tools used and no shell/live/native reads or tests occurred.",
+      "source_outcome": "unresolved",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Acquisition, tools, native operations and TASK rules are locked. Numbers/probe outcomes are preserved as current assertions but neither success nor failure is inferred from unavailable history.",
+      "materiality": "operational-only"
+    },
+    {
+      "claim_id": "R025-C003",
+      "kind": "scope",
+      "report_locators": [
+        "Report L9,L15-17,L23; findings/product-scope-and-boundary.body"
+      ],
+      "claim": "Local read-only OME-Zarr0.5 browser, source unchanged, editing/export/remote services/clinical interpretation excluded.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "B01",
+        "P02"
+      ],
+      "rationale": "Faithfully reports product boundary; required network reading or source mutation would violate it.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C004",
+      "kind": "qualification",
+      "report_locators": [
+        "Report L19,L21; findings/product-scope-and-boundary.body"
+      ],
+      "claim": "Format obligations unresolved because specification unread; a distinct plan/assignment could qualify the brief-derived scope.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "I01",
+        "B01",
+        "P02"
+      ],
+      "rationale": "Current unresolved status is real in the text, not a false format finding. Cause of unreadability is unverified; exact admitted plan is available to evaluator but does not prove candidate operational access.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C005",
+      "kind": "implication",
+      "report_locators": [
+        "Report L17,L23; findings/product-scope-and-boundary.body"
+      ],
+      "claim": "Source mutation/network-reading requirements are non-goals; clinical exclusion bounds product interpretation claims.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "B01",
+        "P02"
+      ],
+      "rationale": "Appropriate brief-to-plan implication; session-local display and local reading remain allowed.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C006",
+      "kind": "product",
+      "report_locators": [
+        "Report L27-31; findings/required-user-capabilities.body"
+      ],
+      "claim": "Brief requires discovery,multiresolution channel/time/plane inspection,associated labels,calibrated coordinates,responsive large opening and explanatory limits.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "B01",
+        "P01",
+        "P02"
+      ],
+      "rationale": "Product goals accurately preserved; they are not established normative format mechanics.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C007",
+      "kind": "implication",
+      "report_locators": [
+        "Report L31; findings/required-user-capabilities.body"
+      ],
+      "claim": "These goals must be observable; wrong scale/origin is a correctness defect, not styling.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "B01",
+        "E20",
+        "E22"
+      ],
+      "rationale": "Correct correctness implication; actual source transform/unit conditions are not derived in current report.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C008",
+      "kind": "choice",
+      "report_locators": [
+        "Report L31-33,L63,L147; findings/required-user-capabilities.body,responsiveness-on-large-datasets.body and proposed-validation-unexecuted.body"
+      ],
+      "claim": "Responsiveness/explanatory thresholds and calibration acceptance thresholds require product choices.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "B01",
+        "P02",
+        "E20",
+        "E21"
+      ],
+      "rationale": "No numeric performance threshold is given. Presentation/measurement tolerances may be choices, but normative scale/offset/order and no-invented-unit correctness cannot be replaced by an arbitrary product threshold.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C009",
+      "kind": "unresolved",
+      "report_locators": [
+        "Report L35,L101-107; findings/required-user-capabilities.body and unresolved-format-and-reader-landscape.body"
+      ],
+      "claim": "Multiscale/axes/labels/calibration/chunking/reader mechanics remain unresolved; report avoids declaring corpus-wide absence.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "I01",
+        "E04",
+        "E12",
+        "E19",
+        "E20",
+        "E27",
+        "E30",
+        "E36"
+      ],
+      "rationale": "This correctly describes its current knowledge gaps. Admitted S003 contains the six normative facet rules, so unknown status does not satisfy those coverage obligations. Reader behavior/full Zarr internals are genuinely outside S003.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C010",
+      "kind": "proposal",
+      "report_locators": [
+        "Report L37; findings/required-user-capabilities.body"
+      ],
+      "claim": "Later map each brief capability to format constructs and reader interfaces, derive acceptance checks; unexecuted.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "B01",
+        "P02"
+      ],
+      "rationale": "Valid future research proposal, not present normative coverage or executed validation.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C011",
+      "kind": "product",
+      "report_locators": [
+        "Report L41-45; findings/calibration-and-coordinate-fidelity.body"
+      ],
+      "claim": "Calibrated coordinates must preserve physical units/frame through transforms,downsampling and plane offsets.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "B01",
+        "E20",
+        "E21",
+        "E22"
+      ],
+      "rationale": "Sound target for known physical calibration. S003 allows missing units/absolute scale, so product must also state relative/index or unknown-calibration treatment; current report leaves that unresolved. No universal stored-unit guarantee is asserted.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C012",
+      "kind": "unresolved",
+      "report_locators": [
+        "Report L47-49; findings/calibration-and-coordinate-fidelity.body"
+      ],
+      "claim": "Brief does not define frames/units; missing-acquisition-unit qualification is open and not rejected; no counterevidence read.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "B01",
+        "E11",
+        "E21",
+        "I01"
+      ],
+      "rationale": "Frame/unit omission in brief is real; S003 supplies required transform order and optional calibration conditions, absent in deliverable. Actual read/counterevidence exposure remains unknown operationally.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C013",
+      "kind": "scope",
+      "report_locators": [
+        "Report L51; findings/calibration-and-coordinate-fidelity.body"
+      ],
+      "claim": "Calibration scope excludes export or analysis features under brief.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "B01",
+        "P02"
+      ],
+      "rationale": "Export/clinical and automated scientific interpretation are excluded. Brief does not expressly forbid every possible read-only analysis feature; broad analysis ban is an overextended scope gloss rather than a format rule.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C014",
+      "kind": "proposal",
+      "report_locators": [
+        "Report L53; findings/calibration-and-coordinate-fidelity.body"
+      ],
+      "claim": "Later find scale/unit clauses and run known-spacing physical-size round-trip; unexecuted.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E11",
+        "E20",
+        "E22",
+        "P02"
+      ],
+      "rationale": "Valid research/test idea, but no clause derivation,offset-sensitive composition oracle or unknown-calibration test currently supplied.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C015",
+      "kind": "product",
+      "report_locators": [
+        "Report L57-61; findings/responsiveness-on-large-datasets.body"
+      ],
+      "claim": "Opening large saved datasets must stay responsive and not block the interface on a complete read.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "B01",
+        "P02"
+      ],
+      "rationale": "Required product behavior; exact threading/strategy remains a choice and no performance execution is claimed.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C016",
+      "kind": "inference",
+      "report_locators": [
+        "Report L61; findings/responsiveness-on-large-datasets.body"
+      ],
+      "claim": "Multiresolution suggests level-selective/progressive reading but does not establish its mechanism.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E04",
+        "E05",
+        "E19",
+        "B01"
+      ],
+      "rationale": "Correctly labeled suggestion; source permits chunking but provides no measured performance guarantee.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C017",
+      "kind": "unresolved",
+      "report_locators": [
+        "Report L65; findings/responsiveness-on-large-datasets.body"
+      ],
+      "claim": "Partial-read feasibility and real dataset sizes unknown without source/implementation evidence.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E04",
+        "E05",
+        "I01"
+      ],
+      "rationale": "Full Zarr read mechanics and real sizes are outside S003; basic pyramid/chunk permission is present but not derived in report.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C018",
+      "kind": "proposal",
+      "report_locators": [
+        "Report L67; findings/responsiveness-on-large-datasets.body"
+      ],
+      "claim": "Define a responsiveness budget and measure representative local datasets; both unexecuted.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "B01",
+        "P02"
+      ],
+      "rationale": "Legitimate proposal with no invented passing result.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C019",
+      "kind": "plan-fit",
+      "report_locators": [
+        "Report L71-75; findings/thin-plan-gap-implications.body"
+      ],
+      "claim": "Brief identifies compatibility,correctness,navigation/display risk surfaces; no concrete plan contents are asserted.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "B01",
+        "P01",
+        "P02"
+      ],
+      "rationale": "Correct brief-level framing and restraint; no actual source-to-plan clause analysis is delivered.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C020",
+      "kind": "operation",
+      "report_locators": [
+        "Report L77; findings/thin-plan-gap-implications.body"
+      ],
+      "claim": "Plan directory exists but about25 named probes found no file and tools cannot list.",
+      "source_outcome": "unresolved",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Candidate path/tool exposure,probe count and directory observations are locked. Do not infer actual file absence or operational failure from this self-report.",
+      "materiality": "operational-only"
+    },
+    {
+      "claim_id": "R025-C021",
+      "kind": "unresolved",
+      "report_locators": [
+        "Report L79; findings/thin-plan-gap-implications.body"
+      ],
+      "claim": "Concrete plan requirements not enumerated and corpus absence not asserted.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E09",
+        "E12",
+        "E19",
+        "E20",
+        "E27",
+        "E30",
+        "P01",
+        "P02"
+      ],
+      "rationale": "Current text indeed omits source-specific requirements; full facet roster records omissions instead of accepting unknown as complete coverage.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C022",
+      "kind": "proposal",
+      "report_locators": [
+        "Report L81; findings/thin-plan-gap-implications.body"
+      ],
+      "claim": "Later compare thin plan against brief/format with line evidence; unexecuted.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "B01"
+      ],
+      "rationale": "Valid future plan audit, not current completed gap analysis.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C023",
+      "kind": "operation",
+      "report_locators": [
+        "Report L85-93; findings/unresolved-assignment-plan-corpus-locus.body"
+      ],
+      "claim": "Directory/cache/line-map errors,unsupported globbing,legacy path absence and replicated S01 error disagreement establish search-scope limit.",
+      "source_outcome": "unresolved",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "All exact named paths,error classes,replication/tool limitations and acquisition recording are unverified until phase2. Explicit no-world-absence interpretation is retained.",
+      "materiality": "operational-only"
+    },
+    {
+      "claim_id": "R025-C024",
+      "kind": "reasoning",
+      "report_locators": [
+        "Report L85,L89,L93,L115; findings/unresolved-assignment-plan-corpus-locus.body and rejected-interpretations.body"
+      ],
+      "claim": "Failed guessed-path searches do not prove no corpus/specification; empty and unknown filenames cannot be distinguished by such errors alone.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Correct negative-evidence principle independently of whether reported probes occurred. No corpus-wide absence claim accepted.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C025",
+      "kind": "proposal",
+      "report_locators": [
+        "Report L95,L141; findings/unresolved-assignment-plan-corpus-locus.body and proposed-validation-unexecuted.body"
+      ],
+      "claim": "Obtain a permitted inventory,read located docs,re-derive brief-only findings; unexecuted.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "I01",
+        "B01"
+      ],
+      "rationale": "Reasonable future acquisition proposal. It does not repair current source coverage and is not candidate acquisition evidence.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C026",
+      "kind": "unresolved",
+      "report_locators": [
+        "Report L99-107; findings/unresolved-format-and-reader-landscape.body"
+      ],
+      "claim": "Format/version/axes/pyramid/labels/calibration/storage and reader libraries/limits all left open,with no verified reader/format facts.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E04",
+        "E09",
+        "E12",
+        "E19",
+        "E20",
+        "E27",
+        "E30",
+        "E36"
+      ],
+      "rationale": "Accurate current omission inventory. Format rules are in admitted S003; actual reader landscape is not. These distinct gaps cannot be combined into an infrastructure judgment before operations are unlocked.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C027",
+      "kind": "constraint",
+      "report_locators": [
+        "Report L103,L107,L117; findings/unresolved-format-and-reader-landscape.body and rejected-interpretations.body"
+      ],
+      "claim": "Do not backfill source-verified assertions from background recall; every open item needs exact admitted-source derivation.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Appropriate evidence hygiene. Rule attribution to TASK is unverified, but rejecting fabricated provenance is sound.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C028",
+      "kind": "proposal",
+      "report_locators": [
+        "Report L109,L143,L145; findings/unresolved-format-and-reader-landscape.body and proposed-validation-unexecuted.body"
+      ],
+      "claim": "Acquire normative/reader sources,derive clause table and cross-check library versions/limits; all unexecuted.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "I01",
+        "E36"
+      ],
+      "rationale": "Valid future research idea, but fixed component scope is S003-only; external reader acquisitions need future authorized scope. Proposal not scored as executed or present format coverage.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C029",
+      "kind": "rejection",
+      "report_locators": [
+        "Report L115; findings/rejected-interpretations.body"
+      ],
+      "claim": "Reject treating failed path probes as proof of absent corpus/spec.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Correct disposition; actual failed attempts remain unassessed.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C030",
+      "kind": "rejection",
+      "report_locators": [
+        "Report L117; findings/rejected-interpretations.body"
+      ],
+      "claim": "Reject presenting familiar OME conventions/library behavior as sourced research.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Proper provenance distinction,not false rejection of a specific verified source finding.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C031",
+      "kind": "rejection",
+      "report_locators": [
+        "Report L119; findings/rejected-interpretations.body"
+      ],
+      "claim": "Reject shell/native/arbitrary code/live fetching based on TASK tool restrictions.",
+      "source_outcome": "unresolved",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Candidate task/tool authority and actual compliance are locked. Fixed no-live component source scope is verified; do not infer broader tool operation outcomes.",
+      "materiality": "operational-only"
+    },
+    {
+      "claim_id": "R025-C032",
+      "kind": "rejection",
+      "report_locators": [
+        "Report L121; findings/rejected-interpretations.body"
+      ],
+      "claim": "Reject legacy out/report.md and out/acquisition.json as unsupported,require versioned artifacts/final binding.",
+      "source_outcome": "unresolved",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Delivery-contract attribution and nonexistent-path observations are not phase1 authority. Current carrier structurally available, but binding/native history remains locked.",
+      "materiality": "operational-only"
+    },
+    {
+      "claim_id": "R025-C033",
+      "kind": "rejection",
+      "report_locators": [
+        "Report L123; findings/rejected-interpretations.body"
+      ],
+      "claim": "Reject partial/patch-only findings; snapshots must carry whole complete current report.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Completeness principle is appropriate. Exact staged11-section companion reconstructs the full current report; candidate TASK rule/operation claim remains unverified.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C034",
+      "kind": "constraint",
+      "report_locators": [
+        "Report L125; findings/rejected-interpretations.body"
+      ],
+      "claim": "Rejections bind current deliverable; future changes require host instructions,not unread source.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Evidentiary caution appropriate; actual authorization/contract semantics are unavailable. Source-supported correction can be assessed once evidence exists.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C035",
+      "kind": "delivery",
+      "report_locators": [
+        "Report L129-135; findings/deliverable-set-and-binding-conditions.body"
+      ],
+      "claim": "Candidate says acquisition/findings/rendered report/final binding all V001,exact fields,first version,native renderer origin and retention/version rules.",
+      "source_outcome": "unresolved",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Current report/findings artifacts exist and agree, but acquisition/final/native render origin/version freshness/earlier-version absence and write-once mechanics are locked. No historical or delivery-success inference made.",
+      "materiality": "operational-only"
+    },
+    {
+      "claim_id": "R025-C036",
+      "kind": "carrier",
+      "report_locators": [
+        "Report L131,L149; findings/deliverable-set-and-binding-conditions.body and proposed-validation-unexecuted.body"
+      ],
+      "claim": "Findings snapshot contains complete current section bodies matching standalone report.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Evaluator parsed all11 id/body entries; joining every body with two newlines plus final newline equals all18622 current report bytes. This current-carrier check is not proof of candidate native rendering operation.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C037",
+      "kind": "proposal",
+      "report_locators": [
+        "Report L135,L149,L153; findings/proposed-validation-unexecuted.body"
+      ],
+      "claim": "Host rerender/byte comparison proposed,expected by construction,but unobserved by candidate.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Current carrier equivalence independently verified. Same-operation production and host execution remain unknown; explicit proposal/expectation is not a passing native test claim.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C038",
+      "kind": "proposal",
+      "report_locators": [
+        "Report L139,L141-147; findings/proposed-validation-unexecuted.body"
+      ],
+      "claim": "Inventory,spec table,reader grounding,and responsiveness/calibration acceptance execution are all future proposals.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "B01",
+        "P02",
+        "I01"
+      ],
+      "rationale": "Valid unexecuted proposals. No concrete normative facet solution or measured acceptance result is supplied.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R025-C039",
+      "kind": "proposal",
+      "report_locators": [
+        "Report L151; findings/proposed-validation-unexecuted.body"
+      ],
+      "claim": "Proposed freshness check verifies final binding selects latest complete contiguous artifacts.",
+      "source_outcome": "unresolved",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Proposal is valid in principle; actual final/binding/namespace rules and versions are locked. No execution or correctness of bindings concluded.",
+      "materiality": "operational-only"
+    },
+    {
+      "claim_id": "R025-C040",
+      "kind": "claim",
+      "report_locators": [
+        "Report L153; findings/proposed-validation-unexecuted.body"
+      ],
+      "claim": "Binding freshness is checkable only against future versions,if any.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Even first versions can be compared with current available namespaces to verify no newer version exists. Future-only phrasing is overbroad; actual contract/historical file availability remains unknown.",
+      "materiality": "low"
+    },
+    {
+      "claim_id": "R025-C041",
+      "kind": "completeness",
+      "report_locators": [
+        "Current-artifact-set.json L5-22; all11 findings id/body entries"
+      ],
+      "claim": "Full report and required current findings companion are staged,with no missing current artifact and no history/acquisition content admitted.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "All10 MANIFEST file pins match; companion contains only id/body and is byte-equivalent current semantic content. Every material assertion across both is assessed once with dual locators,not sampled.",
+      "materiality": "material"
+    }
+  ],
+  "facets": [
+    {
+      "id": "OME05-C01",
+      "title": "Versioned metadata admission",
+      "coverage": "omitted",
+      "source_outcome": "unresolved",
+      "report_locators": [
+        "L19",
+        "L35",
+        "L101",
+        "L143"
+      ],
+      "evidence_ids": [
+        "E04",
+        "E09"
+      ],
+      "rationale": "Only OME-Zarr0.5 target and unresolved version/layout questions are given; no Zarrv3/attributes.ome admission facts or hierarchy version rule.",
+      "missing": [
+        "Zarrv3 versus legacy layout identity,attributes.ome metadata,consistent version and explicit compatibility-validation/unsupported admission policy."
+      ]
+    },
+    {
+      "id": "OME05-C02",
+      "title": "Axis-to-array identity",
+      "coverage": "omitted",
+      "source_outcome": "unresolved",
+      "report_locators": [
+        "L29",
+        "L35",
+        "L101",
+        "L143"
+      ],
+      "evidence_ids": [
+        "E10",
+        "E12",
+        "E18"
+      ],
+      "rationale": "Channel/time/plane product goals repeated,but no normative rank/order/naming/dimension_names derivation or validated slicing mapping.",
+      "missing": [
+        "Rank/order equality,unique arbitrary names and dimension_names matching;optional/custom axes and absent versus length-one dimensions;truthful unsupported role handling."
+      ]
+    },
+    {
+      "id": "OME05-C03",
+      "title": "Declared pyramid selection",
+      "coverage": "omitted",
+      "source_outcome": "unresolved",
+      "report_locators": [
+        "L35",
+        "L61",
+        "L65",
+        "L101",
+        "L143"
+      ],
+      "evidence_ids": [
+        "E19",
+        "E20"
+      ],
+      "rationale": "Multiresolution/selective-reading goal is identified,but declared dataset path/order and geometry are not researched.",
+      "missing": [
+        "Group-relative arbitrary paths,highest-resolution-first declared order,per-level transforms,nonuniform/anisotropic reductions and missing declared level handling."
+      ]
+    },
+    {
+      "id": "OME05-C04",
+      "title": "Composed coordinate calibration",
+      "coverage": "omitted",
+      "source_outcome": "unresolved",
+      "report_locators": [
+        "L41-53",
+        "L101",
+        "L143",
+        "L147"
+      ],
+      "evidence_ids": [
+        "E11",
+        "E17",
+        "E20",
+        "E21",
+        "E22"
+      ],
+      "rationale": "General calibration correctness and known-spacing proposal lack any normative transform composition or calibration-availability rule.",
+      "missing": [
+        "Dataset transform order then multiscales transforms,scale-before-translation/rank constraints,relative fallback/unknown unit treatment and an offset-sensitive concrete expected-result check."
+      ]
+    },
+    {
+      "id": "OME05-C05",
+      "title": "Associated label discovery and registration",
+      "coverage": "omitted",
+      "source_outcome": "unresolved",
+      "report_locators": [
+        "L29",
+        "L35",
+        "L101",
+        "L143"
+      ],
+      "evidence_ids": [
+        "E27",
+        "E28",
+        "E30"
+      ],
+      "rationale": "Associated overlay goal only; no declared discovery/source-image relation or level/coordinate registration rules.",
+      "missing": [
+        "Declared labels paths/intermediate groups,multiscales and equal-level relationship,explicit/default relative source.image association and truthful unsupported geometry."
+      ]
+    },
+    {
+      "id": "OME05-C06",
+      "title": "Categorical label identity",
+      "coverage": "omitted",
+      "source_outcome": "unresolved",
+      "report_locators": [
+        "L29",
+        "L35",
+        "L101",
+        "L143"
+      ],
+      "evidence_ids": [
+        "E27",
+        "E29",
+        "E30"
+      ],
+      "rationale": "No integer dtype,label-value key,precision/resampling or palette-force findings at all.",
+      "missing": [
+        "Integer categorical values,color/property lookup by exact label-value,sparse/wide64-bit identity or declared refusal,noninterpolating resampling and SHOULD versus mandatory palette distinction."
+      ]
+    }
+  ],
+  "complete_coverage": true,
+  "coverage_meaning": "All material assertion families and all six assigned facets assessed; this is review completeness, not candidate correctness or full candidate coverage.",
+  "omitted_or_unreviewed_scope": {
+    "unreviewed_current_claims": [],
+    "unreviewed_facets": [],
+    "candidate_omissions": [
+      "Zarrv3 versus legacy layout identity,attributes.ome metadata,consistent version and explicit compatibility-validation/unsupported admission policy.",
+      "Rank/order equality,unique arbitrary names and dimension_names matching;optional/custom axes and absent versus length-one dimensions;truthful unsupported role handling.",
+      "Group-relative arbitrary paths,highest-resolution-first declared order,per-level transforms,nonuniform/anisotropic reductions and missing declared level handling.",
+      "Dataset transform order then multiscales transforms,scale-before-translation/rank constraints,relative fallback/unknown unit treatment and an offset-sensitive concrete expected-result check.",
+      "Declared labels paths/intermediate groups,multiscales and equal-level relationship,explicit/default relative source.image association and truthful unsupported geometry.",
+      "Integer categorical values,color/property lookup by exact label-value,sparse/wide64-bit identity or declared refusal,noninterpolating resampling and SHOULD versus mandatory palette distinction."
+    ],
+    "broader_scope_limits": [
+      "S003 has normative metadata/axis/pyramid/coordinate/label requirements and was fully read by evaluator. It does not contain actual reader-library behavior,full Zarr mechanics or measured responsiveness. The report combines all as unresolved; only normative six-facet omissions count as fixed-source quality failure.",
+      "TASK.md and candidate acquisition/final/native artifacts are not phase1 inputs,so exact rule/tool/probe/delivery statements are operationally unresolved."
+    ]
+  },
+  "unresolved_matters": [
+    "Actual candidate input-read access and all137/about25 probe histories,tool capabilities,error replication and native execution.",
+    "Original TASK identity/rules,binding selection/version retention and candidate mechanical rendering operations.",
+    "Reader implementations/performance remain outside fixed S003 authority."
+  ],
+  "novelty": [
+    {
+      "id": "R025-N01",
+      "support": "supported brief-only",
+      "description": "Faithful product boundary,capability goals,calibration correctness and performance/presentation decision needs. No useful novel normative OME source finding is delivered.",
+      "report_locator": "L15-81; matching findings bodies",
+      "evidence_ids": [
+        "B01",
+        "P01",
+        "P02"
+      ]
+    },
+    {
+      "id": "R025-N02",
+      "support": "supported current-carrier coherence",
+      "description": "All11 complete findings bodies reconstruct standalone current report exactly; material claims remain consistent across current carriers. This is a structural property,not semantic quality or native-execution proof.",
+      "report_locator": "findings/V001.json and full current report",
+      "evidence_ids": [
+        "I01"
+      ]
+    }
+  ],
+  "material_failures": [
+    {
+      "id": "R025-F01",
+      "classification": "material full-scope omission",
+      "description": "Every assigned normative facet is omitted. The report truthfully marks format work unresolved,but its brief-only findings and future research proposals do not meet the fixed full-source/current-quality denominator. Cause of reported inability to locate/read inputs is unassessed,not an operational failure inferred here.",
+      "report_locator": "L19,L35,L79,L99-109,L143; full companion",
+      "evidence_ids": [
+        "E04",
+        "E09",
+        "E12",
+        "E19",
+        "E20",
+        "E21",
+        "E27",
+        "E29",
+        "E30"
+      ]
+    }
+  ],
+  "blinding_limitations": [
+    "Title exposes T03 treatment-workspace cue. Native Goal/tool/probe/acquisition/delivery method statements embedded throughout are unavoidable;no private map,acquisition file,protocol log,Goal API,final binding or earlier version was read.",
+    "The permitted findings companion is current semantic content;its source claims remain data,not tool instructions."
+  ],
+  "claim_inventory_control": {
+    "complete_report_read_ranges": [
+      "L1-138",
+      "L139-153"
+    ],
+    "complete_original_source_read": true,
+    "same_source_reuse": "Allsource/brief/plan/key/protocol/catalogpinsmatchthecompleteoriginalread;theentireS003baselineincludingallconditionswasappliedwithoutreducingdenominator.",
+    "current_semantic_companions_complete": [
+      "findings/V001.json,all11 id/body entries"
+    ],
+    "companion_read_method": "AllJSONbodiesparsedandreturned;remainingtailreadseparatelyaftertool-outputtruncation. Two-newlinebodyjoinplusfinalnewlineequalsall18622 standalonecurrentbytes;noadditionalfields. Duplicateassertionsshareduallocators.",
+    "companion_sha256": "5bbdac74e8e805cd5096beab9cbcc9ec654c0fee5b6df783a74b7ef3ba9e51fd",
+    "companion_render_equivalence": "Verified current semantic byte equivalence only;candidate nativeoperation,historyandfinalfreshnessstilllocked.",
+    "nonassertion_lines": "Blanklines/headers/statuslabelsrepresentedbytheirsectionassertions. Every substantive finding,condition,qualification,absence/uncertainty,rejection,deliverystatementandproposal across all11 sectionsis inventoried.",
+    "all_current_dispositions_reviewed": true,
+    "all_unknown_and_rejected_items_reviewed": true,
+    "novel_claims_independently_source_checked": true,
+    "claimed_current_supersessions": "V001claimsfirstversion/noearlierartifact;thishistoricalclaimisunverified,notinferredfromcurrentstage."
+  },
+  "current_report_verdict": "quality failure",
+  "verdict_rationale": "The complete current report and its required findings companion are assessed and frozen. All six normative facets are omitted: product requirements are restated and format/reader work is left unresolved. Faithful brief facts,negative-evidence restraint and unexecuted proposals receive appropriate credit,but they do not supply the assigned S003-grounded research. This is a current-quality omission judgment. Reported path/tool/read failures and native delivery/acquisition history remain unknown,so no operational or infrastructure failure is inferred.",
+  "locked_dimensions": {
+    "acquisition": "unassessed; locked",
+    "preservation": "unassessed; locked",
+    "native_delivery": "unassessed; locked",
+    "source_acquisition_operations": "unassessed; locked",
+    "efficiency_and_cost": "unassessed; locked",
+    "history": "not accessed",
+    "no_negative_operational_inference_from_unknown": true
+  },
+  "evaluator_usage": {
+    "wall_clock_start_utc": "2026-10-01T21:17:58Z",
+    "candidate_cost_included": false,
+    "evaluator_cost_in_campaign": true,
+    "model_token_usage": "not exposed; unknown",
+    "input_cache_hit_usage": "not exposed; unknown; not inferred from generated tokens",
+    "tool_output_tokens": "Only per-tool original output counts exposed; these are not model token usage or candidate acquisition cost."
+  }
+}

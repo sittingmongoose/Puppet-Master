@@ -1,0 +1,9 @@
+Frozen cohort007
+
+Accountant snapshot: October 01, 2026, 06:13:43 p.m. EDT.43 admissions,41 recorded native Goal activations,28471.287682294846 occupied seconds,1216102 generated output lower bound. Current queue occupancy is only a dated observation. Helper parent rollup96/96 leaves zero known starts; unknown omissions/true headroom and generated output remain unknown.
+
+T13 both native-complete with scalar projections and measured v3 whole/current delivery; native reports/versioned decision/verification streams and separately tagged host-rendered reports retained. R026/R027 intake pending independent current grading. T03 treatment R025 scoped current quality failure is complete over its assigned scope; evaluator-only carrier joins required finding bodies without modifying native candidate outputs or gaining native/process credit. T03 control v3 delivery still returns1; diagnostic and preceding original failures/costs remain immutable, with no further delivery promotion.
+
+Inclusive native deadlines are UNESTABLISHED in the source-only review; no actual native qualification credit is assigned to that static review, wrapper tests or external watchdog preparation. Whole-v3 acceptance is narrow static/host authority with actual measured copies separately evidenced.
+
+Eligibility columns distinguish scope, original-case key/source/current coverage, semantic comparison interpretation, quality pass/failure, native context/inventory, inclusive-cap proof, current delivery, and acquisition. Missing legacy flags mean UNKNOWN. T14 additive six-facet scope does not establish full original eight-key eligibility. T03 control delivery HOLD prevents a qualifying delivery comparison. Scoped reviews and preparation do not establish12 interpretable comparisons,6 actual integrated runs, a replication or an efficiency win. Raw source corpora/private logs/modelIO/auth excluded.

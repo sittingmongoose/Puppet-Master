@@ -1,0 +1,83 @@
+{
+  "decisions": [
+    {
+      "id": "U001",
+      "input_sha256": "0c7000ef5f7e6e3831b38623ec6e4eed81df431a077e3f3c29aed73c3aa7eb36",
+      "decision": "supported",
+      "reason": "Header claims independently re-verified: inputs/sources/S003.txt is an 896-line normative OME-Zarr 0.5 capture (sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de) with the 0.5 URL at S003 L5-L10 and RFC 2119 conventions at L57-L59 plus conformance rules at L868-L888; inputs/brief.md (5 lines) and inputs/plan/Viewer.md (11 lines) match the described brief and plan roles; case id ome-normative-dev-v1 and task card t02-m-ome-dev1-control-r1 match the seed metadata fields; the two-group coverage framing matches the brief's requirement list at brief L3; and the S003-only source scope is consistent with this workspace's probeable corpus (S003 present; probes of S000, S001, S002 and S004 each returned file-not-found, so no other source was available to read)."
+    },
+    {
+      "id": "U002",
+      "input_sha256": "0827993f8df2026556c69ba76e1e81d96ed3563c751e4251b1ec19a61b3fb864",
+      "decision": "supported",
+      "reason": "Every load-bearing citation re-checked against the capture: Zarr v3 basis at S003 L68-L69; all Zarr features admissible unless explicitly disallowed at L70-L72 with no disallowance stated anywhere in L1-L896; zarr.json-described groups and arrays at L87-L100; ome-namespaced metadata with hierarchy-consistent string version at L150-L165; the typed metadata keys all exist at their cited sections (multiscales L295-L319, axes L167-L174, coordinateTransformations L277-L293, omero L399-L430, labels/image-label L432-L514, plate L516-L739, well L741-L808, bioformats2raw.layout plus series L175-L275); the plan core shape matches Viewer.md L5-L11; the largest unsupported-input surface is correctly tied to L70-L72; and L813-L814 is confirmed as a pointer-only implementations section, so the executive summary's scope caveat is accurate."
+    },
+    {
+      "id": "U003",
+      "input_sha256": "15765656cd856e9e60ce7c5f0dc7d948b77a92f452ae52b8c7cd52ff88a04d9d",
+      "decision": "supported",
+      "reason": "All six governing conditions re-checked, with quoted phrases matching the capture: L68-L72 (Zarr v3 foundation and unbounded features), L73-L77 (location-agnostic hierarchy narrowed by the local boundary at Viewer.md L9 and brief L5), L152-L165 (ome namespace, version string, MUST-consistency at L156, 0.5 example at L157-L165), L57-L59 and L872-L876 (RFC 2119), L60-L64 (transitional metadata: read MUST/SHOULD, write usually MAY, directly covering bioformats2raw.layout and omero which are both titled transitional), L877-L888 (all text normative except marked non-normative sections, examples and notes; example/note fencing conventions), L25-L27 (0.5 released; editor's drafts not necessarily supported), and L810-L812 (camelCase style with grandfathered exceptions) together with the literal key spellings confirmed at L538 and L595 (field_count), L557-L560 (rowIndex/columnIndex), L462 (label-value), L526-L529 (starttime/endtime), L524-L525 (maximumfieldcount) and L200 (bioformats2raw.layout)."
+    },
+    {
+      "id": "U004",
+      "input_sha256": "c8cd59282cc9c7e83853335606f6e0275c845415ce2fd8fb60c5194262e5c209",
+      "decision": "supported",
+      "reason": "Re-verified all structural claims: group/array layout with per-level zarr.json at L87-L100 and chunk conformance at L99-L100; the three fileset shapes (plain images L82-L100, HCS plate hierarchy L118-L148, bioformats2raw collection L175-L275); plate precedence over bioformats2raw.layout at L204-L206 and L262-L263; the multiscale choice rule and name-then-first pseudocode at L388-L397; plate wells, rows, columns and acquisitions rules at L518-L560 and L744-L752 with the sparse-plate example at L641-L739; collection discovery rules at L256-L275 including the SHOULD NOT default to the first image at L272; the labels-group-is-not-an-image rule at L437-L438; dataset path ordering largest-to-smallest at L305-L306 with arbitrary array names at L93-L94; dimensionality and dimension_names gates at L173-L174 and L307; per-level exactly-one-scale and optional translation-after-scale composed with global transforms at L308-L316; and the worked example values at L320-L387. The observed ambiguities are genuine: no ordering metric is stated at L306, the multi-acquisition trigger at L748-L749 is ambiguous, the multi-multiscales rule at L388-L397 carries no RFC keyword, and rows are metadata-addressable only through plate.rows and plate.wells paths at L542-L560. Every entry in the failure-taxonomy list resolves to the cited line."
+    },
+    {
+      "id": "U005",
+      "input_sha256": "850520183174cb7e455983355a6a7f03ad0eaf374d4c9b0e770685208a65bcbd",
+      "decision": "supported",
+      "reason": "Re-verified: axes rules at L167-L174 and L296-L303 with arbitrary axis names at L81 and the L96-L97 dimension-order statement; omero MUST fields (channels at L426, color at L427, window min/max/start/end at L428-L430) versus example-only fields (L401-L423, non-normative per L877-L883) with the channels-length correspondence appearing only as the comment at L403; the transform vocabulary and sequential application at L277-L293, per-level exactly-one-scale with relative-fallback language at L310, translation-after-scale at L311, vector-length rule at L312, and global transforms applied after at L314-L316, with the worked calibration values (level scales 0.5/1.0/2.0 micrometer and global 0.1 millisecond time scale) confirmed at L330-L334, L343, L353, L363 and L368-L374; labels discovery and contract at L102-L117 and L437-L455, the alignment 'usually' hedge at L432-L433 with the overview-only broadcast rule at L106-L108; and image-label colors, version, properties and source at L456-L474 with the worked color example at L476-L514. The two reported textual tensions are real: dimension_names wording at L174 versus the history one-liner at L827, and the null/custom axis type at L301 versus string types at L169."
+    },
+    {
+      "id": "U006",
+      "input_sha256": "81cbf2b16bffecc997e38ccbf64a6f39a005c2b51db15075c990fd822bd8424c",
+      "decision": "supported",
+      "reason": "Each MUST item re-checked at its cited lines: Zarr v3 parsing (L68-L72, L87-L100), hierarchy-consistent version (L156) and the JSON-comment prohibition (L65-L66); axes rank, ordering, uniqueness and dimension_names (L96-L97, L168, L173-L174, L299-L302); dataset traversal by metadata order (L93-L94, L305-L306); per-level and global transform composition (L308-L316); the HCS discovery chain with full row/column enumeration and acquisition matching (L552-L560, L744-L750) under plate precedence (L204-L206); collection rules (L256-L270); omero required fields (L426-L430); and the labels contract (L438-L455). The SHOULD list (L272, L128-L129, L170-L172, L303, L317-L319, L257-L260, L461, L523-L525, L538-L541, L751-L752, L810-L812) and MAY list (L426, L273-L275, L314-L316, L466-L474, L518-L529, L169-L170, L70-L72) were each confirmed, and the product-decision inventory in 5.4 is consistent with everything the source leaves unstated. The read-only session-local obligation matches brief L5 and Viewer.md L9 with no S003 write requirement found in L1-L896."
+    },
+    {
+      "id": "U007",
+      "input_sha256": "1c70b645905672033cda34d859c9a4e2aa10eadaeacfd6f0be2d6e531890066f",
+      "decision": "supported",
+      "reason": "Every Viewer.md proposition quoted in the block matches the plan text verbatim at L5, L7, L9 and L11; each KEEP, EXTEND, CONSTRAIN or FLAG disposition is consistent with the corresponding S003 obligations re-verified this session (shape sniffing basis L82-L148 and L175-L275; plate precedence L204-L206 and L262-L263; axis-driven control presence L167-L174 and L296-L303; omero-aware initialization L399-L430; the label contract L432-L514; transform composition L277-L316; the item-scoped failure taxonomy at its cited sites); the FLAG on real-tool interoperability is correct because L813-L814 supplies no implementation requirements; and the KEEP on read-only session-local behavior matches brief L5 and Viewer.md L9."
+    },
+    {
+      "id": "U008",
+      "input_sha256": "8186fd9d9c9e2e7eb94d13bed624b63ba823d652f9ffe99b27f7982b19337086",
+      "decision": "supported",
+      "reason": "All cited violation and limitation sites re-confirmed in the capture: the unbounded Zarr feature admission at L70-L72; the underspecified binary path transform form at L285-L289; version inconsistency at L156; rank, axis, order and dimension_names violations at L173-L174 and L299-L307; path-order violations at L306; transform violations at L309-L312; bad well paths or indices and dangling acquisitions at L553-L560 and L748-L750; the non-3 layout value at L256; non-integer or level-mismatched labels at L438-L455; malformed omero color/window at L426-L430; the remote-store narrowing of the location-agnostic format at L73-L77; the version gate at L25-L27; and the OME-XML MetadataOnly restriction at L257-L260. The three-way taxonomy (viewer limitation, malformed input, product boundary) is consistent with brief L5 and Viewer.md L7, L9 and L11."
+    },
+    {
+      "id": "U009",
+      "input_sha256": "1b63d7faf56148bff48b2f75f638b667fe5b62e40e554df591791b2de8b1861a",
+      "decision": "supported",
+      "reason": "All thirteen items reproduce genuine textual facts verified line-by-line: the dimension_names wording conflict between normative L174 and history L827; the null/custom axis type at L301 versus string types at L169; the absent ordering metric at L306; the scale fallback language creating the 1.0 ambiguity at L310 and the undefined translation origin at L311; the global-after rule at L315 with only a time-axis worked example at L368-L374; the RFC-keyword-free multiscale choice rule at L388-L397; the comment-only channels-length note at L403 with rdefs example-only at L419-L423; the 'usually' alignment hedge at L433 plus the overview-only broadcast rule at L106-L108; unspecified version vocabularies at L459-L460, L550-L551 and L751-L752; the unexplained layout value at L200 and L256 with the ambiguous acquisition trigger at L748-L749; the binary-path gap at L285-L289; the field_count versus maximumfieldcount overlap at L538-L539 and L524-L525 with the duplicated 'by the' genuinely present across L93-L94; and the whole-format risk at L70-L72 with no implementation content at L813-L814."
+    },
+    {
+      "id": "U010",
+      "input_sha256": "7319b336d7c56b35151f0c04b5687a40ff994b79f0c4a43df4bccec7d75785a0",
+      "decision": "supported",
+      "reason": "Re-verified: S003 L813-L814 is the corpus's only implementation content and reads '4. Implementations / See Tools.', an unresolvable pointer under the no-fetch condition; no reader-tolerance, performance, caching or error-handling requirements appear anywhere in S003 L1-L896; the brief L5 sentence about researching the format and actual reader implementations and the Viewer.md L9 interoperability sentence are quoted verbatim; and the scope-limitation rather than incompatibility framing requires no correction."
+    },
+    {
+      "id": "U011",
+      "input_sha256": "105199e453768c844208fc142e6cccecc1efef20c85030e330f1b77bd3059aa9",
+      "decision": "supported",
+      "reason": "All nine proposals map onto obligation sets verified this session: V1 to the single-image gates at L150-L174 and the worked values at L320-L387; V2 to the HCS metadata at L516-L739 and L741-L808; V3 to the collection rules at L175-L275 including plate precedence; V4 to axis-driven controls at L167-L174 and L296-L303 with omero initialization at L399-L430; V5 to composed transforms at L277-L316; V6 to the label contract at L432-L514; V7 to the malformed-input sites cited in the unsupported-input section; V8 to the responsiveness requirements at brief L3 and Viewer.md L7 and L11; V9 to the out-of-scope real-tool cross-check per L813-L814. All are correctly labeled UNEXECUTED, and no execution occurred in this session either: the toolset was bounded read/write only, with no live fetch."
+    },
+    {
+      "id": "U012",
+      "input_sha256": "35315c303684066ff0d36e1cda5fdbabe48afa87763ff1c3ce56b34eeaf606f7",
+      "decision": "supported",
+      "reason": "Every locator in the source-line index was re-checked against the 896-line capture and resolves to the described content, including release status L25-L27, transitional rules and comment prohibition L60-L66, storage and layouts L68-L148, ome namespace and axes L150-L174, the bioformats2raw transitional section L175-L275, transforms L277-L293, multiscales with example and choice rule L295-L397, omero L399-L430, labels and image-label L432-L514, plate L516-L739, well L741-L808, naming and implementations L810-L814, version history L822-L866, and conformance L868-L888; the closing scoping sentence accurately describes where the report records unsettled areas and UNEXECUTED validation."
+    }
+  ],
+  "additions": [
+    {
+      "id": "A001",
+      "decision": "supported",
+      "body": "## 12. Independent verification record and corpus scope (treatment session 2026-10-01)\n\nEvery seed section U001-U012 was independently re-verified against the full source corpus in this session before confirmation; all twelve are confirmed and none required amendment.\n\n- Full reads (bounded tools only): `inputs/sources/S003.txt` (all 896 lines, sha256 `5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de`), `inputs/brief.md` (5 lines), `inputs/plan/Viewer.md` (11 lines), `inputs/candidate_seed.json` (all 58 lines, read as two calls whose union covers the file), `inputs/seed_block_hashes.json` (14 lines), `TASK.md` (7 lines). Complete hashes are recorded in `out/acquisition/V001.json`.\n- Every S003 line locator cited by the seed was re-checked against the capture and resolves to the claimed content, including the textual tensions the seed itself reports: normative `dimension_names` wording at L174 versus the history one-liner at L827; `null / custom` axis type at L301 versus string-only types at L169; the comment-only channel-length note at L403; the alignment 'usually' hedge at L433; and the duplicated 'by the' at L93-L94.\n- Corpus scope: `S003.txt` is the only source file in evidence. Probes of `inputs/sources/S000.txt`, `S001.txt`, `S002.txt` and `S004.txt`, and of candidate assignment/task/case paths under `inputs/`, each returned file-not-found from the bounded reader; directory enumeration was unavailable (mechanical line-map failed at the tool boundary on `.` and `inputs`), so corpus completeness beyond these named probes cannot be asserted - this is a tool-boundary limit, not a positive claim that no other sources exist.\n- No live fetch, no code execution, and no writes inside `inputs/` occurred; all proposed validation in section 10 remains UNEXECUTED.\n- Consequence: the unresolved areas remain exactly those recorded in sections 7-9 (U008-U010); the brief's real-reader-implementation research goal stays unresolvable inside this corpus (S003 L813-L814 pointer only)."
+    }
+  ]
+}

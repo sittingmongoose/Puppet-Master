@@ -1,0 +1,69 @@
+{
+  "schema": "er7.productive_z.output_integrity.v1",
+  "epoch": 1790891479.7881935,
+  "label": "t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control",
+  "files": {
+    "acquisition/V001.json": {
+      "sha256": "44ac80a3520e74067205ee6d40f85eba2b19640766d79ea1a41c495dc6e7814c",
+      "bytes": 11512
+    },
+    "final/V001.json": {
+      "sha256": "cdffcb04c50dc70c140b09613f738ab27b94f5641d3cd1af649f39e0d341a862",
+      "bytes": 96
+    },
+    "reports/V001.md": {
+      "sha256": "96089edfc376c7df8883d8242b0471ac2c3ade6128d74d6d08547058e1d713d2",
+      "bytes": 53681
+    },
+    "verification/V001.json": {
+      "sha256": "b97c50535c5a82bbdaf7b07ab4a22f811b85e1d60a920b58cc2bb7e14d37fbc1",
+      "bytes": 10361
+    }
+  },
+  "missing_required_outputs": [],
+  "sanitized_native_artifacts": {
+    "receipt.json": {
+      "sha256": "4e00713886c2795732030b0fb716ffe829b45689fcffbf52f94eff69cedc8655",
+      "bytes": 444881
+    },
+    "host-process.json": {
+      "sha256": "b3513b94e9e3f7efd19f8f6cb1221dafd4f55a56050fe3620d46fc67fc278473",
+      "bytes": 58
+    },
+    "session-tool-contract.json": {
+      "sha256": "f181eb2b662b8237d46205aa065081549fac6a815cdbd3e1a785e5d7ffe380f2",
+      "bytes": 2150
+    },
+    "progress.jsonl": {
+      "sha256": "e151eb8b4ae5f3a8003a3fa72b7b949125483a826c67dc7bb19f0968af04dfab",
+      "bytes": 386
+    },
+    "usage-events.jsonl": {
+      "sha256": "5dc84c4d8c185897f4c6a5d630ad349b679b1854ce794f69191d87437eefc4c4",
+      "bytes": 10213
+    },
+    "zcode-stdout.redacted.jsonl": {
+      "sha256": "bc6a2fffeb452764b4be542608c738ca52e68b5db051d306a6270f84c482e296",
+      "bytes": 41821645
+    },
+    "zcode-stderr.omitted.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control/native/receipt.json",
+    "native_receipt_sha256": "4e00713886c2795732030b0fb716ffe829b45689fcffbf52f94eff69cedc8655",
+    "owned_driver_pgid": 2044122,
+    "basis": "sanitized native receipt plus only known own group absence"
+  },
+  "private_client": "excluded entirely; never read",
+  "semantic_quality": "unassessed",
+  "context_observations_sha256": "099a56758d296e14e5069a14b13b4996a53ecff18c9f537852eda1c97fd673f7",
+  "future_native_context": "qualified",
+  "native_outcome": "passed",
+  "inventory_verified": true,
+  "method_postrender_delivery": "pending separate measured machinery; no free semantic helper rewrite"
+}

@@ -1,0 +1,99 @@
+{
+  "schema": "er7.acquisition.v1",
+  "case_id": "ome-normative-dev-v1",
+  "prepared": "2026-10-01",
+  "report_bound": "out/reports/V001.md",
+  "tooling": "Bounded MCP read_file/write_file only; no Bash, no native Read, no arbitrary code, no live fetching.",
+  "actual_source_reads": [
+    {
+      "path": "TASK.md",
+      "sha256": "cd689452249af46b4ffb4b5221aabe547210bd995e36238dd2c9b26573a365e4",
+      "bytes": 2662,
+      "total_lines": 5,
+      "ranges_read": ["L1-L5"],
+      "role": "Task assignment/instructions (delivery contract, versioning rules, binding schema)."
+    },
+    {
+      "path": "inputs/brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905,
+      "total_lines": 5,
+      "ranges_read": ["L1-L5"],
+      "role": "Slide Scout product brief; research directive at L5."
+    },
+    {
+      "path": "inputs/plan/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498,
+      "total_lines": 11,
+      "ranges_read": ["L1-L11"],
+      "role": "Thin plan under review (sentence-by-sentence disposition in report R7)."
+    },
+    {
+      "path": "inputs/sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "total_lines": 896,
+      "ranges_read": ["L1-L100", "L101-L500", "L501-L896"],
+      "role": "Primary normative source: OME-Zarr specification, Final Community Group Report, 8 September 2026, https://ngff.openmicroscopy.org/0.5/. Read in full; all report citations resolve against this read."
+    },
+    {
+      "path": "inputs/candidate_seed.json",
+      "sha256": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c",
+      "bytes": 49549,
+      "total_lines": 58,
+      "ranges_read": ["L1-L54 (first read; tool display truncated inside final section U012)", "L50-L58 (re-read completing U011 tail and U012)"],
+      "role": "Unverified reused candidate report; verification subject for report R11 and out/verification/V001.json. Not treated as an answer key."
+    }
+  ],
+  "source_locators": {
+    "S003": {
+      "path": "inputs/sources/S003.txt",
+      "identity": "OME-Zarr specification, Final Community Group Report, 8 September 2026, this/latest/editor's version all https://ngff.openmicroscopy.org/0.5/ (S003 L5-L10); editor Josh Moore (S003 L14-L15).",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "lines": 896
+    },
+    "brief": { "path": "inputs/brief.md", "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a", "lines": 5 },
+    "plan": { "path": "inputs/plan/Viewer.md", "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d", "lines": 11 },
+    "seed": { "path": "inputs/candidate_seed.json", "sha256": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c", "lines": 58, "note": "UNVERIFIED reused candidate report (schema er7.candidate_report_seed.v1, source_job_id t02-m-ome-dev1-control-r1); used only as verification subject, never as evidence." }
+  },
+  "finding_to_source_links": [
+    { "section_id": "R1", "title": "Executive summary", "primary_sources": ["S003 L68-72", "S003 L87-100", "S003 L150-165", "S003 L70-72", "S003 L813-814", "brief L3", "brief L5", "Viewer.md L5-L11"], "seed_section": "U002" },
+    { "section_id": "R2", "title": "Corpus read and acquisition bounds", "primary_sources": ["TASK.md L1-L5", "all five artifacts listed in actual_source_reads"], "seed_section": null },
+    { "section_id": "R3", "title": "Governing conditions and reading rules", "primary_sources": ["S003 L68-69", "S003 L70-72", "S003 L73-77", "S003 L150-156", "S003 L157-165", "S003 L57-59", "S003 L872-876", "S003 L60-64", "S003 L877-878", "S003 L879-888", "S003 L65-66", "S003 L25-27", "S003 L810-812", "S003 L538", "S003 L595", "S003 L557-560", "S003 L462", "S003 L528", "S003 L524", "S003 L200", "brief L5", "Viewer.md L9"], "seed_section": "U003" },
+    { "section_id": "R4", "title": "Group 1 - opening, discovery, navigation", "primary_sources": ["S003 L82-100", "S003 L91-94", "S003 L99-100", "S003 L118-148", "S003 L128-129", "S003 L175-275", "S003 L193-203", "S003 L204-206", "S003 L256-270", "S003 L257-260", "S003 L271-275", "S003 L295-319", "S003 L305-306", "S003 L307-316", "S003 L320-397", "S003 L437-438", "S003 L518-560", "S003 L641-739", "S003 L744-752", "S003 L763-780", "S003 L795-803", "Viewer.md L5", "Viewer.md L7", "Viewer.md L11", "brief L3", "brief L5"], "seed_section": "U004" },
+    { "section_id": "R5", "title": "Group 2 - display, coordinates, label overlays", "primary_sources": ["S003 L81", "S003 L96-97", "S003 L102-117", "S003 L106-108", "S003 L167-174", "S003 L277-293", "S003 L299-319", "S003 L320-387", "S003 L398-430", "S003 L401-423", "S003 L426-430", "S003 L432-514", "S003 L434-435", "S003 L454-474", "S003 L476-514", "S003 L513-514", "Viewer.md L5", "brief L3"], "seed_section": "U005" },
+    { "section_id": "R6", "title": "Obligations vs recommendations vs options vs product decisions", "primary_sources": ["S003 L65-66", "S003 L68-72", "S003 L87-100", "S003 L93-94", "S003 L128-129", "S003 L150-156", "S003 L168-174", "S003 L169-170", "S003 L170-172", "S003 L204-206", "S003 L256-270", "S003 L272", "S003 L273-275", "S003 L303", "S003 L305-316", "S003 L317-319", "S003 L426-430", "S003 L438-455", "S003 L461", "S003 L518-529", "S003 L523-525", "S003 L538-541", "S003 L552-560", "S003 L744-750", "S003 L751-752", "S003 L810-812"], "seed_section": "U006" },
+    { "section_id": "R7", "title": "Plan disposition sentence-by-sentence", "primary_sources": ["Viewer.md L5", "Viewer.md L7", "Viewer.md L9", "Viewer.md L11", "brief L3", "brief L5", "S003 L73-77"], "seed_section": "U007" },
+    { "section_id": "R8", "title": "Unsupported-input limitations", "primary_sources": ["S003 L25-27", "S003 L70-72", "S003 L156", "S003 L169-170", "S003 L173-174", "S003 L256", "S003 L285-289", "S003 L299-312", "S003 L426-430", "S003 L438-455", "S003 L553-560", "S003 L748-750", "S003 L257-260", "Viewer.md L7", "Viewer.md L9", "Viewer.md L11", "brief L5"], "seed_section": "U008" },
+    { "section_id": "R9", "title": "Counterevidence, uncertainty, unresolved areas", "primary_sources": ["S003 L174", "S003 L827", "S003 L301", "S003 L169", "S003 L306", "S003 L310", "S003 L311", "S003 L315", "S003 L368-374", "S003 L388-397", "S003 L403", "S003 L419-423", "S003 L433", "S003 L106-108", "S003 L459-460", "S003 L550-551", "S003 L751-752", "S003 L200", "S003 L256", "S003 L748-749", "S003 L285-289", "S003 L538-539", "S003 L524-525", "S003 L93-94", "S003 L875-876", "S003 L813-814", "S003 L815-820"], "seed_section": "U009" },
+    { "section_id": "R10", "title": "Reader-implementation evidence gap", "primary_sources": ["S003 L813-814", "S003 L815-820", "brief L5", "Viewer.md L9"], "seed_section": "U010" },
+    { "section_id": "R11", "title": "Seed verification outcomes", "primary_sources": ["inputs/candidate_seed.json U001-U012", "S003 full read", "Viewer.md full read", "brief full read"], "seed_section": null },
+    { "section_id": "R12", "title": "Plan implications carried forward", "primary_sources": ["Viewer.md L5-L11", "brief L3", "brief L5", "S003 L70-72", "S003 L813-814"], "seed_section": null },
+    { "section_id": "R13", "title": "Proposed validation (UNEXECUTED)", "primary_sources": ["report R1-R10 (all proposals derive from cited findings only); no execution performed"], "seed_section": "U011" },
+    { "section_id": "R14", "title": "Source-line index", "primary_sources": ["S003 L25-27", "S003 L60-100", "S003 L102-165", "S003 L167-275", "S003 L277-397", "S003 L399-430", "S003 L432-514", "S003 L516-808", "S003 L810-866", "S003 L868-888"], "seed_section": "U012" }
+  ],
+  "undeveloped_leads": [
+    { "lead": "Real reader implementations behind the 'Tools' pointer (S003 L813-814).", "status": "unresolvable offline; would close report R10 interoperability gap.", "next_step": "Requires authorized live fetch or supplied real filesets (validation V9, UNEXECUTED)." },
+    { "lead": "Zarr v3 specification itself, admitted by reference at S003 L68-72 (codecs, chunk grids, chunk key encodings, data types, storage transformers).", "status": "not in corpus; profile of decodable inputs undefined.", "next_step": "Acquire Zarr v3 spec or real-world tool-output corpus to bound the unsupported-input surface." },
+    { "lead": "OME-XML specification details beyond <MetadataOnly/> (S003 L257-260).", "status": "external; only presence/order correspondence is in scope.", "next_step": "Only needed if OME/METADATA.ome.xml parsing is deepened." },
+    { "lead": "UDUNITS-2 validity of unit strings (S003 L170-172).", "status": "external vocabulary; unit lists taken as opaque enums.", "next_step": "Validate unit strings against UDUNITS-2 if calibrated display is hardened." },
+    { "lead": "OMERO WebGateway semantics for omero fields (S003 L424-425).", "status": "external pointer; rdefs/window semantics beyond field presence unresolved.", "next_step": "Consult OMERO docs to confirm best-effort initial-state mapping." },
+    { "lead": "Version-history rows other than 0.5.2/0.5.0 (S003 L822-866).", "status": "partially used (dimension_names L827, Zarr v3 L833); remaining rows not developed.", "next_step": "Mine transitional-evolution history if pre-0.5 filesets ever enter scope." },
+    { "lead": "Whether conforming validators enforce dimension_names per S003 L174 vs L827.", "status": "unresolved inside corpus.", "next_step": "Test against real 0.5 filesets (V1, UNEXECUTED)." },
+    { "lead": "Binary 'path' form storage details for scale/translation (S003 L285-289).", "status": "underspecified in capture; treated as unsupported input.", "next_step": "Resolve via Zarr v3 spec or real filesets before supporting." }
+  ],
+  "coverage_limits": [
+    "Source corpus as read: only inputs/sources/S003.txt (896 lines, read in full). Probes for inputs/sources/S001.txt, S002.txt, S003.md returned FileNotFoundError; per method rules this is a recorded failed search, NOT a claim of corpus-wide absence.",
+    "No separate assignment artifact was found: probes of inputs/assignment.md, inputs/assignment/assignment.md, inputs/case/assignment.md, inputs/assignment_groups.md, inputs/groups.md, inputs/index.json, inputs/manifest.json, inputs/case.json, inputs/README.md all returned FileNotFoundError. The research assignment is taken from TASK.md plus the brief's directive (brief L5); the seed's 'two assignment groups' structure is its own organization of brief L3.",
+    "Workspace-root content beyond TASK.md and inputs/ could not be enumerated: a root-level probe (assignment.md) and absolute-path reads were rejected by the tool boundary (ValueError). Recorded as a tooling limit, not an absence claim.",
+    "No execution of any kind: no filesets opened, no code run, no live fetch; all validation proposals (report R13) are UNEXECUTED.",
+    "Reader-implementation behavior, real-world codec/chunk/dtype distributions, and performance characteristics are absent from the corpus (report R10); no implementation-derived requirement was invented to fill this gap.",
+    "The seed report was display-truncated on first read inside its final section; the remainder was re-read (L50-L58), so seed coverage is complete."
+  ],
+  "deliverables": {
+    "report": "out/reports/V001.md",
+    "acquisition": "out/acquisition/V001.json",
+    "verification_notes": "out/verification/V001.json"
+  }
+}

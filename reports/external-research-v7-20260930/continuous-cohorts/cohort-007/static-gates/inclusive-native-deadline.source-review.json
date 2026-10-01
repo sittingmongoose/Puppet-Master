@@ -1,0 +1,94 @@
+{
+  "schema": "er7.source_only_inclusive_native_deadline_review.v1",
+  "created_epoch": 1790892253.5845299,
+  "verdict": "INCLUSIVE_NATIVE_STARTUP_CLEANUP_PREDICATE_UNESTABLISHED_WITH_EXISTING_SOURCES",
+  "source_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/review-snapshot-final.json",
+      "sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/native_runner.py",
+      "sha256": "9894fa2d82f801cf2d70f1f0a9756e2a14e7bcbd59fe95d69459d6d552d4baa9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/harness-v1-frozen/native/run_goal.py",
+      "sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/harness-v1-frozen/native/zcode_goal_driver.py",
+      "sha256": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/integrated-guard-repair1-v3/budget_guard.py",
+      "sha256": "0ef6a890679992a18fdca0fac351b023bf1e475a42ffee721d98c4983b58509a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/z_productive_dispatch_v3.py",
+      "sha256": "5f25c1d1eed1a9e1794ca4a3cd0698e2cafea4c3d5a2b5d183bbb4007d1d39a9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/host_guard.py",
+      "sha256": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops-frozen-v1/slot_ledger.py",
+      "sha256": "497e8e53598b13e4a9c93cf3c7fee96c7b323058d8041b86be35f962a87c5fa7"
+    }
+  ],
+  "native_execution_or_actual_job_qualification": false,
+  "findings": [
+    {
+      "id": "LC01",
+      "locator": "ops-frozen-v1/slot_ledger.py:39,59; ops/z_productive_dispatch_v3.py:88,99-107",
+      "finding": "Slot acquire default cleanup_seconds=60 sets release deadline admitted+max+60. Dispatcher waits until release-30 (max+30), then SIGINT25s and SIGKILL5s. This is a conservative occupancy lease/watchdog, not an inclusive original max_seconds native-quiescence proof."
+    },
+    {
+      "id": "LC02",
+      "locator": "dev/runtime-boundary-final-repair2/native_runner.py:207-227; dev/harness-v1-frozen/native/run_goal.py:62-70",
+      "finding": "Runner start is after admission validation. Alarm is set after objective/out/setup steps to max_seconds-30 from alarm call, while capped RPC computes remaining from runner start. These execution cutoffs do not prove total stage-native startup+cleanup ends by a host original stage deadline."
+    },
+    {
+      "id": "LC03",
+      "locator": "dev/harness-v1-frozen/native/run_goal.py:73-115; dev/harness-v1-frozen/native/zcode_goal_driver.py:91-97,117-126",
+      "finding": "cleanup_native disables alarm at entry; 25s deadline covers cleanup RPC loop only. RPC locking and stdin write/flush occur before timeout deadline is formed. close waits5+5, source/file closes, group enumeration, .2 sleep, process wait3 and final checks are outside that25s loop deadline. Nominal finite waits suggest intended30s reserve but do not establish a hard envelope for all operations."
+    },
+    {
+      "id": "LC04",
+      "locator": "dev/runtime-boundary-final-repair2/host_guard.py:19-34; native_runner.py:133-150",
+      "finding": "Host guard native-host deadline starts after native Popen and record write, then TERM/.2/KILL/wait2 cleanup follows. EOF/driver death closes own native host group, but its relative seconds and cleanup tail do not themselves enforce the original absolute inclusive stage deadline."
+    },
+    {
+      "id": "LC05",
+      "locator": "dev/runtime-boundary-final-repair2/native_runner.py:233-253; ops/z_productive_dispatch_v3.py:119-147",
+      "finding": "Post-run inventory, shared metadata comparison, receipts, host context projection, copying and accounting run after native quiescence checks, with no demonstrated absolute outer duration bound. These may be pure host bookkeeping when native absence has positively been established at a recorded earlier time; source labels alone do not prove time or absence."
+    },
+    {
+      "id": "LC06",
+      "locator": "dev/integrated-guard-repair1-v3/budget_guard.py:96,109-115,125-145,161-171,198",
+      "finding": "Guard requires wrapper native-startup/cleanup and atomic deadline predicates as exact host truths, plus original stage/case/slot/overhead caps and current counters. Read-only guard does not create that enforcement, and no host truth can be substituted by optimistic intent."
+    }
+  ],
+  "defensible_interpretation": {
+    "native_stage_scope": "Original host-bound stage launch/setup involving native lifetime, all native request/Goal activity, graceful stop/close, host/native/MCP lifecycle cleanup and positive absence of every owned native-capable group must fit original stage deadline and response cap.",
+    "host_bookkeeping_scope": "Only tasks after positively established all-owned native quiescence may be outside native wrapper scope: inventories using admitted sanitized interface, immutable output copy/hash/render/delivery, receipts and slot/accounting updates. Their elapsed and occupied costs still belong to original case/campaign and declared outside-wrapper categories, including tail_cleanup only when purely host work.",
+    "required_actual_proof": "Authentic monotonic/absolute timing tied to original stage start and recorded owned-group identities; native-quiescence time <= unchanged inclusive stage deadline. Actual receipt claims were not inspected, so this remains conditional source interpretation."
+  },
+  "required_host_only_enforcer_conditions": [
+    "Freeze and independently pin an exact host-only enforcer before dispatch; preserve frozen runtime/provider/native prompts/context/source semantics and original Goal lifecycle. Qualify no actual native job from a source test alone.",
+    "Bind original case assignment first host time, immutable original stage start, stage900/600 cap and response96/64 cap, case3600 elapsed, case5400 occupied, overhead300 and campaign final-hour deadline. Share retry counters/clock ancestry; no fresh retry or stage reset.",
+    "Use an independent host watchdog alive across native startup, driver/host/MCP cleanup and blocked wrapper bookkeeping. Compute one original absolute stage cutoff, preferably with a monotonic companion clock; do not depend on wrapper returning, runtime alarm, lease extra60, or receipt generation.",
+    "Register only positively created own driver and native-capable host/MCP groups using provenance-bound trusted positive metadata. Never infer/guess PGIDs, enumerate sibling/client state, or kill unrelated groups. Fail closed if identity registration/absence cannot be proved, including startup races.",
+    "Begin graceful stop with sufficient reserve within the same original cap; hard-stop all registered native-capable groups early enough to verify actual absence by the original cutoff. A signal sent at cutoff is not a quiescence proof. If native absence at cutoff is unknown, exceeded or false, freeze as cap-failed/unknown and preserve occupancy until safe quiescence.",
+    "Do not fabricate completed Goal or native receipt after forced cleanup, and do not turn a syntactically complete carrier into a qualified stage. Preserve native status/request/usage unknowns and all failures/costs; no dropped or shortened counters.",
+    "Separate postquiescence host bookkeeping only with recorded earlier positive quiescence. Include every host/copy/setup/queue/interstage/handoff/retry/tail cost in original outside caps and case/campaign occupation; unknown remaining outside bounds cannot be asserted true.",
+    "Adversarially test blocked startup, delayed/absent group metadata, blocked cleanup RPC/write, driver death, native/MCP descendants, at-deadline completion race, late receipts and false/late quiescence using source-authenticated synthetic host processes only. Enforcer output must fail closed and retain held costs on uncertain/late results; then independently source-review exact new pin before any integrated dispatch."
+  ],
+  "native_Goals_started": 0,
+  "actual_private_client_reads": 0,
+  "actual_native_receipt_reads": 0,
+  "candidate_semantic_feedback": 0,
+  "generated_tokens": "UNKNOWN",
+  "original_review_start_epoch": 1790891744.9263375,
+  "task_clock_extended": false
+}

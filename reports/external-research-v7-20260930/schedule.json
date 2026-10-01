@@ -48,14 +48,16 @@
       "R021",
       "R022",
       "R023",
-      "R024"
+      "R024",
+      "R025"
     ],
     "current_partial_certification": [
       "R011",
       "R012"
     ],
     "current_pending": [
-      "R025"
+      "R026",
+      "R027"
     ],
     "saved_history_complete_available_scope": [
       "R001",
@@ -78,7 +80,8 @@
         "R018",
         "R019"
       ]
-    ]
+    ],
+    "original_expanded_T14_pending": true
   },
   "preservation_cohort_utc": "2026-09-30T17:35:37.328046+00:00",
   "helper_override": "Explicit user raises helper starts96; simultaneous23 and deadline unchanged",
@@ -90,23 +93,43 @@
   "original_wall_deadline_epoch": 1790820406,
   "deadline_edt": "2026-10-01T21:29:01-04:00",
   "extension_authority": "work-clock-extension/authority.json",
-  "publication_as_of_utc": "2026-10-01T21:53:55.016228+00:00",
+  "publication_as_of_utc": "2026-10-01T22:14:29.186429+00:00",
   "new_research_budget_required": false,
   "active_snapshot": {
-    "candidate_admissions": 41,
-    "occupied_slot_seconds": 26818.58122420311,
-    "reported_generated_tokens_lower_bound": 1166986,
+    "admissions": 43,
+    "operator_native_goals_pin": 41,
+    "derived_native_goal_lower_bound": 41,
+    "derived_count_post_pin_explicit_activation_labels": [],
+    "derived_count_basis": "Operator native counter plus explicit slot-ledger activation flags for admissions strictly after operator pin epoch; never traverse native receipts",
+    "operator_epoch": 1790892546.4499054,
+    "operator_staleness_seconds": 276.88739371299744,
+    "occupied_slot_seconds": 28471.287682294846,
+    "committed_remaining_seconds": 1559.5947139263153,
     "active_by_family": {
       "M": 0,
-      "Z": 1,
+      "Z": 2,
       "L": 0
     },
-    "active_jobs": [
-      "t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control",
-      "t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-treatment"
-    ]
+    "active_caps": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "M_L": "held original repair cap; no implicit route reopening",
+    "generated_output_lower_bound": 1216102,
+    "generated_output_complete": false,
+    "true_headroom": null,
+    "warning": 2400000,
+    "output_stop": 3000000,
+    "start_cap": 144,
+    "slot_seconds_cap": 172800,
+    "remaining_admission_starts": 101,
+    "reserve_starts_at_least": 21,
+    "uncommitted_slot_seconds_remaining": 142769.11760377884,
+    "reserve_slot_seconds_at_least": 28553.82352075577
   },
-  "snapshot_source": "continuous-cohorts/cohort-006/observed-accountant-snapshot.json",
+  "snapshot_source": "continuous-cohorts/cohort-007/observed-accountant-snapshot.json",
   "snapshot_is_live_current": false,
-  "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json"
+  "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json",
+  "native_inclusive_cap_verification": "UNESTABLISHED source-only8403cbcf review; no actual native qualification credit"
 }

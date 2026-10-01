@@ -1,0 +1,60 @@
+{
+  "schema": "er7.whole_delivery_v3.independent_acceptance.v1",
+  "verdict": "ACCEPTED_NARROW_HOST_BOUNDARY",
+  "created_epoch": 1790891999.2580092,
+  "reviewer": "/root/full_preservation_review_v6",
+  "source": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/whole_freeze_delivery_v3.py",
+    "sha256": "65ad3579038e5c9adbabd12a578def056f40b9e1f7ce31f6e14d112dff64d930"
+  },
+  "change_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/whole-freeze-delivery-v3-change.json",
+    "sha256": "4bbde5204f46162f1c025b4112316f7f07cb099200bcdd75735191b6537a3722"
+  },
+  "accepted_predecessor": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/whole-companion-v2.acceptance.json",
+    "sha256": "25fa83a4bb944655a89f1bed0c20d6b59e9d56c03af9ae68bfc380768b892d7a"
+  },
+  "scope": "Exact source-bound generic JSON syntax boundary repair only. Syntax validation covers every immutable inputs/*.json and every .json at all versions under positively cfg-declared output namespaces. Undeclared auxiliary outputs stay unparsed, immutable, and exact-byte-preserved in complete authenticated whole maps. No native actual-file qualification, semantic grade, acquisition credit, deadline predicate or launch authorization.",
+  "source_findings": [
+    "AST identical outside validate_frozen definition and cfg argument at its single call; companion, exact required/current selector and postrender source unchanged.",
+    "All eight original positive exact configs authenticated against their manifest. Their required JSON carrier namespaces remain syntax-checked, including old and highest current versions.",
+    "Version/current selection cannot skip malformed required versions, stale final bindings, gaps, extra names, empty current reports, missing current artifacts or wrong exact final fields.",
+    "Invalid undeclared auxiliary bytes survive the complete companion map/copy unchanged. If that namespace is positively declared by cfg, the same malformed JSON rejects.",
+    "Inputs and ALL outputs still undergo regular single-link/no-symlink/readonly/hash/bytes/map/cap checks independently of JSON interpretation."
+  ],
+  "synthetics": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/whole-delivery-v3-synthetics.json",
+    "sha256": "1b739f4ed7b16c49d21983c8b9d0eb920d122416a84ccaf4b8614ae8b7e8b651",
+    "tests": 95,
+    "all_passed": true
+  },
+  "reproduction": {
+    "script_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/boundary_synthetics.py",
+    "script_sha256": "be86ebdfd0e5fc9dd803c4d9cf7eeae4b51e6d572b6b137ad81e5d7d5a6646f5",
+    "interpreter": "python3 -B",
+    "cache_prefix": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/boundary-empty-pycache",
+    "cache_was_exclusive_owned_empty": true,
+    "source_loading": "hash-authenticated compile of exact source bytes; no old pyc",
+    "native_pgrep": "mocked synthetic-only subprocess result; no actual native/process probes"
+  },
+  "fixture_failure_preserved": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/boundary-synthetic-fixtures",
+    "type": "reviewer synthetic fixture setup PermissionError moving an already readonly directory; corrected by constructing at final synthetic location",
+    "candidate_or_delivery_source_defect": false,
+    "failed_attempts_retained": true,
+    "cost_in_review_wall": true
+  },
+  "conditions": [
+    "All accepted-v2 conditions continue, including independently accepted exact configs/dispatcher, separately established exact own native quiescence, exclusive destination, immutable complete current integrity and input pins.",
+    "Current and history semantic assessments must be separated. This repair cannot promote failed, incomplete, context-unknown or source-unqualified work.",
+    "Actual malformed auxiliary file was not opened or edited by this reviewer; root supplied mechanical metadata only.",
+    "Any new source/config pin requires independent source qualification; no runtime edits or native launch authorized by this acceptance."
+  ],
+  "native_Goals_started": 0,
+  "actual_native_receipt_reads": 0,
+  "actual_private_reads": 0,
+  "actual_candidate_output_reads": 0,
+  "generated_tokens": "UNKNOWN",
+  "wall_seconds_from_review_start": 254.332448720932
+}

@@ -16,7 +16,9 @@
     "historical_status": "independent current review complete; quality failure",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   },
   {
     "id": "T02",
@@ -35,7 +37,9 @@
     "historical_status": "independent current review complete; quality failure",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   },
   {
     "id": "T03",
@@ -55,7 +59,9 @@
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
-    "actual_redo_status": "new Z native pair complete; treatment whole delivered/intake R025, control combined delivery JSONDecodeError preserved with whole-only copy; no original control delivery claim"
+    "actual_redo_status": "treatment scoped R025 quality failure; control v3 delivery still HOLD/error; evaluator-only finding-body joins no native credit",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   },
   {
     "id": "T04",
@@ -75,7 +81,9 @@
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
-    "replacement_actual_status": "T04R redo both complete/measured whole delivery; R023/R024 full current quality failures; original capped attempts preserved"
+    "replacement_actual_status": "T04R redo both complete/measured whole delivery; R023/R024 full current quality failures; original capped attempts preserved",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   },
   {
     "id": "T05",
@@ -95,7 +103,9 @@
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
-    "replacement_actual_status": "T05R original both complete/measured whole delivery; R020/R022 full current quality failures"
+    "replacement_actual_status": "T05R original both complete/measured whole delivery; R020/R022 full current quality failures",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   },
   {
     "id": "T06",
@@ -114,7 +124,9 @@
     "historical_status": "independent current review complete; quality failure",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   },
   {
     "id": "T07",
@@ -136,7 +148,9 @@
     "future_execution": "same extended campaign; exact admission required",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
     "actual_execution_cohort": "continuous-cohorts/cohort-001",
-    "current_review_summary": "continuous-cohorts/cohort-002/T07-current-pair-summary.json"
+    "current_review_summary": "continuous-cohorts/cohort-002/T07-current-pair-summary.json",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   },
   {
     "id": "T08",
@@ -157,7 +171,9 @@
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
-    "replacement_actual_status": "Z repair1 both own assignment caps; native Goal terminal NULL; source acquisition unknown; all original failures preserved"
+    "replacement_actual_status": "Z repair1 both own assignment caps; native Goal terminal NULL; source acquisition unknown; all original failures preserved",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   },
   {
     "id": "T09",
@@ -176,7 +192,9 @@
     "historical_status": "independent current review complete; quality failure",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   },
   {
     "id": "T10",
@@ -202,7 +220,9 @@
     "current_reviews": [
       "R015",
       "R016"
-    ]
+    ],
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   },
   {
     "id": "T11",
@@ -224,7 +244,9 @@
     "future_execution": "same extended campaign; exact admission required",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
     "actual_execution_cohort": "continuous-cohorts/cohort-003",
-    "actual_current_status": "original Z control incomplete/unqualified; treatment R017 complete current quality failure; source capture unknown"
+    "actual_current_status": "original Z control incomplete/unqualified; treatment R017 complete current quality failure; source capture unknown",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   },
   {
     "id": "T12",
@@ -244,7 +266,9 @@
     "historical_status": "queued",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   },
   {
     "id": "T13",
@@ -263,7 +287,10 @@
     "historical_status": "native blocked; all required outputs missing",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only",
+    "actual_redo_status": "both native complete, measured v3 whole/current delivery; R026/R027 grading pending"
   },
   {
     "id": "T14",
@@ -285,7 +312,9 @@
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
-    "additive_review": "R018/R019 complete current quality failures; original partial capped reviews immutable; native qualification independent"
+    "additive_review": "R018/R019 scoped6facet current quality failures; original8-key expanded eligibility pending; old partial reviews unchanged",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   },
   {
     "id": "T15",
@@ -306,7 +335,9 @@
     "future_execution": "same extended campaign; exact admission required",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
     "actual_execution_cohort": "continuous-cohorts/cohort-003",
-    "actual_current_status": "redo1 seed R021 complete current quality failure; witness own assignment cap/native terminal NULL; no reuse benefit established"
+    "actual_current_status": "redo1 seed R021 complete current quality failure; witness own assignment cap/native terminal NULL; no reuse benefit established",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   },
   {
     "id": "T16",
@@ -325,6 +356,8 @@
     "historical_status": "queued",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
   }
 ]
