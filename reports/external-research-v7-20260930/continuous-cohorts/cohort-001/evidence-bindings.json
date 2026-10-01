@@ -1,0 +1,361 @@
+{
+  "frozen_cohort_import_utc": "2026-10-01T19:29:09.222225+00:00",
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-treatment/output-integrity.json",
+      "sha256": "6b76d56450a5c83dc922b946e0855844a1dae4292e988c5f5b0646086d3d339c",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-treatment/output-integrity.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-treatment/frozen-output/out/acquisition.json",
+      "sha256": "35c1e667d279b6142c23d9c5ede8fb6ccc0275863259a79872e973a4c81352f6",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-treatment/out/acquisition.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-treatment/frozen-output/out/report.md",
+      "sha256": "10bfa79d5a5860075b86df56757d1a97b378e06614cbcad50bcdb233ed4a011b",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-treatment/out/report.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-treatment/context-observations.json",
+      "sha256": "686634940bfb549daa9098c257168136c2e137e510307029826dc707c4404078",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-treatment/context-observations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-treatment/operator-receipt.json",
+      "sha256": "331f98ee5f7f30d3600a076f0c42efa3161f302a598d51c58b7ad9d6e0f025ad",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-treatment/operator-receipt.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control/output-integrity.json",
+      "sha256": "8ff372762e8781f1f65e0767c6a06d5fc61120ed7715ed8e55245aca7cd7e49b",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-control/output-integrity.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control/frozen-output/out/acquisition.json",
+      "sha256": "a61f471f0ac61017ae563e8e3f9d7f26362f57e10dab6281f4f63e7357784a94",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-control/out/acquisition.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control/frozen-output/out/draft-acquisition.json",
+      "sha256": "2719d60a4280e85796f2b3dfbe2fef5768831f5f56e83cdcbf674cb454b07c7b",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-control/out/draft-acquisition.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control/frozen-output/out/draft-report.md",
+      "sha256": "019a1411d13a02f0af52da097452dd3bc44622bc9263ced0d52f7a8e43d313c1",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-control/out/draft-report.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control/frozen-output/out/report.md",
+      "sha256": "019a1411d13a02f0af52da097452dd3bc44622bc9263ced0d52f7a8e43d313c1",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-control/out/report.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control/context-observations.json",
+      "sha256": "214830843c0b280560ba8db8e2d29df1cb14d76dd049d1ae2c52ada881f6c4e7",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-control/context-observations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control/operator-receipt.json",
+      "sha256": "31ab5ed6b204dc55a259aaa4da0d083b7d0c4211b54e0752469e9870f6b6b47a",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-control/operator-receipt.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-seed/output-integrity.json",
+      "sha256": "5cc9c8d6142445135db1048a24c7b60041b6cc31e2623a261af45c224d374613",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t15-z-ome-mcp-reuse-v2-seed/output-integrity.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-seed/context-observations.json",
+      "sha256": "3af3d2eaca93d62271d93e7a921f1a64b92dcf74c17271bff3e0deb9058b1841",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t15-z-ome-mcp-reuse-v2-seed/context-observations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-seed/operator-receipt.json",
+      "sha256": "d93aea990a501430e2c009e2fa599b740803bace66435808386403b8505b5cdb",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t15-z-ome-mcp-reuse-v2-seed/operator-receipt.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/FROZEN-REVIEW.json",
+      "sha256": "625eb3dd22702cc2b221db2db1c0eb8bed7588fdffc43a6151339921e44d0289",
+      "publication_path": "continuous-cohorts/cohort-001/gates/FROZEN-REVIEW.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/host-v3-context-acceptance.json",
+      "sha256": "6fa1882e2e0ccdd4f4034a78cba3561b9d45f4fb56c11732a0f6c99f3dd652f3",
+      "publication_path": "continuous-cohorts/cohort-001/gates/host-v3-context-acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/capture-final-privacy-acceptance.json",
+      "sha256": "ac130e16b57409ccdf05fc1066bd02a19e2a3def8a181e5293709cb6e7374e66",
+      "publication_path": "continuous-cohorts/cohort-001/gates/capture-final-privacy-acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/capture-final-independent-tests.json",
+      "sha256": "9519915395c4980a2ec759ce6b48b9bba1097287563ffd74008d1b28403b2fa8",
+      "publication_path": "continuous-cohorts/cohort-001/gates/capture-final-independent-tests.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/dispatch-v3-independent-tests.json",
+      "sha256": "8b94a9ea5bd70f26176613b3ca973e89dedabae99c514cc9ee3cfb9b4bd03511",
+      "publication_path": "continuous-cohorts/cohort-001/gates/dispatch-v3-independent-tests.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/context-observer-independent-tests.json",
+      "sha256": "6e618bf62f65b097fae031b9fe56fb4ea4c6c3636967617e56328f078570198c",
+      "publication_path": "continuous-cohorts/cohort-001/gates/context-observer-independent-tests.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/cost-timeline.json",
+      "sha256": "b8620575c1e18f066e95b5de5abca3e4be43a9bab21b1f18dc47cea81aa19283",
+      "publication_path": "continuous-cohorts/cohort-001/gates/cost-timeline.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/capture-v2-code-privacy-review.json",
+      "sha256": "d68c685aacff9a09daa4d6ea3f049907acc0289e674931755a392e01b1283f11",
+      "publication_path": "continuous-cohorts/cohort-001/gates/capture-v2-code-privacy-review.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/preservation-repair2-source-review.json",
+      "sha256": "91d863ae8d90dba5ae3b1880f614f14217e287b724fc1c0af174ee4538e4fbf4",
+      "publication_path": "continuous-cohorts/cohort-001/gates/preservation-repair2-source-review.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/z_productive_dispatch_v3.py",
+      "sha256": "5f25c1d1eed1a9e1794ca4a3cd0698e2cafea4c3d5a2b5d183bbb4007d1d39a9",
+      "publication_path": "continuous-cohorts/cohort-001/gates/code/z_productive_dispatch_v3.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/native_context_projection_v1.py",
+      "sha256": "97102acf9e8a988257d782c822a93ca2f62b766c44301503c66cf72e082542ee",
+      "publication_path": "continuous-cohorts/cohort-001/gates/code/native_context_projection_v1.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/z-mcp-acquisition-capture-v2/projector_final.py",
+      "sha256": "5a9894290471a1947964c9c9c47699a5f48ed08a3b949c3bb18f908097a622e4",
+      "publication_path": "continuous-cohorts/cohort-001/gates/code/projector_final.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t04r-z-ome-compact-contrasts-v1-control.method-config.json",
+      "sha256": "5f07858571a90dd130f12648dd89c2b8d4e01ed4d996bd4e0dfd834eaaa8a3a0",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t04r-control/method-config.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t04r-control.acceptance.json",
+      "sha256": "beb4e95e08fc8b9780980b24f73750bd7317d0ca03a913d4f04945b809512592",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t04r-control/acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/replacements/t04r-z-ome-compact-contrasts-v1/control/goal.txt",
+      "sha256": "556593bc7dae958dfd6cc264dab3773b92a70a39d92263f43d831a56e2d4621a",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t04r-control/goal.txt"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/replacements/t04r-z-ome-compact-contrasts-v1/control/workspace/TASK.md",
+      "sha256": "8dd166dc6e7626646a39a4cd82518a09e23c57f8a253bd83c0803bfb74403d80",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t04r-control/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t04r-z-ome-compact-contrasts-v1-treatment.method-config.json",
+      "sha256": "c33393a4dfa54d9d7f9c78a9654ba7ca5dd707a15d7c38ef03282a64aaaf0704",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t04r-treatment/method-config.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t04r-treatment.acceptance.json",
+      "sha256": "467664ee89ee099060d9b1cb0dca1a329bbfea91f371e05c2ff68055d6016be5",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t04r-treatment/acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/replacements/t04r-z-ome-compact-contrasts-v1/treatment/goal.txt",
+      "sha256": "556593bc7dae958dfd6cc264dab3773b92a70a39d92263f43d831a56e2d4621a",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t04r-treatment/goal.txt"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/replacements/t04r-z-ome-compact-contrasts-v1/treatment/workspace/TASK.md",
+      "sha256": "664880b8963b70a365c3329b11f1eea1513f10d6771e97797f5c20f9209894b6",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t04r-treatment/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t05r-z-ome-read-once-related-questions-v1-control.method-config.json",
+      "sha256": "c666984d2515b93e4f02ac579559a4e96d76da4c69180f8e4c44d474d7de41a7",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t05r-control/method-config.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t05r-control.acceptance.json",
+      "sha256": "1c9973ded22b8259a9b7592ec1bf4b53300de378c1236853d093ef3dff74aec3",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t05r-control/acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/replacements/t05r-z-ome-read-once-related-questions-v1/control/goal.txt",
+      "sha256": "556593bc7dae958dfd6cc264dab3773b92a70a39d92263f43d831a56e2d4621a",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t05r-control/goal.txt"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/replacements/t05r-z-ome-read-once-related-questions-v1/control/workspace/TASK.md",
+      "sha256": "2b9452fbd8f687f3ff077d20c2b2bd4f2208745d749cd2736dc81d59d0d8f598",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t05r-control/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t05r-z-ome-read-once-related-questions-v1-treatment.method-config.json",
+      "sha256": "a4f25829465d0a4db2f20112febfdcb48fa6639dbd28d879fa40b8e1494e5873",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t05r-treatment/method-config.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t05r-treatment.acceptance.json",
+      "sha256": "b1d6871aa74cb765674de73a672979e9255813347d030525a8ea8a4c80354b4e",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t05r-treatment/acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/replacements/t05r-z-ome-read-once-related-questions-v1/treatment/goal.txt",
+      "sha256": "556593bc7dae958dfd6cc264dab3773b92a70a39d92263f43d831a56e2d4621a",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t05r-treatment/goal.txt"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/replacements/t05r-z-ome-read-once-related-questions-v1/treatment/workspace/TASK.md",
+      "sha256": "5b43083d67cecbdaecf4981defdbb2cd0f47cc1d8b9485b9cb6e5c65446ae7b8",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t05r-treatment/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t03-z-ome-preservation-delivery-v3-repair2-control.method-config.json",
+      "sha256": "561ca3d6ef2fc3f27278980c14d085da7a1214e39871fff26e0233fb37cbef1c",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t03-control/method-config.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t03-control.acceptance.json",
+      "sha256": "fdc08dd6d70c3803aca1a6e0a6a1c2d5872d109915a9b748e88f52321488583e",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t03-control/acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/control/goal.txt",
+      "sha256": "082682685b15b4ca660231fe2b452e054bc1589fbc29cb7299f00e030d63cb82",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t03-control/goal.txt"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/control/workspace/TASK.md",
+      "sha256": "ed42fd360fb201e72ad425b333dea031e72182f594098f800250481c4b0fab80",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t03-control/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t03-z-ome-preservation-delivery-v3-repair2-treatment.method-config.json",
+      "sha256": "9bf537d09c72c538e99754414f8ea8ac4083ddc2e8e05bf502b2f40fd44489e5",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t03-treatment/method-config.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t03-treatment.acceptance.json",
+      "sha256": "5e62730830cf81bf41541f6a01d62bc05fe310b72a835dc02c309b581bd23e2c",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t03-treatment/acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/treatment/goal.txt",
+      "sha256": "082682685b15b4ca660231fe2b452e054bc1589fbc29cb7299f00e030d63cb82",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t03-treatment/goal.txt"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/treatment/workspace/TASK.md",
+      "sha256": "f2cb5b07cfb85f14b56faca33b41d170cfcc0e0c3a7636f435a625a7b6efbe98",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t03-treatment/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t13-z-ome-preservation-delivery-v3-repair2-control.method-config.json",
+      "sha256": "3415aac975259e6f33fd54f8ae1e8d98ded671e62a8e1838610dc154b3418ecb",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t13-control/method-config.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t13-control.acceptance.json",
+      "sha256": "da5f00cb7c871431d9784b11c70a87a647625d43f75d99f20356daae049e3b01",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t13-control/acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/control/goal.txt",
+      "sha256": "082682685b15b4ca660231fe2b452e054bc1589fbc29cb7299f00e030d63cb82",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t13-control/goal.txt"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/control/workspace/TASK.md",
+      "sha256": "cd689452249af46b4ffb4b5221aabe547210bd995e36238dd2c9b26573a365e4",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t13-control/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t13-z-ome-preservation-delivery-v3-repair2-treatment.method-config.json",
+      "sha256": "30955d06c3f6529095e2cf30d7568d2325fd84fd69ac2877dd472b37f5c3056d",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t13-treatment/method-config.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t13-treatment.acceptance.json",
+      "sha256": "e24f1d390d549633e418d9d991b603bc2cced7c30d823685fbdd9db6d343e5d2",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t13-treatment/acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/treatment/goal.txt",
+      "sha256": "082682685b15b4ca660231fe2b452e054bc1589fbc29cb7299f00e030d63cb82",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t13-treatment/goal.txt"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/treatment/workspace/TASK.md",
+      "sha256": "63904fa5275fd2215d01c9bf1c6e05daa015367ee180c5e20f7e3ca1c5652719",
+      "publication_path": "continuous-cohorts/cohort-001/prepared-extended/t13-treatment/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t07-z-ome-mcp-line-map-cache-v2-treatment.method-config.json",
+      "sha256": "1bd5d6384c6f3bb287b5e1cde511a931479bf6e96a0f829d488c8449b8cd6aea",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-treatment/method-config.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-safe-methods-v2/t07-z-ome-mcp-line-map-cache-v2-treatment.acceptance.json",
+      "sha256": "f5b70b6a1c9785f9b497a2529a12453985f2c58c51f352a73b59077ae2aeb2c3",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-treatment/method-acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t07-z-ome-mcp-line-map-cache-v2/treatment/goal.txt",
+      "sha256": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-treatment/goal.txt"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t07-z-ome-mcp-line-map-cache-v2/treatment/workspace/TASK.md",
+      "sha256": "d46d1b7fb05d47d7b380b3fb1db5fff7d661922f26d13d8f9d6b10aeb862bd56",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-treatment/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t07-z-ome-mcp-line-map-cache-v2-control.method-config.json",
+      "sha256": "feb74d819b002f9c3cbc6eb5811b41ddd6b53fa94f180f5b0ba6ff12adab5b9d",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-control/method-config.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-safe-methods-v2/t07-z-ome-mcp-line-map-cache-v2-control.acceptance.json",
+      "sha256": "59cfcfc1edc8715e638b70b0d691f24caa28a173f16a1fabc13c083ee2b3ba70",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-control/method-acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t07-z-ome-mcp-line-map-cache-v2/control/goal.txt",
+      "sha256": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-control/goal.txt"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t07-z-ome-mcp-line-map-cache-v2/control/workspace/TASK.md",
+      "sha256": "9f95470c48799e10840aaba634a42a62563f1f1fa18609c594bf71ad0a3f38fd",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t07-z-ome-mcp-line-map-cache-v2-control/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t15-z-ome-mcp-reuse-v2-seed.method-config.json",
+      "sha256": "d06ab3df33fb16badb0c0e012f12996d391bcdbaa38c3eeb7ddb686e41e19ff3",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t15-z-ome-mcp-reuse-v2-seed/method-config.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-safe-methods-v2/t15-z-ome-mcp-reuse-v2-seed.acceptance.json",
+      "sha256": "642a189d72a7e3a85099018fcb223a7df68dca1eacfc129c6a9e88bc2abcca66",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t15-z-ome-mcp-reuse-v2-seed/method-acceptance.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t15-z-ome-mcp-reuse-v2/seed/goal.txt",
+      "sha256": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t15-z-ome-mcp-reuse-v2-seed/goal.txt"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t15-z-ome-mcp-reuse-v2/seed/workspace/TASK.md",
+      "sha256": "27c0ad48a56721e39d927e1893620a07224db753d62fb70c0eca2695123bb759",
+      "publication_path": "continuous-cohorts/cohort-001/candidates/t15-z-ome-mcp-reuse-v2-seed/TASK.md"
+    }
+  ],
+  "private_exclusions": "No raw modelIO/logs/private-client/auth/config files/keys/candidate conversations or source cache bodies imported; native fields whitelist projected only."
+}

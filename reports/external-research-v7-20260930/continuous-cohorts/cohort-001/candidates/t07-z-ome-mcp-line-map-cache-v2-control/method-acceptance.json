@@ -1,0 +1,51 @@
+{
+  "schema": "er7.z.safe.method.acceptance.v1",
+  "verdict": "accepted",
+  "review_kind": "independent prospective method machinery/scope only",
+  "reviewer": "/root/method_scope_reviewer",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "method_config_sha256": "feb74d819b002f9c3cbc6eb5811b41ddd6b53fa94f180f5b0ba6ff12adab5b9d",
+  "method_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t07-z-ome-mcp-line-map-cache-v2-control.method-config.json",
+  "attempt": {
+    "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t07-z-ome-mcp-line-map-cache-v2/control/workspace",
+    "prompt_sha256": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa",
+    "label": "t07-z-ome-mcp-line-map-cache-v2-control",
+    "max_seconds": 900.0,
+    "max_responses": 96,
+    "public_get": false
+  },
+  "method": "T07",
+  "pair_id": "t07-z-ome-mcp-line-map-cache-v2",
+  "reason": "Accepted only as the NEW offline line_map parse versus exact parsed-view cache_source copy configuration. It provides no live fetch savings, automatic original cache invalidation or original T07 adapter. Equal inputs/questions/caps; cold first parse, setup and all operation costs retained.",
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/t07-z-ome-mcp-line-map-cache-v2.review-manifest.json",
+      "sha256": "b2c29b4e18d8b7fe30662ec97f16eef0c145ea5903bd88d6ea3d2bfd671564b8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-binding-review.json",
+      "sha256": "81e1d4aa6309486a9388e18cb10848f32e4df2db541666f477b8e861ff90aa7f"
+    }
+  ],
+  "checks": {
+    "exact_pins_verified": true,
+    "matched_scope_and_caps_verified": true,
+    "source_permissions_declared": true,
+    "cold_setup_cost_counted": true,
+    "semantic_answers_supplied_by_reviewer": false,
+    "candidate_starts_by_reviewer": 0,
+    "candidate_grades": 0
+  },
+  "native_admission": "HOLD until independent exact runtime FREEZE and real SAME frozen canary PASS. This is not runtime or canary acceptance.",
+  "pre_admission_requirements": [
+    "Recheck every reviewed task/input/prompt/metadata/pair/code/config pin immediately before admission; drift is a new binding, never silently accepted.",
+    "Record randomized/counterbalanced pair order and simultaneous account/sibling occupancy before first arm.",
+    "Use only accepted final runtime productive interface with exact original component caps; no canary cap substitution, old launcher or runtime hotpatch.",
+    "Retain all prior preparation/repair/new binding, cold host mechanics, native setup/retries/continuation/verification/cleanup and prerequisite costs; unknown values remain unknown."
+  ],
+  "result_constraints": [
+    "No machinery acceptance is a semantic quality pass or measured method comparison.",
+    "Complete current report must receive independent source-grounded evaluation before acquisition/history review.",
+    "Actual MCP operation receipts and complete bytes must establish claimed work; candidate operation counters alone are insufficient."
+  ]
+}

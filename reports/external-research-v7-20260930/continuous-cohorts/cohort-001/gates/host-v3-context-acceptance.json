@@ -1,0 +1,58 @@
+{
+  "schema": "er7.host_dispatch.context.acceptance.v1",
+  "verdict": "accepted",
+  "review_epoch": 1790880960.1840513,
+  "dispatcher_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/z_productive_dispatch_v3.py",
+  "dispatcher_sha256": "5f25c1d1eed1a9e1794ca4a3cd0698e2cafea4c3d5a2b5d183bbb4007d1d39a9",
+  "context_projector_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/native_context_projection_v1.py",
+  "context_projector_sha256": "97102acf9e8a988257d782c822a93ca2f62b766c44301503c66cf72e082542ee",
+  "prospective_empty_native_home_verified": true,
+  "independent_context_projector_privacy_verified": true,
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "freeze_sha256": "eb0c97ee748afa3cee832a87501c92e0b30a5e5b67e6541ac6bbc00edbbd5625",
+  "frozen_closure_drift": [],
+  "official_installed_source_sha256": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+  "checks": {
+    "accepted_self_dispatcher_pin_before_observer_load": true,
+    "observer_pin_before_load": true,
+    "all_ancestor_instruction_project_config_and_git_markers_denied": true,
+    "fresh_host_and_child_home_0700_empty_before_launch": true,
+    "child_HOME_USERPROFILE_XDG_controls_verified": true,
+    "inherited_ZCODE_and_secret_environment_cleared": true,
+    "absolute_existing_approved_registry_auth_path_unchanged": true,
+    "pgrep_errors_and_malformed_outputs_fail_closed": true,
+    "post_Popen_exception_cleans_known_fresh_driver_and_holds_lease": true,
+    "own_guard_EOF_and_deadline_cleanup_source_verified": true,
+    "only_known_owned_driver_or_trusted_runtime_groups_probed_or_targeted": true,
+    "observer_only_after_own_native_quiescence": true,
+    "bounded_own_job_model_IO_and_startup_logs_only": true,
+    "observer_no_raw_text_copy_hash_or_sensitive_fields_emitted": true,
+    "source_defined_instruction_markers_and_startup_enums_independently_checked": true,
+    "unknown_context_preserved_without_quality_admission_and_known_quiet_lease_released": true,
+    "GET_requires_separate_exact_capture_privacy_gate": true
+  },
+  "authorized_observer_rule": "The trusted host may read only this fresh own host/native private-client storage/cli model-io exact admitted session file and date-named startup logs, after independently established own quiescence. Do not inspect sibling jobs or auth/config/header files; emit only Boolean/count/fixed-event fields. Actual request inventory remains required from unchanged frozen native runtime.",
+  "actual_job_context_qualification": "unknown until each exact productive job passes its post-quiescence projection and runtime request-attempt inventory",
+  "native_canary_qualification": "outside this review; exact independently passed SAME frozen runtime receipt/review remains mandatory",
+  "tests": {
+    "exact_dispatch_v3_synthetic_checks": 9,
+    "context_observer_synthetic_checks": 20,
+    "all_passed": true,
+    "artifacts": {
+      "dispatch-v3-independent-tests.json": "8b94a9ea5bd70f26176613b3ca973e89dedabae99c514cc9ee3cfb9b4bd03511",
+      "context-observer-independent-tests.json": "6e618bf62f65b097fae031b9fe56fb4ea4c6c3636967617e56328f078570198c",
+      "dispatch-independent-tests.json": "d958ffd11a95db95167b70ccff6c59fa525140bc2cf4024b1041c2ad026ba9b0",
+      "dispatch-fallback-tests.json": "be2ea19f8a41e6cfd7d29562a7dccd88ee745c12bfeffe89d229a30458fde0dd",
+      "guard-independent-tests.json": "337986558c068fc50d0f32c0834fa836b8f8184b08bf82fd09643b55ead75254"
+    }
+  },
+  "actual_private_reads_by_reviewer": 0,
+  "native_Goals_started_by_reviewer": 0,
+  "no_semantic_quality_or_actual_sample_grant": true,
+  "preserved_versions": [
+    "v1 partial/held untouched by this review",
+    "v2 boundary-only acceptance, prospective productive admission held",
+    "v3 draft01 caeb and draft02 b042 author-preserved before final5f25"
+  ],
+  "scope_limit": "Exact host machinery/context privacy acceptance. No blanket method acceptance, semantic quality pass, actual future-context pass or campaign ceiling reset."
+}

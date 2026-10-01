@@ -1,0 +1,70 @@
+{
+  "epoch": 1790882479.9068818,
+  "status": "eight exact bindings accepted; actual handoff pending qualified companion/delivery machinery",
+  "acceptances": [
+    {
+      "method": "T04R",
+      "arm": "control",
+      "config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t04r-z-ome-compact-contrasts-v1-control.method-config.json",
+      "config_sha256": "5f07858571a90dd130f12648dd89c2b8d4e01ed4d996bd4e0dfd834eaaa8a3a0",
+      "acceptance_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t04r-control.acceptance.json",
+      "acceptance_sha256": "beb4e95e08fc8b9780980b24f73750bd7317d0ca03a913d4f04945b809512592"
+    },
+    {
+      "method": "T04R",
+      "arm": "treatment",
+      "config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t04r-z-ome-compact-contrasts-v1-treatment.method-config.json",
+      "config_sha256": "c33393a4dfa54d9d7f9c78a9654ba7ca5dd707a15d7c38ef03282a64aaaf0704",
+      "acceptance_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t04r-treatment.acceptance.json",
+      "acceptance_sha256": "467664ee89ee099060d9b1cb0dca1a329bbfea91f371e05c2ff68055d6016be5"
+    },
+    {
+      "method": "T05R",
+      "arm": "control",
+      "config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t05r-z-ome-read-once-related-questions-v1-control.method-config.json",
+      "config_sha256": "c666984d2515b93e4f02ac579559a4e96d76da4c69180f8e4c44d474d7de41a7",
+      "acceptance_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t05r-control.acceptance.json",
+      "acceptance_sha256": "1c9973ded22b8259a9b7592ec1bf4b53300de378c1236853d093ef3dff74aec3"
+    },
+    {
+      "method": "T05R",
+      "arm": "treatment",
+      "config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t05r-z-ome-read-once-related-questions-v1-treatment.method-config.json",
+      "config_sha256": "a4f25829465d0a4db2f20112febfdcb48fa6639dbd28d879fa40b8e1494e5873",
+      "acceptance_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t05r-treatment.acceptance.json",
+      "acceptance_sha256": "b1d6871aa74cb765674de73a672979e9255813347d030525a8ea8a4c80354b4e"
+    },
+    {
+      "method": "T03",
+      "arm": "control",
+      "config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t03-z-ome-preservation-delivery-v3-repair2-control.method-config.json",
+      "config_sha256": "561ca3d6ef2fc3f27278980c14d085da7a1214e39871fff26e0233fb37cbef1c",
+      "acceptance_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t03-control.acceptance.json",
+      "acceptance_sha256": "fdc08dd6d70c3803aca1a6e0a6a1c2d5872d109915a9b748e88f52321488583e"
+    },
+    {
+      "method": "T03",
+      "arm": "treatment",
+      "config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t03-z-ome-preservation-delivery-v3-repair2-treatment.method-config.json",
+      "config_sha256": "9bf537d09c72c538e99754414f8ea8ac4083ddc2e8e05bf502b2f40fd44489e5",
+      "acceptance_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t03-treatment.acceptance.json",
+      "acceptance_sha256": "5e62730830cf81bf41541f6a01d62bc05fe310b72a835dc02c309b581bd23e2c"
+    },
+    {
+      "method": "T13",
+      "arm": "control",
+      "config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t13-z-ome-preservation-delivery-v3-repair2-control.method-config.json",
+      "config_sha256": "3415aac975259e6f33fd54f8ae1e8d98ded671e62a8e1838610dc154b3418ecb",
+      "acceptance_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t13-control.acceptance.json",
+      "acceptance_sha256": "da5f00cb7c871431d9784b11c70a87a647625d43f75d99f20356daae049e3b01"
+    },
+    {
+      "method": "T13",
+      "arm": "treatment",
+      "config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t13-z-ome-preservation-delivery-v3-repair2-treatment.method-config.json",
+      "config_sha256": "30955d06c3f6529095e2cf30d7568d2325fd84fd69ac2877dd472b37f5c3056d",
+      "acceptance_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t13-treatment.acceptance.json",
+      "acceptance_sha256": "e24f1d390d549633e418d9d991b603bc2cced7c30d823685fbdd9db6d343e5d2"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "schema": "er7.z.safe.method.acceptance.v1",
+  "verdict": "accepted",
+  "reviewer": "/root/exact_methods_release_v3",
+  "created_utc": "2026-10-01T19:21:19.903816+00:00",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "method_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t03-z-ome-preservation-delivery-v3-repair2-control.method-config.json",
+  "method_config_sha256": "561ca3d6ef2fc3f27278980c14d085da7a1214e39871fff26e0233fb37cbef1c",
+  "method": "T03",
+  "arm": "control",
+  "original_closure": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/closure.json",
+    "sha256": "ec98f0644d5c786ccc908789b3b28c349ab59a08fd08bb2067f8d79bff263d06"
+  },
+  "scope": "Fresh independent exact ABI/source binding and prospective immutable handoff contract; no semantic candidate grading or actual future handoff grant.",
+  "checks": {
+    "exact_manifest_config_sha": true,
+    "exact_original_binding_sha": true,
+    "schema": true,
+    "attempt_unchanged": true,
+    "goal_alias": true,
+    "prompt_hash": true,
+    "task_hash": true,
+    "task_original_pin": true,
+    "model_effort_alias": true,
+    "tools_alias": true,
+    "caps_alias": true,
+    "no_get": true,
+    "runtime_sha": true,
+    "identity": true,
+    "input_alias_full_unchanged": true,
+    "all_input_pins": true,
+    "safe_unique_input_targets": true,
+    "all_config_closure_pins": true,
+    "whole_original_closure_verified": true,
+    "postdelivery_script_pin": true,
+    "whole_companion_required": true,
+    "output_alias": true,
+    "postargv_unchanged": true
+  },
+  "conditions": [
+    "Exact frozen runtime298f plus independently passed SAME counted canary, root campaign resource/work-clock authority, exact single-use operator admission and host context acceptance remain mandatory.",
+    "Bind the entire original input_manifest; source, prompt, task, model, effort, tools, source scope and caps remain unchanged.",
+    "Before any host delivery or preservation use, independently reviewed trusted host machinery must establish native quiescence and copy EVERY prebound input into frozen-output/inputs; every original preexecution SHA must match; no glob/private capture, linked files, symlink ancestors or mutable companion. Accepted dispatcher5f25 currently freezes out only, so this acceptance itself does not complete that operation.",
+    "Whole regular nonlinked immutable output and input snapshots must be independently bound before checker use. Exact renderer is deterministic delivery only, not a quiescence, native Write, receiver ACK or completion proof.",
+    "Highest contiguous final binding must select highest complete report/acquisition/research streams (null report only for T13 treatment, null research only for T13 control); V001 output_files are initial minimum-carrier requirements, never a fixed latest selector.",
+    "Independent current report semantic assessment must be saved before acquisition/history review; no host semantic rewrite or helper-provided research facts.",
+    "Protocol actions remain SELF_REPORT unless independently observed; no count-only claim of reads, cache reuse, comprehension or savings.",
+    "Measure cold preparation, native retries/corrections/cleanup, complete input-companion copy/hash/freeze and final host delivery separately in total user-facing cost; preserve all failed attempts, pauses and development overruns.",
+    "Any subsequent config/script/source drift or changed ABI requires a newly pinned exact review; no new runtime repair or canary authorized.",
+    "Before invoking unchanged exact postrender27c0, independently reviewed wrapper must validate all root/ancestor/out/input paths are regular, nonlinked, immutable and unique JSON keys in every JSON carrier. Renderer itself is not sufficient to establish those preconditions.",
+    "T03 treatment current report bytes must equal the exact current whole id/body section render. T13 treatment must use the original preexecution hash-bound seed companion and explicitly assessed whole decisions; omitted seed decisions remain unconfirmed, rejected content stays historical."
+  ],
+  "native_Goals_started": 0,
+  "runtime_edits": 0,
+  "actual_private_reads": 0,
+  "candidate_findings_or_keys_read": false,
+  "actual_posthandoff_qualified": false,
+  "native_launch_authorized_by_this_document_alone": false,
+  "original_source_renderer_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/preservation-repair2-source-review.json",
+    "sha256": "91d863ae8d90dba5ae3b1880f614f14217e287b724fc1c0af174ee4538e4fbf4"
+  },
+  "independent_renderer_synthetics": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/preservation-renderer-synthetics.json",
+    "sha256": "5e59279016e98a7170fde8ad886d4006d7ff99dc62ff070a8c65b403143171a0",
+    "tests": 10,
+    "all_passed": true
+  },
+  "source_seed_provenance": {
+    "T03_seed_prerequisite_removed": true,
+    "T03_full_source_scope_unchanged": true,
+    "T13": "Original FIRST T02 control seed fixed before grades; tagged reused candidate source, not fresh discovery or an answer key.",
+    "seed_sha256": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c",
+    "original_source_report_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/attempts/t02-m-ome-dev1-control-r1/frozen-output/out/report.md",
+    "original_source_report_sha256": "6e302aa3cae223ea41e99f6862644f524695fe36f661b50edcf22ab1aedf4895",
+    "source_report_semantically_read": false,
+    "seed_semantically_read": false
+  }
+}

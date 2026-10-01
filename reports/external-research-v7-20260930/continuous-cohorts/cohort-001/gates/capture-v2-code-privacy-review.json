@@ -1,0 +1,37 @@
+{
+  "schema": "er7.independent.capture_code_privacy_review.v2",
+  "verdict": "held",
+  "closure_path": "dev/z-mcp-acquisition-capture-v2/CLOSURE.json",
+  "closure_sha256": "86db55c93b7e9dd22d2d0d27c6bf0757e815626e57acb2fe97ebb06b9d7a38f9",
+  "projector_sha256": "08ecf6150eacd0d49d124944321535602c579e8917de5f0b7cfe2ad5090f79b1",
+  "closure_file_drift": [],
+  "independent_source_shape_verified": true,
+  "source_shapes_scope": "Installed official CLI source supports direct request.BODY/full retention versus compressed/delta/tail; source names and exact independent excerpt pins saved. Actual selected record eligibility unknown.",
+  "actual_raw_reader_privacy_accepted": false,
+  "actual_private_reads": 0,
+  "actual_GET_sample_qualified": false,
+  "gate_selection_accepted": false,
+  "blocking_findings": [
+    {
+      "id": "CAP-PRIV-001",
+      "finding": "bounded_file hashes the entire selected raw log; capture emits that raw model_io_sha256 in provenance. Raw native model-I/O includes private system/prompt/context namespaces. This conflicts with the controlling instruction never to hash/output raw log/content/private context."
+    },
+    {
+      "id": "CAP-JOB-001",
+      "finding": "No exact prospective selected job/path/request-attempt privacy acceptance or direct full-BODY actual record proof is available. Code/source shape acceptance alone cannot authorize an actual read."
+    }
+  ],
+  "nonblocking_observations": [
+    "PublicGET input and result fields are strictly whitelisted; exact UTF8 body bytes/hash, native request identity, completed model status and scheduled/started/completed tool identity are checked.",
+    "Unrelated prompt/system/header/SDK/tool namespaces are not emitted by synthetic projection.",
+    "Extra tool-block metadata and unknown model status are ignored; accepted direct args/results remain strict. Native source telemetry schema is strict, but projector itself does not reject every malformed outer field.",
+    "Repeated history across requests is not deduplicated; new completion counts remain unknown.",
+    "Author excerpt hash convention is undocumented; independent exact-function excerpts differ while the whole installed source hash matches.",
+    "Author active cost reported322s against300s cap (+22); retained as helper budget overrun, not candidate failure or automatic source invalidation."
+  ],
+  "synthetic_tests": {
+    "author_tests_passed": 16,
+    "independent_expectations_passed": 19
+  },
+  "review_epoch": 1790879802.6656156
+}

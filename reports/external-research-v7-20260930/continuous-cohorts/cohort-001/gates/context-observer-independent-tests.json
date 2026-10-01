@@ -1,0 +1,149 @@
+{
+  "schema": "er7.independent.native_context_projection.synthetic_checks.v1",
+  "checks": [
+    {
+      "name": "healthy_private_sentinels_excluded",
+      "expected_qualified": true,
+      "actual_qualified": true,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "agentsMd_system_marker",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "global_instruction_marker",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "auto_memory_marker",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "user_config_loaded",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "project_config_not_loaded",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "missing_startup_features",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "memory_extraction_post_work_separate",
+      "expected_qualified": true,
+      "actual_qualified": true,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "memory_use_enabled",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "memory_enabled",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "nonzero_pluginCount",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "nonzero_enabledPluginCount",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "nonzero_hookCount",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "nonzero_commandRootCount",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "nonzero_skillRootCount",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "wrong_config_boolean_type",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "conflicting_config_booleans",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "wrong_model_session",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "missing_direct_body",
+      "expected_qualified": false,
+      "actual_qualified": false,
+      "only_admitted_projection_output": true,
+      "passed": true
+    },
+    {
+      "name": "unexpected_startup_private_data_ignored",
+      "expected_qualified": true,
+      "actual_qualified": true,
+      "only_admitted_projection_output": true,
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "actual_private_reads": 0,
+  "native_Goals": 0,
+  "synthetic_private_fixture_reads_only": true
+}

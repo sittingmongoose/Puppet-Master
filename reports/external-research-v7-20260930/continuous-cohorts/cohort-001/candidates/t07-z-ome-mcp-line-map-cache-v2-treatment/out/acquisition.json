@@ -1,0 +1,118 @@
+{
+  "case": "t07-z-ome-mcp-line-map-cache-v2-treatment",
+  "generated": "2026-10-01",
+  "tools_allowed_and_used": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical"
+  ],
+  "notes_on_evidence_integrity": "Every sha256 and byte count below is a tool-returned value; none are invented. No live fetching was performed (catalog source_scope forbids it for this component case). No runtime automatic dependency selector is claimed. Q1 line_map ran cold (no prior out/cache or source views) and its cold work counts in both arms; cache_source on the Q1 view also ran cold.",
+  "selected_sources": [
+    {
+      "handle": "S003",
+      "file": "inputs/sources/S003.txt",
+      "uri": "https://ngff.openmicroscopy.org/0.5/",
+      "uri_note": "Primary alias recorded in inputs/catalog.json; the three other aliases are 'local-capture (origin URL not recorded)'.",
+      "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "document_identity": "OME-Zarr specification, Final Community Group Report, 8 September 2026; released version 0.5; history through 0.5.2 (2025-01-10)",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "lines": 896,
+      "verification": "read_file returned sha256 equals inputs/catalog.json original_sha256 and view_sha256 (view_kind original_bytes, view_parser null)"
+    }
+  ],
+  "dependency_binding": {
+    "file": "inputs/cache-dependency.json",
+    "source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "source_version": "capture:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "permissions": "public frozen export read-only",
+    "parser": "runtime-boundary-final-repair2.tool_server.line_map:72557b5e8d5c4f529570b55bd4c04867fb7b72d88bfbbd351fc8fbfce65eb0dd",
+    "settings": {
+      "encoding": "utf-8",
+      "line_numbering": "1-based",
+      "JSON": "ensure_ascii=False"
+    },
+    "applicability": "Entire Slide Scout OME-Zarr0.5 brief Q1opening/navigation,Q2display/coordinates/labels",
+    "corpus_membership_sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+    "negative_scope_sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9"
+  },
+  "queries_and_reads": [
+    {"tool": "mcp__pm_boundary__read_file", "path": "TASK.md", "coverage": "lines 1-9 of 9 (complete)"},
+    {"tool": "mcp__pm_boundary__read_file", "path": "inputs/brief.md", "coverage": "lines 1-5 of 5 (complete)"},
+    {"tool": "mcp__pm_boundary__read_file", "path": "inputs/catalog.json", "coverage": "lines 1-40 of 40 (complete)"},
+    {"tool": "mcp__pm_boundary__read_file", "path": "inputs/cache-dependency.json", "coverage": "lines 1-14 of 14 (complete)"},
+    {"tool": "mcp__pm_boundary__read_file", "path": "inputs/plan/Viewer.md", "coverage": "lines 1-11 of 11 (complete)"},
+    {"tool": "mcp__pm_boundary__read_file", "path": "inputs/sources/S003.txt", "coverage": "lines 1-896 of 896 (complete; all governing source bytes inspected)"},
+    {"tool": "mcp__pm_boundary__read_file", "path": "out/source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q1.json", "coverage": "entire file (single line, 61299 bytes); map entries 1-554 visible in echo before harness display truncation, verified line-for-line against S003 lines 1-554"},
+    {"tool": "mcp__pm_boundary__read_file", "path": "out/source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q2.json", "coverage": "entire file (single line, 61299 bytes), independent read; identical truncation point; view content byte-identical to Q1 view by tool-returned sha256; tail content S003:554-896 inspected in the direct full source read"}
+  ],
+  "tool_operations": [
+    {
+      "tool": "mcp__pm_boundary__mechanical",
+      "operation": "line_map",
+      "source": "inputs/sources/S003.txt",
+      "output": "out/source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q1.json",
+      "returned_sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "returned_bytes": 61299,
+      "returned_source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "cold_start": true
+    },
+    {
+      "tool": "mcp__pm_boundary__mechanical",
+      "operation": "cache_source",
+      "source": "out/source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q1.json",
+      "output": "out/source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q2.json",
+      "returned_sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "returned_bytes": 61299,
+      "returned_source_sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "cold_start": true
+    },
+    {
+      "tool": "mcp__pm_boundary__mechanical",
+      "operation": "render_sections",
+      "source": "out/source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q2.json",
+      "output": "out/drafts/q2-tail-sections.json",
+      "result": "failed: boundary failure ValueError; no output written; not retried",
+      "returned_sha256": null
+    },
+    {
+      "tool": "mcp__pm_boundary__mechanical",
+      "operation": "render_sections",
+      "source": "inputs/sources/S003.txt",
+      "output": "out/drafts/s003-sections-map.txt",
+      "result": "failed: boundary failure JSONDecodeError; no output written; not retried",
+      "returned_sha256": null
+    }
+  ],
+  "artifacts_written": [
+    "out/report.md",
+    "out/acquisition.json",
+    "out/source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q1.json",
+    "out/source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q2.json"
+  ],
+  "finding_to_source": {
+    "F-Q1-01": {"source": "S003", "lines": "67-100", "gist": "image group layout; zarr.json group attrs multiscales/omero; arbitrary level names ordered by metadata"},
+    "F-Q1-02": {"source": "S003", "lines": "81, 96-97, 296, 300", "gist": "2-5D arrays; time before channel before spatial"},
+    "F-Q1-03": {"source": "S003", "lines": "149-156", "gist": "ome namespace; version string; hierarchy-consistent MUST"},
+    "F-Q1-04": {"source": "S003", "lines": "175-206, 243-253, 254-275", "gist": "bioformats2raw.layout collections; series; SHOULD NOT default to first image"},
+    "F-Q1-05": {"source": "S003", "lines": "118-129, 515-560, 641-739, 740-752", "gist": "HCS plate/row/well/field hierarchy and metadata rules"},
+    "F-Q1-06": {"source": "S003", "lines": "102-108, 441-442", "gist": "labels group listing for overlay discovery"},
+    "F-Q1-07": {"source": "S003", "lines": "304-307", "gist": "datasets ordered highest to lowest resolution; dimensionality rules"},
+    "F-Q1-08": {"source": "S003", "lines": "298, 317, 388-397", "gist": "named multiscale selection; first as fallback"},
+    "F-Q1-09": {"source": "S003", "lines": "166-174", "gist": "axes name/type/unit rules; dimension_names MUST in array zarr.json"},
+    "F-Q1-10": {"source": "S003", "lines": "68-72, 396", "gist": "chunk-aware level choice hinted; Zarr v3 detail not in corpus"},
+    "F-Q2-01": {"source": "S003", "lines": "308-310", "gist": "exactly one scale per dataset; relative factor default 1.0"},
+    "F-Q2-02": {"source": "S003", "lines": "276-293, 309-313", "gist": "translation after scale; vector lengths equal axes; sequential application"},
+    "F-Q2-03": {"source": "S003", "lines": "314-316, 368-374", "gist": "group-level transforms applied after dataset-level; shared time scale example"},
+    "F-Q2-04": {"source": "S003", "lines": "170-172, 330-334", "gist": "UDUNITS-2 units per axis; micrometer/millisecond example"},
+    "F-Q2-05": {"source": "S003", "lines": "301-303", "gist": "axis order t, c/custom, space; zyx SHOULD; type-driven indexing"},
+    "F-Q2-06": {"source": "S003", "lines": "398-430", "gist": "omero channels color/window MUST; rdefs defaultT/defaultZ/model; optional/transitional"},
+    "F-Q2-07": {"source": "S003", "lines": "437-442", "gist": "labels storage; integer dtypes MUST; labels key MUST; intermediate groups metadata-free"},
+    "F-Q2-08": {"source": "S003", "lines": "454-455", "gist": "label multiscales level-count parity MUST"},
+    "F-Q2-09": {"source": "S003", "lines": "456-466, 483-491, 513-514", "gist": "image-label colors label-value/rgba with alpha; readers SHOULD use them"},
+    "F-Q2-10": {"source": "S003", "lines": "467-474, 493-508", "gist": "properties and source.image default ../../"},
+    "F-Q2-11": {"source": "S003", "lines": "106-108", "gist": "label dims equal image dims or 1; broadcast overlay"},
+    "F-Q2-12": {"source": "S003", "lines": "65-66, 341-370", "gist": "JSON comments forbidden in real files though examples show them"}
+  },
+  "coverage_statement": "Whole admitted corpus inspected: S003 lines 1-896 complete; all six admitted input files read completely; both questions (Q1, Q2) answered from S003 alone; no admitted area left unvisited; no searches performed beyond the admitted corpus (catalog forbids live fetching)."
+}

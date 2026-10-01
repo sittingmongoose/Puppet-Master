@@ -1,0 +1,65 @@
+{
+  "schema": "er7.productive_z.output_integrity.v1",
+  "epoch": 1790882199.163021,
+  "label": "t15-z-ome-mcp-reuse-v2-seed",
+  "files": {
+    "aux-cache-S003.json": {
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980
+    },
+    "aux-line-map-S003.md": {
+      "sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "bytes": 61299
+    }
+  },
+  "missing_required_outputs": [
+    "report.md",
+    "acquisition.json",
+    "findings.json"
+  ],
+  "sanitized_native_artifacts": {
+    "receipt.json": {
+      "sha256": "96d47c0e602b41f23018d37c5b4f757334e18fb7e5a9db54a941fe794aa0011c",
+      "bytes": 144195
+    },
+    "host-process.json": {
+      "sha256": "6c600d0c31552ebc9a208fe9fd7ee365547487e55b92bf3dfcc641dbbec326d0",
+      "bytes": 58
+    },
+    "session-tool-contract.json": {
+      "sha256": "36ce6bde75e5ac6a0779199c44d5599f5f2af4141c77d82fa828e9828f11c81e",
+      "bytes": 2168
+    },
+    "progress.jsonl": {
+      "sha256": "cbea71e3785fc1c172bd8fd33feac91ad6feb54f5a65d374a492ea5da94abf7b",
+      "bytes": 174
+    },
+    "usage-events.jsonl": {
+      "sha256": "1f4ae9747946301ded0263d904aee25adcf6c7e3a9dcf55bda61c103aa10f2fc",
+      "bytes": 2827
+    },
+    "zcode-stdout.redacted.jsonl": {
+      "sha256": "961f7f6d7c33b232b5ae1c8d4213a2bcef3b7582f0555764a7a6e0f8dbbbcf36",
+      "bytes": 19678925
+    },
+    "zcode-stderr.omitted.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-seed/native/receipt.json",
+    "native_receipt_sha256": "96d47c0e602b41f23018d37c5b4f757334e18fb7e5a9db54a941fe794aa0011c",
+    "owned_driver_pgid": 1469714,
+    "basis": "sanitized native receipt plus only known own group absence"
+  },
+  "private_client": "excluded entirely; never read",
+  "semantic_quality": "unassessed",
+  "context_observations_sha256": "3af3d2eaca93d62271d93e7a921f1a64b92dcf74c17271bff3e0deb9058b1841",
+  "future_native_context": "qualified",
+  "native_outcome": "failed-or-unestablished",
+  "inventory_verified": false,
+  "method_postrender_delivery": "pending separate measured machinery; no free semantic helper rewrite"
+}

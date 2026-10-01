@@ -1,0 +1,23 @@
+{
+  "epoch": 1790881535.4385371,
+  "label": "t07-z-ome-mcp-line-map-cache-v2-treatment",
+  "status": "frozen-for-independent-evaluation",
+  "native_goal_status": "complete",
+  "output_integrity_sha256": "6b76d56450a5c83dc922b946e0855844a1dae4292e988c5f5b0646086d3d339c",
+  "accounting": {
+    "candidate_admissions": 22,
+    "occupied_slot_seconds": 10384.845275878906,
+    "remaining_committed_slot_seconds": 448.60667157173157,
+    "reported_generated_tokens_lower_bound": 390991,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 1,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t07-z-ome-mcp-line-map-cache-v2-control"
+    ]
+  }
+}

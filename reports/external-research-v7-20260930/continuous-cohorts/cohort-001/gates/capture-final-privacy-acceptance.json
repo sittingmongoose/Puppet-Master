@@ -1,0 +1,45 @@
+{
+  "schema": "er7.capture_method_privacy_gate.v2.final",
+  "verdict": "accepted",
+  "review_epoch": 1790880325.260215,
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "projector_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/z-mcp-acquisition-capture-v2/projector_final.py",
+  "projector_sha256": "5a9894290471a1947964c9c9c47699a5f48ed08a3b949c3bb18f908097a622e4",
+  "final_draft_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/z-mcp-acquisition-capture-v2/FINAL_DRAFT.json",
+  "final_draft_sha256": "99f4409e0b9a646ccb112ec5abc1e0ad1ad18ac33925e8b984655a8ef7353af1",
+  "raw_private_hash_or_output": false,
+  "independent_source_shape_verified": true,
+  "trusted_host_interface": "projector_final.capture(selection, acceptance)",
+  "authorized_selection_rule": "exact-quiescent-job-modelio-native-identities-v1",
+  "selection_rules": [
+    "The trusted host derives the exact owned prospective job, runtime, model-I/O root+filename, lifecycle root+filename and request/attempt/session/turn from retained sanitized native identity evidence. No arbitrary workspace or sibling path is authorized.",
+    "Confirm native/driver/known own process-group quiescence before stat or reader execution; maintain host-only selected file ownership and stable bytes/mtime/inode/device metadata.",
+    "Bind the exact selection using canonical sorted compact JSON plus newline; acceptance must carry the exact selection SHA, projector SHA, runtime SHA, verified source shape and this authorized rule. No raw private-file SHA may be computed or emitted.",
+    "Interpret only direct request.BODY assistant publicGET use and matching result, with exact argument/result whitelist, UTF8 body length/hash, completed native model request and scheduled/started/completed tool join. Direct full BODY eligibility is checked after the authorized read, never asserted as a pre-read fact.",
+    "Emit only validated publicGET projection and its public hashes plus admitted native identifiers. Never expose auth/header/config/system/ordinary prompt/body paths or unrelated tool content; reject malformed/extra admitted arguments/results without raw error details.",
+    "Deduplicate repeated history by native tool identity before counting independent completions. Until an exact independently reviewed host deduper exists, repeated exposure and completion counts remain unknown."
+  ],
+  "actual_private_reads_by_reviewer": 0,
+  "actual_GET_sample_qualified": false,
+  "actual_source_eligibility": "unknown until authorized selected record projects and joins successfully",
+  "semantic_acquisition": "unknown",
+  "candidate_comprehension": "unknown",
+  "source_pin": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+  "tests": {
+    "prior_semantic_tests_against_final_source": 15,
+    "new_reader_gate_tests": 10,
+    "all_passed": true,
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/capture-final-independent-tests.json",
+    "evidence_sha256": "9519915395c4980a2ec759ce6b48b9bba1097287563ffd74008d1b28403b2fa8"
+  },
+  "preserved_failed_or_held_version": {
+    "closure_sha256": "86db55c93b7e9dd22d2d0d27c6bf0757e815626e57acb2fe97ebb06b9d7a38f9",
+    "held_review_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/capture-v2-code-privacy-review.json",
+    "held_review_sha256": "d68c685aacff9a09daa4d6ea3f049907acc0289e674931755a392e01b1283f11",
+    "reported_active_seconds": 322,
+    "original_cap_seconds": 300,
+    "overrun_seconds": 22,
+    "candidate_failure": false
+  },
+  "scope_limit": "Code/source/privacy acceptance for this exact trusted-host interface only. It is not actual sample eligibility, productive dispatch approval, canary qualification, semantic grading or a method-count credit."
+}

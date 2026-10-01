@@ -1,0 +1,74 @@
+{
+  "schema": "er7.independent.review_cost_timeline.v1",
+  "review_start_epoch": 1790879201,
+  "terminal_record_epoch": 1790881683.0884683,
+  "prospective_active_cap_seconds": 2400,
+  "response_cap": 120,
+  "freeze_reserve_seconds": 180,
+  "freeze_phase_epoch": 1790881421,
+  "actual_active_seconds_through_terminal_record": 2482.088468313217,
+  "active_overrun_seconds": 82.08846831321716,
+  "pauses_seconds": 0,
+  "waiting_charged_as_active": true,
+  "same_campaign_no_allowance_reset": true,
+  "work_after_reserved_freeze": "Terminal evidence/MD/timeline assembly only; no new method qualification",
+  "native_Goals": 0,
+  "candidate_starts": 0,
+  "native_client_startups": 0,
+  "actual_private_reads": 0,
+  "harmless_direct_test_children": 5,
+  "harmless_guard_Node_descendants": 2,
+  "generated_token_meter": "unknown",
+  "response_counter": "not exposed; cap preserved",
+  "original_capture_author": {
+    "reported_active_seconds": 322,
+    "cap_seconds": 300,
+    "overrun_seconds": 22,
+    "candidate_failure": false
+  },
+  "events": [
+    {
+      "epoch": 1790879201,
+      "event": "review_start",
+      "scope": "independent fresh coherent review;40active-min/120responses"
+    },
+    {
+      "epoch": 1790879378,
+      "event": "pins_and_closure_verified",
+      "actual_private_reads": 0
+    },
+    {
+      "epoch": 1790879639.5085459,
+      "event": "independent_synthetic_checks_and_source_audit_complete",
+      "actual_private_reads": 0
+    },
+    {
+      "epoch": 1790880012.3031962,
+      "event": "forced_own_driver_fallback_verified",
+      "seconds": 25.00363451000885,
+      "native_Goals": 0,
+      "private_reads": 0
+    },
+    {
+      "epoch": 1790880450.18944,
+      "event": "capture_final_source_privacy_interface_accepted",
+      "actual_private_reads": 0,
+      "acceptance_sha256": "ac130e16b57409ccdf05fc1066bd02a19e2a3def8a181e5293709cb6e7374e66"
+    },
+    {
+      "epoch": 1790881421,
+      "event": "reserved_freeze_phase_started",
+      "new_method_review_coverage": "partial/unassessed"
+    },
+    {
+      "epoch": 1790881623.2091105,
+      "event": "machinery_results_and_remaining_method_scope_frozen",
+      "actual_private_reads": 0
+    },
+    {
+      "epoch": 1790881683.0884683,
+      "event": "terminal_freeze_cost_record",
+      "overrun_charged": 82.08846831321716
+    }
+  ]
+}

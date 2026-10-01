@@ -1,0 +1,93 @@
+{
+  "schema": "er7.z.safe.method.config.v1",
+  "attempt": {
+    "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t07-z-ome-mcp-line-map-cache-v2/treatment/workspace",
+    "prompt_sha256": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa",
+    "label": "t07-z-ome-mcp-line-map-cache-v2-treatment",
+    "max_seconds": 900.0,
+    "max_responses": 96,
+    "public_get": false
+  },
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "runtime_snapshot": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/review-snapshot-final.json",
+  "method": "T07",
+  "pair_id": "t07-z-ome-mcp-line-map-cache-v2",
+  "arm": "treatment",
+  "task_sha256": "d46d1b7fb05d47d7b380b3fb1db5fff7d661922f26d13d8f9d6b10aeb862bd56",
+  "input_manifest": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+      "target": "brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/TASK.md",
+      "target": "TASK.md",
+      "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+      "bytes": 1367
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/catalog.json",
+      "target": "catalog.json",
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/sources/S003.txt",
+      "target": "sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/plan/Viewer.md",
+      "target": "plan/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t07-z-ome-mcp-line-map-cache-v2/cache-dependency.json",
+      "target": "cache-dependency.json",
+      "sha256": "85e42264fc6896d42e636625a9cc519414d737e0f63b2f251f0846ba953bdfe9",
+      "bytes": 783
+    }
+  ],
+  "goal_file": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t07-z-ome-mcp-line-map-cache-v2/treatment/goal.txt",
+  "output_files": [
+    "report.md",
+    "acquisition.json",
+    "source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q1.json",
+    "source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q2.json"
+  ],
+  "source_access": "Only frozen admitted evidence; no live external fetching.",
+  "plan_visibility": "Admitted thin plan visible.",
+  "model": "GLM-5.3-Flash",
+  "effort": "max",
+  "tool_names": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical"
+  ],
+  "closure_sha256": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/prepare.py": "7e3c57851189a67d1bd713b82f9698945abf82a9c87e52cd86ab8f390d4ec812",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/dependency_selector_v2.py": "fba1f20effdea82305e328c2f7a0f5de7332072ca0aae1da49337417df37be05",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/budget_guard.py": "9e870636dae31aa92bf2b3409a5f0b810b30e2f11f38de21fccd6b9c7ec55e25",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/boundary.py": "e4b39a3bbb978968ec4ac9684bd8bf1c1662e9f594293808444fd6c18bcc7621",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/tool_server.py": "72557b5e8d5c4f529570b55bd4c04867fb7b72d88bfbbd351fc8fbfce65eb0dd",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/native_runner.py": "9894fa2d82f801cf2d70f1f0a9756e2a14e7bcbd59fe95d69459d6d552d4baa9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/host_guard.py": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/bind_final_runtime.py": "68ae6c807425863b57315af7b762a3888c7bea880aac97bcceadf0e279cfd640"
+  },
+  "preserved_attempt_metadata": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t07-z-ome-mcp-line-map-cache-v2/treatment/attempt.json",
+    "sha256": "bc738b24ce119017fd0964722f38d6002d61ba0d5a5d7c0b49c0428308970f54"
+  },
+  "pair_card": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t07-z-ome-mcp-line-map-cache-v2/pair.json",
+    "sha256": "72c4b314f89822cb510dbabb9bbea7cbc9a6ded9b1c125d722d716673a678a64"
+  },
+  "configuration_transition": "Initial unexecuted prospective runtime pins retained in attempt/card history. This explicit final host configuration binds the finalized repair2 snapshot; no original attempt output or failure is replaced.",
+  "status": "HOLD: author config only; independent er7.z.safe.method.acceptance.v1 plus runtime/canary gates required",
+  "cost_policy": "All prior preparation/repair/newbinding and future candidate/hostmechanics/setup/retry/cleanup costs remain counted. No executed comparison claimed."
+}

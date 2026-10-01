@@ -1,0 +1,77 @@
+{
+  "schema": "er7.productive_z.output_integrity.v1",
+  "epoch": 1790881693.9774847,
+  "label": "t07-z-ome-mcp-line-map-cache-v2-control",
+  "files": {
+    "acquisition.json": {
+      "sha256": "a61f471f0ac61017ae563e8e3f9d7f26362f57e10dab6281f4f63e7357784a94",
+      "bytes": 13958
+    },
+    "draft-acquisition.json": {
+      "sha256": "2719d60a4280e85796f2b3dfbe2fef5768831f5f56e83cdcbf674cb454b07c7b",
+      "bytes": 11505
+    },
+    "draft-report.md": {
+      "sha256": "019a1411d13a02f0af52da097452dd3bc44622bc9263ced0d52f7a8e43d313c1",
+      "bytes": 19893
+    },
+    "report.md": {
+      "sha256": "019a1411d13a02f0af52da097452dd3bc44622bc9263ced0d52f7a8e43d313c1",
+      "bytes": 19893
+    },
+    "source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q1.json": {
+      "sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "bytes": 61299
+    },
+    "source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q2.json": {
+      "sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "bytes": 61299
+    }
+  },
+  "missing_required_outputs": [],
+  "sanitized_native_artifacts": {
+    "receipt.json": {
+      "sha256": "f9af22fd2b510d2845daf29f325371e53a8e7b636eee6f2bb56fe7db96b423a9",
+      "bytes": 466497
+    },
+    "host-process.json": {
+      "sha256": "ca441737c380c6c1924f982df83456c406907691407e3a27b29d7b38ce617768",
+      "bytes": 58
+    },
+    "session-tool-contract.json": {
+      "sha256": "d3f73c732e5be925ff61553ad956ab1283f015cc267e9676e6d51c6fdfe08efa",
+      "bytes": 2204
+    },
+    "progress.jsonl": {
+      "sha256": "dbd89f49ad6bec608cb92e59174cc4af95663b5fef138f16d955613b524eb278",
+      "bytes": 386
+    },
+    "usage-events.jsonl": {
+      "sha256": "f63cf8d48aad7f83c5d55894c09f1129379e59b4ee40e9d9147e943e99c6591c",
+      "bytes": 7377
+    },
+    "zcode-stdout.redacted.jsonl": {
+      "sha256": "ff242b87c0f963372840c6afc0058e60c72cf6ea30ce9939872dbc31e7d94cc9",
+      "bytes": 36068368
+    },
+    "zcode-stderr.omitted.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control/native/receipt.json",
+    "native_receipt_sha256": "f9af22fd2b510d2845daf29f325371e53a8e7b636eee6f2bb56fe7db96b423a9",
+    "owned_driver_pgid": 1442264,
+    "basis": "sanitized native receipt plus only known own group absence"
+  },
+  "private_client": "excluded entirely; never read",
+  "semantic_quality": "unassessed",
+  "context_observations_sha256": "214830843c0b280560ba8db8e2d29df1cb14d76dd049d1ae2c52ada881f6c4e7",
+  "future_native_context": "qualified",
+  "native_outcome": "passed",
+  "inventory_verified": true,
+  "method_postrender_delivery": "pending separate measured machinery; no free semantic helper rewrite"
+}

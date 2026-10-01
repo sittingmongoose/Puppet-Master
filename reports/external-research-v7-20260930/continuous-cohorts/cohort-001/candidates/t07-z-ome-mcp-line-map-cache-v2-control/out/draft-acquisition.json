@@ -1,0 +1,211 @@
+{
+  "case": "t07-z-ome-mcp-line-map-cache-v2-control",
+  "corpus": {
+    "schema": "er7.candidate_case.v1",
+    "case_id": "ome-normative-dev-v1",
+    "corpus_membership_sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+    "source_scope": "Fixed admitted source S003 only; no live fetching for this component case."
+  },
+  "selected_sources": [
+    {
+      "handle": "S003",
+      "workspace_path": "inputs/sources/S003.txt",
+      "uri_aliases": [
+        {
+          "source_id": "SRC-2b11c54af373e1979af8cbb3",
+          "uri": "https://ngff.openmicroscopy.org/0.5/"
+        },
+        {
+          "source_id": "SRC-e59af1d3eedfb618a7ce766f",
+          "uri": "local-capture (origin URL not recorded)"
+        },
+        {
+          "source_id": "SRC-bf327c82f5ee6b5d1b754d8c",
+          "uri": "local-capture (origin URL not recorded)"
+        },
+        {
+          "source_id": "SRC-da65296ca0490aebb780c237",
+          "uri": "local-capture (origin URL not recorded)"
+        }
+      ],
+      "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "lines": 896,
+      "view_kind": "original_bytes",
+      "description": "OME-NGFF 0.5 specification capture (Final Community Group Report, 8 September 2026)"
+    },
+    {
+      "handle": "PLAN",
+      "workspace_path": "inputs/plan/Viewer.md",
+      "uri_aliases": [],
+      "version": "file:5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498,
+      "lines": 11,
+      "description": "Admitted thin viewer plan fixture (research context only; not a source of format facts)"
+    }
+  ],
+  "cache_dependency_binding": {
+    "path": "inputs/cache-dependency.json",
+    "sha256": "85e42264fc6896d42e636625a9cc519414d737e0f63b2f251f0846ba953bdfe9",
+    "source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "source_version": "capture:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "permissions": "public frozen export read-only",
+    "parser": "runtime-boundary-final-repair2.tool_server.line_map:72557b5e8d5c4f529570b55bd4c04867fb7b72d88bfbbd351fc8fbfce65eb0dd",
+    "settings": {
+      "encoding": "utf-8",
+      "line_numbering": "1-based",
+      "JSON": "ensure_ascii=False"
+    },
+    "applicability": "Entire Slide Scout OME-Zarr0.5 brief Q1opening/navigation,Q2display/coordinates/labels",
+    "corpus_membership_sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+    "negative_scope_sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9"
+  },
+  "queries": [
+    {
+      "query_id": "Q1",
+      "terms": "opening/listing/selecting images and multiresolution navigation (public non-sensitive problem terms only; no external search executed — fixed single-source case)",
+      "external_searches_executed": 0
+    },
+    {
+      "query_id": "Q2",
+      "terms": "channel/time/plane display, calibrated coordinates and label overlays (public non-sensitive problem terms only; no external search executed — fixed single-source case)",
+      "external_searches_executed": 0
+    }
+  ],
+  "operations": [
+    {
+      "tool": "mcp__pm_boundary__read_file",
+      "seq": 1,
+      "path": "TASK.md",
+      "returned_sha256": "9f95470c48799e10840aaba634a42a62563f1f1fa18609c594bf71ad0a3f38fd",
+      "bytes": 3764,
+      "lines": "1-9",
+      "purpose": "read task card"
+    },
+    {
+      "tool": "mcp__pm_boundary__read_file",
+      "seq": 2,
+      "path": "inputs/brief.md",
+      "returned_sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905,
+      "lines": "1-5",
+      "purpose": "product brief context"
+    },
+    {
+      "tool": "mcp__pm_boundary__read_file",
+      "seq": 3,
+      "path": "inputs/catalog.json",
+      "returned_sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563,
+      "lines": "1-40",
+      "purpose": "corpus/source admission"
+    },
+    {
+      "tool": "mcp__pm_boundary__read_file",
+      "seq": 4,
+      "path": "inputs/cache-dependency.json",
+      "returned_sha256": "85e42264fc6896d42e636625a9cc519414d737e0f63b2f251f0846ba953bdfe9",
+      "bytes": 783,
+      "lines": "1-14",
+      "purpose": "cache/scope binding"
+    },
+    {
+      "tool": "mcp__pm_boundary__read_file",
+      "seq": 5,
+      "path": "inputs/plan/Viewer.md",
+      "returned_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498,
+      "lines": "1-11",
+      "purpose": "admitted plan for implications"
+    },
+    {
+      "tool": "mcp__pm_boundary__read_file",
+      "seq": 6,
+      "path": "inputs/sources/S003.txt",
+      "line_range": "1-896",
+      "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "lines": 896,
+      "purpose": "full inspection of governing source bytes (complete, untruncated)"
+    },
+    {
+      "tool": "mcp__pm_boundary__mechanical",
+      "seq": 7,
+      "operation": "line_map",
+      "source": "inputs/sources/S003.txt",
+      "output": "out/source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q1.json",
+      "returned_output_sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "returned_source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 61299,
+      "arm": "Q1"
+    },
+    {
+      "tool": "mcp__pm_boundary__mechanical",
+      "seq": 8,
+      "operation": "line_map",
+      "source": "inputs/sources/S003.txt",
+      "output": "out/source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q2.json",
+      "returned_output_sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "returned_source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 61299,
+      "arm": "Q2"
+    },
+    {
+      "tool": "mcp__pm_boundary__read_file",
+      "seq": 9,
+      "path": "out/source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q1.json",
+      "returned_sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "bytes": 61299,
+      "lines": 1,
+      "purpose": "inspect Q1 parsed view",
+      "inspection_note": "View is a single-line JSON: {source, source_sha256, lines[896]}. Verified source binding (inputs/sources/S003.txt, sha 5d8b2408...), JSON structure, and parsed entries for source lines 1-554 verbatim; the harness display truncated the remainder of the 61,299-byte line at ~entry 554. The full 896-line content of the view is line-identical to inputs/sources/S003.txt (same parser, same source_sha256), whose complete bytes were inspected in operation seq 6. No content was assumed beyond this evidence."
+    },
+    {
+      "tool": "mcp__pm_boundary__read_file",
+      "seq": 10,
+      "path": "out/source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q2.json",
+      "returned_sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "bytes": 61299,
+      "lines": 1,
+      "purpose": "inspect Q2 parsed view independently",
+      "inspection_note": "Independent read call against the Q2 view path. Identical result structure and identical display truncation behavior (~entry 554 of 896). Findings for Q2 were derived from this arm's view inspection plus the same fully-inspected source bytes; no Q1 semantic answers were reused, only the shared source evidence permitted by the task (Q1 actual cold work counts in both arms)."
+    }
+  ],
+  "findings_to_sources": [
+    {"finding": "F-Q1-1", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:67-90"]},
+    {"finding": "F-Q1-2", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:91-100"]},
+    {"finding": "F-Q1-3", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:175-206", "S003:243-253", "S003:261-275"]},
+    {"finding": "F-Q1-4", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:118-148", "S003:515-560", "S003:740-752"]},
+    {"finding": "F-Q1-5", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:294-319"]},
+    {"finding": "F-Q1-6", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:388-397"]},
+    {"finding": "F-Q1-7", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:149-165"]},
+    {"finding": "F-Q1-8", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:102-117", "S003:437-453"]},
+    {"finding": "F-Q1-9", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:67-72"]},
+    {"finding": "F-Q1-10", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:60-64"]},
+    {"finding": "F-Q2-1", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:398-430"]},
+    {"finding": "F-Q2-2", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:166-174"]},
+    {"finding": "F-Q2-3", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:276-293", "S003:308-316"]},
+    {"finding": "F-Q2-4", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:301-303", "S003:96-97"]},
+    {"finding": "F-Q2-5", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:431-455", "S003:432-433", "S003:106-108"]},
+    {"finding": "F-Q2-6", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:456-474", "S003:476-514"]},
+    {"finding": "F-Q2-7", "source": "S003", "version": "capture-only:5d8b2408...", "locators": ["S003:320-387"]},
+    {"finding": "PLAN-IMPLICATIONS-1-8", "source": "PLAN+S003", "version": "PLAN file:5f4d4db8...; S003 capture-only:5d8b2408...", "locators": ["Viewer.md:5-11", "S003:272", "S003:305-316", "S003:388-397", "S003:398-430", "S003:170", "S003:454-465", "S003:156"]}
+  ],
+  "integrity_notes": {
+    "no_external_access": "No live fetching, external writes, or non-MCP tools were used; all operations above are the bounded MCP tools only.",
+    "no_invented_evidence": "All paths, hashes, byte/line counts and operation names recorded here are values actually returned by the tool calls in this session; counters are not extrapolated.",
+    "view_inspection_limits": "read_file displayed ~554 of the 896 parsed entries per view due to a harness result-size budget (originalBytes 68,921 vs 50,000 limit); the truncated remainder is cross-verified via the complete untruncated read of the same source bytes (seq 6) and the parser binding in cache-dependency.json. Recorded as a limit, not silently elided.",
+    "failed_search_interpretation": "The corpus sweep (catalog admits only S003) proves only that this corpus holds nothing further, not absence elsewhere."
+  },
+  "artifacts": {
+    "report": "out/report.md",
+    "acquisition": "out/acquisition.json",
+    "source_views": [
+      "out/source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q1.json",
+      "out/source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q2.json"
+    ],
+    "drafts_superseded": ["out/draft-report.md", "out/draft-acquisition.json"]
+  }
+}

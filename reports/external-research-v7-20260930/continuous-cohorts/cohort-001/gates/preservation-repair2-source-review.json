@@ -1,0 +1,36 @@
+{
+  "schema": "er7.independent.method_source_closure_review.v1",
+  "verdict": "accepted_source_and_renderer_only",
+  "closure_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/closure.json",
+  "closure_sha256": "ec98f0644d5c786ccc908789b3b28c349ab59a08fd08bb2067f8d79bff263d06",
+  "native_admission_authorized": false,
+  "scope": "T03/T13 deterministic method-source and paired provenance metadata only; no translated finalmethod config acceptance",
+  "checks": {
+    "paired_source_input_caps_model_effort_tools_equal": true,
+    "closure_and_input_pins_match": true,
+    "readonly_verifier_passed": true,
+    "renderer_tests_passed": 11,
+    "highest_complete_contiguous_version_selection": true,
+    "exact_whole_section_T03_treatment_byte_match": true,
+    "T13_seed_record_hash_binding_and_omitted_unconfirmed": true,
+    "original_renderer_synthetic_parity": true,
+    "exclusive_delivery_and_symlink_denial": true
+  },
+  "required_before_final_method_acceptance": [
+    "Pin translated exact operator-compatible method configs with unchanged goal/task/input/source/caps/treatment except declared mechanical field aliases.",
+    "Whole frozen workspace must include hash-bound immutable admitted inputs/candidate_seed.json for T13 treatment; current operator output freeze contains only out/.",
+    "Bind the exact highest contiguous final/report/acquisition/research version selector; V001 may be a minimum-carrier existence obligation only.",
+    "Measure host input companion freeze and postrender/delivery separately in total user-facing latency/cost; no semantic helper rewrites."
+  ],
+  "source_seed_provenance": "First T02 control candidate reused seed tagged, not fresh discovery; seed/report selection metadata seen, seed text not read or graded",
+  "actual_candidate_outputs_semantically_read": 0,
+  "semantic_source_facts_inspected": false,
+  "native_Goals": 0,
+  "actual_private_reads": 0,
+  "author_fixture_failure_preserved": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/offline-failure01.json",
+    "sha256": "e7d63e4e427d4c93a8ede68c91588c1d829c182ad10a773e1bd87a4d6d1a7a05",
+    "candidate_failure": false
+  },
+  "review_epoch": 1790881207.8464987
+}

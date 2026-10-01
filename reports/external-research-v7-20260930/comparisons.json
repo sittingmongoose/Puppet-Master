@@ -199,5 +199,30 @@
     "inventory": "cohort-grading/prepared-method-inventory.json",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+  },
+  {
+    "method": "T07",
+    "instance": "actual v2 pair cohort001",
+    "assessment": "unassessed",
+    "native_both_complete": true,
+    "context_qualified": true,
+    "current_before_history": true,
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-001"
+  },
+  {
+    "method": "T15",
+    "instance": "v2 seed only cohort001",
+    "assessment": "unassessed",
+    "native_cap_incomplete": true,
+    "missing_required_outputs": [
+      "report.md",
+      "acquisition.json",
+      "findings.json"
+    ],
+    "source_qualification": "unqualified",
+    "redo": "pending; original preserved",
+    "comparison_complete": false,
+    "cohort": "continuous-cohorts/cohort-001"
   }
 ]

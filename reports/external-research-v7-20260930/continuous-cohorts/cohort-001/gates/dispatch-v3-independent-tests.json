@@ -1,0 +1,79 @@
+{
+  "schema": "er7.independent.dispatch.v3.synthetic_checks.v1",
+  "source_sha256": "5f25c1d1eed1a9e1794ca4a3cd0698e2cafea4c3d5a2b5d183bbb4007d1d39a9",
+  "checks": [
+    {
+      "name": "group_probe",
+      "returncode": 0,
+      "stdout_shape": "numeric",
+      "expected_accepted": true,
+      "passed": true
+    },
+    {
+      "name": "group_probe",
+      "returncode": 1,
+      "stdout_shape": "empty",
+      "expected_accepted": true,
+      "passed": true
+    },
+    {
+      "name": "group_probe",
+      "returncode": 2,
+      "stdout_shape": "empty",
+      "expected_accepted": false,
+      "passed": true
+    },
+    {
+      "name": "group_probe",
+      "returncode": 1,
+      "stdout_shape": "numeric",
+      "expected_accepted": false,
+      "passed": true
+    },
+    {
+      "name": "group_probe",
+      "returncode": 0,
+      "stdout_shape": "malformed",
+      "expected_accepted": false,
+      "passed": true
+    },
+    {
+      "name": "group_probe",
+      "returncode": -9,
+      "stdout_shape": "empty",
+      "expected_accepted": false,
+      "passed": true
+    },
+    {
+      "name": "group_probe",
+      "returncode": 0,
+      "stdout_shape": "malformed",
+      "expected_accepted": false,
+      "passed": true
+    },
+    {
+      "name": "actual_non_native_child_post_Popen_exception",
+      "exception_propagated": true,
+      "fresh_child_reaped": true,
+      "own_group_absent": true,
+      "lease_retained": true,
+      "passed": true,
+      "native_Goals": 0
+    },
+    {
+      "name": "prospective_empty_native_home_child_environment",
+      "checks": {
+        "home_equals_profile": true,
+        "home_empty": true,
+        "home_mode_0700": true,
+        "xdg_under_home": true,
+        "inherited_zcode_cleared": true,
+        "secret_env_cleared": true
+      },
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "native_Goals": 0,
+  "actual_private_reads": 0
+}

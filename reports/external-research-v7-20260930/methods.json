@@ -122,7 +122,7 @@
     "measure": "Cold plus warm acquisition cost, per-question coverage, actual saved fetch/parse work, negative-result and corpus-membership invalidation.",
     "boundary": "No cross-arm semantic answer or discovered-source-list reuse. Cache keys include source version, permissions, parser/settings and applicability dependencies.",
     "first_screen_family": "L",
-    "status": "not yet executed; prospective preparation/qualification ongoing",
+    "status": "new v2 pair complete/context-qualified; independent source quality unassessed",
     "class": "substantive",
     "discovery_or_repo": false,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
@@ -131,7 +131,8 @@
     "historical_status": "queued",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "actual_execution_cohort": "continuous-cohorts/cohort-001"
   },
   {
     "id": "T08",
@@ -281,15 +282,16 @@
     "measure": "Missed dependent changes, false already-covered judgments, negative-search invalidation, support/currentness, avoided work and cold-start cost.",
     "boundary": "Use explicit controlled changed/unchanged cases. Shared protocol evidence requires per-instance binding; citation presence or matching IDs alone never proves coverage.",
     "first_screen_family": "L",
-    "status": "not yet executed; prospective preparation/qualification ongoing",
+    "status": "v2 seed capped incomplete; three required outputs missing; unqualified; redo pending",
     "class": "substantive",
     "discovery_or_repo": false,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
-    "terminal_assessment": null,
+    "terminal_assessment": "semantic quality unassessed",
     "historical_status": "queued",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "actual_execution_cohort": "continuous-cohorts/cohort-001"
   },
   {
     "id": "T16",

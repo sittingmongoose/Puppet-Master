@@ -1,0 +1,68 @@
+{
+  "schema": "er7.z.safe.method.acceptance.v1",
+  "verdict": "accepted",
+  "reviewer": "/root/exact_methods_release_v3",
+  "created_utc": "2026-10-01T19:18:10.828971+00:00",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "method_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t05r-z-ome-read-once-related-questions-v1-control.method-config.json",
+  "method_config_sha256": "c666984d2515b93e4f02ac579559a4e96d76da4c69180f8e4c44d474d7de41a7",
+  "method": "T05R",
+  "arm": "control",
+  "original_method_acceptance": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/work-clock-resume-machinery-v1/t05r-control.acceptance.json",
+    "sha256": "9db4a15b6d4548653b39cc0358f41c1789979f55e59457fe76d245e7a58051ea"
+  },
+  "original_closure": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/REPLACEMENT_CLOSURE.json",
+    "sha256": "8fd83e8a5feed880fcae46177c32d730257a5f982c51acd3da7ec352ba3d5903"
+  },
+  "scope": "Fresh independent exact ABI/source binding and prospective immutable handoff contract; no semantic candidate grading or actual future handoff grant.",
+  "checks": {
+    "exact_manifest_config_sha": true,
+    "exact_original_binding_sha": true,
+    "schema": true,
+    "attempt_unchanged": true,
+    "goal_alias": true,
+    "prompt_hash": true,
+    "task_hash": true,
+    "task_original_pin": true,
+    "model_effort_alias": true,
+    "tools_alias": true,
+    "caps_alias": true,
+    "no_get": true,
+    "runtime_sha": true,
+    "identity": true,
+    "input_alias_full_unchanged": true,
+    "all_input_pins": true,
+    "safe_unique_input_targets": true,
+    "all_config_closure_pins": true,
+    "whole_original_closure_verified": true,
+    "postdelivery_script_pin": true,
+    "whole_companion_required": true,
+    "output_alias": true,
+    "latest_selector": true
+  },
+  "independent_synthetic_selector_checks": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/extended-selector-synthetics.json",
+    "sha256": "7c18b1e88725d299475d03ac1f9e8536c9ddc5e7e34599db838c76679fc723e6",
+    "tests": 9,
+    "all_passed": true
+  },
+  "conditions": [
+    "Exact frozen runtime298f plus independently passed SAME counted canary, root campaign resource/work-clock authority, exact single-use operator admission and host context acceptance remain mandatory.",
+    "Bind the entire original input_manifest; source, prompt, task, model, effort, tools, source scope and caps remain unchanged.",
+    "Before any host delivery or preservation use, independently reviewed trusted host machinery must establish native quiescence and copy EVERY prebound input into frozen-output/inputs; every original preexecution SHA must match; no glob/private capture, linked files, symlink ancestors or mutable companion. Accepted dispatcher5f25 currently freezes out only, so this acceptance itself does not complete that operation.",
+    "Whole regular nonlinked immutable output and input snapshots must be independently bound before checker use. Checker is read-only selection, not a quiescence, native Write, receiver ACK or completion proof.",
+    "Highest contiguous final binding must select highest complete report/acquisition/protocol streams; V001 output_files are initial minimum-carrier requirements, never a fixed latest selector.",
+    "Independent current report semantic assessment must be saved before acquisition/history review; no host semantic rewrite or helper-provided research facts.",
+    "Protocol actions remain SELF_REPORT unless independently observed; no count-only claim of reads, cache reuse, comprehension or savings.",
+    "Measure cold preparation, native retries/corrections/cleanup, complete input-companion copy/hash/freeze and final host delivery separately in total user-facing cost; preserve all failed attempts, pauses and development overruns.",
+    "Any subsequent config/script/source drift or changed ABI requires a newly pinned exact review; no new runtime repair or canary authorized."
+  ],
+  "native_Goals_started": 0,
+  "runtime_edits": 0,
+  "actual_private_reads": 0,
+  "candidate_findings_or_keys_read": false,
+  "actual_posthandoff_qualified": false,
+  "native_launch_authorized_by_this_document_alone": false
+}

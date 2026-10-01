@@ -1,16 +1,16 @@
 {
   "status": "ACTIVE; continuing publisher available for next frozen cohort",
-  "as_of_utc": "2026-10-01T18:42:28.877153+00:00",
+  "as_of_utc": "2026-10-01T19:29:09.223962+00:00",
   "deadline_edt": "October 1,2026 9:29:01 p.m. EDT",
   "authority_sha256": "ca4afed46dc1218bd449b3ef34f67f6c6245efbbbc73bb66e86d592102d36567",
-  "candidate_admissions": 20,
-  "actual_native_goals": 18,
-  "occupied_seconds": 9340.536205530167,
-  "reported_output_lower_bound": 366778,
-  "known_conservative_helper_events": 66,
-  "known_helper_headroom": 6,
+  "candidate_admissions": 23,
+  "actual_native_goals": 21,
+  "occupied_seconds": 11117.104108572006,
+  "reported_output_lower_bound": 429962,
+  "known_conservative_helper_events": 68,
+  "known_helper_headroom": 4,
   "unknown_usage_not_zero": true,
-  "next_publication": "exact frozen capture-v2/host-release review then actually admitted frozen candidates",
+  "next_publication": "new frozen rolling cohorts and independent sourcequality reviews",
   "private_publication_exclusions": [
     "auth/config",
     "keys",
@@ -19,7 +19,7 @@
     "large corpora"
   ],
   "previous_published_head": "e7b698a5d273c990799999ed2ca48f3ead7a3683",
-  "native_v3_status": "historical three checks passed; prospective context isolation/dispatch hold",
+  "native_v3_status": "historical passed; exact productive host/context route accepted; perattempt qualification mandatory",
   "evidence": [
     {
       "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/acceptance.json",
@@ -53,5 +53,6 @@
     }
   ],
   "helper_headroom_as_of": "root latest explicit66-event rollup; unknown omissions/true-starttimes retained",
-  "root_corrected_lab_manifest_sha256": "f5098b93e5b647b88bd103fb7a7d29bff280ae22dff6a5d120fe4612881b08cb"
+  "root_corrected_lab_manifest_sha256": "f5098b93e5b647b88bd103fb7a7d29bff280ae22dff6a5d120fe4612881b08cb",
+  "latest_frozen_cohort": "continuous-cohorts/cohort-001"
 }

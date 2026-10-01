@@ -56,18 +56,33 @@
       "R007",
       "R008"
     ],
-    "native_admissions": "held pending exact prospective context isolation and dispatch acceptance"
+    "native_admissions": "Zrolling exact rootbound queue; M/Lheld"
   },
   "preservation_cohort_utc": "2026-09-30T17:35:37.328046+00:00",
   "helper_override": "latest user resume permits23 simultaneous helpers; 72starts/token ceilings unchanged",
-  "new_admissions": false,
+  "new_admissions": true,
   "requires_explicit_user_resume": false,
   "pause_receipt": "second-pause/operator-pause.json",
-  "native_canary_independent_qualification": "native-v3 passed historical three checks; future context isolation/dispatch acceptance still held",
+  "native_canary_independent_qualification": "historical passed; exact host/context route accepted; perproductiveattempt verification required",
   "publication_status": "ACTIVE user-authorized work-clock extension; candidate families held",
   "original_wall_deadline_epoch": 1790820406,
   "deadline_edt": "2026-10-01T21:29:01-04:00",
   "extension_authority": "work-clock-extension/authority.json",
   "publication_as_of_utc": "2026-10-01T18:15:24.352746+00:00",
-  "new_research_budget_required": false
+  "new_research_budget_required": false,
+  "active_snapshot": {
+    "candidate_admissions": 23,
+    "occupied_slot_seconds": 11117.104108572006,
+    "remaining_committed_slot_seconds": 0,
+    "reported_generated_tokens_lower_bound": 429962,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": []
+  },
+  "snapshot_source": "continuous-cohorts/cohort-001/continuous-evaluation-ready.json"
 }

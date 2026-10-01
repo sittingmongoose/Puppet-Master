@@ -1,0 +1,21 @@
+{
+  "epoch": 1790882199.1645732,
+  "label": "t15-z-ome-mcp-reuse-v2-seed",
+  "status": "failed-or-incomplete-preserved",
+  "native_goal_status": null,
+  "output_integrity_sha256": "5cc9c8d6142445135db1048a24c7b60041b6cc31e2623a261af45c224d374613",
+  "accounting": {
+    "candidate_admissions": 23,
+    "occupied_slot_seconds": 11117.104108572006,
+    "remaining_committed_slot_seconds": 0,
+    "reported_generated_tokens_lower_bound": 429962,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": []
+  }
+}

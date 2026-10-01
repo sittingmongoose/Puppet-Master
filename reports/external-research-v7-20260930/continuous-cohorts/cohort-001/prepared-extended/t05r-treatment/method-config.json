@@ -1,0 +1,92 @@
+{
+  "schema": "er7.z.safe.method.config.v1",
+  "attempt": {
+    "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/replacements/t05r-z-ome-read-once-related-questions-v1/treatment/workspace",
+    "prompt_sha256": "556593bc7dae958dfd6cc264dab3773b92a70a39d92263f43d831a56e2d4621a",
+    "label": "t05r-z-ome-read-once-related-questions-v1-treatment",
+    "max_seconds": 900.0,
+    "max_responses": 96,
+    "public_get": false
+  },
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "runtime_snapshot": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/review-snapshot-final.json",
+  "method": "T05R",
+  "pair_id": "t05r-z-ome-read-once-related-questions-v1",
+  "arm": "treatment",
+  "goal_file": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/replacements/t05r-z-ome-read-once-related-questions-v1/treatment/goal.txt",
+  "task_sha256": "5b43083d67cecbdaecf4981defdbb2cd0f47cc1d8b9485b9cb6e5c65446ae7b8",
+  "input_manifest": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+      "target": "brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/TASK.md",
+      "target": "TASK.md",
+      "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+      "bytes": 1367
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/catalog.json",
+      "target": "catalog.json",
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/sources/S003.txt",
+      "target": "sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/plan/Viewer.md",
+      "target": "plan/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498
+    }
+  ],
+  "output_files": [
+    "reports/V001.md",
+    "acquisition/V001.json",
+    "protocol/V001.json",
+    "final/V001.json"
+  ],
+  "tool_names": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical"
+  ],
+  "model": "GLM-5.3-Flash",
+  "effort": "max",
+  "source_access": "Entire admitted fixed corpus; no live GET; no source scope cut.",
+  "closure_sha256": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/replacements/t05r-z-ome-read-once-related-questions-v1/treatment.binding.json": "649be1cee669760e27e285d7636c62ea872713b50a64685e8e302928dfc72705",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/replacements/t05r-z-ome-read-once-related-questions-v1/pair.json": "ec8ff4cf5c3a83c22c12d0845299b67c4e66632f0e95b5e7f3a74910553dc124",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/check_delivery.py": "7ec08a500e6f75326afe75bf895d7af1bc42cea7f82d44b37be5e49aba167a44",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/prepare_replacements.py": "96920e27751782a571c51378b187ce87952f9bd5c2fafab3a4c4d17a101d09d3",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/verify_replacements.py": "939e02e7e35c99c8ab10f637250f2eb68fec1b3bf944d266d7752d49a83ae8e0",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/REPLACEMENT_CLOSURE.json": "8fd83e8a5feed880fcae46177c32d730257a5f982c51acd3da7ec352ba3d5903"
+  },
+  "preserved_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/replacements/t05r-z-ome-read-once-related-questions-v1/treatment.binding.json",
+    "sha256": "649be1cee669760e27e285d7636c62ea872713b50a64685e8e302928dfc72705"
+  },
+  "post_quiescence_delivery": {
+    "kind": "latest_bound_version_check",
+    "script_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-write-receipts-v2/check_delivery.py",
+    "script_sha256": "7ec08a500e6f75326afe75bf895d7af1bc42cea7f82d44b37be5e49aba167a44",
+    "selected_report": "latest contiguous final binding selecting latest complete report/acquisition/protocol",
+    "required_whole_frozen_inputs": true
+  },
+  "input_companion_contract": {
+    "required": true,
+    "source": "Exact prebound input_manifest from this attempt after native quiescence; no glob/private context/config capture",
+    "destination": "Known host frozen-output/inputs as immutable companion to whole frozen-output/out",
+    "verification": "Every target byte SHA equals preexecution input_manifest; exclusive files; regular/nonlink/within admitted input paths; copy/hash/freeze elapsed measured separately",
+    "before": "Any postrenderer or preservation use; no semantic host repair"
+  },
+  "status": "HELD pending exact independent new-config acceptance; source cards/prompt/outputs/caps unchanged",
+  "cost_policy": "All prior failures/development/setup/native waits/corrections/cleanup +whole input companion copy/host delivery counts separately; no best-of"
+}

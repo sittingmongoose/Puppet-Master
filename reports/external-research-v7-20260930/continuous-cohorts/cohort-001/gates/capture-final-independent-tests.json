@@ -1,0 +1,54 @@
+{
+  "schema": "er7.independent.capture_final.synthetic_checks.v1",
+  "projector_sha256": "5a9894290471a1947964c9c9c47699a5f48ed08a3b949c3bb18f908097a622e4",
+  "prior_semantic_tests_rerun_against_exact_final_source": 15,
+  "prior_semantic_tests_passed": true,
+  "final_reader_gate_checks": [
+    {
+      "name": "synthetic_approved_exact_gate",
+      "passed": true
+    },
+    {
+      "name": "gate_reject_projector_sha256",
+      "passed": true
+    },
+    {
+      "name": "gate_reject_selection_sha256",
+      "passed": true
+    },
+    {
+      "name": "gate_reject_runtime_sha256",
+      "passed": true
+    },
+    {
+      "name": "gate_reject_verdict",
+      "passed": true
+    },
+    {
+      "name": "gate_reject_authorized_selection_rule",
+      "passed": true
+    },
+    {
+      "name": "metadata_drift_rejected",
+      "passed": true
+    },
+    {
+      "name": "symlink_rejected",
+      "passed": true
+    },
+    {
+      "name": "hardlink_rejected",
+      "passed": true
+    },
+    {
+      "name": "raw_hash_field_rejected",
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "actual_private_reads": 0,
+  "synthetic_private_fixture_reads_only": true,
+  "actual_GET_samples": 0,
+  "native_Goals": 0,
+  "raw_private_hash_or_output": false
+}

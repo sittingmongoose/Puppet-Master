@@ -1,0 +1,69 @@
+{
+  "schema": "er7.continuous_eval_ready.v1",
+  "epoch": 1790882318.2591288,
+  "jobs": [
+    {
+      "label": "t07-z-ome-mcp-line-map-cache-v2-treatment",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-treatment",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-treatment/frozen-output/out",
+      "integrity_sha256": "6b76d56450a5c83dc922b946e0855844a1dae4292e988c5f5b0646086d3d339c",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "qualified-current-for-independent-grading",
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding"
+    },
+    {
+      "label": "t07-z-ome-mcp-line-map-cache-v2-control",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control/frozen-output/out",
+      "integrity_sha256": "8ff372762e8781f1f65e0767c6a06d5fc61120ed7715ed8e55245aca7cd7e49b",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "qualified-current-for-independent-grading",
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding"
+    },
+    {
+      "label": "t15-z-ome-mcp-reuse-v2-seed",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-seed",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-seed/frozen-output/out",
+      "integrity_sha256": "5cc9c8d6142445135db1048a24c7b60041b6cc31e2623a261af45c224d374613",
+      "context_status": "qualified",
+      "native_outcome": "failed-or-unestablished",
+      "inventory_verified": false,
+      "missing_required_outputs": [
+        "report.md",
+        "acquisition.json",
+        "findings.json"
+      ],
+      "status": "failed-or-incomplete-preserved",
+      "source_qualification": "capped-incomplete-preserved-unqualified-no-dynamic-reuse",
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding"
+    }
+  ],
+  "accounting": {
+    "candidate_admissions": 23,
+    "occupied_slot_seconds": 11117.104108572006,
+    "remaining_committed_slot_seconds": 0,
+    "reported_generated_tokens_lower_bound": 429962,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": []
+  }
+}

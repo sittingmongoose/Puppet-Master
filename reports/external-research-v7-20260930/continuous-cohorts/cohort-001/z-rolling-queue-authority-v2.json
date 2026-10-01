@@ -1,0 +1,75 @@
+{
+  "schema": "er7.prospective.z.queue.authority.v1",
+  "status": "authorized",
+  "created_epoch": 1790882708.9571285,
+  "deadline_epoch": 1790904541,
+  "components": [
+    {
+      "label": "t07-z-ome-mcp-line-map-cache-v2-control",
+      "method_config_sha256": "feb74d819b002f9c3cbc6eb5811b41ddd6b53fa94f180f5b0ba6ff12adab5b9d",
+      "method_review_sha256": "59cfcfc1edc8715e638b70b0d691f24caa28a173f16a1fabc13c083ee2b3ba70"
+    },
+    {
+      "label": "t07-z-ome-mcp-line-map-cache-v2-treatment",
+      "method_config_sha256": "1bd5d6384c6f3bb287b5e1cde511a931479bf6e96a0f829d488c8449b8cd6aea",
+      "method_review_sha256": "f5b70b6a1c9785f9b497a2529a12453985f2c58c51f352a73b59077ae2aeb2c3"
+    },
+    {
+      "label": "t15-z-ome-mcp-reuse-v2-seed",
+      "method_config_sha256": "d06ab3df33fb16badb0c0e012f12996d391bcdbaa38c3eeb7ddb686e41e19ff3",
+      "method_review_sha256": "642a189d72a7e3a85099018fcb223a7df68dca1eacfc129c6a9e88bc2abcca66"
+    },
+    {
+      "label": "t08-z-ome-mcp-discovery-v2-repair1-control",
+      "method_config_sha256": "2099ce4c9e7ae2cd9a475933d580c24193591d57ddbf391a8fc9fce579631af7",
+      "method_review_sha256": "58f7d63247234804ba268cc895cd8d31879b958a66f431f6364306182a8dd9fc",
+      "method_config": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t08-z-ome-mcp-discovery-v2-repair1-control.method-config.json",
+      "method_review": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-safe-methods-v2/t08-z-ome-mcp-discovery-v2-repair1-control.acceptance.json"
+    },
+    {
+      "label": "t08-z-ome-mcp-discovery-v2-repair1-treatment",
+      "method_config_sha256": "456ccbc1c66bc410b2c5a9dd6fab5adb15907086ac014c1d3844abe5c8af93eb",
+      "method_review_sha256": "454a6ecf0da325d75f1ccccbdc1c508cb61c2952a7560b2cb116bac0a2e29e85",
+      "method_config": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t08-z-ome-mcp-discovery-v2-repair1-treatment.method-config.json",
+      "method_review": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-safe-methods-v2/t08-z-ome-mcp-discovery-v2-repair1-treatment.acceptance.json"
+    },
+    {
+      "label": "t10-z-azure-mcp-discovery-v2-control",
+      "method_config_sha256": "85b5ef16a5d006b8bed3ab70db2a760953e8f17945302a7b0979089689c5d69c",
+      "method_review_sha256": "1668165547f7d18701dde3e182ce52410eecc48f617f0177e2c7ccffccb21981",
+      "method_config": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t10-z-azure-mcp-discovery-v2-control.method-config.json",
+      "method_review": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-safe-methods-v2/t10-z-azure-mcp-discovery-v2-control.acceptance.json"
+    },
+    {
+      "label": "t10-z-azure-mcp-discovery-v2-treatment",
+      "method_config_sha256": "92e5aba109a681880e9c015cceaaf8042a82f7ccbb269b753e15c771dd4b83d4",
+      "method_review_sha256": "9f4cca43794ffb51dbe90ee674d609e3d1df21d340446805dfdbacadafd2f9ce",
+      "method_config": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t10-z-azure-mcp-discovery-v2-treatment.method-config.json",
+      "method_review": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-safe-methods-v2/t10-z-azure-mcp-discovery-v2-treatment.acceptance.json"
+    },
+    {
+      "label": "t16-z-azure-mcp-topology-v2-control-discovery",
+      "method_config_sha256": "35e5db1894fbf5eacd454b418652e80bf66055ab21d8fc0397eda42890ad4068",
+      "method_review_sha256": "04bf3a98f20661d07d5c8786c4e87855cc745d1d41a1552528321cf15fdc9993",
+      "method_config": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t16-z-azure-mcp-topology-v2-control-discovery.method-config.json",
+      "method_review": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-safe-methods-v2/t16-z-azure-mcp-topology-v2-control-discovery.acceptance.json"
+    },
+    {
+      "label": "t16-z-azure-mcp-topology-v2-treatment-discovery-study",
+      "method_config_sha256": "daa87a05bfa99c97f84e3a8432e8e449948751380c80e76245f0507c789ce258",
+      "method_review_sha256": "d9155e40ae93a66cae522d18a8d1bf937b02e50f49e73a0a2c1c1211326882c5",
+      "method_config": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t16-z-azure-mcp-topology-v2-treatment-discovery-study.method-config.json",
+      "method_review": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-safe-methods-v2/t16-z-azure-mcp-topology-v2-treatment-discovery-study.acceptance.json"
+    }
+  ],
+  "scope": "Prospective exact component queue authority only; DOES NOT bypass independent frozen runtime, native canary PASS, host machinery/privacy gates, live caps or final-hour reserves",
+  "pair_order_policy": "T10 control first released slot and treatment next free slot immediately; T08 and T16 remain eligible future rolling components, each exact stage/dependency independently bound.",
+  "sibling_load": "unknown; never borrow their slots",
+  "clock_authority_sha256": "ca4afed46dc1218bd449b3ef34f67f6c6245efbbbc73bb66e86d592102d36567",
+  "revision": "v2 rolling public GET continuation",
+  "capture_privacy_gate": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/capture-final-privacy-acceptance.json",
+    "sha256": "ac130e16b57409ccdf05fc1066bd02a19e2a3def8a181e5293709cb6e7374e66"
+  },
+  "capture_eligibility": "Strict accepted projector unchanged; ineligible/missing/ambiguous native body source remains unknown. No semantic rescue or raw private log hash/copy."
+}
