@@ -1,0 +1,171 @@
+{
+  "schema": "er7.candidate_acquisition.v1",
+  "case_id": "ome-normative-dev-v1",
+  "goal": "single fresh native Goal; Q1 then Q2 over the same admitted corpus",
+  "reporting_basis": "SELF_REPORT (candidate-authored read records; actual tool responses are quoted/summarized, not invented)",
+  "sources": [
+    {
+      "handle": "S003",
+      "path": "inputs/sources/S003.txt",
+      "observed_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "catalog_original_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "catalog_view_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "hash_match": true,
+      "bytes": 36980,
+      "total_lines": 896,
+      "view_kind": "original_bytes",
+      "interpretation": "Capture of the OME-Zarr (NGFF) specification, Final Community Group Report, 8 September 2026; released version 0.5 with version history through 0.5.2 (2025-01-10). All line citations in out/reports/V001.md refer to this file and hash.",
+      "aliases": [
+        {
+          "source_id": "SRC-2b11c54af373e1979af8cbb3",
+          "uri": "https://ngff.openmicroscopy.org/0.5/",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        {
+          "source_id": "SRC-e59af1d3eedfb618a7ce766f",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        {
+          "source_id": "SRC-bf327c82f5ee6b5d1b754d8c",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        {
+          "source_id": "SRC-da65296ca0490aebb780c237",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        }
+      ]
+    }
+  ],
+  "front_matter_reads": [
+    {
+      "path": "TASK.md",
+      "attempts": [
+        {
+          "tool": "mcp__pm_boundary.read_file",
+          "requested_path": "absolute workspace path ending in /control/workspace/TASK.md",
+          "result": "ERROR: boundary failure: ValueError (no content returned); corrected per protocol event seq 1 / correction C1"
+        },
+        {
+          "tool": "mcp__pm_boundary.read_file",
+          "requested_path": "TASK.md",
+          "result": "ok",
+          "sha256": "2b9452fbd8f687f3ff077d20c2b2bd4f2208745d749cd2736dc81d59d0d8f598",
+          "bytes": 6187,
+          "total_lines": 40
+        }
+      ]
+    },
+    {
+      "path": "inputs/brief.md",
+      "tool": "mcp__pm_boundary.read_file",
+      "result": "ok",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905,
+      "total_lines": 5
+    },
+    {
+      "path": "inputs/catalog.json",
+      "tool": "mcp__pm_boundary.read_file",
+      "result": "ok",
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563,
+      "total_lines": 40
+    },
+    {
+      "path": "inputs/plan/Viewer.md",
+      "tool": "mcp__pm_boundary.read_file",
+      "result": "ok",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498,
+      "total_lines": 11
+    }
+  ],
+  "phases": [
+    {
+      "phase_id": "A1",
+      "question": "Q1",
+      "declared_purpose": "Fresh complete source-expansion phase for Q1: read every catalog-admitted source from its inputs path, covering all lines, before Q1 analysis.",
+      "reads": [
+        { "read_id": "R001", "tool": "mcp__pm_boundary.read_file", "path": "inputs/sources/S003.txt", "requested": { "line_start": 1, "line_count": 150 }, "returned_lines": "1-150", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+        { "read_id": "R002", "tool": "mcp__pm_boundary.read_file", "path": "inputs/sources/S003.txt", "requested": { "line_start": 151, "line_count": 150 }, "returned_lines": "151-300", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+        { "read_id": "R003", "tool": "mcp__pm_boundary.read_file", "path": "inputs/sources/S003.txt", "requested": { "line_start": 301, "line_count": 150 }, "returned_lines": "301-450", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+        { "read_id": "R004", "tool": "mcp__pm_boundary.read_file", "path": "inputs/sources/S003.txt", "requested": { "line_start": 451, "line_count": 150 }, "returned_lines": "451-600", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+        { "read_id": "R005", "tool": "mcp__pm_boundary.read_file", "path": "inputs/sources/S003.txt", "requested": { "line_start": 601, "line_count": 150 }, "returned_lines": "601-750", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+        { "read_id": "R006", "tool": "mcp__pm_boundary.read_file", "path": "inputs/sources/S003.txt", "requested": { "line_start": 751, "line_count": 150 }, "returned_lines": "751-896", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "note": "requested through line 900; file ends at 896" }
+      ],
+      "coverage": { "covered_lines": "1-896", "complete": true, "gaps": [] }
+    },
+    {
+      "phase_id": "A2",
+      "question": "Q2",
+      "declared_purpose": "Mandated second fresh complete source-expansion phase for Q2: reread every admitted source line before Q2 analysis; no substitution of notes or cached content. Reason for expansion is the assignment's repeated-source-expansion treatment, not an evidence-driven need.",
+      "reads": [
+        { "read_id": "R007", "tool": "mcp__pm_boundary.read_file", "path": "inputs/sources/S003.txt", "requested": { "line_start": 1, "line_count": 150 }, "returned_lines": "1-150", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+        { "read_id": "R008", "tool": "mcp__pm_boundary.read_file", "path": "inputs/sources/S003.txt", "requested": { "line_start": 151, "line_count": 150 }, "returned_lines": "151-300", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+        { "read_id": "R009", "tool": "mcp__pm_boundary.read_file", "path": "inputs/sources/S003.txt", "requested": { "line_start": 301, "line_count": 150 }, "returned_lines": "301-450", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+        { "read_id": "R010", "tool": "mcp__pm_boundary.read_file", "path": "inputs/sources/S003.txt", "requested": { "line_start": 451, "line_count": 150 }, "returned_lines": "451-600", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+        { "read_id": "R011", "tool": "mcp__pm_boundary.read_file", "path": "inputs/sources/S003.txt", "requested": { "line_start": 601, "line_count": 150 }, "returned_lines": "601-750", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+        { "read_id": "R012", "tool": "mcp__pm_boundary.read_file", "path": "inputs/sources/S003.txt", "requested": { "line_start": 751, "line_count": 150 }, "returned_lines": "751-896", "returned_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de", "note": "requested through line 900; file ends at 896" }
+      ],
+      "coverage": { "covered_lines": "1-896", "complete": true, "gaps": [] }
+    }
+  ],
+  "targeted_rereads": [],
+  "finding_index": [
+    { "id": "F001", "question": "Q1", "title": "Conformance conventions: RFC 2119, lowercase caveat, normative default, no JSON comments", "locator": "S003 L56-66, L867-888 (comments: L65-66; commented example L341, L351, L361, L370)" },
+    { "id": "F002", "question": "Q1", "title": "Document status: released 0.5; editor's drafts unsupported; history 0.5.0-0.5.2", "locator": "S003 L3-4, L24-27, L821-833" },
+    { "id": "F003", "question": "Q1", "title": "Zarr v3 basis; all Zarr features allowed unless disallowed; storage-agnostic hierarchy", "locator": "S003 L67-77" },
+    { "id": "F004", "question": "Q1", "title": "Image layout: 2-5D, arbitrary axis and array names, zarr.json attributes, t before c before space", "locator": "S003 L78-100 (L81, L87-89, L91-97)" },
+    { "id": "F005", "question": "Q1", "title": "Labels layout: container listing, dims equal-or-1, metadata-free intermediate groups, integer-only arrays", "locator": "S003 L102-117 (L106-108, L110, L112-117)" },
+    { "id": "F006", "question": "Q1", "title": "HCS hierarchy: well/row/plate MUSTs; SHOULD NOT empty groups", "locator": "S003 L118-130" },
+    { "id": "F007", "question": "Q1", "title": "ome namespace; version MUST be consistent within hierarchy", "locator": "S003 L149-165 (L155-156)" },
+    { "id": "F008", "question": "Q1", "title": "axes metadata: unique name MUST; type/unit SHOULD with custom MAY; length MUST match dims; dimension_names MUST in array zarr.json", "locator": "S003 L166-174 (0.5.2 note L825-827)" },
+    { "id": "F009", "question": "Q1", "title": "coordinateTransformations mechanism: identity/translation/scale; inline or path; sequential application", "locator": "S003 L276-293" },
+    { "id": "F010", "question": "Q1", "title": "multiscales requirements: axes constraints, dataset ordering, exactly one scale, translation after scale, group-level transforms applied after", "locator": "S003 L294-319, L312-316" },
+    { "id": "F011", "question": "Q1", "title": "Scale-value semantics: absolute pixel size primary, relative-factor fallback; residual ambiguity unresolved", "locator": "S003 L308-312, L341-374" },
+    { "id": "F012", "question": "Q1", "title": "Multiscale selection: single -> use; else user chooses by name, fallback first (informative)", "locator": "S003 L388-397" },
+    { "id": "F013", "question": "Q1", "title": "bioformats2raw.layout transitional: value MUST be 3; plate precedence; no mixing; OME-XML MetadataOnly; series logic", "locator": "S003 L60-64, L175-275 (L204-206, L256-270)" },
+    { "id": "F014", "question": "Q1", "title": "Reader duties for collections: SHOULD NOT default to first image; MAY use series/show-all/ignore extras", "locator": "S003 L271-275" },
+    { "id": "F015", "question": "Q1", "title": "omero transitional: optional; MUST channels/color/window(min,max,start,end); rdefs informative; OMERO docs referenced", "locator": "S003 L398-430" },
+    { "id": "F016", "question": "Q1", "title": "labels metadata: integer dtypes MUST; no metadata in intermediate groups; labels key MUST; label image level-count parity MUST", "locator": "S003 L431-455" },
+    { "id": "F017", "question": "Q1", "title": "image-label: SHOULD keys; colors/label-value MUSTs; rgba MAY; readers SHOULD use colors; properties/source MAY; source.image default ../../", "locator": "S003 L456-514" },
+    { "id": "F018", "question": "Q1", "title": "plate metadata: acquisitions/columns/rows/wells MUST-SHOULD structure; name constraints; 0-based indices; sparse plates supported", "locator": "S003 L515-739 (sparse example L641-739)" },
+    { "id": "F019", "question": "Q1", "title": "well metadata: images MUST; path rules; acquisition matching; version SHOULD (asymmetric with plate version MUST)", "locator": "S003 L740-808 (cf. L550-551)" },
+    { "id": "F020", "question": "Q1", "title": "Naming-style exceptions acknowledged (field_count, maximumfieldcount, rowIndex, label-value)", "locator": "S003 L809-812" },
+    { "id": "F021", "question": "Q1", "title": "Index/reference artifacts: HCS indexed at 2.2.3 vs actual 1.2; unnumbered Transitional; stray '.'", "locator": "S003 L130, L889-892" },
+    { "id": "F022", "question": "Q1", "title": "Corpus coverage limits: no tools listing, no Zarr v3 details, no OME-XML/OMERO/UDUNITS-2 content, no conformance suite", "locator": "S003 L70-72, L170-172, L257-260, L424-425, L813-814" },
+    { "id": "F023", "question": "Q1", "title": "Rejected common assumptions with counterevidence (comments, name-encoded order, fixed axis names, dense plates, required omero, label dtypes, version asymmetry)", "locator": "S003 L65-66, L93-94, L128-129, L305-306, L426, L438-439, L550-551, L641-739, L751-752, L81, L168-169" },
+    { "id": "F101", "question": "Q2", "title": "Plan implication: discovery across images/HCS/bioformats2raw collections; do not default to first image", "locator": "Viewer L5; S003 L78-117, L118-148, L175-275 (L272, L275)" },
+    { "id": "F102", "question": "Q2", "title": "Plan implication: dimension-agnostic UI driven by axes/dimension_names, not hardcoded names", "locator": "Viewer L5; S003 L81, L96-97, L168-174, L299-302" },
+    { "id": "F103", "question": "Q2", "title": "Plan implication: pyramid level choice from datasets order and scale, not path names; name-choice fallback for multiscales entries", "locator": "Viewer L5; S003 L93-94, L305-306, L388-397" },
+    { "id": "F104", "question": "Q2", "title": "Plan implication: calibrated coordinates require full transformation chain and honest missing-unit handling", "locator": "Viewer L5; S003 L169-172, L308-316" },
+    { "id": "F105", "question": "Q2", "title": "Plan implication: label overlay pipeline, alignment conditions, color SHOULD, fallback for missing image-label", "locator": "Viewer L5; S003 L106-108, L441-442, L454-455, L461-474" },
+    { "id": "F106", "question": "Q2", "title": "Plan implication: initial display state from optional omero with required non-omero defaults", "locator": "Viewer L5; S003 L401-430" },
+    { "id": "F107", "question": "Q2", "title": "Plan implication: failure feedback maps to a checkable MUST inventory for validation messages", "locator": "Viewer L7, L11; S003 L56-66, L156, L173-174, L204-206, L256-270, L300-312, L438-440, L454-455, L530-560, L744-750, L875-876" },
+    { "id": "F108", "question": "Q2", "title": "Engineering alternative: background IO/cancellation unregulated by spec; chunked partial reads plausible but Zarr v3 unadmitted; local boundary compatible", "locator": "Viewer L7; S003 L70-72, L73-77, L91-100" },
+    { "id": "F109", "question": "Q2", "title": "Compatibility limits: 0.5 is Zarr v3; legacy 0.4-era filesets via transitional layout; viewer policy for older versions unresolved; version-consistency detection", "locator": "Viewer L9; S003 L25-27, L60-64, L156, L180-181, L831-833" },
+    { "id": "F110", "question": "Q2", "title": "Improvement opportunities: sparse plate UI, acquisition filtering, collision warnings, tolerant key handling, version detection, unlisted-label scan, collection-size surfacing", "locator": "S003 L155-156, L169-172, L442, L536-537, L548-549, L641-739, L744-750, L809-812" },
+    { "id": "F111", "question": "Q2", "title": "Proposed validation fixture battery, negative battery, desk-check review, interop testing — ALL UNEXECUTED", "locator": "S003 examples cited therein (L320-387, L443-514, L561-640, L641-739, L753-808, L183-253)" },
+    { "id": "F112", "question": "Q2", "title": "Dead ends and open areas: tools, Zarr v3 details, OME-XML, OMERO docs, UDUNITS-2 grammar, future layout replacement, conformance suite", "locator": "S003 L70-72, L170-172, L180-181, L257-260, L424-425, L813-814" }
+  ],
+  "coverage_limits": [
+    "All Q1/Q2 claims are scoped to S003 as captured (sha256 5d8b2408...; Final Community Group Report, 8 September 2026; version 0.5 through 0.5.2). No live verification of https://ngff.openmicroscopy.org/0.5/ was possible or attempted; the catalog marks the URI capture-only.",
+    "The Zarr v3 specification is referenced but not admitted: chunk grids, codecs, chunk key encodings, storage transformers and array zarr.json details could not be verified beyond S003 L67-72, L99-100.",
+    "Section 4 Implementations says only 'See Tools' (S003 L813-814): no reader or writer implementation is present in the corpus, so no claim about any specific tool's behavior is supported or made.",
+    "No conformance test suite or normative schema is included in the corpus; none is referenced.",
+    "OME-XML obligations beyond the <MetadataOnly/> requirement (S003 L257-260) and full omero/rdefs semantics (S003 L424-425) are unadmitted dependencies.",
+    "UDUNITS-2 grammar beyond the enumerated unit strings (S003 L170-172) is unverified.",
+    "No keyword searches were relied upon for absence claims; coverage was by full linear reads of all 896 lines in two phases. Negative claims are limited to this inspected capture."
+  ],
+  "undeveloped_leads": [
+    "NGFF Tools/implementations listing (S003 L813-814 points to it) - needed for any real-tool interoperability claims; outside admitted corpus.",
+    "RFC 2119 full text (S003 L896) - normative baseline for keyword interpretation; not admitted.",
+    "Upcoming NGFF specification that will replace bioformats2raw.layout with explicit metadata (S003 L180-181) - forward compatibility unobservable here.",
+    "OMERO WebGateway documentation for complete omero/rdefs field semantics (S003 L424-425).",
+    "UDUNITS-2 specification for validating or converting unit strings beyond the listed set (S003 L170-172).",
+    "Zarr v3 specification (S003 L67-69) for chunk addressing, codecs and storage transformers relevant to the plan's background-read design."
+  ]
+}

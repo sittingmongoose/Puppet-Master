@@ -1,0 +1,67 @@
+{
+  "schema": "er7.productive_z.output_integrity.v1",
+  "epoch": 1790885285.3979707,
+  "label": "t11-z-jj-repo-safe-v2-s2-control",
+  "files": {
+    "draft-1-report.md": {
+      "sha256": "e7794856b3f801d04308b054ebd2e0080dfe6eace481ad123424c8b9c8920635",
+      "bytes": 23993
+    },
+    "draft-lm-working-copy.txt": {
+      "sha256": "ca477814b4790aad7b266aa5d4e990ce8c2c791c5c3c923b68b1ca50b3fcac8d",
+      "bytes": 19807
+    }
+  },
+  "missing_required_outputs": [
+    "report.md",
+    "acquisition.json",
+    "navigation.json",
+    "evidence-chains.json",
+    "map-usage.json"
+  ],
+  "sanitized_native_artifacts": {
+    "receipt.json": {
+      "sha256": "1b50f72ac088e225244de2590bd43838b82c5636f6e2b3ec672f25acfe2d3d75",
+      "bytes": 894731
+    },
+    "host-process.json": {
+      "sha256": "22fbe05187c8b8cdde07bc496d52f47e3d87568133629b94942839bc186e9c02",
+      "bytes": 58
+    },
+    "session-tool-contract.json": {
+      "sha256": "0b9a95055c6be1844e89c437437ba434edf2112f1f99fddccde0c72986663525",
+      "bytes": 2240
+    },
+    "progress.jsonl": {
+      "sha256": "55116bc8e7c9ffe5fab0bf408688a72e4d06f8bb3113c55277d458f9fb8ff10a",
+      "bytes": 174
+    },
+    "usage-events.jsonl": {
+      "sha256": "1166433fa25acf445f34c75efd393a1ca8de46d81ff18eb53f017a733b004a6e",
+      "bytes": 19915
+    },
+    "zcode-stdout.redacted.jsonl": {
+      "sha256": "8a4361b445dcd56078f8c249aba16cc4a4e0647436b492f6f2ad7bc96a99aa0a",
+      "bytes": 79816257
+    },
+    "zcode-stderr.omitted.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-control/native/receipt.json",
+    "native_receipt_sha256": "1b50f72ac088e225244de2590bd43838b82c5636f6e2b3ec672f25acfe2d3d75",
+    "owned_driver_pgid": 1631417,
+    "basis": "sanitized native receipt plus only known own group absence"
+  },
+  "private_client": "excluded entirely; never read",
+  "semantic_quality": "unassessed",
+  "context_observations_sha256": "9dd066a3e990d828097ad54a58d0f47cc90aa8140342f64d659dbd91d33e26d4",
+  "future_native_context": "qualified",
+  "native_outcome": "failed-or-unestablished",
+  "inventory_verified": false,
+  "method_postrender_delivery": "pending separate measured machinery; no free semantic helper rewrite"
+}

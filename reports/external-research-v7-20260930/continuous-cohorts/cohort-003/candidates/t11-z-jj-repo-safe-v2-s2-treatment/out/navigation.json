@@ -1,0 +1,32 @@
+{
+  "schema": "er7.navigation_ledger.v1",
+  "task": "t11-z-jj-repo-safe-v2-s2-treatment",
+  "budget": {"elapsed_seconds_cap": 900, "parent_response_cap": 96, "note": "retries/self-correction included; per-call elapsed time not reported by the tool harness, so per-step costs are unknown"},
+  "chronology": [
+    {"step": 1, "action": "read_file TASK.md", "outcome": "task card; output/naming/budget constraints"},
+    {"step": 2, "action": "read_file inputs/brief.md + inputs/Z_SAFE_TASK.md", "outcome": "question families, matched navigation policy"},
+    {"step": 3, "action": "read_file inputs/source-locator.json (head) + inputs/map/index.json", "outcome": "shard layout learned; index.json fully read; source-locator truncated by result budget", "elapsed_cost": "unknown"},
+    {"step": 4, "action": "read_file inputs/catalog.json (head, truncated) + inputs/PIN.json", "outcome": "PIN confirms v0.22.0 commit and 431 files with per-file hashes"},
+    {"step": 5, "action": "read_file inputs/catalog.json tail", "outcome": "issue entry format: issues/<num>.json"},
+    {"step": 6, "action": "read_file inputs/issues-index.json; attempt inputs/lib/src/workspace.rs", "outcome": "68 titles/states scanned, 8 candidates selected; direct lib/ path failed (FileNotFoundError) - corpus lives under inputs/repository/", "error": "FileNotFoundError on inputs/lib/src/workspace.rs"},
+    {"step": 7, "action": "read_file inputs/source-locator.json lines 628-1307", "outcome": "locator shards list repository/<path> candidates; resolved correct prefix"},
+    {"step": 8, "action": "read_file repository/lib/src/workspace.rs + issues/4239.json + issues/4423.json + issues/4465.json", "outcome": "workspace module pinned; three issue anchors captured"},
+    {"step": 9, "action": "read_file history-index.json head + repository/lib/src/working_copy.rs + cli/src/cleanup_guard.rs + docs/technical/concurrency.md", "outcome": "trait surface, signal-cleanup scope, op-log concurrency model"},
+    {"step": 10, "action": "mechanical line_map history-index.json -> out/drafts/history-linemap.json; read update_stale.rs + test_concurrent_operations.rs + workspace/rename.rs", "outcome": "line_map produced 382,333B generic map - judged non-semantic and abandoned; three pinned files captured"},
+    {"step": 11, "action": "read_file history-index.json lines 120-919", "outcome": "found 412ef362 (workspace rename, fixes #4342), 8e727de2 (op undo reporting), b30ce36c, 9551794f subjects"},
+    {"step": 12, "action": "read_file history-index.json lines 920-1719", "outcome": "found 76f40e59 (reorder reporting), cc15ecf7 (reconcile divergent rename), f36f4ad2 (auto-track), 0.21.0 release boundary"},
+    {"step": 13, "action": "public_https_get issues/4239/comments; read patches 412ef362 (1-260) and 8e727de2 (1-120); read map/shard-000.json (1-140)", "outcome": "F1 fix direction (PR #4517 reorder) established; F2/F3 chains closed to test level; map shard schema inspected"},
+    {"step": 14, "action": "read patch 76f40e59 (1-200) + test_workspaces.rs (1075-1174) + revset_engine.rs (930-1009)", "outcome": "76f40e59 = Fixes: #4239 confirmed; pinned rename tests verified; pinned panic site verified at line 972"},
+    {"step": 15, "action": "read cli_util.rs (1690-1799) + issues/4545.json + workspace/add.rs + issues/4508.json", "outcome": "pinned update-before-report code with exact comment; open FR bodies captured; 0.22.0 workspace add has no colocate option"},
+    {"step": 16, "action": "read test_repo_change_report.rs (25-79)", "outcome": "pinned test ordering matches post-fix expectations; F1 chain fully closed"},
+    {"step": 17, "action": "write_file out/report.md, out/acquisition.json, out/navigation.json, out/evidence-chains.json, out/map-usage.json", "outcome": "five final artifacts (exclusive-create, each written once)"}
+  ],
+  "retries": [
+    {"step": 6, "what": "path guess inputs/lib/src/workspace.rs", "result": "FileNotFoundError", "correction": "locator showed inputs/repository/ prefix; no further retries needed"}
+  ],
+  "cost_accounting": {
+    "map_index_setup_seconds": "0.9738001080004324 (host-paid, pre-launch; see out/map-usage.json)",
+    "candidate_navigation_elapsed": "unknown (harness does not expose per-call timing); all navigation via bounded reads listed above",
+    "response_usage_note": "17 navigation/research steps before artifact writing, within the 96-response cap"
+  }
+}

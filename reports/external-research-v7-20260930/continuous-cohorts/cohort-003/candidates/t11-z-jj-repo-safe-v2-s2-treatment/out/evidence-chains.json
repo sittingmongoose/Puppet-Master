@@ -1,0 +1,119 @@
+{
+  "schema": "er7.evidence_chains.v1",
+  "task": "t11-z-jj-repo-safe-v2-s2-treatment",
+  "legend": "status: fixed-in-pinned | pinned-limitation | open-unresolved | test-anchored-mechanism; all local paths under inputs/; line pins verified by bounded reads",
+  "chains": [
+    {
+      "id": "F1",
+      "family": 2,
+      "claim": "Broken pipe during end-of-command reporting left the working copy stale; fixed for v0.22.0 by updating the working copy before reporting repo changes",
+      "status": "fixed-in-pinned",
+      "issue": {"number": 4239, "url": "https://github.com/jj-vcs/jj/issues/4239", "local": "issues/4239.json", "body_line": 112, "state_line": 46, "closed_at_line": 75, "state_at_capture": "closed 2024-09-22"},
+      "discussion": [
+        "https://github.com/jj-vcs/jj/issues/4239#issuecomment-2275287126 (yuja: reorder update_working_copy/report_repo_changes)",
+        "https://github.com/jj-vcs/jj/issues/4239#issuecomment-2365243059 (essiene: draft PR #4517)",
+        "fetched via public_https_get: https://api.github.com/repos/jj-vcs/jj/issues/4239/comments (200, 11148B, sha256 042c4715bde42a5e4a051a215a99613447da791c93a4ddff5f3f3500c80fa5b4)"
+      ],
+      "fix_commits": [{"hash": "76f40e5990db2981e7c86986c8af98f22edaccc9", "subject": "cli: reorder updating and reporting for consistency.", "fixes_ref": "#4239", "patch_local": "commit-patches/76f40e5990db2981e7c86986c8af98f22edaccc9.patch", "patch_lines": "1-14 header; 39-63 cli_util.rs hunk; 64-97, 98-180 test updates", "url": "https://github.com/jj-vcs/jj/commit/76f40e5990db2981e7c86986c8af98f22edaccc9"}],
+      "pinned_implementation": [{"path": "repository/cli/src/cli_util.rs", "lines": "1757-1771", "note": "tx.commit at 1757; comment 1759-1761; update_working_copy 1762-1769; report_repo_changes 1771"}],
+      "pinned_tests": [{"path": "repository/cli/tests/test_repo_change_report.rs", "lines": "30-79", "note": "post-fix ordering verified in pinned file"}, {"path": "commit-patches/76f40e5990db2981e7c86986c8af98f22edaccc9.patch", "lines": "64-97", "note": "test_file_chmod_command.rs ordering snapshot updated"}],
+      "missing_links": []
+    },
+    {
+      "id": "F2",
+      "family": 1,
+      "claim": "jj workspace rename exists in v0.22.0 and renames repo-side WorkspaceId + working-copy state in one transaction",
+      "status": "fixed-in-pinned",
+      "issue": {"number": 4342, "url": "https://github.com/jj-vcs/jj/issues/4342", "local": "issues-index.json lines 217-225", "state_at_capture": "closed 2024-09-17"},
+      "fix_commits": [{"hash": "412ef36259426d8d7a8bc33bf076922f2a801c18", "subject": "cli: Support renaming workspaces", "fixes_ref": "#4342", "patch_local": "commit-patches/412ef36259426d8d7a8bc33bf076922f2a801c18.patch", "patch_lines": "1-9 header; 101-184 new rename.rs; 224-262+ test additions", "url": "https://github.com/jj-vcs/jj/commit/412ef36259426d8d7a8bc33bf076922f2a801c18"}],
+      "pinned_implementation": [
+        {"path": "repository/cli/src/commands/workspace/rename.rs", "lines": "36-77", "note": "validation 36-38, untracked-workspace error 49-59, locked mutation 61-75"},
+        {"path": "repository/lib/src/working_copy.rs", "lines": "110-111", "note": "LockedWorkingCopy::rename_workspace trait method"}
+      ],
+      "pinned_tests": [{"path": "repository/cli/tests/test_workspaces.rs", "lines": "1081-1166", "note": "four rename tests incl. forgotten-workspace error 1109-1124"}],
+      "missing_links": ["lib/src/view.rs rename_workspace implementation not read (view-layer error path asserted from patch only)"]
+    },
+    {
+      "id": "F3",
+      "family": 2,
+      "claim": "jj op undo (and op restore) report the undone/restored operation; FR #4431 closed",
+      "status": "fixed-in-pinned",
+      "issue": {"number": 4431, "url": "https://github.com/jj-vcs/jj/issues/4431", "local": "issues-index.json lines 387-395", "state_at_capture": "closed 2024-09-15"},
+      "fix_commits": [
+        {"hash": "8e727de2ab3589d1cd5d9530c0809d9793165edd", "subject": "undo: Report what operation has been undone in `jj op undo`", "fixes_ref": "#4431 (subject-aligned; explicit issue ref not present in header)", "patch_local": "commit-patches/8e727de2ab3589d1cd5d9530c0809d9793165edd.patch", "patch_lines": "22-60 undo.rs; 61-78 templates.toml op_summary; 79-104 test_duplicate_command.rs expectations", "url": "https://github.com/jj-vcs/jj/commit/8e727de2ab3589d1cd5d9530c0809d9793165edd"},
+        {"hash": "9551794f19d72c2bcb935dd62077ae26c5bc699f", "subject": "cli: print operation summary on \"op restore\" as we do for \"undo\"", "patch_local": "history-index.json lines 210-214", "note": "not read in detail"},
+        {"hash": "b30ce36c5553f29bd95d4f06d4c9500f91833a5e", "subject": "cli: print operation summary before committing transaction", "patch_local": "history-index.json lines 217-221", "note": "not read in detail"}
+      ],
+      "pinned_implementation": [{"path": "repository/cli/src/commands/operation/undo.rs", "lines": "pinned file present, PIN sha256 4f33418eecd80c91fd402a52411d28bc297a0d34ce23364ffb24470f1f66b26b", "note": "pinned content asserted from patch post-image; file not separately re-read"}],
+      "pinned_tests": [{"path": "commit-patches/8e727de2ab3589d1cd5d9530c0809d9793165edd.patch", "lines": "79-104", "note": "test_duplicate_command.rs snapshot updates ('Undid operation ... duplicate 1 commit(s)')"}],
+      "missing_links": ["direct bounded read of pinned cli/src/commands/operation/undo.rs not performed"]
+    },
+    {
+      "id": "F4",
+      "family": 2,
+      "claim": "jj op show panicked on merged divergent operations (hidden commit -> commit_id_to_pos unwrap); panic site present at pinned v0.22.0; fix postdates the pin",
+      "status": "open-unresolved",
+      "issue": {"number": 4465, "url": "https://github.com/jj-vcs/jj/issues/4465", "local": "issues/4465.json", "body_line": 112, "state_line": 46, "closed_at_line": 75, "state_at_capture": "closed 2025-06-12 (after v0.22.0 window); reporter on 0.21.0-6e72b1cf"},
+      "fix_commits": [],
+      "pinned_implementation": [
+        {"path": "repository/lib/src/default_index/revset_engine.rs", "lines": "969-977", "note": "unwrap at line 972 matches issue backtrace frame revset_engine.rs:972:55"},
+        {"path": "repository/cli/tests/test_concurrent_operations.rs", "lines": "21-64, 109-168", "note": "divergence auto-merge notice lines 61-63; 'reconcile divergent operations' op description line 157"}
+      ],
+      "pinned_tests": [{"path": "repository/cli/tests/test_concurrent_operations.rs", "lines": "21-64", "note": "op log --at-op=@ multi-head error path lines 33-38"}],
+      "missing_links": ["fix commit (landed after 0.22.0, issue closed 2025-06-12) not identified; not present in pinned patch corpus"]
+    },
+    {
+      "id": "F5",
+      "family": 1,
+      "claim": "Snapshot-before-every-command is the cost of trusted observation; open reports document latency/CPU cost and request an opt-out when automatic snapshotting exists",
+      "status": "open-unresolved",
+      "issue": [
+        {"number": 4545, "url": "https://github.com/jj-vcs/jj/issues/4545", "local": "issues/4545.json", "body_line": 70, "state_line": 46, "state_at_capture": "open (performance label)"},
+        {"number": 4508, "url": "https://github.com/jj-vcs/jj/issues/4508", "local": "issues/4508.json", "body_line": 81, "state_line": 57, "state_at_capture": "open (bug+Mac labels)"}
+      ],
+      "fix_commits": [],
+      "pinned_implementation": [
+        {"path": "repository/lib/src/working_copy.rs", "lines": "64-66, 104-105, 189-211", "note": "start_mutation/snapshot trait + SnapshotOptions (fsmonitor, start_tracking_matcher, max_new_file_size)"},
+        {"path": "repository/cli/src/commands/workspace/update_stale.rs", "lines": "54", "note": "pinned call site of workspace_command.maybe_snapshot(ui)"},
+        {"path": "repository/cli/tests/test_concurrent_operations.rs", "lines": "80-81, 156, 163, 195-202", "note": "'snapshot working copy' op-log entries recorded on ordinary commands"}
+      ],
+      "pinned_tests": [],
+      "missing_links": ["no fix (both open at capture)", "maybe_snapshot definition body in cli_util.rs not line-pinned", "#4545/#4508 comment threads not fetched"]
+    },
+    {
+      "id": "F6",
+      "family": 2,
+      "claim": "Hard power loss can leave an unreadable op-store view object with no built-in repair; SIGINT/SIGTERM-only cleanup cannot cover it",
+      "status": "open-unresolved",
+      "issue": {"number": 4423, "url": "https://github.com/jj-vcs/jj/issues/4423", "local": "issues/4423.json", "body_line": 58, "state_line": 34, "state_at_capture": "open since 2024-09-08; updated 2026-08-25"},
+      "fix_commits": [],
+      "pinned_implementation": [
+        {"path": "docs/technical/concurrency.md", "lines": "51-54, 116-127", "note": "op-head marker files / atomic transaction claim; documented git-backend corruption caveat (#2193)"},
+        {"path": "repository/cli/src/commands/workspace/update_stale.rs", "lines": "110-143, 152-171", "note": "recovery-commit path covers missing working-copy operation only, not corrupt view objects"},
+        {"path": "repository/cli/src/cleanup_guard.rs", "lines": "13-22, 39-46, 96-100", "note": "SIGINT/SIGTERM drop guards; unix-only signal module; cannot cover SIGKILL/power loss"}
+      ],
+      "pinned_tests": [],
+      "missing_links": ["no fix (open at capture)", "op_heads_store/local_working_copy lock internals not read"]
+    },
+    {
+      "id": "F7",
+      "family": 1,
+      "claim": "Multi-workspace staleness by design: secondary workspaces point at the shared repo via .jj/repo file; concurrent checkout detected (ConcurrentCheckout); update-stale reconciles",
+      "status": "test-anchored-mechanism",
+      "issue": {"lead": "https://github.com/jj-vcs/jj/issues/4436 (workspace colocate FR; closed at capture, body not read, fix commit unidentified - unconfirmed for 0.22.0)", "local": "issues-index.json lines 407-415"},
+      "fix_commits": [],
+      "pinned_implementation": [
+        {"path": "repository/lib/src/workspace.rs", "lines": "549-563, 432-440, 462-466", "note": ".jj/repo file pointer + RepoDoesNotExist; ConcurrentCheckout on tree-id mismatch; LockedWorkspace::finish"},
+        {"path": "repository/lib/src/working_copy.rs", "lines": "116-118, 256-259", "note": "recover(); CheckoutError::ConcurrentCheckout"},
+        {"path": "repository/cli/src/commands/workspace/update_stale.rs", "lines": "43-108", "note": "staleness classification + concurrent-rejection 78-83"},
+        {"path": "repository/cli/src/commands/workspace/add.rs", "lines": "86-132, 136-156, 158-196", "note": "collision checks, no colocate option in 0.22.0, forget-hint warning 124-132"}
+      ],
+      "pinned_tests": [
+        {"path": "repository/cli/tests/test_concurrent_operations.rs", "lines": "170-242", "note": "test_concurrent_snapshot_wc_reloadable: op-head rename race 214-228, child-of-newer-parent assertion 229-241"},
+        {"path": "repository/cli/tests/test_workspaces.rs", "lines": "1109-1124", "note": "forgotten-workspace error path"}
+      ],
+      "missing_links": ["#4436 closing/fixed commit unidentified"]
+    }
+  ],
+  "summary": {"chains_complete": ["F1", "F2", "F3"], "chains_with_pinned_panics_or_limits": ["F4", "F6"], "open_reports_mechanism_pinned": ["F5"], "test_anchored": ["F7"], "unexecuted": "all validations proposed in out/report.md are UNEXECUTED; test source references are not test executions"}
+}

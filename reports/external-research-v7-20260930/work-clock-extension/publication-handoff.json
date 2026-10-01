@@ -1,16 +1,16 @@
 {
   "status": "ACTIVE; continuing publisher available for next frozen cohort",
-  "as_of_utc": "2026-10-01T20:03:31.221316+00:00",
+  "as_of_utc": "2026-10-01T20:39:56.044982+00:00",
   "deadline_edt": "October 1,2026 9:29:01 p.m. EDT",
   "authority_sha256": "ca4afed46dc1218bd449b3ef34f67f6c6245efbbbc73bb66e86d592102d36567",
-  "candidate_admissions": 29,
-  "actual_native_goals": 27,
-  "occupied_seconds": 15002.496506214142,
-  "reported_output_lower_bound": 593370,
+  "candidate_admissions": 33,
+  "actual_native_goals": 31,
+  "occupied_seconds": 18402.633721590042,
+  "reported_output_lower_bound": 748968,
   "known_conservative_helper_events": 71,
   "known_helper_headroom": 1,
   "unknown_usage_not_zero": true,
-  "next_publication": "actualGETsourcequalification, frozenT11/T12 results and separate preservation review",
+  "next_publication": "exact sourcecapture/current grades and next frozen rolling jobs",
   "private_publication_exclusions": [
     "auth/config",
     "keys",
@@ -54,7 +54,7 @@
   ],
   "helper_headroom_as_of": "root latest explicit66-event rollup; unknown omissions/true-starttimes retained",
   "root_corrected_lab_manifest_sha256": "f5098b93e5b647b88bd103fb7a7d29bff280ae22dff6a5d120fe4612881b08cb",
-  "latest_frozen_cohort": "continuous-cohorts/cohort-002",
-  "accounting_snapshot_epoch": 1790884843.7998903,
+  "latest_frozen_cohort": "continuous-cohorts/cohort-003",
+  "accounting_snapshot_epoch": 1790886810.0985003,
   "accounting_snapshot_later_state_unknown": true
 }

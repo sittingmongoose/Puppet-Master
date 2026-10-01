@@ -1,0 +1,70 @@
+{
+  "schema": "er7.acquisition_ledger.v1",
+  "task": "t11-z-jj-repo-safe-v2-s2-treatment",
+  "pinned_version": {
+    "repository_url": "https://github.com/jj-vcs/jj",
+    "tag": "v0.22.0",
+    "commit": "67c2ae0a9e3e445f034a456b299e3f37c4dc4b93",
+    "pin_file": "inputs/PIN.json",
+    "pin_sha256": "6cb6112d93cdecd21d5e9a57db5f878b1afac553012e99f008e0c4102a503342"
+  },
+  "tooling": "read_file/write_file/mechanical(line_map,render_sections,cache_source)/public_https_get only; no Bash, no native tools, no execution",
+  "reads": [
+    {"path": "TASK.md", "bytes": 3559, "lines": 11, "sha256": "e09d7694beb044d081920a555f70efcc43f6eb8304c57076c96191d2ad3a82f8", "purpose": "task card"},
+    {"path": "inputs/brief.md", "bytes": 1431, "lines": 7, "sha256": "6455c54d08627a6669c8f176a5cfb1e1c23578a183f3e606addadcf59eefff36", "purpose": "product brief / question families"},
+    {"path": "inputs/Z_SAFE_TASK.md", "bytes": 2695, "lines": 11, "sha256": "b39d86e6f0", "purpose": "safety/budget rules (sha truncated here; full value in read result)", "note": "read in full"},
+    {"path": "inputs/source-locator.json", "bytes": 164119, "lines": 2305, "sha256": "76cf7694", "reads": [{"line_start": 1, "line_count": 627, "note": "truncated by harness result budget"}, {"line_start": 628, "line_count": 680}], "purpose": "shard layout; discovered repository/ prefix and issues/ paths"},
+    {"path": "inputs/map/index.json", "bytes": 19755, "lines": 509, "sha256": "9837b6f7f000e06d4a79f245885e8e09411257cb14114ab8feed278b46309e68", "purpose": "map shards, indexed path lists, host index cost"},
+    {"path": "inputs/catalog.json", "bytes": 243589, "lines": 4862, "sha256": "edd0fdb850724199cdf5a7153053d26664704dba07fae418f29e7f5014f7e7a3", "reads": [{"line_start": 1, "line_count": 627, "note": "truncated"}, {"line_start": 4463, "line_count": 400}], "purpose": "source catalog; issue entry format"},
+    {"path": "inputs/PIN.json", "bytes": 44410, "lines": 441, "sha256": "6cb6112d93cdecd21d5e9a57db5f878b1afac553012e99f008e0c4102a503342", "purpose": "pin verification; candidate paths"},
+    {"path": "inputs/issues-index.json", "bytes": 28194, "lines": 689, "sha256": "6a6e593591ccd033b424101f2470effebc2cfd433dc97bb345e555dafac726d6", "purpose": "68 issue titles/states; finding selection"},
+    {"path": "inputs/history-index.json", "bytes": 252489, "lines": 4376, "sha256": "e8330e80a540d4432e33843436ac76c255c879661e57d7b1f818554efd544d60", "reads": [{"line_start": 1, "line_count": 120}, {"line_start": 120, "line_count": 400}, {"line_start": 520, "line_count": 400}, {"line_start": 920, "line_count": 400}, {"line_start": 1320, "line_count": 400}], "purpose": "commit subject index; fix-commit discovery"},
+    {"path": "inputs/repository/lib/src/workspace.rs", "bytes": 22419, "lines": 629, "sha256": "bb2796db350fa8d3d1c508d1baff77ae252b2e7b1791a11da316184ec8c7ac20", "purpose": "F7: workspace load/check_out/.jj/repo pointer"},
+    {"path": "inputs/repository/lib/src/working_copy.rs", "bytes": 11751, "lines": 307, "sha256": "7f7f8f8a8b6c2570a1171f51bc10ee23cb7f960ee754ad210f0de8e9592c2f40", "purpose": "F5/F7: LockedWorkingCopy trait, SnapshotOptions, ConcurrentCheckout"},
+    {"path": "inputs/repository/cli/src/cleanup_guard.rs", "bytes": 3778, "lines": 126, "sha256": "383311c42fc4346fb7bd8d0bee07278a78ff0c29fbe571e9147ddda276a5b891", "purpose": "F6: SIGINT/SIGTERM cleanup scope"},
+    {"path": "inputs/repository/docs/technical/concurrency.md", "bytes": 7259, "lines": 127, "sha256": "464ac73e5bead50a401ba00340c7fd9c837ee92ca39e2131f3f66af5a5025b5c", "purpose": "F4/F6/F7: op-log model, divergent merge, storage"},
+    {"path": "inputs/repository/cli/src/commands/workspace/update_stale.rs", "bytes": 6689, "lines": 175, "sha256": "d97bb464e4d0f2857ae571731925744acc40e0e705245f93b244b168d0289ad5", "purpose": "F6/F7: staleness handling, recovery commit"},
+    {"path": "inputs/repository/cli/src/commands/workspace/rename.rs", "bytes": 2447, "lines": 78, "sha256": "be6d3e326408ee9ac004b05a68dc72beae3803437c80638710992cf9ce48b2fd", "purpose": "F2: pinned rename implementation"},
+    {"path": "inputs/repository/cli/src/commands/workspace/add.rs", "bytes": 7163, "lines": 198, "sha256": "0d5a2e5a18851f126f4cc8311dc1c738a86c38e8b26a67438682b02e2fdf8345", "purpose": "F7/L1: workspace add behavior in 0.22.0"},
+    {"path": "inputs/repository/cli/tests/test_concurrent_operations.rs", "bytes": 10607, "lines": 247, "sha256": "e4522e19c83e49a8e4c3b34e909842fe6b15f9571ff0b82780662a38780d3b8b", "purpose": "F4/F5/F7: divergence, reconcile, snapshot ops"},
+    {"path": "inputs/repository/cli/tests/test_workspaces.rs", "bytes": 46290, "lines": 1177, "sha256": "d8f6b2178f38e51dc97e519be3221f6830d540e175b47edc546b6be799b9559e", "reads": [{"line_start": 1075, "line_count": 100}], "purpose": "F2: pinned rename tests"},
+    {"path": "inputs/repository/cli/tests/test_repo_change_report.rs", "bytes": 9658, "lines": 214, "sha256": "6614e2b5a4c457dc4b0fd9b0beb9052d3c9b810d00bdff4829be1a043fb5ddfd", "reads": [{"line_start": 25, "line_count": 55}], "purpose": "F1: pinned post-fix message ordering"},
+    {"path": "inputs/repository/lib/src/default_index/revset_engine.rs", "bytes": 49923, "lines": 1455, "sha256": "29478c70ab767e1f4b60b5dfa9ed2c18578dab9c338ae761c601226e2f6a0194", "reads": [{"line_start": 930, "line_count": 80}], "purpose": "F4: pinned panic site line 972"},
+    {"path": "inputs/repository/cli/src/cli_util.rs", "bytes": 129809, "lines": 3435, "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04", "reads": [{"line_start": 1690, "line_count": 110}], "purpose": "F1: pinned finish_transaction ordering"},
+    {"path": "inputs/issues/4239.json", "bytes": 6149, "lines": 130, "sha256": "1f47a5da278ef981bde5e474a800b692ce72ea3a53f6c91408bfa975b127c795", "purpose": "F1 issue body/state"},
+    {"path": "inputs/issues/4423.json", "bytes": 3779, "lines": 76, "sha256": "d72a14271fb697217917eef42baab65eff836b63acdca7ba9393ca5658cfda64", "purpose": "F6 issue body/state"},
+    {"path": "inputs/issues/4465.json", "bytes": 8366, "lines": 130, "sha256": "ce41618f43514866713c7b26982deacef21910f93c0d6f2dcbf426e84c027c5d", "purpose": "F4 issue body/backtrace/state"},
+    {"path": "inputs/issues/4545.json", "bytes": 4373, "lines": 88, "sha256": "a6f9011c0ebda172ab04e2edcae10945a464556b871f2824e8f811351c1d0ae6", "purpose": "F5 issue body/state"},
+    {"path": "inputs/issues/4508.json", "bytes": 4256, "lines": 99, "sha256": "7574413e1681fc1e3c15cd306399095b9c722e312ae8bbfe77275df262e934cb", "purpose": "F5 counter-evidence body/state"},
+    {"path": "inputs/commit-patches/412ef36259426d8d7a8bc33bf076922f2a801c18.patch", "bytes": 16224, "lines": 462, "sha256": "12994fcbaae4bede93ed6e91ba65923c291ecb260311147ffcd7388a0b1dd265", "reads": [{"line_start": 1, "line_count": 260}], "purpose": "F2 fix patch (fixes #4342)"},
+    {"path": "inputs/commit-patches/76f40e5990db2981e7c86986c8af98f22edaccc9.patch", "bytes": 22225, "lines": 451, "sha256": "9710b6108cf70350dddf76dcf4c182c56cc1622332fc559a33f58bdd706eea56", "reads": [{"line_start": 1, "line_count": 200}], "purpose": "F1 fix patch (Fixes: #4239)"},
+    {"path": "inputs/commit-patches/8e727de2ab3589d1cd5d9530c0809d9793165edd.patch", "bytes": 12117, "lines": 297, "sha256": "7b34c55dcae88200a87526207eb39a446252283c5acdd8e89cd5af7205a7b267", "reads": [{"line_start": 1, "line_count": 120}], "purpose": "F3 fix patch (#4431)"},
+    {"path": "inputs/map/shard-000.json", "bytes": 196419, "sha256": "5128058b9ef7993543177ae9be4929e0f6ff9306a1b28c44486c15537b9c6ca7", "reads": [{"line_start": 1, "line_count": 140}], "purpose": "map shard schema inspection (see out/map-usage.json)"}
+  ],
+  "mechanical_operations": [
+    {"operation": "line_map", "source": "inputs/history-index.json", "output": "out/drafts/history-linemap.json", "result_bytes": 382333, "result_sha256": "9485e15a006795158e7f2f9653370f3d12c42999c0b369882deb33f70a9d3403", "assessment": "generic per-line map; not a subject index; not used for selection"}
+  ],
+  "public_https": [
+    {"url": "https://api.github.com/repos/jj-vcs/jj/issues/4239/comments", "status": 200, "bytes": 11148, "sha256": "042c4715bde42a5e4a051a215a99613447da791c93a4ddff5f3f3500c80fa5b4", "purpose": "F1 discussion; PR #4517 reference and reorder rationale"}
+  ],
+  "urls_recorded_not_fetched": [
+    "https://github.com/jj-vcs/jj/issues/4239",
+    "https://github.com/jj-vcs/jj/issues/4342",
+    "https://github.com/jj-vcs/jj/issues/4423",
+    "https://github.com/jj-vcs/jj/issues/4431",
+    "https://github.com/jj-vcs/jj/issues/4436",
+    "https://github.com/jj-vcs/jj/issues/4465",
+    "https://github.com/jj-vcs/jj/issues/4508",
+    "https://github.com/jj-vcs/jj/issues/4545",
+    "https://github.com/jj-vcs/jj/pull/4517",
+    "https://github.com/jj-vcs/jj/commit/412ef36259426d8d7a8bc33bf076922f2a801c18",
+    "https://github.com/jj-vcs/jj/commit/76f40e5990db2981e7c86986c8af98f22edaccc9",
+    "https://github.com/jj-vcs/jj/commit/8e727de2ab3589d1cd5d9530c0809d9793165edd",
+    "https://github.com/jj-vcs/jj/commit/cc15ecf7c75be9b5a8061013d359ec61365e3344",
+    "https://github.com/jj-vcs/jj/commit/9551794f19d72c2bcb935dd62077ae26c5bc699f",
+    "https://github.com/jj-vcs/jj/commit/b30ce36c5553f29bd95d4f06d4c9500f91833a5e",
+    "https://github.com/jj-vcs/jj/commit/f36f4ad257dbba9057d214a509535f148f13e24f"
+  ],
+  "images_note": "demos/*.png never read; no image-viewing tool on this route; no visual claims made",
+  "capture_caveat": "issue bodies/states captured 2026-09-30, not release-time state"
+}

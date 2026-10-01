@@ -1,0 +1,47 @@
+{
+  "app": "zcode",
+  "fresh_session": true,
+  "requested_model": "GLM-5.3-Flash",
+  "requested_effort": "max",
+  "native_goal_entry": "unchanged session/goal set and native automatic continuation/verifier",
+  "admission_mode": "productive",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "accepted_method_sha256": "743a57a2a704274d783cf5a9b1108f61ed5adf86ad2a7a35f806f21d07c93578",
+  "session_id": "sess_d53790a4-f1c5-4bb7-b1b4-72255228a11f",
+  "provider_id": "builtin:zai-coding-plan",
+  "model_id": "GLM-5.3-Flash",
+  "effort_effective": "max",
+  "tool_allowlist": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical"
+  ],
+  "goal_submitted_utc": "2026-10-01T20:13:13.138310+00:00",
+  "goal_target_id": "target_mupz1jro_d160116f-73c3-4b40-8ca8-bade2975e1c0",
+  "goal_started_turn": true,
+  "stop_reason": "goal_complete",
+  "goal_status_final": "complete",
+  "end_utc": "2026-10-01T20:25:36.013214+00:00",
+  "elapsed_seconds": 747.3,
+  "native_responses": 8,
+  "request_status_counts": {
+    "model_request_completed": 8
+  },
+  "usage_totals": {
+    "inputTokens": 229286,
+    "outputTokens": 44784,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 157824,
+    "cacheWriteTokens": 0,
+    "totalTokens": 274070
+  },
+  "usage_requests_with_delta": 7,
+  "native_process_returncode": 0,
+  "native_process_group_remaining": [],
+  "own_process_group_absent": true,
+  "native_quiescent": true,
+  "startup_cleanup_elapsed_seconds": 749.298,
+  "component_outcome": "passed",
+  "original_sanitized_receipt_sha256": "c094ecf5767e235564d9be0b3d60b5a8f6cbc5e08296c609c05af24d3abede0b",
+  "excluded": "Tool input/output bodies, private conversations/logs/context/auth excluded"
+}

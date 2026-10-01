@@ -1,0 +1,23 @@
+{
+  "epoch": 1790885285.3998733,
+  "label": "t11-z-jj-repo-safe-v2-s2-control",
+  "status": "failed-or-incomplete-preserved",
+  "native_goal_status": null,
+  "output_integrity_sha256": "3280ad9b72decb8a9372663bbbe7e7e3f11e5f9ff20795a2bf0d3818522d2396",
+  "accounting": {
+    "candidate_admissions": 29,
+    "occupied_slot_seconds": 15885.70705986023,
+    "remaining_committed_slot_seconds": 281.9562096595764,
+    "reported_generated_tokens_lower_bound": 625046,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 1,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t11-z-jj-repo-safe-v2-s2-treatment"
+    ]
+  }
+}

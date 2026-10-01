@@ -1,0 +1,69 @@
+{
+  "schema": "er7.productive_z.output_integrity.v1",
+  "epoch": 1790886027.2194104,
+  "label": "t05r-z-ome-read-once-related-questions-v1-control",
+  "files": {
+    "acquisition/V001.json": {
+      "sha256": "ca701656dcd54daf71b5eec4bd6642ab4b25724c58df01838c2f9be72cacd01e",
+      "bytes": 17403
+    },
+    "final/V001.json": {
+      "sha256": "8d9a7df0740aa08c9135ae2a17132d2f7f9817b27b46fab2381e63f697aa9936",
+      "bytes": 124
+    },
+    "protocol/V001.json": {
+      "sha256": "007cc5f1e975b86f1c04d3f2dbf40256fc087cd721a316bd157e3626ac2088d2",
+      "bytes": 8844
+    },
+    "reports/V001.md": {
+      "sha256": "9d43cf6076ddc2aec0b9fb489a7cdb60620c8cccc3885f4d725ce437fcb7575d",
+      "bytes": 31672
+    }
+  },
+  "missing_required_outputs": [],
+  "sanitized_native_artifacts": {
+    "receipt.json": {
+      "sha256": "699b094f85c49210cd48733f2ab72a1b3d02835a0aa4f8d0374b59e0730f80dc",
+      "bytes": 359059
+    },
+    "host-process.json": {
+      "sha256": "3bb9aa27c828234ba708f4ceb9ea9d588caa2c4d0698ff53a7f9cfa1ec00bb6c",
+      "bytes": 58
+    },
+    "session-tool-contract.json": {
+      "sha256": "53659dee845d0f58d27dcaef68cf02b256d096b199a540741242610f6bf49553",
+      "bytes": 2285
+    },
+    "progress.jsonl": {
+      "sha256": "09dae6a1cf6fdb0d69bc8af004109a03c4af7a26105f4d5cc3c43689d8c8c103",
+      "bytes": 386
+    },
+    "usage-events.jsonl": {
+      "sha256": "536c907929d251546cb3dac6ec66245c274ad520637e81eb0be6404373fd479b",
+      "bytes": 5670
+    },
+    "zcode-stdout.redacted.jsonl": {
+      "sha256": "3b922f221a32a363502158b258bb04048022003cf1917b0071330b12c284cd60",
+      "bytes": 29479693
+    },
+    "zcode-stderr.omitted.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t05r-z-ome-read-once-related-questions-v1-control/native/receipt.json",
+    "native_receipt_sha256": "699b094f85c49210cd48733f2ab72a1b3d02835a0aa4f8d0374b59e0730f80dc",
+    "owned_driver_pgid": 1675022,
+    "basis": "sanitized native receipt plus only known own group absence"
+  },
+  "private_client": "excluded entirely; never read",
+  "semantic_quality": "unassessed",
+  "context_observations_sha256": "5ad6306b408ef1a714392319bebfd20b792f93d022221a64e949e87c05924e56",
+  "future_native_context": "qualified",
+  "native_outcome": "passed",
+  "inventory_verified": true,
+  "method_postrender_delivery": "pending separate measured machinery; no free semantic helper rewrite"
+}

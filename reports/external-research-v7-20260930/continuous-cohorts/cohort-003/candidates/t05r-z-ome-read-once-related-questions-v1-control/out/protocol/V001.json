@@ -1,0 +1,78 @@
+{
+  "schema": "er7.candidate_protocol.v1",
+  "case_id": "ome-normative-dev-v1",
+  "reporting_basis": "SELF_REPORT — every record below is candidate-authored within the single fresh native Goal. No host marker, receiver acknowledgement, or feedback read is included or required.",
+  "goal": "one fresh native Goal for all research, corrections and final artifacts; Q1 then Q2 over the same corpus; no host context reset claimed or relied on",
+  "native_caps": { "seconds": 900, "responses": 96 },
+  "tool_identity": {
+    "allowed_tools": ["mcp__pm_boundary.read_file", "mcp__pm_boundary.write_file", "mcp__pm_boundary.mechanical"],
+    "tools_used": ["mcp__pm_boundary.read_file", "mcp__pm_boundary.write_file"],
+    "mechanical_used": false,
+    "shell_or_arbitrary_code_used": false,
+    "native_read_tool_used": false,
+    "external_fetch_or_live_get_used": false,
+    "namespaces_touched": ["inputs/** (read)", "TASK.md (read)", "out/** (write)"]
+  },
+  "events": [
+    { "seq": 1, "question": null, "action": "read TASK.md", "request": "mcp__pm_boundary.read_file absolute workspace path .../control/workspace/TASK.md", "result": "ERROR: boundary failure: ValueError; no content returned" },
+    { "seq": 2, "question": null, "action": "read TASK.md (corrected)", "request": "mcp__pm_boundary.read_file TASK.md (workspace-relative)", "result": "ok; sha256 2b9452fbd8f687f3ff077d20c2b2bd4f2208745d749cd2736dc81d59d0d8f598; 6187 bytes; 40 lines", "correction": "C1" },
+    { "seq": 3, "question": null, "action": "read inputs/brief.md", "request": "mcp__pm_boundary.read_file inputs/brief.md", "result": "ok; sha256 f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a; 905 bytes; 5 lines" },
+    { "seq": 4, "question": null, "action": "read inputs/catalog.json", "request": "mcp__pm_boundary.read_file inputs/catalog.json", "result": "ok; sha256 c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a; 1563 bytes; 40 lines; admits S003 only" },
+    { "seq": 5, "question": null, "action": "read inputs/plan/Viewer.md", "request": "mcp__pm_boundary.read_file inputs/plan/Viewer.md", "result": "ok; sha256 5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d; 1498 bytes; 11 lines" },
+    { "seq": 6, "question": "Q1", "action": "phase A1 read 1/6", "request": "mcp__pm_boundary.read_file inputs/sources/S003.txt lines 1-150", "result": "ok; returned lines 1-150; sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de; 36980 bytes; 896 total lines" },
+    { "seq": 7, "question": "Q1", "action": "phase A1 read 2/6", "request": "mcp__pm_boundary.read_file inputs/sources/S003.txt lines 151-300", "result": "ok; returned lines 151-300; sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+    { "seq": 8, "question": "Q1", "action": "phase A1 read 3/6", "request": "mcp__pm_boundary.read_file inputs/sources/S003.txt lines 301-450", "result": "ok; returned lines 301-450; sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+    { "seq": 9, "question": "Q1", "action": "phase A1 read 4/6", "request": "mcp__pm_boundary.read_file inputs/sources/S003.txt lines 451-600", "result": "ok; returned lines 451-600; sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+    { "seq": 10, "question": "Q1", "action": "phase A1 read 5/6", "request": "mcp__pm_boundary.read_file inputs/sources/S003.txt lines 601-750", "result": "ok; returned lines 601-750; sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+    { "seq": 11, "question": "Q1", "action": "phase A1 read 6/6", "request": "mcp__pm_boundary.read_file inputs/sources/S003.txt lines 751-900 (count 150)", "result": "ok; returned lines 751-896 (file end); sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+    { "seq": 12, "question": "Q1", "action": "Q1 analysis", "result": "completed from phase A1 full coverage; no additional tool exposure; conclusions recorded in out/reports/V001.md sections 1.x (findings F001-F023)" },
+    { "seq": 13, "question": "Q2", "action": "phase A2 read 1/6 (mandated fresh re-read before Q2 analysis; prior notes not substituted)", "request": "mcp__pm_boundary.read_file inputs/sources/S003.txt lines 1-150", "result": "ok; returned lines 1-150; sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+    { "seq": 14, "question": "Q2", "action": "phase A2 read 2/6", "request": "mcp__pm_boundary.read_file inputs/sources/S003.txt lines 151-300", "result": "ok; returned lines 151-300; sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+    { "seq": 15, "question": "Q2", "action": "phase A2 read 3/6", "request": "mcp__pm_boundary.read_file inputs/sources/S003.txt lines 301-450", "result": "ok; returned lines 301-450; sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+    { "seq": 16, "question": "Q2", "action": "phase A2 read 4/6", "request": "mcp__pm_boundary.read_file inputs/sources/S003.txt lines 451-600", "result": "ok; returned lines 451-600; sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+    { "seq": 17, "question": "Q2", "action": "phase A2 read 5/6", "request": "mcp__pm_boundary.read_file inputs/sources/S003.txt lines 601-750", "result": "ok; returned lines 601-750; sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+    { "seq": 18, "question": "Q2", "action": "phase A2 read 6/6", "request": "mcp__pm_boundary.read_file inputs/sources/S003.txt lines 751-900 (count 150)", "result": "ok; returned lines 751-896 (file end); sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+    { "seq": 19, "question": "Q2", "action": "Q2 analysis", "result": "completed after phase A2 full re-read; recorded in out/reports/V001.md sections 2.x (findings F101-F112)" },
+    { "seq": 20, "question": null, "action": "write out/reports/V001.md", "request": "mcp__pm_boundary.write_file", "result": "ok; 31672 bytes; sha256 9d43cf6076ddc2aec0b9fb489a7cdb60620c8cccc3885f4d725ce437fcb7575d" },
+    { "seq": 21, "question": null, "action": "write out/acquisition/V001.json", "request": "mcp__pm_boundary.write_file", "result": "ok; 17403 bytes; sha256 ca701656dcd54daf71b5eec4bd6642ab4b25724c58df01838c2f9be72cacd01e" },
+    { "seq": 22, "question": null, "action": "write out/protocol/V001.json", "request": "mcp__pm_boundary.write_file", "result": "declared by this file itself; its own hash cannot be contained within it" },
+    { "seq": 23, "question": null, "action": "write out/final/V001.json", "request": "mcp__pm_boundary.write_file", "result": "final binding V001 selecting out/reports/V001.md, out/acquisition/V001.json, out/protocol/V001.json" }
+  ],
+  "corrections": [
+    {
+      "id": "C1",
+      "deviation": "First TASK.md read used an absolute workspace path and was rejected by the path boundary (mcp boundary failure: ValueError); no content was returned, so no unperformed read is claimed.",
+      "resolution": "Retried with a workspace-relative path (TASK.md), which succeeded; all subsequent paths were workspace-relative.",
+      "impact": "None on evidence; TASK.md was obtained exactly once successfully."
+    }
+  ],
+  "question_compliance": {
+    "Q1": {
+      "phase": "A1",
+      "full_source_coverage_before_analysis": true,
+      "lines_covered": "1-896 of 896",
+      "targeted_rereads": [],
+      "note": "Aggregate native read counts alone are not treated as proof of question-specific compliance; the mapping of reads to findings is in out/acquisition/V001.json (finding_index)."
+    },
+    "Q2": {
+      "phase": "A2",
+      "full_source_reread_before_analysis": true,
+      "lines_covered": "1-896 of 896",
+      "reason_for_expansion": "Mandated repeated source-expansion treatment for Q2 (assignment instruction), declared prospectively here; not an evidence-driven expansion.",
+      "targeted_rereads": [],
+      "note": "Same-goal retained history acknowledged; no host context reset claimed."
+    }
+  },
+  "expansion_reasons": [
+    "A2 full re-read: mandated by assignment (fresh second acquisition phase for Q2). No evidence-driven targeted expansions were required; both phases covered the source completely."
+  ],
+  "cost_notes": {
+    "read_file_calls": 17,
+    "read_file_errors": 1,
+    "write_file_calls": 4,
+    "mechanical_calls": 0,
+    "note": "These counts are candidate SELF_REPORT. The host counts quiescence, freeze and selection cost separately; native cap accounting is the host's."
+  },
+  "compliance_deviations": ["C1 (path-boundary rejection on first TASK.md read; corrected immediately)"],
+  "test_execution_claims": "None. No test, fixture, or conformance run was executed in this Goal. All validation proposed in out/reports/V001.md (F111) is explicitly UNEXECUTED."
+}

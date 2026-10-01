@@ -1,0 +1,34 @@
+{
+  "schema": "er7.map_usage_ledger.v1",
+  "task": "t11-z-jj-repo-safe-v2-s2-treatment",
+  "host_index": {
+    "path": "inputs/map/index.json",
+    "sha256": "9837b6f7f000e06d4a79f245885e8e09411257cb14114ab8feed278b46309e68",
+    "repository_commit": "67c2ae0a9e3e445f034a456b299e3f37c4dc4b93",
+    "files_indexed": 426,
+    "symbol_records": 5893,
+    "test_paths": 97,
+    "binary_files_not_indexed": 5,
+    "provenance": "host-prepared before candidate launch (index.json fields: host_generator_sha256 068545b1671de8e034456bfb9c12e8084796430aa0e47a20939b3a287a2b3f68); candidate performed no indexing",
+    "index_setup_seconds": 0.9738001080004324,
+    "cost_boundary_quote": "Actual first host index-build cost, paid before candidate launch. Equal cached map access in both arms; report cold setup separately from candidate navigation and retain it in T12 economics. Not candidate research or a scored comparison."
+  },
+  "candidate_map_usage": [
+    {"use": "navigation selection", "detail": "read inputs/map/index.json in full; used shards[].paths listings (shard-000/001/002/003) to enumerate candidate repository paths, choose lib/src/workspace.rs, lib/src/working_copy.rs, cli/src/cli_util.rs, cli/src/commands/workspace/{update_stale,rename,add}.rs, cli/tests/{test_concurrent_operations,test_workspaces,test_repo_change_report}.rs, lib/src/default_index/revset_engine.rs, docs/technical/concurrency.md"},
+    {"use": "schema inspection", "detail": "read inputs/map/shard-000.json lines 1-140 to learn the record schema (path/sha256/bytes/lines/module/symbols/test_path); no semantic inference drawn from the map", "path": "inputs/map/shard-000.json"},
+    {"use": "not used for line targeting", "detail": "symbol-record line lookups were not used; source line pins were established by direct bounded read_file reads of the pinned files (recorded in out/acquisition.json and out/navigation.json)", "reason": "budget"}
+  ],
+  "mechanical_tool_usage": {
+    "operations_attempted": ["line_map"],
+    "calls": [{"operation": "line_map", "source": "inputs/history-index.json", "output": "out/drafts/history-linemap.json", "result_bytes": 382333, "result_sha256": "9485e15a006795158e7f2f9653370f3d12c42999c0b369882deb33f70a9d3403"}],
+    "assessment": "line_map is a generic exact line map of the JSON, not a subject/semantic index; it did not help locate commit subjects and was abandoned after one call; render_sections/cache_source not needed",
+    "draft_note": "output kept under out/drafts/ (draft path); not a final artifact"
+  },
+  "non_map_navigation_aids": [
+    {"path": "inputs/issues-index.json", "role": "corpus navigation index (68 issues, titles/states) - part of the raw corpus, not the lexical repo map"},
+    {"path": "inputs/history-index.json", "role": "corpus commit-subject index (624 patches) - bounded slice reads; fix commits located by subject scan"},
+    {"path": "inputs/source-locator.json", "role": "resolved repository/ path prefix and chunk policy"}
+  ],
+  "images": {"png_files": 5, "visually_inspected": false, "reason": "no image-viewing tool on this route; bytes retained exactly per corpus; no visual claims made anywhere in the artifacts"},
+  "cost_separation": {"host_cold_setup_seconds": 0.9738001080004324, "candidate_navigation_seconds": "unknown (tool harness does not report per-call elapsed time)", "candidate_indexing_seconds": 0}
+}

@@ -254,5 +254,36 @@
     "current_delivery_complete": false,
     "comparison_complete": false,
     "cohort": "continuous-cohorts/cohort-002"
+  },
+  {
+    "method": "T11",
+    "instance": "actual v2-s2 pair cohort003",
+    "assessment": "unassessed",
+    "control": "capped incomplete/unqualified",
+    "treatment": "native/context complete; actualGETsourcecapture pending",
+    "comparison_complete": false,
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-003"
+  },
+  {
+    "method": "T15",
+    "instance": "actual redo1 seed cohort003",
+    "assessment": "unassessed",
+    "native_complete": true,
+    "source_qualification": "qualified-current-for-independent-grading",
+    "matched_comparison": false,
+    "original_seed_preserved": true,
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-003"
+  },
+  {
+    "method": "T05R",
+    "instance": "actual control only cohort003",
+    "assessment": "unassessed",
+    "native_complete": true,
+    "source_qualification": "qualified-current-for-independent-grading",
+    "matched_comparison": false,
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-003"
   }
 ]

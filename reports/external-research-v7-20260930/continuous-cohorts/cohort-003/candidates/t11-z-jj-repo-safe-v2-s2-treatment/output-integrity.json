@@ -1,0 +1,77 @@
+{
+  "schema": "er7.productive_z.output_integrity.v1",
+  "epoch": 1790885478.1891794,
+  "label": "t11-z-jj-repo-safe-v2-s2-treatment",
+  "files": {
+    "acquisition.json": {
+      "sha256": "58163d90d843fb58f90d4f59a007bf51c4dbb86dc1f1ba4c8202edf70f90ae09",
+      "bytes": 9562
+    },
+    "drafts/history-linemap.json": {
+      "sha256": "9485e15a006795158e7f2f9653370f3d12c42999c0b369882deb33f70a9d3403",
+      "bytes": 382333
+    },
+    "evidence-chains.json": {
+      "sha256": "70d9b364be96f84e56cd25a22091dbb34be33f24eb7036deb6a34684c8e04847",
+      "bytes": 11498
+    },
+    "map-usage.json": {
+      "sha256": "200270e42e2ac34223c6d1e3885c158a4c9423c27b59a5769a4a89ef4db284d6",
+      "bytes": 3386
+    },
+    "navigation.json": {
+      "sha256": "556a98261b947921ad3074103730a03c3fc5fbf8d5711fd2dc6206a05d1b9524",
+      "bytes": 4417
+    },
+    "report.md": {
+      "sha256": "23673c66fbbfa47bc50928a93c153151993154672232835459305bee85c30dbf",
+      "bytes": 22880
+    }
+  },
+  "missing_required_outputs": [],
+  "sanitized_native_artifacts": {
+    "receipt.json": {
+      "sha256": "84ba674cad62be6719f52d3c27d1829385adf772cde8597321f8a94abb99d54f",
+      "bytes": 962035
+    },
+    "host-process.json": {
+      "sha256": "48dbf50abf1fc3fb86c8b53a74583ff35951d217fde9e798ba05bd799163c3e7",
+      "bytes": 58
+    },
+    "session-tool-contract.json": {
+      "sha256": "201bf80e0fcc9893dd35d341b48e56ae59dd704da97a27f306ed93f939ba2e5c",
+      "bytes": 2246
+    },
+    "progress.jsonl": {
+      "sha256": "1cd8b563207e56eed96ebf591176e14b6056722c6b264e5241387ec7794d7714",
+      "bytes": 386
+    },
+    "usage-events.jsonl": {
+      "sha256": "0c3a9179c7e5831dbc769621650adceee3afdb7542f5cb231f563c877a4db8ba",
+      "bytes": 10258
+    },
+    "zcode-stdout.redacted.jsonl": {
+      "sha256": "580cdeec171c6d7d974a5a72d2d441ff9118b73eec4a7ea5d023a81b5fe3dc67",
+      "bytes": 110918300
+    },
+    "zcode-stderr.omitted.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-treatment/native/receipt.json",
+    "native_receipt_sha256": "84ba674cad62be6719f52d3c27d1829385adf772cde8597321f8a94abb99d54f",
+    "owned_driver_pgid": 1639017,
+    "basis": "sanitized native receipt plus only known own group absence"
+  },
+  "private_client": "excluded entirely; never read",
+  "semantic_quality": "unassessed",
+  "context_observations_sha256": "099a56758d296e14e5069a14b13b4996a53ecff18c9f537852eda1c97fd673f7",
+  "future_native_context": "qualified",
+  "native_outcome": "passed",
+  "inventory_verified": true,
+  "method_postrender_delivery": "pending separate measured machinery; no free semantic helper rewrite"
+}

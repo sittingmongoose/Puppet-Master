@@ -93,7 +93,8 @@
     "historical_status": "queued",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "replacement_actual_status": "T05R control complete/context-source-qualified for current grading; treatment/mechanism comparison pending; original T05 hypothesis untested"
   },
   {
     "id": "T06",
@@ -205,7 +206,7 @@
     "measure": "Supported failure constraints, stale-version claims, issue-title overgeneralization, code-reading accuracy, time per useful finding.",
     "boundary": "Pin repository versions. An issue title is not proof or community consensus; no external issue/PR writes.",
     "first_screen_family": "Z",
-    "status": "not yet executed; prospective preparation/qualification ongoing",
+    "status": "v2-s2 control capped incomplete; treatment native/context complete with GET sourcecapture pending; semantic quality unassessed",
     "class": "substantive",
     "discovery_or_repo": true,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
@@ -214,7 +215,8 @@
     "historical_status": "queued",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "actual_execution_cohort": "continuous-cohorts/cohort-003"
   },
   {
     "id": "T12",
@@ -285,7 +287,7 @@
     "measure": "Missed dependent changes, false already-covered judgments, negative-search invalidation, support/currentness, avoided work and cold-start cost.",
     "boundary": "Use explicit controlled changed/unchanged cases. Shared protocol evidence requires per-instance binding; citation presence or matching IDs alone never proves coverage.",
     "first_screen_family": "L",
-    "status": "v2 seed capped incomplete; three required outputs missing; unqualified; redo pending",
+    "status": "original seed capped incomplete preserved; redo1 seed complete/qualified for current grading; reuse comparison not executed",
     "class": "substantive",
     "discovery_or_repo": false,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
@@ -294,7 +296,7 @@
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
-    "actual_execution_cohort": "continuous-cohorts/cohort-001"
+    "actual_execution_cohort": "continuous-cohorts/cohort-003"
   },
   {
     "id": "T16",

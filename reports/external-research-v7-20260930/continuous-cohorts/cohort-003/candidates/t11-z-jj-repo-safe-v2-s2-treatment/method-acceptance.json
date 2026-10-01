@@ -1,0 +1,59 @@
+{
+  "schema": "er7.z.safe.method.acceptance.v1",
+  "verdict": "accepted",
+  "reviewer": "/root/exact_methods_release_v3",
+  "created_utc": "2026-10-01T19:30:41.122046+00:00",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "method_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-repo-abi-configs-v1/t11-z-jj-repo-safe-v2-s2-treatment.method-config.json",
+  "method_config_sha256": "2340ac1ca98128e94336bab310b8db16534110c6e40614ba399abcb6ffd35ef8",
+  "method": "T11",
+  "arm": "treatment",
+  "scope": "Independent prospective exact current-operator ABI binding, source/input preservation and handoff fidelity only; no semantic grading or actual GET source/sample grant.",
+  "original_config": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-method-configs-repo-v2/t11-z-jj-repo-safe-v2-s2-treatment.method-config.json",
+    "sha256": "da2d21d9e4793cd6c3b2336c4c15b569feef3e7cdf2bd26c5940ef0ab77fcdd9"
+  },
+  "independent_audit": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/repo-exact-alias-audit.json",
+    "sha256": "631bedcb3a29b63c8f162e7962f5fbfcf43d02476dde553c6961e680ae4bda4c"
+  },
+  "checks": {
+    "exact_config_sha": true,
+    "old_source_metadata_unchanged": true,
+    "old_exact_config_pinned": true,
+    "attempt_exact_unchanged": true,
+    "prompt_alias": true,
+    "task_exact_pin": true,
+    "full_inputs_alias": true,
+    "safe_targets": true,
+    "all_input_pins_and_bounds": true,
+    "all_closure_pins": true,
+    "all_original_card_metadata_pins": true,
+    "fixed_output_alias": true,
+    "tools_alias": true,
+    "model_effort": true,
+    "caps": true,
+    "source_plan_alias": true,
+    "GET_alias": true,
+    "frozen_runtime": true
+  },
+  "source_input_files": 1187,
+  "source_input_bytes": 26457571,
+  "conditions": [
+    "Exact independently accepted dispatcher/context boundary, frozen runtime298f, independently passed SAME counted canary, root component authority, campaign resources and single-use admission remain mandatory.",
+    "All1187 original admitted inputs and exact tasks/prompts/source scope/caps/tools/outputs are preserved; original fixed filenames remain immutable final deliverables, fresh drafts permitted under the original task.",
+    "GET additionally requires exact independently accepted final capture privacy gate and source eligibility from each qualified realized public response. Frozen installed normative source and deterministic capture privacy tests are machinery evidence only; actual capture may remain unknown. No premium refetch, model alias, private auth/config/header/rawlog inspection or semantic source rescue.",
+    "Original JJv0.22 logical source and line/chunk pins remain required. Base64 preserves five PNG byte streams but provides no visual tool: required image-inspection facets remain held/unresolved; never claim visual completion or shrink the denominator.",
+    "Question families and independent full scope remain unchanged. T11 issue/fix/test-chain and T12 generic lexical map are hypothesis factors, not established wins; source issue titles/closed status/test paths provide leads rather than verified semantic truth or executed tests.",
+    "Before any preservation/delivery use, reviewed trusted machinery must establish native quiescence and bind the whole immutable output plus every original preexecution input hash in an exclusive regular nonlinked safe companion; no glob/private context capture.",
+    "Save independent complete current-report assessment before acquisition/navigation/history access. Actual source exposure, chain/map use, omissions and mechanism outcomes require permitted independent evidence; candidate ledgers remain SELF_REPORT where unobserved.",
+    "Measure cold export/transport/map preparation, native retries/corrections/cleanup, whole input copy/hash/freeze and host delivery in total economics; retain all old failures and costs.",
+    "Any further changed exact config/script/source needs a new independent binding; no additional canary/runtime repair or campaign ceiling reset authorized."
+  ],
+  "native_Goals_started": 0,
+  "runtime_edits": 0,
+  "actual_private_reads": 0,
+  "candidate_findings_or_keys_read": false,
+  "actual_posthandoff_qualified": false,
+  "native_launch_authorized_by_this_document_alone": false
+}

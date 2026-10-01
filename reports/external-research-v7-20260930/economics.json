@@ -1,10 +1,10 @@
 {
-  "as_of_epoch": 1790884843.7998903,
-  "counted_launch_admissions": 29,
-  "known_native_goal_starts": 27,
+  "as_of_epoch": 1790886810.0985003,
+  "counted_launch_admissions": 33,
+  "known_native_goal_starts": 31,
   "pre_goal_failures": 2,
-  "occupied_slot_seconds_as_of_snapshot": 15002.496506214142,
-  "reported_candidate_output_tokens_lower_bound": 593370,
+  "occupied_slot_seconds_as_of_snapshot": 18402.633721590042,
+  "reported_candidate_output_tokens_lower_bound": 748968,
   "generated_output_completeness": "unknown; all figures partial, native children/cancellation/unexposed fields retained unknown",
   "parent_sol_usage": "includes input; generated component unknown",
   "helper_generated_tokens": null,
@@ -25,7 +25,7 @@
     "quality": "both quality failure; treatment lower elapsed observed, no same-quality speedup claim",
     "current_summary": "reviews/R003-R004-current-only-summary.json"
   },
-  "as_of_utc": "2026-10-01T20:00:43.799890+00:00",
+  "as_of_utc": "2026-10-01T20:33:30.098500+00:00",
   "same_quality_efficiency_claim": false,
   "new_terminal_attempt_metrics": "cohort-evidence/terminal-attempts.json",
   "post_snapshot_final_hold_accounting": {
@@ -161,5 +161,22 @@
       "t11-z-jj-repo-safe-v2-s2-treatment"
     ]
   },
-  "T07_current_quality": "complete independent qualityfailures;87/74claims all6facets1full5partial; acquisition/history pending"
+  "T07_current_quality": "complete independent qualityfailures;87/74claims all6facets1full5partial; acquisition/history pending",
+  "continuous_cohort_003_accounting": {
+    "candidate_admissions": 33,
+    "occupied_slot_seconds": 18402.633721590042,
+    "remaining_committed_slot_seconds": 1047.030165195465,
+    "reported_generated_tokens_lower_bound": 748968,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t08-z-ome-mcp-discovery-v2-repair1-control",
+      "t08-z-ome-mcp-discovery-v2-repair1-treatment"
+    ]
+  }
 }

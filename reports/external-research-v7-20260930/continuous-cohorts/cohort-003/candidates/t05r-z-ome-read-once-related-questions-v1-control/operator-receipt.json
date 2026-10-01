@@ -1,0 +1,23 @@
+{
+  "epoch": 1790886027.2212903,
+  "label": "t05r-z-ome-read-once-related-questions-v1-control",
+  "status": "frozen-for-independent-evaluation",
+  "native_goal_status": "complete",
+  "output_integrity_sha256": "1bcd6a68e6b925582492cffd8198bc76fbeb4c8af2b21827393f40c05638bbb4",
+  "accounting": {
+    "candidate_admissions": 31,
+    "occupied_slot_seconds": 17218.404145240784,
+    "remaining_committed_slot_seconds": 821.3210344314575,
+    "reported_generated_tokens_lower_bound": 704184,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 1,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t15-z-ome-mcp-reuse-v2-redo1-seed"
+    ]
+  }
+}

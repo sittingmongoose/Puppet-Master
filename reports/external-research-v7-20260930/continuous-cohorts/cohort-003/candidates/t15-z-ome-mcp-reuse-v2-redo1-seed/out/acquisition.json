@@ -1,0 +1,82 @@
+{
+  "case_id": "ome-normative-dev-v1",
+  "assignment": {
+    "task_card": "TASK.md (workspace root, 9 lines)",
+    "brief": "inputs/brief.md (5 lines) - Slide Scout read-only local OME-Zarr 0.5 desktop viewer",
+    "assignment_brief": "inputs/TASK.md (11 lines) - research format obligations and implementation requirements needed by the thin viewer plan; source scope only sources/S003.txt; no live fetching",
+    "plan": "inputs/plan/Viewer.md (21 lines) - admitted thin plan, slices 01-05",
+    "assignment_groups": [
+      "Group 1: opening a fileset, listing/selecting images, navigating multiresolution data",
+      "Group 2: channel/time/plane display, coordinate details, and associated label overlays"
+    ]
+  },
+  "selected_sources": [
+    {
+      "handle": "S003",
+      "file": "inputs/sources/S003.txt",
+      "description": "OME-Zarr 0.5 specification, Final Community Group Report, 8 September 2026 (normative capture)",
+      "aliases": [
+        {
+          "source_id": "SRC-2b11c54af373e1979af8cbb3",
+          "uri": "https://ngff.openmicroscopy.org/0.5/",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        {
+          "source_id": "SRC-e59af1d3eedfb618a7ce766f",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        }
+      ],
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "lines": 896,
+      "view_kind": "original_bytes",
+      "integrity_check": "sha256 reported by bounded read of inputs/sources/S003.txt equals catalog original_sha256 and view_sha256",
+      "selection_rationale": "Only admitted source per inputs/catalog.json source_scope and inputs/TASK.md; covers the entire normative 0.5 text needed for both assignment groups"
+    }
+  ],
+  "queries": [
+    {
+      "executed": false,
+      "external_searches": 0,
+      "note": "No live queries or fetches were performed; the assignment and catalog forbid live sources for this bounded case. No claims of absence in the wild are drawn from any search, and none is asserted."
+    }
+  ],
+  "reads": [
+    { "path": "TASK.md", "lines": "1-9", "purpose": "task card: bounded tools, required artifacts, budget" },
+    { "path": "inputs/brief.md", "lines": "1-5", "purpose": "product brief coverage target" },
+    { "path": "inputs/TASK.md", "lines": "1-11", "purpose": "research assignment scope and grouping" },
+    { "path": "inputs/catalog.json", "lines": "1-40", "purpose": "admitted source register and version pinning" },
+    { "path": "inputs/sources/S003.txt", "lines": "1-896", "purpose": "complete normative OME-Zarr 0.5 capture; all governing bytes inspected in one read (896 of 896 lines)" },
+    { "path": "inputs/plan/Viewer.md", "lines": "1-21", "purpose": "admitted thin plan for implication mapping" }
+  ],
+  "mechanical_operations": [
+    {
+      "operation": "line_map",
+      "source": "inputs/sources/S003.txt",
+      "source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "output": "out/scratch-linemap-S003.md",
+      "purpose": "cross-check line numbering used in citations; no semantic research performed by the tool"
+    }
+  ],
+  "finding_to_source_links": [
+    { "id": "F01", "sources": [{ "handle": "S003", "lines": "67-77,99-100" }] },
+    { "id": "F02", "sources": [{ "handle": "S003", "lines": "78-117" }] },
+    { "id": "F03", "sources": [{ "handle": "S003", "lines": "118-148" }] },
+    { "id": "F04", "sources": [{ "handle": "S003", "lines": "149-165" }] },
+    { "id": "F05", "sources": [{ "handle": "S003", "lines": "166-174" }] },
+    { "id": "F06", "sources": [{ "handle": "S003", "lines": "175-275" }] },
+    { "id": "F07", "sources": [{ "handle": "S003", "lines": "276-293" }] },
+    { "id": "F08", "sources": [{ "handle": "S003", "lines": "294-397" }] },
+    { "id": "F09", "sources": [{ "handle": "S003", "lines": "398-430" }] },
+    { "id": "F10", "sources": [{ "handle": "S003", "lines": "102-117,431-514" }] },
+    { "id": "F11", "sources": [{ "handle": "S003", "lines": "515-739" }] },
+    { "id": "F12", "sources": [{ "handle": "S003", "lines": "740-808" }] },
+    { "id": "F13", "sources": [{ "handle": "S003", "lines": "56-66,809-812" }] },
+    { "id": "F14", "sources": [{ "handle": "S003", "lines": "1-27,56-59,813-820,821-866,867-896" }] }
+  ],
+  "execution_evidence": {
+    "validation_run": false,
+    "note": "No validation, tests, or fixture runs were executed. Proposed validation in report.md section 10 is UNEXECUTED by design."
+  }
+}

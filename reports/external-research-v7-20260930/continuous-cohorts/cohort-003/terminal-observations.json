@@ -1,0 +1,51 @@
+[
+  {
+    "id": "t11-z-jj-repo-safe-v2-s2-control",
+    "record_kind": "terminal frozen observation",
+    "method": "T11",
+    "family": "Z",
+    "actual_native_goal": true,
+    "publication_cohort": "continuous-cohorts/cohort-003",
+    "source_qualification": "capped-incomplete-or-unqualified-preserved",
+    "semantic_quality": "unassessed",
+    "missing_required_outputs": [
+      "report.md",
+      "acquisition.json",
+      "navigation.json",
+      "evidence-chains.json",
+      "map-usage.json"
+    ],
+    "usage_completeness": "unknown"
+  },
+  {
+    "id": "t11-z-jj-repo-safe-v2-s2-treatment",
+    "record_kind": "terminal frozen observation",
+    "method": "T11",
+    "family": "Z",
+    "actual_native_goal": true,
+    "publication_cohort": "continuous-cohorts/cohort-003",
+    "source_qualification": "native-context-qualified-GET-capture-pending",
+    "semantic_quality": "unassessed",
+    "missing_required_outputs": [],
+    "usage_completeness": "unknown"
+  },
+  {
+    "id": "t15-z-ome-mcp-reuse-v2-redo1-seed",
+    "record_kind": "terminal frozen observation",
+    "method": "T15",
+    "family": "Z",
+    "actual_native_goal": true,
+    "publication_cohort": "continuous-cohorts/cohort-003",
+    "source_qualification": "qualified-current-for-independent-grading",
+    "semantic_quality": "unassessed",
+    "missing_required_outputs": [],
+    "usage_completeness": "unknown"
+  },
+  {
+    "id": "t05r-z-ome-read-once-related-questions-v1-control",
+    "record_kind": "terminal frozen observation",
+    "method": "T05R",
+    "source_qualification": "qualified-current-for-independent-grading",
+    "semantic_quality": "unassessed"
+  }
+]
