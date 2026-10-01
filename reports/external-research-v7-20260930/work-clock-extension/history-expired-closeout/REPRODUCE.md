@@ -1,8 +1,6 @@
-**ACTIVE — resumed under the explicit user work-clock extension.** Deadline: **October 1, 2026, 9:29:01 p.m. EDT**. Documented stopped intervals contribute 84,135 seconds of idle credit; the original 12-hour active-work allowance and all resource, repair and quality limits remain in force.
+**TERMINAL — GLOBAL ELAPSED ENVELOPE EXPIRED.** Fixed deadline: 2026-10-01 02:06:46 UTC. The October 1 17:24:38 UTC continuation arrived 15h 17m 52s after that deadline; restart pauses do not reset it. No candidate, experiment, evaluation or integration work is admitted. Further research requires a new explicit budget envelope.
 
-# Inspect and reproduce
-
-Published historical evidence can be inspected and hashed. New executions require exact root/operator admission and accepted bindings under the same campaign; publication scripts do not grant launch authority. Private auth/config, keys, raw model conversations and large corpora remain excluded.
+[Terminal readout and limits](TERMINAL.md).
 
 # Reproduce and inspect
 

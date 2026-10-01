@@ -1,0 +1,54 @@
+{
+  "schema": "er7.user_authorized_work_clock_extension.v1",
+  "campaign_id": "external-research-v7-20260930",
+  "user_instruction": "I am authorizing an extension, the timeline passed because i stopped you to do other work, so the world clock passed but your work clock did not.",
+  "policy": "Preserve original12hours as active campaign work excluding documented user-requested stopped intervals. All resource/start/repair/quality limits and oldgrades unchanged; not a fresh12-hour tranche.",
+  "start_epoch": 1790777206,
+  "original_wall_deadline_epoch": 1790820406,
+  "extension_activated_epoch": 1790877030,
+  "excluded_intervals": [
+    {
+      "start": 1790792127,
+      "end": 1790875478,
+      "why": "User-requested second restart: all candidate and helper work stopped; last clean pause publication37ae2d12 timestamp confirms boundary."
+    },
+    {
+      "start": 1790876246,
+      "end": 1790877030,
+      "why": "Blocked idle interval after completion of existing-evidence closeout until explicit user work-clock extension."
+    }
+  ],
+  "excluded_seconds": 84135,
+  "reconstructed_work_seconds_at_recording": 16157.066917657852,
+  "remaining_work_seconds_at_recording": 27042.933082342148,
+  "effective_deadline_epoch_until_next_explicit_pause": 1790904541,
+  "effective_deadline_utc": "2026-10-02T01:29:01+00:00",
+  "first_restart_pause": "Conservatively charged in full because externalcandidateGoals continued and exact no-work gaps were not established. No unsupported idle credit.",
+  "administrative_closeout": "Oct1 17:24:38\u201317:37:26UTC counted as work; oldout-of-envelope readouts preserved as historical state, not changed grades.",
+  "paused_helper_tasks": "Resume exact frozen task with documented remaining ACTIVE budget; no fresh budget reset. Prior cap overruns before explicit pause remain preserved.",
+  "candidate_admissions_before_resume": 20,
+  "known_helper_tasks_before_resume": 58,
+  "remaining_candidate_start_ceiling": 124,
+  "remaining_helper_start_ceiling_before_new_helpers": 14,
+  "unknown_usage": "Native children/cancelled/helper generated/token totals incomplete remain unknown.",
+  "guardrails": {
+    "elapsed_hours": 12,
+    "candidate_starts": 144,
+    "occupied_slot_hours": 48,
+    "family_active": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "generated_candidate_stop": 3000000,
+    "helper_starts": 72,
+    "generated_helper_stop": 1500000
+  },
+  "reserves": {
+    "candidate_fraction": 0.2,
+    "closeout_seconds": 3600
+  },
+  "native_root_goal_status": "active observed supported get_goal after user authorization",
+  "created_epoch": 1790877498.0669177,
+  "archived_manifest_sha256": "16eb353e0368257b9c2cd2e39cf64e56e71695ce22b825af06873b72ac0b7838"
+}

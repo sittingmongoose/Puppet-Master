@@ -1,0 +1,22 @@
+{
+  "status": "ACTIVE; continuing publisher available for next frozen cohort",
+  "as_of_utc": "2026-10-01T18:15:24.352746+00:00",
+  "deadline_edt": "October 1,2026 9:29:01 p.m. EDT",
+  "authority_sha256": "ca4afed46dc1218bd449b3ef34f67f6c6245efbbbc73bb66e86d592102d36567",
+  "candidate_admissions": 20,
+  "actual_native_goals": 18,
+  "occupied_seconds": 9340.536205530167,
+  "reported_output_lower_bound": 366778,
+  "known_conservative_helper_events": 65,
+  "known_helper_headroom": 7,
+  "unknown_usage_not_zero": true,
+  "next_publication": "exact frozen native-v3/capture-v2 reviews then admitted frozen candidate cohort",
+  "private_publication_exclusions": [
+    "auth/config",
+    "keys",
+    "raw modelIO",
+    "candidate conversations",
+    "large corpora"
+  ],
+  "previous_published_head": "e7b698a5d273c990799999ed2ca48f3ead7a3683"
+}

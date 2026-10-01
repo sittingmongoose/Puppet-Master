@@ -1,27 +1,17 @@
-**TERMINAL — GLOBAL ELAPSED ENVELOPE EXPIRED.** Fixed deadline: 2026-10-01 02:06:46 UTC. The October 1 17:24:38 UTC continuation arrived 15h 17m 52s after that deadline; restart pauses do not reset it. No candidate, experiment, evaluation or integration work is admitted. Further research requires a new explicit budget envelope.
+**ACTIVE — resumed under the explicit user work-clock extension.** Deadline: **October 1, 2026, 9:29:01 p.m. EDT**. Documented stopped intervals contribute 84,135 seconds of idle credit; the original 12-hour active-work allowance and all resource, repair and quality limits remain in force.
 
-# Terminal campaign closeout
+# Current rolling checkpoint
 
-Actual frozen accounting: **20 admissions, 18 native Goals, 9,340.536 occupied slot seconds, 366,778 reported generated-token lower bound**; complete generated usage, native children, helper generated tokens and fees remain unknown. Five matched semantic quality-failure pairs produced ten reviewed reports (T14 certification partial); T03 is structural failure, T13 infrastructure-limited, and Luna T08 remains quarantined. The completed Z canary passed a tiny current review with qualifications for exactly one finding; independent native qualification remains **UNESTABLISHED**, partial and insufficient for productive authority. No qualified one-account recipe or same-quality efficiency win is established.
+All candidate families are currently held pending exact independent native qualification. Frozen accounting remains **20 admissions, 18 native Goal activations, 9,340.536 occupied slot seconds and 366,778 reported generated-token lower bound**. Usage completeness remains unknown. Known conservative helper task/start events are **65/72**, leaving seven known events of headroom; omissions and exact generated helper output remain unknown.
 
-See [terminal readout](TERMINAL.md), [requirements audit](closeout/requirements-audit.md) and [closeout custody/accounting](closeout/custody-accounting.json).
+User stops, pauses and the superseded wall deadline are administrative interruptions, **not candidate failures**. Incomplete or timing-limited native review remains **UNESTABLISHED**, not a failed candidate. Genuine observed tool/output defects and source-grounded quality failures remain unchanged. Fresh bounded review of the unchanged counted canary continues in the same campaign; no second canary or new candidate job is implied.
 
-## Historical published checkpoint (retained; superseded for current status)
+Five historical matched semantic pairs retain quality-failure verdicts (four fully certified current pairs plus T14 partial capped certification). T03 has observed missing outputs/render failure; T13 has observed namespace/timeout defects; L T08 remains quarantined. The tiny canary current review passed with qualifications for exactly one finding. No same-quality efficiency win, replication, integrated execution or qualified one-account recipe is established. Preparation does not increase achieved breadth.
 
-The following checkpoint prose records earlier state only. Its pause/resume language, earlier counters and pending runtime preparation do not authorize any further work.
+- [Extension authority](work-clock-extension/authority.json)
+- [Current publication handoff](work-clock-extension/publication-handoff.json)
+- [Prospective replacement preparation](work-clock-extension/preparation-status.json)
+- [Results](RESULTS.md), [methods](methods.json), [attempts](attempts.jsonl), [comparisons](comparisons.json), [economics](economics.json)
+- [Historical expired closeout](TERMINAL.md) and [exact previous readouts](work-clock-extension/history-expired-closeout/README.md)
 
-# Second restart — PAUSED
-
-User requested pause at2026-09-30 18:07 UTC. No new admissions or existing Goal restarts until explicit user resume. All own native leases released; sibling untouched. Original deadline1790820406 /2026-10-01 02:06:46UTC, budget/repair ceilings/history unchanged.
-
-20 admissions/18 actual native Goals;9,340.536 occupied slot seconds;366,778partial reported generated output. Native children and unexposed output remain unknown. Z runtime2 canary completed with five required outputs; host self-pass is not independent qualification. Independent native proof remains pending at pause; do not dispatch productive jobs merely from self-pass. M/L remain held; never reuse unsafe v1.
-
-Read [operator pause](second-pause/operator-pause.json), [canary freeze](second-pause/evaluation-ready.json), [source bindings](second-pause/source-freeze.json), and root second restart checkpoint if included. Explicit resume must reconcile identifiable own state without renewing any cap or budget.
-
-C041 available-history phase2 is complete within its new20 minute cap; old partial current quality-failure certification remains unchanged. No supported substantive completed-draft-to-final loss observed; inherited errors, missed counterevidence and unresolved raw/unsaved scope remain. No efficiency/model inference. Native qualification and further independent review work pause with the campaign.
-
-No canon/main/PR/native admission changes by publisher.
-
-The independent tiny canary current review is **passed with qualifications for exactly one assigned finding**, not full OME research or a same-quality win. Native review paused **UNESTABLISHED**: all three qualification booleans remain false and a tool inventory discrepancy (apparent2 reads/1 write versus native3 reads/6 writes) remains unresolved. No productive qualification or launch authority is inferred. See [review checkpoint](second-pause/canary-review-checkpoint.json).
-
-Final [root restart checkpoint](second-pause/root-restart-checkpoint.json) is frozen and hash-bound. All helpers stopped for the requested restart; prospective template acceptances grant no admissions while paused. Resume only on explicit user instruction; original campaign and task deadlines remain unchanged.
+Previous pause and expired-closeout editions remain historical evidence. Their earlier stop/resume prose does not govern the current explicitly extended work clock. Original candidate reports, grades and failures remain immutable.

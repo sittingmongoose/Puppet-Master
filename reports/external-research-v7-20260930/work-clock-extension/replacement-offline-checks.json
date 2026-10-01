@@ -1,0 +1,27 @@
+{
+  "status": "offline-invariants-pass-not-native-or-quality-proof",
+  "checks": [
+    {
+      "pair": "t04r-z-ome-compact-contrasts-v1",
+      "paired_invariants": "passed",
+      "candidate_starts": 0,
+      "source_bytes": 42313,
+      "task_bytes": {
+        "control": 4009,
+        "treatment": 3154
+      }
+    },
+    {
+      "pair": "t05r-z-ome-read-once-related-questions-v1",
+      "paired_invariants": "passed",
+      "candidate_starts": 0,
+      "source_bytes": 42313,
+      "task_bytes": {
+        "control": 6187,
+        "treatment": 6435
+      }
+    }
+  ],
+  "native_goals": 0,
+  "runtime_edits": 0
+}
