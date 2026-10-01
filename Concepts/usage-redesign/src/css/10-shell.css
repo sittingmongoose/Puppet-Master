@@ -1,0 +1,16 @@
+/* Usage redesign (placeholder): the rail and the stage. The real page replaces this file. */
+#panel-usage .pmu-shell { display: grid; grid-template-columns: 196px minmax(0, 1fr); height: 100%; min-height: 0; color: var(--pmu-text); background: var(--pmu-ground); }
+#panel-usage .pmu-rail { display: flex; flex-direction: column; gap: 10px; min-width: 0; min-height: 0; padding: 14px 10px; border-right: 1px solid var(--pmu-line); background: var(--pmu-surface); overflow: auto; }
+#panel-usage .pmu-brand h1 { margin: 2px 8px 4px; font-size: 15px; font-weight: 650; letter-spacing: 0; }
+#panel-usage .pmu-nav { display: flex; flex-direction: column; gap: 2px; }
+#panel-usage .pmu-navbtn { display: flex; align-items: center; gap: 10px; width: 100%; padding: 7px 10px; border: 0; border-radius: 8px; background: transparent; color: var(--pmu-text-2); font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
+#panel-usage .pmu-navbtn:hover { background: color-mix(in srgb, var(--pmu-accent) 8%, transparent); color: var(--pmu-text); }
+#panel-usage .pmu-navbtn.active { background: color-mix(in srgb, var(--pmu-accent) 14%, transparent); color: var(--pmu-text); }
+#panel-usage .pmu-navbtn:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 1px; }
+#panel-usage .pmu-navicon { width: 16px; height: 16px; flex: none; }
+#panel-usage .pmu-navicon svg { display: block; width: 100%; height: 100%; }
+#panel-usage .pmu-stage { display: flex; flex-direction: column; gap: 16px; min-width: 0; min-height: 0; padding: 22px 26px; overflow: auto; }
+#panel-usage .pmu-stagehead h2 { margin: 0; font-size: 20px; font-weight: 650; }
+#panel-usage .pmu-roomdesc { margin: 4px 0 0; color: var(--pmu-text-2); font-size: 13px; }
+#panel-usage .pmu-building { max-width: 640px; padding: 18px 20px; border: 1px dashed var(--pmu-line-strong); border-radius: var(--pmu-radius); color: var(--pmu-text-3); font-size: 13px; }
+body.pmu-page-active #pm-home-workspace { pointer-events: none !important; }

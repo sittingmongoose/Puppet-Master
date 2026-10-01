@@ -1,0 +1,17 @@
+/* Usage redesign: theme tokens. Every colour comes from the app's theme tokens, so the eight themes and NieR Mode
+   repaint the page with no rule of their own; nothing here is a colour literal. */
+#panel-usage .pmu-shell {
+  --pmu-ground: var(--background, var(--bg));
+  --pmu-surface: var(--surface);
+  --pmu-raised: var(--surface-elevated, var(--surface));
+  --pmu-line: var(--border-light, var(--border));
+  --pmu-line-strong: var(--border);
+  --pmu-text: var(--text-primary);
+  --pmu-text-2: var(--text-secondary);
+  --pmu-text-3: var(--text-muted);
+  --pmu-accent: var(--accent-primary);
+  --pmu-ok: var(--accent-green, var(--accent-primary));
+  --pmu-warn: var(--accent-orange, var(--accent-primary));
+  --pmu-radius: 10px;
+  --pmu-gap: 12px;
+}
