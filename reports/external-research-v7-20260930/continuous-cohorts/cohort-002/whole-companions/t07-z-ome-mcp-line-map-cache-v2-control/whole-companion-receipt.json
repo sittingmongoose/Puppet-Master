@@ -1,0 +1,67 @@
+{
+  "schema": "er7.whole_companion.v1",
+  "label": "t07-z-ome-mcp-line-map-cache-v2-control",
+  "method_config_sha256": "feb74d819b002f9c3cbc6eb5811b41ddd6b53fa94f180f5b0ba6ff12adab5b9d",
+  "native_receipt_sha256": "f9af22fd2b510d2845daf29f325371e53a8e7b636eee6f2bb56fe7db96b423a9",
+  "output_integrity_sha256": "8ff372762e8781f1f65e0767c6a06d5fc61120ed7715ed8e55245aca7cd7e49b",
+  "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control/whole-frozen-workspace",
+  "inputs": {
+    "brief.md": {
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905
+    },
+    "TASK.md": {
+      "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+      "bytes": 1367
+    },
+    "catalog.json": {
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563
+    },
+    "sources/S003.txt": {
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980
+    },
+    "plan/Viewer.md": {
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498
+    },
+    "cache-dependency.json": {
+      "sha256": "85e42264fc6896d42e636625a9cc519414d737e0f63b2f251f0846ba953bdfe9",
+      "bytes": 783
+    }
+  },
+  "out": {
+    "acquisition.json": {
+      "sha256": "a61f471f0ac61017ae563e8e3f9d7f26362f57e10dab6281f4f63e7357784a94",
+      "bytes": 13958
+    },
+    "draft-acquisition.json": {
+      "sha256": "2719d60a4280e85796f2b3dfbe2fef5768831f5f56e83cdcbf674cb454b07c7b",
+      "bytes": 11505
+    },
+    "draft-report.md": {
+      "sha256": "019a1411d13a02f0af52da097452dd3bc44622bc9263ced0d52f7a8e43d313c1",
+      "bytes": 19893
+    },
+    "report.md": {
+      "sha256": "019a1411d13a02f0af52da097452dd3bc44622bc9263ced0d52f7a8e43d313c1",
+      "bytes": 19893
+    },
+    "source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q1.json": {
+      "sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "bytes": 61299
+    },
+    "source-views/0f1f8548625821ca1ae3ac168e0f50e29a708e2a7feb1155634c07884f0c650e-Q2.json": {
+      "sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "bytes": 61299
+    }
+  },
+  "copied_bytes": 230943,
+  "copy_seconds": 0.31218598599662073,
+  "all_inputs_preserved": true,
+  "all_output_versions_preserved": true,
+  "source_and_output_immutable": true,
+  "semantic_assessment": "none",
+  "private_client_access": false
+}

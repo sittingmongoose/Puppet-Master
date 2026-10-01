@@ -1,0 +1,23 @@
+{
+  "epoch": 1790883609.262119,
+  "label": "t10-z-azure-mcp-discovery-v2-control",
+  "status": "frozen-for-independent-evaluation",
+  "native_goal_status": "complete",
+  "output_integrity_sha256": "f82de55487be31416c0ae279626d87f503dea475f27cb41cf0fe4e652266906b",
+  "accounting": {
+    "candidate_admissions": 26,
+    "occupied_slot_seconds": 12731.291808843613,
+    "remaining_committed_slot_seconds": 815.7245972156525,
+    "reported_generated_tokens_lower_bound": 504513,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 1,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t04r-z-ome-compact-contrasts-v1-control"
+    ]
+  }
+}

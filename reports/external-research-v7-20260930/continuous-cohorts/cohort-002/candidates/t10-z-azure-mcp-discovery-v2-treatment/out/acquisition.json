@@ -1,0 +1,147 @@
+{
+  "task": "t10-z-azure-mcp-discovery-v2-treatment",
+  "generated_date": "2026-10-01",
+  "retrieval_tool": "mcp__pm_boundary__public_https_get (returns actual final URL, status, sha256, text)",
+  "queries": [
+    { "id": "Q1", "url": "https://api.github.com/search/repositories?q=azure%20devops%20pull%20request%20viewer&sort=stars&order=desc&per_page=10", "status": 200, "sha256": "0b6a978d9ffe9b4cf47da25508147338fc2fb6c9c4ec23d169caf269c610fa43" },
+    { "id": "Q2", "url": "https://api.github.com/search/repositories?q=azure%20devops%20pull%20request%20desktop&sort=stars&order=desc&per_page=10", "status": 200, "sha256": "ad1b85b3cb3fc03e2d073b81b2ae080f74eea5b088e73a88b23fd650d08c94f3" },
+    { "id": "Q3", "url": "https://duckduckgo.com/html/?q=Azure+DevOps+pull+request+review+desktop+companion+app", "status": 202, "sha256": "0046cf5f8f2715898147f405ca451bf4ac061f6464329d03d0f199351a5fd7d6", "note": "bot-challenge dead end; proves only that this search attempt was blocked, not that other competitors are absent" }
+  ],
+  "selected_sources": [
+    {
+      "id": "S1",
+      "kind": "provider_api_doc",
+      "title": "Azure DevOps REST API 7.1 - Policy Evaluations - List",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/evaluations/list?view=azure-devops-rest-7.1",
+      "version": { "api_version": "7.1-preview.1", "doc_git_commit_id": "cb0d0b30ca71a83e03cc7a7bbd9361e1a432b377", "doc_updated_at": "2025-03-18T10:27:00Z", "moniker": "azure-devops-rest-7.1" },
+      "retrieved": "2026-10-01", "status": 200, "sha256": "afea6109c40b24c978c71f15ab9c8c107d703bdd4baa29be97fc2f147476bb0c",
+      "key_locators": ["artifactId template vstfs:///CodeReview/CodeReviewId/{projectId}/{pullRequestId}", "includeNotApplicable parameter", "$top/$skip paging", "PolicyEvaluationStatus enum: queued|running|approved|rejected|notApplicable|broken", "PolicyConfiguration.isBlocking/isEnabled/isDeleted/isEnterpriseManaged/settings(JObject)", "Security scope: vso.code"]
+    },
+    {
+      "id": "S2",
+      "kind": "provider_api_doc",
+      "title": "Azure DevOps REST API 7.1 - Pull Request Iterations - Get (single iteration)",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/get?view=azure-devops-rest-7.1",
+      "version": { "api_version": "7.1", "doc_git_commit_id": "cb0d0b30ca71a83e03cc7a7bbd9361e1a432b377", "doc_updated_at": "2025-03-18T10:27:00Z" },
+      "retrieved": "2026-10-01", "status": 200, "sha256": "c83e027d24e62cc6d7e23d11899f0cad35bde8ac4dd9bced9ce40a645f32cfe3",
+      "key_locators": ["GET .../git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}", "repositoryId accepts 'ID or name'", "GitPullRequestIteration.hasMoreCommits", "GitCommitRef.commentTruncated / commitTooManyChanges", "scope vso.code"]
+    },
+    {
+      "id": "S3",
+      "kind": "provider_api_doc",
+      "title": "Azure DevOps REST API 7.1 - Pull Request Iterations - List",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/list?view=azure-devops-rest-7.1&accept=text/markdown",
+      "version": { "api_version": "7.1", "doc_git_commit_id": "cb0d0b30ca71a83e03cc7a7bbd9361e1a432b377", "doc_updated_at": "2025-03-18T10:27:00Z" },
+      "retrieved": "2026-10-01", "status": 200, "sha256": "28d00fc54547afac615e4658cc8845efc2aba3b6efded7090db3dcf95014f5b1",
+      "key_locators": ["includeCommits query parameter", "IterationReason enum: push|forcePush|create|rebase|unknown|retarget|resolveConflicts", "sourceRefCommit/targetRefCommit/commonRefCommit", "'Other Supported Versions' 4.1-7.2 hosted, Server 5.0-7.1"]
+    },
+    {
+      "id": "S4",
+      "kind": "provider_api_doc",
+      "title": "Azure DevOps REST API 7.1 - Pull Request Iteration Changes - Get",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1&accept=text/markdown",
+      "version": { "api_version": "7.1", "doc_git_commit_id": "cb0d0b30ca71a83e03cc7a7bbd9361e1a432b377", "doc_updated_at": "2025-03-18T10:27:00Z" },
+      "retrieved": "2026-10-01", "status": 200, "sha256": "7bd3fcd0e67783f75d9bbc4557136b89e36148e992b8a61d08c914cf8e420745",
+      "key_locators": ["iteration 1 = source-branch head at PR creation; later iterations on pushes", "$compareTo default 0 = common source/target commit", "$top default 100, max 2000", "GitPullRequestIterationChanges.nextSkip/nextTop (zero when no more pages)", "sample JSON with originalObjectId for edits"]
+    },
+    {
+      "id": "S5",
+      "kind": "provider_api_doc",
+      "title": "Azure DevOps REST API 7.1 - Pull Request Statuses - List",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-statuses/list?view=azure-devops-rest-7.1&accept=text/markdown",
+      "version": { "api_version": "7.1", "doc_git_commit_id": "cb0d0b30ca71a83e03cc7a7bbd9361e1a432b377", "doc_updated_at": "2025-03-18T10:27:00Z" },
+      "retrieved": "2026-10-01", "status": 200, "sha256": "3699494b0b0fab58565709b91e66910d4f477e99943ef25ba53df275c37e7a38",
+      "key_locators": ["repositoryId described as 'the repository ID of the pull request's target branch'", "GitPullRequestStatus.iterationId (min 1); status may attach to PR or iteration", "GitStatusState enum: notSet|pending|succeeded|failed|error|notApplicable", "GitStatusContext genre+name", "targetUrl", "scopes vso.code and vso.code_status"]
+    },
+    {
+      "id": "S6",
+      "kind": "implementation_source",
+      "title": "QVL-ToolBox/PrViewer - src/providers/ado.ts (Azure DevOps reference adapter)",
+      "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+      "version": { "repo": "QVL-ToolBox/PrViewer", "branch": "main", "repo_pushed_at": "2026-07-08T12:01:09Z", "language": "TypeScript", "pinned_api_version_in_code": "7.1" },
+      "retrieved": "2026-10-01", "status": 200, "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+      "key_locators": ["API_VERSION='7.1'", "PAT auth: Basic base64(':'+pat)", "classifyResponse: 401/203/2xx-non-JSON = auth-degraded (ADO login HTML)", "429 with Retry-After capped 5000ms; 502/503/504 transient", "GET /_apis/connectionData (api-version 7.1-preview) for authenticatedUser.id", "GET {project}/_apis/git/pullrequests?searchCriteria.status=active&searchCriteria.creatorId|reviewerId&$top=200", "threads N+1 with ANALYZE_CONCURRENCY=8", "thread properties CodeReviewThreadType (VoteUpdate/RefUpdate) and CodeReviewVoteResult (negative = rejected)", "failedProjects -> warnings (partial failure honesty)", "normalizeOrg/normalizeProject: dev.azure.com/{org} and legacy {org}.visualstudio.com"]
+    },
+    {
+      "id": "S7",
+      "kind": "implementation_doc",
+      "title": "zunhdev/azure-pr-viewer - docs/architecture.md",
+      "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+      "version": { "repo": "zunhdev/azure-pr-viewer", "branch": "main", "repo_pushed_at": "2026-07-24T12:14:07Z", "license": "MIT", "language": "Go" },
+      "retrieved": "2026-10-01", "status": 200, "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+      "key_locators": ["az account get-access-token --resource 499b84ac-1321-427f-aa17-267ca6975798; cached, re-acquired ~5min before expiry", "GET /{org}/_apis/connectionData resolves user GUID", "org-wide GET /{org}/_apis/git/pullrequests with searchCriteria.creatorId/reviewerId, status=active", "reviewer entry isRequired flag splits required/optional; approvals tally from votes in same response (no extra request)", "threads fan-out concurrency 8, cancelled on new refresh; started vs unresolved thread definitions (active/pending vs fixed/wontFix/closed/byDesign)", "policy evaluations read only for own PRs, only blocking Build+Status policies; degrades to 'active', never overclaims readiness"]
+    },
+    {
+      "id": "S8",
+      "kind": "product_readme",
+      "title": "zunhdev/azure-pr-viewer README",
+      "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/README.md",
+      "version": { "repo": "zunhdev/azure-pr-viewer", "branch": "main", "license": "MIT" },
+      "retrieved": "2026-10-01", "status": 200, "sha256": "5f7b31c0c417dcd7872808911cdd38c906fec6b2581f57456bb2f9f572a90d6f",
+      "key_locators": ["'signs in through the Azure CLI - no PAT to manage'", "three lists: created-by-me / required-from-me / optional-for-me", "resolved/started thread ratio per PR", "'Counts show ?' transient-failure affordance in Troubleshooting"]
+    },
+    {
+      "id": "S9",
+      "kind": "product_readme",
+      "title": "Meral-IT/PullRequest-Manager README",
+      "url": "https://raw.githubusercontent.com/Meral-IT/PullRequest-Manager/develop/README.md",
+      "version": { "repo": "Meral-IT/PullRequest-Manager", "branch": "develop", "repo_pushed_at": "2026-07-24T07:08:23Z", "license": "custom non-commercial (license 'Other'/NOASSERTION per GitHub API)" },
+      "retrieved": "2026-10-01", "status": 200, "sha256": "490718bb7be675348fa402b77430bd8a95e86600cc52307065a6a41cfc9b1831",
+      "key_locators": ["Electron+React+Fluent UI desktop app for ADO PRs", "multi-project switching", "desktop notifications on new PRs", "'DevOps Integration (Work in Progress)' section", "non-commercial license note"]
+    },
+    {
+      "id": "S10",
+      "kind": "product_readme",
+      "title": "QVL-ToolBox/PrViewer README",
+      "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/README.md",
+      "version": { "repo": "QVL-ToolBox/PrViewer", "branch": "main", "license": "none declared" },
+      "retrieved": "2026-10-01", "status": 200, "sha256": "d0f16ae6b3ddf9c29bd8225d13c746483aa9c2afff04878c4066cfe8f8710abd",
+      "key_locators": ["ports & adapters PrProvider contract with ADO as reference provider", "PAT optional: empty PAT = az login Azure AD token injected server-side by Vite proxy (CORS)", "'Last activity' invariant: filter own actions, monotonic per PR id", "FetchResult.warnings for partially failing projects", "secrets in sessionStorage; non-secrets in localStorage"]
+    },
+    {
+      "id": "S11",
+      "kind": "product_readme",
+      "title": "BipulRaman/DevCenter README",
+      "url": "https://raw.githubusercontent.com/BipulRaman/DevCenter/main/README.md",
+      "version": { "repo": "BipulRaman/DevCenter", "branch": "main", "repo_pushed_at": "2026-09-28T18:13:59Z", "language": "JavaScript/Rust (Tauri)" },
+      "retrieved": "2026-10-01", "status": 200, "sha256": "90e1aef73f21d5054fcd9337683f40b2f3295330d38b73e5dc10139b22870277",
+      "key_locators": ["PR list + PR reviewer across GitHub and Azure DevOps", "tokens in OS keychain, multiple provider accounts", "in-app reply/approve (write paths outside Review Desk scope)"]
+    },
+    {
+      "id": "S12",
+      "kind": "implementation_source",
+      "title": "cli/cli (GitHub CLI) - pkg/cmd/pr/view/view.go (analogous read-only PR viewer component)",
+      "url": "https://raw.githubusercontent.com/cli/cli/trunk/pkg/cmd/pr/view/view.go",
+      "version": { "repo": "cli/cli", "branch": "trunk" },
+      "retrieved": "2026-10-01", "status": 200, "sha256": "2a4422232ca522ee5c5284fa83387fe22e6251d8597489f5af28b19727a6e4c7",
+      "key_locators": ["defaultFields incl. statusCheckRollup, reviews, reviewRequests", "dismissed review displayed as 'Commented' (mapping decision, with in-code rationale)", "pending reviews filtered from reviewer tally", "ghost user for deleted accounts", "truncated lists rendered with ', ...' when TotalCount > returned nodes", "empty body rendered as 'No description provided'"]
+    }
+  ],
+  "finding_to_source": {
+    "F1_compatibility_api_versioning": ["S2", "S3", "S4", "S5"],
+    "F2_identity_current_user_and_roles": ["S6", "S7", "S8"],
+    "F3_identity_name_vs_id_and_artifact_id": ["S1", "S2", "S3", "S5", "S6"],
+    "F4_iteration_semantics_and_compare": ["S2", "S3", "S4"],
+    "F5_checks_statuses_and_policy_evaluations": ["S1", "S5", "S7"],
+    "F6_presentation_mapping_of_states": ["S7", "S12", "S6"],
+    "F7_honest_incomplete_data": ["S6", "S7", "S8", "S12", "S4"],
+    "F8_auth_and_connection": ["S6", "S7", "S8", "S10", "S11", "S1", "S5"],
+    "F9_simpler_implementation_choices": ["S7", "S6", "S8", "S10"],
+    "F10_competitor_landscape_and_limits": ["Q1", "Q2", "S8", "S9", "S10", "S11", "S12"]
+  },
+  "rejected_candidates": [
+    { "candidate": "isaacOjeda/AdoMcpServer", "reason": "MCP server bridging AI assistants to ADO; not a human review companion UI. Category mismatch - rejected as irrelevant analogy.", "evidence": "Q2 result metadata (description, language Python)" },
+    { "candidate": "dylsmith8/PRex", "reason": "Notifier/parser only; no review-version/compare/checks surface to transfer.", "evidence": "Q2 result metadata (description); stale (pushed 2021-09-03)" },
+    { "candidate": "Dev4mir/devops-gate-releases", "reason": "Releases-only repo for closed-source product; no implementation evidence inspectable. Kept as unresolved lead, not used for findings.", "evidence": "Q2 result metadata (size 1, description)" },
+    { "candidate": "TimothyK/PdfDiff", "reason": "Azure DevOps extension for PDF diff viewing; narrow file-format viewer, not a review-companion product; no transfer to Review Desk's API/presentation questions.", "evidence": "Q1 result metadata" },
+    { "candidate": "gh CLI GraphQL statusCheckRollup as direct model for ADO checks", "reason": "GitHub computes a server-side rollup; Azure DevOps has no equivalent - statuses + policy evaluations must be composed client-side. Analogy accepted only at presentation level, rejected at API level.", "evidence": "S12 defaultFields vs S1/S5 (no rollup field in ADO docs inspected)" }
+  ],
+  "unresolved_leads": [
+    "Pull Request Threads API doc (git/pull-request-threads) not fetched; thread-status enum values seen only in azure-pr-viewer architecture.md",
+    "Git Pull Requests - Get (git/pull-requests/get-pull-request) doc not fetched; mergeStatus/readiness fields unevidenced",
+    "Azure DevOps Server (on-prem) api-version negotiation only inferred from 'Other Supported Versions' lists",
+    "DevOps Gate closed source; internals unknown",
+    "Web search beyond GitHub API and the blocked DuckDuckGo attempt not performed; competitor landscape coverage is bounded by the two GitHub queries"
+  ],
+  "integrity_notes": "No access or execution evidence invented. All statuses and sha256 values are as returned by the retrieval tool. Source selection and interpretation are this pass's own; no external source list was supplied."
+}

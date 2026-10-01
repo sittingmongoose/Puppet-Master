@@ -1,0 +1,52 @@
+{
+  "task": "t10-z-azure-mcp-discovery-v2-treatment",
+  "generated_date": "2026-10-01",
+  "budget": { "elapsed_seconds_limit": 900, "parent_responses_limit": 96 },
+  "instructions": {
+    "task_card": "TASK.md (read in full, 9/9 lines)",
+    "admitted_input": "inputs/brief.md (read in full, 3/3 lines)",
+    "plan_boundary": "Plan-blind: no plan/spec/answer history was admitted to this research pass; no plan is admitted, so plan implications are recorded as research notes only."
+  },
+  "component_questions_derived_from_brief": [
+    "CQ1 identity/context: how a read-only client identifies org/project/repo, resolves the current user, and keeps the selected review context stable as the PR changes",
+    "CQ2 versions/compare: how to enumerate review versions (iterations) and compare the selected version with earlier work",
+    "CQ3 checks/policies: how to read which checks and policies apply and what their results mean (states, blocking vs optional)",
+    "CQ4 honest incomplete data: how the provider signals absence, permission loss, throttling, truncation, and partial failure",
+    "CQ5 auth/connection: reusing the existing account choice; token kinds, scopes, transport constraints",
+    "CQ6 simpler implementation choices: request-count reductions, aggregation from single responses, architecture seams a thin plan may miss"
+  ],
+  "search_and_read_sequence": [
+    { "step": 1, "kind": "read", "tool": "mcp__pm_boundary__read_file", "target": "TASK.md", "purpose": "task card", "outcome": "200-equivalent read; sha256=07c4e8e2befc17800025ed1239f6d64316c498d307dba6ee1bde0f030a6b89a6" },
+    { "step": 2, "kind": "read", "tool": "mcp__pm_boundary__read_file", "target": "inputs/brief.md", "purpose": "admitted input; Review Desk product brief", "outcome": "read; sha256=b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607" },
+    { "step": 3, "kind": "query", "tool": "mcp__pm_boundary__public_https_get", "url": "https://api.github.com/search/repositories?q=azure%20devops%20pull%20request%20viewer&sort=stars&order=desc&per_page=10", "purpose": "discover whole-product competitors (viewer category)", "outcome": "200; sha256=0b6a978d9ffe9b4cf47da25508147338fc2fb6c9c4ec23d169caf269c610fa43; 5 hits incl. zunhdev/azure-pr-viewer, QVL-ToolBox/PrViewer, vscode-review extensions" },
+    { "step": 4, "kind": "query", "tool": "mcp__pm_boundary__public_https_get", "url": "https://api.github.com/search/repositories?q=azure%20devops%20pull%20request%20desktop&sort=stars&order=desc&per_page=10", "purpose": "discover whole-product competitors (desktop category)", "outcome": "200; sha256=ad1b85b3cb3fc03e2d073b81b2ae080f74eea5b088e73a88b23fd650d08c94f3; 5 hits incl. Meral-IT/PullRequest-Manager, BipulRaman/DevCenter, dylsmith8/PRex, Dev4mir/devops-gate-releases, isaacOjeda/AdoMcpServer" },
+    { "step": 5, "kind": "query", "tool": "mcp__pm_boundary__public_https_get", "url": "https://duckduckgo.com/html/?q=Azure+DevOps+pull+request+review+desktop+companion+app", "purpose": "web-search corroboration for whole-product landscape", "outcome": "202 with bot-challenge page; DEAD END recorded, not retried verbatim" },
+    { "step": 6, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/README.md", "purpose": "primary evidence: whole-product competitor (Go TUI)", "outcome": "200; sha256=5f7b31c0c417dcd7872808911cdd38c906fec6b2581f57456bb2f9f572a90d6f" },
+    { "step": 7, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://raw.githubusercontent.com/Meral-IT/PullRequest-Manager/develop/README.md", "purpose": "primary evidence: whole-product competitor (Electron)", "outcome": "200; sha256=490718bb7be675348fa402b77430bd8a95e86600cc52307065a6a41cfc9b1831" },
+    { "step": 8, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/README.md", "purpose": "primary evidence: provider-agnostic viewer with ADO reference adapter", "outcome": "200; sha256=d0f16ae6b3ddf9c29bd8225d13c746483aa9c2afff04878c4066cfe8f8710abd" },
+    { "step": 9, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://raw.githubusercontent.com/BipulRaman/DevCenter/main/README.md", "purpose": "primary evidence: multi-provider desktop app (analogous whole product)", "outcome": "200; sha256=90e1aef73f21d5054fcd9337683f40b2f3295330d38b73e5dc10139b22870277" },
+    { "step": 10, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/evaluations/list?view=azure-devops-rest-7.1", "purpose": "CQ3 primary API doc: policy evaluations", "outcome": "200; sha256=afea6109c40b24c978c71f15ab9c8c107d703bdd4baa29be97fc2f147476bb0c; doc git_commit_id=cb0d0b30ca71a83e03cc7a7bbd9361e1a432b377" },
+    { "step": 11, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/get-pull-request-iterations?view=azure-devops-rest-7.1", "purpose": "CQ2 primary API doc (first slug guess)", "outcome": "404 DEAD END (wrong slug); sha256=d19ea64af21b2fe3258bb5dc9c684b6f3d79e9232124c84b5f521a09bd0a2e36; corrected in step 14" },
+    { "step": 12, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get-iteration-changes?view=azure-devops-rest-7.1", "purpose": "CQ2 primary API doc (first slug guess)", "outcome": "404 DEAD END (wrong slug); sha256=d19ea64af21b2fe3258bb5dc9c684b6f3d79e9232124c84b5f521a09bd0a2e36; corrected in step 16" },
+    { "step": 13, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/get?view=azure-devops-rest-7.1", "purpose": "CQ2 primary API doc: single iteration (Get)", "outcome": "200; sha256=c83e027d24e62cc6d7e23d11899f0cad35bde8ac4dd9bced9ce40a645f32cfe3; doc git_commit_id=cb0d0b30ca71a83e03cc7a7bbd9361e1a432b377" },
+    { "step": 14, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-status/list?view=azure-devops-rest-7.1", "purpose": "CQ3 primary API doc (first slug guess)", "outcome": "404 DEAD END (wrong slug); sha256=d19ea64af21b2fe3258bb5dc9c684b6f3d79e9232124c84b5f521a09bd0a2e36; corrected in step 15" },
+    { "step": 15, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-statuses/list?view=azure-devops-rest-7.1&accept=text/markdown", "purpose": "CQ3 primary API doc: PR statuses list (markdown form)", "outcome": "200; sha256=3699494b0b0fab58565709b91e66910d4f477e99943ef25ba53df275c37e7a38" },
+    { "step": 16, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/list?view=azure-devops-rest-7.1&accept=text/markdown", "purpose": "CQ2 primary API doc: iterations list (markdown form)", "outcome": "200; sha256=28d00fc54547afac615e4658cc8845efc2aba3b6efded7090db3dcf95014f5b1" },
+    { "step": 17, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1&accept=text/markdown", "purpose": "CQ2 primary API doc: iteration changes (markdown form)", "outcome": "200; sha256=7bd3fcd0e67783f75d9bbc4557136b89e36148e992b8a61d08c914cf8e420745" },
+    { "step": 18, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts", "purpose": "CQ1/CQ4/CQ5 primary implementation evidence: ADO adapter source", "outcome": "200; sha256=6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4" },
+    { "step": 19, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md", "purpose": "CQ1/CQ3/CQ5/CQ6 primary implementation evidence: architecture doc", "outcome": "200; sha256=7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897" },
+    { "step": 20, "kind": "read", "tool": "mcp__pm_boundary__public_https_get", "url": "https://raw.githubusercontent.com/cli/cli/trunk/pkg/cmd/pr/view/view.go", "purpose": "analogous component (read-only PR viewer, GitHub CLI): presentation mapping evidence", "outcome": "200; sha256=2a4422232ca522ee5c5284fa83387fe22e6251d8597489f5af28b19727a6e4c7" }
+  ],
+  "false_dismissal_checks": [
+    "Iterations/statuses/changes doc URLs 404ed on first slug guess; retried with corrected operation slugs (get / list) and the fetches succeeded - the 404 was a locator failure, not source absence.",
+    "DuckDuckGo HTML search returned a 202 bot-challenge; switched to the GitHub REST search API instead of concluding the competitor landscape is empty; additional-engine search remains an open lead (see report U7).",
+    "dylsmith8/PRex last pushed 2021-09-03: treated as stale-but-existing, not as proof that ADO desktop notifiers do not exist.",
+    "azure-pr-viewer README counts '?' example in the mockup was read as an intentional degraded-data affordance and then corroborated against its troubleshooting section and architecture.md instead of being dismissed as a typo."
+  ],
+  "dead_ends_and_unresolved_leads": [
+    "https://duckduckgo.com/html/?q=... (bot challenge, status 202)",
+    "Dev4mir/devops-gate-releases: releases-only repo (size 1), product 'DevOps Gate' closed source - cannot inspect implementation; lead recorded in report",
+    "Microsoft Learn 'PAT scopes' summary page not fetched; scopes taken from per-operation Security sections instead (vso.code / vso.code_status)"
+  ],
+  "notes": "All fetches returned the actual final URL, status, and sha256 as reported by mcp__pm_boundary__public_https_get; no access or execution evidence is invented. Proposed validations are labeled UNEXECUTED in out/report.md."
+}

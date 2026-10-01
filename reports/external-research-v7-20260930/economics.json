@@ -1,10 +1,10 @@
 {
-  "as_of_epoch": 1790882318.2591288,
-  "counted_launch_admissions": 23,
-  "known_native_goal_starts": 21,
+  "as_of_epoch": 1790884843.7998903,
+  "counted_launch_admissions": 29,
+  "known_native_goal_starts": 27,
   "pre_goal_failures": 2,
-  "occupied_slot_seconds_as_of_snapshot": 11117.104108572006,
-  "reported_candidate_output_tokens_lower_bound": 429962,
+  "occupied_slot_seconds_as_of_snapshot": 15002.496506214142,
+  "reported_candidate_output_tokens_lower_bound": 593370,
   "generated_output_completeness": "unknown; all figures partial, native children/cancellation/unexposed fields retained unknown",
   "parent_sol_usage": "includes input; generated component unknown",
   "helper_generated_tokens": null,
@@ -25,7 +25,7 @@
     "quality": "both quality failure; treatment lower elapsed observed, no same-quality speedup claim",
     "current_summary": "reviews/R003-R004-current-only-summary.json"
   },
-  "as_of_utc": "2026-10-01T19:18:38.259129+00:00",
+  "as_of_utc": "2026-10-01T20:00:43.799890+00:00",
   "same_quality_efficiency_claim": false,
   "new_terminal_attempt_metrics": "cohort-evidence/terminal-attempts.json",
   "post_snapshot_final_hold_accounting": {
@@ -124,9 +124,9 @@
   "publication_status": "ACTIVE explicit work-clock extension; totals unchanged",
   "administrative_closeout_as_of_utc": "2026-10-01T17:29:11.818480+00:00",
   "extension_authority": "work-clock-extension/authority.json",
-  "known_conservative_helper_task_start_events": 68,
+  "known_conservative_helper_task_start_events": 71,
   "helper_ceiling": 72,
-  "known_helper_headroom": 4,
+  "known_helper_headroom": 1,
   "helper_event_count_completeness": "unknown; conservative events not guaranteed unique helpers",
   "helper_event_count_as_of_utc": "2026-10-01T18:42:28.876602+00:00",
   "helper_event_count_source": "root explicit rollup including fresh host_release_machinery_v2; manual omissions/true starttimes remain unknown",
@@ -143,5 +143,23 @@
     },
     "overdue_jobs": [],
     "active_jobs": []
-  }
+  },
+  "continuous_cohort_002_accounting": {
+    "candidate_admissions": 29,
+    "occupied_slot_seconds": 15002.496506214142,
+    "remaining_committed_slot_seconds": 1250.7226617336273,
+    "reported_generated_tokens_lower_bound": 593370,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t11-z-jj-repo-safe-v2-s2-control",
+      "t11-z-jj-repo-safe-v2-s2-treatment"
+    ]
+  },
+  "T07_current_quality": "complete independent qualityfailures;87/74claims all6facets1full5partial; acquisition/history pending"
 }

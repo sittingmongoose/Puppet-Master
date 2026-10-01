@@ -73,7 +73,8 @@
     "historical_status": "queued",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "replacement_actual_status": "T04R pair capped incomplete/unqualified; reportversions preserved; originalT04hypothesis remains untested; no pause-induced grade"
   },
   {
     "id": "T05",
@@ -122,17 +123,18 @@
     "measure": "Cold plus warm acquisition cost, per-question coverage, actual saved fetch/parse work, negative-result and corpus-membership invalidation.",
     "boundary": "No cross-arm semantic answer or discovered-source-list reuse. Cache keys include source version, permissions, parser/settings and applicability dependencies.",
     "first_screen_family": "L",
-    "status": "new v2 pair complete/context-qualified; independent source quality unassessed",
+    "status": "v2 pair both complete current qualityfailure; preservation/mechanism pending",
     "class": "substantive",
     "discovery_or_repo": false,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
-    "terminal_assessment": null,
+    "terminal_assessment": "quality failure",
     "prospective_resume_preparation": "accepted machinery/card inventory; no candidate execution; inherited runtime admissions held",
     "historical_status": "queued",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
-    "actual_execution_cohort": "continuous-cohorts/cohort-001"
+    "actual_execution_cohort": "continuous-cohorts/cohort-001",
+    "current_review_summary": "continuous-cohorts/cohort-002/T07-current-pair-summary.json"
   },
   {
     "id": "T08",
@@ -182,7 +184,7 @@
     "measure": "Novel applicable mechanisms, implementation evidence, irrelevant-transfer errors, duplicated sources and total research cost.",
     "boundary": "At least one fresh brief-only case. Do not supply the winning source list from a strong-model developer.",
     "first_screen_family": "L",
-    "status": "not yet executed; prospective preparation/qualification ongoing",
+    "status": "v2 actual pair native/context/inventory complete; GETsourcecapture eligibility/quality pending",
     "class": "substantive",
     "discovery_or_repo": true,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
@@ -191,7 +193,8 @@
     "historical_status": "queued",
     "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
     "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held"
+    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "actual_execution_cohort": "continuous-cohorts/cohort-002"
   },
   {
     "id": "T11",

@@ -203,12 +203,24 @@
   {
     "method": "T07",
     "instance": "actual v2 pair cohort001",
-    "assessment": "unassessed",
+    "assessment": "quality failure",
     "native_both_complete": true,
     "context_qualified": true,
     "current_before_history": true,
     "same_quality_efficiency_claim": false,
-    "cohort": "continuous-cohorts/cohort-001"
+    "cohort": "continuous-cohorts/cohort-001",
+    "independent_current_review_complete": true,
+    "reviews": [
+      "R013",
+      "R014"
+    ],
+    "claim_rows": [
+      87,
+      74
+    ],
+    "all_six_facets_assessed": true,
+    "preservation_mechanism": "pending",
+    "current_summary": "continuous-cohorts/cohort-002/T07-current-pair-summary.json"
   },
   {
     "method": "T15",
@@ -224,5 +236,23 @@
     "redo": "pending; original preserved",
     "comparison_complete": false,
     "cohort": "continuous-cohorts/cohort-001"
+  },
+  {
+    "method": "T10",
+    "instance": "actual v2 pair cohort002",
+    "assessment": "unassessed",
+    "native_context_inventory_complete": true,
+    "actualGETsource_eligibility": "treatmentpartial/unknown;controlpending",
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-002"
+  },
+  {
+    "method": "T04R",
+    "instance": "actual capped pair cohort002",
+    "assessment": "unassessed",
+    "source_qualification": "unqualified",
+    "current_delivery_complete": false,
+    "comparison_complete": false,
+    "cohort": "continuous-cohorts/cohort-002"
   }
 ]

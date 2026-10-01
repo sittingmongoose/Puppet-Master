@@ -1,0 +1,146 @@
+{
+  "task": "t10-z-azure-mcp-discovery-v2-control",
+  "generatedAt": "2026-10-01",
+  "planAdmitted": false,
+  "planBoundaryNote": "Task card states Plan-blind: no plan/spec/key/answer history admitted. scheduling.json therefore records only search sequence, selection reasons, and unresolved areas.",
+  "objectiveRestated": "Discover whole-product competitors to Review Desk (read-only desktop companion for Azure DevOps Git pull requests) and provider (Azure DevOps) API/implementation evidence covering compatibility, identity, correctness, presentation, and simpler implementation choices; record sources, sequence, and unresolved areas.",
+  "searchSequence": [
+    {
+      "step": 1,
+      "tool": "mcp__pm_boundary__read_file",
+      "target": "TASK.md",
+      "purpose": "Load governing task card.",
+      "outcome": "OK (9 lines)."
+    },
+    {
+      "step": 2,
+      "tool": "mcp__pm_boundary__read_file",
+      "target": "inputs/brief.md",
+      "purpose": "Load admitted product brief (sole admitted input).",
+      "outcome": "OK (3 lines)."
+    },
+    {
+      "step": 3,
+      "tool": "mcp__pm_boundary__public_https_get",
+      "target": "https://html.duckduckgo.com/html/?q=Azure+DevOps+pull+request+desktop+review+tool",
+      "purpose": "General-web search for whole-product desktop competitors.",
+      "outcome": "Blocked: HTTP 202 anomaly/CAPTCHA page ('Unfortunately, bots use DuckDuckGo too'). Recorded as unresolved lead U6; proves only that this query was blocked, not absence of results."
+    },
+    {
+      "step": 4,
+      "tool": "mcp__pm_boundary__public_https_get",
+      "target": "https://html.duckduckgo.com/html/?q=Azure+DevOps+pull+request+versions+iterations+REST+API",
+      "purpose": "General-web search for provider API material.",
+      "outcome": "Blocked: HTTP 202 CAPTCHA page, same anomaly flow. Same lead U6."
+    },
+    {
+      "step": 5,
+      "tool": "mcp__pm_boundary__public_https_get",
+      "target": "https://www.bing.com/search?q=Azure+DevOps+pull+request+desktop+review+tool",
+      "purpose": "Alternative general-web search channel after DDG block.",
+      "outcome": "HTTP 200 SERP (sha256 86e2d4c...). Organic result list was truncated in capture; used for channel confirmation only, findings drawn from other sources."
+    },
+    {
+      "step": 6,
+      "tool": "mcp__pm_boundary__public_https_get",
+      "target": "https://api.github.com/search/repositories?q=azure+devops+pull+request&sort=stars&order=desc&per_page=15",
+      "purpose": "Primary competitor discovery: GitHub repository search API (public, JSON, stable locators) for whole-product ADO PR tools.",
+      "outcome": "HTTP 200, total_count 311, 15 items captured. Selected as primary competitor source because metadata (description, stars, archived flag, dates, license, language) is machine-readable and verifiable."
+    },
+    {
+      "step": 7,
+      "tool": "mcp__pm_boundary__public_https_get",
+      "target": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/list?view=azure-devops-rest-7.1",
+      "purpose": "Provider API evidence for the version/iteration model (core Review Desk surface).",
+      "outcome": "HTTP 200; endpoint, parameters, GitPullRequestIteration definition captured."
+    },
+    {
+      "step": 8,
+      "tool": "mcp__pm_boundary__public_https_get",
+      "target": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-statuses/list?view=azure-devops-rest-7.1",
+      "purpose": "Provider API evidence for external check statuses (brief: 'which checks ... apply and what their current results mean').",
+      "outcome": "HTTP 200; GitPullRequestStatus, GitStatusContext, GitStatusState, OAuth scopes captured."
+    },
+    {
+      "step": 9,
+      "tool": "mcp__pm_boundary__public_https_get",
+      "target": "https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/evaluations/list?view=azure-devops-rest-7.1",
+      "purpose": "Provider API evidence for branch-policy evaluations (brief: 'policies').",
+      "outcome": "HTTP 200; artifactId template, PolicyEvaluationRecord, PolicyEvaluationStatus enum, includeNotApplicable captured."
+    },
+    {
+      "step": 10,
+      "tool": "mcp__pm_boundary__public_https_get",
+      "target": "https://raw.githubusercontent.com/microsoft/TeamMate/main/README.md",
+      "purpose": "Implementation evidence for the strongest whole-product competitor (Microsoft desktop app managing ADO work items and PRs).",
+      "outcome": "HTTP 200; installation, PR feature claims, telemetry stance captured."
+    },
+    {
+      "step": 11,
+      "tool": "mcp__pm_boundary__public_https_get",
+      "target": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.1&accept=text/markdown",
+      "purpose": "Complete GitPullRequest field definitions via the docs' text/markdown representation (chosen because the HTML page exceeds capture budget and the markdown form is complete and smaller).",
+      "outcome": "HTTP 200; full definitions incl. supportsIterations, lastMerge*, mergeStatus, mergeFailureType, IdentityRefWithVote votes, artifactId template."
+    },
+    {
+      "step": 12,
+      "tool": "mcp__pm_boundary__public_https_get",
+      "target": "https://api.github.com/repos/microsoft/vscode-azurerepos",
+      "purpose": "Candidate competitor/implementation lead: VS Code Azure Repos extension (guessed repo name).",
+      "outcome": "HTTP 404 Not Found. Lead unresolved (U1); proves only that this lookup failed."
+    },
+    {
+      "step": 13,
+      "tool": "mcp__pm_boundary__public_https_get",
+      "target": "https://api.github.com/repos/microsoft/vscode-azure-repos",
+      "purpose": "Second name guess for the same lead (U1).",
+      "outcome": "HTTP 404 Not Found. Lead remains unresolved; no absence claim made."
+    },
+    {
+      "step": 14,
+      "tool": "mcp__pm_boundary__public_https_get",
+      "target": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1&accept=text/markdown",
+      "purpose": "Provider API evidence for comparing selected version with earlier work (version-diff primitive).",
+      "outcome": "HTTP 200; $compareTo semantics, $top max 2000, changeTrackingId, nextSkip/nextTop paging, sample payloads captured."
+    },
+    {
+      "step": 15,
+      "tool": "mcp__pm_boundary__public_https_get",
+      "target": "https://axaguildev.github.io/Skizzle/",
+      "purpose": "Product page of desktop competitor Skizzle (homepage listed in repo metadata).",
+      "outcome": "HTTP 404 GitHub Pages 'Site not found'. Dead-end lead (U2); repo metadata still evidences the project."
+    },
+    {
+      "step": 16,
+      "tool": "mcp__pm_boundary__public_https_get",
+      "target": "https://registry.npmjs.org/azure-devops-node-api/latest",
+      "purpose": "Exact version + maintenance status of the official Azure DevOps client library (simpler implementation choices).",
+      "outcome": "HTTP 200; azure-devops-node-api@17.0.1, MIT, Node >=16, deps tunnel 0.0.6 / typed-rest-client 3.1.2."
+    }
+  ],
+  "selectionReasons": {
+    "generalSearchChannels": "Two channels attempted (DuckDuckGo HTML, Bing) because the task card allows candidate-chosen public search URLs; DDG blocked, Bing succeeded. GitHub REST search API added as an independent, structured discovery channel whose per-repo metadata gives exact, hash-verifiable locators.",
+    "microsoftLearnDocs": "Chosen as authoritative provider-API evidence; every fetched page carries updated_at 2025-03-18 and source git commit cb0d0b30ca71a83e03cc7a7bbd9361e1a432b377, satisfying the source-version requirement. text/markdown representation chosen where complete field definitions were needed.",
+    "endpointsChosen": "Get Pull Request, Iterations List, Iteration Changes Get, Statuses List, Policy Evaluations List were selected because they map one-to-one onto the brief's declared surfaces: inspect review versions, compare selected version with earlier work, see which checks and policies apply and what results mean, explain unavailable data honestly.",
+    "competitorsChosen": "From GitHub search results: microsoft/TeamMate and AxaFrance/Skizzle (whole desktop products), Willem-J-an/adopure.nvim (whole editor product), cribeiro84/azure-devops-pull-request-hub (archived whole product), plus adjacent non-whole-product tools (Mimeo extension, ado-syntax-highlighter, OpenAI-Code-Review, infracost) recorded to bound the competitive slice.",
+    "implementationEvidence": "TeamMate README (first-party desktop implementation), npm registry metadata for microsoft/azure-devops-node-api (client library choice)."
+  },
+  "unresolvedAreas": [
+    "U1: VS Code 'Azure Repos' extension source repository not located; api.github.com/repos/microsoft/vscode-azurerepos and .../vscode-azure-repos both returned 404. Only these two lookups failed; no claim about whether an open-source repo exists.",
+    "U2: Skizzle distribution/product status: homepage https://axaguildev.github.io/Skizzle/ returns 404 (GitHub Pages site not found); releases page not inspected.",
+    "U3: Azure DevOps Server (on-premises) API deltas vs cloud: only 7.1 cloud docs fetched; the docs' 'Other Supported Versions' lists confirm Server 5.0/6.0/7.0/7.1 doc sets exist but were not read.",
+    "U4: Pull Request Threads/Comments API not fetched; needed to fully specify 'keep the selected review context clear as the pull request changes' (comment tracking across iterations).",
+    "U5: Desktop-app authentication path beyond the legacy OAuth2 endpoints shown in the REST docs (Microsoft Entra ID interactive broker, PAT) not researched.",
+    "U6: DuckDuckGo HTML search returned a CAPTCHA anomaly page; general-web search coverage therefore rests on one Bing SERP (organic results truncated in capture) plus GitHub search; Visual Studio Marketplace not searched.",
+    "U7: Relationship between external statuses and Pipelines builds (Timeline/Builds APIs) not inspected; 'what their current results mean' is evidenced only via status fields and targetUrl.",
+    "U8: Read permissions for PR statuses List list both vso.code and vso.code_status scopes; the minimal-scope read-only combination was not verified against a live org."
+  ],
+  "falseDismissalChecks": [
+    "DDG CAPTCHA: re-ran equivalent discovery through Bing and the GitHub search API (two independent channels) instead of treating the block as a result.",
+    "vscode-azurerepos 404: retried with corrected name vscode-azure-repos; both failures recorded as leads, and no 'no such repo' conclusion is drawn anywhere in the report.",
+    "Skizzle homepage 404: competitor still reported, with the 404 recorded and product-status uncertainty flagged rather than dropping the finding.",
+    "Bing SERP truncated: competitor identification did not rely on the truncated SERP; it was cross-checked against the structured GitHub search results.",
+    "Get Pull Request HTML page would truncate before definitions: re-fetched via ?accept=text/markdown to avoid dismissing field-level evidence for capture-size reasons."
+  ],
+  "budgetNote": "16 tool steps recorded; all within the fixed 900s / 96-response budget. No retries beyond the two documented 404 name guesses."
+}

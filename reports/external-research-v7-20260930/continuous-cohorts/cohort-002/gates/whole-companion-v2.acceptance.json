@@ -1,0 +1,58 @@
+{
+  "schema": "er7.whole_companion_delivery.acceptance.v1",
+  "verdict": "accepted",
+  "reviewer": "/root/exact_methods_release_v3",
+  "created_utc": "2026-10-01T19:39:51.130654+00:00",
+  "script_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/whole_freeze_delivery_v2.py",
+  "script_sha256": "7f6f8a2bfc2c50172cc00541238c6951459300f23a0905a2eabe5c779f6ce844",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "scope": "Exact trusted host whole-input/output preservation and deterministic T03/T13/T04R/T05R delivery machinery only. No native/semantic/source eligibility or actual job admission grant.",
+  "exact_renderer_sha256": "27c0d4dbf102306c3ad085f095c41dd54e0d46a16b55a1ac33de324905f9f91c",
+  "tests": {
+    "whole_companion_synthetics": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/whole-companion-v2-review.json",
+      "sha256": "66e0d3aabab4f6fa2a0367bff498e84c93f11f1a798fb277ee309a6a572debfc",
+      "tests": 12
+    },
+    "latest_selection_synthetics": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/whole-companion-v2-latest-selection-addendum.json",
+      "sha256": "1bc27b6e32629c3a0edbd667633d5ebeca6fdb835650d14ace3f6258695cd4d2",
+      "tests": 5
+    },
+    "all_passed": true
+  },
+  "repaired_first_draft": {
+    "script_sha256": "a1199ea8d39f1d8a1cbf64ae8d1e2c245cbf380f4378ffb2df63595d18dfa351",
+    "review_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/whole-companion-first-review.json",
+    "review_sha256": "945954f8d84039bf9d4e52386e407c7e2335dd54a6317b7a28389f2cb036e24c",
+    "three_demonstrated_defects_fixed": [
+      "mutable source inputs accepted",
+      "empty selected report accepted",
+      "postrender delivery files mutable"
+    ]
+  },
+  "verified_boundaries": [
+    "All path ancestors checked via lstat, regular single-link files, exclusive destination and immutable source/output files.",
+    "Entire input tree must equal the exact prebound target/hash list; every copied input keeps original preexecution SHA. Extra/missing/changed targets reject.",
+    "Entire frozen output tree must equal exact output integrity hashes/bytes and128file16MiB512KiB limits; all output versions retained.",
+    "Pinned sanitized native receipt plus exact own group absence is required; command failure/matches/malformed nonquiet receipts fail closed.",
+    "Preflight binds exact method config and integrity label; complete copy count/elapsed and delivery elapsed reported separately.",
+    "Unique JSON keys validated before exact renderer; no semantic transformations by reviewer or helper.",
+    "T04R/T05R latest final exact3fields report/acquisition/protocol selects highest contiguous complete streams; rejects stale/gap/extra/wrongfields and empty current artifacts.",
+    "T03/T13 original renderer source remains exact27c0; all rendered delivery files become0400 and directories0500 before return."
+  ],
+  "conditions": [
+    "Invoke only with independently accepted exact configs and accepted host dispatcher, after independently established own native quiescence. This code checks preservation metadata, not completed native Goal, request inventory, exact runtime/context qualification or research validity.",
+    "Caller must separately establish each actual sanitized native receipt belongs to that exact component/runtime298f and root authority. A preserved failed/incomplete/context-unknown job stays failed/incomplete; a companion or syntactically valid report cannot promote it.",
+    "All actual source/input byte pins, current output integrity and preflight fields must remain exact; input source bytes are copied without semantic repair. No auth/config/header/rawlog/private state capture is allowed.",
+    "Only T03/T13/T04R/T05R delivery is supported here; other methods may use whole companion preservation, but require a separate exact delivery/stage binding.",
+    "Use an exclusive companion/delivery destination and retain the immutable whole original freeze for history review; save current-report semantic assessment before opening history.",
+    "Measure all copying/hash/freeze/render/delivery costs and retain prior draft/test/failure cost. Machine checks are not new method comparisons.",
+    "Any changed wrapper/source/config requires a new independent exact pin; no runtime edits, native canary or new campaign budget authorized."
+  ],
+  "native_Goals_started": 0,
+  "actual_private_reads": 0,
+  "actual_candidate_outputs_read": 0,
+  "semantic_grades": 0,
+  "actual_posthandoff_qualified": false
+}

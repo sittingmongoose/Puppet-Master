@@ -1,0 +1,61 @@
+{
+  "schema": "er7.productive_z.output_integrity.v1",
+  "epoch": 1790884563.8307614,
+  "label": "t04r-z-ome-compact-contrasts-v1-treatment",
+  "files": {
+    "reports/V001.md": {
+      "sha256": "5dad765dd3b290e599b76718d3af51cb0fe6ebaefa0bb47d58bf0b44bf7d8d7d",
+      "bytes": 33466
+    }
+  },
+  "missing_required_outputs": [
+    "acquisition/V001.json",
+    "protocol/V001.json",
+    "final/V001.json"
+  ],
+  "sanitized_native_artifacts": {
+    "receipt.json": {
+      "sha256": "48cf8a4691c5ebc1fd5328da219e012d29e1f5844b87470a9800bb2e49ccb2e1",
+      "bytes": 300368
+    },
+    "host-process.json": {
+      "sha256": "a97695090d4cb39bc910b73640c1720118cd882b109e3c3c75f12aa162fc53f7",
+      "bytes": 58
+    },
+    "session-tool-contract.json": {
+      "sha256": "40c0e2556ad8712ec2466486fd51d28a6a41cc1650a910b16a20fa7f6667da5d",
+      "bytes": 2261
+    },
+    "progress.jsonl": {
+      "sha256": "053b164bdcb0b53921263cd1bf1aced309db98424b517f4ec5ff390a7162044e",
+      "bytes": 174
+    },
+    "usage-events.jsonl": {
+      "sha256": "ac2fd0459d88ac2ff74afac551a57dac7ef3385e8df8a3f66eacfbd713bce9fd",
+      "bytes": 4513
+    },
+    "zcode-stdout.redacted.jsonl": {
+      "sha256": "20a5568a2fa131e178f0d52bb81321c15d3118c93e396ae2bc4df48624f27a2a",
+      "bytes": 31582165
+    },
+    "zcode-stderr.omitted.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-treatment/native/receipt.json",
+    "native_receipt_sha256": "48cf8a4691c5ebc1fd5328da219e012d29e1f5844b87470a9800bb2e49ccb2e1",
+    "owned_driver_pgid": 1603927,
+    "basis": "sanitized native receipt plus only known own group absence"
+  },
+  "private_client": "excluded entirely; never read",
+  "semantic_quality": "unassessed",
+  "context_observations_sha256": "10c73e95f73ac341b03f6f142d7501d2cf8e2a48b1d37721a44562c844d4b20b",
+  "future_native_context": "qualified",
+  "native_outcome": "failed-or-unestablished",
+  "inventory_verified": false,
+  "method_postrender_delivery": "pending separate measured machinery; no free semantic helper rewrite"
+}

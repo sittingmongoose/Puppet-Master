@@ -1,0 +1,23 @@
+{
+  "epoch": 1790884563.8324523,
+  "label": "t04r-z-ome-compact-contrasts-v1-treatment",
+  "status": "failed-or-incomplete-preserved",
+  "native_goal_status": null,
+  "output_integrity_sha256": "293085e1898a4190675e30161adfa2951b2edf9bc2b00e0c84b906c5440d5210",
+  "accounting": {
+    "candidate_admissions": 28,
+    "occupied_slot_seconds": 14486.097234725952,
+    "remaining_committed_slot_seconds": 807.121933221817,
+    "reported_generated_tokens_lower_bound": 593370,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 1,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t11-z-jj-repo-safe-v2-s2-control"
+    ]
+  }
+}

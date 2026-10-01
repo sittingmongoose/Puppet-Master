@@ -1,0 +1,223 @@
+{
+  "task": "t10-z-azure-mcp-discovery-v2-control",
+  "capturedAt": "2026-10-01",
+  "accessNote": "All network evidence below was obtained with mcp__pm_boundary__public_https_get (public HTTPS GET only). The tool returns the actual final URL, HTTP status, byte count, and sha256 for each fetch; those values are recorded verbatim per source. No live Azure DevOps organization API call was made or claimed (none attempted; would require credentials not admitted by this task). No execution evidence exists and none is invented.",
+  "workspaceInputs": [
+    {
+      "id": "S1",
+      "path": "TASK.md",
+      "sha256": "21a5d121e129744f4af931fbbf52fda9df3476a4073dd0800bfca5812ae5390a",
+      "bytes": 2728,
+      "role": "Governing task card (line 7 defines report/acquisition/scheduling deliverables; line 9 defines budget 900s/96 responses)."
+    },
+    {
+      "id": "S2",
+      "path": "inputs/brief.md",
+      "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+      "bytes": 1009,
+      "role": "Admitted product brief: Review Desk scope, read-only obligations, research targets (provider APIs, real implementations, whole-product competitors)."
+    }
+  ],
+  "queries": [
+    {
+      "id": "Q1",
+      "tool": "mcp__pm_boundary__public_https_get",
+      "url": "https://html.duckduckgo.com/html/?q=Azure+DevOps+pull+request+desktop+review+tool",
+      "finalUrl": "https://html.duckduckgo.com/html/?q=Azure+DevOps+pull+request+desktop+review+tool",
+      "httpStatus": 202,
+      "sha256": "f5d2be4e0dba8e3f7f5c46d7ad6163a938d5e2bb613543fae4f5e74acd32d9d7",
+      "outcome": "CAPTCHA anomaly page; no organic results obtainable.",
+      "linkedFindings": []
+    },
+    {
+      "id": "Q2",
+      "tool": "mcp__pm_boundary__public_https_get",
+      "url": "https://html.duckduckgo.com/html/?q=Azure+DevOps+pull+request+versions+iterations+REST+API",
+      "finalUrl": "https://html.duckduckgo.com/html/?q=Azure+DevOps+pull+request+versions+iterations+REST+API",
+      "httpStatus": 202,
+      "sha256": "541e0daa654150b296b842c954b2cfdc1dd8a7f3450836a1c8f5b7a0ac418133",
+      "outcome": "CAPTCHA anomaly page.",
+      "linkedFindings": []
+    },
+    {
+      "id": "Q3",
+      "tool": "mcp__pm_boundary__public_https_get",
+      "url": "https://www.bing.com/search?q=Azure+DevOps+pull+request+desktop+review+tool",
+      "finalUrl": "https://www.bing.com/search?q=Azure+DevOps+pull+request+desktop+review+tool",
+      "httpStatus": 200,
+      "sha256": "86e2d4ce57bd497e7b52401591682493a14a7c3fecd060924476abe04a23f7f2",
+      "bytes": 120418,
+      "outcome": "SERP returned; organic results truncated in capture (resultBudget), so no finding rests on it.",
+      "linkedFindings": []
+    },
+    {
+      "id": "Q4",
+      "tool": "mcp__pm_boundary__public_https_get",
+      "url": "https://api.github.com/search/repositories?q=azure+devops+pull+request&sort=stars&order=desc&per_page=15",
+      "finalUrl": "https://api.github.com/search/repositories?q=azure+devops+pull+request&sort=stars&order=desc&per_page=15",
+      "httpStatus": 200,
+      "sha256": "0309674a19d6f6a89fa017aca29c2db525026de095e276b4d68e9aa5b5a9c830",
+      "bytes": 85483,
+      "outcome": "total_count=311, incomplete_results=false; 15 items captured (infracost-azure-devops 63 stars; azure-devops-pull-request-hub 61 stars archived; adopure.nvim 44; Skizzle 39; microsoft/TeamMate 39; VSTSExtension-ActivePullRequests 33; OpenAI-Code-Review 32; ado-syntax-highlighter 28; devops-pr-stats and others truncated).",
+      "linkedFindings": ["F1", "F2", "F3", "F4", "F5", "F6"]
+    },
+    {
+      "id": "Q5",
+      "tool": "mcp__pm_boundary__public_https_get",
+      "url": "https://api.github.com/repos/microsoft/vscode-azurerepos",
+      "httpStatus": 404,
+      "sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+      "outcome": "Not Found.",
+      "linkedFindings": ["U1"]
+    },
+    {
+      "id": "Q6",
+      "tool": "mcp__pm_boundary__public_https_get",
+      "url": "https://api.github.com/repos/microsoft/vscode-azure-repos",
+      "httpStatus": 404,
+      "sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+      "outcome": "Not Found.",
+      "linkedFindings": ["U1"]
+    },
+    {
+      "id": "Q7",
+      "tool": "mcp__pm_boundary__public_https_get",
+      "url": "https://axaguildev.github.io/Skizzle/",
+      "httpStatus": 404,
+      "sha256": "70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+      "bytes": 9115,
+      "outcome": "GitHub Pages 'Site not found'.",
+      "linkedFindings": ["F2", "U2"]
+    }
+  ],
+  "reads": [
+    {
+      "id": "S3",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/list?view=azure-devops-rest-7.1",
+      "finalUrl": "same as url (canonical meta identical)",
+      "httpStatus": 200,
+      "sha256": "7b0ed8ecff97609cfd7e6eea7ae62e1bc996515cd4526fc3c1216ffef30f25fa",
+      "bytes": 76326,
+      "sourceVersion": "Azure DevOps REST API version 7.1; page meta updated_at 2025-03-18T10:27:00Z; source git commit cb0d0b30ca71a83e03cc7a7bbd9361e1a432b377; uid vsts.git.pullrequestiterations.list",
+      "locators": [
+        "GET https://dev.azure.com/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations?api-version=7.1 (optional includeCommits=true)",
+        "Security: oauth2 scope vso.code",
+        "Definitions: GitPullRequestIteration (id, author, changeList, commits, commonRefCommit, createdDate, hasMoreCommits, newTargetRefName/oldTargetRefName); GitPullRequestChange.changeTrackingId 'ID used to track files through multiple changes'"
+      ],
+      "linkedFindings": ["F8"]
+    },
+    {
+      "id": "S4",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-statuses/list?view=azure-devops-rest-7.1",
+      "httpStatus": 200,
+      "sha256": "52bc716fc847f5c03274d97cd2b0e8c209674c4789fc95095ee00711a4b9bb41",
+      "bytes": 61128,
+      "sourceVersion": "Azure DevOps REST API 7.1; updated_at 2025-03-18T10:27:00Z; git commit cb0d0b30ca71a83e03cc7a7bbd9361e1a432b377; uid vsts.git.pullrequeststatuses.list",
+      "locators": [
+        "GET https://dev.azure.com/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/statuses?api-version=7.1",
+        "Sample response: two statuses with context {name, genre:'vsts-samples'}, state 'succeeded', targetUrl",
+        "Definitions: GitPullRequestStatus (iterationId 'Minimum value is 1'; properties; targetUrl), GitStatusContext (genre can be empty; name cannot be null/empty), GitStatusState enum notSet|pending|succeeded|failed|error|notApplicable",
+        "Security scopes: vso.code AND vso.code_status ('read and write commit and pull request status')"
+      ],
+      "linkedFindings": ["F10"]
+    },
+    {
+      "id": "S5",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/evaluations/list?view=azure-devops-rest-7.1",
+      "httpStatus": 200,
+      "sha256": "afea6109c40b24c978c71f15ab9c8c107d703bdd4baa29be97fc2f147476bb0c",
+      "bytes": 61704,
+      "sourceVersion": "Azure DevOps REST API 7.1-preview.1; updated_at 2025-03-18T10:27:00Z; git commit cb0d0b30ca71a83e03cc7a7bbd9361e1a432b377; uid vsts.policy.evaluations.list",
+      "locators": [
+        "Artifact ID template: vstfs:///CodeReview/CodeReviewId/{projectId}/{pullRequestId}",
+        "GET https://dev.azure.com/{organization}/{project}/_apis/policy/evaluations?artifactId={artifactId}&api-version=7.1-preview.1 (optional includeNotApplicable, $top, $skip)",
+        "Definitions: PolicyEvaluationRecord (evaluationId, configuration, status, startedDate, completedDate); PolicyConfiguration (isBlocking, isEnabled, isDeleted, isEnterpriseManaged, revision, settings JObject, type PolicyTypeRef); PolicyEvaluationStatus enum queued|running|approved|rejected|notApplicable|broken ('encountered an unexpected error')",
+        "Security scope: vso.code"
+      ],
+      "linkedFindings": ["F11"]
+    },
+    {
+      "id": "S6",
+      "url": "https://raw.githubusercontent.com/microsoft/TeamMate/main/README.md",
+      "httpStatus": 200,
+      "sha256": "9b85c2b7eeb19b9225ed2a535faff074d516dfd7ca422b126f4f605dcbd75625",
+      "bytes": 3558,
+      "sourceVersion": "microsoft/TeamMate default branch 'main', raw fetch 2026-10-01; repo metadata (from Q4-adjacent API data): pushed_at 2026-09-08T22:36:43Z, stargazers 39, license MIT, language C#, not archived",
+      "locators": [
+        "Title paragraph: 'TeamMate is an application for managing Azure Dev Ops (ADO) work items and pull requests.'",
+        "PR paragraph: 'Pull Requests (PRs) are also first class citizens ... You get notifications, filtering, search, and quick digests and status of a set of reviews.'",
+        "Installation: 'winget install --id Microsoft.TeamMate' or Microsoft.Tools.TeamMate.Production.msi (Windows 10 1709+/11)",
+        "Telemetry: 'TeamMate does NOT send any telemetry to Microsoft or anywhere else. None.'"
+      ],
+      "linkedFindings": ["F1", "F13"]
+    },
+    {
+      "id": "S7",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.1&accept=text/markdown",
+      "httpStatus": 200,
+      "sha256": "410c2fcae80e0876bf8f8831efc75a7231ad463d84acd4751b71e09947cb0095",
+      "bytes": 31535,
+      "sourceVersion": "Azure DevOps REST API 7.1; updated_at 2025-03-18T10:27:00Z; git commit cb0d0b30ca71a83e03cc7a7bbd9361e1a432b377; uid vsts.git.pullrequests.getpullrequest; page also enumerates other supported versions: cloud 4.1, 5.0, 5.1, 6.0, 6.1, 7.0, 7.2 and Server 5.0/6.0/7.0/7.1",
+      "locators": [
+        "GET https://dev.azure.com/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests/{pullRequestId}?api-version=7.1; repositoryId = 'repository ID of the pull request's target branch'",
+        "Optional params: includeCommits, includeWorkItemRefs; '$skip', '$top', 'maxCommentLength' all documented 'Not used'",
+        "GitPullRequest.artifactId template: vstfs:///Git/PullRequestId/{projectId}/{repositoryId}/{pullRequestId}",
+        "GitPullRequest.supportsIterations: 'If true, this pull request supports multiple iterations ... comments left in one iteration will be tracked across future iterations.'",
+        "lastMergeSourceCommit / lastMergeTargetCommit / lastMergeCommit ('If empty, the most recent merge is in progress or was unsuccessful')",
+        "mergeStatus PullRequestAsyncStatus: notSet|queued|conflicts|succeeded|rejectedByPolicy|failure; mergeFailureType: none|unknown|caseSensitive|objectTooLarge; hasMultipleMergeBases: 'Multiple mergebases warning'; isDraft",
+        "IdentityRefWithVote.vote integer: 10 approved, 5 approved with suggestions, 0 no vote, -5 waiting for author, -10 rejected; isRequired, hasDeclined, isFlagged, votedFor (group/team vote roll-up)"
+      ],
+      "linkedFindings": ["F7", "F11", "F12"]
+    },
+    {
+      "id": "S8",
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1&accept=text/markdown",
+      "httpStatus": 200,
+      "sha256": "7bd3fcd0e67783f75d9bbc4557136b89e36148e992b8a61d08c914cf8e420745",
+      "bytes": 11261,
+      "sourceVersion": "Azure DevOps REST API 7.1; updated_at 2025-03-18T10:27:00Z; git commit cb0d0b30ca71a83e03cc7a7bbd9361e1a432b377; uid vsts.git.pullrequestiterationchanges.get",
+      "locators": [
+        "GET https://dev.azure.com/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests/{pullRequestId}/iterations/{iterationId}/changes?api-version=7.1 (optional $top, $skip, $compareTo)",
+        "$compareTo: 'default value is zero which indicates the comparison is made against the common commit between the source and target branches'",
+        "$top: 'default value is 100 and the maximum value is 2000'",
+        "GitPullRequestIterationChanges: changeEntries, nextSkip, nextTop ('zero if there are no more changes')",
+        "Sample: PR 22 iteration 2 vs compareTo=1 shows edit with item.objectId e21e56d1... and originalObjectId ff93e64a..."
+      ],
+      "linkedFindings": ["F9"]
+    },
+    {
+      "id": "S9",
+      "url": "https://registry.npmjs.org/azure-devops-node-api/latest",
+      "httpStatus": 200,
+      "sha256": "a55825584dd200f701195f52a8f90c1be8e68fca7a131b7c874580e1462e2fc8",
+      "bytes": 3322,
+      "sourceVersion": "npm registry 'latest' dist-tag snapshot fetched 2026-10-01: azure-devops-node-api@17.0.1 (dist shasum ca3109a9db9e20fc9e14faeec1ed664eb8a567e8; registry tmp timestamp 1789374417155 indicates 2026 publication)",
+      "locators": [
+        "description: 'Node client for Azure DevOps and TFS REST APIs'; author Microsoft Corporation; license MIT",
+        "engines node >= 16.0.0; dependencies tunnel 0.0.6, typed-rest-client 3.1.2",
+        "types ./WebApi.d.ts; homepage github.com/Microsoft/azure-devops-node-api"
+      ],
+      "linkedFindings": ["F12"]
+    }
+  ],
+  "findingToSource": {
+    "F1_competitor_teamMate": ["Q4", "S6"],
+    "F2_competitor_skizzle": ["Q4", "Q7"],
+    "F3_competitor_adopureNvim": ["Q4"],
+    "F4_competitor_prHubArchived": ["Q4"],
+    "F5_adjacentToolsBoundTheSlice": ["Q4"],
+    "F6_incumbentIsProviderWebUI": ["Q3", "Q4"],
+    "F7_prCoreFields": ["S7"],
+    "F8_iterationModel": ["S3", "S7"],
+    "F9_versionComparePrimitive": ["S8"],
+    "F10_externalStatuses": ["S4"],
+    "F11_policyEvaluations": ["S5", "S7"],
+    "F12_implementationChoices": ["S9", "S7"],
+    "F13_authentication": ["S3", "S4", "S5", "S6"]
+  },
+  "unresolvedLeads": [
+    "Q1/Q2 (DuckDuckGo CAPTCHA): search channel blocked; recorded, not retried verbatim.",
+    "Q5/Q6 (GitHub repo 404 x2): VS Code Azure Repos extension repo name unresolved.",
+    "Q7 (Skizzle homepage 404): product page dead; releases not inspected."
+  ]
+}

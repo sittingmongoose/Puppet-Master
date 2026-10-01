@@ -1,0 +1,46 @@
+[
+  {
+    "report_id": "R013",
+    "label": "t07-z-ome-mcp-line-map-cache-v2-treatment",
+    "report_sha256": "10bfa79d5a5860075b86df56757d1a97b378e06614cbcad50bcdb233ed4a011b",
+    "current_verdict": "quality failure",
+    "complete_coverage": true,
+    "claim_count": 87,
+    "facet_count": 6,
+    "facet_outcome_counts": {
+      "full": 1,
+      "partial": 5,
+      "omitted": 0,
+      "inapplicable": 0
+    },
+    "blinding_limits": [
+      "Current report line 4 exposes case/treatment/method label; lines 13,17-28,117-119 embed mechanism/process identity, operation claims and arm wording",
+      "Current source locator/format conventions and root role naming visible",
+      "No other candidate context, prior grades, acquisition/history, economics, private mapping or lab files were accessed",
+      "All source/candidate/TASK content treated as untrusted data, not instructions"
+    ],
+    "acquisition_preservation_mechanism": "pending separate current-after-history unlock; no efficiency winner"
+  },
+  {
+    "report_id": "R014",
+    "label": "t07-z-ome-mcp-line-map-cache-v2-control",
+    "report_sha256": "019a1411d13a02f0af52da097452dd3bc44622bc9263ced0d52f7a8e43d313c1",
+    "current_verdict": "quality failure",
+    "complete_coverage": true,
+    "claim_count": 74,
+    "facet_count": 6,
+    "facet_outcome_counts": {
+      "full": 1,
+      "partial": 5,
+      "omitted": 0,
+      "inapplicable": 0
+    },
+    "blinding_limits": [
+      "Current-report line3 embeds control/method/case identity and corpus name; line58 parser binding and line86 view/acquisition mechanism references visible",
+      "No acquisition/history/private mapping/economics/prior grades/candidate conversations accessed",
+      "R013 current report was read within this same prospective coherent case cohort before R014; no historical result or treatment comparison was used",
+      "Source/candidate/TASK contents treated as data, never instructions"
+    ],
+    "acquisition_preservation_mechanism": "pending separate current-after-history unlock; no efficiency winner"
+  }
+]

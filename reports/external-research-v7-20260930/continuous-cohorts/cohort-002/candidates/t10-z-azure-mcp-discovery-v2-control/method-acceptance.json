@@ -1,0 +1,51 @@
+{
+  "schema": "er7.z.safe.method.acceptance.v1",
+  "verdict": "accepted",
+  "review_kind": "independent prospective method machinery/scope only",
+  "reviewer": "/root/method_scope_reviewer",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "method_config_sha256": "85b5ef16a5d006b8bed3ab70db2a760953e8f17945302a7b0979089689c5d69c",
+  "method_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t10-z-azure-mcp-discovery-v2-control.method-config.json",
+  "attempt": {
+    "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t10-z-azure-mcp-discovery-v2/control/workspace",
+    "prompt_sha256": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa",
+    "label": "t10-z-azure-mcp-discovery-v2-control",
+    "max_seconds": 900.0,
+    "max_responses": 96,
+    "public_get": true
+  },
+  "method": "T10",
+  "pair_id": "t10-z-azure-mcp-discovery-v2",
+  "reason": "Accepted prospective source-selection policy comparison on the existing Azure development brief. Both arms choose sources independently under identical GET profile. This does not establish an untouched holdout or fresh-domain confirmation.",
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/t10-z-azure-mcp-discovery-v2.review-manifest.json",
+      "sha256": "4f5dcb89d9a47ea00a0fbc118a21d284a3eb815b6869683272f0cfd16986c09f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-binding-review.json",
+      "sha256": "81e1d4aa6309486a9388e18cb10848f32e4df2db541666f477b8e861ff90aa7f"
+    }
+  ],
+  "checks": {
+    "exact_pins_verified": true,
+    "matched_scope_and_caps_verified": true,
+    "source_permissions_declared": true,
+    "cold_setup_cost_counted": true,
+    "semantic_answers_supplied_by_reviewer": false,
+    "candidate_starts_by_reviewer": 0,
+    "candidate_grades": 0
+  },
+  "native_admission": "HOLD until independent exact runtime FREEZE and real SAME frozen canary PASS. This is not runtime or canary acceptance.",
+  "pre_admission_requirements": [
+    "Recheck every reviewed task/input/prompt/metadata/pair/code/config pin immediately before admission; drift is a new binding, never silently accepted.",
+    "Record randomized/counterbalanced pair order and simultaneous account/sibling occupancy before first arm.",
+    "Use only accepted final runtime productive interface with exact original component caps; no canary cap substitution, old launcher or runtime hotpatch.",
+    "Retain all prior preparation/repair/new binding, cold host mechanics, native setup/retries/continuation/verification/cleanup and prerequisite costs; unknown values remain unknown."
+  ],
+  "result_constraints": [
+    "No machinery acceptance is a semantic quality pass or measured method comparison.",
+    "Complete current report must receive independent source-grounded evaluation before acquisition/history review.",
+    "Actual MCP operation receipts and complete bytes must establish claimed work; candidate operation counters alone are insufficient."
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "schema": "er7.future_native_context.observations.v1",
+  "status": "qualified",
+  "model_attempts_observed": 13,
+  "instruction_marker_booleans": [
+    {
+      "agentsMd": false,
+      "global_user_instructions": false,
+      "auto_memory": false
+    },
+    {
+      "agentsMd": false,
+      "global_user_instructions": false,
+      "auto_memory": false
+    },
+    {
+      "agentsMd": false,
+      "global_user_instructions": false,
+      "auto_memory": false
+    },
+    {
+      "agentsMd": false,
+      "global_user_instructions": false,
+      "auto_memory": false
+    },
+    {
+      "agentsMd": false,
+      "global_user_instructions": false,
+      "auto_memory": false
+    },
+    {
+      "agentsMd": false,
+      "global_user_instructions": false,
+      "auto_memory": false
+    },
+    {
+      "agentsMd": false,
+      "global_user_instructions": false,
+      "auto_memory": false
+    },
+    {
+      "agentsMd": false,
+      "global_user_instructions": false,
+      "auto_memory": false
+    },
+    {
+      "agentsMd": false,
+      "global_user_instructions": false,
+      "auto_memory": false
+    },
+    {
+      "agentsMd": false,
+      "global_user_instructions": false,
+      "auto_memory": false
+    },
+    {
+      "agentsMd": false,
+      "global_user_instructions": false,
+      "auto_memory": false
+    },
+    {
+      "agentsMd": false,
+      "global_user_instructions": false,
+      "auto_memory": false
+    },
+    {
+      "agentsMd": false,
+      "global_user_instructions": false,
+      "auto_memory": false
+    }
+  ],
+  "startup": [
+    {
+      "event": "bootstrap.app.startup.config.completed",
+      "fields": {
+        "configSourceUser": false,
+        "configSourceProject": true
+      }
+    },
+    {
+      "event": "bootstrap.app.startup.plugins.completed",
+      "fields": {
+        "pluginCount": 0,
+        "enabledPluginCount": 0,
+        "hookCount": 0,
+        "commandRootCount": 0,
+        "skillRootCount": 0
+      }
+    },
+    {
+      "event": "bootstrap.app.startup.runtime_config.completed",
+      "fields": {
+        "memoryEnabled": false,
+        "memoryUse": false,
+        "memoryExtractionEnabled": true
+      }
+    }
+  ],
+  "raw_text_hash_or_copy": false,
+  "semantic_findings_inspected": false,
+  "scope": "Configured route closure plus observed instruction-marker absence; no blanket all-memory-machinery-disabled claim"
+}

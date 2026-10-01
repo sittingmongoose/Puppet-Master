@@ -1,0 +1,179 @@
+{
+  "schema": "slide-scout.acquisition.v1",
+  "version": "V001",
+  "case_id": "ome-normative-dev-v1",
+  "generated_date": "2026-10-01",
+  "record_provenance": "SELF_REPORT — all records below are candidate-authored observations of this session; no host verification, receiver acknowledgement, or feedback read is included or required.",
+  "assignment": {
+    "brief": "inputs/brief.md",
+    "plan": "inputs/plan/Viewer.md",
+    "assignment_card": "inputs/TASK.md",
+    "groups_covered": [
+      "G1: opening a fileset, listing/selecting images, navigating multiresolution data",
+      "G2: channel/time/plane display, coordinate details, associated label overlays"
+    ],
+    "groups_note": "This is a single combined assignment covering both permitted groups; aggregate scope equals the full brief."
+  },
+  "sources": [
+    {
+      "handle": "S003",
+      "file": "inputs/sources/S003.txt",
+      "description": "OME-Zarr specification, Final Community Group Report, 8 September 2026 (frozen normative capture)",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "lines": 896,
+      "integrity_check": "sha256, byte count, and line count observed at read time and match inputs/catalog.json (view_sha256, view_bytes, view_lines).",
+      "aliases": [
+        {
+          "source_id": "SRC-2b11c54af373e1979af8cbb3",
+          "uri": "https://ngff.openmicroscopy.org/0.5/",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        {
+          "source_id": "SRC-e59af1d3eedfb618a7ce766f",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        {
+          "source_id": "SRC-bf327c82f5ee6b5d1b754d8c",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        {
+          "source_id": "SRC-da65296ca0490aebb780c237",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        }
+      ]
+    }
+  ],
+  "reads": [
+    {
+      "id": "R01",
+      "tool": "read_file",
+      "path": "TASK.md",
+      "line_range": "1-24 (entire file)",
+      "result": "success; 4009 bytes, 24 lines, sha256 8dd166dc6e7626646a39a4cd82518a09e23c57f8a253bd83c0803bfb74403d80",
+      "purpose": "workflow rules"
+    },
+    {
+      "id": "R02",
+      "tool": "read_file",
+      "path": "inputs/TASK.md",
+      "line_range": "1-11 (entire file)",
+      "result": "success; 1367 bytes, 11 lines, sha256 b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+      "purpose": "research assignment"
+    },
+    {
+      "id": "R03",
+      "tool": "read_file",
+      "path": "inputs/brief.md",
+      "line_range": "1-5 (entire file)",
+      "result": "success; 905 bytes, 5 lines, sha256 f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "purpose": "product brief"
+    },
+    {
+      "id": "R04",
+      "tool": "read_file",
+      "path": "inputs/catalog.json",
+      "line_range": "1-40 (entire file)",
+      "result": "success; 1563 bytes, 40 lines, sha256 c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "purpose": "source catalog"
+    },
+    {
+      "id": "R05",
+      "tool": "read_file",
+      "path": "inputs/plan/Viewer.md",
+      "line_range": "1-11 (entire file)",
+      "result": "success; 1498 bytes, 11 lines, sha256 5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "purpose": "thin viewer plan"
+    },
+    {
+      "id": "R06",
+      "tool": "read_file",
+      "path": "sources/S003.txt",
+      "line_range": null,
+      "result": "ERROR — boundary failure (ValueError); workspace-root-relative path outside admitted namespaces; no content returned",
+      "purpose": "attempted source read at catalog-literal path; corrected in R07"
+    },
+    {
+      "id": "R07",
+      "tool": "read_file",
+      "path": "inputs/sources/S003.txt",
+      "line_range": "1-450",
+      "result": "success; file metadata observed: sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de, 36980 bytes, 896 total lines (matches catalog)",
+      "purpose": "first half of normative capture"
+    },
+    {
+      "id": "R08",
+      "tool": "read_file",
+      "path": "inputs/sources/S003.txt",
+      "line_range": "451-896",
+      "result": "success; same file metadata as R07; with R07 the entire 896-line capture was read",
+      "purpose": "second half of normative capture"
+    }
+  ],
+  "findings": [
+    {"id": "F001", "group": "G1", "status": "supported", "level": "obligation", "locator": "S003 L68-L72", "claim": "OME-Zarr 0.5 is implemented on Zarr format v3; all Zarr features (codecs, chunk grids, chunk key encodings, data types, storage transformers) may be used unless explicitly disallowed; no explicit disallowances appear in the capture."},
+    {"id": "F002", "group": "G1", "status": "supported", "level": "obligation", "locator": "S003 L79-L100", "claim": "An image is a Zarr group with 'multiscales' (and optionally 'omero') in zarr.json attributes; each level is a separate array; level array names are arbitrary, ordering defined by multiscales metadata."},
+    {"id": "F003", "group": "G1", "status": "supported", "level": "obligation", "locator": "S003 L81, L96-L97, L302", "claim": "Image arrays up to 5-dimensional; axis order time before channel before spatial; dimensionality variable 2-5; axis names arbitrary."},
+    {"id": "F004", "group": "X", "status": "supported", "level": "obligation", "locator": "S003 L152-L165", "claim": "OME-Zarr metadata stored under namespaced key 'ome' in attributes with string version; version MUST be consistent within a hierarchy."},
+    {"id": "F005", "group": "G1", "status": "supported", "level": "obligation", "locator": "S003 L79-L85, L118-L127, L175-L270", "claim": "Three image-discovery layouts: plain sibling image groups; bioformats2raw collections (transitional) with optional OME/series; HCS plate/well trees with mandatory well/plate specifications."},
+    {"id": "F006", "group": "G1", "status": "supported", "level": "obligation", "locator": "S003 L193-L206, L256, L262-L263", "claim": "bioformats2raw.layout value MUST be '3'; if present with plate, plate takes precedence; image collections and plates cannot be mixed at present; plate images MUST be at defined locations."},
+    {"id": "F007", "group": "G1", "status": "supported", "level": "obligation-when-present/optional", "locator": "S003 L243-L253, L264-L267", "claim": "OME group MAY contain 'series'; when present it MUST be a list of string paths whose order MUST match OME-XML Image order if provided."},
+    {"id": "F008", "group": "G1", "status": "supported", "level": "recommended+obligation", "locator": "S003 L257-L260", "claim": "b2raw collections SHOULD have OME/METADATA.ome.xml; it MUST adhere to OME-XML and MUST use MetadataOnly (no BinData/BinaryOnly/TiffData); MAY use minimum spec."},
+    {"id": "F009", "group": "G1", "status": "supported", "level": "recommended/optional", "locator": "S003 L271-L275", "claim": "Readers SHOULD surface multiple images (SHOULD NOT default to first); MAY use series; MAY show all or offer choice; MAY ignore other groups/arrays under root."},
+    {"id": "F010", "group": "G1", "status": "supported", "level": "obligation", "locator": "S003 L268-L270", "claim": "Without series and without plate, multiscales images MUST be in consecutively numbered groups starting at 0, each representing exactly one OME-XML Image in order."},
+    {"id": "F011", "group": "G1", "status": "supported", "level": "obligation", "locator": "S003 L118-L129", "claim": "HCS: three groups above images; well group MUST implement well spec; plate group MUST implement plate spec; empty rows/wells SHOULD NOT be present."},
+    {"id": "F012", "group": "G1", "status": "supported", "level": "obligation", "locator": "S003 L515-L560", "claim": "Plate dictionary MUSTs: columns, rows, wells, version (string); SHOULD: field_count, name; MAY: acquisitions; column/row names alphanumeric, case-sensitive, unique; well path MUST be <row>/<column>, no extra dirs; rowIndex/columnIndex 0-based and consistent with path."},
+    {"id": "F013", "group": "G1", "status": "supported", "level": "obligation", "locator": "S003 L740-L752", "claim": "Well dictionary MUST contain images; each MUST have path (alphanumeric, case-sensitive, unique); acquisition key MUST when plate has multiple acquisitions; well version SHOULD with MUST-string-when-present."},
+    {"id": "F014", "group": "G2", "status": "supported", "level": "obligation+recommended", "locator": "S003 L166-L173", "claim": "axes: name MUST (unique); type SHOULD (space/time/channel, custom MAY); unit SHOULD (UDUNITS-2 strings enumerated L171-L172); axes length MUST equal array dimensionality."},
+    {"id": "F015", "group": "G1", "status": "supported", "level": "obligation", "locator": "S003 L174, L825-L827", "claim": "dimension_names MUST be included in array zarr.json of a multiscale level and MUST match axes names (MUST clarified in 0.5.2)."},
+    {"id": "F016", "group": "G1", "status": "supported", "level": "obligation", "locator": "S003 L294-L303", "claim": "multiscales: list of dicts; axes MUST 2-5 entries equal to array dims; 2-3 space axes; MAY one time, MAY one channel/null/custom; order MUST be time, channel/custom, space; zyx SHOULD for anisotropic z."},
+    {"id": "F017", "group": "G1", "status": "supported", "level": "obligation", "locator": "S003 L304-L307", "claim": "datasets MUST list levels with relative paths ordered largest (highest resolution) to smallest; same dimension count <=5 corresponding to axes."},
+    {"id": "F018", "group": "G2", "status": "supported", "level": "obligation", "locator": "S003 L308-L313", "claim": "Each dataset MUST have exactly one scale transformation (physical size or time duration); unavailable scaling MUST use inter-level factor defaulting 1.0; MAY one translation after scale; vector lengths MUST equal axes; only scale/translation allowed at this position."},
+    {"id": "F019", "group": "G2", "status": "supported", "level": "optional", "locator": "S003 L314-L316", "claim": "multiscales-level coordinateTransformations MAY exist, apply to all levels, follow same type/order rules, and are applied after per-dataset transforms."},
+    {"id": "F020", "group": "G2", "status": "supported-with-gap", "level": "obligation", "locator": "S003 L276-L293", "claim": "Transform types: identity (default, typically implicit), translation, scale; vectors may be inline float lists or binary data at a 'path' in the container; applied sequentially in order. Binary path variant lacks layout detail in capture (unresolved U3)."},
+    {"id": "F021", "group": "G1", "status": "supported-partially-informative", "level": "obligation+informative", "locator": "S003 L298, L388-L397", "claim": "multiscales is a list (multiple pyramids possible); selection guidance (use single; else user chooses by name; fallback first) appears only in example/pseudocode form, non-normative per L877-L883."},
+    {"id": "F022", "group": "G2", "status": "supported", "level": "optional+obligation-when-present", "locator": "S003 L398-L430", "claim": "omero (transitional) is optional; if present MUST contain channels; each channel MUST have color (6 hex digits) and window with MUST fields min, max, start, end."},
+    {"id": "F023", "group": "G2", "status": "supported-as-informative", "level": "informative", "locator": "S003 L401-L425", "claim": "omero example shows id, name, per-channel active/coefficient/family/inverted/label and rdefs defaultT/defaultZ/model; these appear only in the annotated example (non-normative); OMERO WebGateway docs referenced but not in capture."},
+    {"id": "F024", "group": "G2", "status": "supported", "level": "obligation+recommended", "locator": "S003 L102-L108, L431-L442", "claim": "labels group nested in image group; labels-group zarr.json MUST contain 'labels' key listing paths to label images; all label images SHOULD be listed; intermediate groups MUST NOT contain metadata."},
+    {"id": "F025", "group": "G2", "status": "supported", "level": "obligation", "locator": "S003 L438-L439, L116-L117", "claim": "Label image pixels MUST be integer types: uint8/int8/uint16/int16/uint32/int32/uint64/int64."},
+    {"id": "F026", "group": "G2", "status": "supported", "level": "obligation", "locator": "S003 L454-L455", "claim": "Label image zarr.json MUST implement multiscales; datasets MUST have same number of scale levels as the original unlabeled image."},
+    {"id": "F027", "group": "G2", "status": "supported", "level": "recommended+obligation-when-present", "locator": "S003 L456-L466, L513-L514", "claim": "image-label SHOULD exist with colors (MUST be array) and version (MUST be string); readers SHOULD display using colors; each entry MUST have integer label-value; rgba MAY (4 ints 0-255, 4th alpha)."},
+    {"id": "F028", "group": "G2", "status": "supported", "level": "optional", "locator": "S003 L467-L474", "claim": "image-label MAY contain properties (entries MUST have label-value; arbitrary kv; keys may differ across entries) and source (MUST be object; MAY include image relative path; default '../../')."},
+    {"id": "F029", "group": "X", "status": "supported", "level": "obligation", "locator": "S003 L65-L66", "claim": "JSON comments MUST NOT be included in JSON objects (spec example comments are for clarity only)."},
+    {"id": "F030", "group": "X", "status": "supported", "level": "obligation-conditional", "locator": "S003 L60-L64", "claim": "Transitional metadata: implementations may be expected (MUST) or encouraged (SHOULD) to support reading; writing usually MAY."},
+    {"id": "F031", "group": "X", "status": "supported", "level": "obligation-context", "locator": "S003 L24-L27, L821-L833", "claim": "Released version is 0.5; editor's-draft data not necessarily supported; 0.5.2 added dimension_names MUST; 0.5.0 introduced Zarr v3."},
+    {"id": "F032", "group": "X", "status": "supported", "level": "observation", "locator": "S003 L73-L77", "claim": "Hierarchy may equally live on HTTP/object storage; format is storage-neutral; local-only reading is a product boundary, not a format property."},
+    {"id": "F033", "group": "X", "status": "supported", "level": "observation", "locator": "S003 L809-L812", "claim": "Multi-word keys should be camelCase but legacy exceptions exist (e.g. bioformats2raw.layout, field_count, image-label, label-value as used in document); parsers must not normalize key casing."},
+    {"id": "F034", "group": "G2", "status": "supported", "level": "optional", "locator": "S003 L145", "claim": "Labels under an HCS field of view are optional."},
+    {"id": "F035", "group": "G2", "status": "supported-as-comment", "level": "hierarchy-comment", "locator": "S003 L104-L108", "claim": "Each label dimension should equal the corresponding image dimension or be 1 if irrelevant; observed in layout annotations, not as an RFC-2119 sentence."},
+    {"id": "C001", "group": "X", "status": "counterevidence", "level": "inconsistency", "locator": "S003 L550-L551 vs L563-L640, L643-L739", "claim": "Plate 'version' is MUST per normative text but both plate examples omit the key; real files may lack it."},
+    {"id": "C002", "group": "X", "status": "counterevidence", "level": "inconsistency", "locator": "S003 L872-L876", "claim": "Conformance boilerplate claims RFC2119 words do not appear in all uppercase, contradicting pervasive uppercase usage; adopted reading: uppercase keywords are normative (L872-L874, L57-L59)."},
+    {"id": "C003", "group": "X", "status": "counterevidence", "level": "inconsistency", "locator": "S003 L889-L892 vs L118", "claim": "Index lists 'HCS, in § 2.2.3' while HCS hierarchy is §1.2."},
+    {"id": "C004", "group": "X", "status": "observed-artifact", "level": "artifact", "locator": "S003 L130", "claim": "Stray '.' line in HCS hierarchy diagram."},
+    {"id": "C005", "group": "X", "status": "coverage-limit", "level": "gap", "locator": "S003 L813-L814", "claim": "Implementations section contains only 'See Tools.' — no implementation/tool evidence exists in the admitted capture; brief's reader-implementation dimension cannot be evidenced in scope."},
+    {"id": "C006", "group": "G2", "status": "uncertainty", "level": "example-only", "locator": "S003 L403, L419-L423", "claim": "rdefs semantics and the channels-array-matches-c-dimension rule appear only in annotated examples, non-normative per L877-L883."},
+    {"id": "C007", "group": "G1", "status": "uncertainty", "level": "informative", "locator": "S003 L388-L397", "claim": "Multiscale-selection pseudocode/fallback is example material; normative status of the fallback rule is not established."},
+    {"id": "C008", "group": "X", "status": "supported", "level": "reading-note", "locator": "S003 L523-L529, L751-L752", "claim": "Mixed requirement constructions ('SHOULD contain a key whose value MUST be ...') separate presence level from value level; readers must not conflate."},
+    {"id": "C009", "group": "X", "status": "supported", "level": "observation", "locator": "S003 L341, L351, L361, L370", "claim": "Spec's own JSON examples include comments despite the comments ban for objects (L65-L66); strict parsing of real files still required."}
+  ],
+  "coverage_limits": [
+    "Single admitted source (S003 capture only); no live fetching was performed or permitted, so the capture cannot be compared against the live specification.",
+    "The Zarr v3 specification is referenced (S003 L68-L72, L174) but not admitted; mandatory reader behavior for Zarr-level metadata and codecs cannot be determined from this scope.",
+    "No real-world OME-Zarr filesets or reader/writer tools were inspected; interop claims are limited to what the spec text prescribes (see C005).",
+    "No code was executed and no fixture tests were run; all validation proposals in the report are UNEXECUTED.",
+    "Absence claims (e.g., no reader-error-handling obligations found) are scoped to one complete manual read of the 896-line capture, not to the full spec ecosystem.",
+    "The binary 'path' storage variant for scale/translation vectors lacks layout/dtype detail in the capture; parsing design is blocked."
+  ],
+  "undeveloped_leads": [
+    "OMERO WebGateway documentation for full 'omero' field semantics (S003 L424-L425).",
+    "OME-XML 'minimum specification' option for METADATA.ome.xml (S003 L260).",
+    "UDUNITS-2 grammar for validating and displaying axis units (S003 L170-L172).",
+    "Zarr v3 specification surface implied by S003 L68-L72 and dimension_names (L174).",
+    "'Tools' implementations list the spec points to (S003 L813-L814).",
+    "Upcoming NGFF specification expected to replace bioformats2raw.layout (S003 L181).",
+    "Valid value set for image-label 'version' strings (S003 L459-L460) — not enumerated in capture."
+  ]
+}

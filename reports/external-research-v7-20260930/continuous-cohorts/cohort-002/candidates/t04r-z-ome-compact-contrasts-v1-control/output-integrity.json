@@ -1,0 +1,72 @@
+{
+  "schema": "er7.productive_z.output_integrity.v1",
+  "epoch": 1790884338.2927914,
+  "label": "t04r-z-ome-compact-contrasts-v1-control",
+  "files": {
+    "acquisition/V001.json": {
+      "sha256": "8b523ba4f7824a56aaf34dff432f027d166c6feed5fcea7bcd966d12522a4875",
+      "bytes": 19140
+    },
+    "reports/V001.md": {
+      "sha256": "a36f58290a6fa0d56004497267bea98d4db801fae994a458c24a6b33bfee8a38",
+      "bytes": 35674
+    },
+    "reports/V002.md": {
+      "sha256": "5bb9916e6d6cce43d392eef4928e311df3be9470e526221ceb5425282d5a5dcb",
+      "bytes": 36460
+    },
+    "verification/v002_line_map.txt": {
+      "sha256": "400201ce9279837ca6a37cfdc4db2ab15f1e1b43bf056053b382cc148d57e88a",
+      "bytes": 41522
+    }
+  },
+  "missing_required_outputs": [
+    "protocol/V001.json",
+    "final/V001.json"
+  ],
+  "sanitized_native_artifacts": {
+    "receipt.json": {
+      "sha256": "066a63fdf72cdac7f2657734af07dc578d4b89ed3cb927a494c38e52f55c1b32",
+      "bytes": 382825
+    },
+    "host-process.json": {
+      "sha256": "ad26f0e77df3d337df5573a9b96708234b720c2093f8a21bb1d219a743487ae4",
+      "bytes": 58
+    },
+    "session-tool-contract.json": {
+      "sha256": "a9f6534b29a8b6718ceacc9998f1b3644d0f4c3c5e75741a93d1954301b2a449",
+      "bytes": 2255
+    },
+    "progress.jsonl": {
+      "sha256": "aff691d41c2cec98d6af89a6661045dc15f3e4427bb0660a9918e0df334ab0a6",
+      "bytes": 174
+    },
+    "usage-events.jsonl": {
+      "sha256": "4c91c2d953b71e47222c868d2f3462e3cdb75afcb532db0ff1f315bd5455e62d",
+      "bytes": 5663
+    },
+    "zcode-stdout.redacted.jsonl": {
+      "sha256": "ecc2ebce89589123419d43da668ede237ce166b8559600a3ae830e3eae5ab5fe",
+      "bytes": 29872566
+    },
+    "zcode-stderr.omitted.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-control/native/receipt.json",
+    "native_receipt_sha256": "066a63fdf72cdac7f2657734af07dc578d4b89ed3cb927a494c38e52f55c1b32",
+    "owned_driver_pgid": 1590598,
+    "basis": "sanitized native receipt plus only known own group absence"
+  },
+  "private_client": "excluded entirely; never read",
+  "semantic_quality": "unassessed",
+  "context_observations_sha256": "5ad6306b408ef1a714392319bebfd20b792f93d022221a64e949e87c05924e56",
+  "future_native_context": "qualified",
+  "native_outcome": "failed-or-unestablished",
+  "inventory_verified": false,
+  "method_postrender_delivery": "pending separate measured machinery; no free semantic helper rewrite"
+}

@@ -37,7 +37,9 @@
       "R005",
       "R006",
       "R007",
-      "R008"
+      "R008",
+      "R013",
+      "R014"
     ],
     "current_partial_certification": [
       "R011",
@@ -71,18 +73,22 @@
   "publication_as_of_utc": "2026-10-01T18:15:24.352746+00:00",
   "new_research_budget_required": false,
   "active_snapshot": {
-    "candidate_admissions": 23,
-    "occupied_slot_seconds": 11117.104108572006,
-    "remaining_committed_slot_seconds": 0,
-    "reported_generated_tokens_lower_bound": 429962,
+    "candidate_admissions": 29,
+    "occupied_slot_seconds": 15002.496506214142,
+    "remaining_committed_slot_seconds": 1250.7226617336273,
+    "reported_generated_tokens_lower_bound": 593370,
     "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
     "active_by_family": {
       "M": 0,
-      "Z": 0,
+      "Z": 2,
       "L": 0
     },
     "overdue_jobs": [],
-    "active_jobs": []
+    "active_jobs": [
+      "t11-z-jj-repo-safe-v2-s2-control",
+      "t11-z-jj-repo-safe-v2-s2-treatment"
+    ]
   },
-  "snapshot_source": "continuous-cohorts/cohort-001/continuous-evaluation-ready.json"
+  "snapshot_source": "continuous-cohorts/cohort-002/observed-continuous-evaluation-ready.json",
+  "snapshot_is_live_current": false
 }

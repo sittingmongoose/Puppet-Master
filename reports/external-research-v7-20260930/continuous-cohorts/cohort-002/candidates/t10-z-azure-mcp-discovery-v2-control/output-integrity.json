@@ -1,0 +1,77 @@
+{
+  "schema": "er7.productive_z.output_integrity.v1",
+  "epoch": 1790883609.2604265,
+  "label": "t10-z-azure-mcp-discovery-v2-control",
+  "files": {
+    "acquisition.json": {
+      "sha256": "6698d7b1ab865d18c10c861921848eefbbd0e810db0a8a6f319d9d0ee46bcab2",
+      "bytes": 15061
+    },
+    "draft-acquisition.json": {
+      "sha256": "aa7f0a8ce51da286af877c5b4861a5d02271477cfebe5b7967d867173d3824a4",
+      "bytes": 13933
+    },
+    "draft-report.md": {
+      "sha256": "7906712ccfd07cb5bffa3f3891748b5dcd48ebd4e60298ee908e444a37a7af3e",
+      "bytes": 27230
+    },
+    "draft-scheduling.json": {
+      "sha256": "7656d92b1fcd1215fb1f860cc8176e1716b9563f5fcdc61503f78920b1b9f061",
+      "bytes": 11300
+    },
+    "report.md": {
+      "sha256": "00732ac3d612c28c90b3e1a3ed7af83b16a42ff0e79286832dfad2fefffdbee9",
+      "bytes": 27225
+    },
+    "scheduling.json": {
+      "sha256": "7656d92b1fcd1215fb1f860cc8176e1716b9563f5fcdc61503f78920b1b9f061",
+      "bytes": 11300
+    }
+  },
+  "missing_required_outputs": [],
+  "sanitized_native_artifacts": {
+    "receipt.json": {
+      "sha256": "159be8ff80b98409bd02576983ae2ba2d0505284383bc83a8a32bf9cb3b1a53a",
+      "bytes": 702767
+    },
+    "host-process.json": {
+      "sha256": "c96f12d6f36410c0c1c8d3c727a126c7c4585f7d30f1b22132eeb831d58a2123",
+      "bytes": 58
+    },
+    "session-tool-contract.json": {
+      "sha256": "21eee6876209d09d1b8d01e0a6c2efc2fcbb7c1c1b8d09d647e4ee49fba22dad",
+      "bytes": 2237
+    },
+    "progress.jsonl": {
+      "sha256": "4400b1f6fb296358d3556f300ce770157053dda64b287cf59bd38c886ded2e08",
+      "bytes": 386
+    },
+    "usage-events.jsonl": {
+      "sha256": "07372cbc091a7c84828dbeb8f3ea7ea8656bceb8e8c7f8c310d97e4a03f8e706",
+      "bytes": 8544
+    },
+    "zcode-stdout.redacted.jsonl": {
+      "sha256": "ad11e77e83bba47e7586b8ea7746be197d4fbe95a33872651f1595b8cf73f3f6",
+      "bytes": 76333647
+    },
+    "zcode-stderr.omitted.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-control/native/receipt.json",
+    "native_receipt_sha256": "159be8ff80b98409bd02576983ae2ba2d0505284383bc83a8a32bf9cb3b1a53a",
+    "owned_driver_pgid": 1523349,
+    "basis": "sanitized native receipt plus only known own group absence"
+  },
+  "private_client": "excluded entirely; never read",
+  "semantic_quality": "unassessed",
+  "context_observations_sha256": "5b8d69a23700bf652c6e17b69870989cf4bdbc5f03556a59115362ca4b8a7cac",
+  "future_native_context": "qualified",
+  "native_outcome": "passed",
+  "inventory_verified": true,
+  "method_postrender_delivery": "pending separate measured machinery; no free semantic helper rewrite"
+}
