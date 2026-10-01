@@ -198,7 +198,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 | Language | Rust stable 1.96.1 | All logic, state management, and Slint bridge code; verified current stable on 2026-07-02 |
 | UI Framework | Slint 1.17.1 | `.slint` markup files compiled via `slint_build` in `build.rs`; selected by owner decision on 2026-07-07 |
 | Default Renderer | Winit + Skia (GPU) | Skia is the only renderer compiled into Windows, Linux, and macOS native desktop builds; it draws on the GPU (Metal, Direct3D, Vulkan, or OpenGL) by default and carries Puppet Master's Skia renderer extensions (F3-582) |
-| Fallback Renderer | Winit + Skia CPU (`winit-skia-software`) | Skia's own CPU raster, used when no GPU surface can be created after explicit override and persisted-preference resolution; also the headless, CI, and emergency-recovery renderer. Heavy blur is off on this path |
+| Fallback Renderer | Winit + Skia CPU (`winit-skia-software`) | Skia's own CPU raster, used when no GPU surface can be created after explicit override and persisted-preference resolution; also the headless, CI, and emergency-recovery renderer. Backdrop blur is not drawn on this path and frosted surfaces draw solid |
 | Retired Renderers | Winit + FemtoVG-wgpu, Winit software renderer | Not compiled or shipped (DL-139); the names remain source lineage only |
 | Web GUI | Leptos 0.8 (client-side rendered) | Rust compiled to WebAssembly, drawn with browser elements and CSS, served by the trusted local daemon (§2.3, F3-583) |
 | Persistence (layout) | redb | Durable KV store for layout state, preferences, editor state |
@@ -213,7 +213,7 @@ Native desktop targets Windows, Linux, and macOS through the Slint Winit backend
 
 #### Skia renderer extensions (DL-139)
 
-Puppet Master extends Slint's Skia renderer with its own code; F3-582 owns the contract. The extensions add, as `.slint` properties drawn by Skia: element blur; backdrop blur of what is drawn underneath an element; gradient and alpha masks; blend modes; saturate, contrast, and brightness filters; ClearType text on Windows; and selectable rich text (`StyledText`) with readable selection offsets. ClearType reads the Windows font-smoothing settings, gives Skia surfaces the screen's subpixel layout, draws glyphs with subpixel edging, and falls back to grayscale for text in fading or cached layers, text being scaled or rotated, and transparent windows. macOS keeps grayscale text; Linux subpixel text is out of scope until Skia's FreeType path supports it. On the CPU path heavy blur is off and blurred panels draw solid. The extensions are written to upstream quality, offered to Slint against slint-ui/slint#612, #2066, and #5748, and carried as a Cargo `[patch]` of Slint's crates until merged; each Slint upgrade re-applies and re-verifies them. Motion that Slint lacks but that needs no renderer work, such as multi-step keyframes, stepped easing, and path draw-on, is built from Slint animations, `animation-tick()`, and timers rather than from these extensions.
+Puppet Master extends Slint's Skia renderer with its own code; F3-582 owns the contract. The extensions add, as `.slint` properties drawn by Skia: element blur; backdrop blur of what is drawn underneath an element; gradient and alpha masks; blend modes; saturate, contrast, and brightness filters; ClearType text on Windows; and selectable rich text (`StyledText`) whose selection the application can read and set. ClearType reads the Windows font-smoothing settings, gives Skia surfaces the screen's subpixel layout, draws glyphs with subpixel edging, and falls back to grayscale for text in fading or cached layers, text being scaled or rotated, and transparent windows. macOS keeps grayscale text; Linux subpixel text needs more work in Skia's FreeType setup and follows after Windows. On the CPU path backdrop blur is not drawn and frosted surfaces draw solid in their own fill; the other effects still draw. The extensions are written to upstream quality, offered to Slint against slint-ui/slint#612, #2066, and #5748, and carried as a Cargo `[patch]` of Slint's crates until merged; each Slint upgrade re-applies and re-checks them. "Slint portability" notes elsewhere in this spec that ban blur, backdrop blur, masks, blend modes, or filter effects only because stock Slint could not draw them no longer bind for these effects (DL-139); their other guidance (precomputed colours, pre-blurred wallpaper images, opaque surfaces) remains a performance option. Design rules that limit blur for their own reasons, such as DL-114, F3-566, and F3-431, stay in force. Motion that Slint lacks but that needs no renderer work, such as multi-step keyframes, stepped easing, and path draw-on, is built from Slint animations, `animation-tick()`, and timers rather than from these extensions.
 
 ### 2.3 Web/WASM GUI Contract
 
@@ -39832,11 +39832,14 @@ canonical_text: >-
   text (StyledText) whose selection offsets the application can read and set. ClearType reads the Windows
   font-smoothing settings (on or off, RGB or BGR order, contrast), gives Skia surfaces the screen's subpixel layout,
   draws glyphs with subpixel edging, and falls back to grayscale for text in fading or cached layers, text being
-  scaled or rotated, and transparent windows; macOS keeps grayscale text, and Linux subpixel text is out of scope
-  until Skia's FreeType path supports it. On the Skia CPU raster (winit-skia-software), heavy blur is off and blurred
-  panels draw solid. The extensions are written to upstream quality, offered to Slint against slint-ui/slint#612,
+  scaled or rotated, and transparent windows; macOS keeps grayscale text, and Linux subpixel text needs more work in
+  Skia's FreeType setup and follows after Windows. On the Skia CPU raster (winit-skia-software), backdrop blur is not
+  drawn and frosted surfaces draw solid in their own fill; the other effects still draw. The extensions are written to upstream quality, offered to Slint against slint-ui/slint#612,
   slint-ui/slint#2066, and slint-ui/slint#5748, and carried as a Cargo [patch] of Slint's crates until merged; every
-  Slint upgrade re-applies them and re-runs their screenshot checks before it lands. Motion that needs no renderer
+  Slint upgrade re-applies them and re-runs their screenshot checks. Slint-portability notes that ban blur, backdrop
+  blur, masks, blend modes, or filter effects only because stock Slint could not draw them no longer bind for these
+  effects; their other guidance remains a performance option, and design rules that limit blur for their own
+  reasons (DL-114, F3-566, F3-431) stay in force. Motion that needs no renderer
   work, such as multi-step keyframes, stepped easing, and path draw-on, is built from Slint animations,
   animation-tick(), and timers rather than from these extensions.
 gui_related: true
@@ -39845,10 +39848,11 @@ split_recommended: false
 depends_on: [DL-139, F3-026, F3-029, F3-033, F3-417]
 unblocks: []
 acceptance_criteria:
-  - "Each listed effect is reachable as a .slint property and drawn by Skia on both the GPU and CPU paths, except heavy blur, which draws solid on the CPU path."
+  - "Each listed effect is reachable as a .slint property and drawn by Skia on both the GPU and CPU paths, except backdrop blur, whose surfaces draw solid in their own fill on the CPU path."
   - "On Windows with ClearType on, static text over an opaque background draws with subpixel edging in the system's RGB or BGR order; text in fading or cached layers, scaled or rotated text, and transparent windows draw grayscale."
   - "StyledText supports mouse and keyboard selection and copy, and the application can read and set its selection offsets."
-  - "The extensions live in a Cargo [patch] of Slint's crates with a recorded upstream issue or pull request for each, and a Slint upgrade does not land until they re-apply and their screenshot checks pass."
+  - "The extensions live in a Cargo [patch] of Slint's crates with a recorded upstream issue or pull request for each, and each Slint upgrade re-applies them and re-runs their screenshot checks."
+  - "Slint-portability bans on these effects no longer bind, and the blur limits of DL-114, F3-566 and F3-431 are unchanged."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -39873,9 +39877,13 @@ preserved_exact_tokens:
   - "winit-skia-software"
   - "slint-ui/slint#5748"
 negative_constraints:
-  - "Do not add these effects to any renderer other than Skia."
-  - "Do not draw heavy blur on the Skia CPU raster; draw those panels solid."
-  - "Do not land a Slint upgrade without re-applying and re-verifying the extensions."
+  - "Do not draw backdrop blur on the Skia CPU raster; draw those surfaces solid in their own fill."
+  - "Do not treat this unit as reopening the blur limits of DL-114, F3-566 or F3-431."
+compatibility_only_notes: []
+stale_retired_dispositions:
+  - "DL-139 lifts Slint-portability bans on blur, backdrop blur, masks, blend modes and filter effects that existed only because stock Slint could not draw them; the individual notes are updated when their units are next edited."
+owner_boundary_notes:
+  - "FinalGUISpec owns the extension contract; Release_Supply_Chain consumes it for packaging and renderer-order verification."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -39894,7 +39902,8 @@ canonical_text: >-
   route by the trusted local daemon; first paint may later move to server rendering from the daemon if load time needs
   it. It uses no React, Tauri, or TypeScript; JavaScript is limited to generated glue and the minimal bootstrap needed
   to load the WASM module, route static assets, and connect to approved local services. The trusted local daemon
-  contract and the web capability states of sections 2.4 and 2.5 apply unchanged. Desktop and web stay in step through
+  contract and the web capability states (the Trusted Local Daemon Contract and Web Capability Matrix sections) apply
+  unchanged. Desktop and web stay in step through
   one shared Rust interface-model crate that owns state, commands, formatting, and validation and that both interfaces
   bind to; one design-token source that generates the Slint theme globals and the CSS custom properties for every
   theme; and the same fixtures run through both interfaces, with screenshots of each. Web animations keep to transform
@@ -39907,9 +39916,10 @@ depends_on: [DL-139, F3-030, F3-417, ATS-023]
 unblocks: []
 acceptance_criteria:
   - "The web GUI is built from Rust Leptos components and CSS, pinned to the Leptos 0.8 line until 0.9 is stable, with no React, Tauri, or TypeScript product code."
-  - "The web GUI reaches OS-owned capabilities only through the trusted local daemon and reports the web capability states of section 2.5."
+  - "The web GUI reaches OS-owned capabilities only through the trusted local daemon and reports the web capability states of the Web Capability Matrix section."
   - "Desktop and web bind the same interface-model crate and the same generated design tokens, and the shared fixtures produce screenshots on both."
   - "Web text is browser-rendered and selectable with the browser's own selection."
+  - "Web animations keep to transform and opacity where the design allows, long lists render only their visible rows, and long transcripts are trimmed or kept as page text."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -39940,6 +39950,9 @@ negative_constraints:
   - "Do not fork interface state or theme tokens between desktop and web."
 stale_retired_dispositions:
   - "DL-139 retires the Slint/WASM canvas web GUI, its cdylib canvas client, and its minimal HTML/canvas bootstrap; those names remain source lineage only."
+compatibility_only_notes: []
+owner_boundary_notes:
+  - "FinalGUISpec owns the web-client contract; Automated_Testing_System owns the web dev/test workflow (ATS-023)."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Automated_Testing_System.md

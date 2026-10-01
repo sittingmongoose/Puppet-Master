@@ -136,6 +136,7 @@ unblocks:
 - F3-417
 acceptance_criteria:
 - The local daemon plus static web route workflow has fixture mode, browser automation smoke test, screenshots/state-capture, state hooks, and fast reload coverage.
+- The shared fixtures also run through the Slint desktop, and screenshots of the web and desktop interfaces are captured for comparison.
 - Smoke tests prove authenticated local origin or pairing, origin/CSRF protection, capability probe, degraded reason, and permission/audit receipt projection.
 - Production builds keep dev/test, MCP, live-preview, fixture, and browser automation controls disabled unless explicit configuration enables the capability.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this spec.

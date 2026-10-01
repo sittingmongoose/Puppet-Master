@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L2926-L10526
+Source lines: L2931-L10537
 
-Source SHA256: `dddd135f9cbeebaaeee63939977f07f9db305c24409bd134799103853ef540d6`
+Source SHA256: `45c23a65c8b4a3b7f6ceb53a62afe966cbc86ceafb723873edcee4b090ab434e`
 
 ---
 
@@ -7553,25 +7553,31 @@ canonical_text: >-
   own CPU raster (winit-skia-software); FemtoVG and Slint's separate software renderer are not compiled or shipped.
   Puppet Master carries its own extensions to Slint's Skia renderer for element blur, backdrop blur, gradient and
   alpha masks, blend modes, saturate/contrast/brightness filters, ClearType text on Windows and selectable rich text
-  (F3-582), written to upstream quality, offered to Slint and carried as a Cargo patch until merged. The web GUI is a
+  (F3-582), written to upstream quality, offered to Slint, carried as a Cargo patch until merged and re-checked with
+  every Slint upgrade; on the CPU raster backdrop blur is not drawn and frosted surfaces draw solid. "Slint
+  portability" notes that ban blur, backdrop blur, masks, blend modes or filter effects only because stock Slint could
+  not draw them no longer bind for those effects; design rules that limit blur for their own reasons (DL-114, F3-566,
+  F3-431) stay in force until decided separately. The web GUI is a
   Leptos client drawn with browser elements and CSS and served by the trusted local daemon (F3-583); it replaces the
   Slint/WASM canvas web GUI. Both interfaces bind one shared Rust interface-model crate and one design-token source.
   Jared said: "ok sounds like we are doing custom skia work and only using skia for desktop.  For web, you said we
   should use a browser-native web client, what would you recommend?", then "I told the other thread to drop the
   slint requirements since we are going to do custom code on skia to alleviate the shortcomings.", then "ok go with
   Leptos, draft the decision card and spec edits.  Including the skia change, custom code, dropping FemtoVG then
-  cpu(skia has cpu)." Leaving out Slint's own software renderer is recorded as the reading of "dropping FemtoVG then
-  cpu(skia has cpu)". The Slint and Rust version pins, the no-React and no-Tauri rule, the trusted local daemon
-  contract and the in-canvas float-layer name are unchanged.
+  cpu(skia has cpu)." Two readings are recorded for owner confirmation: leaving out Slint's own software renderer is
+  the reading of "dropping FemtoVG then cpu(skia has cpu)", and lifting the Slint-portability bans for the F3-582
+  effects is the reading of "drop the slint requirements". The Slint and Rust version pins, the no-React and
+  no-Tauri rule, the trusted local daemon contract and the in-canvas float-layer name are unchanged.
 gui_related: true
 gui_classification_reason: Records the owner decision on the desktop renderer set, the visual capabilities added to
   it, and the technology of the web GUI.
 split_recommended: false
-depends_on: [F3-026, F3-029, F3-030, F3-033, F3-271, F3-417, ATS-023]
+depends_on: []
 unblocks: [F3-582, F3-583]
 acceptance_criteria:
   - "Every live owner and consumer statement of the desktop renderer order names Skia on the GPU then Skia's CPU raster, with FemtoVG and Slint's separate software renderer retired."
   - "The Skia extension set and the Leptos web client each have one owning FinalGUISpec PlanUnit."
+  - "Slint-portability bans on the F3-582 effects no longer bind, while DL-114, F3-566 and F3-431 keep their own blur limits."
   - "The trusted local daemon contract, web capability states, Slint version pins and the no-React and no-Tauri rule are unchanged."
   - "The three owner answers are preserved verbatim with their source hash."
 validation_surfaces:
