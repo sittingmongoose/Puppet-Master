@@ -1,0 +1,98 @@
+{
+  "schema": "er7.eligible_facets.ome_integrated_brief_v2",
+  "case_id": "ome-integrated-brief-only-v2",
+  "evaluator_only": true,
+  "established_before_outputs": true,
+  "created_epoch": 1790791581.451373,
+  "created_by": "/root scope author only; independent review required",
+  "input_pins": {
+    "brief_sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "plan_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d"
+  },
+  "authority": "The supplied product brief determines the seven prospective problem families. This is a scope key, not a factual answer list or universal source-truth denominator.",
+  "facets": [
+    {
+      "id": "F01",
+      "name": "Fileset image discovery and navigation",
+      "source_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+        "line": 3
+      },
+      "brief_scope_locator": "Scientists should be able to find images within a fileset",
+      "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+    },
+    {
+      "id": "F02",
+      "name": "Multiresolution display and channel/time/plane selection",
+      "source_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+        "line": 3
+      },
+      "brief_scope_locator": "inspect multiresolution images by channel, time point and plane",
+      "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+    },
+    {
+      "id": "F03",
+      "name": "Associated label image overlays",
+      "source_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+        "line": 3
+      },
+      "brief_scope_locator": "overlay associated label images",
+      "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+    },
+    {
+      "id": "F04",
+      "name": "Correctly calibrated coordinates",
+      "source_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+        "line": 3
+      },
+      "brief_scope_locator": "read correctly calibrated coordinates",
+      "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+    },
+    {
+      "id": "F05",
+      "name": "Responsiveness while opening large saved datasets",
+      "source_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+        "line": 3
+      },
+      "brief_scope_locator": "remain responsive while opening large saved datasets",
+      "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+    },
+    {
+      "id": "F06",
+      "name": "Unsupported-data explanation and compatibility boundaries",
+      "source_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+        "line": 3
+      },
+      "brief_scope_locator": "clearly explain data it cannot display",
+      "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+    },
+    {
+      "id": "F07",
+      "name": "Local read-only product boundary and transfer from actual implementations",
+      "source_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+        "line": 5
+      },
+      "brief_scope_locator": "local filesystem reading; Source files must remain unchanged; actual reader implementations",
+      "eligibility": "Assess complete current material assertions and supported applicable research for this family. Explicit evidence-grounded inapplicability is permitted; lack of research is not absence."
+    }
+  ],
+  "reference_evidence": [],
+  "reference_evidence_universe": {
+    "type": "open first-party acquisition scope, prospectively declared",
+    "allowed": "Public normative format documentation at relevant versions; actual reader implementation repositories/docs/tests and primary issue/fix discussions chosen by the candidate; each current factual assertion requires exact source/version and whole available relevant capture. Secondary sources are leads unless primary support is separately established.",
+    "scope": "The complete supplied brief and OME-Zarr0.5 local-read-only boundary, rather than the earlier S003-only task. All acquired source identities remain recorded; new sources do not silently change the brief-derived denominator.",
+    "source_capture_required": "Use actual completed correlated acquisition bytes with matching returned hash/length. Uncaptured/sanitized-mismatched bodies stay unknown; no supervising Sol replacement of candidate research."
+  },
+  "current_assessment_rules": "Current-only complete material/facet assessment and frozen JSON/MD BEFORE acquisition/history; prior grades/economics and method labels inaccessible. Unknown source support or sampled assessment cannot pass. Existing factual omission aid is not reused.",
+  "candidate_exposure": "Never mount or include this key, private paths, grading or factual answers in candidate/methodauthor packets. Candidate receives only its own brief, and the thin plan only after discovery freeze.",
+  "limitations": [
+    "No pre-execution factual omission aid has been written for this broad discovery edition. Source ground truth must be independently checked from frozen actual primary captures.",
+    "This key supplies no factual finding, winning source list, numeric patch, research answer or plan solution."
+  ]
+}

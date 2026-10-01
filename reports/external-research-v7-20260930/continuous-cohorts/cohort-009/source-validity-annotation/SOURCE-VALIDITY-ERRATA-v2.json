@@ -1,0 +1,672 @@
+{
+  "schema": "er7.additive_source_validity_errata.v2",
+  "edition_kind": "Separate additive SOURCE/VALIDITY ERRATA annotation, not a regrade or replacement assessment",
+  "created_at_utc": "2026-10-01T22:46:30.848611Z",
+  "phase": 1,
+  "reviewer": "/root/normative_current_grading_v5",
+  "instruction_binding": "Root explicitly required preservation of all frozen v1 assessments/grades as original authoritative editions, no changing old grades or best-of. Only additive source/validity errata is published.",
+  "original_grades_rows_metrics_preserved": true,
+  "grade_replacements": [],
+  "new_scores": [],
+  "threshold_change": false,
+  "facets_denominator_change": false,
+  "overall_verdict_change": false,
+  "fixed_source": {
+    "path": "R023/inputs/sources/S003.txt",
+    "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "bytes": 36980,
+    "lines": 896,
+    "publication_date_in_capture": "8 September 2026",
+    "authority": "Original fixed source remains the sole normative grading scope; unchanged."
+  },
+  "live_evaluator_only_source": {
+    "pin_manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-current-grading-v5/evaluator-sources/ome05-html-classification-v1/manifest.json",
+    "pin_manifest_sha256": "f15bc003aba96986f14ca22816ed0017747d1aa598bef25a3ac9e79948aa2b23",
+    "pin": {
+      "schema": "er7.evaluator_source_pin.v1",
+      "requested_url": "https://ngff.openmicroscopy.org/0.5/",
+      "final_url": "https://ngff.openmicroscopy.org/0.5/",
+      "accessed_at_utc": "2026-10-01T22:40:42.567904Z",
+      "bytes": 158591,
+      "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "version": "official /0.5/ page; exact page-date/classification not yet assessed",
+      "purpose": "Only confirm lost HTML example/class context around pinned S003 L388-397. Evaluator-only cost, never candidate source acquisition or rescue.",
+      "pinned_before_semantic_decision": true,
+      "candidate_operations_inferred": false,
+      "candidate_files_modified": false
+    },
+    "publication_date_in_fetched_html": "1 October 2026",
+    "purpose_limit": "Only lost HTML example/class context; not a candidate rescue, corrected candidate source, retrospective candidate acquisition proof or new normative grading corpus.",
+    "date_difference_limits": "The live page is a different access-time edition; its DOM is not proof of the exact historical 8 September HTML. Matching paragraph text corroborates context but cannot silently replace the pinned capture."
+  },
+  "source_context_observations": [
+    {
+      "locator": "Fixed S003 L320-397",
+      "observation": "A large JSON example is introduced by For example; the selection paragraph at L388-389 follows it, then Python code. The exact boundary of the preceding example introduction is not explicitly preserved in the plain-text capture."
+    },
+    {
+      "locator": "Fixed S003 L869-883",
+      "observation": "Conformance combines descriptive assertions and RFC2119; capitalization is not required. Text is normative except explicit non-normative sections, examples and notes, with stated example-introduction conventions."
+    },
+    {
+      "locator": "Pinned current HTML, selection paragraph and following pre element",
+      "observation": "The selection paragraph is a plain p under main, with no example-class ancestor. Following Python pre has highlight language-python classes, rather than class=example. This establishes current DOM structure, not historical provenance."
+    },
+    {
+      "locator": "Fixed S003 L388-397",
+      "observation": "Using a single multiscale, optional named selection and fallback guidance must be distinguished from viewport pyramid-level selection. The code comment suggests chunk-size choice. These facts do not establish a universal reader UI algorithm solely through keyword casing."
+    }
+  ],
+  "validity_erratum": {
+    "original_overconfident_classification": "Treating the entire L388-397 passage categorically as an informative example.",
+    "bounded_correction": "The whole-passage classification was not established. Plain capture and current unmarked HTML do not justify the blanket statement; the extent of the earlier For example introduction and descriptive-prose force require a qualification. Conversely, this does not establish every first-fallback UI choice as a universal reader MUST.",
+    "R026_F01_withdrawal_as_phrased": "The evaluator withdraws the categorical informative-guidance-promoted description as phrased. The original R026-F01 entry and original grade row remain untouched and authoritative; this is an explicit validity annotation, not a deleted failure, new row, revised score or best-of grade.",
+    "remaining_findings": "Independent coordinate-equation, source association, optional label-version, unsupported window/calibration and categorical/singleton coverage findings remain documented. Overall quality-failure verdicts and all six original facet rosters remain unchanged."
+  },
+  "original_vs_additive_concern": [
+    {
+      "report_id": "R023",
+      "original_assessment_sha256": "4ce3d3a549259439233e3d71f66c01adaa82d458568da2a1cf14f57ca9473af3",
+      "original_freeze_sha256": "d8a4d7d5f4bd20cdd70b4eb20055df4f831743fee5fcdf1c56cc548577275720",
+      "original_edition_authoritative": true,
+      "original_evidence_E23": {
+        "locator": "S003 L388-397",
+        "quote": "using the first multiscale as a fallback:",
+        "context": "Named-multiscale selection/pseudocode; informative example, not a universal pyramid-level policy."
+      },
+      "referenced_original_claims": [
+        {
+          "claim_id": "R023-C014",
+          "kind": "choice",
+          "report_locators": [
+            "L48,L136,L139"
+          ],
+          "claim": "Choosing an appropriate level or named multiscale first is product policy; pseudocode first fallback is informative.",
+          "source_outcome": "supported",
+          "evidence_ids": [
+            "E23",
+            "P01"
+          ],
+          "rationale": "Spec gives named-multiscale example, not a mandated viewport selection algorithm.",
+          "materiality": "material"
+        },
+        {
+          "claim_id": "R023-C060",
+          "kind": "choice",
+          "report_locators": [
+            "L135-139"
+          ],
+          "claim": "View-level policy,rendering fallbacks,custom-axisUI,unit formatting/errorcopy/plateUX are product choices.",
+          "source_outcome": "supported",
+          "evidence_ids": [
+            "E10",
+            "E11",
+            "E23",
+            "E24",
+            "E25",
+            "E29",
+            "B01",
+            "P02"
+          ],
+          "rationale": "Suitable distinction except mandatory display of unknown axis type elsewhere and unknown-vs-unitless calibration issue.",
+          "materiality": "material"
+        }
+      ],
+      "original_E23_failure_entries": [],
+      "original_verdict_unchanged": "quality failure",
+      "original_facets_unchanged": [
+        {
+          "id": "OME05-C01",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        },
+        {
+          "id": "OME05-C02",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        },
+        {
+          "id": "OME05-C03",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        },
+        {
+          "id": "OME05-C04",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        },
+        {
+          "id": "OME05-C05",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        },
+        {
+          "id": "OME05-C06",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        }
+      ],
+      "annotation": "The blanket informative-example label for the entire selection passage was not established. Referenced rows, source outcomes and metrics remain exactly the original frozen edition; this annotation records source-classification uncertainty, not replacement grade rows."
+    },
+    {
+      "report_id": "R024",
+      "original_assessment_sha256": "779afb20b11d76951b1331111aedc5e754d820506c5064a83af1493e52b1c1fc",
+      "original_freeze_sha256": "76dccb95208aa0c6d8d38d3048d001d8c5014e445ac5fe98aa4dca9a3eb72055",
+      "original_edition_authoritative": true,
+      "original_evidence_E23": {
+        "locator": "S003 L388-397",
+        "quote": "using the first multiscale as a fallback:",
+        "context": "Named-multiscale selection/pseudocode; informative example, not a universal pyramid-level policy."
+      },
+      "referenced_original_claims": [
+        {
+          "claim_id": "R024-C009",
+          "kind": "normative-status",
+          "report_locators": [
+            "L37-38"
+          ],
+          "claim": "RFC2119; text normative except explicit non-normative examples/notes; multiscale pseudocode informative.",
+          "source_outcome": "supported",
+          "evidence_ids": [
+            "E02",
+            "E23",
+            "E38"
+          ],
+          "rationale": "Proper keyword/example distinction; avoids treating example-only rdefs as guaranteed.",
+          "materiality": "material"
+        },
+        {
+          "claim_id": "R024-C022",
+          "kind": "example",
+          "report_locators": [
+            "L75-77,L197"
+          ],
+          "claim": "Multiple multiscales permitted; example use single/choose name/first fallback is guidance,selection rule product decision.",
+          "source_outcome": "supported",
+          "evidence_ids": [
+            "E23",
+            "P01"
+          ],
+          "rationale": "Non-normative selection advice kept distinct from format list structure and viewport level policy.",
+          "materiality": "material"
+        },
+        {
+          "claim_id": "R024-C068",
+          "kind": "plan-gap",
+          "report_locators": [
+            "L177"
+          ],
+          "claim": "Planlacksnamedversion/dimensionnames/multiscalechoice/pathvariants/HCSdetails.",
+          "source_outcome": "qualified",
+          "evidence_ids": [
+            "P01",
+            "P02",
+            "E09",
+            "E12",
+            "E17",
+            "E23",
+            "E08"
+          ],
+          "rationale": "Textlackverified;HCSaslargestomissionisascribedreviewerpriorityratherthanasourcefact. Pathnumericassumptionnotestablished.",
+          "materiality": "material"
+        },
+        {
+          "claim_id": "R024-C078",
+          "kind": "transfer",
+          "report_locators": [
+            "L197"
+          ],
+          "claim": "CE5OMEROWebGatewaymodeloriginatesinserver-siderendercontext,unverifiedsemanticslocaltransferonlyconditional;pseudocodeinformative.",
+          "source_outcome": "qualified",
+          "evidence_ids": [
+            "E24",
+            "E23"
+          ],
+          "rationale": "ExternalWebGatewaypointerdoesnotestablishservermodeldetailsinsideS003;origincontextunresolvednotindependentlyverified. Explicitnotverified/conditionalimportappropriate; nooutsidefactusedascalibrationmandate.",
+          "materiality": "material"
+        }
+      ],
+      "original_E23_failure_entries": [],
+      "original_verdict_unchanged": "quality failure",
+      "original_facets_unchanged": [
+        {
+          "id": "OME05-C01",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        },
+        {
+          "id": "OME05-C02",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        },
+        {
+          "id": "OME05-C03",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        },
+        {
+          "id": "OME05-C04",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        },
+        {
+          "id": "OME05-C05",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        },
+        {
+          "id": "OME05-C06",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        }
+      ],
+      "annotation": "The blanket informative-example label for the entire selection passage was not established. Referenced rows, source outcomes and metrics remain exactly the original frozen edition; this annotation records source-classification uncertainty, not replacement grade rows."
+    },
+    {
+      "report_id": "R025",
+      "original_assessment_sha256": "f69ad2b1fb40ec79833d6f1e7c182ad6bba5c384e41a3ecd8f4a3d3d45958b05",
+      "original_freeze_sha256": "d0c9daad0b7b90737c57e74d85dfbe4c32c6e19d48669a2331e42e3c0dad0b6b",
+      "original_edition_authoritative": true,
+      "original_evidence_E23": {
+        "locator": "S003 L388-397",
+        "quote": "using the first multiscale as a fallback:",
+        "context": "Named-multiscale selection/pseudocode; informative example, not a universal pyramid-level policy."
+      },
+      "referenced_original_claims": [],
+      "original_E23_failure_entries": [],
+      "original_verdict_unchanged": "quality failure",
+      "original_facets_unchanged": [
+        {
+          "id": "OME05-C01",
+          "coverage": "omitted",
+          "source_outcome": "unresolved"
+        },
+        {
+          "id": "OME05-C02",
+          "coverage": "omitted",
+          "source_outcome": "unresolved"
+        },
+        {
+          "id": "OME05-C03",
+          "coverage": "omitted",
+          "source_outcome": "unresolved"
+        },
+        {
+          "id": "OME05-C04",
+          "coverage": "omitted",
+          "source_outcome": "unresolved"
+        },
+        {
+          "id": "OME05-C05",
+          "coverage": "omitted",
+          "source_outcome": "unresolved"
+        },
+        {
+          "id": "OME05-C06",
+          "coverage": "omitted",
+          "source_outcome": "unresolved"
+        }
+      ],
+      "annotation": "The blanket informative-example label for the entire selection passage was not established. Referenced rows, source outcomes and metrics remain exactly the original frozen edition; this annotation records source-classification uncertainty, not replacement grade rows."
+    },
+    {
+      "report_id": "R026",
+      "original_assessment_sha256": "3a25458026ee425c8b5ec730e59f92cb065c6692489b9e5e97559bf872532033",
+      "original_freeze_sha256": "85bba54ba0ec859cbb8b1b3ab72bc5dc8ba7ca11a2c02de26a96acb4916cdfd2",
+      "original_edition_authoritative": true,
+      "original_evidence_E23": {
+        "locator": "S003 L388-397",
+        "quote": "using the first multiscale as a fallback:",
+        "context": "Named-multiscale selection/pseudocode; informative example, not a universal pyramid-level policy."
+      },
+      "referenced_original_claims": [
+        {
+          "claim_id": "R026-C015",
+          "kind": "mandate",
+          "report_locators": [
+            "L73,L83,L104,L223,L230"
+          ],
+          "claim": "Named-multiscale choose-by-name/first fallback imperative is binding or uniquely required despite example placement.",
+          "source_outcome": "unsupported",
+          "evidence_ids": [
+            "E23",
+            "E38"
+          ],
+          "rationale": "It is informative pseudocode/example guidance. Lowercase keyword caveat cannot create obligation from use it or override explicit example exception. Adoption is a permissible product choice.",
+          "materiality": "material"
+        },
+        {
+          "claim_id": "R026-C029",
+          "kind": "disposition",
+          "report_locators": [
+            "L103-104,L192,L196"
+          ],
+          "claim": "Keep pan/zoom,level-per-view and background/cancellation; add metadata traversal,validation,transforms,multiscale policy and per-level unsupported feedback.",
+          "source_outcome": "qualified",
+          "evidence_ids": [
+            "P01",
+            "P02",
+            "E19",
+            "E20",
+            "E23"
+          ],
+          "rationale": "Core and most extensions sound; first-fallback requirement remains informative/policy. Level-specific geometry and missing/unavailable decoding handled explicitly.",
+          "materiality": "material"
+        },
+        {
+          "claim_id": "R026-C059",
+          "kind": "choice",
+          "report_locators": [
+            "L183-185"
+          ],
+          "claim": "Listing UI,selection/cache/defaults/palette/scanning/version/path/uncalibrated/errors/performance budgets require review.",
+          "source_outcome": "supported",
+          "evidence_ids": [
+            "P02",
+            "E10",
+            "E11",
+            "E23",
+            "E25",
+            "E29"
+          ],
+          "rationale": "Honest product-choice inventory. Must keep valid unsupported input distinct from format errors.",
+          "materiality": "material"
+        },
+        {
+          "claim_id": "R026-C062",
+          "kind": "uncertainty",
+          "report_locators": [
+            "L218-231"
+          ],
+          "claim": "Fourteen source tensions retained:dimension_names/null,level metric,scale/origin/composition,named selection,omero/labelgeometry/schema/layout/acquisition/binary counts/keywordforce and implementations.",
+          "source_outcome": "qualified",
+          "evidence_ids": [
+            "E12",
+            "E18",
+            "E19",
+            "E20",
+            "E21",
+            "E22",
+            "E23",
+            "E24",
+            "E26",
+            "E28",
+            "E32",
+            "E33",
+            "E35",
+            "E37",
+            "E38"
+          ],
+          "rationale": "Current uncertainty list complete and mostly useful. Some chosen resolutions exceed source force or invent semantics; separately assessed rows preserve each material decision. Typographic duplication is immaterial.",
+          "materiality": "material"
+        },
+        {
+          "claim_id": "R026-C068",
+          "kind": "verification-disposition",
+          "report_locators": [
+            "L245,L251,L281"
+          ],
+          "claim": "All listed seed sections supported/preserved,every locator spot-checked,none failed verification and all current findings source-supported.",
+          "source_outcome": "qualified",
+          "evidence_ids": [
+            "I01",
+            "E23",
+            "E28",
+            "E30",
+            "E38"
+          ],
+          "rationale": "Actual seed/check history locked; blanket current supported claim is contradicted by present overclaims/equation. No prior-seed factual judgment made. Listed current conclusions assessed individually.",
+          "materiality": "material"
+        }
+      ],
+      "original_E23_failure_entries": [
+        {
+          "id": "R026-F01",
+          "classification": "informative guidance promoted",
+          "description": "First-named-multiscale fallback is repeatedly treated as normative because of lowercase imperative style,contrary to example exception.",
+          "report_locator": "L13,L73,L83,L104,L223",
+          "evidence_ids": [
+            "E23",
+            "E38"
+          ]
+        }
+      ],
+      "original_verdict_unchanged": "quality failure",
+      "original_facets_unchanged": [
+        {
+          "id": "OME05-C01",
+          "coverage": "full",
+          "source_outcome": "supported"
+        },
+        {
+          "id": "OME05-C02",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        },
+        {
+          "id": "OME05-C03",
+          "coverage": "full",
+          "source_outcome": "qualified"
+        },
+        {
+          "id": "OME05-C04",
+          "coverage": "partial",
+          "source_outcome": "contradicted"
+        },
+        {
+          "id": "OME05-C05",
+          "coverage": "partial",
+          "source_outcome": "unsupported"
+        },
+        {
+          "id": "OME05-C06",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        }
+      ],
+      "annotation": "The blanket informative-example label for the entire selection passage was not established. Referenced rows, source outcomes and metrics remain exactly the original frozen edition; this annotation records source-classification uncertainty, not replacement grade rows."
+    },
+    {
+      "report_id": "R027",
+      "original_assessment_sha256": "4329efe62eee6869533ff4127fe0e2ab71dbc7378874525f12aafab7de175e07",
+      "original_freeze_sha256": "49f66682983a092ab36faca980b4fa5eea2cc2f38258f01b5526b12871072d14",
+      "original_edition_authoritative": true,
+      "original_evidence_E23": {
+        "locator": "S003 L388-397",
+        "quote": "Or perhaps choose based on chunk size.",
+        "context": "Name matching and first fallback are selection guidance with pseudocode and an explicit alternative; adopting a first-fallback policy is permitted, but exclusive mandatory reader behavior is not established."
+      },
+      "referenced_original_claims": [
+        {
+          "claim_id": "R027-C013",
+          "kind": "multiscale selection",
+          "report_locators": [
+            "L117,L136-139,L186,L415,L492"
+          ],
+          "claim": "Name/first fallback is the only stated deterministic rule and a required addition, though its force is uncertain and adopted as an assumption.",
+          "source_outcome": "qualified",
+          "evidence_ids": [
+            "E23",
+            "E38"
+          ],
+          "rationale": "Adoption as an explicit product policy is valid. The source also suggests choosing by chunk size; illustrative selection advice does not establish an exclusive mandatory fallback or universal picker design.",
+          "materiality": "material"
+        },
+        {
+          "claim_id": "R027-C025",
+          "kind": "pyramid display policy",
+          "report_locators": [
+            "L180-187"
+          ],
+          "claim": "Keep view-level selection and pan/zoom; add declared traversal, calibration, multiple-pyramid policy and per-level undecodable feedback.",
+          "source_outcome": "qualified",
+          "evidence_ids": [
+            "P01",
+            "P02",
+            "E19",
+            "E20",
+            "E22",
+            "E23"
+          ],
+          "rationale": "Most refinements follow correctness and responsiveness. A specific first-fallback picker remains policy. Missing/undecodable levels are explicitly item-scoped; no whole-image crash is assumed.",
+          "materiality": "material"
+        },
+        {
+          "claim_id": "R027-C068",
+          "kind": "uncertainty selection",
+          "report_locators": [
+            "L492"
+          ],
+          "claim": "Keyword-free multiscale fallback is implemented as the only stated rule.",
+          "source_outcome": "qualified",
+          "evidence_ids": [
+            "E23",
+            "E38"
+          ],
+          "rationale": "Declared policy is permitted; absence of RFC keywords alone does not make all prose informative. Pseudocode’s alternative chunk-size choice defeats exclusivity.",
+          "materiality": "material"
+        },
+        {
+          "claim_id": "R027-C094",
+          "kind": "required companion decision",
+          "report_locators": [
+            "decisions/V001.json#/decisions/3/decision",
+            "decisions/V001.json#/decisions/3/reason"
+          ],
+          "claim": "U004 is marked supported; every claim and cited reason in its full current block is confirmed, with no replacement.",
+          "source_outcome": "qualified",
+          "evidence_ids": [
+            "E07",
+            "E08",
+            "E12",
+            "E14",
+            "E15",
+            "E16",
+            "E19",
+            "E20",
+            "E22",
+            "E23",
+            "E27",
+            "E32",
+            "E33",
+            "E34",
+            "E35"
+          ],
+          "rationale": "Most structural citations are correct. The reason confirms an entire block that invents label-listing prohibition, sole first-fallback obligation and universal directory algorithm. Highest-resolution gloss exists; policy heuristics are not conformance definitions.",
+          "materiality": "material"
+        },
+        {
+          "claim_id": "R027-C099",
+          "kind": "required companion decision",
+          "report_locators": [
+            "decisions/V001.json#/decisions/8/decision",
+            "decisions/V001.json#/decisions/8/reason"
+          ],
+          "claim": "U009 is marked supported; every claim and cited reason in its full current block is confirmed, with no replacement.",
+          "source_outcome": "qualified",
+          "evidence_ids": [
+            "E10",
+            "E11",
+            "E12",
+            "E18",
+            "E19",
+            "E20",
+            "E21",
+            "E22",
+            "E23",
+            "E24",
+            "E25",
+            "E26",
+            "E28",
+            "E32",
+            "E33",
+            "E35",
+            "E36",
+            "E37"
+          ],
+          "rationale": "All thirteen textual features/tensions are reviewed individually above. They are not all true contradictions: SHOULD-string versus null allowance can coexist; highest-resolution gloss exists; usually qualifies geometry, not original-source identity. Proposed resolutions remain policies.",
+          "materiality": "material"
+        },
+        {
+          "claim_id": "R027-C102",
+          "kind": "required companion decision",
+          "report_locators": [
+            "decisions/V001.json#/decisions/11/decision",
+            "decisions/V001.json#/decisions/11/reason"
+          ],
+          "claim": "U012 is marked supported; every claim and cited reason in its full current block is confirmed, with no replacement.",
+          "source_outcome": "qualified",
+          "evidence_ids": [
+            "E01",
+            "E02",
+            "E03",
+            "E04",
+            "E07",
+            "E09",
+            "E12",
+            "E17",
+            "E18",
+            "E23",
+            "E25",
+            "E27",
+            "E32",
+            "E33",
+            "E35",
+            "E36",
+            "E37",
+            "E38",
+            "I01"
+          ],
+          "rationale": "All index locations point to relevant topics, not proof all interpretations or reader mandates supported. Claimed rechecks are unverified operations; explicit uncertainty and unexecuted proposals are current text facts.",
+          "materiality": "material"
+        }
+      ],
+      "original_E23_failure_entries": [],
+      "original_verdict_unchanged": "quality failure",
+      "original_facets_unchanged": [
+        {
+          "id": "OME05-C01",
+          "coverage": "full",
+          "source_outcome": "supported"
+        },
+        {
+          "id": "OME05-C02",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        },
+        {
+          "id": "OME05-C03",
+          "coverage": "full",
+          "source_outcome": "qualified"
+        },
+        {
+          "id": "OME05-C04",
+          "coverage": "partial",
+          "source_outcome": "contradicted"
+        },
+        {
+          "id": "OME05-C05",
+          "coverage": "partial",
+          "source_outcome": "unsupported"
+        },
+        {
+          "id": "OME05-C06",
+          "coverage": "partial",
+          "source_outcome": "qualified"
+        }
+      ],
+      "annotation": "This edition already qualified the source-force interpretation. The paragraph and following Python example should not be conflated; an example-code alternative alone cannot settle all descriptive-prose force. Original rows and metrics remain authoritative and unchanged."
+    }
+  ],
+  "phase2_and_operations": {
+    "acquisition": "locked/unassessed",
+    "history": "locked/not accessed",
+    "native_delivery": "locked/unassessed",
+    "preservation": "locked/unassessed",
+    "efficiency": "locked/unassessed",
+    "actual_candidate_operations_inferred_from_evaluator": false,
+    "evaluator_cost": "Evaluator-only public source verification counted in campaign; exact model/network cost not exposed. Never credited as candidate acquisition."
+  }
+}

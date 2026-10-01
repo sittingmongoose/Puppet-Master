@@ -1,0 +1,37 @@
+{
+  "schema": "er7.host_only.startup_quiescence.v1",
+  "epoch": 1790895485.0035217,
+  "label": "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1",
+  "authority_sha256": "a3bf12e03211c670b43daab4cae130f2babb47da07b2a48be935ce3796d1904f",
+  "config_sha256": "99d48c8afbe314d08d2d9624bdac6570c619173255e4726cd46376ed1f229154",
+  "launch_sha256": "24070baaa2f6c5f1718401d6b5b9e5ca416d0d0e2ecd20d6c13c6ebac931f775",
+  "wrapper_launch_sha256": "e58bf4e3b2616da142d2261c7f50c1652bb68dbb9740ccf449eed6eb3e9cb6f3",
+  "owned_driver_pgid": 2121084,
+  "owned_wrapper_pgid": 2121062,
+  "current_owned_process_scalar_metadata": [],
+  "owned_known_lineage_quiescent": true,
+  "native_directory_exists": false,
+  "native_progress_exists": false,
+  "native_receipt_exists": false,
+  "actual_native_goal_observed": false,
+  "native_inventory": "unestablished",
+  "usage": "unknown",
+  "terminal_python_exception_class": "ValueError",
+  "exact_authenticated_source_reason": "independent method acceptance missing or mismatched",
+  "authenticated_traceback_frames": [
+    {
+      "authenticated_source_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/native_runner.py",
+      "line_number": 257
+    },
+    {
+      "authenticated_source_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/native_runner.py",
+      "line_number": 207
+    },
+    {
+      "authenticated_source_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/admission.py",
+      "line_number": 45
+    }
+  ],
+  "no_raw_log_copy_hash_or_output": true,
+  "lease_release_authorized": false
+}

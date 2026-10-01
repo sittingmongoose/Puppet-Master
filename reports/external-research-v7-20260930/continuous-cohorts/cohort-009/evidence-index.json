@@ -1,0 +1,287 @@
+[
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/expansion-accounting-v5/current.json",
+    "publication": "continuous-cohorts/cohort-009/observed-accountant-snapshot.json",
+    "sha256": "3eb0bdcd47209c7ac6f8f7e8b16592e5402b001e637db8f4b35b97ebc64559bd"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/continuous-rollup-versions/continuous-operator-state-59c0a9fc1e249c97088c9aa73868af41f8f72a3aad769ca123b76feb9fc5b1d9.json",
+    "publication": "continuous-cohorts/cohort-009/observed-operator-state.json",
+    "sha256": "59c0a9fc1e249c97088c9aa73868af41f8f72a3aad769ca123b76feb9fc5b1d9"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/output-integrity.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/output-integrity.json",
+    "sha256": "3fd55973456ef1bfad8ce5edeea49b86f7b68bc83c8a4b431342197248bca4e7"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/operator-receipt.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/operator-receipt.json",
+    "sha256": "aeeb45fcf352aa214f61a437cf78bcf7058fa5b9564f6e9f50c8a77191711116"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/context-observations.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/context-observations.json",
+    "sha256": "9e5c7aff811b42a331d9213c3fa521ab1730fbf968cfccc31de18d46a8e7a789"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/treatment.method-config.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/method-config.json",
+    "sha256": "22fa276a0014c820108398543a75611bb22d68438c702f19f8d3411ad4c7173b"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/diagnostic-binding-release-v5/t08-edition2-treatment.acceptance.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/method-acceptance.json",
+    "sha256": "63ebb38c84218ca6de9600152eee22f53a2572d99896852cb93c5194662a2e7c"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/treatment/goal.txt",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/goal.txt",
+    "sha256": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/treatment/workspace/TASK.md",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/TASK.md",
+    "sha256": "f5f3314b6e4d16351230f4b94bed135eaf0c9c752400cc1450574b8c788f3755"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/frozen-output/out/report.md",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/out/report.md",
+    "sha256": "1b116e65d1e19cd47993f99a5680c5f9a1243e577deedfe80d31f843a48f4156"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/frozen-output/out/scheduling.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/out/scheduling.json",
+    "sha256": "c1cf961196bee80a4973dddf14a78f55210ae63073c563353690b23bcfa33934"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/frozen-output/out/scheduling-correction-1.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/out/scheduling-correction-1.json",
+    "sha256": "d2a74e32b225215104da0576e9da3a6ce9838e5988c6be32c718e92abe6f3581"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/frozen-output/out/scheduling-initial.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/out/scheduling-initial.json",
+    "sha256": "d470acfb870d3df1eee3bff392d278e57b5360c2b4ff4893cc11e9641d0f1aee"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/frozen-output/out/acquisition.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/out/acquisition.json",
+    "sha256": "ce60b21bf1162b1867fde9dbe028ae5c9b03ec613a265778640bfd09684f47f4"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/frozen-output/out/scheduling-draft-2.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/out/scheduling-draft-2.json",
+    "sha256": "9e1867923cf5ca4157c216bb4830330062800377ac258c051438888cca31a438"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/whole-companion-receipt.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/whole-companion-receipt.json",
+    "sha256": "3c8e1345601c6c5b91534e71c613a2c5abf180de0f66b562e635a3011dc3f0b3"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/whole-companion-operator-cost.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/whole-companion-operator-cost.json",
+    "sha256": "73ada9b9be5ea509e4ef0ddcbb57f970c3a752d5a9953067b2615709527172c0"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/output-integrity.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/output-integrity.json",
+    "sha256": "6189c1c9527320ebc3aac58f20d476f601d1a354f68f0ddaff55b18d58450634"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/operator-receipt.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/operator-receipt.json",
+    "sha256": "85740a826f9615b55d66ddbf6756453f3d87d231f1b34083efcd62744f602d4a"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/context-observations.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/context-observations.json",
+    "sha256": "d830f011fdbb4185dc02a48f7781ae1d6a72f918a25185351dbb0626f8c567e8"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/control.method-config.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/method-config.json",
+    "sha256": "12d54232427c4e011933c1166777a22e1ed9f6c1be57a92595413d9c9de8c6ae"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/diagnostic-binding-release-v5/t08-edition2-control.acceptance.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/method-acceptance.json",
+    "sha256": "c9c177abb1d455b5b66a4417b759e6a22ca2cf057c12d8acc720ce9aa1e7eb87"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/control/goal.txt",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/goal.txt",
+    "sha256": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/control/workspace/TASK.md",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/TASK.md",
+    "sha256": "90434ed8c62fab7c4eb84d45c5398ce4ed01b665e1a302720fa1a4215390e69e"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/frozen-output/out/report.md",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/out/report.md",
+    "sha256": "48a01fd9f6de07fb3696f628d796d28db9f8a8e74519374571cccac2b3a56215"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/frozen-output/out/scheduling.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/out/scheduling.json",
+    "sha256": "81ef34387cd98222dfdba7a112c2af87d357636b8e9fe12ea1613200bf59b53e"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/frozen-output/out/scheduling.draft2.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/out/scheduling.draft2.json",
+    "sha256": "5311946ba8c6408beb5672bb9b4658acac0364ee212b157f3df83f3013a0f8f2"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/frozen-output/out/acquisition.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/out/acquisition.json",
+    "sha256": "49aceab3cf0b1e6b666643378e3ddcb8bc2c8e54802fd416198385d1f8c4aef8"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/frozen-output/out/scheduling.draft1.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/out/scheduling.draft1.json",
+    "sha256": "ae9909ccb5775874c703cd3334771264f133c230ca8d90db3fbef8c154ce8d4e"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/whole-companion-receipt.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/whole-companion-receipt.json",
+    "sha256": "8bfcd8ab9632734616ab59ede5e3fcab6a06cf466528b7fd656596f18605dcd3"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/whole-companion-operator-cost.json",
+    "publication": "continuous-cohorts/cohort-009/candidates/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/whole-companion-operator-cost.json",
+    "sha256": "e172b269e017cdce3c44504ede3a76c1c1ed9a00affef2f7545613742c1feb45"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/t03-structural-repeat-startup-diagnosis-v1.json",
+    "publication": "continuous-cohorts/cohort-009/startup-infrastructure/diagnosis.json",
+    "sha256": "3312127032e028c48cf399e1ed3d813f4996470791eb031acdbb8fe3c1902bd6"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control-structural-repeat1/startup-quiescence-diagnosis-v1.json",
+    "publication": "continuous-cohorts/cohort-009/startup-infrastructure/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control-structural-repeat1/startup-quiescence-diagnosis-v1.json",
+    "sha256": "1483ce22397ca09508f7487d1d7eaf30c71d16f56efc8a357f78cfa958219656"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/control.method-config.json",
+    "publication": "continuous-cohorts/cohort-009/startup-infrastructure/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control-structural-repeat1/method-config.json",
+    "sha256": "1fd968f4779ba71d5fd56f6645bf603a9f1fd913d7f3f04f782ebb324f395aa4"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/t03-structural-repeat1-control.method-acceptance.json",
+    "publication": "continuous-cohorts/cohort-009/startup-infrastructure/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control-structural-repeat1/method-acceptance.json",
+    "sha256": "3ca2bac3ccfdeb2c55f9b5c5d1bb874dd517aea1e92eec56faafcac60f7317fb"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/control/goal.txt",
+    "publication": "continuous-cohorts/cohort-009/startup-infrastructure/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control-structural-repeat1/goal.txt",
+    "sha256": "082682685b15b4ca660231fe2b452e054bc1589fbc29cb7299f00e030d63cb82"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/control/workspace/TASK.md",
+    "publication": "continuous-cohorts/cohort-009/startup-infrastructure/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control-structural-repeat1/TASK.md",
+    "sha256": "6dafd85c20e29a855ea291785bf331200df032c33e17ac2ed5ed731452c79e0c"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1/startup-quiescence-diagnosis-v1.json",
+    "publication": "continuous-cohorts/cohort-009/startup-infrastructure/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1/startup-quiescence-diagnosis-v1.json",
+    "sha256": "ac7c5f56b8fcada17dda65c746679c20b9fb14158985f4b7ea6a65a8f545d467"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/treatment.method-config.json",
+    "publication": "continuous-cohorts/cohort-009/startup-infrastructure/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1/method-config.json",
+    "sha256": "99d48c8afbe314d08d2d9624bdac6570c619173255e4726cd46376ed1f229154"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/t03-structural-repeat1-treatment.method-acceptance.json",
+    "publication": "continuous-cohorts/cohort-009/startup-infrastructure/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1/method-acceptance.json",
+    "sha256": "10f344b61e2add53c38dc70485f2bfb95e19871293720709a00d77ab5b83ddf6"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/treatment/goal.txt",
+    "publication": "continuous-cohorts/cohort-009/startup-infrastructure/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1/goal.txt",
+    "sha256": "082682685b15b4ca660231fe2b452e054bc1589fbc29cb7299f00e030d63cb82"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/treatment/workspace/TASK.md",
+    "publication": "continuous-cohorts/cohort-009/startup-infrastructure/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1/TASK.md",
+    "sha256": "047e8224db5921b928acf56e219194a19617347a6bac3f290fc960bdca4d3e89"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-current-grading-v6/R028/current-assessment.json",
+    "publication": "continuous-cohorts/cohort-009/reviews/R028/current-assessment.json",
+    "sha256": "21544a6d3a6f4c012b3cd525250b5b251027ca31cb2aa74316a84d9a3d8dbed5"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-current-grading-v6/R028/current-assessment.md",
+    "publication": "continuous-cohorts/cohort-009/reviews/R028/current-assessment.md",
+    "sha256": "aa9e5c398001af36daded0610a9f321b593f0511fe7dbaee661522c693910451"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-current-grading-v6/R029/current-assessment.json",
+    "publication": "continuous-cohorts/cohort-009/reviews/R029/current-assessment.json",
+    "sha256": "7ef785fecf37ef0e654a300fbdec8ee9c62bf2bd0ac827592badb29c85279bb8"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-current-grading-v6/R029/current-assessment.md",
+    "publication": "continuous-cohorts/cohort-009/reviews/R029/current-assessment.md",
+    "sha256": "e97e4dcab0f660ed8e9d8947e55b629105c371d16e4675070ed298ec88f5f698"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R032/stage.json",
+    "publication": "continuous-cohorts/cohort-009/intake/R032/stage.json",
+    "sha256": "f64ee1604fc21e3f10a2efe071c415392fb8d96d87c0e5f7b2842e6cb5bdfda1"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R032/MANIFEST.json",
+    "publication": "continuous-cohorts/cohort-009/intake/R032/MANIFEST.json",
+    "sha256": "c5cae7ded9674ce2a4819106127f41b400c6e0710af7db0f3757a3c11ba171d8"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R032/eligibility.json",
+    "publication": "continuous-cohorts/cohort-009/intake/R032/eligibility.json",
+    "sha256": "24a184eaa0375dd6c0a42426abdb577bf9747ecaed7a8835f982ec391ae5adbb"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R033/stage.json",
+    "publication": "continuous-cohorts/cohort-009/intake/R033/stage.json",
+    "sha256": "9e7a4fcdf67f77ebc47cc3db31e5e20fedf495bf2a3b99f94f0e7932ef361481"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R033/MANIFEST.json",
+    "publication": "continuous-cohorts/cohort-009/intake/R033/MANIFEST.json",
+    "sha256": "cd6a5acf5b1fcf5e5f4d13d2cd4856d51a99f42d5989b8c227dcae6195b7a3be"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R033/eligibility.json",
+    "publication": "continuous-cohorts/cohort-009/intake/R033/eligibility.json",
+    "sha256": "24a184eaa0375dd6c0a42426abdb577bf9747ecaed7a8835f982ec391ae5adbb"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-current-grading-v5/SOURCE-VALIDITY-ERRATA-v2.json",
+    "publication": "continuous-cohorts/cohort-009/source-validity-annotation/SOURCE-VALIDITY-ERRATA-v2.json",
+    "sha256": "e92270700b19c69e280922592ed4ecc716069b12e1d3ebaac7991389264c794d"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-current-grading-v5/SOURCE-VALIDITY-ERRATA-v2.md",
+    "publication": "continuous-cohorts/cohort-009/source-validity-annotation/SOURCE-VALIDITY-ERRATA-v2.md",
+    "sha256": "2b1f9ab866a98d6a04d1794e5e073a7976957db0ce6b3b1f57babb6c9d32aee6"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-current-grading-v5/SOURCE-VALIDITY-ERRATA-v2-freeze.json",
+    "publication": "continuous-cohorts/cohort-009/source-validity-annotation/SOURCE-VALIDITY-ERRATA-v2-freeze.json",
+    "sha256": "1102e3f1d73f25c704f7c4b80a6f93f29852e1c48422df20653e2dace1fef3cc"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/inclusive-stage-watchdog-inactive-proposal.rejection.json",
+    "publication": "continuous-cohorts/cohort-009/inactive-proposal/rejection.json",
+    "sha256": "fa51947f951b18a6cf37333b94e01e2c14ee4580732b84b21be43a8f6e69c5a5"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/watchdog-inactive-proposal-synthetics.json",
+    "publication": "continuous-cohorts/cohort-009/inactive-proposal/synthetic-summary.json",
+    "sha256": "abca88643bb1b7c8fe593c6b6f21e7a71eb01230fabd11a457e939f311fafb83"
+  }
+]

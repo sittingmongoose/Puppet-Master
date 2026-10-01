@@ -1,0 +1,70 @@
+{
+  "task_card": "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control",
+  "written": "2026-10-01",
+  "admitted_input": "inputs/brief.md (Slide Scout product brief: read-only desktop browser for local OME-Zarr 0.5 filesets)",
+  "draft_history": [
+    "out/scheduling.draft1.json (pre-research: initial families, immutable)",
+    "out/scheduling.draft2.json (post-research interim: actual sequence, dead ends, unvisited)",
+    "out/scheduling.json (this file: final record, written once)"
+  ],
+  "initial_source_families": [
+    {"family_id": "FAM-A", "name": "NGFF 0.5 specification (normative format obligations)", "targets": ["https://ngff.openmicroscopy.org/latest/", "https://ngff.openmicroscopy.org/0.5/", "https://github.com/ome/ngff"]},
+    {"family_id": "FAM-B", "name": "Reader library implementations (ome-zarr-py, napari-ome-zarr, zarr-python)", "targets": ["https://github.com/ome/ome-zarr-py", "https://pypi.org/project/ome-zarr/", "https://github.com/ome/napari-ome-zarr"]},
+    {"family_id": "FAM-C", "name": "Browser/viewer reference implementations (vizarr and similar thin viewers)", "targets": ["https://github.com/hms-dbmi/vizarr"]},
+    {"family_id": "FAM-D", "name": "Public search-engine result pages for lead discovery", "targets": ["https://html.duckduckgo.com/html/?q=ome-zarr+0.5+specification+reader", "https://www.bing.com/search?q=..."]}
+  ],
+  "families_added_during_research": [
+    {"family_id": "FAM-E", "name": "Compatibility surveys (viewer matrix, readers/writers survey)"},
+    {"family_id": "FAM-F", "name": "Normative JSON schemas (0.5/schemas)"},
+    {"family_id": "FAM-G", "name": "RFC pipeline (forward-compatibility watchlist)"},
+    {"family_id": "FAM-H", "name": "Multi-language readers (ngff-zarr py/ts, zarrita.js) incl. desktop-relevant stacks"}
+  ],
+  "actual_search_read_sequence": [
+    "See out/scheduling.draft2.json steps 1-38 (verbatim, immutable). Summary: TASK.md + brief read; spec located via ngff.openmicroscopy.org (latest redirects to 0.5); full normative text read from raw.githubusercontent.com/ome/ngff/0.5.2/0.5/index.bs; ecosystem map read from ngff.openmicroscopy.org/resources/tools/index.html; compatibility evidence from ome.github.io/ome-ngff-tools and GitHub issue search on hms-dbmi/vizarr; reader versions from GitHub releases APIs (ome-zarr-py v0.19.2, napari-ome-zarr v0.10.0); dependency evidence from ome-zarr-py pyproject.toml (zarr>=3.0.0) and CHANGELOG.md (former zarr<3 pin); zarrita.js and ngff-zarr READMEs for v2/v3 reader stacks; image.schema read in full; spec source cached to out/cache/ and mapped with mechanical line_map for line locators."
+  ],
+  "deadends": [
+    {"target": "mcp__pm_boundary__mechanical with URL source (cache_source, line_map)", "status": "error", "detail": "boundary ValueError; mechanical requires workspace file source. Tool-boundary limitation, not source unavailability; same URLs fetched fine via public_https_get."},
+    {"target": "https://api.github.com/repos/ome/ngff/contents?ref=latest", "status": "404", "detail": "no commit for ref 'latest'; default branch is main; tags end at 0.5.2"},
+    {"target": "https://raw.githubusercontent.com/ome/ome-zarr-py/main/README.md", "status": "404", "detail": "wrong branch guess; default branch is master"},
+    {"target": "https://raw.githubusercontent.com/ome/ome-zarr-py/master/README.md", "status": "404", "detail": "wrong filename; actual file is README.rst (found via contents listing). False 'no readme' dismissal avoided."},
+    {"target": "https://ome-zarr-py.readthedocs.io/en/latest/format.html", "status": "404", "detail": "readthedocs project not found (project slug is 'ome-zarr')"},
+    {"target": "https://ome-zarr.readthedocs.io/en/latest/format.html", "status": "404", "detail": "docs restructured; ome-zarr-py NGFF-version support table not located (unresolved lead)"},
+    {"target": "https://html.duckduckgo.com/html/?q=ome-zarr+0.5+desktop+viewer+local+file", "status": "202 bot challenge", "detail": "CAPTCHA/anomaly page; proves only that this search request was challenged, nothing about result availability"},
+    {"target": "https://www.bing.com/search?q=ome-zarr+0.5+desktop+viewer", "status": "200 partial", "detail": "SERP returned but organic results not extractable from script-heavy truncated HTML; query lead not deepened"},
+    {"target": "https://ngff.openmicroscopy.org/latest/ and /tools/index.html", "status": "200 redirect stubs", "detail": "resolved by following redirect targets; not treated as dead ends"}
+  ],
+  "large_or_partial_reads": [
+    {"target": "https://ngff.openmicroscopy.org/0.5/", "bytes": 158591, "coverage": "head/CSS shown; normative body beyond display truncation; replaced by full read of spec SOURCE (S2)"},
+    {"target": "https://ome.github.io/ome-ngff-tools/", "bytes": 82849, "coverage": "tested-versions list + key + feature rows through 'multiple multiscales' (partial; later rows unobserved)"},
+    {"target": "https://ngff.openmicroscopy.org/rfc/2/", "bytes": 87768, "coverage": "status table + overview + background + start of 'other notable changes' (partial)"},
+    {"target": "https://ngff.openmicroscopy.org/resources/tools/index.html", "bytes": 47526, "coverage": "all tool tables + survey links (footer truncated)"},
+    {"target": "out/cache/ngff-0.5.2-linemap.txt", "bytes": 53446, "coverage": "read through plate section; well-section tail beyond truncation"}
+  ],
+  "unvisited": [
+    "0.5 examples/*.json fixtures; contents of plate/well/label/bf2raw/strict_* schemas (listing only)",
+    "RFC-3 (more dimensions), RFC-4 (axis orientation), RFC-5 (coordinate systems), RFC-6 (flattening), RFC-7 (channel provenance), RFC-8 (collections), RFC-9 (zipped OME-Zarr), RFC-10 (governance) - titles/status only, documents not read",
+    "ome-zarr-models-py, yaozarrs, ome-ngff-validator internals",
+    "SlicerOMEZarr, Odon, QuPath, MoBIE, BigDataViewer, WEBKNOSSOS, Neuroglancer NGFF-version support specifics",
+    "zarr-python releases; tensorstore, zarr-java, zarr3-rs specifics",
+    "jwindhager/ome-ngff-readers-writers evaluation sheet (Google Drive/Docs assets not fetched)",
+    "image.sc forum threads; PyPI JSON records; pypi.org/project/ome-zarr/ landing page",
+    "ome-ngff-tools matrix rows after 'multiple multiscales' (time axis, dtype, units rows if any)"
+  ],
+  "coverage": {
+    "brief_requirements_mapped": {
+      "find images within a fileset": ["F8 bioformats2raw.layout series discovery", "F7 HCS plate/well navigation", "F3 multiscales list selection"],
+      "inspect by channel/time/plane": ["F3 axes ordering rules", "F5 omero rdefs defaultT/defaultZ"],
+      "overlay associated label images": ["F6 labels/image-label obligations", "F16 viewer support evidence"],
+      "correctly calibrated coordinates": ["F4 axes units UDUNITS-2 + scale/translation", "F15 napari-ome-zarr axis forwarding precedent"],
+      "responsive on large datasets": ["F1 Zarr v3 chunk/sharding model", "F3 multiscale pyramid obligations", "F13 zarrita FileSystemStore/chunk reads"],
+      "clearly explain undisplayable data": ["F10 normative JSON schemas + validators", "F16 known viewer failure modes"],
+      "source files unchanged": ["read-only store designs (zarrita FileSystemStore Readable, FetchStore)", "brief boundary: local reading only"],
+      "compatibility": ["F1 v2-vs-v3 break", "F11-F14 reader version evidence", "F16 matrix gaps"],
+      "correctness": ["F2 version-consistency rule", "F10 schema validation", "F9 transitional read expectations"],
+      "navigation/display": ["F7 plates", "F8 multi-image filesets", "F5/F6 rendering defaults"]
+    },
+    "established_vs_optional": "Reported in out/report.md sections 'Established format obligations' and 'Optional / product decisions'",
+    "failed_search_note": "DuckDuckGo challenge and Bing truncation prove nothing about the existence or absence of further desktop-viewer leads; conclusion 'no additional desktop viewers' is NOT drawn."
+  },
+  "status": "final"
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "er7.independent_inactive_watchdog_proposal_review.v1",
+  "decision": "REJECTED_INACTIVE_PROPOSAL_SOURCE_BOUNDARY",
+  "proposal_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/inclusive-stage-watchdog-extra-repair-proposal.json",
+  "proposal_sha256": "46c28eeeff592740c748f1496112b2d4a4a38055fcb0d93b2d518b255ffe88f1",
+  "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/inclusive-stage-watchdog-v4-proposed-source.txt",
+  "source_sha256": "00b536dd94bb162e9ac52b5ab3d404c9c433397f2fe242da4178cdb1a02d906a",
+  "diff_sha256": "0c075a2f0c0083c81b2bb56931e2a6da546ee1153069b41aa42d0d0d10b131c1",
+  "synthetics_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/watchdog-inactive-proposal-synthetics.json",
+  "synthetics_sha256": "abca88643bb1b7c8fe593c6b6f21e7a71eb01230fabd11a457e939f311fafb83",
+  "driver_sha256": "4699d5d33b0b165fda08262309a35c612a53dc0c35a26368e06df9159e3c222f",
+  "findings": [
+    "After interrupted initial enrollment, no group is registered. Emergency cleanup signals only SIGINT to the positively owned child. If that child ignores SIGINT, bounded wait times out, empty absence scans finish, timer is disabled and enforcer returns while dispatcher_returncode remains None. No future hard stop remains armed; native startup/cleanup may remain live beyond original cutoff."
+  ],
+  "required_condition": "On interrupted startup/enrollment, an owned still-live child must not lose every future deadline enforcement path. Unknown native groups must stay unqualified/held and must never be signaled by invented ownership. A source-only failed/held return is not an inclusive occupancy bound.",
+  "corrected_predecessor_gap": "Timer now armed before Popen/enrollment; active-source interruption demonstrated. This does not establish cleanup of the unregistered positively owned child that ignores SIGINT.",
+  "effective_adapter_status": "HOLD; v3 final rejection unchanged, no fourth deployed/frozen source, no repair-policy exception granted by reviewer.",
+  "native_or_other_process_launches": 0,
+  "private_or_actual_native_metadata_reads": 0,
+  "freeze_epoch": 1790894641.588352,
+  "generated_tokens": "UNKNOWN"
+}

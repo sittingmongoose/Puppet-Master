@@ -1,0 +1,136 @@
+{
+  "schema": "er7.z.safe.method.acceptance.v1",
+  "verdict": "accepted",
+  "reviewer": "/root/diagnostic_binding_release_v5",
+  "created_utc": "2026-10-01T20:59:49.887028+00:00",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "method_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/treatment.method-config.json",
+  "method_config_sha256": "22fa276a0014c820108398543a75611bb22d68438c702f19f8d3411ad4c7173b",
+  "method": "T08",
+  "arm": "treatment",
+  "pair_id": "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1",
+  "attempt": {
+    "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/treatment/workspace",
+    "prompt_sha256": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa",
+    "label": "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment",
+    "max_seconds": 1500.0,
+    "max_responses": 160,
+    "public_get": true
+  },
+  "scope": "Independent prospective exact edition2 matched1500s160 budget and new namespace delta only. Original whole brief, Goal, scheduling contrast, complete report, acquisition and final-once obligations are preserved. Static method binding only; no actual native or source/semantic qualification.",
+  "original_config": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t08-z-ome-mcp-discovery-v2-repair1-treatment.method-config.json",
+    "sha256": "456ccbc1c66bc410b2c5a9dd6fab5adb15907086ac014c1d3844abe5c8af93eb"
+  },
+  "original_independent_acceptance": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-safe-methods-v2/t08-z-ome-mcp-discovery-v2-repair1-treatment.acceptance.json",
+    "sha256": "454a6ecf0da325d75f1ccccbdc1c508cb61c2952a7560b2cb116bac0a2e29e85"
+  },
+  "frozen_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/MANIFEST.json",
+    "sha256": "d2aa0d46c31f74e6094c753c5be269b4370778fe1157801043da5d911b393a77"
+  },
+  "independent_audit": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/diagnostic-binding-release-v5/t08-edition2.review.json",
+    "sha256": "fb742f5959e41f0306c44248eb1ffc35873d8dc69ae52e818cdbecc47c181bc9"
+  },
+  "independent_checker": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/diagnostic-binding-release-v5/review_t08.py",
+    "sha256": "b0cb594699999a59829bab4d9a924f06db4c11226c6e2c28d4e3d00ac953db74"
+  },
+  "checks": {
+    "manifest_exact_frozen_pin": true,
+    "config_exact_frozen_pin": true,
+    "config_manifest_method_arm_namespace": true,
+    "original_config_pin": true,
+    "original_independent_acceptance": true,
+    "attempt_exact_delta": true,
+    "original_all_other_policy_fields_unchanged": true,
+    "runtime_tools_model_source_plan_output_unchanged": true,
+    "old_closure_retained": true,
+    "full_current_closure_pins": true,
+    "runtime_snapshot_current_pin": true,
+    "TASK_only_exact_header_budget_delta": true,
+    "goal_bytes_entirely_unchanged": true,
+    "spec_only_exact_declared_delta": true,
+    "new_attempt_only_declared_metadata_delta": true,
+    "config_spec_attempt_ABI": true,
+    "whole_original_input_map": true,
+    "full_brief905_literal_original": true,
+    "new_immutable_nlink1_files": true,
+    "candidate_tree_declared_only": true,
+    "output_empty_regular_directory": true,
+    "consistent_budget_everywhere": true,
+    "pair_all_other_method_policies_unchanged": true,
+    "pair_caps_consistent": true,
+    "pin_preserved_attempt_metadata": true,
+    "pin_pair_card": true,
+    "pin_original_attempt_metadata": true,
+    "pin_original_pair_card": true,
+    "manifest_pin_card": true,
+    "manifest_pin_exact_ancestor_delta": true,
+    "manifest_pin_raw_failure_history": true,
+    "manifest_pin_ready_cost": true,
+    "prospective_held_no_starts": true,
+    "canary_host_privacy_root_current_pins": true
+  },
+  "whole_source_input_files": 1,
+  "whole_source_input_bytes": 905,
+  "exact_goal_sha256": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa",
+  "caps_each_arm": {
+    "seconds": 1500,
+    "responses": 160
+  },
+  "individual_hard_max_seconds": 1800,
+  "new_root_authority_required": true,
+  "conditions": [
+    "A NEW root queue authority must explicitly bind this exact cfg and acceptance SHA before any launch. Root v5authority1e864 is only the immutable source reference and grants no launch of this new component.",
+    "Root/sole operator independently rechecks all config/closure/task/input/prompt pins, accepted runtime298f, host5f25/context gate6fa188 and SAME frozen counted canary4c99. Fresh isolated native GLM-5.3-Flash/max Goal/session per arm, full native completion/closure/quiescence required. No runtime/context/permission/model change.",
+    "Both new arms receive matched1500s160 budgets prospectively. Record arm order and live concurrent load before starts, reserve shared Z<=2 slots atomically and enforce actual campaign counters, all occupied/setup/copy/queue/retry/cleanup costs, reserves, route holds, hard deadlines and final-hour rules. No old trial clock reset or running Goal extension.",
+    "Full original brief is905 unchanged bytes, original prompt is253 unchanged bytes, original input manifest/source selection/plan blindness/output contract and scheduling method policies remain required. Outer TASK differs only in the instance heading and generic900/96-to1500/160 literal. Final required outputs remain report.md, acquisition.json and scheduling.json; immutable final files created once.",
+    "Strict ac130 privacy gate remains unchanged. Wrapper v3 acceptance96c421 stays old qualified quiet T10/T11-only and does not grant capture for these new jobs. Any future v2 capture separately meets original f1e50/review290f71 exact-own-qualified-quiescent-job authority. Unknown or zero eligible captures cannot establish complete source acquisition.",
+    "Assess the entire frozen current report, all material claims and assigned facets independently against source evidence before history/acquisition access. Unknown capture is not semantic false. This review grants no acquisition/preservation/equivalence quality promotion or method win.",
+    "Retain original900/96 attempts/failures/results and all preparation/development/native/review costs unchanged. This is a new budget variable and new instance, never a rescued original, pooled original result or best-of selection. Unexposed historical native costs, reviewer tokens and billed usage remain UNKNOWN.",
+    "Any changed exact config or candidate-visible bytes, dependency closure, source scope, cap, runtime, visibility or host implementation requires a new independent binding."
+  ],
+  "dependency_pins": {
+    "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+    "host_dispatcher": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/z_productive_dispatch_v3.py",
+      "sha256": "5f25c1d1eed1a9e1794ca4a3cd0698e2cafea4c3d5a2b5d183bbb4007d1d39a9"
+    },
+    "host_context_review": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/host-v3-context-acceptance.json",
+      "sha256": "6fa1882e2e0ccdd4f4034a78cba3561b9d45f4fb56c11732a0f6c99f3dd652f3"
+    },
+    "native_canary_review": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/acceptance.json",
+      "sha256": "4c99c392b317b25453e2ac15a4db642f36f8539fe8b7ce1702b480b22990dd8e"
+    },
+    "original_root_queue_ancestor": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/z-rolling-queue-authority-v5.json",
+      "sha256": "1e8645cf205294d856e1a214c3f018152171a1ffa5e78dda10e149bb7d1a09f9"
+    },
+    "native_canary_receipt_and_review": "Root/operator must supply externally pinned exact SAME frozen qualifying canary; no new canary or inherited new-job qualification.",
+    "capture_privacy_gate": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/capture-final-privacy-acceptance.json",
+      "sha256": "ac130e16b57409ccdf05fc1066bd02a19e2a3def8a181e5293709cb6e7374e66"
+    },
+    "actual_acquisition": "UNKNOWN until exact native job meets strict capture eligibility; no new-v3 acceptance",
+    "fresh_context": "Empty fresh isolated context created by accepted host; post-quiescence projection/inventory required",
+    "independent_method_and_root_queue": "Exact new configs must be independently accepted then included in a NEW root queue authority before native starts"
+  },
+  "native_Goals_started": 0,
+  "candidate_output_reads": 0,
+  "actual_private_reads": 0,
+  "Git_calls": 0,
+  "actual_native_completed": false,
+  "actual_source_capture_qualified": false,
+  "source_capture_completeness_unknown": true,
+  "semantic_quality_evaluated": false,
+  "original_full_source_handoff_qualified": false,
+  "promotion_eligible": false,
+  "native_launch_authorized_by_this_document_alone": false,
+  "reviewer_model_tokens": "UNKNOWN; not exposed",
+  "reviewer_model_billed_usage": "UNKNOWN; not exposed"
+}

@@ -1,0 +1,147 @@
+{
+  "schema": "er7.z.safe.method.config.v1",
+  "attempt": {
+    "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/treatment/workspace",
+    "prompt_sha256": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa",
+    "label": "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment",
+    "max_seconds": 1500.0,
+    "max_responses": 160,
+    "public_get": true
+  },
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "runtime_snapshot": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/review-snapshot-final.json",
+  "method": "T08",
+  "pair_id": "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1",
+  "arm": "treatment",
+  "task_sha256": "f5f3314b6e4d16351230f4b94bed135eaf0c9c752400cc1450574b8c788f3755",
+  "input_manifest": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+      "target": "brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905
+    }
+  ],
+  "goal_file": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/treatment/goal.txt",
+  "output_files": [
+    "report.md",
+    "acquisition.json",
+    "scheduling.json"
+  ],
+  "source_access": "Candidate-selected public HTTPS GET/search URLs and frozen admitted workspace evidence only.",
+  "plan_visibility": "Plan-blind; no plan/spec/key/answer history.",
+  "model": "GLM-5.3-Flash",
+  "effort": "max",
+  "tool_names": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical",
+    "mcp__pm_boundary__public_https_get"
+  ],
+  "closure_sha256": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/prepare.py": "7e3c57851189a67d1bd713b82f9698945abf82a9c87e52cd86ab8f390d4ec812",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/cards.py": "63897cc156c3370cb7478067be79825380d8f2bea3c7b1ee3c4b790c1c3eec56",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/dependency_selector_v2.py": "fba1f20effdea82305e328c2f7a0f5de7332072ca0aae1da49337417df37be05",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-resume-v1/budget_guard.py": "9e870636dae31aa92bf2b3409a5f0b810b30e2f11f38de21fccd6b9c7ec55e25",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/boundary.py": "e4b39a3bbb978968ec4ac9684bd8bf1c1662e9f594293808444fd6c18bcc7621",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/tool_server.py": "72557b5e8d5c4f529570b55bd4c04867fb7b72d88bfbbd351fc8fbfce65eb0dd",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/native_runner.py": "9894fa2d82f801cf2d70f1f0a9756e2a14e7bcbd59fe95d69459d6d552d4baa9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/host_guard.py": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/bind_final_runtime.py": "68ae6c807425863b57315af7b762a3888c7bea880aac97bcceadf0e279cfd640",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/prepare_t08_repair1.py": "06a5c2899a6e9961c3afa0df5de6b59db76e3cb32c25af2b576af4e29a3c4cba",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t08-z-ome-mcp-discovery-v2-repair1-treatment.method-config.json": "456ccbc1c66bc410b2c5a9dd6fab5adb15907086ac014c1d3844abe5c8af93eb",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t08-z-ome-mcp-discovery-v2-repair1/treatment/attempt.json": "f0c0b52d831628b8d8dac02d0b1a8b5c4b0bf1b2ea44427ed5afc2e6a4a83ceb",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t08-z-ome-mcp-discovery-v2-repair1/pair.json": "4d087760312d0a331ff6b5da23a92946544e6fed37374f736978df9edf8197de",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-safe-methods-v2/t08-z-ome-mcp-discovery-v2-repair1-treatment.acceptance.json": "454a6ecf0da325d75f1ccccbdc1c508cb61c2952a7560b2cb116bac0a2e29e85",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t08-z-ome-mcp-discovery-v2-repair1/treatment.spec.json": "70489dca18d6208f822f053694fbb15ae3df75188100c1c4fb8133ae269223af",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/treatment.spec.json": "e9768c3d5b2343c12183bbe459cf2d6e8e6f45530af9c3daede1fb8ec9d007c3",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/treatment/attempt.json": "3fe00dda458fdf187fd3ced85ecd35710a39c47120bbc021d769f3bbf2fe9c7c",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/treatment/workspace/TASK.md": "f5f3314b6e4d16351230f4b94bed135eaf0c9c752400cc1450574b8c788f3755",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/treatment/goal.txt": "160e148114ba047d38a5d99385e8d38b9b268c382f0863e046dc55859be832aa",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/prepare_v2.py": "a5382598996afa3c5428728e044ba28207eb2567e7b5b3e440d4a2d5bf6874f9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/TASK87_CLOCK.json": "2c1ab1c1298d74100fd35518e8df7dddec54ffefe050bab71b954103fc856489",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/z_productive_dispatch_v3.py": "5f25c1d1eed1a9e1794ca4a3cd0698e2cafea4c3d5a2b5d183bbb4007d1d39a9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/host-v3-context-acceptance.json": "6fa1882e2e0ccdd4f4034a78cba3561b9d45f4fb56c11732a0f6c99f3dd652f3",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/capture-final-privacy-acceptance.json": "ac130e16b57409ccdf05fc1066bd02a19e2a3def8a181e5293709cb6e7374e66",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/acceptance.json": "4c99c392b317b25453e2ac15a4db642f36f8539fe8b7ce1702b480b22990dd8e",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/z-rolling-queue-authority-v5.json": "1e8645cf205294d856e1a214c3f018152171a1ffa5e78dda10e149bb7d1a09f9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/MANIFEST.json": "37afaefcd10014d97daec9d6719af3aa221927f7eba06cd6c433af22b4483dba",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/treatment/workspace/inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/CARD.json": "3e108aa0d9f5a9ef608743b20374a6b6a61b16040174ba2dd459b5c7b832ee14",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/RAW_FAILURE_HISTORY.json": "0a3d4fafd4697a10eee60181e6aec9c2b56d691ad800e85de2ae263a8e3e0cd9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/EXACT_ANCESTOR_DELTA.json": "a65681e141dceb2c7a232109fab6c9eac5646a7bcf73b3ef7bd84c99ecd124df",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/READY_COST.json": "8d79b8983bbc73451141a04430fe2858eecd37d27a4c5f6e6ba0f502c3644a26"
+  },
+  "preserved_attempt_metadata": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/treatment/attempt.json",
+    "sha256": "3fe00dda458fdf187fd3ced85ecd35710a39c47120bbc021d769f3bbf2fe9c7c"
+  },
+  "pair_card": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t08-budget-redo-v4/edition2/CARD.json",
+    "sha256": "3e108aa0d9f5a9ef608743b20374a6b6a61b16040174ba2dd459b5c7b832ee14"
+  },
+  "configuration_transition": "Prospective budget-only fresh whole-scope pair: generic900/96 task literal and instance label change; original final runtime closure and all source/contrast/output instructions preserved; all original failures and costs retained.",
+  "status": "HELD: exact independent new-config acceptance and root release required; author cannot launch or self-accept",
+  "cost_policy": "All prior preparation/repair/newbinding and future candidate/hostmechanics/setup/retry/cleanup costs remain counted. No executed comparison claimed.",
+  "original_config": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/final-runtime-bindings/t08-z-ome-mcp-discovery-v2-repair1-treatment.method-config.json",
+    "sha256": "456ccbc1c66bc410b2c5a9dd6fab5adb15907086ac014c1d3844abe5c8af93eb"
+  },
+  "original_attempt_metadata": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t08-z-ome-mcp-discovery-v2-repair1/treatment/attempt.json",
+    "sha256": "f0c0b52d831628b8d8dac02d0b1a8b5c4b0bf1b2ea44427ed5afc2e6a4a83ceb"
+  },
+  "original_pair_card": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-safe-v2/pairs/t08-z-ome-mcp-discovery-v2-repair1/pair.json",
+    "sha256": "4d087760312d0a331ff6b5da23a92946544e6fed37374f736978df9edf8197de"
+  },
+  "original_method_acceptance": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-safe-methods-v2/t08-z-ome-mcp-discovery-v2-repair1-treatment.acceptance.json",
+    "sha256": "454a6ecf0da325d75f1ccccbdc1c508cb61c2952a7560b2cb116bac0a2e29e85"
+  },
+  "budget_redo": {
+    "declared_before_new_starts": true,
+    "old_caps_each_arm": {
+      "seconds": 900,
+      "responses": 96
+    },
+    "new_caps_each_arm": {
+      "seconds": 1500,
+      "responses": 160
+    },
+    "hard_seconds_max": 1800,
+    "reason": "Root administrative disclosure: original900/96 pair did not obtain qualified native completion within its own limit. Prepare a fresh longer matched pair; no pause failure, rescue, extension or old-output feedback.",
+    "fairness": "Both new arms use equal budgets; original discovery scheduling factor and complete brief/source-choice obligations remain unchanged. Operator prospectively records order and load before either arm.",
+    "cross_budget_interpretation": "Budget is an additional prospective variable; do not pool as the original900/96 result or select a best-of.",
+    "candidate_feedback": "Only the generic task budget literal and workspace-instance label change. No source facts, old outputs, grader feedback, keys or privateS003 answer list.",
+    "native_context": "Fresh isolated instance per arm through unchanged accepted host; author performs no native launch.",
+    "capture": "Original strict capture privacy gate is a launch prerequisite only. No new-v3 capture acceptance or actual new-job acquisition qualification is implied. Missing/ineligible/ambiguous acquisition remains UNKNOWN, with separate costs and unchanged full quality denominator."
+  },
+  "launch_preconditions": {
+    "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+    "host_dispatcher": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/z_productive_dispatch_v3.py",
+      "sha256": "5f25c1d1eed1a9e1794ca4a3cd0698e2cafea4c3d5a2b5d183bbb4007d1d39a9"
+    },
+    "host_context_review": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/host-v3-context-acceptance.json",
+      "sha256": "6fa1882e2e0ccdd4f4034a78cba3561b9d45f4fb56c11732a0f6c99f3dd652f3"
+    },
+    "native_canary_review": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/acceptance.json",
+      "sha256": "4c99c392b317b25453e2ac15a4db642f36f8539fe8b7ce1702b480b22990dd8e"
+    },
+    "original_root_queue_ancestor": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/z-rolling-queue-authority-v5.json",
+      "sha256": "1e8645cf205294d856e1a214c3f018152171a1ffa5e78dda10e149bb7d1a09f9"
+    },
+    "native_canary_receipt_and_review": "Root/operator must supply externally pinned exact SAME frozen qualifying canary; no new canary or inherited new-job qualification.",
+    "capture_privacy_gate": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/capture-final-privacy-acceptance.json",
+      "sha256": "ac130e16b57409ccdf05fc1066bd02a19e2a3def8a181e5293709cb6e7374e66"
+    },
+    "actual_acquisition": "UNKNOWN until exact native job meets strict capture eligibility; no new-v3 acceptance",
+    "fresh_context": "Empty fresh isolated context created by accepted host; post-quiescence projection/inventory required",
+    "independent_method_and_root_queue": "Exact new configs must be independently accepted then included in a NEW root queue authority before native starts"
+  }
+}

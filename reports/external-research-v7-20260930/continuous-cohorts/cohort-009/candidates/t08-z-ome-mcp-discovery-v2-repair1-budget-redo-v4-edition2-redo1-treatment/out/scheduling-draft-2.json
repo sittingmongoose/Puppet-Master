@@ -1,0 +1,62 @@
+{
+  "task": "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment",
+  "phase": "draft 2 (post-research intermediate record; written BEFORE final artifacts)",
+  "predecessor": "out/scheduling-initial.json",
+  "first_half_rule_compliance": "All 8 families received >=1 external query and >=1 primary-source inspection before deepening favored leads. The deepening batch (ngff-zarr README, 0.6 currency check, IDR samples, spec source) started only after the full F1-F8 query+read sweep was complete.",
+  "search_tooling_status": {
+    "html.duckduckgo.com/html": "dead end - bot anomaly challenge, status 202, no results (8 queries)",
+    "lite.duckduckgo.com/lite": "dead end - bot anomaly challenge, status 202 (1 query)",
+    "www.mojeek.com": "dead end - JS captcha page, status 200 but zero results (1 query)",
+    "www.startpage.com": "dead end - Anubis JS challenge page (1 query)",
+    "www.bing.com/search (html)": "partial - status 200 real SERP but organic results fell beyond the 50KB truncation of this client; unusable as result source",
+    "www.bing.com/search?format=rss": "dead end - status 200 but returned keyword-irrelevant results (OmeTV chat sites for an OME-Zarr spec query; check retailers for zarr sharding; even/odd calculators for zarr layout)",
+    "api.github.com/search/repositories": "working - used as the legitimate external query channel (public HTTPS GET, returns actual JSON results)",
+    "raw.githubusercontent.com / readthedocs / ngff.openmicroscopy.org / idr.github.io": "working primary-source hosts"
+  },
+  "sequence": [
+    {"step": 1, "kind": "read", "target": "TASK.md", "tool": "read_file", "result": "read (9 lines, sha256 f5f3314b...)"},
+    {"step": 2, "kind": "read", "target": "inputs/brief.md", "tool": "read_file", "result": "read (5 lines, sha256 f4f88fae...)"},
+    {"step": 3, "kind": "write", "target": "out/scheduling-initial.json", "result": "initial families written before any search"},
+    {"step": 4, "kind": "query", "families": ["F1","F2","F3","F4","F5","F6","F7","F8"], "channel": "html.duckduckgo.com/html", "result": "8/8 dead ends (bot challenge, 202)"},
+    {"step": 5, "kind": "probe", "channel": ["bing html","mojeek","ddg lite","startpage"], "result": "bing html 200-but-truncated; mojeek captcha; ddg-lite 202; startpage anubis challenge"},
+    {"step": 6, "kind": "query", "families": ["F1","F2","F3","F4","F5","F6","F7","F8"], "channel": "bing format=rss", "result": "8/8 dead ends (irrelevant result sets)"},
+    {"step": 7, "kind": "query", "families": ["F1","F2","F3","F7"], "channel": "api.github.com/search/repositories", "queries": ["ome ngff next generation file format","ome-zarr reader","zarr image viewer","ome-ngff-validator"], "result": "real results: ome/ome-zarr-py, fideus-labs/ngff-zarr, glencoesoftware/NGFF-Converter, bioio-devs/bioio-ome-zarr, ome/ome_zarr_test_suite, Huber-group-EMBL/Rarr + /romeo, hms-dbmi/vizarr, ome/ome-ngff-validator, fideus-labs/ome-zarr-rfc4-validation"},
+    {"step": 8, "kind": "query", "families": ["F4","F5","F6","F8"], "channel": "api.github.com/search/repositories", "queries": ["ome ngff labels","ome-zarr axes","zarr sharding","zarr-python"], "result": "results incl. zarr-developers/zarr-python, zarrs/zarrs-python, MaadhavKothari/zarr-benchmarks-cryoet; F5 query thin (1 tangential repo) - recorded"},
+    {"step": 9, "kind": "read", "families": ["F1"], "target": "https://ngff.openmicroscopy.org/0.5/index.html", "result": "200, 158591B, truncated at 50KB (CSS boilerplate first); revision meta d9164040dd61b3e4688494de1a58a69251b13f24"},
+    {"step": 10, "kind": "read", "families": ["F2"], "target": "https://ome-zarr.readthedocs.io/en/stable/", "result": "200, full: ome-zarr-py writes 0.5 default w/ zarr v3; 'OME-Zarr v0.5 is not yet supported by all OME-Zarr tools'"},
+    {"step": 11, "kind": "read", "families": ["F3"], "target": "https://raw.githubusercontent.com/hms-dbmi/vizarr/main/README.md", "result": "200, full: client-side zarrita.js + Viv GPU viewer, 2D slices of n-D, channel composites, dtypes int8..float64"},
+    {"step": 12, "kind": "read", "families": ["F7"], "target": "https://raw.githubusercontent.com/ome/ome-ngff-validator/main/README.md", "result": "200, full: web validator + custom schemas param + idr.github.io/ome-ngff-samples samples"},
+    {"step": 13, "kind": "read", "families": ["F1","F8"], "target": "https://api.github.com/repos/ome/ngff/contents/ + /specifications + /.gitmodules + /README.md", "result": "spec versions 0.1-0.6+dev as submodules of ome/ngff-spec; branch 0.5 pinned at tree d9164040"},
+    {"step": 14, "kind": "read", "families": ["F6"], "target": "https://ome-zarr.readthedocs.io/en/stable/advanced/sharding.html", "result": "200, full: ZEP0002; file counts 282/2070/21; shard must be integer multiple of chunk; reading sharded data requires dask > 2026.3.0"},
+    {"step": 15, "kind": "read", "families": ["F3","F4","F5"], "target": "https://raw.githubusercontent.com/ome/napari-ome-zarr/main/README.md", "result": "200, full: supports all OME-Zarr versions; Images/Plates/bioformats2raw/Scene; labels as layers; transforms identity,scale,translation,rotation,affine,sequence"},
+    {"step": 16, "kind": "read", "families": ["F2"], "target": "https://ome-zarr.readthedocs.io/en/stable/basic/read_image.html", "result": "200, full: OMEZarrMultiscale API; IDR v0.5 sample 6001240_labels.zarr; axes c,z,y,x; units micrometer; anisotropic z scale 0.5002 vs 0.3604"},
+    {"step": 17, "kind": "read", "families": ["F4"], "target": "https://ome-zarr.readthedocs.io/en/stable/advanced/labels/index.html + labels_metadata.html", "result": "200, full: image-label colors/properties/source/version structure"},
+    {"step": 18, "kind": "read", "families": ["F6","F8"], "target": "https://ome-zarr.readthedocs.io/en/stable/explanation/zarr_concepts.html", "result": "200, full: stores, chunks, sharding; NGFF 0.4=zarr v2 (.zarray/.zgroup) vs 0.5=zarr v3 (zarr.json, sharding, extensible codecs)"},
+    {"step": 19, "kind": "read", "families": ["F1"], "target": "https://ome-zarr.readthedocs.io/en/stable/explanation/ome_ngff_overview.html", "result": "200, full: overview; tools list pointer"},
+    {"step": 20, "kind": "read", "families": ["F1","F5","F4","F3","F8"], "target": "https://raw.githubusercontent.com/ome/ngff-spec/0.5/index.md", "result": "200, FULL normative text (32266B, sha256 7ca44265...): all MUST/SHOULD/MAY for axes, multiscales, coordinateTransformations, omero, labels, plate, well, bioformats2raw.layout; status w3c/CG-FINAL 2025-01-28"},
+    {"step": 21, "kind": "read", "families": ["F1"], "target": "https://raw.githubusercontent.com/ome/ngff/main/rfc/listing.csv", "result": "200, full: RFC-2 Zarr v3 adopted(0.5); RFC-3 axis restrictions under review; RFC-4 orientation accepted; RFC-5 coordinate systems implementation; RFC-6 superseded; RFC-8/9/10 under review"},
+    {"step": 22, "kind": "read", "families": ["F1"], "target": "https://raw.githubusercontent.com/ome/ngff-spec/0.5/version_history.md", "result": "200, full: 0.5.0 2024-11-21 (zarr v3, labels integer-only), 0.5.1+0.5.2 2025-01-10"},
+    {"step": 23, "kind": "read", "families": ["F2"], "target": "https://raw.githubusercontent.com/fideus-labs/ngff-zarr/main/README.md", "result": "200, full: reads 0.1-0.6, writes 0.4-0.6, TS+Python, sharding, RFC-4, .ozx (RFC-9), HCS, optional validation"},
+    {"step": 24, "kind": "read", "families": ["F1"], "target": "https://raw.githubusercontent.com/ome/ngff-spec/0.6/index.md", "result": "200, 89897B TRUNCATED at 50KB: RFC-5 coordinateSystems/scene/new transform types confirmed present; remainder is an explicit unresolved lead"},
+    {"step": 25, "kind": "read", "families": ["F7"], "target": "https://idr.github.io/ome-ngff-samples/", "result": "200, 270221B truncated: sample catalog with per-sample validator/vizarr links confirmed"},
+    {"step": 26, "kind": "mechanical", "target": "inputs/brief.md", "operation": "line_map", "output": "out/line-map-brief.txt", "result": "ok (1151B)"}
+  ],
+  "family_status": {
+    "F1": "covered (spec full text, version history, RFC ledger, 0.6 partial)",
+    "F2": "covered (ome-zarr-py, ngff-zarr, napari-ome-zarr, vizarr, bioio, R readers, jzarr/z5, version matrix)",
+    "F3": "covered (vizarr, napari-ome-zarr, spec multiscale-selection guidance, omero display defaults)",
+    "F4": "covered (spec labels section, labels_metadata doc, napari labels-as-layers)",
+    "F5": "covered (spec axes/units/coordinateTransformations normative text; read_image anisotropy example)",
+    "F6": "covered (sharding doc with numbers + dask compatibility cliff, zarr concepts chunks, ngff-zarr lazy/parallel claims)",
+    "F7": "covered (ome-ngff-validator + schemas dir + test suite + IDR samples + spec MUST/SHOULD rule set)",
+    "F8": "covered (zarr v2/v3 layout, stores, bf2raw transitional layout, plate case-sensitivity warning, sharding file-count effects)"
+  },
+  "residual_unresolved_leads": [
+    "0.6 spec tail (~40KB beyond truncation) uninspected",
+    "general-web search engines unusable from this client; image.sc forum threads / mailing-list evidence not directly fetched",
+    "zarr-specs v3 core document not fetched directly (obligations cited via ngff 0.5 storage section + ome-zarr-py docs)",
+    "ome-zarr-py view_images.html and transforms/ pages unread (covered indirectly via napari-ome-zarr README)",
+    "Fiji/BigDataViewer desktop-reader OME-Zarr support not inspected (unvisited lead)",
+    "zarr-benchmarks-cryoet repo contents not read (lead only, third-party)"
+  ]
+}

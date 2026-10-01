@@ -1,0 +1,23 @@
+{
+  "epoch": 1790895391.5744076,
+  "diagnoses": [
+    {
+      "arm": "control",
+      "own_driver_pgid": 2120505,
+      "own_group_process_scalar_metadata": [],
+      "terminal_python_error_class": "RuntimeError",
+      "accepted_dispatcher_literal_reason": "native receipt missing; retain occupied lease",
+      "native_goal_activation_observed": false,
+      "no_raw_log_copy_hash_or_output": true
+    },
+    {
+      "arm": "treatment",
+      "own_driver_pgid": 2121084,
+      "own_group_process_scalar_metadata": [],
+      "terminal_python_error_class": "RuntimeError",
+      "accepted_dispatcher_literal_reason": "native receipt missing; retain occupied lease",
+      "native_goal_activation_observed": false,
+      "no_raw_log_copy_hash_or_output": true
+    }
+  ]
+}

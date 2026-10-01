@@ -1,0 +1,21 @@
+{
+  "epoch": 1790895222.866345,
+  "label": "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control",
+  "status": "frozen-for-independent-evaluation",
+  "native_goal_status": "complete",
+  "output_integrity_sha256": "6189c1c9527320ebc3aac58f20d476f601d1a354f68f0ddaff55b18d58450634",
+  "accounting": {
+    "candidate_admissions": 47,
+    "occupied_slot_seconds": 33100.04714870453,
+    "remaining_committed_slot_seconds": 0,
+    "reported_generated_tokens_lower_bound": 1513704,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": []
+  }
+}

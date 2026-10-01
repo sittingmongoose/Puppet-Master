@@ -1,0 +1,51 @@
+{
+  "schema": "er7.whole_companion.v1",
+  "label": "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control",
+  "method_config_sha256": "12d54232427c4e011933c1166777a22e1ed9f6c1be57a92595413d9c9de8c6ae",
+  "native_receipt_sha256": "89e8a4ae03451557e5dac955fae4841534aa1c6edef502c4fb47bd5d888d4b0a",
+  "output_integrity_sha256": "6189c1c9527320ebc3aac58f20d476f601d1a354f68f0ddaff55b18d58450634",
+  "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control/whole-frozen-workspace",
+  "inputs": {
+    "brief.md": {
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905
+    }
+  },
+  "out": {
+    "acquisition.json": {
+      "sha256": "49aceab3cf0b1e6b666643378e3ddcb8bc2c8e54802fd416198385d1f8c4aef8",
+      "bytes": 15159
+    },
+    "cache/ngff-0.5.2-index.bs": {
+      "sha256": "7d4b728e4f4b90cd4266220f264b6f67ffddd287ab75c5fbaf5b0d0b12769a9d",
+      "bytes": 35633
+    },
+    "cache/ngff-0.5.2-linemap.txt": {
+      "sha256": "87f1a3e65ceaf28fb353bf1db8d5b1b191d51071dc227670d4439bf10ec51333",
+      "bytes": 53446
+    },
+    "report.md": {
+      "sha256": "48a01fd9f6de07fb3696f628d796d28db9f8a8e74519374571cccac2b3a56215",
+      "bytes": 24842
+    },
+    "scheduling.draft1.json": {
+      "sha256": "ae9909ccb5775874c703cd3334771264f133c230ca8d90db3fbef8c154ce8d4e",
+      "bytes": 1689
+    },
+    "scheduling.draft2.json": {
+      "sha256": "5311946ba8c6408beb5672bb9b4658acac0364ee212b157f3df83f3013a0f8f2",
+      "bytes": 8676
+    },
+    "scheduling.json": {
+      "sha256": "81ef34387cd98222dfdba7a112c2af87d357636b8e9fe12ea1613200bf59b53e",
+      "bytes": 8009
+    }
+  },
+  "copied_bytes": 148359,
+  "copy_seconds": 0.24794942799780983,
+  "all_inputs_preserved": true,
+  "all_output_versions_preserved": true,
+  "source_and_output_immutable": true,
+  "semantic_assessment": "none",
+  "private_client_access": false
+}

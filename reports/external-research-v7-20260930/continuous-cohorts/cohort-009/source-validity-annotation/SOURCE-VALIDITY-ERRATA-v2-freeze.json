@@ -1,0 +1,21 @@
+{
+  "schema": "er7.additive_erratum_freeze.v1",
+  "frozen_at_utc": "2026-10-01T22:46:30.848611Z",
+  "original_editions_authoritative": true,
+  "old_grade_rows_or_metrics_changed": false,
+  "overall_verdicts_and_facets_unchanged": true,
+  "phase2_unlocked": false,
+  "erratum_artifacts": {
+    "SOURCE-VALIDITY-ERRATA-v2.json": "e92270700b19c69e280922592ed4ecc716069b12e1d3ebaac7991389264c794d",
+    "SOURCE-VALIDITY-ERRATA-v2.md": "2b1f9ab866a98d6a04d1794e5e073a7976957db0ce6b3b1f57babb6c9d32aee6"
+  },
+  "evaluator_source_manifest_sha256": "f15bc003aba96986f14ca22816ed0017747d1aa598bef25a3ac9e79948aa2b23",
+  "evaluator_source_sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b",
+  "original_freezes": {
+    "R023": "d8a4d7d5f4bd20cdd70b4eb20055df4f831743fee5fcdf1c56cc548577275720",
+    "R024": "76dccb95208aa0c6d8d38d3048d001d8c5014e445ac5fe98aa4dca9a3eb72055",
+    "R025": "d0c9daad0b7b90737c57e74d85dfbe4c32c6e19d48669a2331e42e3c0dad0b6b",
+    "R026": "85bba54ba0ec859cbb8b1b3ab72bc5dc8ba7ca11a2c02de26a96acb4916cdfd2",
+    "R027": "49f66682983a092ab36faca980b4fa5eea2cc2f38258f01b5526b12871072d14"
+  }
+}

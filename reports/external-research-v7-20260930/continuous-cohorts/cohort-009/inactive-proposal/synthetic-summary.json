@@ -1,0 +1,495 @@
+{
+  "schema": "er7.inactive_watchdog_proposal.independent_synthetics.v1",
+  "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/inclusive-stage-watchdog-v4-proposed-source.txt",
+  "source_sha256": "00b536dd94bb162e9ac52b5ab3d404c9c433397f2fe242da4178cdb1a02d906a",
+  "created_epoch": 1790894619.139393,
+  "execution": "python3 -B with exclusive owned empty cache; authenticated inactive text-source compile; ALL proc/clock/subprocess/signal/timer operations mocked; no actual alarm installed",
+  "native_or_any_process_launches": 0,
+  "actual_private_or_native_metadata_reads": 0,
+  "all_sources_unchanged": true,
+  "tests": [
+    {
+      "test": "normal",
+      "mode": "normal",
+      "returncode": 0,
+      "exception": null,
+      "clock_at_return": 0.0,
+      "spawn_calls": [
+        {
+          "time": 0.0,
+          "argv": [
+            "python3",
+            "-B",
+            "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/watchdog-proposal-fixtures/normal/ops/dispatcher.py",
+            "--method-config",
+            "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/watchdog-proposal-fixtures/normal/config.json",
+            "--method-sha256",
+            "04c8932e353d7a87e4b6d2e354cbf19c44208d5ec1b0a2d70da5fbd4ae41c7f7"
+          ]
+        }
+      ],
+      "signals": [],
+      "receipt": {
+        "schema": "er7.inclusive_stage_watchdog.receipt.v1",
+        "label": "SYNTHETIC",
+        "plan_sha256": "3087390582ea7761eac0536e9cb16acb1222bd330566cf0784b34e459dd2f9c4",
+        "started_epoch": 2000000000.0,
+        "elapsed_seconds": 0.0,
+        "cap_seconds": 600,
+        "own_group_absence": {
+          "501": true,
+          "502": true,
+          "504": true,
+          "503": true
+        },
+        "all_owned_groups_registered": true,
+        "inclusive_stage_bound_established": true,
+        "dispatcher_returncode": 0,
+        "deadline_interrupt_sent": false,
+        "deadline_hard_stop_sent": false,
+        "monitor_stall_interrupt_armed": true,
+        "group_absence_observed_epoch": 2000000000.0,
+        "native_qualification": "separate original frozen native proof required",
+        "lease_release": "unchanged dispatcher only; missing proof keeps lease occupied",
+        "private_or_candidate_body_reads": false
+      },
+      "passed": true
+    },
+    {
+      "test": "late",
+      "mode": "late-final-absence",
+      "returncode": 2,
+      "exception": null,
+      "clock_at_return": 601.0,
+      "spawn_calls": [
+        {
+          "time": 0.0,
+          "argv": [
+            "python3",
+            "-B",
+            "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/watchdog-proposal-fixtures/late/ops/dispatcher.py",
+            "--method-config",
+            "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/watchdog-proposal-fixtures/late/config.json",
+            "--method-sha256",
+            "04c8932e353d7a87e4b6d2e354cbf19c44208d5ec1b0a2d70da5fbd4ae41c7f7"
+          ]
+        }
+      ],
+      "signals": [
+        {
+          "pgid": 502,
+          "signal": 2,
+          "time": 600.0
+        },
+        {
+          "pgid": 504,
+          "signal": 9,
+          "time": 600.0
+        },
+        {
+          "pgid": 503,
+          "signal": 9,
+          "time": 600.0
+        },
+        {
+          "pgid": 502,
+          "signal": 9,
+          "time": 600.0
+        },
+        {
+          "pgid": 501,
+          "signal": 9,
+          "time": 600.0
+        }
+      ],
+      "receipt": {
+        "schema": "er7.inclusive_stage_watchdog.receipt.v1",
+        "label": "SYNTHETIC",
+        "plan_sha256": "ccd1c723abd6167fe9e92487d2553562520c5acf5a77ea4283e4c5ba52823704",
+        "started_epoch": 2000000000.0,
+        "elapsed_seconds": 601.0,
+        "cap_seconds": 600,
+        "own_group_absence": {
+          "501": true,
+          "502": true,
+          "504": true,
+          "503": true
+        },
+        "all_owned_groups_registered": true,
+        "inclusive_stage_bound_established": false,
+        "dispatcher_returncode": 0,
+        "deadline_interrupt_sent": true,
+        "deadline_hard_stop_sent": true,
+        "monitor_stall_interrupt_armed": true,
+        "group_absence_observed_epoch": 2000000601.0,
+        "native_qualification": "separate original frozen native proof required",
+        "lease_release": "unchanged dispatcher only; missing proof keeps lease occupied",
+        "private_or_candidate_body_reads": false
+      },
+      "passed": true
+    },
+    {
+      "test": "preflight",
+      "mode": "preflight-overdue",
+      "returncode": null,
+      "exception": {
+        "class": "ValueError",
+        "message": "preflight exhausted inclusive launch budget"
+      },
+      "clock_at_return": 601.0,
+      "spawn_calls": [],
+      "signals": [],
+      "receipt": null,
+      "passed": true
+    },
+    {
+      "test": "receipt-link",
+      "mode": "receipt-parent-link",
+      "returncode": null,
+      "exception": {
+        "class": "ValueError",
+        "message": "regular directory ancestry required"
+      },
+      "clock_at_return": 0.0,
+      "spawn_calls": [],
+      "signals": [],
+      "receipt": null,
+      "passed": true
+    },
+    {
+      "test": "identity",
+      "mode": "identity-error-cleanup",
+      "returncode": null,
+      "exception": {
+        "class": "ValueError",
+        "message": "owned group identity changed"
+      },
+      "clock_at_return": 600.0,
+      "spawn_calls": [
+        {
+          "time": 0.0,
+          "argv": [
+            "python3",
+            "-B",
+            "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/watchdog-proposal-fixtures/identity/ops/dispatcher.py",
+            "--method-config",
+            "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/watchdog-proposal-fixtures/identity/config.json",
+            "--method-sha256",
+            "04c8932e353d7a87e4b6d2e354cbf19c44208d5ec1b0a2d70da5fbd4ae41c7f7"
+          ]
+        }
+      ],
+      "signals": [
+        {
+          "pgid": 502,
+          "signal": 2,
+          "time": 600.0
+        },
+        {
+          "pgid": 503,
+          "signal": 9,
+          "time": 600.0
+        },
+        {
+          "pgid": 502,
+          "signal": 9,
+          "time": 600.0
+        },
+        {
+          "pgid": 501,
+          "signal": 9,
+          "time": 600.0
+        }
+      ],
+      "receipt": null,
+      "passed": true
+    },
+    {
+      "test": "bootstrap-live-child-ignores-int",
+      "returncode": 2,
+      "timer_arms": [
+        {
+          "time": 0.0,
+          "delay": 565.0,
+          "period": 1.0
+        },
+        {
+          "time": 566.0,
+          "delay": 0,
+          "period": 0.0
+        }
+      ],
+      "timer_events": [
+        565.0,
+        566.0
+      ],
+      "clock_at_return": 566.0,
+      "signals": [
+        {
+          "pgid": 501,
+          "signal": 2,
+          "time": 565.0,
+          "kind": "positively-owned-Popen-child-only"
+        }
+      ],
+      "receipt": {
+        "schema": "er7.inclusive_stage_watchdog.receipt.v1",
+        "label": "SYNTHETIC",
+        "plan_sha256": "4d716bd11e37895e8368b2bd1c056e7d45a99c773c7bc952223fca4d413c1c02",
+        "started_epoch": 2000000000.0,
+        "elapsed_seconds": 566.0,
+        "cap_seconds": 600,
+        "own_group_absence": {},
+        "all_owned_groups_registered": false,
+        "inclusive_stage_bound_established": false,
+        "dispatcher_returncode": null,
+        "deadline_interrupt_sent": true,
+        "deadline_hard_stop_sent": true,
+        "monitor_stall_interrupt_armed": true,
+        "group_absence_observed_epoch": 2000000566.0,
+        "native_qualification": "separate original frozen native proof required",
+        "lease_release": "unchanged dispatcher only; missing proof keeps lease occupied",
+        "private_or_candidate_body_reads": false
+      },
+      "defect_demonstrated": "After interrupted initial enrollment, no group is registered. Emergency cleanup signals only SIGINT to the positively owned child. If that child ignores SIGINT, bounded wait times out, empty absence scans finish, timer is disabled and enforcer returns while dispatcher_returncode remains None. No future hard stop remains armed; native startup/cleanup may remain live beyond original cutoff."
+    },
+    {
+      "test": "blocked-Popen-startup-unknown-groups",
+      "returncode": 2,
+      "timer_events": [
+        565.0,
+        566.0
+      ],
+      "signals": [
+        {
+          "pgid": 501,
+          "signal": 2,
+          "time": 565.0,
+          "kind": "positively-owned-Popen-child-only"
+        }
+      ],
+      "receipt": {
+        "schema": "er7.inclusive_stage_watchdog.receipt.v1",
+        "label": "SYNTHETIC",
+        "plan_sha256": "7995a77cfc42d3d8604dac170750ffd9bbf13ac7c648d60673f55b1c58655c7e",
+        "started_epoch": 2000000000.0,
+        "elapsed_seconds": 566.0,
+        "cap_seconds": 600,
+        "own_group_absence": {},
+        "all_owned_groups_registered": false,
+        "inclusive_stage_bound_established": false,
+        "dispatcher_returncode": null,
+        "deadline_interrupt_sent": true,
+        "deadline_hard_stop_sent": true,
+        "monitor_stall_interrupt_armed": true,
+        "group_absence_observed_epoch": 2000000566.0,
+        "native_qualification": "separate original frozen native proof required",
+        "lease_release": "unchanged dispatcher only; missing proof keeps lease occupied",
+        "private_or_candidate_body_reads": false
+      },
+      "passed": true
+    },
+    {
+      "test": "armed-active-read",
+      "returncode": 2,
+      "timer_events": [
+        565.0
+      ],
+      "signals": [
+        {
+          "pgid": 501,
+          "signal": 2,
+          "time": 565.0,
+          "kind": "positively-owned-Popen-child-only"
+        },
+        {
+          "pgid": 501,
+          "signal": 9,
+          "time": 565.0
+        }
+      ],
+      "receipt": {
+        "schema": "er7.inclusive_stage_watchdog.receipt.v1",
+        "label": "SYNTHETIC",
+        "plan_sha256": "8769eb95053bff3a14f5853b5cbb9fbf353429e9a5fdf9eb1da0b800288a5b0d",
+        "started_epoch": 2000000000.0,
+        "elapsed_seconds": 565.0,
+        "cap_seconds": 600,
+        "own_group_absence": {
+          "501": false
+        },
+        "all_owned_groups_registered": false,
+        "inclusive_stage_bound_established": false,
+        "dispatcher_returncode": 0,
+        "deadline_interrupt_sent": true,
+        "deadline_hard_stop_sent": true,
+        "monitor_stall_interrupt_armed": true,
+        "group_absence_observed_epoch": 2000000565.0,
+        "native_qualification": "separate original frozen native proof required",
+        "lease_release": "unchanged dispatcher only; missing proof keeps lease occupied",
+        "private_or_candidate_body_reads": false
+      },
+      "passed": true
+    },
+    {
+      "test": "blocked-provenance-siblings",
+      "passed": true,
+      "timer_events": [
+        565.0,
+        566.0,
+        567.0
+      ],
+      "signals": [
+        {
+          "pgid": 501,
+          "signal": 2,
+          "time": 565.0,
+          "kind": "positively-owned-Popen-child-only"
+        },
+        {
+          "pgid": 503,
+          "signal": 9,
+          "time": 566.0
+        },
+        {
+          "pgid": 502,
+          "signal": 9,
+          "time": 566.0
+        },
+        {
+          "pgid": 501,
+          "signal": 9,
+          "time": 566.0
+        }
+      ],
+      "receipt": {
+        "schema": "er7.inclusive_stage_watchdog.receipt.v1",
+        "label": "SYNTHETIC",
+        "plan_sha256": "52c1726b291e218f9cc09d79d9db5bd18353eb0304e49cac5c34404f1d6baca3",
+        "started_epoch": 2000000000.0,
+        "elapsed_seconds": 567.0,
+        "cap_seconds": 600,
+        "own_group_absence": {
+          "501": true,
+          "502": true,
+          "504": false,
+          "503": true
+        },
+        "all_owned_groups_registered": true,
+        "inclusive_stage_bound_established": false,
+        "dispatcher_returncode": 0,
+        "deadline_interrupt_sent": true,
+        "deadline_hard_stop_sent": true,
+        "monitor_stall_interrupt_armed": true,
+        "group_absence_observed_epoch": 2000000567.0,
+        "native_qualification": "separate original frozen native proof required",
+        "lease_release": "unchanged dispatcher only; missing proof keeps lease occupied",
+        "private_or_candidate_body_reads": false
+      }
+    },
+    {
+      "test": "late-bookkeeping-proof-separated",
+      "passed": true,
+      "actual_elapsed": 620.0,
+      "receipt": {
+        "schema": "er7.inclusive_stage_watchdog.receipt.v1",
+        "label": "SYNTHETIC",
+        "plan_sha256": "8aae8da14c2cccf6e0142952c8e2b5f46346ce8d7eacaffdd61c40d83cdf74b8",
+        "started_epoch": 2000000000.0,
+        "elapsed_seconds": 0.0,
+        "cap_seconds": 600,
+        "own_group_absence": {
+          "501": true,
+          "502": true,
+          "504": true,
+          "503": true
+        },
+        "all_owned_groups_registered": true,
+        "inclusive_stage_bound_established": true,
+        "dispatcher_returncode": 0,
+        "deadline_interrupt_sent": false,
+        "deadline_hard_stop_sent": false,
+        "monitor_stall_interrupt_armed": true,
+        "group_absence_observed_epoch": 2000000000.0,
+        "native_qualification": "separate original frozen native proof required",
+        "lease_release": "unchanged dispatcher only; missing proof keeps lease occupied",
+        "private_or_candidate_body_reads": false
+      }
+    },
+    {
+      "test": "nonowned-metadata",
+      "passed": true,
+      "exception": "owned process ancestry unestablished",
+      "spawn_calls": [
+        {
+          "time": 0.0,
+          "argv": [
+            "python3",
+            "-B",
+            "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/watchdog-proposal-fixtures/reject-nonowned-metadata/ops/dispatcher.py",
+            "--method-config",
+            "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/watchdog-proposal-fixtures/reject-nonowned-metadata/config.json",
+            "--method-sha256",
+            "04c8932e353d7a87e4b6d2e354cbf19c44208d5ec1b0a2d70da5fbd4ae41c7f7"
+          ]
+        }
+      ],
+      "signals": []
+    },
+    {
+      "test": "pid-reuse",
+      "passed": true,
+      "exception": "owned group identity changed"
+    },
+    {
+      "test": "config-drift",
+      "passed": true,
+      "exception": "config drift",
+      "spawn_calls": [],
+      "signals": []
+    },
+    {
+      "test": "unknown-argv",
+      "passed": true,
+      "exception": "unknown or duplicate argument",
+      "spawn_calls": [],
+      "signals": []
+    },
+    {
+      "test": "config-link",
+      "passed": true,
+      "exception": "link in metadata ancestry",
+      "spawn_calls": [],
+      "signals": []
+    },
+    {
+      "test": "missing-native-metadata",
+      "passed": true,
+      "receipt": {
+        "schema": "er7.inclusive_stage_watchdog.receipt.v1",
+        "label": "SYNTHETIC",
+        "plan_sha256": "8cbce1074a8b395b0a68549ffb5aa2f5becb53b972bdc90f4bde583eb58ff656",
+        "started_epoch": 2000000000.0,
+        "elapsed_seconds": 0.0,
+        "cap_seconds": 600,
+        "own_group_absence": {
+          "501": true,
+          "502": true
+        },
+        "all_owned_groups_registered": false,
+        "inclusive_stage_bound_established": false,
+        "dispatcher_returncode": 0,
+        "deadline_interrupt_sent": false,
+        "deadline_hard_stop_sent": false,
+        "monitor_stall_interrupt_armed": true,
+        "group_absence_observed_epoch": 2000000000.0,
+        "native_qualification": "separate original frozen native proof required",
+        "lease_release": "unchanged dispatcher only; missing proof keeps lease occupied",
+        "private_or_candidate_body_reads": false
+      }
+    }
+  ],
+  "defects_demonstrated": 1,
+  "status": "INACTIVE_SOURCE_REVIEW_ONLY; no fourth effective adapter/version/exception/deploy",
+  "generated_tokens": "UNKNOWN"
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "review": "R028",
+    "report_sha256": "2c68ee7f430efaaecf841fc584fd30944ebf0bccd552058f283d4c0e1674bd4b",
+    "matching_reports": [
+      "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/out/report.md"
+    ],
+    "verdict": "quality failure",
+    "complete_coverage": true,
+    "scope": "actual2 admitted families/shared questions;16 derived criterion rows+6 opportunity families; no original22-facet key"
+  },
+  {
+    "review": "R029",
+    "report_sha256": "ac2b736ae8180ba31839cf0e80f9d48ef0783fdfb492fb90d78f5a65775c348c",
+    "matching_reports": [
+      "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/report.md"
+    ],
+    "verdict": "quality failure",
+    "complete_coverage": true,
+    "scope": "actual2 admitted families/shared questions;16 derived criterion rows+6 opportunity families; no original22-facet key"
+  }
+]

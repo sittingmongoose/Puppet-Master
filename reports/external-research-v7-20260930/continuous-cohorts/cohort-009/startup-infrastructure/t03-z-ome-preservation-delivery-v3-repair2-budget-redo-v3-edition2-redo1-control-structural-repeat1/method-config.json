@@ -1,0 +1,202 @@
+{
+  "schema": "er7.z.safe.method.config.v1",
+  "attempt": {
+    "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/control/workspace",
+    "prompt_sha256": "082682685b15b4ca660231fe2b452e054bc1589fbc29cb7299f00e030d63cb82",
+    "label": "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control-structural-repeat1",
+    "max_seconds": 1500.0,
+    "max_responses": 160,
+    "public_get": false
+  },
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "runtime_snapshot": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/review-snapshot-final.json",
+  "method": "T03",
+  "pair_id": "t03-z-ome-fullscope-structural-repeat1-v1",
+  "arm": "control",
+  "goal_file": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/control/goal.txt",
+  "task_sha256": "6dafd85c20e29a855ea291785bf331200df032c33e17ac2ed5ed731452c79e0c",
+  "input_manifest": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/brief.md",
+      "target": "brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/TASK.md",
+      "target": "TASK.md",
+      "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+      "bytes": 1367
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/catalog.json",
+      "target": "catalog.json",
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/sources/S003.txt",
+      "target": "sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/exports/ome-normative-dev-v1/plan/Viewer.md",
+      "target": "plan/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498
+    }
+  ],
+  "output_files": [
+    "acquisition/V001.json",
+    "final/V001.json",
+    "reports/V001.md",
+    "observations/V001.json"
+  ],
+  "tool_names": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical"
+  ],
+  "model": "GLM-5.3-Flash",
+  "effort": "max",
+  "source_access": "Entire admitted fixed corpus; no live GET; no source scope cut.",
+  "closure_sha256": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/control.binding.json": "c5fac5ef35922245a287a6ae87a7ec04ff2ca13a3e26b8505c0bd5e6938f6573",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/pair.json": "6ed911683817fb10f76c3c3e93c91d3a274d447af0698360b3e34972b0d8db32",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/AUTHORITY.json": "1abfafc0f1eb8e67fcd3947297a7716071d0e22fd2fd1c61543f22e000ee0474",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/offline-failure01.json": "e7d63e4e427d4c93a8ede68c91588c1d829c182ad10a773e1bd87a4d6d1a7a05",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/control/goal.txt": "082682685b15b4ca660231fe2b452e054bc1589fbc29cb7299f00e030d63cb82",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/control/workspace/TASK.md": "ed42fd360fb201e72ad425b333dea031e72182f594098f800250481c4b0fab80",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/control/workspace/inputs/TASK.md": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/control/workspace/inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/control/workspace/inputs/catalog.json": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/control/workspace/inputs/plan/Viewer.md": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/control/workspace/inputs/sources/S003.txt": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/treatment/goal.txt": "082682685b15b4ca660231fe2b452e054bc1589fbc29cb7299f00e030d63cb82",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/treatment/workspace/TASK.md": "f2cb5b07cfb85f14b56faca33b41d170cfcc0e0c3a7636f435a625a7b6efbe98",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/treatment/workspace/inputs/TASK.md": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/treatment/workspace/inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/treatment/workspace/inputs/catalog.json": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/treatment/workspace/inputs/plan/Viewer.md": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/treatment/workspace/inputs/sources/S003.txt": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/treatment.binding.json": "b6534219c22424e62c49e498c95429b5b8778590c4e8093ac345ef9dbcddc4ba",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/control/goal.txt": "082682685b15b4ca660231fe2b452e054bc1589fbc29cb7299f00e030d63cb82",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/control/workspace/TASK.md": "cd689452249af46b4ffb4b5221aabe547210bd995e36238dd2c9b26573a365e4",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/control/workspace/inputs/TASK.md": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/control/workspace/inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/control/workspace/inputs/candidate_seed.json": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/control/workspace/inputs/catalog.json": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/control/workspace/inputs/plan/Viewer.md": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/control/workspace/inputs/seed_block_hashes.json": "78d7f2822462e230888b26fc72687d8b74753e28b6c048aff38c56bcb5b21bc7",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/control/workspace/inputs/sources/S003.txt": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/control.binding.json": "5f692f62b80587a65b611a9d65c93fa45b3147797d2b55b952e09e117697daec",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/pair.json": "33793ddf366a576d1318d678d2575168c8c00678d34aa4ab85d7093c192a28dc",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/seed_block_hashes.json": "78d7f2822462e230888b26fc72687d8b74753e28b6c048aff38c56bcb5b21bc7",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/treatment/goal.txt": "082682685b15b4ca660231fe2b452e054bc1589fbc29cb7299f00e030d63cb82",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/treatment/workspace/TASK.md": "63904fa5275fd2215d01c9bf1c6e05daa015367ee180c5e20f7e3ca1c5652719",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/treatment/workspace/inputs/TASK.md": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/treatment/workspace/inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/treatment/workspace/inputs/candidate_seed.json": "3628b0597e19f1b9fc92141e1cbc7b2ea2afe3b28ef1e8dd55cbb3bce362532c",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/treatment/workspace/inputs/catalog.json": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/treatment/workspace/inputs/plan/Viewer.md": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/treatment/workspace/inputs/seed_block_hashes.json": "78d7f2822462e230888b26fc72687d8b74753e28b6c048aff38c56bcb5b21bc7",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/treatment/workspace/inputs/sources/S003.txt": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t13-z-ome-preservation-delivery-v3-repair2/treatment.binding.json": "464599caba84655cd592dd325180688f86b1b2ffa7826d4cda71767fcbcee28e",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/postrender.py": "27c0d4dbf102306c3ad085f095c41dd54e0d46a16b55a1ac33de324905f9f91c",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/prepare.draft01.failed.py": "f3e4377b49d558619a3fa8c3cd2af75fda2bef98f6bff19bb084b0f7d18800a2",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/prepare.py": "c17f29966154200d46b217b901408191ac3f4bba6129f033f92ad6f3cbb5049e",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/test_postrender.py": "1e7b4c5e0dd7fb88caa36bb515c5709845687d400c98da201abbec1615db7a76",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/verify.py": "cb879f29ec776d88622f4cbd47e0cd6f6dc1014a1d04a9eb9a0f66216fff9828",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/closure.json": "ec98f0644d5c786ccc908789b3b28c349ab59a08fd08bb2067f8d79bff263d06",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-component-budget-redos-v3/t03-v2/control.binding.json": "435a46f7bd5f1cfddbf0891c9c0fc9733fb8efea86b3dddfbe9145fa0189450a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-component-budget-redos-v3/t03-v2/control/workspace/TASK.md": "ed42fd360fb201e72ad425b333dea031e72182f594098f800250481c4b0fab80",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-component-budget-redos-v3/t03-v2/control/goal.txt": "082682685b15b4ca660231fe2b452e054bc1589fbc29cb7299f00e030d63cb82",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-component-budget-redos-v3/t03-v2/control/workspace/inputs/brief.md": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-component-budget-redos-v3/t03-v2/control/workspace/inputs/TASK.md": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-component-budget-redos-v3/t03-v2/control/workspace/inputs/catalog.json": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-component-budget-redos-v3/t03-v2/control/workspace/inputs/sources/S003.txt": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-component-budget-redos-v3/t03-v2/control/workspace/inputs/plan/Viewer.md": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/whole_freeze_delivery_v2.py": "7f6f8a2bfc2c50172cc00541238c6951459300f23a0905a2eabe5c779f6ce844",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/extended-incremental-acceptances-v2.json": "8aca415f50b6fcff0d2c679a9e6b5e8494d0d999aad1660007e4170205525c95",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-component-budget-redos-v3/prepare_redos_v3.py": "f08e1cf3eb65694211b6502dcacaf02988d5bc96e4ce0b344489410d62b89d36",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-component-budget-redos-v3/t03-v2/CARD.json": "1906aa45e5ef49ad5258f39c24c2e8fa6591d5d3027ed7bad468460f4670f3e8",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/control/workspace/TASK.md": "6dafd85c20e29a855ea291785bf331200df032c33e17ac2ed5ed731452c79e0c",
+    "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/control/goal.txt": "082682685b15b4ca660231fe2b452e054bc1589fbc29cb7299f00e030d63cb82"
+  },
+  "preserved_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-component-budget-redos-v3/t03-v2/control.binding.json",
+    "sha256": "435a46f7bd5f1cfddbf0891c9c0fc9733fb8efea86b3dddfbe9145fa0189450a"
+  },
+  "post_quiescence_delivery": {
+    "kind": "exact_postrender",
+    "argv": [
+      "python3",
+      "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/postrender.py",
+      "--method",
+      "T03",
+      "--arm",
+      "control",
+      "--frozen-workspace",
+      "<OPERATOR_WHOLE_FROZEN_WORKSPACE>",
+      "--destination",
+      "<EXCLUSIVE_HOST_DELIVERY_DIRECTORY>"
+    ],
+    "script_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/postrender.py",
+    "script_sha256": "27c0d4dbf102306c3ad085f095c41dd54e0d46a16b55a1ac33de324905f9f91c",
+    "required_whole_frozen_inputs": true
+  },
+  "input_companion_contract": {
+    "required": true,
+    "source": "Exact prebound input_manifest from this attempt after native quiescence; no glob/private context/config capture",
+    "destination": "Known host frozen-output/inputs as immutable companion to whole frozen-output/out",
+    "verification": "Every target byte SHA equals preexecution input_manifest; exclusive files; regular/nonlink/within admitted input paths; copy/hash/freeze elapsed measured separately",
+    "before": "Any postrenderer or preservation use; no semantic host repair"
+  },
+  "status": "prospective independent exact acceptance required",
+  "cost_policy": "All prior failures/development/setup/native waits/corrections/cleanup +whole input companion copy/host delivery counts separately; no best-of",
+  "original_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-z-preservation-delivery-v3-repair2/pairs/t03-z-ome-preservation-delivery-v3-repair2/control.binding.json",
+    "sha256": "c5fac5ef35922245a287a6ae87a7ec04ff2ca13a3e26b8505c0bd5e6938f6573"
+  },
+  "original_config": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-extended-method-configs-v1/t03-z-ome-preservation-delivery-v3-repair2-control.method-config.json",
+    "sha256": "561ca3d6ef2fc3f27278980c14d085da7a1214e39871fff26e0233fb37cbef1c"
+  },
+  "budget_lineage": {
+    "named_additional_variable": "matched native budget envelope",
+    "original_limits_each_arm": {
+      "seconds": 900,
+      "responses": 96
+    },
+    "new_limits_each_arm": {
+      "seconds": 1500,
+      "responses": 160
+    },
+    "hard_individual_max_seconds": 1800,
+    "timing": "Declared and frozen before either new arm starts; no running-budget extension or rescue.",
+    "fairness": "Both new arms receive identical caps; original method factor remains unchanged. Operator prospectively records arm order and concurrent load before start.",
+    "reason": "Root disclosed this original pair unstarted at 2026-10-01T20:08Z. Full-scope immutable-version overhead prospectively motivates the larger matched envelope.",
+    "cross_budget_interpretation": "No pooling as the original 900/96 comparison; report new budget as an additional prospective variable. Retain original pair and all failures/costs, no best-of.",
+    "candidate_feedback": "Only generic budget instructions change. No evaluator facts, keys, prior grades, old arm outputs or findings are candidate-visible.",
+    "full_scope": "Original complete source/brief/assignment/plan bytes, questions, ten generic obligations when applicable, output streams, tools, method contrast, latest-selection and whole-input companion rules preserved.",
+    "operator_launch_preconditions": "Independent reviewer author != grader exact config acceptance; each original remains untouched; verify this pair not started; frozen runtime and whole-companion pins; fresh output directories empty."
+  },
+  "structural_repeat": {
+    "schema": "er7.prospective.generic_carrier_prompt_repeat.v1",
+    "repeat_ordinal": 1,
+    "reason": "Fresh matched pair with a generic array-vs-wrapper-object schema clarification after a required current carrier shape failure. All original outputs/failures/costs remain unchanged. No renderer source change, no case-specific research answer or old output/grade feedback.",
+    "prior_config": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-component-budget-redos-v3/t03-v2/control.method-config.json",
+      "sha256": "faf8974bbf1e8eceb8d9e2c9eb3d55f21c1e1dc515e5a00223bb0ef763712bc6"
+    },
+    "changed_candidate_bytes": "Append same generic section-list JSON shape clarification to both outer TASK cards; Goal and ALL five admitted source/assignment/brief/plan/catalog inputs remain byte-identical.",
+    "max_seconds_each_arm": 1500,
+    "max_responses_each_arm": 160,
+    "current_selector_and_research_scope": "unchanged original fullsource/questions/obligations/all immutable versions/latest final exact binding",
+    "source_scope_pruned": false,
+    "candidate_case_facts_or_grades_supplied": false,
+    "same_config_fresh_repetition": false,
+    "timing_comparison": "Different execution window/confounded concurrent account load; retain all earlier costs, no best-of endpoint or same-quality speed credit without full independent grades."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "mode": "build",
+  "toolAllowlist": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical",
+    "mcp__pm_boundary__public_https_get"
+  ],
+  "effective_inventory": "pending actual native model requests"
+}

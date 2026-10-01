@@ -1,0 +1,51 @@
+{
+  "schema": "er7.whole_companion.v1",
+  "label": "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment",
+  "method_config_sha256": "22fa276a0014c820108398543a75611bb22d68438c702f19f8d3411ad4c7173b",
+  "native_receipt_sha256": "daaa5c75541a9ca08bd300eab121d0fb382c9f0fd550023357d69159b2c5a919",
+  "output_integrity_sha256": "3fd55973456ef1bfad8ce5edeea49b86f7b68bc83c8a4b431342197248bca4e7",
+  "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment/whole-frozen-workspace",
+  "inputs": {
+    "brief.md": {
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905
+    }
+  },
+  "out": {
+    "acquisition.json": {
+      "sha256": "ce60b21bf1162b1867fde9dbe028ae5c9b03ec613a265778640bfd09684f47f4",
+      "bytes": 17902
+    },
+    "line-map-brief.txt": {
+      "sha256": "0f11bdc72d89fba04cff86304b32f7c6c4dacc6974892df0a8bcb9a66ab0f086",
+      "bytes": 1151
+    },
+    "report.md": {
+      "sha256": "1b116e65d1e19cd47993f99a5680c5f9a1243e577deedfe80d31f843a48f4156",
+      "bytes": 25886
+    },
+    "scheduling-correction-1.json": {
+      "sha256": "d2a74e32b225215104da0576e9da3a6ce9838e5988c6be32c718e92abe6f3581",
+      "bytes": 1900
+    },
+    "scheduling-draft-2.json": {
+      "sha256": "9e1867923cf5ca4157c216bb4830330062800377ac258c051438888cca31a438",
+      "bytes": 9576
+    },
+    "scheduling-initial.json": {
+      "sha256": "d470acfb870d3df1eee3bff392d278e57b5360c2b4ff4893cc11e9641d0f1aee",
+      "bytes": 5469
+    },
+    "scheduling.json": {
+      "sha256": "c1cf961196bee80a4973dddf14a78f55210ae63073c563353690b23bcfa33934",
+      "bytes": 8385
+    }
+  },
+  "copied_bytes": 71174,
+  "copy_seconds": 0.2788468439975986,
+  "all_inputs_preserved": true,
+  "all_output_versions_preserved": true,
+  "source_and_output_immutable": true,
+  "semantic_assessment": "none",
+  "private_client_access": false
+}

@@ -1,0 +1,111 @@
+{
+  "task": "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment",
+  "phase": "initial draft (written BEFORE any external search or primary-source read)",
+  "admitted_inputs": ["TASK.md", "inputs/brief.md"],
+  "admitted_plan": "none — plan-blind case; no plan/spec/key admitted in workspace",
+  "budget": {
+    "elapsed_seconds_total": 1500,
+    "parent_responses_total": 160,
+    "first_half_rule": "within first half of elapsed budget, EVERY relevant family receives at least one legitimate external query and one available primary-source inspection before deepening favored leads"
+  },
+  "families_derived_from_brief_alone": [
+    {
+      "id": "F1",
+      "name": "OME-Zarr/NGFF 0.5 format specification obligations",
+      "questions": [
+        "What does the 0.5 specification actually mandate vs leave optional (multiscales, axes, coordinateTransformations, omero block, version field)?",
+        "Is 0.5 a published, stable version? How does it differ from 0.4 (e.g., new methods, path conventions, validation requirements)?",
+        "Which parts are 'established format obligations' vs 'optional capabilities needing a product decision'?"
+      ],
+      "status": "unvisited",
+      "queries": [],
+      "reads": []
+    },
+    {
+      "id": "F2",
+      "name": "Actual reader implementations and compatibility landscape",
+      "questions": [
+        "Which reader libraries parse OME-Zarr 0.5 (ome-zarr-py, ngio, zarr-python, JS readers) and what versions/spec levels do they support?",
+        "Where are known compatibility gaps (Zarr v2 vs v3 stores, 0.4 vs 0.5 metadata, bioformats2raw layouts)?",
+        "What obligations do readers accept that a thin plan might miss ( downsampling methods, axes matching, well/plate hierarchy)?"
+      ],
+      "status": "unvisited",
+      "queries": [],
+      "reads": []
+    },
+    {
+      "id": "F3",
+      "name": "Navigation and dimension inspection UX (channel / time point / plane, find images in a fileset)",
+      "questions": [
+        "How do existing viewers expose channel, time, and plane navigation (dimension sliders, channel toggles, level selection)?",
+        "How do tools let users find/choose images within a fileset (plate/well hierarchies, file pickers)?",
+        "What responsive-viewer patterns exist for switching multiscale levels during pan/zoom?"
+      ],
+      "status": "unvisited",
+      "queries": [],
+      "reads": []
+    },
+    {
+      "id": "F4",
+      "name": "Associated label image overlay",
+      "questions": [
+        "How does the NGFF label spec (image.label) associate labels with a parent image, and what is mandatory there?",
+        "How do viewers load and color label overlays (LUT sources, merging, opacity)?",
+        "What happens when label and image pyramids/axes disagree?"
+      ],
+      "status": "unvisited",
+      "queries": [],
+      "reads": []
+    },
+    {
+      "id": "F5",
+      "name": "Coordinate calibration correctness (physical units, anisotropy, transforms)",
+      "questions": [
+        "Where does calibration live in 0.5 (axes units, coordinateTransformations on multiscales/datasets)?",
+        "What unit vocabularies are valid and how must readers handle missing/unknown units?",
+        "How do existing tools compute calibrated display coordinates, and where do they go wrong?"
+      ],
+      "status": "unvisited",
+      "queries": [],
+      "reads": []
+    },
+    {
+      "id": "F6",
+      "name": "Performance and responsiveness on large local datasets",
+      "questions": [
+        "What IO patterns keep a thin desktop client responsive (lazy chunk reads, pyramid level selection, debounced fetches, sharded Zarr v3 stores)?",
+        "What performance obligations/failure modes arise from chunk shape and shard size choices in real datasets?",
+        "Which readers stream vs load fully, and what are their documented bottlenecks?"
+      ],
+      "status": "unvisited",
+      "queries": [],
+      "reads": []
+    },
+    {
+      "id": "F7",
+      "name": "Explaining unsupported/invalid data (validation, error reporting)",
+      "questions": [
+        "What validators exist for OME-Zarr (ome-ngff-validator, ome-zarr-py strictness) and which errors do they catch?",
+        "How should a reader 'clearly explain data it cannot display' (schema errors, missing metadata, unsupported codecs/sharding)?",
+        "What metadata is optional-but-common such that lenient parsing is needed?"
+      ],
+      "status": "unvisited",
+      "queries": [],
+      "reads": []
+    },
+    {
+      "id": "F8",
+      "name": "Local read-only filesystem constraints and store layout",
+      "questions": [
+        "What on-disk layouts must a local reader accept (.zgroup/.zattrs Zarr v2 vs zarr.json Zarr v3, ome-zarr .zattrs placement, bioformats2raw 'OME' series layout)?",
+        "How is read-only guaranteed in practice (no sidecar writes, no cache mutation of source)?",
+        "What platform filesystem quirks affect reading (case sensitivity, large directory fan-out for chunks)?"
+      ],
+      "status": "unvisited",
+      "queries": [],
+      "reads": []
+    }
+  ],
+  "note": "Families are research areas, not claims that an external capability exists. Dead-end and unavailable leads will be recorded rather than families removed.",
+  "planned_next": "Per family: >=1 public HTTPS search query and >=1 primary-source inspection before any lead deepening; record actual final URL/status/hash for each."
+}

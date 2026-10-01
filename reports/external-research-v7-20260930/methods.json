@@ -61,7 +61,8 @@
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
     "actual_redo_status": "treatment scoped R025 quality failure; control v3 delivery still HOLD/error; evaluator-only finding-body joins no native credit",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
-    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only",
+    "startup_repeat_status": "2 new admissions, zero observedGoal; startup infrastructure HOLD; no pause failures"
   },
   {
     "id": "T04",
@@ -173,7 +174,8 @@
     "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
     "replacement_actual_status": "Z repair1 both own assignment caps; native Goal terminal NULL; source acquisition unknown; all original failures preserved",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
-    "inclusive_native_cap_verification": "UNESTABLISHED source-only"
+    "inclusive_native_cap_verification": "UNESTABLISHED source-only",
+    "actual_new_redo_status": "new pair native complete/measured whole delivery; R032/R033 pending; acquisition UNKNOWN; original caps unchanged"
   },
   {
     "id": "T09",
@@ -247,7 +249,7 @@
     "actual_current_status": "original Z control incomplete/unqualified; treatment R017 complete current quality failure; source capture unknown",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
     "inclusive_native_cap_verification": "UNESTABLISHED source-only",
-    "actual_new_redo_status": "both native-complete/measured whole/current delivery; all4 R028-R031 current reviews pending; original grades unchanged"
+    "actual_new_redo_status": "R028/R029 actual original2family/shared-question scope fully current reviewed quality failures; original22-key not inferred; originalR017 unchanged"
   },
   {
     "id": "T12",

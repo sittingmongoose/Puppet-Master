@@ -1,0 +1,42 @@
+{
+  "task_card": "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control",
+  "written_at_step": "pre-research (draft 1 of scheduling record; immutable, later records go in draft2+, final in out/scheduling.json)",
+  "admitted_input": "inputs/brief.md (Slide Scout product brief: read-only desktop browser for local OME-Zarr 0.5 filesets)",
+  "initial_source_families": [
+    {
+      "family_id": "FAM-A",
+      "name": "NGFF 0.5 specification (normative format obligations)",
+      "targets": [
+        "https://ngff.openmicroscopy.org/latest/",
+        "https://ngff.openmicroscopy.org/0.5/",
+        "https://github.com/ome/ngff"
+      ]
+    },
+    {
+      "family_id": "FAM-B",
+      "name": "Reader library implementations (ome-zarr-py, napari-ome-zarr, zarr-python)",
+      "targets": [
+        "https://github.com/ome/ome-zarr-py",
+        "https://pypi.org/project/ome-zarr/",
+        "https://github.com/ome/napari-ome-zarr"
+      ]
+    },
+    {
+      "family_id": "FAM-C",
+      "name": "Browser/viewer reference implementations (vizarr and similar thin JS viewers)",
+      "targets": [
+        "https://github.com/hms-dbmi/vizarr"
+      ]
+    },
+    {
+      "family_id": "FAM-D",
+      "name": "Public search-engine result pages for lead discovery (candidate-chosen public search URLs)",
+      "targets": [
+        "https://html.duckduckgo.com/html/?q=ome-zarr+0.5+specification+reader",
+        "https://www.bing.com/search?q=ome-zarr+0.5+reader+compatibility"
+      ]
+    }
+  ],
+  "planned_sequence_note": "Fetch spec first (normative base), then readers, then viewers; deepen leads as judged; record actual sequence in later drafts.",
+  "status": "planned"
+}
